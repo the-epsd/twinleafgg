@@ -10,4 +10,5 @@ exports.setTriumphant = [
     new card_images_1.RescueEnergyArt(),
     new card_images_1.SeekerArt(),
     new card_images_1.TwinsArt(),
+    // new PalkiaDialgaLEGEND(),
 ];

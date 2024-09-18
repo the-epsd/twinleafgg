@@ -14,12 +14,18 @@ function* useStadium(next, store, state, effect) {
     if (player.deck.cards.length === 0) {
         throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
     }
+    const blocked = [];
+    player.deck.cards.forEach((card, index) => {
+        if (card instanceof game_1.PokemonCard && (card.cardType !== card_types_1.CardType.WATER && card.cardType !== card_types_1.CardType.FIGHTING)) {
+            blocked.push(index);
+        }
+    });
     if (slots.length == 0) {
         throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
     }
     else {
         let cards = [];
-        return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH, player.deck, { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.BASIC }, { min: 0, max: 1, allowCancel: false }), selectedCards => {
+        return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH, player.deck, { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.BASIC }, { min: 0, max: 1, allowCancel: false, blocked }), selectedCards => {
             cards = selectedCards || [];
             // Operation canceled by the user
             if (cards.length === 0) {

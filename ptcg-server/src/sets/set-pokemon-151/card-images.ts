@@ -49,6 +49,7 @@ export class AbraArt extends Abra {
 }
 import { Machop } from './machop';
 import { Machoke } from './machoke';
+import { Starmie } from './starmie';
 
 export class AntiqueHelixFossilArt extends AntiqueHelixFossil {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/MEW/MEW_153_R_EN.png';
@@ -208,6 +209,10 @@ export class SquirtleArt extends Squirtle {
 
 export class StaryuArt extends Staryu {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/MEW/MEW_120_R_EN_LG.png';
+}
+
+export class StarmieArt extends Starmie {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_119_R_EN_LG.png';
 }
 
 export class VileplumeArt extends Vileplume {

@@ -17,7 +17,7 @@ class OldCemetery extends trainer_card_1.TrainerCard {
         this.set = 'CRE';
         this.name = 'Old Cemetery';
         this.fullName = 'Old Cemetery CRE 147';
-        this.text = '';
+        this.text = 'Whenever any player attaches an Energy card from their hand to 1 of their non-[P] Pokémon, put 2 damage counters on that Pokémon.';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.UseStadiumEffect && game_1.StateUtils.getStadiumCard(state) === this) {

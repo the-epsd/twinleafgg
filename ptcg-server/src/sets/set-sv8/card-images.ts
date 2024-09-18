@@ -2,6 +2,7 @@ import { CounterGain } from '../set-lost-thunder/counter-gain';
 import { AlolanExeggutorex } from './alolan-exeggutor-ex';
 import { Archaludonex } from './archaludon-ex';
 import { Azumarill } from './azulmarill';
+import { BlackKyuremex } from './black-kyurem-ex';
 import { CelebrationFanfare } from './celebration-fanfare';
 import { CherishCarrier } from './cherish-carrier';
 import { Dialga } from './dialga';
@@ -26,6 +27,10 @@ import { Vibrava } from './vibrava';
 
 export class PalkiaArt extends Palkia {
   public cardImage = 'https://pbs.twimg.com/media/GWxHVtGa8AIClwa?format=jpg&name=large';
+}
+
+export class BlackKyuremexArt extends BlackKyuremex {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpc/SV7a/SV7a_11_R_JP.png';
 }
 
 export class HoOhArt extends HoOh {

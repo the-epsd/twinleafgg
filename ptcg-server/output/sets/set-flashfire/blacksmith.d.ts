@@ -5,7 +5,6 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 export declare class Blacksmith extends TrainerCard {
     trainerType: TrainerType;
-    regulationMark: string;
     set: string;
     name: string;
     cardImage: string;

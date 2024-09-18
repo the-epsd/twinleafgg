@@ -60,7 +60,7 @@ class ShieldEnergy extends energy_card_1.EnergyCard {
             const checkPokemonType = new check_effects_1.CheckPokemonTypeEffect(effect.target);
             store.reduceEffect(state, checkPokemonType);
             if (checkPokemonType.cardTypes.includes(card_types_1.CardType.METAL)) {
-                effect.damage = Math.max(0, effect.damage - 30);
+                effect.damage = Math.max(0, effect.damage - 10);
                 effect.damageReduced = true;
                 return state;
             }

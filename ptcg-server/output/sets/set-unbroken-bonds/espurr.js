@@ -23,7 +23,7 @@ class Espurr extends pokemon_card_1.PokemonCard {
             },
             {
                 name: 'Ear Kinesis',
-                cost: [card_types_1.CardType.PSYCHIC],
+                cost: [card_types_1.CardType.PSYCHIC, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
                 damage: 0,
                 text: 'This attack does 20 damage to 1 of your opponent\'s Benched Pokémon for each damage counter on that Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
             }

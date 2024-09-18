@@ -54,7 +54,7 @@ export class PowerHourglass extends TrainerCard {
         PlayerType.BOTTOM_PLAYER,
         [SlotType.ACTIVE],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-        { allowCancel: false, min: 1, max: 1 }
+        { allowCancel: false, min: 0, max: 1 }
       ), transfers => {
         transfers = transfers || [];
 

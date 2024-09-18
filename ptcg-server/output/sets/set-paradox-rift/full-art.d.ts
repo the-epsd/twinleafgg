@@ -1,17 +1,5 @@
-import { Garbodor } from '../set-dragons-exalted/garbodor';
-import { Swablu } from '../set-evolving-skies/swablu';
-import { Blitzle } from '../set-noble-victories/blitzle';
-import { Vanillish } from '../set-noble-victories/vanillish';
 import { ReversalEnergy } from '../set-paldea-evolved/reversal-energy';
-import { Joltik } from '../set-phantom-forces/joltik';
-import { Aegislash } from '../set-rebel-clash/aegislash';
 import { BeachCourt } from '../set-scarlet-and-violet/beach-court';
-import { Toedscruel } from '../set-scarlet-and-violet/SVI_26_Toedscruel';
-import { IronMoth } from '../set-shrouded-fable/iron-moth';
-import { Ferrothorn } from '../set-team-up/TEU_103_Ferrothorn';
-import { Yveltal } from '../set-team-up/yveltal';
-import { PorygonZ } from '../set-unbroken-bonds/porygon-z';
-import { Bombirdierex } from './bombirdier';
 import { BruteBonnet } from './brute-bonnet';
 import { CounterCatcher } from './counter-catcher';
 import { Cyclizar } from './cyclizar';
@@ -38,32 +26,7 @@ import { Snorunt } from './snorunt';
 import { TapuKokoex } from './tapu-koko-ex';
 import { Tsareenaex } from './tsareena-ex';
 import { Tulip } from './tulip';
-export declare class ToedscruelIR extends Toedscruel {
-    cardImage: string;
-    setNumber: string;
-    fullName: string;
-}
-export declare class IronMothIR extends IronMoth {
-    cardImage: string;
-    setNumber: string;
-    fullName: string;
-}
 export declare class SnoruntIR extends Snorunt {
-    cardImage: string;
-    setNumber: string;
-    fullName: string;
-}
-export declare class VanillishIR extends Vanillish {
-    cardImage: string;
-    setNumber: string;
-    fullName: string;
-}
-export declare class BlitzleIR extends Blitzle {
-    cardImage: string;
-    setNumber: string;
-    fullName: string;
-}
-export declare class JoltikIR extends Joltik {
     cardImage: string;
     setNumber: string;
     fullName: string;
@@ -93,42 +56,12 @@ export declare class SlitherWingIR extends SlitherWing {
     setNumber: string;
     fullName: string;
 }
-export declare class GarbodorIR extends Garbodor {
-    cardImage: string;
-    setNumber: string;
-    fullName: string;
-}
-export declare class YveltalIR extends Yveltal {
-    cardImage: string;
-    setNumber: string;
-    fullName: string;
-}
 export declare class MorpekoIR extends Morpeko {
     cardImage: string;
     setNumber: string;
     fullName: string;
 }
 export declare class BruteBonnetIR extends BruteBonnet {
-    cardImage: string;
-    setNumber: string;
-    fullName: string;
-}
-export declare class FerrothorIR extends Ferrothorn {
-    cardImage: string;
-    setNumber: string;
-    fullName: string;
-}
-export declare class AegislashIR extends Aegislash {
-    cardImage: string;
-    setNumber: string;
-    fullName: string;
-}
-export declare class SwabluIR extends Swablu {
-    cardImage: string;
-    setNumber: string;
-    fullName: string;
-}
-export declare class PorygonZIR extends PorygonZ {
     cardImage: string;
     setNumber: string;
     fullName: string;
@@ -189,11 +122,6 @@ export declare class RoaringMoonexFA extends RoaringMoonex {
     fullName: string;
 }
 export declare class GholdengoexFA extends Gholdengoex {
-    cardImage: string;
-    setNumber: string;
-    fullName: string;
-}
-export declare class BombirdierexFA extends Bombirdierex {
     cardImage: string;
     setNumber: string;
     fullName: string;

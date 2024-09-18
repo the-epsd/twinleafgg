@@ -43,7 +43,7 @@ class Absolex extends pokemon_card_1.PokemonCard {
             const opponent = game_1.StateUtils.getOpponent(state, player);
             const options = [
                 {
-                    message: game_1.GameMessage.DISCARD_AND_DRAW,
+                    message: game_1.GameMessage.CHOOSE_OPTION,
                     action: () => {
                         const opponentDeckTop = new game_1.CardList();
                         opponent.deck.moveTo(opponentDeckTop, 3);
@@ -57,7 +57,7 @@ class Absolex extends pokemon_card_1.PokemonCard {
                     }
                 },
                 {
-                    message: game_1.GameMessage.SWITCH_POKEMON,
+                    message: game_1.GameMessage.CHOOSE_OPTION,
                     action: () => {
                         const player = effect.player;
                         const playerDeckTop = new game_1.CardList();

@@ -52,6 +52,7 @@ import { Ralts } from './ralts';
 import { RareCandy } from './rare-candy';
 import { Revavroom } from './revavroom';
 import { Riolu } from './riolu';
+import { Riolu2 } from './riolu2';
 import { RockChestplate } from './rock-chestplate';
 import { RockyHelmet } from './rocky-helmet';
 import { Scovillain } from './scovillain';
@@ -235,6 +236,9 @@ export declare class RevavroomArt extends Revavroom {
     cardImage: string;
 }
 export declare class RioluArt extends Riolu {
+    cardImage: string;
+}
+export declare class RioluArt2 extends Riolu2 {
     cardImage: string;
 }
 export declare class RockChestplateArt extends RockChestplate {

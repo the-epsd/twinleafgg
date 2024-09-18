@@ -20,14 +20,14 @@ export class Magnezone extends PokemonCard {
     name: 'Magnetic Circuit',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
-    text: 'As often as you like during your turn (before your attack), you may attach a [M] Energy card from your hand to 1 of your Pokémon.'
+    text: 'As often as you like during your turn (before your attack), you may attach a [L] Energy card from your hand to 1 of your Pokémon.'
   }];
 
   public attacks = [{
     name: 'Zap Cannon',
     cost: [CardType.LIGHTNING, CardType.LIGHTNING, CardType.LIGHTNING, CardType.COLORLESS],
     damage: 130,
-    text: 'This Poekmon can\'t use Zap Cannon during your next turn.'
+    text: 'This Pokemon can\'t use Zap Cannon during your next turn.'
   }];
 
   public set: string = 'FLI';

@@ -7,7 +7,7 @@ import { StoreLike } from '../../game/store/store-like';
 
 export class DrawEnergy extends EnergyCard {
 
-  public provides: CardType[] = [ CardType.COLORLESS ];
+  public provides: CardType[] = [CardType.COLORLESS];
 
   public energyType = EnergyType.SPECIAL;
 
@@ -27,9 +27,10 @@ export class DrawEnergy extends EnergyCard {
     'When you attach this card from your hand to a Pokémon, draw a card.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttachEnergyEffect && effect.target?.cards?.includes(this)) {
+
+    if (effect instanceof AttachEnergyEffect && effect.energyCard === this) {
       const player = effect.player;
-      
+
       if (player.deck.cards.length === 0) {
         return state;
       }
@@ -42,10 +43,9 @@ export class DrawEnergy extends EnergyCard {
       }
 
       player.deck.moveTo(player.hand, 1);
-    }      
-      
+    }
+
     return state;
   }
-      
+
 }
-      

@@ -42,8 +42,11 @@ class Kyogre extends pokemon_card_1.PokemonCard {
             const player = effect.player;
             const checkProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(player);
             state = store.reduceEffect(state, checkProvidedEnergy);
+            const isKyogre = effect.player.active.cards.includes(this);
+            const availableEnergy = player.active.cards.filter(card => card.superType === card_types_1.SuperType.ENERGY).length;
+            const minEnergy = isKyogre ? 3 : Math.min(3, availableEnergy);
             return store.prompt(state, new discard_energy_prompt_1.DiscardEnergyPrompt(player.id, game_message_1.GameMessage.CHOOSE_ENERGIES_TO_HAND, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE], // Card source is target Pokemon
-            { superType: card_types_1.SuperType.ENERGY }, { min: 3, max: 3, allowCancel: false }), transfers => {
+            { superType: card_types_1.SuperType.ENERGY }, { min: minEnergy, max: 3, allowCancel: false }), transfers => {
                 transfers = transfers || [];
                 // cancelled by user
                 if (transfers.length === 0) {
@@ -66,7 +69,7 @@ class Kyogre extends pokemon_card_1.PokemonCard {
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
-            state = store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_message_1.GameMessage.ATTACH_ENERGY_TO_ACTIVE, player.deck, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Water Energy' }, { allowCancel: false, min: 1, max: 1 }), transfers => {
+            state = store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_message_1.GameMessage.ATTACH_ENERGY_TO_ACTIVE, player.deck, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Water Energy' }, { allowCancel: false, min: 0, max: 1 }), transfers => {
                 transfers = transfers || [];
                 // cancelled by user
                 if (transfers.length === 0) {

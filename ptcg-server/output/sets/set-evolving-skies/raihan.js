@@ -39,6 +39,7 @@ function* playCard(next, store, state, self, effect) {
             blocked.push(index);
         }
     });
+    player.hand.moveCardTo(effect.trainerCard, player.supporter);
     // We will discard this card after prompt confirmation
     // This will prevent unblocked supporter to appear in the discard pile
     effect.preventDefault = true;

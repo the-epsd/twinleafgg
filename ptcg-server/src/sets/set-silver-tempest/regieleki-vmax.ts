@@ -12,8 +12,6 @@ import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
 
-// import mappings from '../../sets/card-mappings.json';
-
 export class RegielekiVMAX extends PokemonCard {
 
   public regulationMark = 'F';

@@ -2,6 +2,7 @@ import { CounterGain } from '../set-lost-thunder/counter-gain';
 import { AlolanExeggutorex } from './alolan-exeggutor-ex';
 import { Archaludonex } from './archaludon-ex';
 import { Azumarill } from './azulmarill';
+import { BlackKyuremex } from './black-kyurem-ex';
 import { CelebrationFanfare } from './celebration-fanfare';
 import { CherishCarrier } from './cherish-carrier';
 import { Dialga } from './dialga';
@@ -24,6 +25,9 @@ import { TeraOrb } from './tera-orb';
 import { Trapinch } from './trapinch';
 import { Vibrava } from './vibrava';
 export declare class PalkiaArt extends Palkia {
+    cardImage: string;
+}
+export declare class BlackKyuremexArt extends BlackKyuremex {
     cardImage: string;
 }
 export declare class HoOhArt extends HoOh {

@@ -19,6 +19,7 @@ class ScoopUpCycloneArt extends scoop_up_cyclone_1.ScoopUpCyclone {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PLB/PLB_095_R_EN.png';
+        this.set = 'PLB';
         this.setNumber = '95';
         this.fullName = 'Scoop Up Cyclone PLB';
     }
@@ -35,6 +36,7 @@ class UltraBallArt extends ultra_ball_1.UltraBall {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PLB/PLB_090_R_EN.png';
+        this.set = 'PLB';
         this.setNumber = '90';
         this.fullName = 'Ultra ball PLB';
     }
@@ -51,6 +53,7 @@ class MasterBallArt extends master_ball_1.MasterBall {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PLB/PLB_094_R_EN_LG.png';
+        this.set = 'PLB';
         this.setNumber = '94';
         this.fullName = 'Master Ball PLB';
     }

@@ -29,6 +29,7 @@ export const cardReplacements = [
   { from: 'Pokémon Catcher SVI 187', to: 'Pokemon Catcher SVI 187' },
   { from: 'Professor\'s Research SVI 189', to: 'Professor\'s Research SVI 189 189' },
   { from: 'Professor\'s Research SVI 190', to: 'Professor\'s Research SVI 190 189' },
+  { from: 'Riolu SVI 113', to: 'Riolu2 SVI 113' },
 
   //PAL
   { from: 'Frigibax PAL 57', to: '4 Frigibax PAL 57 ' },
@@ -219,6 +220,7 @@ export const exportReplacements = [
   { from: 'Pokemon Catcher SVI 187', to: 'Pokémon Catcher SVI 187' },
   { from: 'Professor\'s Research SVI 189 189', to: 'Professor\'s Research SVI 189' },
   { from: 'Professor\'s Research SVI 190 189', to: 'Professor\'s Research SVI 190 190' },
+  { from: 'Riolu2 SVI 113', to: 'Riolu SVI 113' },
 
   //PAL
   { from: 'Frigibax PAL 57 ', to: 'Frigibax PAL 57' },

@@ -1,5 +1,6 @@
 import { Card } from '../../game/store/card/card';
-import { ArmarougeArt, ArtazonArt, AtticusArt, CharcadetArt, CharizardexArt, CharmanderArt, CharmeleonArt, CliveArt, ElectricGeneratorArt, EspathraexArt, FrigibaxArt, GardevoirexArt, GastlyArt, GengarArt, HaunterArt, IonoArt, KilowattrelArt, MimeJrArt, MimikyuArt, MoonlightHillArt, NatuArt, NemonaArt, NestBallArt, NoibatArt, NoivernexArt, ProfessorsResearch2Art, ProfessorsResearchArt, RaltsArt, RareCandyArt, ScovillainexArt, SquawkabillyexArt, StarmieArt, StudentsInPaldeaArt, TechnicalMachineCrisisPunchArt, UltraBallArt, XatuArt } from './card-images';
+import { ArmarougeArt, ArtazonArt, AtticusArt, CharcadetArt, CharizardexArt, CharmanderArt, CharmeleonArt, CliveArt, ElectricGeneratorArt, EspathraexArt, FrigibaxArt, GardevoirexArt, GastlyArt, GengarArt, HaunterArt, IonoArt, KilowattrelArt, MimeJrArt, MimikyuArt, MoonlightHillArt, NatuArt, NemonaArt, NestBallArt, NoibatArt, NoivernexArt, ProfessorsResearch2Art, ProfessorsResearchArt, RaltsArt, RareCandyArt, ScovillainexArt, SquawkabillyexArt, StudentsInPaldeaArt, TechnicalMachineCrisisPunchArt, UltraBallArt, XatuArt } from './card-images';
+import { PennyArt } from './shiny-vault';
 
 export const setPaldeaFates: Card[] = [
   new CharmeleonArt(),
@@ -11,7 +12,6 @@ export const setPaldeaFates: Card[] = [
   new MoonlightHillArt(),
   new NemonaArt(),
   new ScovillainexArt(),
-  new StarmieArt(),
   new StudentsInPaldeaArt(),
   new GengarArt(),
   new KilowattrelArt(),
@@ -39,5 +39,7 @@ export const setPaldeaFates: Card[] = [
   new SquawkabillyexArt(),
   new ArtazonArt(),
 
+  //Shiny Vault
+  new PennyArt(),
 
 ];

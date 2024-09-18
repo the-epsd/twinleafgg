@@ -42,20 +42,11 @@ class UnidentifiedFossil extends game_1.TrainerCard {
             'This card can\'t retreat.';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0] && effect.player.active.cards.includes(this)) {
-            const cardList = effect.player.active;
+        if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
-            store.log(state, game_1.GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: effect.player.name, card: this.name });
-            if (player.bench.every(b => b.cards.length === 0)) {
-                // technical implementation does not matter exactly because this ends the game
-                effect.player.active.moveCardsTo(effect.player.active.cards, player.deck);
-            }
-            else {
-                player.switchPokemon(cardList);
-                const mysteriousFossilCardList = game_1.StateUtils.findCardList(state, this);
-                mysteriousFossilCardList.moveCardsTo(mysteriousFossilCardList.cards.filter(c => c === this), effect.player.discard);
-                mysteriousFossilCardList.moveCardsTo(mysteriousFossilCardList.cards.filter(c => c !== this), effect.player.discard);
-            }
+            store.log(state, game_1.GameLog.LOG_PLAYER_DISCARDS_CARD, { name: player.name, card: this.name, effect: 'Unidentified Fossil' });
+            const cardList = game_1.StateUtils.findCardList(state, this);
+            cardList.moveCardTo(this, player.discard);
         }
         if (effect instanceof play_card_effects_1.PlayItemEffect && effect.trainerCard === this) {
             const player = effect.player;

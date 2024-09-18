@@ -1,17 +1,5 @@
-import { Garbodor } from '../set-dragons-exalted/garbodor';
-import { Swablu } from '../set-evolving-skies/swablu';
-import { Blitzle } from '../set-noble-victories/blitzle';
-import { Vanillish } from '../set-noble-victories/vanillish';
 import { ReversalEnergy } from '../set-paldea-evolved/reversal-energy';
-import { Joltik } from '../set-phantom-forces/joltik';
-import { Aegislash } from '../set-rebel-clash/aegislash';
 import { BeachCourt } from '../set-scarlet-and-violet/beach-court';
-import { Toedscruel } from '../set-scarlet-and-violet/SVI_26_Toedscruel';
-import { IronMoth } from '../set-shrouded-fable/iron-moth';
-import { Ferrothorn } from '../set-team-up/TEU_103_Ferrothorn';
-import { Yveltal } from '../set-team-up/yveltal';
-import { PorygonZ } from '../set-unbroken-bonds/porygon-z';
-import { Bombirdierex } from './bombirdier';
 import { BruteBonnet } from './brute-bonnet';
 import { CounterCatcher } from './counter-catcher';
 import { Cyclizar } from './cyclizar';
@@ -51,11 +39,11 @@ import { Tulip } from './tulip';
 //   public fullName: string = 'DottlerIR PAR';
 // }
 
-export class ToedscruelIR extends Toedscruel {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_185_R_EN_LG.png';
-  public setNumber = '185';
-  public fullName: string = 'ToedscruelIR PAR';
-}
+// export class ToedscruelIR extends Toedscruel {
+//   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_185_R_EN_LG.png';
+//   public setNumber = '185';
+//   public fullName: string = 'ToedscruelIR PAR';
+// }
 
 // export class MagbyIR extends Magby {
 //   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_186_R_EN_LG.png';
@@ -63,11 +51,11 @@ export class ToedscruelIR extends Toedscruel {
 //   public fullName: string = 'MagbyIR PAR';
 // }
 
-export class IronMothIR extends IronMoth {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_187_R_EN_LG.png';
-  public setNumber = '187';
-  public fullName: string = 'IronMothIR PAR';
-}
+// export class IronMothIR extends IronMoth {
+//   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_187_R_EN_LG.png';
+//   public setNumber = '187';
+//   public fullName: string = 'IronMothIR PAR';
+// }
 
 export class SnoruntIR extends Snorunt {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_188_R_EN_LG.png';
@@ -81,11 +69,11 @@ export class SnoruntIR extends Snorunt {
 //   public fullName: string = 'MantykeIR PAR';
 // }
 
-export class VanillishIR extends Vanillish {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_190_R_EN_LG.png';
-  public setNumber = '190';
-  public fullName: string = 'VanillishIR PAR';
-}
+// export class VanillishIR extends Vanillish {
+//   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_190_R_EN_LG.png';
+//   public setNumber = '190';
+//   public fullName: string = 'VanillishIR PAR';
+// }
 
 // export class WimpodIR extends Wimpod {
 //   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_191_R_EN_LG.png';
@@ -111,17 +99,17 @@ export class VanillishIR extends Vanillish {
 //   public fullName: string = 'MinunIR PAR';
 // }
 
-export class BlitzleIR extends Blitzle {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_195_R_EN_LG.png';
-  public setNumber = '195';
-  public fullName: string = 'BlitzleIR PAR';
-}
+// export class BlitzleIR extends Blitzle {
+//   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_195_R_EN_LG.png';
+//   public setNumber = '195';
+//   public fullName: string = 'BlitzleIR PAR';
+// }
 
-export class JoltikIR extends Joltik {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_196_R_EN_LG.png';
-  public setNumber = '196';
-  public fullName: string = 'JoltikIR PAR';
-}
+// export class JoltikIR extends Joltik {
+//   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_196_R_EN_LG.png';
+//   public setNumber = '196';
+//   public fullName: string = 'JoltikIR PAR';
+// }
 
 // export class EspathrIR extends Espathra {
 //   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_197_R_EN_LG.png';
@@ -165,17 +153,17 @@ export class SlitherWingIR extends SlitherWing {
   public fullName: string = 'SlitherWingIR PAR';
 }
 
-export class GarbodorIR extends Garbodor {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_204_R_EN_LG.png';
-  public setNumber = '204';
-  public fullName: string = 'GarbodorIR PAR';
-}
+// export class GarbodorIR extends Garbodor {
+//   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_204_R_EN_LG.png';
+//   public setNumber = '204';
+//   public fullName: string = 'GarbodorIR PAR';
+// }
 
-export class YveltalIR extends Yveltal {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_205_R_EN_LG.png';
-  public setNumber = '205';
-  public fullName: string = 'YveltalIR PAR';
-}
+// export class YveltalIR extends Yveltal {
+//   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_205_R_EN_LG.png';
+//   public setNumber = '205';
+//   public fullName: string = 'YveltalIR PAR';
+// }
 
 export class MorpekoIR extends Morpeko {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_206_R_EN_LG.png';
@@ -195,17 +183,17 @@ export class BruteBonnetIR extends BruteBonnet {
 //   public fullName: string = 'SteelixIR PAR';
 // }
 
-export class FerrothorIR extends Ferrothorn {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_209_R_EN_LG.png';
-  public setNumber = '209';
-  public fullName: string = 'FerrothorIR PAR';
-}
+// export class FerrothorIR extends Ferrothorn {
+//   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_209_R_EN_LG.png';
+//   public setNumber = '209';
+//   public fullName: string = 'FerrothorIR PAR';
+// }
 
-export class AegislashIR extends Aegislash {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_210_R_EN_LG.png';
-  public setNumber = '210';
-  public fullName: string = 'AegislashIR PAR';
-}
+// export class AegislashIR extends Aegislash {
+//   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_210_R_EN_LG.png';
+//   public setNumber = '210';
+//   public fullName: string = 'AegislashIR PAR';
+// }
 
 // export class AipomIR extends Aipom {
 //   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_211_R_EN_LG.png';
@@ -219,17 +207,17 @@ export class AegislashIR extends Aegislash {
 //   public fullName: string = 'LoudredIR PAR';
 // }
 
-export class SwabluIR extends Swablu {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_213_R_EN_LG.png';
-  public setNumber = '213';
-  public fullName: string = 'SwabluIR PAR';
-}
+// export class SwabluIR extends Swablu {
+//   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_213_R_EN_LG.png';
+//   public setNumber = '213';
+//   public fullName: string = 'SwabluIR PAR';
+// }
 
-export class PorygonZIR extends PorygonZ {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_214_R_EN_LG.png';
-  public setNumber = '214';
-  public fullName: string = 'PorygonZIR PAR';
-}
+// export class PorygonZIR extends PorygonZ {
+//   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_214_R_EN_LG.png';
+//   public setNumber = '214';
+//   public fullName: string = 'PorygonZIR PAR';
+// }
 
 export class CyclizarIR extends Cyclizar {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_215_R_EN_LG.png';
@@ -345,11 +333,11 @@ export class GholdengoexFA extends Gholdengoex {
 //   public fullName: string = 'MausholdexFA PAR';
 // }
 
-export class BombirdierexFA extends Bombirdierex {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_234_R_EN_LG.png';
-  public setNumber = '234';
-  public fullName: string = 'BombirdierexFA PAR';
-}
+// export class BombirdierexFA extends Bombirdierex {
+//   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_234_R_EN_LG.png';
+//   public setNumber = '234';
+//   public fullName: string = 'BombirdierexFA PAR';
+// }
 
 // export class LarryFA extends Larry {
 //   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_235_R_EN_LG.png';

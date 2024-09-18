@@ -15,6 +15,7 @@ import { DeliveryDrone } from './delivery-drone';
 import { Dudunsparce } from './dudunsparce';
 import { FightingAuLait } from './fighting-au-lait';
 import { Flamigo } from './flamigo';
+import { Floragato } from './floragato';
 import { Forretressex } from './forretress-ex';
 import { Frigibax } from './frigibax';
 import { Frigibax2 } from './frigibax2';
@@ -25,6 +26,7 @@ import { Iono } from './iono';
 import { JetEnergy } from './jet-energy';
 import { LuminousEnergy } from './luminous-energy';
 import { Luxray } from './luxray';
+import { Meowscaradaex } from './meowscarada-ex';
 import { Mimikyu } from './mimikyu';
 import { Misdreavus } from './misdreavus';
 import { Murkrow } from './murkrow';
@@ -41,6 +43,7 @@ import { Pineco } from './pineco';
 import { ReversalEnergy } from './reversal-energy';
 import { Shinx } from './shinx';
 import { Spiritomb } from './spiritomb';
+import { Sprigatito } from './sprigatito';
 import { Squawkabillyex } from './squawkabilly-ex';
 import { SuperRod } from './super-rod';
 import { SuperiorEnergyRetrieval } from './superior-energy-retrieval';
@@ -126,6 +129,10 @@ export class FlamigoArt extends Flamigo {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_170_R_EN_LG.png';
 }
 
+export class FloragatoArt extends Floragato {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_014_R_EN_LG.png';
+}
+
 export class ForretressexArt extends Forretressex {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_005_R_EN.png';
 }
@@ -172,6 +179,10 @@ export class LuminousEnergyArt extends LuminousEnergy {
 
 export class MagnemiteArt extends Magnemite {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_065_R_EN_LG.png';
+}
+
+export class MeowscaradaexArt extends Meowscaradaex {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_015_R_EN_LG.png';
 }
 
 export class MimikyuArt extends Mimikyu {
@@ -240,6 +251,10 @@ export class WoChienexArt extends WoChienex {
 
 export class ShinxArt extends Shinx {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_068_R_EN_LG.png';
+}
+
+export class SprigatitoArt extends Sprigatito {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_013_R_EN_LG.png';
 }
 
 export class TadbulbArt extends Tadbulb {

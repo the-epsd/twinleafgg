@@ -1,21 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.RoaringMoonexHR = exports.IronValiantexHR = exports.GarchompexHR = exports.TulipSIR = exports.ProfessorTurosScenarioSIR = exports.ProfessorSadasVitalitySIR = exports.MelaSIR = exports.GholdengoexSIR = exports.RoaringMoonexSIR = exports.SandyShocksexSIR = exports.IronValiantexSIR = exports.IronHandsexSIR = exports.TapuKokoexSIR = exports.GarchompexSIR = exports.TulipFA = exports.ProfessorTurosScenarioFA = exports.ProfessorSadasVitalityFA = exports.MelaFA = exports.BombirdierexFA = exports.GholdengoexFA = exports.RoaringMoonexFA = exports.SandyShocksexFA = exports.HoopaexFA = exports.IronValiantexFA = exports.IronHandsexFA = exports.TapuKokoexFA = exports.TsareenaexFA = exports.GarchompexFA = exports.FroslassexFA = exports.IronJugulisIR = exports.CyclizarIR = exports.PorygonZIR = exports.SwabluIR = exports.AegislashIR = exports.FerrothorIR = exports.BruteBonnetIR = exports.MorpekoIR = exports.YveltalIR = exports.GarbodorIR = exports.SlitherWingIR = exports.GarganacIR = exports.MiniorIR = exports.GroudonIR = exports.GimmighoulIR = exports.JoltikIR = exports.BlitzleIR = exports.VanillishIR = exports.SnoruntIR = exports.IronMothIR = exports.ToedscruelIR = void 0;
-exports.ReversalEnergyHR = exports.LuxuriousCapeHR = exports.CounterCatcherHR = exports.BeachCourtHR = void 0;
-const garbodor_1 = require("../set-dragons-exalted/garbodor");
-const swablu_1 = require("../set-evolving-skies/swablu");
-const blitzle_1 = require("../set-noble-victories/blitzle");
-const vanillish_1 = require("../set-noble-victories/vanillish");
+exports.ReversalEnergyHR = exports.LuxuriousCapeHR = exports.CounterCatcherHR = exports.BeachCourtHR = exports.RoaringMoonexHR = exports.IronValiantexHR = exports.GarchompexHR = exports.TulipSIR = exports.ProfessorTurosScenarioSIR = exports.ProfessorSadasVitalitySIR = exports.MelaSIR = exports.GholdengoexSIR = exports.RoaringMoonexSIR = exports.SandyShocksexSIR = exports.IronValiantexSIR = exports.IronHandsexSIR = exports.TapuKokoexSIR = exports.GarchompexSIR = exports.TulipFA = exports.ProfessorTurosScenarioFA = exports.ProfessorSadasVitalityFA = exports.MelaFA = exports.GholdengoexFA = exports.RoaringMoonexFA = exports.SandyShocksexFA = exports.HoopaexFA = exports.IronValiantexFA = exports.IronHandsexFA = exports.TapuKokoexFA = exports.TsareenaexFA = exports.GarchompexFA = exports.FroslassexFA = exports.IronJugulisIR = exports.CyclizarIR = exports.BruteBonnetIR = exports.MorpekoIR = exports.SlitherWingIR = exports.GarganacIR = exports.MiniorIR = exports.GroudonIR = exports.GimmighoulIR = exports.SnoruntIR = void 0;
 const reversal_energy_1 = require("../set-paldea-evolved/reversal-energy");
-const joltik_1 = require("../set-phantom-forces/joltik");
-const aegislash_1 = require("../set-rebel-clash/aegislash");
 const beach_court_1 = require("../set-scarlet-and-violet/beach-court");
-const SVI_26_Toedscruel_1 = require("../set-scarlet-and-violet/SVI_26_Toedscruel");
-const iron_moth_1 = require("../set-shrouded-fable/iron-moth");
-const TEU_103_Ferrothorn_1 = require("../set-team-up/TEU_103_Ferrothorn");
-const yveltal_1 = require("../set-team-up/yveltal");
-const porygon_z_1 = require("../set-unbroken-bonds/porygon-z");
-const bombirdier_1 = require("./bombirdier");
 const brute_bonnet_1 = require("./brute-bonnet");
 const counter_catcher_1 = require("./counter-catcher");
 const cyclizar_1 = require("./cyclizar");
@@ -52,29 +39,21 @@ const tulip_1 = require("./tulip");
 //   public setNumber = '184';
 //   public fullName: string = 'DottlerIR PAR';
 // }
-class ToedscruelIR extends SVI_26_Toedscruel_1.Toedscruel {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_185_R_EN_LG.png';
-        this.setNumber = '185';
-        this.fullName = 'ToedscruelIR PAR';
-    }
-}
-exports.ToedscruelIR = ToedscruelIR;
+// export class ToedscruelIR extends Toedscruel {
+//   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_185_R_EN_LG.png';
+//   public setNumber = '185';
+//   public fullName: string = 'ToedscruelIR PAR';
+// }
 // export class MagbyIR extends Magby {
 //   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_186_R_EN_LG.png';
 //   public setNumber = '186';
 //   public fullName: string = 'MagbyIR PAR';
 // }
-class IronMothIR extends iron_moth_1.IronMoth {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_187_R_EN_LG.png';
-        this.setNumber = '187';
-        this.fullName = 'IronMothIR PAR';
-    }
-}
-exports.IronMothIR = IronMothIR;
+// export class IronMothIR extends IronMoth {
+//   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_187_R_EN_LG.png';
+//   public setNumber = '187';
+//   public fullName: string = 'IronMothIR PAR';
+// }
 class SnoruntIR extends snorunt_1.Snorunt {
     constructor() {
         super(...arguments);
@@ -89,15 +68,11 @@ exports.SnoruntIR = SnoruntIR;
 //   public setNumber = '189';
 //   public fullName: string = 'MantykeIR PAR';
 // }
-class VanillishIR extends vanillish_1.Vanillish {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_190_R_EN_LG.png';
-        this.setNumber = '190';
-        this.fullName = 'VanillishIR PAR';
-    }
-}
-exports.VanillishIR = VanillishIR;
+// export class VanillishIR extends Vanillish {
+//   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_190_R_EN_LG.png';
+//   public setNumber = '190';
+//   public fullName: string = 'VanillishIR PAR';
+// }
 // export class WimpodIR extends Wimpod {
 //   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_191_R_EN_LG.png';
 //   public setNumber = '191';
@@ -118,24 +93,16 @@ exports.VanillishIR = VanillishIR;
 //   public setNumber = '194';
 //   public fullName: string = 'MinunIR PAR';
 // }
-class BlitzleIR extends blitzle_1.Blitzle {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_195_R_EN_LG.png';
-        this.setNumber = '195';
-        this.fullName = 'BlitzleIR PAR';
-    }
-}
-exports.BlitzleIR = BlitzleIR;
-class JoltikIR extends joltik_1.Joltik {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_196_R_EN_LG.png';
-        this.setNumber = '196';
-        this.fullName = 'JoltikIR PAR';
-    }
-}
-exports.JoltikIR = JoltikIR;
+// export class BlitzleIR extends Blitzle {
+//   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_195_R_EN_LG.png';
+//   public setNumber = '195';
+//   public fullName: string = 'BlitzleIR PAR';
+// }
+// export class JoltikIR extends Joltik {
+//   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_196_R_EN_LG.png';
+//   public setNumber = '196';
+//   public fullName: string = 'JoltikIR PAR';
+// }
 // export class EspathrIR extends Espathra {
 //   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_197_R_EN_LG.png';
 //   public setNumber = '197';
@@ -191,24 +158,16 @@ class SlitherWingIR extends slither_wing_1.SlitherWing {
     }
 }
 exports.SlitherWingIR = SlitherWingIR;
-class GarbodorIR extends garbodor_1.Garbodor {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_204_R_EN_LG.png';
-        this.setNumber = '204';
-        this.fullName = 'GarbodorIR PAR';
-    }
-}
-exports.GarbodorIR = GarbodorIR;
-class YveltalIR extends yveltal_1.Yveltal {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_205_R_EN_LG.png';
-        this.setNumber = '205';
-        this.fullName = 'YveltalIR PAR';
-    }
-}
-exports.YveltalIR = YveltalIR;
+// export class GarbodorIR extends Garbodor {
+//   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_204_R_EN_LG.png';
+//   public setNumber = '204';
+//   public fullName: string = 'GarbodorIR PAR';
+// }
+// export class YveltalIR extends Yveltal {
+//   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_205_R_EN_LG.png';
+//   public setNumber = '205';
+//   public fullName: string = 'YveltalIR PAR';
+// }
 class MorpekoIR extends morpeko_1.Morpeko {
     constructor() {
         super(...arguments);
@@ -232,24 +191,16 @@ exports.BruteBonnetIR = BruteBonnetIR;
 //   public setNumber = '208';
 //   public fullName: string = 'SteelixIR PAR';
 // }
-class FerrothorIR extends TEU_103_Ferrothorn_1.Ferrothorn {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_209_R_EN_LG.png';
-        this.setNumber = '209';
-        this.fullName = 'FerrothorIR PAR';
-    }
-}
-exports.FerrothorIR = FerrothorIR;
-class AegislashIR extends aegislash_1.Aegislash {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_210_R_EN_LG.png';
-        this.setNumber = '210';
-        this.fullName = 'AegislashIR PAR';
-    }
-}
-exports.AegislashIR = AegislashIR;
+// export class FerrothorIR extends Ferrothorn {
+//   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_209_R_EN_LG.png';
+//   public setNumber = '209';
+//   public fullName: string = 'FerrothorIR PAR';
+// }
+// export class AegislashIR extends Aegislash {
+//   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_210_R_EN_LG.png';
+//   public setNumber = '210';
+//   public fullName: string = 'AegislashIR PAR';
+// }
 // export class AipomIR extends Aipom {
 //   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_211_R_EN_LG.png';
 //   public setNumber = '211';
@@ -260,24 +211,16 @@ exports.AegislashIR = AegislashIR;
 //   public setNumber = '212';
 //   public fullName: string = 'LoudredIR PAR';
 // }
-class SwabluIR extends swablu_1.Swablu {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_213_R_EN_LG.png';
-        this.setNumber = '213';
-        this.fullName = 'SwabluIR PAR';
-    }
-}
-exports.SwabluIR = SwabluIR;
-class PorygonZIR extends porygon_z_1.PorygonZ {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_214_R_EN_LG.png';
-        this.setNumber = '214';
-        this.fullName = 'PorygonZIR PAR';
-    }
-}
-exports.PorygonZIR = PorygonZIR;
+// export class SwabluIR extends Swablu {
+//   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_213_R_EN_LG.png';
+//   public setNumber = '213';
+//   public fullName: string = 'SwabluIR PAR';
+// }
+// export class PorygonZIR extends PorygonZ {
+//   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_214_R_EN_LG.png';
+//   public setNumber = '214';
+//   public fullName: string = 'PorygonZIR PAR';
+// }
 class CyclizarIR extends cyclizar_1.Cyclizar {
     constructor() {
         super(...arguments);
@@ -421,15 +364,11 @@ exports.GholdengoexFA = GholdengoexFA;
 //   public setNumber = '233';
 //   public fullName: string = 'MausholdexFA PAR';
 // }
-class BombirdierexFA extends bombirdier_1.Bombirdierex {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_234_R_EN_LG.png';
-        this.setNumber = '234';
-        this.fullName = 'BombirdierexFA PAR';
-    }
-}
-exports.BombirdierexFA = BombirdierexFA;
+// export class BombirdierexFA extends Bombirdierex {
+//   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_234_R_EN_LG.png';
+//   public setNumber = '234';
+//   public fullName: string = 'BombirdierexFA PAR';
+// }
 // export class LarryFA extends Larry {
 //   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_235_R_EN_LG.png';
 //   public setNumber = '235';

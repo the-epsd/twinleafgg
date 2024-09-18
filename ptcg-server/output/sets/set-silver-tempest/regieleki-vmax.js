@@ -8,7 +8,6 @@ const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const check_effects_1 = require("../../game/store/effects/check-effects");
-// import mappings from '../../sets/card-mappings.json';
 class RegielekiVMAX extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);

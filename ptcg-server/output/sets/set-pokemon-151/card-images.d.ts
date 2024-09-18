@@ -48,6 +48,7 @@ export declare class AbraArt extends Abra {
 }
 import { Machop } from './machop';
 import { Machoke } from './machoke';
+import { Starmie } from './starmie';
 export declare class AntiqueHelixFossilArt extends AntiqueHelixFossil {
     cardImage: string;
 }
@@ -166,6 +167,9 @@ export declare class SquirtleArt extends Squirtle {
     cardImage: string;
 }
 export declare class StaryuArt extends Staryu {
+    cardImage: string;
+}
+export declare class StarmieArt extends Starmie {
     cardImage: string;
 }
 export declare class VileplumeArt extends Vileplume {

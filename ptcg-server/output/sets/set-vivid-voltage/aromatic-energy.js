@@ -17,6 +17,9 @@ class AromaticEnergy extends energy_card_1.EnergyCard {
         this.regulationMark = 'D';
         this.name = 'Aromatic Energy';
         this.fullName = 'Aromatic Energy VIV';
+        this.text = 'As long as this card is attached to a Pokémon, it provides [G] Energy.' +
+            '' +
+            'The [G] Pokémon this card is attached to recovers from all Special Conditions and can\'t be affected by any Special Conditions.';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.AttachEnergyEffect && effect.target.cards.includes(this)) {
