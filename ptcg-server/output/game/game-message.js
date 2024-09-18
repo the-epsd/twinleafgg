@@ -170,6 +170,8 @@ var GameCardMessage;
     GameCardMessage["SHUFFLE_YOUR_HAND"] = "SHUFFLE_YOUR_HAND";
     GameCardMessage["CHOOSE_CARD_TO_SHUFFLE"] = "CHOOSE_CARD_TO_SHUFFLE";
     GameCardMessage["LABEL_GX_USED"] = "LABEL_GX_USED";
+    GameCardMessage["ORDER_OPPONENT_DECK"] = "ORDER_OPPONENT_DECK";
+    GameCardMessage["ORDER_YOUR_DECK"] = "ORDER_YOUR_DECK";
 })(GameCardMessage = exports.GameCardMessage || (exports.GameCardMessage = {}));
 var GameLog;
 (function (GameLog) {

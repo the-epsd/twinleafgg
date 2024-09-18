@@ -21,6 +21,7 @@ import { LanasFishingRod } from './lanas-fishing-rod';
 import { LilliesPokeDoll } from './lillies-poke-doll';
 import { Lillipup } from './lillipup';
 import { MallowAndLana } from './mallow-and-lana';
+import { Natu } from './natu';
 import { ProfessorOaksSetup } from './professor-oaks-setup';
 import { Slugma } from './slugma';
 import { TagCall } from './tag-call';
@@ -87,6 +88,10 @@ export class LilliesPokeDollArt extends LilliesPokeDoll {
 
 export class LillipupArt extends Lillipup {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CEC/CEC_174_R_EN_LG.png';
+}
+
+export class NatuArt extends Natu {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CEC/CEC_078_R_EN_LG.png';
 }
 
 export class PhioneArt extends Phione {

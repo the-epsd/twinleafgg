@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WishiwashiArt = exports.TagCallArt = exports.StoutlandArt = exports.SlugmaArt = exports.SawsbuckArt = exports.ProfessorOaksSetupArt = exports.PikachuArt = exports.PhioneArt = exports.LillipupArt = exports.LilliesPokeDollArt = exports.LanasFishingRodArt = exports.MallowAndLanaArt = exports.GuzzlordArt = exports.GuzmaAndHalaArt = exports.GolettArt = exports.DuskullArt = exports.DusclopsArt = exports.DrawEnergyArt = exports.CynthiaAndCaitlinArt = exports.ClayArt = exports.ChaoticSwellArt = exports.BuzzwoleArt = exports.BlacephalonArt = exports.ArceusDialgaPalkiaGXArt = void 0;
+exports.WishiwashiArt = exports.TagCallArt = exports.StoutlandArt = exports.SlugmaArt = exports.SawsbuckArt = exports.ProfessorOaksSetupArt = exports.PikachuArt = exports.PhioneArt = exports.NatuArt = exports.LillipupArt = exports.LilliesPokeDollArt = exports.LanasFishingRodArt = exports.MallowAndLanaArt = exports.GuzzlordArt = exports.GuzmaAndHalaArt = exports.GolettArt = exports.DuskullArt = exports.DusclopsArt = exports.DrawEnergyArt = exports.CynthiaAndCaitlinArt = exports.ClayArt = exports.ChaoticSwellArt = exports.BuzzwoleArt = exports.BlacephalonArt = exports.ArceusDialgaPalkiaGXArt = void 0;
 const arceus_dialga_palkia_gx_1 = require("./arceus-dialga-palkia-gx");
 const blacephalon_1 = require("./blacephalon");
 const CEC_16_Sawsbuck_1 = require("./CEC_16_Sawsbuck");
@@ -22,6 +22,7 @@ const lanas_fishing_rod_1 = require("./lanas-fishing-rod");
 const lillies_poke_doll_1 = require("./lillies-poke-doll");
 const lillipup_1 = require("./lillipup");
 const mallow_and_lana_1 = require("./mallow-and-lana");
+const natu_1 = require("./natu");
 const professor_oaks_setup_1 = require("./professor-oaks-setup");
 const slugma_1 = require("./slugma");
 const tag_call_1 = require("./tag-call");
@@ -137,6 +138,13 @@ class LillipupArt extends lillipup_1.Lillipup {
     }
 }
 exports.LillipupArt = LillipupArt;
+class NatuArt extends natu_1.Natu {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CEC/CEC_078_R_EN_LG.png';
+    }
+}
+exports.NatuArt = NatuArt;
 class PhioneArt extends CEC_57_Phione_1.Phione {
     constructor() {
         super(...arguments);

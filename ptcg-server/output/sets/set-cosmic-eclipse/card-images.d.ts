@@ -19,6 +19,7 @@ import { LanasFishingRod } from './lanas-fishing-rod';
 import { LilliesPokeDoll } from './lillies-poke-doll';
 import { Lillipup } from './lillipup';
 import { MallowAndLana } from './mallow-and-lana';
+import { Natu } from './natu';
 import { ProfessorOaksSetup } from './professor-oaks-setup';
 import { Slugma } from './slugma';
 import { TagCall } from './tag-call';
@@ -68,6 +69,9 @@ export declare class LilliesPokeDollArt extends LilliesPokeDoll {
     cardImage: string;
 }
 export declare class LillipupArt extends Lillipup {
+    cardImage: string;
+}
+export declare class NatuArt extends Natu {
     cardImage: string;
 }
 export declare class PhioneArt extends Phione {

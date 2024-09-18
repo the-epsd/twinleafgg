@@ -19,6 +19,7 @@ exports.setCosmicEclipse = [
     new card_images_1.LilliesPokeDollArt(),
     new card_images_1.LillipupArt(),
     new card_images_1.MallowAndLanaArt(),
+    new card_images_1.NatuArt(),
     new card_images_1.PhioneArt(),
     new card_images_1.PikachuArt(),
     new card_images_1.ProfessorOaksSetupArt(),
