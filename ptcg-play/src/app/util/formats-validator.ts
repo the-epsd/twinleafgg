@@ -316,5 +316,5 @@ export const SetReleaseDates: { [key: string]: Date } = {
   'TEF': new Date('2024-03-22'),
   'TWM': new Date('2024-05-24'),
   'SFA': new Date('2024-05-24'),
-  'SV7': new Date('2024-05-24'),
+  'SCR': new Date('2024-09-13'),
 }
