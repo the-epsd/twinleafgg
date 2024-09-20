@@ -68,6 +68,7 @@ import { SecretBox } from './secret-box';
 import { Heatran } from './heatran';
 import { Chimchar } from './chimchar';
 import { Monferno } from './monferno';
+import { Rillaboom } from './rillaboom';
 
 
 export class AggronArt extends Aggron {
@@ -292,6 +293,10 @@ export class PhioneArt extends Phione {
 
 export class PoochyenaArt extends Poochyena {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_113_R_EN_LG.png';
+}
+
+export class RillaboomArt extends Rillaboom {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_016_R_EN_LG.png';
 }
 
 export class RotoStickArt extends RotoStick {

@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, PlayerType, PokemonCardList } from '../../game';
+import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { AddSpecialConditionsEffect, PutCountersEffect } from '../../game/store/effects/attack-effects';
@@ -33,28 +33,47 @@ export class Azelf extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
+    // if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    //   const player = effect.player;
+    //   const opponent = StateUtils.getOpponent(state, player);
+
+    //   const damagedPokemon: PokemonCardList[] = [];
+
+
+    //   opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
+    //     if (cardList.damage > 0) {
+    //       damagedPokemon.push(cardList);
+    //     }
+
+    //     if (damagedPokemon.length > 0) {
+    //       damagedPokemon.forEach(target => {
+    //         const damageEffect = new PutCountersEffect(effect, 20);
+    //         damageEffect.target = cardList;
+    //         store.reduceEffect(state, damageEffect);
+    //       });
+    //     }
+    //   });
+    //   return state;
+    // }
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
+      const opponent = effect.opponent;
+      const benched = opponent.bench.filter(b => b.cards.length > 0 && b.damage > 0);
 
-      const damagedPokemon: PokemonCardList[] = [];
+      if (opponent.active.damage > 0) {
+        const activeDamageEffect = new PutCountersEffect(effect, 20);
+        store.reduceEffect(state, activeDamageEffect);
+      }
 
-
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-        if (cardList.damage > 0) {
-          damagedPokemon.push(cardList);
-        }
-
-        if (damagedPokemon.length > 0) {
-          damagedPokemon.forEach(target => {
-            const damageEffect = new PutCountersEffect(effect, 20);
-            damageEffect.target = cardList;
-            store.reduceEffect(state, damageEffect);
-          });
+      benched.forEach(target => {
+        if (target.damage > 0) {
+          const damageEffect = new PutCountersEffect(effect, 20);
+          damageEffect.target = target;
+          store.reduceEffect(state, damageEffect);
         }
       });
-      return state;
     }
+
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const specialConditionEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.CONFUSED]);

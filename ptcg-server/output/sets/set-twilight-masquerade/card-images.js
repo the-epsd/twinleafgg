@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MorpekoArt = exports.MonfernoArt = exports.MightyenaArt = exports.LuxrayexArt = exports.LuxioArt = exports.LuckyHelmetArt = exports.LoveBallArt = exports.LegacyEnergyArt = exports.LanasAssistanceArt = exports.LaironArt = exports.KieranArt = exports.JammingTowerArt = exports.IronThornsexArt = exports.IronLeavesArt = exports.InfernapeArt = exports.HyperAromaArt = exports.HeatranArt = exports.HearthflameMaskOgerponexArt = exports.HasselArt = exports.HandyFanArt = exports.GrookeyArt = exports.GreninjaexArt = exports.FroslassArt = exports.FrogadierArt = exports.FroakieArt = exports.FestivalGroundsArt = exports.FarfetchdArt = exports.EnhancedHammerArt = exports.EmolgaArt = exports.DreepyArt = exports.DrakloakArt = exports.DragapultexArt = exports.DipplinArt = exports.CornerstoneMaskOgerponexArt = exports.CommunityCenterArt = exports.ClefairyArt = exports.ClefableArt = exports.ChimcharArt = exports.ChiYuArt = exports.ChanseyArt = exports.CarmineArt = exports.CaretakerArt = exports.BugCatchingSetArt = exports.BoomerangEnergyArt = exports.BloodmoonUrsalunaexArt = exports.BlisseyexArt = exports.AronArt = exports.ApplinArt2 = exports.ApplinArt = exports.AggronArt = void 0;
-exports.SecretBoxArt = exports.WellspringMaskOgerponexArt = exports.WalkingWakeArt = exports.UnfairStampArt = exports.TingLuArt = exports.ThwackeyArt = exports.TealMaskOgerponexArt = exports.TatsugiriArt = exports.SurvivalCastArt = exports.ShinxArt = exports.ScoopUpCycloneArt = exports.ScreamTailexArt = exports.RotoStickArt = exports.PoochyenaArt = exports.PhioneArt = exports.PerrinArt = exports.PerformanceFluteArt = exports.OkidogiArt = exports.MunkidoriArt = void 0;
+exports.SecretBoxArt = exports.WellspringMaskOgerponexArt = exports.WalkingWakeArt = exports.UnfairStampArt = exports.TingLuArt = exports.ThwackeyArt = exports.TealMaskOgerponexArt = exports.TatsugiriArt = exports.SurvivalCastArt = exports.ShinxArt = exports.ScoopUpCycloneArt = exports.ScreamTailexArt = exports.RotoStickArt = exports.RillaboomArt = exports.PoochyenaArt = exports.PhioneArt = exports.PerrinArt = exports.PerformanceFluteArt = exports.OkidogiArt = exports.MunkidoriArt = void 0;
 const aggron_1 = require("./aggron");
 const aron_1 = require("./aron");
 const blissey_ex_1 = require("./blissey-ex");
@@ -71,6 +71,7 @@ const secret_box_1 = require("./secret-box");
 const heatran_1 = require("./heatran");
 const chimchar_1 = require("./chimchar");
 const monferno_1 = require("./monferno");
+const rillaboom_1 = require("./rillaboom");
 class AggronArt extends aggron_1.Aggron {
     constructor() {
         super(...arguments);
@@ -463,6 +464,13 @@ class PoochyenaArt extends poochyena_1.Poochyena {
     }
 }
 exports.PoochyenaArt = PoochyenaArt;
+class RillaboomArt extends rillaboom_1.Rillaboom {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_016_R_EN_LG.png';
+    }
+}
+exports.RillaboomArt = RillaboomArt;
 class RotoStickArt extends roto_stick_1.RotoStick {
     constructor() {
         super(...arguments);

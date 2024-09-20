@@ -49,6 +49,9 @@ class Skwovet extends pokemon_card_1.PokemonCard {
             if (player.marker.hasMarker(this.NEST_STASH_MARKER, this)) {
                 throw new game_1.GameError(game_1.GameMessage.POWER_ALREADY_USED);
             }
+            if (cards.length === 0) {
+                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
+            }
             // Create deckBottom and move hand into it
             const deckBottom = new game_1.CardList();
             player.hand.moveTo(deckBottom, cards.length);

@@ -10,5 +10,6 @@ export declare class ScoopUpNet extends TrainerCard {
     fullName: string;
     superType: SuperType;
     trainerType: TrainerType;
+    text: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

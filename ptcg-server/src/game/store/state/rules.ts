@@ -4,6 +4,8 @@ export class Rules {
 
   public firstTurnUseSupporter = true;
 
+  public attackFirstTurn = false;
+
   public unlimitedEnergyAttachments = false;
 
   constructor(init: Partial<Rules> = {}) {

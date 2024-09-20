@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { AggronArt, ApplinArt, ApplinArt2, AronArt, BlisseyexArt, BloodmoonUrsalunaexArt, BugCatchingSetArt, CaretakerArt, CarmineArt, ChanseyArt, ChimcharArt, CommunityCenterArt, CornerstoneMaskOgerponexArt, DipplinArt, DragapultexArt, DrakloakArt, DreepyArt, EnhancedHammerArt, FarfetchdArt, FestivalGroundsArt, FroakieArt, FrogadierArt, FroslassArt, GreninjaexArt, GrookeyArt, HandyFanArt, HasselArt, HearthflameMaskOgerponexArt, HeatranArt, HyperAromaArt, InfernapeArt, IronLeavesArt, IronThornsexArt, JammingTowerArt, KieranArt, LaironArt, LanasAssistanceArt, LegacyEnergyArt, LoveBallArt, LuckyHelmetArt, LuxioArt, LuxrayexArt, MightyenaArt, MonfernoArt, MorpekoArt, MunkidoriArt, OkidogiArt, PerformanceFluteArt, PerrinArt, PhioneArt, PoochyenaArt, RotoStickArt, ScoopUpCycloneArt, ScreamTailexArt, SecretBoxArt, SurvivalCastArt, TatsugiriArt, TealMaskOgerponexArt, ThwackeyArt, TingLuArt, UnfairStampArt, WalkingWakeArt, WellspringMaskOgerponexArt } from './card-images';
+import { AggronArt, ApplinArt, ApplinArt2, AronArt, BlisseyexArt, BloodmoonUrsalunaexArt, BugCatchingSetArt, CaretakerArt, CarmineArt, ChanseyArt, ChimcharArt, CommunityCenterArt, CornerstoneMaskOgerponexArt, DipplinArt, DragapultexArt, DrakloakArt, DreepyArt, EnhancedHammerArt, FarfetchdArt, FestivalGroundsArt, FroakieArt, FrogadierArt, FroslassArt, GreninjaexArt, GrookeyArt, HandyFanArt, HasselArt, HearthflameMaskOgerponexArt, HeatranArt, HyperAromaArt, InfernapeArt, IronLeavesArt, IronThornsexArt, JammingTowerArt, KieranArt, LaironArt, LanasAssistanceArt, LegacyEnergyArt, LoveBallArt, LuckyHelmetArt, LuxioArt, LuxrayexArt, MightyenaArt, MonfernoArt, MorpekoArt, MunkidoriArt, OkidogiArt, PerformanceFluteArt, PerrinArt, PhioneArt, PoochyenaArt, RillaboomArt, RotoStickArt, ScoopUpCycloneArt, ScreamTailexArt, SecretBoxArt, SurvivalCastArt, TatsugiriArt, TealMaskOgerponexArt, ThwackeyArt, TingLuArt, UnfairStampArt, WalkingWakeArt, WellspringMaskOgerponexArt } from './card-images';
 export const setTwilightMasquerade: Card[] = [
 
   new AggronArt(),
@@ -66,4 +66,5 @@ export const setTwilightMasquerade: Card[] = [
   new SecretBoxArt(),
   new TingLuArt(),
   new MonfernoArt(),
+  new RillaboomArt(),
 ];

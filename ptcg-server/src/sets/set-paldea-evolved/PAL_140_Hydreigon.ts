@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, SpecialCondition } from '../../game/store/card/card-types';
-import { AttachEnergyPrompt, CardList, GameError, GameMessage, PlayerType, PowerType, SlotType, State, StateUtils, StoreLike } from '../../game';
+import { AttachEnergyPrompt, CardList, EnergyCard, GameError, GameMessage, PlayerType, PowerType, SlotType, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
@@ -53,63 +53,73 @@ export class Hydreigon extends PokemonCard {
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
+      const temp = new CardList();
 
-      if (player.deck.cards.length === 0) {
-        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-      }
-
-      // Check to see if anything is blocking our Ability
-      try {
-        const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
-      } catch {
-        return state;
-      }
-
-      // Can't use ability if already used
       if (player.marker.hasMarker(this.TRI_HOWL_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
 
-      const deckTop = new CardList();
-      player.deck.moveTo(deckTop, 3);
+      player.deck.moveTo(temp, 3);
 
-      state = store.prompt(state, new AttachEnergyPrompt(
-        player.id,
-        GameMessage.ATTACH_ENERGY_TO_BENCH,
-        deckTop,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.ACTIVE, SlotType.BENCH],
-        { superType: SuperType.ENERGY },
-        { allowCancel: true }
-      ), transfers => {
-        transfers = transfers || [];
-        // cancelled by user
-        if (transfers.length === 0) {
-          return;
-        }
-        player.marker.addMarker(this.TRI_HOWL_MARKER, this);
-
-        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-          if (cardList.getPokemonCard() === this) {
-            cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
-          }
-        });
-
-        for (const transfer of transfers) {
-          const target = StateUtils.getTarget(state, player, transfer.to);
-          deckTop.moveCardTo(transfer.card, target);
-        }
-
-        deckTop.moveTo(player.discard, deckTop.cards.length);
+      // Check if any cards drawn are basic energy
+      const energyCardsDrawn = temp.cards.filter(card => {
+        return card instanceof EnergyCard;
       });
 
-    }
+      // If no energy cards were drawn, move all cards to discard
+      if (energyCardsDrawn.length == 0) {
+        player.marker.addMarker(this.TRI_HOWL_MARKER, this);
+        temp.cards.slice(0, 3).forEach(card => {
+          temp.moveCardTo(card, player.discard);
+        });
+      }
 
+      if (energyCardsDrawn.length > 0) {
+
+        // Prompt to attach energy if any were drawn
+        return store.prompt(state, new AttachEnergyPrompt(
+          player.id,
+          GameMessage.ATTACH_ENERGY_CARDS,
+          temp, // Only show drawn energies
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.BENCH, SlotType.ACTIVE],
+          { superType: SuperType.ENERGY },
+          { min: 0, max: energyCardsDrawn.length, allowCancel: false }
+        ), transfers => {
+
+          //if transfers = 0, put both in hand
+
+          if (transfers.length === 0) {
+            temp.cards.slice(0, 3).forEach(card => {
+              temp.moveCardTo(card, player.discard);
+              player.marker.addMarker(this.TRI_HOWL_MARKER, this);
+              player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+                if (cardList.getPokemonCard() === this) {
+                  cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+                }
+              });
+            });
+          }
+
+          // Attach energy based on prompt selection
+          if (transfers) {
+            for (const transfer of transfers) {
+              const target = StateUtils.getTarget(state, player, transfer.to);
+              temp.moveCardTo(transfer.card, target); // Move card to target
+            }
+            temp.cards.forEach(card => {
+              temp.moveCardTo(card, player.discard); // Move card to hand
+              player.marker.addMarker(this.TRI_HOWL_MARKER, this);
+              player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+                if (cardList.getPokemonCard() === this) {
+                  cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+                }
+              });
+            });
+          }
+        });
+      }
+    }
     return state;
   }
 }

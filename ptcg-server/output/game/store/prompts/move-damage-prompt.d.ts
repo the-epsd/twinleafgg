@@ -18,6 +18,8 @@ export interface MoveDamageOptions {
     max: number | undefined;
     blockedFrom: CardTarget[];
     blockedTo: CardTarget[];
+    singleSourceTarget: boolean;
+    singleDestinationTarget: boolean;
 }
 export declare class MoveDamagePrompt extends Prompt<DamageTransfer[]> {
     message: GameMessage;

@@ -38,46 +38,51 @@ class Sableye extends game_1.PokemonCard {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             const blocked = [];
-            const hasBenched = opponent.bench.some(b => b.cards.length > 0);
-            if (!hasBenched) {
-                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_ATTACK);
-            }
+            let hasDamagedBench = false;
             opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList, card, target) => {
-                if (cardList.damage > 0) {
-                    return state;
-                }
-                else {
+                if (cardList.damage === 0 && target.slot !== game_1.SlotType.ACTIVE) {
                     blocked.push(target);
                 }
+                if (target.slot === game_1.SlotType.ACTIVE) {
+                    blocked.push(target);
+                }
+                if (cardList.damage > 0 && target.slot === game_1.SlotType.BENCH) {
+                    hasDamagedBench = true;
+                }
             });
-            if (!blocked.length) {
+            if (!hasDamagedBench) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_ATTACK);
             }
-            if (blocked.length) {
-                // Opponent has damaged benched Pokemon
-                const maxAllowedDamage = [];
-                opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList, card, target) => {
-                    const checkHpEffect = new check_effects_1.CheckHpEffect(opponent, cardList);
-                    store.reduceEffect(state, checkHpEffect);
-                    maxAllowedDamage.push({ target, damage: checkHpEffect.hp });
-                });
-                return store.prompt(state, new game_1.MoveDamagePrompt(effect.player.id, game_1.GameMessage.MOVE_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], maxAllowedDamage, { min: 0, allowCancel: false }), transfers => {
-                    if (transfers === null) {
-                        return;
+            const maxAllowedDamage = [];
+            opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList, card, target) => {
+                const checkHpEffect = new check_effects_1.CheckHpEffect(opponent, cardList);
+                store.reduceEffect(state, checkHpEffect);
+                maxAllowedDamage.push({ target, damage: checkHpEffect.hp });
+            });
+            return store.prompt(state, new game_1.MoveDamagePrompt(effect.player.id, game_1.GameMessage.MOVE_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], maxAllowedDamage, {
+                min: 0,
+                allowCancel: false,
+                blockedFrom: blocked,
+                blockedTo: blocked,
+                singleDestinationTarget: true
+            }), transfers => {
+                if (transfers === null) {
+                    return;
+                }
+                for (const transfer of transfers) {
+                    const source = game_1.StateUtils.getTarget(state, player, transfer.from);
+                    const target = game_1.StateUtils.getTarget(state, player, transfer.to);
+                    if (target == opponent.active) {
+                        throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
                     }
-                    for (const transfer of transfers) {
-                        const source = game_1.StateUtils.getTarget(state, player, transfer.from);
-                        const target = game_1.StateUtils.getTarget(state, player, transfer.to);
-                        if (source.damage >= 10) {
-                            source.damage -= source.damage;
-                            target.damage += target.damage;
-                        }
+                    if (source.damage > 0) {
+                        const damageToMove = Math.min(source.damage);
+                        source.damage -= damageToMove;
+                        target.damage += damageToMove;
                     }
-                    return state;
-                });
+                }
                 return state;
-            }
-            return state;
+            });
         }
         return state;
     }

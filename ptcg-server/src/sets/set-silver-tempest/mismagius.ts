@@ -55,7 +55,7 @@ export class Mismagius extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
 
-    if (effect instanceof DealDamageEffect && effect.target.cards.includes(this)) {
+    if (effect instanceof DealDamageEffect && effect.target.cards.includes(this) && effect.player.marker.hasMarker(effect.player.DAMAGE_DEALT_MARKER)) {
       const player = StateUtils.findOwner(state, effect.target);
       const opponent = StateUtils.getOpponent(state, player);
       const pokemonCard = effect.target.getPokemonCard();

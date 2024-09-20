@@ -53,7 +53,7 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
 
   if (Format.STANDARD) {
     //Skip attack on first turn
-    if (state.turn === 1 && player.canAttackFirstTurn !== true) {
+    if (state.turn === 1 && player.canAttackFirstTurn !== true && state.rules.attackFirstTurn == false) {
       throw new GameError(GameMessage.CANNOT_ATTACK_ON_FIRST_TURN);
     }
   }
@@ -209,7 +209,11 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
     effect.target.clearEffects();
     // Apply the removePokemonEffects method from the Player class
     effect.player.removePokemonEffects(effect.target);
-    effect.target.specialConditions = [SpecialCondition.ABILITY_USED];
+    effect.target.specialConditions = [];
+    // effect.target.removeSpecialCondition(SpecialCondition.ABILITY_USED);
+    effect.target.marker.markers = [];
+    effect.target.attackMarker.markers = [];
+    effect.target.abilityMarker.markers = [];
   }
 
   return state;

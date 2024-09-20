@@ -1,21 +1,14 @@
-import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, PowerType } from '../../game';
+import { PokemonCard, Stage, CardType, State, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-export declare class Arboliva extends PokemonCard {
+export declare class Rillaboom extends PokemonCard {
     stage: Stage;
+    evolvesFrom: string;
     cardType: CardType;
     hp: number;
     weakness: {
         type: CardType;
     }[];
     retreat: CardType[];
-    evolvesFrom: string;
-    powers: {
-        name: string;
-        powerType: PowerType;
-        text: string;
-    }[];
     attacks: {
         name: string;
         cost: CardType[];
@@ -28,5 +21,6 @@ export declare class Arboliva extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
+    readonly DEFENDING_POKEMON_CANNOT_RETREAT_MARKER = "DEFENDING_POKEMON_CANNOT_RETREAT_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

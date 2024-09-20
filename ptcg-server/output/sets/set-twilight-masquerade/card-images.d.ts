@@ -67,6 +67,7 @@ import { SecretBox } from './secret-box';
 import { Heatran } from './heatran';
 import { Chimchar } from './chimchar';
 import { Monferno } from './monferno';
+import { Rillaboom } from './rillaboom';
 export declare class AggronArt extends Aggron {
     cardImage: string;
 }
@@ -233,6 +234,9 @@ export declare class PhioneArt extends Phione {
     cardImage: string;
 }
 export declare class PoochyenaArt extends Poochyena {
+    cardImage: string;
+}
+export declare class RillaboomArt extends Rillaboom {
     cardImage: string;
 }
 export declare class RotoStickArt extends RotoStick {
