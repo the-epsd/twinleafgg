@@ -14,6 +14,7 @@ import { Slowking } from './LOT_55_Slowking';
 import { Giratina } from './LOT_97_Giratina';
 import { Mareep } from './mareep';
 import { Meganium } from './meganium';
+import { Mina } from './mina';
 import { NetBall } from './net-ball';
 import { Nihilego } from './nihilego';
 import { SpellTag } from './spell-tag';
@@ -57,6 +58,9 @@ export declare class MareepArt extends Mareep {
     cardImage: string;
 }
 export declare class MeganiumArt extends Meganium {
+    cardImage: string;
+}
+export declare class MinaArt extends Mina {
     cardImage: string;
 }
 export declare class NetBallArt extends NetBall {

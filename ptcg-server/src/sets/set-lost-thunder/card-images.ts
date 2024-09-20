@@ -14,6 +14,7 @@ import { Slowking } from './LOT_55_Slowking';
 import { Giratina } from './LOT_97_Giratina';
 import { Mareep } from './mareep';
 import { Meganium } from './meganium';
+import { Mina } from './mina';
 import { NetBall } from './net-ball';
 import { Nihilego } from './nihilego';
 import { SpellTag } from './spell-tag';
@@ -71,6 +72,10 @@ export class MareepArt extends Mareep {
 
 export class MeganiumArt extends Meganium {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_008_R_EN_LG.png';
+}
+
+export class MinaArt extends Mina {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_183_R_EN_LG.png';
 }
 
 export class NetBallArt extends NetBall {

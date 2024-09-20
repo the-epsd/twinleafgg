@@ -33,6 +33,7 @@ exports.setBrilliantStars = [
     new card_images_1.MagmaBasinArt(),
     new card_images_1.MagmortarArt(),
     new card_images_1.ManaphyArt(),
+    new card_images_1.MarniesPrideArt(),
     new card_images_1.MinccinoArt(),
     new card_images_1.MoltresArt(),
     new card_images_1.RaichuVArt(),

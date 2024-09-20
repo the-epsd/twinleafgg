@@ -1,4 +1,4 @@
-import { AttachEnergyPrompt, CardType, EnergyType, GameMessage, PlayerType, PokemonCard, SlotType, Stage, State, StateUtils, StoreLike, SuperType } from '../../game';
+import { AttachEnergyPrompt, CardType, EnergyType, GameMessage, PlayerType, PokemonCard, ShuffleDeckPrompt, SlotType, Stage, State, StateUtils, StoreLike, SuperType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 
@@ -61,7 +61,9 @@ export class Growlithe extends PokemonCard {
           player.deck.moveCardTo(transfer.card, target);
         }
 
-        return state;
+        return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+          player.deck.applyOrder(order);
+        });
       });
     }
     return state;
