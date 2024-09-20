@@ -25,6 +25,7 @@ export enum CardTag {
   PRIME = 'PRIME',
   HOLO = 'HOLO',
   LEGEND = 'LEGEND',
+  TEAM_FLARE = 'TEAM_FLARE',
 }
 
 

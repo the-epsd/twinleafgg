@@ -5,6 +5,7 @@ import { Effect } from '../../game/store/effects/effect';
 export declare class Haxorus extends PokemonCard {
     stage: Stage;
     cardType: CardType;
+    evolvesFrom: string;
     hp: number;
     retreat: CardType[];
     attacks: {

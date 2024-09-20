@@ -25,6 +25,8 @@ export interface MoveDamageOptions {
   max: number | undefined;
   blockedFrom: CardTarget[];
   blockedTo: CardTarget[];
+  singleSourceTarget: boolean;
+  singleDestinationTarget: boolean;
 }
 
 export class MoveDamagePrompt extends Prompt<DamageTransfer[]> {
@@ -49,7 +51,9 @@ export class MoveDamagePrompt extends Prompt<DamageTransfer[]> {
       min: 0,
       max: undefined,
       blockedFrom: [],
-      blockedTo: []
+      blockedTo: [],
+      singleSourceTarget: false,
+      singleDestinationTarget: false
     }, options);
   }
 
@@ -67,6 +71,20 @@ export class MoveDamagePrompt extends Prompt<DamageTransfer[]> {
   public validate(result: DamageTransfer[] | null, state: State): boolean {
     if (result === null) {
       return this.options.allowCancel;  // operation cancelled
+    }
+
+    if (this.options.singleSourceTarget) {
+      const sources = new Set(result.map(r => JSON.stringify(r.from)));
+      if (sources.size > 1) {
+        return false;
+      }
+    }
+
+    if (this.options.singleDestinationTarget) {
+      const destinations = new Set(result.map(r => JSON.stringify(r.to)));
+      if (destinations.size > 1) {
+        return false;
+      }
     }
 
     if (result.length < this.options.min) {

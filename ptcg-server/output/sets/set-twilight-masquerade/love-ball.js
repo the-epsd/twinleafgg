@@ -16,10 +16,16 @@ function* playCard(next, store, state, effect) {
     if (player.deck.cards.length === 0) {
         throw new game_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
     }
-    const opponentBenchName = opponent.bench.filter(card => card instanceof game_1.PokemonCard).map(card => card.name);
+    const opponentBenchNames = opponent.bench.filter(card => card instanceof game_1.PokemonCard).map(card => card.name);
     const opponentActiveName = opponent.active.cards[0].name;
-    const loveBallFilter = opponentActiveName || opponentBenchName[0];
-    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.POKEMON, name: loveBallFilter }, { min: 1, max: 1, allowCancel: true }), selected => {
+    const allowedNames = [opponentActiveName, ...opponentBenchNames];
+    const blocked = [];
+    player.deck.cards.forEach((card, index) => {
+        if (card instanceof game_1.PokemonCard && !allowedNames.includes(card.name)) {
+            blocked.push(index);
+        }
+    });
+    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.POKEMON }, { min: 1, max: 1, allowCancel: true, blocked: blocked }), selected => {
         cards = selected || [];
         next();
     });

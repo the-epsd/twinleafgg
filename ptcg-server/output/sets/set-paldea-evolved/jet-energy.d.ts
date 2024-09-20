@@ -11,5 +11,6 @@ export declare class JetEnergy extends EnergyCard {
     regulationMark: string;
     name: string;
     fullName: string;
+    text: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

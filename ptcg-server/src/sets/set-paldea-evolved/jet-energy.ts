@@ -6,7 +6,7 @@ import { AttachEnergyEffect, EnergyEffect } from '../../game/store/effects/play-
 
 export class JetEnergy extends EnergyCard {
 
-  public provides: CardType[] = [ CardType.COLORLESS ];
+  public provides: CardType[] = [CardType.COLORLESS];
 
   public energyType = EnergyType.SPECIAL;
 
@@ -22,12 +22,16 @@ export class JetEnergy extends EnergyCard {
 
   public fullName = 'Jet Energy PAL';
 
+  public text = 'As long as this card is attached to a Pokémon, it provides [C] Energy.' +
+    '' +
+    'When you attach this card from your hand to 1 of your Benched Pokémon, switch that Pokémon with your Active Pokémon.';
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof AttachEnergyEffect && effect.energyCard === this) {
       const player = effect.player;
       const target = effect.target;
-  
+
       try {
         const energyEffect = new EnergyEffect(player, this);
         store.reduceEffect(state, energyEffect);
@@ -38,7 +42,7 @@ export class JetEnergy extends EnergyCard {
       player.switchPokemon(target);
       console.log('special energy worked');
     }
-  
+
     return state;
   }
 }

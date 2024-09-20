@@ -14,6 +14,11 @@ class Arboliva extends pokemon_card_1.PokemonCard {
         this.weakness = [{ type: card_types_1.CardType.FIRE }];
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.evolvesFrom = 'Dolliv';
+        this.powers = [{
+                name: 'Enriching Oil',
+                powerType: game_1.PowerType.ABILITY,
+                text: 'When you play this Pokémon from your hand to evolve 1 of your Pokémon during your turn, you may heal all damage from 1 of your Pokémon.'
+            }];
         this.attacks = [
             {
                 name: 'Solar Beam',

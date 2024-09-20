@@ -12,6 +12,12 @@ export class Arboliva extends PokemonCard {
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
   public evolvesFrom = 'Dolliv';
 
+  public powers = [{
+    name: 'Enriching Oil',
+    powerType: PowerType.ABILITY,
+    text: 'When you play this Pokémon from your hand to evolve 1 of your Pokémon during your turn, you may heal all damage from 1 of your Pokémon.'
+  }];
+
   public attacks = [
     {
       name: 'Solar Beam',

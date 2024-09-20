@@ -15,6 +15,9 @@ class JetEnergy extends energy_card_1.EnergyCard {
         this.regulationMark = 'G';
         this.name = 'Jet Energy';
         this.fullName = 'Jet Energy PAL';
+        this.text = 'As long as this card is attached to a Pokémon, it provides [C] Energy.' +
+            '' +
+            'When you attach this card from your hand to 1 of your Benched Pokémon, switch that Pokémon with your Active Pokémon.';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.AttachEnergyEffect && effect.energyCard === this) {

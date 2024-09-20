@@ -6,6 +6,7 @@ const full_arts_1 = require("./full-arts");
 exports.setObsidianFlames = [
     new card_images_1.AbsolexArt(),
     new card_images_1.ArvenArt(),
+    new card_images_1.BarboachArt(),
     new card_images_1.CharizardexArt(),
     new card_images_1.CharmanderArt(),
     new card_images_1.CharmeleonArt(),
@@ -32,6 +33,7 @@ exports.setObsidianFlames = [
     new card_images_1.VengefulPunchArt(),
     new card_images_1.BelliboltArt(),
     new card_images_1.VaroomArt(),
+    new card_images_1.WhiscashArt(),
     //Alt-Arts
     new full_arts_1.BelliboltIR(),
     new full_arts_1.CleffaIR(),

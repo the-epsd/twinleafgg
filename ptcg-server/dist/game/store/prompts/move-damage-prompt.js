@@ -18,7 +18,9 @@ export class MoveDamagePrompt extends Prompt {
             min: 0,
             max: undefined,
             blockedFrom: [],
-            blockedTo: []
+            blockedTo: [],
+            singleSourceTarget: false,
+            singleDestinationTarget: false
         }, options);
     }
     decode(result, state) {
@@ -34,6 +36,18 @@ export class MoveDamagePrompt extends Prompt {
     validate(result, state) {
         if (result === null) {
             return this.options.allowCancel; // operation cancelled
+        }
+        if (this.options.singleSourceTarget) {
+            const sources = new Set(result.map(r => JSON.stringify(r.from)));
+            if (sources.size > 1) {
+                return false;
+            }
+        }
+        if (this.options.singleDestinationTarget) {
+            const destinations = new Set(result.map(r => JSON.stringify(r.to)));
+            if (destinations.size > 1) {
+                return false;
+            }
         }
         if (result.length < this.options.min) {
             return false;

@@ -1,5 +1,6 @@
 import { Arven } from '../set-scarlet-and-violet/arven';
 import { Absolex } from './absol-ex';
+import { Barboach } from './barboach';
 import { Bellibolt } from './bellibolt';
 import { Charizardex } from './charizard-ex';
 import { Charmander } from './charmander';
@@ -28,6 +29,7 @@ import { Thundurus } from './thundurus';
 import { TownStore } from './town-store';
 import { Varoom } from './varoom';
 import { VengefulPunch } from './vengeful-punch';
+import { Whiscash } from './whiscash';
 export declare class AbsolexArt extends Absolex {
     cardImage: string;
 }
@@ -36,6 +38,9 @@ export declare class ArvenArt extends Arven {
     fullName: string;
     set: string;
     setNumber: string;
+}
+export declare class BarboachArt extends Barboach {
+    cardImage: string;
 }
 export declare class BelliboltArt extends Bellibolt {
     cardImage: string;
@@ -119,5 +124,8 @@ export declare class VaroomArt extends Varoom {
     cardImage: string;
 }
 export declare class VengefulPunchArt extends VengefulPunch {
+    cardImage: string;
+}
+export declare class WhiscashArt extends Whiscash {
     cardImage: string;
 }

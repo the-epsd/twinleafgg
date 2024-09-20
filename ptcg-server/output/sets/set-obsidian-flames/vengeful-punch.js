@@ -52,7 +52,7 @@ class VengefulPunch extends trainer_card_1.TrainerCard {
                 this.damageDealt = true;
             }
         }
-        if (effect instanceof game_effects_1.KnockOutEffect && effect.target.cards.includes(this)) {
+        if (effect instanceof game_effects_1.KnockOutEffect && effect.target.cards.includes(this) && effect.player.marker.hasMarker(effect.player.DAMAGE_DEALT_MARKER)) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             try {

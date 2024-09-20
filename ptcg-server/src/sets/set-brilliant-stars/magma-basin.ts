@@ -32,6 +32,11 @@ export class MagmaBasin extends TrainerCard {
     if (effect instanceof UseStadiumEffect && StateUtils.getStadiumCard(state) === this) {
 
       const player = effect.player;
+      const hasBench = player.bench.some(b => b.cards.length > 0);
+
+      if (!hasBench) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      }
 
       const blocked2: CardTarget[] = [];
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
@@ -43,6 +48,7 @@ export class MagmaBasin extends TrainerCard {
       const hasEnergyInDiscard = player.discard.cards.some(c => {
         return c instanceof EnergyCard && c.name == 'Fire Energy';
       });
+
       if (!hasEnergyInDiscard) {
         throw new GameError(GameMessage.CANNOT_USE_STADIUM);
       }

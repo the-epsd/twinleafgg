@@ -41,13 +41,19 @@ class Ditto extends pokemon_card_1.PokemonCard {
             if (player.active.cards[0] !== this) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
+            const blocked = [];
+            player.deck.cards.forEach((card, index) => {
+                if (card instanceof pokemon_card_1.PokemonCard && card.name == 'Ditto') {
+                    blocked.push(index);
+                }
+            });
             // Check if it is player's first turn
             if (turn > 2) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
             else {
                 let cards = [];
-                return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH, player.deck, { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.BASIC }, { min: 0, max: 1, allowCancel: true }), selectedCards => {
+                return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH, player.deck, { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.BASIC }, { min: 0, max: 1, allowCancel: true, blocked }), selectedCards => {
                     cards = selectedCards || [];
                     cards.forEach((card) => {
                         effect.player.removePokemonEffects(player.active);

@@ -1,5 +1,6 @@
 import { Arven } from '../set-scarlet-and-violet/arven';
 import { Absolex } from './absol-ex';
+import { Barboach } from './barboach';
 import { Bellibolt } from './bellibolt';
 import { Charizardex } from './charizard-ex';
 import { Charmander } from './charmander';
@@ -28,6 +29,7 @@ import { Thundurus } from './thundurus';
 import { TownStore } from './town-store';
 import { Varoom } from './varoom';
 import { VengefulPunch } from './vengeful-punch';
+import { Whiscash } from './whiscash';
 
 export class AbsolexArt extends Absolex {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_135_R_EN.png';
@@ -38,6 +40,10 @@ export class ArvenArt extends Arven {
   public fullName = 'Arven OBF';
   public set = 'OBF';
   public setNumber = '186';
+}
+
+export class BarboachArt extends Barboach {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_108_R_EN_LG.png';
 }
 
 export class BelliboltArt extends Bellibolt {
@@ -151,4 +157,8 @@ export class VaroomArt extends Varoom {
 
 export class VengefulPunchArt extends VengefulPunch {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_197_R_EN_LG.png';
+}
+
+export class WhiscashArt extends Whiscash {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_109_R_EN_LG.png';
 }

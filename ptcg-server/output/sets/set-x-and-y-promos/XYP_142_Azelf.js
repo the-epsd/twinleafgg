@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Azelf = void 0;
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
-const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 class Azelf extends pokemon_card_1.PokemonCard {
@@ -33,23 +32,38 @@ class Azelf extends pokemon_card_1.PokemonCard {
         this.fullName = 'Azelf XYP';
     }
     reduceEffect(store, state, effect) {
+        // if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+        //   const player = effect.player;
+        //   const opponent = StateUtils.getOpponent(state, player);
+        //   const damagedPokemon: PokemonCardList[] = [];
+        //   opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
+        //     if (cardList.damage > 0) {
+        //       damagedPokemon.push(cardList);
+        //     }
+        //     if (damagedPokemon.length > 0) {
+        //       damagedPokemon.forEach(target => {
+        //         const damageEffect = new PutCountersEffect(effect, 20);
+        //         damageEffect.target = cardList;
+        //         store.reduceEffect(state, damageEffect);
+        //       });
+        //     }
+        //   });
+        //   return state;
+        // }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
-            const player = effect.player;
-            const opponent = game_1.StateUtils.getOpponent(state, player);
-            const damagedPokemon = [];
-            opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList, card, target) => {
-                if (cardList.damage > 0) {
-                    damagedPokemon.push(cardList);
-                }
-                if (damagedPokemon.length > 0) {
-                    damagedPokemon.forEach(target => {
-                        const damageEffect = new attack_effects_1.PutCountersEffect(effect, 20);
-                        damageEffect.target = cardList;
-                        store.reduceEffect(state, damageEffect);
-                    });
+            const opponent = effect.opponent;
+            const benched = opponent.bench.filter(b => b.cards.length > 0 && b.damage > 0);
+            if (opponent.active.damage > 0) {
+                const activeDamageEffect = new attack_effects_1.PutCountersEffect(effect, 20);
+                store.reduceEffect(state, activeDamageEffect);
+            }
+            benched.forEach(target => {
+                if (target.damage > 0) {
+                    const damageEffect = new attack_effects_1.PutCountersEffect(effect, 20);
+                    damageEffect.target = target;
+                    store.reduceEffect(state, damageEffect);
                 }
             });
-            return state;
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const specialConditionEffect = new attack_effects_1.AddSpecialConditionsEffect(effect, [card_types_1.SpecialCondition.CONFUSED]);

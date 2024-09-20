@@ -10,6 +10,7 @@ import { CheckHpEffect } from '../../game/store/effects/check-effects';
 import { PlayerType, SlotType } from '../../game/store/actions/play-card-action';
 import { MoveDamagePrompt, DamageMap } from '../../game/store/prompts/move-damage-prompt';
 import { GameMessage } from '../../game/game-message';
+import { GameError } from '../../game';
 
 
 export class RadiantAlakazam extends PokemonCard {
@@ -63,6 +64,15 @@ export class RadiantAlakazam extends PokemonCard {
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      const damagedPokemon = [
+        ...opponent.bench.filter(b => b.cards.length > 0 && b.damage > 0),
+        ...(opponent.active.damage > 0 ? [opponent.active] : [])
+      ];
+      if (damagedPokemon.length === 0) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
+      }
 
       const maxAllowedDamage: DamageMap[] = [];
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
@@ -77,7 +87,7 @@ export class RadiantAlakazam extends PokemonCard {
         PlayerType.TOP_PLAYER,
         [SlotType.ACTIVE, SlotType.BENCH],
         maxAllowedDamage,
-        { min: 1, max: 2, allowCancel: false }
+        { min: 1, max: 2, allowCancel: false, singleDestinationTarget: true }
       ), transfers => {
         if (transfers === null) {
           return;

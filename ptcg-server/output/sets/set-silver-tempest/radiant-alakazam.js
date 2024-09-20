@@ -10,6 +10,7 @@ const check_effects_1 = require("../../game/store/effects/check-effects");
 const play_card_action_1 = require("../../game/store/actions/play-card-action");
 const move_damage_prompt_1 = require("../../game/store/prompts/move-damage-prompt");
 const game_message_1 = require("../../game/game-message");
+const game_1 = require("../../game");
 class RadiantAlakazam extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -46,13 +47,21 @@ class RadiantAlakazam extends pokemon_card_1.PokemonCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
+            const opponent = state_utils_1.StateUtils.getOpponent(state, player);
+            const damagedPokemon = [
+                ...opponent.bench.filter(b => b.cards.length > 0 && b.damage > 0),
+                ...(opponent.active.damage > 0 ? [opponent.active] : [])
+            ];
+            if (damagedPokemon.length === 0) {
+                throw new game_1.GameError(game_message_1.GameMessage.CANNOT_USE_POWER);
+            }
             const maxAllowedDamage = [];
             player.forEachPokemon(play_card_action_1.PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
                 const checkHpEffect = new check_effects_1.CheckHpEffect(player, cardList);
                 store.reduceEffect(state, checkHpEffect);
                 maxAllowedDamage.push({ target, damage: checkHpEffect.hp });
             });
-            return store.prompt(state, new move_damage_prompt_1.MoveDamagePrompt(effect.player.id, game_message_1.GameMessage.MOVE_DAMAGE, play_card_action_1.PlayerType.TOP_PLAYER, [play_card_action_1.SlotType.ACTIVE, play_card_action_1.SlotType.BENCH], maxAllowedDamage, { min: 1, max: 2, allowCancel: false }), transfers => {
+            return store.prompt(state, new move_damage_prompt_1.MoveDamagePrompt(effect.player.id, game_message_1.GameMessage.MOVE_DAMAGE, play_card_action_1.PlayerType.TOP_PLAYER, [play_card_action_1.SlotType.ACTIVE, play_card_action_1.SlotType.BENCH], maxAllowedDamage, { min: 1, max: 2, allowCancel: false, singleDestinationTarget: true }), transfers => {
                 if (transfers === null) {
                     return;
                 }

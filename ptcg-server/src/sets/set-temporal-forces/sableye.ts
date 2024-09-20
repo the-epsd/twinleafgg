@@ -49,59 +49,65 @@ export class Sableye extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       const blocked: CardTarget[] = [];
-
-      const hasBenched = opponent.bench.some(b => b.cards.length > 0);
-      if (!hasBenched) {
-        throw new GameError(GameMessage.CANNOT_USE_ATTACK);
-      }
+      let hasDamagedBench = false;
 
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-        if (cardList.damage > 0) {
-          return state;
-        } else {
+        if (cardList.damage === 0 && target.slot !== SlotType.ACTIVE) {
           blocked.push(target);
+        }
+        if (target.slot === SlotType.ACTIVE) {
+          blocked.push(target);
+        }
+        if (cardList.damage > 0 && target.slot === SlotType.BENCH) {
+          hasDamagedBench = true;
         }
       });
 
-      if (!blocked.length) {
+      if (!hasDamagedBench) {
         throw new GameError(GameMessage.CANNOT_USE_ATTACK);
       }
 
-      if (blocked.length) {
-        // Opponent has damaged benched Pokemon
+      const maxAllowedDamage: DamageMap[] = [];
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
+        const checkHpEffect = new CheckHpEffect(opponent, cardList);
+        store.reduceEffect(state, checkHpEffect);
+        maxAllowedDamage.push({ target, damage: checkHpEffect.hp });
+      });
 
-        const maxAllowedDamage: DamageMap[] = [];
-        opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-          const checkHpEffect = new CheckHpEffect(opponent, cardList);
-          store.reduceEffect(state, checkHpEffect);
-          maxAllowedDamage.push({ target, damage: checkHpEffect.hp });
-        });
+      return store.prompt(state, new MoveDamagePrompt(
+        effect.player.id,
+        GameMessage.MOVE_DAMAGE,
+        PlayerType.TOP_PLAYER,
+        [SlotType.ACTIVE, SlotType.BENCH],
+        maxAllowedDamage,
+        {
+          min: 0,
+          allowCancel: false,
+          blockedFrom: blocked,
+          blockedTo: blocked,
+          singleDestinationTarget: true
+        }
+      ), transfers => {
+        if (transfers === null) {
+          return;
+        }
 
-        return store.prompt(state, new MoveDamagePrompt(
-          effect.player.id,
-          GameMessage.MOVE_DAMAGE,
-          PlayerType.TOP_PLAYER,
-          [SlotType.ACTIVE, SlotType.BENCH],
-          maxAllowedDamage,
-          { min: 0, allowCancel: false }
-        ), transfers => {
-          if (transfers === null) {
-            return;
+        for (const transfer of transfers) {
+          const source = StateUtils.getTarget(state, player, transfer.from);
+          const target = StateUtils.getTarget(state, player, transfer.to);
+
+          if (target == opponent.active) {
+            throw new GameError(GameMessage.CANNOT_USE_POWER);
           }
 
-          for (const transfer of transfers) {
-            const source = StateUtils.getTarget(state, player, transfer.from);
-            const target = StateUtils.getTarget(state, player, transfer.to);
-            if (source.damage >= 10) {
-              source.damage -= source.damage;
-              target.damage += target.damage;
-            }
+          if (source.damage > 0) {
+            const damageToMove = Math.min(source.damage);
+            source.damage -= damageToMove;
+            target.damage += damageToMove;
           }
-          return state;
-        });
+        }
         return state;
-      }
-      return state;
+      });
     }
     return state;
   }

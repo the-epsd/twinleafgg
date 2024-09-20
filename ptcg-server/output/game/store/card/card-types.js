@@ -28,6 +28,7 @@ var CardTag;
     CardTag["PRIME"] = "PRIME";
     CardTag["HOLO"] = "HOLO";
     CardTag["LEGEND"] = "LEGEND";
+    CardTag["TEAM_FLARE"] = "TEAM_FLARE";
 })(CardTag = exports.CardTag || (exports.CardTag = {}));
 var SuperType;
 (function (SuperType) {

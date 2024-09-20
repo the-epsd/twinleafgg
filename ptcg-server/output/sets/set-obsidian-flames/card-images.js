@@ -1,8 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.VengefulPunchArt = exports.VaroomArt = exports.TownStoreArt = exports.ToedscruelexArt = exports.ThundurusArt = exports.ScizorArt = exports.RymeArt = exports.PoppyArt = exports.PokemonLeagueHeadquartersArt = exports.PidgeyArt = exports.PidgeottoArt = exports.PidgeotexArt = exports.PalafinArt = exports.OddishArt = exports.NinetalesArt = exports.MiraidonexArt = exports.LunatoneArt = exports.LetterOfEncouragementArt = exports.FinizenArt = exports.EnteiArt = exports.DratiniArt = exports.DragoniteexArt = exports.DragonairArt = exports.CleffaArt = exports.CharmanderArt = exports.CharmeleonArt = exports.CharizardexArt = exports.BelliboltArt = exports.ArvenArt = exports.AbsolexArt = void 0;
+exports.WhiscashArt = exports.VengefulPunchArt = exports.VaroomArt = exports.TownStoreArt = exports.ToedscruelexArt = exports.ThundurusArt = exports.ScizorArt = exports.RymeArt = exports.PoppyArt = exports.PokemonLeagueHeadquartersArt = exports.PidgeyArt = exports.PidgeottoArt = exports.PidgeotexArt = exports.PalafinArt = exports.OddishArt = exports.NinetalesArt = exports.MiraidonexArt = exports.LunatoneArt = exports.LetterOfEncouragementArt = exports.FinizenArt = exports.EnteiArt = exports.DratiniArt = exports.DragoniteexArt = exports.DragonairArt = exports.CleffaArt = exports.CharmanderArt = exports.CharmeleonArt = exports.CharizardexArt = exports.BelliboltArt = exports.BarboachArt = exports.ArvenArt = exports.AbsolexArt = void 0;
 const arven_1 = require("../set-scarlet-and-violet/arven");
 const absol_ex_1 = require("./absol-ex");
+const barboach_1 = require("./barboach");
 const bellibolt_1 = require("./bellibolt");
 const charizard_ex_1 = require("./charizard-ex");
 const charmander_1 = require("./charmander");
@@ -31,6 +32,7 @@ const thundurus_1 = require("./thundurus");
 const town_store_1 = require("./town-store");
 const varoom_1 = require("./varoom");
 const vengeful_punch_1 = require("./vengeful-punch");
+const whiscash_1 = require("./whiscash");
 class AbsolexArt extends absol_ex_1.Absolex {
     constructor() {
         super(...arguments);
@@ -48,6 +50,13 @@ class ArvenArt extends arven_1.Arven {
     }
 }
 exports.ArvenArt = ArvenArt;
+class BarboachArt extends barboach_1.Barboach {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_108_R_EN_LG.png';
+    }
+}
+exports.BarboachArt = BarboachArt;
 class BelliboltArt extends bellibolt_1.Bellibolt {
     constructor() {
         super(...arguments);
@@ -244,3 +253,10 @@ class VengefulPunchArt extends vengeful_punch_1.VengefulPunch {
     }
 }
 exports.VengefulPunchArt = VengefulPunchArt;
+class WhiscashArt extends whiscash_1.Whiscash {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_109_R_EN_LG.png';
+    }
+}
+exports.WhiscashArt = WhiscashArt;

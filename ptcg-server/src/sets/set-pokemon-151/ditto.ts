@@ -54,6 +54,14 @@ export class Ditto extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
+      const blocked: number[] = [];
+      player.deck.cards.forEach((card, index) => {
+        if (card instanceof PokemonCard && card.name == 'Ditto') {
+          blocked.push(index);
+        }
+      });
+
+
       // Check if it is player's first turn
       if (turn > 2) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
@@ -65,7 +73,7 @@ export class Ditto extends PokemonCard {
           GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
           player.deck,
           { superType: SuperType.POKEMON, stage: Stage.BASIC },
-          { min: 0, max: 1, allowCancel: true }
+          { min: 0, max: 1, allowCancel: true, blocked }
         ), selectedCards => {
           cards = selectedCards || [];
 
