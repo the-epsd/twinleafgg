@@ -101,30 +101,49 @@ export class BellelbaAndBrycenMan extends TrainerCard {
               store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD_FROM_HAND, { name: player.name, card: card.name });
             });
             
-            while (opponentsBenchedPokemon > 3) {
-              const benchDifference = opponentsBenchedPokemon - 3;
-              return store.prompt(state, new ChoosePokemonPrompt(
+            const oppoonentBenchDifference = opponentsBenchedPokemon - 3;
+            const benchDifference = benchedPokemon - 3;
+            
+            if (oppoonentBenchDifference > 0) {
+              store.prompt(state, new ChoosePokemonPrompt(
                 opponent.id,
                 GameMessage.CHOOSE_CARD_TO_DISCARD,
                 PlayerType.BOTTOM_PLAYER,
                 [SlotType.BENCH],
                 {
                   allowCancel: false,
-                  min: benchDifference,
-                  max: benchDifference
+                  min: oppoonentBenchDifference,
+                  max: oppoonentBenchDifference
                 }
               ), (selected: any[]) => {
                 selected.forEach(card => {
                   card.moveTo(opponent.discard);
                 });
+              
+                if (benchDifference > 0) {
+                  store.prompt(state, new ChoosePokemonPrompt(
+                    player.id,
+                    GameMessage.CHOOSE_CARD_TO_DISCARD,
+                    PlayerType.BOTTOM_PLAYER,
+                    [SlotType.BENCH],
+                    {
+                      allowCancel: false,
+                      min: benchDifference,
+                      max: benchDifference
+                    }
+                  ), (selected: any[]) => {
+                    selected.forEach(card => {
+                      card.moveTo(player.discard);
+                    });
+                    
+                    return state;
+                  });              
+                }
                 
                 return state;
               });
-            }
-            
-            while (benchedPokemon > 3) {
-              const benchDifference = benchedPokemon - 3;
-              return store.prompt(state, new ChoosePokemonPrompt(
+            } else if (benchDifference > 0) {
+              store.prompt(state, new ChoosePokemonPrompt(
                 player.id,
                 GameMessage.CHOOSE_CARD_TO_DISCARD,
                 PlayerType.BOTTOM_PLAYER,
@@ -140,7 +159,7 @@ export class BellelbaAndBrycenMan extends TrainerCard {
                 });
                 
                 return state;
-              });
+              });              
             }
             
             player.supporter.moveCardTo(effect.trainerCard, player.discard);

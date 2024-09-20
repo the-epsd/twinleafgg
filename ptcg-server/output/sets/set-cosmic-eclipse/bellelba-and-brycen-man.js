@@ -65,22 +65,34 @@ class BellelbaAndBrycenMan extends trainer_card_1.TrainerCard {
                         cards.forEach((card, index) => {
                             store.log(state, game_message_1.GameLog.LOG_PLAYER_DISCARDS_CARD_FROM_HAND, { name: player.name, card: card.name });
                         });
-                        while (opponentsBenchedPokemon > 3) {
-                            const benchDifference = opponentsBenchedPokemon - 3;
-                            return store.prompt(state, new game_1.ChoosePokemonPrompt(opponent.id, game_message_1.GameMessage.CHOOSE_CARD_TO_DISCARD, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], {
+                        const oppoonentBenchDifference = opponentsBenchedPokemon - 3;
+                        const benchDifference = benchedPokemon - 3;
+                        if (oppoonentBenchDifference > 0) {
+                            store.prompt(state, new game_1.ChoosePokemonPrompt(opponent.id, game_message_1.GameMessage.CHOOSE_CARD_TO_DISCARD, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], {
                                 allowCancel: false,
-                                min: benchDifference,
-                                max: benchDifference
+                                min: oppoonentBenchDifference,
+                                max: oppoonentBenchDifference
                             }), (selected) => {
                                 selected.forEach(card => {
                                     card.moveTo(opponent.discard);
                                 });
+                                if (benchDifference > 0) {
+                                    store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_DISCARD, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], {
+                                        allowCancel: false,
+                                        min: benchDifference,
+                                        max: benchDifference
+                                    }), (selected) => {
+                                        selected.forEach(card => {
+                                            card.moveTo(player.discard);
+                                        });
+                                        return state;
+                                    });
+                                }
                                 return state;
                             });
                         }
-                        while (benchedPokemon > 3) {
-                            const benchDifference = benchedPokemon - 3;
-                            return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_DISCARD, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], {
+                        else if (benchDifference > 0) {
+                            store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_DISCARD, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], {
                                 allowCancel: false,
                                 min: benchDifference,
                                 max: benchDifference
