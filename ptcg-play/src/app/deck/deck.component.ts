@@ -68,7 +68,7 @@ export class DeckComponent implements OnInit {
     if (name === undefined) {
       return;
     }
-  
+
     this.loading = true;
     this.deckService.createDeck(name).pipe(
       finalize(() => { this.loading = false; }),
@@ -84,8 +84,25 @@ export class DeckComponent implements OnInit {
       }
     );
   }
-  
-  
+
+  public exportDeckList(deck: DeckListEntry): void {
+    const deckList = this.generateDeckList(deck);
+    navigator.clipboard.writeText(deckList).then(() => {
+      this.alertService.toast(this.translate.instant('DECK_EXPORTED_TO_CLIPBOARD'));
+    });
+  }
+
+  private generateDeckList(deck: DeckListEntry): string {
+    const cardCounts = new Map<string, number>();
+    deck.deckItems.forEach(item => {
+      const cardName = item.card.fullName;
+      cardCounts.set(cardName, (cardCounts.get(cardName) || 0) + 1);
+    });
+
+    return Array.from(cardCounts.entries())
+      .map(([cardName, count]) => `${count} ${cardName}`)
+      .join('\n');
+  }
 
   public async deleteDeck(deckId: number) {
     if (!await this.alertService.confirm(this.translate.instant('DECK_DELETE_SELECTED'))) {
@@ -148,15 +165,15 @@ export class DeckComponent implements OnInit {
 
   getDeckBackground(deckName: string): string {
     let backgroundImage: string;
-  
+
     // if (deckName.includes('Charizard')) {
     //   backgroundImage = 'url("https://images.squarespace-cdn.com/content/v1/5cf4cfa4382ac0000123aa1b/b54fc451-b936-4668-b632-c3c090417702/Charizard+ex+OBF.png")';
     // } else if (deckName.includes('Arceus')) {
     //   backgroundImage = 'url("https://tcg.pokemon.com/assets/img/home/wallpapers/wallpaper-55.jpg?height=200")';
     // } else {
-      // backgroundImage = 'url("https://assets-prd.ignimgs.com/2024/02/27/pokemon-card-back-1709069641229.png?height=300")';
+    // backgroundImage = 'url("https://assets-prd.ignimgs.com/2024/02/27/pokemon-card-back-1709069641229.png?height=300")';
     // }
-  
+
     return `
       linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.6)),
       ${backgroundImage}

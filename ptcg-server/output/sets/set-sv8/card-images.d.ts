@@ -1,104 +1,35 @@
-import { CounterGain } from '../set-lost-thunder/counter-gain';
-import { AlolanExeggutorex } from './alolan-exeggutor-ex';
-import { Archaludonex } from './archaludon-ex';
-import { Azumarill } from './azulmarill';
-import { BlackKyuremex } from './black-kyurem-ex';
-import { CelebrationFanfare } from './celebration-fanfare';
-import { CherishCarrier } from './cherish-carrier';
-import { Dialga } from './dialga';
-import { DragonsElixir } from './dragons-elixir';
-import { Drayton } from './drayton';
-import { Duraludon } from './duraludon';
-import { DuskBall } from './dusk-ball';
-import { Exeggcute } from './exeggcute';
-import { Flygonex } from './flygon-ex';
-import { HelperBell } from './helper.bell';
-import { HoOh } from './ho-oh';
-import { Klefki } from './klefki';
-import { Marill } from './marill';
-import { MegatonBlower } from './megaton-blower';
-import { Palkia } from './palkia';
-import { PerfectMixer } from './perfect-mixer';
-import { RichEnergy } from './rich-energy';
-import { Smoochum } from './smoochum';
-import { TeraOrb } from './tera-orb';
-import { Trapinch } from './trapinch';
-import { Vibrava } from './vibrava';
-export declare class PalkiaArt extends Palkia {
+import { Magneton } from '../set-scarlet-and-violet-promos/magneton';
+import { Cyrano } from './cyrano';
+import { ExcitingStadium } from './exciting-stadium';
+import { GravityMountain } from './gravity-mountain';
+import { Magnemite } from './magnemite';
+import { MiraculousIntercom } from './miraculous-intercom';
+import { Pikachuex } from './pikachu-ex';
+import { Terapagos } from './terapagos';
+export declare class PikachuexArt extends Pikachuex {
     cardImage: string;
 }
-export declare class BlackKyuremexArt extends BlackKyuremex {
+export declare class TerapagosArt extends Terapagos {
     cardImage: string;
 }
-export declare class HoOhArt extends HoOh {
+export declare class MagnemiteArt extends Magnemite {
     cardImage: string;
 }
-export declare class AzumarillArt extends Azumarill {
+export declare class MagnetonArt extends Magneton {
+    cardImage: string;
+    set: string;
+    fullName: string;
+    setNumber: string;
+}
+export declare class GravityMountainArt extends GravityMountain {
     cardImage: string;
 }
-export declare class PerfectMixerArt extends PerfectMixer {
+export declare class ExcitingStadiumArt extends ExcitingStadium {
     cardImage: string;
 }
-export declare class CherishCarrierArt extends CherishCarrier {
+export declare class MiraculousIntercomArt extends MiraculousIntercom {
     cardImage: string;
 }
-export declare class MarillArt extends Marill {
-    cardImage: string;
-}
-export declare class TeraOrbArt extends TeraOrb {
-    cardImage: string;
-}
-export declare class HelperBellArt extends HelperBell {
-    cardImage: string;
-}
-export declare class MegatonBlowerArt extends MegatonBlower {
-    cardImage: string;
-}
-export declare class TrapinchArt extends Trapinch {
-    cardImage: string;
-}
-export declare class VibravaArt extends Vibrava {
-    cardImage: string;
-}
-export declare class FlygonexArt extends Flygonex {
-    cardImage: string;
-}
-export declare class CounterGainArt extends CounterGain {
-    cardImage: string;
-}
-export declare class SmoochumArt extends Smoochum {
-    cardImage: string;
-}
-export declare class DuraludonArt extends Duraludon {
-    cardImage: string;
-}
-export declare class ArchaludonexArt extends Archaludonex {
-    cardImage: string;
-}
-export declare class CelebrationFanfareArt extends CelebrationFanfare {
-    cardImage: string;
-}
-export declare class DialgaArt extends Dialga {
-    cardImage: string;
-}
-export declare class DragonsElixirArt extends DragonsElixir {
-    cardImage: string;
-}
-export declare class DuskBallArt extends DuskBall {
-    cardImage: string;
-}
-export declare class DraytonArt extends Drayton {
-    cardImage: string;
-}
-export declare class RichEnergyArt extends RichEnergy {
-    cardImage: string;
-}
-export declare class KlefkiArt extends Klefki {
-    cardImage: string;
-}
-export declare class ExeggcuteArt extends Exeggcute {
-    cardImage: string;
-}
-export declare class AlolanExeggutorexArt extends AlolanExeggutorex {
+export declare class CyranoArt extends Cyrano {
     cardImage: string;
 }

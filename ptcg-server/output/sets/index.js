@@ -112,6 +112,7 @@ __exportStar(require("./set-temporal-forces"), exports);
 __exportStar(require("./set-twilight-masquerade"), exports);
 __exportStar(require("./set-shrouded-fable"), exports);
 __exportStar(require("./set-sv7"), exports);
+__exportStar(require("./set-sv7a"), exports);
 __exportStar(require("./set-sv8"), exports);
 __exportStar(require("./set-sv9"), exports);
 //TEST

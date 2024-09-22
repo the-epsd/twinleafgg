@@ -3,7 +3,12 @@
 :host {
   display: flex;
   flex-direction: column;
-  
+
+}
+
+.private-log {
+  font-style: italic;
+  color: #888;
 }
 
 .ptcg-game-logs-header {
@@ -28,6 +33,7 @@
     height: 0;
     list-style-type: none;
   }
+
   li {
     padding: $ptcg-sidebar-tiny-padding;
   }

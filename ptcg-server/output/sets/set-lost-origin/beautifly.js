@@ -5,11 +5,11 @@ const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const pokemon_types_1 = require("../../game/store/card/pokemon-types");
 const game_effects_1 = require("../../game/store/effects/game-effects");
-const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 const play_card_action_1 = require("../../game/store/actions/play-card-action");
 const game_error_1 = require("../../game/game-error");
 const game_message_1 = require("../../game/game-message");
+const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class Beautifly extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -40,6 +40,10 @@ class Beautifly extends pokemon_card_1.PokemonCard {
         this.STOKED_STRAW_MARKER = 'STOKED_STRAW_MARKER';
     }
     reduceEffect(store, state, effect) {
+        if (effect instanceof game_effects_1.EvolveEffect && effect.pokemonCard === this) {
+            const player = effect.player;
+            player.marker.removeMarker(this.STOKED_STRAW_MARKER, this);
+        }
         if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {
             const player = effect.player;
             player.marker.removeMarker(this.STOKED_STRAW_MARKER, this);

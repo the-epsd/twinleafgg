@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WishiwashiArt = exports.TagCallArt = exports.StoutlandArt = exports.SlugmaArt = exports.SawsbuckArt = exports.ProfessorOaksSetupArt = exports.PikachuArt = exports.PhioneArt = exports.NatuArt = exports.LillipupArt = exports.LilliesPokeDollArt = exports.LanasFishingRodArt = exports.MallowAndLanaArt = exports.GuzzlordArt = exports.GuzmaAndHalaArt = exports.GolettArt = exports.DuskullArt = exports.DusclopsArt = exports.DrawEnergyArt = exports.CynthiaAndCaitlinArt = exports.ClayArt = exports.ChaoticSwellArt = exports.BuzzwoleArt = exports.BlacephalonArt = exports.ArceusDialgaPalkiaGXArt = void 0;
+exports.WishiwashiArt = exports.TagCallArt = exports.StoutlandArt = exports.SlugmaArt = exports.SawsbuckArt = exports.ProfessorOaksSetupArt = exports.PikachuArt = exports.PhioneArt = exports.NatuArt = exports.LillipupArt = exports.LilliesPokeDollArt = exports.LanasFishingRodArt = exports.MallowAndLanaArt = exports.GuzzlordArt = exports.GuzmaAndHalaArt = exports.GolettArt = exports.DuskullArt = exports.DusclopsArt = exports.DrawEnergyArt = exports.CynthiaAndCaitlinArt = exports.ClayArt = exports.ChaoticSwellArt = exports.BuzzwoleArt = exports.BlacephalonArt = exports.BellelbaAndBrycenManArt = exports.ArceusDialgaPalkiaGXArt = void 0;
 const arceus_dialga_palkia_gx_1 = require("./arceus-dialga-palkia-gx");
+const bellelba_and_brycen_man_1 = require("./bellelba-and-brycen-man");
 const blacephalon_1 = require("./blacephalon");
 const CEC_16_Sawsbuck_1 = require("./CEC_16_Sawsbuck");
 const CEC_176_Stoutland_1 = require("./CEC_176_Stoutland");
@@ -33,6 +34,13 @@ class ArceusDialgaPalkiaGXArt extends arceus_dialga_palkia_gx_1.ArceusDialgaPalk
     }
 }
 exports.ArceusDialgaPalkiaGXArt = ArceusDialgaPalkiaGXArt;
+class BellelbaAndBrycenManArt extends bellelba_and_brycen_man_1.BellelbaAndBrycenMan {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CEC/CEC_186_R_EN_LG.png';
+    }
+}
+exports.BellelbaAndBrycenManArt = BellelbaAndBrycenManArt;
 class BlacephalonArt extends blacephalon_1.Blacephalon {
     constructor() {
         super(...arguments);

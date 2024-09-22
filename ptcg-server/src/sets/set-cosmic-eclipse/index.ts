@@ -1,9 +1,10 @@
 import { Card } from '../../game/store/card/card';
 
-import { ArceusDialgaPalkiaGXArt, BlacephalonArt, BuzzwoleArt, ChaoticSwellArt, ClayArt, CynthiaAndCaitlinArt, DrawEnergyArt, DusclopsArt, DuskullArt, GolettArt, GuzmaAndHalaArt, GuzzlordArt, LanasFishingRodArt, LilliesPokeDollArt, LillipupArt, MallowAndLanaArt, NatuArt, PhioneArt, PikachuArt, ProfessorOaksSetupArt, SawsbuckArt, SlugmaArt, StoutlandArt, TagCallArt, WishiwashiArt } from './card-images';
+import { ArceusDialgaPalkiaGXArt, BellelbaAndBrycenManArt, BlacephalonArt, BuzzwoleArt, ChaoticSwellArt, ClayArt, CynthiaAndCaitlinArt, DrawEnergyArt, DusclopsArt, DuskullArt, GolettArt, GuzmaAndHalaArt, GuzzlordArt, LanasFishingRodArt, LilliesPokeDollArt, LillipupArt, MallowAndLanaArt, NatuArt, PhioneArt, PikachuArt, ProfessorOaksSetupArt, SawsbuckArt, SlugmaArt, StoutlandArt, TagCallArt, WishiwashiArt } from './card-images';
 
 export const setCosmicEclipse: Card[] = [
   new ArceusDialgaPalkiaGXArt(),
+  new BellelbaAndBrycenManArt(),
   new BlacephalonArt(),
   new BuzzwoleArt(),
   new ChaoticSwellArt(),

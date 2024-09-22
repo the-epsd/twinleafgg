@@ -87,10 +87,6 @@ class ScoopUpNet extends game_1.TrainerCard {
                     cardList.moveCardsTo(pokemons, player.hand);
                     cardList.moveTo(player.discard);
                     cardList.clearEffects();
-                    cardList.removeSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
-                    cardList.marker.markers = [];
-                    cardList.attackMarker.markers = [];
-                    cardList.abilityMarker.markers = [];
                     player.supporter.moveCardTo(effect.trainerCard, player.discard);
                 }
             });

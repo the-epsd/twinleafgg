@@ -1,12 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZeraoraGXArt = exports.ZebstrikaArt = exports.WurmpleArt = exports.TreeckoArt = exports.ThunderMountainPrismStarArt = exports.SpellTagArt = exports.SlowkingArt = exports.NihilegoArt = exports.NetBallArt = exports.MeganiumArt = exports.MareepArt = exports.LostBlenderArt = exports.GrovleArt = exports.GiratinaArt = exports.GirafarigArt = exports.ElectropowerArt = exports.CustomCatcherArt = exports.CounterGainArt = exports.ChikoritaArt2 = exports.ChikoritaArt = exports.AlolanMeowthArt = exports.AdventureBagArt = void 0;
+exports.ZeraoraGXArt = exports.ZebstrikaArt = exports.WurmpleArt = exports.TreeckoArt = exports.ThunderMountainPrismStarArt = exports.SpellTagArt = exports.SlowkingArt = exports.NihilegoArt = exports.NetBallArt = exports.MinaArt = exports.MeganiumArt = exports.MareepArt = exports.LostBlenderArt = exports.GrovleArt = exports.GiratinaArt = exports.GirafarigArt = exports.ElectropowerArt = exports.DittoPrismStarArt = exports.CustomCatcherArt = exports.CounterGainArt = exports.ChikoritaArt2 = exports.ChikoritaArt = exports.AlolanMeowthArt = exports.AdventureBagArt = void 0;
 const adventure_bag_1 = require("./adventure-bag");
 const alolan_meowth_1 = require("./alolan-meowth");
 const chikorita_1 = require("./chikorita");
 const chikorita_2_1 = require("./chikorita-2");
 const counter_gain_1 = require("./counter-gain");
 const custom_catcher_1 = require("./custom-catcher");
+const ditto_prism_star_1 = require("./ditto-prism-star");
 const electropower_1 = require("./electropower");
 const girafarig_1 = require("./girafarig");
 const grovyle_1 = require("./grovyle");
@@ -17,6 +18,7 @@ const LOT_55_Slowking_1 = require("./LOT_55_Slowking");
 const LOT_97_Giratina_1 = require("./LOT_97_Giratina");
 const mareep_1 = require("./mareep");
 const meganium_1 = require("./meganium");
+const mina_1 = require("./mina");
 const net_ball_1 = require("./net-ball");
 const nihilego_1 = require("./nihilego");
 const spell_tag_1 = require("./spell-tag");
@@ -65,6 +67,13 @@ class CustomCatcherArt extends custom_catcher_1.CustomCatcher {
     }
 }
 exports.CustomCatcherArt = CustomCatcherArt;
+class DittoPrismStarArt extends ditto_prism_star_1.DittoPrismStar {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_154_R_EN_LG.png';
+    }
+}
+exports.DittoPrismStarArt = DittoPrismStarArt;
 class ElectropowerArt extends electropower_1.Electropower {
     constructor() {
         super(...arguments);
@@ -114,6 +123,13 @@ class MeganiumArt extends meganium_1.Meganium {
     }
 }
 exports.MeganiumArt = MeganiumArt;
+class MinaArt extends mina_1.Mina {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_183_R_EN_LG.png';
+    }
+}
+exports.MinaArt = MinaArt;
 class NetBallArt extends net_ball_1.NetBall {
     constructor() {
         super(...arguments);

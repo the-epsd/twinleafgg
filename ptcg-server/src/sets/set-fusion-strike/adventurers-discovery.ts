@@ -19,14 +19,16 @@ function* playCard(next: Function, store: StoreLike, state: State,
   const opponent = StateUtils.getOpponent(state, player);
   let cards: Card[] = [];
 
-  cards = player.hand.cards.filter(c => c !== self);
-  if (cards.length < 1) {
-    throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-  }
-
   if (player.deck.cards.length === 0) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
+
+  const blocked: number[] = [];
+  player.deck.cards.forEach((card, index) => {
+    if (card.tags.includes(CardTag.POKEMON_V) || card.tags.includes(CardTag.POKEMON_VSTAR) || card.tags.includes(CardTag.POKEMON_VMAX)) {
+      blocked.push(index);
+    }
+  });
 
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
@@ -35,15 +37,15 @@ function* playCard(next: Function, store: StoreLike, state: State,
     player.id,
     GameMessage.CHOOSE_CARD_TO_HAND,
     player.deck,
-    { superType: SuperType.POKEMON, cardTag: [CardTag.POKEMON_V || CardTag.POKEMON_VMAX || CardTag.POKEMON_VSTAR] },
-    { min: 1, max: 3, allowCancel: true }
+    { superType: SuperType.POKEMON },
+    { min: 0, max: 3, allowCancel: false, blocked }
   ), selected => {
     cards = selected || [];
     next();
   });
 
   player.deck.moveCardsTo(cards, player.hand);
-  player.hand.moveCardTo(self, player.discard);
+  player.hand.moveCardTo(effect.trainerCard, player.discard);
 
   if (cards.length > 0) {
     yield store.prompt(state, new ShowCardsPrompt(
@@ -67,7 +69,7 @@ export class AdventurersDiscovery extends TrainerCard {
   public set: string = 'FST';
 
   public cardImage: string = 'assets/cardback.png';
-  
+
   public setNumber: string = '224';
 
   public name: string = 'Adventurer\'s Discovery';

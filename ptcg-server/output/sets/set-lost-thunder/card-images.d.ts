@@ -4,6 +4,7 @@ import { Chikorita } from './chikorita';
 import { Chikorita2 } from './chikorita-2';
 import { CounterGain } from './counter-gain';
 import { CustomCatcher } from './custom-catcher';
+import { DittoPrismStar } from './ditto-prism-star';
 import { Electropower } from './electropower';
 import { Girafarig } from './girafarig';
 import { Grovyle } from './grovyle';
@@ -14,6 +15,7 @@ import { Slowking } from './LOT_55_Slowking';
 import { Giratina } from './LOT_97_Giratina';
 import { Mareep } from './mareep';
 import { Meganium } from './meganium';
+import { Mina } from './mina';
 import { NetBall } from './net-ball';
 import { Nihilego } from './nihilego';
 import { SpellTag } from './spell-tag';
@@ -38,6 +40,9 @@ export declare class CounterGainArt extends CounterGain {
 export declare class CustomCatcherArt extends CustomCatcher {
     cardImage: string;
 }
+export declare class DittoPrismStarArt extends DittoPrismStar {
+    cardImage: string;
+}
 export declare class ElectropowerArt extends Electropower {
     cardImage: string;
 }
@@ -57,6 +62,9 @@ export declare class MareepArt extends Mareep {
     cardImage: string;
 }
 export declare class MeganiumArt extends Meganium {
+    cardImage: string;
+}
+export declare class MinaArt extends Mina {
     cardImage: string;
 }
 export declare class NetBallArt extends NetBall {

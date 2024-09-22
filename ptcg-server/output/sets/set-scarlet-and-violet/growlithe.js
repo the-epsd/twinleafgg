@@ -41,7 +41,9 @@ class Growlithe extends game_1.PokemonCard {
                     const target = game_1.StateUtils.getTarget(state, player, transfer.to);
                     player.deck.moveCardTo(transfer.card, target);
                 }
-                return state;
+                return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
+                    player.deck.applyOrder(order);
+                });
             });
         }
         return state;

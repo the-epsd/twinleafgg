@@ -45,10 +45,12 @@ class TingLu extends pokemon_card_1.PokemonCard {
             const cardList = game_1.StateUtils.findCardList(state, stadiumCard);
             const player = game_1.StateUtils.findOwner(state, cardList);
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            const benched = opponent.bench.filter(b => b.cards.length > 0);
-            benched.forEach(target => {
+            opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList, card) => {
+                if (cardList === opponent.active) {
+                    return;
+                }
                 const damageEffect = new attack_effects_1.PutDamageEffect(effect, 30);
-                damageEffect.target = target;
+                damageEffect.target = cardList;
                 store.reduceEffect(state, damageEffect);
             });
             cardList.moveTo(player.discard);

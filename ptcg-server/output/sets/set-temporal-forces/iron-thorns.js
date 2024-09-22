@@ -9,6 +9,7 @@ class IronThorns extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.BASIC;
+        this.tags = [card_types_1.CardTag.FUTURE];
         this.cardType = card_types_1.CardType.LIGHTNING;
         this.hp = 140;
         this.weakness = [{ type: card_types_1.CardType.FIGHTING }];

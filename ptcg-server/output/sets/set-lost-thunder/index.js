@@ -16,6 +16,7 @@ exports.setLostThunder = [
     new card_images_1.LostBlenderArt(),
     new card_images_1.MareepArt(),
     new card_images_1.MeganiumArt(),
+    new card_images_1.MinaArt(),
     new card_images_1.NetBallArt(),
     new card_images_1.NihilegoArt(),
     new card_images_1.SlowkingArt(),
@@ -24,5 +25,6 @@ exports.setLostThunder = [
     new card_images_1.TreeckoArt(),
     new card_images_1.WurmpleArt(),
     new card_images_1.ZebstrikaArt(),
-    new card_images_1.ZeraoraGXArt()
+    new card_images_1.ZeraoraGXArt(),
+    new card_images_1.DittoPrismStarArt(),
 ];

@@ -1,4 +1,5 @@
 import { ArceusDialgaPalkiaGX } from './arceus-dialga-palkia-gx';
+import { BellelbaAndBrycenMan } from './bellelba-and-brycen-man';
 import { Blacephalon } from './blacephalon';
 import { Sawsbuck } from './CEC_16_Sawsbuck';
 import { Stoutland } from './CEC_176_Stoutland';
@@ -28,6 +29,10 @@ import { TagCall } from './tag-call';
 
 export class ArceusDialgaPalkiaGXArt extends ArceusDialgaPalkiaGX {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CEC/CEC_156_R_EN.png';
+}
+
+export class BellelbaAndBrycenManArt extends BellelbaAndBrycenMan {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CEC/CEC_186_R_EN_LG.png';
 }
 
 export class BlacephalonArt extends Blacephalon {
