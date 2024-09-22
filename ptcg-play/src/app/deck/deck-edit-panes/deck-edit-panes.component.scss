@@ -7,16 +7,42 @@
   overflow: auto;
 }
 
-.ptcg-deck-edit-pane {
-  flex: 1 1 0;
-  overflow: auto;
-  max-width: 250px;
+.ptcg-deck-edit-container {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
 }
 
-.ptcg-deck-edit-pane.secondary {
-  border-width: 0px;
+.ptcg-deck-edit-panes-wrapper {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: row;
   overflow: auto;
-  max-width: 100%;
+}
+
+.ptcg-deck-edit-pane,
+.ptcg-deck-edit-pane-secondary {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-content: flex-start;
+  padding: 15px;
+  overflow-y: auto;
+}
+
+.ptcg-deck-edit-pane {
+  flex: 0 0 269px;
+}
+
+.ptcg-deck-edit-pane-secondary {
+  flex: 1 1 auto;
+  background-color: rgb(57, 60, 62);
+}
+
+ptcg-deck-card {
+  margin: 5px;
 }
 
 ptcg-deck-card.placeholder {
@@ -36,7 +62,7 @@ ptcg-deck-card.placeholder {
   width: 100%;
   margin-top: 10px;
   margin-bottom: 10px;
-  place-content: center;
+  justify-content: center;
 }
 
 // .deck-pane-container {

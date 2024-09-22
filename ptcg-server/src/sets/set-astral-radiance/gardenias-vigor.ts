@@ -34,6 +34,15 @@ export class GardeniasVigor extends TrainerCard {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
 
+      const hasBenched = player.bench.some(b => b.cards.length > 0);
+      if (!hasBenched) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      }
+
+      if (player.deck.cards.length === 0) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      }
+
       if (player.deck.cards.length === 0) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
@@ -66,7 +75,7 @@ export class GardeniasVigor extends TrainerCard {
         PlayerType.BOTTOM_PLAYER,
         [SlotType.BENCH],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Grass Energy' },
-        { min: 0, max: 2, allowCancel: false, differentTargets: false }
+        { min: 0, max: 2, allowCancel: false, differentTargets: false, sameTarget: true }
       ), transfers => {
         transfers = transfers || [];
         for (const transfer of transfers) {

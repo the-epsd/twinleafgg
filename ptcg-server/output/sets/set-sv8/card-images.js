@@ -1,211 +1,70 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AlolanExeggutorexArt = exports.ExeggcuteArt = exports.KlefkiArt = exports.RichEnergyArt = exports.DraytonArt = exports.DuskBallArt = exports.DragonsElixirArt = exports.DialgaArt = exports.CelebrationFanfareArt = exports.ArchaludonexArt = exports.DuraludonArt = exports.SmoochumArt = exports.CounterGainArt = exports.FlygonexArt = exports.VibravaArt = exports.TrapinchArt = exports.MegatonBlowerArt = exports.HelperBellArt = exports.TeraOrbArt = exports.MarillArt = exports.CherishCarrierArt = exports.PerfectMixerArt = exports.AzumarillArt = exports.HoOhArt = exports.BlackKyuremexArt = exports.PalkiaArt = void 0;
-const counter_gain_1 = require("../set-lost-thunder/counter-gain");
-const alolan_exeggutor_ex_1 = require("./alolan-exeggutor-ex");
-const archaludon_ex_1 = require("./archaludon-ex");
-const azulmarill_1 = require("./azulmarill");
-const black_kyurem_ex_1 = require("./black-kyurem-ex");
-const celebration_fanfare_1 = require("./celebration-fanfare");
-const cherish_carrier_1 = require("./cherish-carrier");
-const dialga_1 = require("./dialga");
-const dragons_elixir_1 = require("./dragons-elixir");
-const drayton_1 = require("./drayton");
-const duraludon_1 = require("./duraludon");
-const dusk_ball_1 = require("./dusk-ball");
-const exeggcute_1 = require("./exeggcute");
-const flygon_ex_1 = require("./flygon-ex");
-const helper_bell_1 = require("./helper.bell");
-const ho_oh_1 = require("./ho-oh");
-const klefki_1 = require("./klefki");
-const marill_1 = require("./marill");
-const megaton_blower_1 = require("./megaton-blower");
-const palkia_1 = require("./palkia");
-const perfect_mixer_1 = require("./perfect-mixer");
-const rich_energy_1 = require("./rich-energy");
-const smoochum_1 = require("./smoochum");
-const tera_orb_1 = require("./tera-orb");
-const trapinch_1 = require("./trapinch");
-const vibrava_1 = require("./vibrava");
-class PalkiaArt extends palkia_1.Palkia {
+exports.CyranoArt = exports.MiraculousIntercomArt = exports.ExcitingStadiumArt = exports.GravityMountainArt = exports.MagnetonArt = exports.MagnemiteArt = exports.TerapagosArt = exports.PikachuexArt = void 0;
+const magneton_1 = require("../set-scarlet-and-violet-promos/magneton");
+const cyrano_1 = require("./cyrano");
+const exciting_stadium_1 = require("./exciting-stadium");
+const gravity_mountain_1 = require("./gravity-mountain");
+const magnemite_1 = require("./magnemite");
+const miraculous_intercom_1 = require("./miraculous-intercom");
+const pikachu_ex_1 = require("./pikachu-ex");
+const terapagos_1 = require("./terapagos");
+class PikachuexArt extends pikachu_ex_1.Pikachuex {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://pbs.twimg.com/media/GWxHVtGa8AIClwa?format=jpg&name=large';
+        this.cardImage = 'https://pokemonproxies.com/static/media/8i-033-Pikachu_ex.59c3ad488393197a4f14.png';
     }
 }
-exports.PalkiaArt = PalkiaArt;
-class BlackKyuremexArt extends black_kyurem_ex_1.BlackKyuremex {
+exports.PikachuexArt = PikachuexArt;
+class TerapagosArt extends terapagos_1.Terapagos {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpc/SV7a/SV7a_11_R_JP.png';
+        this.cardImage = 'https://pokemonproxies.com/static/media/8i-093-Terapagos.fbc2a55ff31d62c15914.png';
     }
 }
-exports.BlackKyuremexArt = BlackKyuremexArt;
-class HoOhArt extends ho_oh_1.HoOh {
+exports.TerapagosArt = TerapagosArt;
+class MagnemiteArt extends magnemite_1.Magnemite {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://pbs.twimg.com/media/GTY5hwSXMAIqBkf?format=jpg&name=large';
+        this.cardImage = 'https://pokemonproxies.com/static/media/8i-034-Magnemite.43bcb4c967f83f8ca1a3.png';
     }
 }
-exports.HoOhArt = HoOhArt;
-class AzumarillArt extends azulmarill_1.Azumarill {
+exports.MagnemiteArt = MagnemiteArt;
+class MagnetonArt extends magneton_1.Magneton {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://pbs.twimg.com/media/GTY4mvvWMAAxw7P?format=jpg&name=large';
+        this.cardImage = 'https://pokemonproxies.com/static/media/8i-035-Magneton.14142fde61a9aa63fd24.png';
+        this.set = 'SV8';
+        this.fullName = 'Magneton SV8';
+        this.setNumber = '35';
     }
 }
-exports.AzumarillArt = AzumarillArt;
-class PerfectMixerArt extends perfect_mixer_1.PerfectMixer {
+exports.MagnetonArt = MagnetonArt;
+class GravityMountainArt extends gravity_mountain_1.GravityMountain {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://pbs.twimg.com/media/GTY4JHhXoAAMtNV?format=jpg&name=large';
+        this.cardImage = 'https://pokemonproxies.com/static/media/8i-106-Gravity_Mountain.764ab940ffe5c9af71a8.png';
     }
 }
-exports.PerfectMixerArt = PerfectMixerArt;
-class CherishCarrierArt extends cherish_carrier_1.CherishCarrier {
+exports.GravityMountainArt = GravityMountainArt;
+class ExcitingStadiumArt extends exciting_stadium_1.ExcitingStadium {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://pbs.twimg.com/media/GTY3QxxXkAAqzhh?format=jpg&name=large';
+        this.cardImage = 'https://pokemonproxies.com/static/media/8i-105-Exciting_Stadium.c98c5a6a761ea270c5d4.png';
     }
 }
-exports.CherishCarrierArt = CherishCarrierArt;
-class MarillArt extends marill_1.Marill {
+exports.ExcitingStadiumArt = ExcitingStadiumArt;
+class MiraculousIntercomArt extends miraculous_intercom_1.MiraculousIntercom {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://pbs.twimg.com/media/GTZFCqaWIAAecHF?format=jpg&name=large';
+        this.cardImage = 'https://pokemonproxies.com/static/media/8i-097-Miraculous_Intercom.55d2409f22d0d359f25a.png';
     }
 }
-exports.MarillArt = MarillArt;
-class TeraOrbArt extends tera_orb_1.TeraOrb {
+exports.MiraculousIntercomArt = MiraculousIntercomArt;
+class CyranoArt extends cyrano_1.Cyrano {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://pbs.twimg.com/media/GTY3wkfWAAAmv5O?format=jpg&name=large';
+        this.cardImage = 'https://pokemonproxies.com/static/media/8i-102-Cyrano.027d5eba075c868bcc20.png';
     }
 }
-exports.TeraOrbArt = TeraOrbArt;
-class HelperBellArt extends helper_bell_1.HelperBell {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://www.pokebeach.com/news/2024/08/Helper-Bell.png';
-    }
-}
-exports.HelperBellArt = HelperBellArt;
-class MegatonBlowerArt extends megaton_blower_1.MegatonBlower {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://www.pokebeach.com/news/2024/08/Megaton-Blower.png';
-    }
-}
-exports.MegatonBlowerArt = MegatonBlowerArt;
-class TrapinchArt extends trapinch_1.Trapinch {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://www.pokebeach.com/news/2024/08/Trapinch.png';
-    }
-}
-exports.TrapinchArt = TrapinchArt;
-class VibravaArt extends vibrava_1.Vibrava {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://www.pokebeach.com/news/2024/08/Vibrava.png';
-    }
-}
-exports.VibravaArt = VibravaArt;
-class FlygonexArt extends flygon_ex_1.Flygonex {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://www.pokebeach.com/news/2024/08/Tera-Flygon-ex.png';
-    }
-}
-exports.FlygonexArt = FlygonexArt;
-class CounterGainArt extends counter_gain_1.CounterGain {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://pbs.twimg.com/media/GVPnDxPWgAAstfh?format=jpg&name=medium';
-    }
-}
-exports.CounterGainArt = CounterGainArt;
-class SmoochumArt extends smoochum_1.Smoochum {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://www.pokebeach.com/news/2024/08/Smoochum.jpg';
-    }
-}
-exports.SmoochumArt = SmoochumArt;
-class DuraludonArt extends duraludon_1.Duraludon {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://www.pokebeach.com/news/2024/08/Duraludon.png';
-    }
-}
-exports.DuraludonArt = DuraludonArt;
-class ArchaludonexArt extends archaludon_ex_1.Archaludonex {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://www.pokebeach.com/news/2024/08/Arcaludon-ex.jpg';
-    }
-}
-exports.ArchaludonexArt = ArchaludonexArt;
-class CelebrationFanfareArt extends celebration_fanfare_1.CelebrationFanfare {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://pbs.twimg.com/media/GT8_RuqXgAAr-PB?format=jpg&name=large';
-    }
-}
-exports.CelebrationFanfareArt = CelebrationFanfareArt;
-class DialgaArt extends dialga_1.Dialga {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://pbs.twimg.com/media/GVPjdKyWQAA9iwN?format=jpg&name=large';
-    }
-}
-exports.DialgaArt = DialgaArt;
-class DragonsElixirArt extends dragons_elixir_1.DragonsElixir {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://www.pokebeach.com/news/2024/08/sv7a_s4_RyuNoHiyaku.jpg';
-    }
-}
-exports.DragonsElixirArt = DragonsElixirArt;
-class DuskBallArt extends dusk_ball_1.DuskBall {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://www.pokebeach.com/news/2024/08/sv7a_s4_DarkBall.jpg';
-    }
-}
-exports.DuskBallArt = DuskBallArt;
-class DraytonArt extends drayton_1.Drayton {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://www.pokebeach.com/news/2024/08/sv7a_s4_Kakitsubata.jpg';
-    }
-}
-exports.DraytonArt = DraytonArt;
-class RichEnergyArt extends rich_energy_1.RichEnergy {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://www.pokebeach.com/news/2024/08/sv7a_s3_RichEnergy.jpg';
-    }
-}
-exports.RichEnergyArt = RichEnergyArt;
-class KlefkiArt extends klefki_1.Klefki {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://www.pokebeach.com/news/2024/08/sv7a_s2_CLEFFY.jpg';
-    }
-}
-exports.KlefkiArt = KlefkiArt;
-class ExeggcuteArt extends exeggcute_1.Exeggcute {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://www.pokebeach.com/news/2024/08/sv7a_s1_TAMATAMA.jpg';
-    }
-}
-exports.ExeggcuteArt = ExeggcuteArt;
-class AlolanExeggutorexArt extends alolan_exeggutor_ex_1.AlolanExeggutorex {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://www.pokebeach.com/news/2024/08/sv7a_s1_aNASSYex.jpg';
-    }
-}
-exports.AlolanExeggutorexArt = AlolanExeggutorexArt;
+exports.CyranoArt = CyranoArt;

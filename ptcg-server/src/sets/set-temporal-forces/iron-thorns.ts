@@ -8,6 +8,8 @@ export class IronThorns extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
+  public tags = [CardTag.FUTURE];
+
   public cardType: CardType = CardType.LIGHTNING;
 
   public hp: number = 140;

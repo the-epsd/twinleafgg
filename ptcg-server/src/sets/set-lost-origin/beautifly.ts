@@ -4,12 +4,12 @@ import { PowerType } from '../../game/store/card/pokemon-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, HealEffect, PowerEffect } from '../../game/store/effects/game-effects';
-import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { AttackEffect, EvolveEffect, HealEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayerType } from '../../game/store/actions/play-card-action';
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
+import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 
 export class Beautifly extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -43,6 +43,11 @@ export class Beautifly extends PokemonCard {
   public readonly STOKED_STRAW_MARKER = 'STOKED_STRAW_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
+    if (effect instanceof EvolveEffect && effect.pokemonCard === this) {
+      const player = effect.player;
+      player.marker.removeMarker(this.STOKED_STRAW_MARKER, this);
+    }
 
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const player = effect.player;

@@ -2,7 +2,8 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import {
   StoreLike, State,
-  StateUtils
+  StateUtils,
+  PlayerType
 } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
@@ -50,6 +51,7 @@ export class TingLu extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+
       const stadiumCard = StateUtils.getStadiumCard(state);
       if (stadiumCard == undefined) {
         return state;
@@ -59,14 +61,15 @@ export class TingLu extends PokemonCard {
       const player = StateUtils.findOwner(state, cardList);
 
       const opponent = StateUtils.getOpponent(state, player);
-      const benched = opponent.bench.filter(b => b.cards.length > 0);
 
-      benched.forEach(target => {
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
+        if (cardList === opponent.active) {
+          return;
+        }
         const damageEffect = new PutDamageEffect(effect, 30);
-        damageEffect.target = target;
+        damageEffect.target = cardList;
         store.reduceEffect(state, damageEffect);
       });
-
       cardList.moveTo(player.discard);
     }
     return state;

@@ -112,6 +112,7 @@ export * from './set-temporal-forces';
 export * from './set-twilight-masquerade';
 export * from './set-shrouded-fable';
 export * from './set-sv7';
+export * from './set-sv7a';
 export * from './set-sv8';
 export * from './set-sv9';
 

@@ -4,6 +4,7 @@ import { Chikorita } from './chikorita';
 import { Chikorita2 } from './chikorita-2';
 import { CounterGain } from './counter-gain';
 import { CustomCatcher } from './custom-catcher';
+import { DittoPrismStar } from './ditto-prism-star';
 import { Electropower } from './electropower';
 import { Girafarig } from './girafarig';
 import { Grovyle } from './grovyle';
@@ -37,6 +38,9 @@ export declare class CounterGainArt extends CounterGain {
     cardImage: string;
 }
 export declare class CustomCatcherArt extends CustomCatcher {
+    cardImage: string;
+}
+export declare class DittoPrismStarArt extends DittoPrismStar {
     cardImage: string;
 }
 export declare class ElectropowerArt extends Electropower {

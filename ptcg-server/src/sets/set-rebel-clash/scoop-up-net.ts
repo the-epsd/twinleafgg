@@ -103,7 +103,6 @@ export class ScoopUpNet extends TrainerCard {
           cardList.moveTo(player.discard);
           cardList.clearEffects();
           player.supporter.moveCardTo(effect.trainerCard, player.discard);
-
         }
       });
     }
