@@ -15,6 +15,7 @@ exports.setSunAndMoon = [
     new card_images_1.OranguruArt(),
     new card_images_1.ProfessorKukuiArt(),
     new card_images_1.RainbowEnergyArt(),
+    new card_images_1.RepelArt(),
     new card_images_1.RareCandyArt(),
     new card_images_1.TimerBallArt()
 ];

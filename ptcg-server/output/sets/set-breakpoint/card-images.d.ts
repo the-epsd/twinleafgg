@@ -5,6 +5,7 @@ import { Zoroark } from './BKT_91_Zoroark';
 import { Delinquent } from './delinquent';
 import { FightingFuryBelt } from './fighting-fury-belt';
 import { Kricketot } from './kricketot';
+import { MaxElixir } from './max-elixir';
 import { Phantump } from './phantump';
 import { ReverseValley } from './reverse-valley';
 import { SplashEnergy } from './splash-energy';
@@ -22,6 +23,9 @@ export declare class FroakieArt extends Froakie {
     cardImage: string;
 }
 export declare class KricketotArt extends Kricketot {
+    cardImage: string;
+}
+export declare class MaxElixirArt extends MaxElixir {
     cardImage: string;
 }
 export declare class PhantumpArt extends Phantump {

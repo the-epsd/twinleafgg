@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZoroarkArt = exports.SudowoodoArt = exports.StaryuArt = exports.SplashEnergyArt = exports.ReverseValleyArt = exports.PhantumpArt = exports.KricketotArt = exports.FroakieArt = exports.FightingFuryBeltArt = exports.DelinquentArt = exports.BayleefArt = void 0;
+exports.ZoroarkArt = exports.SudowoodoArt = exports.StaryuArt = exports.SplashEnergyArt = exports.ReverseValleyArt = exports.PhantumpArt = exports.MaxElixirArt = exports.KricketotArt = exports.FroakieArt = exports.FightingFuryBeltArt = exports.DelinquentArt = exports.BayleefArt = void 0;
 const bayleef_1 = require("./bayleef");
 const BKP_38_Froakie_1 = require("./BKP_38_Froakie");
 const BKP_67_Sudowoodo_1 = require("./BKP_67_Sudowoodo");
@@ -8,6 +8,7 @@ const BKT_91_Zoroark_1 = require("./BKT_91_Zoroark");
 const delinquent_1 = require("./delinquent");
 const fighting_fury_belt_1 = require("./fighting-fury-belt");
 const kricketot_1 = require("./kricketot");
+const max_elixir_1 = require("./max-elixir");
 const phantump_1 = require("./phantump");
 const reverse_valley_1 = require("./reverse-valley");
 const splash_energy_1 = require("./splash-energy");
@@ -47,6 +48,13 @@ class KricketotArt extends kricketot_1.Kricketot {
     }
 }
 exports.KricketotArt = KricketotArt;
+class MaxElixirArt extends max_elixir_1.MaxElixir {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BKP/BKP_102_R_EN_LG.png';
+    }
+}
+exports.MaxElixirArt = MaxElixirArt;
 class PhantumpArt extends phantump_1.Phantump {
     constructor() {
         super(...arguments);

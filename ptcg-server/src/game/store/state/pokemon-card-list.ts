@@ -65,6 +65,10 @@ export class PokemonCardList extends CardList {
         result.push(card as PokemonCard);
       } else if (card.name === 'Lillie\'s Poké Doll') {
         result.push(card as PokemonCard);
+      } else if (card.name === 'Rare Fossil') {
+        result.push(card as PokemonCard);
+      } else if (card.name === 'Robo Substitute') {
+        result.push(card as PokemonCard);
       } else if (card.name === 'Mysterious Fossil') {
         result.push(card as PokemonCard);
       } else if (card.name === 'Unidentified Fossil') {

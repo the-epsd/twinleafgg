@@ -1,14 +1,14 @@
-import { Card } from '../../game/store/card/card';
+import { PokemonCardList, StateUtils } from '../../game';
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
-import { Effect } from '../../game/store/effects/effect';
-import { PokemonCardList, StateUtils } from '../../game';
+import { Card } from '../../game/store/card/card';
+import { Stage, SuperType, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { Stage, TrainerType, SuperType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike } from '../../game/store/store-like';
-import { State } from '../../game/store/state/state';
+import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
+import { State } from '../../game/store/state/state';
+import { StoreLike } from '../../game/store/store-like';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -55,26 +55,22 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   });
 
 }
-export class EchoingHorn extends TrainerCard {
-
-  public regulationMark = 'E';
-
-  public tags = [CardTag.RAPID_STRIKE];
+export class TargetWhistle extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
 
-  public set: string = 'CRE';
+  public set: string = 'PHF';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '136';
+  public setNumber: string = '106';
 
-  public name: string = 'Echoing Horn';
+  public name: string = 'Target Whistle';
 
-  public fullName: string = 'Echoing Horn CRE';
+  public fullName: string = 'Target Whistle PHF';
 
   public text: string =
-    'Put a Basic Pokémon from your opponent\'s discard pile onto their Bench.';
+    'Put a Basic Pokémon from your opponent\'s discard pile onto his or her Bench.';
 
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

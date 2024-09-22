@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.EchoingHorn = void 0;
+exports.TargetWhistle = void 0;
+const game_1 = require("../../game");
 const game_error_1 = require("../../game/game-error");
 const game_message_1 = require("../../game/game-message");
-const game_1 = require("../../game");
-const trainer_card_1 = require("../../game/store/card/trainer-card");
 const card_types_1 = require("../../game/store/card/card-types");
+const trainer_card_1 = require("../../game/store/card/trainer-card");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 const choose_cards_prompt_1 = require("../../game/store/prompts/choose-cards-prompt");
 function* playCard(next, store, state, effect) {
@@ -38,18 +38,16 @@ function* playCard(next, store, state, effect) {
         player.supporter.moveCardTo(effect.trainerCard, player.discard);
     });
 }
-class EchoingHorn extends trainer_card_1.TrainerCard {
+class TargetWhistle extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
-        this.regulationMark = 'E';
-        this.tags = [card_types_1.CardTag.RAPID_STRIKE];
         this.trainerType = card_types_1.TrainerType.ITEM;
-        this.set = 'CRE';
+        this.set = 'PHF';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '136';
-        this.name = 'Echoing Horn';
-        this.fullName = 'Echoing Horn CRE';
-        this.text = 'Put a Basic Pokémon from your opponent\'s discard pile onto their Bench.';
+        this.setNumber = '106';
+        this.name = 'Target Whistle';
+        this.fullName = 'Target Whistle PHF';
+        this.text = 'Put a Basic Pokémon from your opponent\'s discard pile onto his or her Bench.';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
@@ -59,4 +57,4 @@ class EchoingHorn extends trainer_card_1.TrainerCard {
         return state;
     }
 }
-exports.EchoingHorn = EchoingHorn;
+exports.TargetWhistle = TargetWhistle;

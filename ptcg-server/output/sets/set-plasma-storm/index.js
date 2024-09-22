@@ -8,6 +8,7 @@ exports.setPlasmaStorm = [
     new card_images_1.DonphanArt(),
     new card_images_1.DowsingMachineArt(),
     new card_images_1.EscapeRopeArt(),
+    new card_images_1.EtherArt(),
     new card_images_1.GalladeArt(),
     new card_images_1.HypnotoxicLaserArt(),
     new card_images_1.KirliaArt(),

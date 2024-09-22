@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { AlolanGrimerArt, AlolanMukArt, AlolanRattataArt, DragonairArt, EnergyRetrievalArt, ExpShareArt, FomantisArt, GolduckArt, HerdierArt, OranguruArt, ProfessorKukuiArt, RainbowEnergyArt, RareCandyArt, TimerBallArt } from './card-images';
+import { AlolanGrimerArt, AlolanMukArt, AlolanRattataArt, DragonairArt, EnergyRetrievalArt, ExpShareArt, FomantisArt, GolduckArt, HerdierArt, OranguruArt, ProfessorKukuiArt, RainbowEnergyArt, RareCandyArt, RepelArt, TimerBallArt } from './card-images';
 
 export const setSunAndMoon: Card[] = [
   new AlolanGrimerArt(),
@@ -14,6 +14,7 @@ export const setSunAndMoon: Card[] = [
   new OranguruArt(),
   new ProfessorKukuiArt(),
   new RainbowEnergyArt(),
+  new RepelArt(),
   new RareCandyArt(),
   new TimerBallArt()
 ];

@@ -1,11 +1,9 @@
-import { Effect } from '../../game/store/effects/effect';
+import { TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { TrainerType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike } from '../../game/store/store-like';
+import { Effect } from '../../game/store/effects/effect';
 import { State } from '../../game/store/state/state';
-export declare class EchoingHorn extends TrainerCard {
-    regulationMark: string;
-    tags: CardTag[];
+import { StoreLike } from '../../game/store/store-like';
+export declare class TargetWhistle extends TrainerCard {
     trainerType: TrainerType;
     set: string;
     cardImage: string;

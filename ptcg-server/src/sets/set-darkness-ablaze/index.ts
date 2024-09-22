@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { BirdKeeperArt, CapeOfToughnessArt, CombuskenArt, CrobatVArt, HidingDarknessEnergyArt, KangaskhanArt, KlangArt, LugiaArt, PowerfulColorlessEnergyArt, RoseTowerArt, TapuKokoArt, TeddiursaArt, UrsaringArt } from './card-images';
+import { BirdKeeperArt, CapeOfToughnessArt, CombuskenArt, CrobatVArt, HidingDarknessEnergyArt, KangaskhanArt, KlangArt, LugiaArt, PowerfulColorlessEnergyArt, RareFossilArt, RoseTowerArt, TapuKokoArt, TeddiursaArt, UrsaringArt } from './card-images';
 
 export const setDarknessAblaze: Card[] = [
   new BirdKeeperArt(),
@@ -11,6 +11,7 @@ export const setDarknessAblaze: Card[] = [
   new KlangArt(),
   new LugiaArt(),
   new PowerfulColorlessEnergyArt(),
+  new RareFossilArt(),
   new RoseTowerArt(),
   new TapuKokoArt(),
   new TeddiursaArt(),

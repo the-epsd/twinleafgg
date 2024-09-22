@@ -8,6 +8,7 @@ import { Delcatty } from './delcatty';
 import { ElectrodeGX } from './electrode-gx';
 import { Fisherman } from './fisherman';
 import { HustleBelt } from './hustle-belt';
+import { LastChancePotion } from './last-chance-potion';
 import { Magcargo } from './magcargo';
 import { Marshtomp } from './marshtomp';
 import { Mudkip } from './mudkip';
@@ -31,6 +32,9 @@ export declare class FishermanArt extends Fisherman {
     cardImage: string;
 }
 export declare class HustleBeltArt extends HustleBelt {
+    cardImage: string;
+}
+export declare class LastChancePotionArt extends LastChancePotion {
     cardImage: string;
 }
 export declare class MagcargoArt extends Magcargo {

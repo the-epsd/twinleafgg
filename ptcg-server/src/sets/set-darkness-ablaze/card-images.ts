@@ -7,6 +7,7 @@ import { HidingDarknessEnergy } from './hiding-darkness-energy';
 import { Kangaskhan } from './kangaskhan';
 import { Lugia } from './lugia';
 import { PowerfulColorlessEnergy } from './powerful-colorless-energy';
+import { RareFossil } from './rare-fossil';
 import { RoseTower } from './rose-tower';
 import { TapuKoko } from './tapu-koko';
 import { Teddiursa } from './teddiursa';
@@ -46,6 +47,10 @@ export class LugiaArt extends Lugia {
 
 export class PowerfulColorlessEnergyArt extends PowerfulColorlessEnergy {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/DAA/DAA_176_R_EN.png';
+}
+
+export class RareFossilArt extends RareFossil {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/DAA/DAA_167_R_EN.png';
 }
 
 export class RoseTowerArt extends RoseTower {

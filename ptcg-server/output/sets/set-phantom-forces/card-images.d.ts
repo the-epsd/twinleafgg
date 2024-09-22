@@ -12,7 +12,9 @@ import { LysandresTrumpCard } from './lysandres-trump-card';
 import { MysteryEnergy } from './mystery-energy';
 import { Pumpkaboo } from './pumpkaboo';
 import { Regigigas } from './regigigas';
+import { RoboSubstitute } from './robo-substitutue';
 import { SteelShelter } from './steel-shelter';
+import { TargetWhistle } from './target-whistle';
 import { VsSeeker } from './vs-seeker';
 import { Wobbuffet } from './wobbuffet';
 export declare class AZArt extends AZ {
@@ -57,7 +59,13 @@ export declare class PumpkabooArt extends Pumpkaboo {
 export declare class RegigigasArt extends Regigigas {
     cardImage: string;
 }
+export declare class RoboSubstituteArt extends RoboSubstitute {
+    cardImage: string;
+}
 export declare class SteelShelterArt extends SteelShelter {
+    cardImage: string;
+}
+export declare class TargetWhistleArt extends TargetWhistle {
     cardImage: string;
 }
 export declare class VsSeekerArt extends VsSeeker {

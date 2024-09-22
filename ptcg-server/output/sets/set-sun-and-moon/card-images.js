@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TimerBallArt = exports.RareCandyArt = exports.RainbowEnergyArt = exports.ProfessorKukuiArt = exports.OranguruArt = exports.NestBallArt = exports.HerdierArt = exports.GolduckArt = exports.FomantisArt = exports.ExpShareArt = exports.EnergyRetrievalArt = exports.DragonairArt = exports.AlolanRattataArt = exports.AlolanMukArt = exports.AlolanGrimerArt = void 0;
+exports.TimerBallArt = exports.RepelArt = exports.RareCandyArt = exports.RainbowEnergyArt = exports.ProfessorKukuiArt = exports.OranguruArt = exports.NestBallArt = exports.HerdierArt = exports.GolduckArt = exports.FomantisArt = exports.ExpShareArt = exports.EnergyRetrievalArt = exports.DragonairArt = exports.AlolanRattataArt = exports.AlolanMukArt = exports.AlolanGrimerArt = void 0;
 const energy_retrieval_1 = require("../set-scarlet-and-violet/energy-retrieval");
 const exp_share_1 = require("../set-scarlet-and-violet/exp-share");
 const nest_ball_1 = require("../set-scarlet-and-violet/nest-ball");
@@ -12,6 +12,7 @@ const herdier_1 = require("./herdier");
 const oranguru_1 = require("./oranguru");
 const professor_kukui_1 = require("./professor-kukui");
 const rainbow_energy_1 = require("./rainbow-energy");
+const repel_1 = require("./repel");
 const SUM_14_Fomantis_1 = require("./SUM_14_Fomantis");
 const SUM_29_Golduck_1 = require("./SUM_29_Golduck");
 const SUM_76_Alolan_Rattata_1 = require("./SUM_76_Alolan_Rattata");
@@ -122,6 +123,13 @@ class RareCandyArt extends rare_candy_1.RareCandy {
     }
 }
 exports.RareCandyArt = RareCandyArt;
+class RepelArt extends repel_1.Repel {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SUM/SUM_130_R_EN.png';
+    }
+}
+exports.RepelArt = RepelArt;
 class TimerBallArt extends timer_ball_1.TimerBall {
     constructor() {
         super(...arguments);

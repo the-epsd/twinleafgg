@@ -7,6 +7,7 @@ import { HidingDarknessEnergy } from './hiding-darkness-energy';
 import { Kangaskhan } from './kangaskhan';
 import { Lugia } from './lugia';
 import { PowerfulColorlessEnergy } from './powerful-colorless-energy';
+import { RareFossil } from './rare-fossil';
 import { RoseTower } from './rose-tower';
 import { TapuKoko } from './tapu-koko';
 import { Teddiursa } from './teddiursa';
@@ -36,6 +37,9 @@ export declare class LugiaArt extends Lugia {
     cardImage: string;
 }
 export declare class PowerfulColorlessEnergyArt extends PowerfulColorlessEnergy {
+    cardImage: string;
+}
+export declare class RareFossilArt extends RareFossil {
     cardImage: string;
 }
 export declare class RoseTowerArt extends RoseTower {

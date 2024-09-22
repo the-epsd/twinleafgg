@@ -17,7 +17,9 @@ exports.setPhantomForces = [
     new card_images_1.MysteryEnergyArt(),
     new card_images_1.PumpkabooArt(),
     new card_images_1.RegigigasArt(),
+    new card_images_1.RoboSubstituteArt(),
     new card_images_1.SteelShelterArt(),
+    new card_images_1.TargetWhistleArt(),
     new card_images_1.VsSeekerArt(),
     new card_images_1.WobbuffetArt(),
 ];
