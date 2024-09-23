@@ -1,8 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZeraoraArt = exports.VolcanionArt = exports.TripleAccelerationEnergyArt = exports.SpiritombArt = exports.SalazzleArt = exports.PorygonZArt = exports.PoliwagArt = exports.Pokegear30Art = exports.OddishArt = exports.MismagiusArt = exports.MewtwoArt = exports.MewArt = exports.MeowthArt = exports.MartialArtsDojoArt = exports.MarshadowArt = exports.LtSurgesStrategyArt = exports.LickitungArt = exports.LaironArt = exports.KartanaArt = exports.HitmontopArt = exports.GreensExplorationArt = exports.GloomArt = exports.FireCrystalArt = exports.EspurrArt = exports.ElectromagneticRadarArt = exports.DedenneGXArt = exports.CleffaArt = exports.AronArt = exports.ArcanineArt = void 0;
+exports.ZeraoraArt = exports.VolcanionArt = exports.TripleAccelerationEnergyArt = exports.SpiritombArt = exports.SalazzleArt = exports.PorygonZArt = exports.PoliwagArt = exports.Pokegear30Art = exports.OddishArt = exports.MismagiusArt = exports.MewtwoArt = exports.MewArt = exports.MeowthArt = exports.MartialArtsDojoArt = exports.MarshadowArt = exports.LtSurgesStrategyArt = exports.LickitungArt = exports.LaironArt = exports.KartanaArt = exports.HitmontopArt = exports.GreensExplorationArt = exports.GloomArt = exports.FireCrystalArt = exports.EspurrArt = exports.ElectromagneticRadarArt = exports.DuskStoneArt = exports.DedenneGXArt = exports.CleffaArt = exports.AronArt = exports.ArcanineArt = void 0;
 const arcanine_1 = require("./arcanine");
 const cleffa_1 = require("./cleffa");
+const dusk_stone_1 = require("./dusk-stone");
 const espurr_1 = require("./espurr");
 const fire_crystal_1 = require("./fire-crystal");
 const greens_exploration_1 = require("./greens-exploration");
@@ -58,6 +59,13 @@ class DedenneGXArt extends UNB_195_DedenneGX_1.DedenneGX {
     }
 }
 exports.DedenneGXArt = DedenneGXArt;
+class DuskStoneArt extends dusk_stone_1.DuskStone {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_167_R_EN_LG.png';
+    }
+}
+exports.DuskStoneArt = DuskStoneArt;
 class ElectromagneticRadarArt extends UNB_169_Electromagnetic_Radar_1.ElectromagneticRadar {
     constructor() {
         super(...arguments);

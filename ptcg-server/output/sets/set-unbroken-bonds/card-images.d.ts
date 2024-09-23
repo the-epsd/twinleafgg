@@ -1,5 +1,6 @@
 import { Arcanine } from './arcanine';
 import { Cleffa } from './cleffa';
+import { DuskStone } from './dusk-stone';
 import { Espurr } from './espurr';
 import { FireCrystal } from './fire-crystal';
 import { GreensExploration } from './greens-exploration';
@@ -37,6 +38,9 @@ export declare class CleffaArt extends Cleffa {
     cardImage: string;
 }
 export declare class DedenneGXArt extends DedenneGX {
+    cardImage: string;
+}
+export declare class DuskStoneArt extends DuskStone {
     cardImage: string;
 }
 export declare class ElectromagneticRadarArt extends ElectromagneticRadar {

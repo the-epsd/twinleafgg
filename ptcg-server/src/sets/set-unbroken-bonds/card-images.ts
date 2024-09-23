@@ -1,5 +1,6 @@
 import { Arcanine } from './arcanine';
 import { Cleffa } from './cleffa';
+import { DuskStone } from './dusk-stone';
 import { Espurr } from './espurr';
 import { FireCrystal } from './fire-crystal';
 import { GreensExploration } from './greens-exploration';
@@ -42,6 +43,10 @@ export class CleffaArt extends Cleffa {
 
 export class DedenneGXArt extends DedenneGX {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_195_R_EN_LG.png';
+}
+
+export class DuskStoneArt extends DuskStone {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_167_R_EN_LG.png';  
 }
 
 export class ElectromagneticRadarArt extends ElectromagneticRadar {
