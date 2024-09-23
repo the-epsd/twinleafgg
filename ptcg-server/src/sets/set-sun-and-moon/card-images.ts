@@ -9,6 +9,7 @@ import { Herdier } from './herdier';
 import { Oranguru } from './oranguru';
 import { ProfessorKukui } from './professor-kukui';
 import { RainbowEnergy } from './rainbow-energy';
+import { Repel } from './repel';
 import { Fomantis } from './SUM_14_Fomantis';
 import { Golduck } from './SUM_29_Golduck';
 import { AlolanRattata } from './SUM_76_Alolan_Rattata';
@@ -76,6 +77,10 @@ export class RareCandyArt extends RareCandy {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SUM/SUM_129_R_EN.png';
   public setNumber = '129';
   public fullName: string = 'Rare Candy SUM';
+}
+
+export class RepelArt extends Repel {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SUM/SUM_130_R_EN.png';
 }
 
 export class TimerBallArt extends TimerBall {

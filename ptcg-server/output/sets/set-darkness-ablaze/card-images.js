@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UrsaringArt = exports.TeddiursaArt = exports.TapuKokoArt = exports.RoseTowerArt = exports.PowerfulColorlessEnergyArt = exports.LugiaArt = exports.KlangArt = exports.KangaskhanArt = exports.HidingDarknessEnergyArt = exports.CrobatVArt = exports.CombuskenArt = exports.CapeOfToughnessArt = exports.BirdKeeperArt = void 0;
+exports.UrsaringArt = exports.TeddiursaArt = exports.TapuKokoArt = exports.RoseTowerArt = exports.RareFossilArt = exports.PowerfulColorlessEnergyArt = exports.LugiaArt = exports.KlangArt = exports.KangaskhanArt = exports.HidingDarknessEnergyArt = exports.CrobatVArt = exports.CombuskenArt = exports.CapeOfToughnessArt = exports.BirdKeeperArt = void 0;
 const bird_keeper_1 = require("./bird-keeper");
 const cape_of_toughness_1 = require("./cape-of-toughness");
 const crobat_v_1 = require("./crobat-v");
@@ -10,6 +10,7 @@ const hiding_darkness_energy_1 = require("./hiding-darkness-energy");
 const kangaskhan_1 = require("./kangaskhan");
 const lugia_1 = require("./lugia");
 const powerful_colorless_energy_1 = require("./powerful-colorless-energy");
+const rare_fossil_1 = require("./rare-fossil");
 const rose_tower_1 = require("./rose-tower");
 const tapu_koko_1 = require("./tapu-koko");
 const teddiursa_1 = require("./teddiursa");
@@ -77,6 +78,13 @@ class PowerfulColorlessEnergyArt extends powerful_colorless_energy_1.PowerfulCol
     }
 }
 exports.PowerfulColorlessEnergyArt = PowerfulColorlessEnergyArt;
+class RareFossilArt extends rare_fossil_1.RareFossil {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/DAA/DAA_167_R_EN.png';
+    }
+}
+exports.RareFossilArt = RareFossilArt;
 class RoseTowerArt extends rose_tower_1.RoseTower {
     constructor() {
         super(...arguments);

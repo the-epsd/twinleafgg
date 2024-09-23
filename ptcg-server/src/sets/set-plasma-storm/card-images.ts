@@ -3,6 +3,7 @@ import { Bicycle } from './bicycle';
 import { Colress } from './colress';
 import { Donphan } from './donphan';
 import { DowsingMachine } from './dowsing-machine';
+import { Ether } from './ether';
 import { Gallade } from './gallade';
 import { HypnotoxicLaser } from './hypnotoxic-laser';
 import { Kirlia } from './kirlia';
@@ -35,6 +36,10 @@ export class EscapeRopeArt extends EscapeRope {
   public set = 'PLS';
   public setNumber = '120';
   public fullName = 'Escape Rope PLS';
+}
+
+export class EtherArt extends Ether {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PLS/PLS_121s_R_EN.png';
 }
 
 export class GalladeArt extends Gallade {

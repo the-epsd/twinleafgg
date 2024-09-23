@@ -12,7 +12,9 @@ import { LysandresTrumpCard } from './lysandres-trump-card';
 import { MysteryEnergy } from './mystery-energy';
 import { Pumpkaboo } from './pumpkaboo';
 import { Regigigas } from './regigigas';
+import { RoboSubstitute } from './robo-substitutue';
 import { SteelShelter } from './steel-shelter';
+import { TargetWhistle } from './target-whistle';
 import { VsSeeker } from './vs-seeker';
 import { Wobbuffet } from './wobbuffet';
 
@@ -72,8 +74,16 @@ export class RegigigasArt extends Regigigas {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PHF/PHF_086_R_EN.png';
 }
 
+export class RoboSubstituteArt extends RoboSubstitute {
+    public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PHF/PHF_102_R_EN.png';
+}
+
 export class SteelShelterArt extends SteelShelter {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PHF/PHF_105_R_EN.png';
+}
+
+export class TargetWhistleArt extends TargetWhistle {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PHF/PHF_106_R_EN.png';
 }
 
 export class VsSeekerArt extends VsSeeker {

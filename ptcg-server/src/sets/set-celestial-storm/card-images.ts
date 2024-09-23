@@ -8,6 +8,7 @@ import { Delcatty } from './delcatty';
 import { ElectrodeGX } from './electrode-gx';
 import { Fisherman } from './fisherman';
 import { HustleBelt } from './hustle-belt';
+import { LastChancePotion } from './last-chance-potion';
 import { Magcargo } from './magcargo';
 import { Marshtomp } from './marshtomp';
 import { Mudkip } from './mudkip';
@@ -38,6 +39,10 @@ export class FishermanArt extends Fisherman {
 
 export class HustleBeltArt extends HustleBelt {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CES/CES_134_R_EN.png';
+}
+
+export class LastChancePotionArt extends LastChancePotion {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CES/CES_135_R_EN.png';
 }
 
 export class MagcargoArt extends Magcargo {

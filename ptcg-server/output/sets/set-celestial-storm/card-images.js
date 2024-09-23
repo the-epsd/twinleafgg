@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WhismurArt = exports.TateAndLizaArt = exports.SwampertArt = exports.SlakothArt = exports.SlakingArt = exports.SableyeArt = exports.OricorioArt = exports.NuzleafArt = exports.MarshtompArt = exports.MudkipArt = exports.MagcargoArt = exports.HustleBeltArt = exports.FishermanArt = exports.ElectrodeGXArt = exports.DelcattyArt = exports.CopycatArt = exports.ApricornMakerArt = void 0;
+exports.WhismurArt = exports.TateAndLizaArt = exports.SwampertArt = exports.SlakothArt = exports.SlakingArt = exports.SableyeArt = exports.OricorioArt = exports.NuzleafArt = exports.MarshtompArt = exports.MudkipArt = exports.MagcargoArt = exports.LastChancePotionArt = exports.HustleBeltArt = exports.FishermanArt = exports.ElectrodeGXArt = exports.DelcattyArt = exports.CopycatArt = exports.ApricornMakerArt = void 0;
 const apricorn_maker_1 = require("./apricorn-maker");
 const CES_113_Slakoth_1 = require("./CES_113_Slakoth");
 const CES_115_Slaking_1 = require("./CES_115_Slaking");
@@ -11,6 +11,7 @@ const delcatty_1 = require("./delcatty");
 const electrode_gx_1 = require("./electrode-gx");
 const fisherman_1 = require("./fisherman");
 const hustle_belt_1 = require("./hustle-belt");
+const last_chance_potion_1 = require("./last-chance-potion");
 const magcargo_1 = require("./magcargo");
 const marshtomp_1 = require("./marshtomp");
 const mudkip_1 = require("./mudkip");
@@ -60,6 +61,13 @@ class HustleBeltArt extends hustle_belt_1.HustleBelt {
     }
 }
 exports.HustleBeltArt = HustleBeltArt;
+class LastChancePotionArt extends last_chance_potion_1.LastChancePotion {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CES/CES_135_R_EN.png';
+    }
+}
+exports.LastChancePotionArt = LastChancePotionArt;
 class MagcargoArt extends magcargo_1.Magcargo {
     constructor() {
         super(...arguments);

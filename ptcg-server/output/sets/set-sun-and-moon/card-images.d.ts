@@ -9,6 +9,7 @@ import { Herdier } from './herdier';
 import { Oranguru } from './oranguru';
 import { ProfessorKukui } from './professor-kukui';
 import { RainbowEnergy } from './rainbow-energy';
+import { Repel } from './repel';
 import { Fomantis } from './SUM_14_Fomantis';
 import { Golduck } from './SUM_29_Golduck';
 import { AlolanRattata } from './SUM_76_Alolan_Rattata';
@@ -62,6 +63,9 @@ export declare class RareCandyArt extends RareCandy {
     cardImage: string;
     setNumber: string;
     fullName: string;
+}
+export declare class RepelArt extends Repel {
+    cardImage: string;
 }
 export declare class TimerBallArt extends TimerBall {
     cardImage: string;

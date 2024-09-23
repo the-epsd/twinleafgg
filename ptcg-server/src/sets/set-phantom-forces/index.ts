@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { AZArt, BattleCompressorArt, BronzongArt, BronzorArt, CrobatArt, DimensionValleyArt, GolbatArt, JoltikArt, LampentArt, LitwickArt, LysandresTrumpCardArt, MysteryEnergyArt, PumpkabooArt, RegigigasArt, SteelShelterArt, VsSeekerArt, WobbuffetArt } from './card-images';
+import { AZArt, BattleCompressorArt, BronzongArt, BronzorArt, CrobatArt, DimensionValleyArt, GolbatArt, JoltikArt, LampentArt, LitwickArt, LysandresTrumpCardArt, MysteryEnergyArt, PumpkabooArt, RegigigasArt, RoboSubstituteArt, SteelShelterArt, TargetWhistleArt, VsSeekerArt, WobbuffetArt } from './card-images';
 
 export const setPhantomForces: Card[] = [
   new AZArt(),
@@ -16,8 +16,9 @@ export const setPhantomForces: Card[] = [
   new MysteryEnergyArt(),
   new PumpkabooArt(),
   new RegigigasArt(),
+  new RoboSubstituteArt(),
   new SteelShelterArt(),
+  new TargetWhistleArt(),
   new VsSeekerArt(),
   new WobbuffetArt(),
-
 ];

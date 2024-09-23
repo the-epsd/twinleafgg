@@ -1,6 +1,6 @@
 import { Card } from '../../game/store/card/card';
 
-import { ArcanineArt, AronArt, CleffaArt, DedenneGXArt, ElectromagneticRadarArt, EspurrArt, FireCrystalArt, GloomArt, GreensExplorationArt, HitmontopArt, KartanaArt, LaironArt, LickitungArt, LtSurgesStrategyArt, MarshadowArt, MartialArtsDojoArt, MeowthArt, MewArt, MewtwoArt, MismagiusArt, OddishArt, Pokegear30Art, PoliwagArt, PorygonZArt, SalazzleArt, SpiritombArt, TripleAccelerationEnergyArt, VolcanionArt, ZeraoraArt } from './card-images';
+import { ArcanineArt, AronArt, CleffaArt, DedenneGXArt, DuskStoneArt, ElectromagneticRadarArt, EspurrArt, FireCrystalArt, GloomArt, GreensExplorationArt, HitmontopArt, KartanaArt, LaironArt, LickitungArt, LtSurgesStrategyArt, MarshadowArt, MartialArtsDojoArt, MeowthArt, MewArt, MewtwoArt, MismagiusArt, OddishArt, Pokegear30Art, PoliwagArt, PorygonZArt, SalazzleArt, SpiritombArt, TripleAccelerationEnergyArt, VolcanionArt, ZeraoraArt } from './card-images';
 
 
 export const setUnbrokenBonds: Card[] = [
@@ -8,6 +8,7 @@ export const setUnbrokenBonds: Card[] = [
   new AronArt(),
   new CleffaArt(),
   new DedenneGXArt(),
+  new DuskStoneArt(),
   new ElectromagneticRadarArt(),
   new EspurrArt(),
   new FireCrystalArt(),

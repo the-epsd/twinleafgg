@@ -3,6 +3,7 @@ import { Bicycle } from './bicycle';
 import { Colress } from './colress';
 import { Donphan } from './donphan';
 import { DowsingMachine } from './dowsing-machine';
+import { Ether } from './ether';
 import { Gallade } from './gallade';
 import { HypnotoxicLaser } from './hypnotoxic-laser';
 import { Kirlia } from './kirlia';
@@ -30,6 +31,9 @@ export declare class EscapeRopeArt extends EscapeRope {
     set: string;
     setNumber: string;
     fullName: string;
+}
+export declare class EtherArt extends Ether {
+    cardImage: string;
 }
 export declare class GalladeArt extends Gallade {
     cardImage: string;
