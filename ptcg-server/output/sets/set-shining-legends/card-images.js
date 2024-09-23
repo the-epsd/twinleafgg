@@ -1,11 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WarpEnergyArt = exports.VenusaurArt = exports.ShiningMewArt = exports.ShiningGenesectArt = exports.MarshadowArt = void 0;
+exports.ZoroarkGXArt = exports.WarpEnergyArt = exports.VenusaurArt = exports.ShiningMewArt = exports.ShiningGenesectArt = exports.MarshadowArt = void 0;
 const marshadow_1 = require("./marshadow");
 const shining_genesect_1 = require("./shining-genesect");
 const shining_mew_1 = require("./shining-mew");
 const venusaur_1 = require("./venusaur");
 const warp_energy_1 = require("./warp-energy");
+const zoroark_gx_1 = require("./zoroark-gx");
 class MarshadowArt extends marshadow_1.Marshadow {
     constructor() {
         super(...arguments);
@@ -41,3 +42,10 @@ class WarpEnergyArt extends warp_energy_1.WarpEnergy {
     }
 }
 exports.WarpEnergyArt = WarpEnergyArt;
+class ZoroarkGXArt extends zoroark_gx_1.ZoroarkGX {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SLG/SLG_053_R_EN.png';
+    }
+}
+exports.ZoroarkGXArt = ZoroarkGXArt;

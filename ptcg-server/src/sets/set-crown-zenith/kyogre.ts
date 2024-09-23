@@ -1,4 +1,4 @@
-import { AttachEnergyPrompt, ChoosePokemonPrompt, PlayerType, SlotType, State, StateUtils, StoreLike } from '../../game';
+import { AttachEnergyPrompt, ChooseEnergyPrompt, ChoosePokemonPrompt, PlayerType, SlotType, State, StateUtils, StoreLike } from '../../game';
 import { GameMessage } from '../../game/game-message';
 import { CardType, EnergyType, Stage, SuperType } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
@@ -6,7 +6,6 @@ import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { DiscardEnergyPrompt } from '../../game/store/prompts/discard-energy-prompt';
 
 
 export class Kyogre extends PokemonCard {
@@ -56,17 +55,12 @@ export class Kyogre extends PokemonCard {
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
       state = store.reduceEffect(state, checkProvidedEnergy);
 
-      const isKyogre = effect.player.active.cards.includes(this);
-      const availableEnergy = player.active.cards.filter(card => card.superType === SuperType.ENERGY).length;
-      const minEnergy = isKyogre ? 3 : Math.min(3, availableEnergy);
-
-      return store.prompt(state, new DiscardEnergyPrompt(
+      state = store.prompt(state, new ChooseEnergyPrompt(
         player.id,
-        GameMessage.CHOOSE_ENERGIES_TO_HAND,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.ACTIVE],// Card source is target Pokemon
-        { superType: SuperType.ENERGY },
-        { min: minEnergy, max: 3, allowCancel: false }
+        GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
+        checkProvidedEnergy.energyMap,
+        [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
+        { allowCancel: false }
       ), transfers => {
         transfers = transfers || [];
         // cancelled by user

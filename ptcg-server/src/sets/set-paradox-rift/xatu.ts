@@ -47,7 +47,7 @@ export class Xatu extends PokemonCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '5';
+  public setNumber: string = '72';
 
   public name: string = 'Xatu';
 

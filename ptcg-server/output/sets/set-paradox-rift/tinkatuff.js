@@ -21,7 +21,7 @@ class Tinkatuff extends pokemon_card_1.PokemonCard {
                 cost: [card_types_1.CardType.PSYCHIC],
                 damage: 20,
                 damageCalculation: '+',
-                text: 'Your opponent\'s Active Pokémon is now Burned.'
+                text: 'If this Pokémon has any [M] Energy attached, this attack does 40 more damage.'
             }
         ];
         this.set = 'PAR';
@@ -39,7 +39,8 @@ class Tinkatuff extends pokemon_card_1.PokemonCard {
             let damage = 20;
             checkEnergy.energyMap.forEach(em => {
                 const energyCard = em.card;
-                if (energyCard instanceof game_1.EnergyCard && energyCard.provides.includes(card_types_1.CardType.METAL)) {
+                if (energyCard instanceof game_1.EnergyCard &&
+                    (energyCard.provides.includes(card_types_1.CardType.METAL) || energyCard.provides.includes(card_types_1.CardType.ANY))) {
                     damage += 40;
                 }
             });

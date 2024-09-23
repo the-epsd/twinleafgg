@@ -17,7 +17,7 @@ class IronThorns extends pokemon_card_1.PokemonCard {
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.attacks = [
             {
-                name: 'Destropressor',
+                name: 'Destructo-Press',
                 cost: [card_types_1.CardType.LIGHTNING, card_types_1.CardType.COLORLESS],
                 damage: 70,
                 damageCalculation: 'x',
@@ -40,11 +40,18 @@ class IronThorns extends pokemon_card_1.PokemonCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
             const deckTop = new game_1.CardList();
             player.deck.moveTo(deckTop, 5);
             // Filter for item cards
             const futureCards = deckTop.cards.filter(c => c instanceof pokemon_card_1.PokemonCard &&
                 c.tags.includes(card_types_1.CardTag.FUTURE));
+            if (futureCards.length > 0) {
+                state = store.prompt(state, new game_1.ShowCardsPrompt(opponent.id, game_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, futureCards), () => state);
+            }
+            if (futureCards.length > 0) {
+                state = store.prompt(state, new game_1.ShowCardsPrompt(player.id, game_1.GameMessage.CARDS_SHOWED_BY_EFFECT, futureCards), () => state);
+            }
             // Move item cards to hand
             deckTop.moveCardsTo(futureCards, player.discard);
             // Move all cards to discard

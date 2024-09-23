@@ -34,7 +34,7 @@ class Mewtwoex extends pokemon_card_1.PokemonCard {
         ];
         this.set = 'PAR';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '1';
+        this.setNumber = '58';
         this.name = 'Mewtwo ex';
         this.fullName = 'Mewtwo ex PAR';
     }

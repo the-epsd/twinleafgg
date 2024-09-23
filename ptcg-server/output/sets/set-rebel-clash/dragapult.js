@@ -25,7 +25,7 @@ class Dragapult extends pokemon_card_1.PokemonCard {
         this.attacks = [
             {
                 name: 'Phantom Force',
-                cost: [card_types_1.CardType.PSYCHIC],
+                cost: [card_types_1.CardType.PSYCHIC, card_types_1.CardType.PSYCHIC],
                 damage: 120,
                 text: 'Put 3 damage counters on your opponent\'s Benched Pokémon in any way you like.'
             }

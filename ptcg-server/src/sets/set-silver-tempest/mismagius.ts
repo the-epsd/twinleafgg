@@ -4,7 +4,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { DealDamageEffect, PutCountersEffect } from '../../game/store/effects/attack-effects';
 import { CheckHpEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class Mismagius extends PokemonCard {
@@ -63,6 +63,20 @@ export class Mismagius extends PokemonCard {
       this.damageDealt = true;
 
       if (pokemonCard === this && this.damageDealt === true) {
+
+
+        // Try to reduce PowerEffect, to check if something is blocking our ability
+        try {
+          const stub = new PowerEffect(player, {
+            name: 'test',
+            powerType: PowerType.ABILITY,
+            text: ''
+          }, this);
+          store.reduceEffect(state, stub);
+        } catch {
+          return state;
+        }
+
         const checkHpEffect = new CheckHpEffect(player, effect.target);
         store.reduceEffect(state, checkHpEffect);
 

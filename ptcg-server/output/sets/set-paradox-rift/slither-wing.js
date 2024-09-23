@@ -32,7 +32,7 @@ class SlitherWing extends pokemon_card_1.PokemonCard {
         ];
         this.set = 'PAR';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '32';
+        this.setNumber = '107';
         this.name = 'Slither Wing';
         this.fullName = 'Slither Wing PAR';
     }

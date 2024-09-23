@@ -29,7 +29,7 @@ export class Mightyena extends PokemonCard {
       cost: [CardType.DARK],
       damage: 30,
       damageCalculation: '+',
-      text: 'This attack does 90 more damage for each of your Benched Mightyena.'
+      text: 'If Mightyena is on your Bench, this attack does 90 more damage.'
     },
     {
       name: 'Corner',
@@ -52,13 +52,14 @@ export class Mightyena extends PokemonCard {
   public readonly DEFENDING_POKEMON_CANNOT_RETREAT_MARKER = 'DEFENDING_POKEMON_CANNOT_RETREAT_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
 
       const benchPokemon = player.bench.map(b => b.getPokemonCard()).filter(card => card !== undefined) as PokemonCard[];
-      const mightyenasInPlay = benchPokemon.filter(card => card.name == 'Mightyena');
+      const mightyenasOnBench = benchPokemon.filter(card => card.name === 'Mightyena');
 
-      if (mightyenasInPlay) {
+      if (mightyenasOnBench.length > 0) {
         effect.damage += 90;
       }
     }

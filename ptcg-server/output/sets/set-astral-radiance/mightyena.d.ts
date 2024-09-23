@@ -12,7 +12,7 @@ export declare class Mightyena extends PokemonCard {
     }[];
     resistance: never[];
     retreat: CardType[];
-    abilities: {
+    powers: {
         name: string;
         powerType: PowerType;
         text: string;

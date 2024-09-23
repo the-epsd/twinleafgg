@@ -45,7 +45,7 @@ export class BruteBonnet extends PokemonCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '53';
+  public setNumber: string = '123';
 
   public name: string = 'Brute Bonnet';
 

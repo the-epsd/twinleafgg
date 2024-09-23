@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, CardList, ShuffleDeckPrompt } from '../../game';
+import { StoreLike, State, CardList, ShuffleDeckPrompt, GameMessage, ShowCardsPrompt, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 
@@ -22,7 +22,7 @@ export class IronThorns extends PokemonCard {
 
   public attacks = [
     {
-      name: 'Destropressor',
+      name: 'Destructo-Press',
       cost: [CardType.LIGHTNING, CardType.COLORLESS],
       damage: 70,
       damageCalculation: 'x',
@@ -52,6 +52,7 @@ export class IronThorns extends PokemonCard {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
 
       const deckTop = new CardList();
       player.deck.moveTo(deckTop, 5);
@@ -61,6 +62,20 @@ export class IronThorns extends PokemonCard {
         c instanceof PokemonCard &&
         c.tags.includes(CardTag.FUTURE)
       );
+
+      if (futureCards.length > 0) {
+        state = store.prompt(state, new ShowCardsPrompt(
+          opponent.id,
+          GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
+          futureCards), () => state);
+      }
+
+      if (futureCards.length > 0) {
+        state = store.prompt(state, new ShowCardsPrompt(
+          player.id,
+          GameMessage.CARDS_SHOWED_BY_EFFECT,
+          futureCards), () => state);
+      }
 
       // Move item cards to hand
       deckTop.moveCardsTo(futureCards, player.discard);

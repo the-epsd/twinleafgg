@@ -19,7 +19,7 @@ export class Jirachi extends PokemonCard {
 
   public resistance = [{ type: CardType.GRASS, value: -30 }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public powers = [{
     name: 'Stellar Veil',
@@ -30,7 +30,7 @@ export class Jirachi extends PokemonCard {
 
   public attacks = [{
     name: 'Charge Energy',
-    cost: [ CardType.COLORLESS ],
+    cost: [CardType.COLORLESS],
     damage: 0,
     text: 'Search your deck for up to 2 Basic Energy cards, reveal them, and put them into your hand. Then, shuffle your deck.'
   }
@@ -40,7 +40,7 @@ export class Jirachi extends PokemonCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '42';
+  public setNumber: string = '126';
 
   public name: string = 'Jirachi';
 
@@ -76,11 +76,11 @@ export class Jirachi extends PokemonCard {
         // Try to reduce PowerEffect, to check if something is blocking our ability
         try {
           const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
+            name: 'test',
+            powerType: PowerType.ABILITY,
+            text: ''
+          }, this);
+          store.reduceEffect(state, stub);
         } catch {
           return state;
         }

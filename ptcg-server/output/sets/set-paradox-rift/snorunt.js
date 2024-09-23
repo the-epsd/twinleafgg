@@ -23,7 +23,7 @@ class Snorunt extends pokemon_card_1.PokemonCard {
         ];
         this.set = 'PAR';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '5';
+        this.setNumber = '37';
         this.name = 'Snorunt';
         this.fullName = 'Snorunt PAR';
     }

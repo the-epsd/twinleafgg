@@ -63,7 +63,7 @@ class TechnoRadar extends trainer_card_1.TrainerCard {
         this.regulationMark = 'G';
         this.set = 'PAR';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '60';
+        this.setNumber = '180';
         this.name = 'Techno Radar';
         this.fullName = 'Techno Radar PAR';
         this.text = 'Yau can play this card only if you discard another card from your hand. ' +

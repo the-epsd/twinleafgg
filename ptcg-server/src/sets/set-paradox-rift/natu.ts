@@ -35,7 +35,7 @@ export class Natu extends PokemonCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '4';
+  public setNumber: string = '71';
 
   public name: string = 'Natu';
 

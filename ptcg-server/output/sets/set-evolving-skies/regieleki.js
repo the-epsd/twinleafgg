@@ -47,7 +47,7 @@ class Regieleki extends pokemon_card_1.PokemonCard {
             const benched = opponent.bench.reduce((left, b) => left + (b.cards.length ? 1 : 0), 0);
             const min = Math.min(2, benched);
             const max = Math.min(2, benched);
-            return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH], { min, max, allowCancel: true }), selected => {
+            return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH], { min, max, allowCancel: false }), selected => {
                 const targets = selected || [];
                 targets.forEach(target => {
                     const damageEffect = new attack_effects_1.PutDamageEffect(effect, 40);

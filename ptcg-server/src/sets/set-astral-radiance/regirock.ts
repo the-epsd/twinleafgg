@@ -11,13 +11,21 @@ function* useRegiGate(next: Function, store: StoreLike, state: State,
   const slots: PokemonCardList[] = player.bench.filter(b => b.cards.length === 0);
   const max = Math.min(slots.length, 1);
 
+  // Check if bench has open slots
+  const openSlots = player.bench.filter(b => b.cards.length === 0);
+
+  if (openSlots.length === 0) {
+    // No open slots, throw error
+    throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+  }
+
   let cards: Card[] = [];
   yield store.prompt(state, new ChooseCardsPrompt(
     player.id,
     GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
     player.deck,
     { superType: SuperType.POKEMON, stage: Stage.BASIC },
-    { min: 0, max, allowCancel: true }
+    { min: 0, max, allowCancel: false }
   ), selected => {
     cards = selected || [];
     next();

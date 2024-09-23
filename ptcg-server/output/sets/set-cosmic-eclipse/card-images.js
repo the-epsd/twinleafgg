@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WishiwashiArt = exports.TagCallArt = exports.StoutlandArt = exports.SlugmaArt = exports.SawsbuckArt = exports.ProfessorOaksSetupArt = exports.PikachuArt = exports.PhioneArt = exports.NatuArt = exports.LillipupArt = exports.LilliesPokeDollArt = exports.LanasFishingRodArt = exports.MallowAndLanaArt = exports.GuzzlordArt = exports.GuzmaAndHalaArt = exports.GolettArt = exports.DuskullArt = exports.DusclopsArt = exports.DrawEnergyArt = exports.CynthiaAndCaitlinArt = exports.ClayArt = exports.ChaoticSwellArt = exports.BuzzwoleArt = exports.BlacephalonArt = exports.BellelbaAndBrycenManArt = exports.ArceusDialgaPalkiaGXArt = void 0;
+exports.WishiwashiArt = exports.UltraNecrozmaArt = exports.TagCallArt = exports.StoutlandArt = exports.SlugmaArt = exports.SawsbuckArt = exports.ProfessorOaksSetupArt = exports.PikachuArt = exports.PhioneArt = exports.NatuArt = exports.LillipupArt = exports.LilliesPokeDollArt = exports.LanasFishingRodArt = exports.MallowAndLanaArt = exports.GuzzlordArt = exports.GuzmaAndHalaArt = exports.GolettArt = exports.DuskullArt = exports.DusclopsArt = exports.DrawEnergyArt = exports.CynthiaAndCaitlinArt = exports.ClayArt = exports.ChaoticSwellArt = exports.BuzzwoleArt = exports.BlacephalonArt = exports.BellelbaAndBrycenManArt = exports.ArceusDialgaPalkiaGXArt = void 0;
 const arceus_dialga_palkia_gx_1 = require("./arceus-dialga-palkia-gx");
 const bellelba_and_brycen_man_1 = require("./bellelba-and-brycen-man");
 const blacephalon_1 = require("./blacephalon");
@@ -27,6 +27,7 @@ const natu_1 = require("./natu");
 const professor_oaks_setup_1 = require("./professor-oaks-setup");
 const slugma_1 = require("./slugma");
 const tag_call_1 = require("./tag-call");
+const ultra_necrozma_1 = require("./ultra-necrozma");
 class ArceusDialgaPalkiaGXArt extends arceus_dialga_palkia_gx_1.ArceusDialgaPalkiaGX {
     constructor() {
         super(...arguments);
@@ -202,6 +203,13 @@ class TagCallArt extends tag_call_1.TagCall {
     }
 }
 exports.TagCallArt = TagCallArt;
+class UltraNecrozmaArt extends ultra_necrozma_1.UltraNecrozma {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CEC/CEC_164_R_EN.png';
+    }
+}
+exports.UltraNecrozmaArt = UltraNecrozmaArt;
 class WishiwashiArt extends CEC_62_Wishiwashi_1.Wishiwashi {
     constructor() {
         super(...arguments);

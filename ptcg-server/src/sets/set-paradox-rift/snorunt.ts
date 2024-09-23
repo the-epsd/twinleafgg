@@ -31,7 +31,7 @@ export class Snorunt extends PokemonCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '5';
+  public setNumber: string = '37';
 
   public name: string = 'Snorunt';
 

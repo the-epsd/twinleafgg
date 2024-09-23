@@ -76,17 +76,16 @@ export class Manaphy extends PokemonCard {
         { min: 0, max: 2, allowCancel: true }
       ), selected => {
         cards = selected || [];
-      });
 
-      // Operation canceled by the user
-      if (cards.length === 0) {
-        return state;
-      }
+        // Operation canceled by the user
+        if (cards.length === 0) {
+          return state;
+        }
 
-
-      cards.forEach((card, index) => {
-        opponent.hand.moveCardTo(card, slots[index]);
-        slots[index].pokemonPlayedTurn = state.turn;
+        cards.forEach((card, index) => {
+          opponent.hand.moveCardTo(card, slots[index]);
+          slots[index].pokemonPlayedTurn = state.turn;
+        });
       });
     }
 

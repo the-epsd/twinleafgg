@@ -42,7 +42,7 @@ export class SlitherWing extends PokemonCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '32';
+  public setNumber: string = '107';
 
   public name: string = 'Slither Wing';
 

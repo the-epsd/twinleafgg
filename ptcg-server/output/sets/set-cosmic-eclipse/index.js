@@ -28,5 +28,6 @@ exports.setCosmicEclipse = [
     new card_images_1.SlugmaArt(),
     new card_images_1.StoutlandArt(),
     new card_images_1.TagCallArt(),
+    new card_images_1.UltraNecrozmaArt(),
     new card_images_1.WishiwashiArt()
 ];

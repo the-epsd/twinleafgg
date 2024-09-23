@@ -15,7 +15,7 @@ class ProfessorTurosScenario extends trainer_card_1.TrainerCard {
         this.regulationMark = 'G';
         this.set = 'PAR';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '65';
+        this.setNumber = '171';
         this.name = 'Professor Turo\'s Scenario';
         this.fullName = 'Professor Turo\'s Scenario PAR';
         this.text = 'Put 1 of your Pokémon into your hand. (Discard all attached cards.)';

@@ -14,7 +14,7 @@ class AncientBoosterEnergyCapsule extends trainer_card_1.TrainerCard {
         this.tags = [card_types_1.CardTag.ANCIENT];
         this.set = 'PAR';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '61';
+        this.setNumber = '159';
         this.name = 'Ancient Booster Energy Capsule';
         this.fullName = 'Ancient Booster Energy Capsule PAR';
         this.text = 'The Ancient Pokémon this card is attached to gets +60 HP, recovers from all Special Conditions, and can\'t be affected by any Special Conditions.';

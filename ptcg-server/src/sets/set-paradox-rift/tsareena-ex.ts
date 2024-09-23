@@ -45,7 +45,7 @@ export class Tsareenaex extends PokemonCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '20';
+  public setNumber: string = '46';
 
   public name: string = 'Tsareena ex';
 

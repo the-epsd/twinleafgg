@@ -19,11 +19,11 @@ export class Gabite extends PokemonCard {
 
   public weakness = [{ type: CardType.GRASS }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [{
     name: 'Power Blast',
-    cost: [ CardType.FIGHTING ],
+    cost: [CardType.FIGHTING],
     damage: 50,
     text: 'Discard an Energy from this Pokémon.',
     effect: (store: StoreLike, state: State, effect: AttackEffect) => {
@@ -35,7 +35,7 @@ export class Gabite extends PokemonCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '28';
+  public setNumber: string = '95';
 
   public name: string = 'Gabite';
 

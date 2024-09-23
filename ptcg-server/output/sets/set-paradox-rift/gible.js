@@ -21,7 +21,7 @@ class Gible extends pokemon_card_1.PokemonCard {
         ];
         this.set = 'PAR';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '27';
+        this.setNumber = '94';
         this.name = 'Gible';
         this.fullName = 'Gible PAR';
     }

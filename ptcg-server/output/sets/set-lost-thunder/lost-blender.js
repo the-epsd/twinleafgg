@@ -30,24 +30,17 @@ class LostBlender extends trainer_card_1.TrainerCard {
             // We will discard this card after prompt confirmation
             effect.preventDefault = true;
             player.hand.moveCardTo(effect.trainerCard, player.supporter);
-            // prepare card list without Junk Arm
-            const handTemp = new game_1.CardList();
-            handTemp.cards = player.hand.cards;
-            store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, handTemp, {}, { min: 2, max: 2, allowCancel: false }), selected => {
+            store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, player.hand, {}, { min: 2, max: 2, allowCancel: false }), selected => {
                 cards = selected || [];
                 // Operation canceled by the user
                 if (cards.length === 0) {
                     return state;
                 }
-                cards.forEach((card, index) => {
-                    card.cards.moveTo(player.lostzone);
-                    store.log(state, game_1.GameLog.LOG_PLAYER_PUTS_CARD_IN_LOST_ZONE, { name: player.name, card: card.name });
-                });
+                player.hand.moveCardsTo(cards, player.discard);
                 player.deck.moveTo(player.hand, 1);
                 player.supporter.moveCardTo(this, player.discard);
                 store.log(state, game_1.GameLog.LOG_PLAYER_DRAWS_CARD, { name: player.name });
             });
-            return state;
         }
         return state;
     }

@@ -52,7 +52,7 @@ class Gimmighoul extends pokemon_card_1.PokemonCard {
         ];
         this.set = 'PAR';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '20';
+        this.setNumber = '87';
         this.name = 'Gimmighoul';
         this.fullName = 'Gimmighoul PAR';
     }

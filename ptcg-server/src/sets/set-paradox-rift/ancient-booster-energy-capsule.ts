@@ -19,7 +19,7 @@ export class AncientBoosterEnergyCapsule extends TrainerCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '61';
+  public setNumber: string = '159';
 
   public name: string = 'Ancient Booster Energy Capsule';
 

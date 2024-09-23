@@ -24,6 +24,7 @@ import { Natu } from './natu';
 import { ProfessorOaksSetup } from './professor-oaks-setup';
 import { Slugma } from './slugma';
 import { TagCall } from './tag-call';
+import { UltraNecrozma } from './ultra-necrozma';
 export declare class ArceusDialgaPalkiaGXArt extends ArceusDialgaPalkiaGX {
     cardImage: string;
 }
@@ -97,6 +98,9 @@ export declare class StoutlandArt extends Stoutland {
     cardImage: string;
 }
 export declare class TagCallArt extends TagCall {
+    cardImage: string;
+}
+export declare class UltraNecrozmaArt extends UltraNecrozma {
     cardImage: string;
 }
 export declare class WishiwashiArt extends Wishiwashi {

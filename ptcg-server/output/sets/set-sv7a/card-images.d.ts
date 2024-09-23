@@ -24,6 +24,7 @@ import { Smoochum } from './smoochum';
 import { TeraOrb } from './tera-orb';
 import { Trapinch } from './trapinch';
 import { Vibrava } from './vibrava';
+import { Vulpix } from './vulpix';
 export declare class PalkiaArt extends Palkia {
     cardImage: string;
 }
@@ -100,5 +101,8 @@ export declare class ExeggcuteArt extends Exeggcute {
     cardImage: string;
 }
 export declare class AlolanExeggutorexArt extends AlolanExeggutorex {
+    cardImage: string;
+}
+export declare class VulpixArt extends Vulpix {
     cardImage: string;
 }

@@ -1,4 +1,4 @@
-import { Card, CardList, ChooseCardsPrompt, GameError, GameLog, GameMessage } from '../../game';
+import { Card, ChooseCardsPrompt, GameError, GameLog, GameMessage } from '../../game';
 import { TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
@@ -43,35 +43,27 @@ export class LostBlender extends TrainerCard {
       effect.preventDefault = true;
       player.hand.moveCardTo(effect.trainerCard, player.supporter);
 
-      // prepare card list without Junk Arm
-      const handTemp = new CardList();
-      handTemp.cards = player.hand.cards;
-
       store.prompt(state, new ChooseCardsPrompt(
         player.id,
         GameMessage.CHOOSE_CARD_TO_DISCARD,
-        handTemp,
+        player.hand,
         {},
         { min: 2, max: 2, allowCancel: false }
       ), selected => {
         cards = selected || [];
+
         // Operation canceled by the user
         if (cards.length === 0) {
           return state;
         }
 
-        cards.forEach((card, index) => {
-          card.cards.moveTo(player.lostzone);
-          store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_LOST_ZONE, { name: player.name, card: card.name });
-        });
+        player.hand.moveCardsTo(cards, player.discard);
 
         player.deck.moveTo(player.hand, 1);
         player.supporter.moveCardTo(this, player.discard);
 
         store.log(state, GameLog.LOG_PLAYER_DRAWS_CARD, { name: player.name });
       });
-
-      return state;
     }
     return state;
   }

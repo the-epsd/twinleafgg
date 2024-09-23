@@ -34,7 +34,7 @@ class RoaringMoonex extends pokemon_card_1.PokemonCard {
         ];
         this.set = 'PAR';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '54';
+        this.setNumber = '124';
         this.name = 'Roaring Moon ex';
         this.fullName = 'Roaring Moon ex PAR';
     }

@@ -13,11 +13,11 @@ export class Gible extends PokemonCard {
 
   public weakness = [{ type: CardType.GRASS }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [{
     name: 'Bite',
-    cost: [ CardType.FIGHTING ],
+    cost: [CardType.FIGHTING],
     damage: 20,
     text: ''
   }
@@ -27,7 +27,7 @@ export class Gible extends PokemonCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '27';
+  public setNumber: string = '94';
 
   public name: string = 'Gible';
 
