@@ -32,7 +32,7 @@ export class Dragapult extends PokemonCard {
     [
       {
         name: 'Phantom Force',
-        cost: [CardType.PSYCHIC],
+        cost: [CardType.PSYCHIC, CardType.PSYCHIC],
         damage: 120,
         text: 'Put 3 damage counters on your opponent\'s Benched Pokémon in any way you like.'
       }

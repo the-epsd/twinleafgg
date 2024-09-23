@@ -11,7 +11,7 @@ export class Meloetta extends PokemonCard {
 
   public regulationMark = 'E';
 
-  public tags = [ CardTag.FUSION_STRIKE ];
+  public tags = [CardTag.FUSION_STRIKE];
 
   public cardType: CardType = CardType.PSYCHIC;
 
@@ -21,12 +21,12 @@ export class Meloetta extends PokemonCard {
 
   public resistance = [{ type: CardType.FIGHTING, value: -30 }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Melodius Echo',
-      cost: [ CardType.COLORLESS ],
+      cost: [CardType.PSYCHIC, CardType.COLORLESS],
       damage: 70,
       text: 'This attack does 70 damage for each Fusion Strike Energy ' +
         'attached to all of your Pokémon.'
@@ -62,5 +62,5 @@ export class Meloetta extends PokemonCard {
     }
     return state;
   }
-  
+
 }

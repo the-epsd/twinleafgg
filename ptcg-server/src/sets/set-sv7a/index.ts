@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { HoOhArt, AzumarillArt, PerfectMixerArt, CherishCarrierArt, MarillArt, TeraOrbArt, TrapinchArt, VibravaArt, FlygonexArt, CounterGainArt, HelperBellArt, DuraludonArt, ArchaludonexArt, MegatonBlowerArt, SmoochumArt, CelebrationFanfareArt, DragonsElixirArt, DraytonArt, RichEnergyArt, KlefkiArt, ExeggcuteArt, AlolanExeggutorexArt, PalkiaArt } from './card-images';
+import { HoOhArt, AzumarillArt, PerfectMixerArt, CherishCarrierArt, MarillArt, TeraOrbArt, TrapinchArt, VibravaArt, FlygonexArt, CounterGainArt, HelperBellArt, DuraludonArt, ArchaludonexArt, MegatonBlowerArt, SmoochumArt, CelebrationFanfareArt, DragonsElixirArt, DraytonArt, RichEnergyArt, KlefkiArt, ExeggcuteArt, AlolanExeggutorexArt, PalkiaArt, VulpixArt } from './card-images';
 
 export const setSV7a: Card[] = [
   new PalkiaArt(),
@@ -25,4 +25,5 @@ export const setSV7a: Card[] = [
   new KlefkiArt(),
   new ExeggcuteArt(),
   new AlolanExeggutorexArt(),
+  new VulpixArt(),
 ];

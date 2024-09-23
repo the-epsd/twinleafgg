@@ -54,7 +54,7 @@ export class Gholdengoex extends PokemonCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '50';
+  public setNumber: string = '139';
 
   public name: string = 'Gholdengo ex';
 

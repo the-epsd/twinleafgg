@@ -6,6 +6,7 @@ const card_types_1 = require("../../game/store/card/card-types");
 const check_effects_1 = require("../../game/store/effects/check-effects");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
+const attack_effects_1 = require("../../game/store/effects/attack-effects");
 class Mightyena extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -16,7 +17,7 @@ class Mightyena extends pokemon_card_1.PokemonCard {
         this.weakness = [{ type: card_types_1.CardType.GRASS }];
         this.resistance = [];
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
-        this.abilities = [{
+        this.powers = [{
                 name: 'Hustle Bark',
                 powerType: game_1.PowerType.ABILITY,
                 text: 'If your opponent has any Pokémon VMAX in play, this Pokémon\'s attacks cost [C][C][C] less.'
@@ -50,8 +51,14 @@ class Mightyena extends pokemon_card_1.PokemonCard {
                 return state;
             }
             const opponent = game_1.StateUtils.getOpponent(state, effect.player);
-            const opponentActive = opponent.active.getPokemonCard();
-            if (opponentActive && opponentActive.tags.includes(card_types_1.CardTag.POKEMON_VMAX)) {
+            let hasVmaxPokemon = false;
+            opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList) => {
+                const pokemonCard = cardList.getPokemonCard();
+                if (pokemonCard && pokemonCard.tags.includes(card_types_1.CardTag.POKEMON_VMAX)) {
+                    hasVmaxPokemon = true;
+                }
+            });
+            if (hasVmaxPokemon) {
                 const costToRemove = 3;
                 for (let i = 0; i < costToRemove; i++) {
                     const index = effect.cost.indexOf(card_types_1.CardType.COLORLESS);
@@ -60,6 +67,12 @@ class Mightyena extends pokemon_card_1.PokemonCard {
                     }
                 }
             }
+        }
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+            const player = effect.player;
+            const dealDamage = new attack_effects_1.DealDamageEffect(effect, 50);
+            dealDamage.target = player.active;
+            return store.reduceEffect(state, dealDamage);
         }
         return state;
     }

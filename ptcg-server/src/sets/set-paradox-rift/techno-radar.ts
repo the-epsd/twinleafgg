@@ -48,7 +48,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
     player.id,
     GameMessage.CHOOSE_CARD_TO_DISCARD,
     handTemp,
-    { },
+    {},
     { min: 1, max: 1, allowCancel: false }
   ), selected => {
     cards = selected || [];
@@ -66,7 +66,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
     player.id,
     GameMessage.CHOOSE_CARD_TO_HAND,
     player.deck,
-    { superType: SuperType.POKEMON},
+    { superType: SuperType.POKEMON },
     { min: 0, max: 2, allowCancel: false, blocked }
   ), selected => {
     cards = selected || [];
@@ -99,8 +99,8 @@ export class TechnoRadar extends TrainerCard {
   public set: string = 'PAR';
 
   public cardImage: string = 'assets/cardback.png';
-  
-  public setNumber: string = '60';
+
+  public setNumber: string = '180';
 
   public name: string = 'Techno Radar';
 

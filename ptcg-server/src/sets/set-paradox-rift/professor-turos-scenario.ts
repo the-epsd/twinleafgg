@@ -18,8 +18,8 @@ export class ProfessorTurosScenario extends TrainerCard {
   public set: string = 'PAR';
 
   public cardImage: string = 'assets/cardback.png';
-  
-  public setNumber: string = '65';
+
+  public setNumber: string = '171';
 
   public name: string = 'Professor Turo\'s Scenario';
 
@@ -41,12 +41,12 @@ export class ProfessorTurosScenario extends TrainerCard {
       player.hand.moveCardTo(effect.trainerCard, player.supporter);
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
-  
+
       return store.prompt(state, new ChoosePokemonPrompt(
         player.id,
         GameMessage.CHOOSE_POKEMON_TO_PICK_UP,
         PlayerType.BOTTOM_PLAYER,
-        [ SlotType.ACTIVE, SlotType.BENCH ],
+        [SlotType.ACTIVE, SlotType.BENCH],
         { allowCancel: false }
       ), result => {
         const cardList = result.length > 0 ? result[0] : null;
@@ -57,13 +57,12 @@ export class ProfessorTurosScenario extends TrainerCard {
           cardList.clearEffects();
           cardList.removeSpecialCondition(SpecialCondition.ABILITY_USED);
           player.supporter.moveCardTo(effect.trainerCard, player.discard);
-          
+
         }
       });
     }
-  
+
     return state;
   }
-  
+
 }
-  

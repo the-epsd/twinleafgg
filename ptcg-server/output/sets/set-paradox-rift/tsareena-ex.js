@@ -34,7 +34,7 @@ class Tsareenaex extends pokemon_card_1.PokemonCard {
         ];
         this.set = 'PAR';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '20';
+        this.setNumber = '46';
         this.name = 'Tsareena ex';
         this.fullName = 'Tsareena ex PAR';
     }

@@ -33,7 +33,7 @@ class ScreamTail extends pokemon_card_1.PokemonCard {
         ];
         this.set = 'PAR';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '32';
+        this.setNumber = '86';
         this.name = 'Scream Tail';
         this.fullName = 'Scream Tail PAR';
     }

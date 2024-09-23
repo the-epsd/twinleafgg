@@ -15,12 +15,12 @@ export class Bounsweet extends PokemonCard {
 
   public weakness = [{ type: CardType.FIRE }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Quick Blow',
-      cost: [ CardType.GRASS ],
+      cost: [CardType.GRASS],
       damage: 10,
       text: 'Flip a coin. If heads, this attack does 20 more damage.'
     }
@@ -32,7 +32,7 @@ export class Bounsweet extends PokemonCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '6';
+  public setNumber: string = '8';
 
   public name: string = 'Bounsweet';
 

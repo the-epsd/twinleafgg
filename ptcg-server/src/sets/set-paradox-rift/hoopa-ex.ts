@@ -78,10 +78,10 @@ export class Hoopaex extends PokemonCard {
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
         totalEnergy += cardList.cards.filter(c => c instanceof EnergyCard).length;
       });
-      effect.damage += totalEnergy * 50;
+      effect.damage = totalEnergy * 50;
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
 
       // Check marker
       if (effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {

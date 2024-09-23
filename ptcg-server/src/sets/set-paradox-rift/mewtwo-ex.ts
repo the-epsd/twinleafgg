@@ -42,7 +42,7 @@ export class Mewtwoex extends PokemonCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '1';
+  public setNumber: string = '58';
 
   public name: string = 'Mewtwo ex';
 

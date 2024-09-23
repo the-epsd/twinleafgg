@@ -26,6 +26,7 @@ import { Natu } from './natu';
 import { ProfessorOaksSetup } from './professor-oaks-setup';
 import { Slugma } from './slugma';
 import { TagCall } from './tag-call';
+import { UltraNecrozma } from './ultra-necrozma';
 
 export class ArceusDialgaPalkiaGXArt extends ArceusDialgaPalkiaGX {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CEC/CEC_156_R_EN.png';
@@ -125,6 +126,10 @@ export class StoutlandArt extends Stoutland {
 
 export class TagCallArt extends TagCall {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CEC/CEC_206_R_EN_LG.png';
+}
+
+export class UltraNecrozmaArt extends UltraNecrozma {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CEC/CEC_164_R_EN.png';
 }
 
 export class WishiwashiArt extends Wishiwashi {

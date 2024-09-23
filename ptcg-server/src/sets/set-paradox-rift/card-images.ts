@@ -1,5 +1,5 @@
 import { AncientBoosterEnergyCapsule } from './ancient-booster-energy-capsule';
-import { Bombirdierex } from './bombirdier';
+import { Bombirdierex } from './bombirdier-ex';
 import { Bounsweet } from './bounsweet';
 import { BruteBonnet } from './brute-bonnet';
 import { Charcadet } from './charcadet';

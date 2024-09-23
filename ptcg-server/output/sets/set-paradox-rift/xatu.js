@@ -34,7 +34,7 @@ class Xatu extends pokemon_card_1.PokemonCard {
         ];
         this.set = 'PAR';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '5';
+        this.setNumber = '72';
         this.name = 'Xatu';
         this.fullName = 'Xatu PAR';
         this.AKASHIC_SENSE_MARKER = 'AKASHIC_SENSE_MARKER';

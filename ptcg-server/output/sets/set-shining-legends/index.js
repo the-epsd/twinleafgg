@@ -9,5 +9,6 @@ exports.setShiningLegends = [
     new card_images_1.ShiningGenesectArt(),
     new card_images_1.ShiningMewArt(),
     new card_images_1.VenusaurArt(),
-    new card_images_1.WarpEnergyArt()
+    new card_images_1.WarpEnergyArt(),
+    new card_images_1.ZoroarkGXArt(),
 ];

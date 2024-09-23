@@ -1,9 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { CheckAttackCostEffect } from '../../game/store/effects/check-effects';
-import { PowerType, StoreLike, State, StateUtils } from '../../game';
+import { PowerType, StoreLike, State, StateUtils, PlayerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 
 export class Mightyena extends PokemonCard {
 
@@ -21,7 +22,7 @@ export class Mightyena extends PokemonCard {
 
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
-  public abilities = [{
+  public powers = [{
     name: 'Hustle Bark',
     powerType: PowerType.ABILITY,
     text: 'If your opponent has any Pokémon VMAX in play, this Pokémon\'s attacks cost [C][C][C] less.'
@@ -65,8 +66,15 @@ export class Mightyena extends PokemonCard {
 
       const opponent = StateUtils.getOpponent(state, effect.player);
 
-      const opponentActive = opponent.active.getPokemonCard();
-      if (opponentActive && opponentActive.tags.includes(CardTag.POKEMON_VMAX)) {
+      let hasVmaxPokemon = false;
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
+        const pokemonCard = cardList.getPokemonCard();
+        if (pokemonCard && pokemonCard.tags.includes(CardTag.POKEMON_VMAX)) {
+          hasVmaxPokemon = true;
+        }
+      });
+
+      if (hasVmaxPokemon) {
 
         const costToRemove = 3;
 
@@ -77,6 +85,14 @@ export class Mightyena extends PokemonCard {
           }
         }
       }
+    }
+
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+      const player = effect.player;
+
+      const dealDamage = new DealDamageEffect(effect, 50);
+      dealDamage.target = player.active;
+      return store.reduceEffect(state, dealDamage);
     }
 
     return state;

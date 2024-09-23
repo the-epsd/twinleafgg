@@ -45,7 +45,7 @@ export class RoaringMoonex extends PokemonCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '54';
+  public setNumber: string = '124';
 
   public name: string = 'Roaring Moon ex';
 

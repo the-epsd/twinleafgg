@@ -36,7 +36,7 @@ class IronValiantex extends pokemon_card_1.PokemonCard {
         ];
         this.set = 'PAR';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '38';
+        this.setNumber = '89';
         this.name = 'Iron Valiant ex';
         this.fullName = 'Iron Valiant ex PAR';
         this.tachyonBits = 0;

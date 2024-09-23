@@ -65,7 +65,7 @@ export class Regieleki extends PokemonCard {
         GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
         PlayerType.TOP_PLAYER,
         [SlotType.BENCH],
-        { min, max, allowCancel: true },
+        { min, max, allowCancel: false },
       ), selected => {
         const targets = selected || [];
         targets.forEach(target => {

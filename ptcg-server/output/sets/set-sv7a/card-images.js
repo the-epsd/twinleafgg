@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AlolanExeggutorexArt = exports.ExeggcuteArt = exports.KlefkiArt = exports.RichEnergyArt = exports.DraytonArt = exports.DuskBallArt = exports.DragonsElixirArt = exports.DialgaArt = exports.CelebrationFanfareArt = exports.ArchaludonexArt = exports.DuraludonArt = exports.SmoochumArt = exports.CounterGainArt = exports.FlygonexArt = exports.VibravaArt = exports.TrapinchArt = exports.MegatonBlowerArt = exports.HelperBellArt = exports.TeraOrbArt = exports.MarillArt = exports.CherishCarrierArt = exports.PerfectMixerArt = exports.AzumarillArt = exports.HoOhArt = exports.BlackKyuremexArt = exports.PalkiaArt = void 0;
+exports.VulpixArt = exports.AlolanExeggutorexArt = exports.ExeggcuteArt = exports.KlefkiArt = exports.RichEnergyArt = exports.DraytonArt = exports.DuskBallArt = exports.DragonsElixirArt = exports.DialgaArt = exports.CelebrationFanfareArt = exports.ArchaludonexArt = exports.DuraludonArt = exports.SmoochumArt = exports.CounterGainArt = exports.FlygonexArt = exports.VibravaArt = exports.TrapinchArt = exports.MegatonBlowerArt = exports.HelperBellArt = exports.TeraOrbArt = exports.MarillArt = exports.CherishCarrierArt = exports.PerfectMixerArt = exports.AzumarillArt = exports.HoOhArt = exports.BlackKyuremexArt = exports.PalkiaArt = void 0;
 const counter_gain_1 = require("../set-lost-thunder/counter-gain");
 const alolan_exeggutor_ex_1 = require("./alolan-exeggutor-ex");
 const archaludon_ex_1 = require("./archaludon-ex");
@@ -27,6 +27,7 @@ const smoochum_1 = require("./smoochum");
 const tera_orb_1 = require("./tera-orb");
 const trapinch_1 = require("./trapinch");
 const vibrava_1 = require("./vibrava");
+const vulpix_1 = require("./vulpix");
 class PalkiaArt extends palkia_1.Palkia {
     constructor() {
         super(...arguments);
@@ -209,3 +210,10 @@ class AlolanExeggutorexArt extends alolan_exeggutor_ex_1.AlolanExeggutorex {
     }
 }
 exports.AlolanExeggutorexArt = AlolanExeggutorexArt;
+class VulpixArt extends vulpix_1.Vulpix {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpc/SVLS/SVLS_1_R_JP.png';
+    }
+}
+exports.VulpixArt = VulpixArt;

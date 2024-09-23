@@ -19,7 +19,7 @@ class Meloetta extends pokemon_card_1.PokemonCard {
         this.attacks = [
             {
                 name: 'Melodius Echo',
-                cost: [card_types_1.CardType.COLORLESS],
+                cost: [card_types_1.CardType.PSYCHIC, card_types_1.CardType.COLORLESS],
                 damage: 70,
                 text: 'This attack does 70 damage for each Fusion Strike Energy ' +
                     'attached to all of your Pokémon.'

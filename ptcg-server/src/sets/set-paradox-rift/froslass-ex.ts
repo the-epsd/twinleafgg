@@ -43,7 +43,7 @@ export class Froslassex extends PokemonCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '1';
+  public setNumber: string = '3';
 
   public name: string = 'Froslass ex';
 

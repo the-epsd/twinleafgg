@@ -50,21 +50,27 @@ export class Moltres extends PokemonCard {
         return state;
       }
 
-      const checkProvidedEnergy = new CheckProvidedEnergyEffect(player, player.active);
-      state = store.reduceEffect(state, checkProvidedEnergy);
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+        if (cardList.getPokemonCard() === this) {
 
-      checkProvidedEnergy.energyMap.forEach(energy => {
-        if (energy.provides.includes(CardType.FIRE)) {
-          effect.cost = [];
-          return state;
-        }
+          const checkProvidedEnergy = new CheckProvidedEnergyEffect(player, cardList);
+          state = store.reduceEffect(state, checkProvidedEnergy);
 
-        if (energy.provides.includes(CardType.ANY)) {
-          effect.cost = [];
-          return state;
+          checkProvidedEnergy.energyMap.forEach(energy => {
+            if (energy.provides.includes(CardType.FIRE)) {
+              effect.cost = [];
+              return state;
+            }
+
+            if (energy.provides.includes(CardType.ANY)) {
+              effect.cost = [];
+              return state;
+            }
+          });
         }
       });
     }
+
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;

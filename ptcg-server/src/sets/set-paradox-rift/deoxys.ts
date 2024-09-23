@@ -19,18 +19,18 @@ export class Deoxys extends PokemonCard {
 
   public resistance = [{ type: CardType.FIGHTING, value: -30 }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Psypunch',
-      cost: [ CardType.PSYCHIC ],
+      cost: [CardType.PSYCHIC],
       damage: 30,
       text: ''
     },
     {
       name: 'Genome Spiral',
-      cost: [ CardType.PSYCHIC, CardType.PSYCHIC, CardType.PSYCHIC ],
+      cost: [CardType.PSYCHIC, CardType.PSYCHIC, CardType.PSYCHIC],
       damage: 120,
       text: 'Move all Energy attached to this Pokémon to your Benched Pokémon in any way you like.'
     },
@@ -39,8 +39,8 @@ export class Deoxys extends PokemonCard {
   public set: string = 'PAR';
 
   public cardImage: string = 'assets/cardback.png';
-  
-  public setNumber: string = '6';
+
+  public setNumber: string = '74';
 
   public name: string = 'Deoxys';
 
@@ -66,7 +66,7 @@ export class Deoxys extends PokemonCard {
         GameMessage.ATTACH_ENERGY_TO_BENCH,
         player.active,
         PlayerType.BOTTOM_PLAYER,
-        [ SlotType.BENCH ],
+        [SlotType.BENCH],
         { superType: SuperType.ENERGY },
         { allowCancel: false, min: attachedEnergies.length, max: attachedEnergies.length }
       ), transfers => {

@@ -24,6 +24,7 @@ import { Smoochum } from './smoochum';
 import { TeraOrb } from './tera-orb';
 import { Trapinch } from './trapinch';
 import { Vibrava } from './vibrava';
+import { Vulpix } from './vulpix';
 
 export class PalkiaArt extends Palkia {
   public cardImage = 'https://pbs.twimg.com/media/GWxHVtGa8AIClwa?format=jpg&name=large';
@@ -127,4 +128,8 @@ export class ExeggcuteArt extends Exeggcute {
 
 export class AlolanExeggutorexArt extends AlolanExeggutorex {
   public cardImage = 'https://www.pokebeach.com/news/2024/08/sv7a_s1_aNASSYex.jpg';
+}
+
+export class VulpixArt extends Vulpix {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpc/SVLS/SVLS_1_R_JP.png';
 }

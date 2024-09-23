@@ -46,6 +46,18 @@ class Mismagius extends pokemon_card_1.PokemonCard {
             const pokemonCard = effect.target.getPokemonCard();
             this.damageDealt = true;
             if (pokemonCard === this && this.damageDealt === true) {
+                // Try to reduce PowerEffect, to check if something is blocking our ability
+                try {
+                    const stub = new game_effects_1.PowerEffect(player, {
+                        name: 'test',
+                        powerType: game_1.PowerType.ABILITY,
+                        text: ''
+                    }, this);
+                    store.reduceEffect(state, stub);
+                }
+                catch (_a) {
+                    return state;
+                }
                 const checkHpEffect = new check_effects_1.CheckHpEffect(player, effect.target);
                 store.reduceEffect(state, checkHpEffect);
                 if (effect.target.damage === 0 && effect.damage >= checkHpEffect.hp) {

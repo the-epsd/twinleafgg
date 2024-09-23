@@ -37,7 +37,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     GameMessage.CHOOSE_CARD_TO_HAND,
     player.deck,
     { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-    { min: 1, max: 4, allowCancel: true }
+    { min: 0, max: 4, allowCancel: true }
   ), selected => {
     cards = selected || [];
     next();
@@ -45,7 +45,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
   player.deck.moveCardsTo(cards, player.hand);
   player.supporter.moveCardTo(effect.trainerCard, player.discard);
-  
+
 
   if (cards.length > 0) {
     yield store.prompt(state, new ShowCardsPrompt(

@@ -23,7 +23,7 @@ class Mightyena extends pokemon_card_1.PokemonCard {
                 cost: [card_types_1.CardType.DARK],
                 damage: 30,
                 damageCalculation: '+',
-                text: 'This attack does 90 more damage for each of your Benched Mightyena.'
+                text: 'If Mightyena is on your Bench, this attack does 90 more damage.'
             },
             {
                 name: 'Corner',
@@ -43,8 +43,8 @@ class Mightyena extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const benchPokemon = player.bench.map(b => b.getPokemonCard()).filter(card => card !== undefined);
-            const mightyenasInPlay = benchPokemon.filter(card => card.name == 'Mightyena');
-            if (mightyenasInPlay) {
+            const mightyenasOnBench = benchPokemon.filter(card => card.name === 'Mightyena');
+            if (mightyenasOnBench.length > 0) {
                 effect.damage += 90;
             }
         }

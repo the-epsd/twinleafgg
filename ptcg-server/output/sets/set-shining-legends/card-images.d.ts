@@ -3,6 +3,7 @@ import { ShiningGenesect } from './shining-genesect';
 import { ShiningMew } from './shining-mew';
 import { Venusaur } from './venusaur';
 import { WarpEnergy } from './warp-energy';
+import { ZoroarkGX } from './zoroark-gx';
 export declare class MarshadowArt extends Marshadow {
     cardImage: string;
 }
@@ -16,5 +17,8 @@ export declare class VenusaurArt extends Venusaur {
     cardImage: string;
 }
 export declare class WarpEnergyArt extends WarpEnergy {
+    cardImage: string;
+}
+export declare class ZoroarkGXArt extends ZoroarkGX {
     cardImage: string;
 }

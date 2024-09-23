@@ -9,7 +9,7 @@ function* useCallForFamily(next: Function, store: StoreLike, state: State,
   const player = effect.player;
   const slots: PokemonCardList[] = player.bench.filter(b => b.cards.length === 0);
   const max = Math.min(slots.length, 1);
-  
+
   let cards: Card[] = [];
   yield store.prompt(state, new ChooseCardsPrompt(
     player.id,
@@ -21,16 +21,16 @@ function* useCallForFamily(next: Function, store: StoreLike, state: State,
     cards = selected || [];
     next();
   });
-  
+
   if (cards.length > slots.length) {
     cards.length = slots.length;
   }
-  
+
   cards.forEach((card, index) => {
     player.deck.moveCardTo(card, slots[index]);
     slots[index].pokemonPlayedTurn = state.turn;
   });
-  
+
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);
   });
@@ -50,19 +50,19 @@ export class Gimmighoul extends PokemonCard {
 
   public resistance = [{ type: CardType.FIGHTING, value: -30 }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Call For Family',
-      cost: [CardType.COLORLESS ],
+      cost: [CardType.COLORLESS],
       damage: 0,
       text: 'Search your deck for a Basic Pokémon and put it onto your ' +
         'Bench. Then, shuffle your deck.'
     },
     {
       name: 'Corkscrew Punch',
-      cost: [CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.COLORLESS, CardType.COLORLESS],
       damage: 20,
       text: ''
     }
@@ -72,7 +72,7 @@ export class Gimmighoul extends PokemonCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '20';
+  public setNumber: string = '87';
 
   public name: string = 'Gimmighoul';
 

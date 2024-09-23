@@ -50,13 +50,16 @@ export class Poochyena extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
 
+      let damage = 0;
+
       return store.prompt(state, [
         new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
       ], result => {
         if (result === true) {
-          effect.damage += 10;
+          damage++;
           return this.reduceEffect(store, state, effect);
         }
+        effect.damage = damage;
       });
     }
     return state;

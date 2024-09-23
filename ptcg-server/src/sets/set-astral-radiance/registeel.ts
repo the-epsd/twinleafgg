@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, PokemonCardList, Card, ChooseCardsPrompt, GameMessage, ShuffleDeckPrompt } from '../../game';
+import { StoreLike, State, StateUtils, PokemonCardList, Card, ChooseCardsPrompt, GameMessage, ShuffleDeckPrompt, GameError } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 
@@ -9,6 +9,14 @@ function* useRegiGate(next: Function, store: StoreLike, state: State,
   const player = effect.player;
   const slots: PokemonCardList[] = player.bench.filter(b => b.cards.length === 0);
   const max = Math.min(slots.length, 1);
+
+  // Check if bench has open slots
+  const openSlots = player.bench.filter(b => b.cards.length === 0);
+
+  if (openSlots.length === 0) {
+    // No open slots, throw error
+    throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+  }
 
   let cards: Card[] = [];
   yield store.prompt(state, new ChooseCardsPrompt(

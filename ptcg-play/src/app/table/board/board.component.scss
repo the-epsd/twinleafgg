@@ -208,13 +208,26 @@ $board-min-height: calc(6 * var(--card-size) * #{$card-aspect-ratio} + 2 * #{map
   }
 }
 
-.ptcg-board-supporter,
-.ptcg-board-stadium {
+.ptcg-board-bench {
 
   >ptcg-board-card,
   >.ptcg-board-drop-target {
-    width: var(--card-size);
-    // height: calc(var(--card-size) * #{$card-aspect-ratio});
+    width: calc(var(--card-size) * 1.15);
+    height: calc(var(--card-size) * 1.15 * #{$card-aspect-ratio});
+    max-width: 100%;
+  }
+}
+
+.ptcg-board-supporter,
+.ptcg-board-stadium,
+.ptcg-board-deck,
+.ptcg-board-prizes,
+.lost-zone {
+
+  >ptcg-board-card,
+  >.ptcg-board-drop-target {
+    width: calc(var(--card-size) * 1.15);
+    height: calc(var(--card-size) * 1.15 * #{$card-aspect-ratio});
     max-width: 100%;
   }
 }
@@ -275,8 +288,8 @@ ptcg-board-deck {
 .ptcg-card-preview {
   border-radius: $card-border-radius;
   position: absolute;
-  width: 101.2px; // Increased from var(--card-size)
-  transform: translate(15%, -75%); // Center on cursor
+  width: 91.2px; // Increased from var(--card-size)
+  transform: translate(15%, -55%); // Center on cursor
   pointer-events: none;
 }
 

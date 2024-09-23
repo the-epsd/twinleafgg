@@ -45,7 +45,7 @@ export class IronValiantex extends PokemonCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '38';
+  public setNumber: string = '89';
 
   public name: string = 'Iron Valiant ex';
 

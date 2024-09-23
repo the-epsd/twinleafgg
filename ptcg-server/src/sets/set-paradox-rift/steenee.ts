@@ -41,7 +41,7 @@ export class Steenee extends PokemonCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '7';
+  public setNumber: string = '9';
 
   public name: string = 'Steenee';
 

@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.SlitherWingArt = exports.ScreamTailArt = exports.SandyShocksexArt = exports.RoaringMoonexArt = exports.RemoraidArt = exports.ProfessorTurosScenarioArt = exports.ProfessorSadasVitalityArt = exports.PorygonArt = exports.NymbleArt = exports.NatuArt = exports.NaclstackArt = exports.NacliArt = exports.MorpekoArt = exports.MiniorArt = exports.MewtwoexArt = exports.MelaArt = exports.LuxuriousCapeArt = exports.LatiosArt = exports.KlawfArt = exports.JirachiArt = exports.IronValiantexArt = exports.IronJugulisArt = exports.IronHandsexArt = exports.IronBundleArt = exports.HoopaexArt = exports.HonedgeArt = exports.GroudonArt = exports.GimmighoulArt = exports.GibleArt = exports.GholdengoexArt = exports.GarganaclArt = exports.GarchompexArt = exports.GabiteArt = exports.FutureBoosterEnergyCapsuleArt = exports.FroslassexArt = exports.FlittleArt = exports.ElekidArt = exports.EarthenVesselArt = exports.DoubladeArt = exports.DeoxysArt = exports.DefianceVestArt = exports.CyclizarArt = exports.CrobatArt = exports.CounterCatcherArt = exports.ChiYuArt = exports.CharcadetArt = exports.BruteBonnetArt = exports.BounsweetArt = exports.BombirdierexArt = exports.AncientBoosterEnergyCapsuleArt = void 0;
 exports.ZacianArt = exports.XatuArt = exports.TulipArt = exports.TsareenaexArt = exports.TinkatuffArt = exports.TechnoRadarArt = exports.TechnicalMachineTurboEnergizeArt = exports.TechnicalMachineEvolutionArt = exports.TechnicalMachineDevolutionArt = exports.TechnicalMachineBlindsideArt = exports.TapuKokoexArt = exports.SteeneeArt = exports.SnoruntArt = void 0;
 const ancient_booster_energy_capsule_1 = require("./ancient-booster-energy-capsule");
-const bombirdier_1 = require("./bombirdier");
+const bombirdier_ex_1 = require("./bombirdier-ex");
 const bounsweet_1 = require("./bounsweet");
 const brute_bonnet_1 = require("./brute-bonnet");
 const charcadet_1 = require("./charcadet");
@@ -72,7 +72,7 @@ class AncientBoosterEnergyCapsuleArt extends ancient_booster_energy_capsule_1.An
     }
 }
 exports.AncientBoosterEnergyCapsuleArt = AncientBoosterEnergyCapsuleArt;
-class BombirdierexArt extends bombirdier_1.Bombirdierex {
+class BombirdierexArt extends bombirdier_ex_1.Bombirdierex {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_156_R_EN_LG.png';

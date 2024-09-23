@@ -39,7 +39,13 @@ class Wurmple extends pokemon_card_1.PokemonCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
-            return store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { name: 'Wurmple' || 'Silcoon' || 'Beautifly' || 'Cascoon' || 'Dustox' }, { min: 0, max: player.deck.cards.length }), cards => {
+            const blocked = [];
+            player.deck.cards.forEach((card, index) => {
+                if (card instanceof pokemon_card_1.PokemonCard && card.name !== 'Wurmple' || card instanceof pokemon_card_1.PokemonCard && card.name !== 'Silcoon' || card instanceof pokemon_card_1.PokemonCard && card.name !== 'Cascoon' || card instanceof pokemon_card_1.PokemonCard && card.name !== 'Beautifly' || card instanceof pokemon_card_1.PokemonCard && card.name !== 'Dustox') {
+                    blocked.push(index);
+                }
+            });
+            return store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.POKEMON }, { min: 0, max: 59, blocked }), cards => {
                 cards = cards || [];
                 cards.forEach(card => player.deck.moveCardTo(card, player.hand));
                 return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
