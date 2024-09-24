@@ -69,7 +69,7 @@ class Cobalion extends pokemon_card_1.PokemonCard {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             const prizesTaken = 6 - opponent.getPrizeLeft();
-            effect.damage = (prizesTaken * 30) + 30;
+            effect.damage += prizesTaken * 30;
         }
         return state;
     }

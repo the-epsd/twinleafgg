@@ -12,6 +12,7 @@ exports.setSV7 = [
     new card_images_1.CrispinArt(),
     new card_images_1.DrednawArt(),
     new card_images_1.DrifblimArt(),
+    new card_images_1.ElectabuzzArt(),
     new card_images_1.FanRotomArt(),
     new card_images_1.GalvantulexaArt(),
     new card_images_1.GlassTrumpetArt(),

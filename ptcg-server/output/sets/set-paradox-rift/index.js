@@ -65,6 +65,7 @@ exports.setParadoxRift = [
     new card_images_1.GroudonArt(),
     new card_images_1.TapuKokoexArt(),
     new card_images_1.PorygonArt(),
+    new card_images_1.Porygon2Art(),
     new card_images_1.ZacianArt(),
     //Full Arts
     new full_art_1.SnoruntIR(),

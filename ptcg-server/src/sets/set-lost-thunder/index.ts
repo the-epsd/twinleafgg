@@ -1,11 +1,13 @@
 import { Card } from '../../game/store/card/card';
-import { AdventureBagArt, AlolanMeowthArt, ChikoritaArt, ChikoritaArt2, CounterGainArt, CustomCatcherArt, DittoPrismStarArt, ElectropowerArt, GirafarigArt, GiratinaArt, GrovleArt, LostBlenderArt, MareepArt, MeganiumArt, MinaArt, NetBallArt, NihilegoArt, SlowkingArt, SpellTagArt, ThunderMountainPrismStarArt, TreeckoArt, WurmpleArt, ZebstrikaArt, ZeraoraGXArt } from './card-images';
+import { AdventureBagArt, AlolanMeowthArt, BlitzleArt, ChikoritaArt, ChikoritaArt2, ChinchouArt, CounterGainArt, CustomCatcherArt, DittoPrismStarArt, ElectropowerArt, GirafarigArt, GiratinaArt, GrovleArt, LostBlenderArt, MareepArt, MeganiumArt, MinaArt, NetBallArt, NihilegoArt, SlowkingArt, SpellTagArt, ThunderMountainPrismStarArt, TreeckoArt, WurmpleArt, ZebstrikaArt, ZeraoraGXArt } from './card-images';
 
 export const setLostThunder: Card[] = [
   new AdventureBagArt(),
   new AlolanMeowthArt(),
+  new BlitzleArt(),
   new ChikoritaArt(),
   new ChikoritaArt2(),
+  new ChinchouArt(),
   new CounterGainArt(),
   new CustomCatcherArt(),
   new ElectropowerArt(),

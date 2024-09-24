@@ -38,6 +38,7 @@ exports.setTemporalForces = [
     new card_images_1.HerosCapeArt(),
     new card_images_1.IronCrownexArt(),
     new card_images_1.IronHandsArt(),
+    new card_images_1.IronJugulisArt(),
     new card_images_1.IronLeavesexArt(),
     new card_images_1.IronThornsArt(),
     new card_images_1.KoraidonexArt(),

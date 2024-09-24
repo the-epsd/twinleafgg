@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { ArchaludonArt, AreaZeroUnderdepthsArt, BouffalantArt, BriarArt, ChewtleArt, CinderaceexArt, CrispinArt, DrednawArt, DrifblimArt, FanRotomArt, GalvantulexaArt, GlassTrumpetArt, GlisteningCrystalArt, GreatTreeArt, HoothootArt, HydrappleexArt, JoltikArt, LaprasexArt, MedichamexArt, MedititeArt, NoctowlArt, RabootArt, RagingBoltArt, ScorbunnyArt, TerapagosexArt, ZeraoraArt } from './card-images';
+import { ArchaludonArt, AreaZeroUnderdepthsArt, BouffalantArt, BriarArt, ChewtleArt, CinderaceexArt, CrispinArt, DrednawArt, DrifblimArt, ElectabuzzArt, FanRotomArt, GalvantulexaArt, GlassTrumpetArt, GlisteningCrystalArt, GreatTreeArt, HoothootArt, HydrappleexArt, JoltikArt, LaprasexArt, MedichamexArt, MedititeArt, NoctowlArt, RabootArt, RagingBoltArt, ScorbunnyArt, TerapagosexArt, ZeraoraArt } from './card-images';
 
 export const setSV7: Card[] = [
   new ArchaludonArt(),
@@ -11,6 +11,7 @@ export const setSV7: Card[] = [
   new CrispinArt(),
   new DrednawArt(),
   new DrifblimArt(),
+  new ElectabuzzArt(),
   new FanRotomArt(),
   new GalvantulexaArt(),
   new GlassTrumpetArt(),

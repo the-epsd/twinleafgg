@@ -42,6 +42,7 @@ import { Zacian } from './PAR_136_Zacian';
 import { Nymble } from './PAR_13_Nymble';
 import { Flittle } from './PAR_80_Flittle';
 import { Porygon } from './porygon';
+import { Porygon2 } from './porygon2';
 import { ProfessorSadasVitality } from './professor-sadas-vitality';
 import { ProfessorTurosScenario } from './professor-turos-scenario';
 import { Remoraid } from './remoraid';
@@ -232,6 +233,10 @@ export class NymbleArt extends Nymble {
 
 export class PorygonArt extends Porygon {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_142_R_EN_LG.png';
+}
+
+export class Porygon2Art extends Porygon2 {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_143_R_EN_LG.png';
 }
 
 export class ProfessorSadasVitalityArt extends ProfessorSadasVitality {

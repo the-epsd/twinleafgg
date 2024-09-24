@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.VulpixArt = exports.TwinEnergyArt = exports.TrainingCourtArt = exports.SpeedLightningEnergyArt = exports.ScoopUpNetArt = exports.NatuArt = exports.MetapodArt = exports.HorrorPsychicEnergyArt = exports.HonedgeArt = exports.GalarianMeowthArt = exports.DuraludonArt = exports.DragapultArt = exports.CoalossalArt = exports.CaterpieArt = exports.CaptureEnergyArt = exports.CapaciousBucketArt = exports.ButterfreeArt = exports.BarraskewdaArt = exports.ArrokudaArt = exports.AegislashArt = void 0;
+exports.VulpixArt = exports.TwinEnergyArt = exports.TrainingCourtArt = exports.SpeedLightningEnergyArt = exports.ScoopUpNetArt = exports.NatuArt = exports.MorpekoArt = exports.MetapodArt = exports.HorrorPsychicEnergyArt = exports.HonedgeArt = exports.GalarianMeowthArt = exports.DuraludonArt = exports.DragapultArt = exports.CoalossalArt = exports.CaterpieArt = exports.CaptureEnergyArt = exports.CapaciousBucketArt = exports.ButterfreeArt = exports.BarraskewdaArt = exports.ArrokudaArt = exports.AegislashArt = void 0;
 const aegislash_1 = require("./aegislash");
 const butterfree_1 = require("./butterfree");
 const capacious_bucket_1 = require("./capacious-bucket");
@@ -11,6 +11,7 @@ const dragapult_1 = require("./dragapult");
 const duraludon_1 = require("./duraludon");
 const horror_psychic_energy_1 = require("./horror-psychic-energy");
 const metapod_1 = require("./metapod");
+const morpeko_1 = require("./morpeko");
 const natu_1 = require("./natu");
 const RCL_126_Galarian_Meowth_1 = require("./RCL_126_Galarian_Meowth");
 const RCL_133_Honedge_1 = require("./RCL_133_Honedge");
@@ -119,6 +120,13 @@ class MetapodArt extends metapod_1.Metapod {
     }
 }
 exports.MetapodArt = MetapodArt;
+class MorpekoArt extends morpeko_1.Morpeko {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/RCL/RCL_073_R_EN_LG.png';
+    }
+}
+exports.MorpekoArt = MorpekoArt;
 class NatuArt extends natu_1.Natu {
     constructor() {
         super(...arguments);

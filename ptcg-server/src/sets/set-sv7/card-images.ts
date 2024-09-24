@@ -8,6 +8,7 @@ import { Comfey } from './comfey';
 import { Crispin } from './crispin';
 import { Drednaw } from './drednaw';
 import { Drifblim } from './drifblim';
+import { Electabuzz } from './electabuzz';
 import { FanRotom } from './fan-rotom';
 import { Galvantulaex } from './galvantula-ex';
 import { GlassTrumpet } from './glass-trumpet';
@@ -65,6 +66,10 @@ export class DrednawArt extends Drednaw {
 
 export class DrifblimArt extends Drifblim {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SCR/SCR_061_R_EN.png';
+}
+
+export class ElectabuzzArt extends Electabuzz {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SCR/SCR_046_R_EN.png';
 }
 
 export class FanRotomArt extends FanRotom {

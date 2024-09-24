@@ -5,8 +5,10 @@ const card_images_1 = require("./card-images");
 exports.setLostThunder = [
     new card_images_1.AdventureBagArt(),
     new card_images_1.AlolanMeowthArt(),
+    new card_images_1.BlitzleArt(),
     new card_images_1.ChikoritaArt(),
     new card_images_1.ChikoritaArt2(),
+    new card_images_1.ChinchouArt(),
     new card_images_1.CounterGainArt(),
     new card_images_1.CustomCatcherArt(),
     new card_images_1.ElectropowerArt(),

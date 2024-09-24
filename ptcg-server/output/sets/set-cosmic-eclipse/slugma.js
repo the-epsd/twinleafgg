@@ -15,7 +15,7 @@ class Slugma extends pokemon_card_1.PokemonCard {
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.evolvesInto = 'Magcargo';
         this.attacks = [{
-                name: 'singe',
+                name: 'Singe',
                 cost: [card_types_1.CardType.FIRE],
                 damage: 0,
                 text: 'Your opponent\'s Active Pokemon is now Burned.'

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZeraoraArt = exports.TerapagosexArt = exports.ScorbunnyArt = exports.RagingBoltArt = exports.RabootArt = exports.OrthwormexArt = exports.NoctowlArt = exports.MedititeArt = exports.MedichamexArt = exports.LaprasexArt = exports.JoltikArt = exports.HydrappleexArt = exports.HoothootArt = exports.GreatTreeArt = exports.GlisteningCrystalArt = exports.GlassTrumpetArt = exports.GalvantulexaArt = exports.FanRotomArt = exports.DrifblimArt = exports.DrednawArt = exports.CrispinArt = exports.CinderaceexArt = exports.ComfeyArt = exports.ChewtleArt = exports.BriarArt = exports.BouffalantArt = exports.AreaZeroUnderdepthsArt = exports.ArchaludonArt = void 0;
+exports.ZeraoraArt = exports.TerapagosexArt = exports.ScorbunnyArt = exports.RagingBoltArt = exports.RabootArt = exports.OrthwormexArt = exports.NoctowlArt = exports.MedititeArt = exports.MedichamexArt = exports.LaprasexArt = exports.JoltikArt = exports.HydrappleexArt = exports.HoothootArt = exports.GreatTreeArt = exports.GlisteningCrystalArt = exports.GlassTrumpetArt = exports.GalvantulexaArt = exports.FanRotomArt = exports.ElectabuzzArt = exports.DrifblimArt = exports.DrednawArt = exports.CrispinArt = exports.CinderaceexArt = exports.ComfeyArt = exports.ChewtleArt = exports.BriarArt = exports.BouffalantArt = exports.AreaZeroUnderdepthsArt = exports.ArchaludonArt = void 0;
 const archaludon_1 = require("./archaludon");
 const area_zero_underdepths_1 = require("./area-zero-underdepths");
 const bouffalant_1 = require("./bouffalant");
@@ -11,6 +11,7 @@ const comfey_1 = require("./comfey");
 const crispin_1 = require("./crispin");
 const drednaw_1 = require("./drednaw");
 const drifblim_1 = require("./drifblim");
+const electabuzz_1 = require("./electabuzz");
 const fan_rotom_1 = require("./fan-rotom");
 const galvantula_ex_1 = require("./galvantula-ex");
 const glass_trumpet_1 = require("./glass-trumpet");
@@ -99,6 +100,13 @@ class DrifblimArt extends drifblim_1.Drifblim {
     }
 }
 exports.DrifblimArt = DrifblimArt;
+class ElectabuzzArt extends electabuzz_1.Electabuzz {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SCR/SCR_046_R_EN.png';
+    }
+}
+exports.ElectabuzzArt = ElectabuzzArt;
 class FanRotomArt extends fan_rotom_1.FanRotom {
     constructor() {
         super(...arguments);

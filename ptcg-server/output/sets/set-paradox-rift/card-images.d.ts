@@ -42,6 +42,7 @@ import { Zacian } from './PAR_136_Zacian';
 import { Nymble } from './PAR_13_Nymble';
 import { Flittle } from './PAR_80_Flittle';
 import { Porygon } from './porygon';
+import { Porygon2 } from './porygon2';
 import { ProfessorSadasVitality } from './professor-sadas-vitality';
 import { ProfessorTurosScenario } from './professor-turos-scenario';
 import { Remoraid } from './remoraid';
@@ -188,6 +189,9 @@ export declare class NymbleArt extends Nymble {
     cardImage: string;
 }
 export declare class PorygonArt extends Porygon {
+    cardImage: string;
+}
+export declare class Porygon2Art extends Porygon2 {
     cardImage: string;
 }
 export declare class ProfessorSadasVitalityArt extends ProfessorSadasVitality {

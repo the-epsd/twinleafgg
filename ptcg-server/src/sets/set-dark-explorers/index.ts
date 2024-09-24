@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { AccelgorArt, DarkClawArt, DarkPatchArt, DarkraiExArt, EmpoleonArt, EnhancedHammerArt, GardevoirArt, IvysaurArt, PiplupArt, PrinplupArt, RaikouExArt, RandomReceiverArt, SableyeArt, ShelmetArt, TornadusExArt, TwistMountainArt, TynamoArt, ZoruaArt } from './card-images';
+import { AccelgorArt, DarkClawArt, DarkPatchArt, DarkraiExArt, EmpoleonArt, EnhancedHammerArt, GardevoirArt, IvysaurArt, MinunArt, PiplupArt, PrinplupArt, RaikouExArt, RandomReceiverArt, SableyeArt, ShelmetArt, TornadusExArt, TwistMountainArt, TynamoArt, ZoruaArt } from './card-images';
 
 export const setDarkExplorers: Card[] = [
   new AccelgorArt(),
@@ -10,6 +10,7 @@ export const setDarkExplorers: Card[] = [
   new EnhancedHammerArt(),
   new GardevoirArt(),
   new IvysaurArt(),
+  new MinunArt(),
   new PiplupArt(),
   new PrinplupArt(),
   new RaikouExArt(),

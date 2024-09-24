@@ -7,6 +7,7 @@ import { Jirachi } from './jirachi';
 import { Leon } from './leon';
 import { Nessa } from './nessa';
 import { Raikou } from './raikou';
+import { Slugma } from './slugma';
 import { Snorlax } from './snorlax';
 import { StoneFightingEnergy } from './stone-fighting-energy';
 import { Magearna } from './VIV_128_Magearna';
@@ -59,6 +60,10 @@ export class NessaArt extends Nessa {
 
 export class RaikouArt extends Raikou {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/VIV/VIV_050_R_EN.png';
+}
+
+export class SlugmaArt extends Slugma {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/VIV/VIV_027_R_EN.png';
 }
 
 export class SnorlaxArt extends Snorlax {

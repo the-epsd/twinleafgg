@@ -1,16 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZeraoraGXArt = exports.ZebstrikaArt = exports.WurmpleArt = exports.TreeckoArt = exports.ThunderMountainPrismStarArt = exports.SpellTagArt = exports.SlowkingArt = exports.NihilegoArt = exports.NetBallArt = exports.MinaArt = exports.MeganiumArt = exports.MareepArt = exports.LostBlenderArt = exports.GrovleArt = exports.GiratinaArt = exports.GirafarigArt = exports.ElectropowerArt = exports.DittoPrismStarArt = exports.CustomCatcherArt = exports.CounterGainArt = exports.ChikoritaArt2 = exports.ChikoritaArt = exports.AlolanMeowthArt = exports.AdventureBagArt = void 0;
+exports.ZeraoraGXArt = exports.ZebstrikaArt = exports.WurmpleArt = exports.TreeckoArt = exports.ThunderMountainPrismStarArt = exports.SpellTagArt = exports.SlowkingArt = exports.NihilegoArt = exports.NetBallArt = exports.MinaArt = exports.MeganiumArt = exports.MareepArt = exports.LostBlenderArt = exports.LanturnArt = exports.GrovleArt = exports.GiratinaArt = exports.GirafarigArt = exports.ElectropowerArt = exports.DittoPrismStarArt = exports.CustomCatcherArt = exports.CounterGainArt = exports.ChinchouArt = exports.ChikoritaArt2 = exports.ChikoritaArt = exports.BlitzleArt = exports.AlolanMeowthArt = exports.AdventureBagArt = void 0;
 const adventure_bag_1 = require("./adventure-bag");
 const alolan_meowth_1 = require("./alolan-meowth");
+const blitzle_1 = require("./blitzle");
 const chikorita_1 = require("./chikorita");
 const chikorita_2_1 = require("./chikorita-2");
+const chinchou_1 = require("./chinchou");
 const counter_gain_1 = require("./counter-gain");
 const custom_catcher_1 = require("./custom-catcher");
 const ditto_prism_star_1 = require("./ditto-prism-star");
 const electropower_1 = require("./electropower");
 const girafarig_1 = require("./girafarig");
 const grovyle_1 = require("./grovyle");
+const lanturn_1 = require("./lanturn");
 const lost_blender_1 = require("./lost-blender");
 const LOT_191_ThunderMountainPrismStar_1 = require("./LOT_191_ThunderMountainPrismStar");
 const LOT_201_ZeraoraGX_1 = require("./LOT_201_ZeraoraGX");
@@ -39,6 +42,13 @@ class AlolanMeowthArt extends alolan_meowth_1.AlolanMeowth {
     }
 }
 exports.AlolanMeowthArt = AlolanMeowthArt;
+class BlitzleArt extends blitzle_1.Blitzle {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_081_R_EN_LG.png';
+    }
+}
+exports.BlitzleArt = BlitzleArt;
 class ChikoritaArt extends chikorita_1.Chikorita {
     constructor() {
         super(...arguments);
@@ -53,6 +63,13 @@ class ChikoritaArt2 extends chikorita_2_1.Chikorita2 {
     }
 }
 exports.ChikoritaArt2 = ChikoritaArt2;
+class ChinchouArt extends chinchou_1.Chinchou {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_073_R_EN_LG.png';
+    }
+}
+exports.ChinchouArt = ChinchouArt;
 class CounterGainArt extends counter_gain_1.CounterGain {
     constructor() {
         super(...arguments);
@@ -102,6 +119,13 @@ class GrovleArt extends grovyle_1.Grovyle {
     }
 }
 exports.GrovleArt = GrovleArt;
+class LanturnArt extends lanturn_1.Lanturn {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_074_R_EN_LG.png';
+    }
+}
+exports.LanturnArt = LanturnArt;
 class LostBlenderArt extends lost_blender_1.LostBlender {
     constructor() {
         super(...arguments);

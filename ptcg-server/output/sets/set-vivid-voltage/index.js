@@ -14,6 +14,7 @@ exports.setVividVoltage = [
     new card_images_1.MagearnaArt(),
     new card_images_1.NessaArt(),
     new card_images_1.RaikouArt(),
+    new card_images_1.SlugmaArt(),
     new card_images_1.SnorlaxArt(),
     new card_images_1.StoneFightingEnergyArt(),
     new card_images_1.TaillowArt(),

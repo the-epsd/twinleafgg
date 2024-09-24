@@ -1,13 +1,16 @@
 import { AdventureBag } from './adventure-bag';
 import { AlolanMeowth } from './alolan-meowth';
+import { Blitzle } from './blitzle';
 import { Chikorita } from './chikorita';
 import { Chikorita2 } from './chikorita-2';
+import { Chinchou } from './chinchou';
 import { CounterGain } from './counter-gain';
 import { CustomCatcher } from './custom-catcher';
 import { DittoPrismStar } from './ditto-prism-star';
 import { Electropower } from './electropower';
 import { Girafarig } from './girafarig';
 import { Grovyle } from './grovyle';
+import { Lanturn } from './lanturn';
 import { LostBlender } from './lost-blender';
 import { ThunderMountainPrismStar } from './LOT_191_ThunderMountainPrismStar';
 import { ZeraoraGX } from './LOT_201_ZeraoraGX';
@@ -28,10 +31,16 @@ export declare class AdventureBagArt extends AdventureBag {
 export declare class AlolanMeowthArt extends AlolanMeowth {
     cardImage: string;
 }
+export declare class BlitzleArt extends Blitzle {
+    cardImage: string;
+}
 export declare class ChikoritaArt extends Chikorita {
     cardImage: string;
 }
 export declare class ChikoritaArt2 extends Chikorita2 {
+    cardImage: string;
+}
+export declare class ChinchouArt extends Chinchou {
     cardImage: string;
 }
 export declare class CounterGainArt extends CounterGain {
@@ -53,6 +62,9 @@ export declare class GiratinaArt extends Giratina {
     cardImage: string;
 }
 export declare class GrovleArt extends Grovyle {
+    cardImage: string;
+}
+export declare class LanturnArt extends Lanturn {
     cardImage: string;
 }
 export declare class LostBlenderArt extends LostBlender {

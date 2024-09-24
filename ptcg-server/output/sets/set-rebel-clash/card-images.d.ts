@@ -8,6 +8,7 @@ import { Dragapult } from './dragapult';
 import { Duraludon } from './duraludon';
 import { HorrorPsychicEnergy } from './horror-psychic-energy';
 import { Metapod } from './metapod';
+import { Morpeko } from './morpeko';
 import { Natu } from './natu';
 import { GalarianMeowth } from './RCL_126_Galarian_Meowth';
 import { Honedge } from './RCL_133_Honedge';
@@ -58,6 +59,9 @@ export declare class HorrorPsychicEnergyArt extends HorrorPsychicEnergy {
     cardImage: string;
 }
 export declare class MetapodArt extends Metapod {
+    cardImage: string;
+}
+export declare class MorpekoArt extends Morpeko {
     cardImage: string;
 }
 export declare class NatuArt extends Natu {

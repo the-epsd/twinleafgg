@@ -8,6 +8,7 @@ import { Comfey } from './comfey';
 import { Crispin } from './crispin';
 import { Drednaw } from './drednaw';
 import { Drifblim } from './drifblim';
+import { Electabuzz } from './electabuzz';
 import { FanRotom } from './fan-rotom';
 import { Galvantulaex } from './galvantula-ex';
 import { GlassTrumpet } from './glass-trumpet';
@@ -54,6 +55,9 @@ export declare class DrednawArt extends Drednaw {
     cardImage: string;
 }
 export declare class DrifblimArt extends Drifblim {
+    cardImage: string;
+}
+export declare class ElectabuzzArt extends Electabuzz {
     cardImage: string;
 }
 export declare class FanRotomArt extends FanRotom {
