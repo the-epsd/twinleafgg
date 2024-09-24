@@ -1,10 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Oricorio = void 0;
-const pokemon_card_1 = require("../../game/store/card/pokemon-card");
-const card_types_1 = require("../../game/store/card/card-types");
-const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_1 = require("../../game");
+const card_types_1 = require("../../game/store/card/card-types");
+const pokemon_card_1 = require("../../game/store/card/pokemon-card");
+const attack_effects_1 = require("../../game/store/effects/attack-effects");
+const game_effects_1 = require("../../game/store/effects/game-effects");
 class Oricorio extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -36,6 +37,8 @@ class Oricorio extends pokemon_card_1.PokemonCard {
             }
             return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_SWITCH, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH], { allowCancel: false }), result => {
                 const cardList = result[0];
+                const gustOpponentBenchEffect = new attack_effects_1.GustOpponentBenchEffect(effect, cardList);
+                store.reduceEffect(state, gustOpponentBenchEffect);
                 opponent.switchPokemon(cardList);
                 const active = opponent.active;
                 active.addSpecialCondition(card_types_1.SpecialCondition.BURNED);

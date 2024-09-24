@@ -1,10 +1,11 @@
-import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
-import { AttackEffect } from '../../game/store/effects/game-effects';
-import { StoreLike } from '../../game/store/store-like';
-import { State } from '../../game/store/state/state';
-import { Effect } from '../../game/store/effects/effect';
 import { ChoosePokemonPrompt, GameError, GameMessage, PlayerType, SlotType, StateUtils } from '../../game';
+import { CardType, SpecialCondition, Stage } from '../../game/store/card/card-types';
+import { PokemonCard } from '../../game/store/card/pokemon-card';
+import { GustOpponentBenchEffect } from '../../game/store/effects/attack-effects';
+import { Effect } from '../../game/store/effects/effect';
+import { AttackEffect } from '../../game/store/effects/game-effects';
+import { State } from '../../game/store/state/state';
+import { StoreLike } from '../../game/store/store-like';
 
 export class Oricorio extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -37,7 +38,7 @@ export class Oricorio extends PokemonCard {
       if (!hasBench) {
         throw new GameError(GameMessage.CANNOT_USE_ATTACK);
       }
-
+      
       return store.prompt(state, new ChoosePokemonPrompt(
         player.id,
         GameMessage.CHOOSE_POKEMON_TO_SWITCH,
@@ -45,7 +46,12 @@ export class Oricorio extends PokemonCard {
         [SlotType.BENCH],
         { allowCancel: false }
       ), result => {
+        
         const cardList = result[0];
+        
+        const gustOpponentBenchEffect = new GustOpponentBenchEffect(effect, cardList);
+        store.reduceEffect(state, gustOpponentBenchEffect);
+        
         opponent.switchPokemon(cardList);
 
         const active = opponent.active;

@@ -9,6 +9,7 @@ export var AttackEffects;
     AttackEffects["PUT_COUNTERS_EFFECT"] = "PUT_COUNTERS_EFFECT";
     AttackEffects["DISCARD_CARD_EFFECT"] = "DISCARD_CARD_EFFECT";
     AttackEffects["CARDS_TO_HAND_EFFECT"] = "CARDS_TO_HAND_EFFECT";
+    AttackEffects["GUST_OPPONENT_BENCH_EFFECT"] = "GUST_OPPONENT_BENCH_EFFECT";
     AttackEffects["ADD_MARKER_EFFECT"] = "ADD_MARKER_EFFECT";
     AttackEffects["ADD_SPECIAL_CONDITIONS_EFFECT"] = "ADD_SPECIAL_CONDITIONS_EFFECT";
     AttackEffects["MOVED_TO_ACTIVE_BONUS_EFFECT"] = "MOVED_TO_ACTIVE_BONUS_EFFECT";
@@ -78,6 +79,14 @@ export class KOEffect extends AbstractAttackEffect {
         this.damageReduced = false;
         this.wasKnockedOutFromFullHP = false;
         this.damage = damage;
+    }
+}
+export class GustOpponentBenchEffect extends AbstractAttackEffect {
+    constructor(base, target) {
+        super(base);
+        this.type = AttackEffects.GUST_OPPONENT_BENCH_EFFECT;
+        this.preventDefault = false;
+        this.target = target;
     }
 }
 export class KnockOutOpponentEffect extends AbstractAttackEffect {

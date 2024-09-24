@@ -14,6 +14,7 @@ export declare enum AttackEffects {
     PUT_COUNTERS_EFFECT = "PUT_COUNTERS_EFFECT",
     DISCARD_CARD_EFFECT = "DISCARD_CARD_EFFECT",
     CARDS_TO_HAND_EFFECT = "CARDS_TO_HAND_EFFECT",
+    GUST_OPPONENT_BENCH_EFFECT = "GUST_OPPONENT_BENCH_EFFECT",
     ADD_MARKER_EFFECT = "ADD_MARKER_EFFECT",
     ADD_SPECIAL_CONDITIONS_EFFECT = "ADD_SPECIAL_CONDITIONS_EFFECT",
     MOVED_TO_ACTIVE_BONUS_EFFECT = "MOVED_TO_ACTIVE_BONUS_EFFECT",
@@ -71,6 +72,12 @@ export declare class KOEffect extends AbstractAttackEffect implements Effect {
     damageReduced: boolean;
     wasKnockedOutFromFullHP: boolean;
     constructor(base: AttackEffect, damage: number);
+}
+export declare class GustOpponentBenchEffect extends AbstractAttackEffect implements Effect {
+    readonly type: string;
+    preventDefault: boolean;
+    target: PokemonCardList;
+    constructor(base: AttackEffect, target: PokemonCardList);
 }
 export declare class KnockOutOpponentEffect extends AbstractAttackEffect implements Effect {
     readonly type: string;

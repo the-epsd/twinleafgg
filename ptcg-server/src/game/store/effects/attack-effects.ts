@@ -15,6 +15,7 @@ export enum AttackEffects {
   PUT_COUNTERS_EFFECT = 'PUT_COUNTERS_EFFECT',
   DISCARD_CARD_EFFECT = 'DISCARD_CARD_EFFECT',
   CARDS_TO_HAND_EFFECT = 'CARDS_TO_HAND_EFFECT',
+  GUST_OPPONENT_BENCH_EFFECT = 'GUST_OPPONENT_BENCH_EFFECT',
   ADD_MARKER_EFFECT = 'ADD_MARKER_EFFECT',
   ADD_SPECIAL_CONDITIONS_EFFECT = 'ADD_SPECIAL_CONDITIONS_EFFECT',
   MOVED_TO_ACTIVE_BONUS_EFFECT = 'MOVED_TO_ACTIVE_BONUS_EFFECT',
@@ -110,6 +111,17 @@ export class KOEffect extends AbstractAttackEffect implements Effect {
   constructor(base: AttackEffect, damage: number) {
     super(base);
     this.damage = damage;
+  }
+}
+
+export class GustOpponentBenchEffect extends AbstractAttackEffect implements Effect {
+  readonly type: string = AttackEffects.GUST_OPPONENT_BENCH_EFFECT;
+  public preventDefault = false;
+  public target: PokemonCardList;
+
+  constructor(base: AttackEffect, target: PokemonCardList) {
+    super(base);
+    this.target = target;
   }
 }
 

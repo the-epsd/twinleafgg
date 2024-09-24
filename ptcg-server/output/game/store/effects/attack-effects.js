@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.HealTargetEffect = exports.RemoveSpecialConditionsEffect = exports.AddSpecialConditionsEffect = exports.AddMarkerEffect = exports.CardsToHandEffect = exports.LostZoneCardsEffect = exports.DiscardCardsEffect = exports.KnockOutOpponentEffect = exports.KOEffect = exports.PutCountersEffect = exports.AfterDamageEffect = exports.PutDamageEffect = exports.DealDamageEffect = exports.ApplyWeaknessEffect = exports.AbstractAttackEffect = exports.AttackEffects = void 0;
+exports.HealTargetEffect = exports.RemoveSpecialConditionsEffect = exports.AddSpecialConditionsEffect = exports.AddMarkerEffect = exports.CardsToHandEffect = exports.LostZoneCardsEffect = exports.DiscardCardsEffect = exports.KnockOutOpponentEffect = exports.GustOpponentBenchEffect = exports.KOEffect = exports.PutCountersEffect = exports.AfterDamageEffect = exports.PutDamageEffect = exports.DealDamageEffect = exports.ApplyWeaknessEffect = exports.AbstractAttackEffect = exports.AttackEffects = void 0;
 const card_types_1 = require("../card/card-types");
 var AttackEffects;
 (function (AttackEffects) {
@@ -12,6 +12,7 @@ var AttackEffects;
     AttackEffects["PUT_COUNTERS_EFFECT"] = "PUT_COUNTERS_EFFECT";
     AttackEffects["DISCARD_CARD_EFFECT"] = "DISCARD_CARD_EFFECT";
     AttackEffects["CARDS_TO_HAND_EFFECT"] = "CARDS_TO_HAND_EFFECT";
+    AttackEffects["GUST_OPPONENT_BENCH_EFFECT"] = "GUST_OPPONENT_BENCH_EFFECT";
     AttackEffects["ADD_MARKER_EFFECT"] = "ADD_MARKER_EFFECT";
     AttackEffects["ADD_SPECIAL_CONDITIONS_EFFECT"] = "ADD_SPECIAL_CONDITIONS_EFFECT";
     AttackEffects["MOVED_TO_ACTIVE_BONUS_EFFECT"] = "MOVED_TO_ACTIVE_BONUS_EFFECT";
@@ -90,6 +91,15 @@ class KOEffect extends AbstractAttackEffect {
     }
 }
 exports.KOEffect = KOEffect;
+class GustOpponentBenchEffect extends AbstractAttackEffect {
+    constructor(base, target) {
+        super(base);
+        this.type = AttackEffects.GUST_OPPONENT_BENCH_EFFECT;
+        this.preventDefault = false;
+        this.target = target;
+    }
+}
+exports.GustOpponentBenchEffect = GustOpponentBenchEffect;
 class KnockOutOpponentEffect extends AbstractAttackEffect {
     constructor(base, damage) {
         super(base);
