@@ -33,7 +33,7 @@ export class Cobalion extends PokemonCard {
       cost: [ CardType.METAL, CardType.METAL ],
       damage: 30,
       damageCalculation: '+',      
-      text: 'This attack does 30 more damage for each Prize card your opponent has taken. ',
+      text: 'This attack does 30 more damage for each Prize card your opponent has taken.',
     },
   ];
 
@@ -86,7 +86,7 @@ export class Cobalion extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
       
       const prizesTaken = 6 - opponent.getPrizeLeft();
-      effect.damage += prizesTaken * 30;
+      effect.damage = (prizesTaken * 30) + 30;
     }
     
     return state;
