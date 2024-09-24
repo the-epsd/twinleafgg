@@ -86,7 +86,7 @@ export class Cobalion extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
       
       const prizesTaken = 6 - opponent.getPrizeLeft();
-      effect.damage = (prizesTaken * 30) + 30;
+      effect.damage += prizesTaken * 30;
     }
     
     return state;
