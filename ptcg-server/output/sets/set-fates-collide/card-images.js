@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TeamRocketsHandiworkArt = exports.RioluArt = exports.NArt = exports.MewArt = exports.LucarioArt = exports.FennekinArt = exports.DeerlingArt = void 0;
+exports.TeamRocketsHandiworkArt = exports.RioluArt = exports.NArt = exports.MewArt = exports.LucarioArt = exports.FennekinArt = exports.EnergyPouchArt = exports.DeerlingArt = void 0;
+const energy_pouch_1 = require("./energy-pouch");
 const FCO_8_Deerling_1 = require("./FCO_8_Deerling");
 const fennekin_1 = require("./fennekin");
 const lucario_1 = require("./lucario");
@@ -15,6 +16,13 @@ class DeerlingArt extends FCO_8_Deerling_1.Deerling {
     }
 }
 exports.DeerlingArt = DeerlingArt;
+class EnergyPouchArt extends energy_pouch_1.EnergyPouch {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FCO/FCO_097_R_EN_LG.png';
+    }
+}
+exports.EnergyPouchArt = EnergyPouchArt;
 class FennekinArt extends fennekin_1.Fennekin {
     constructor() {
         super(...arguments);

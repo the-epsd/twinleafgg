@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZeraoraArt = exports.VolcanionArt = exports.TripleAccelerationEnergyArt = exports.SpiritombArt = exports.SalazzleArt = exports.PorygonZArt = exports.PoliwagArt = exports.Pokegear30Art = exports.OddishArt = exports.MismagiusArt = exports.MewtwoArt = exports.MewArt = exports.MeowthArt = exports.MartialArtsDojoArt = exports.MarshadowArt = exports.LtSurgesStrategyArt = exports.LickitungArt = exports.LaironArt = exports.KartanaArt = exports.HitmontopArt = exports.GreensExplorationArt = exports.GloomArt = exports.FireCrystalArt = exports.EspurrArt = exports.ElectromagneticRadarArt = exports.DuskStoneArt = exports.DedenneGXArt = exports.CleffaArt = exports.AronArt = exports.ArcanineArt = void 0;
+exports.ZeraoraArt = exports.VolcanionArt = exports.TripleAccelerationEnergyArt = exports.SpiritombArt = exports.SalazzleArt = exports.PorygonZArt = exports.PoliwagArt = exports.Pokegear30Art = exports.OddishArt = exports.MismagiusArt = exports.MewtwoArt = exports.MewArt = exports.MetalCoreBarrierArt = exports.MeowthArt = exports.MartialArtsDojoArt = exports.MarshadowArt = exports.LtSurgesStrategyArt = exports.LickitungArt = exports.LaironArt = exports.KartanaArt = exports.HitmontopArt = exports.GreensExplorationArt = exports.GloomArt = exports.FireCrystalArt = exports.EspurrArt = exports.ElectromagneticRadarArt = exports.DuskStoneArt = exports.DedenneGXArt = exports.CleffaArt = exports.AronArt = exports.ArcanineArt = void 0;
 const arcanine_1 = require("./arcanine");
 const cleffa_1 = require("./cleffa");
 const dusk_stone_1 = require("./dusk-stone");
@@ -11,6 +11,7 @@ const hitmontop_1 = require("./hitmontop");
 const lt_surges_strategy_1 = require("./lt-surges-strategy");
 const marshadow_1 = require("./marshadow");
 const martial_arts_dojo_1 = require("./martial-arts-dojo");
+const metal_core_barrier_1 = require("./metal-core-barrier");
 const mew_1 = require("./mew");
 const mewtwo_1 = require("./mewtwo");
 const mismagius_1 = require("./mismagius");
@@ -157,6 +158,13 @@ class MeowthArt extends UNB_147_Meowth_1.Meowth {
     }
 }
 exports.MeowthArt = MeowthArt;
+class MetalCoreBarrierArt extends metal_core_barrier_1.MetalCoreBarrier {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_180_R_EN_LG.png';
+    }
+}
+exports.MetalCoreBarrierArt = MetalCoreBarrierArt;
 class MewArt extends mew_1.Mew {
     constructor() {
         super(...arguments);

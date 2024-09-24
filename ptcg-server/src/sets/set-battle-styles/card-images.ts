@@ -25,6 +25,7 @@ import { MimikyuV } from './mimikyu-v';
 import { NecrozmaV } from './necrozma-v';
 import { Octillery } from './octillery';
 import { RapidStrikeEnergy } from './rapid-strike-energy';
+import { RapidStrikeScrollOfSwirls } from './rapid-strike-scroll-of-swirls';
 import { RapidStrikeUrshifuV } from './rapid-strike-urshifu-v';
 import { RapidStrikeUrshifuVMAX } from './rapid-strike-urshifu-vmax';
 import { Remoraid } from './remoraid';
@@ -152,6 +153,10 @@ export class OctilleryArt extends Octillery {
 
 export class RapidStrikeEnergyArt extends RapidStrikeEnergy {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BST/BST_140_R_EN.png';
+}
+
+export class RapidStrikeScrollOfSwirlsArt extends RapidStrikeScrollOfSwirls {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BST/BST_131_R_EN.png';
 }
 
 export class RapidStrikeUrshifuVArt extends RapidStrikeUrshifuV {

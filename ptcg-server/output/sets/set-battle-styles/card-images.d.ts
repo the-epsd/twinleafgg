@@ -25,6 +25,7 @@ import { MimikyuV } from './mimikyu-v';
 import { NecrozmaV } from './necrozma-v';
 import { Octillery } from './octillery';
 import { RapidStrikeEnergy } from './rapid-strike-energy';
+import { RapidStrikeScrollOfSwirls } from './rapid-strike-scroll-of-swirls';
 import { RapidStrikeUrshifuV } from './rapid-strike-urshifu-v';
 import { RapidStrikeUrshifuVMAX } from './rapid-strike-urshifu-vmax';
 import { Remoraid } from './remoraid';
@@ -124,6 +125,9 @@ export declare class OctilleryArt extends Octillery {
     cardImage: string;
 }
 export declare class RapidStrikeEnergyArt extends RapidStrikeEnergy {
+    cardImage: string;
+}
+export declare class RapidStrikeScrollOfSwirlsArt extends RapidStrikeScrollOfSwirls {
     cardImage: string;
 }
 export declare class RapidStrikeUrshifuVArt extends RapidStrikeUrshifuV {

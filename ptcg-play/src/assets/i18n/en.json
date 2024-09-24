@@ -495,6 +495,7 @@
     "LOG_PLAYER_PLAYS_STADIUM": "{{name}} puts {{card}} in play.",
     "LOG_PLAYER_PLAYS_SUPPORTER": "{{name}} plays {{card}}.",
     "LOG_PLAYER_PLAYS_TOOL": "{{name}} attaches {{card}} to {{pokemon}}.",
+    "LOG_PLAYER_RETURNS_CARD_TO_HAND": "{{name}} returns {{card}} to their hand.",
     "LOG_PLAYER_RETREATS": "{{name}} retreats {{active}} to {{benched}}.",
     "LOG_PLAYER_USES_ABILITY": "{{name}} uses {{ability}} ability.",
     "LOG_PLAYER_SWITCHES_POKEMON_WITH_POKEMON_FROM_DECK": "{{name}} switches {{card}} with {{secondCard}} from the deck.",

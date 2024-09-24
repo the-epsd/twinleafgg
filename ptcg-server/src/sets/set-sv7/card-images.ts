@@ -22,6 +22,7 @@ import { Meditite } from './meditite';
 import { Noctowl } from './noctowl';
 import { Orthwormex } from './orthworm-ex';
 import { Raboot } from './raboot';
+import { RagingBolt } from './raging-bolt';
 import { Scorbunny } from './scorbunny';
 import { Terapagosex } from './terapagos-ex';
 import { Zeraora } from './zeraora';
@@ -120,6 +121,10 @@ export class OrthwormexArt extends Orthwormex {
 
 export class RabootArt extends Raboot {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SCR/SCR_027_R_EN.png';
+}
+
+export class RagingBoltArt extends RagingBolt {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SCR/SCR_111_R_EN.png';
 }
 
 export class ScorbunnyArt extends Scorbunny {

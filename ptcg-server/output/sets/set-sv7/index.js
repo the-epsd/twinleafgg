@@ -26,6 +26,7 @@ exports.setSV7 = [
     new card_images_1.NoctowlArt(),
     // new OrthwormexArt(),
     new card_images_1.RabootArt(),
+    new card_images_1.RagingBoltArt(),
     new card_images_1.ScorbunnyArt(),
     new card_images_1.TerapagosexArt(),
     new card_images_1.ZeraoraArt(),

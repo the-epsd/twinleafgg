@@ -49,6 +49,7 @@ export declare class AbraArt extends Abra {
 import { Machop } from './machop';
 import { Machoke } from './machoke';
 import { Starmie } from './starmie';
+import { RigidBand } from './rigid-band';
 export declare class AntiqueHelixFossilArt extends AntiqueHelixFossil {
     cardImage: string;
 }
@@ -158,6 +159,9 @@ export declare class PidgeottoArt extends Pidgeotto {
     cardImage: string;
 }
 export declare class PidgeyArt extends Pidgey {
+    cardImage: string;
+}
+export declare class RigidBandArt extends RigidBand {
     cardImage: string;
 }
 export declare class ScytherArt extends Scyther {

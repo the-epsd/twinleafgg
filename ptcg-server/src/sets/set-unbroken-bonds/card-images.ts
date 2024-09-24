@@ -8,6 +8,7 @@ import { Hitmontop } from './hitmontop';
 import { LtSurgesStrategy } from './lt-surges-strategy';
 import { Marshadow } from './marshadow';
 import { MartialArtsDojo } from './martial-arts-dojo';
+import { MetalCoreBarrier } from './metal-core-barrier';
 import { Mew } from './mew';
 import { Mewtwo } from './mewtwo';
 import { Mismagius } from './mismagius';
@@ -99,6 +100,10 @@ export class MartialArtsDojoArt extends MartialArtsDojo {
 
 export class MeowthArt extends Meowth {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_147_R_EN_LG.png';
+}
+
+export class MetalCoreBarrierArt extends MetalCoreBarrier {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_180_R_EN_LG.png';
 }
 
 export class MewArt extends Mew {

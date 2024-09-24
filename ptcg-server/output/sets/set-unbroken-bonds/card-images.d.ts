@@ -8,6 +8,7 @@ import { Hitmontop } from './hitmontop';
 import { LtSurgesStrategy } from './lt-surges-strategy';
 import { Marshadow } from './marshadow';
 import { MartialArtsDojo } from './martial-arts-dojo';
+import { MetalCoreBarrier } from './metal-core-barrier';
 import { Mew } from './mew';
 import { Mewtwo } from './mewtwo';
 import { Mismagius } from './mismagius';
@@ -80,6 +81,9 @@ export declare class MartialArtsDojoArt extends MartialArtsDojo {
     cardImage: string;
 }
 export declare class MeowthArt extends Meowth {
+    cardImage: string;
+}
+export declare class MetalCoreBarrierArt extends MetalCoreBarrier {
     cardImage: string;
 }
 export declare class MewArt extends Mew {

@@ -70,7 +70,10 @@ class Archaludon extends pokemon_card_1.PokemonCard {
                     inPlay = true;
                 }
             });
-            if (inPlay) {
+            const checkProvidedEnergyEffect = new check_effects_1.CheckProvidedEnergyEffect(player, player.active);
+            store.reduceEffect(state, checkProvidedEnergyEffect);
+            const activeHasMetalEnergy = checkProvidedEnergyEffect.energyMap.some(p => p.provides.includes(card_types_1.CardType.METAL));
+            if (inPlay && activeHasMetalEnergy) {
                 effect.cost = [];
             }
         }

@@ -1,5 +1,6 @@
 import { AlolanGrimer } from './alolan-grimer';
 import { DarkCity } from './dark-city';
+import { FlyiniumZAirSlash } from './flyinium-z-air-slash';
 import { KarateBelt } from './karate-belt';
 import { Necrozma } from './necrozma';
 import { Purrloin } from './purrloin';
@@ -24,6 +25,10 @@ export class AlolanGrimerArt extends AlolanGrimer {
 
 export class DarkCityArt extends DarkCity {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNM/UNM_193_R_EN.png';
+}
+
+export class FlyiniumZAirSlashArt extends FlyiniumZAirSlash {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNM/UNM_195_R_EN_LG.png';
 }
 
 export class FroslassArt extends Froslass {

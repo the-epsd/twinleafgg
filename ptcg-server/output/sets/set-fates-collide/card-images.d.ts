@@ -1,3 +1,4 @@
+import { EnergyPouch } from './energy-pouch';
 import { Deerling } from './FCO_8_Deerling';
 import { Fennekin } from './fennekin';
 import { Lucario } from './lucario';
@@ -6,6 +7,9 @@ import { N } from './n';
 import { Riolu } from './riolu';
 import { TeamRocketsHandiwork } from './team-rockets-handiwork';
 export declare class DeerlingArt extends Deerling {
+    cardImage: string;
+}
+export declare class EnergyPouchArt extends EnergyPouch {
     cardImage: string;
 }
 export declare class FennekinArt extends Fennekin {

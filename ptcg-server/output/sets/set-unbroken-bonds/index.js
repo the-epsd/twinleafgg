@@ -21,6 +21,7 @@ exports.setUnbrokenBonds = [
     new card_images_1.MarshadowArt(),
     new card_images_1.MartialArtsDojoArt(),
     new card_images_1.MeowthArt(),
+    new card_images_1.MetalCoreBarrierArt(),
     new card_images_1.MewArt(),
     new card_images_1.MewtwoArt(),
     new card_images_1.MismagiusArt(),

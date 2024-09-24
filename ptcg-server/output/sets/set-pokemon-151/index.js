@@ -42,6 +42,7 @@ exports.setPokemon151 = [
     new card_images_1.OddishArt(),
     new card_images_1.PidgeottoArt(),
     new card_images_1.PidgeyArt(),
+    new card_images_1.RigidBandArt(),
     new card_images_1.ScytherArt(),
     new card_images_1.SquirtleArt(),
     new card_images_1.StaryuArt(),

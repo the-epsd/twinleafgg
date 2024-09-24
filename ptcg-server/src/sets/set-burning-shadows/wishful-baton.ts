@@ -28,32 +28,7 @@ export class WishfulBaton extends TrainerCard {
   public text: string =
     'If the Pokémon this card is attached to is your Active Pokémon and is Knocked Out by damage from an opponent\'s attack, move up to 3 basic Energy cards from that Pokémon to 1 of your Benched Pokémon.';
 
-  // public damageDealt = false;
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    // if (effect instanceof AttackEffect && effect.player.active.tool === this) {
-    //   this.damageDealt = false;
-    // }
-
-    // if ((effect instanceof DealDamageEffect || effect instanceof PutDamageEffect) &&
-    //     effect.target.tool === this) {
-    //   const player = StateUtils.getOpponent(state, effect.player);
-
-    //   if (player.active.tool === this) {
-    //     this.damageDealt = true;
-    //   }
-    // }
-
-    // if (effect instanceof EndTurnEffect && effect.player === StateUtils.getOpponent(state, effect.player)) {
-    //   const cardList = StateUtils.findCardList(state, this);
-    //   const owner = StateUtils.findOwner(state, cardList);
-
-    //   if (owner === effect.player) {
-    //     this.damageDealt = false;
-    //   }
-    // }
-
     if (effect instanceof KnockOutEffect && effect.target.cards.includes(this) && effect.player.marker.hasMarker(effect.player.DAMAGE_DEALT_MARKER)) {
 
       const player = effect.player;
@@ -71,8 +46,6 @@ export class WishfulBaton extends TrainerCard {
       } catch {
         return state;
       }
-
-      // if (this.damageDealt) {
 
       for (let i = pokemonIndices.length - 1; i >= 0; i--) {
         const removedCard = target.cards.splice(pokemonIndices[i], 1)[0];

@@ -50,6 +50,7 @@ export class AbraArt extends Abra {
 import { Machop } from './machop';
 import { Machoke } from './machoke';
 import { Starmie } from './starmie';
+import { RigidBand } from './rigid-band';
 
 export class AntiqueHelixFossilArt extends AntiqueHelixFossil {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/MEW/MEW_153_R_EN.png';
@@ -197,6 +198,10 @@ export class PidgeottoArt extends Pidgeotto {
 
 export class PidgeyArt extends Pidgey {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/MEW/MEW_016_R_EN_LG.png';
+}
+
+export class RigidBandArt extends RigidBand {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/MEW/MEW_165_R_EN_LG.png';
 }
 
 export class ScytherArt extends Scyther {

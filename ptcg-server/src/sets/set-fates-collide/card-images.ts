@@ -1,3 +1,4 @@
+import { EnergyPouch } from './energy-pouch';
 import { Deerling } from './FCO_8_Deerling';
 import { Fennekin } from './fennekin';
 import { Lucario } from './lucario';
@@ -8,6 +9,10 @@ import { TeamRocketsHandiwork } from './team-rockets-handiwork';
 
 export class DeerlingArt extends Deerling {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FCO/FCO_008_R_EN_LG.png';
+}
+
+export class EnergyPouchArt extends EnergyPouch {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FCO/FCO_097_R_EN_LG.png';
 }
 
 export class FennekinArt extends Fennekin {

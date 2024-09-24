@@ -70,7 +70,7 @@ class Bronzong extends pokemon_card_1.PokemonCard {
                     blocked.push(index);
                 }
             });
-            state = store.prompt(state, new attach_energy_prompt_1.AttachEnergyPrompt(player.id, game_message_1.GameMessage.ATTACH_ENERGY_CARDS, player.discard, play_card_action_1.PlayerType.BOTTOM_PLAYER, [play_card_action_1.SlotType.BENCH], { superType: card_types_1.SuperType.ENERGY }, { allowCancel: false, min: 1, max: 1, blocked }), transfers => {
+            state = store.prompt(state, new attach_energy_prompt_1.AttachEnergyPrompt(player.id, game_message_1.GameMessage.ATTACH_ENERGY_CARDS, player.discard, play_card_action_1.PlayerType.BOTTOM_PLAYER, [play_card_action_1.SlotType.BENCH], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Metal Energy' }, { allowCancel: false, min: 1, max: 1, blocked }), transfers => {
                 transfers = transfers || [];
                 for (const transfer of transfers) {
                     const target = state_utils_1.StateUtils.getTarget(state, player, transfer.to);

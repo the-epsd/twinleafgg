@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZeraoraArt = exports.TerapagosexArt = exports.ScorbunnyArt = exports.RabootArt = exports.OrthwormexArt = exports.NoctowlArt = exports.MedititeArt = exports.MedichamexArt = exports.LaprasexArt = exports.JoltikArt = exports.HydrappleexArt = exports.HoothootArt = exports.GreatTreeArt = exports.GlisteningCrystalArt = exports.GlassTrumpetArt = exports.GalvantulexaArt = exports.FanRotomArt = exports.DrifblimArt = exports.DrednawArt = exports.CrispinArt = exports.CinderaceexArt = exports.ComfeyArt = exports.ChewtleArt = exports.BriarArt = exports.BouffalantArt = exports.AreaZeroUnderdepthsArt = exports.ArchaludonArt = void 0;
+exports.ZeraoraArt = exports.TerapagosexArt = exports.ScorbunnyArt = exports.RagingBoltArt = exports.RabootArt = exports.OrthwormexArt = exports.NoctowlArt = exports.MedititeArt = exports.MedichamexArt = exports.LaprasexArt = exports.JoltikArt = exports.HydrappleexArt = exports.HoothootArt = exports.GreatTreeArt = exports.GlisteningCrystalArt = exports.GlassTrumpetArt = exports.GalvantulexaArt = exports.FanRotomArt = exports.DrifblimArt = exports.DrednawArt = exports.CrispinArt = exports.CinderaceexArt = exports.ComfeyArt = exports.ChewtleArt = exports.BriarArt = exports.BouffalantArt = exports.AreaZeroUnderdepthsArt = exports.ArchaludonArt = void 0;
 const archaludon_1 = require("./archaludon");
 const area_zero_underdepths_1 = require("./area-zero-underdepths");
 const bouffalant_1 = require("./bouffalant");
@@ -25,6 +25,7 @@ const meditite_1 = require("./meditite");
 const noctowl_1 = require("./noctowl");
 const orthworm_ex_1 = require("./orthworm-ex");
 const raboot_1 = require("./raboot");
+const raging_bolt_1 = require("./raging-bolt");
 const scorbunny_1 = require("./scorbunny");
 const terapagos_ex_1 = require("./terapagos-ex");
 const zeraora_1 = require("./zeraora");
@@ -196,6 +197,13 @@ class RabootArt extends raboot_1.Raboot {
     }
 }
 exports.RabootArt = RabootArt;
+class RagingBoltArt extends raging_bolt_1.RagingBolt {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SCR/SCR_111_R_EN.png';
+    }
+}
+exports.RagingBoltArt = RagingBoltArt;
 class ScorbunnyArt extends scorbunny_1.Scorbunny {
     constructor() {
         super(...arguments);

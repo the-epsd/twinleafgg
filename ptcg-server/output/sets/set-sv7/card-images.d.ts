@@ -22,6 +22,7 @@ import { Meditite } from './meditite';
 import { Noctowl } from './noctowl';
 import { Orthwormex } from './orthworm-ex';
 import { Raboot } from './raboot';
+import { RagingBolt } from './raging-bolt';
 import { Scorbunny } from './scorbunny';
 import { Terapagosex } from './terapagos-ex';
 import { Zeraora } from './zeraora';
@@ -95,6 +96,9 @@ export declare class OrthwormexArt extends Orthwormex {
     cardImage: string;
 }
 export declare class RabootArt extends Raboot {
+    cardImage: string;
+}
+export declare class RagingBoltArt extends RagingBolt {
     cardImage: string;
 }
 export declare class ScorbunnyArt extends Scorbunny {

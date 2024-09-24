@@ -29,6 +29,7 @@ exports.setBattleStyles = [
     new card_images_1.NecrozmaVArt(),
     new card_images_1.OctilleryArt(),
     new card_images_1.RapidStrikeEnergyArt(),
+    new card_images_1.RapidStrikeScrollOfSwirlsArt(),
     new card_images_1.RapidStrikeUrshifuVArt(),
     new card_images_1.RapidStrikeUrshifuVMAXArt(),
     new card_images_1.RemoraidArt(),
