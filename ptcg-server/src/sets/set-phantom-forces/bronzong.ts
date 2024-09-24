@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
+import { Stage, CardType, SuperType, EnergyType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
@@ -96,7 +96,7 @@ export class Bronzong extends PokemonCard {
         player.discard,
         PlayerType.BOTTOM_PLAYER,
         [SlotType.BENCH],
-        { superType: SuperType.ENERGY },
+        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Metal Energy' },
         { allowCancel: false, min: 1, max: 1, blocked }
       ), transfers => {
         transfers = transfers || [];

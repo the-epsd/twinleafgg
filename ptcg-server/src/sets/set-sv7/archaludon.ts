@@ -1,7 +1,7 @@
 import { GameError, GameMessage, PlayerType, PowerType, State, StateUtils, StoreLike } from '../../game';
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { CheckPokemonTypeEffect, CheckRetreatCostEffect } from '../../game/store/effects/check-effects';
+import { CheckPokemonTypeEffect, CheckProvidedEnergyEffect, CheckRetreatCostEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
@@ -89,8 +89,13 @@ export class Archaludon extends PokemonCard {
           inPlay = true;
         }
       });
+      
+      const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player, player.active);
+      store.reduceEffect(state, checkProvidedEnergyEffect);
+      
+      const activeHasMetalEnergy = checkProvidedEnergyEffect.energyMap.some(p => p.provides.includes(CardType.METAL));
 
-      if (inPlay) {
+      if (inPlay && activeHasMetalEnergy) {
         effect.cost = [];
       }
     }
