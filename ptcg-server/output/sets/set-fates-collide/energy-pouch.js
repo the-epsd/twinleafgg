@@ -37,6 +37,12 @@ class EnergyPouch extends trainer_card_1.TrainerCard {
             }
             const basicEnergy = new game_1.CardList();
             basicEnergy.cards = removedCards.filter(c => c instanceof game_1.EnergyCard && c.energyType === card_types_1.EnergyType.BASIC);
+            basicEnergy.cards.forEach(c => {
+                store.log(state, game_1.GameLog.LOG_PLAYER_RETURNS_CARD_TO_HAND, {
+                    name: player.name,
+                    card: c.name
+                });
+            });
             basicEnergy.moveTo(player.hand);
             return state;
         }
