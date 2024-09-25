@@ -8,6 +8,7 @@ import { CounterGain } from './counter-gain';
 import { CustomCatcher } from './custom-catcher';
 import { DittoPrismStar } from './ditto-prism-star';
 import { Electropower } from './electropower';
+import { Faba } from './faba';
 import { Girafarig } from './girafarig';
 import { Grovyle } from './grovyle';
 import { Lanturn } from './lanturn';
@@ -65,6 +66,10 @@ export class DittoPrismStarArt extends DittoPrismStar {
 
 export class ElectropowerArt extends Electropower {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_172_R_EN_LG.png';
+}
+
+export class FabaArt extends Faba {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_173_R_EN_LG.png';
 }
 
 export class GirafarigArt extends Girafarig {

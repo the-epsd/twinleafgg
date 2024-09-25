@@ -12,6 +12,7 @@ exports.setLostThunder = [
     new card_images_1.CounterGainArt(),
     new card_images_1.CustomCatcherArt(),
     new card_images_1.ElectropowerArt(),
+    new card_images_1.FabaArt(),
     new card_images_1.GirafarigArt(),
     new card_images_1.GiratinaArt(),
     new card_images_1.GrovleArt(),
