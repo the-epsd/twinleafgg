@@ -19,11 +19,11 @@ class Pokedex extends trainer_card_1.TrainerCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
             const player = effect.player;
+            if (player.deck.cards.length === 0) {
+                throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
+            }
             const deckTop = new game_1.CardList();
-            // Get up to 5 cards from the top of the deck
             player.deck.moveTo(deckTop, 5);
-            // We will discard this card after prompt confirmation
-            effect.preventDefault = true;
             return store.prompt(state, new game_1.OrderCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARDS_ORDER, deckTop, { allowCancel: false }), order => {
                 if (order === null) {
                     return state;

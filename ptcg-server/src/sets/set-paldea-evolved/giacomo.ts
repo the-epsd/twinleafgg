@@ -30,7 +30,7 @@ export class Giacomo extends TrainerCard {
 
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      
+
 
       let oppSpecialPokemon = 0;
       let hasPokemonWithEnergy = false;
@@ -43,36 +43,36 @@ export class Giacomo extends TrainerCard {
           blocked.push(target);
         }
       });
-      
+
       if (!hasPokemonWithEnergy) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
-      
+
       const supporterTurn = player.supporterTurn;
 
       if (supporterTurn > 0) {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
-      
+
       player.hand.moveCardTo(effect.trainerCard, player.supporter);
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
-      
+
       let targets: PokemonCardList[] = [];
       store.prompt(state, new ChoosePokemonPrompt(
         player.id,
         GameMessage.CHOOSE_POKEMON_TO_DISCARD_CARDS,
         PlayerType.TOP_PLAYER,
-        [ SlotType.ACTIVE, SlotType.BENCH ],
+        [SlotType.ACTIVE, SlotType.BENCH],
         { min: oppSpecialPokemon, max: oppSpecialPokemon, allowCancel: false, blocked }
       ), results => {
         targets = results || [];
       });
-      
+
       if (targets.length === 0) {
         return state;
       }
-      
+
       const target = targets[0];
       let cards: Card[] = [];
       store.prompt(state, new ChooseCardsPrompt(
@@ -84,18 +84,19 @@ export class Giacomo extends TrainerCard {
       ), selected => {
         cards = selected || [];
       });
-      
+
       if (cards.length > 0) {
         // Discard selected special energy card
-        target.moveCardsTo(cards, opponent.discard);
+        cards.forEach(card => {
+          target.moveCardTo(card, opponent.discard);
+        });
       }
 
       player.supporter.moveCardTo(effect.trainerCard, player.discard);
-      
-      
+
+
       return state;
     }
     return state;
   }
 }
-      

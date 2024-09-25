@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DarknessEnergyArt = exports.StarmieArt = exports.PoliwhirlArt = exports.PokedexArt = exports.ElectabuzzArt = exports.DragoniteEXArt = exports.DevolutionSprayArt = void 0;
+const pokedex_1 = require("../set-black-and-white/pokedex");
 const darkness_energy_1 = require("../set-diamond-and-pearl/darkness-energy");
 const devolution_spray_1 = require("./devolution-spray");
 const dragonite_ex_1 = require("./dragonite-ex");
 const electabuzz_1 = require("./electabuzz");
 const EVO_24_Poliwhirl_1 = require("./EVO_24_Poliwhirl");
-const pokedex_1 = require("./pokedex");
 const starmie_1 = require("./starmie");
 class DevolutionSprayArt extends devolution_spray_1.DevolutionSpray {
     constructor() {
@@ -33,6 +33,9 @@ class PokedexArt extends pokedex_1.Pokedex {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/EVO/EVO_082_R_EN_LG.png';
+        this.set = 'EVO';
+        this.setNumber = '98';
+        this.fullName = 'Pokedex EVO';
     }
 }
 exports.PokedexArt = PokedexArt;
@@ -56,7 +59,7 @@ class DarknessEnergyArt extends darkness_energy_1.DarknessEnergy {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/EVO/EVO_097_R_EN.png';
         this.set = 'EVO';
-        this.setNumber = '097';
+        this.setNumber = '97';
         this.fullName = 'Darkness Energy EVO';
     }
 }

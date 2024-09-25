@@ -43,10 +43,12 @@ export class Wurmple extends PokemonCard {
 
       const blocked: number[] = [];
       player.deck.cards.forEach((card, index) => {
-        if (card instanceof PokemonCard && card.name !== 'Wurmple' || card instanceof PokemonCard && card.name !== 'Silcoon' || card instanceof PokemonCard && card.name !== 'Cascoon' || card instanceof PokemonCard && card.name !== 'Beautifly' || card instanceof PokemonCard && card.name !== 'Dustox') {
+        if (card instanceof PokemonCard &&
+          !['Wurmple', 'Silcoon', 'Cascoon', 'Beautifly', 'Dustox'].includes(card.name)) {
           blocked.push(index);
         }
       });
+
 
       return store.prompt(state, new ChooseCardsPrompt(
         player.id,

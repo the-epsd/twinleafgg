@@ -41,7 +41,7 @@ class LetterOfEncouragement extends trainer_card_1.TrainerCard {
         this.set = 'OBF';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '152';
-        this.regulationMark = 'E';
+        this.regulationMark = 'G';
         this.name = 'Letter of Encouragement';
         this.fullName = 'Letter of Encouragement OBF';
         this.text = 'You can play this card only if 1 of your Pokemon was Knocked Out ' +
