@@ -31,9 +31,11 @@ class GutsyPickaxe extends game_1.TrainerCard {
             if (temp.cards.length > 0) {
                 return store.prompt(state, new game_1.ShowCardsPrompt(opponent.id, game_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, temp.cards), () => {
                     if (energyCardsDrawn.length == 0) {
-                        temp.cards.slice(0, 1).forEach(card => {
-                            temp.moveCardTo(card, player.hand);
-                            player.supporter.moveCardTo(effect.trainerCard, player.discard);
+                        return store.prompt(state, new game_1.ShowCardsPrompt(player.id, game_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, temp.cards), () => {
+                            temp.cards.slice(0, 1).forEach(card => {
+                                temp.moveCardTo(card, player.hand);
+                                player.supporter.moveCardTo(effect.trainerCard, player.discard);
+                            });
                         });
                     }
                     else {
