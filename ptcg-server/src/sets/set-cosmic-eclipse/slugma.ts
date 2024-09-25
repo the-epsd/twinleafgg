@@ -15,7 +15,7 @@ export class Slugma extends PokemonCard {
   public evolvesInto = 'Magcargo';
 
   public attacks = [{
-    name: 'singe',
+    name: 'Singe',
     cost: [CardType.FIRE],
     damage: 0,
     text: 'Your opponent\'s Active Pokemon is now Burned.'

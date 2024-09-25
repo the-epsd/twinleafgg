@@ -32,6 +32,7 @@ import { HeavyBaton } from './heavy-baton';
 import { HerosCape } from './heros-cape';
 import { IronCrownex } from './iron-crown-ex';
 import { IronHands } from './iron-hands';
+import { IronJugulis } from './iron-jugulis';
 import { IronLeavesex } from './iron-leaves-ex';
 import { IronThorns } from './iron-thorns';
 import { Koraidon } from './koraidon';
@@ -175,6 +176,9 @@ export declare class IronCrownexArt extends IronCrownex {
     cardImage: string;
 }
 export declare class IronHandsArt extends IronHands {
+    cardImage: string;
+}
+export declare class IronJugulisArt extends IronJugulis {
     cardImage: string;
 }
 export declare class IronLeavesexArt extends IronLeavesex {

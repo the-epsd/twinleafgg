@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PalafinArt = exports.NeoUpperEnergyArt = exports.MrMimeArt = exports.MortysConvictionArt = exports.MistEnergyArt = exports.MiraidonArt = exports.MiraidonexArt = exports.MinccinoArt = exports.MetagrossArt = exports.MetangArt = exports.MasterBallArt = exports.MaximumBeltArt = exports.KoraidonArt = exports.KoraidonexArt = exports.IronThornsArt = exports.IronLeavesexArt = exports.IronHandsArt = exports.IronCrownexArt = exports.HerosCapeArt = exports.HeavyBatonArt = exports.HaunterArt = exports.HandTrimmerArt = exports.GrotleArt = exports.GougingFireexArt = exports.GengarexArt = exports.GastlyArt = exports.GreatTuskArt = exports.FutureBoosterEnergyCapsuleArt = exports.FullMetalLabArt = exports.FlutterManeArt = exports.FeraligatrArt = exports.ExplorersGuidanceArt = exports.EriArt = exports.EmergencyBoardArt = exports.DuosionArt = exports.DunsparceArt = exports.DudunsparceArt = exports.DrumsOfAwakeningArt = exports.DrilburArt = exports.DeliveryBoxArt = exports.CryptomaniacsDecipheringArt = exports.CroconawArt = exports.CinccinoArt = exports.ChatotArt = exports.CharjabugArt = exports.BuddyBuddyPoffinArt = exports.BrambleghastArt = exports.BiancasDevotionArt = exports.BeldumArt = exports.AncientBoosterEnergyCapsuleArt = void 0;
-exports.WalkingWakeexArt = exports.VikavoltArt = exports.VictiniArt = exports.TurtwigArt = exports.TotodileArt = exports.TorterraexArt = exports.SolosisArt = exports.SkittyArt = exports.SandyShocksArt = exports.SalvatoreArt = exports.SableyeArt = exports.RoaringMoonArt = exports.ReuniclusArt = exports.RellorArt = exports.RebootPodArt = exports.RaichuArt = exports.RagingBoltexArt = exports.RabscaArt = exports.PrimeCatcherArt = exports.PikachuArt = exports.PerilousJungleArt = void 0;
+exports.NeoUpperEnergyArt = exports.MrMimeArt = exports.MortysConvictionArt = exports.MistEnergyArt = exports.MiraidonArt = exports.MiraidonexArt = exports.MinccinoArt = exports.MetagrossArt = exports.MetangArt = exports.MasterBallArt = exports.MaximumBeltArt = exports.KoraidonArt = exports.KoraidonexArt = exports.IronThornsArt = exports.IronLeavesexArt = exports.IronJugulisArt = exports.IronHandsArt = exports.IronCrownexArt = exports.HerosCapeArt = exports.HeavyBatonArt = exports.HaunterArt = exports.HandTrimmerArt = exports.GrotleArt = exports.GougingFireexArt = exports.GengarexArt = exports.GastlyArt = exports.GreatTuskArt = exports.FutureBoosterEnergyCapsuleArt = exports.FullMetalLabArt = exports.FlutterManeArt = exports.FeraligatrArt = exports.ExplorersGuidanceArt = exports.EriArt = exports.EmergencyBoardArt = exports.DuosionArt = exports.DunsparceArt = exports.DudunsparceArt = exports.DrumsOfAwakeningArt = exports.DrilburArt = exports.DeliveryBoxArt = exports.CryptomaniacsDecipheringArt = exports.CroconawArt = exports.CinccinoArt = exports.ChatotArt = exports.CharjabugArt = exports.BuddyBuddyPoffinArt = exports.BrambleghastArt = exports.BiancasDevotionArt = exports.BeldumArt = exports.AncientBoosterEnergyCapsuleArt = void 0;
+exports.WalkingWakeexArt = exports.VikavoltArt = exports.VictiniArt = exports.TurtwigArt = exports.TotodileArt = exports.TorterraexArt = exports.SolosisArt = exports.SkittyArt = exports.SandyShocksArt = exports.SalvatoreArt = exports.SableyeArt = exports.RoaringMoonArt = exports.ReuniclusArt = exports.RellorArt = exports.RebootPodArt = exports.RaichuArt = exports.RagingBoltexArt = exports.RabscaArt = exports.PrimeCatcherArt = exports.PikachuArt = exports.PerilousJungleArt = exports.PalafinArt = void 0;
 const ancient_booster_energy_capsule_1 = require("../set-paradox-rift/ancient-booster-energy-capsule");
 const future_booster_energy_capsule_1 = require("../set-paradox-rift/future-booster-energy-capsule");
 const beldum_1 = require("./beldum");
@@ -36,6 +36,7 @@ const heavy_baton_1 = require("./heavy-baton");
 const heros_cape_1 = require("./heros-cape");
 const iron_crown_ex_1 = require("./iron-crown-ex");
 const iron_hands_1 = require("./iron-hands");
+const iron_jugulis_1 = require("./iron-jugulis");
 const iron_leaves_ex_1 = require("./iron-leaves-ex");
 const iron_thorns_1 = require("./iron-thorns");
 const koraidon_1 = require("./koraidon");
@@ -317,6 +318,13 @@ class IronHandsArt extends iron_hands_1.IronHands {
     }
 }
 exports.IronHandsArt = IronHandsArt;
+class IronJugulisArt extends iron_jugulis_1.IronJugulis {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEF/TEF_139_R_EN.png';
+    }
+}
+exports.IronJugulisArt = IronJugulisArt;
 class IronLeavesexArt extends iron_leaves_ex_1.IronLeavesex {
     constructor() {
         super(...arguments);

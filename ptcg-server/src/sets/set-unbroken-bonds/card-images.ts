@@ -14,7 +14,9 @@ import { Mewtwo } from './mewtwo';
 import { Mismagius } from './mismagius';
 import { Oddish } from './oddish';
 import { Pokegear30 } from './pokegear-30';
+import { Porygon } from './porygon';
 import { PorygonZ } from './porygon-z';
+import { Porygon2 } from './porygon2';
 import { Spiritomb } from './spiritomb';
 import { TripleAccelerationEnergy } from './triple-acceleration-energy';
 import { Aron } from './UNB_123_Aron';
@@ -128,6 +130,14 @@ export class Pokegear30Art extends Pokegear30 {
 
 export class PoliwagArt extends Poliwag {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_037_R_EN_LG.png';
+}
+
+export class PorygonArt extends Porygon {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_155_R_EN_LG.png';
+}
+
+export class Porygon2Art extends Porygon2 {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_156_R_EN_LG.png';
 }
 
 export class PorygonZArt extends PorygonZ {

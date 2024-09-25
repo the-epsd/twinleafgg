@@ -28,6 +28,8 @@ exports.setUnbrokenBonds = [
     new card_images_1.OddishArt(),
     new card_images_1.Pokegear30Art(),
     new card_images_1.PoliwagArt(),
+    new card_images_1.PorygonArt(),
+    new card_images_1.Porygon2Art(),
     new card_images_1.PorygonZArt(),
     new card_images_1.SalazzleArt(),
     new card_images_1.SpiritombArt(),

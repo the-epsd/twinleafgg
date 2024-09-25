@@ -1,15 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZekromArt = exports.WashWaterEnergyArt = exports.WailordArt = exports.WailmerArt = exports.TaillowArt = exports.StoneFightingEnergyArt = exports.SnorlaxArt = exports.RaikouArt = exports.NessaArt = exports.MagearnaArt = exports.LeonArt = exports.JirachiArt = exports.DhelmiseArt = exports.CoatingMetalEnergyArt = exports.CharmeleonArt = exports.CharmanderArt = exports.CharizardArt = exports.AromaticEnergyArt = void 0;
+exports.ZekromArt = exports.WashWaterEnergyArt = exports.WailordArt = exports.WailmerArt = exports.TaillowArt = exports.StoneFightingEnergyArt = exports.SnorlaxArt = exports.SlugmaArt = exports.RaikouArt = exports.NessaArt = exports.MagearnaArt = exports.LeonArt = exports.JirachiArt = exports.DhelmiseArt = exports.CoatingMetalEnergyArt = exports.ClefairyArt = exports.CharmeleonArt = exports.CharmanderArt = exports.CharizardArt = exports.AromaticEnergyArt = void 0;
 const aromatic_energy_1 = require("./aromatic-energy");
 const charizard_1 = require("./charizard");
 const charmander_1 = require("./charmander");
 const charmeleon_1 = require("./charmeleon");
+const clefairy_1 = require("./clefairy");
 const coating_metal_energy_1 = require("./coating-metal-energy");
 const jirachi_1 = require("./jirachi");
 const leon_1 = require("./leon");
 const nessa_1 = require("./nessa");
 const raikou_1 = require("./raikou");
+const slugma_1 = require("./slugma");
 const snorlax_1 = require("./snorlax");
 const stone_fighting_energy_1 = require("./stone-fighting-energy");
 const VIV_128_Magearna_1 = require("./VIV_128_Magearna");
@@ -47,6 +49,13 @@ class CharmeleonArt extends charmeleon_1.Charmeleon {
     }
 }
 exports.CharmeleonArt = CharmeleonArt;
+class ClefairyArt extends clefairy_1.Clefairy {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/VIV/VIV_063_R_EN.png';
+    }
+}
+exports.ClefairyArt = ClefairyArt;
 class CoatingMetalEnergyArt extends coating_metal_energy_1.CoatingMetalEnergy {
     constructor() {
         super(...arguments);
@@ -96,6 +105,13 @@ class RaikouArt extends raikou_1.Raikou {
     }
 }
 exports.RaikouArt = RaikouArt;
+class SlugmaArt extends slugma_1.Slugma {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/VIV/VIV_027_R_EN.png';
+    }
+}
+exports.SlugmaArt = SlugmaArt;
 class SnorlaxArt extends snorlax_1.Snorlax {
     constructor() {
         super(...arguments);

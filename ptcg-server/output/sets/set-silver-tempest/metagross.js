@@ -49,36 +49,6 @@ class Metagross extends pokemon_card_1.PokemonCard {
             effect.player.attackMarker.addMarker(this.ATTACK_USED_2_MARKER, this);
             console.log('second marker added');
         }
-        // const player = state.players[state.activePlayer];
-        // if (player.drewMetagross == true) {
-        //   const slots: PokemonCardList[] = player.bench.filter(b => b.cards.length === 0);
-        //   // No open slots, throw error
-        //   if (slots.length === 0) {
-        //     return state;
-        //   }
-        //   // Try to reduce PowerEffect, to check if something is blocking our ability
-        //   try {
-        //     const stub = new PowerEffect(player, {
-        //       name: 'test',
-        //       powerType: PowerType.ABILITY,
-        //       text: ''
-        //     }, this);
-        //     store.reduceEffect(state, stub);
-        //   } catch {
-        //     return state;
-        //   }
-        //   state = store.prompt(state, new ConfirmPrompt(
-        //     player.id,
-        //     GameMessage.WANT_TO_USE_ABILITY,
-        //   ), wantToUse => {
-        //     if (wantToUse) {
-        //       const cards = player.hand.cards.filter(c => c === this);
-        //       cards.forEach(card => {
-        //         player.hand.moveCardTo(card, slots[0]); // Move to Bench
-        //       });
-        //     }
-        //   });
-        // }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             // Check marker
             if (effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {

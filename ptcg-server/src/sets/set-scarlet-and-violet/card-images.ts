@@ -65,6 +65,7 @@ import { Toedscool } from './SVI_25_Toedscool';
 import { Toedscruel } from './SVI_26_Toedscruel';
 import { Switch } from './switch';
 import { TeamStarGrunt } from './team-star-grunt';
+import { Torkoal } from './torkoal';
 import { UltraBall } from './ultra-ball';
 import { VitalityBand } from './vitality-band';
 import { Youngster } from './youngster';
@@ -341,6 +342,10 @@ export class ToedscoolArt extends Toedscool {
 
 export class ToedscruelArt extends Toedscruel {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_026_R_EN_LG.png';
+}
+
+export class TorkoalArt extends Torkoal {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_035_R_EN_LG.png';
 }
 
 export class UltraBallArt extends UltraBall {

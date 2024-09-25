@@ -1,13 +1,17 @@
 import { AdventureBag } from './adventure-bag';
 import { AlolanMeowth } from './alolan-meowth';
+import { Blitzle } from './blitzle';
 import { Chikorita } from './chikorita';
 import { Chikorita2 } from './chikorita-2';
+import { Chinchou } from './chinchou';
 import { CounterGain } from './counter-gain';
 import { CustomCatcher } from './custom-catcher';
 import { DittoPrismStar } from './ditto-prism-star';
 import { Electropower } from './electropower';
+import { Faba } from './faba';
 import { Girafarig } from './girafarig';
 import { Grovyle } from './grovyle';
+import { Lanturn } from './lanturn';
 import { LostBlender } from './lost-blender';
 import { ThunderMountainPrismStar } from './LOT_191_ThunderMountainPrismStar';
 import { ZeraoraGX } from './LOT_201_ZeraoraGX';
@@ -20,6 +24,7 @@ import { NetBall } from './net-ball';
 import { Nihilego } from './nihilego';
 import { SpellTag } from './spell-tag';
 import { Treecko } from './treecko';
+import { WhiteKyurem } from './white-kyurem';
 import { Wurmple } from './wurmple';
 import { Zebstrika } from './zebstrika';
 
@@ -31,12 +36,20 @@ export class AlolanMeowthArt extends AlolanMeowth {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_118_R_EN.png';
 }
 
+export class BlitzleArt extends Blitzle {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_081_R_EN_LG.png';
+}
+
 export class ChikoritaArt extends Chikorita {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_006_R_EN_LG.png';
 }
 
 export class ChikoritaArt2 extends Chikorita2 {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_005_R_EN_LG.png';
+}
+
+export class ChinchouArt extends Chinchou {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_073_R_EN_LG.png';
 }
 
 export class CounterGainArt extends CounterGain {
@@ -55,6 +68,10 @@ export class ElectropowerArt extends Electropower {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_172_R_EN_LG.png';
 }
 
+export class FabaArt extends Faba {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_173_R_EN_LG.png';
+}
+
 export class GirafarigArt extends Girafarig {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_094_R_EN.png';
 }
@@ -65,6 +82,10 @@ export class GiratinaArt extends Giratina {
 
 export class GrovleArt extends Grovyle {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_021_R_EN_LG.png';
+}
+
+export class LanturnArt extends Lanturn {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_074_R_EN_LG.png';
 }
 
 export class LostBlenderArt extends LostBlender {
@@ -105,6 +126,10 @@ export class ThunderMountainPrismStarArt extends ThunderMountainPrismStar {
 
 export class TreeckoArt extends Treecko {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_020_R_EN_LG.png';
+}
+
+export class WhiteKyuremArt extends WhiteKyurem { 
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_063_R_EN_LG.png';
 }
 
 export class WurmpleArt extends Wurmple {

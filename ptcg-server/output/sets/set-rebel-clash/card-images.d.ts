@@ -6,8 +6,10 @@ import { Caterpie } from './caterpie';
 import { Coalossal } from './coalossal';
 import { Dragapult } from './dragapult';
 import { Duraludon } from './duraludon';
+import { Electivire } from './electivire';
 import { HorrorPsychicEnergy } from './horror-psychic-energy';
 import { Metapod } from './metapod';
+import { Morpeko } from './morpeko';
 import { Natu } from './natu';
 import { GalarianMeowth } from './RCL_126_Galarian_Meowth';
 import { Honedge } from './RCL_133_Honedge';
@@ -48,6 +50,9 @@ export declare class DragapultArt extends Dragapult {
 export declare class DuraludonArt extends Duraludon {
     cardImage: string;
 }
+export declare class ElectivireArt extends Electivire {
+    cardImage: string;
+}
 export declare class GalarianMeowthArt extends GalarianMeowth {
     cardImage: string;
 }
@@ -58,6 +63,9 @@ export declare class HorrorPsychicEnergyArt extends HorrorPsychicEnergy {
     cardImage: string;
 }
 export declare class MetapodArt extends Metapod {
+    cardImage: string;
+}
+export declare class MorpekoArt extends Morpeko {
     cardImage: string;
 }
 export declare class NatuArt extends Natu {

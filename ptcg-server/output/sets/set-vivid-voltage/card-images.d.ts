@@ -2,11 +2,13 @@ import { AromaticEnergy } from './aromatic-energy';
 import { Charizard } from './charizard';
 import { Charmander } from './charmander';
 import { Charmeleon } from './charmeleon';
+import { Clefairy } from './clefairy';
 import { CoatingMetalEnergy } from './coating-metal-energy';
 import { Jirachi } from './jirachi';
 import { Leon } from './leon';
 import { Nessa } from './nessa';
 import { Raikou } from './raikou';
+import { Slugma } from './slugma';
 import { Snorlax } from './snorlax';
 import { StoneFightingEnergy } from './stone-fighting-energy';
 import { Magearna } from './VIV_128_Magearna';
@@ -28,6 +30,9 @@ export declare class CharmanderArt extends Charmander {
 export declare class CharmeleonArt extends Charmeleon {
     cardImage: string;
 }
+export declare class ClefairyArt extends Clefairy {
+    cardImage: string;
+}
 export declare class CoatingMetalEnergyArt extends CoatingMetalEnergy {
     cardImage: string;
 }
@@ -47,6 +52,9 @@ export declare class NessaArt extends Nessa {
     cardImage: string;
 }
 export declare class RaikouArt extends Raikou {
+    cardImage: string;
+}
+export declare class SlugmaArt extends Slugma {
     cardImage: string;
 }
 export declare class SnorlaxArt extends Snorlax {

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.YveltalArt = exports.TotodileArt = exports.SwampertArt = exports.StarmieArt = exports.ShelmetArt = exports.ShaunaArt = exports.SchoolgirlArt = exports.SchoolboyArt = exports.PyukumukuArt = exports.PowerTabletArt = exports.OricorioArt = exports.MewVMAXArt = exports.MewVArt = exports.MeloettaArt = exports.JudgeArt = exports.InteleonVMAXArt = exports.InteleonVArt = exports.HeatmorArt = exports.GengarVMAXArt = exports.GengarVArt = exports.GenesectVArt = exports.GalarianLinooneArt = exports.FusionStrikeEnergyArt = exports.ElesasSparkleArt = exports.DunsparceArt = exports.DreepyArt = exports.DeoxysArt = exports.CrossSwitcherArt = exports.CroagunkArt = exports.CreamomaticArt = exports.CookArt = exports.BattleVIPPassArt = exports.BasculinArt = exports.AzumarillArt = exports.AdventurersDiscoveryArt = exports.AccelgorArt = void 0;
+exports.YveltalArt = exports.TotodileArt = exports.SwampertArt = exports.StaryuArt = exports.StarmieArt = exports.ShelmetArt = exports.ShaunaArt = exports.SchoolgirlArt = exports.SchoolboyArt = exports.PyukumukuArt = exports.PowerTabletArt = exports.OricorioArt = exports.MewVMAXArt = exports.MewVArt = exports.MeloettaArt = exports.JudgeArt = exports.InteleonVMAXArt = exports.InteleonVArt = exports.HeatmorArt = exports.GengarVMAXArt = exports.GengarVArt = exports.GenesectVArt = exports.GalarianLinooneArt = exports.FusionStrikeEnergyArt = exports.ElesasSparkleArt = exports.DunsparceArt = exports.DreepyArt = exports.DeoxysArt = exports.CrossSwitcherArt = exports.CroagunkArt = exports.CreamomaticArt = exports.CookArt = exports.BattleVIPPassArt = exports.BasculinArt = exports.AzumarillArt = exports.AdventurersDiscoveryArt = exports.AccelgorArt = void 0;
 const judge_1 = require("../set-scarlet-and-violet/judge");
 const accelgor_1 = require("./accelgor");
 const adventurers_discovery_1 = require("./adventurers-discovery");
@@ -35,6 +35,7 @@ const schoolboy_1 = require("./schoolboy");
 const schoolgirl_1 = require("./schoolgirl");
 const shauna_1 = require("./shauna");
 const shelmet_1 = require("./shelmet");
+const staryu_1 = require("./staryu");
 const totodile_1 = require("./totodile");
 const yveltal_1 = require("./yveltal");
 class AccelgorArt extends accelgor_1.Accelgor {
@@ -271,6 +272,13 @@ class StarmieArt extends FST_53_Starmie_1.Starmie {
     }
 }
 exports.StarmieArt = StarmieArt;
+class StaryuArt extends staryu_1.Staryu {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_052_R_EN_LG.png';
+    }
+}
+exports.StaryuArt = StaryuArt;
 class SwampertArt extends FST_64_Swampert_1.Swampert {
     constructor() {
         super(...arguments);

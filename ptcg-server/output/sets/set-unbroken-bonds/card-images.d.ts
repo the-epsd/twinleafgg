@@ -14,7 +14,9 @@ import { Mewtwo } from './mewtwo';
 import { Mismagius } from './mismagius';
 import { Oddish } from './oddish';
 import { Pokegear30 } from './pokegear-30';
+import { Porygon } from './porygon';
 import { PorygonZ } from './porygon-z';
+import { Porygon2 } from './porygon2';
 import { Spiritomb } from './spiritomb';
 import { TripleAccelerationEnergy } from './triple-acceleration-energy';
 import { Aron } from './UNB_123_Aron';
@@ -102,6 +104,12 @@ export declare class Pokegear30Art extends Pokegear30 {
     cardImage: string;
 }
 export declare class PoliwagArt extends Poliwag {
+    cardImage: string;
+}
+export declare class PorygonArt extends Porygon {
+    cardImage: string;
+}
+export declare class Porygon2Art extends Porygon2 {
     cardImage: string;
 }
 export declare class PorygonZArt extends PorygonZ {

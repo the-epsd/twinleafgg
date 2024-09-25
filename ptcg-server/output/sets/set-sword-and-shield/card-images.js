@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WelderArt = exports.ToxicroakArt = exports.SobbleArt = exports.SnomArt = exports.SizzlipedeArt = exports.RosaArt = exports.RabootArt = exports.QuickBallArt = exports.OrdinaryRodArt = exports.OranguruArt = exports.MetalSaucerArt = exports.MarnieArt = exports.MaractusArt = exports.InteleonArt = exports.GiantHearthArt = exports.GalarianZigzagoonArt = exports.GalarianPerrserkerArt = exports.FerroseedArt = exports.EvolutionIncenseArt = exports.DrizzileArt = exports.CopperajahArt = exports.CinderaceArt = exports.CinccinoArt = exports.CentiskorchArt = exports.AuroraEnergyArt = exports.AirBalloonArt = void 0;
+exports.WelderArt = exports.ToxicroakArt = exports.SobbleArt = exports.SnomArt = exports.SizzlipedeArt = exports.RosaArt = exports.RabootArt = exports.QuickBallArt = exports.OrdinaryRodArt = exports.OranguruArt = exports.MorpekoArt = exports.MetalSaucerArt = exports.MarnieArt = exports.MaractusArt = exports.InteleonArt = exports.GiantHearthArt = exports.GalarianZigzagoonArt = exports.GalarianPerrserkerArt = exports.FerroseedArt = exports.EvolutionIncenseArt = exports.DrizzileArt = exports.CopperajahArt = exports.CinderaceArt = exports.CinccinoArt = exports.CentiskorchArt = exports.AuroraEnergyArt = exports.AirBalloonArt = void 0;
 const air_balloon_1 = require("./air-balloon");
 const aurora_energy_1 = require("./aurora-energy");
 const cinccino_1 = require("./cinccino");
@@ -12,6 +12,7 @@ const giant_hearth_1 = require("./giant-hearth");
 const inteleon_1 = require("./inteleon");
 const marnie_1 = require("./marnie");
 const metal_saucer_1 = require("./metal-saucer");
+const morpeko_1 = require("./morpeko");
 const oranguru_1 = require("./oranguru");
 const ordinary_rod_1 = require("./ordinary-rod");
 const quick_ball_1 = require("./quick-ball");
@@ -139,6 +140,13 @@ class MetalSaucerArt extends metal_saucer_1.MetalSaucer {
     }
 }
 exports.MetalSaucerArt = MetalSaucerArt;
+class MorpekoArt extends morpeko_1.Morpeko {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSH/SSH_078_R_EN_LG.png';
+    }
+}
+exports.MorpekoArt = MorpekoArt;
 class OranguruArt extends oranguru_1.Oranguru {
     constructor() {
         super(...arguments);

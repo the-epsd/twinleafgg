@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WeavileArt = exports.VolknerArt = exports.UnitEnergyLPMArt = exports.UnitEnergyGRWArt = exports.TurtwigArt = exports.SneaselArt = exports.RioluArt = exports.PokemonFanClubArt = exports.MtCoronetArt = exports.MagnezoneArt = exports.MagnemiteArt = exports.GibleArt = exports.GardeniaArt = exports.EscapeBoardArt = exports.DialgaGXArt = exports.CynthiaArt = exports.BastiodonArt = void 0;
+exports.WeavileArt = exports.VolknerArt = exports.UnitEnergyLPMArt = exports.UnitEnergyGRWArt = exports.TurtwigArt = exports.SneaselArt = exports.RoseliaArt = exports.RioluArt = exports.PokemonFanClubArt = exports.MtCoronetArt = exports.MagnezoneArt = exports.MagnemiteArt = exports.GibleArt = exports.GardeniaArt = exports.EscapeBoardArt = exports.DialgaGXArt = exports.CynthiaArt = exports.BastiodonArt = void 0;
 const cynthia_1 = require("./cynthia");
 const dialga_gx_1 = require("./dialga-gx");
 const escape_board_1 = require("./escape-board");
@@ -10,6 +10,7 @@ const magnemite_1 = require("./magnemite");
 const magnezone_1 = require("./magnezone");
 const mt_coronet_1 = require("./mt-coronet");
 const pokemon_fan_club_1 = require("./pokemon-fan-club");
+const roselia_1 = require("./roselia");
 const sneasel_1 = require("./sneasel");
 const turtwig_1 = require("./turtwig");
 const unit_energy_grw_1 = require("./unit-energy-grw");
@@ -95,6 +96,13 @@ class RioluArt extends UPR_66_Riolu_1.Riolu {
     }
 }
 exports.RioluArt = RioluArt;
+class RoseliaArt extends roselia_1.Roselia {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UPR/UPR_004_R_EN_LG.png';
+    }
+}
+exports.RoseliaArt = RoseliaArt;
 class SneaselArt extends sneasel_1.Sneasel {
     constructor() {
         super(...arguments);

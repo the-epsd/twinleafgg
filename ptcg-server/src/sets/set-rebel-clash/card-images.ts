@@ -6,9 +6,12 @@ import { Caterpie } from './caterpie';
 import { Coalossal } from './coalossal';
 import { Dragapult } from './dragapult';
 import { Duraludon } from './duraludon';
+import { Electivire } from './electivire';
 import { HorrorPsychicEnergy } from './horror-psychic-energy';
 import { Metapod } from './metapod';
+import { Morpeko } from './morpeko';
 import { Natu } from './natu';
+import { Palpitoad } from './palpitoad';
 import { GalarianMeowth } from './RCL_126_Galarian_Meowth';
 import { Honedge } from './RCL_133_Honedge';
 import { Vulpix } from './RCL_24_Vulpix';
@@ -59,6 +62,10 @@ export class DuraludonArt extends Duraludon {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/RCL/RCL_138_R_EN.png';
 }
 
+export class ElectivireArt extends Electivire {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/RCL/RCL_059_R_EN_LG.png';
+}
+
 export class GalarianMeowthArt extends GalarianMeowth {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/RCL/RCL_126_R_EN_LG.png';
 }
@@ -75,8 +82,16 @@ export class MetapodArt extends Metapod {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/RCL/RCL_002_R_EN_LG.png';
 }
 
+export class MorpekoArt extends Morpeko {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/RCL/RCL_073_R_EN_LG.png';
+}
+
 export class NatuArt extends Natu {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/RCL/RCL_076_R_EN_LG.png';
+}
+
+export class PalpitoadArt extends Palpitoad {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/RCL/RCL_045_R_EN_LG.png';
 }
 
 export class ScoopUpNetArt extends ScoopUpNet {

@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { AromaticEnergyArt, CharizardArt, CharmanderArt, CharmeleonArt, CoatingMetalEnergyArt, DhelmiseArt, JirachiArt, LeonArt, MagearnaArt, NessaArt, RaikouArt, SnorlaxArt, StoneFightingEnergyArt, TaillowArt, WailmerArt, WailordArt, WashWaterEnergyArt, ZekromArt } from './card-images';
+import { AromaticEnergyArt, CharizardArt, CharmanderArt, CharmeleonArt, CoatingMetalEnergyArt, DhelmiseArt, JirachiArt, LeonArt, MagearnaArt, NessaArt, RaikouArt, SlugmaArt, SnorlaxArt, StoneFightingEnergyArt, TaillowArt, WailmerArt, WailordArt, WashWaterEnergyArt, ZekromArt } from './card-images';
 
 export const setVividVoltage: Card[] = [
   new AromaticEnergyArt(),
@@ -13,6 +13,7 @@ export const setVividVoltage: Card[] = [
   new MagearnaArt(),
   new NessaArt(),
   new RaikouArt(),
+  new SlugmaArt(),
   new SnorlaxArt(),
   new StoneFightingEnergyArt(),
   new TaillowArt(),

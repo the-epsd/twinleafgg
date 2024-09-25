@@ -110,6 +110,7 @@ exports.setScarletAndViolet = [
     new card_images_41.SkwovetArt(),
     new card_images_42.SwitchArt(),
     new card_images_43.TeamStarGruntArt(),
+    new card_images_1.TorkoalArt(),
     new card_images_44.UltraBallArt(),
     new card_images_45.VitalityBandArt(),
     new card_images_46.YoungsterArt(),

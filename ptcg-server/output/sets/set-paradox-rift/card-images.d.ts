@@ -34,6 +34,7 @@ import { LuxuriousCape } from './luxurious-cape';
 import { Mela } from './mela';
 import { Mewtwoex } from './mewtwo-ex';
 import { Minior } from './minior';
+import { Minun } from './minun';
 import { Morpeko } from './morpeko';
 import { Nacli } from './nacli';
 import { Naclstack } from './naclstack';
@@ -42,6 +43,7 @@ import { Zacian } from './PAR_136_Zacian';
 import { Nymble } from './PAR_13_Nymble';
 import { Flittle } from './PAR_80_Flittle';
 import { Porygon } from './porygon';
+import { Porygon2 } from './porygon2';
 import { ProfessorSadasVitality } from './professor-sadas-vitality';
 import { ProfessorTurosScenario } from './professor-turos-scenario';
 import { Remoraid } from './remoraid';
@@ -60,6 +62,7 @@ import { TechnoRadar } from './techno-radar';
 import { Tinkatuff } from './tinkatuff';
 import { Tsareenaex } from './tsareena-ex';
 import { Tulip } from './tulip';
+import { Veluza } from './veluza';
 import { Xatu } from './xatu';
 export declare class AncientBoosterEnergyCapsuleArt extends AncientBoosterEnergyCapsule {
     cardImage: string;
@@ -172,6 +175,9 @@ export declare class MewtwoexArt extends Mewtwoex {
 export declare class MiniorArt extends Minior {
     cardImage: string;
 }
+export declare class MinunArt extends Minun {
+    cardImage: string;
+}
 export declare class MorpekoArt extends Morpeko {
     cardImage: string;
 }
@@ -188,6 +194,9 @@ export declare class NymbleArt extends Nymble {
     cardImage: string;
 }
 export declare class PorygonArt extends Porygon {
+    cardImage: string;
+}
+export declare class Porygon2Art extends Porygon2 {
     cardImage: string;
 }
 export declare class ProfessorSadasVitalityArt extends ProfessorSadasVitality {
@@ -242,6 +251,9 @@ export declare class TsareenaexArt extends Tsareenaex {
     cardImage: string;
 }
 export declare class TulipArt extends Tulip {
+    cardImage: string;
+}
+export declare class VeluzaArt extends Veluza {
     cardImage: string;
 }
 export declare class XatuArt extends Xatu {

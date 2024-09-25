@@ -8,6 +8,7 @@ import { Comfey } from './comfey';
 import { Crispin } from './crispin';
 import { Drednaw } from './drednaw';
 import { Drifblim } from './drifblim';
+import { Electabuzz } from './electabuzz';
 import { FanRotom } from './fan-rotom';
 import { Galvantulaex } from './galvantula-ex';
 import { GlassTrumpet } from './glass-trumpet';
@@ -15,6 +16,7 @@ import { GlisteningCrystal } from './glistening-crystal';
 import { GreatTree } from './great-tree';
 import { Hoothoot } from './hoothoot';
 import { Hydrappleex } from './hydrapple-ex';
+import { IronBoulder } from './iron-boulder';
 import { Joltik } from './joltik';
 import { Laprasex } from './lapras-ex';
 import { Medichamex } from './medicham-ex';
@@ -67,6 +69,10 @@ export class DrifblimArt extends Drifblim {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SCR/SCR_061_R_EN.png';
 }
 
+export class ElectabuzzArt extends Electabuzz {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SCR/SCR_046_R_EN.png';
+}
+
 export class FanRotomArt extends FanRotom {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SCR/SCR_118_R_EN.png';
 }
@@ -93,6 +99,10 @@ export class HoothootArt extends Hoothoot {
 
 export class HydrappleexArt extends Hydrappleex {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SCR/SCR_014_R_EN.png';
+}
+
+export class IronBoulderArt extends IronBoulder {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SCR/SCR_071_R_EN.png';
 }
 
 export class JoltikArt extends Joltik {

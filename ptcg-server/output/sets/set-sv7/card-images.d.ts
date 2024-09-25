@@ -8,6 +8,7 @@ import { Comfey } from './comfey';
 import { Crispin } from './crispin';
 import { Drednaw } from './drednaw';
 import { Drifblim } from './drifblim';
+import { Electabuzz } from './electabuzz';
 import { FanRotom } from './fan-rotom';
 import { Galvantulaex } from './galvantula-ex';
 import { GlassTrumpet } from './glass-trumpet';
@@ -15,6 +16,7 @@ import { GlisteningCrystal } from './glistening-crystal';
 import { GreatTree } from './great-tree';
 import { Hoothoot } from './hoothoot';
 import { Hydrappleex } from './hydrapple-ex';
+import { IronBoulder } from './iron-boulder';
 import { Joltik } from './joltik';
 import { Laprasex } from './lapras-ex';
 import { Medichamex } from './medicham-ex';
@@ -56,6 +58,9 @@ export declare class DrednawArt extends Drednaw {
 export declare class DrifblimArt extends Drifblim {
     cardImage: string;
 }
+export declare class ElectabuzzArt extends Electabuzz {
+    cardImage: string;
+}
 export declare class FanRotomArt extends FanRotom {
     cardImage: string;
 }
@@ -75,6 +80,9 @@ export declare class HoothootArt extends Hoothoot {
     cardImage: string;
 }
 export declare class HydrappleexArt extends Hydrappleex {
+    cardImage: string;
+}
+export declare class IronBoulderArt extends IronBoulder {
     cardImage: string;
 }
 export declare class JoltikArt extends Joltik {

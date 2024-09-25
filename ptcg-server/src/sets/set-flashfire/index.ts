@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { BlacksmithArt, DragalgeArt, FieryTorchArt, LitleoArt, LysandreArt, MCharizardEXArt, MiltankArt, ProtectionCubeArt, PyroarArt, SacredAshArt, SeedotArt, SkrelpArt, StartlingMegaphoneArt, ToxicroakExArt } from './card-images';
+import { BlacksmithArt, DragalgeArt, FieryTorchArt, LitleoArt, LysandreArt, MCharizardEXArt, MiloticArt, MiltankArt, ProtectionCubeArt, PyroarArt, SacredAshArt, SeedotArt, SkrelpArt, StartlingMegaphoneArt, ToxicroakExArt } from './card-images';
 
 export const setFlashfire: Card[] = [
   new BlacksmithArt(),
@@ -8,6 +8,7 @@ export const setFlashfire: Card[] = [
   new LitleoArt(),
   new LysandreArt(),
   new MCharizardEXArt(),
+  new MiloticArt(),
   new MiltankArt(),
   new ProtectionCubeArt(),
   new PyroarArt(),

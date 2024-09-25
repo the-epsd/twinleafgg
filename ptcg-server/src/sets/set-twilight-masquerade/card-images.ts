@@ -69,6 +69,7 @@ import { Heatran } from './heatran';
 import { Chimchar } from './chimchar';
 import { Monferno } from './monferno';
 import { Rillaboom } from './rillaboom';
+import { Zapdos } from './zapdos';
 
 
 export class AggronArt extends Aggron {
@@ -349,4 +350,8 @@ export class WellspringMaskOgerponexArt extends WellspringMaskOgerponex {
 
 export class SecretBoxArt extends SecretBox {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_163_R_EN_LG.png';
+}
+
+export class ZapdosArt extends Zapdos {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_065_R_EN_LG.png';
 }

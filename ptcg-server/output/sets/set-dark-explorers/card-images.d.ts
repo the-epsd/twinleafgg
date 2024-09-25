@@ -6,6 +6,7 @@ import { DarkraiEx } from './darkrai-ex';
 import { Gardevoir } from './DEX_109_Gardevoir';
 import { Empoleon } from './empoleon';
 import { Ivysaur } from './ivysaur';
+import { Minun } from './minun';
 import { Piplup } from './piplup';
 import { Prinplup } from './prinplup';
 import { RaikouEx } from './raikou-ex';
@@ -42,6 +43,9 @@ export declare class GardevoirArt extends Gardevoir {
     cardImage: string;
 }
 export declare class IvysaurArt extends Ivysaur {
+    cardImage: string;
+}
+export declare class MinunArt extends Minun {
     cardImage: string;
 }
 export declare class PiplupArt extends Piplup {

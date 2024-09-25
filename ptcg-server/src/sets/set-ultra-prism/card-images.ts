@@ -7,6 +7,7 @@ import { Magnemite } from './magnemite';
 import { Magnezone } from './magnezone';
 import { MtCoronet } from './mt-coronet';
 import { PokemonFanClub } from './pokemon-fan-club';
+import { Roselia } from './roselia';
 import { Sneasel } from './sneasel';
 import { Turtwig } from './turtwig';
 import { UnitEnergyGRW } from './unit-energy-grw';
@@ -58,6 +59,10 @@ export class PokemonFanClubArt extends PokemonFanClub {
 
 export class RioluArt extends Riolu {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UPR/UPR_066_R_EN_LG.png';
+}
+
+export class RoseliaArt extends Roselia {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UPR/UPR_004_R_EN_LG.png';
 }
 
 export class SneaselArt extends Sneasel {

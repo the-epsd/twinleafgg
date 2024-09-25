@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZeraoraArt = exports.VolcanionArt = exports.TripleAccelerationEnergyArt = exports.SpiritombArt = exports.SalazzleArt = exports.PorygonZArt = exports.PoliwagArt = exports.Pokegear30Art = exports.OddishArt = exports.MismagiusArt = exports.MewtwoArt = exports.MewArt = exports.MetalCoreBarrierArt = exports.MeowthArt = exports.MartialArtsDojoArt = exports.MarshadowArt = exports.LtSurgesStrategyArt = exports.LickitungArt = exports.LaironArt = exports.KartanaArt = exports.HitmontopArt = exports.GreensExplorationArt = exports.GloomArt = exports.FireCrystalArt = exports.EspurrArt = exports.ElectromagneticRadarArt = exports.DuskStoneArt = exports.DedenneGXArt = exports.CleffaArt = exports.AronArt = exports.ArcanineArt = void 0;
+exports.ZeraoraArt = exports.VolcanionArt = exports.TripleAccelerationEnergyArt = exports.SpiritombArt = exports.SalazzleArt = exports.PorygonZArt = exports.Porygon2Art = exports.PorygonArt = exports.PoliwagArt = exports.Pokegear30Art = exports.OddishArt = exports.MismagiusArt = exports.MewtwoArt = exports.MewArt = exports.MetalCoreBarrierArt = exports.MeowthArt = exports.MartialArtsDojoArt = exports.MarshadowArt = exports.LtSurgesStrategyArt = exports.LickitungArt = exports.LaironArt = exports.KartanaArt = exports.HitmontopArt = exports.GreensExplorationArt = exports.GloomArt = exports.FireCrystalArt = exports.EspurrArt = exports.ElectromagneticRadarArt = exports.DuskStoneArt = exports.DedenneGXArt = exports.CleffaArt = exports.AronArt = exports.ArcanineArt = void 0;
 const arcanine_1 = require("./arcanine");
 const cleffa_1 = require("./cleffa");
 const dusk_stone_1 = require("./dusk-stone");
@@ -17,7 +17,9 @@ const mewtwo_1 = require("./mewtwo");
 const mismagius_1 = require("./mismagius");
 const oddish_1 = require("./oddish");
 const pokegear_30_1 = require("./pokegear-30");
+const porygon_1 = require("./porygon");
 const porygon_z_1 = require("./porygon-z");
+const porygon2_1 = require("./porygon2");
 const spiritomb_1 = require("./spiritomb");
 const triple_acceleration_energy_1 = require("./triple-acceleration-energy");
 const UNB_123_Aron_1 = require("./UNB_123_Aron");
@@ -207,6 +209,20 @@ class PoliwagArt extends UNB_37_Poliwag_1.Poliwag {
     }
 }
 exports.PoliwagArt = PoliwagArt;
+class PorygonArt extends porygon_1.Porygon {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_155_R_EN_LG.png';
+    }
+}
+exports.PorygonArt = PorygonArt;
+class Porygon2Art extends porygon2_1.Porygon2 {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_156_R_EN_LG.png';
+    }
+}
+exports.Porygon2Art = Porygon2Art;
 class PorygonZArt extends porygon_z_1.PorygonZ {
     constructor() {
         super(...arguments);

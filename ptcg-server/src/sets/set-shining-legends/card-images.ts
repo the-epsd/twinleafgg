@@ -1,12 +1,22 @@
+import { Croconaw } from './croconaw';
 import { Marshadow } from './marshadow';
+import { Plusle } from './plusle';
 import { ShiningGenesect } from './shining-genesect';
 import { ShiningMew } from './shining-mew';
 import { Venusaur } from './venusaur';
 import { WarpEnergy } from './warp-energy';
 import { ZoroarkGX } from './zoroark-gx';
 
+export class CroconawArt extends Croconaw {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SLG/SLG_019_R_EN_LG.png';
+}
+
 export class MarshadowArt extends Marshadow {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SLG/SLG_045_R_EN.png';
+}
+
+export class PlusleArt extends Plusle {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SLG/SLG_033_R_EN_LG.png';
 }
 
 export class ShiningGenesectArt extends ShiningGenesect {

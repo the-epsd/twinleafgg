@@ -5,6 +5,7 @@ import { Seedot } from './FLF_5_Seedot';
 import { Litleo } from './litleo';
 import { Lysandre } from './lysandre';
 import { MCharizardEX } from './m-charizard-ex';
+import { Milotic } from './milotic';
 import { Miltank } from './miltank';
 import { ProtectionCube } from './protection-cube';
 import { Pyroar } from './pyroar';
@@ -28,6 +29,9 @@ export declare class LysandreArt extends Lysandre {
     cardImage: string;
 }
 export declare class MCharizardEXArt extends MCharizardEX {
+    cardImage: string;
+}
+export declare class MiloticArt extends Milotic {
     cardImage: string;
 }
 export declare class MiltankArt extends Miltank {

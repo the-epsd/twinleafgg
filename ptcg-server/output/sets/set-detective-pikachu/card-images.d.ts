@@ -1,5 +1,5 @@
 import { Bulbasaur } from './bulbasaur';
-import { Greninja } from './DET_9_Greninja';
+import { Greninja } from './greninja';
 export declare class BulbasaurArt extends Bulbasaur {
     cardImage: string;
 }

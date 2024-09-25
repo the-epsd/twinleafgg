@@ -68,6 +68,7 @@ import { Heatran } from './heatran';
 import { Chimchar } from './chimchar';
 import { Monferno } from './monferno';
 import { Rillaboom } from './rillaboom';
+import { Zapdos } from './zapdos';
 export declare class AggronArt extends Aggron {
     cardImage: string;
 }
@@ -276,5 +277,8 @@ export declare class WellspringMaskOgerponexArt extends WellspringMaskOgerponex 
     cardImage: string;
 }
 export declare class SecretBoxArt extends SecretBox {
+    cardImage: string;
+}
+export declare class ZapdosArt extends Zapdos {
     cardImage: string;
 }

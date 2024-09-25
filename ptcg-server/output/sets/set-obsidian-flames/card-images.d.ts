@@ -25,8 +25,10 @@ import { PokemonLeagueHeadquarters } from './pokemon-league-headquarters';
 import { Poppy } from './poppy';
 import { Ryme } from './ryme';
 import { Scizor } from './scizor';
+import { Seismitoad } from './seismitoad';
 import { Thundurus } from './thundurus';
 import { TownStore } from './town-store';
+import { Tympole } from './tympole';
 import { Varoom } from './varoom';
 import { VengefulPunch } from './vengeful-punch';
 import { Whiscash } from './whiscash';
@@ -111,6 +113,9 @@ export declare class RymeArt extends Ryme {
 export declare class ScizorArt extends Scizor {
     cardImage: string;
 }
+export declare class SeismitoadArt extends Seismitoad {
+    cardImage: string;
+}
 export declare class ThundurusArt extends Thundurus {
     cardImage: string;
 }
@@ -118,6 +123,9 @@ export declare class ToedscruelexArt extends Toedscruelex {
     cardImage: string;
 }
 export declare class TownStoreArt extends TownStore {
+    cardImage: string;
+}
+export declare class TympoleArt extends Tympole {
     cardImage: string;
 }
 export declare class VaroomArt extends Varoom {

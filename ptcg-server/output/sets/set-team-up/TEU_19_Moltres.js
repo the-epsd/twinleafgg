@@ -41,7 +41,6 @@ class Moltres extends pokemon_card_1.PokemonCard {
             const opponent = game_1.StateUtils.getOpponent(state, player);
             const checkProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(player);
             state = store.reduceEffect(state, checkProvidedEnergy);
-            // Count total FIRE energy provided
             const totalFirenergy = checkProvidedEnergy.energyMap.reduce((sum, energy) => {
                 return sum + energy.provides.filter(type => type === card_types_1.CardType.FIRE || type === card_types_1.CardType.ANY).length;
             }, 0);

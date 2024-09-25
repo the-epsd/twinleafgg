@@ -2,10 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setShiningLegends = void 0;
 const card_images_1 = require("./card-images");
-const croconaw_1 = require("./croconaw");
 exports.setShiningLegends = [
-    new croconaw_1.Croconaw(),
+    new card_images_1.CroconawArt(),
     new card_images_1.MarshadowArt(),
+    new card_images_1.PlusleArt(),
     new card_images_1.ShiningGenesectArt(),
     new card_images_1.ShiningMewArt(),
     new card_images_1.VenusaurArt(),
