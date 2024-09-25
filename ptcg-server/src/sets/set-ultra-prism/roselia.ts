@@ -48,6 +48,7 @@ export class Roselia extends PokemonCard {
       ], results => {
         let heads: number = 0;
         results.forEach(r => { heads += r ? 1 : 0; });
+        
         effect.damage = 30 * heads;
       });
       
