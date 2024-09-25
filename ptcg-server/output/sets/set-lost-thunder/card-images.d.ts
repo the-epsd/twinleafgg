@@ -8,6 +8,7 @@ import { CounterGain } from './counter-gain';
 import { CustomCatcher } from './custom-catcher';
 import { DittoPrismStar } from './ditto-prism-star';
 import { Electropower } from './electropower';
+import { Faba } from './faba';
 import { Girafarig } from './girafarig';
 import { Grovyle } from './grovyle';
 import { Lanturn } from './lanturn';
@@ -54,6 +55,9 @@ export declare class DittoPrismStarArt extends DittoPrismStar {
     cardImage: string;
 }
 export declare class ElectropowerArt extends Electropower {
+    cardImage: string;
+}
+export declare class FabaArt extends Faba {
     cardImage: string;
 }
 export declare class GirafarigArt extends Girafarig {
