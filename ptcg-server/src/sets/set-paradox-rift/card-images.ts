@@ -34,6 +34,7 @@ import { LuxuriousCape } from './luxurious-cape';
 import { Mela } from './mela';
 import { Mewtwoex } from './mewtwo-ex';
 import { Minior } from './minior';
+import { Minun } from './minun';
 import { Morpeko } from './morpeko';
 import { Nacli } from './nacli';
 import { Naclstack } from './naclstack';
@@ -61,6 +62,7 @@ import { TechnoRadar } from './techno-radar';
 import { Tinkatuff } from './tinkatuff';
 import { Tsareenaex } from './tsareena-ex';
 import { Tulip } from './tulip';
+import { Veluza } from './veluza';
 import { Xatu } from './xatu';
 
 export class AncientBoosterEnergyCapsuleArt extends AncientBoosterEnergyCapsule {
@@ -211,6 +213,10 @@ export class MiniorArt extends Minior {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_099_R_EN_LG.png';
 }
 
+export class MinunArt extends Minun {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_061_R_EN_LG.png';
+}
+
 export class MorpekoArt extends Morpeko {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_121_R_EN_LG.png';
 }
@@ -309,6 +315,10 @@ export class TsareenaexArt extends Tsareenaex {
 
 export class TulipArt extends Tulip {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_181_R_EN_LG.png';
+}
+
+export class VeluzaArt extends Veluza {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_54_R_EN_LG.png';
 }
 
 export class XatuArt extends Xatu {

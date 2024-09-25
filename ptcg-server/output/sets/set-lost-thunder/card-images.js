@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZeraoraGXArt = exports.ZebstrikaArt = exports.WurmpleArt = exports.TreeckoArt = exports.ThunderMountainPrismStarArt = exports.SpellTagArt = exports.SlowkingArt = exports.NihilegoArt = exports.NetBallArt = exports.MinaArt = exports.MeganiumArt = exports.MareepArt = exports.LostBlenderArt = exports.LanturnArt = exports.GrovleArt = exports.GiratinaArt = exports.GirafarigArt = exports.ElectropowerArt = exports.DittoPrismStarArt = exports.CustomCatcherArt = exports.CounterGainArt = exports.ChinchouArt = exports.ChikoritaArt2 = exports.ChikoritaArt = exports.BlitzleArt = exports.AlolanMeowthArt = exports.AdventureBagArt = void 0;
+exports.ZeraoraGXArt = exports.ZebstrikaArt = exports.WurmpleArt = exports.WhiteKyuremArt = exports.TreeckoArt = exports.ThunderMountainPrismStarArt = exports.SpellTagArt = exports.SlowkingArt = exports.NihilegoArt = exports.NetBallArt = exports.MinaArt = exports.MeganiumArt = exports.MareepArt = exports.LostBlenderArt = exports.LanturnArt = exports.GrovleArt = exports.GiratinaArt = exports.GirafarigArt = exports.ElectropowerArt = exports.DittoPrismStarArt = exports.CustomCatcherArt = exports.CounterGainArt = exports.ChinchouArt = exports.ChikoritaArt2 = exports.ChikoritaArt = exports.BlitzleArt = exports.AlolanMeowthArt = exports.AdventureBagArt = void 0;
 const adventure_bag_1 = require("./adventure-bag");
 const alolan_meowth_1 = require("./alolan-meowth");
 const blitzle_1 = require("./blitzle");
@@ -26,6 +26,7 @@ const net_ball_1 = require("./net-ball");
 const nihilego_1 = require("./nihilego");
 const spell_tag_1 = require("./spell-tag");
 const treecko_1 = require("./treecko");
+const white_kyurem_1 = require("./white-kyurem");
 const wurmple_1 = require("./wurmple");
 const zebstrika_1 = require("./zebstrika");
 class AdventureBagArt extends adventure_bag_1.AdventureBag {
@@ -196,6 +197,13 @@ class TreeckoArt extends treecko_1.Treecko {
     }
 }
 exports.TreeckoArt = TreeckoArt;
+class WhiteKyuremArt extends white_kyurem_1.WhiteKyurem {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_063_R_EN_LG.png';
+    }
+}
+exports.WhiteKyuremArt = WhiteKyuremArt;
 class WurmpleArt extends wurmple_1.Wurmple {
     constructor() {
         super(...arguments);

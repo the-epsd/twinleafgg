@@ -23,6 +23,7 @@ import { NetBall } from './net-ball';
 import { Nihilego } from './nihilego';
 import { SpellTag } from './spell-tag';
 import { Treecko } from './treecko';
+import { WhiteKyurem } from './white-kyurem';
 import { Wurmple } from './wurmple';
 import { Zebstrika } from './zebstrika';
 
@@ -120,6 +121,10 @@ export class ThunderMountainPrismStarArt extends ThunderMountainPrismStar {
 
 export class TreeckoArt extends Treecko {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_020_R_EN_LG.png';
+}
+
+export class WhiteKyuremArt extends WhiteKyurem { 
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_063_R_EN_LG.png';
 }
 
 export class WurmpleArt extends Wurmple {

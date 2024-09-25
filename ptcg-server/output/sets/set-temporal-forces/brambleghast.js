@@ -61,7 +61,6 @@ class Brambleghast extends pokemon_card_1.PokemonCard {
             // Check attached energy
             const checkEnergy = new check_effects_1.CheckProvidedEnergyEffect(player);
             state = store.reduceEffect(state, checkEnergy);
-            // Count total FIRE energy provided
             const totalEnergy = checkEnergy.energyMap.reduce((sum, energy) => {
                 return sum + energy.provides.length;
             }, 0);

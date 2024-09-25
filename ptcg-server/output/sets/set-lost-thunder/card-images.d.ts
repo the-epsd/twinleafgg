@@ -23,6 +23,7 @@ import { NetBall } from './net-ball';
 import { Nihilego } from './nihilego';
 import { SpellTag } from './spell-tag';
 import { Treecko } from './treecko';
+import { WhiteKyurem } from './white-kyurem';
 import { Wurmple } from './wurmple';
 import { Zebstrika } from './zebstrika';
 export declare class AdventureBagArt extends AdventureBag {
@@ -95,6 +96,9 @@ export declare class ThunderMountainPrismStarArt extends ThunderMountainPrismSta
     cardImage: string;
 }
 export declare class TreeckoArt extends Treecko {
+    cardImage: string;
+}
+export declare class WhiteKyuremArt extends WhiteKyurem {
     cardImage: string;
 }
 export declare class WurmpleArt extends Wurmple {

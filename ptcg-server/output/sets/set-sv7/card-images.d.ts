@@ -16,6 +16,7 @@ import { GlisteningCrystal } from './glistening-crystal';
 import { GreatTree } from './great-tree';
 import { Hoothoot } from './hoothoot';
 import { Hydrappleex } from './hydrapple-ex';
+import { IronBoulder } from './iron-boulder';
 import { Joltik } from './joltik';
 import { Laprasex } from './lapras-ex';
 import { Medichamex } from './medicham-ex';
@@ -79,6 +80,9 @@ export declare class HoothootArt extends Hoothoot {
     cardImage: string;
 }
 export declare class HydrappleexArt extends Hydrappleex {
+    cardImage: string;
+}
+export declare class IronBoulderArt extends IronBoulder {
     cardImage: string;
 }
 export declare class JoltikArt extends Joltik {

@@ -43,7 +43,6 @@ export class Moltres extends PokemonCard {
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
       state = store.reduceEffect(state, checkProvidedEnergy);
 
-      // Count total FIRE energy provided
       const totalFirenergy = checkProvidedEnergy.energyMap.reduce((sum, energy) => {
         return sum + energy.provides.filter(type => type === CardType.FIRE || type === CardType.ANY).length;
       }, 0);

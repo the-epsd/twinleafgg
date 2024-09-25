@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZeraoraArt = exports.TerapagosexArt = exports.ScorbunnyArt = exports.RagingBoltArt = exports.RabootArt = exports.OrthwormexArt = exports.NoctowlArt = exports.MedititeArt = exports.MedichamexArt = exports.LaprasexArt = exports.JoltikArt = exports.HydrappleexArt = exports.HoothootArt = exports.GreatTreeArt = exports.GlisteningCrystalArt = exports.GlassTrumpetArt = exports.GalvantulexaArt = exports.FanRotomArt = exports.ElectabuzzArt = exports.DrifblimArt = exports.DrednawArt = exports.CrispinArt = exports.CinderaceexArt = exports.ComfeyArt = exports.ChewtleArt = exports.BriarArt = exports.BouffalantArt = exports.AreaZeroUnderdepthsArt = exports.ArchaludonArt = void 0;
+exports.ZeraoraArt = exports.TerapagosexArt = exports.ScorbunnyArt = exports.RagingBoltArt = exports.RabootArt = exports.OrthwormexArt = exports.NoctowlArt = exports.MedititeArt = exports.MedichamexArt = exports.LaprasexArt = exports.JoltikArt = exports.IronBoulderArt = exports.HydrappleexArt = exports.HoothootArt = exports.GreatTreeArt = exports.GlisteningCrystalArt = exports.GlassTrumpetArt = exports.GalvantulexaArt = exports.FanRotomArt = exports.ElectabuzzArt = exports.DrifblimArt = exports.DrednawArt = exports.CrispinArt = exports.CinderaceexArt = exports.ComfeyArt = exports.ChewtleArt = exports.BriarArt = exports.BouffalantArt = exports.AreaZeroUnderdepthsArt = exports.ArchaludonArt = void 0;
 const archaludon_1 = require("./archaludon");
 const area_zero_underdepths_1 = require("./area-zero-underdepths");
 const bouffalant_1 = require("./bouffalant");
@@ -19,6 +19,7 @@ const glistening_crystal_1 = require("./glistening-crystal");
 const great_tree_1 = require("./great-tree");
 const hoothoot_1 = require("./hoothoot");
 const hydrapple_ex_1 = require("./hydrapple-ex");
+const iron_boulder_1 = require("./iron-boulder");
 const joltik_1 = require("./joltik");
 const lapras_ex_1 = require("./lapras-ex");
 const medicham_ex_1 = require("./medicham-ex");
@@ -156,6 +157,13 @@ class HydrappleexArt extends hydrapple_ex_1.Hydrappleex {
     }
 }
 exports.HydrappleexArt = HydrappleexArt;
+class IronBoulderArt extends iron_boulder_1.IronBoulder {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SCR/SCR_071_R_EN.png';
+    }
+}
+exports.IronBoulderArt = IronBoulderArt;
 class JoltikArt extends joltik_1.Joltik {
     constructor() {
         super(...arguments);

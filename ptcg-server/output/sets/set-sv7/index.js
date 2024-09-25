@@ -20,6 +20,7 @@ exports.setSV7 = [
     new card_images_1.GreatTreeArt(),
     new card_images_1.HoothootArt(),
     new card_images_1.HydrappleexArt(),
+    new card_images_1.IronBoulderArt(),
     new card_images_1.JoltikArt(),
     new card_images_1.LaprasexArt(),
     new card_images_1.MedichamexArt(),

@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { AnnihilapeArt, ArbolivaArt, ArcanineexArt, ArmarougeArt, BanetteexArt, CapsakidArt, CharcadetArt, DollivArt, FlittleArt, GrowlitheArt, GyaradosexArt, LucarioArt, MagikarpArt, MankeyArt, NemonaArt, NestBallArt2, PrimeapeArt, RevavroomArt, RioluArt, RioluArt2, RockyHelmetArt, ShuppetArt, SmolivArt, ToedscoolArt, ToedscruelArt } from './card-images';
+import { AnnihilapeArt, ArbolivaArt, ArcanineexArt, ArmarougeArt, BanetteexArt, CapsakidArt, CharcadetArt, DollivArt, FlittleArt, GrowlitheArt, GyaradosexArt, LucarioArt, MagikarpArt, MankeyArt, NemonaArt, NestBallArt2, PrimeapeArt, RevavroomArt, RioluArt, RioluArt2, RockyHelmetArt, ShuppetArt, SmolivArt, ToedscoolArt, ToedscruelArt, TorkoalArt } from './card-images';
 import { ArvenArt } from './card-images';
 import { BeachCourtArt } from './card-images';
 import { CrushingHammerArt } from './card-images';
@@ -110,6 +110,7 @@ export const setScarletAndViolet: Card[] = [
   new SkwovetArt(),
   new SwitchArt(),
   new TeamStarGruntArt(),
+  new TorkoalArt(),
   new UltraBallArt(),
   new VitalityBandArt(),
   new YoungsterArt(),

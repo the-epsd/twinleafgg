@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WhiscashArt = exports.VengefulPunchArt = exports.VaroomArt = exports.TownStoreArt = exports.ToedscruelexArt = exports.ThundurusArt = exports.ScizorArt = exports.RymeArt = exports.PoppyArt = exports.PokemonLeagueHeadquartersArt = exports.PidgeyArt = exports.PidgeottoArt = exports.PidgeotexArt = exports.PalafinArt = exports.OddishArt = exports.NinetalesArt = exports.MiraidonexArt = exports.LunatoneArt = exports.LetterOfEncouragementArt = exports.FinizenArt = exports.EnteiArt = exports.DratiniArt = exports.DragoniteexArt = exports.DragonairArt = exports.CleffaArt = exports.CharmanderArt = exports.CharmeleonArt = exports.CharizardexArt = exports.BelliboltArt = exports.BarboachArt = exports.ArvenArt = exports.AbsolexArt = void 0;
+exports.WhiscashArt = exports.VengefulPunchArt = exports.VaroomArt = exports.TympoleArt = exports.TownStoreArt = exports.ToedscruelexArt = exports.ThundurusArt = exports.SeismitoadArt = exports.ScizorArt = exports.RymeArt = exports.PoppyArt = exports.PokemonLeagueHeadquartersArt = exports.PidgeyArt = exports.PidgeottoArt = exports.PidgeotexArt = exports.PalafinArt = exports.OddishArt = exports.NinetalesArt = exports.MiraidonexArt = exports.LunatoneArt = exports.LetterOfEncouragementArt = exports.FinizenArt = exports.EnteiArt = exports.DratiniArt = exports.DragoniteexArt = exports.DragonairArt = exports.CleffaArt = exports.CharmanderArt = exports.CharmeleonArt = exports.CharizardexArt = exports.BelliboltArt = exports.BarboachArt = exports.ArvenArt = exports.AbsolexArt = void 0;
 const arven_1 = require("../set-scarlet-and-violet/arven");
 const absol_ex_1 = require("./absol-ex");
 const barboach_1 = require("./barboach");
@@ -28,8 +28,10 @@ const pokemon_league_headquarters_1 = require("./pokemon-league-headquarters");
 const poppy_1 = require("./poppy");
 const ryme_1 = require("./ryme");
 const scizor_1 = require("./scizor");
+const seismitoad_1 = require("./seismitoad");
 const thundurus_1 = require("./thundurus");
 const town_store_1 = require("./town-store");
+const tympole_1 = require("./tympole");
 const varoom_1 = require("./varoom");
 const vengeful_punch_1 = require("./vengeful-punch");
 const whiscash_1 = require("./whiscash");
@@ -218,6 +220,13 @@ class ScizorArt extends scizor_1.Scizor {
     }
 }
 exports.ScizorArt = ScizorArt;
+class SeismitoadArt extends seismitoad_1.Seismitoad {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_052_R_EN.png';
+    }
+}
+exports.SeismitoadArt = SeismitoadArt;
 class ThundurusArt extends thundurus_1.Thundurus {
     constructor() {
         super(...arguments);
@@ -239,6 +248,13 @@ class TownStoreArt extends town_store_1.TownStore {
     }
 }
 exports.TownStoreArt = TownStoreArt;
+class TympoleArt extends tympole_1.Tympole {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_050_R_EN_LG.png';
+    }
+}
+exports.TympoleArt = TympoleArt;
 class VaroomArt extends varoom_1.Varoom {
     constructor() {
         super(...arguments);

@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { AirBalloonArt, AuroraEnergyArt, CentiskorchArt, CinccinoArt, CinderaceArt, CopperajahArt, DrizzileArt, EvolutionIncenseArt, FerroseedArt, GalarianPerrserkerArt, GalarianZigzagoonArt, GiantHearthArt, InteleonArt, MaractusArt, MarnieArt, MetalSaucerArt, OranguruArt, OrdinaryRodArt, QuickBallArt, RabootArt, RosaArt, SizzlipedeArt, SnomArt, SobbleArt, ToxicroakArt, WelderArt } from './card-images';
+import { AirBalloonArt, AuroraEnergyArt, CentiskorchArt, CinccinoArt, CinderaceArt, CopperajahArt, DrizzileArt, EvolutionIncenseArt, FerroseedArt, GalarianPerrserkerArt, GalarianZigzagoonArt, GiantHearthArt, InteleonArt, MaractusArt, MarnieArt, MetalSaucerArt, MorpekoArt, OranguruArt, OrdinaryRodArt, QuickBallArt, RabootArt, RosaArt, SizzlipedeArt, SnomArt, SobbleArt, ToxicroakArt, WelderArt } from './card-images';
 
 export const setSwordAndShield: Card[] = [
   new AirBalloonArt(),
@@ -18,6 +18,7 @@ export const setSwordAndShield: Card[] = [
   new MaractusArt(),
   new MarnieArt(),
   new MetalSaucerArt(),
+  new MorpekoArt(),
   new SizzlipedeArt(),
   new SnomArt(),
   new SobbleArt(),

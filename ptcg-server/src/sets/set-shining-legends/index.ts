@@ -1,10 +1,10 @@
 import { Card } from '../../game/store/card/card';
-import { MarshadowArt, ShiningGenesectArt, ShiningMewArt, VenusaurArt, WarpEnergyArt, ZoroarkGXArt } from './card-images';
-import { Croconaw } from './croconaw';
+import { CroconawArt, MarshadowArt, PlusleArt, ShiningGenesectArt, ShiningMewArt, VenusaurArt, WarpEnergyArt, ZoroarkGXArt } from './card-images';
 
 export const setShiningLegends: Card[] = [
-  new Croconaw(),
+  new CroconawArt(),
   new MarshadowArt(),
+  new PlusleArt(),
   new ShiningGenesectArt(),
   new ShiningMewArt(),
   new VenusaurArt(),

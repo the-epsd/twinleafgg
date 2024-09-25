@@ -65,6 +65,7 @@ import { Toedscool } from './SVI_25_Toedscool';
 import { Toedscruel } from './SVI_26_Toedscruel';
 import { Switch } from './switch';
 import { TeamStarGrunt } from './team-star-grunt';
+import { Torkoal } from './torkoal';
 import { UltraBall } from './ultra-ball';
 import { VitalityBand } from './vitality-band';
 import { Youngster } from './youngster';
@@ -272,6 +273,9 @@ export declare class ToedscoolArt extends Toedscool {
     cardImage: string;
 }
 export declare class ToedscruelArt extends Toedscruel {
+    cardImage: string;
+}
+export declare class TorkoalArt extends Torkoal {
     cardImage: string;
 }
 export declare class UltraBallArt extends UltraBall {

@@ -9,6 +9,7 @@ exports.setFlashfire = [
     new card_images_1.LitleoArt(),
     new card_images_1.LysandreArt(),
     new card_images_1.MCharizardEXArt(),
+    new card_images_1.MiloticArt(),
     new card_images_1.MiltankArt(),
     new card_images_1.ProtectionCubeArt(),
     new card_images_1.PyroarArt(),

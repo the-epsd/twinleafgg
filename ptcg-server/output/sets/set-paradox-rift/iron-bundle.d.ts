@@ -1,6 +1,6 @@
+import { PowerType, State, StoreLike } from '../../game';
+import { CardTag, CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, PowerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 export declare class IronBundle extends PokemonCard {
     stage: Stage;

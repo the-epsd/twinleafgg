@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { AegislashArt, ArrokudaArt, BarraskewdaArt, ButterfreeArt, CapaciousBucketArt, CaptureEnergyArt, CaterpieArt, CoalossalArt, DragapultArt, DuraludonArt, GalarianMeowthArt, HonedgeArt, HorrorPsychicEnergyArt, MetapodArt, MorpekoArt, NatuArt, ScoopUpNetArt, SpeedLightningEnergyArt, TrainingCourtArt, TwinEnergyArt, VulpixArt } from './card-images';
+import { AegislashArt, ArrokudaArt, BarraskewdaArt, ButterfreeArt, CapaciousBucketArt, CaptureEnergyArt, CaterpieArt, CoalossalArt, DragapultArt, DuraludonArt, ElectivireArt, GalarianMeowthArt, HonedgeArt, HorrorPsychicEnergyArt, MetapodArt, MorpekoArt, NatuArt, ScoopUpNetArt, SpeedLightningEnergyArt, TrainingCourtArt, TwinEnergyArt, VulpixArt } from './card-images';
 
 export const setRebelClash: Card[] = [
   new AegislashArt(),
@@ -12,6 +12,7 @@ export const setRebelClash: Card[] = [
   new CoalossalArt(),
   new DragapultArt(),
   new DuraludonArt(),
+  new ElectivireArt(),
   new GalarianMeowthArt(),
   new HonedgeArt(),
   new HorrorPsychicEnergyArt(),

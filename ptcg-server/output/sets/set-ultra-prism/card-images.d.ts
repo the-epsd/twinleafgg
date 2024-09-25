@@ -7,6 +7,7 @@ import { Magnemite } from './magnemite';
 import { Magnezone } from './magnezone';
 import { MtCoronet } from './mt-coronet';
 import { PokemonFanClub } from './pokemon-fan-club';
+import { Roselia } from './roselia';
 import { Sneasel } from './sneasel';
 import { Turtwig } from './turtwig';
 import { UnitEnergyGRW } from './unit-energy-grw';
@@ -46,6 +47,9 @@ export declare class PokemonFanClubArt extends PokemonFanClub {
     cardImage: string;
 }
 export declare class RioluArt extends Riolu {
+    cardImage: string;
+}
+export declare class RoseliaArt extends Roselia {
     cardImage: string;
 }
 export declare class SneaselArt extends Sneasel {

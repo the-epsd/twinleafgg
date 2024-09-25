@@ -16,6 +16,7 @@ import { GlisteningCrystal } from './glistening-crystal';
 import { GreatTree } from './great-tree';
 import { Hoothoot } from './hoothoot';
 import { Hydrappleex } from './hydrapple-ex';
+import { IronBoulder } from './iron-boulder';
 import { Joltik } from './joltik';
 import { Laprasex } from './lapras-ex';
 import { Medichamex } from './medicham-ex';
@@ -98,6 +99,10 @@ export class HoothootArt extends Hoothoot {
 
 export class HydrappleexArt extends Hydrappleex {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SCR/SCR_014_R_EN.png';
+}
+
+export class IronBoulderArt extends IronBoulder {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SCR/SCR_071_R_EN.png';
 }
 
 export class JoltikArt extends Joltik {

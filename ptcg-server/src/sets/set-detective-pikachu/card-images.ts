@@ -1,5 +1,5 @@
 import { Bulbasaur } from './bulbasaur';
-import { Greninja } from './DET_9_Greninja';
+import { Greninja } from './greninja';
 
 export class BulbasaurArt extends Bulbasaur {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/DET/DET_001_R_EN_LG.png';

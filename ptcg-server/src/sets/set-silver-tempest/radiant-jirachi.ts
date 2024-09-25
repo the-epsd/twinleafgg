@@ -3,7 +3,7 @@ import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, KnockOutEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect, KnockOutEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { ChooseCardsPrompt, CoinFlipPrompt, GameMessage, PlayerType, ShuffleDeckPrompt, StateUtils } from '../../game';
 
@@ -55,6 +55,17 @@ export class RadiantJirachi extends PokemonCard {
       // This Pokemon was knocked out
       const player = effect.player;
 
+      try {
+        const stub = new PowerEffect(player, {
+          name: 'test',
+          powerType: PowerType.ABILITY,
+          text: ''
+        }, this);
+        store.reduceEffect(state, stub);
+      } catch {
+        return state;
+      }
+      
       let cards: any[] = [];
       return store.prompt(state, new ChooseCardsPrompt(
         player.id,

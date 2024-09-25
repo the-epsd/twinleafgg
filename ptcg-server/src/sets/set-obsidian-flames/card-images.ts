@@ -25,8 +25,10 @@ import { PokemonLeagueHeadquarters } from './pokemon-league-headquarters';
 import { Poppy } from './poppy';
 import { Ryme } from './ryme';
 import { Scizor } from './scizor';
+import { Seismitoad } from './seismitoad';
 import { Thundurus } from './thundurus';
 import { TownStore } from './town-store';
+import { Tympole } from './tympole';
 import { Varoom } from './varoom';
 import { VengefulPunch } from './vengeful-punch';
 import { Whiscash } from './whiscash';
@@ -139,6 +141,10 @@ export class ScizorArt extends Scizor {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_141_R_EN.png';
 }
 
+export class SeismitoadArt extends Seismitoad {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_052_R_EN.png';
+}
+
 export class ThundurusArt extends Thundurus {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_070_R_EN.png';
 }
@@ -149,6 +155,10 @@ export class ToedscruelexArt extends Toedscruelex {
 
 export class TownStoreArt extends TownStore {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_196_R_EN_LG.png';
+}
+
+export class TympoleArt extends Tympole {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_050_R_EN_LG.png';
 }
 
 export class VaroomArt extends Varoom {

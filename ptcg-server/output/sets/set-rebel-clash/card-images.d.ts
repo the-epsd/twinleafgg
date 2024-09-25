@@ -6,6 +6,7 @@ import { Caterpie } from './caterpie';
 import { Coalossal } from './coalossal';
 import { Dragapult } from './dragapult';
 import { Duraludon } from './duraludon';
+import { Electivire } from './electivire';
 import { HorrorPsychicEnergy } from './horror-psychic-energy';
 import { Metapod } from './metapod';
 import { Morpeko } from './morpeko';
@@ -47,6 +48,9 @@ export declare class DragapultArt extends Dragapult {
     cardImage: string;
 }
 export declare class DuraludonArt extends Duraludon {
+    cardImage: string;
+}
+export declare class ElectivireArt extends Electivire {
     cardImage: string;
 }
 export declare class GalarianMeowthArt extends GalarianMeowth {

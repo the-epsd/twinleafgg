@@ -95,7 +95,6 @@ export class WishfulBaton extends TrainerCard {
 
         energyToAttach.moveTo(player.discard);
       });
-
     }
     return state;
   }

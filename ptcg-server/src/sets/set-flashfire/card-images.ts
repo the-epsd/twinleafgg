@@ -5,6 +5,7 @@ import { Seedot } from './FLF_5_Seedot';
 import { Litleo } from './litleo';
 import { Lysandre } from './lysandre';
 import { MCharizardEX } from './m-charizard-ex';
+import { Milotic } from './milotic';
 import { Miltank } from './miltank';
 import { ProtectionCube } from './protection-cube';
 import { Pyroar } from './pyroar';
@@ -35,6 +36,10 @@ export class LysandreArt extends Lysandre {
 
 export class MCharizardEXArt extends MCharizardEX {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FLF/FLF_069_R_EN.png';
+}
+
+export class MiloticArt extends Milotic {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FLF/FLF_023_R_EN.png';
 }
 
 export class MiltankArt extends Miltank {

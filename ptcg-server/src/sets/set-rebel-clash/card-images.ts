@@ -6,6 +6,7 @@ import { Caterpie } from './caterpie';
 import { Coalossal } from './coalossal';
 import { Dragapult } from './dragapult';
 import { Duraludon } from './duraludon';
+import { Electivire } from './electivire';
 import { HorrorPsychicEnergy } from './horror-psychic-energy';
 import { Metapod } from './metapod';
 import { Morpeko } from './morpeko';
@@ -58,6 +59,10 @@ export class DragapultArt extends Dragapult {
 
 export class DuraludonArt extends Duraludon {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/RCL/RCL_138_R_EN.png';
+}
+
+export class ElectivireArt extends Electivire {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/RCL/RCL_059_R_EN_LG.png';
 }
 
 export class GalarianMeowthArt extends GalarianMeowth {
