@@ -9,6 +9,7 @@ class DarkraiGX extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.cardType = game_1.CardType.DARK;
+        this.tags = [game_1.CardTag.POKEMON_GX];
         this.stage = game_1.Stage.BASIC;
         this.hp = 180;
         this.weakness = [{ type: game_1.CardType.FIGHTING }];
@@ -110,6 +111,10 @@ class DarkraiGX extends game_1.PokemonCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
+            if (player.usedGX === true) {
+                throw new game_1.GameError(game_1.GameMessage.LABEL_GX_USED);
+            }
+            player.usedGX = true;
             const opponentActive = opponent.active;
             if (opponentActive instanceof game_1.PokemonCardList) {
                 const activePokemon = opponentActive.getPokemonCard();

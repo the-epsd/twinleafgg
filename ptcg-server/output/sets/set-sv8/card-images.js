@@ -1,13 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CyranoArt = exports.MiraculousIntercomArt = exports.ExcitingStadiumArt = exports.GravityMountainArt = exports.MagnetonArt = exports.MagnemiteArt = exports.TerapagosArt = exports.PikachuexArt = void 0;
+exports.DeinoArt = exports.MiloticexArt = exports.SkeledirgeArt = exports.CrocalorArt = exports.FuecocoArt = exports.CyranoArt = exports.MiraculousIntercomArt = exports.ExcitingStadiumArt = exports.GravityMountainArt = exports.MagnetonArt = exports.MagnemiteArt = exports.TerapagosArt = exports.PikachuexArt = void 0;
 const magneton_1 = require("../set-scarlet-and-violet-promos/magneton");
+const crocalor_1 = require("./crocalor");
 const cyrano_1 = require("./cyrano");
+const deino_1 = require("./deino");
 const exciting_stadium_1 = require("./exciting-stadium");
+const fuecoco_1 = require("./fuecoco");
 const gravity_mountain_1 = require("./gravity-mountain");
 const magnemite_1 = require("./magnemite");
+const milotic_ex_1 = require("./milotic-ex");
 const miraculous_intercom_1 = require("./miraculous-intercom");
 const pikachu_ex_1 = require("./pikachu-ex");
+const skeledirge_1 = require("./skeledirge");
 const terapagos_1 = require("./terapagos");
 class PikachuexArt extends pikachu_ex_1.Pikachuex {
     constructor() {
@@ -68,3 +73,38 @@ class CyranoArt extends cyrano_1.Cyrano {
     }
 }
 exports.CyranoArt = CyranoArt;
+class FuecocoArt extends fuecoco_1.Fuecoco {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://www.pokebeach.com/news/2024/09/IMG_8011.png';
+    }
+}
+exports.FuecocoArt = FuecocoArt;
+class CrocalorArt extends crocalor_1.Crocalor {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://www.pokebeach.com/news/2024/09/IMG_8010.png';
+    }
+}
+exports.CrocalorArt = CrocalorArt;
+class SkeledirgeArt extends skeledirge_1.Skeledirge {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://www.pokebeach.com/news/2024/09/IMG_8009.jpeg';
+    }
+}
+exports.SkeledirgeArt = SkeledirgeArt;
+class MiloticexArt extends milotic_ex_1.Miloticex {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pokemonproxies.com/static/media/8i-026-Milotic_ex.5ff152c4fc9e8baef0cc.png';
+    }
+}
+exports.MiloticexArt = MiloticexArt;
+class DeinoArt extends deino_1.Deino {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pokemonproxies.com/static/media/8i-070-Deino.7b5d3275fdbf0f26e3c2.png';
+    }
+}
+exports.DeinoArt = DeinoArt;

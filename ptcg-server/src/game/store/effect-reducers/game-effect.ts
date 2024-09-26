@@ -78,9 +78,10 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
   const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
   state = store.reduceEffect(state, checkProvidedEnergy);
 
-  if (StateUtils.checkEnoughEnergy(checkProvidedEnergy.energyMap, checkAttackCost.cost) === false) {
+  if (StateUtils.checkEnoughEnergy(checkProvidedEnergy.energyMap, checkAttackCost.cost as CardType[]) === false) {
     throw new GameError(GameMessage.NOT_ENOUGH_ENERGY);
   }
+
 
   if (sp.includes(SpecialCondition.CONFUSED)) {
     let flip = false;
@@ -122,7 +123,6 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
 
   return store.reduceEffect(state, new EndTurnEffect(player));
 }
-
 export function gameReducer(store: StoreLike, state: State, effect: Effect): State {
 
   if (effect instanceof KnockOutEffect) {

@@ -72,12 +72,26 @@ class EnergyScore extends score_1.SimpleScore {
                     colorless += 1;
                     break;
                 default: {
-                    const index = provided.findIndex(energy => energy === costType);
-                    if (index !== -1) {
-                        provided.splice(index, 1);
+                    if (typeof costType === 'string') {
+                        const energyType = game_1.Energy[costType];
+                        if (energyType !== undefined) {
+                            const index = provided.findIndex(energy => energy === energyType);
+                            if (index !== -1) {
+                                provided.splice(index, 1);
+                            }
+                            else {
+                                missing.push(energyType);
+                            }
+                        }
                     }
                     else {
-                        missing.push(costType);
+                        const index = provided.findIndex(energy => energy === costType);
+                        if (index !== -1) {
+                            provided.splice(index, 1);
+                        }
+                        else {
+                            missing.push(costType);
+                        }
                     }
                 }
             }

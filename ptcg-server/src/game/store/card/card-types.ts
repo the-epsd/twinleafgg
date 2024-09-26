@@ -28,7 +28,6 @@ export enum CardTag {
   TEAM_FLARE = 'TEAM_FLARE',
 }
 
-
 export enum SuperType {
   NONE,
   POKEMON,
@@ -143,4 +142,36 @@ export enum Format {
   UNLIMITED,
   RETRO,
   GLC
+}
+
+export const Energy = {
+  D: CardType.DARK,
+  C: CardType.COLORLESS,
+  F: CardType.FIGHTING,
+  G: CardType.GRASS,
+  L: CardType.LIGHTNING,
+  M: CardType.METAL,
+  P: CardType.PSYCHIC,
+  R: CardType.FIRE,
+  W: CardType.WATER,
+  Y: CardType.FAIRY,
+  N: CardType.DRAGON
+} as const;
+
+Object.entries(Energy).forEach(([key, value]) => {
+  (global as any)[key] = value;
+});
+
+declare global {
+  const D: typeof Energy.D;
+  const C: typeof Energy.C;
+  const F: typeof Energy.F;
+  const G: typeof Energy.G;
+  const L: typeof Energy.L;
+  const M: typeof Energy.M;
+  const P: typeof Energy.P;
+  const R: typeof Energy.R;
+  const W: typeof Energy.W;
+  const Y: typeof Energy.Y;
+  const N: typeof Energy.N;
 }

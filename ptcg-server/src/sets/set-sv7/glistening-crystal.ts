@@ -37,8 +37,7 @@ export class GlisteningCrystal extends TrainerCard {
         const availableEnergy = checkEnergy.energyMap.flatMap(e => e.provides);
 
         effect.cost = effect.cost.filter(costType =>
-          costType === CardType.NONE || availableEnergy.includes(costType)
-        );
+          costType === CardType.NONE || availableEnergy.includes(costType as CardType));
       }
     }
     return state;

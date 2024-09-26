@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { CyranoArt, ExcitingStadiumArt, GravityMountainArt, MagnemiteArt, MagnetonArt, MiraculousIntercomArt, PikachuexArt, TerapagosArt } from './card-images';
+import { CrocalorArt, CyranoArt, DeinoArt, ExcitingStadiumArt, FuecocoArt, GravityMountainArt, MagnemiteArt, MagnetonArt, MiloticexArt, MiraculousIntercomArt, PikachuexArt, SkeledirgeArt, TerapagosArt } from './card-images';
 
 export const setSV8: Card[] = [
   new PikachuexArt(),
@@ -10,4 +10,9 @@ export const setSV8: Card[] = [
   new GravityMountainArt(),
   new CyranoArt(),
   new MiraculousIntercomArt(),
+  new FuecocoArt(),
+  new CrocalorArt(),
+  new SkeledirgeArt(),
+  new MiloticexArt(),
+  new DeinoArt(),
 ];

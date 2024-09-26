@@ -18,14 +18,14 @@ export class JaninesSecretTechnique extends TrainerCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '60';
+  public setNumber: string = '59';
 
-  public name: string = 'Janine\'s Secret Technique';
+  public name: string = 'Janine\'s Secret Art';
 
   public fullName: string = 'Janine\'s Secret Technique SFA';
 
   public text: string =
-    'Choose up to 2 of your [D] Pokémon. For each of those Pokémon, search your deck for a Basic [D] Energy card and attach it to that Pokémon. Then, shuffle your deck. If you attached any Energy to your Active Pokémon in this way, that Pokémon is now Poisoned.';
+    'Choose up to 2 of your [D] Pokémon. For each of those Pokémon, search your deck for a Basic [D] Energy card and attach it to that Pokémon. Then, shuffle your deck. If you attached Energy to your Active Pokémon in this way, it is now Poisoned.';
 
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

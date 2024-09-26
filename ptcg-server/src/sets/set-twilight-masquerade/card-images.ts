@@ -125,11 +125,11 @@ export class ChimcharArt extends Chimchar {
 }
 
 export class ClefableArt extends Clefable {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_078_R_EN_LG.png';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_079_R_EN_LG.png';
 }
 
 export class ClefairyArt extends Clefairy {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_077_R_EN_LG.png';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_078_R_EN_LG.png';
 }
 
 export class CommunityCenterArt extends CommunityCenter {

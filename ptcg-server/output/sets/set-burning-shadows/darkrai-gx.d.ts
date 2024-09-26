@@ -1,7 +1,8 @@
-import { PokemonCard, CardType, Stage, PowerType, State, StoreLike } from '../../game';
+import { PokemonCard, CardType, Stage, PowerType, State, StoreLike, CardTag } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 export declare class DarkraiGX extends PokemonCard {
     cardType: CardType;
+    tags: CardTag[];
     stage: Stage;
     hp: number;
     weakness: {

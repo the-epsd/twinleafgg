@@ -18,13 +18,13 @@ class VenusaurVMAX extends game_1.PokemonCard {
         this.attacks = [
             {
                 name: 'Forest Storm',
-                cost: [game_1.CardType.GRASS, game_1.CardType.COLORLESS],
+                cost: [game_1.CardType.COLORLESS, game_1.CardType.COLORLESS],
                 damage: 30,
                 text: 'This attack does 30 damage for each [G] Energy attached to all of your Pokémon.'
             },
             {
                 name: 'G-Max Bloom',
-                cost: [game_1.CardType.GRASS, game_1.CardType.GRASS, game_1.CardType.COLORLESS],
+                cost: [game_1.CardType.GRASS, game_1.CardType.GRASS, game_1.CardType.COLORLESS, game_1.CardType.COLORLESS],
                 damage: 210,
                 text: 'Heal 30 damage from this Pokémon.'
             }

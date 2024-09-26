@@ -44,7 +44,7 @@ export class CheckPokemonAttacksEffect implements Effect {
   constructor(player: Player) {
     this.player = player;
     const tool = player.active.tool;
-    
+
     if (!!tool && (tool as TrainerCard).attacks.length > 0) {
       this.attacks = [...(tool as TrainerCard).attacks];
     } else {
@@ -92,8 +92,8 @@ export class CheckPokemonStatsEffect implements Effect {
   constructor(target: PokemonCardList) {
     this.target = target;
     const pokemonCard = target.getPokemonCard();
-    this.weakness = pokemonCard ? [ ...pokemonCard.weakness ] : [];
-    this.resistance = pokemonCard ? [ ...pokemonCard.resistance ] : [];
+    this.weakness = pokemonCard ? [...pokemonCard.weakness] : [];
+    this.resistance = pokemonCard ? [...pokemonCard.resistance] : [];
   }
 }
 
@@ -106,7 +106,7 @@ export class CheckPokemonTypeEffect implements Effect {
   constructor(target: PokemonCardList) {
     this.target = target;
     const pokemonCard = target.getPokemonCard();
-    this.cardTypes = pokemonCard ? [ pokemonCard.cardType ] : [];
+    this.cardTypes = pokemonCard ? [pokemonCard.cardType] : [];
   }
 }
 
@@ -120,7 +120,7 @@ export class CheckRetreatCostEffect implements Effect {
   constructor(player: Player) {
     this.player = player;
     const pokemonCard = player.active.getPokemonCard();
-    this.cost = pokemonCard !== undefined ? [ ...pokemonCard.retreat ] : [];
+    this.cost = pokemonCard !== undefined ? [...pokemonCard.retreat] : [];
   }
 }
 
@@ -134,7 +134,7 @@ export class CheckAttackCostEffect implements Effect {
   constructor(player: Player, attack: Attack) {
     this.player = player;
     this.attack = attack;
-    this.cost = [ ...attack.cost ];
+    this.cost = [...attack.cost];
   }
 }
 

@@ -209,7 +209,7 @@ export class Mew extends PokemonCard {
       const attacks = card.attacks.filter(attack => {
         const checkAttackCost = new CheckAttackCostEffect(player, attack);
         state = store.reduceEffect(state, checkAttackCost);
-        return StateUtils.checkEnoughEnergy(energyMap, checkAttackCost.cost);
+        return StateUtils.checkEnoughEnergy(energyMap, checkAttackCost.cost as CardType[]);
       });
       const index = pokemonCards.length;
       pokemonCards.push(card);

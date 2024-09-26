@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Format = exports.SpecialCondition = exports.CardType = exports.Stage = exports.PokemonType = exports.TrainerType = exports.EnergyType = exports.SuperType = exports.CardTag = void 0;
+exports.Energy = exports.Format = exports.SpecialCondition = exports.CardType = exports.Stage = exports.PokemonType = exports.TrainerType = exports.EnergyType = exports.SuperType = exports.CardTag = void 0;
 var CardTag;
 (function (CardTag) {
     CardTag["POKEMON_SP"] = "SP";
@@ -146,3 +146,19 @@ var Format;
     Format[Format["RETRO"] = 4] = "RETRO";
     Format[Format["GLC"] = 5] = "GLC";
 })(Format = exports.Format || (exports.Format = {}));
+exports.Energy = {
+    D: CardType.DARK,
+    C: CardType.COLORLESS,
+    F: CardType.FIGHTING,
+    G: CardType.GRASS,
+    L: CardType.LIGHTNING,
+    M: CardType.METAL,
+    P: CardType.PSYCHIC,
+    R: CardType.FIRE,
+    W: CardType.WATER,
+    Y: CardType.FAIRY,
+    N: CardType.DRAGON
+};
+Object.entries(exports.Energy).forEach(([key, value]) => {
+    global[key] = value;
+});

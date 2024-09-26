@@ -167,14 +167,14 @@ exports.ChimcharArt = ChimcharArt;
 class ClefableArt extends clefable_1.Clefable {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_078_R_EN_LG.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_079_R_EN_LG.png';
     }
 }
 exports.ClefableArt = ClefableArt;
 class ClefairyArt extends clefairy_1.Clefairy {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_077_R_EN_LG.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_078_R_EN_LG.png';
     }
 }
 exports.ClefairyArt = ClefairyArt;
