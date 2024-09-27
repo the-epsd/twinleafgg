@@ -8,7 +8,7 @@ export class VenusaurVMAX extends PokemonCard {
 
   public stage: Stage = Stage.VMAX;
 
-  public tags = [ CardTag.POKEMON_VMAX ];
+  public tags = [CardTag.POKEMON_VMAX];
 
   public cardType: CardType = CardType.GRASS;
 
@@ -18,18 +18,18 @@ export class VenusaurVMAX extends PokemonCard {
 
   public hp: number = 330;
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
-  
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
+
   public attacks = [
     {
       name: 'Forest Storm',
-      cost: [ CardType.GRASS, CardType.COLORLESS ],
+      cost: [CardType.COLORLESS, CardType.COLORLESS],
       damage: 30,
       text: 'This attack does 30 damage for each [G] Energy attached to all of your Pokémon.'
     },
     {
       name: 'G-Max Bloom',
-      cost: [ CardType.GRASS, CardType.GRASS, CardType.COLORLESS ],
+      cost: [CardType.GRASS, CardType.GRASS, CardType.COLORLESS, CardType.COLORLESS],
       damage: 210,
       text: 'Heal 30 damage from this Pokémon.'
     }
@@ -69,7 +69,7 @@ export class VenusaurVMAX extends PokemonCard {
 
       if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
         const player = effect.player;
-          
+
         const healTargetEffect = new HealTargetEffect(effect, 30);
         healTargetEffect.target = player.active;
         state = store.reduceEffect(state, healTargetEffect);

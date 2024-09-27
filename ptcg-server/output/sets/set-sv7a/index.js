@@ -27,4 +27,5 @@ exports.setSV7a = [
     new card_images_1.ExeggcuteArt(),
     new card_images_1.AlolanExeggutorexArt(),
     new card_images_1.VulpixArt(),
+    new card_images_1.LatiasexArt(),
 ];

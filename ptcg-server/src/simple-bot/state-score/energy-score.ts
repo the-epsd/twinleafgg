@@ -1,4 +1,4 @@
-import { State, PokemonCardList, CardType, EnergyCard, PlayerType } from '../../game';
+import { State, PokemonCardList, CardType, EnergyCard, PlayerType, Energy } from '../../game';
 import { SimpleScore } from './score';
 
 export class EnergyScore extends SimpleScore {
@@ -51,7 +51,7 @@ export class EnergyScore extends SimpleScore {
     });
 
     const max = Math.max(any1, any2);
-    for (let i = 0; i < max ; i++) {
+    for (let i = 0; i < max; i++) {
       missing1.push(CardType.ANY);
     }
 
@@ -59,7 +59,7 @@ export class EnergyScore extends SimpleScore {
   }
 
 
-  private getMissingEnergies(cardList: PokemonCardList, cost: CardType[]): CardType[] {
+  private getMissingEnergies(cardList: PokemonCardList, cost: (CardType | keyof typeof Energy)[]): CardType[] {
     if (cost.length === 0) {
       return [];
     }
@@ -83,16 +83,27 @@ export class EnergyScore extends SimpleScore {
           colorless += 1;
           break;
         default: {
-          const index = provided.findIndex(energy => energy === costType);
-          if (index !== -1) {
-            provided.splice(index, 1);
+          if (typeof costType === 'string') {
+            const energyType = Energy[costType as keyof typeof Energy];
+            if (energyType !== undefined) {
+              const index = provided.findIndex(energy => energy === energyType);
+              if (index !== -1) {
+                provided.splice(index, 1);
+              } else {
+                missing.push(energyType);
+              }
+            }
           } else {
-            missing.push(costType);
+            const index = provided.findIndex(energy => energy === costType);
+            if (index !== -1) {
+              provided.splice(index, 1);
+            } else {
+              missing.push(costType);
+            }
           }
         }
       }
     });
-
     colorless -= provided.length;
 
     for (let i = 0; i < colorless; i++) {

@@ -34,20 +34,25 @@ class Torterra extends pokemon_card_1.PokemonCard {
         this.fullName = 'Torterra BRS';
     }
     reduceEffect(store, state, effect) {
+        var _a;
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const playerBench = player.bench;
             let evolutionPokemonCount = 0;
             playerBench.forEach(c => {
-                var _a, _b, _c, _d, _e;
+                var _a;
                 if (c.getPokemonCard() instanceof pokemon_card_1.PokemonCard) {
-                    if (((_a = c.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.stage) == card_types_1.Stage.STAGE_1 || ((_b = c.getPokemonCard()) === null || _b === void 0 ? void 0 : _b.stage) == card_types_1.Stage.STAGE_2 || ((_c = c.getPokemonCard()) === null || _c === void 0 ? void 0 : _c.stage) == card_types_1.Stage.VMAX || ((_d = c.getPokemonCard()) === null || _d === void 0 ? void 0 : _d.stage) == card_types_1.Stage.VSTAR) {
-                        console.log((_e = c.getPokemonCard()) === null || _e === void 0 ? void 0 : _e.stage);
+                    if (((_a = c.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.stage) !== card_types_1.Stage.BASIC) {
                         evolutionPokemonCount++;
                     }
                 }
             });
-            effect.damage = (evolutionPokemonCount + 1) * 50;
+            // Don't forget to include the active Pokémon if it's not basic
+            if (((_a = player.active.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.stage) !== card_types_1.Stage.BASIC) {
+                evolutionPokemonCount++;
+            }
+            // Set the damage based on the count of evolution Pokémon
+            effect.damage = 50 * evolutionPokemonCount;
             return state;
         }
         return state;

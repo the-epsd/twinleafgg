@@ -1,4 +1,4 @@
-import { PokemonCard, CardType, Stage, PowerType, GameError, GameMessage, PokemonCardList, State, StoreLike, AttachEnergyPrompt, CardTarget, EnergyCard, EnergyType, PlayerType, SlotType, StateUtils, SuperType, SpecialCondition } from '../../game';
+import { PokemonCard, CardType, Stage, PowerType, GameError, GameMessage, PokemonCardList, State, StoreLike, AttachEnergyPrompt, CardTarget, EnergyCard, EnergyType, PlayerType, SlotType, StateUtils, SuperType, SpecialCondition, CardTag } from '../../game';
 import { KnockOutOpponentEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
@@ -6,6 +6,7 @@ import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class DarkraiGX extends PokemonCard {
   public cardType: CardType = CardType.DARK;
+  public tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.BASIC;
   public hp: number = 180;
   public weakness = [{ type: CardType.FIGHTING }];
@@ -133,6 +134,12 @@ export class DarkraiGX extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
+
+      if (player.usedGX === true) {
+        throw new GameError(GameMessage.LABEL_GX_USED);
+      }
+
+      player.usedGX = true;
 
       const opponentActive = opponent.active;
 

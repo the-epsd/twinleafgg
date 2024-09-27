@@ -16,34 +16,34 @@ import { ChooseCardsPrompt } from '../../game';
 function* playCard(next: Function, store: StoreLike, state: State,
   self: LetterOfEncouragement, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
-  
+
   // No Pokemon KO last turn
   if (!player.marker.hasMarker(self.LETTER_OF_ENCOURAGEMENT_MARKER)) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
-  
+
   if (player.deck.cards.length === 0) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
-  
+
   let cards: Card[] = [];
   return store.prompt(state, new ChooseCardsPrompt(
     player.id,
     GameMessage.CHOOSE_CARD_TO_HAND,
     player.deck,
     { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-    {min: 0, max: 3, allowCancel: false}
+    { min: 0, max: 3, allowCancel: false }
   ), selected => {
     cards = selected || [];
     next();
 
     player.deck.moveCardsTo(cards, player.hand);
-  
+
     player.supporter.moveCardTo(effect.trainerCard, player.discard);
-  
+
     return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
       player.deck.applyOrder(order);
     });
@@ -60,7 +60,7 @@ export class LetterOfEncouragement extends TrainerCard {
 
   public setNumber: string = '152';
 
-  public regulationMark = 'E';
+  public regulationMark = 'G';
 
   public name: string = 'Letter of Encouragement';
 

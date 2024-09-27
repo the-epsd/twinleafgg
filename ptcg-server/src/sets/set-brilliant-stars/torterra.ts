@@ -43,14 +43,20 @@ export class Torterra extends PokemonCard {
 
       playerBench.forEach(c => {
         if (c.getPokemonCard() instanceof PokemonCard) {
-          if (c.getPokemonCard()?.stage == Stage.STAGE_1 || c.getPokemonCard()?.stage == Stage.STAGE_2 || c.getPokemonCard()?.stage == Stage.VMAX || c.getPokemonCard()?.stage == Stage.VSTAR) {
-            console.log(c.getPokemonCard()?.stage);
+          if (c.getPokemonCard()?.stage !== Stage.BASIC) {
             evolutionPokemonCount++;
           }
         }
       });
 
-      effect.damage = (evolutionPokemonCount + 1) * 50;
+      // Don't forget to include the active Pokémon if it's not basic
+      if (player.active.getPokemonCard()?.stage !== Stage.BASIC) {
+        evolutionPokemonCount++;
+      }
+
+      // Set the damage based on the count of evolution Pokémon
+      effect.damage = 50 * evolutionPokemonCount;
+
 
       return state;
     }

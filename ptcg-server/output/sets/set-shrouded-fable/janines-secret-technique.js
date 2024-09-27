@@ -14,10 +14,10 @@ class JaninesSecretTechnique extends trainer_card_1.TrainerCard {
         this.regulationMark = 'H';
         this.set = 'SFA';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '60';
-        this.name = 'Janine\'s Secret Technique';
+        this.setNumber = '59';
+        this.name = 'Janine\'s Secret Art';
         this.fullName = 'Janine\'s Secret Technique SFA';
-        this.text = 'Choose up to 2 of your [D] Pokémon. For each of those Pokémon, search your deck for a Basic [D] Energy card and attach it to that Pokémon. Then, shuffle your deck. If you attached any Energy to your Active Pokémon in this way, that Pokémon is now Poisoned.';
+        this.text = 'Choose up to 2 of your [D] Pokémon. For each of those Pokémon, search your deck for a Basic [D] Energy card and attach it to that Pokémon. Then, shuffle your deck. If you attached Energy to your Active Pokémon in this way, it is now Poisoned.';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {

@@ -199,6 +199,7 @@ export const cardReplacements = [
 
   //SFA
   { from: 'Bloodmoon Ursaluna SFA 25', to: 'Bloodmoon Ursaluna SV6a 25' },
+  { from: 'Janine\'s Secret Art SFA 59', to: 'Janine\'s Secret Technique SFA 59' },
 
   //SCR
   { from: 'Archaludon SCR 107', to: 'Archaludon SV6a 107' },
@@ -420,6 +421,7 @@ export const exportReplacements = [
 
   //SFA
   { from: 'Bloodmoon Ursaluna SV6a 25', to: 'Bloodmoon Ursaluna SFA 25' },
+  { from: 'Janine\'s Secret Technique SFA 59', to: 'Janine\'s Secret Art SFA 59' },
 
   //SCR
   { from: 'Archaludon SV6a 107', to: 'Archaludon SCR 107' },

@@ -1,7 +1,7 @@
 import { PlayerType, PowerType, State, StateUtils, StoreLike } from '../../game';
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { DealDamageEffect, PutCountersEffect } from '../../game/store/effects/attack-effects';
+import { PutCountersEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { CheckHpEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
@@ -55,7 +55,7 @@ export class Mismagius extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
 
-    if (effect instanceof DealDamageEffect && effect.target.cards.includes(this) && effect.player.marker.hasMarker(effect.player.DAMAGE_DEALT_MARKER)) {
+    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this) && effect.player.marker.hasMarker(effect.player.DAMAGE_DEALT_MARKER)) {
       const player = StateUtils.findOwner(state, effect.target);
       const opponent = StateUtils.getOpponent(state, player);
       const pokemonCard = effect.target.getPokemonCard();

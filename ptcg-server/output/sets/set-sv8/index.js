@@ -11,4 +11,9 @@ exports.setSV8 = [
     new card_images_1.GravityMountainArt(),
     new card_images_1.CyranoArt(),
     new card_images_1.MiraculousIntercomArt(),
+    new card_images_1.FuecocoArt(),
+    new card_images_1.CrocalorArt(),
+    new card_images_1.SkeledirgeArt(),
+    new card_images_1.MiloticexArt(),
+    new card_images_1.DeinoArt(),
 ];

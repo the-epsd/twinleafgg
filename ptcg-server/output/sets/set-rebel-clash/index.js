@@ -20,6 +20,7 @@ exports.setRebelClash = [
     new card_images_1.MetapodArt(),
     new card_images_1.MorpekoArt(),
     new card_images_1.NatuArt(),
+    new card_images_1.PalpitoadArt(),
     new card_images_1.ScoopUpNetArt(),
     new card_images_1.SpeedLightningEnergyArt(),
     new card_images_1.TrainingCourtArt(),

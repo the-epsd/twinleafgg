@@ -41,7 +41,8 @@ class Wurmple extends pokemon_card_1.PokemonCard {
             const player = effect.player;
             const blocked = [];
             player.deck.cards.forEach((card, index) => {
-                if (card instanceof pokemon_card_1.PokemonCard && card.name !== 'Wurmple' || card instanceof pokemon_card_1.PokemonCard && card.name !== 'Silcoon' || card instanceof pokemon_card_1.PokemonCard && card.name !== 'Cascoon' || card instanceof pokemon_card_1.PokemonCard && card.name !== 'Beautifly' || card instanceof pokemon_card_1.PokemonCard && card.name !== 'Dustox') {
+                if (card instanceof pokemon_card_1.PokemonCard &&
+                    !['Wurmple', 'Silcoon', 'Cascoon', 'Beautifly', 'Dustox'].includes(card.name)) {
                     blocked.push(index);
                 }
             });

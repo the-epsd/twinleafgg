@@ -25,6 +25,7 @@ import { TeraOrb } from './tera-orb';
 import { Trapinch } from './trapinch';
 import { Vibrava } from './vibrava';
 import { Vulpix } from './vulpix';
+import { Latiasex } from './latias-ex';
 
 export class PalkiaArt extends Palkia {
   public cardImage = 'https://pbs.twimg.com/media/GWxHVtGa8AIClwa?format=jpg&name=large';
@@ -123,13 +124,17 @@ export class KlefkiArt extends Klefki {
 }
 
 export class ExeggcuteArt extends Exeggcute {
-  public cardImage = 'https://www.pokebeach.com/news/2024/08/sv7a_s1_TAMATAMA.jpg';
+  public cardImage = 'https://pokemonproxies.com/static/media/7a-001-Exeggcute.faf2a7e3b6fd643c2999.png';
 }
 
 export class AlolanExeggutorexArt extends AlolanExeggutorex {
-  public cardImage = 'https://www.pokebeach.com/news/2024/08/sv7a_s1_aNASSYex.jpg';
+  public cardImage = 'https://pokemonproxies.com/static/media/7a-040-Alolan_Exeggutor_ex.72c98e0575d7ae603368.png';
 }
 
 export class VulpixArt extends Vulpix {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpc/SVLS/SVLS_1_R_JP.png';
+  public cardImage = 'https://pokemonproxies.com/static/media/7b-001-Vulpix.c0bfa431ae08b6ffb68f.png';
+}
+
+export class LatiasexArt extends Latiasex {
+  public cardImage = 'https://pokemonproxies.com/static/media/7a-019-Latias_ex.127ba20282ca27e09fce.png';
 }

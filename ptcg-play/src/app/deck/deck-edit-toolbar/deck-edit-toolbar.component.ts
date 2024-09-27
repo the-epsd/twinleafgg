@@ -36,6 +36,9 @@ export class DeckEditToolbarComponent implements OnDestroy {
 
   @Output() clearDeck = new EventEmitter<void>();
 
+  @Input() selected: CardType[] = [];
+
+
   public onClearDeck() {
     this.clearDeck.emit();
   }
@@ -257,7 +260,12 @@ export class DeckEditToolbarComponent implements OnDestroy {
   }
 
   onTypeSelected(type: CardType) {
-    this.form.patchValue({ cardTypes: [type] });
+    const currentTypes = this.form.get('cardTypes').value;
+    if (currentTypes.includes(type)) {
+      this.form.patchValue({ cardTypes: [] });
+    } else {
+      this.form.patchValue({ cardTypes: [type] });
+    }
   }
 
   public exportToFile() {

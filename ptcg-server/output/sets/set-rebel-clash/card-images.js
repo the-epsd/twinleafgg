@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.VulpixArt = exports.TwinEnergyArt = exports.TrainingCourtArt = exports.SpeedLightningEnergyArt = exports.ScoopUpNetArt = exports.NatuArt = exports.MorpekoArt = exports.MetapodArt = exports.HorrorPsychicEnergyArt = exports.HonedgeArt = exports.GalarianMeowthArt = exports.ElectivireArt = exports.DuraludonArt = exports.DragapultArt = exports.CoalossalArt = exports.CaterpieArt = exports.CaptureEnergyArt = exports.CapaciousBucketArt = exports.ButterfreeArt = exports.BarraskewdaArt = exports.ArrokudaArt = exports.AegislashArt = void 0;
+exports.VulpixArt = exports.TwinEnergyArt = exports.TrainingCourtArt = exports.SpeedLightningEnergyArt = exports.ScoopUpNetArt = exports.PalpitoadArt = exports.NatuArt = exports.MorpekoArt = exports.MetapodArt = exports.HorrorPsychicEnergyArt = exports.HonedgeArt = exports.GalarianMeowthArt = exports.ElectivireArt = exports.DuraludonArt = exports.DragapultArt = exports.CoalossalArt = exports.CaterpieArt = exports.CaptureEnergyArt = exports.CapaciousBucketArt = exports.ButterfreeArt = exports.BarraskewdaArt = exports.ArrokudaArt = exports.AegislashArt = void 0;
 const aegislash_1 = require("./aegislash");
 const butterfree_1 = require("./butterfree");
 const capacious_bucket_1 = require("./capacious-bucket");
@@ -14,6 +14,7 @@ const horror_psychic_energy_1 = require("./horror-psychic-energy");
 const metapod_1 = require("./metapod");
 const morpeko_1 = require("./morpeko");
 const natu_1 = require("./natu");
+const palpitoad_1 = require("./palpitoad");
 const RCL_126_Galarian_Meowth_1 = require("./RCL_126_Galarian_Meowth");
 const RCL_133_Honedge_1 = require("./RCL_133_Honedge");
 const RCL_24_Vulpix_1 = require("./RCL_24_Vulpix");
@@ -142,6 +143,13 @@ class NatuArt extends natu_1.Natu {
     }
 }
 exports.NatuArt = NatuArt;
+class PalpitoadArt extends palpitoad_1.Palpitoad {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/RCL/RCL_045_R_EN_LG.png';
+    }
+}
+exports.PalpitoadArt = PalpitoadArt;
 class ScoopUpNetArt extends scoop_up_net_1.ScoopUpNet {
     constructor() {
         super(...arguments);

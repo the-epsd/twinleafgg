@@ -3,13 +3,14 @@ import { CardTag, CardType, SpecialCondition, Stage } from '../../game/store/car
 import { AttackEffect, HealEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { StoreLike, State, PowerType, StateUtils, CardTarget, GameError, GameMessage, PlayerType, PokemonCardList, ChoosePokemonPrompt, SlotType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class Venusaurex extends PokemonCard {
 
   public regulationMark = 'G';
 
   public tags = [CardTag.POKEMON_ex];
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Ivysaur';
   public cardType: CardType = CardType.GRASS;
   public hp: number = 340;
@@ -39,6 +40,10 @@ export class Venusaurex extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.TRANQUIL_FLOWER_MARKER)) {
+      const player = effect.player;
+      player.marker.removeMarker(this.TRANQUIL_FLOWER_MARKER);
+    }
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
 
@@ -55,7 +60,7 @@ export class Venusaurex extends PokemonCard {
       const hasActiveWIthDamage = player.active.damage > 0;
       const pokemonInPlayWithDamage = hasPokeBenchWithDamage || hasActiveWIthDamage;
 
-      if (!player.marker.hasMarker(this.TRANQUIL_FLOWER_MARKER)) {
+      if (player.marker.hasMarker(this.TRANQUIL_FLOWER_MARKER)) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 

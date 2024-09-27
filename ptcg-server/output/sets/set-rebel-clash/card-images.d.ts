@@ -11,6 +11,7 @@ import { HorrorPsychicEnergy } from './horror-psychic-energy';
 import { Metapod } from './metapod';
 import { Morpeko } from './morpeko';
 import { Natu } from './natu';
+import { Palpitoad } from './palpitoad';
 import { GalarianMeowth } from './RCL_126_Galarian_Meowth';
 import { Honedge } from './RCL_133_Honedge';
 import { Vulpix } from './RCL_24_Vulpix';
@@ -69,6 +70,9 @@ export declare class MorpekoArt extends Morpeko {
     cardImage: string;
 }
 export declare class NatuArt extends Natu {
+    cardImage: string;
+}
+export declare class PalpitoadArt extends Palpitoad {
     cardImage: string;
 }
 export declare class ScoopUpNetArt extends ScoopUpNet {

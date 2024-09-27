@@ -143,3 +143,19 @@ export var Format;
     Format[Format["RETRO"] = 4] = "RETRO";
     Format[Format["GLC"] = 5] = "GLC";
 })(Format || (Format = {}));
+export const Energy = {
+    D: CardType.DARK,
+    C: CardType.COLORLESS,
+    F: CardType.FIGHTING,
+    G: CardType.GRASS,
+    L: CardType.LIGHTNING,
+    M: CardType.METAL,
+    P: CardType.PSYCHIC,
+    R: CardType.FIRE,
+    W: CardType.WATER,
+    Y: CardType.FAIRY,
+    N: CardType.DRAGON
+};
+Object.entries(Energy).forEach(([key, value]) => {
+    global[key] = value;
+});

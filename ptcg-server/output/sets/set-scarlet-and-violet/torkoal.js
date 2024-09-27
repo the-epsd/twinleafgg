@@ -33,7 +33,7 @@ class Torkoal extends pokemon_card_1.PokemonCard {
         this.regulationMark = 'G';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
             // Check attached energy
             const checkEnergy = new check_effects_1.CheckProvidedEnergyEffect(player);

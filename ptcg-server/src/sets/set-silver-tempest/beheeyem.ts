@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType } from '../../game';
+import { StoreLike, State, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { AttackEffect } from '../../game/store/effects/game-effects';
@@ -52,6 +52,7 @@ export class Beheeyem extends PokemonCard {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
 
       return store.prompt(state, new ChoosePokemonPrompt(
         player.id,
@@ -62,11 +63,20 @@ export class Beheeyem extends PokemonCard {
       ), selected => {
         const targets = selected || [];
         targets.forEach(target => {
-          const damageEffect = new PutDamageEffect(effect, 60);
+          let damage = 60;
+          if (target !== opponent.active) {
+            const pokemonCard = target.getPokemonCard();
+            if (pokemonCard && pokemonCard.weakness) {
+              const weakness = pokemonCard.weakness.find(w => w.type === CardType.PSYCHIC);
+              if (weakness) {
+                damage *= 2; // Apply weakness
+              }
+            }
+          }
+          const damageEffect = new PutDamageEffect(effect, damage);
           damageEffect.target = target;
           store.reduceEffect(state, damageEffect);
         });
-        return state;
       });
     }
     return state;

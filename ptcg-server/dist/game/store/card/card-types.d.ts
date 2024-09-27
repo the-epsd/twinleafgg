@@ -134,3 +134,29 @@ export declare enum Format {
     RETRO = 4,
     GLC = 5
 }
+export declare const Energy: {
+    readonly D: CardType.DARK;
+    readonly C: CardType.COLORLESS;
+    readonly F: CardType.FIGHTING;
+    readonly G: CardType.GRASS;
+    readonly L: CardType.LIGHTNING;
+    readonly M: CardType.METAL;
+    readonly P: CardType.PSYCHIC;
+    readonly R: CardType.FIRE;
+    readonly W: CardType.WATER;
+    readonly Y: CardType.FAIRY;
+    readonly N: CardType.DRAGON;
+};
+declare global {
+    const D: typeof Energy.D;
+    const C: typeof Energy.C;
+    const F: typeof Energy.F;
+    const G: typeof Energy.G;
+    const L: typeof Energy.L;
+    const M: typeof Energy.M;
+    const P: typeof Energy.P;
+    const R: typeof Energy.R;
+    const W: typeof Energy.W;
+    const Y: typeof Energy.Y;
+    const N: typeof Energy.N;
+}

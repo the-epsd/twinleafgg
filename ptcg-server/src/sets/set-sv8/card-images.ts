@@ -1,10 +1,15 @@
 import { Magneton } from '../set-scarlet-and-violet-promos/magneton';
+import { Crocalor } from './crocalor';
 import { Cyrano } from './cyrano';
+import { Deino } from './deino';
 import { ExcitingStadium } from './exciting-stadium';
+import { Fuecoco } from './fuecoco';
 import { GravityMountain } from './gravity-mountain';
 import { Magnemite } from './magnemite';
+import { Miloticex } from './milotic-ex';
 import { MiraculousIntercom } from './miraculous-intercom';
 import { Pikachuex } from './pikachu-ex';
+import { Skeledirge } from './skeledirge';
 import { Terapagos } from './terapagos';
 
 export class PikachuexArt extends Pikachuex {
@@ -40,4 +45,24 @@ export class MiraculousIntercomArt extends MiraculousIntercom {
 
 export class CyranoArt extends Cyrano {
   public cardImage = 'https://pokemonproxies.com/static/media/8i-102-Cyrano.027d5eba075c868bcc20.png';
+}
+
+export class FuecocoArt extends Fuecoco {
+  public cardImage = 'https://www.pokebeach.com/news/2024/09/IMG_8011.png';
+}
+
+export class CrocalorArt extends Crocalor {
+  public cardImage = 'https://www.pokebeach.com/news/2024/09/IMG_8010.png';
+}
+
+export class SkeledirgeArt extends Skeledirge {
+  public cardImage = 'https://www.pokebeach.com/news/2024/09/IMG_8009.jpeg';
+}
+
+export class MiloticexArt extends Miloticex {
+  public cardImage = 'https://pokemonproxies.com/static/media/8i-026-Milotic_ex.5ff152c4fc9e8baef0cc.png';
+}
+
+export class DeinoArt extends Deino {
+  public cardImage = 'https://pokemonproxies.com/static/media/8i-070-Deino.7b5d3275fdbf0f26e3c2.png';
 }

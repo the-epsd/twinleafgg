@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.VulpixArt = exports.AlolanExeggutorexArt = exports.ExeggcuteArt = exports.KlefkiArt = exports.RichEnergyArt = exports.DraytonArt = exports.DuskBallArt = exports.DragonsElixirArt = exports.DialgaArt = exports.CelebrationFanfareArt = exports.ArchaludonexArt = exports.DuraludonArt = exports.SmoochumArt = exports.CounterGainArt = exports.FlygonexArt = exports.VibravaArt = exports.TrapinchArt = exports.MegatonBlowerArt = exports.HelperBellArt = exports.TeraOrbArt = exports.MarillArt = exports.CherishCarrierArt = exports.PerfectMixerArt = exports.AzumarillArt = exports.HoOhArt = exports.BlackKyuremexArt = exports.PalkiaArt = void 0;
+exports.LatiasexArt = exports.VulpixArt = exports.AlolanExeggutorexArt = exports.ExeggcuteArt = exports.KlefkiArt = exports.RichEnergyArt = exports.DraytonArt = exports.DuskBallArt = exports.DragonsElixirArt = exports.DialgaArt = exports.CelebrationFanfareArt = exports.ArchaludonexArt = exports.DuraludonArt = exports.SmoochumArt = exports.CounterGainArt = exports.FlygonexArt = exports.VibravaArt = exports.TrapinchArt = exports.MegatonBlowerArt = exports.HelperBellArt = exports.TeraOrbArt = exports.MarillArt = exports.CherishCarrierArt = exports.PerfectMixerArt = exports.AzumarillArt = exports.HoOhArt = exports.BlackKyuremexArt = exports.PalkiaArt = void 0;
 const counter_gain_1 = require("../set-lost-thunder/counter-gain");
 const alolan_exeggutor_ex_1 = require("./alolan-exeggutor-ex");
 const archaludon_ex_1 = require("./archaludon-ex");
@@ -28,6 +28,7 @@ const tera_orb_1 = require("./tera-orb");
 const trapinch_1 = require("./trapinch");
 const vibrava_1 = require("./vibrava");
 const vulpix_1 = require("./vulpix");
+const latias_ex_1 = require("./latias-ex");
 class PalkiaArt extends palkia_1.Palkia {
     constructor() {
         super(...arguments);
@@ -199,21 +200,28 @@ exports.KlefkiArt = KlefkiArt;
 class ExeggcuteArt extends exeggcute_1.Exeggcute {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://www.pokebeach.com/news/2024/08/sv7a_s1_TAMATAMA.jpg';
+        this.cardImage = 'https://pokemonproxies.com/static/media/7a-001-Exeggcute.faf2a7e3b6fd643c2999.png';
     }
 }
 exports.ExeggcuteArt = ExeggcuteArt;
 class AlolanExeggutorexArt extends alolan_exeggutor_ex_1.AlolanExeggutorex {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://www.pokebeach.com/news/2024/08/sv7a_s1_aNASSYex.jpg';
+        this.cardImage = 'https://pokemonproxies.com/static/media/7a-040-Alolan_Exeggutor_ex.72c98e0575d7ae603368.png';
     }
 }
 exports.AlolanExeggutorexArt = AlolanExeggutorexArt;
 class VulpixArt extends vulpix_1.Vulpix {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpc/SVLS/SVLS_1_R_JP.png';
+        this.cardImage = 'https://pokemonproxies.com/static/media/7b-001-Vulpix.c0bfa431ae08b6ffb68f.png';
     }
 }
 exports.VulpixArt = VulpixArt;
+class LatiasexArt extends latias_ex_1.Latiasex {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pokemonproxies.com/static/media/7a-019-Latias_ex.127ba20282ca27e09fce.png';
+    }
+}
+exports.LatiasexArt = LatiasexArt;

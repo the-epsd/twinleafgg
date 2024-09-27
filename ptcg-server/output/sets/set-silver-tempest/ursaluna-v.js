@@ -23,7 +23,8 @@ class UrsalunaV extends pokemon_card_1.PokemonCard {
         this.attacks = [{
                 name: 'Peat Shoulder',
                 cost: [card_types_1.CardType.FIGHTING, card_types_1.CardType.FIGHTING, card_types_1.CardType.FIGHTING],
-                damage: 230,
+                damage: 220,
+                damageCalculation: '-',
                 text: 'This attack does 10 less damage for each damage counter on this Pokémon.'
             }];
         this.set = 'SIT';

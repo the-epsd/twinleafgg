@@ -9,9 +9,9 @@ export class UrsalunaV extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
-  public tags = [ CardTag.POKEMON_V ];
+  public tags = [CardTag.POKEMON_V];
 
-  public cardType: CardType = CardType.FIGHTING;  
+  public cardType: CardType = CardType.FIGHTING;
 
   public hp: number = 230;
 
@@ -28,7 +28,8 @@ export class UrsalunaV extends PokemonCard {
   public attacks = [{
     name: 'Peat Shoulder',
     cost: [CardType.FIGHTING, CardType.FIGHTING, CardType.FIGHTING],
-    damage: 230,
+    damage: 220,
+    damageCalculation: '-',
     text: 'This attack does 10 less damage for each damage counter on this Pokémon.'
   }];
 
@@ -49,19 +50,19 @@ export class UrsalunaV extends PokemonCard {
     // Reduce damage by 30
     if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {
       const pokemonCard = effect.target.getPokemonCard();
-  
+
       // It's not this pokemon card
       if (pokemonCard !== this) {
         return state;
       }
-  
+
       // It's not an attack
       if (state.phase !== GamePhase.ATTACK) {
         return state;
       }
-  
+
       const player = StateUtils.findOwner(state, effect.target);
-  
+
       // Try to reduce PowerEffect, to check if something is blocking our ability
       try {
         const stub = new PowerEffect(player, {
@@ -73,16 +74,16 @@ export class UrsalunaV extends PokemonCard {
       } catch {
         return state;
       }
-  
+
       effect.damage = Math.max(0, effect.damage - 30);
     }
-  
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       effect.damage -= effect.player.active.damage;
       return state;
     }
 
-    return state; 
+    return state;
   }
 }
 

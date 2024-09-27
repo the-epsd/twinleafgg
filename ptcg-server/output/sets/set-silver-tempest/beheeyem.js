@@ -40,14 +40,24 @@ class Beheeyem extends pokemon_card_1.PokemonCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
             return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { min: 1, max: 1, allowCancel: false }), selected => {
                 const targets = selected || [];
                 targets.forEach(target => {
-                    const damageEffect = new attack_effects_1.PutDamageEffect(effect, 60);
+                    let damage = 60;
+                    if (target !== opponent.active) {
+                        const pokemonCard = target.getPokemonCard();
+                        if (pokemonCard && pokemonCard.weakness) {
+                            const weakness = pokemonCard.weakness.find(w => w.type === card_types_1.CardType.PSYCHIC);
+                            if (weakness) {
+                                damage *= 2; // Apply weakness
+                            }
+                        }
+                    }
+                    const damageEffect = new attack_effects_1.PutDamageEffect(effect, damage);
                     damageEffect.target = target;
                     store.reduceEffect(state, damageEffect);
                 });
-                return state;
             });
         }
         return state;

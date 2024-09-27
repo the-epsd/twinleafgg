@@ -1,4 +1,4 @@
-import { CardList, GameMessage, OrderCardsPrompt } from '../../game';
+import { CardList, GameError, GameMessage, OrderCardsPrompt } from '../../game';
 import { TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
@@ -24,35 +24,31 @@ export class Pokedex extends TrainerCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
-      const deck = player.deck;
+
+      if (player.deck.cards.length === 0) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      }
 
       const deckTop = new CardList();
-
-
-      // Get up to 5 cards from the top of the deck
-      const cards = deck.cards.slice(0, 5);
-      player.deck.moveCardsTo(cards, deckTop);
-
-      // We will discard this card after prompt confirmation
-      effect.preventDefault = true;
+      player.deck.moveTo(deckTop, 5);
 
       return store.prompt(state, new OrderCardsPrompt(
         player.id,
         GameMessage.CHOOSE_CARDS_ORDER,
         deckTop,
-        { allowCancel: false }
-      ), (rearrangedCards) => {
-        if (rearrangedCards === null) {
+        { allowCancel: false },
+      ), order => {
+        if (order === null) {
           return state;
         }
 
-        deckTop.applyOrder(rearrangedCards);
-        deckTop.moveTo(player.deck);
+        deckTop.applyOrder(order);
+        deckTop.moveToTopOfDestination(player.deck);
 
         player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
       });
     }
-
     return state;
   }
 }

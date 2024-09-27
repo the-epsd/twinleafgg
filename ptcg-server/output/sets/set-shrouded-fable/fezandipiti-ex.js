@@ -22,13 +22,13 @@ class Fezandipitiex extends pokemon_card_1.PokemonCard {
                 name: 'Flip the Script',
                 powerType: game_1.PowerType.ABILITY,
                 useWhenInPlay: true,
-                text: 'Once during your turn, if any of your Pokémon were Knocked Out during your opponent\'s last turn, you may draw 3 cards.You can\'t use more than 1 Flip the Script Ability each turn.'
+                text: 'Once during your turn, if any of your Pokémon were Knocked Out during your opponent\'s last turn, you may draw 3 cards. You can\'t use more than 1 Flip the Script Ability each turn.'
             }];
         this.attacks = [{
-                name: 'Dirty Headbutt',
+                name: 'Cruel Arrow',
                 cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
                 damage: 0,
-                text: 'This attack does 100 damage to 1 of your opponent\'s Pokémon.'
+                text: 'This attack does 100 damage to 1 of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
             }];
         this.set = 'SFA';
         this.cardImage = 'assets/cardback.png';

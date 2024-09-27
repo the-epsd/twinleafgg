@@ -91,12 +91,20 @@ export class PorygonZ extends PokemonCard {
         { allowCancel: true }
       ), transfers => {
         transfers = transfers || [];
+        // First, move all cards to their targets
+        for (const transfer of transfers) {
+          const target = StateUtils.getTarget(state, player, transfer.to);
+          player.hand.moveCardTo(transfer.card, target);
+        }
+
+        // Then, trigger AttachEnergyEffect for each attachment
         for (const transfer of transfers) {
           const target = StateUtils.getTarget(state, player, transfer.to);
           const energyCard = transfer.card as EnergyCard;
           const attachEnergyEffect = new AttachEnergyEffect(player, energyCard, target);
-          store.reduceEffect(state, attachEnergyEffect);
+          state = store.reduceEffect(state, attachEnergyEffect);
         }
+
       });
     }
 

@@ -57,7 +57,9 @@ class Giacomo extends trainer_card_1.TrainerCard {
             });
             if (cards.length > 0) {
                 // Discard selected special energy card
-                target.moveCardsTo(cards, opponent.discard);
+                cards.forEach(card => {
+                    target.moveCardTo(card, opponent.discard);
+                });
             }
             player.supporter.moveCardTo(effect.trainerCard, player.discard);
             return state;

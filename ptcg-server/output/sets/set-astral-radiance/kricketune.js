@@ -6,7 +6,7 @@ const check_effects_1 = require("../../game/store/effects/check-effects");
 class Kricketune extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.stage = game_1.Stage.STAGE_1;
+        this.stage = game_1.Stage.BASIC;
         this.evolvesFrom = 'Kricketot';
         this.cardType = game_1.CardType.GRASS;
         this.hp = 90;
@@ -37,26 +37,19 @@ class Kricketune extends game_1.PokemonCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof check_effects_1.CheckHpEffect) {
             const player = effect.player;
-            let kricketunesInPlay = false;
-            let swellingTuneApplied = false;
-            if (swellingTuneApplied) {
-                return state;
-            }
+            let abilityApplied = false;
             player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList) => {
                 var _a;
-                if (((_a = cardList.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.name) === 'Kricketune') {
-                    kricketunesInPlay = true;
+                if (!abilityApplied && ((_a = cardList.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.name) === 'Kricketune') {
+                    abilityApplied = true;
+                    player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, innerCardList => {
+                        const pokemonCard = innerCardList.getPokemonCard();
+                        if (pokemonCard && pokemonCard.cardType === game_1.CardType.GRASS && pokemonCard.name !== 'Kricketune') {
+                            effect.hp += 40;
+                        }
+                    });
                 }
             });
-            if (kricketunesInPlay) {
-                player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
-                    const pokemonCard = cardList.getPokemonCard();
-                    if (pokemonCard && pokemonCard.cardType === game_1.CardType.GRASS && pokemonCard.name !== 'Kricketune') {
-                        effect.hp += 40;
-                        swellingTuneApplied = true;
-                    }
-                });
-            }
         }
         return state;
     }
