@@ -18,6 +18,7 @@ import { Oddish } from './OBF_1_Oddish';
 import { Toedscruelex } from './OBF_22_Toedscruel_ex';
 import { Ninetales } from './OBF_29_Ninetales';
 import { Palafin } from './palafin';
+import { Palpitoad } from './palpitoad';
 import { Pidgeotex } from './pidgeot-ex';
 import { Pidgeotto } from './pidgeotto';
 import { Pidgey } from './pidgey';
@@ -90,6 +91,9 @@ export declare class OddishArt extends Oddish {
     cardImage: string;
 }
 export declare class PalafinArt extends Palafin {
+    cardImage: string;
+}
+export declare class PalpitoadArt extends Palpitoad {
     cardImage: string;
 }
 export declare class PidgeotexArt extends Pidgeotex {
