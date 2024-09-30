@@ -15,14 +15,14 @@ export class Veluza extends PokemonCard {
 
   public weakness = [{ type: CardType.LIGHTNING }];
 
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Filet Memento',
     powerType: PowerType.ABILITY,
     text: 'If this Pokémon is in the Active Spot and is Knocked Out by damage from an attack from your opponent\'s Pokémon, move up to 2 [W] Energy cards from this Pokémon to 1 of your Benched Pokémon.'
   }];
-  
+
   public attacks = [
     {
       name: 'Hydro Pump',
@@ -44,9 +44,9 @@ export class Veluza extends PokemonCard {
   public fullName: string = 'Veluza PAR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    
+
     if (effect instanceof KnockOutEffect && effect.target.cards.includes(this) &&
-        effect.player.marker.hasMarker(effect.player.DAMAGE_DEALT_MARKER)) {
+      effect.player.marker.hasMarker(effect.player.DAMAGE_DEALT_MARKER)) {
       const player = effect.player;
 
       try {
@@ -59,7 +59,7 @@ export class Veluza extends PokemonCard {
       } catch {
         return state;
       }
-      
+
       return store.prompt(state, new AttachEnergyPrompt(
         player.id,
         GameMessage.ATTACH_ENERGY_TO_BENCH,

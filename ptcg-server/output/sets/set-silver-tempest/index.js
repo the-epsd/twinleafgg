@@ -55,6 +55,7 @@ exports.setSilverTempest = [
     new card_images_1.SerperiorVSTARArt(),
     new card_images_1.SnoruntArt(),
     new card_images_1.SpindaArt(),
+    new card_images_1.SunfloraArt(),
     //new TerrakionArt(),
     new card_images_1.UnidentifiedFossilArt(),
     new card_images_1.UrsalunaVArt(),

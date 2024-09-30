@@ -18,6 +18,7 @@ import { Oddish } from './OBF_1_Oddish';
 import { Toedscruelex } from './OBF_22_Toedscruel_ex';
 import { Ninetales } from './OBF_29_Ninetales';
 import { Palafin } from './palafin';
+import { Palpitoad } from './palpitoad';
 import { Pidgeotex } from './pidgeot-ex';
 import { Pidgeotto } from './pidgeotto';
 import { Pidgey } from './pidgey';
@@ -111,6 +112,10 @@ export class OddishArt extends Oddish {
 
 export class PalafinArt extends Palafin {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_062_R_EN.png';
+}
+
+export class PalpitoadArt extends Palpitoad {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_051_R_EN_LG.png';
 }
 
 export class PidgeotexArt extends Pidgeotex {

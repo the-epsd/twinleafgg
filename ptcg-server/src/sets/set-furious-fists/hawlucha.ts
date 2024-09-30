@@ -19,18 +19,18 @@ export class Hawlucha extends PokemonCard {
 
   public resistance = [{ type: CardType.FIGHTING, value: -20 }];
 
-  public retreat = [ ];
+  public retreat = [];
 
   public powers = [{
     name: 'Shining Spirit',
     powerType: PowerType.ABILITY,
-    text: 'Damage from this Pokemon\'s attacks isn\'t affected by ' +
+    text: 'Damage from this Pokémon\'s attacks isn\'t affected by ' +
       'Weakness or Resistance.'
   }];
 
   public attacks = [{
     name: 'Flying Press',
-    cost: [ CardType.FIGHTING ],
+    cost: [CardType.FIGHTING],
     damage: 60,
     text: 'If your opponent\'s Active Pokemon isn\'t a Pokemon-EX, ' +
       'this attack does nothing.'

@@ -15,5 +15,8 @@ exports.setSV8 = [
     new card_images_1.CrocalorArt(),
     new card_images_1.SkeledirgeArt(),
     new card_images_1.MiloticexArt(),
+    new card_images_1.TogekissArt(),
     new card_images_1.DeinoArt(),
+    new card_images_1.ZweilousArt(),
+    new card_images_1.HydreigonexArt(),
 ];

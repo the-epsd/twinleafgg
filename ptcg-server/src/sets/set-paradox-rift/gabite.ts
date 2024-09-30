@@ -1,9 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
+import { StoreLike, State, Card, ChooseEnergyPrompt, GameMessage } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { DISCARD_X_ENERGY_FROM_THIS_POKEMON, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { Effect } from '../../game/store/effects/effect';
+import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 
 export class Gabite extends PokemonCard {
 
@@ -26,8 +27,6 @@ export class Gabite extends PokemonCard {
     cost: [CardType.FIGHTING],
     damage: 50,
     text: 'Discard an Energy from this Pokémon.',
-    effect: (store: StoreLike, state: State, effect: AttackEffect) => {
-    }
   },
   ];
 
@@ -42,8 +41,24 @@ export class Gabite extends PokemonCard {
   public fullName: string = 'Gabite PAR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (WAS_ATTACK_USED(effect, 0, this)) {
-      DISCARD_X_ENERGY_FROM_THIS_POKEMON(state, effect, store, CardType.COLORLESS, 1);
+
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+      const player = effect.player;
+
+      const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
+      state = store.reduceEffect(state, checkProvidedEnergy);
+      state = store.prompt(state, new ChooseEnergyPrompt(
+        player.id,
+        GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
+        checkProvidedEnergy.energyMap,
+        [CardType.COLORLESS],
+        { allowCancel: false }
+      ), energy => {
+        const cards: Card[] = (energy || []).map(e => e.card);
+        const discardEnergy = new DiscardCardsEffect(effect, cards);
+        discardEnergy.target = player.active;
+        store.reduceEffect(state, discardEnergy);
+      });
     }
     return state;
   }

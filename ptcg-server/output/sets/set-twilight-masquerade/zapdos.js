@@ -25,7 +25,7 @@ class Zapdos extends pokemon_card_1.PokemonCard {
             },
             {
                 name: 'Thunderbolt',
-                cost: [card_types_1.CardType.LIGHTNING],
+                cost: [L, L, C],
                 damage: 190,
                 text: 'Discard all Energy from this Pokémon.'
             }

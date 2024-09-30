@@ -1,6 +1,6 @@
 import { Card } from '../../game/store/card/card';
 
-import { AlolanVulpixVArt, AlolanVulpixVSTARArt, ArchenArt, ArcheopsArt, ArticunoArt, BeheeyemArt, BeldumArt, BraixenArt, CandiceArt, CapturingAromaArt, CobalionArt, CrobatArt, DragoniteArt, DrakloakArt, DreepyArt, ElgyemArt, EmergencyJellyArt, FeebasArt, FennekinArt, ForestSealStoneArt, FurisodeGirlArt, GardevoirArt, GolbatArt, HisuianBraviaryArt, KirliaArt, KlangArt, KlinkArt, KlinklangArt, LanceArt, LugiaVArt, LugiaVSTARArt, MeowsticArt, MismagiusArt, PalossandArt, PrimordialAltarArt, RadiantAlakazamArt, RadiantJirachiArt, RadiantTsareenaArt, RaichuArt, RaltsArt, RegenerativeEnergyArt, RegidragoVArt, RegidragoVSTARArt, RegielekiVArt, RegielekiVMAXArt, RuffletArt, SandygastArt, SerenaArt, SerperiorVArt, SerperiorVSTARArt, SnoruntArt, SpindaArt, UnidentifiedFossilArt, UrsalunaVArt, VGuardEnergyArt, WailordArt, WorkerArt, ZeraoraArt, ZubatArt } from './card-images';
+import { AlolanVulpixVArt, AlolanVulpixVSTARArt, ArchenArt, ArcheopsArt, ArticunoArt, BeheeyemArt, BeldumArt, BraixenArt, CandiceArt, CapturingAromaArt, CobalionArt, CrobatArt, DragoniteArt, DrakloakArt, DreepyArt, ElgyemArt, EmergencyJellyArt, FeebasArt, FennekinArt, ForestSealStoneArt, FurisodeGirlArt, GardevoirArt, GolbatArt, HisuianBraviaryArt, KirliaArt, KlangArt, KlinkArt, KlinklangArt, LanceArt, LugiaVArt, LugiaVSTARArt, MeowsticArt, MismagiusArt, PalossandArt, PrimordialAltarArt, RadiantAlakazamArt, RadiantJirachiArt, RadiantTsareenaArt, RaichuArt, RaltsArt, RegenerativeEnergyArt, RegidragoVArt, RegidragoVSTARArt, RegielekiVArt, RegielekiVMAXArt, RuffletArt, SandygastArt, SerenaArt, SerperiorVArt, SerperiorVSTARArt, SnoruntArt, SpindaArt, SunfloraArt, UnidentifiedFossilArt, UrsalunaVArt, VGuardEnergyArt, WailordArt, WorkerArt, ZeraoraArt, ZubatArt } from './card-images';
 
 export const setSilverTempest: Card[] = [
   new AlolanVulpixVArt(),
@@ -55,6 +55,7 @@ export const setSilverTempest: Card[] = [
   new SerperiorVSTARArt(),
   new SnoruntArt(),
   new SpindaArt(),
+  new SunfloraArt(),
   //new TerrakionArt(),
   new UnidentifiedFossilArt(),
   new UrsalunaVArt(),

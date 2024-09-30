@@ -1,12 +1,9 @@
-
-// citing empoleon to help make this (https://github.com/keeshii/ryuu-play/blob/master/ptcg-server/src/sets/set-black-and-white/empoleon.ts)
-
 import { PokemonCard, CardTag, Stage, CardType, StoreLike, State, StateUtils, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType } from '../../game';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 
-export class Hydreigon_ex extends PokemonCard {
+export class Hydreigonex extends PokemonCard {
 
   public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
 
@@ -14,27 +11,27 @@ export class Hydreigon_ex extends PokemonCard {
 
   public evolvesFrom = 'Zweilous';
 
-  public cardType: CardType = CardType.DARK;
+  public cardType: CardType = D;
 
   public hp: number = 330;
 
-  public weakness = [{ type: CardType.GRASS }];
+  public weakness = [{ type: G }];
 
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
+  public retreat = [C, C, C];
 
   public attacks = [
     {
       name: 'Crash Heads',
-      cost: [CardType.DARK, CardType.COLORLESS],
+      cost: [D, C],
       damage: 200,
-      text: 'Discard the top 3 cards from your opponent’s deck.'
+      text: 'Discard the top 3 cards from your opponent\'s deck.'
     },
 
     {
       name: 'Obsidian',
-      cost: [CardType.PSYCHIC, CardType.DARK, CardType.METAL, CardType.COLORLESS],
+      cost: [P, D, M, C],
       damage: 130,
-      text: 'This attack also does 130 damage to 2 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokemon.)'
+      text: 'This attack also does 130 damage to 2 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
     }
   ];
 
@@ -46,9 +43,9 @@ export class Hydreigon_ex extends PokemonCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public name: string = 'Hydreigon-ex';
+  public name: string = 'Hydreigon ex';
 
-  public fullName: string = 'Hydreigon-ex SV8';
+  public fullName: string = 'Hydreigon ex SV8';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Crash Heads

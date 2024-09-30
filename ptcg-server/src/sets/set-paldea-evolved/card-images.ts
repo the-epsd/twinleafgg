@@ -22,6 +22,7 @@ import { Frigibax2 } from './frigibax2';
 import { Giacomo } from './giacomo';
 import { GreatBall } from './great-ball';
 import { Grusha } from './grusha';
+import { Hoppip } from './hoppip';
 import { Iono } from './iono';
 import { JetEnergy } from './jet-energy';
 import { LuminousEnergy } from './luminous-energy';
@@ -155,6 +156,10 @@ export class GreatBallArt extends GreatBall {
 
 export class GrushaArt extends Grusha {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_184_R_EN_LG.png';
+}
+
+export class HoppipArt extends Hoppip {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_001_R_EN_LG.png';
 }
 
 export class HydreigonArt extends Hydreigon {

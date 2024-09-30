@@ -13,7 +13,7 @@ class GengarMimikyuGX extends game_1.PokemonCard {
         this.weakness = [{ type: game_1.CardType.DARK }];
         this.resistance = [{ type: game_1.CardType.FIGHTING, value: -20 }];
         this.retreat = [game_1.CardType.COLORLESS, game_1.CardType.COLORLESS];
-        this.cardTag = [game_1.CardTag.POKEMON_GX, game_1.CardTag.TAG_TEAM];
+        this.tags = [game_1.CardTag.POKEMON_GX, game_1.CardTag.TAG_TEAM];
         this.attacks = [
             {
                 name: 'Poltergeist',

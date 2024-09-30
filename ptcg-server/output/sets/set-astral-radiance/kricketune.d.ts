@@ -6,9 +6,9 @@ export declare class Kricketune extends PokemonCard {
     cardType: CardType;
     hp: number;
     weakness: {
-        type: CardType;
+        type: CardType.FIRE;
     }[];
-    retreat: CardType[];
+    retreat: CardType.COLORLESS[];
     powers: Power[];
     attacks: Attack[];
     set: string;

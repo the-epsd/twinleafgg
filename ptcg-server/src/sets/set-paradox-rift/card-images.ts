@@ -318,7 +318,7 @@ export class TulipArt extends Tulip {
 }
 
 export class VeluzaArt extends Veluza {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_54_R_EN_LG.png';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_054_R_EN_LG.png';
 }
 
 export class XatuArt extends Xatu {

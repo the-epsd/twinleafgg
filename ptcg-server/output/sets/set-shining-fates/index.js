@@ -6,6 +6,7 @@ const full_art_1 = require("./full-art");
 exports.setShiningFates = [
     new card_images_1.BallGuyArt(),
     new card_images_1.BuizelArt(),
+    new card_images_1.DartrixArt(),
     new card_images_1.FrosmothArt(),
     new card_images_1.GalarianWeezingArt(),
     new card_images_1.HorseaArt(),

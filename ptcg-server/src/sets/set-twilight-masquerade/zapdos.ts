@@ -29,29 +29,29 @@ export class Zapdos extends PokemonCard {
     },
     {
       name: 'Thunderbolt',
-      cost: [CardType.LIGHTNING],
+      cost: [L, L, C],
       damage: 190,
       text: 'Discard all Energy from this Pokémon.'
     }
   ];
 
   public set: string = 'TWM';
-  
+
   public cardImage: string = 'assets/cardback.png';
-  
+
   public setNumber: string = '65';
-  
+
   public name: string = 'Zapdos';
-  
+
   public fullName: string = 'Zapdos TWM';
-  
+
   public regulationMark: string = 'H';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-  
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
-  
+
       return store.prompt(state, [
         new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
       ], result => {
@@ -61,22 +61,22 @@ export class Zapdos extends PokemonCard {
         }
       });
     }
-    
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
-          
+
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
-      state = store.reduceEffect(state, checkProvidedEnergy);  
-          
-      const cards: Card[] = checkProvidedEnergy.energyMap.map(e => e.card);  
-      const discardEnergy = new DiscardCardsEffect(effect, cards);  
+      state = store.reduceEffect(state, checkProvidedEnergy);
+
+      const cards: Card[] = checkProvidedEnergy.energyMap.map(e => e.card);
+      const discardEnergy = new DiscardCardsEffect(effect, cards);
       discardEnergy.target = player.active;
-      
-      store.reduceEffect(state, discardEnergy);  
-      
+
+      store.reduceEffect(state, discardEnergy);
+
       return state;
     }
-    
+
     return state;
   }
 }

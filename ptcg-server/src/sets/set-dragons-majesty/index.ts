@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { BlazikenArt, CroconawArt, FeebasArt, FeraligatrArt, FieryFlintArt, SwitchRaftArt } from './card-images';
+import { BlazikenArt, CroconawArt, FeebasArt, FeraligatrArt, FieryFlintArt, QuagsireArt, SwitchRaftArt, WooperArt } from './card-images';
 
 
 export const setDragonsMajesty: Card[] = [
@@ -8,5 +8,7 @@ export const setDragonsMajesty: Card[] = [
   new FeebasArt(),
   new FeraligatrArt(),
   new FieryFlintArt(),
-  new SwitchRaftArt()
+  new QuagsireArt(),
+  new SwitchRaftArt(),
+  new WooperArt()
 ];

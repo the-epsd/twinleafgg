@@ -18,7 +18,7 @@ class Hawlucha extends pokemon_card_1.PokemonCard {
         this.powers = [{
                 name: 'Shining Spirit',
                 powerType: pokemon_types_1.PowerType.ABILITY,
-                text: 'Damage from this Pokemon\'s attacks isn\'t affected by ' +
+                text: 'Damage from this Pokémon\'s attacks isn\'t affected by ' +
                     'Weakness or Resistance.'
             }];
         this.attacks = [{

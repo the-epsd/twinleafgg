@@ -16,7 +16,6 @@ class Skeledirge extends game_1.PokemonCard {
         this.retreat = [game_1.CardType.COLORLESS, game_1.CardType.COLORLESS, game_1.CardType.COLORLESS];
         this.powers = [{
                 name: 'Unaware',
-                useWhenInPlay: true,
                 powerType: game_1.PowerType.ABILITY,
                 text: 'Prevent all effects of attacks from your opponent\'s Pokémon done to this Pokémon. (Damage is not an effect.)'
             }];

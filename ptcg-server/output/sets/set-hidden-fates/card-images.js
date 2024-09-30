@@ -1,6 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PsyduckArt = exports.ErikasHospitalityArt = exports.CharmanderArt = void 0;
+exports.QuagsireArt = exports.WooperArt = exports.PsyduckArt = exports.ErikasHospitalityArt = exports.CharmanderArt = void 0;
+const quagsire_1 = require("../set-dragons-majesty/quagsire");
+const wooper_1 = require("../set-dragons-majesty/wooper");
 const charmander_1 = require("./charmander");
 const erikas_hospitality_1 = require("./erikas-hospitality");
 const HIF_11_Psyduck_1 = require("./HIF_11_Psyduck");
@@ -25,3 +27,23 @@ class PsyduckArt extends HIF_11_Psyduck_1.Psyduck {
     }
 }
 exports.PsyduckArt = PsyduckArt;
+class WooperArt extends wooper_1.Wooper {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/HIF/HIF_SV9_R_EN_LG.png';
+        this.fullName = 'Wooper HIF';
+        this.set = 'HIF';
+        this.setNumber = 'SV9';
+    }
+}
+exports.WooperArt = WooperArt;
+class QuagsireArt extends quagsire_1.Quagsire {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/HIF/HIF_SV10_R_EN_LG.png';
+        this.fullName = 'Quagsire HIF';
+        this.set = 'HIF';
+        this.setNumber = 'SV10';
+    }
+}
+exports.QuagsireArt = QuagsireArt;

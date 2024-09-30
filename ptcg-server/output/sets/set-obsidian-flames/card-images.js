@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WhiscashArt = exports.VengefulPunchArt = exports.VaroomArt = exports.TympoleArt = exports.TownStoreArt = exports.ToedscruelexArt = exports.ThundurusArt = exports.SeismitoadArt = exports.ScizorArt = exports.RymeArt = exports.PoppyArt = exports.PokemonLeagueHeadquartersArt = exports.PidgeyArt = exports.PidgeottoArt = exports.PidgeotexArt = exports.PalafinArt = exports.OddishArt = exports.NinetalesArt = exports.MiraidonexArt = exports.LunatoneArt = exports.LetterOfEncouragementArt = exports.FinizenArt = exports.EnteiArt = exports.DratiniArt = exports.DragoniteexArt = exports.DragonairArt = exports.CleffaArt = exports.CharmanderArt = exports.CharmeleonArt = exports.CharizardexArt = exports.BelliboltArt = exports.BarboachArt = exports.ArvenArt = exports.AbsolexArt = void 0;
+exports.WhiscashArt = exports.VengefulPunchArt = exports.VaroomArt = exports.TympoleArt = exports.TownStoreArt = exports.ToedscruelexArt = exports.ThundurusArt = exports.SeismitoadArt = exports.ScizorArt = exports.RymeArt = exports.PoppyArt = exports.PokemonLeagueHeadquartersArt = exports.PidgeyArt = exports.PidgeottoArt = exports.PidgeotexArt = exports.PalpitoadArt = exports.PalafinArt = exports.OddishArt = exports.NinetalesArt = exports.MiraidonexArt = exports.LunatoneArt = exports.LetterOfEncouragementArt = exports.FinizenArt = exports.EnteiArt = exports.DratiniArt = exports.DragoniteexArt = exports.DragonairArt = exports.CleffaArt = exports.CharmanderArt = exports.CharmeleonArt = exports.CharizardexArt = exports.BelliboltArt = exports.BarboachArt = exports.ArvenArt = exports.AbsolexArt = void 0;
 const arven_1 = require("../set-scarlet-and-violet/arven");
 const absol_ex_1 = require("./absol-ex");
 const barboach_1 = require("./barboach");
@@ -21,6 +21,7 @@ const OBF_1_Oddish_1 = require("./OBF_1_Oddish");
 const OBF_22_Toedscruel_ex_1 = require("./OBF_22_Toedscruel_ex");
 const OBF_29_Ninetales_1 = require("./OBF_29_Ninetales");
 const palafin_1 = require("./palafin");
+const palpitoad_1 = require("./palpitoad");
 const pidgeot_ex_1 = require("./pidgeot-ex");
 const pidgeotto_1 = require("./pidgeotto");
 const pidgey_1 = require("./pidgey");
@@ -171,6 +172,13 @@ class PalafinArt extends palafin_1.Palafin {
     }
 }
 exports.PalafinArt = PalafinArt;
+class PalpitoadArt extends palpitoad_1.Palpitoad {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_051_R_EN_LG.png';
+    }
+}
+exports.PalpitoadArt = PalpitoadArt;
 class PidgeotexArt extends pidgeot_ex_1.Pidgeotex {
     constructor() {
         super(...arguments);

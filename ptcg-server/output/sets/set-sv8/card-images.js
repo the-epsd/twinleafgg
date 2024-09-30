@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DeinoArt = exports.MiloticexArt = exports.SkeledirgeArt = exports.CrocalorArt = exports.FuecocoArt = exports.CyranoArt = exports.MiraculousIntercomArt = exports.ExcitingStadiumArt = exports.GravityMountainArt = exports.MagnetonArt = exports.MagnemiteArt = exports.TerapagosArt = exports.PikachuexArt = void 0;
+exports.HydreigonexArt = exports.ZweilousArt = exports.DeinoArt = exports.TogekissArt = exports.MiloticexArt = exports.SkeledirgeArt = exports.CrocalorArt = exports.FuecocoArt = exports.CyranoArt = exports.MiraculousIntercomArt = exports.ExcitingStadiumArt = exports.GravityMountainArt = exports.MagnetonArt = exports.MagnemiteArt = exports.TerapagosArt = exports.PikachuexArt = void 0;
 const magneton_1 = require("../set-scarlet-and-violet-promos/magneton");
 const crocalor_1 = require("./crocalor");
 const cyrano_1 = require("./cyrano");
@@ -8,12 +8,15 @@ const deino_1 = require("./deino");
 const exciting_stadium_1 = require("./exciting-stadium");
 const fuecoco_1 = require("./fuecoco");
 const gravity_mountain_1 = require("./gravity-mountain");
+const hydreigon_ex_1 = require("./hydreigon-ex");
 const magnemite_1 = require("./magnemite");
 const milotic_ex_1 = require("./milotic-ex");
 const miraculous_intercom_1 = require("./miraculous-intercom");
 const pikachu_ex_1 = require("./pikachu-ex");
 const skeledirge_1 = require("./skeledirge");
 const terapagos_1 = require("./terapagos");
+const togekiss_1 = require("./togekiss");
+const zweilous_1 = require("./zweilous");
 class PikachuexArt extends pikachu_ex_1.Pikachuex {
     constructor() {
         super(...arguments);
@@ -101,6 +104,13 @@ class MiloticexArt extends milotic_ex_1.Miloticex {
     }
 }
 exports.MiloticexArt = MiloticexArt;
+class TogekissArt extends togekiss_1.Togekiss {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pokemonproxies.com/static/media/8i-047-Togekiss.8981ab5bccce31f029ad.png';
+    }
+}
+exports.TogekissArt = TogekissArt;
 class DeinoArt extends deino_1.Deino {
     constructor() {
         super(...arguments);
@@ -108,3 +118,17 @@ class DeinoArt extends deino_1.Deino {
     }
 }
 exports.DeinoArt = DeinoArt;
+class ZweilousArt extends zweilous_1.Zweilous {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pokemonproxies.com/static/media/8i-071-Zweilous.9fe0d9e004f1da7080b8.png';
+    }
+}
+exports.ZweilousArt = ZweilousArt;
+class HydreigonexArt extends hydreigon_ex_1.Hydreigonex {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pokemonproxies.com/static/media/8i-072-Hydreigon_ex.c6c39c693066ecba8124.png';
+    }
+}
+exports.HydreigonexArt = HydreigonexArt;

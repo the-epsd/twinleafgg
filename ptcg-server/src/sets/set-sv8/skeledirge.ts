@@ -15,7 +15,6 @@ export class Skeledirge extends PokemonCard {
 
   public powers = [{
     name: 'Unaware',
-    useWhenInPlay: true,
     powerType: PowerType.ABILITY,
     text: 'Prevent all effects of attacks from your opponent\'s Pokémon done to this Pokémon. (Damage is not an effect.)'
   }];

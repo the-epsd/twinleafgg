@@ -1,5 +1,6 @@
 import { BallGuy } from './ball-guy';
 import { Buizel } from './buizel';
+import { Dartrix } from './dartrix';
 import { Frosmoth } from './frosmoth';
 import { GalarianWeezing } from './galarian-weezing';
 import { Horsea } from './horsea';
@@ -12,6 +13,9 @@ export declare class BallGuyArt extends BallGuy {
     cardImage: string;
 }
 export declare class BuizelArt extends Buizel {
+    cardImage: string;
+}
+export declare class DartrixArt extends Dartrix {
     cardImage: string;
 }
 export declare class FrosmothArt extends Frosmoth {

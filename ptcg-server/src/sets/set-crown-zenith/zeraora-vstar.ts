@@ -1,4 +1,4 @@
-import { PokemonCard, Stage, CardType, CardTag, StoreLike, State, StateUtils, ConfirmPrompt, GameMessage, DamageMap, PlayerType, PutDamagePrompt, SlotType } from '../../game';
+import { PokemonCard, Stage, CardType, CardTag, StoreLike, State, StateUtils, ConfirmPrompt, GameMessage, DamageMap, PlayerType, PutDamagePrompt, SlotType, GameError } from '../../game';
 import { PutCountersEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
@@ -6,6 +6,12 @@ import { AttackEffect } from '../../game/store/effects/game-effects';
 function* useLightningStormStar(next: Function, store: StoreLike, state: State, effect: AttackEffect): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
+
+  if (player.usedVSTAR) {
+    throw new GameError(GameMessage.LABEL_VSTAR_USED);
+  }
+
+  player.usedVSTAR = true;
 
   const maxAllowedDamage: DamageMap[] = [];
   opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
@@ -35,12 +41,12 @@ function* useLightningStormStar(next: Function, store: StoreLike, state: State, 
 
 export class ZeraoraVSTAR extends PokemonCard {
   public stage: Stage = Stage.VSTAR;
+  public tags = [CardTag.POKEMON_VSTAR];
   public evolvesFrom: string = 'Zeraora V';
   public cardType: CardType = CardType.LIGHTNING;
   public hp: number = 270;
   public weakness = [{ type: CardType.FIGHTING }];
   public retreat = [];
-  public cardTag = [CardTag.POKEMON_V, CardTag.POKEMON_VSTAR];
   public regulationMark = 'F';
 
   public attacks = [

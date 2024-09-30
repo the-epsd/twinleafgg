@@ -3,7 +3,9 @@ import { Feraligatr } from './DRM_24_Feraligatr';
 import { Blaziken } from './DRM_6_Blaziken';
 import { Feebas } from './feebas';
 import { FieryFlint } from './fiery-flint';
+import { Quagsire } from './quagsire';
 import { SwitchRaft } from './switch-raft';
+import { Wooper } from './wooper';
 
 export class BlazikenArt extends Blaziken {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/DRM/DRM_006_R_EN_LG.png';
@@ -25,7 +27,15 @@ export class FieryFlintArt extends FieryFlint {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/DRM/DRM_060_R_EN.png';
 }
 
+export class QuagsireArt extends Quagsire {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/DRM/DRM_026_R_EN_LG.png';
+}
+
 export class SwitchRaftArt extends SwitchRaft {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/DRM/DRM_062_R_EN_LG.png';
+}
+
+export class WooperArt extends Wooper {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/DRM/DRM_025_R_EN_LG.png';
 }
 

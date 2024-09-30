@@ -52,6 +52,7 @@ import { Klinklang } from './SIT_125_Klinklang';
 import { Spinda } from './SIT_141_Spinda';
 import { Snorunt } from './SIT_41_Snorunt';
 import { Terrakion } from './SIT_97_Terrakion';
+import { Sunflora } from './sunflora';
 import { UnidentifiedFossil } from './unidentified-fossil';
 import { UrsalunaV } from './ursaluna-v';
 import { VGuardEnergy } from './v-guard-energy';
@@ -216,6 +217,9 @@ export declare class SnoruntArt extends Snorunt {
     cardImage: string;
 }
 export declare class SpindaArt extends Spinda {
+    cardImage: string;
+}
+export declare class SunfloraArt extends Sunflora {
     cardImage: string;
 }
 export declare class TerrakionArt extends Terrakion {

@@ -5,12 +5,15 @@ import { Deino } from './deino';
 import { ExcitingStadium } from './exciting-stadium';
 import { Fuecoco } from './fuecoco';
 import { GravityMountain } from './gravity-mountain';
+import { Hydreigonex } from './hydreigon-ex';
 import { Magnemite } from './magnemite';
 import { Miloticex } from './milotic-ex';
 import { MiraculousIntercom } from './miraculous-intercom';
 import { Pikachuex } from './pikachu-ex';
 import { Skeledirge } from './skeledirge';
 import { Terapagos } from './terapagos';
+import { Togekiss } from './togekiss';
+import { Zweilous } from './zweilous';
 
 export class PikachuexArt extends Pikachuex {
   public cardImage = 'https://pokemonproxies.com/static/media/8i-033-Pikachu_ex.59c3ad488393197a4f14.png';
@@ -63,6 +66,18 @@ export class MiloticexArt extends Miloticex {
   public cardImage = 'https://pokemonproxies.com/static/media/8i-026-Milotic_ex.5ff152c4fc9e8baef0cc.png';
 }
 
+export class TogekissArt extends Togekiss {
+  public cardImage = 'https://pokemonproxies.com/static/media/8i-047-Togekiss.8981ab5bccce31f029ad.png';
+}
+
 export class DeinoArt extends Deino {
   public cardImage = 'https://pokemonproxies.com/static/media/8i-070-Deino.7b5d3275fdbf0f26e3c2.png';
+}
+
+export class ZweilousArt extends Zweilous {
+  public cardImage = 'https://pokemonproxies.com/static/media/8i-071-Zweilous.9fe0d9e004f1da7080b8.png';
+}
+
+export class HydreigonexArt extends Hydreigonex {
+  public cardImage = 'https://pokemonproxies.com/static/media/8i-072-Hydreigon_ex.c6c39c693066ecba8124.png';
 }

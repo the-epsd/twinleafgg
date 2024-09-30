@@ -4,7 +4,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 export declare class SpiralEnergy extends EnergyCard {
-    cardTag: CardTag[];
+    tags: CardTag[];
     regulationMark: string;
     provides: CardType[];
     energyType: EnergyType;

@@ -1,7 +1,7 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
-import { State, GamePhase } from '../../game/store/state/state';
+import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect, AttackEffect } from '../../game/store/effects/game-effects';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
@@ -65,43 +65,30 @@ export class RadiantGardevoir extends PokemonCard {
 
 
     // Reduce damage by 20
-    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {
-      const pokemonCard = effect.target.getPokemonCard();
+    if (effect instanceof PutDamageEffect) {
       const sourceCard = effect.source.getPokemonCard();
+      const player = effect.player;
+      const targetPlayer = StateUtils.findOwner(state, effect.target);
 
-      // It's not this pokemon card
-      if (pokemonCard !== this) {
-        return state;
-      }
-
-      // It's not an attack
-      if (state.phase !== GamePhase.ATTACK) {
-        return state;
-      }
-
-      const player = StateUtils.findOwner(state, effect.target);
-      if (sourceCard?.tags.includes(CardTag.POKEMON_V || CardTag.POKEMON_VMAX || CardTag.POKEMON_VSTAR)) {
-
-        // Try to reduce PowerEffect, to check if something is blocking our ability
-        try {
-          const stub = new PowerEffect(player, {
-            name: 'test',
-            powerType: PowerType.ABILITY,
-            text: ''
-          }, this);
-          store.reduceEffect(state, stub);
-        } catch {
-          return state;
-        }
-        // Check if damage target is owned by this card's owner 
-        const targetPlayer = StateUtils.findOwner(state, effect.target);
+      // Check if the attack is from a Pokémon V, VSTAR, or VMAX
+      if (sourceCard && sourceCard.tags.includes(CardTag.POKEMON_V) || sourceCard && sourceCard.tags.includes(CardTag.POKEMON_VMAX) || sourceCard && sourceCard.tags.includes(CardTag.POKEMON_VSTAR)) {
+        // Check if the damage target is owned by this card's owner
         if (targetPlayer === player) {
+          // Try to reduce PowerEffect, to check if something is blocking our ability
+          try {
+            const stub = new PowerEffect(player, {
+              name: 'test',
+              powerType: PowerType.ABILITY,
+              text: ''
+            }, this);
+            store.reduceEffect(state, stub);
+          } catch {
+            return state;
+          }
+
           effect.damage = Math.max(0, effect.damage - 20);
         }
-
-        return state;
       }
-      return state;
     }
     return state;
   }

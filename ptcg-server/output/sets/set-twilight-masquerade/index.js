@@ -14,6 +14,7 @@ exports.setTwilightMasquerade = [
     new card_images_1.DreepyArt(),
     new card_images_1.DrakloakArt(),
     new card_images_1.DragapultexArt(),
+    new card_images_1.EmolgaArt(),
     new card_images_1.FarfetchdArt(),
     new card_images_1.FroslassArt(),
     new card_images_1.HandyFanArt(),

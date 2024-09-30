@@ -1,7 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
-import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 export declare class Charmander extends PokemonCard {
     stage: Stage;
@@ -9,15 +8,14 @@ export declare class Charmander extends PokemonCard {
     cardType: CardType;
     hp: number;
     weakness: {
-        type: CardType;
+        type: CardType.WATER;
     }[];
-    retreat: CardType[];
+    retreat: CardType.COLORLESS[];
     attacks: {
         name: string;
-        cost: CardType[];
+        cost: CardType.FIRE[];
         damage: number;
         text: string;
-        effect: (store: StoreLike, state: State, effect: AttackEffect) => void;
     }[];
     set: string;
     cardImage: string;

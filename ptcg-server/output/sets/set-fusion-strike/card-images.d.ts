@@ -31,6 +31,7 @@ import { Pyukumuku } from './pyukumuku';
 import { Schoolboy } from './schoolboy';
 import { Schoolgirl } from './schoolgirl';
 import { Shauna } from './shauna';
+import { Shellder } from './shellder';
 import { Shelmet } from './shelmet';
 import { Staryu } from './staryu';
 import { Totodile } from './totodile';
@@ -129,6 +130,9 @@ export declare class SchoolgirlArt extends Schoolgirl {
     cardImage: string;
 }
 export declare class ShaunaArt extends Shauna {
+    cardImage: string;
+}
+export declare class ShellderArt extends Shellder {
     cardImage: string;
 }
 export declare class ShelmetArt extends Shelmet {

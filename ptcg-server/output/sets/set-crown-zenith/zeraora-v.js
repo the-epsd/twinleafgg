@@ -12,7 +12,7 @@ class ZeraoraV extends game_1.PokemonCard {
         this.hp = 210;
         this.weakness = [{ type: game_1.CardType.FIGHTING }];
         this.retreat = [game_1.CardType.COLORLESS];
-        this.cardTag = [game_1.CardTag.POKEMON_V];
+        this.tags = [game_1.CardTag.POKEMON_V];
         this.regulationMark = 'F';
         this.attacks = [
             {

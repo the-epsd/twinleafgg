@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { CharmanderArt, ErikasHospitalityArt, PsyduckArt } from './card-images';
+import { CharmanderArt, ErikasHospitalityArt, PsyduckArt, QuagsireArt, WooperArt } from './card-images';
 import { AlolanVulpixArt } from './full-art';
 
 export const setHiddenFates: Card[] = [
@@ -10,4 +10,6 @@ export const setHiddenFates: Card[] = [
 
   // Full Arts/Shiny Vault
   new AlolanVulpixArt(),
+  new WooperArt(),
+  new QuagsireArt()
 ];
