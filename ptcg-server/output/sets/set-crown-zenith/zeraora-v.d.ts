@@ -8,7 +8,7 @@ export declare class ZeraoraV extends PokemonCard {
         type: CardType;
     }[];
     retreat: CardType[];
-    cardTag: CardTag[];
+    tags: CardTag[];
     regulationMark: string;
     attacks: {
         name: string;

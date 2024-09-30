@@ -9,7 +9,7 @@ const play_card_effects_1 = require("../../game/store/effects/play-card-effects"
 class SpiralEnergy extends energy_card_1.EnergyCard {
     constructor() {
         super(...arguments);
-        this.cardTag = [card_types_1.CardTag.RAPID_STRIKE];
+        this.tags = [card_types_1.CardTag.RAPID_STRIKE];
         this.regulationMark = 'E';
         this.provides = [card_types_1.CardType.COLORLESS];
         this.energyType = card_types_1.EnergyType.SPECIAL;

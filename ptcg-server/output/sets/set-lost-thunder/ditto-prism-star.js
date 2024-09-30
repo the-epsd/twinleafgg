@@ -15,7 +15,7 @@ class DittoPrismStar extends pokemon_card_1.PokemonCard {
         this.hp = 40;
         this.weakness = [{ type: card_types_1.CardType.FIGHTING }];
         this.retreat = [card_types_1.CardType.COLORLESS];
-        this.cardTag = [card_types_1.CardTag.PRISM_STAR];
+        this.tags = [card_types_1.CardTag.PRISM_STAR];
         this.powers = [{
                 name: 'Almighty Evolution',
                 powerType: pokemon_types_1.PowerType.ABILITY,

@@ -512,7 +512,7 @@ exports.TulipArt = TulipArt;
 class VeluzaArt extends veluza_1.Veluza {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_54_R_EN_LG.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_054_R_EN_LG.png';
     }
 }
 exports.VeluzaArt = VeluzaArt;

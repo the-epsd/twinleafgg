@@ -8,6 +8,7 @@ import { EvolveEffect, PowerEffect } from '../../game/store/effects/game-effects
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
 import { PlayerType } from '../../game';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class Zebstrika extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -42,6 +43,11 @@ export class Zebstrika extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof EvolveEffect && effect.pokemonCard === this) {
+      const player = effect.player;
+      player.marker.removeMarker(this.SPRINT_MARKER, this);
+    }
+
+    if (effect instanceof EndTurnEffect) {
       const player = effect.player;
       player.marker.removeMarker(this.SPRINT_MARKER, this);
     }

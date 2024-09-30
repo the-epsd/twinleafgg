@@ -2,6 +2,7 @@ import { PokemonCard, Stage, CardType, CardTag, StoreLike, State } from '../../g
 import { Effect } from '../../game/store/effects/effect';
 export declare class ZeraoraVSTAR extends PokemonCard {
     stage: Stage;
+    tags: CardTag[];
     evolvesFrom: string;
     cardType: CardType;
     hp: number;
@@ -9,7 +10,6 @@ export declare class ZeraoraVSTAR extends PokemonCard {
         type: CardType;
     }[];
     retreat: never[];
-    cardTag: CardTag[];
     regulationMark: string;
     attacks: {
         name: string;

@@ -15,12 +15,20 @@ export class Oricorio extends PokemonCard {
   public resistance = [{ type: CardType.FIGHTING, value: -20 }];
   public retreat = [CardType.COLORLESS];
 
-  public attacks = [{
-    name: 'Captivating Salsa',
-    cost: [CardType.FIRE],
-    damage: 0,
-    text: 'Switch 1 of your opponent\'s Benched Pokemon with their Active Pokemon. The new Active Poekmon is now Burned and Confused.'
-  }];
+  public attacks = [
+    {
+      name: 'Captivating Salsa',
+      cost: [CardType.FIRE],
+      damage: 0,
+      text: 'Switch 1 of your opponent\'s Benched Pokemon with their Active Pokemon. The new Active Poekmon is now Burned and Confused.'
+    },
+    {
+      name: 'Heat Blast',
+      cost: [CardType.FIRE, CardType.COLORLESS, CardType.COLORLESS],
+      damage: 70,
+      text: ''
+    }
+  ];
 
   public set: string = 'SHF';
   public name: string = 'Oricorio';
@@ -38,7 +46,7 @@ export class Oricorio extends PokemonCard {
       if (!hasBench) {
         throw new GameError(GameMessage.CANNOT_USE_ATTACK);
       }
-      
+
       return store.prompt(state, new ChoosePokemonPrompt(
         player.id,
         GameMessage.CHOOSE_POKEMON_TO_SWITCH,
@@ -46,12 +54,12 @@ export class Oricorio extends PokemonCard {
         [SlotType.BENCH],
         { allowCancel: false }
       ), result => {
-        
+
         const cardList = result[0];
-        
+
         const gustOpponentBenchEffect = new GustOpponentBenchEffect(effect, cardList);
         store.reduceEffect(state, gustOpponentBenchEffect);
-        
+
         opponent.switchPokemon(cardList);
 
         const active = opponent.active;

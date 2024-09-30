@@ -110,6 +110,17 @@ export class Noivernex extends PokemonCard {
       }
     }
 
+    if (effect instanceof EndTurnEffect) {
+
+      if (effect.player.attackMarker.hasMarker(this.DOMINATING_ECHO_MARKER, this)) {
+        effect.player.attackMarker.removeMarker(this.DOMINATING_ECHO_MARKER, this);
+        const opponent = StateUtils.getOpponent(state, effect.player);
+        opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
+          cardList.attackMarker.removeMarker(this.DOMINATING_ECHO_MARKER, this);
+        });
+      }
+    }
+
     return state;
   }
 

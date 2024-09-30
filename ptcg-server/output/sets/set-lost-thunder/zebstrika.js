@@ -8,6 +8,7 @@ const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_error_1 = require("../../game/game-error");
 const game_message_1 = require("../../game/game-message");
 const game_1 = require("../../game");
+const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 class Zebstrika extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -38,6 +39,10 @@ class Zebstrika extends pokemon_card_1.PokemonCard {
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.EvolveEffect && effect.pokemonCard === this) {
+            const player = effect.player;
+            player.marker.removeMarker(this.SPRINT_MARKER, this);
+        }
+        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
             const player = effect.player;
             player.marker.removeMarker(this.SPRINT_MARKER, this);
         }

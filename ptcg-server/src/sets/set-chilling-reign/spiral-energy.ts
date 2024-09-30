@@ -9,11 +9,11 @@ import { EnergyEffect } from '../../game/store/effects/play-card-effects';
 
 export class SpiralEnergy extends EnergyCard {
 
-  public cardTag: CardTag[] = [CardTag.RAPID_STRIKE];
+  public tags: CardTag[] = [CardTag.RAPID_STRIKE];
 
   public regulationMark = 'E';
 
-  public provides: CardType[] = [ CardType.COLORLESS ];
+  public provides: CardType[] = [CardType.COLORLESS];
 
   public energyType = EnergyType.SPECIAL;
 

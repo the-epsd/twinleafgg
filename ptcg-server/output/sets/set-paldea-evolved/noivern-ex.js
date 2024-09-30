@@ -83,6 +83,15 @@ class Noivernex extends pokemon_card_1.PokemonCard {
                 });
             }
         }
+        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+            if (effect.player.attackMarker.hasMarker(this.DOMINATING_ECHO_MARKER, this)) {
+                effect.player.attackMarker.removeMarker(this.DOMINATING_ECHO_MARKER, this);
+                const opponent = game_1.StateUtils.getOpponent(state, effect.player);
+                opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList) => {
+                    cardList.attackMarker.removeMarker(this.DOMINATING_ECHO_MARKER, this);
+                });
+            }
+        }
         return state;
     }
 }

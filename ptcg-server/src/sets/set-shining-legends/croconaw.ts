@@ -6,7 +6,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 
 export class Croconaw extends PokemonCard {
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Totodile';
   public cardType: CardType = CardType.WATER;
   public hp: number = 90;

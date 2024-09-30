@@ -11,7 +11,7 @@ export declare class DittoPrismStar extends PokemonCard {
         type: CardType;
     }[];
     retreat: CardType[];
-    cardTag: CardTag[];
+    tags: CardTag[];
     powers: {
         name: string;
         powerType: PowerType;

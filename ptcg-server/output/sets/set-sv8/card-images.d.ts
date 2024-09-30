@@ -5,12 +5,15 @@ import { Deino } from './deino';
 import { ExcitingStadium } from './exciting-stadium';
 import { Fuecoco } from './fuecoco';
 import { GravityMountain } from './gravity-mountain';
+import { Hydreigonex } from './hydreigon-ex';
 import { Magnemite } from './magnemite';
 import { Miloticex } from './milotic-ex';
 import { MiraculousIntercom } from './miraculous-intercom';
 import { Pikachuex } from './pikachu-ex';
 import { Skeledirge } from './skeledirge';
 import { Terapagos } from './terapagos';
+import { Togekiss } from './togekiss';
+import { Zweilous } from './zweilous';
 export declare class PikachuexArt extends Pikachuex {
     cardImage: string;
 }
@@ -50,6 +53,15 @@ export declare class SkeledirgeArt extends Skeledirge {
 export declare class MiloticexArt extends Miloticex {
     cardImage: string;
 }
+export declare class TogekissArt extends Togekiss {
+    cardImage: string;
+}
 export declare class DeinoArt extends Deino {
+    cardImage: string;
+}
+export declare class ZweilousArt extends Zweilous {
+    cardImage: string;
+}
+export declare class HydreigonexArt extends Hydreigonex {
     cardImage: string;
 }

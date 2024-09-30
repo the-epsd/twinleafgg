@@ -57,8 +57,7 @@ export class LostBlender extends TrainerCard {
           return state;
         }
 
-        player.hand.moveCardsTo(cards, player.discard);
-
+        player.hand.moveCardsTo(cards, player.lostzone);
         player.deck.moveTo(player.hand, 1);
         player.supporter.moveCardTo(this, player.discard);
 

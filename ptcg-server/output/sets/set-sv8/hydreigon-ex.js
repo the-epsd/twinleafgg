@@ -1,40 +1,39 @@
 "use strict";
-// citing empoleon to help make this (https://github.com/keeshii/ryuu-play/blob/master/ptcg-server/src/sets/set-black-and-white/empoleon.ts)
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Hydreigon_ex = void 0;
+exports.Hydreigonex = void 0;
 const game_1 = require("../../game");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
-class Hydreigon_ex extends game_1.PokemonCard {
+class Hydreigonex extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.tags = [game_1.CardTag.POKEMON_ex, game_1.CardTag.POKEMON_TERA];
         this.stage = game_1.Stage.STAGE_2;
         this.evolvesFrom = 'Zweilous';
-        this.cardType = game_1.CardType.DARK;
+        this.cardType = D;
         this.hp = 330;
-        this.weakness = [{ type: game_1.CardType.GRASS }];
-        this.retreat = [game_1.CardType.COLORLESS, game_1.CardType.COLORLESS, game_1.CardType.COLORLESS];
+        this.weakness = [{ type: G }];
+        this.retreat = [C, C, C];
         this.attacks = [
             {
                 name: 'Crash Heads',
-                cost: [game_1.CardType.DARK, game_1.CardType.COLORLESS],
+                cost: [D, C],
                 damage: 200,
-                text: 'Discard the top 3 cards from your opponent’s deck.'
+                text: 'Discard the top 3 cards from your opponent\'s deck.'
             },
             {
                 name: 'Obsidian',
-                cost: [game_1.CardType.PSYCHIC, game_1.CardType.DARK, game_1.CardType.METAL, game_1.CardType.COLORLESS],
+                cost: [P, D, M, C],
                 damage: 130,
-                text: 'This attack also does 130 damage to 2 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokemon.)'
+                text: 'This attack also does 130 damage to 2 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
             }
         ];
         this.regulationMark = 'H';
         this.set = 'SV8';
         this.setNumber = '72';
         this.cardImage = 'assets/cardback.png';
-        this.name = 'Hydreigon-ex';
-        this.fullName = 'Hydreigon-ex SV8';
+        this.name = 'Hydreigon ex';
+        this.fullName = 'Hydreigon ex SV8';
     }
     reduceEffect(store, state, effect) {
         // Crash Heads
@@ -68,4 +67,4 @@ class Hydreigon_ex extends game_1.PokemonCard {
         return state;
     }
 }
-exports.Hydreigon_ex = Hydreigon_ex;
+exports.Hydreigonex = Hydreigonex;

@@ -24,7 +24,7 @@ class Buzzwole extends pokemon_card_1.PokemonCard {
                 name: 'Touchdown',
                 cost: [card_types_1.CardType.GRASS, card_types_1.CardType.COLORLESS],
                 damage: 60,
-                text: 'Heal 30 damage from this Pokemon'
+                text: 'Heal 30 damage from this Pokémon'
             }];
         this.set = 'CEC';
         this.cardImage = 'assets/cardback.png';

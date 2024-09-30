@@ -23,7 +23,7 @@ export class Buzzwole extends PokemonCard {
     name: 'Touchdown',
     cost: [CardType.GRASS, CardType.COLORLESS],
     damage: 60,
-    text: 'Heal 30 damage from this Pokemon'
+    text: 'Heal 30 damage from this Pokémon'
   }];
 
   public set = 'CEC';

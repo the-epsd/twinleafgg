@@ -10,7 +10,7 @@ export class GengarMimikyuGX extends PokemonCard {
   public weakness = [{ type: CardType.DARK }];
   public resistance = [{ type: CardType.FIGHTING, value: -20 }];
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
-  public cardTag = [CardTag.POKEMON_GX, CardTag.TAG_TEAM];
+  public tags = [CardTag.POKEMON_GX, CardTag.TAG_TEAM];
 
   public attacks = [
     {

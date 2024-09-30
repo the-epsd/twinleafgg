@@ -13,7 +13,7 @@ class Veluza extends pokemon_card_1.PokemonCard {
         this.cardType = card_types_1.CardType.WATER;
         this.hp = 130;
         this.weakness = [{ type: card_types_1.CardType.LIGHTNING }];
-        this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
+        this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.powers = [{
                 name: 'Filet Memento',
                 powerType: game_1.PowerType.ABILITY,

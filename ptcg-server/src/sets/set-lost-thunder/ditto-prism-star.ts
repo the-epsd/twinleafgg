@@ -11,7 +11,7 @@ export class DittoPrismStar extends PokemonCard {
   public hp: number = 40;
   public weakness = [{ type: CardType.FIGHTING }];
   public retreat = [CardType.COLORLESS];
-  public cardTag = [CardTag.PRISM_STAR];
+  public tags = [CardTag.PRISM_STAR];
 
   public powers = [{
     name: 'Almighty Evolution',

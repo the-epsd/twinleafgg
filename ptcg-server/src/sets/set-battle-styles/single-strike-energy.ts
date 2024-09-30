@@ -11,11 +11,11 @@ import { EnergyEffect } from '../../game/store/effects/play-card-effects';
 
 export class SingleStrikeEnergy extends EnergyCard {
 
-  public cardTag: CardTag[] = [CardTag.SINGLE_STRIKE];
+  public tags: CardTag[] = [CardTag.SINGLE_STRIKE];
 
   public regulationMark = 'E';
 
-  public provides: CardType[] = [ CardType.COLORLESS ];
+  public provides: CardType[] = [CardType.COLORLESS];
 
   public energyType = EnergyType.SPECIAL;
 
@@ -40,7 +40,7 @@ export class SingleStrikeEnergy extends EnergyCard {
     'Weakness and Resistance).';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    
+
     // Provide energy when attached to Single Strike Pokemon
     if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
       const player = effect.player;
@@ -54,11 +54,11 @@ export class SingleStrikeEnergy extends EnergyCard {
       }
 
       if (pokemon.getPokemonCard()?.tags.includes(CardTag.SINGLE_STRIKE)) {
-        effect.energyMap.push({ card: this, provides: [ CardType.FIGHTING || CardType.DARK ] });
+        effect.energyMap.push({ card: this, provides: [CardType.FIGHTING || CardType.DARK] });
       }
       return state;
     }
-    
+
     // Discard card when not attached to Single Strike Pokemon
     if (effect instanceof CheckTableStateEffect) {
       state.players.forEach(player => {
@@ -82,7 +82,7 @@ export class SingleStrikeEnergy extends EnergyCard {
       });
       return state;
     }
-    
+
     if (effect instanceof DealDamageEffect && effect.source.cards.includes(this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -99,9 +99,8 @@ export class SingleStrikeEnergy extends EnergyCard {
 
       effect.damage += 20;
     }
-    
+
     return state;
   }
-    
+
 }
-    

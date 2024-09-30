@@ -12,7 +12,7 @@ export declare class GengarMimikyuGX extends PokemonCard {
         value: number;
     }[];
     retreat: CardType[];
-    cardTag: CardTag[];
+    tags: CardTag[];
     attacks: {
         name: string;
         cost: CardType[];

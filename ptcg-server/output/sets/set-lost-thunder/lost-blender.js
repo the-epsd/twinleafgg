@@ -36,7 +36,7 @@ class LostBlender extends trainer_card_1.TrainerCard {
                 if (cards.length === 0) {
                     return state;
                 }
-                player.hand.moveCardsTo(cards, player.discard);
+                player.hand.moveCardsTo(cards, player.lostzone);
                 player.deck.moveTo(player.hand, 1);
                 player.supporter.moveCardTo(this, player.discard);
                 store.log(state, game_1.GameLog.LOG_PLAYER_DRAWS_CARD, { name: player.name });

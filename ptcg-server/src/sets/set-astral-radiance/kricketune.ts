@@ -3,12 +3,12 @@ import { CheckHpEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 
 export class Kricketune extends PokemonCard {
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Kricketot';
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType = G;
   public hp: number = 90;
-  public weakness = [{ type: CardType.FIRE }];
-  public retreat = [CardType.COLORLESS];
+  public weakness = [{ type: R }];
+  public retreat = [C];
 
   public powers: Power[] = [
     {
@@ -21,7 +21,7 @@ export class Kricketune extends PokemonCard {
   public attacks: Attack[] = [
     {
       name: 'Slash',
-      cost: [CardType.GRASS, CardType.COLORLESS],
+      cost: [G, C],
       damage: 50,
       text: ''
     }
@@ -38,21 +38,20 @@ export class Kricketune extends PokemonCard {
 
     if (effect instanceof CheckHpEffect) {
       const player = effect.player;
-      let abilityApplied = false;
+
+      if (player.marker.hasMarker('SWELLING_TUNE_MARKER')) {
+        return state;
+      }
+
+      player.marker.addMarkerToState('SWELLING_TUNE_MARKER');
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
-        if (!abilityApplied && cardList.getPokemonCard()?.name === 'Kricketune') {
-          abilityApplied = true;
-          player.forEachPokemon(PlayerType.BOTTOM_PLAYER, innerCardList => {
-            const pokemonCard = innerCardList.getPokemonCard();
-            if (pokemonCard && pokemonCard.cardType === CardType.GRASS && pokemonCard.name !== 'Kricketune') {
-              effect.hp += 40;
-            }
-          });
+        const pokemonCard = cardList.getPokemonCard();
+        if (pokemonCard && pokemonCard.cardType === CardType.GRASS && pokemonCard.name !== 'Kricketune') {
+          effect.hp += 40;
         }
       });
     }
     return state;
   }
-
 }

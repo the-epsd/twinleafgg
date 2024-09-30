@@ -14,9 +14,9 @@ class Trubbish extends pokemon_card_1.PokemonCard {
         this.weakness = [{ type: card_types_1.CardType.PSYCHIC }];
         this.retreat = [card_types_1.CardType.COLORLESS];
         this.attacks = [{
-                name: 'Pound',
+                name: 'Garbage Collection',
                 cost: [card_types_1.CardType.COLORLESS],
-                damage: 20,
+                damage: 0,
                 text: 'Put a card from your discard pile on top of your deck.'
             }, {
                 name: 'Sludge Bomb',

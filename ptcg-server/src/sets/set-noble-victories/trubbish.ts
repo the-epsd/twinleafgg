@@ -17,16 +17,16 @@ export class Trubbish extends PokemonCard {
 
   public weakness = [{ type: CardType.PSYCHIC }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [{
-    name: 'Pound',
-    cost: [ CardType.COLORLESS ],
-    damage: 20,
+    name: 'Garbage Collection',
+    cost: [CardType.COLORLESS],
+    damage: 0,
     text: 'Put a card from your discard pile on top of your deck.'
   }, {
     name: 'Sludge Bomb',
-    cost: [ CardType.PSYCHIC, CardType.COLORLESS ],
+    cost: [CardType.PSYCHIC, CardType.COLORLESS],
     damage: 20,
     text: ''
   }];
@@ -51,7 +51,7 @@ export class Trubbish extends PokemonCard {
         player.id,
         GameMessage.CHOOSE_CARD_TO_HAND,
         player.discard,
-        { },
+        {},
         { min: 1, max: 1, allowCancel: false }
       ), selected => {
         const cards = selected || [];

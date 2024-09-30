@@ -15,12 +15,20 @@ class Oricorio extends pokemon_card_1.PokemonCard {
         this.weakness = [{ type: card_types_1.CardType.LIGHTNING }];
         this.resistance = [{ type: card_types_1.CardType.FIGHTING, value: -20 }];
         this.retreat = [card_types_1.CardType.COLORLESS];
-        this.attacks = [{
+        this.attacks = [
+            {
                 name: 'Captivating Salsa',
                 cost: [card_types_1.CardType.FIRE],
                 damage: 0,
                 text: 'Switch 1 of your opponent\'s Benched Pokemon with their Active Pokemon. The new Active Poekmon is now Burned and Confused.'
-            }];
+            },
+            {
+                name: 'Heat Blast',
+                cost: [card_types_1.CardType.FIRE, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
+                damage: 70,
+                text: ''
+            }
+        ];
         this.set = 'SHF';
         this.name = 'Oricorio';
         this.fullName = 'Oricorio SHF';

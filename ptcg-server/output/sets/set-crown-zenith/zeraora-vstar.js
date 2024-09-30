@@ -7,6 +7,10 @@ const game_effects_1 = require("../../game/store/effects/game-effects");
 function* useLightningStormStar(next, store, state, effect) {
     const player = effect.player;
     const opponent = game_1.StateUtils.getOpponent(state, player);
+    if (player.usedVSTAR) {
+        throw new game_1.GameError(game_1.GameMessage.LABEL_VSTAR_USED);
+    }
+    player.usedVSTAR = true;
     const maxAllowedDamage = [];
     opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList, card, target) => {
         maxAllowedDamage.push({ target, damage: card.hp + 240 });
@@ -26,12 +30,12 @@ class ZeraoraVSTAR extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = game_1.Stage.VSTAR;
+        this.tags = [game_1.CardTag.POKEMON_VSTAR];
         this.evolvesFrom = 'Zeraora V';
         this.cardType = game_1.CardType.LIGHTNING;
         this.hp = 270;
         this.weakness = [{ type: game_1.CardType.FIGHTING }];
         this.retreat = [];
-        this.cardTag = [game_1.CardTag.POKEMON_V, game_1.CardTag.POKEMON_VSTAR];
         this.regulationMark = 'F';
         this.attacks = [
             {

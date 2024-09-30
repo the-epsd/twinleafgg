@@ -9,7 +9,7 @@ export class ZeraoraV extends PokemonCard {
   public hp: number = 210;
   public weakness = [{ type: CardType.FIGHTING }];
   public retreat = [CardType.COLORLESS];
-  public cardTag = [CardTag.POKEMON_V];
+  public tags = [CardTag.POKEMON_V];
   public regulationMark = 'F';
 
   public attacks = [
