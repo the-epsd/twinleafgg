@@ -9,4 +9,6 @@ exports.setHiddenFates = [
     new card_images_1.PsyduckArt(),
     // Full Arts/Shiny Vault
     new full_art_1.AlolanVulpixArt(),
+    new card_images_1.WooperArt(),
+    new card_images_1.QuagsireArt()
 ];
