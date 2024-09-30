@@ -31,6 +31,7 @@ import { Pyukumuku } from './pyukumuku';
 import { Schoolboy } from './schoolboy';
 import { Schoolgirl } from './schoolgirl';
 import { Shauna } from './shauna';
+import { Shellder } from './shellder';
 import { Shelmet } from './shelmet';
 import { Staryu } from './staryu';
 import { Totodile } from './totodile';
@@ -161,6 +162,10 @@ export class SchoolgirlArt extends Schoolgirl {
 
 export class ShaunaArt extends Shauna {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_263_R_EN_LG.png';
+}
+
+export class ShellderArt extends Shellder {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_050_R_EN_LG.png';
 }
 
 export class ShelmetArt extends Shelmet {

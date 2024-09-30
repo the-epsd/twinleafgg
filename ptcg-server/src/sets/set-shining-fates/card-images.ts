@@ -1,5 +1,6 @@
 import { BallGuy } from './ball-guy';
 import { Buizel } from './buizel';
+import { Dartrix } from './dartrix';
 import { Frosmoth } from './frosmoth';
 import { GalarianWeezing } from './galarian-weezing';
 import { Horsea } from './horsea';
@@ -15,6 +16,10 @@ export class BallGuyArt extends BallGuy {
 
 export class BuizelArt extends Buizel {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SHF/SHF_022_R_EN_LG.png';
+}
+
+export class DartrixArt extends Dartrix {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SHF/SHF_007_R_EN_LG.png';
 }
 
 export class FrosmothArt extends Frosmoth {

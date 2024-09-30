@@ -1,8 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ThwackeyArt = exports.SnomArt = exports.RookideeArt = exports.RillaboomArt = exports.KoffingArt = exports.HorseaArt = exports.GalarianWeezingArt = exports.FrosmothArt = exports.BuizelArt = exports.BallGuyArt = void 0;
+exports.ThwackeyArt = exports.SnomArt = exports.RookideeArt = exports.RillaboomArt = exports.KoffingArt = exports.HorseaArt = exports.GalarianWeezingArt = exports.FrosmothArt = exports.DartrixArt = exports.BuizelArt = exports.BallGuyArt = void 0;
 const ball_guy_1 = require("./ball-guy");
 const buizel_1 = require("./buizel");
+const dartrix_1 = require("./dartrix");
 const frosmoth_1 = require("./frosmoth");
 const galarian_weezing_1 = require("./galarian-weezing");
 const horsea_1 = require("./horsea");
@@ -25,6 +26,13 @@ class BuizelArt extends buizel_1.Buizel {
     }
 }
 exports.BuizelArt = BuizelArt;
+class DartrixArt extends dartrix_1.Dartrix {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SHF/SHF_007_R_EN_LG.png';
+    }
+}
+exports.DartrixArt = DartrixArt;
 class FrosmothArt extends frosmoth_1.Frosmoth {
     constructor() {
         super(...arguments);

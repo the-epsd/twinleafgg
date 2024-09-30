@@ -14,7 +14,7 @@ class Palpitoad extends pokemon_card_1.PokemonCard {
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.evolvesFrom = 'Tympole';
         this.attacks = [{
-                name: "Rain Splash",
+                name: 'Rain Splash',
                 cost: [card_types_1.CardType.WATER, card_types_1.CardType.WATER],
                 damage: 50,
                 text: ''

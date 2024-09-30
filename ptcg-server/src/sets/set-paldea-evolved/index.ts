@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { ArctibaxArt, ArtazonArt, BaxcaliburArt, BossOrdersArt, BramblinArt, BraveyCharmArt, CetitanArt, CetoddleArt, ChienPaoexArt, ChiYuexArt, ChoiceBeltArt, ClavellArt, CufantArt, DeinoArt, DeliveryDroneArt, DudunsparceArt, FightingAuLaitArt, FlamigoArt, FloragatoArt, ForretressexArt, Frigibax2Art, FrigibaxArt, GiacomoArt, GreatBallArt, GrushaArt, HydreigonArt, IonoArt, JetEnergyArt, LokixArt, LuminousEnergyArt, LuxrayArt, MagnemiteArt, MeowscaradaexArt, MimikyuArt, MisdreavusArt, MurkrowArt, NoibatArt, NoivernexArt, OrthwormArt, PelipperArt, PinecoArt, ReversalEnergyArt, ShinxArt, SpiritombArt, SprigatitoArt, SquawkabillyexArt, SuperiorEnergyRetrievalArt, SuperRodArt, TadbulbArt, TherapeuticEnergyArt, TingLuexArt, TinkatinkArt, TinkatonArt, TinkatuffArt, WattrelArt, WingullArt, WoChienexArt, ZweilousArt } from './card-images';
+import { ArctibaxArt, ArtazonArt, BaxcaliburArt, BossOrdersArt, BramblinArt, BraveyCharmArt, CetitanArt, CetoddleArt, ChienPaoexArt, ChiYuexArt, ChoiceBeltArt, ClavellArt, CufantArt, DeinoArt, DeliveryDroneArt, DudunsparceArt, FightingAuLaitArt, FlamigoArt, FloragatoArt, ForretressexArt, Frigibax2Art, FrigibaxArt, GiacomoArt, GreatBallArt, GrushaArt, HoppipArt, HydreigonArt, IonoArt, JetEnergyArt, LokixArt, LuminousEnergyArt, LuxrayArt, MagnemiteArt, MeowscaradaexArt, MimikyuArt, MisdreavusArt, MurkrowArt, NoibatArt, NoivernexArt, OrthwormArt, PelipperArt, PinecoArt, ReversalEnergyArt, ShinxArt, SpiritombArt, SprigatitoArt, SquawkabillyexArt, SuperiorEnergyRetrievalArt, SuperRodArt, TadbulbArt, TherapeuticEnergyArt, TingLuexArt, TinkatinkArt, TinkatonArt, TinkatuffArt, WattrelArt, WingullArt, WoChienexArt, ZweilousArt } from './card-images';
 import { ArctibaxIR, BaxcaliburIR, BossOrdersFA, BossOrdersSIR, ChiYuexFA, ChiYuexSIR, ChienPaoexFA, ChienPaoexHR, ChienPaoexSIR, ClavellFA, FlamigoIR, FrigibaxIR, GiacomoFA, GiacomoSIR, GrushaFA, GrushaSIR, IonoFA, IonoSIR, MeowscaradaexFA, MeowscaradaexHR, MeowscaradaexSIR, NoivernexFA, SquawkabillyexFA, SquawkabillyexSIR, SuperRodHR, SuperiorEnergyRetrievalHR, TingLuexFA, TingLuexHR, TingLuexSIR, WoChienexFA, WoChienexSIR } from './full-art';
 
 //import { CalamitousSnowyMountain } from './new calamitous-snowy-mountain';
@@ -31,6 +31,7 @@ export const setPaldeaEvolved: Card[] = [
   new GiacomoArt(),
   new GreatBallArt(),
   new GrushaArt(),
+  new HoppipArt(),
   new HydreigonArt(),
   new IonoArt(),
   new JetEnergyArt(),

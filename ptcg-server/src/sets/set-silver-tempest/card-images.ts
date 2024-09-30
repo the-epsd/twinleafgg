@@ -52,6 +52,7 @@ import { Klinklang } from './SIT_125_Klinklang';
 import { Spinda } from './SIT_141_Spinda';
 import { Snorunt } from './SIT_41_Snorunt';
 import { Terrakion } from './SIT_97_Terrakion';
+import { Sunflora } from './sunflora';
 import { UnidentifiedFossil } from './unidentified-fossil';
 import { UrsalunaV } from './ursaluna-v';
 import { VGuardEnergy } from './v-guard-energy';
@@ -270,6 +271,10 @@ export class SnoruntArt extends Snorunt {
 
 export class SpindaArt extends Spinda {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SIT/SIT_141_R_EN_LG.png';
+}
+
+export class SunfloraArt extends Sunflora {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SIT/SIT_006_R_EN_LG.png';
 }
 
 export class TerrakionArt extends Terrakion {

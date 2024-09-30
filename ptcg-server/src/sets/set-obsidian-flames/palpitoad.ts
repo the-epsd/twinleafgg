@@ -17,7 +17,7 @@ export class Palpitoad extends PokemonCard {
   public evolvesFrom: string = 'Tympole';
 
   public attacks = [{
-    name: "Rain Splash",
+    name: 'Rain Splash',
     cost: [CardType.WATER, CardType.WATER],
     damage: 50,
     text: ''

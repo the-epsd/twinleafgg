@@ -3,7 +3,9 @@ import { Feraligatr } from './DRM_24_Feraligatr';
 import { Blaziken } from './DRM_6_Blaziken';
 import { Feebas } from './feebas';
 import { FieryFlint } from './fiery-flint';
+import { Quagsire } from './quagsire';
 import { SwitchRaft } from './switch-raft';
+import { Wooper } from './wooper';
 export declare class BlazikenArt extends Blaziken {
     cardImage: string;
 }
@@ -19,6 +21,12 @@ export declare class FeraligatrArt extends Feraligatr {
 export declare class FieryFlintArt extends FieryFlint {
     cardImage: string;
 }
+export declare class QuagsireArt extends Quagsire {
+    cardImage: string;
+}
 export declare class SwitchRaftArt extends SwitchRaft {
+    cardImage: string;
+}
+export declare class WooperArt extends Wooper {
     cardImage: string;
 }

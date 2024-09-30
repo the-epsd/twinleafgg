@@ -30,6 +30,7 @@ exports.setPaldeaEvolved = [
     new card_images_1.GiacomoArt(),
     new card_images_1.GreatBallArt(),
     new card_images_1.GrushaArt(),
+    new card_images_1.HoppipArt(),
     new card_images_1.HydreigonArt(),
     new card_images_1.IonoArt(),
     new card_images_1.JetEnergyArt(),

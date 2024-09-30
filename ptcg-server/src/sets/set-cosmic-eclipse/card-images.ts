@@ -25,6 +25,7 @@ import { MallowAndLana } from './mallow-and-lana';
 import { Natu } from './natu';
 import { ProfessorOaksSetup } from './professor-oaks-setup';
 import { Slugma } from './slugma';
+import { Sunkern } from './sunkern';
 import { TagCall } from './tag-call';
 import { UltraNecrozma } from './ultra-necrozma';
 
@@ -122,6 +123,10 @@ export class SlugmaArt extends Slugma {
 
 export class StoutlandArt extends Stoutland {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CEC/CEC_176_R_EN_LG.png';
+}
+
+export class SunkernArt extends Sunkern {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CEC/CEC_007_R_EN_LG.png';
 }
 
 export class TagCallArt extends TagCall {

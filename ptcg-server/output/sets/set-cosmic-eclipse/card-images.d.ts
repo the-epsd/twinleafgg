@@ -23,6 +23,7 @@ import { MallowAndLana } from './mallow-and-lana';
 import { Natu } from './natu';
 import { ProfessorOaksSetup } from './professor-oaks-setup';
 import { Slugma } from './slugma';
+import { Sunkern } from './sunkern';
 import { TagCall } from './tag-call';
 import { UltraNecrozma } from './ultra-necrozma';
 export declare class ArceusDialgaPalkiaGXArt extends ArceusDialgaPalkiaGX {
@@ -95,6 +96,9 @@ export declare class SlugmaArt extends Slugma {
     cardImage: string;
 }
 export declare class StoutlandArt extends Stoutland {
+    cardImage: string;
+}
+export declare class SunkernArt extends Sunkern {
     cardImage: string;
 }
 export declare class TagCallArt extends TagCall {

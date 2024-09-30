@@ -22,6 +22,7 @@ import { Frigibax2 } from './frigibax2';
 import { Giacomo } from './giacomo';
 import { GreatBall } from './great-ball';
 import { Grusha } from './grusha';
+import { Hoppip } from './hoppip';
 import { Iono } from './iono';
 import { JetEnergy } from './jet-energy';
 import { LuminousEnergy } from './luminous-energy';
@@ -129,6 +130,9 @@ export declare class GreatBallArt extends GreatBall {
     cardImage: string;
 }
 export declare class GrushaArt extends Grusha {
+    cardImage: string;
+}
+export declare class HoppipArt extends Hoppip {
     cardImage: string;
 }
 export declare class HydreigonArt extends Hydreigon {
