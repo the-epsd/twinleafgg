@@ -69,6 +69,7 @@ import { Chimchar } from './chimchar';
 import { Monferno } from './monferno';
 import { Rillaboom } from './rillaboom';
 import { Zapdos } from './zapdos';
+import { Sunkern } from './sunkern';
 export declare class AggronArt extends Aggron {
     cardImage: string;
 }
@@ -250,6 +251,9 @@ export declare class ScoopUpCycloneArt extends ScoopUpCyclone {
     cardImage: string;
 }
 export declare class ShinxArt extends Shinx {
+    cardImage: string;
+}
+export declare class SunkernArt extends Sunkern {
     cardImage: string;
 }
 export declare class SurvivalCastArt extends SurvivalCast {

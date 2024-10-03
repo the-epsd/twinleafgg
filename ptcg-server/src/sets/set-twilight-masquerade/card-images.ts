@@ -70,6 +70,7 @@ import { Chimchar } from './chimchar';
 import { Monferno } from './monferno';
 import { Rillaboom } from './rillaboom';
 import { Zapdos } from './zapdos';
+import { Sunkern } from './sunkern';
 
 
 export class AggronArt extends Aggron {
@@ -314,6 +315,10 @@ export class ScoopUpCycloneArt extends ScoopUpCyclone {
 
 export class ShinxArt extends Shinx {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_066_R_EN_LG.png';
+}
+
+export class SunkernArt extends Sunkern {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_006_R_EN_LG.png';
 }
 
 export class SurvivalCastArt extends SurvivalCast {
