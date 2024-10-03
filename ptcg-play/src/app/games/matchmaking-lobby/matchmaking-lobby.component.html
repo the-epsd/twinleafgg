@@ -1,0 +1,24 @@
+<div class="matchmaking-lobby">
+  <mat-form-field>
+    <mat-label>{{ 'LABEL_SELECT_FORMAT' | translate }}</mat-label>
+    <mat-select [(ngModel)]="selectedFormat" [disabled]="inQueue">
+      <mat-option *ngFor="let format of formats" [value]="format.value">
+        {{ format.label | translate }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" (click)="joinQueue()" *ngIf="!inQueue">
+    {{ 'BUTTON_FIND_MATCH' | translate }}
+  </button>
+  <button mat-raised-button color="warn" (click)="leaveQueue()" *ngIf="inQueue">
+    {{ 'BUTTON_LEAVE_QUEUE' | translate }}
+  </button>
+
+  <div *ngIf="inQueue">
+    <h3>{{ 'LABEL_PLAYERS_IN_QUEUE' | translate }}</h3>
+    <ul>
+      <li *ngFor="let player of queuedPlayers">{{ player }}</li>
+    </ul>
+  </div>
+</div>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { GameInfo, ClientInfo } from 'ptcg-server';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable, EMPTY, from } from 'rxjs';
@@ -16,14 +16,18 @@ import { SelectPopupOption } from '../shared/alert/select-popup/select-popup.com
 import { SessionService } from '../shared/session/session.service';
 import { UserInfoMap } from '../shared/session/session.interface';
 import { Deck, DeckListEntry } from '../api/interfaces/deck.interface';
+import { MatchmakingLobbyComponent } from './matchmaking-lobby/matchmaking-lobby.component';
+
 
 @UntilDestroy()
 @Component({
   selector: 'ptcg-games',
   templateUrl: './games.component.html',
-  styleUrls: ['./games.component.scss']
+  styleUrls: ['./games.component.scss'],
+  providers: [MatchmakingLobbyComponent]
 })
 export class GamesComponent implements OnInit {
+  @ViewChild(MatchmakingLobbyComponent) matchmakingLobby: MatchmakingLobbyComponent;
   title = 'ptcg-play';
 
   displayedColumns: string[] = ['id', 'turn', 'player1', 'player2', 'actions'];
@@ -32,6 +36,7 @@ export class GamesComponent implements OnInit {
   public loading = false;
   public clientId: number;
   public loggedUserId: number;
+  public lobbyComponent = MatchmakingLobbyComponent;
 
   constructor(
     private alertService: AlertService,
@@ -88,7 +93,7 @@ export class GamesComponent implements OnInit {
           const options = decks.decks
             .filter(deckEntry => deckEntry.isValid)
             .map(deckEntry => {
-              return {value: deckEntry, viewValue: deckEntry.name}
+              return { value: deckEntry, viewValue: deckEntry.name }
             });
 
           if (options.length === 0) {
@@ -116,7 +121,7 @@ export class GamesComponent implements OnInit {
         finalize(() => { this.loading = false; })
       )
       .subscribe({
-        next: () => {},
+        next: () => { },
         error: (error: ApiError) => {
           this.alertService.toast(this.translate.instant('ERROR_UNKNOWN'));
         }

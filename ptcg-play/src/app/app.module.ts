@@ -19,10 +19,11 @@ import { RankingModule } from './ranking/ranking.module';
 import { ReplaysModule } from './replays/replays.module';
 import { SharedModule } from './shared/shared.module';
 import { TableModule } from './table/table.module';
+import { MatchmakingLobbyComponent } from './games/matchmaking-lobby/matchmaking-lobby.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     ApiModule,
@@ -42,8 +43,8 @@ import { TableModule } from './table/table.module';
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        useFactory: ( createTranslateLoader ),
-        deps: [ HttpClient ]
+        useFactory: (createTranslateLoader),
+        deps: [HttpClient]
       }
     })
   ],

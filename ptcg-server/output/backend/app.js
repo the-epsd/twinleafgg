@@ -9,6 +9,8 @@ const websocket_server_1 = require("./socket/websocket-server");
 const config_1 = require("../config");
 const cors_1 = require("./services/cors");
 const controllers_1 = require("./controllers");
+const matchmaking_controller_1 = require("./controllers/matchmaking.controller");
+const socket_io_1 = require("socket.io");
 class App {
     constructor() {
         this.core = new core_1.Core();
@@ -20,6 +22,11 @@ class App {
         const storage = this.storage;
         const core = this.core;
         const app = express();
+        const io = new socket_io_1.Server();
+        const matchmakingController = new matchmaking_controller_1.MatchmakingController('/matchmaking', app, storage, core, io, core);
+        app.use('/matchmaking', matchmakingController.joinQueue.bind(matchmakingController));
+        app.post('/matchmaking/join', matchmakingController.joinQueue.bind(matchmakingController));
+        app.post('/matchmaking/leave', matchmakingController.leaveQueue.bind(matchmakingController));
         const define = function (path, controller) {
             const instance = new controller(path, app, storage, core);
             instance.init();

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ApiErrorEnum } from 'ptcg-server';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { Socket, io } from 'socket.io-client';
-import { timeout, catchError } from 'rxjs/operators';
+import { timeout, catchError, retry } from 'rxjs/operators';
 
 import { ApiError } from './api.error';
 import { environment } from '../../environments/environment';
@@ -16,7 +16,7 @@ interface SocketResponse<T> {
 export class SocketService {
 
   public socket: Socket;
-  private callbacks: {event: string, fn: any}[] = [];
+  private callbacks: { event: string, fn: any }[] = [];
   private enabled = false;
   private connectionSubject = new BehaviorSubject<boolean>(false);
 
@@ -42,6 +42,22 @@ export class SocketService {
 
     this.socket.on('connect', () => this.connectionSubject.next(true));
     this.socket.on('disconnect', () => this.connectionSubject.next(false));
+  }
+
+  joinLobby(format: string): Observable<any> {
+    return this.emit('joinLobby', { format });
+  }
+
+  joinMatchmakingQueue(format: string): Observable<any> {
+    return this.emit('joinQueue', { format }).pipe(
+      timeout(5000),
+      retry(2),
+      catchError((error) => {
+        const apiError = ApiError.fromError(error);
+        console.log('Failed - Could not Join Queue.', error);
+        return throwError(apiError);
+      })
+    );
   }
 
   public enable(authToken: string) {
@@ -84,7 +100,7 @@ export class SocketService {
   }
 
   public on<T>(event: string, fn: (data: T) => void): void {
-    const callback = {event, fn: fn.bind(this)};
+    const callback = { event, fn: fn.bind(this) };
     this.callbacks.push(callback);
     this.socket.on(event, callback.fn);
   }

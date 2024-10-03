@@ -5,7 +5,7 @@ import { Core } from '../../game/core/core';
 import { SocketClient } from './socket-client';
 import { User } from '../../storage';
 import { authMiddleware } from './auth-middleware';
-import {config} from '../../config';
+import { config } from '../../config';
 
 export type Middleware = (socket: Socket, next: (err?: any) => void) => void;
 
