@@ -12,20 +12,20 @@ class Electivire extends pokemon_card_1.PokemonCard {
         super(...arguments);
         this.stage = card_types_1.Stage.STAGE_1;
         this.evolvesFrom = 'Electabuzz';
-        this.cardType = card_types_1.CardType.LIGHTNING;
+        this.cardType = L;
         this.hp = 140;
-        this.weakness = [{ type: card_types_1.CardType.FIGHTING }];
-        this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
+        this.weakness = [{ type: F }];
+        this.retreat = [C, C, C];
         this.attacks = [
             {
                 name: 'Thunder Shock',
-                cost: [card_types_1.CardType.LIGHTNING],
+                cost: [L, C],
                 damage: 50,
                 text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
             },
             {
                 name: 'Electrified Bolt',
-                cost: [card_types_1.CardType.LIGHTNING, card_types_1.CardType.LIGHTNING, card_types_1.CardType.COLORLESS],
+                cost: [L, L, C],
                 damage: 90,
                 damageCalculation: '+',
                 text: 'If this Pokémon has any Special Energy attached, this attack does 90 more damage.'

@@ -108,6 +108,15 @@ export class ArceusDialgaPalkiaGX extends PokemonCard {
       }
     }
 
+    if (effect instanceof PutDamageEffect) {
+      const player = effect.player;
+      // const opponent = StateUtils.getOpponent(state, player);
+
+      if (player.alteredCreationDamage === true) {
+        effect.damage += 30;
+      }
+    }
+
     if (effect instanceof KnockOutEffect) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -124,29 +133,29 @@ export class ArceusDialgaPalkiaGX extends PokemonCard {
     }
 
 
-    if (effect instanceof PutDamageEffect && effect.source == effect.player.active) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, effect.player);
+    // if (effect instanceof PutDamageEffect && effect.source == effect.player.active) {
+    //   const player = effect.player;
+    //   const opponent = StateUtils.getOpponent(state, effect.player);
 
-      if (effect.target == effect.source) {
-        return state;
-      }
+    //   if (effect.target == effect.source) {
+    //     return state;
+    //   }
 
-      if (effect.target !== player.active && effect.target !== opponent.active) {
-        return state;
-      }
+    //   if (effect.target !== player.active && effect.target !== opponent.active) {
+    //     return state;
+    //   }
 
-      if (effect.damageReduced) {
-        // Damage already reduced, don't reduce again
-        return state;
-      }
+    //   if (effect.damageReduced) {
+    //     // Damage already reduced, don't reduce again
+    //     return state;
+    //   }
 
-      const targetCard = effect.target.getPokemonCard();
-      if (targetCard && player.alteredCreationDamage) {
-        effect.damage += 30;
-        effect.damageReduced = true;
-      }
-    }
+    //   const targetCard = effect.target.getPokemonCard();
+    //   if (targetCard && player.alteredCreationDamage) {
+    //     effect.damage += 30;
+    //     effect.damageReduced = true;
+    //   }
+    // }
 
     return state;
   }

@@ -34,27 +34,36 @@ class Miloticex extends game_1.PokemonCard {
         this.fullName = 'Milotic ex SV8';
     }
     reduceEffect(store, state, effect) {
+        // if (effect instanceof BetweenTurnsEffect) {
+        //   const player = effect.player;
+        //   player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+        //     if (cardList.getPokemonCard() === this && cardList.attackMarker.markers.length > 0) {
+        //       cardList.clearAttackEffects();
+        //       cardList.clearEffects();
+        //     }
+        //   });
+        // }
         if (effect instanceof attack_effects_1.AbstractAttackEffect && effect.target.cards.includes(this)) {
             const player = effect.player;
-            const opponent = game_1.StateUtils.getOpponent(state, player);
-            const opponentActive = opponent.active.getPokemonCard();
-            if (opponentActive && opponentActive.tags.includes(game_1.CardTag.POKEMON_TERA)) {
+            const attackingPokemon = player.active.getPokemonCard();
+            if (attackingPokemon && attackingPokemon.tags.includes(game_1.CardTag.POKEMON_TERA)) {
+                effect.attack.damage = 0;
                 effect.preventDefault = true;
             }
         }
         if (effect instanceof attack_effects_1.PutDamageEffect && effect.target.cards.includes(this)) {
             const player = effect.player;
-            const opponent = game_1.StateUtils.getOpponent(state, player);
-            const opponentActive = opponent.active.getPokemonCard();
-            if (opponentActive && opponentActive.tags.includes(game_1.CardTag.POKEMON_TERA)) {
+            const sourcePokemon = player.active.getPokemonCard();
+            if (sourcePokemon && sourcePokemon.tags.includes(game_1.CardTag.POKEMON_TERA)) {
+                effect.damage = 0;
                 effect.preventDefault = true;
             }
         }
         if (effect instanceof attack_effects_1.DealDamageEffect && effect.target.cards.includes(this)) {
             const player = effect.player;
-            const opponent = game_1.StateUtils.getOpponent(state, player);
-            const opponentActive = opponent.active.getPokemonCard();
-            if (opponentActive && opponentActive.tags.includes(game_1.CardTag.POKEMON_TERA)) {
+            const sourcePokemon = player.active.getPokemonCard();
+            if (sourcePokemon && sourcePokemon.tags.includes(game_1.CardTag.POKEMON_TERA)) {
+                effect.damage = 0;
                 effect.preventDefault = true;
             }
         }

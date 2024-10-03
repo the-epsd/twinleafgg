@@ -26,6 +26,7 @@ import { Gengarex } from './gengar-ex';
 import { GougingFireex } from './gouging-fire-ex';
 import { GreatTusk } from './great-tusk';
 import { Grotle } from './grotle';
+import { Grubbin } from './grubbin';
 import { HandTrimmer } from './hand-trimmer';
 import { Haunter } from './haunter';
 import { HeavyBaton } from './heavy-baton';
@@ -158,6 +159,9 @@ export declare class GougingFireexArt extends GougingFireex {
     cardImage: string;
 }
 export declare class GrotleArt extends Grotle {
+    cardImage: string;
+}
+export declare class GrubbinArt extends Grubbin {
     cardImage: string;
 }
 export declare class HandTrimmerArt extends HandTrimmer {

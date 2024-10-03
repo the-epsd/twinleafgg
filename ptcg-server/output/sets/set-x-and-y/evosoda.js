@@ -46,12 +46,13 @@ function* playCard(next, store, state, effect) {
         }
     });
     let cards = [];
-    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_EVOLVE, player.deck, { superType: card_types_1.SuperType.POKEMON }, { min: 1, max: 1, allowCancel: true, blocked }), selected => {
+    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_EVOLVE, player.deck, { superType: card_types_1.SuperType.POKEMON }, { min: 1, max: 1, allowCancel: false, blocked }), selected => {
         cards = selected || [];
         next();
     });
     // Canceled by user, he didn't found the card in the deck
     if (cards.length === 0) {
+        player.supporter.moveCardTo(effect.trainerCard, player.discard);
         return state;
     }
     const evolution = cards[0];
@@ -67,6 +68,7 @@ function* playCard(next, store, state, effect) {
         next();
     });
     if (targets.length === 0) {
+        player.supporter.moveCardTo(effect.trainerCard, player.discard);
         return state; // canceled by user
     }
     const pokemonCard = targets[0].getPokemonCard();

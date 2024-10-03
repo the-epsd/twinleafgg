@@ -60,7 +60,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     GameMessage.CHOOSE_CARD_TO_EVOLVE,
     player.deck,
     { superType: SuperType.POKEMON },
-    { min: 1, max: 1, allowCancel: true, blocked }
+    { min: 1, max: 1, allowCancel: false, blocked }
   ), selected => {
     cards = selected || [];
     next();
@@ -68,6 +68,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
   // Canceled by user, he didn't found the card in the deck
   if (cards.length === 0) {
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
     return state;
   }
 
@@ -93,6 +94,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   });
 
   if (targets.length === 0) {
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
     return state; // canceled by user
   }
   const pokemonCard = targets[0].getPokemonCard();

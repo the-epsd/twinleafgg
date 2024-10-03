@@ -24,7 +24,7 @@ export class FieldBlower extends TrainerCard {
     'Choose up to 2 in any combination of Pokémon Tool cards and Stadium cards in play (yours or your opponent\'s) and discard them.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    
+
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -62,23 +62,24 @@ export class FieldBlower extends TrainerCard {
           {
             message: GameMessage.YES,
             action: () => {
-              
+
               const cardList = StateUtils.findCardList(state, stadiumCard);
               const stadiumPlayer = StateUtils.findOwner(state, cardList);
-              cardList.moveTo(stadiumPlayer.discard);         
-              store.log(state, GameLog.LOG_PLAYER_DISCARDS_WITH_FIELD_BLOWER, { name: player.name, card: stadiumCard.name });               
-              
+              cardList.moveTo(stadiumPlayer.discard);
+              store.log(state, GameLog.LOG_PLAYER_DISCARDS_WITH_FIELD_BLOWER, { name: player.name, card: stadiumCard.name });
+
               let targets: PokemonCardList[] = [];
               return store.prompt(state, new ChoosePokemonPrompt(
                 player.id,
                 GameMessage.CHOOSE_POKEMON_TO_DISCARD_CARDS,
                 PlayerType.ANY,
                 [SlotType.ACTIVE, SlotType.BENCH],
-                { min: 0, max: 1, allowCancel: true, blocked }
+                { min: 0, max: 1, allowCancel: false, blocked }
               ), results => {
                 targets = results || [];
 
                 if (targets.length === 0) {
+                  player.supporter.moveCardTo(this, player.discard);
                   return state;
                 }
 
@@ -87,10 +88,10 @@ export class FieldBlower extends TrainerCard {
                   if (target.tool !== undefined) {
                     target.moveCardTo(target.tool, owner.discard);
                     store.log(state, GameLog.LOG_PLAYER_DISCARDS_WITH_FIELD_BLOWER, { name: player.name, card: target.tool.name });
-                    
+
                     target.tool = undefined;
                   }
-                  
+                  player.supporter.moveCardTo(this, player.discard);
                   return state;
                 });
                 return state;
@@ -113,6 +114,7 @@ export class FieldBlower extends TrainerCard {
                 targets = results || [];
 
                 if (targets.length === 0) {
+                  player.supporter.moveCardTo(this, player.discard);
                   return state;
                 }
 
@@ -125,14 +127,15 @@ export class FieldBlower extends TrainerCard {
                   }
                   return state;
                 });
+                player.supporter.moveCardTo(this, player.discard);
                 return state;
               });
-              
+
             }
-          
+
           }
         ];
-        
+
         return store.prompt(state, new SelectPrompt(
           player.id,
           GameMessage.WANT_TO_DISCARD_STADIUM,
@@ -144,7 +147,7 @@ export class FieldBlower extends TrainerCard {
           if (option.action) {
             option.action();
           }
-          
+
           player.supporter.moveCardTo(this, player.discard);
           return state;
         });
@@ -154,7 +157,7 @@ export class FieldBlower extends TrainerCard {
         const owner = StateUtils.findOwner(state, cardList);
         cardList.moveTo(owner.discard);
         store.log(state, GameLog.LOG_PLAYER_DISCARDS_WITH_FIELD_BLOWER, { name: player.name, card: stadiumCard.name });
-        
+
         player.supporter.moveCardTo(this, player.discard);
         return state;
       } else if (pokemonsWithTool >= 1 && stadiumCard == undefined) {
@@ -184,7 +187,6 @@ export class FieldBlower extends TrainerCard {
               store.log(state, GameLog.LOG_PLAYER_DISCARDS_WITH_FIELD_BLOWER, { name: player.name, card: target.tool.name });
               target.tool = undefined;
             }
-      
             player.supporter.moveCardTo(this, player.discard);
             return state;
           });

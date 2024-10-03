@@ -8,24 +8,24 @@ export class Electabuzz extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = CardType.LIGHTNING;
+  public cardType: CardType = L;
 
   public hp: number = 90;
 
-  public weakness = [{ type: CardType.FIGHTING }];
+  public weakness = [{ type: F }];
 
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
-  
+  public retreat = [C, C];
+
   public attacks = [
     {
       name: 'Collect',
-      cost: [CardType.LIGHTNING],
-      damage: 10,
+      cost: [L],
+      damage: 0,
       text: 'Draw a card.'
     },
     {
       name: 'Magnum Punch',
-      cost: [CardType.LIGHTNING, CardType.LIGHTNING],
+      cost: [L, L],
       damage: 40,
       text: ''
     }
@@ -52,9 +52,8 @@ export class Electabuzz extends PokemonCard {
       player.deck.moveTo(player.hand, 1);
       return state;
     }
-    
+
     return state;
   }
-  
+
 }
-  

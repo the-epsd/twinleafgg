@@ -28,11 +28,13 @@ export declare class ElectrodeGX extends PokemonCard {
         damage: number;
         text: string;
         damageCalculation?: undefined;
+        gxAttack?: undefined;
     } | {
         name: string;
         cost: CardType[];
         damage: number;
         damageCalculation: string;
+        gxAttack: boolean;
         text: string;
     })[];
     set: string;

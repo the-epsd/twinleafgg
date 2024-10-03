@@ -2,6 +2,7 @@ import { Magneton } from '../set-scarlet-and-violet-promos/magneton';
 import { Crocalor } from './crocalor';
 import { Cyrano } from './cyrano';
 import { Deino } from './deino';
+import { Eternatus } from './eternatus';
 import { ExcitingStadium } from './exciting-stadium';
 import { Fuecoco } from './fuecoco';
 import { GravityMountain } from './gravity-mountain';
@@ -80,4 +81,8 @@ export class ZweilousArt extends Zweilous {
 
 export class HydreigonexArt extends Hydreigonex {
   public cardImage = 'https://pokemonproxies.com/static/media/8i-072-Hydreigon_ex.c6c39c693066ecba8124.png';
+}
+
+export class EternatusArt extends Eternatus {
+  public cardImage = 'https://pokemonproxies.com/static/media/8i-080-Eternatus.c644b266e5800c93414a.png';
 }

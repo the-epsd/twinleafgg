@@ -41,6 +41,7 @@ export class Toxicroak extends PokemonCard {
 
     if (effect instanceof BetweenTurnsEffect) {
       const player = effect.player;
+      
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
         if (card === this) {
 

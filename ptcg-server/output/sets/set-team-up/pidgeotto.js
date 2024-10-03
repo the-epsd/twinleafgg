@@ -14,10 +14,11 @@ class Pidgeotto extends game_1.PokemonCard {
         super(...arguments);
         this.stage = card_types_1.Stage.STAGE_1;
         this.evolvesFrom = 'Pidgey';
-        this.cardType = card_types_1.CardType.COLORLESS;
+        this.cardType = C;
         this.hp = 60;
-        this.weakness = [];
-        this.retreat = [card_types_1.CardType.COLORLESS];
+        this.weakness = [{ type: L }];
+        this.resistance = [{ type: F, value: -30 }];
+        this.retreat = [C];
         this.powers = [{
                 name: 'Air Mail',
                 useWhenInPlay: true,
@@ -27,7 +28,7 @@ class Pidgeotto extends game_1.PokemonCard {
         this.attacks = [
             {
                 name: 'Gust',
-                cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
+                cost: [C, C],
                 damage: 30,
                 text: ''
             }

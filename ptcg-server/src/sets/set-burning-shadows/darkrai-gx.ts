@@ -31,6 +31,7 @@ export class DarkraiGX extends PokemonCard {
       name: 'Dead End-GX',
       cost: [CardType.DARK, CardType.DARK, CardType.COLORLESS],
       damage: 0,
+      gxAttack: true,
       text: 'If your opponent\'s Active Pokémon is affected by a Special Condition, that Pokémon is Knocked Out. (You can\'t use more than 1 GX attack in a game.)'
     }
   ];

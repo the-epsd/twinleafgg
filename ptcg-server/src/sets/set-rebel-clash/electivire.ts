@@ -13,24 +13,24 @@ export class Electivire extends PokemonCard {
 
   public evolvesFrom = 'Electabuzz';
 
-  public cardType: CardType = CardType.LIGHTNING;
+  public cardType: CardType = L;
 
   public hp: number = 140;
 
-  public weakness = [{ type: CardType.FIGHTING }];
+  public weakness = [{ type: F }];
 
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
+  public retreat = [C, C, C];
 
   public attacks = [
     {
       name: 'Thunder Shock',
-      cost: [CardType.LIGHTNING],
+      cost: [L, C],
       damage: 50,
       text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
     },
     {
       name: 'Electrified Bolt',
-      cost: [CardType.LIGHTNING, CardType.LIGHTNING, CardType.COLORLESS],
+      cost: [L, L, C],
       damage: 90,
       damageCalculation: '+',
       text: 'If this Pokémon has any Special Energy attached, this attack does 90 more damage.'
@@ -53,7 +53,7 @@ export class Electivire extends PokemonCard {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
-  
+
       return store.prompt(state, [
         new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
       ], result => {
@@ -63,13 +63,13 @@ export class Electivire extends PokemonCard {
         }
       });
     }
-    
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
-  
+
       const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player, player.active);
       store.reduceEffect(state, checkProvidedEnergyEffect);
-      
+
       let hasSpecialEnergy = false;
       checkProvidedEnergyEffect.energyMap.forEach(energy => {
         if (energy.card.energyType === EnergyType.SPECIAL) {
@@ -81,7 +81,7 @@ export class Electivire extends PokemonCard {
         effect.damage += 90;
       }
     }
-    
+
     return state;
   }
 }

@@ -21,6 +21,7 @@ class Mimikyu extends game_1.PokemonCard {
                 name: 'Copycat',
                 cost: [game_1.CardType.PSYCHIC, game_1.CardType.COLORLESS],
                 damage: 0,
+                copycatAttack: true,
                 text: 'If your opponent\'s Pokémon used an attack that isn\'t a GX attack during their last turn, use it as this attack.'
             }];
         this.set = 'GRI';
@@ -39,7 +40,7 @@ class Mimikyu extends game_1.PokemonCard {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             const lastAttack = state.lastAttack;
-            if (!lastAttack || lastAttack.name === 'Copycat' || lastAttack.name === 'Watch and Learn') {
+            if (!lastAttack || lastAttack.copycatAttack === true || lastAttack.gxAttack === true) {
                 return state;
             }
             const attackEffect = new game_effects_1.AttackEffect(player, opponent, lastAttack);

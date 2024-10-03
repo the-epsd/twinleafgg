@@ -31,16 +31,24 @@ export class CanActivateService implements CanActivate {
     const isLoggedIn = !!loggedUser;
 
     if (isLoggedIn) {
-      const removedUsernames = ['Joacotaco24', 'leofanax', 'RedditKarmaGold', '10types'];
       const bannedUsernames = ['Joacotaco24', 'leofanax', 'RedditKarmaGold', '10types'];
 
-      if (bannedUsernames.includes(loggedUser.name) || removedUsernames.includes(loggedUser.name)) {
+      const betaEndedUsernames = []; // Add usernames here
+
+      if (bannedUsernames.includes(loggedUser.name)) {
         this.alertService.toast(this.translate.instant('User has been removed from the Beta Program for breach of Terms of Service'));
         this.sessionService.clear();
         this.loginService.logout();
         this.loginPopupService.redirectUrl = state.url;
         return this.router.parseUrl('/login');
+      } else if (betaEndedUsernames.includes(loggedUser.name)) {
+        this.alertService.toast(this.translate.instant('This portion of the Beta Program has ended. Thank you for your participation.'));
+        this.sessionService.clear();
+        this.loginService.logout();
+        this.loginPopupService.redirectUrl = state.url;
+        return this.router.parseUrl('/login');
       }
+
       return true;
     }
 

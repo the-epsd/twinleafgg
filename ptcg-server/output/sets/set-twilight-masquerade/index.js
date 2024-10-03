@@ -70,5 +70,6 @@ exports.setTwilightMasquerade = [
     new card_images_1.TingLuArt(),
     new card_images_1.MonfernoArt(),
     new card_images_1.RillaboomArt(),
-    new card_images_1.ZapdosArt()
+    new card_images_1.ZapdosArt(),
+    new card_images_1.ClefairyArt(),
 ];

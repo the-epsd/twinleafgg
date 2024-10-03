@@ -14,6 +14,8 @@ export interface Attack {
     cost: CardType[];
     damage: number;
     damageCalculation?: string;
+    copycatAttack?: boolean;
+    gxAttack?: boolean;
     name: string;
     text: string;
     effect?: (store: StoreLike, state: State, effect: AttackEffect) => void;

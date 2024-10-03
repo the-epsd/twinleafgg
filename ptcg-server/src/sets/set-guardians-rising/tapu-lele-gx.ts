@@ -48,6 +48,7 @@ export class TapuLeleGX extends PokemonCard {
       name: 'Tapu Cure-GX',
       cost: [CardType.PSYCHIC],
       damage: 0,
+      gxAttack: true,
       text: 'Heal all damage from 2 of your Benched Pokémon. (You can\'t use more than 1 GX attack in a game.) '
     }
   ];

@@ -29,7 +29,7 @@ function* useGenomeHacking(next, store, state, effect) {
     if (attack === null) {
         return state;
     }
-    if (attack.name === 'Genome Hacking') {
+    if (attack.copycatAttack === true) {
         return state;
     }
     store.log(state, game_1.GameLog.LOG_PLAYER_COPIES_ATTACK, {
@@ -70,6 +70,7 @@ class Mewex extends pokemon_card_1.PokemonCard {
                 name: 'Genome Hacking',
                 cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
                 damage: 0,
+                copycatAttack: true,
                 text: 'Choose 1 of the Defending Pokemon\'s attacks and use it ' +
                     'as this attack.'
             }];

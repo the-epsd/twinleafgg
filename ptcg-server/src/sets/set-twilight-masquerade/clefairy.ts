@@ -2,36 +2,36 @@ import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game';
 
 export class Clefairy extends PokemonCard {
-  
+
   public stage: Stage = Stage.BASIC;
 
   public regulationMark = 'H';
-  
-  public cardType: CardType = CardType.PSYCHIC;
-  
-  public weakness = [{ type: CardType.METAL }];
+
+  public cardType: CardType = P;
+
+  public weakness = [{ type: M }];
 
   public hp: number = 60;
-  
-  public retreat = [ CardType.COLORLESS ];
-  
+
+  public retreat = [C];
+
   public attacks = [
     {
       name: 'Moon Kick',
-      cost: [ CardType.COLORLESS ],
+      cost: [C, C],
       damage: 40,
       text: ''
     }
   ];
-  
+
   public set: string = 'TWM';
 
   public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '77';
-  
+
   public name: string = 'Clefairy';
-  
+
   public fullName: string = 'Clefairy TWM';
 
 }

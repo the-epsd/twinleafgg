@@ -55,9 +55,10 @@ class FieldBlower extends trainer_card_1.TrainerCard {
                             cardList.moveTo(stadiumPlayer.discard);
                             store.log(state, game_1.GameLog.LOG_PLAYER_DISCARDS_WITH_FIELD_BLOWER, { name: player.name, card: stadiumCard.name });
                             let targets = [];
-                            return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DISCARD_CARDS, game_1.PlayerType.ANY, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { min: 0, max: 1, allowCancel: true, blocked }), results => {
+                            return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DISCARD_CARDS, game_1.PlayerType.ANY, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { min: 0, max: 1, allowCancel: false, blocked }), results => {
                                 targets = results || [];
                                 if (targets.length === 0) {
+                                    player.supporter.moveCardTo(this, player.discard);
                                     return state;
                                 }
                                 targets.forEach(target => {
@@ -67,6 +68,7 @@ class FieldBlower extends trainer_card_1.TrainerCard {
                                         store.log(state, game_1.GameLog.LOG_PLAYER_DISCARDS_WITH_FIELD_BLOWER, { name: player.name, card: target.tool.name });
                                         target.tool = undefined;
                                     }
+                                    player.supporter.moveCardTo(this, player.discard);
                                     return state;
                                 });
                                 return state;
@@ -81,6 +83,7 @@ class FieldBlower extends trainer_card_1.TrainerCard {
                             return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DISCARD_CARDS, game_1.PlayerType.ANY, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { min: 1, max: max, allowCancel: false, blocked }), results => {
                                 targets = results || [];
                                 if (targets.length === 0) {
+                                    player.supporter.moveCardTo(this, player.discard);
                                     return state;
                                 }
                                 targets.forEach(target => {
@@ -92,6 +95,7 @@ class FieldBlower extends trainer_card_1.TrainerCard {
                                     }
                                     return state;
                                 });
+                                player.supporter.moveCardTo(this, player.discard);
                                 return state;
                             });
                         }

@@ -16,13 +16,15 @@ export class Pidgeotto extends PokemonCard {
 
   public evolvesFrom = 'Pidgey';
 
-  public cardType: CardType = CardType.COLORLESS;
+  public cardType: CardType = C;
 
   public hp: number = 60;
 
-  public weakness = [];
+  public weakness = [{ type: L }];
 
-  public retreat = [CardType.COLORLESS];
+  public resistance = [{ type: F, value: -30 }];
+
+  public retreat = [C];
 
   public powers = [{
     name: 'Air Mail',
@@ -34,7 +36,7 @@ export class Pidgeotto extends PokemonCard {
   public attacks = [
     {
       name: 'Gust',
-      cost: [CardType.COLORLESS, CardType.COLORLESS],
+      cost: [C, C],
       damage: 30,
       text: ''
     }

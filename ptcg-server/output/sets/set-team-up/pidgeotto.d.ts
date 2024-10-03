@@ -8,8 +8,14 @@ export declare class Pidgeotto extends PokemonCard {
     evolvesFrom: string;
     cardType: CardType;
     hp: number;
-    weakness: never[];
-    retreat: CardType[];
+    weakness: {
+        type: CardType.LIGHTNING;
+    }[];
+    resistance: {
+        type: CardType.FIGHTING;
+        value: number;
+    }[];
+    retreat: CardType.COLORLESS[];
     powers: {
         name: string;
         useWhenInPlay: boolean;
@@ -18,7 +24,7 @@ export declare class Pidgeotto extends PokemonCard {
     }[];
     attacks: {
         name: string;
-        cost: CardType[];
+        cost: CardType.COLORLESS[];
         damage: number;
         text: string;
     }[];

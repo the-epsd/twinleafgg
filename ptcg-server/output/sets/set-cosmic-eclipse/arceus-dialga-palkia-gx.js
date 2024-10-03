@@ -76,6 +76,13 @@ class ArceusDialgaPalkiaGX extends pokemon_card_1.PokemonCard {
                 console.log('Used Altered Creation with Extra Water');
             }
         }
+        if (effect instanceof attack_effects_1.PutDamageEffect) {
+            const player = effect.player;
+            // const opponent = StateUtils.getOpponent(state, player);
+            if (player.alteredCreationDamage === true) {
+                effect.damage += 30;
+            }
+        }
         if (effect instanceof game_effects_1.KnockOutEffect) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
@@ -88,25 +95,25 @@ class ArceusDialgaPalkiaGX extends pokemon_card_1.PokemonCard {
                 effect.prizeCount += 1;
             }
         }
-        if (effect instanceof attack_effects_1.PutDamageEffect && effect.source == effect.player.active) {
-            const player = effect.player;
-            const opponent = game_1.StateUtils.getOpponent(state, effect.player);
-            if (effect.target == effect.source) {
-                return state;
-            }
-            if (effect.target !== player.active && effect.target !== opponent.active) {
-                return state;
-            }
-            if (effect.damageReduced) {
-                // Damage already reduced, don't reduce again
-                return state;
-            }
-            const targetCard = effect.target.getPokemonCard();
-            if (targetCard && player.alteredCreationDamage) {
-                effect.damage += 30;
-                effect.damageReduced = true;
-            }
-        }
+        // if (effect instanceof PutDamageEffect && effect.source == effect.player.active) {
+        //   const player = effect.player;
+        //   const opponent = StateUtils.getOpponent(state, effect.player);
+        //   if (effect.target == effect.source) {
+        //     return state;
+        //   }
+        //   if (effect.target !== player.active && effect.target !== opponent.active) {
+        //     return state;
+        //   }
+        //   if (effect.damageReduced) {
+        //     // Damage already reduced, don't reduce again
+        //     return state;
+        //   }
+        //   const targetCard = effect.target.getPokemonCard();
+        //   if (targetCard && player.alteredCreationDamage) {
+        //     effect.damage += 30;
+        //     effect.damageReduced = true;
+        //   }
+        // }
         return state;
     }
 }

@@ -1,10 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.HydreigonexArt = exports.ZweilousArt = exports.DeinoArt = exports.TogekissArt = exports.MiloticexArt = exports.SkeledirgeArt = exports.CrocalorArt = exports.FuecocoArt = exports.CyranoArt = exports.MiraculousIntercomArt = exports.ExcitingStadiumArt = exports.GravityMountainArt = exports.MagnetonArt = exports.MagnemiteArt = exports.TerapagosArt = exports.PikachuexArt = void 0;
+exports.EternatusArt = exports.HydreigonexArt = exports.ZweilousArt = exports.DeinoArt = exports.TogekissArt = exports.MiloticexArt = exports.SkeledirgeArt = exports.CrocalorArt = exports.FuecocoArt = exports.CyranoArt = exports.MiraculousIntercomArt = exports.ExcitingStadiumArt = exports.GravityMountainArt = exports.MagnetonArt = exports.MagnemiteArt = exports.TerapagosArt = exports.PikachuexArt = void 0;
 const magneton_1 = require("../set-scarlet-and-violet-promos/magneton");
 const crocalor_1 = require("./crocalor");
 const cyrano_1 = require("./cyrano");
 const deino_1 = require("./deino");
+const eternatus_1 = require("./eternatus");
 const exciting_stadium_1 = require("./exciting-stadium");
 const fuecoco_1 = require("./fuecoco");
 const gravity_mountain_1 = require("./gravity-mountain");
@@ -132,3 +133,10 @@ class HydreigonexArt extends hydreigon_ex_1.Hydreigonex {
     }
 }
 exports.HydreigonexArt = HydreigonexArt;
+class EternatusArt extends eternatus_1.Eternatus {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pokemonproxies.com/static/media/8i-080-Eternatus.c644b266e5800c93414a.png';
+    }
+}
+exports.EternatusArt = EternatusArt;

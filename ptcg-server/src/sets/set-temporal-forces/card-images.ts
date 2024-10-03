@@ -26,6 +26,7 @@ import { Gengarex } from './gengar-ex';
 import { GougingFireex } from './gouging-fire-ex';
 import { GreatTusk } from './great-tusk';
 import { Grotle } from './grotle';
+import { Grubbin } from './grubbin';
 import { HandTrimmer } from './hand-trimmer';
 import { Haunter } from './haunter';
 import { HeavyBaton } from './heavy-baton';
@@ -188,6 +189,11 @@ export class GougingFireexArt extends GougingFireex {
 export class GrotleArt extends Grotle {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEF/TEF_011_R_EN.png';
 }
+
+export class GrubbinArt extends Grubbin {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEF/TEF_018_R_EN.png';
+}
+
 
 export class HandTrimmerArt extends HandTrimmer {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEF/TEF_150_R_EN.png';

@@ -2,6 +2,7 @@ import { Magneton } from '../set-scarlet-and-violet-promos/magneton';
 import { Crocalor } from './crocalor';
 import { Cyrano } from './cyrano';
 import { Deino } from './deino';
+import { Eternatus } from './eternatus';
 import { ExcitingStadium } from './exciting-stadium';
 import { Fuecoco } from './fuecoco';
 import { GravityMountain } from './gravity-mountain';
@@ -63,5 +64,8 @@ export declare class ZweilousArt extends Zweilous {
     cardImage: string;
 }
 export declare class HydreigonexArt extends Hydreigonex {
+    cardImage: string;
+}
+export declare class EternatusArt extends Eternatus {
     cardImage: string;
 }

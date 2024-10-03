@@ -42,7 +42,7 @@ function* useGenomeHacking(next: Function, store: StoreLike, state: State,
     return state;
   }
 
-  if (attack.name === 'Genome Hacking') {
+  if (attack.copycatAttack === true) {
     return state;
   }
 
@@ -97,6 +97,7 @@ export class Mewex extends PokemonCard {
     name: 'Genome Hacking',
     cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
     damage: 0,
+    copycatAttack: true,
     text: 'Choose 1 of the Defending Pokemon\'s attacks and use it ' +
       'as this attack.'
   }];
