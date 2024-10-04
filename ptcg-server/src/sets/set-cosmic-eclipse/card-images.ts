@@ -1,15 +1,15 @@
 import { ArceusDialgaPalkiaGX } from './arceus-dialga-palkia-gx';
 import { BellelbaAndBrycenMan } from './bellelba-and-brycen-man';
 import { Blacephalon } from './blacephalon';
-import { Sawsbuck } from './CEC_16_Sawsbuck';
-import { Stoutland } from './CEC_176_Stoutland';
-import { Buzzwole } from './CEC_21_Buzzwole';
-import { Phione } from './CEC_57_Phione';
-import { Wishiwashi } from './CEC_62_Wishiwashi';
-import { Pikachu } from './CEC_66_Pikachu';
-import { Duskull } from './CEC_83_Duskull';
+import { Sawsbuck } from './sawsbuck';
+import { Stoutland } from './stoutland';
+import { Buzzwole } from './buzzwole';
+import { Phione } from './phione';
+import { Wishiwashi } from './wishiwashi';
+import { Pikachu } from './pikachu';
+import { Duskull } from './duskull';
 
-import { Dusclops } from './CEC_84_Dusclops';
+import { Dusclops } from './dusclops';
 
 import { ChaoticSwell } from './chaotic-swell';
 import { Clay } from './clay';

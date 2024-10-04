@@ -10,9 +10,9 @@ import { Oranguru } from './oranguru';
 import { ProfessorKukui } from './professor-kukui';
 import { RainbowEnergy } from './rainbow-energy';
 import { Repel } from './repel';
-import { Fomantis } from './SUM_14_Fomantis';
-import { Golduck } from './SUM_29_Golduck';
-import { AlolanRattata } from './SUM_76_Alolan_Rattata';
+import { Fomantis } from './fomantis';
+import { Golduck } from './golduck';
+import { AlolanRattata } from './alolan_rattata';
 import { TimerBall } from './timer-ball';
 
 export class AlolanGrimerArt extends AlolanGrimer {

@@ -12,8 +12,8 @@ import { Sneasel } from './sneasel';
 import { Turtwig } from './turtwig';
 import { UnitEnergyGRW } from './unit-energy-grw';
 import { UnitEnergyLPM } from './unit-energy-lpm';
-import { Riolu } from './UPR_66_Riolu';
-import { Bastiodon } from './UPR_85_Bastiodon';
+import { Riolu } from './riolu';
+import { Bastiodon } from './bastiodon';
 import { Volkner } from './volkner';
 import { Weavile } from './weavile';
 

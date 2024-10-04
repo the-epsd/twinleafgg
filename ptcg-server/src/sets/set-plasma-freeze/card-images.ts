@@ -3,8 +3,8 @@ import { Exeggcute } from './exeggcute';
 import { FloatStone } from './float-stone';
 import { FrozenCity } from './frozen-city';
 import { MrMime } from './mr-mime';
-import { Electrode } from './PLF_33_Electrode';
-import { Exeggutor } from './PLF_5_Exeggutor';
+import { Electrode } from './electrode';
+import { Exeggutor } from './exeggutor';
 import { RockGuard } from './rock-guard';
 
 export class ElectrodeArt extends Electrode {

@@ -1,5 +1,5 @@
 import { EnergyPouch } from './energy-pouch';
-import { Deerling } from './FCO_8_Deerling';
+import { Deerling } from './deerling';
 import { Fennekin } from './fennekin';
 import { Lucario } from './lucario';
 import { Mew } from './mew';
@@ -36,5 +36,5 @@ export class RioluArt extends Riolu {
 }
 
 export class TeamRocketsHandiworkArt extends TeamRocketsHandiwork {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FCO/FCO_112_R_EN_LG.png';  
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FCO/FCO_112_R_EN_LG.png';
 }

@@ -1,8 +1,8 @@
 import { BirdKeeper } from './bird-keeper';
 import { CapeOfToughness } from './cape-of-toughness';
 import { CrobatV } from './crobat-v';
-import { Klang } from './DAA_126_Klang';
-import { Combusken } from './DAA_23_Combusken';
+import { Klang } from './klang';
+import { Combusken } from './combusken';
 import { HidingDarknessEnergy } from './hiding-darkness-energy';
 import { Kangaskhan } from './kangaskhan';
 import { Lugia } from './lugia';

@@ -9,7 +9,7 @@ import { Caitlin } from './caitlin';
 import { CastformRainyForm } from './castform-rainy-form';
 import { CastformSnowyForm } from './castform-snowy-form';
 import { CastformSunnyForm } from './castform-sunny-form';
-import { Tauros } from './CRE_115_Tauros';
+import { Tauros } from './tauros';
 import { Drizzile } from './drizzile';
 import { DynaTreeHill } from './dyna-tree-hill';
 import { EchoingHorn } from './echoing-horn';

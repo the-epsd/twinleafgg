@@ -1,4 +1,4 @@
-import { Vileplume } from './AOR_3_Vileplume';
+import { Vileplume } from './vileplume';
 import { EcoArm } from './eco-arm';
 import { HexManiac } from './hex-maniac';
 import { Unown } from './unown';
