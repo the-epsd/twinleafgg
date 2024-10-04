@@ -5,10 +5,10 @@ const lost_vacuum_1 = require("../set-lost-origin/lost-vacuum");
 const rotom_v_1 = require("../set-lost-origin/rotom-v");
 const absol_1 = require("./absol");
 const bidoof_1 = require("./bidoof");
-const CRZ_16_Zarude_1 = require("./CRZ_16_Zarude");
-const CRZ_27_Salandit_1 = require("./CRZ_27_Salandit");
-const CRZ_94_Zacian_1 = require("./CRZ_94_Zacian");
-const CRZ_9_Yanmega_1 = require("./CRZ_9_Yanmega");
+const zarude_1 = require("./zarude");
+const salandit_1 = require("./salandit");
+const zacian_1 = require("./zacian");
+const yanmega_1 = require("./yanmega");
 const hoopa_1 = require("./hoopa");
 const kyogre_1 = require("./kyogre");
 const luxray_1 = require("./luxray");
@@ -114,7 +114,7 @@ class RotomVArt extends rotom_v_1.RotomV {
     }
 }
 exports.RotomVArt = RotomVArt;
-class SalanditArt extends CRZ_27_Salandit_1.Salandit {
+class SalanditArt extends salandit_1.Salandit {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRZ/CRZ_027_R_EN_LG.png';
@@ -128,14 +128,14 @@ class WailmerArt extends wailmer_1.Wailmer {
     }
 }
 exports.WailmerArt = WailmerArt;
-class YanmegaArt extends CRZ_9_Yanmega_1.Yanmega {
+class YanmegaArt extends yanmega_1.Yanmega {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRZ/CRZ_009_R_EN_LG.png';
     }
 }
 exports.YanmegaArt = YanmegaArt;
-class ZacianArt extends CRZ_94_Zacian_1.Zacian {
+class ZacianArt extends zacian_1.Zacian {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRZ/CRZ_094_R_EN_LG.png';
@@ -170,7 +170,7 @@ class ZamazentaVArt extends zamazenta_v_1.ZamazentaV {
     }
 }
 exports.ZamazentaVArt = ZamazentaVArt;
-class ZarudeArt extends CRZ_16_Zarude_1.Zarude {
+class ZarudeArt extends zarude_1.Zarude {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRZ/CRZ_016_R_EN_LG.png';

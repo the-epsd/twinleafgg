@@ -3,8 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.TapuKokoArt = exports.PikachuZekromGXArt = exports.PalaceBookArt = exports.LurantisArt = exports.FirefighterPikachuArt = void 0;
 const firefighter_pikachu_1 = require("./firefighter-pikachu");
 const palace_book_1 = require("./palace-book");
-const SMP_168_Pikachu_ZekromGX_1 = require("./SMP_168_Pikachu&ZekromGX");
-const SMP_25_Lurantis_1 = require("./SMP_25_Lurantis");
+const Pikachu_ZekromGX_1 = require("./Pikachu&ZekromGX");
+const lurantis_1 = require("./lurantis");
 const tapu_koko_1 = require("./tapu-koko");
 class FirefighterPikachuArt extends firefighter_pikachu_1.FirefighterPikachu {
     constructor() {
@@ -13,7 +13,7 @@ class FirefighterPikachuArt extends firefighter_pikachu_1.FirefighterPikachu {
     }
 }
 exports.FirefighterPikachuArt = FirefighterPikachuArt;
-class LurantisArt extends SMP_25_Lurantis_1.Lurantis {
+class LurantisArt extends lurantis_1.Lurantis {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SMP/SMP_025_R_EN_LG.png';
@@ -27,7 +27,7 @@ class PalaceBookArt extends palace_book_1.PalaceBook {
     }
 }
 exports.PalaceBookArt = PalaceBookArt;
-class PikachuZekromGXArt extends SMP_168_Pikachu_ZekromGX_1.PikachuZekromGX {
+class PikachuZekromGXArt extends Pikachu_ZekromGX_1.PikachuZekromGX {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SMP/SMP_168_R_EN_LG.png';

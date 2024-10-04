@@ -20,13 +20,13 @@ const rosa_1 = require("./rosa");
 const sizzlipede_1 = require("./sizzlipede");
 const snom_1 = require("./snom");
 const sobble_1 = require("./sobble");
-const SSH_124_Toxicroak_1 = require("./SSH_124_Toxicroak");
-const SSH_128_Galarian_Perrserker_1 = require("./SSH_128_Galarian_Perrserker");
-const SSH_130_Ferroseed_1 = require("./SSH_130_Ferroseed");
-const SSH_32_Raboot_1 = require("./SSH_32_Raboot");
-const SSH_34_Cinderace_1 = require("./SSH_34_Cinderace");
-const SSH_39_Centiskorch_1 = require("./SSH_39_Centiskorch");
-const SSH_7_Maractus_1 = require("./SSH_7_Maractus");
+const toxicroak_1 = require("./toxicroak");
+const galarian_perrserker_1 = require("./galarian_perrserker");
+const ferroseed_1 = require("./ferroseed");
+const raboot_1 = require("./raboot");
+const cinderace_1 = require("./cinderace");
+const centiskorch_1 = require("./centiskorch");
+const maractus_1 = require("./maractus");
 const welder_1 = require("./welder");
 class AirBalloonArt extends air_balloon_1.AirBalloon {
     constructor() {
@@ -42,7 +42,7 @@ class AuroraEnergyArt extends aurora_energy_1.AuroraEnergy {
     }
 }
 exports.AuroraEnergyArt = AuroraEnergyArt;
-class CentiskorchArt extends SSH_39_Centiskorch_1.Centiskorch {
+class CentiskorchArt extends centiskorch_1.Centiskorch {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSH/SSH_039_R_EN_LG.png';
@@ -56,7 +56,7 @@ class CinccinoArt extends cinccino_1.Cinccino {
     }
 }
 exports.CinccinoArt = CinccinoArt;
-class CinderaceArt extends SSH_34_Cinderace_1.Cinderace {
+class CinderaceArt extends cinderace_1.Cinderace {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSH/SSH_034_R_EN_LG.png';
@@ -84,14 +84,14 @@ class EvolutionIncenseArt extends evolution_incense_1.EvolutionIncense {
     }
 }
 exports.EvolutionIncenseArt = EvolutionIncenseArt;
-class FerroseedArt extends SSH_130_Ferroseed_1.Ferroseed {
+class FerroseedArt extends ferroseed_1.Ferroseed {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSH/SSH_130_R_EN_LG.png';
     }
 }
 exports.FerroseedArt = FerroseedArt;
-class GalarianPerrserkerArt extends SSH_128_Galarian_Perrserker_1.GalarianPerrserker {
+class GalarianPerrserkerArt extends galarian_perrserker_1.GalarianPerrserker {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSH/SSH_128_R_EN_LG.png';
@@ -119,7 +119,7 @@ class InteleonArt extends inteleon_1.Inteleon {
     }
 }
 exports.InteleonArt = InteleonArt;
-class MaractusArt extends SSH_7_Maractus_1.Maractus {
+class MaractusArt extends maractus_1.Maractus {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSH/SSH_007_R_EN_LG.png';
@@ -168,7 +168,7 @@ class QuickBallArt extends quick_ball_1.QuickBall {
     }
 }
 exports.QuickBallArt = QuickBallArt;
-class RabootArt extends SSH_32_Raboot_1.Raboot {
+class RabootArt extends raboot_1.Raboot {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSH/SSH_032_R_EN_LG.png';
@@ -203,7 +203,7 @@ class SobbleArt extends sobble_1.Sobble {
     }
 }
 exports.SobbleArt = SobbleArt;
-class ToxicroakArt extends SSH_124_Toxicroak_1.Toxicroak {
+class ToxicroakArt extends toxicroak_1.Toxicroak {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSH/SSH_124_R_EN_LG.png';

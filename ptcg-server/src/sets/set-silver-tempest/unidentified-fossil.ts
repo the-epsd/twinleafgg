@@ -78,7 +78,7 @@ export class UnidentifiedFossil extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      const playPokemonEffect = new PlayPokemonEffect(player, this as PokemonCard, emptySlots[0]);
+      const playPokemonEffect = new PlayPokemonEffect(player, this as unknown as PokemonCard, emptySlots[0]);
       store.reduceEffect(state, playPokemonEffect);
     }
 

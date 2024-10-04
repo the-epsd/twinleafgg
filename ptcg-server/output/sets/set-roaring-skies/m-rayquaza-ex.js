@@ -11,6 +11,7 @@ class MRayquazaEX extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.MEGA;
+        this.tags = [card_types_1.CardTag.POKEMON_EX, card_types_1.CardTag.MEGA];
         this.evolvesFrom = 'Rayquaza EX';
         this.cardType = card_types_1.CardType.DRAGON;
         this.hp = 230;

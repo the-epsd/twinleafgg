@@ -8,14 +8,14 @@ class Clefairy extends game_1.PokemonCard {
         super(...arguments);
         this.stage = card_types_1.Stage.BASIC;
         this.regulationMark = 'H';
-        this.cardType = card_types_1.CardType.PSYCHIC;
-        this.weakness = [{ type: card_types_1.CardType.METAL }];
+        this.cardType = P;
+        this.weakness = [{ type: M }];
         this.hp = 60;
-        this.retreat = [card_types_1.CardType.COLORLESS];
+        this.retreat = [C];
         this.attacks = [
             {
                 name: 'Moon Kick',
-                cost: [card_types_1.CardType.COLORLESS],
+                cost: [C, C],
                 damage: 40,
                 text: ''
             }

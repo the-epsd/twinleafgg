@@ -35,10 +35,10 @@ const magmar_1 = require("./magmar");
 const oddish_1 = require("./oddish");
 const antique_helix_fossil_1 = require("./antique-helix-fossil");
 const energy_sticker_1 = require("./energy-sticker");
-const MEW_146_Moltres_1 = require("./MEW_146_Moltres");
+const moltres_1 = require("./moltres");
 const staryu_1 = require("./staryu");
-const MEW_24_Arbok_ex_1 = require("./MEW_24_Arbok_ex");
-const MEW_23_Ekans_1 = require("./MEW_23_Ekans");
+const arbok_ex_1 = require("./arbok_ex");
+const ekans_1 = require("./ekans");
 const nidoking_1 = require("./nidoking");
 const nidoqueen_1 = require("./nidoqueen");
 const nidoran_male_1 = require("./nidoran-male");
@@ -71,7 +71,7 @@ class AlakazamexArt extends alakazam_ex_1.Alakazamex {
     }
 }
 exports.AlakazamexArt = AlakazamexArt;
-class ArbokexArt extends MEW_24_Arbok_ex_1.Arbokex {
+class ArbokexArt extends arbok_ex_1.Arbokex {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/MEW/MEW_024_R_EN_LG.png';
@@ -141,7 +141,7 @@ class DoduoArt extends doduo_1.Doduo {
     }
 }
 exports.DoduoArt = DoduoArt;
-class EkansArt extends MEW_23_Ekans_1.Ekans {
+class EkansArt extends ekans_1.Ekans {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/MEW/MEW_023_R_EN_LG.png';
@@ -246,7 +246,7 @@ class MewexArt extends mew_ex_1.Mewex {
     }
 }
 exports.MewexArt = MewexArt;
-class MoltresArt extends MEW_146_Moltres_1.Moltres {
+class MoltresArt extends moltres_1.Moltres {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/MEW/MEW_146_R_EN_LG.png';

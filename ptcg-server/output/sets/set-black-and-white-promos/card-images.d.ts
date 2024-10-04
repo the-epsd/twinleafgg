@@ -1,4 +1,4 @@
-import { Litwick } from './BWP_27_Litwick';
+import { Litwick } from './litwick';
 import { Kyurem } from './kyurem';
 import { TropicalBeach } from './tropical-beach';
 export declare class KyuremArt extends Kyurem {

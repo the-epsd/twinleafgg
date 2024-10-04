@@ -12,8 +12,14 @@ export const cardReplacements = [
 
   { from: 'Grass Energy SVE 1', to: 'Grass Energy 1' },
 
+  //BKP
+  { from: 'Delinquent BKP 98', to: 'Delinquent BKT 98' },
+
   //GRI
   { from: 'Mallow GRI 127', to: 'Mallow TEF 121' },
+
+  //RCL
+  { from: 'Horror Psychic Energy RCL 172', to: 'Horror Psychic Energy DAA 172' },
 
   //CRE
   { from: 'Klara CRE 145', to: 'Klara CRE 145 145' },
@@ -234,8 +240,14 @@ export const cardReplacements = [
 
 export const exportReplacements = [
 
+  //BKP
+  { from: 'Delinquent BKT 98', to: 'Delinquent BKP 98' },
+
   //GRI
   { from: 'Mallow TEF 121', to: 'Mallow GRI 127' },
+
+  //RCL
+  { from: 'Horror Psychic Energy DAA 172', to: 'Horror Psychic Energy RCL 172' },
 
   //CRE
   { from: 'Klara CRE 145 145', to: 'Klara CRE 145' },

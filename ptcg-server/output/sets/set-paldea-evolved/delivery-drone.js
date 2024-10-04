@@ -45,9 +45,7 @@ class DeliveryDrone extends trainer_card_1.TrainerCard {
         this.setNumber = '178';
         this.name = 'Delivery Drone';
         this.fullName = 'Delivery Drone PAL';
-        this.text = 'Discard 2 cards from your hand. (If you can\'t discard 2 cards, ' +
-            'you can\'t play this card.) Search your deck for a card and put it into ' +
-            'your hand. Shuffle your deck afterward.';
+        this.text = 'Flip 2 coins. If both of them are heads, search your deck for a card and put it into your hand. Then, shuffle your deck.';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {

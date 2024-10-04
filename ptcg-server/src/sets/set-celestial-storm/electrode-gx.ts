@@ -42,6 +42,7 @@ export class ElectrodeGX extends PokemonCard {
       cost: [CardType.LIGHTNING, CardType.COLORLESS],
       damage: 30,
       damageCalculation: '+',
+      gxAttack: true,
       text: 'Discard any amount of Energy from your Pokémon. This attack does 50 more damage for each card you discarded in this way. (You can\'t use more than 1 GX attack in a game.) '
     },
   ];

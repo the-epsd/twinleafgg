@@ -6,10 +6,10 @@ const exeggcute_1 = require("./exeggcute");
 const float_stone_1 = require("./float-stone");
 const frozen_city_1 = require("./frozen-city");
 const mr_mime_1 = require("./mr-mime");
-const PLF_33_Electrode_1 = require("./PLF_33_Electrode");
-const PLF_5_Exeggutor_1 = require("./PLF_5_Exeggutor");
+const electrode_1 = require("./electrode");
+const exeggutor_1 = require("./exeggutor");
 const rock_guard_1 = require("./rock-guard");
-class ElectrodeArt extends PLF_33_Electrode_1.Electrode {
+class ElectrodeArt extends electrode_1.Electrode {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PLF/PLF_033_R_EN_LG.png';
@@ -23,7 +23,7 @@ class ExeggcuteArt extends exeggcute_1.Exeggcute {
     }
 }
 exports.ExeggcuteArt = ExeggcuteArt;
-class ExeggutorArt extends PLF_5_Exeggutor_1.Exeggutor {
+class ExeggutorArt extends exeggutor_1.Exeggutor {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PLF/PLF_005_R_EN.png';

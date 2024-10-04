@@ -11,7 +11,7 @@ export class Delinquent extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;
 
-  public set: string = 'BKT';
+  public set: string = 'BKP';
 
   public name: string = 'Delinquent';
 

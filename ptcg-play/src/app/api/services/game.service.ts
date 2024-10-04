@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
-import { ClientInfo, GameState, State, CardTarget, StateLog, Replay,
-  Base64, StateSerializer, PlayerStats } from 'ptcg-server';
-import { Observable } from 'rxjs';
+import {
+  ClientInfo, GameState, State, CardTarget, StateLog, Replay,
+  Base64, StateSerializer, PlayerStats
+} from 'ptcg-server';
+import { BehaviorSubject, merge, Observable, throwError } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
-import { finalize } from 'rxjs/operators';
+import { catchError, finalize, switchMap, takeUntil, timeout } from 'rxjs/operators';
 
 import { AlertService } from '../../shared/alert/alert.service';
 import { ApiError } from '../api.error';
@@ -12,16 +14,22 @@ import { LocalGameState } from '../../shared/session/session.interface';
 import { PlayerStatsResponse } from '../interfaces/game.interface';
 import { SocketService } from '../socket.service';
 import { SessionService } from '../../shared/session/session.service';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 export interface GameUserInfo {
   gameId: number;
   userInfo: ClientInfo;
 }
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class GameService {
-
+  private apiUrl = environment.apiUrl;
+  private queueSubject = new BehaviorSubject<string[]>([]);
   constructor(
+    private http: HttpClient,
     private api: ApiService,
     private alertService: AlertService,
     private sessionService: SessionService,
@@ -66,7 +74,7 @@ export class GameService {
         replayPosition: 1,
         replay,
       };
-      const gameStates = [...games, localGameState ];
+      const gameStates = [...games, localGameState];
       this.startListening(gameState.gameId);
       this.sessionService.set({ gameStates, lastGameId });
       return localGameState;
@@ -128,68 +136,68 @@ export class GameService {
 
   public ability(gameId: number, ability: string, target: CardTarget) {
     this.socketService.emit('game:action:ability', { gameId, ability, target })
-      .subscribe(() => {}, (error: ApiError) => this.handleError(error));
+      .subscribe(() => { }, (error: ApiError) => this.handleError(error));
   }
 
   public attack(gameId: number, attack: string) {
     this.socketService.emit('game:action:attack', { gameId, attack })
-      .subscribe(() => {}, (error: ApiError) => this.handleError(error));
+      .subscribe(() => { }, (error: ApiError) => this.handleError(error));
   }
 
   public stadium(gameId: number) {
     this.socketService.emit('game:action:stadium', { gameId })
-      .subscribe(() => {}, (error: ApiError) => this.handleError(error));
+      .subscribe(() => { }, (error: ApiError) => this.handleError(error));
   }
 
   public play(gameId: number, deck: string[]) {
     this.socketService.emit('game:action:play', { gameId, deck })
-      .subscribe(() => {}, (error: ApiError) => this.handleError(error));
+      .subscribe(() => { }, (error: ApiError) => this.handleError(error));
   }
 
   public resolvePrompt(gameId: number, promptId: number, result: any) {
-    this.socketService.emit('game:action:resolvePrompt', {gameId, id: promptId, result})
-      .subscribe(() => {}, (error: ApiError) => this.handleError(error));
+    this.socketService.emit('game:action:resolvePrompt', { gameId, id: promptId, result })
+      .subscribe(() => { }, (error: ApiError) => this.handleError(error));
   }
 
   public playCardAction(gameId: number, handIndex: number, target: CardTarget) {
-    this.socketService.emit('game:action:playCard', {gameId, handIndex, target})
-      .subscribe(() => {}, (error: ApiError) => this.handleError(error));
+    this.socketService.emit('game:action:playCard', { gameId, handIndex, target })
+      .subscribe(() => { }, (error: ApiError) => this.handleError(error));
   }
 
   public reorderBenchAction(gameId: number, from: number, to: number) {
-    this.socketService.emit('game:action:reorderBench', {gameId, from, to})
-      .subscribe(() => {}, (error: ApiError) => this.handleError(error));
+    this.socketService.emit('game:action:reorderBench', { gameId, from, to })
+      .subscribe(() => { }, (error: ApiError) => this.handleError(error));
   }
 
   public reorderHandAction(gameId: number, order: number[]) {
-    this.socketService.emit('game:action:reorderHand', {gameId, order})
-      .subscribe(() => {}, (error: ApiError) => this.handleError(error));
+    this.socketService.emit('game:action:reorderHand', { gameId, order })
+      .subscribe(() => { }, (error: ApiError) => this.handleError(error));
   }
 
   public retreatAction(gameId: number, to: number) {
-    this.socketService.emit('game:action:retreat', {gameId, to})
-      .subscribe(() => {}, (error: ApiError) => this.handleError(error));
+    this.socketService.emit('game:action:retreat', { gameId, to })
+      .subscribe(() => { }, (error: ApiError) => this.handleError(error));
   }
 
   public passTurnAction(gameId: number) {
-    this.socketService.emit('game:action:passTurn', {gameId})
-      .subscribe(() => {}, (error: ApiError) => this.handleError(error));
+    this.socketService.emit('game:action:passTurn', { gameId })
+      .subscribe(() => { }, (error: ApiError) => this.handleError(error));
   }
 
   public appendLogAction(gameId: number, message: string) {
-    this.socketService.emit('game:action:appendLog', {gameId, message})
-      .subscribe(() => {}, (error: ApiError) => this.handleError(error));
+    this.socketService.emit('game:action:appendLog', { gameId, message })
+      .subscribe(() => { }, (error: ApiError) => this.handleError(error));
   }
 
   public changeAvatarAction(gameId: number, avatarName: string) {
-    this.socketService.emit('game:action:changeAvatar', {gameId, avatarName})
-      .subscribe(() => {}, (error: ApiError) => this.handleError(error));
+    this.socketService.emit('game:action:changeAvatar', { gameId, avatarName })
+      .subscribe(() => { }, (error: ApiError) => this.handleError(error));
   }
 
   private startListening(id: number) {
     this.socketService.on(`game[${id}]:join`, (clientId: number) => this.onJoin(id, clientId));
     this.socketService.on(`game[${id}]:leave`, (clientId: number) => this.onLeave(id, clientId));
-    this.socketService.on(`game[${id}]:stateChange`, (data: {stateData: string, playerStats: PlayerStats[]}) =>
+    this.socketService.on(`game[${id}]:stateChange`, (data: { stateData: string, playerStats: PlayerStats[] }) =>
       this.onStateChange(id, data.stateData, data.playerStats));
   }
 
@@ -205,7 +213,7 @@ export class GameService {
     const index = games.findIndex(g => g.gameId === gameId && g.deleted === false);
     if (index !== -1) {
       const gameStates = this.sessionService.session.gameStates.slice();
-      const logs = [ ...gameStates[index].logs, ...state.logs ];
+      const logs = [...gameStates[index].logs, ...state.logs];
       gameStates[index] = { ...gameStates[index], state, logs, playerStats };
       this.sessionService.set({ gameStates });
     }
@@ -220,7 +228,7 @@ export class GameService {
     const game = this.sessionService.session.gameStates[index];
     const clientIndex = game.clientIds.indexOf(clientId);
     if (clientIndex === -1) {
-      const clientIds = [ ...game.clientIds, clientId ];
+      const clientIds = [...game.clientIds, clientId];
       const gameStates = this.sessionService.session.gameStates.slice();
       gameStates[index] = { ...gameStates[index], clientIds };
       this.sessionService.set({ gameStates });
@@ -260,6 +268,54 @@ export class GameService {
       : 'ERROR_UNKNOWN';
 
     this.alertService.toast(this.translate.instant(key));
+  }
+
+  joinMatchmakingLobby(format: string): Observable<any> {
+    return this.socketService.joinLobby(format).pipe(
+      switchMap(() => new Observable<any>(observer => {
+        this.socketService.on('lobbyUpdate', (data: any) => observer.next(data));
+      })),
+      takeUntil(new Observable<any>(observer => {
+        this.socketService.on('gameStarted', () => observer.next());
+      }))
+    );
+  }
+
+  handleGameStart(): Observable<any> {
+    return new Observable<any>(observer => {
+      this.socketService.on('gameStarted', (gameData: any) => {
+        this.join(gameData.gameId).subscribe(
+          result => observer.next(result),
+          error => observer.error(error),
+          () => observer.complete()
+        );
+      });
+    });
+  }
+
+  joinMatchmakingQueue(format: string): Observable<any> {
+    return this.socketService.joinMatchmakingQueue(format);
+  }
+
+
+  leaveMatchmakingQueue(): Observable<any> {
+    return this.socketService.emit('leaveQueue');
+  }
+
+  checkQueueStatus(format: string): Observable<any> {
+    return this.socketService.emit('checkQueueStatus', { format });
+  }
+
+  getQueueUpdates(): Observable<any> {
+    return new Observable<any>(observer => {
+      this.socketService.on('queueUpdate', (data) => {
+        observer.next(data);
+      });
+    });
+  }
+
+  updateQueuedPlayers(players: string[]) {
+    this.queueSubject.next(players);
   }
 
 }

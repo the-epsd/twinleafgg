@@ -4,14 +4,14 @@ exports.WishiwashiArt = exports.UltraNecrozmaArt = exports.TagCallArt = exports.
 const arceus_dialga_palkia_gx_1 = require("./arceus-dialga-palkia-gx");
 const bellelba_and_brycen_man_1 = require("./bellelba-and-brycen-man");
 const blacephalon_1 = require("./blacephalon");
-const CEC_16_Sawsbuck_1 = require("./CEC_16_Sawsbuck");
-const CEC_176_Stoutland_1 = require("./CEC_176_Stoutland");
-const CEC_21_Buzzwole_1 = require("./CEC_21_Buzzwole");
-const CEC_57_Phione_1 = require("./CEC_57_Phione");
-const CEC_62_Wishiwashi_1 = require("./CEC_62_Wishiwashi");
-const CEC_66_Pikachu_1 = require("./CEC_66_Pikachu");
-const CEC_83_Duskull_1 = require("./CEC_83_Duskull");
-const CEC_84_Dusclops_1 = require("./CEC_84_Dusclops");
+const sawsbuck_1 = require("./sawsbuck");
+const stoutland_1 = require("./stoutland");
+const buzzwole_1 = require("./buzzwole");
+const phione_1 = require("./phione");
+const wishiwashi_1 = require("./wishiwashi");
+const pikachu_1 = require("./pikachu");
+const duskull_1 = require("./duskull");
+const dusclops_1 = require("./dusclops");
 const chaotic_swell_1 = require("./chaotic-swell");
 const clay_1 = require("./clay");
 const cynthia_and_caitlin_1 = require("./cynthia-and-caitlin");
@@ -50,7 +50,7 @@ class BlacephalonArt extends blacephalon_1.Blacephalon {
     }
 }
 exports.BlacephalonArt = BlacephalonArt;
-class BuzzwoleArt extends CEC_21_Buzzwole_1.Buzzwole {
+class BuzzwoleArt extends buzzwole_1.Buzzwole {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CEC/CEC_021_R_EN_LG.png';
@@ -85,14 +85,14 @@ class DrawEnergyArt extends draw_energy_1.DrawEnergy {
     }
 }
 exports.DrawEnergyArt = DrawEnergyArt;
-class DusclopsArt extends CEC_84_Dusclops_1.Dusclops {
+class DusclopsArt extends dusclops_1.Dusclops {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CEC/CEC_084_R_EN_LG.png';
     }
 }
 exports.DusclopsArt = DusclopsArt;
-class DuskullArt extends CEC_83_Duskull_1.Duskull {
+class DuskullArt extends duskull_1.Duskull {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CEC/CEC_083_R_EN_LG.png';
@@ -155,14 +155,14 @@ class NatuArt extends natu_1.Natu {
     }
 }
 exports.NatuArt = NatuArt;
-class PhioneArt extends CEC_57_Phione_1.Phione {
+class PhioneArt extends phione_1.Phione {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CEC/CEC_057_R_EN_LG.png';
     }
 }
 exports.PhioneArt = PhioneArt;
-class PikachuArt extends CEC_66_Pikachu_1.Pikachu {
+class PikachuArt extends pikachu_1.Pikachu {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CEC/CEC_066_R_EN_LG.png';
@@ -176,7 +176,7 @@ class ProfessorOaksSetupArt extends professor_oaks_setup_1.ProfessorOaksSetup {
     }
 }
 exports.ProfessorOaksSetupArt = ProfessorOaksSetupArt;
-class SawsbuckArt extends CEC_16_Sawsbuck_1.Sawsbuck {
+class SawsbuckArt extends sawsbuck_1.Sawsbuck {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CEC/CEC_016_R_EN_LG.png';
@@ -190,7 +190,7 @@ class SlugmaArt extends slugma_1.Slugma {
     }
 }
 exports.SlugmaArt = SlugmaArt;
-class StoutlandArt extends CEC_176_Stoutland_1.Stoutland {
+class StoutlandArt extends stoutland_1.Stoutland {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CEC/CEC_176_R_EN_LG.png';
@@ -218,7 +218,7 @@ class UltraNecrozmaArt extends ultra_necrozma_1.UltraNecrozma {
     }
 }
 exports.UltraNecrozmaArt = UltraNecrozmaArt;
-class WishiwashiArt extends CEC_62_Wishiwashi_1.Wishiwashi {
+class WishiwashiArt extends wishiwashi_1.Wishiwashi {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CEC/CEC_062_R_EN_LG.png';

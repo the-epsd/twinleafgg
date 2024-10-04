@@ -50,6 +50,7 @@ exports.setTwilightMasquerade = [
     new card_images_1.PhioneArt(),
     new card_images_1.ScreamTailexArt(),
     new card_images_1.SurvivalCastArt(),
+    new card_images_1.SunkernArt(),
     new card_images_1.UnfairStampArt(),
     new card_images_1.TealMaskOgerponexArt(),
     new card_images_1.FroakieArt(),
@@ -70,5 +71,6 @@ exports.setTwilightMasquerade = [
     new card_images_1.TingLuArt(),
     new card_images_1.MonfernoArt(),
     new card_images_1.RillaboomArt(),
-    new card_images_1.ZapdosArt()
+    new card_images_1.ZapdosArt(),
+    new card_images_1.ClefairyArt(),
 ];

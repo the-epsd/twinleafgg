@@ -1,7 +1,7 @@
 import { Bayleef } from './bayleef';
-import { Froakie } from './BKP_38_Froakie';
-import { Sudowoodo } from './BKP_67_Sudowoodo';
-import { Zoroark } from './BKT_91_Zoroark';
+import { Froakie } from './froakie';
+import { Sudowoodo } from './sudowoodo';
+import { Zoroark } from './zoroark';
 import { Delinquent } from './delinquent';
 import { FightingFuryBelt } from './fighting-fury-belt';
 import { Kricketot } from './kricketot';

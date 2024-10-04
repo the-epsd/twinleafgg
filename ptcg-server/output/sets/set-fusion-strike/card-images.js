@@ -13,10 +13,10 @@ const deoxys_1 = require("./deoxys");
 const dreepy_1 = require("./dreepy");
 const dunsparce_1 = require("./dunsparce");
 const elesas_sparkle_1 = require("./elesas-sparkle");
-const FST_165_Croagunk_1 = require("./FST_165_Croagunk");
-const FST_53_Starmie_1 = require("./FST_53_Starmie");
-const FST_59_Azumarill_1 = require("./FST_59_Azumarill");
-const FST_64_Swampert_1 = require("./FST_64_Swampert");
+const croagunk_1 = require("./croagunk");
+const starmie_1 = require("./starmie");
+const azumarill_1 = require("./azumarill");
+const swampert_1 = require("./swampert");
 const fusion_strike_energy_1 = require("./fusion-strike-energy");
 const galarian_linoone_1 = require("./galarian-linoone");
 const genesect_v_1 = require("./genesect-v");
@@ -53,7 +53,7 @@ class AdventurersDiscoveryArt extends adventurers_discovery_1.AdventurersDiscove
     }
 }
 exports.AdventurersDiscoveryArt = AdventurersDiscoveryArt;
-class AzumarillArt extends FST_59_Azumarill_1.Azumarill {
+class AzumarillArt extends azumarill_1.Azumarill {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_059_R_EN_LG.png';
@@ -88,7 +88,7 @@ class CreamomaticArt extends cram_o_matic_1.Creamomatic {
     }
 }
 exports.CreamomaticArt = CreamomaticArt;
-class CroagunkArt extends FST_165_Croagunk_1.Croagunk {
+class CroagunkArt extends croagunk_1.Croagunk {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_165_R_EN_LG.png';
@@ -273,7 +273,7 @@ class ShelmetArt extends shelmet_1.Shelmet {
     }
 }
 exports.ShelmetArt = ShelmetArt;
-class StarmieArt extends FST_53_Starmie_1.Starmie {
+class StarmieArt extends starmie_1.Starmie {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_053_R_EN_LG.png';
@@ -287,7 +287,7 @@ class StaryuArt extends staryu_1.Staryu {
     }
 }
 exports.StaryuArt = StaryuArt;
-class SwampertArt extends FST_64_Swampert_1.Swampert {
+class SwampertArt extends swampert_1.Swampert {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FST/FST_064_R_EN_LG.png';

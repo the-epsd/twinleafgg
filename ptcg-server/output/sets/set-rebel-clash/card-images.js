@@ -15,11 +15,11 @@ const metapod_1 = require("./metapod");
 const morpeko_1 = require("./morpeko");
 const natu_1 = require("./natu");
 const palpitoad_1 = require("./palpitoad");
-const RCL_126_Galarian_Meowth_1 = require("./RCL_126_Galarian_Meowth");
-const RCL_133_Honedge_1 = require("./RCL_133_Honedge");
-const RCL_24_Vulpix_1 = require("./RCL_24_Vulpix");
-const RCL_52_Arrokuda_1 = require("./RCL_52_Arrokuda");
-const RCL_53_Barraskewda_1 = require("./RCL_53_Barraskewda");
+const galarian_meowth_1 = require("./galarian_meowth");
+const honedge_1 = require("./honedge");
+const vulpix_1 = require("./vulpix");
+const arrokuda_1 = require("./arrokuda");
+const barraskewda_1 = require("./barraskewda");
 const scoop_up_net_1 = require("./scoop-up-net");
 const speed_lightning_energy_1 = require("./speed-lightning-energy");
 const training_court_1 = require("./training-court");
@@ -31,14 +31,14 @@ class AegislashArt extends aegislash_1.Aegislash {
     }
 }
 exports.AegislashArt = AegislashArt;
-class ArrokudaArt extends RCL_52_Arrokuda_1.Arrokuda {
+class ArrokudaArt extends arrokuda_1.Arrokuda {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/RCL/RCL_052_R_EN_LG.png';
     }
 }
 exports.ArrokudaArt = ArrokudaArt;
-class BarraskewdaArt extends RCL_53_Barraskewda_1.Barraskewda {
+class BarraskewdaArt extends barraskewda_1.Barraskewda {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/RCL/RCL_053_R_EN_LG.png';
@@ -101,14 +101,14 @@ class ElectivireArt extends electivire_1.Electivire {
     }
 }
 exports.ElectivireArt = ElectivireArt;
-class GalarianMeowthArt extends RCL_126_Galarian_Meowth_1.GalarianMeowth {
+class GalarianMeowthArt extends galarian_meowth_1.GalarianMeowth {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/RCL/RCL_126_R_EN_LG.png';
     }
 }
 exports.GalarianMeowthArt = GalarianMeowthArt;
-class HonedgeArt extends RCL_133_Honedge_1.Honedge {
+class HonedgeArt extends honedge_1.Honedge {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/RCL/RCL_133_R_EN_LG.png';
@@ -178,7 +178,7 @@ class TwinEnergyArt extends twin_energy_1.TwinEnergy {
     }
 }
 exports.TwinEnergyArt = TwinEnergyArt;
-class VulpixArt extends RCL_24_Vulpix_1.Vulpix {
+class VulpixArt extends vulpix_1.Vulpix {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/RCL/RCL_024_R_EN_LG.png';

@@ -3,7 +3,7 @@ import { EnhancedHammer } from '../set-twilight-masquerade/enhanced-hammer';
 import { Accelgor } from './accelgor';
 import { DarkClaw } from './dark-claw';
 import { DarkraiEx } from './darkrai-ex';
-import { Gardevoir } from './DEX_109_Gardevoir';
+import { Gardevoir } from './gardevoir';
 import { Empoleon } from './empoleon';
 import { Ivysaur } from './ivysaur';
 import { Minun } from './minun';

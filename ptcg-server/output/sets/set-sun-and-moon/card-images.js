@@ -13,9 +13,9 @@ const oranguru_1 = require("./oranguru");
 const professor_kukui_1 = require("./professor-kukui");
 const rainbow_energy_1 = require("./rainbow-energy");
 const repel_1 = require("./repel");
-const SUM_14_Fomantis_1 = require("./SUM_14_Fomantis");
-const SUM_29_Golduck_1 = require("./SUM_29_Golduck");
-const SUM_76_Alolan_Rattata_1 = require("./SUM_76_Alolan_Rattata");
+const fomantis_1 = require("./fomantis");
+const golduck_1 = require("./golduck");
+const alolan_rattata_1 = require("./alolan_rattata");
 const timer_ball_1 = require("./timer-ball");
 class AlolanGrimerArt extends alolan_grimer_1.AlolanGrimer {
     constructor() {
@@ -31,7 +31,7 @@ class AlolanMukArt extends alolan_muk_1.AlolanMuk {
     }
 }
 exports.AlolanMukArt = AlolanMukArt;
-class AlolanRattataArt extends SUM_76_Alolan_Rattata_1.AlolanRattata {
+class AlolanRattataArt extends alolan_rattata_1.AlolanRattata {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SUM/SUM_076_R_EN_LG.png';
@@ -63,14 +63,14 @@ class ExpShareArt extends exp_share_1.ExpShare {
     }
 }
 exports.ExpShareArt = ExpShareArt;
-class FomantisArt extends SUM_14_Fomantis_1.Fomantis {
+class FomantisArt extends fomantis_1.Fomantis {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SUM/SUM_014_R_EN_LG.png';
     }
 }
 exports.FomantisArt = FomantisArt;
-class GolduckArt extends SUM_29_Golduck_1.Golduck {
+class GolduckArt extends golduck_1.Golduck {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SUM/SUM_029_R_EN_LG.png';

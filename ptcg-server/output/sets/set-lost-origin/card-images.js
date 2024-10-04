@@ -30,9 +30,9 @@ const jynx_1 = require("./jynx");
 const kyurem_v_1 = require("./kyurem-v");
 const kyurem_vmax_1 = require("./kyurem-vmax");
 const lady_1 = require("./lady");
-const LOR_14_Roselia_1 = require("./LOR_14_Roselia");
-const LOR_37_Kingdra_1 = require("./LOR_37_Kingdra");
-const LOR_45_Hisuian_Basculegion_1 = require("./LOR_45_Hisuian_Basculegion");
+const roselia_1 = require("./roselia");
+const kingdra_1 = require("./kingdra");
+const hisuian_basculegion_1 = require("./hisuian-basculegion");
 const lost_city_1 = require("./lost-city");
 const lost_vacuum_1 = require("./lost-vacuum");
 const machamp_1 = require("./machamp");
@@ -173,7 +173,7 @@ class GiratinaVSTARArt extends giratina_vstar_1.GiratinaVSTAR {
     }
 }
 exports.GiratinaVSTARArt = GiratinaVSTARArt;
-class HisuianBasculegionArt extends LOR_45_Hisuian_Basculegion_1.HisuianBasculegion {
+class HisuianBasculegionArt extends hisuian_basculegion_1.HisuianBasculegion {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOR/LOR_045_R_EN_LG.png';
@@ -236,7 +236,7 @@ class JynxArt extends jynx_1.Jynx {
     }
 }
 exports.JynxArt = JynxArt;
-class KingdraArt extends LOR_37_Kingdra_1.Kingdra {
+class KingdraArt extends kingdra_1.Kingdra {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOR/LOR_037_R_EN_LG.png';
@@ -355,7 +355,7 @@ class RadiantHisuianSneaslerArt extends radiant_hisuian_sneasler_1.RadiantHisuia
     }
 }
 exports.RadiantHisuianSneaslerArt = RadiantHisuianSneaslerArt;
-class RoseliaArt extends LOR_14_Roselia_1.Roselia {
+class RoseliaArt extends roselia_1.Roselia {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOR/LOR_014_R_EN_LG.png';

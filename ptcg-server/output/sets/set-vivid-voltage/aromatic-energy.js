@@ -9,7 +9,7 @@ const play_card_effects_1 = require("../../game/store/effects/play-card-effects"
 class AromaticEnergy extends energy_card_1.EnergyCard {
     constructor() {
         super(...arguments);
-        this.provides = [card_types_1.CardType.COLORLESS];
+        this.provides = [C];
         this.energyType = card_types_1.EnergyType.SPECIAL;
         this.set = 'VIV';
         this.cardImage = 'assets/cardback.png';
@@ -22,6 +22,17 @@ class AromaticEnergy extends energy_card_1.EnergyCard {
             'The [G] Pokémon this card is attached to recovers from all Special Conditions and can\'t be affected by any Special Conditions.';
     }
     reduceEffect(store, state, effect) {
+        if (effect instanceof check_effects_1.CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
+            const player = effect.player;
+            try {
+                const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
+                store.reduceEffect(state, energyEffect);
+            }
+            catch (_a) {
+                return state;
+            }
+            effect.energyMap.push({ card: this, provides: [G] });
+        }
         if (effect instanceof play_card_effects_1.AttachEnergyEffect && effect.target.cards.includes(this)) {
             const pokemon = effect.target;
             pokemon.removeSpecialCondition(card_types_1.SpecialCondition.ASLEEP);

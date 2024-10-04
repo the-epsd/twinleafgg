@@ -1,16 +1,15 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { PowerType } from '../../game/store/card/pokemon-types';
+import { CardType, Stage } from '../../game/store/card/card-types';
+import { PowerType, State, StoreLike } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
 export declare class Jumpluff extends PokemonCard {
     stage: Stage;
-    tags: CardTag[];
     evolvesFrom: string;
     cardType: CardType;
+    hp: number;
     weakness: {
         type: CardType;
     }[];
-    hp: number;
-    retreat: never[];
     powers: {
         name: string;
         powerType: PowerType;
@@ -23,8 +22,11 @@ export declare class Jumpluff extends PokemonCard {
         text: string;
     }[];
     set: string;
+    regulationMark: string;
     cardImage: string;
     setNumber: string;
     name: string;
     fullName: string;
+    attacksThisTurn: number;
+    reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

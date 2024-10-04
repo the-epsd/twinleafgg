@@ -57,7 +57,7 @@ export class Chatot extends PokemonCard {
       name: 'A Capella',
       cost: [CardType.COLORLESS],
       damage: 0,
-      text: 'Search your deck for up to 2 Basic Pokémon and put them onto your Bench. Then, shuffle your deck.'
+      text: 'Search your deck for up to 3 Basic Pokémon and put them onto your Bench. Then, shuffle your deck.'
     },
     {
       name: 'Gust',

@@ -11,7 +11,7 @@ import { ShadowCircle } from './shadow-circle';
 import { Shauna } from './shauna';
 import { SuperPotion } from './super-potion';
 import { Voltorb } from './voltorb';
-import { Trevenant } from './XY_55_Trevenant';
+import { Trevenant } from './trevenant';
 import { YveltalEx } from './yveltal-ex';
 export declare class BraixenArt extends Braixen {
     cardImage: string;

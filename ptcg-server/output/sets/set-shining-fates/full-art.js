@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SnomSVArt = exports.ApplinArt = void 0;
-const SHF_SV12_Applin_1 = require("./SHF_SV12_Applin");
+const applin_1 = require("./applin");
 const snom_1 = require("./snom");
-class ApplinArt extends SHF_SV12_Applin_1.Applin {
+class ApplinArt extends applin_1.Applin {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SHF/SHF_SV12_R_EN_LG.png';

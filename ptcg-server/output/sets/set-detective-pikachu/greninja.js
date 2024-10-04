@@ -41,6 +41,11 @@ class Greninja extends pokemon_card_1.PokemonCard {
         if (effect instanceof attack_effects_1.PutDamageEffect && effect.target.cards.includes(this)) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
+            const pokemonCard = effect.target.getPokemonCard();
+            const sourceCard = effect.source.getPokemonCard();
+            if (pokemonCard !== this || sourceCard === undefined || state.phase !== game_1.GamePhase.ATTACK) {
+                return state;
+            }
             try {
                 const stub = new game_effects_1.PowerEffect(player, {
                     name: 'test',
@@ -52,15 +57,20 @@ class Greninja extends pokemon_card_1.PokemonCard {
             catch (_a) {
                 return state;
             }
-            return store.prompt(state, [
+            const originalDamage = effect.damage;
+            effect.damage = 0; // Temporarily set damage to 0
+            state = store.prompt(state, [
                 new game_1.CoinFlipPrompt(player.id, game_message_1.GameMessage.COIN_FLIP)
             ], result => {
                 if (result === true) {
-                    effect.preventDefault = true;
                     store.log(state, game_message_1.GameLog.LOG_ABILITY_BLOCKS_DAMGE, { name: opponent.name, pokemon: this.name });
-                    return state;
                 }
+                else {
+                    effect.damage = originalDamage; // Restore original damage if coin flip is tails
+                }
+                return state;
             });
+            return state;
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;

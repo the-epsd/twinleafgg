@@ -14,7 +14,7 @@ export class HorrorPsychicEnergy extends EnergyCard {
 
   public energyType = EnergyType.SPECIAL;
 
-  public set: string = 'DAA';
+  public set: string = 'RCL';
 
   public name = 'Horror Psychic Energy';
 

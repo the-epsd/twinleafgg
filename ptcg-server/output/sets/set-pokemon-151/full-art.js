@@ -11,7 +11,7 @@ const giovannis_charisma_1 = require("./giovannis-charisma");
 const ivysaur_1 = require("./ivysaur");
 const kangaskhan_ex_1 = require("./kangaskhan-ex");
 const mew_ex_1 = require("./mew-ex");
-const MEW_24_Arbok_ex_1 = require("./MEW_24_Arbok_ex");
+const arbok_ex_1 = require("./arbok_ex");
 const nidoking_1 = require("./nidoking");
 const squirtle_1 = require("./squirtle");
 const venusaur_ex_1 = require("./venusaur-ex");
@@ -155,7 +155,7 @@ class BlastoiseexFA extends blastoise_ex_1.Blastoiseex {
     }
 }
 exports.BlastoiseexFA = BlastoiseexFA;
-class ArbokexFA extends MEW_24_Arbok_ex_1.Arbokex {
+class ArbokexFA extends arbok_ex_1.Arbokex {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/MEW/MEW_185_R_EN_LG.png';

@@ -1,4 +1,4 @@
-import { PokemonCard, Stage, CardType, CardTag, PowerType, StoreLike, State, SpecialCondition, StateUtils } from '../../game';
+import { PokemonCard, Stage, CardType, CardTag, PowerType, StoreLike, State, SpecialCondition } from '../../game';
 import { AbstractAttackEffect, DealDamageEffect, AddSpecialConditionsEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
@@ -35,32 +35,42 @@ export class Miloticex extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
+    // if (effect instanceof BetweenTurnsEffect) {
+    //   const player = effect.player;
+    //   player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+    //     if (cardList.getPokemonCard() === this && cardList.attackMarker.markers.length > 0) {
+    //       cardList.clearAttackEffects();
+    //       cardList.clearEffects();
+    //     }
+    //   });
+    // }
+
     if (effect instanceof AbstractAttackEffect && effect.target.cards.includes(this)) {
       const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      const opponentActive = opponent.active.getPokemonCard();
+      const attackingPokemon = player.active.getPokemonCard();
 
-      if (opponentActive && opponentActive.tags.includes(CardTag.POKEMON_TERA)) {
+      if (attackingPokemon && attackingPokemon.tags.includes(CardTag.POKEMON_TERA)) {
+        effect.attack.damage = 0;
         effect.preventDefault = true;
       }
     }
 
     if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {
       const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      const opponentActive = opponent.active.getPokemonCard();
+      const sourcePokemon = player.active.getPokemonCard();
 
-      if (opponentActive && opponentActive.tags.includes(CardTag.POKEMON_TERA)) {
+      if (sourcePokemon && sourcePokemon.tags.includes(CardTag.POKEMON_TERA)) {
+        effect.damage = 0;
         effect.preventDefault = true;
       }
     }
 
     if (effect instanceof DealDamageEffect && effect.target.cards.includes(this)) {
       const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      const opponentActive = opponent.active.getPokemonCard();
+      const sourcePokemon = player.active.getPokemonCard();
 
-      if (opponentActive && opponentActive.tags.includes(CardTag.POKEMON_TERA)) {
+      if (sourcePokemon && sourcePokemon.tags.includes(CardTag.POKEMON_TERA)) {
+        effect.damage = 0;
         effect.preventDefault = true;
       }
     }

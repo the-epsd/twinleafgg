@@ -6,12 +6,19 @@ export declare class Mimikyu extends PokemonCard {
     hp: number;
     weakness: never[];
     retreat: CardType[];
-    attacks: {
+    attacks: ({
         name: string;
         cost: CardType[];
         damage: number;
         text: string;
-    }[];
+        copycatAttack?: undefined;
+    } | {
+        name: string;
+        cost: CardType[];
+        damage: number;
+        copycatAttack: boolean;
+        text: string;
+    })[];
     set: string;
     name: string;
     fullName: string;

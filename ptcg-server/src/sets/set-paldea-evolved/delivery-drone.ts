@@ -25,18 +25,18 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     coin2Result = result;
     next();
   });
-  if (coin1Result && coin2Result) { 
+  if (coin1Result && coin2Result) {
     let cards: any[] = [];
     yield store.prompt(state, new ChooseCardsPrompt(
-      player.id, 
-      GameMessage.CHOOSE_CARD_TO_HAND, 
-      player.deck, 
-      {}, 
-      { min: 0, max: 1, allowCancel: false }), 
-    (selected: any[]) => {
-      cards = selected || [];
-      next();
-    });
+      player.id,
+      GameMessage.CHOOSE_CARD_TO_HAND,
+      player.deck,
+      {},
+      { min: 0, max: 1, allowCancel: false }),
+      (selected: any[]) => {
+        cards = selected || [];
+        next();
+      });
     player.deck.moveCardsTo(cards, player.hand);
   }
 
@@ -50,23 +50,21 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 export class DeliveryDrone extends TrainerCard {
 
   public regulationMark = 'G';
-  
+
   public trainerType = TrainerType.ITEM;
   public set = 'PAL';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '178';
   public name = 'Delivery Drone';
   public fullName: string = 'Delivery Drone PAL';
-  public text: string = 'Discard 2 cards from your hand. (If you can\'t discard 2 cards, ' + 
-                            'you can\'t play this card.) Search your deck for a card and put it into ' + 
-                            'your hand. Shuffle your deck afterward.';
+  public text: string = 'Flip 2 coins. If both of them are heads, search your deck for a card and put it into your hand. Then, shuffle your deck.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const generator = playCard(() => generator.next(), store, state, effect);
       return generator.next().value;
     }
-                                                    
+
     return state;
   }
 }                         

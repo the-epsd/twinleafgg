@@ -57,7 +57,7 @@ export class GalarianWeezing extends PokemonCard {
       store.reduceEffect(state, specialCondition);
     }
 
-    if (effect instanceof PowerEffect && effect.power.powerType === PowerType.ABILITY && !effect.power.exemptFromAbilityLock) {
+    if (effect instanceof PowerEffect && effect.power.powerType === PowerType.ABILITY) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -82,13 +82,13 @@ export class GalarianWeezing extends PokemonCard {
         }, this);
         store.reduceEffect(state, stub);
       } catch {
-        throw new GameError(GameMessage.CANNOT_USE_POWER);
+
+        if (!effect.power.exemptFromAbilityLock) {
+          throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
+        }
       }
-
-      // throw new GameError(GameMessage.CANNOT_USE_POWER);
+      return state;
     }
-
     return state;
   }
-
 }

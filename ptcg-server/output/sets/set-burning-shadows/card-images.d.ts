@@ -1,5 +1,5 @@
 import { Acerola } from './acerola';
-import { Marill } from './BUS_34_Marill';
+import { Marill } from './marill';
 import { DarkraiGX } from './darkrai-gx';
 import { Gloom } from './gloom';
 import { Guzma } from './guzma';

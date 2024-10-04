@@ -96,6 +96,7 @@ export class ZoroarkGX extends PokemonCard {
       name: 'Trickster-GX',
       cost: [CardType.DARK, CardType.DARK],
       damage: 0,
+      gxAttack: true,
       text: 'Choose 1 of your opponent\'s Pokémon\'s attacks and use it as this attack. (You can\'t use more than 1 GX attack in a game.)'
     }
   ];

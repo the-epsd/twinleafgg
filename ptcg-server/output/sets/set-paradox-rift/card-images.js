@@ -43,9 +43,9 @@ const morpeko_1 = require("./morpeko");
 const nacli_1 = require("./nacli");
 const naclstack_1 = require("./naclstack");
 const natu_1 = require("./natu");
-const PAR_136_Zacian_1 = require("./PAR_136_Zacian");
-const PAR_13_Nymble_1 = require("./PAR_13_Nymble");
-const PAR_80_Flittle_1 = require("./PAR_80_Flittle");
+const zacian_1 = require("./zacian");
+const nymble_1 = require("./nymble");
+const flittle_1 = require("./flittle");
 const porygon_1 = require("./porygon");
 const porygon2_1 = require("./porygon2");
 const professor_sadas_vitality_1 = require("./professor-sadas-vitality");
@@ -166,7 +166,7 @@ class ElekidArt extends elekid_1.Elekid {
     }
 }
 exports.ElekidArt = ElekidArt;
-class FlittleArt extends PAR_80_Flittle_1.Flittle {
+class FlittleArt extends flittle_1.Flittle {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_080_R_EN_LG.png';
@@ -362,7 +362,7 @@ class NatuArt extends natu_1.Natu {
     }
 }
 exports.NatuArt = NatuArt;
-class NymbleArt extends PAR_13_Nymble_1.Nymble {
+class NymbleArt extends nymble_1.Nymble {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_013_R_EN_LG.png';
@@ -523,7 +523,7 @@ class XatuArt extends xatu_1.Xatu {
     }
 }
 exports.XatuArt = XatuArt;
-class ZacianArt extends PAR_136_Zacian_1.Zacian {
+class ZacianArt extends zacian_1.Zacian {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_136_R_EN_LG.png';

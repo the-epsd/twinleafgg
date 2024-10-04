@@ -9,11 +9,11 @@ const duraludon_v_1 = require("./duraludon-v");
 const duraludon_vmax_1 = require("./duraludon-vmax");
 const espeon_v_1 = require("./espeon-v");
 const espeon_vmax_1 = require("./espeon-vmax");
-const EVS_130_Vigoroth_1 = require("./EVS_130_Vigoroth");
-const EVS_2_Hoppip_1 = require("./EVS_2_Hoppip");
-const EVS_3_Skiploom_1 = require("./EVS_3_Skiploom");
-const EVS_4_Jumpluff_1 = require("./EVS_4_Jumpluff");
-const EVS_82_Galarian_Zapdos_1 = require("./EVS_82_Galarian_Zapdos");
+const vigoroth_1 = require("./vigoroth");
+const hoppip_1 = require("./hoppip");
+const skiploom_1 = require("./skiploom");
+const jumpluff_1 = require("./jumpluff");
+const galarian_zapdos_1 = require("./galarian_zapdos");
 const flaaffy_1 = require("./flaaffy");
 const flapple_1 = require("./flapple");
 const full_face_guard_1 = require("./full-face-guard");
@@ -135,7 +135,7 @@ class GalarianMoltresArt extends galarian_moltres_1.GalarianMoltres {
     }
 }
 exports.GalarianMoltresArt = GalarianMoltresArt;
-class GalarianZapdosArt extends EVS_82_Galarian_Zapdos_1.GalarianZapdos {
+class GalarianZapdosArt extends galarian_zapdos_1.GalarianZapdos {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/EVS/EVS_082_R_EN_LG.png';
@@ -156,14 +156,14 @@ class GyaradosVMAXArt extends gyarados_vmax_1.GyaradosVMAX {
     }
 }
 exports.GyaradosVMAXArt = GyaradosVMAXArt;
-class HoppipArt extends EVS_2_Hoppip_1.Hoppip {
+class HoppipArt extends hoppip_1.Hoppip {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/EVS/EVS_002_R_EN_LG.png';
     }
 }
 exports.HoppipArt = HoppipArt;
-class JumpluffArt extends EVS_4_Jumpluff_1.Jumpluff {
+class JumpluffArt extends jumpluff_1.Jumpluff {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/EVS/EVS_004_R_EN_LG.png';
@@ -240,7 +240,7 @@ class RescueCarrierArt extends rescue_carrier_1.RescueCarrier {
     }
 }
 exports.RescueCarrierArt = RescueCarrierArt;
-class SkiploomArt extends EVS_3_Skiploom_1.Skiploom {
+class SkiploomArt extends skiploom_1.Skiploom {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/EVS/EVS_003_R_EN_LG.png';
@@ -310,7 +310,7 @@ class UmbreonVMAXArt extends umbreon_vmax_1.UmbreonVMAX {
     }
 }
 exports.UmbreonVMAXArt = UmbreonVMAXArt;
-class VigorothArt extends EVS_130_Vigoroth_1.Vigoroth {
+class VigorothArt extends vigoroth_1.Vigoroth {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/EVS/EVS_130_R_EN_LG.png';

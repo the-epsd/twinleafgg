@@ -67,6 +67,10 @@ function* useFoulPlay(next: Function, store: StoreLike, state: State,
     return state;
   }
 
+  if (attack.copycatAttack === true) {
+    return state;
+  }
+
   store.log(state, GameLog.LOG_PLAYER_COPIES_ATTACK, {
     name: player.name,
     attack: attack.name
@@ -114,6 +118,7 @@ export class Zoroark extends PokemonCard {
     name: 'Foul Play',
     cost: [CardType.COLORLESS, CardType.COLORLESS],
     damage: 0,
+    copycatAttack: true,
     text: 'Choose 1 of the Defending Pokemon\'s attacks and use it ' +
       'as this attack.'
   }];

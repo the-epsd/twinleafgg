@@ -1,4 +1,4 @@
-import { Applin } from './SHF_SV12_Applin';
+import { Applin } from './applin';
 import { Snom } from './snom';
 
 export class ApplinArt extends Applin {

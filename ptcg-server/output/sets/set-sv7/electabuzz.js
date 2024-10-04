@@ -8,20 +8,20 @@ class Electabuzz extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.BASIC;
-        this.cardType = card_types_1.CardType.LIGHTNING;
+        this.cardType = L;
         this.hp = 90;
-        this.weakness = [{ type: card_types_1.CardType.FIGHTING }];
-        this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
+        this.weakness = [{ type: F }];
+        this.retreat = [C, C];
         this.attacks = [
             {
                 name: 'Collect',
-                cost: [card_types_1.CardType.LIGHTNING],
-                damage: 10,
+                cost: [L],
+                damage: 0,
                 text: 'Draw a card.'
             },
             {
                 name: 'Magnum Punch',
-                cost: [card_types_1.CardType.LIGHTNING, card_types_1.CardType.LIGHTNING],
+                cost: [L, L],
                 damage: 40,
                 text: ''
             }

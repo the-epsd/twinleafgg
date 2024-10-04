@@ -63,10 +63,10 @@ const scovillain_1 = require("./scovillain");
 const seviper_1 = require("./seviper");
 const shuppet_1 = require("./shuppet");
 const skwovet_1 = require("./skwovet");
-const SVI_100_Flittle_1 = require("./SVI_100_Flittle");
-const SVI_21_Smoliv_1 = require("./SVI_21_Smoliv");
-const SVI_25_Toedscool_1 = require("./SVI_25_Toedscool");
-const SVI_26_Toedscruel_1 = require("./SVI_26_Toedscruel");
+const flittle_1 = require("./flittle");
+const smoliv_1 = require("./smoliv");
+const toedscool_1 = require("./toedscool");
+const toedscruel_1 = require("./toedscruel");
 const switch_1 = require("./switch");
 const team_star_grunt_1 = require("./team-star-grunt");
 const torkoal_1 = require("./torkoal");
@@ -213,7 +213,7 @@ class ExpShareArt extends exp_share_1.ExpShare {
     }
 }
 exports.ExpShareArt = ExpShareArt;
-class FlittleArt extends SVI_100_Flittle_1.Flittle {
+class FlittleArt extends flittle_1.Flittle {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_100_R_EN_LG.png';
@@ -516,7 +516,7 @@ class SkwovetArt extends skwovet_1.Skwovet {
     }
 }
 exports.SkwovetArt = SkwovetArt;
-class SmolivArt extends SVI_21_Smoliv_1.Smoliv {
+class SmolivArt extends smoliv_1.Smoliv {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_021_R_EN_LG.png';
@@ -537,14 +537,14 @@ class TeamStarGruntArt extends team_star_grunt_1.TeamStarGrunt {
     }
 }
 exports.TeamStarGruntArt = TeamStarGruntArt;
-class ToedscoolArt extends SVI_25_Toedscool_1.Toedscool {
+class ToedscoolArt extends toedscool_1.Toedscool {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_025_R_EN_LG.png';
     }
 }
 exports.ToedscoolArt = ToedscoolArt;
-class ToedscruelArt extends SVI_26_Toedscruel_1.Toedscruel {
+class ToedscruelArt extends toedscruel_1.Toedscruel {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_026_R_EN_LG.png';

@@ -1,7 +1,7 @@
 import { Blacksmith } from './blacksmith';
 import { Dragalge } from './dragalge';
 import { FieryTorch } from './fiery-torch';
-import { Seedot } from './FLF_5_Seedot';
+import { Seedot } from './seedot';
 import { Litleo } from './litleo';
 import { Lysandre } from './lysandre';
 import { MCharizardEX } from './m-charizard-ex';

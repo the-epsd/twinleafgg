@@ -44,6 +44,7 @@ export class DialgaGX extends PokemonCard {
       name: 'Timeless-GX',
       cost: [CardType.METAL, CardType.METAL, CardType.METAL, CardType.METAL, CardType.COLORLESS],
       damage: 150,
+      gxAttack: true,
       text: 'Take another turn after this one. (Skip the between-turns step.) (You can\'t use more than 1 GX attack in a game.) '
     }
   ];

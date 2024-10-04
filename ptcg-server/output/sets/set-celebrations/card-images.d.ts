@@ -1,4 +1,4 @@
-import { Reshiram } from './CEL_2_Reshiram';
+import { Reshiram } from './reshiram';
 import { Dialga } from './dialga';
 import { FlyingPikachuV } from './flying-pikachu-v';
 import { FlyingPikachuVMAX } from './flying-pikachu-vmax';

@@ -2,7 +2,7 @@ import { Quagsire } from '../set-dragons-majesty/quagsire';
 import { Wooper } from '../set-dragons-majesty/wooper';
 import { Charmander } from './charmander';
 import { ErikasHospitality } from './erikas-hospitality';
-import { Psyduck } from './HIF_11_Psyduck';
+import { Psyduck } from './psyduck';
 export declare class CharmanderArt extends Charmander {
     cardImage: string;
 }

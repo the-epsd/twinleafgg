@@ -1,11 +1,12 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
+import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerType } from '../../game/store/card/pokemon-types';
 export declare class MRayquazaEX extends PokemonCard {
     stage: Stage;
+    tags: CardTag[];
     evolvesFrom: string;
     cardType: CardType;
     hp: number;

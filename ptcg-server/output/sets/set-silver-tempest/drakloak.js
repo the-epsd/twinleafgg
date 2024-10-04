@@ -15,7 +15,7 @@ class Drakloak extends pokemon_card_1.PokemonCard {
         this.retreat = [card_types_1.CardType.COLORLESS];
         this.attacks = [
             {
-                name: 'Sppoky Shot',
+                name: 'Spooky Shot',
                 cost: [card_types_1.CardType.PSYCHIC],
                 damage: 40,
                 text: ''

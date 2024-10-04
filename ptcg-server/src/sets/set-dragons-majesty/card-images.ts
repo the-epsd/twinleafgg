@@ -1,6 +1,6 @@
 import { Croconaw } from './croconaw';
-import { Feraligatr } from './DRM_24_Feraligatr';
-import { Blaziken } from './DRM_6_Blaziken';
+import { Feraligatr } from './feraligatr';
+import { Blaziken } from './blaziken';
 import { Feebas } from './feebas';
 import { FieryFlint } from './fiery-flint';
 import { Quagsire } from './quagsire';

@@ -19,8 +19,11 @@ import {
   Profile,
   Ranking,
   Replays,
-  ResetPassword
+  ResetPassword,
+
 } from './controllers';
+import { MatchmakingController } from './controllers/matchmaking.controller';
+import { Server } from 'socket.io';
 
 export class App {
 
@@ -39,12 +42,20 @@ export class App {
     const storage = this.storage;
     const core = this.core;
     const app = express();
+    const io = new Server();
+
+    const matchmakingController = new MatchmakingController('/matchmaking', app, storage, core, io, core);
+    app.use('/matchmaking', matchmakingController.joinQueue.bind(matchmakingController));
+
+    app.post('/matchmaking/join', matchmakingController.joinQueue.bind(matchmakingController));
+    app.post('/matchmaking/leave', matchmakingController.leaveQueue.bind(matchmakingController));
+
     const define = function (path: string, controller: ControllerClass): void {
       const instance = new controller(path, app, storage, core);
       instance.init();
     };
 
-    app.use(json({limit: 512 + config.backend.avatarFileSize * 4}));
+    app.use(json({ limit: 512 + config.backend.avatarFileSize * 4 }));
     app.use(cors());
     define('/v1/avatars', Avatars);
     define('/v1/cards', Cards);

@@ -13,10 +13,10 @@ import { Girafarig } from './girafarig';
 import { Grovyle } from './grovyle';
 import { Lanturn } from './lanturn';
 import { LostBlender } from './lost-blender';
-import { ThunderMountainPrismStar } from './LOT_191_ThunderMountainPrismStar';
-import { ZeraoraGX } from './LOT_201_ZeraoraGX';
-import { Slowking } from './LOT_55_Slowking';
-import { Giratina } from './LOT_97_Giratina';
+import { ThunderMountainPrismStar } from './ThunderMountainPrismStar';
+import { ZeraoraGX } from './ZeraoraGX';
+import { Slowking } from './slowking';
+import { Giratina } from './giratina';
 import { Mareep } from './mareep';
 import { Meganium } from './meganium';
 import { Mina } from './mina';
@@ -128,7 +128,7 @@ export class TreeckoArt extends Treecko {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_020_R_EN_LG.png';
 }
 
-export class WhiteKyuremArt extends WhiteKyurem { 
+export class WhiteKyuremArt extends WhiteKyurem {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_063_R_EN_LG.png';
 }
 

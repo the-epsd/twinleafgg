@@ -6,7 +6,7 @@ const charizard_ex_1 = require("../set-obsidian-flames/charizard-ex");
 const cleffa_1 = require("../set-obsidian-flames/cleffa");
 const entei_1 = require("../set-obsidian-flames/entei");
 const finizen_1 = require("../set-obsidian-flames/finizen");
-const OBF_22_Toedscruel_ex_1 = require("../set-obsidian-flames/OBF_22_Toedscruel_ex");
+const Toedscruel_ex_1 = require("../set-obsidian-flames/Toedscruel_ex");
 const palafin_1 = require("../set-obsidian-flames/palafin");
 const pidgeot_ex_1 = require("../set-obsidian-flames/pidgeot-ex");
 const scizor_1 = require("../set-obsidian-flames/scizor");
@@ -21,7 +21,7 @@ const mimikyu_1 = require("../set-paldea-evolved/mimikyu");
 const murkrow_1 = require("../set-paldea-evolved/murkrow");
 const noibat_1 = require("../set-paldea-evolved/noibat");
 const noivern_ex_1 = require("../set-paldea-evolved/noivern-ex");
-const PAL_159_Pelipper_1 = require("../set-paldea-evolved/PAL_159_Pelipper");
+const pelipper_1 = require("../set-paldea-evolved/pelipper");
 const pineco_1 = require("../set-paldea-evolved/pineco");
 const spiritomb_1 = require("../set-paldea-evolved/spiritomb");
 const squawkabilly_ex_1 = require("../set-paldea-evolved/squawkabilly-ex");
@@ -60,7 +60,7 @@ const ralts_1 = require("../set-scarlet-and-violet/ralts");
 const revavroom_1 = require("../set-scarlet-and-violet/revavroom");
 const riolu2_1 = require("../set-scarlet-and-violet/riolu2");
 const skwovet_1 = require("../set-scarlet-and-violet/skwovet");
-const SVI_21_Smoliv_1 = require("../set-scarlet-and-violet/SVI_21_Smoliv");
+const smoliv_1 = require("../set-scarlet-and-violet/smoliv");
 const charmeleon_1 = require("./charmeleon");
 const espathra_ex_1 = require("./espathra-ex");
 const frigibax_1 = require("./frigibax");
@@ -107,7 +107,7 @@ class PinecoArt extends pineco_1.Pineco {
     }
 }
 exports.PinecoArt = PinecoArt;
-class SmolivArt extends SVI_21_Smoliv_1.Smoliv {
+class SmolivArt extends smoliv_1.Smoliv {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_102_R_EN_LG.png';
@@ -508,7 +508,7 @@ class WingullArt extends wingull_1.Wingull {
     }
 }
 exports.WingullArt = WingullArt;
-class PelipperArt extends PAL_159_Pelipper_1.Pelipper {
+class PelipperArt extends pelipper_1.Pelipper {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_204_R_EN_LG.png';
@@ -537,7 +537,7 @@ class ForretressexArt extends forretress_ex_1.Forretressex {
     }
 }
 exports.ForretressexArt = ForretressexArt;
-class ToedscruelexArt extends OBF_22_Toedscruel_ex_1.Toedscruelex {
+class ToedscruelexArt extends Toedscruel_ex_1.Toedscruelex {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_213_R_EN_LG.png';

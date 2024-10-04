@@ -9,7 +9,7 @@ const chandelure_1 = require("./chandelure");
 const durant_1 = require("./durant");
 const eelektrik_1 = require("./eelektrik");
 const kyurem_1 = require("./kyurem");
-const NVI_59_Lampent_1 = require("./NVI_59_Lampent");
+const lampent_1 = require("./lampent");
 const plume_fossil_1 = require("./plume-fossil");
 const terrakion_1 = require("./terrakion");
 const trubbish_1 = require("./trubbish");
@@ -68,7 +68,7 @@ class KyuremArt extends kyurem_1.Kyurem {
     }
 }
 exports.KyuremArt = KyuremArt;
-class LampentArt extends NVI_59_Lampent_1.Lampent {
+class LampentArt extends lampent_1.Lampent {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/NVI/NVI_059_R_EN_LG.png';

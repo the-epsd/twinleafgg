@@ -12,7 +12,7 @@ const caitlin_1 = require("./caitlin");
 const castform_rainy_form_1 = require("./castform-rainy-form");
 const castform_snowy_form_1 = require("./castform-snowy-form");
 const castform_sunny_form_1 = require("./castform-sunny-form");
-const CRE_115_Tauros_1 = require("./CRE_115_Tauros");
+const tauros_1 = require("./tauros");
 const drizzile_1 = require("./drizzile");
 const dyna_tree_hill_1 = require("./dyna-tree-hill");
 const echoing_horn_1 = require("./echoing-horn");
@@ -387,7 +387,7 @@ class SpiralEnergyArt extends spiral_energy_1.SpiralEnergy {
     }
 }
 exports.SpiralEnergyArt = SpiralEnergyArt;
-class TaurosArt extends CRE_115_Tauros_1.Tauros {
+class TaurosArt extends tauros_1.Tauros {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRE/CRE_115_R_EN_LG.png';

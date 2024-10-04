@@ -1,7 +1,7 @@
 import { BeastRing } from './beast-ring';
-import { LysandreLabs } from './FLI_111_Lysandre_Labs';
-import { Frogadier } from './FLI_23_Frogadier';
-import { Magnezone } from './FLI_36_Magnezone';
+import { LysandreLabs } from './lysandre_labs';
+import { Frogadier } from './frogadier';
+import { Magnezone } from './magnezone';
 import { Inkay } from './inkay';
 import { Malamar } from './malamar';
 import { MetalFryingPan } from './metal-frying-pan';

@@ -26,6 +26,7 @@ import { Gengarex } from './gengar-ex';
 import { GougingFireex } from './gouging-fire-ex';
 import { GreatTusk } from './great-tusk';
 import { Grotle } from './grotle';
+import { Grubbin } from './grubbin';
 import { HandTrimmer } from './hand-trimmer';
 import { Haunter } from './haunter';
 import { HeavyBaton } from './heavy-baton';
@@ -63,7 +64,7 @@ import { Salvatore } from './salvatore';
 import { SandyShocks } from './sandy-shocks';
 import { Skitty } from './skitty';
 import { Solosis } from './solosis';
-import { Palafin } from './TEF_49_Palafin';
+import { Palafin } from './palafin';
 import { Torterraex } from './torterra-ex';
 import { Totodile } from './totodile';
 import { Turtwig } from './turtwig';
@@ -158,6 +159,9 @@ export declare class GougingFireexArt extends GougingFireex {
     cardImage: string;
 }
 export declare class GrotleArt extends Grotle {
+    cardImage: string;
+}
+export declare class GrubbinArt extends Grubbin {
     cardImage: string;
 }
 export declare class HandTrimmerArt extends HandTrimmer {
