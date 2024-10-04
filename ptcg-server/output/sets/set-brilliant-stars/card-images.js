@@ -9,8 +9,8 @@ const arceus_vstar_1 = require("./arceus-vstar");
 const axew_1 = require("./axew");
 const bibarel_1 = require("./bibarel");
 const bidoof_1 = require("./bidoof");
-const BRS_100_Heatran_1 = require("./BRS_100_Heatran");
-const BRS_112_Haxorus_1 = require("./BRS_112_Haxorus");
+const heatran_1 = require("./heatran");
+const haxorus_1 = require("./haxorus");
 const cherens_care_1 = require("./cherens-care");
 const cleansing_gloves_1 = require("./cleansing-gloves");
 const collapsed_stadium_1 = require("./collapsed-stadium");
@@ -198,14 +198,14 @@ class GrotleArt extends grotle_1.Grotle {
     }
 }
 exports.GrotleArt = GrotleArt;
-class HaxorusArt extends BRS_112_Haxorus_1.Haxorus {
+class HaxorusArt extends haxorus_1.Haxorus {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BRS/BRS_112_R_EN_LG.png';
     }
 }
 exports.HaxorusArt = HaxorusArt;
-class HeatranArt extends BRS_100_Heatran_1.Heatran {
+class HeatranArt extends heatran_1.Heatran {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BRS/BRS_100_R_EN_LG.png';

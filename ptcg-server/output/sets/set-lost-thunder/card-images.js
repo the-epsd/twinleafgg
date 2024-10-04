@@ -16,10 +16,10 @@ const girafarig_1 = require("./girafarig");
 const grovyle_1 = require("./grovyle");
 const lanturn_1 = require("./lanturn");
 const lost_blender_1 = require("./lost-blender");
-const LOT_191_ThunderMountainPrismStar_1 = require("./LOT_191_ThunderMountainPrismStar");
-const LOT_201_ZeraoraGX_1 = require("./LOT_201_ZeraoraGX");
-const LOT_55_Slowking_1 = require("./LOT_55_Slowking");
-const LOT_97_Giratina_1 = require("./LOT_97_Giratina");
+const ThunderMountainPrismStar_1 = require("./ThunderMountainPrismStar");
+const ZeraoraGX_1 = require("./ZeraoraGX");
+const slowking_1 = require("./slowking");
+const giratina_1 = require("./giratina");
 const mareep_1 = require("./mareep");
 const meganium_1 = require("./meganium");
 const mina_1 = require("./mina");
@@ -114,7 +114,7 @@ class GirafarigArt extends girafarig_1.Girafarig {
     }
 }
 exports.GirafarigArt = GirafarigArt;
-class GiratinaArt extends LOT_97_Giratina_1.Giratina {
+class GiratinaArt extends giratina_1.Giratina {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_097_R_EN_LG.png';
@@ -177,7 +177,7 @@ class NihilegoArt extends nihilego_1.Nihilego {
     }
 }
 exports.NihilegoArt = NihilegoArt;
-class SlowkingArt extends LOT_55_Slowking_1.Slowking {
+class SlowkingArt extends slowking_1.Slowking {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_055_R_EN_LG.png';
@@ -191,7 +191,7 @@ class SpellTagArt extends spell_tag_1.SpellTag {
     }
 }
 exports.SpellTagArt = SpellTagArt;
-class ThunderMountainPrismStarArt extends LOT_191_ThunderMountainPrismStar_1.ThunderMountainPrismStar {
+class ThunderMountainPrismStarArt extends ThunderMountainPrismStar_1.ThunderMountainPrismStar {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_191_R_EN_LG.png';
@@ -226,7 +226,7 @@ class ZebstrikaArt extends zebstrika_1.Zebstrika {
     }
 }
 exports.ZebstrikaArt = ZebstrikaArt;
-class ZeraoraGXArt extends LOT_201_ZeraoraGX_1.ZeraoraGX {
+class ZeraoraGXArt extends ZeraoraGX_1.ZeraoraGX {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_201_R_EN_LG.png';

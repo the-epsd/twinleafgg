@@ -11,8 +11,8 @@ const lucario_vstar_1 = require("./lucario-vstar");
 const manaphy_1 = require("./manaphy");
 const oricorio_1 = require("./oricorio");
 const professor_burnett_1 = require("./professor-burnett");
-const SSP_71_Scorbunny_1 = require("./SSP_71_Scorbunny");
-const SSP_92_Charmander_1 = require("./SSP_92_Charmander");
+const scorbunny_1 = require("./scorbunny");
+const charmander_1 = require("./charmander");
 const tepig_1 = require("./tepig");
 const venusaur_v_1 = require("./venusaur-v");
 const venusaur_vmax_1 = require("./venusaur-vmax");
@@ -23,7 +23,7 @@ class ChampionsFestivalArt extends champions_festival_1.ChampionsFestival {
     }
 }
 exports.ChampionsFestivalArt = ChampionsFestivalArt;
-class CharmanderArt extends SSP_92_Charmander_1.Charmander {
+class CharmanderArt extends charmander_1.Charmander {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_092_R_EN_LG.png';
@@ -99,7 +99,7 @@ class EscapeRopeArt extends escape_rope_1.EscapeRope {
     }
 }
 exports.EscapeRopeArt = EscapeRopeArt;
-class ScorbunnyArt extends SSP_71_Scorbunny_1.Scorbunny {
+class ScorbunnyArt extends scorbunny_1.Scorbunny {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_071_R_EN_LG.png';

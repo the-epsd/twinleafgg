@@ -39,34 +39,63 @@ export class Toxicroak extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
+    // if (effect instanceof BetweenTurnsEffect) {
+    //   const player = effect.player;
+
+    //   player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+    //     if (card === this) {
+
+    //       try {
+    //         const stub = new PowerEffect(player, {
+    //           name: 'test',
+    //           powerType: PowerType.ABILITY,
+    //           text: ''
+    //         }, this);
+    //         store.reduceEffect(state, stub);
+    //       } catch {
+    //         return state;
+    //       }
+
+    //       if (this.marker.hasMarker(this.POISON_MODIFIER_MARKER)) {
+    //         return state;
+    //       }
+
+    //       const opponent = StateUtils.getOpponent(state, player);
+    //       if (opponent.active.specialConditions.includes(SpecialCondition.POISONED)) {
+    //         opponent.active.poisonDamage += 20;
+    //         this.marker.addMarker(this.POISON_MODIFIER_MARKER, this);
+    //       }
+    //     }
+    //   });
+    // }
+
     if (effect instanceof BetweenTurnsEffect) {
       const player = effect.player;
-      
+      const opponent = StateUtils.getOpponent(state, player);
+
+      let isGarbodorWithToolInPlay = false;
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
         if (card === this) {
-
-          try {
-            const stub = new PowerEffect(player, {
-              name: 'test',
-              powerType: PowerType.ABILITY,
-              text: ''
-            }, this);
-            store.reduceEffect(state, stub);
-          } catch {
-            return state;
-          }
-
-          if (this.marker.hasMarker(this.POISON_MODIFIER_MARKER)) {
-            return state;
-          }
-
-          const opponent = StateUtils.getOpponent(state, player);
-          if (opponent.active.specialConditions.includes(SpecialCondition.POISONED)) {
-            opponent.active.poisonDamage += 20;
-            this.marker.addMarker(this.POISON_MODIFIER_MARKER, this);
-          }
+          isGarbodorWithToolInPlay = true;
         }
       });
+
+      if (!isGarbodorWithToolInPlay) {
+        return state;
+      }
+
+      // Try to reduce PowerEffect, to check if something is blocking our ability
+      try {
+        const stub = new PowerEffect(player, {
+          name: 'test',
+          powerType: PowerType.ABILITY,
+          text: ''
+        }, this);
+        store.reduceEffect(state, stub);
+      } catch {
+        return state;
+      }
+      opponent.active.poisonDamage += 20;
     }
 
     if (effect instanceof KnockOutEffect && effect.target.getPokemonCard() === this) {

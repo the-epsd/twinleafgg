@@ -68,7 +68,7 @@ const salvatore_1 = require("./salvatore");
 const sandy_shocks_1 = require("./sandy-shocks");
 const skitty_1 = require("./skitty");
 const solosis_1 = require("./solosis");
-const TEF_49_Palafin_1 = require("./TEF_49_Palafin");
+const palafin_1 = require("./palafin");
 const torterra_ex_1 = require("./torterra-ex");
 const totodile_1 = require("./totodile");
 const turtwig_1 = require("./turtwig");
@@ -438,7 +438,7 @@ class NeoUpperEnergyArt extends neo_upper_energy_1.NeoUpperEnergy {
     }
 }
 exports.NeoUpperEnergyArt = NeoUpperEnergyArt;
-class PalafinArt extends TEF_49_Palafin_1.Palafin {
+class PalafinArt extends palafin_1.Palafin {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEF/TEF_049_R_EN_LG.png';

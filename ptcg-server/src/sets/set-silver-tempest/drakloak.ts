@@ -13,15 +13,15 @@ export class Drakloak extends PokemonCard {
 
   public weakness = [{ type: CardType.DARK }];
 
-  public resistance = [ {type: CardType.FIGHTING, value: -30} ];
+  public resistance = [{ type: CardType.FIGHTING, value: -30 }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
-  public attacks = 
+  public attacks =
     [
       {
-        name: 'Sppoky Shot',
-        cost: [ CardType.PSYCHIC ],
+        name: 'Spooky Shot',
+        cost: [CardType.PSYCHIC],
         damage: 40,
         text: ''
       }
@@ -32,7 +32,7 @@ export class Drakloak extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '88';
-  
+
   public evolvesFrom: string = 'Dreepy';
 
   public name: string = 'Drakloak';

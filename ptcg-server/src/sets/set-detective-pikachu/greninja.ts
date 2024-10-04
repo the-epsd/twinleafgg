@@ -1,4 +1,4 @@
-import { ChoosePokemonPrompt, CoinFlipPrompt, PlayerType, Power, PowerType, SlotType, State, StateUtils, StoreLike } from '../../game';
+import { ChoosePokemonPrompt, CoinFlipPrompt, GamePhase, PlayerType, Power, PowerType, SlotType, State, StateUtils, StoreLike } from '../../game';
 import { GameLog, GameMessage } from '../../game/game-message';
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
@@ -26,7 +26,7 @@ export class Greninja extends PokemonCard {
     powerType: PowerType.ABILITY,
     text: 'If any damage is done to this Pokémon by attacks, flip a coin. If heads, prevent that damage.'
   }];
-  
+
   public attacks = [
     {
       name: 'Furious Shurikens',
@@ -54,6 +54,13 @@ export class Greninja extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
+      const pokemonCard = effect.target.getPokemonCard();
+      const sourceCard = effect.source.getPokemonCard();
+
+      if (pokemonCard !== this || sourceCard === undefined || state.phase !== GamePhase.ATTACK) {
+        return state;
+      }
+
       try {
         const stub = new PowerEffect(player, {
           name: 'test',
@@ -65,27 +72,34 @@ export class Greninja extends PokemonCard {
         return state;
       }
 
-      return store.prompt(state, [
+      const originalDamage = effect.damage;
+      effect.damage = 0; // Temporarily set damage to 0
+
+      state = store.prompt(state, [
         new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
       ], result => {
         if (result === true) {
-          effect.preventDefault = true;
           store.log(state, GameLog.LOG_ABILITY_BLOCKS_DAMGE, { name: opponent.name, pokemon: this.name });
-          return state;
+        } else {
+          effect.damage = originalDamage; // Restore original damage if coin flip is tails
         }
+        return state;
       });
+
+      return state;
     }
-    
+
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
 
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      
+
       let attackTargets = 0;
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, _ => attackTargets += 1); 
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, _ => attackTargets += 1);
       const min = Math.min(attackTargets, 2);
       const max = Math.min(attackTargets, 2);
-      
+
       state = store.prompt(state, new ChoosePokemonPrompt(
         player.id,
         GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
@@ -96,7 +110,7 @@ export class Greninja extends PokemonCard {
         if (!target || target.length === 0) {
           return;
         }
-        
+
         const targets = target || [];
         targets.forEach(target => {
           const damageEffect = new PutDamageEffect(effect, 50);
@@ -104,7 +118,7 @@ export class Greninja extends PokemonCard {
           store.reduceEffect(state, damageEffect);
         });
       });
-      
+
       return state;
     }
 

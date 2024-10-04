@@ -10,7 +10,7 @@ class Delinquent extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
-        this.set = 'BKT';
+        this.set = 'BKP';
         this.name = 'Delinquent';
         this.fullName = 'Delinquent BKT';
         this.cardImage = 'assets/cardback.png';

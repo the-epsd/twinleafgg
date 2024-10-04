@@ -2,10 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.WhismurArt = exports.TateAndLizaArt = exports.SwampertArt = exports.SlakothArt = exports.SlakingArt = exports.SableyeArt = exports.OricorioArt = exports.NuzleafArt = exports.MarshtompArt = exports.MudkipArt = exports.MagcargoArt = exports.LastChancePotionArt = exports.HustleBeltArt = exports.FishermanArt = exports.ElectrodeGXArt = exports.DelcattyArt = exports.CopycatArt = exports.ApricornMakerArt = void 0;
 const apricorn_maker_1 = require("./apricorn-maker");
-const CES_113_Slakoth_1 = require("./CES_113_Slakoth");
-const CES_115_Slaking_1 = require("./CES_115_Slaking");
-const CES_13_Nuzleaf_1 = require("./CES_13_Nuzleaf");
-const CES_88_Sableye_1 = require("./CES_88_Sableye");
+const slakoth_1 = require("./slakoth");
+const slaking_1 = require("./slaking");
+const nuzleaf_1 = require("./nuzleaf");
+const sableye_1 = require("./sableye");
 const copycat_1 = require("./copycat");
 const delcatty_1 = require("./delcatty");
 const electrode_gx_1 = require("./electrode-gx");
@@ -89,7 +89,7 @@ class MarshtompArt extends marshtomp_1.Marshtomp {
     }
 }
 exports.MarshtompArt = MarshtompArt;
-class NuzleafArt extends CES_13_Nuzleaf_1.Nuzleaf {
+class NuzleafArt extends nuzleaf_1.Nuzleaf {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CES/CES_013_R_EN_LG.png';
@@ -103,21 +103,21 @@ class OricorioArt extends oricorio_1.Oricorio {
     }
 }
 exports.OricorioArt = OricorioArt;
-class SableyeArt extends CES_88_Sableye_1.Sableye {
+class SableyeArt extends sableye_1.Sableye {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CES/CES_088_R_EN_LG.png';
     }
 }
 exports.SableyeArt = SableyeArt;
-class SlakingArt extends CES_115_Slaking_1.Slaking {
+class SlakingArt extends slaking_1.Slaking {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CES/CES_115_R_EN_LG.png';
     }
 }
 exports.SlakingArt = SlakingArt;
-class SlakothArt extends CES_113_Slakoth_1.Slakoth {
+class SlakothArt extends slakoth_1.Slakoth {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CES/CES_113_R_EN_LG.png';

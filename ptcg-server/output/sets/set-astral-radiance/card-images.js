@@ -3,13 +3,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.RegirockArt = exports.RegigigasArt = exports.RegielekiArt = exports.RegidragoArt = exports.RegiceArt = exports.RaltsArt = exports.RadiantHawluchaArt = exports.RadiantGreninjaArt = exports.OriginFormePalkiaVSTARArt = exports.OriginFormePalkiaVArt = exports.OriginFormeDialgaVSTARArt = exports.OriginFormeDialgaVArt = exports.MiltankArt = exports.MightyenaArt = exports.MantineArt = exports.MagnetonArt = exports.LuxrayVArt = exports.LucarioVArt = exports.KricketuneArt = exports.KricketotArt = exports.KleavorArt = exports.KeldeoArt = exports.JubilifeVillageArt = exports.IridaArt = exports.HisuianSamurottVSTARArt = exports.HisuianSamurottVArt = exports.HisuianQwilfishArt2 = exports.HisuianQwilfishArt = exports.HisuianOverqwilArt = exports.HisuianHeavyBallArt = exports.HisuianGrowlitheArt = exports.HisuianBasculinArt = exports.HisuianBasculegionArt = exports.HisuianArcanineArt = exports.GutsyPickaxeArt = exports.GrantArt = exports.GardeniasVigorArt = exports.GapejawBogArt = exports.GarchompVArt = exports.GalladeArt = exports.FeatherBallArt = exports.EnergyLotoArt = exports.DiancieArt = exports.DarkraiVSTARArt = exports.DarkraiVArt = exports.DarkPatchArt = exports.CylleneArt = exports.CancelingCologneArt = exports.BronzorArt = exports.AdamanArt = void 0;
 exports.YanmaArt = exports.WyrdeerVArt = exports.UrsalunaArt = exports.TrekkingShoesArt = exports.TempleofSinnohArt = exports.SwitchCartArt = exports.SupereffectiveGlassesArt = exports.StarmieVArt = exports.SpicySeasonedCurryArt = exports.ShieldonArt = exports.RoxanneArt = exports.RegisteelArt = void 0;
 const adaman_1 = require("./adaman");
-const ASR_109_Shieldon_1 = require("./ASR_109_Shieldon");
-const ASR_111_Bronzor_1 = require("./ASR_111_Bronzor");
-const ASR_6_Yanma_1 = require("./ASR_6_Yanma");
-const ASR_70_Hisuian_Growlithe_1 = require("./ASR_70_Hisuian_Growlithe");
-const ASR_88_Hisuian_Qwilfish_1 = require("./ASR_88_Hisuian_Qwilfish");
-const ASR_89_Hisuian_Qwilfish_1 = require("./ASR_89_Hisuian_Qwilfish");
-const ASR_90_Hisuian_Overqwil_1 = require("./ASR_90_Hisuian_Overqwil");
+const shieldon_1 = require("./shieldon");
+const bronzor_1 = require("./bronzor");
+const yanma_1 = require("./yanma");
+const hisuian_growllithe_1 = require("./hisuian_growllithe");
+const hisuian_qwilfish_1 = require("./hisuian_qwilfish");
+const hisuian_qwilfish2_1 = require("./hisuian_qwilfish2");
+const hisuian_overqwil_1 = require("./hisuian_overqwil");
 const canceling_cologne_1 = require("./canceling-cologne");
 const cyllene_1 = require("./cyllene");
 const dark_patch_1 = require("./dark-patch");
@@ -71,7 +71,7 @@ class AdamanArt extends adaman_1.Adaman {
     }
 }
 exports.AdamanArt = AdamanArt;
-class BronzorArt extends ASR_111_Bronzor_1.Bronzor {
+class BronzorArt extends bronzor_1.Bronzor {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ASR/ASR_111_R_EN_LG.png';
@@ -197,7 +197,7 @@ class HisuianBasculinArt extends hisuian_basculin_1.HisuianBasculin {
     }
 }
 exports.HisuianBasculinArt = HisuianBasculinArt;
-class HisuianGrowlitheArt extends ASR_70_Hisuian_Growlithe_1.HisuianGrowlithe {
+class HisuianGrowlitheArt extends hisuian_growllithe_1.HisuianGrowlithe {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ASR/ASR_070_R_EN_LG.png';
@@ -211,21 +211,21 @@ class HisuianHeavyBallArt extends hisuian_heavy_ball_1.HisuianHeavyBall {
     }
 }
 exports.HisuianHeavyBallArt = HisuianHeavyBallArt;
-class HisuianOverqwilArt extends ASR_90_Hisuian_Overqwil_1.HisuianOverqwil {
+class HisuianOverqwilArt extends hisuian_overqwil_1.HisuianOverqwil {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ASR/ASR_090_R_EN_LG.png';
     }
 }
 exports.HisuianOverqwilArt = HisuianOverqwilArt;
-class HisuianQwilfishArt extends ASR_89_Hisuian_Qwilfish_1.HisuianQwilfish {
+class HisuianQwilfishArt extends hisuian_qwilfish2_1.HisuianQwilfish {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ASR/ASR_089_R_EN_LG.png';
     }
 }
 exports.HisuianQwilfishArt = HisuianQwilfishArt;
-class HisuianQwilfishArt2 extends ASR_88_Hisuian_Qwilfish_1.HisuianQwilfish2 {
+class HisuianQwilfishArt2 extends hisuian_qwilfish_1.HisuianQwilfish2 {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ASR/ASR_088_R_EN_LG.png';
@@ -428,7 +428,7 @@ class RoxanneArt extends roxanne_1.Roxanne {
     }
 }
 exports.RoxanneArt = RoxanneArt;
-class ShieldonArt extends ASR_109_Shieldon_1.Shieldon {
+class ShieldonArt extends shieldon_1.Shieldon {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ASR/ASR_109_R_EN_LG.png';
@@ -491,7 +491,7 @@ class WyrdeerVArt extends wyrdeer_v_1.WyrdeerV {
     }
 }
 exports.WyrdeerVArt = WyrdeerVArt;
-class YanmaArt extends ASR_6_Yanma_1.Yanma {
+class YanmaArt extends yanma_1.Yanma {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ASR/ASR_006_R_EN_LG.png';

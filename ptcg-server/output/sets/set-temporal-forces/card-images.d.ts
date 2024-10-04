@@ -64,7 +64,7 @@ import { Salvatore } from './salvatore';
 import { SandyShocks } from './sandy-shocks';
 import { Skitty } from './skitty';
 import { Solosis } from './solosis';
-import { Palafin } from './TEF_49_Palafin';
+import { Palafin } from './palafin';
 import { Torterraex } from './torterra-ex';
 import { Totodile } from './totodile';
 import { Turtwig } from './turtwig';

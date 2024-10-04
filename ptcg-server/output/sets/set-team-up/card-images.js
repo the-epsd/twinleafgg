@@ -13,17 +13,17 @@ const mareep_1 = require("./mareep");
 const metal_goggles_1 = require("./metal-goggles");
 const pidgeotto_1 = require("./pidgeotto");
 const pokemon_communication_1 = require("./pokemon-communication");
-const TEU_103_Ferrothorn_1 = require("./TEU_103_Ferrothorn");
-const TEU_104_Pawniard_1 = require("./TEU_104_Pawniard");
-const TEU_105_Bisharp_1 = require("./TEU_105_Bisharp");
-const TEU_126_Persian_1 = require("./TEU_126_Persian");
-const TEU_19_Moltres_1 = require("./TEU_19_Moltres");
-const TEU_52_Tapu_Koko_Prism_Star_1 = require("./TEU_52_Tapu_Koko_Prism_Star");
-const TEU_88_Absol_1 = require("./TEU_88_Absol");
+const ferrothorn_1 = require("./ferrothorn");
+const pawniard_1 = require("./pawniard");
+const bisharp_1 = require("./bisharp");
+const persian_1 = require("./persian");
+const moltres_1 = require("./moltres");
+const tapu_koko_prism_star_1 = require("./tapu_koko_prism_star");
+const absol_1 = require("./absol");
 const viridian_forest_1 = require("./viridian-forest");
 const yveltal_1 = require("./yveltal");
 const zapdos_1 = require("./zapdos");
-class AbsolArt extends TEU_88_Absol_1.Absol {
+class AbsolArt extends absol_1.Absol {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEU/TEU_088_R_EN_LG.png';
@@ -44,7 +44,7 @@ class ArticunoArt extends articuno_1.Articuno {
     }
 }
 exports.ArticunoArt = ArticunoArt;
-class BisharpArt extends TEU_105_Bisharp_1.Bisharp {
+class BisharpArt extends bisharp_1.Bisharp {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEU/TEU_105_R_EN_LG.png';
@@ -65,7 +65,7 @@ class DragoniteArt extends dragonite_1.Dragonite {
     }
 }
 exports.DragoniteArt = DragoniteArt;
-class FerrothornArt extends TEU_103_Ferrothorn_1.Ferrothorn {
+class FerrothornArt extends ferrothorn_1.Ferrothorn {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEU/TEU_103_R_EN_LG.png';
@@ -114,21 +114,21 @@ class MetalGogglesArt extends metal_goggles_1.MetalGoggles {
     }
 }
 exports.MetalGogglesArt = MetalGogglesArt;
-class MoltresArt extends TEU_19_Moltres_1.Moltres {
+class MoltresArt extends moltres_1.Moltres {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEU/TEU_019_R_EN_LG.png';
     }
 }
 exports.MoltresArt = MoltresArt;
-class PawniardArt extends TEU_104_Pawniard_1.Pawniard {
+class PawniardArt extends pawniard_1.Pawniard {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEU/TEU_104_R_EN_LG.png';
     }
 }
 exports.PawniardArt = PawniardArt;
-class PersianArt extends TEU_126_Persian_1.Persian {
+class PersianArt extends persian_1.Persian {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEU/TEU_126_R_EN_LG.png';
@@ -149,7 +149,7 @@ class PokemonCommunicationArt extends pokemon_communication_1.PokemonCommunicati
     }
 }
 exports.PokemonCommunicationArt = PokemonCommunicationArt;
-class TapuKokoPrismStarArt extends TEU_52_Tapu_Koko_Prism_Star_1.TapuKokoPrismStar {
+class TapuKokoPrismStarArt extends tapu_koko_prism_star_1.TapuKokoPrismStar {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEU/TEU_051_R_EN_LG.png';

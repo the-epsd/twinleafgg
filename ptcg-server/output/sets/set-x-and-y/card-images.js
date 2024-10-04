@@ -14,7 +14,7 @@ const shadow_circle_1 = require("./shadow-circle");
 const shauna_1 = require("./shauna");
 const super_potion_1 = require("./super-potion");
 const voltorb_1 = require("./voltorb");
-const XY_55_Trevenant_1 = require("./XY_55_Trevenant");
+const trevenant_1 = require("./trevenant");
 const yveltal_ex_1 = require("./yveltal-ex");
 class BraixenArt extends braixen_1.Braixen {
     constructor() {
@@ -103,7 +103,7 @@ class SuperPotionArt extends super_potion_1.SuperPotion {
     }
 }
 exports.SuperPotionArt = SuperPotionArt;
-class TrevenantArt extends XY_55_Trevenant_1.Trevenant {
+class TrevenantArt extends trevenant_1.Trevenant {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/XY/XY_055_R_EN_LG.png';

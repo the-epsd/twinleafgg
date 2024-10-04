@@ -49,13 +49,13 @@ const sandygast_1 = require("./sandygast");
 const serena_1 = require("./serena");
 const serperior_v_1 = require("./serperior-v");
 const serperior_vstar_1 = require("./serperior-vstar");
-const SIT_100_Palossand_1 = require("./SIT_100_Palossand");
-const SIT_123_Klink_1 = require("./SIT_123_Klink");
-const SIT_124_Klang_1 = require("./SIT_124_Klang");
-const SIT_125_Klinklang_1 = require("./SIT_125_Klinklang");
-const SIT_141_Spinda_1 = require("./SIT_141_Spinda");
-const SIT_41_Snorunt_1 = require("./SIT_41_Snorunt");
-const SIT_97_Terrakion_1 = require("./SIT_97_Terrakion");
+const palossand_1 = require("./palossand");
+const klink_1 = require("./klink");
+const klang_1 = require("./klang");
+const klinklang_1 = require("./klinklang");
+const spinda_1 = require("./spinda");
+const snorunt_1 = require("./snorunt");
+const terrakion_1 = require("./terrakion");
 const sunflora_1 = require("./sunflora");
 const unidentified_fossil_1 = require("./unidentified-fossil");
 const ursaluna_v_1 = require("./ursaluna-v");
@@ -239,21 +239,21 @@ class KirliaArt extends kirlia_1.Kirlia {
     }
 }
 exports.KirliaArt = KirliaArt;
-class KlangArt extends SIT_124_Klang_1.Klang {
+class KlangArt extends klang_1.Klang {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SIT/SIT_124_R_EN_LG.png';
     }
 }
 exports.KlangArt = KlangArt;
-class KlinkArt extends SIT_123_Klink_1.Klink {
+class KlinkArt extends klink_1.Klink {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SIT/SIT_123_R_EN_LG.png';
     }
 }
 exports.KlinkArt = KlinkArt;
-class KlinklangArt extends SIT_125_Klinklang_1.Klinklang {
+class KlinklangArt extends klinklang_1.Klinklang {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SIT/SIT_125_R_EN_LG.png';
@@ -302,7 +302,7 @@ class MismagiusArt extends mismagius_1.Mismagius {
     }
 }
 exports.MismagiusArt = MismagiusArt;
-class PalossandArt extends SIT_100_Palossand_1.Palossand {
+class PalossandArt extends palossand_1.Palossand {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SIT/SIT_100_R_EN_LG.png';
@@ -421,14 +421,14 @@ class SerperiorVSTARArt extends serperior_vstar_1.SerperiorVSTAR {
     }
 }
 exports.SerperiorVSTARArt = SerperiorVSTARArt;
-class SnoruntArt extends SIT_41_Snorunt_1.Snorunt {
+class SnoruntArt extends snorunt_1.Snorunt {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SIT/SIT_041_R_EN_LG.png';
     }
 }
 exports.SnoruntArt = SnoruntArt;
-class SpindaArt extends SIT_141_Spinda_1.Spinda {
+class SpindaArt extends spinda_1.Spinda {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SIT/SIT_141_R_EN_LG.png';
@@ -442,7 +442,7 @@ class SunfloraArt extends sunflora_1.Sunflora {
     }
 }
 exports.SunfloraArt = SunfloraArt;
-class TerrakionArt extends SIT_97_Terrakion_1.Terrakion {
+class TerrakionArt extends terrakion_1.Terrakion {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SIT/SIT_097_R_EN_LG.png';

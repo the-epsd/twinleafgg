@@ -5,7 +5,7 @@ const quagsire_1 = require("../set-dragons-majesty/quagsire");
 const wooper_1 = require("../set-dragons-majesty/wooper");
 const charmander_1 = require("./charmander");
 const erikas_hospitality_1 = require("./erikas-hospitality");
-const HIF_11_Psyduck_1 = require("./HIF_11_Psyduck");
+const psyduck_1 = require("./psyduck");
 class CharmanderArt extends charmander_1.Charmander {
     constructor() {
         super(...arguments);
@@ -20,7 +20,7 @@ class ErikasHospitalityArt extends erikas_hospitality_1.ErikasHospitality {
     }
 }
 exports.ErikasHospitalityArt = ErikasHospitalityArt;
-class PsyduckArt extends HIF_11_Psyduck_1.Psyduck {
+class PsyduckArt extends psyduck_1.Psyduck {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/HIF/HIF_011_R_EN_LG.png';

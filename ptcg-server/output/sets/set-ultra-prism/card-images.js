@@ -15,11 +15,11 @@ const sneasel_1 = require("./sneasel");
 const turtwig_1 = require("./turtwig");
 const unit_energy_grw_1 = require("./unit-energy-grw");
 const unit_energy_lpm_1 = require("./unit-energy-lpm");
-const UPR_66_Riolu_1 = require("./UPR_66_Riolu");
-const UPR_85_Bastiodon_1 = require("./UPR_85_Bastiodon");
+const riolu_1 = require("./riolu");
+const bastiodon_1 = require("./bastiodon");
 const volkner_1 = require("./volkner");
 const weavile_1 = require("./weavile");
-class BastiodonArt extends UPR_85_Bastiodon_1.Bastiodon {
+class BastiodonArt extends bastiodon_1.Bastiodon {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UPR/UPR_085_R_EN_LG.png';
@@ -89,7 +89,7 @@ class PokemonFanClubArt extends pokemon_fan_club_1.PokemonFanClub {
     }
 }
 exports.PokemonFanClubArt = PokemonFanClubArt;
-class RioluArt extends UPR_66_Riolu_1.Riolu {
+class RioluArt extends riolu_1.Riolu {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UPR/UPR_066_R_EN_LG.png';

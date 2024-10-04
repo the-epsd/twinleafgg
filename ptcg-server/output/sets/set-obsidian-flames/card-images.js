@@ -17,9 +17,9 @@ const finizen_1 = require("./finizen");
 const letter_of_encouragement_1 = require("./letter-of-encouragement");
 const lunatone_1 = require("./lunatone");
 const miraidon_ex_1 = require("./miraidon-ex");
-const OBF_1_Oddish_1 = require("./OBF_1_Oddish");
-const OBF_22_Toedscruel_ex_1 = require("./OBF_22_Toedscruel_ex");
-const OBF_29_Ninetales_1 = require("./OBF_29_Ninetales");
+const oddish_1 = require("./oddish");
+const Toedscruel_ex_1 = require("./Toedscruel_ex");
+const ninetales_1 = require("./ninetales");
 const palafin_1 = require("./palafin");
 const palpitoad_1 = require("./palpitoad");
 const pidgeot_ex_1 = require("./pidgeot-ex");
@@ -151,14 +151,14 @@ class MiraidonexArt extends miraidon_ex_1.Miraidonex {
     }
 }
 exports.MiraidonexArt = MiraidonexArt;
-class NinetalesArt extends OBF_29_Ninetales_1.Ninetales {
+class NinetalesArt extends ninetales_1.Ninetales {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_029_R_EN_LG.png';
     }
 }
 exports.NinetalesArt = NinetalesArt;
-class OddishArt extends OBF_1_Oddish_1.Oddish {
+class OddishArt extends oddish_1.Oddish {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_001_R_EN_LG.png';
@@ -242,7 +242,7 @@ class ThundurusArt extends thundurus_1.Thundurus {
     }
 }
 exports.ThundurusArt = ThundurusArt;
-class ToedscruelexArt extends OBF_22_Toedscruel_ex_1.Toedscruelex {
+class ToedscruelexArt extends Toedscruel_ex_1.Toedscruelex {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_022_R_EN_LG.png';

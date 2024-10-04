@@ -6,7 +6,7 @@ const enhanced_hammer_1 = require("../set-twilight-masquerade/enhanced-hammer");
 const accelgor_1 = require("./accelgor");
 const dark_claw_1 = require("./dark-claw");
 const darkrai_ex_1 = require("./darkrai-ex");
-const DEX_109_Gardevoir_1 = require("./DEX_109_Gardevoir");
+const gardevoir_1 = require("./gardevoir");
 const empoleon_1 = require("./empoleon");
 const ivysaur_1 = require("./ivysaur");
 const minun_1 = require("./minun");
@@ -66,7 +66,7 @@ class EnhancedHammerArt extends enhanced_hammer_1.EnhancedHammer {
     }
 }
 exports.EnhancedHammerArt = EnhancedHammerArt;
-class GardevoirArt extends DEX_109_Gardevoir_1.Gardevoir {
+class GardevoirArt extends gardevoir_1.Gardevoir {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/DEX/DEX_109_R_EN_LG.png';

@@ -1,8 +1,8 @@
 import { ApricornMaker } from './apricorn-maker';
-import { Slakoth } from './CES_113_Slakoth';
-import { Slaking } from './CES_115_Slaking';
-import { Nuzleaf } from './CES_13_Nuzleaf';
-import { Sableye } from './CES_88_Sableye';
+import { Slakoth } from './slakoth';
+import { Slaking } from './slaking';
+import { Nuzleaf } from './nuzleaf';
+import { Sableye } from './sableye';
 import { Copycat } from './copycat';
 import { Delcatty } from './delcatty';
 import { ElectrodeGX } from './electrode-gx';

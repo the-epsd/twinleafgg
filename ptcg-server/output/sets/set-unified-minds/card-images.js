@@ -12,14 +12,14 @@ const reset_stamp_1 = require("./reset-stamp");
 const riolu_1 = require("./riolu");
 const stadium_nav_1 = require("./stadium-nav");
 const u_turn_board_1 = require("./u-turn-board");
-const UNM_140_Hoopa_1 = require("./UNM_140_Hoopa");
-const UNM_162_Lickilicky_1 = require("./UNM_162_Lickilicky");
-const UNM_173_Munchlax_1 = require("./UNM_173_Munchlax");
-const UNM_209_Tag_Switch_1 = require("./UNM_209_Tag_Switch");
-const UNM_221_RaichuAlolanRaichuGX_1 = require("./UNM_221_RaichuAlolanRaichuGX");
-const UNM_23_Numel_1 = require("./UNM_23_Numel");
-const UNM_38_Froslass_1 = require("./UNM_38_Froslass");
-const UNM_57_Alolan_Raichu_1 = require("./UNM_57_Alolan_Raichu");
+const hoopa_1 = require("./hoopa");
+const lickilicky_1 = require("./lickilicky");
+const munchlax_1 = require("./munchlax");
+const tag_switch_1 = require("./tag_switch");
+const RaichuAlolanRaichuGX_1 = require("./RaichuAlolanRaichuGX");
+const numel_1 = require("./numel");
+const froslass_1 = require("./froslass");
+const alolan_raichu_1 = require("./alolan_raichu");
 const weakness_guard_energy_1 = require("./weakness-guard-energy");
 class AlolanGrimerArt extends alolan_grimer_1.AlolanGrimer {
     constructor() {
@@ -42,14 +42,14 @@ class FlyiniumZAirSlashArt extends flyinium_z_air_slash_1.FlyiniumZAirSlash {
     }
 }
 exports.FlyiniumZAirSlashArt = FlyiniumZAirSlashArt;
-class FroslassArt extends UNM_38_Froslass_1.Froslass {
+class FroslassArt extends froslass_1.Froslass {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNM/UNM_038_R_EN_LG.png';
     }
 }
 exports.FroslassArt = FroslassArt;
-class HoopaArt extends UNM_140_Hoopa_1.Hoopa {
+class HoopaArt extends hoopa_1.Hoopa {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNM/UNM_140_R_EN_LG.png';
@@ -63,14 +63,14 @@ class KarateBeltArt extends karate_belt_1.KarateBelt {
     }
 }
 exports.KarateBeltArt = KarateBeltArt;
-class LickilickyArt extends UNM_162_Lickilicky_1.Lickilicky {
+class LickilickyArt extends lickilicky_1.Lickilicky {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNM/UNM_162_R_EN_LG.png';
     }
 }
 exports.LickilickyArt = LickilickyArt;
-class MunchlaxArt extends UNM_173_Munchlax_1.Munchlax {
+class MunchlaxArt extends munchlax_1.Munchlax {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNM/UNM_173_R_EN_LG.png';
@@ -84,7 +84,7 @@ class NecrozmaArt extends necrozma_1.Necrozma {
     }
 }
 exports.NecrozmaArt = NecrozmaArt;
-class NumelArt extends UNM_23_Numel_1.Numel {
+class NumelArt extends numel_1.Numel {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNM/UNM_023_R_EN_LG.png';
@@ -98,14 +98,14 @@ class PurrloinArt extends purrloin_1.Purrloin {
     }
 }
 exports.PurrloinArt = PurrloinArt;
-class AlolanRaichuArt extends UNM_57_Alolan_Raichu_1.AlolanRaichu {
+class AlolanRaichuArt extends alolan_raichu_1.AlolanRaichu {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNM/UNM_057_R_EN_LG.png';
     }
 }
 exports.AlolanRaichuArt = AlolanRaichuArt;
-class RaichuAlolanRaichuGXArt extends UNM_221_RaichuAlolanRaichuGX_1.RaichuAlolanRaichuGX {
+class RaichuAlolanRaichuGXArt extends RaichuAlolanRaichuGX_1.RaichuAlolanRaichuGX {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNM/UNM_221_R_EN_LG.png';
@@ -140,7 +140,7 @@ class StadiumNavArt extends stadium_nav_1.StadiumNav {
     }
 }
 exports.StadiumNavArt = StadiumNavArt;
-class TagSwitchArt extends UNM_209_Tag_Switch_1.TagSwitch {
+class TagSwitchArt extends tag_switch_1.TagSwitch {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNM/UNM_209_R_EN_LG.png';

@@ -2,9 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ZoroarkArt = exports.SudowoodoArt = exports.StaryuArt = exports.SplashEnergyArt = exports.ReverseValleyArt = exports.PhantumpArt = exports.MaxElixirArt = exports.KricketotArt = exports.FroakieArt = exports.FightingFuryBeltArt = exports.DelinquentArt = exports.BayleefArt = void 0;
 const bayleef_1 = require("./bayleef");
-const BKP_38_Froakie_1 = require("./BKP_38_Froakie");
-const BKP_67_Sudowoodo_1 = require("./BKP_67_Sudowoodo");
-const BKT_91_Zoroark_1 = require("./BKT_91_Zoroark");
+const froakie_1 = require("./froakie");
+const sudowoodo_1 = require("./sudowoodo");
+const zoroark_1 = require("./zoroark");
 const delinquent_1 = require("./delinquent");
 const fighting_fury_belt_1 = require("./fighting-fury-belt");
 const kricketot_1 = require("./kricketot");
@@ -34,7 +34,7 @@ class FightingFuryBeltArt extends fighting_fury_belt_1.FightingFuryBelt {
     }
 }
 exports.FightingFuryBeltArt = FightingFuryBeltArt;
-class FroakieArt extends BKP_38_Froakie_1.Froakie {
+class FroakieArt extends froakie_1.Froakie {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BKP/BKP_038_R_EN_LG.png';
@@ -83,14 +83,14 @@ class StaryuArt extends staryu_1.Staryu {
     }
 }
 exports.StaryuArt = StaryuArt;
-class SudowoodoArt extends BKP_67_Sudowoodo_1.Sudowoodo {
+class SudowoodoArt extends sudowoodo_1.Sudowoodo {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BKP/BKP_067_R_EN_LG.png';
     }
 }
 exports.SudowoodoArt = SudowoodoArt;
-class ZoroarkArt extends BKT_91_Zoroark_1.Zoroark {
+class ZoroarkArt extends zoroark_1.Zoroark {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BKT/BKT_091_R_EN_LG.png';

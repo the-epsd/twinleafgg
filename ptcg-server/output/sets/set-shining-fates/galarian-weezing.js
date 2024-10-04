@@ -42,7 +42,7 @@ class GalarianWeezing extends pokemon_card_1.PokemonCard {
             specialCondition.poisonDamage = 40;
             store.reduceEffect(state, specialCondition);
         }
-        if (effect instanceof game_effects_1.PowerEffect && effect.power.powerType === pokemon_types_1.PowerType.ABILITY && !effect.power.exemptFromAbilityLock) {
+        if (effect instanceof game_effects_1.PowerEffect && effect.power.powerType === pokemon_types_1.PowerType.ABILITY) {
             const player = effect.player;
             const opponent = state_utils_1.StateUtils.getOpponent(state, player);
             const cardList = state_utils_1.StateUtils.findCardList(state, this);
@@ -64,9 +64,11 @@ class GalarianWeezing extends pokemon_card_1.PokemonCard {
                 store.reduceEffect(state, stub);
             }
             catch (_a) {
-                throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_USE_POWER);
+                if (!effect.power.exemptFromAbilityLock) {
+                    throw new game_error_1.GameError(game_message_1.GameMessage.BLOCKED_BY_ABILITY);
+                }
             }
-            // throw new GameError(GameMessage.CANNOT_USE_POWER);
+            return state;
         }
         return state;
     }

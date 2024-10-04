@@ -22,17 +22,17 @@ const porygon_z_1 = require("./porygon-z");
 const porygon2_1 = require("./porygon2");
 const spiritomb_1 = require("./spiritomb");
 const triple_acceleration_energy_1 = require("./triple-acceleration-energy");
-const UNB_123_Aron_1 = require("./UNB_123_Aron");
-const UNB_124_Lairon_1 = require("./UNB_124_Lairon");
-const UNB_147_Meowth_1 = require("./UNB_147_Meowth");
-const UNB_152_Lickitung_1 = require("./UNB_152_Lickitung");
-const UNB_169_Electromagnetic_Radar_1 = require("./UNB_169_Electromagnetic_Radar");
-const UNB_195_DedenneGX_1 = require("./UNB_195_DedenneGX");
-const UNB_19_Kartana_1 = require("./UNB_19_Kartana");
-const UNB_31_Salazzle_1 = require("./UNB_31_Salazzle");
-const UNB_37_Poliwag_1 = require("./UNB_37_Poliwag");
-const UNB_60_Zeraora_1 = require("./UNB_60_Zeraora");
-const UNB_7_Gloom_1 = require("./UNB_7_Gloom");
+const aron_1 = require("./aron");
+const lairon_1 = require("./lairon");
+const meowth_1 = require("./meowth");
+const lickitung_1 = require("./lickitung");
+const electromagnetic_radar_1 = require("./electromagnetic_radar");
+const dedenneGX_1 = require("./dedenneGX");
+const kartana_1 = require("./kartana");
+const salazzle_1 = require("./salazzle");
+const poliwag_1 = require("./poliwag");
+const zeraora_1 = require("./zeraora");
+const gloom_1 = require("./gloom");
 const volcanion_1 = require("./volcanion");
 class ArcanineArt extends arcanine_1.Arcanine {
     constructor() {
@@ -41,7 +41,7 @@ class ArcanineArt extends arcanine_1.Arcanine {
     }
 }
 exports.ArcanineArt = ArcanineArt;
-class AronArt extends UNB_123_Aron_1.Aron {
+class AronArt extends aron_1.Aron {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_123_R_EN_LG.png';
@@ -55,7 +55,7 @@ class CleffaArt extends cleffa_1.Cleffa {
     }
 }
 exports.CleffaArt = CleffaArt;
-class DedenneGXArt extends UNB_195_DedenneGX_1.DedenneGX {
+class DedenneGXArt extends dedenneGX_1.DedenneGX {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_195_R_EN_LG.png';
@@ -69,7 +69,7 @@ class DuskStoneArt extends dusk_stone_1.DuskStone {
     }
 }
 exports.DuskStoneArt = DuskStoneArt;
-class ElectromagneticRadarArt extends UNB_169_Electromagnetic_Radar_1.ElectromagneticRadar {
+class ElectromagneticRadarArt extends electromagnetic_radar_1.ElectromagneticRadar {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_169_R_EN_LG.png';
@@ -90,7 +90,7 @@ class FireCrystalArt extends fire_crystal_1.FireCrystal {
     }
 }
 exports.FireCrystalArt = FireCrystalArt;
-class GloomArt extends UNB_7_Gloom_1.Gloom {
+class GloomArt extends gloom_1.Gloom {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_007_R_EN_LG.png';
@@ -111,21 +111,21 @@ class HitmontopArt extends hitmontop_1.Hitmontop {
     }
 }
 exports.HitmontopArt = HitmontopArt;
-class KartanaArt extends UNB_19_Kartana_1.Kartana {
+class KartanaArt extends kartana_1.Kartana {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_019_R_EN_LG.png';
     }
 }
 exports.KartanaArt = KartanaArt;
-class LaironArt extends UNB_124_Lairon_1.Lairon {
+class LaironArt extends lairon_1.Lairon {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_124_R_EN_LG.png';
     }
 }
 exports.LaironArt = LaironArt;
-class LickitungArt extends UNB_152_Lickitung_1.Lickitung {
+class LickitungArt extends lickitung_1.Lickitung {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_152_R_EN_LG.png';
@@ -153,7 +153,7 @@ class MartialArtsDojoArt extends martial_arts_dojo_1.MartialArtsDojo {
     }
 }
 exports.MartialArtsDojoArt = MartialArtsDojoArt;
-class MeowthArt extends UNB_147_Meowth_1.Meowth {
+class MeowthArt extends meowth_1.Meowth {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_147_R_EN_LG.png';
@@ -202,7 +202,7 @@ class Pokegear30Art extends pokegear_30_1.Pokegear30 {
     }
 }
 exports.Pokegear30Art = Pokegear30Art;
-class PoliwagArt extends UNB_37_Poliwag_1.Poliwag {
+class PoliwagArt extends poliwag_1.Poliwag {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_037_R_EN_LG.png';
@@ -230,7 +230,7 @@ class PorygonZArt extends porygon_z_1.PorygonZ {
     }
 }
 exports.PorygonZArt = PorygonZArt;
-class SalazzleArt extends UNB_31_Salazzle_1.Salazzle {
+class SalazzleArt extends salazzle_1.Salazzle {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_031_R_EN_LG.png';
@@ -258,7 +258,7 @@ class VolcanionArt extends volcanion_1.Volcanion {
     }
 }
 exports.VolcanionArt = VolcanionArt;
-class ZeraoraArt extends UNB_60_Zeraora_1.Zeraora {
+class ZeraoraArt extends zeraora_1.Zeraora {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_060_R_EN_LG.png';

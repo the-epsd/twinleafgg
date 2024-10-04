@@ -2,14 +2,14 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.WooperArt = exports.SwitchRaftArt = exports.QuagsireArt = exports.FieryFlintArt = exports.FeraligatrArt = exports.FeebasArt = exports.CroconawArt = exports.BlazikenArt = void 0;
 const croconaw_1 = require("./croconaw");
-const DRM_24_Feraligatr_1 = require("./DRM_24_Feraligatr");
-const DRM_6_Blaziken_1 = require("./DRM_6_Blaziken");
+const feraligatr_1 = require("./feraligatr");
+const blaziken_1 = require("./blaziken");
 const feebas_1 = require("./feebas");
 const fiery_flint_1 = require("./fiery-flint");
 const quagsire_1 = require("./quagsire");
 const switch_raft_1 = require("./switch-raft");
 const wooper_1 = require("./wooper");
-class BlazikenArt extends DRM_6_Blaziken_1.Blaziken {
+class BlazikenArt extends blaziken_1.Blaziken {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/DRM/DRM_006_R_EN_LG.png';
@@ -30,7 +30,7 @@ class FeebasArt extends feebas_1.Feebas {
     }
 }
 exports.FeebasArt = FeebasArt;
-class FeraligatrArt extends DRM_24_Feraligatr_1.Feraligatr {
+class FeraligatrArt extends feraligatr_1.Feraligatr {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/DRM/DRM_024_R_EN_LG.png';

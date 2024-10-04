@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.WishfulBatonArt = exports.PlumeriaArt = exports.MarillArt = exports.GuzmaArt = exports.GloomArt = exports.DarkraiGXArt = exports.AcerolaArt = void 0;
 const acerola_1 = require("./acerola");
-const BUS_34_Marill_1 = require("./BUS_34_Marill");
+const marill_1 = require("./marill");
 const darkrai_gx_1 = require("./darkrai-gx");
 const gloom_1 = require("./gloom");
 const guzma_1 = require("./guzma");
@@ -36,7 +36,7 @@ class GuzmaArt extends guzma_1.Guzma {
     }
 }
 exports.GuzmaArt = GuzmaArt;
-class MarillArt extends BUS_34_Marill_1.Marill {
+class MarillArt extends marill_1.Marill {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BUS/BUS_034_R_EN_LG.png';

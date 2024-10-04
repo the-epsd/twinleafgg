@@ -7,8 +7,8 @@ const bunnelby_1 = require("./bunnelby");
 const dive_ball_1 = require("./dive-ball");
 const maxies_hidden_ball_trick_1 = require("./maxies-hidden-ball-trick");
 const milotic_1 = require("./milotic");
-const PRC_22_Slugma_1 = require("./PRC_22_Slugma");
-const PRC_26_Torchic_1 = require("./PRC_26_Torchic");
+const slugma_1 = require("./slugma");
+const torchic_1 = require("./torchic");
 const rough_seas_1 = require("./rough-seas");
 const sceptile_1 = require("./sceptile");
 const scorched_earth_1 = require("./scorched-earth");
@@ -93,7 +93,7 @@ class SilentLabArt extends silent_lab_1.SilentLab {
     }
 }
 exports.SilentLabArt = SilentLabArt;
-class SlugmaArt extends PRC_22_Slugma_1.Slugma {
+class SlugmaArt extends slugma_1.Slugma {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PRC/PRC_022_R_EN_LG.png';
@@ -107,7 +107,7 @@ class TeammatesArt extends teammates_1.Teammates {
     }
 }
 exports.TeammatesArt = TeammatesArt;
-class TorchicArt extends PRC_26_Torchic_1.Torchic {
+class TorchicArt extends torchic_1.Torchic {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PRC/PRC_026_R_EN_LG.png';

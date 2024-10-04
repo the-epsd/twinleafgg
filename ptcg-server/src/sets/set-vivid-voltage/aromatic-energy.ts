@@ -8,7 +8,7 @@ import { AttachEnergyEffect, EnergyEffect } from '../../game/store/effects/play-
 
 export class AromaticEnergy extends EnergyCard {
 
-  public provides: CardType[] = [CardType.COLORLESS];
+  public provides: CardType[] = [C];
 
   public energyType = EnergyType.SPECIAL;
 
@@ -29,6 +29,18 @@ export class AromaticEnergy extends EnergyCard {
     'The [G] Pokémon this card is attached to recovers from all Special Conditions and can\'t be affected by any Special Conditions.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
+    if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
+      const player = effect.player;
+      try {
+        const energyEffect = new EnergyEffect(player, this);
+        store.reduceEffect(state, energyEffect);
+      } catch {
+        return state;
+      }
+
+      effect.energyMap.push({ card: this, provides: [G] });
+    }
 
     if (effect instanceof AttachEnergyEffect && effect.target.cards.includes(this)) {
       const pokemon = effect.target;

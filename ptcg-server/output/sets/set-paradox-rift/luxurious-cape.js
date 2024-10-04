@@ -46,10 +46,7 @@ class LuxuriousCape extends trainer_card_1.TrainerCard {
             catch (_a) {
                 return state;
             }
-            if (effect.target.tool instanceof LuxuriousCape) {
-                if (effect.target.hasRuleBox()) {
-                    return state;
-                }
+            if (!effect.target.hasRuleBox()) {
                 effect.hp += 100;
             }
         }

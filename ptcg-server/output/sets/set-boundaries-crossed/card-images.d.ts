@@ -1,6 +1,6 @@
 import { RockyHelmet } from '../set-scarlet-and-violet/rocky-helmet';
 import { AspertiaCityGym } from './aspertia-city-gym';
-import { Stoutland } from './BCR_122_Stoutland';
+import { Stoutland } from './stoutland';
 import { Blastoise } from './blastoise';
 import { ComputerSearch } from './computer-search';
 import { Dusclops } from './dusclops';

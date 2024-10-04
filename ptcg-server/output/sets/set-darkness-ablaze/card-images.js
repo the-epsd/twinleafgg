@@ -4,8 +4,8 @@ exports.UrsaringArt = exports.TeddiursaArt = exports.TapuKokoArt = exports.RoseT
 const bird_keeper_1 = require("./bird-keeper");
 const cape_of_toughness_1 = require("./cape-of-toughness");
 const crobat_v_1 = require("./crobat-v");
-const DAA_126_Klang_1 = require("./DAA_126_Klang");
-const DAA_23_Combusken_1 = require("./DAA_23_Combusken");
+const klang_1 = require("./klang");
+const combusken_1 = require("./combusken");
 const hiding_darkness_energy_1 = require("./hiding-darkness-energy");
 const kangaskhan_1 = require("./kangaskhan");
 const lugia_1 = require("./lugia");
@@ -29,7 +29,7 @@ class CapeOfToughnessArt extends cape_of_toughness_1.CapeOfToughness {
     }
 }
 exports.CapeOfToughnessArt = CapeOfToughnessArt;
-class CombuskenArt extends DAA_23_Combusken_1.Combusken {
+class CombuskenArt extends combusken_1.Combusken {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/DAA/DAA_023_R_EN_LG.png';
@@ -57,7 +57,7 @@ class KangaskhanArt extends kangaskhan_1.Kangaskhan {
     }
 }
 exports.KangaskhanArt = KangaskhanArt;
-class KlangArt extends DAA_126_Klang_1.Klang {
+class KlangArt extends klang_1.Klang {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/DAA/DAA_126_R_EN_LG.png';

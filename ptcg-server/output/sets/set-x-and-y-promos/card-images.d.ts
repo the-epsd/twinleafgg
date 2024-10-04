@@ -1,6 +1,6 @@
 import { Jirachi } from './jirachi';
-import { Azelf } from './XYP_142_Azelf';
-import { Meloetta } from './XYP_193_Meloetta';
+import { Azelf } from './azelf';
+import { Meloetta } from './meloetta';
 export declare class AzelfArt extends Azelf {
     cardImage: string;
 }

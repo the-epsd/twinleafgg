@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
+import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
@@ -11,6 +11,8 @@ import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 export class MRayquazaEX extends PokemonCard {
 
   public stage: Stage = Stage.MEGA;
+
+  public tags = [CardTag.POKEMON_EX, CardTag.MEGA];
 
   public evolvesFrom = 'Rayquaza EX';
 

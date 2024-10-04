@@ -2,9 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UnitEnergyFDYArt = exports.MysteriousTreasureArt = exports.MetalFryingPanArt = exports.MalamarArt = exports.MagnezoneArt = exports.LysandreLabsArt = exports.InkayArt = exports.FrogadierArt = exports.BeastRingArt = void 0;
 const beast_ring_1 = require("./beast-ring");
-const FLI_111_Lysandre_Labs_1 = require("./FLI_111_Lysandre_Labs");
-const FLI_23_Frogadier_1 = require("./FLI_23_Frogadier");
-const FLI_36_Magnezone_1 = require("./FLI_36_Magnezone");
+const lysandre_labs_1 = require("./lysandre_labs");
+const frogadier_1 = require("./frogadier");
+const magnezone_1 = require("./magnezone");
 const inkay_1 = require("./inkay");
 const malamar_1 = require("./malamar");
 const metal_frying_pan_1 = require("./metal-frying-pan");
@@ -17,7 +17,7 @@ class BeastRingArt extends beast_ring_1.BeastRing {
     }
 }
 exports.BeastRingArt = BeastRingArt;
-class FrogadierArt extends FLI_23_Frogadier_1.Frogadier {
+class FrogadierArt extends frogadier_1.Frogadier {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FLI/FLI_023_R_EN_LG.png';
@@ -31,14 +31,14 @@ class InkayArt extends inkay_1.Inkay {
     }
 }
 exports.InkayArt = InkayArt;
-class LysandreLabsArt extends FLI_111_Lysandre_Labs_1.LysandreLabs {
+class LysandreLabsArt extends lysandre_labs_1.LysandreLabs {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FLI/FLI_111_R_EN_LG.png';
     }
 }
 exports.LysandreLabsArt = LysandreLabsArt;
-class MagnezoneArt extends FLI_36_Magnezone_1.Magnezone {
+class MagnezoneArt extends magnezone_1.Magnezone {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FLI/FLI_036_R_EN_LG.png';

@@ -38,12 +38,12 @@ const murkrow_1 = require("./murkrow");
 const noibat_1 = require("./noibat");
 const noivern_ex_1 = require("./noivern-ex");
 const orthworm_1 = require("./orthworm");
-const PAL_138_Deino_1 = require("./PAL_138_Deino");
-const PAL_139_Zweilous_1 = require("./PAL_139_Zweilous");
-const PAL_140_Hydreigon_1 = require("./PAL_140_Hydreigon");
-const PAL_159_Pelipper_1 = require("./PAL_159_Pelipper");
-const PAL_21_Lokix_1 = require("./PAL_21_Lokix");
-const PAL_65_Magnemite_1 = require("./PAL_65_Magnemite");
+const deino_1 = require("./deino");
+const zweilous_1 = require("./zweilous");
+const hydreigon_1 = require("./hydreigon");
+const pelipper_1 = require("./pelipper");
+const lokix_1 = require("./lokix");
+const magnemite_1 = require("./magnemite");
 const pineco_1 = require("./pineco");
 const reversal_energy_1 = require("./reversal-energy");
 const shinx_1 = require("./shinx");
@@ -152,7 +152,7 @@ class CufantArt extends cufant_1.Cufant {
     }
 }
 exports.CufantArt = CufantArt;
-class DeinoArt extends PAL_138_Deino_1.Deino {
+class DeinoArt extends deino_1.Deino {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_138_R_EN_LG.png';
@@ -243,7 +243,7 @@ class HoppipArt extends hoppip_1.Hoppip {
     }
 }
 exports.HoppipArt = HoppipArt;
-class HydreigonArt extends PAL_140_Hydreigon_1.Hydreigon {
+class HydreigonArt extends hydreigon_1.Hydreigon {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_140_R_EN_LG.png';
@@ -264,7 +264,7 @@ class JetEnergyArt extends jet_energy_1.JetEnergy {
     }
 }
 exports.JetEnergyArt = JetEnergyArt;
-class LokixArt extends PAL_21_Lokix_1.Lokix {
+class LokixArt extends lokix_1.Lokix {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_021_R_EN_LG.png';
@@ -278,7 +278,7 @@ class LuminousEnergyArt extends luminous_energy_1.LuminousEnergy {
     }
 }
 exports.LuminousEnergyArt = LuminousEnergyArt;
-class MagnemiteArt extends PAL_65_Magnemite_1.Magnemite {
+class MagnemiteArt extends magnemite_1.Magnemite {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_065_R_EN_LG.png';
@@ -334,7 +334,7 @@ class OrthwormArt extends orthworm_1.Orthworm {
     }
 }
 exports.OrthwormArt = OrthwormArt;
-class PelipperArt extends PAL_159_Pelipper_1.Pelipper {
+class PelipperArt extends pelipper_1.Pelipper {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_159_R_EN_LG.png';
@@ -467,7 +467,7 @@ class WingullArt extends wingull_1.Wingull {
     }
 }
 exports.WingullArt = WingullArt;
-class ZweilousArt extends PAL_139_Zweilous_1.Zweilous {
+class ZweilousArt extends zweilous_1.Zweilous {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_139_R_EN_LG.png';

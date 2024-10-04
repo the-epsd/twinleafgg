@@ -9,10 +9,10 @@ const ditto_1 = require("./ditto");
 const lunatone_1 = require("./lunatone");
 const lure_module_1 = require("./lure-module");
 const moltres_1 = require("./moltres");
-const PGO_14_Camerupt_1 = require("./PGO_14_Camerupt");
-const PGO_19_Slowpoke_1 = require("./PGO_19_Slowpoke");
-const PGO_2_Ivysaur_1 = require("./PGO_2_Ivysaur");
-const PGO_42_Alolan_Raticate_1 = require("./PGO_42_Alolan_Raticate");
+const camerupt_1 = require("./camerupt");
+const slowpoke_1 = require("./slowpoke");
+const ivysaur_1 = require("./ivysaur");
+const alolan_raticate_1 = require("./alolan_raticate");
 const pokestop_1 = require("./pokestop");
 const radiant_venusaur_1 = require("./radiant-venusaur");
 const slaking_v_1 = require("./slaking-v");
@@ -20,7 +20,7 @@ const slowbro_1 = require("./slowbro");
 const snorlax_1 = require("./snorlax");
 const solrock_1 = require("./solrock");
 const zapdos_1 = require("./zapdos");
-class AlolanRaticateArt extends PGO_42_Alolan_Raticate_1.AlolanRaticate {
+class AlolanRaticateArt extends alolan_raticate_1.AlolanRaticate {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PGO/PGO_042_R_EN_LG.png';
@@ -41,7 +41,7 @@ class BlastoiseArt extends blastoise_1.Blastoise {
     }
 }
 exports.BlastoiseArt = BlastoiseArt;
-class CameruptArt extends PGO_14_Camerupt_1.Camerupt {
+class CameruptArt extends camerupt_1.Camerupt {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PGO/PGO_014_R_EN_LG.png';
@@ -69,7 +69,7 @@ class DittoArt extends ditto_1.Ditto {
     }
 }
 exports.DittoArt = DittoArt;
-class IvysaurArt extends PGO_2_Ivysaur_1.Ivysaur {
+class IvysaurArt extends ivysaur_1.Ivysaur {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PGO/PGO_002_R_EN_LG.png';
@@ -125,7 +125,7 @@ class SlowbroArt extends slowbro_1.Slowbro {
     }
 }
 exports.SlowbroArt = SlowbroArt;
-class SlowpokeArt extends PGO_19_Slowpoke_1.Slowpoke {
+class SlowpokeArt extends slowpoke_1.Slowpoke {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PGO/PGO_019_R_EN_LG.png';

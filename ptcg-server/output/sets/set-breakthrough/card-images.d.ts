@@ -1,4 +1,4 @@
-import { Magneton } from './BKT_53_Magneton';
+import { Magneton } from './magneton';
 import { Brigette } from './brigette';
 import { BuddyBuddyRescue } from './buddy-buddy-rescue';
 import { Florges } from './florges';

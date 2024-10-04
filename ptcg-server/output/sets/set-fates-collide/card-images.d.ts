@@ -1,5 +1,5 @@
 import { EnergyPouch } from './energy-pouch';
-import { Deerling } from './FCO_8_Deerling';
+import { Deerling } from './deerling';
 import { Fennekin } from './fennekin';
 import { Lucario } from './lucario';
 import { Mew } from './mew';
