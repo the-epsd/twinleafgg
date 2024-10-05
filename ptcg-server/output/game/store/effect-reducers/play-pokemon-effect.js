@@ -46,17 +46,15 @@ function playPokemonReducer(store, state, effect) {
             }
             const evolveEffect = new game_effects_1.EvolveEffect(effect.player, effect.target, effect.pokemonCard);
             store.reduceEffect(state, evolveEffect);
-            effect.target.clearEffects();
-            effect.player.removePokemonEffects(effect.target);
+            // effect.pokemonCard.marker.markers = [];
+            // effect.player.removePokemonEffects(effect.target);
+            effect.target.specialConditions = [];
+            effect.target.marker.markers = [];
+            effect.target.attackMarker.markers = [];
+            effect.target.abilityMarker.markers = [];
             if (effect.target.specialConditions.includes(card_types_1.SpecialCondition.ABILITY_USED)) {
                 effect.target.removeSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
             }
-            // player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-            //   if (cardList === player.active) {
-            //     return;
-            //   }
-            //   cardList.removeSpecialCondition(SpecialCondition.ABILITY_USED);
-            // });
             return state;
         }
         throw new game_error_1.GameError(game_message_1.GameMessage.INVALID_TARGET);
