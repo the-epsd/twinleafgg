@@ -14,6 +14,8 @@ import { Pikachuex } from './pikachu-ex';
 import { Skeledirge } from './skeledirge';
 import { Terapagos } from './terapagos';
 import { Togekiss } from './togekiss';
+import { Togepi } from './togepi';
+import { Togetic } from './togetic';
 import { Zweilous } from './zweilous';
 
 export class PikachuexArt extends Pikachuex {
@@ -65,6 +67,14 @@ export class SkeledirgeArt extends Skeledirge {
 
 export class MiloticexArt extends Miloticex {
   public cardImage = 'https://pokemonproxies.com/static/media/8i-026-Milotic_ex.5ff152c4fc9e8baef0cc.png';
+}
+
+export class TogepiArt extends Togepi {
+  public cardImage = 'https://pokemonproxies.com/static/media/8i-045-Togepi.77d2eebef33e068469eb.png';
+}
+
+export class TogeticArt extends Togetic {
+  public cardImage = 'https://pokemonproxies.com/static/media/8i-046-Togetic.a233d366b39ba2ad3e61.png';
 }
 
 export class TogekissArt extends Togekiss {

@@ -14,6 +14,8 @@ import { Pikachuex } from './pikachu-ex';
 import { Skeledirge } from './skeledirge';
 import { Terapagos } from './terapagos';
 import { Togekiss } from './togekiss';
+import { Togepi } from './togepi';
+import { Togetic } from './togetic';
 import { Zweilous } from './zweilous';
 export declare class PikachuexArt extends Pikachuex {
     cardImage: string;
@@ -52,6 +54,12 @@ export declare class SkeledirgeArt extends Skeledirge {
     cardImage: string;
 }
 export declare class MiloticexArt extends Miloticex {
+    cardImage: string;
+}
+export declare class TogepiArt extends Togepi {
+    cardImage: string;
+}
+export declare class TogeticArt extends Togetic {
     cardImage: string;
 }
 export declare class TogekissArt extends Togekiss {

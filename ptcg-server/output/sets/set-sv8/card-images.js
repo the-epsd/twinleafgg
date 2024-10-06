@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.EternatusArt = exports.HydreigonexArt = exports.ZweilousArt = exports.DeinoArt = exports.TogekissArt = exports.MiloticexArt = exports.SkeledirgeArt = exports.CrocalorArt = exports.FuecocoArt = exports.CyranoArt = exports.MiraculousIntercomArt = exports.ExcitingStadiumArt = exports.GravityMountainArt = exports.MagnetonArt = exports.MagnemiteArt = exports.TerapagosArt = exports.PikachuexArt = void 0;
+exports.EternatusArt = exports.HydreigonexArt = exports.ZweilousArt = exports.DeinoArt = exports.TogekissArt = exports.TogeticArt = exports.TogepiArt = exports.MiloticexArt = exports.SkeledirgeArt = exports.CrocalorArt = exports.FuecocoArt = exports.CyranoArt = exports.MiraculousIntercomArt = exports.ExcitingStadiumArt = exports.GravityMountainArt = exports.MagnetonArt = exports.MagnemiteArt = exports.TerapagosArt = exports.PikachuexArt = void 0;
 const magneton_1 = require("../set-scarlet-and-violet-promos/magneton");
 const crocalor_1 = require("./crocalor");
 const cyrano_1 = require("./cyrano");
@@ -17,6 +17,8 @@ const pikachu_ex_1 = require("./pikachu-ex");
 const skeledirge_1 = require("./skeledirge");
 const terapagos_1 = require("./terapagos");
 const togekiss_1 = require("./togekiss");
+const togepi_1 = require("./togepi");
+const togetic_1 = require("./togetic");
 const zweilous_1 = require("./zweilous");
 class PikachuexArt extends pikachu_ex_1.Pikachuex {
     constructor() {
@@ -105,6 +107,20 @@ class MiloticexArt extends milotic_ex_1.Miloticex {
     }
 }
 exports.MiloticexArt = MiloticexArt;
+class TogepiArt extends togepi_1.Togepi {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pokemonproxies.com/static/media/8i-045-Togepi.77d2eebef33e068469eb.png';
+    }
+}
+exports.TogepiArt = TogepiArt;
+class TogeticArt extends togetic_1.Togetic {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pokemonproxies.com/static/media/8i-046-Togetic.a233d366b39ba2ad3e61.png';
+    }
+}
+exports.TogeticArt = TogeticArt;
 class TogekissArt extends togekiss_1.Togekiss {
     constructor() {
         super(...arguments);
