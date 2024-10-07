@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.EternatusArt = exports.HydreigonexArt = exports.ZweilousArt = exports.DeinoArt = exports.TogekissArt = exports.TogeticArt = exports.TogepiArt = exports.MiloticexArt = exports.SkeledirgeArt = exports.CrocalorArt = exports.FuecocoArt = exports.CyranoArt = exports.MiraculousIntercomArt = exports.ExcitingStadiumArt = exports.GravityMountainArt = exports.MagnetonArt = exports.MagnemiteArt = exports.TerapagosArt = exports.PikachuexArt = void 0;
+exports.MespritArt = exports.UxieArt = exports.AzelfArt = exports.VivillionArt = exports.EternatusArt = exports.HydreigonexArt = exports.ZweilousArt = exports.DeinoArt = exports.TogekissArt = exports.TogeticArt = exports.TogepiArt = exports.MiloticexArt = exports.SkeledirgeArt = exports.CrocalorArt = exports.FuecocoArt = exports.CyranoArt = exports.MiraculousIntercomArt = exports.ExcitingStadiumArt = exports.GravityMountainArt = exports.MagnetonArt = exports.MagnemiteArt = exports.TerapagosArt = exports.PikachuexArt = void 0;
 const magneton_1 = require("../set-scarlet-and-violet-promos/magneton");
+const azelf_1 = require("./azelf");
 const crocalor_1 = require("./crocalor");
 const cyrano_1 = require("./cyrano");
 const deino_1 = require("./deino");
@@ -11,6 +12,7 @@ const fuecoco_1 = require("./fuecoco");
 const gravity_mountain_1 = require("./gravity-mountain");
 const hydreigon_ex_1 = require("./hydreigon-ex");
 const magnemite_1 = require("./magnemite");
+const mesprit_1 = require("./mesprit");
 const milotic_ex_1 = require("./milotic-ex");
 const miraculous_intercom_1 = require("./miraculous-intercom");
 const pikachu_ex_1 = require("./pikachu-ex");
@@ -19,6 +21,8 @@ const terapagos_1 = require("./terapagos");
 const togekiss_1 = require("./togekiss");
 const togepi_1 = require("./togepi");
 const togetic_1 = require("./togetic");
+const uxie_1 = require("./uxie");
+const vivillion_1 = require("./vivillion");
 const zweilous_1 = require("./zweilous");
 class PikachuexArt extends pikachu_ex_1.Pikachuex {
     constructor() {
@@ -156,3 +160,31 @@ class EternatusArt extends eternatus_1.Eternatus {
     }
 }
 exports.EternatusArt = EternatusArt;
+class VivillionArt extends vivillion_1.Vivillion {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pokemonproxies.com/static/media/8i-006-Vivillon.f116fa10d05ef67bf440.png';
+    }
+}
+exports.VivillionArt = VivillionArt;
+class AzelfArt extends azelf_1.Azelf {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pokemonproxies.com/static/media/8i-050-Azelf.b2900055c513ab0df10f.png';
+    }
+}
+exports.AzelfArt = AzelfArt;
+class UxieArt extends uxie_1.Uxie {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pokemonproxies.com/static/media/8i-048-Uxie.fbd6d5e91202b3f17528.png';
+    }
+}
+exports.UxieArt = UxieArt;
+class MespritArt extends mesprit_1.Mesprit {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pokemonproxies.com/static/media/8i-049-Mesprit.29fc30244daaa8ea082b.png';
+    }
+}
+exports.MespritArt = MespritArt;

@@ -23,16 +23,16 @@ export class Chimchar extends PokemonCard {
     value: 10
   }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [{
     name: 'Serial Swipes',
-    cost: [ CardType.FIRE ],
+    cost: [CardType.FIRE],
     damage: 10,
     text: 'Flip 4 coins. This attack does 10 damage times the number of heads.'
   }, {
     name: 'Sleepy',
-    cost: [ CardType.FIRE, CardType.COLORLESS, CardType.COLORLESS ],
+    cost: [CardType.FIRE, CardType.COLORLESS, CardType.COLORLESS],
     damage: 40,
     text: 'If you have Piplup in play, this attack does 40 damage plus 20 ' +
       'more damage and the Defending Pokemon is now Asleep.'

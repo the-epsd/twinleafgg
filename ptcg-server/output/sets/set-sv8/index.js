@@ -21,4 +21,9 @@ exports.setSV8 = [
     new card_images_1.DeinoArt(),
     new card_images_1.ZweilousArt(),
     new card_images_1.HydreigonexArt(),
+    new card_images_1.EternatusArt(),
+    new card_images_1.VivillionArt(),
+    new card_images_1.AzelfArt(),
+    new card_images_1.UxieArt(),
+    new card_images_1.MespritArt(),
 ];

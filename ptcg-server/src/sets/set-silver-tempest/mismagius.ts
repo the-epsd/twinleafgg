@@ -1,4 +1,4 @@
-import { PlayerType, PowerType, State, StateUtils, StoreLike } from '../../game';
+import { GamePhase, PlayerType, PowerType, State, StateUtils, StoreLike } from '../../game';
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { PutCountersEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
@@ -9,7 +9,7 @@ import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class Mismagius extends PokemonCard {
 
-  public stage: Stage = Stage.STAGE_1;
+  public stage: Stage = Stage.BASIC;
 
   public regulationMark = 'F';
 
@@ -54,16 +54,20 @@ export class Mismagius extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-
-    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this) && effect.player.marker.hasMarker(effect.player.DAMAGE_DEALT_MARKER)) {
+    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {
       const player = StateUtils.findOwner(state, effect.target);
       const opponent = StateUtils.getOpponent(state, player);
+
       const pokemonCard = effect.target.getPokemonCard();
+      const sourceCard = effect.source.getPokemonCard();
+
+      if (pokemonCard !== this || sourceCard === undefined || state.phase !== GamePhase.ATTACK) {
+        return state;
+      }
 
       this.damageDealt = true;
 
       if (pokemonCard === this && this.damageDealt === true) {
-
 
         // Try to reduce PowerEffect, to check if something is blocking our ability
         try {

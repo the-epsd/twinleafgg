@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SuperType, EnergyType } from '../../game/store/card/card-types';
-import { StoreLike, State, ChooseCardsPrompt, GameMessage, PlayerType, SlotType, DamageMap, PutDamagePrompt, StateUtils } from '../../game';
+import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
+import { StoreLike, State, ChooseCardsPrompt, GameMessage, PlayerType, SlotType, DamageMap, PutDamagePrompt, StateUtils, EnergyCard } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { DiscardCardsEffect, PutCountersEffect } from '../../game/store/effects/attack-effects';
@@ -34,13 +34,25 @@ export class Starmie extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
+      const blocked: number[] = [];
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
+        if (cardList.cards.some(c => c instanceof EnergyCard && c.provides.includes(CardType.WATER))) {
+          blocked.push();
+        }
+        if (cardList.cards.some(c => c instanceof EnergyCard && c.provides.includes(CardType.ANY))) {
+          blocked.push();
+        }
+        if (cardList.cards.some(c => c instanceof EnergyCard && c.blendedEnergies.includes(CardType.WATER))) {
+          blocked.push();
+        }
+      });
 
       return store.prompt(state, new ChooseCardsPrompt(
         player.id,
         GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
         player.active, // Card source is target Pokemon
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Water Energy' },
-        { allowCancel: false }
+        { superType: SuperType.ENERGY },
+        { allowCancel: false, blocked: blocked }
       ), selected => {
         const cards = selected || [];
         if (cards.length > 0) {

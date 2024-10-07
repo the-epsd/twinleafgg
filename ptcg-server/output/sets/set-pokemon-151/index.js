@@ -6,7 +6,7 @@ const full_art_1 = require("./full-art");
 exports.setPokemon151 = [
     new card_images_1.AbraArt(),
     // new AntiqueHelixFossilArt(),
-    // new AlakazamexArt(),
+    new card_images_1.AlakazamexArt(),
     new card_images_1.ArbokexArt(),
     new card_images_1.BlastoiseexArt(),
     new card_images_1.BulbasaurArt(),

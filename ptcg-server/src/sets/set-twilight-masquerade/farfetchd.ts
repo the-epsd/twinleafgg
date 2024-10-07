@@ -12,7 +12,7 @@ import { CardType, Stage, SuperType, TrainerType } from '../../game/store/card/c
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
-import { AttachPokemonToolEffect, PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 
 
 export class Farfetchd extends PokemonCard {
@@ -89,7 +89,9 @@ export class Farfetchd extends PokemonCard {
         });
 
         if (cards[0] instanceof TrainerCard) {
-          state = store.reduceEffect(state, new AttachPokemonToolEffect(player, cards[0] as TrainerCard, player.bench[benchSlot]));
+          player.deck.moveCardTo(cards[0], player.bench[benchSlot]);
+          player.bench[benchSlot].tool = cards[0];
+          // state = store.reduceEffect(state, new AttachPokemonToolEffect(player, cards[0] as TrainerCard, player.bench[benchSlot]));
         }
 
         state = store.prompt(state, new ShuffleDeckPrompt(player.id), order => {

@@ -19,37 +19,38 @@ function* playCard(next: Function, store: StoreLike, state: State,
   player.hand.moveCardTo(effect.trainerCard, player.supporter);
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
-  
+
   if (player.deck.cards.length === 0) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
-  const topFive = new CardList();
   const deckTop = new CardList();
-  
-  player.deck.moveTo(topFive, 5);
+  const temp = new CardList();
+  player.deck.moveTo(deckTop, 5);
 
   let cards: Card[] = [];
   yield store.prompt(state, new ChooseCardsPrompt(
     player.id,
     GameMessage.CHOOSE_CARD_TO_HAND,
-    topFive,
-    {  },
+    deckTop,
+    {},
     { min: 1, max: 1 }
   ), selected => {
     cards = selected || [];
-    
-    topFive.moveCardsTo(cards, deckTop);
     next();
   });
 
+  deckTop.moveCardsTo(cards, temp);
+  deckTop.moveTo(player.deck);
+  player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);
-    deckTop.moveToTopOfDestination(player.deck);
-    player.supporter.moveCardTo(effect.trainerCard, player.discard);
+    temp.moveToTopOfDestination(player.deck);
   });
+
 }
-      
+
 export class RotomPhone extends TrainerCard {
 
   public regulationMark = 'D';

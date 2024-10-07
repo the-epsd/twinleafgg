@@ -7,7 +7,6 @@ import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { ShowCardsPrompt } from '../../game/store/prompts/show-cards-prompt';
-import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
 import { StateUtils } from '../../game/store/state-utils';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
@@ -49,7 +48,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
     player.id,
     GameMessage.CHOOSE_CARD_TO_HAND,
     player.discard,
-    { },
+    {},
     { min: 0, max: count, allowCancel: false, blocked, maxPokemons, maxEnergies }
   ), selected => {
     cards = selected || [];
@@ -58,7 +57,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
   player.discard.moveCardsTo(cards, player.hand);
   player.supporter.moveCardTo(effect.trainerCard, player.discard);
-  
+
 
   if (cards.length > 0) {
     yield store.prompt(state, new ShowCardsPrompt(
@@ -67,10 +66,6 @@ function* playCard(next: Function, store: StoreLike, state: State,
       cards
     ), () => next());
   }
-
-  return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-    player.deck.applyOrder(order);
-  });
 }
 
 export class Tulip extends TrainerCard {
@@ -99,8 +94,8 @@ export class Tulip extends TrainerCard {
       const generator = playCard(() => generator.next(), store, state, this, effect);
       return generator.next().value;
     }
-      
+
     return state;
   }
-      
+
 }

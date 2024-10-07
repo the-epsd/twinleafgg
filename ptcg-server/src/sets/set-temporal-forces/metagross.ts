@@ -53,18 +53,18 @@ export class Metagross extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof EndTurnEffect && effect.player.attackMarker.hasMarker(this.NEXT_TURN_MORE_DAMAGE_MARKER_2, this)) {
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       effect.player.attackMarker.removeMarker(this.NEXT_TURN_MORE_DAMAGE_MARKER, this);
       effect.player.attackMarker.removeMarker(this.NEXT_TURN_MORE_DAMAGE_MARKER_2, this);
-      console.log('marker cleared');
+      console.log('both markers cleared - used another attack');
     }
 
     if (effect instanceof EndTurnEffect && effect.player.attackMarker.hasMarker(this.NEXT_TURN_MORE_DAMAGE_MARKER, this)) {
       effect.player.attackMarker.addMarker(this.NEXT_TURN_MORE_DAMAGE_MARKER_2, this);
       console.log('second marker added');
     }
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
 
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       // Check marker
       if (effect.player.attackMarker.hasMarker(this.NEXT_TURN_MORE_DAMAGE_MARKER, this)) {
         console.log('attack added damage');

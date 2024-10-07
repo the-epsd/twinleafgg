@@ -1,4 +1,5 @@
 import { Magneton } from '../set-scarlet-and-violet-promos/magneton';
+import { Azelf } from './azelf';
 import { Crocalor } from './crocalor';
 import { Cyrano } from './cyrano';
 import { Deino } from './deino';
@@ -8,6 +9,7 @@ import { Fuecoco } from './fuecoco';
 import { GravityMountain } from './gravity-mountain';
 import { Hydreigonex } from './hydreigon-ex';
 import { Magnemite } from './magnemite';
+import { Mesprit } from './mesprit';
 import { Miloticex } from './milotic-ex';
 import { MiraculousIntercom } from './miraculous-intercom';
 import { Pikachuex } from './pikachu-ex';
@@ -16,6 +18,8 @@ import { Terapagos } from './terapagos';
 import { Togekiss } from './togekiss';
 import { Togepi } from './togepi';
 import { Togetic } from './togetic';
+import { Uxie } from './uxie';
+import { Vivillion } from './vivillion';
 import { Zweilous } from './zweilous';
 
 export class PikachuexArt extends Pikachuex {
@@ -95,4 +99,20 @@ export class HydreigonexArt extends Hydreigonex {
 
 export class EternatusArt extends Eternatus {
   public cardImage = 'https://pokemonproxies.com/static/media/8i-080-Eternatus.c644b266e5800c93414a.png';
+}
+
+export class VivillionArt extends Vivillion {
+  public cardImage = 'https://pokemonproxies.com/static/media/8i-006-Vivillon.f116fa10d05ef67bf440.png';
+}
+
+export class AzelfArt extends Azelf {
+  public cardImage = 'https://pokemonproxies.com/static/media/8i-050-Azelf.b2900055c513ab0df10f.png';
+}
+
+export class UxieArt extends Uxie {
+  public cardImage = 'https://pokemonproxies.com/static/media/8i-048-Uxie.fbd6d5e91202b3f17528.png';
+}
+
+export class MespritArt extends Mesprit {
+  public cardImage = 'https://pokemonproxies.com/static/media/8i-049-Mesprit.29fc30244daaa8ea082b.png';
 }

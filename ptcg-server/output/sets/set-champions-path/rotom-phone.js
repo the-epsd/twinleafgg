@@ -17,19 +17,20 @@ function* playCard(next, store, state, self, effect) {
     if (player.deck.cards.length === 0) {
         throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
     }
-    const topFive = new card_list_1.CardList();
     const deckTop = new card_list_1.CardList();
-    player.deck.moveTo(topFive, 5);
+    const temp = new card_list_1.CardList();
+    player.deck.moveTo(deckTop, 5);
     let cards = [];
-    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, topFive, {}, { min: 1, max: 1 }), selected => {
+    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, deckTop, {}, { min: 1, max: 1 }), selected => {
         cards = selected || [];
-        topFive.moveCardsTo(cards, deckTop);
         next();
     });
+    deckTop.moveCardsTo(cards, temp);
+    deckTop.moveTo(player.deck);
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
     return store.prompt(state, new shuffle_prompt_1.ShuffleDeckPrompt(player.id), order => {
         player.deck.applyOrder(order);
-        deckTop.moveToTopOfDestination(player.deck);
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+        temp.moveToTopOfDestination(player.deck);
     });
 }
 class RotomPhone extends trainer_card_1.TrainerCard {

@@ -10,6 +10,7 @@ export var PlayCardEffects;
     PlayCardEffects["ENERGY_EFFECT"] = "ENERGY_EFFECT";
     PlayCardEffects["TOOL_EFFECT"] = "TOOL_EFFECT";
     PlayCardEffects["SUPPORTER_EFFECT"] = "SUPPORTER_EFFECT";
+    PlayCardEffects["COIN_FLIP_EFFECT"] = "COIN_FLIP_EFFECT";
 })(PlayCardEffects || (PlayCardEffects = {}));
 export class AttachEnergyEffect {
     constructor(player, energyCard, target) {
@@ -95,5 +96,12 @@ export class SupporterEffect {
         this.preventDefault = false;
         this.player = player;
         this.card = card;
+    }
+}
+export class CoinFlipEffect {
+    constructor(player) {
+        this.type = PlayCardEffects.COIN_FLIP_EFFECT;
+        this.preventDefault = false;
+        this.player = player;
     }
 }

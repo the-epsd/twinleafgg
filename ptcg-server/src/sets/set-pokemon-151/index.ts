@@ -1,11 +1,11 @@
 import { Card } from '../../game/store/card/card';
-import { AbraArt, ArbokexArt, BlastoiseexArt, BulbasaurArt, CharizardexArt, CharmanderArt, CharmeleonArt, CyclingRoadArt, DittoArt, DodrioArt, DoduoArt, EeveeArt, EkansArt, ElectabuzzArt, EnergyStickerArt, EreikasInvitationArt, GiovannisCharismaArt, GloomArt, GrabberArt, IvysaurArt, JolteonArt, KangaskhanexArt, MachokeArt, MachopArt, MagmarArt, MewexArt, MoltresArt, NidokingArt, NidoqueenArt, NidoranFemaleArt, NidoranMaleArt, NidorinaArt, NidorinoArt, OddishArt, PidgeottoArt, PidgeyArt, RigidBandArt, ScytherArt, SquirtleArt, StaryuArt, VenomothArt, VenonatArt, VenusaurexArt, VileplumeArt, WartortleArt, ZapdosexArt } from './card-images';
+import { AbraArt, AlakazamexArt, ArbokexArt, BlastoiseexArt, BulbasaurArt, CharizardexArt, CharmanderArt, CharmeleonArt, CyclingRoadArt, DittoArt, DodrioArt, DoduoArt, EeveeArt, EkansArt, ElectabuzzArt, EnergyStickerArt, EreikasInvitationArt, GiovannisCharismaArt, GloomArt, GrabberArt, IvysaurArt, JolteonArt, KangaskhanexArt, MachokeArt, MachopArt, MagmarArt, MewexArt, MoltresArt, NidokingArt, NidoqueenArt, NidoranFemaleArt, NidoranMaleArt, NidorinaArt, NidorinoArt, OddishArt, PidgeottoArt, PidgeyArt, RigidBandArt, ScytherArt, SquirtleArt, StaryuArt, VenomothArt, VenonatArt, VenusaurexArt, VileplumeArt, WartortleArt, ZapdosexArt } from './card-images';
 import { BulbasaurIR, IvysaurIR, CharmanderIR, CharmeleonIR, SquirtleIR, WartortleIR, NidokingIR, VenusaurexFA, CharizardexFA, BlastoiseexFA, ArbokexFA, KangaskhanexFA, ZapdosexFA, MewexFA, ErikasInvitationFA, GiovannisCharismaFA, VenusaurexSIR, CharizardexSIR, BlastoiseexSIR, ZapdosexSIR, ErikasInvitationSIR, GiovannisCharismaSIR, MewexHR, SwitchHR, BasicPsychicEnergyHR } from './full-art';
 
 export const setPokemon151: Card[] = [
   new AbraArt(),
   // new AntiqueHelixFossilArt(),
-  // new AlakazamexArt(),
+  new AlakazamexArt(),
   new ArbokexArt(),
   new BlastoiseexArt(),
   new BulbasaurArt(),

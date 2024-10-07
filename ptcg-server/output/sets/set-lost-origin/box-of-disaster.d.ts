@@ -11,6 +11,7 @@ export declare class BoxOfDisaster extends TrainerCard {
     setNumber: string;
     name: string;
     fullName: string;
+    damageDealt: boolean;
     text: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

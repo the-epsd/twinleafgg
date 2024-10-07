@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SupporterEffect = exports.ToolEffect = exports.EnergyEffect = exports.TrainerEffect = exports.PlayItemEffect = exports.AttachPokemonToolEffect = exports.PlayStadiumEffect = exports.PlaySupporterEffect = exports.PlayPokemonEffect = exports.AttachEnergyEffect = exports.PlayCardEffects = void 0;
+exports.CoinFlipEffect = exports.SupporterEffect = exports.ToolEffect = exports.EnergyEffect = exports.TrainerEffect = exports.PlayItemEffect = exports.AttachPokemonToolEffect = exports.PlayStadiumEffect = exports.PlaySupporterEffect = exports.PlayPokemonEffect = exports.AttachEnergyEffect = exports.PlayCardEffects = void 0;
 var PlayCardEffects;
 (function (PlayCardEffects) {
     PlayCardEffects["ATTACH_ENERGY_EFFECT"] = "ATTACH_ENERGY_EFFECT";
@@ -13,6 +13,7 @@ var PlayCardEffects;
     PlayCardEffects["ENERGY_EFFECT"] = "ENERGY_EFFECT";
     PlayCardEffects["TOOL_EFFECT"] = "TOOL_EFFECT";
     PlayCardEffects["SUPPORTER_EFFECT"] = "SUPPORTER_EFFECT";
+    PlayCardEffects["COIN_FLIP_EFFECT"] = "COIN_FLIP_EFFECT";
 })(PlayCardEffects = exports.PlayCardEffects || (exports.PlayCardEffects = {}));
 class AttachEnergyEffect {
     constructor(player, energyCard, target) {
@@ -110,3 +111,11 @@ class SupporterEffect {
     }
 }
 exports.SupporterEffect = SupporterEffect;
+class CoinFlipEffect {
+    constructor(player) {
+        this.type = PlayCardEffects.COIN_FLIP_EFFECT;
+        this.preventDefault = false;
+        this.player = player;
+    }
+}
+exports.CoinFlipEffect = CoinFlipEffect;

@@ -73,6 +73,12 @@ export class Scovillain extends PokemonCard {
         if (energyCard instanceof EnergyCard && energyCard.provides.includes(CardType.FIRE)) {
           damage += 90;
         }
+        if (energyCard instanceof EnergyCard && energyCard.provides.includes(CardType.ANY)) {
+          damage += 90;
+        }
+        if (energyCard instanceof EnergyCard && energyCard.blendedEnergies.includes(CardType.FIRE)) {
+          damage += 90;
+        }
       });
 
       effect.damage = damage;

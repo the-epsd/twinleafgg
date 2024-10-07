@@ -9,8 +9,14 @@ function* useKeepCalling(next, store, state, effect) {
     const player = effect.player;
     const slots = player.bench.filter(b => b.cards.length === 0);
     const max = Math.min(slots.length, 3);
+    const blocked = [];
+    player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (list, card, target) => {
+        if (!card.tags.includes(card_types_1.CardTag.RAPID_STRIKE)) {
+            blocked.push();
+        }
+    });
     let cards = [];
-    yield store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH, player.deck, { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.BASIC }, { min: 0, max, allowCancel: true }), selected => {
+    yield store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH, player.deck, { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.BASIC }, { min: 0, max, allowCancel: false, blocked }), selected => {
         cards = selected || [];
         next();
     });

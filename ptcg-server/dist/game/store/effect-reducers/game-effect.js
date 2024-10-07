@@ -9,11 +9,12 @@ import { AttackEffect, UseAttackEffect, HealEffect, KnockOutEffect, UsePowerEffe
 import { CoinFlipPrompt } from '../prompts/coin-flip-prompt';
 import { DealDamageEffect, ApplyWeaknessEffect } from '../effects/attack-effects';
 import { TrainerEffect } from '../effects/play-card-effects';
-function applyWeaknessAndResistance(damage, cardTypes, weakness, resistance) {
+function applyWeaknessAndResistance(damage, cardTypes, weakness, resistance, secondaryCardType) {
     let multiply = 1;
     let modifier = 0;
+    const allCardTypes = secondaryCardType ? [...cardTypes, secondaryCardType] : cardTypes;
     for (const item of weakness) {
-        if (cardTypes.includes(item.type)) {
+        if (allCardTypes.includes(item.type)) {
             if (item.value === undefined) {
                 multiply *= 2;
             }
@@ -23,7 +24,7 @@ function applyWeaknessAndResistance(damage, cardTypes, weakness, resistance) {
         }
     }
     for (const item of resistance) {
-        if (cardTypes.includes(item.type)) {
+        if (allCardTypes.includes(item.type)) {
             modifier += item.value;
         }
     }

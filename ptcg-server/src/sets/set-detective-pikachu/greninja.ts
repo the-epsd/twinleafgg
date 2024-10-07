@@ -1,14 +1,15 @@
-import { ChoosePokemonPrompt, CoinFlipPrompt, GamePhase, PlayerType, Power, PowerType, SlotType, State, StateUtils, StoreLike } from '../../game';
+import { ChoosePokemonPrompt, GamePhase, Player, PlayerType, Power, PowerType, SlotType, State, StateUtils, StoreLike } from '../../game';
 import { GameLog, GameMessage } from '../../game/game-message';
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { CoinFlipEffect } from '../../game/store/effects/play-card-effects';
 
 export class Greninja extends PokemonCard {
 
-  public stage: Stage = Stage.STAGE_2;
+  public stage: Stage = Stage.BASIC;
 
   public evolvesFrom = 'Frogadier';
 
@@ -47,13 +48,19 @@ export class Greninja extends PokemonCard {
   public fullName: string = 'Greninja DET';
 
   public usedMirageBarrage: boolean = false;
+  public blockDamage: boolean = false;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    function simulateCoinFlip(store: StoreLike, state: State, player: Player): boolean {
+      const result = Math.random() < 0.5;
+      const gameMessage = result ? GameLog.LOG_PLAYER_FLIPS_HEADS : GameLog.LOG_PLAYER_FLIPS_TAILS;
+      store.log(state, gameMessage, { name: player.name });
+      return result;
+    }
 
     if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-
       const pokemonCard = effect.target.getPokemonCard();
       const sourceCard = effect.source.getPokemonCard();
 
@@ -72,23 +79,22 @@ export class Greninja extends PokemonCard {
         return state;
       }
 
-      const originalDamage = effect.damage;
-      effect.damage = 0; // Temporarily set damage to 0
-
-      state = store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], result => {
-        if (result === true) {
-          store.log(state, GameLog.LOG_ABILITY_BLOCKS_DAMGE, { name: opponent.name, pokemon: this.name });
-        } else {
-          effect.damage = originalDamage; // Restore original damage if coin flip is tails
-        }
+      try {
+        const coinFlip = new CoinFlipEffect(player);
+        store.reduceEffect(state, coinFlip);
+      } catch {
         return state;
-      });
+      }
+
+      const coinFlipResult = simulateCoinFlip(store, state, player);
+
+      if (coinFlipResult) {
+        effect.damage = 0;
+        store.log(state, GameLog.LOG_ABILITY_BLOCKS_DAMGE, { name: opponent.name, pokemon: this.name });
+      }
 
       return state;
     }
-
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
 
