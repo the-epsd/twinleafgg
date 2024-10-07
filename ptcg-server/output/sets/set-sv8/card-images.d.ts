@@ -1,3 +1,4 @@
+import { ScrambleSwitch } from '../set-plasma-storm/scramble-switch';
 import { Magneton } from '../set-scarlet-and-violet-promos/magneton';
 import { Azelf } from './azelf';
 import { Crocalor } from './crocalor';
@@ -12,6 +13,7 @@ import { Magnemite } from './magnemite';
 import { Mesprit } from './mesprit';
 import { Miloticex } from './milotic-ex';
 import { MiraculousIntercom } from './miraculous-intercom';
+import { Ninetales } from './ninetales';
 import { Pikachuex } from './pikachu-ex';
 import { Skeledirge } from './skeledirge';
 import { Terapagos } from './terapagos';
@@ -91,5 +93,15 @@ export declare class UxieArt extends Uxie {
     cardImage: string;
 }
 export declare class MespritArt extends Mesprit {
+    cardImage: string;
+}
+export declare class ScrambleSwitchArt extends ScrambleSwitch {
+    cardImage: string;
+    set: string;
+    setNumber: string;
+    fullName: string;
+    regulationMark: string;
+}
+export declare class NinetalesArt extends Ninetales {
     cardImage: string;
 }

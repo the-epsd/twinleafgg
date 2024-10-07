@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.MespritArt = exports.UxieArt = exports.AzelfArt = exports.VivillionArt = exports.EternatusArt = exports.HydreigonexArt = exports.ZweilousArt = exports.DeinoArt = exports.TogekissArt = exports.TogeticArt = exports.TogepiArt = exports.MiloticexArt = exports.SkeledirgeArt = exports.CrocalorArt = exports.FuecocoArt = exports.CyranoArt = exports.MiraculousIntercomArt = exports.ExcitingStadiumArt = exports.GravityMountainArt = exports.MagnetonArt = exports.MagnemiteArt = exports.TerapagosArt = exports.PikachuexArt = void 0;
+exports.NinetalesArt = exports.ScrambleSwitchArt = exports.MespritArt = exports.UxieArt = exports.AzelfArt = exports.VivillionArt = exports.EternatusArt = exports.HydreigonexArt = exports.ZweilousArt = exports.DeinoArt = exports.TogekissArt = exports.TogeticArt = exports.TogepiArt = exports.MiloticexArt = exports.SkeledirgeArt = exports.CrocalorArt = exports.FuecocoArt = exports.CyranoArt = exports.MiraculousIntercomArt = exports.ExcitingStadiumArt = exports.GravityMountainArt = exports.MagnetonArt = exports.MagnemiteArt = exports.TerapagosArt = exports.PikachuexArt = void 0;
+const scramble_switch_1 = require("../set-plasma-storm/scramble-switch");
 const magneton_1 = require("../set-scarlet-and-violet-promos/magneton");
 const azelf_1 = require("./azelf");
 const crocalor_1 = require("./crocalor");
@@ -15,6 +16,7 @@ const magnemite_1 = require("./magnemite");
 const mesprit_1 = require("./mesprit");
 const milotic_ex_1 = require("./milotic-ex");
 const miraculous_intercom_1 = require("./miraculous-intercom");
+const ninetales_1 = require("./ninetales");
 const pikachu_ex_1 = require("./pikachu-ex");
 const skeledirge_1 = require("./skeledirge");
 const terapagos_1 = require("./terapagos");
@@ -188,3 +190,21 @@ class MespritArt extends mesprit_1.Mesprit {
     }
 }
 exports.MespritArt = MespritArt;
+class ScrambleSwitchArt extends scramble_switch_1.ScrambleSwitch {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pokemonproxies.com/static/media/8i-095-Scramble_Switch.9baab5dc20a503cd2bec.png';
+        this.set = 'SV8';
+        this.setNumber = '95';
+        this.fullName = 'Scramble Switch SV8';
+        this.regulationMark = 'H';
+    }
+}
+exports.ScrambleSwitchArt = ScrambleSwitchArt;
+class NinetalesArt extends ninetales_1.Ninetales {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pokemonproxies.com/static/media/7b-002-Ninetales.0e37fb5a6a0a97fc50c5.png';
+    }
+}
+exports.NinetalesArt = NinetalesArt;

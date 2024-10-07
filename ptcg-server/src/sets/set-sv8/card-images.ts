@@ -1,3 +1,4 @@
+import { ScrambleSwitch } from '../set-plasma-storm/scramble-switch';
 import { Magneton } from '../set-scarlet-and-violet-promos/magneton';
 import { Azelf } from './azelf';
 import { Crocalor } from './crocalor';
@@ -12,6 +13,7 @@ import { Magnemite } from './magnemite';
 import { Mesprit } from './mesprit';
 import { Miloticex } from './milotic-ex';
 import { MiraculousIntercom } from './miraculous-intercom';
+import { Ninetales } from './ninetales';
 import { Pikachuex } from './pikachu-ex';
 import { Skeledirge } from './skeledirge';
 import { Terapagos } from './terapagos';
@@ -115,4 +117,16 @@ export class UxieArt extends Uxie {
 
 export class MespritArt extends Mesprit {
   public cardImage = 'https://pokemonproxies.com/static/media/8i-049-Mesprit.29fc30244daaa8ea082b.png';
+}
+
+export class ScrambleSwitchArt extends ScrambleSwitch {
+  public cardImage = 'https://pokemonproxies.com/static/media/8i-095-Scramble_Switch.9baab5dc20a503cd2bec.png';
+  public set = 'SV8';
+  public setNumber = '95';
+  public fullName = 'Scramble Switch SV8';
+  public regulationMark = 'H';
+}
+
+export class NinetalesArt extends Ninetales {
+  public cardImage = 'https://pokemonproxies.com/static/media/7b-002-Ninetales.0e37fb5a6a0a97fc50c5.png';
 }
