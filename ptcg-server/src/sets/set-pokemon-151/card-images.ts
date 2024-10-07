@@ -1,4 +1,7 @@
+import { Abra } from './abra';
 import { Alakazamex } from './alakazam-ex';
+import { AntiqueHelixFossil } from './antique-helix-fossil';
+import { Arbokex } from './arbok_ex';
 import { Blastoiseex } from './blastoise-ex';
 import { Bulbasaur } from './bulbasaur';
 import { Charizardex } from './charizard-ex';
@@ -8,49 +11,47 @@ import { CyclingRoad } from './cycling-road';
 import { Ditto } from './ditto';
 import { Dodrio } from './dodrio';
 import { Doduo } from './doduo';
-import { Electabuzz } from './electabuzz';
+import { Dragonite } from './dragonite';
 import { Eevee } from './eevee';
+import { Ekans } from './ekans';
+import { Electabuzz } from './electabuzz';
+import { EnergySticker } from './energy-sticker';
 import { EreikasInvitation } from './erikas-invitation';
-import { Gloom } from './gloom';
 import { GiovannisCharisma } from './giovannis-charisma';
+import { Gloom } from './gloom';
 import { Grabber } from './grabber';
 import { Ivysaur } from './ivysaur';
-import { Kangaskhanex } from './kangaskhan-ex';
-import { Mewex } from './mew-ex';
-import { Pidgeotto } from './pidgeotto';
-import { Pidgey } from './pidgey';
-import { Scyther } from './scyther';
-import { Squirtle } from './squirtle';
-import { Vileplume } from './vileplume';
-import { Venonat } from './venonat';
-import { Venomoth } from './venomoth';
-import { Venusaurex } from './venusaur-ex';
-import { Wartortle } from './wartortle';
-import { Zapdosex } from './zapdos-ex';
 import { Jolteon } from './jolteon';
+import { Kangaskhanex } from './kangaskhan-ex';
+import { Machoke } from './machoke';
+import { Machop } from './machop';
 import { Magmar } from './magmar';
-import { Oddish } from './oddish';
-import { AntiqueHelixFossil } from './antique-helix-fossil';
-import { EnergySticker } from './energy-sticker';
+import { Mewex } from './mew-ex';
 import { Moltres } from './moltres';
-import { Staryu } from './staryu';
-import { Arbokex } from './arbok_ex';
-import { Ekans } from './ekans';
 import { Nidoking } from './nidoking';
 import { Nidoqueen } from './nidoqueen';
-import { NidoranMale } from './nidoran-male';
-import { Nidorino } from './nidorino';
 import { NidoranFemale } from './nidoran-female';
+import { NidoranMale } from './nidoran-male';
 import { Nidorina } from './nidorina';
-import { Abra } from './abra';
+import { Nidorino } from './nidorino';
+import { Oddish } from './oddish';
+import { Pidgeotto } from './pidgeotto';
+import { Pidgey } from './pidgey';
+import { RigidBand } from './rigid-band';
+import { Scyther } from './scyther';
+import { Squirtle } from './squirtle';
+import { Starmie } from './starmie';
+import { Staryu } from './staryu';
+import { Venomoth } from './venomoth';
+import { Venonat } from './venonat';
+import { Venusaurex } from './venusaur-ex';
+import { Vileplume } from './vileplume';
+import { Wartortle } from './wartortle';
+import { Zapdosex } from './zapdos-ex';
 
 export class AbraArt extends Abra {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/MEW/MEW_063_R_EN.png';
 }
-import { Machop } from './machop';
-import { Machoke } from './machoke';
-import { Starmie } from './starmie';
-import { RigidBand } from './rigid-band';
 
 export class AntiqueHelixFossilArt extends AntiqueHelixFossil {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/MEW/MEW_153_R_EN.png';
@@ -98,6 +99,10 @@ export class DodrioArt extends Dodrio {
 
 export class DoduoArt extends Doduo {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/MEW/MEW_084_R_EN_LG.png';
+}
+
+export class DragoniteArt extends Dragonite {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/MEW/MEW_149_R_EN_LG.png';
 }
 
 export class EkansArt extends Ekans {

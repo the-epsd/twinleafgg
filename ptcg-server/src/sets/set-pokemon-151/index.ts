@@ -1,6 +1,6 @@
 import { Card } from '../../game/store/card/card';
-import { AbraArt, AlakazamexArt, ArbokexArt, BlastoiseexArt, BulbasaurArt, CharizardexArt, CharmanderArt, CharmeleonArt, CyclingRoadArt, DittoArt, DodrioArt, DoduoArt, EeveeArt, EkansArt, ElectabuzzArt, EnergyStickerArt, EreikasInvitationArt, GiovannisCharismaArt, GloomArt, GrabberArt, IvysaurArt, JolteonArt, KangaskhanexArt, MachokeArt, MachopArt, MagmarArt, MewexArt, MoltresArt, NidokingArt, NidoqueenArt, NidoranFemaleArt, NidoranMaleArt, NidorinaArt, NidorinoArt, OddishArt, PidgeottoArt, PidgeyArt, RigidBandArt, ScytherArt, SquirtleArt, StaryuArt, VenomothArt, VenonatArt, VenusaurexArt, VileplumeArt, WartortleArt, ZapdosexArt } from './card-images';
-import { BulbasaurIR, IvysaurIR, CharmanderIR, CharmeleonIR, SquirtleIR, WartortleIR, NidokingIR, VenusaurexFA, CharizardexFA, BlastoiseexFA, ArbokexFA, KangaskhanexFA, ZapdosexFA, MewexFA, ErikasInvitationFA, GiovannisCharismaFA, VenusaurexSIR, CharizardexSIR, BlastoiseexSIR, ZapdosexSIR, ErikasInvitationSIR, GiovannisCharismaSIR, MewexHR, SwitchHR, BasicPsychicEnergyHR } from './full-art';
+import { AbraArt, AlakazamexArt, ArbokexArt, BlastoiseexArt, BulbasaurArt, CharizardexArt, CharmanderArt, CharmeleonArt, CyclingRoadArt, DittoArt, DodrioArt, DoduoArt, DragoniteArt, EeveeArt, EkansArt, ElectabuzzArt, EnergyStickerArt, EreikasInvitationArt, GiovannisCharismaArt, GloomArt, GrabberArt, IvysaurArt, JolteonArt, KangaskhanexArt, MachokeArt, MachopArt, MagmarArt, MewexArt, MoltresArt, NidokingArt, NidoqueenArt, NidoranFemaleArt, NidoranMaleArt, NidorinaArt, NidorinoArt, OddishArt, PidgeottoArt, PidgeyArt, RigidBandArt, ScytherArt, SquirtleArt, StaryuArt, VenomothArt, VenonatArt, VenusaurexArt, VileplumeArt, WartortleArt, ZapdosexArt } from './card-images';
+import { ArbokexFA, BasicPsychicEnergyHR, BlastoiseexFA, BlastoiseexSIR, BulbasaurIR, CharizardexFA, CharizardexSIR, CharmanderIR, CharmeleonIR, ErikasInvitationFA, ErikasInvitationSIR, GiovannisCharismaFA, GiovannisCharismaSIR, IvysaurIR, KangaskhanexFA, MewexFA, MewexHR, NidokingIR, SquirtleIR, SwitchHR, VenusaurexFA, VenusaurexSIR, WartortleIR, ZapdosexFA, ZapdosexSIR } from './full-art';
 
 export const setPokemon151: Card[] = [
   new AbraArt(),
@@ -16,6 +16,7 @@ export const setPokemon151: Card[] = [
   new DittoArt(),
   new DodrioArt(),
   new DoduoArt(),
+  new DragoniteArt(),
   new EeveeArt(),
   new EkansArt(),
   new ElectabuzzArt(),
