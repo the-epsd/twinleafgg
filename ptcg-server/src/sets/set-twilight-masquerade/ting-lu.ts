@@ -58,8 +58,8 @@ export class TingLu extends PokemonCard {
       }
       // Discard Stadium
       const cardList = StateUtils.findCardList(state, stadiumCard);
-      const player = StateUtils.findOwner(state, cardList);
-
+      const owner = StateUtils.findOwner(state, cardList);
+      const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
@@ -70,7 +70,7 @@ export class TingLu extends PokemonCard {
         damageEffect.target = cardList;
         store.reduceEffect(state, damageEffect);
       });
-      cardList.moveTo(player.discard);
+      cardList.moveTo(owner.discard);
     }
     return state;
   }

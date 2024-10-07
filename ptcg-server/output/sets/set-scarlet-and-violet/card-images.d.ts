@@ -69,6 +69,8 @@ import { Torkoal } from './torkoal';
 import { UltraBall } from './ultra-ball';
 import { VitalityBand } from './vitality-band';
 import { Youngster } from './youngster';
+import { Scatterbug } from './scatterbug';
+import { Spewpa } from './spewpa';
 export declare class AnnihilapeArt extends Annihilape {
     cardImage: string;
 }
@@ -248,6 +250,9 @@ export declare class RockChestplateArt extends RockChestplate {
 export declare class RockyHelmetArt extends RockyHelmet {
     cardImage: string;
 }
+export declare class ScatterbugArt extends Scatterbug {
+    cardImage: string;
+}
 export declare class ScovillainArt extends Scovillain {
     cardImage: string;
 }
@@ -261,6 +266,9 @@ export declare class SkwovetArt extends Skwovet {
     cardImage: string;
 }
 export declare class SmolivArt extends Smoliv {
+    cardImage: string;
+}
+export declare class SpewpaArt extends Spewpa {
     cardImage: string;
 }
 export declare class SwitchArt extends Switch {

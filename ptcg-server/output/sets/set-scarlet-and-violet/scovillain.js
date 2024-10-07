@@ -54,6 +54,12 @@ class Scovillain extends pokemon_card_1.PokemonCard {
                 if (energyCard instanceof game_1.EnergyCard && energyCard.provides.includes(card_types_1.CardType.FIRE)) {
                     damage += 90;
                 }
+                if (energyCard instanceof game_1.EnergyCard && energyCard.provides.includes(card_types_1.CardType.ANY)) {
+                    damage += 90;
+                }
+                if (energyCard instanceof game_1.EnergyCard && energyCard.blendedEnergies.includes(card_types_1.CardType.FIRE)) {
+                    damage += 90;
+                }
             });
             effect.damage = damage;
         }

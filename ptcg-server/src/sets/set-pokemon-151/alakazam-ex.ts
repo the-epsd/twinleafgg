@@ -8,7 +8,7 @@ export class Alakazamex extends PokemonCard {
 
   public tags = [CardTag.POKEMON_ex];
 
-  public stage: Stage = Stage.STAGE_2;
+  public stage: Stage = Stage.BASIC;
 
   public cardType: CardType = CardType.PSYCHIC;
 

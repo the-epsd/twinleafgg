@@ -316,7 +316,12 @@ export class BoardComponent implements OnDestroy {
     const target: CardTarget = { player, slot, index };
 
     if (card.name === 'Alakazam ex') {
-      const options = { enableAbility: { useWhenInPlay: true }, enableAttack: true };
+      const isOnBench = cardList !== this.gameState.state.players[this.gameState.state.activePlayer].active;
+      const options = {
+        enableAbility: { useWhenInPlay: true },
+        enableAttack: true,
+        enableBenchAttack: isOnBench
+      };
       this.cardsBaseService.showCardInfo({ card, cardList, options })
         .then(result => {
           if (!result) {
@@ -328,12 +333,13 @@ export class BoardComponent implements OnDestroy {
           if (result.ability) {
             this.gameService.ability(gameId, result.ability, target);
 
-            // Use attack from the card
+            // Use attack from the card (including from bench)
           } else if (result.attack) {
             this.gameService.attack(gameId, result.attack);
           }
         });
     }
+
     else {
 
       const options = { enableAbility: { useWhenInPlay: true }, enableAttack: false };

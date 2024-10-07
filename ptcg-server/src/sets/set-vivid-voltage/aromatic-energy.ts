@@ -1,8 +1,7 @@
-import { State, StoreLike } from '../../game';
+import { PokemonCardList, State, StateUtils, StoreLike } from '../../game';
 import { CardType, EnergyType, SpecialCondition } from '../../game/store/card/card-types';
 import { EnergyCard } from '../../game/store/card/energy-card';
-import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
-import { CheckPokemonTypeEffect, CheckProvidedEnergyEffect, CheckTableStateEffect } from '../../game/store/effects/check-effects';
+import { CheckProvidedEnergyEffect, CheckTableStateEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttachEnergyEffect, EnergyEffect } from '../../game/store/effects/play-card-effects';
 
@@ -43,48 +42,41 @@ export class AromaticEnergy extends EnergyCard {
     }
 
     if (effect instanceof AttachEnergyEffect && effect.target.cards.includes(this)) {
+      const player = effect.player;
       const pokemon = effect.target;
-      pokemon.removeSpecialCondition(SpecialCondition.ASLEEP);
-      pokemon.removeSpecialCondition(SpecialCondition.BURNED);
-      pokemon.removeSpecialCondition(SpecialCondition.PARALYZED);
-      pokemon.removeSpecialCondition(SpecialCondition.CONFUSED);
-    }
 
-    if (effect instanceof AddSpecialConditionsEffect && effect.target.cards.includes(this)) {
-      effect.preventDefault = true;
-    }
-
-    if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
-      const pokemon = effect.source;
-      if (effect instanceof CheckTableStateEffect) {
-        state.players.forEach(player => {
-          if (pokemon.specialConditions.length === 0) {
-            return;
-          }
-
-          try {
-            const energyEffect = new EnergyEffect(player, this);
-            store.reduceEffect(state, energyEffect);
-          } catch {
-            return state;
-          }
-
-          const checkPokemonTypeEffect = new CheckPokemonTypeEffect(player.active);
-          store.reduceEffect(state, checkPokemonTypeEffect);
-
-          if (checkPokemonTypeEffect) {
-            const conditions = pokemon.specialConditions.slice();
-            conditions.forEach(condition => {
-              pokemon.removeSpecialCondition(SpecialCondition.ASLEEP);
-              pokemon.removeSpecialCondition(SpecialCondition.PARALYZED);
-              pokemon.removeSpecialCondition(SpecialCondition.CONFUSED);
-            });
-          }
-        });
+      try {
+        const energyEffect = new EnergyEffect(player, this);
+        store.reduceEffect(state, energyEffect);
+      } catch {
         return state;
       }
 
-      return state;
+      pokemon.removeSpecialCondition(SpecialCondition.ASLEEP);
+      pokemon.removeSpecialCondition(SpecialCondition.PARALYZED);
+      pokemon.removeSpecialCondition(SpecialCondition.CONFUSED);
+      pokemon.removeSpecialCondition(SpecialCondition.BURNED);
+      pokemon.removeSpecialCondition(SpecialCondition.POISONED);
+    }
+
+    if (effect instanceof CheckTableStateEffect) {
+      const player = state.players[state.activePlayer];
+      const cardList = StateUtils.findCardList(state, this);
+
+      try {
+        const energyEffect = new EnergyEffect(player, this);
+        store.reduceEffect(state, energyEffect);
+      } catch {
+        return state;
+      }
+
+      if (cardList instanceof PokemonCardList && cardList.cards.includes(this)) {
+        const conditionsToKeep = [SpecialCondition.ABILITY_USED];
+        const hasSpecialCondition = cardList.specialConditions.some(condition => !conditionsToKeep.includes(condition));
+        if (hasSpecialCondition) {
+          cardList.specialConditions = cardList.specialConditions.filter(condition => conditionsToKeep.includes(condition));
+        }
+      }
     }
     return state;
   }

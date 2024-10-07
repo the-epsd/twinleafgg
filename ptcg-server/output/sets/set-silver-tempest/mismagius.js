@@ -11,7 +11,7 @@ const game_phase_effects_1 = require("../../game/store/effects/game-phase-effect
 class Mismagius extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.stage = card_types_1.Stage.STAGE_1;
+        this.stage = card_types_1.Stage.BASIC;
         this.regulationMark = 'F';
         this.evolvesFrom = 'Misdreavus';
         this.cardType = card_types_1.CardType.PSYCHIC;
@@ -40,10 +40,14 @@ class Mismagius extends pokemon_card_1.PokemonCard {
         this.damageDealt = false;
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof attack_effects_1.PutDamageEffect && effect.target.cards.includes(this) && effect.player.marker.hasMarker(effect.player.DAMAGE_DEALT_MARKER)) {
+        if (effect instanceof attack_effects_1.PutDamageEffect && effect.target.cards.includes(this)) {
             const player = game_1.StateUtils.findOwner(state, effect.target);
             const opponent = game_1.StateUtils.getOpponent(state, player);
             const pokemonCard = effect.target.getPokemonCard();
+            const sourceCard = effect.source.getPokemonCard();
+            if (pokemonCard !== this || sourceCard === undefined || state.phase !== game_1.GamePhase.ATTACK) {
+                return state;
+            }
             this.damageDealt = true;
             if (pokemonCard === this && this.damageDealt === true) {
                 // Try to reduce PowerEffect, to check if something is blocking our ability

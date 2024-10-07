@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { CrocalorArt, CyranoArt, DeinoArt, ExcitingStadiumArt, FuecocoArt, GravityMountainArt, HydreigonexArt, MagnemiteArt, MagnetonArt, MiloticexArt, MiraculousIntercomArt, PikachuexArt, SkeledirgeArt, TerapagosArt, TogekissArt, ZweilousArt } from './card-images';
+import { AzelfArt, CrocalorArt, CyranoArt, DeinoArt, EternatusArt, ExcitingStadiumArt, FuecocoArt, GravityMountainArt, HydreigonexArt, MagnemiteArt, MagnetonArt, MespritArt, MiloticexArt, MiraculousIntercomArt, NinetalesArt, PikachuexArt, ScrambleSwitchArt, SkeledirgeArt, TerapagosArt, TogekissArt, TogepiArt, TogeticArt, UxieArt, VivillionArt, ZweilousArt } from './card-images';
 
 export const setSV8: Card[] = [
   new PikachuexArt(),
@@ -14,8 +14,17 @@ export const setSV8: Card[] = [
   new CrocalorArt(),
   new SkeledirgeArt(),
   new MiloticexArt(),
+  new TogepiArt(),
+  new TogeticArt(),
   new TogekissArt(),
   new DeinoArt(),
   new ZweilousArt(),
   new HydreigonexArt(),
+  new EternatusArt(),
+  new VivillionArt(),
+  new AzelfArt(),
+  new UxieArt(),
+  new MespritArt(),
+  new ScrambleSwitchArt(),
+  new NinetalesArt(),
 ];

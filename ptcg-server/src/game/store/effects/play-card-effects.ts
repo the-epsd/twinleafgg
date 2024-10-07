@@ -17,6 +17,7 @@ export enum PlayCardEffects {
   ENERGY_EFFECT = 'ENERGY_EFFECT',
   TOOL_EFFECT = 'TOOL_EFFECT',
   SUPPORTER_EFFECT = 'SUPPORTER_EFFECT',
+  COIN_FLIP_EFFECT = 'COIN_FLIP_EFFECT',
 }
 
 export class AttachEnergyEffect implements Effect {
@@ -149,5 +150,15 @@ export class SupporterEffect implements Effect {
   constructor(player: Player, card: TrainerCard) {
     this.player = player;
     this.card = card;
+  }
+}
+
+export class CoinFlipEffect implements Effect {
+  readonly type: string = PlayCardEffects.COIN_FLIP_EFFECT;
+  public preventDefault = false;
+  public player: Player;
+
+  constructor(player: Player) {
+    this.player = player;
   }
 }

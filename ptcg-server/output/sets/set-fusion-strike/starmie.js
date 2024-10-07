@@ -32,8 +32,20 @@ class Starmie extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
+            const blocked = [];
+            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
+                if (cardList.cards.some(c => c instanceof game_1.EnergyCard && c.provides.includes(card_types_1.CardType.WATER))) {
+                    blocked.push();
+                }
+                if (cardList.cards.some(c => c instanceof game_1.EnergyCard && c.provides.includes(card_types_1.CardType.ANY))) {
+                    blocked.push();
+                }
+                if (cardList.cards.some(c => c instanceof game_1.EnergyCard && c.blendedEnergies.includes(card_types_1.CardType.WATER))) {
+                    blocked.push();
+                }
+            });
             return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, player.active, // Card source is target Pokemon
-            { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Water Energy' }, { allowCancel: false }), selected => {
+            { superType: card_types_1.SuperType.ENERGY }, { allowCancel: false, blocked: blocked }), selected => {
                 const cards = selected || [];
                 if (cards.length > 0) {
                     const discardEnergy = new attack_effects_1.DiscardCardsEffect(effect, cards);

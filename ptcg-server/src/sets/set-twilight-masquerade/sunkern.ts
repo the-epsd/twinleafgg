@@ -15,7 +15,7 @@ export class Sunkern extends PokemonCard {
     {
       name: 'Bullet Seed',
       cost: [CardType.GRASS],
-      damage: 80,
+      damage: 10,
       damageCalculation: 'x',
       text: ' Flip 4 coins. This attack does 10 damage for each heads. '
     }];

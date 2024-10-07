@@ -30,7 +30,16 @@ export class TherapeuticEnergy extends EnergyCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof AttachEnergyEffect && effect.target.cards.includes(this)) {
+      const player = effect.player;
       const pokemon = effect.target;
+
+      try {
+        const energyEffect = new EnergyEffect(player, this);
+        store.reduceEffect(state, energyEffect);
+      } catch {
+        return state;
+      }
+
       pokemon.removeSpecialCondition(SpecialCondition.ASLEEP);
       pokemon.removeSpecialCondition(SpecialCondition.PARALYZED);
       pokemon.removeSpecialCondition(SpecialCondition.CONFUSED);

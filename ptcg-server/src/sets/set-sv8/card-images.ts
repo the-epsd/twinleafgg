@@ -1,4 +1,6 @@
+import { ScrambleSwitch } from '../set-plasma-storm/scramble-switch';
 import { Magneton } from '../set-scarlet-and-violet-promos/magneton';
+import { Azelf } from './azelf';
 import { Crocalor } from './crocalor';
 import { Cyrano } from './cyrano';
 import { Deino } from './deino';
@@ -8,12 +10,18 @@ import { Fuecoco } from './fuecoco';
 import { GravityMountain } from './gravity-mountain';
 import { Hydreigonex } from './hydreigon-ex';
 import { Magnemite } from './magnemite';
+import { Mesprit } from './mesprit';
 import { Miloticex } from './milotic-ex';
 import { MiraculousIntercom } from './miraculous-intercom';
+import { Ninetales } from './ninetales';
 import { Pikachuex } from './pikachu-ex';
 import { Skeledirge } from './skeledirge';
 import { Terapagos } from './terapagos';
 import { Togekiss } from './togekiss';
+import { Togepi } from './togepi';
+import { Togetic } from './togetic';
+import { Uxie } from './uxie';
+import { Vivillion } from './vivillion';
 import { Zweilous } from './zweilous';
 
 export class PikachuexArt extends Pikachuex {
@@ -67,6 +75,14 @@ export class MiloticexArt extends Miloticex {
   public cardImage = 'https://pokemonproxies.com/static/media/8i-026-Milotic_ex.5ff152c4fc9e8baef0cc.png';
 }
 
+export class TogepiArt extends Togepi {
+  public cardImage = 'https://pokemonproxies.com/static/media/8i-045-Togepi.77d2eebef33e068469eb.png';
+}
+
+export class TogeticArt extends Togetic {
+  public cardImage = 'https://pokemonproxies.com/static/media/8i-046-Togetic.a233d366b39ba2ad3e61.png';
+}
+
 export class TogekissArt extends Togekiss {
   public cardImage = 'https://pokemonproxies.com/static/media/8i-047-Togekiss.8981ab5bccce31f029ad.png';
 }
@@ -85,4 +101,32 @@ export class HydreigonexArt extends Hydreigonex {
 
 export class EternatusArt extends Eternatus {
   public cardImage = 'https://pokemonproxies.com/static/media/8i-080-Eternatus.c644b266e5800c93414a.png';
+}
+
+export class VivillionArt extends Vivillion {
+  public cardImage = 'https://pokemonproxies.com/static/media/8i-006-Vivillon.f116fa10d05ef67bf440.png';
+}
+
+export class AzelfArt extends Azelf {
+  public cardImage = 'https://pokemonproxies.com/static/media/8i-050-Azelf.b2900055c513ab0df10f.png';
+}
+
+export class UxieArt extends Uxie {
+  public cardImage = 'https://pokemonproxies.com/static/media/8i-048-Uxie.fbd6d5e91202b3f17528.png';
+}
+
+export class MespritArt extends Mesprit {
+  public cardImage = 'https://pokemonproxies.com/static/media/8i-049-Mesprit.29fc30244daaa8ea082b.png';
+}
+
+export class ScrambleSwitchArt extends ScrambleSwitch {
+  public cardImage = 'https://pokemonproxies.com/static/media/8i-095-Scramble_Switch.9baab5dc20a503cd2bec.png';
+  public set = 'SV8';
+  public setNumber = '95';
+  public fullName = 'Scramble Switch SV8';
+  public regulationMark = 'H';
+}
+
+export class NinetalesArt extends Ninetales {
+  public cardImage = 'https://pokemonproxies.com/static/media/7b-002-Ninetales.0e37fb5a6a0a97fc50c5.png';
 }

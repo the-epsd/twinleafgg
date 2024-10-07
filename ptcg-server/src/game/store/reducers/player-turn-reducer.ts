@@ -10,6 +10,7 @@ import { StateUtils } from '../state-utils';
 import { SlotType } from '../actions/play-card-action';
 import { PokemonCard } from '../card/pokemon-card';
 import { CheckPokemonAttacksEffect, CheckPokemonPowersEffect } from '../effects/check-effects';
+import { Attack } from '../card/pokemon-types';
 
 export function playerTurnReducer(store: StoreLike, state: State, action: Action): State {
 
@@ -49,18 +50,26 @@ export function playerTurnReducer(store: StoreLike, state: State, action: Action
       }
 
       const pokemonCard = player.active.getPokemonCard();
+      let attacks: Attack[] = [];
 
-      if (pokemonCard === undefined) {
-        throw new GameError(GameMessage.UNKNOWN_ATTACK);
+      if (pokemonCard) {
+        attacks = [...pokemonCard.attacks];
       }
+
+      // Check for Alakazam ex on the bench
+      const alakazamOnBench = player.bench.find(b => b.getPokemonCard()?.name === 'Alakazam ex');
+      if (alakazamOnBench) {
+        const alakazamAttacks = alakazamOnBench.getPokemonCard()?.attacks || [];
+        attacks = [...attacks, ...alakazamAttacks];
+      }
+
 
       const attackEffect = new CheckPokemonAttacksEffect(player);
       state = store.reduceEffect(state, attackEffect);
 
-      const attack = [
-        ...pokemonCard.attacks,
-        ...attackEffect.attacks
-      ].find(a => a.name === action.name);
+      attacks = [...attacks, ...attackEffect.attacks];
+
+      const attack = attacks.find(a => a.name === action.name);
 
       if (attack === undefined) {
         throw new GameError(GameMessage.UNKNOWN_ATTACK);
@@ -73,6 +82,7 @@ export function playerTurnReducer(store: StoreLike, state: State, action: Action
 
       return state;
     }
+
 
     if (action instanceof UseAbilityAction) {
       const player = state.players[state.activePlayer];

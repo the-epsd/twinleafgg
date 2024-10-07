@@ -23,7 +23,15 @@ class TherapeuticEnergy extends energy_card_1.EnergyCard {
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.AttachEnergyEffect && effect.target.cards.includes(this)) {
+            const player = effect.player;
             const pokemon = effect.target;
+            try {
+                const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
+                store.reduceEffect(state, energyEffect);
+            }
+            catch (_a) {
+                return state;
+            }
             pokemon.removeSpecialCondition(card_types_1.SpecialCondition.ASLEEP);
             pokemon.removeSpecialCondition(card_types_1.SpecialCondition.PARALYZED);
             pokemon.removeSpecialCondition(card_types_1.SpecialCondition.CONFUSED);
@@ -35,7 +43,7 @@ class TherapeuticEnergy extends energy_card_1.EnergyCard {
                 const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
                 store.reduceEffect(state, energyEffect);
             }
-            catch (_a) {
+            catch (_b) {
                 return state;
             }
             if (cardList instanceof game_1.PokemonCardList && cardList.cards.includes(this)) {

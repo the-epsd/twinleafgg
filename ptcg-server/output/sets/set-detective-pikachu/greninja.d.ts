@@ -24,5 +24,6 @@ export declare class Greninja extends PokemonCard {
     name: string;
     fullName: string;
     usedMirageBarrage: boolean;
+    blockDamage: boolean;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }
