@@ -1,7 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZapdosexArt = exports.WartortleArt = exports.VenusaurexArt = exports.VenomothArt = exports.VenonatArt = exports.VileplumeArt = exports.StarmieArt = exports.StaryuArt = exports.SquirtleArt = exports.ScytherArt = exports.RigidBandArt = exports.PidgeyArt = exports.PidgeottoArt = exports.OddishArt = exports.NidoqueenArt = exports.NidorinaArt = exports.NidoranFemaleArt = exports.NidokingArt = exports.NidorinoArt = exports.NidoranMaleArt = exports.MoltresArt = exports.MewexArt = exports.MagmarArt = exports.MachokeArt = exports.MachopArt = exports.KangaskhanexArt = exports.JolteonArt = exports.IvysaurArt = exports.GrabberArt = exports.GloomArt = exports.GiovannisCharismaArt = exports.EreikasInvitationArt = exports.EnergyStickerArt = exports.EeveeArt = exports.ElectabuzzArt = exports.EkansArt = exports.DoduoArt = exports.DodrioArt = exports.DittoArt = exports.CyclingRoadArt = exports.CharmeleonArt = exports.CharmanderArt = exports.CharizardexArt = exports.BulbasaurArt = exports.BlastoiseexArt = exports.ArbokexArt = exports.AlakazamexArt = exports.AntiqueHelixFossilArt = exports.AbraArt = void 0;
+exports.ZapdosexArt = exports.WartortleArt = exports.VenusaurexArt = exports.VenomothArt = exports.VenonatArt = exports.VileplumeArt = exports.StarmieArt = exports.StaryuArt = exports.SquirtleArt = exports.ScytherArt = exports.RigidBandArt = exports.PidgeyArt = exports.PidgeottoArt = exports.OddishArt = exports.NidoqueenArt = exports.NidorinaArt = exports.NidoranFemaleArt = exports.NidokingArt = exports.NidorinoArt = exports.NidoranMaleArt = exports.MoltresArt = exports.MewexArt = exports.MagmarArt = exports.MachokeArt = exports.MachopArt = exports.KangaskhanexArt = exports.JolteonArt = exports.IvysaurArt = exports.GrabberArt = exports.GloomArt = exports.GiovannisCharismaArt = exports.EreikasInvitationArt = exports.EnergyStickerArt = exports.EeveeArt = exports.ElectabuzzArt = exports.EkansArt = exports.DragoniteArt = exports.DoduoArt = exports.DodrioArt = exports.DittoArt = exports.CyclingRoadArt = exports.CharmeleonArt = exports.CharmanderArt = exports.CharizardexArt = exports.BulbasaurArt = exports.BlastoiseexArt = exports.ArbokexArt = exports.AlakazamexArt = exports.AntiqueHelixFossilArt = exports.AbraArt = void 0;
+const abra_1 = require("./abra");
 const alakazam_ex_1 = require("./alakazam-ex");
+const antique_helix_fossil_1 = require("./antique-helix-fossil");
+const arbok_ex_1 = require("./arbok_ex");
 const blastoise_ex_1 = require("./blastoise-ex");
 const bulbasaur_1 = require("./bulbasaur");
 const charizard_ex_1 = require("./charizard-ex");
@@ -11,41 +14,43 @@ const cycling_road_1 = require("./cycling-road");
 const ditto_1 = require("./ditto");
 const dodrio_1 = require("./dodrio");
 const doduo_1 = require("./doduo");
-const electabuzz_1 = require("./electabuzz");
+const dragonite_1 = require("./dragonite");
 const eevee_1 = require("./eevee");
+const ekans_1 = require("./ekans");
+const electabuzz_1 = require("./electabuzz");
+const energy_sticker_1 = require("./energy-sticker");
 const erikas_invitation_1 = require("./erikas-invitation");
-const gloom_1 = require("./gloom");
 const giovannis_charisma_1 = require("./giovannis-charisma");
+const gloom_1 = require("./gloom");
 const grabber_1 = require("./grabber");
 const ivysaur_1 = require("./ivysaur");
-const kangaskhan_ex_1 = require("./kangaskhan-ex");
-const mew_ex_1 = require("./mew-ex");
-const pidgeotto_1 = require("./pidgeotto");
-const pidgey_1 = require("./pidgey");
-const scyther_1 = require("./scyther");
-const squirtle_1 = require("./squirtle");
-const vileplume_1 = require("./vileplume");
-const venonat_1 = require("./venonat");
-const venomoth_1 = require("./venomoth");
-const venusaur_ex_1 = require("./venusaur-ex");
-const wartortle_1 = require("./wartortle");
-const zapdos_ex_1 = require("./zapdos-ex");
 const jolteon_1 = require("./jolteon");
+const kangaskhan_ex_1 = require("./kangaskhan-ex");
+const machoke_1 = require("./machoke");
+const machop_1 = require("./machop");
 const magmar_1 = require("./magmar");
-const oddish_1 = require("./oddish");
-const antique_helix_fossil_1 = require("./antique-helix-fossil");
-const energy_sticker_1 = require("./energy-sticker");
+const mew_ex_1 = require("./mew-ex");
 const moltres_1 = require("./moltres");
-const staryu_1 = require("./staryu");
-const arbok_ex_1 = require("./arbok_ex");
-const ekans_1 = require("./ekans");
 const nidoking_1 = require("./nidoking");
 const nidoqueen_1 = require("./nidoqueen");
-const nidoran_male_1 = require("./nidoran-male");
-const nidorino_1 = require("./nidorino");
 const nidoran_female_1 = require("./nidoran-female");
+const nidoran_male_1 = require("./nidoran-male");
 const nidorina_1 = require("./nidorina");
-const abra_1 = require("./abra");
+const nidorino_1 = require("./nidorino");
+const oddish_1 = require("./oddish");
+const pidgeotto_1 = require("./pidgeotto");
+const pidgey_1 = require("./pidgey");
+const rigid_band_1 = require("./rigid-band");
+const scyther_1 = require("./scyther");
+const squirtle_1 = require("./squirtle");
+const starmie_1 = require("./starmie");
+const staryu_1 = require("./staryu");
+const venomoth_1 = require("./venomoth");
+const venonat_1 = require("./venonat");
+const venusaur_ex_1 = require("./venusaur-ex");
+const vileplume_1 = require("./vileplume");
+const wartortle_1 = require("./wartortle");
+const zapdos_ex_1 = require("./zapdos-ex");
 class AbraArt extends abra_1.Abra {
     constructor() {
         super(...arguments);
@@ -53,10 +58,6 @@ class AbraArt extends abra_1.Abra {
     }
 }
 exports.AbraArt = AbraArt;
-const machop_1 = require("./machop");
-const machoke_1 = require("./machoke");
-const starmie_1 = require("./starmie");
-const rigid_band_1 = require("./rigid-band");
 class AntiqueHelixFossilArt extends antique_helix_fossil_1.AntiqueHelixFossil {
     constructor() {
         super(...arguments);
@@ -141,6 +142,13 @@ class DoduoArt extends doduo_1.Doduo {
     }
 }
 exports.DoduoArt = DoduoArt;
+class DragoniteArt extends dragonite_1.Dragonite {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/MEW/MEW_149_R_EN_LG.png';
+    }
+}
+exports.DragoniteArt = DragoniteArt;
 class EkansArt extends ekans_1.Ekans {
     constructor() {
         super(...arguments);

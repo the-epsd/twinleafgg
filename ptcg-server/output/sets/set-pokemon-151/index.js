@@ -17,6 +17,7 @@ exports.setPokemon151 = [
     new card_images_1.DittoArt(),
     new card_images_1.DodrioArt(),
     new card_images_1.DoduoArt(),
+    new card_images_1.DragoniteArt(),
     new card_images_1.EeveeArt(),
     new card_images_1.EkansArt(),
     new card_images_1.ElectabuzzArt(),
