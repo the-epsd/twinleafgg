@@ -1,17 +1,19 @@
-import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
-import { PowerType } from '../../game/store/card/pokemon-types';
-import { StoreLike, State } from '../../game';
+import { PokemonCard, Stage, CardType, PowerType, StoreLike, State, CardTag } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-export declare class Dustox extends PokemonCard {
+export declare class Talonflame extends PokemonCard {
     stage: Stage;
     evolvesFrom: string;
+    tags: CardTag[];
     cardType: CardType;
     hp: number;
     weakness: {
-        type: CardType;
+        type: CardType.LIGHTNING;
     }[];
-    retreat: CardType[];
+    resistance: {
+        type: CardType.FIGHTING;
+        value: number;
+    }[];
+    retreat: never[];
     powers: {
         name: string;
         powerType: PowerType;
@@ -19,14 +21,14 @@ export declare class Dustox extends PokemonCard {
     }[];
     attacks: {
         name: string;
-        cost: CardType[];
+        cost: CardType.COLORLESS[];
         damage: number;
         text: string;
     }[];
     set: string;
     cardImage: string;
-    fullName: string;
-    name: string;
     setNumber: string;
+    name: string;
+    fullName: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

@@ -23,7 +23,7 @@ import { playerTurnReducer } from './reducers/player-turn-reducer';
 import { gamePhaseReducer } from './effect-reducers/game-phase-effect';
 import { gameReducer } from './effect-reducers/game-effect';
 import { checkState, checkStateReducer } from './effect-reducers/check-effect';
-import { playerStateReducer} from './reducers/player-state-reducer';
+import { playerStateReducer } from './reducers/player-state-reducer';
 import { retreatReducer } from './effect-reducers/retreat-effect';
 import { setupPhaseReducer } from './reducers/setup-reducer';
 import { abortGameReducer } from './reducers/abort-game-reducer';
@@ -139,7 +139,7 @@ export class Store implements StoreLike {
     const promptItem = this.promptItems.find(item => item.ids.indexOf(action.id) !== -1);
 
     if (prompt === undefined || promptItem === undefined) {
-      throw new GameError(GameMessage.ILLEGAL_ACTION);
+      return state;
     }
 
     if (prompt.result !== undefined) {
@@ -188,7 +188,7 @@ export class Store implements StoreLike {
   }
 
   private reduce(state: State, action: Action): State {
-    const stateBackup = deepClone(state, [ Card ]);
+    const stateBackup = deepClone(state, [Card]);
     this.promptItems.length = 0;
 
     try {

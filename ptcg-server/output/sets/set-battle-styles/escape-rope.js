@@ -37,6 +37,7 @@ function* playCard(next, store, state, effect) {
         }
         player.supporter.moveCardTo(effect.trainerCard, player.discard);
     }
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
     return state;
 }
 class EscapeRope extends trainer_card_1.TrainerCard {

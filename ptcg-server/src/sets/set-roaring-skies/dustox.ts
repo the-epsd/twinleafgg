@@ -8,6 +8,7 @@ import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 
 export class Dustox extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
+  public evolvesFrom = 'Cascoon';
   public cardType: CardType = CardType.GRASS;
   public hp: number = 130;
   public weakness = [{ type: CardType.FIRE }];

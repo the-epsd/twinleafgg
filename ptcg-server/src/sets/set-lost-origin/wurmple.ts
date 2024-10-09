@@ -49,7 +49,6 @@ export class Wurmple extends PokemonCard {
         }
       });
 
-
       return store.prompt(state, new ChooseCardsPrompt(
         player.id,
         GameMessage.CHOOSE_CARD_TO_HAND,
