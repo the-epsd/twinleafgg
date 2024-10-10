@@ -49,6 +49,8 @@ class LilliesPokeDoll extends __1.TrainerCard {
             store.log(state, __1.GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: effect.player.name, card: this.name });
             if (player.bench.every(b => b.cards.length === 0)) {
                 // technical implementation does not matter exactly because this ends the game
+                effect.player.active.clearEffects();
+                effect.player.active.clearAttackEffects();
                 effect.player.active.moveCardsTo(effect.player.active.cards, player.deck);
             }
             else {

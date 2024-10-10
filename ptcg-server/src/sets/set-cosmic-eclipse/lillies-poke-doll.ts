@@ -68,6 +68,8 @@ export class LilliesPokeDoll extends TrainerCard {
 
       if (player.bench.every(b => b.cards.length === 0)) {
         // technical implementation does not matter exactly because this ends the game
+        effect.player.active.clearEffects();
+        effect.player.active.clearAttackEffects();
         effect.player.active.moveCardsTo(effect.player.active.cards, player.deck);
       } else {
         player.switchPokemon(cardList);

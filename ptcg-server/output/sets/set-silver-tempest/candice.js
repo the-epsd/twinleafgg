@@ -26,7 +26,7 @@ function* playCard(next, store, state, self, effect) {
         if (c instanceof game_1.EnergyCard && c.energyType === card_types_1.EnergyType.BASIC && c.name === 'Water Energy') {
             energies += 1;
         }
-        else if (c instanceof game_1.PokemonCard && c.cardType === card_types_1.CardType.PSYCHIC) {
+        else if (c instanceof game_1.PokemonCard && c.cardType === card_types_1.CardType.WATER) {
             pokemons += 1;
         }
         else {

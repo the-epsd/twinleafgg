@@ -30,14 +30,14 @@ export class Peonia extends TrainerCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
-      
+
       if (player.supporterTurn > 0) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
-      
+
       // we'll discard peonia later
       effect.preventDefault = true;
-      
+
       player.hand.moveCardTo(effect.trainerCard, player.supporter);
 
       return store.prompt(state, new ChoosePrizePrompt(
@@ -47,21 +47,21 @@ export class Peonia extends TrainerCard {
       ), chosenPrizes => {
         chosenPrizes = chosenPrizes || [];
         const hand = player.hand;
-        
+
         chosenPrizes.forEach(prize => prize.moveTo(hand, 1));
-        
+
         store.prompt(state, new ChooseCardsPrompt(
           player.id,
           GameMessage.CHOOSE_CARDS_TO_RETURN_TO_PRIZES,
           player.hand,
-          {  },
+          {},
           { min: chosenPrizes.length, max: chosenPrizes.length, allowCancel: false }
         ), cards => {
           cards = cards || [];
-          
+
           const newPrizeCards = new CardList();
           player.hand.moveCardsTo(cards, newPrizeCards);
-          
+
           return store.prompt(state, new OrderCardsPrompt(
             player.id,
             GameMessage.CHOOSE_CARDS_ORDER,
@@ -69,22 +69,22 @@ export class Peonia extends TrainerCard {
             { allowCancel: false }
           ), (rearrangedCards) => {
             newPrizeCards.applyOrder(rearrangedCards);
-            
+
             // put rearranged cards into prize first prize slots available
             player.prizes.forEach(p => {
               if (p.cards.length === 0) {
                 p.cards = newPrizeCards.cards.splice(0, 1);
+                p.isSecret = true; // Only set the new cards to secret
               }
-              
-              p.isSecret = true;
+              // Remove this line: newPrizeCards.isSecret = true;
             });
-            
+
             return state;
           });
         });
-        
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);        
-        
+
+        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
       });
     }
     return state;

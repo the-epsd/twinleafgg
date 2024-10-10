@@ -32,7 +32,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   deckTop.cards.forEach((c, index) => {
     if (c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.name === 'Water Energy') {
       energies += 1;
-    } else if (c instanceof PokemonCard && c.cardType === CardType.PSYCHIC) {
+    } else if (c instanceof PokemonCard && c.cardType === CardType.WATER) {
       pokemons += 1;
     } else {
       blocked.push(index);
