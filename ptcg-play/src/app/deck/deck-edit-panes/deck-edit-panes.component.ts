@@ -306,12 +306,21 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
         }
       }
     }
-
     this.tempList = this.list = list;
     this.deckItemsChange.next(list);
-    this.tempList.sort((a, b) => a.card.fullName.localeCompare(b.card.fullName));
-    this.tempList.sort((a, b) => a.card.superType - b.card.superType);
-    this.tempList = this.sortByPokemonEvolution([...this.tempList]);
+
+    // Sort by supertype first
+    this.tempList.sort((a, b) => {
+      if (a.card.superType !== b.card.superType) {
+        return a.card.superType - b.card.superType;
+      }
+      // If supertypes are the same, sort alphabetically
+      return a.card.fullName.localeCompare(b.card.fullName);
+    });
+
+    // Then apply specific sorting for Pokémon and Trainers
+    this.sortPokemonCards();
+    this.sortTrainerCards();
   }
 
   public async removeCardFromDeck(item: DeckItem) {
@@ -355,12 +364,32 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
   }
 
   private sortTrainerCards() {
+    const trainerTypeOrder = [
+      TrainerType.SUPPORTER,
+      TrainerType.ITEM,
+      TrainerType.TOOL,
+      TrainerType.STADIUM
+    ];
+
     const trainerCards = this.tempList.filter(item => item.card.superType === SuperType.TRAINER);
     trainerCards.sort((a, b) => {
       const aType = (a.card as TrainerCard).trainerType;
       const bType = (b.card as TrainerCard).trainerType;
-      return aType - bType || a.card.fullName.localeCompare(b.card.fullName);
+      const aIndex = trainerTypeOrder.indexOf(aType);
+      const bIndex = trainerTypeOrder.indexOf(bType);
+
+      if (aIndex !== bIndex) {
+        return aIndex - bIndex;
+      }
+
+      // If trainer types are the same, sort alphabetically
+      return a.card.fullName.localeCompare(b.card.fullName);
     });
+
+    // Update the tempList with the sorted trainer cards
+    const firstTrainerIndex = this.tempList.findIndex(item => item.card.superType === SuperType.TRAINER);
+    const lastTrainerIndex = this.tempList.length - 1 - [...this.tempList].reverse().findIndex(item => item.card.superType === SuperType.TRAINER);
+    this.tempList.splice(firstTrainerIndex, lastTrainerIndex - firstTrainerIndex + 1, ...trainerCards);
   }
 
   @ViewChild('deckPane') deckPane: ElementRef;
@@ -483,6 +512,8 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.cards = this.loadLibraryCards();
+    this.sortPokemonCards();
+    this.sortTrainerCards();
   }
 
   ngOnDestroy() {
