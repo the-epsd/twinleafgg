@@ -13,18 +13,14 @@ export class Ninetales extends PokemonCard {
   public retreat = [C];
   public evolvesFrom = 'Vulpix';
 
-  public attacks = [{
-    name: 'Will-O-Wisp',
-    cost: [CardType.FIRE],
-    damage: 20,
-    text: ''
-  },
+  public attacks = [
   {
     name: 'Fiery Spirits',
     cost: [R],
     damage: 50,
     text: 'This attack also does 30 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-  }];
+    }
+  ];
 
   public set = 'SV8';
   public regulationMark = 'H';

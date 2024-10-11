@@ -1,36 +1,38 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { PlayerType, PowerType, State, StateUtils, StoreLike } from '../../game';
-import { TrainerToDeckEffect } from '../../game/store/effects/play-card-effects';
+import { DiscardToHandEffect } from '../../game/store/effects/play-card-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 
 
-export class Sandshrew extends PokemonCard {
+export class Toedscruel extends PokemonCard {
 
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.STAGE_1;
 
-  public cardType: CardType = F;
+  public evolvesFrom = 'Toedscool';
 
-  public hp: number = 60;
+  public cardType: CardType = G;
 
-  public weakness = [{ type: G }];
+  public hp: number = 120;
 
-  public retreat = [C];
+  public weakness = [{ type: R }];
+
+  public retreat = [C, C];
 
   public powers =
     [{
-      name: 'Sand Screen',
+      name: 'Slime Mold Colony',
       powerType: PowerType.ABILITY,
-      text: 'Trainer cards in your opponent\'s discard pile can\'t be put into their deck by an effect of your opponent\'s Item or Supporter cards.'
+      text: 'Cards in your opponent\'s discard pile can\'t be put into their hand by an effect of your opponent\'s Abilities or Trainer cards.'
     }];
 
   public attacks = [
     {
       name: 'Scratch',
-      cost: [C, C],
-      damage: 30,
-      text: '',
+      cost: [G, C, C],
+      damage: 80,
+      text: 'Heal 30 damage from this Pokémon.',
     }
   ];
 
@@ -38,32 +40,32 @@ export class Sandshrew extends PokemonCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '27';
+  public setNumber: string = '17';
 
-  public set = 'MEW';
+  public set = 'PAR';
 
-  public name: string = 'Sandshrew';
+  public name: string = 'Toedscruel';
 
-  public fullName: string = 'Sandshrew MEW';
+  public fullName: string = 'Toedscruel PAR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof TrainerToDeckEffect) {
+    if (effect instanceof DiscardToHandEffect) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      let isSandshrewInPlay = false;
+      let isToedscruelInPlay = false;
       opponent.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
         if (card === this) {
-          isSandshrewInPlay = true;
+          isToedscruelInPlay = true;
         }
       });
 
-      if (!isSandshrewInPlay) {
+      if (!isToedscruelInPlay) {
         return state;
       }
 
-      if (isSandshrewInPlay) {
+      if (isToedscruelInPlay) {
         // Try to reduce PowerEffect, to check if something is blocking our ability
         try {
           const stub = new PowerEffect(opponent, {

@@ -1,10 +1,10 @@
 import { Effect } from '../../game/store/effects/effect';
 import { GameMessage } from '../../game/game-message';
-import { TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { SupporterEffect, TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { CardTag, TrainerType } from '../../game/store/card/card-types';
+import { CardTag, Stage, TrainerType } from '../../game/store/card/card-types';
 import { Card, CardTarget, ChooseCardsPrompt, ChoosePokemonPrompt, GameError, PlayerType, PokemonCard, SelectPrompt, SlotType, StateUtils } from '../../game';
 
 export class Serena extends TrainerCard {
@@ -94,9 +94,21 @@ export class Serena extends TrainerCard {
               { allowCancel: false, blocked: blocked }
             ), result => {
               const cardList = result[0];
-              if (!result[0].getPokemonCard()?.tags.includes(CardTag.POKEMON_V) && !result[0].getPokemonCard()?.tags.includes(CardTag.POKEMON_VMAX) && !result[0].getPokemonCard()?.tags.includes(CardTag.POKEMON_VSTAR)) {
-                throw new GameError(GameMessage.INVALID_TARGET)
+
+              if (cardList.stage == Stage.BASIC) {
+                try {
+                  const supporterEffect = new SupporterEffect(player, effect.trainerCard);
+                  store.reduceEffect(state, supporterEffect);
+                } catch {
+                  player.supporter.moveCardTo(effect.trainerCard, player.discard);
+                  return state;
+                }
               }
+
+              if (!result[0].getPokemonCard()?.tags.includes(CardTag.POKEMON_V) && !result[0].getPokemonCard()?.tags.includes(CardTag.POKEMON_VMAX) && !result[0].getPokemonCard()?.tags.includes(CardTag.POKEMON_VSTAR)) {
+                throw new GameError(GameMessage.INVALID_TARGET);
+              }
+
               opponent.switchPokemon(cardList);
               player.supporter.moveCardTo(effect.trainerCard, player.discard);
               return state;

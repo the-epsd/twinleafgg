@@ -15,18 +15,14 @@ class Ninetales extends pokemon_card_1.PokemonCard {
         this.weakness = [{ type: W }];
         this.retreat = [C];
         this.evolvesFrom = 'Vulpix';
-        this.attacks = [{
-                name: 'Will-O-Wisp',
-                cost: [card_types_1.CardType.FIRE],
-                damage: 20,
-                text: ''
-            },
+        this.attacks = [
             {
                 name: 'Fiery Spirits',
                 cost: [R],
                 damage: 50,
                 text: 'This attack also does 30 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-            }];
+            }
+        ];
         this.set = 'SV8';
         this.regulationMark = 'H';
         this.cardImage = 'assets/cardback.png';

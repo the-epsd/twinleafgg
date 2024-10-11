@@ -24,8 +24,14 @@ import { SandyShocksex } from './sandy-shocks-ex';
 import { SlitherWing } from './slither-wing';
 import { Snorunt } from './snorunt';
 import { TapuKokoex } from './tapu-koko-ex';
+import { Toedscruel } from './toedscruel';
 import { Tsareenaex } from './tsareena-ex';
 import { Tulip } from './tulip';
+export declare class ToedscruelIR extends Toedscruel {
+    cardImage: string;
+    setNumber: string;
+    fullName: string;
+}
 export declare class SnoruntIR extends Snorunt {
     cardImage: string;
     setNumber: string;

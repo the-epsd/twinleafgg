@@ -5,6 +5,7 @@ import { PokemonCard } from '../card/pokemon-card';
 import { PokemonCardList } from '../state/pokemon-card-list';
 import { TrainerCard } from '../card/trainer-card';
 import { CardList } from '../state/card-list';
+import { Card } from '../card/card';
 
 export enum PlayCardEffects {
   ATTACH_ENERGY_EFFECT = 'ATTACH_ENERGY_EFFECT',
@@ -18,6 +19,8 @@ export enum PlayCardEffects {
   TOOL_EFFECT = 'TOOL_EFFECT',
   SUPPORTER_EFFECT = 'SUPPORTER_EFFECT',
   COIN_FLIP_EFFECT = 'COIN_FLIP_EFFECT',
+  TRAINER_CARD_TO_DECK_EFFECT = 'TRAINER_CARD_TO_DECK_EFFECT',
+  DISCARD_TO_HAND_EFFECT = 'DISCARD_TO_HAND_EFFECT',
 }
 
 export class AttachEnergyEffect implements Effect {
@@ -160,5 +163,29 @@ export class CoinFlipEffect implements Effect {
 
   constructor(player: Player) {
     this.player = player;
+  }
+}
+
+export class TrainerToDeckEffect implements Effect {
+  readonly type: string = PlayCardEffects.TRAINER_CARD_TO_DECK_EFFECT;
+  public preventDefault = false;
+  public player: Player;
+  public card: TrainerCard;
+
+  constructor(player: Player, card: TrainerCard) {
+    this.player = player;
+    this.card = card;
+  }
+}
+
+export class DiscardToHandEffect implements Effect {
+  readonly type: string = PlayCardEffects.DISCARD_TO_HAND_EFFECT;
+  public preventDefault = false;
+  public player: Player;
+  public card: Card;
+
+  constructor(player: Player, card: Card) {
+    this.player = player;
+    this.card = card;
   }
 }

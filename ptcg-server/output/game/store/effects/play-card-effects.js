@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CoinFlipEffect = exports.SupporterEffect = exports.ToolEffect = exports.EnergyEffect = exports.TrainerEffect = exports.PlayItemEffect = exports.AttachPokemonToolEffect = exports.PlayStadiumEffect = exports.PlaySupporterEffect = exports.PlayPokemonEffect = exports.AttachEnergyEffect = exports.PlayCardEffects = void 0;
+exports.DiscardToHandEffect = exports.TrainerToDeckEffect = exports.CoinFlipEffect = exports.SupporterEffect = exports.ToolEffect = exports.EnergyEffect = exports.TrainerEffect = exports.PlayItemEffect = exports.AttachPokemonToolEffect = exports.PlayStadiumEffect = exports.PlaySupporterEffect = exports.PlayPokemonEffect = exports.AttachEnergyEffect = exports.PlayCardEffects = void 0;
 var PlayCardEffects;
 (function (PlayCardEffects) {
     PlayCardEffects["ATTACH_ENERGY_EFFECT"] = "ATTACH_ENERGY_EFFECT";
@@ -14,6 +14,8 @@ var PlayCardEffects;
     PlayCardEffects["TOOL_EFFECT"] = "TOOL_EFFECT";
     PlayCardEffects["SUPPORTER_EFFECT"] = "SUPPORTER_EFFECT";
     PlayCardEffects["COIN_FLIP_EFFECT"] = "COIN_FLIP_EFFECT";
+    PlayCardEffects["TRAINER_CARD_TO_DECK_EFFECT"] = "TRAINER_CARD_TO_DECK_EFFECT";
+    PlayCardEffects["DISCARD_TO_HAND_EFFECT"] = "DISCARD_TO_HAND_EFFECT";
 })(PlayCardEffects = exports.PlayCardEffects || (exports.PlayCardEffects = {}));
 class AttachEnergyEffect {
     constructor(player, energyCard, target) {
@@ -119,3 +121,21 @@ class CoinFlipEffect {
     }
 }
 exports.CoinFlipEffect = CoinFlipEffect;
+class TrainerToDeckEffect {
+    constructor(player, card) {
+        this.type = PlayCardEffects.TRAINER_CARD_TO_DECK_EFFECT;
+        this.preventDefault = false;
+        this.player = player;
+        this.card = card;
+    }
+}
+exports.TrainerToDeckEffect = TrainerToDeckEffect;
+class DiscardToHandEffect {
+    constructor(player, card) {
+        this.type = PlayCardEffects.DISCARD_TO_HAND_EFFECT;
+        this.preventDefault = false;
+        this.player = player;
+        this.card = card;
+    }
+}
+exports.DiscardToHandEffect = DiscardToHandEffect;

@@ -1,14 +1,15 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { PowerType } from '../../game';
+import { PowerType, State, StoreLike } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
 export declare class Sandshrew extends PokemonCard {
     stage: Stage;
     cardType: CardType;
     hp: number;
     weakness: {
-        type: CardType;
+        type: CardType.GRASS;
     }[];
-    retreat: CardType[];
+    retreat: CardType.COLORLESS[];
     powers: {
         name: string;
         powerType: PowerType;
@@ -16,7 +17,7 @@ export declare class Sandshrew extends PokemonCard {
     }[];
     attacks: {
         name: string;
-        cost: CardType[];
+        cost: CardType.COLORLESS[];
         damage: number;
         text: string;
     }[];
@@ -26,4 +27,5 @@ export declare class Sandshrew extends PokemonCard {
     set: string;
     name: string;
     fullName: string;
+    reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

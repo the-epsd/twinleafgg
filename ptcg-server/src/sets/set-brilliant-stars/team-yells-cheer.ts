@@ -3,10 +3,10 @@ import { TrainerType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { TrainerEffect, TrainerToDeckEffect } from '../../game/store/effects/play-card-effects';
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
-import { Card} from '../../game/store/card/card';
+import { Card } from '../../game/store/card/card';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { PokemonCard } from '../../game';
 
@@ -49,7 +49,7 @@ function* playCard(next: Function, store: StoreLike, state: State, self: TeamYel
     player.id,
     GameMessage.CHOOSE_CARD_TO_DECK,
     player.discard,
-    { },
+    {},
     { min: 1, max: 3, allowCancel: false }
   ), selected => {
     cards = selected || [];
@@ -57,7 +57,7 @@ function* playCard(next: Function, store: StoreLike, state: State, self: TeamYel
   });
   player.discard.moveCardsTo(cards, player.deck);
   player.supporter.moveCardTo(effect.trainerCard, player.discard);
-  
+
   return state;
 }
 
@@ -66,15 +66,15 @@ export class TeamYellsCheer extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public regulationMark = 'F';
-  
+
   public set: string = 'BRS';
-  
+
   public cardImage: string = 'assets/cardback.png';
-  
+
   public setNumber: string = '149';
-  
+
   public name: string = 'Team Yell\'s Cheer';
-  
+
   public fullName: string = 'Team Yell\'s Cheer BRS';
 
   public text: string =
@@ -82,6 +82,18 @@ export class TeamYellsCheer extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+      const player = effect.player;
+
+      // Check if TrainerToDeckEffect is prevented
+      const toolEffect = new TrainerToDeckEffect(player, this);
+      store.reduceEffect(state, toolEffect);
+
+      if (toolEffect.preventDefault) {
+        // If prevented, just discard the card and return
+        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+        return state;
+      }
+
       const generator = playCard(() => generator.next(), store, state, this, effect);
       return generator.next().value;
     }

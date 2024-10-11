@@ -3,8 +3,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Metagross = void 0;
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
+const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
+const attack_effects_1 = require("../../game/store/effects/attack-effects");
+const check_effects_1 = require("../../game/store/effects/check-effects");
 class Metagross extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -37,16 +40,45 @@ class Metagross extends pokemon_card_1.PokemonCard {
         this.fullName = 'Metagross TEF';
         this.NEXT_TURN_MORE_DAMAGE_MARKER = 'NEXT_TURN_MORE_DAMAGE_MARKER';
         this.NEXT_TURN_MORE_DAMAGE_MARKER_2 = 'NEXT_TURN_MORE_DAMAGE_MARKER_2';
+        this.usedAttack = false;
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
-            effect.player.attackMarker.removeMarker(this.NEXT_TURN_MORE_DAMAGE_MARKER, this);
-            effect.player.attackMarker.removeMarker(this.NEXT_TURN_MORE_DAMAGE_MARKER_2, this);
-            console.log('both markers cleared - used another attack');
+        if (effect instanceof game_effects_1.AttackEffect) {
+            this.usedAttack = true;
+            console.log('attacked');
+        }
+        if (effect instanceof game_phase_effects_1.BeginTurnEffect) {
+            if (this.usedAttack) {
+                this.usedAttack = false;
+                console.log('reset');
+            }
+        }
+        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+            if (!this.usedAttack) {
+                this.usedAttack = false;
+                console.log('did not attack');
+                effect.player.attackMarker.removeMarker(this.NEXT_TURN_MORE_DAMAGE_MARKER, this);
+                effect.player.attackMarker.removeMarker(this.NEXT_TURN_MORE_DAMAGE_MARKER_2, this);
+                console.log('remove all markers');
+            }
         }
         if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.attackMarker.hasMarker(this.NEXT_TURN_MORE_DAMAGE_MARKER, this)) {
             effect.player.attackMarker.addMarker(this.NEXT_TURN_MORE_DAMAGE_MARKER_2, this);
             console.log('second marker added');
+        }
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
+            effect.player.attackMarker.removeMarker(this.NEXT_TURN_MORE_DAMAGE_MARKER, this);
+            effect.player.attackMarker.removeMarker(this.NEXT_TURN_MORE_DAMAGE_MARKER_2, this);
+            console.log('attacked with different attack, remove meteor mash markers');
+            const player = effect.player;
+            const checkProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(player);
+            state = store.reduceEffect(state, checkProvidedEnergy);
+            state = store.prompt(state, new game_1.ChooseEnergyPrompt(player.id, game_1.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, checkProvidedEnergy.energyMap, [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS], { allowCancel: false }), energy => {
+                const cards = (energy || []).map(e => e.card);
+                const discardEnergy = new attack_effects_1.DiscardCardsEffect(effect, cards);
+                discardEnergy.target = player.active;
+                store.reduceEffect(state, discardEnergy);
+            });
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             // Check marker

@@ -15,7 +15,7 @@ class NeutralCenter extends trainer_card_1.TrainerCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '60';
         this.regulationMark = 'H';
-        this.name = 'Neutral Center';
+        this.name = 'Neutralization Zone';
         this.fullName = 'Neutral Center SFA';
         this.text = 'Pokémon that don\'t have a Rule Box don\'t take any damage from attacks from their opponent\'s Pokémon ex and Pokémon V.' +
             '' +
@@ -37,7 +37,63 @@ class NeutralCenter extends trainer_card_1.TrainerCard {
                 return state;
             }
             const nonRuleBox = pokemonCard && !pokemonCard.tags.includes(card_types_1.CardTag.POKEMON_ex) && !pokemonCard.tags.includes(card_types_1.CardTag.POKEMON_V) && !pokemonCard.tags.includes(card_types_1.CardTag.POKEMON_VMAX) && !pokemonCard.tags.includes(card_types_1.CardTag.POKEMON_VSTAR);
+            if (sourceCard && sourceCard.tags.includes(card_types_1.CardTag.POKEMON_V)) {
+                if (nonRuleBox) {
+                    effect.preventDefault = true;
+                }
+                else {
+                    effect.preventDefault = false;
+                }
+            }
             if (sourceCard && sourceCard.tags.includes(card_types_1.CardTag.POKEMON_VSTAR)) {
+                if (nonRuleBox) {
+                    effect.preventDefault = true;
+                }
+            }
+            else {
+                effect.preventDefault = false;
+            }
+            if (sourceCard && sourceCard.tags.includes(card_types_1.CardTag.POKEMON_VMAX)) {
+                if (nonRuleBox) {
+                    effect.preventDefault = true;
+                }
+                else {
+                    effect.preventDefault = false;
+                }
+            }
+            if (sourceCard && sourceCard.tags.includes(card_types_1.CardTag.POKEMON_ex)) {
+                if (nonRuleBox) {
+                    effect.preventDefault = true;
+                }
+                else {
+                    effect.preventDefault = false;
+                }
+            }
+            if (sourceCard && sourceCard.tags.includes(card_types_1.CardTag.RADIANT)) {
+                if (nonRuleBox) {
+                    effect.preventDefault = true;
+                }
+                else {
+                    effect.preventDefault = false;
+                }
+            }
+            if (sourceCard && sourceCard.tags.includes(card_types_1.CardTag.POKEMON_EX)) {
+                if (nonRuleBox) {
+                    effect.preventDefault = true;
+                }
+                else {
+                    effect.preventDefault = false;
+                }
+            }
+            if (sourceCard && sourceCard.tags.includes(card_types_1.CardTag.POKEMON_GX)) {
+                if (nonRuleBox) {
+                    effect.preventDefault = true;
+                }
+                else {
+                    effect.preventDefault = false;
+                }
+            }
+            if (sourceCard && sourceCard.tags.includes(card_types_1.CardTag.POKEMON_LV_X)) {
                 if (nonRuleBox) {
                     effect.preventDefault = true;
                 }

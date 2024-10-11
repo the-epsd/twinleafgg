@@ -81,6 +81,11 @@ export class FlygonexArt extends Flygonex {
 
 export class CounterGainArt extends CounterGain {
   public cardImage = 'https://pbs.twimg.com/media/GVPnDxPWgAAstfh?format=jpg&name=medium';
+  public name = 'Counter Gain';
+  public set = 'SV7a';
+  public setNumber = '59';
+  public fullName = 'Counter Gain SV7a';
+  public regulationMark = 'H';
 }
 
 export class SmoochumArt extends Smoochum {

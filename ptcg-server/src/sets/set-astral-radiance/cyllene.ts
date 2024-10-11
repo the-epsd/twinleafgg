@@ -3,7 +3,7 @@ import { TrainerType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { TrainerEffect, TrainerToDeckEffect } from '../../game/store/effects/play-card-effects';
 import { StateUtils, GameError, GameMessage, CoinFlipPrompt, ChooseCardsPrompt, Card, CardList, OrderCardsPrompt, ShowCardsPrompt } from '../../game';
 
 export class Cyllene extends TrainerCard {
@@ -70,45 +70,54 @@ export class Cyllene extends TrainerCard {
         ), selected => {
           cards = selected || [];
 
-          cards.forEach(card => {
-            player.discard.moveCardTo(card, deckTop);
-          });
+          const trainerCards = cards.filter(card => card instanceof TrainerCard);
+          const nonTrainerCards = cards.filter(card => !(card instanceof TrainerCard));
 
-          return store.prompt(state, new OrderCardsPrompt(
-            player.id,
-            GameMessage.CHOOSE_CARDS_ORDER,
-            deckTop,
-            { allowCancel: false },
-          ), order => {
-            if (order === null) {
-              return state;
-            }
+          let canMoveTrainerCards = true;
+          if (trainerCards.length > 0) {
+            const toolEffect = new TrainerToDeckEffect(player, this);
+            store.reduceEffect(state, toolEffect);
+            canMoveTrainerCards = !toolEffect.preventDefault;
+          }
 
-            deckTop.applyOrder(order);
-            deckTop.moveToTopOfDestination(player.deck);
-            player.supporter.moveCardTo(effect.trainerCard, player.discard);
+          const cardsToMove = canMoveTrainerCards ? cards : nonTrainerCards;
 
-            if (cards.length > 0) {
-              return store.prompt(state, new ShowCardsPrompt(
-                opponent.id,
-                GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-                cards
-              ), () => {
+          if (cardsToMove.length > 0) {
+            cardsToMove.forEach(card => {
+              player.discard.moveCardTo(card, deckTop);
+            });
 
+            return store.prompt(state, new OrderCardsPrompt(
+              player.id,
+              GameMessage.CHOOSE_CARDS_ORDER,
+              deckTop,
+              { allowCancel: false },
+            ), order => {
+              if (order === null) {
                 return state;
+              }
 
-              });
-            }
+              deckTop.applyOrder(order);
+              deckTop.moveToTopOfDestination(player.deck);
+              player.supporter.moveCardTo(effect.trainerCard, player.discard);
 
-            // player.deck.moveCardsTo(cards, deckTop);
+              if (cardsToMove.length > 0) {
+                return store.prompt(state, new ShowCardsPrompt(
+                  opponent.id,
+                  GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
+                  cardsToMove
+                ), () => state);
+              }
 
-            return state;
-          });
+              return state;
+            });
+          }
+
+          player.supporter.moveCardTo(effect.trainerCard, player.discard);
+          return state;
         });
-
       });
     }
-
     return state;
   }
 }

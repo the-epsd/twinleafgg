@@ -1,6 +1,6 @@
 import { Card } from '../../game/store/card/card';
-import { AncientBoosterEnergyCapsuleArt, BombirdierexArt, BounsweetArt, BruteBonnetArt, CharcadetArt, ChiYuArt, CounterCatcherArt, CrobatArt, CyclizarArt, DefianceVestArt, DeoxysArt, DoubladeArt, EarthenVesselArt, ElekidArt, FlittleArt, FroslassexArt, FutureBoosterEnergyCapsuleArt, GabiteArt, GarchompexArt, GarganaclArt, GholdengoexArt, GibleArt, GimmighoulArt, GroudonArt, HonedgeArt, HoopaexArt, IronBundleArt, IronHandsexArt, IronJugulisArt, IronValiantexArt, JirachiArt, KlawfArt, LatiosArt, LuxuriousCapeArt, MelaArt, MewtwoexArt, MiniorArt, MinunArt, MorpekoArt, NacliArt, NaclstackArt, NatuArt, NymbleArt, Porygon2Art, PorygonArt, ProfessorSadasVitalityArt, ProfessorTurosScenarioArt, RemoraidArt, RoaringMoonexArt, SandyShocksexArt, ScreamTailArt, SlitherWingArt, SnoruntArt, SteeneeArt, TapuKokoexArt, TechnicalMachineBlindsideArt, TechnicalMachineDevolutionArt, TechnicalMachineEvolutionArt, TechnicalMachineTurboEnergizeArt, TechnoRadarArt, TinkatuffArt, TsareenaexArt, TulipArt, VeluzaArt, XatuArt, ZacianArt } from './card-images';
-import { BeachCourtHR, BruteBonnetIR, CounterCatcherHR, CyclizarIR, FroslassexFA, GarchompexFA, GarchompexHR, GarchompexSIR, GarganacIR, GholdengoexFA, GholdengoexSIR, GimmighoulIR, GroudonIR, HoopaexFA, IronHandsexFA, IronHandsexSIR, IronJugulisIR, IronValiantexFA, IronValiantexHR, IronValiantexSIR, LuxuriousCapeHR, MelaFA, MelaSIR, MiniorIR, MorpekoIR, ProfessorSadasVitalityFA, ProfessorSadasVitalitySIR, ProfessorTurosScenarioFA, ProfessorTurosScenarioSIR, ReversalEnergyHR, RoaringMoonexFA, RoaringMoonexHR, RoaringMoonexSIR, SandyShocksexFA, SandyShocksexSIR, SlitherWingIR, SnoruntIR, TapuKokoexFA, TapuKokoexSIR, TsareenaexFA, TulipFA, TulipSIR } from './full-art';
+import { AncientBoosterEnergyCapsuleArt, BombirdierexArt, BounsweetArt, BruteBonnetArt, CharcadetArt, ChiYuArt, CounterCatcherArt, CrobatArt, CyclizarArt, DefianceVestArt, DeoxysArt, DoubladeArt, EarthenVesselArt, ElekidArt, FlittleArt, FroslassexArt, FutureBoosterEnergyCapsuleArt, GabiteArt, GarchompexArt, GarganaclArt, GholdengoexArt, GibleArt, GimmighoulArt, GroudonArt, HonedgeArt, HoopaexArt, IronBundleArt, IronHandsexArt, IronJugulisArt, IronValiantexArt, JirachiArt, KlawfArt, LatiosArt, LuxuriousCapeArt, MelaArt, MewtwoexArt, MiniorArt, MinunArt, MorpekoArt, NacliArt, NaclstackArt, NatuArt, NymbleArt, Porygon2Art, PorygonArt, ProfessorSadasVitalityArt, ProfessorTurosScenarioArt, RemoraidArt, RoaringMoonexArt, SandyShocksexArt, ScreamTailArt, SlitherWingArt, SnoruntArt, SteeneeArt, TapuKokoexArt, TechnicalMachineBlindsideArt, TechnicalMachineDevolutionArt, TechnicalMachineEvolutionArt, TechnicalMachineTurboEnergizeArt, TechnoRadarArt, TinkatuffArt, ToedscruelArt, TsareenaexArt, TulipArt, VeluzaArt, XatuArt, ZacianArt } from './card-images';
+import { BeachCourtHR, BruteBonnetIR, CounterCatcherHR, CyclizarIR, FroslassexFA, GarchompexFA, GarchompexHR, GarchompexSIR, GarganacIR, GholdengoexFA, GholdengoexSIR, GimmighoulIR, GroudonIR, HoopaexFA, IronHandsexFA, IronHandsexSIR, IronJugulisIR, IronValiantexFA, IronValiantexHR, IronValiantexSIR, LuxuriousCapeHR, MelaFA, MelaSIR, MiniorIR, MorpekoIR, ProfessorSadasVitalityFA, ProfessorSadasVitalitySIR, ProfessorTurosScenarioFA, ProfessorTurosScenarioSIR, ReversalEnergyHR, RoaringMoonexFA, RoaringMoonexHR, RoaringMoonexSIR, SandyShocksexFA, SandyShocksexSIR, SlitherWingIR, SnoruntIR, TapuKokoexFA, TapuKokoexSIR, ToedscruelIR, TsareenaexFA, TulipFA, TulipSIR } from './full-art';
 
 export const setParadoxRift: Card[] = [
 
@@ -63,6 +63,7 @@ export const setParadoxRift: Card[] = [
   new TechnicalMachineEvolutionArt(),
   new TechnicalMachineTurboEnergizeArt(),
   new TinkatuffArt(),
+  new ToedscruelArt(),
   new TechnoRadarArt(),
   new TsareenaexArt(),
   new TulipArt(),
@@ -72,6 +73,7 @@ export const setParadoxRift: Card[] = [
   new BombirdierexArt(),
 
   //Full Arts
+  new ToedscruelIR(),
   new SnoruntIR(),
   new GimmighoulIR(),
   new GroudonIR(),

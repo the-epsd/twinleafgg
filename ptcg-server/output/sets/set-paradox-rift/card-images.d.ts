@@ -64,6 +64,7 @@ import { Tsareenaex } from './tsareena-ex';
 import { Tulip } from './tulip';
 import { Veluza } from './veluza';
 import { Xatu } from './xatu';
+import { Toedscruel } from './toedscruel';
 export declare class AncientBoosterEnergyCapsuleArt extends AncientBoosterEnergyCapsule {
     cardImage: string;
 }
@@ -245,6 +246,9 @@ export declare class TechnoRadarArt extends TechnoRadar {
     cardImage: string;
 }
 export declare class TinkatuffArt extends Tinkatuff {
+    cardImage: string;
+}
+export declare class ToedscruelArt extends Toedscruel {
     cardImage: string;
 }
 export declare class TsareenaexArt extends Tsareenaex {

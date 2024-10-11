@@ -1,53 +1,54 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Sandshrew = void 0;
+exports.Toedscruel = void 0;
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
-class Sandshrew extends pokemon_card_1.PokemonCard {
+class Toedscruel extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.stage = card_types_1.Stage.BASIC;
-        this.cardType = F;
-        this.hp = 60;
-        this.weakness = [{ type: G }];
-        this.retreat = [C];
+        this.stage = card_types_1.Stage.STAGE_1;
+        this.evolvesFrom = 'Toedscool';
+        this.cardType = G;
+        this.hp = 120;
+        this.weakness = [{ type: R }];
+        this.retreat = [C, C];
         this.powers = [{
-                name: 'Sand Screen',
+                name: 'Slime Mold Colony',
                 powerType: game_1.PowerType.ABILITY,
-                text: 'Trainer cards in your opponent\'s discard pile can\'t be put into their deck by an effect of your opponent\'s Item or Supporter cards.'
+                text: 'Cards in your opponent\'s discard pile can\'t be put into their hand by an effect of your opponent\'s Abilities or Trainer cards.'
             }];
         this.attacks = [
             {
                 name: 'Scratch',
-                cost: [C, C],
-                damage: 30,
-                text: '',
+                cost: [G, C, C],
+                damage: 80,
+                text: 'Heal 30 damage from this Pokémon.',
             }
         ];
         this.regulationMark = 'G';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '27';
-        this.set = 'MEW';
-        this.name = 'Sandshrew';
-        this.fullName = 'Sandshrew MEW';
+        this.setNumber = '17';
+        this.set = 'PAR';
+        this.name = 'Toedscruel';
+        this.fullName = 'Toedscruel PAR';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof play_card_effects_1.TrainerToDeckEffect) {
+        if (effect instanceof play_card_effects_1.DiscardToHandEffect) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            let isSandshrewInPlay = false;
+            let isToedscruelInPlay = false;
             opponent.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
                 if (card === this) {
-                    isSandshrewInPlay = true;
+                    isToedscruelInPlay = true;
                 }
             });
-            if (!isSandshrewInPlay) {
+            if (!isToedscruelInPlay) {
                 return state;
             }
-            if (isSandshrewInPlay) {
+            if (isToedscruelInPlay) {
                 // Try to reduce PowerEffect, to check if something is blocking our ability
                 try {
                     const stub = new game_effects_1.PowerEffect(opponent, {
@@ -66,4 +67,4 @@ class Sandshrew extends pokemon_card_1.PokemonCard {
         return state;
     }
 }
-exports.Sandshrew = Sandshrew;
+exports.Toedscruel = Toedscruel;

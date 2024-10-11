@@ -124,6 +124,11 @@ class CounterGainArt extends counter_gain_1.CounterGain {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://pbs.twimg.com/media/GVPnDxPWgAAstfh?format=jpg&name=medium';
+        this.name = 'Counter Gain';
+        this.set = 'SV7a';
+        this.setNumber = '59';
+        this.fullName = 'Counter Gain SV7a';
+        this.regulationMark = 'H';
     }
 }
 exports.CounterGainArt = CounterGainArt;

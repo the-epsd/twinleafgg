@@ -9,13 +9,19 @@ export declare class Eternatus extends PokemonCard {
     weakness: never[];
     resistance: never[];
     retreat: CardType.COLORLESS[];
-    attacks: {
+    attacks: ({
         name: string;
-        cost: (CardType.FIRE | CardType.DARK)[];
+        cost: CardType.DARK[];
         damage: number;
         damageCalculation: string;
         text: string;
-    }[];
+    } | {
+        name: string;
+        cost: (CardType.FIRE | CardType.DARK)[];
+        damage: number;
+        text: string;
+        damageCalculation?: undefined;
+    })[];
     set: string;
     regulationMark: string;
     cardImage: string;

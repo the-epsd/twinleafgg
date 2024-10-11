@@ -87,19 +87,19 @@ export class AlolanMuk extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      let isGarbodorWithToolInPlay = false;
+      let isAlolanMukInPlay = false;
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
         if (card === this) {
-          isGarbodorWithToolInPlay = true;
+          isAlolanMukInPlay = true;
         }
       });
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
         if (card === this) {
-          isGarbodorWithToolInPlay = true;
+          isAlolanMukInPlay = true;
         }
       });
 
-      if (!isGarbodorWithToolInPlay) {
+      if (!isAlolanMukInPlay) {
         return state;
       }
 

@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZapdosexArt = exports.WartortleArt = exports.VenusaurexArt = exports.VenomothArt = exports.VenonatArt = exports.VileplumeArt = exports.StarmieArt = exports.StaryuArt = exports.SquirtleArt = exports.ScytherArt = exports.RigidBandArt = exports.PidgeyArt = exports.PidgeottoArt = exports.OddishArt = exports.NidoqueenArt = exports.NidorinaArt = exports.NidoranFemaleArt = exports.NidokingArt = exports.NidorinoArt = exports.NidoranMaleArt = exports.MoltresArt = exports.MewexArt = exports.MagmarArt = exports.MachokeArt = exports.MachopArt = exports.KangaskhanexArt = exports.JolteonArt = exports.IvysaurArt = exports.GrabberArt = exports.GloomArt = exports.GiovannisCharismaArt = exports.EreikasInvitationArt = exports.EnergyStickerArt = exports.EeveeArt = exports.ElectabuzzArt = exports.EkansArt = exports.DragoniteArt = exports.DoduoArt = exports.DodrioArt = exports.DittoArt = exports.CyclingRoadArt = exports.CharmeleonArt = exports.CharmanderArt = exports.CharizardexArt = exports.BulbasaurArt = exports.BlastoiseexArt = exports.ArbokexArt = exports.AlakazamexArt = exports.AntiqueHelixFossilArt = exports.AbraArt = void 0;
+exports.WartortleArt = exports.VenusaurexArt = exports.VenomothArt = exports.VenonatArt = exports.VileplumeArt = exports.StarmieArt = exports.StaryuArt = exports.SquirtleArt = exports.ScytherArt = exports.SandshrewArt = exports.RigidBandArt = exports.PidgeyArt = exports.PidgeottoArt = exports.OddishArt = exports.NidoqueenArt = exports.NidorinaArt = exports.NidoranFemaleArt = exports.NidokingArt = exports.NidorinoArt = exports.NidoranMaleArt = exports.MoltresArt = exports.MewexArt = exports.MagmarArt = exports.MachokeArt = exports.MachopArt = exports.KangaskhanexArt = exports.JolteonArt = exports.IvysaurArt = exports.GrabberArt = exports.GloomArt = exports.GiovannisCharismaArt = exports.EreikasInvitationArt = exports.EnergyStickerArt = exports.EeveeArt = exports.ElectabuzzArt = exports.EkansArt = exports.DragoniteArt = exports.DoduoArt = exports.DodrioArt = exports.DittoArt = exports.CyclingRoadArt = exports.CharmeleonArt = exports.CharmanderArt = exports.CharizardexArt = exports.BulbasaurArt = exports.BlastoiseexArt = exports.ArbokexArt = exports.AlakazamexArt = exports.AntiqueHelixFossilArt = exports.AbraArt = void 0;
+exports.ZapdosexArt = void 0;
 const abra_1 = require("./abra");
 const alakazam_ex_1 = require("./alakazam-ex");
 const antique_helix_fossil_1 = require("./antique-helix-fossil");
@@ -41,6 +42,7 @@ const oddish_1 = require("./oddish");
 const pidgeotto_1 = require("./pidgeotto");
 const pidgey_1 = require("./pidgey");
 const rigid_band_1 = require("./rigid-band");
+const sandshrew_1 = require("./sandshrew");
 const scyther_1 = require("./scyther");
 const squirtle_1 = require("./squirtle");
 const starmie_1 = require("./starmie");
@@ -331,6 +333,13 @@ class RigidBandArt extends rigid_band_1.RigidBand {
     }
 }
 exports.RigidBandArt = RigidBandArt;
+class SandshrewArt extends sandshrew_1.Sandshrew {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/MEW/MEW_027_R_EN_LG.png';
+    }
+}
+exports.SandshrewArt = SandshrewArt;
 class ScytherArt extends scyther_1.Scyther {
     constructor() {
         super(...arguments);

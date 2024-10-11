@@ -20,7 +20,7 @@ export class NeutralCenter extends TrainerCard {
 
   public regulationMark = 'H';
 
-  public name = 'Neutral Center';
+  public name = 'Neutralization Zone';
 
   public fullName = 'Neutral Center SFA';
 
@@ -50,14 +50,70 @@ export class NeutralCenter extends TrainerCard {
 
       const nonRuleBox = pokemonCard && !pokemonCard.tags.includes(CardTag.POKEMON_ex) && !pokemonCard.tags.includes(CardTag.POKEMON_V) && !pokemonCard.tags.includes(CardTag.POKEMON_VMAX) && !pokemonCard.tags.includes(CardTag.POKEMON_VSTAR);
 
+      if (sourceCard && sourceCard.tags.includes(CardTag.POKEMON_V)) {
+        if (nonRuleBox) {
+          effect.preventDefault = true;
+        } else {
+          effect.preventDefault = false;
+        }
+      }
+
       if (sourceCard && sourceCard.tags.includes(CardTag.POKEMON_VSTAR)) {
         if (nonRuleBox) {
           effect.preventDefault = true;
         }
-        else {
+      } else {
+        effect.preventDefault = false;
+      }
+
+      if (sourceCard && sourceCard.tags.includes(CardTag.POKEMON_VMAX)) {
+        if (nonRuleBox) {
+          effect.preventDefault = true;
+        } else {
           effect.preventDefault = false;
         }
       }
+
+      if (sourceCard && sourceCard.tags.includes(CardTag.POKEMON_ex)) {
+        if (nonRuleBox) {
+          effect.preventDefault = true;
+        } else {
+          effect.preventDefault = false;
+        }
+      }
+
+      if (sourceCard && sourceCard.tags.includes(CardTag.RADIANT)) {
+        if (nonRuleBox) {
+          effect.preventDefault = true;
+        } else {
+          effect.preventDefault = false;
+        }
+      }
+
+      if (sourceCard && sourceCard.tags.includes(CardTag.POKEMON_EX)) {
+        if (nonRuleBox) {
+          effect.preventDefault = true;
+        } else {
+          effect.preventDefault = false;
+        }
+      }
+
+      if (sourceCard && sourceCard.tags.includes(CardTag.POKEMON_GX)) {
+        if (nonRuleBox) {
+          effect.preventDefault = true;
+        } else {
+          effect.preventDefault = false;
+        }
+      }
+
+      if (sourceCard && sourceCard.tags.includes(CardTag.POKEMON_LV_X)) {
+        if (nonRuleBox) {
+          effect.preventDefault = true;
+        } else {
+          effect.preventDefault = false;
+        }
+      }
+
       return state;
     }
     return state;

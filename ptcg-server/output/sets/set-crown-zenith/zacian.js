@@ -40,12 +40,12 @@ class Zacian extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            const benchedPokemon = player.bench.length;
-            const bonusDamage = benchedPokemon * 10;
-            const applyWeakness = new attack_effects_1.ApplyWeaknessEffect(effect, 20 + bonusDamage);
-            store.reduceEffect(state, applyWeakness);
-            const damage = applyWeakness.damage;
+            //Get number of benched pokemon
+            const opponentBenched = opponent.bench.reduce((left, b) => left + (b.cards.length ? 1 : 0), 0);
+            const totalBenched = opponentBenched;
+            const damage = 20 + (totalBenched * 10);
             effect.damage = 0;
+            effect.ignoreWeakness = true;
             if (damage > 0) {
                 opponent.active.damage += damage;
                 const afterDamage = new attack_effects_1.AfterDamageEffect(effect, damage);

@@ -28,7 +28,8 @@ export declare class Seismitoad extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
-    readonly ATTACK_USED_MARKER = "ATTACK_USED_MARKER";
-    readonly ATTACK_USED_2_MARKER = "ATTACK_USED_2_MARKER";
+    readonly NEXT_TURN_MORE_DAMAGE_MARKER = "NEXT_TURN_MORE_DAMAGE_MARKER";
+    readonly NEXT_TURN_MORE_DAMAGE_MARKER_2 = "NEXT_TURN_MORE_DAMAGE_MARKER_2";
+    usedAttack: boolean;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

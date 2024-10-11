@@ -48,6 +48,10 @@ class Zacian extends pokemon_card_1.PokemonCard {
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
+            if (effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+                console.log('attack blocked');
+                throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);
+            }
             const hasBench = player.bench.some(b => b.cards.length > 0);
             if (!hasBench) {
                 return state;

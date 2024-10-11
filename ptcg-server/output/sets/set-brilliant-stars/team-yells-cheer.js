@@ -60,6 +60,15 @@ class TeamYellsCheer extends trainer_card_1.TrainerCard {
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
+            const player = effect.player;
+            // Check if TrainerToDeckEffect is prevented
+            const toolEffect = new play_card_effects_1.TrainerToDeckEffect(player, this);
+            store.reduceEffect(state, toolEffect);
+            if (toolEffect.preventDefault) {
+                // If prevented, just discard the card and return
+                player.supporter.moveCardTo(effect.trainerCard, player.discard);
+                return state;
+            }
             const generator = playCard(() => generator.next(), store, state, this, effect);
             return generator.next().value;
         }

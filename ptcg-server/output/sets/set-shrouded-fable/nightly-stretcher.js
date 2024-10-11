@@ -64,6 +64,16 @@ class NightlyStretcher extends trainer_card_1.TrainerCard {
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
+            const player = effect.player;
+            // Check if DiscardToHandEffect is prevented
+            const toolEffect = new play_card_effects_1.DiscardToHandEffect(player, this);
+            store.reduceEffect(state, toolEffect);
+            if (toolEffect.preventDefault) {
+                // If prevented, just discard the card and return
+                player.supporter.moveCardTo(effect.trainerCard, player.discard);
+                return state;
+            }
+            // If not prevented, proceed with the original effect
             const generator = playCard(() => generator.next(), store, state, this, effect);
             return generator.next().value;
         }

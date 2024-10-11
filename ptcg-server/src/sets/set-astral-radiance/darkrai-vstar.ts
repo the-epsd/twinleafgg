@@ -1,13 +1,14 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, SuperType, TrainerType } from '../../game/store/card/card-types';
+import { Stage, CardType, CardTag, SuperType, TrainerType, SpecialCondition } from '../../game/store/card/card-types';
 import { StoreLike, State, PlayerType, Card, GameError, GameMessage, ChooseCardsPrompt, TrainerCard, PowerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { DiscardToHandEffect } from '../../game/store/effects/play-card-effects';
 
 export class DarkraiVSTAR extends PokemonCard {
 
-  public tags = [ CardTag.POKEMON_VSTAR ];
+  public tags = [CardTag.POKEMON_VSTAR];
 
   public evolvesFrom = 'Darkrai V';
 
@@ -21,7 +22,7 @@ export class DarkraiVSTAR extends PokemonCard {
 
   public weakness = [{ type: CardType.GRASS }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [
     {
@@ -31,11 +32,11 @@ export class DarkraiVSTAR extends PokemonCard {
       text: 'During your turn, you may put up to 2 Item cards from your discard pile into your hand. (You can\'t use more than 1 VSTAR Power in a game.)'
     }
   ];
-  
+
   public attacks = [
     {
       name: 'Dark Pulse',
-      cost: [ CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.COLORLESS, CardType.COLORLESS],
       damage: 30,
       text: 'This attack does 30 more damage for each [D] Energy attached to all of your Pokémon.'
     }
@@ -52,22 +53,40 @@ export class DarkraiVSTAR extends PokemonCard {
   public fullName: string = 'Darkrai VSTAR ASR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    
+
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
 
       if (player.usedVSTAR === true) {
         throw new GameError(GameMessage.LABEL_VSTAR_USED);
       }
-  
+
       const hasItem = player.discard.cards.some(c => {
         return c instanceof TrainerCard && c.trainerType === TrainerType.ITEM;
       });
-    
+
       if (!hasItem) {
-        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
+      // Check if DiscardToHandEffect is prevented
+      const toolEffect = new DiscardToHandEffect(player, this);
+      store.reduceEffect(state, toolEffect);
+
+      if (toolEffect.preventDefault) {
+        // If prevented, just return
+        player.usedVSTAR = true;
+
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+          if (cardList.getPokemonCard() === this) {
+            cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+          }
+        });
+
+        return state;
+      }
+
+      // If not prevented, proceed with the original effect
       player.usedVSTAR = true;
 
       let cards: Card[] = [];
@@ -79,15 +98,22 @@ export class DarkraiVSTAR extends PokemonCard {
         { min: 1, max: 2, allowCancel: true }
       ), selected => {
         cards = selected || [];
-      
+
         if (cards.length > 0) {
           player.discard.moveCardsTo(cards, player.hand);
         }
+
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+          if (cardList.getPokemonCard() === this) {
+            cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+          }
+        });
+
       });
     }
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
-  
+
       let energies = 0;
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
         const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player, cardList);
@@ -98,10 +124,10 @@ export class DarkraiVSTAR extends PokemonCard {
           }
         });
       });
-  
+
       effect.damage = 30 + energies * 30;
     }
-  
+
     return state;
   }
 

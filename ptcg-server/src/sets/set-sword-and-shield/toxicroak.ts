@@ -73,14 +73,14 @@ export class Toxicroak extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      let isGarbodorWithToolInPlay = false;
+      let isToxicroakInPlay = false;
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
         if (card === this) {
-          isGarbodorWithToolInPlay = true;
+          isToxicroakInPlay = true;
         }
       });
 
-      if (!isGarbodorWithToolInPlay) {
+      if (!isToxicroakInPlay) {
         return state;
       }
 

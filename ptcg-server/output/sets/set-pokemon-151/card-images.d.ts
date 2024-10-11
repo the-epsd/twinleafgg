@@ -38,6 +38,7 @@ import { Oddish } from './oddish';
 import { Pidgeotto } from './pidgeotto';
 import { Pidgey } from './pidgey';
 import { RigidBand } from './rigid-band';
+import { Sandshrew } from './sandshrew';
 import { Scyther } from './scyther';
 import { Squirtle } from './squirtle';
 import { Starmie } from './starmie';
@@ -166,6 +167,9 @@ export declare class PidgeyArt extends Pidgey {
     cardImage: string;
 }
 export declare class RigidBandArt extends RigidBand {
+    cardImage: string;
+}
+export declare class SandshrewArt extends Sandshrew {
     cardImage: string;
 }
 export declare class ScytherArt extends Scyther {

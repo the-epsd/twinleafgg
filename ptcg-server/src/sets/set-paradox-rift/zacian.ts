@@ -48,9 +48,14 @@ export class Zacian extends PokemonCard {
       effect.player.attackMarker.addMarker(this.ATTACK_USED_2_MARKER, this);
       console.log('second marker added');
     }
-    
-    if(effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
+
+      if (effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+        console.log('attack blocked');
+        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+      }
 
       const hasBench = player.bench.some(b => b.cards.length > 0);
       if (!hasBench) {
@@ -77,7 +82,7 @@ export class Zacian extends PokemonCard {
         GameMessage.ATTACH_ENERGY_CARDS,
         player.discard,
         PlayerType.BOTTOM_PLAYER,
-        [ SlotType.BENCH ],
+        [SlotType.BENCH],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
         { allowCancel: false, min: 1, max: 1, blocked }
       ), transfers => {
@@ -91,7 +96,7 @@ export class Zacian extends PokemonCard {
       return state;
     }
 
-    if(effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
 
       if (effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
         console.log('attack blocked');
@@ -102,6 +107,6 @@ export class Zacian extends PokemonCard {
     }
 
     return state;
-  }  
+  }
 
 }

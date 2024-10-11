@@ -1,8 +1,8 @@
 import { ChoosePokemonPrompt, GameError, GameMessage, PlayerType, SlotType, StateUtils } from '../../game';
-import { TrainerType } from '../../game/store/card/card-types';
+import { Stage, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
-import { TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { SupporterEffect, TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
@@ -49,24 +49,37 @@ export class Ryme extends TrainerCard {
 
       if (!opponent.bench.some(c => c.cards.length > 0)) {
         player.supporter.moveCardTo(effect.trainerCard, player.discard);
-        
+
         return state;
       }
-      
+
       return store.prompt(state, new ChoosePokemonPrompt(
         opponent.id,
         GameMessage.CHOOSE_POKEMON_TO_SWITCH,
         PlayerType.BOTTOM_PLAYER,
-        [ SlotType.BENCH ],
+        [SlotType.BENCH],
         { allowCancel: false }
       ), results => {
+
+        const cardList = results[0];
+
+        if (cardList.stage == Stage.BASIC) {
+          try {
+            const supporterEffect = new SupporterEffect(player, effect.trainerCard);
+            store.reduceEffect(state, supporterEffect);
+          } catch {
+            player.supporter.moveCardTo(effect.trainerCard, player.discard);
+            return state;
+          }
+        }
+
         if (results.length > 0) {
           opponent.active.clearEffects();
           opponent.switchPokemon(results[0]);
         }
-        
+
         player.supporter.moveCardTo(effect.trainerCard, player.discard);
-        
+
         return state;
       });
     }

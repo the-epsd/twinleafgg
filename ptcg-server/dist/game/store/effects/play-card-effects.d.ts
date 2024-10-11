@@ -5,6 +5,7 @@ import { PokemonCard } from '../card/pokemon-card';
 import { PokemonCardList } from '../state/pokemon-card-list';
 import { TrainerCard } from '../card/trainer-card';
 import { CardList } from '../state/card-list';
+import { Card } from '../card/card';
 export declare enum PlayCardEffects {
     ATTACH_ENERGY_EFFECT = "ATTACH_ENERGY_EFFECT",
     PLAY_POKEMON_EFFECT = "PLAY_POKEMON_EFFECT",
@@ -16,7 +17,9 @@ export declare enum PlayCardEffects {
     ENERGY_EFFECT = "ENERGY_EFFECT",
     TOOL_EFFECT = "TOOL_EFFECT",
     SUPPORTER_EFFECT = "SUPPORTER_EFFECT",
-    COIN_FLIP_EFFECT = "COIN_FLIP_EFFECT"
+    COIN_FLIP_EFFECT = "COIN_FLIP_EFFECT",
+    TRAINER_CARD_TO_DECK_EFFECT = "TRAINER_CARD_TO_DECK_EFFECT",
+    DISCARD_TO_HAND_EFFECT = "DISCARD_TO_HAND_EFFECT"
 }
 export declare class AttachEnergyEffect implements Effect {
     readonly type: string;
@@ -100,4 +103,18 @@ export declare class CoinFlipEffect implements Effect {
     preventDefault: boolean;
     player: Player;
     constructor(player: Player);
+}
+export declare class TrainerToDeckEffect implements Effect {
+    readonly type: string;
+    preventDefault: boolean;
+    player: Player;
+    card: TrainerCard;
+    constructor(player: Player, card: TrainerCard);
+}
+export declare class DiscardToHandEffect implements Effect {
+    readonly type: string;
+    preventDefault: boolean;
+    player: Player;
+    card: Card;
+    constructor(player: Player, card: Card);
 }
