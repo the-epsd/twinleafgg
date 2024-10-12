@@ -6,7 +6,7 @@ import { TrainerType, EnergyType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { StateUtils } from '../../game/store/state-utils';
-import { TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { DiscardToHandEffect, TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { ShowCardsPrompt } from '../../game/store/prompts/show-cards-prompt';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
@@ -96,6 +96,19 @@ export class NightlyStretcher extends TrainerCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+      const player = effect.player;
+
+      // Check if DiscardToHandEffect is prevented
+      const toolEffect = new DiscardToHandEffect(player, this);
+      store.reduceEffect(state, toolEffect);
+
+      if (toolEffect.preventDefault) {
+        // If prevented, just discard the card and return
+        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+        return state;
+      }
+
+      // If not prevented, proceed with the original effect
       const generator = playCard(() => generator.next(), store, state, this, effect);
       return generator.next().value;
     }

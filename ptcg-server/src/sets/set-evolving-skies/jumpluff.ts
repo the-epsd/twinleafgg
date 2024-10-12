@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { CardType, Stage, TrainerType } from '../../game/store/card/card-types';
+import { CardTag, CardType, Stage, TrainerType } from '../../game/store/card/card-types';
 import { Attack, ChooseAttackPrompt, ConfirmPrompt, GameLog, GameMessage, PowerType, State, StateUtils, StoreLike, TrainerCard } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
@@ -9,6 +9,7 @@ import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 export class Jumpluff extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Skiploom';
+  public tags = [CardTag.RAPID_STRIKE];
   public cardType: CardType = CardType.GRASS;
   public hp: number = 90;
   public weakness = [{ type: CardType.FIRE }];
@@ -100,7 +101,7 @@ export class Jumpluff extends PokemonCard {
 
             return state;
           });
-        };
+        }
       });
     }
 
@@ -161,7 +162,7 @@ export class Jumpluff extends PokemonCard {
 
             return state;
           });
-        };
+        }
       });
     }
 

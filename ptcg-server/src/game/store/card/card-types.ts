@@ -27,6 +27,7 @@ export enum CardTag {
   LEGEND = 'LEGEND',
   TEAM_FLARE = 'TEAM_FLARE',
   MEGA = 'MEGA',
+  PLAY_DURING_SETUP = 'PLAY_DURING_SETUP',
 }
 
 export enum SuperType {

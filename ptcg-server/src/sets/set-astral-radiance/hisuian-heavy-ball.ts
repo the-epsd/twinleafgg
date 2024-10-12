@@ -34,13 +34,22 @@ export class HisuianHeavyBall extends TrainerCard {
       const cards: Card[] = [];
       prizes.forEach(p => { p.cards.forEach(c => cards.push(c)); });
 
-      const blocked: number[] = [];
+      // const blocked: number[] = [];
 
-      player.prizes.forEach((c, index) => {
-        if (c.faceUpPrize) {
-          blocked.push(index);
-        }
-      });
+      // player.prizes.forEach((p, index) => {
+      //   if (p.faceUpPrize) {
+      //     blocked.push(index);
+      //   }
+      //   if (p.isPublic) {
+      //     blocked.push(index);
+      //   }
+      //   if (!p.isSecret) {
+      //     blocked.push(index);
+      //   }
+      // });
+
+      // Keep track of which prizes were originally face down
+      const originallyFaceDown = player.prizes.map(p => p.isSecret);
 
       // Make prizes no more secret, before displaying prompt
       prizes.forEach(p => { p.isSecret = false; });
@@ -66,24 +75,17 @@ export class HisuianHeavyBall extends TrainerCard {
         GameMessage.CHOOSE_CARD_TO_HAND,
         allPrizeCards,
         { superType: SuperType.POKEMON, stage: Stage.BASIC },
-        { min: 0, max: 1, allowCancel: false, blocked: blocked }
+        { min: 0, max: 1, allowCancel: false }
       ), chosenPrize => {
-
-        // if (chosenPrize === null || chosenPrize.length === 0) {
-        //   player.prizes.forEach(p => {
-        //     if (!p.faceUpPrize) {
-        //       p.isSecret = true;
-        //     }
-        //   });
-        //   player.supporter.moveCardTo(effect.trainerCard, player.discard);
-        //   player.prizes = this.shuffleFaceDownPrizeCards(player.prizes.filter(p => !p.faceUpPrize));
-        //   return state;
-        // }
-
         if (chosenPrize === null || chosenPrize.length === 0) {
-          player.prizes.forEach(p => { p.isSecret = true; });
+          player.prizes.forEach((p, index) => {
+            if (originallyFaceDown[index]) {
+              p.isSecret = true;
+            }
+          });
           player.supporter.moveCardTo(effect.trainerCard, player.discard);
-          player.prizes = this.shuffleFaceDownPrizeCards(player.prizes);
+          const faceDownPrizes = player.prizes.filter((p, index) => originallyFaceDown[index]);
+          this.shuffleFaceDownPrizeCards(faceDownPrizes);
           return state;
         }
 
@@ -107,17 +109,23 @@ export class HisuianHeavyBall extends TrainerCard {
           player.supporter.moveCardTo(heavyBall, chosenPrizeList);
         }
 
-        player.prizes.forEach(p => { p.isSecret = true; });
-        player.prizes = this.shuffleFaceDownPrizeCards(player.prizes);
+        // At the end, when resetting prize cards:
+        player.prizes.forEach((p, index) => {
+          if (originallyFaceDown[index]) {
+            p.isSecret = true;
+          }
+        });
+
+        // Shuffle only the face-down prize cards
+        const faceDownPrizes = player.prizes.filter((p, index) => originallyFaceDown[index]);
+        this.shuffleFaceDownPrizeCards(faceDownPrizes);
 
         return state;
-
       });
     }
 
     return state;
   }
-
 
   shuffleFaceDownPrizeCards(array: CardList[]): CardList[] {
 

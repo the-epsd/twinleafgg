@@ -65,13 +65,13 @@ class Toxicroak extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_phase_effects_1.BetweenTurnsEffect) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            let isGarbodorWithToolInPlay = false;
+            let isToxicroakInPlay = false;
             player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
                 if (card === this) {
-                    isGarbodorWithToolInPlay = true;
+                    isToxicroakInPlay = true;
                 }
             });
-            if (!isGarbodorWithToolInPlay) {
+            if (!isToxicroakInPlay) {
                 return state;
             }
             // Try to reduce PowerEffect, to check if something is blocking our ability

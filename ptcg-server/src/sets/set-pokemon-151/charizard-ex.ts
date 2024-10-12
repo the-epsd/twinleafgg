@@ -2,7 +2,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
-import { AttackEffect } from '../../game/store/effects/game-effects';
 import { DISCARD_X_ENERGY_FROM_THIS_POKEMON, THIS_ATTACK_DOES_X_MORE_DAMAGE, THIS_POKEMON_HAS_ANY_DAMAGE_COUNTERS_ON_IT, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { Effect } from '../../game/store/effects/effect';
 
@@ -32,16 +31,12 @@ export class Charizardex extends PokemonCard {
       damageCalculation: '+',
       text: 'If this Pokémon has any damage counters on it, this attack ' +
         'does 100 more damage.',
-      effect: (store: StoreLike, state: State, effect: AttackEffect) => {
-      }
     },
     {
       name: 'Explosive Vortex',
       cost: [CardType.FIRE, CardType.FIRE, CardType.FIRE, CardType.FIRE],
       damage: 330,
       text: 'Discard 3 Energy from this Pokémon. ',
-      effect: (store: StoreLike, state: State, effect: AttackEffect) => {
-      }
     },
   ];
 

@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LanasFishingRod = void 0;
 const game_1 = require("../../game");
-const game_error_1 = require("../../game/game-error");
 const game_message_1 = require("../../game/game-message");
 const card_types_1 = require("../../game/store/card/card-types");
 const trainer_card_1 = require("../../game/store/card/trainer-card");
@@ -11,40 +10,38 @@ const choose_cards_prompt_1 = require("../../game/store/prompts/choose-cards-pro
 function* playCard(next, store, state, self, effect) {
     const player = effect.player;
     const opponent = game_1.StateUtils.getOpponent(state, player);
-    const pokemonAndTools = player.discard.cards.filter(c => {
-        return (c instanceof game_1.PokemonCard || (c instanceof trainer_card_1.TrainerCard && c.trainerType === card_types_1.TrainerType.TOOL));
-    }).length;
-    if (pokemonAndTools === 0) {
-        throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
-    }
+    let cards = [];
+    player.hand.moveCardTo(effect.trainerCard, player.supporter);
+    effect.preventDefault = true;
+    let tools = 0;
+    let pokemons = 0;
     const blocked = [];
     player.discard.cards.forEach((c, index) => {
-        if (c instanceof game_1.PokemonCard || (c instanceof trainer_card_1.TrainerCard && c.trainerType === card_types_1.TrainerType.TOOL)) {
-            /**/
+        if (c instanceof trainer_card_1.TrainerCard && c.trainerType === card_types_1.TrainerType.TOOL) {
+            tools += 1;
+        }
+        else if (c instanceof game_1.PokemonCard) {
+            pokemons += 1;
         }
         else {
             blocked.push(index);
         }
     });
-    // We will discard this card after prompt confirmation
-    effect.preventDefault = true;
-    player.discard.moveCardTo(effect.trainerCard, player.hand);
-    const min = Math.min(2, pokemonAndTools);
-    let cards = [];
-    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_DECK, player.discard, {}, { min, max: 2, allowCancel: false, blocked }), selected => {
+    const hasBoth = tools > 0 && pokemons > 0;
+    const minCount = hasBoth ? 2 : (tools > 0 || pokemons > 0 ? 1 : 0);
+    const maxCount = hasBoth ? 2 : 1;
+    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, hasBoth ? game_message_1.GameMessage.CHOOSE_CARD_TO_DECK : game_message_1.GameMessage.CHOOSE_CARD_TO_DECK, player.discard, {}, { min: minCount, max: maxCount, allowCancel: false, blocked, maxTools: 1, maxPokemons: 1 }), selected => {
         cards = selected || [];
         next();
     });
-    if (cards.length > 0) {
-        player.discard.moveCardsTo(cards, player.deck);
-        cards.forEach((card, index) => {
-            store.log(state, game_message_1.GameLog.LOG_PLAYER_RETURNS_TO_DECK_FROM_DISCARD, { name: player.name, card: card.name });
-        });
-        if (cards.length > 0) {
-            state = store.prompt(state, new game_1.ShowCardsPrompt(opponent.id, game_message_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards), () => state);
-        }
-    }
+    player.discard.moveCardsTo(cards, player.deck);
     player.supporter.moveCardTo(effect.trainerCard, player.discard);
+    cards.forEach((card, index) => {
+        store.log(state, game_message_1.GameLog.LOG_PLAYER_RETURNS_TO_DECK_FROM_DISCARD, { name: player.name, card: card.name });
+    });
+    if (cards.length > 0) {
+        yield store.prompt(state, new game_1.ShowCardsPrompt(opponent.id, game_message_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards), () => next());
+    }
     return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
         player.deck.applyOrder(order);
     });

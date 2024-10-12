@@ -67,6 +67,11 @@ export declare class FlygonexArt extends Flygonex {
 }
 export declare class CounterGainArt extends CounterGain {
     cardImage: string;
+    name: string;
+    set: string;
+    setNumber: string;
+    fullName: string;
+    regulationMark: string;
 }
 export declare class SmoochumArt extends Smoochum {
     cardImage: string;

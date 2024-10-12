@@ -34,6 +34,7 @@ class AlolanExeggutorex extends game_1.PokemonCard {
                 text: 'Flip a coin. If heads, Knock Out your opponent\'s Active Basic Pokemon. If tails, Knock Out 1 of your opponent\'s Benched Basic Pokemon.'
             }
         ];
+        this.regulationMark = 'H';
         this.set = 'SV7a';
         this.setNumber = '40';
         this.cardImage = 'assets/cardback.png';

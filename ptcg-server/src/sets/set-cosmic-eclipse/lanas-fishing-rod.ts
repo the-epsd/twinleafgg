@@ -1,5 +1,4 @@
 import { PokemonCard, ShowCardsPrompt, ShuffleDeckPrompt, StateUtils } from '../../game';
-import { GameError } from '../../game/game-error';
 import { GameLog, GameMessage } from '../../game/game-message';
 import { Card } from '../../game/store/card/card';
 import { TrainerType } from '../../game/store/card/card-types';
@@ -13,58 +12,55 @@ import { StoreLike } from '../../game/store/store-like';
 function* playCard(next: Function, store: StoreLike, state: State, self: LanasFishingRod, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
-  
-  const pokemonAndTools = player.discard.cards.filter(c => {
-    return (c instanceof PokemonCard || (c instanceof TrainerCard && c.trainerType === TrainerType.TOOL));
-  }).length;
+  let cards: Card[] = [];
 
-  if (pokemonAndTools === 0) {
-    throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-  }
+  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  effect.preventDefault = true;
 
+  let tools = 0;
+  let pokemons = 0;
   const blocked: number[] = [];
   player.discard.cards.forEach((c, index) => {
-    if (c instanceof PokemonCard || (c instanceof TrainerCard && c.trainerType === TrainerType.TOOL)) {
-      /**/ 
+    if (c instanceof TrainerCard && c.trainerType === TrainerType.TOOL) {
+      tools += 1;
+    } else if (c instanceof PokemonCard) {
+      pokemons += 1;
     } else {
       blocked.push(index);
     }
   });
-  
-  // We will discard this card after prompt confirmation
-  effect.preventDefault = true;
-  player.discard.moveCardTo(effect.trainerCard, player.hand);
 
-  const min = Math.min(2, pokemonAndTools);
-  
-  let cards: Card[] = [];
+  const hasBoth = tools > 0 && pokemons > 0;
+  const minCount = hasBoth ? 2 : (tools > 0 || pokemons > 0 ? 1 : 0);
+  const maxCount = hasBoth ? 2 : 1;
+
   yield store.prompt(state, new ChooseCardsPrompt(
     player.id,
-    GameMessage.CHOOSE_CARD_TO_DECK,
+    hasBoth ? GameMessage.CHOOSE_CARD_TO_DECK : GameMessage.CHOOSE_CARD_TO_DECK,
     player.discard,
-    {  },
-    { min, max: 2, allowCancel: false, blocked }
+    {},
+    { min: minCount, max: maxCount, allowCancel: false, blocked, maxTools: 1, maxPokemons: 1 }
   ), selected => {
     cards = selected || [];
     next();
   });
 
-  if (cards.length > 0) {
-    player.discard.moveCardsTo(cards, player.deck);
-    cards.forEach((card, index) => {
-      store.log(state, GameLog.LOG_PLAYER_RETURNS_TO_DECK_FROM_DISCARD, { name: player.name, card: card.name });
-    });
-    
-    if (cards.length > 0) {
-      state = store.prompt(state, new ShowCardsPrompt(
-        opponent.id,
-        GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-        cards), () => state);
-    }
-
-  }
-  
+  player.discard.moveCardsTo(cards, player.deck);
   player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
+
+  cards.forEach((card, index) => {
+    store.log(state, GameLog.LOG_PLAYER_RETURNS_TO_DECK_FROM_DISCARD, { name: player.name, card: card.name });
+  });
+
+  if (cards.length > 0) {
+    yield store.prompt(state, new ShowCardsPrompt(
+      opponent.id,
+      GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
+      cards
+    ), () => next());
+  }
+
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);
   });

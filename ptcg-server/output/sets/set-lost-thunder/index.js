@@ -6,6 +6,7 @@ exports.setLostThunder = [
     new card_images_1.AdventureBagArt(),
     new card_images_1.AlolanMeowthArt(),
     new card_images_1.BlitzleArt(),
+    new card_images_1.CascoonArt(),
     new card_images_1.ChikoritaArt(),
     new card_images_1.ChikoritaArt2(),
     new card_images_1.ChinchouArt(),

@@ -34,6 +34,7 @@ export class AlolanExeggutorex extends PokemonCard {
     }
   ];
 
+  public regulationMark = 'H';
   public set: string = 'SV7a';
   public setNumber: string = '40';
   public cardImage: string = 'assets/cardback.png';

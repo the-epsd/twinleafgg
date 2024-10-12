@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.abortGameReducer = void 0;
 const state_1 = require("../state/state");
-const game_error_1 = require("../../game-error");
 const game_message_1 = require("../../game-message");
 const abort_game_action_1 = require("../actions/abort-game-action");
 const check_effect_1 = require("../effect-reducers/check-effect");
@@ -10,7 +9,7 @@ function abortGameReducer(store, state, action) {
     if (state.phase !== state_1.GamePhase.FINISHED && action instanceof abort_game_action_1.AbortGameAction) {
         const culprit = state.players.find(p => p.id === action.culpritId);
         if (culprit === undefined) {
-            throw new game_error_1.GameError(game_message_1.GameMessage.ILLEGAL_ACTION);
+            return state;
         }
         // Mark all prompts as resolved, so they won't mess with our state anymore.
         state.prompts.forEach(prompt => {

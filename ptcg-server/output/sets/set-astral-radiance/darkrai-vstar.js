@@ -6,6 +6,7 @@ const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const check_effects_1 = require("../../game/store/effects/check-effects");
+const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class DarkraiVSTAR extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -49,8 +50,22 @@ class DarkraiVSTAR extends pokemon_card_1.PokemonCard {
                 return c instanceof game_1.TrainerCard && c.trainerType === card_types_1.TrainerType.ITEM;
             });
             if (!hasItem) {
-                throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
+                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
+            // Check if DiscardToHandEffect is prevented
+            const toolEffect = new play_card_effects_1.DiscardToHandEffect(player, this);
+            store.reduceEffect(state, toolEffect);
+            if (toolEffect.preventDefault) {
+                // If prevented, just return
+                player.usedVSTAR = true;
+                player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
+                    if (cardList.getPokemonCard() === this) {
+                        cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
+                    }
+                });
+                return state;
+            }
+            // If not prevented, proceed with the original effect
             player.usedVSTAR = true;
             let cards = [];
             return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.discard, { superType: card_types_1.SuperType.TRAINER, trainerType: card_types_1.TrainerType.ITEM }, { min: 1, max: 2, allowCancel: true }), selected => {
@@ -58,6 +73,11 @@ class DarkraiVSTAR extends pokemon_card_1.PokemonCard {
                 if (cards.length > 0) {
                     player.discard.moveCardsTo(cards, player.hand);
                 }
+                player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
+                    if (cardList.getPokemonCard() === this) {
+                        cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
+                    }
+                });
             });
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

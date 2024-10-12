@@ -1,7 +1,8 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
-import { ChooseCardsPrompt, PowerType, State, StoreLike } from '../../game';
+import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-types';
+import { ChooseCardsPrompt, GameMessage, PowerType, ShowCardsPrompt, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
+import { AttackEffect } from '../../game/store/effects/game-effects';
 
 
 export class Luxray extends PokemonCard {
@@ -10,28 +11,30 @@ export class Luxray extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_2;
 
+  public tags = [CardTag.PLAY_DURING_SETUP];
+
   public evolvesFrom = 'Luxio';
 
-  public cardType: CardType = CardType.LIGHTNING;
+  public cardType: CardType = L;
 
   public hp: number = 160;
 
-  public weakness = [{ type: CardType.FIGHTING }];
+  public weakness = [{ type: F }];
 
   public retreat = [];
 
   public powers = [{
-    name: 'Swelling Flash',
+    name: 'Explosiveness',
     powerType: PowerType.ABILITY,
-    text: ''
+    text: 'If this Pokémon is in your hand when you are setting up to play, you may put it face down as your Active Pokémon.'
   }];
 
   public attacks = [{
 
-    name: 'Tail Snap',
-    cost: [CardType.COLORLESS],
-    damage: 20,
-    text: ''
+    name: 'Seeking Fang',
+    cost: [C],
+    damage: 50,
+    text: 'Search your deck for up to 2 Trainer cards, reveal them, and put them into your hand. Then, shuffle your deck.'
   }];
 
   public set: string = 'CRZ';
@@ -48,10 +51,33 @@ export class Luxray extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (state.turn == 0 && effect instanceof ChooseCardsPrompt) {
-      this.stage === Stage.BASIC;
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      if (player.deck.cards.length === 0) {
+        return state;
+      }
+
+      state = store.prompt(state, new ChooseCardsPrompt(
+        player.id,
+        GameMessage.CHOOSE_CARD_TO_HAND,
+        player.deck,
+        { superType: SuperType.TRAINER },
+        { min: 0, max: 2, allowCancel: false }
+      ), selected => {
+        const cards = selected || [];
+
+        store.prompt(state, [new ShowCardsPrompt(
+          opponent.id,
+          GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
+          cards
+        )], () => {
+          player.deck.moveCardsTo(cards, player.hand);
+        });
+        return state;
+      });
     }
     return state;
   }
 }
-

@@ -2,7 +2,6 @@ import { GamePhase, GameWinner } from '../state/state';
 import { CheckHpEffect, CheckProvidedEnergyEffect, CheckTableStateEffect } from '../effects/check-effects';
 import { PokemonCardList } from '../state/pokemon-card-list';
 import { ChoosePokemonPrompt } from '../prompts/choose-pokemon-prompt';
-import { GameError } from '../../game-error';
 import { GameMessage, GameLog } from '../../game-message';
 import { ChoosePrizePrompt } from '../prompts/choose-prize-prompt';
 import { PlayerType, SlotType } from '../actions/play-card-action';
@@ -97,7 +96,7 @@ function choosePrizeCards(state, prizesToTake) {
 }
 export function endGame(store, state, winner) {
     if (state.players.length !== 2) {
-        throw new GameError(GameMessage.ILLEGAL_ACTION);
+        return state;
     }
     if ([
         GamePhase.WAITING_FOR_PLAYERS,
@@ -105,7 +104,7 @@ export function endGame(store, state, winner) {
         GamePhase.ATTACK,
         GamePhase.BETWEEN_TURNS
     ].includes(state.phase) === false) {
-        throw new GameError(GameMessage.ILLEGAL_ACTION);
+        return state;
     }
     switch (winner) {
         case GameWinner.NONE:
@@ -169,7 +168,7 @@ function handlePrompts(store, state, prompts, onComplete) {
     }
     const player = state.players.find(p => p.id === prompt.playerId);
     if (player === undefined) {
-        throw new GameError(GameMessage.ILLEGAL_ACTION);
+        return state;
     }
     return store.prompt(state, prompt, (result) => {
         if (prompt instanceof ChoosePrizePrompt) {
@@ -180,11 +179,11 @@ function handlePrompts(store, state, prompts, onComplete) {
         else if (prompt instanceof ChoosePokemonPrompt) {
             const selectedPokemon = result;
             if (selectedPokemon.length !== 1) {
-                throw new GameError(GameMessage.ILLEGAL_ACTION);
+                return state;
             }
             const benchIndex = player.bench.indexOf(selectedPokemon[0]);
             if (benchIndex === -1 || player.active.cards.length > 0) {
-                throw new GameError(GameMessage.ILLEGAL_ACTION);
+                return state;
             }
             const temp = player.active;
             player.active = player.bench[benchIndex];

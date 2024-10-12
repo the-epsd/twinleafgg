@@ -38,6 +38,7 @@ import { Oddish } from './oddish';
 import { Pidgeotto } from './pidgeotto';
 import { Pidgey } from './pidgey';
 import { RigidBand } from './rigid-band';
+import { Sandshrew } from './sandshrew';
 import { Scyther } from './scyther';
 import { Squirtle } from './squirtle';
 import { Starmie } from './starmie';
@@ -207,6 +208,10 @@ export class PidgeyArt extends Pidgey {
 
 export class RigidBandArt extends RigidBand {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/MEW/MEW_165_R_EN_LG.png';
+}
+
+export class SandshrewArt extends Sandshrew {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/MEW/MEW_027_R_EN_LG.png';
 }
 
 export class ScytherArt extends Scyther {

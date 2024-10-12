@@ -62,6 +62,16 @@ class Serena extends trainer_card_1.TrainerCard {
                         return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_POKEMON_TO_SWITCH, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH], { allowCancel: false, blocked: blocked }), result => {
                             var _a, _b, _c;
                             const cardList = result[0];
+                            if (cardList.stage == card_types_1.Stage.BASIC) {
+                                try {
+                                    const supporterEffect = new play_card_effects_1.SupporterEffect(player, effect.trainerCard);
+                                    store.reduceEffect(state, supporterEffect);
+                                }
+                                catch (_d) {
+                                    player.supporter.moveCardTo(effect.trainerCard, player.discard);
+                                    return state;
+                                }
+                            }
                             if (!((_a = result[0].getPokemonCard()) === null || _a === void 0 ? void 0 : _a.tags.includes(card_types_1.CardTag.POKEMON_V)) && !((_b = result[0].getPokemonCard()) === null || _b === void 0 ? void 0 : _b.tags.includes(card_types_1.CardTag.POKEMON_VMAX)) && !((_c = result[0].getPokemonCard()) === null || _c === void 0 ? void 0 : _c.tags.includes(card_types_1.CardTag.POKEMON_VSTAR))) {
                                 throw new game_1.GameError(game_message_1.GameMessage.INVALID_TARGET);
                             }

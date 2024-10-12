@@ -5,7 +5,6 @@ const state_1 = require("../state/state");
 const check_effects_1 = require("../effects/check-effects");
 const pokemon_card_list_1 = require("../state/pokemon-card-list");
 const choose_pokemon_prompt_1 = require("../prompts/choose-pokemon-prompt");
-const game_error_1 = require("../../game-error");
 const game_message_1 = require("../../game-message");
 const choose_prize_prompt_1 = require("../prompts/choose-prize-prompt");
 const play_card_action_1 = require("../actions/play-card-action");
@@ -100,7 +99,7 @@ function choosePrizeCards(state, prizesToTake) {
 }
 function endGame(store, state, winner) {
     if (state.players.length !== 2) {
-        throw new game_error_1.GameError(game_message_1.GameMessage.ILLEGAL_ACTION);
+        return state;
     }
     if ([
         state_1.GamePhase.WAITING_FOR_PLAYERS,
@@ -108,7 +107,7 @@ function endGame(store, state, winner) {
         state_1.GamePhase.ATTACK,
         state_1.GamePhase.BETWEEN_TURNS
     ].includes(state.phase) === false) {
-        throw new game_error_1.GameError(game_message_1.GameMessage.ILLEGAL_ACTION);
+        return state;
     }
     switch (winner) {
         case state_1.GameWinner.NONE:
@@ -173,7 +172,7 @@ function handlePrompts(store, state, prompts, onComplete) {
     }
     const player = state.players.find(p => p.id === prompt.playerId);
     if (player === undefined) {
-        throw new game_error_1.GameError(game_message_1.GameMessage.ILLEGAL_ACTION);
+        return state;
     }
     return store.prompt(state, prompt, (result) => {
         if (prompt instanceof choose_prize_prompt_1.ChoosePrizePrompt) {
@@ -184,11 +183,11 @@ function handlePrompts(store, state, prompts, onComplete) {
         else if (prompt instanceof choose_pokemon_prompt_1.ChoosePokemonPrompt) {
             const selectedPokemon = result;
             if (selectedPokemon.length !== 1) {
-                throw new game_error_1.GameError(game_message_1.GameMessage.ILLEGAL_ACTION);
+                return state;
             }
             const benchIndex = player.bench.indexOf(selectedPokemon[0]);
             if (benchIndex === -1 || player.active.cards.length > 0) {
-                throw new game_error_1.GameError(game_message_1.GameMessage.ILLEGAL_ACTION);
+                return state;
             }
             const temp = player.active;
             player.active = player.bench[benchIndex];

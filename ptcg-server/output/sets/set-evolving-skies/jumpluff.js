@@ -12,6 +12,7 @@ class Jumpluff extends pokemon_card_1.PokemonCard {
         super(...arguments);
         this.stage = card_types_1.Stage.STAGE_2;
         this.evolvesFrom = 'Skiploom';
+        this.tags = [card_types_1.CardTag.RAPID_STRIKE];
         this.cardType = card_types_1.CardType.GRASS;
         this.hp = 90;
         this.weakness = [{ type: card_types_1.CardType.FIRE }];
@@ -77,7 +78,6 @@ class Jumpluff extends pokemon_card_1.PokemonCard {
                         return state;
                     });
                 }
-                ;
             });
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
@@ -117,7 +117,6 @@ class Jumpluff extends pokemon_card_1.PokemonCard {
                         return state;
                     });
                 }
-                ;
             });
         }
         return state;

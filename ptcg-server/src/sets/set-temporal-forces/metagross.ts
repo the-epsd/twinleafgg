@@ -1,9 +1,11 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { State, StoreLike } from '../../game';
+import { Card, ChooseEnergyPrompt, GameMessage, State, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { BeginTurnEffect, EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
+import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 
 export class Metagross extends PokemonCard {
 
@@ -51,17 +53,59 @@ export class Metagross extends PokemonCard {
   public readonly NEXT_TURN_MORE_DAMAGE_MARKER = 'NEXT_TURN_MORE_DAMAGE_MARKER';
   public readonly NEXT_TURN_MORE_DAMAGE_MARKER_2 = 'NEXT_TURN_MORE_DAMAGE_MARKER_2';
 
+  public usedAttack: boolean = false;
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-      effect.player.attackMarker.removeMarker(this.NEXT_TURN_MORE_DAMAGE_MARKER, this);
-      effect.player.attackMarker.removeMarker(this.NEXT_TURN_MORE_DAMAGE_MARKER_2, this);
-      console.log('both markers cleared - used another attack');
+    if (effect instanceof AttackEffect) {
+      this.usedAttack = true;
+      console.log('attacked');
+    }
+
+    if (effect instanceof BeginTurnEffect) {
+      if (this.usedAttack) {
+        this.usedAttack = false;
+        console.log('reset');
+      }
+    }
+
+    if (effect instanceof EndTurnEffect) {
+      if (!this.usedAttack) {
+        this.usedAttack = false;
+        console.log('did not attack');
+        effect.player.attackMarker.removeMarker(this.NEXT_TURN_MORE_DAMAGE_MARKER, this);
+        effect.player.attackMarker.removeMarker(this.NEXT_TURN_MORE_DAMAGE_MARKER_2, this);
+        console.log('remove all markers');
+      }
     }
 
     if (effect instanceof EndTurnEffect && effect.player.attackMarker.hasMarker(this.NEXT_TURN_MORE_DAMAGE_MARKER, this)) {
       effect.player.attackMarker.addMarker(this.NEXT_TURN_MORE_DAMAGE_MARKER_2, this);
       console.log('second marker added');
+    }
+
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+      effect.player.attackMarker.removeMarker(this.NEXT_TURN_MORE_DAMAGE_MARKER, this);
+      effect.player.attackMarker.removeMarker(this.NEXT_TURN_MORE_DAMAGE_MARKER_2, this);
+      console.log('attacked with different attack, remove meteor mash markers');
+
+      const player = effect.player;
+
+      const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
+      state = store.reduceEffect(state, checkProvidedEnergy);
+
+      state = store.prompt(state, new ChooseEnergyPrompt(
+        player.id,
+        GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
+        checkProvidedEnergy.energyMap,
+        [CardType.COLORLESS, CardType.COLORLESS],
+        { allowCancel: false }
+      ), energy => {
+        const cards: Card[] = (energy || []).map(e => e.card);
+        const discardEnergy = new DiscardCardsEffect(effect, cards);
+        discardEnergy.target = player.active;
+        store.reduceEffect(state, discardEnergy);
+      });
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

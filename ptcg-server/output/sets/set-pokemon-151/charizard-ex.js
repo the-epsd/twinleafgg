@@ -24,16 +24,12 @@ class Charizardex extends pokemon_card_1.PokemonCard {
                 damageCalculation: '+',
                 text: 'If this Pokémon has any damage counters on it, this attack ' +
                     'does 100 more damage.',
-                effect: (store, state, effect) => {
-                }
             },
             {
                 name: 'Explosive Vortex',
                 cost: [card_types_1.CardType.FIRE, card_types_1.CardType.FIRE, card_types_1.CardType.FIRE, card_types_1.CardType.FIRE],
                 damage: 330,
                 text: 'Discard 3 Energy from this Pokémon. ',
-                effect: (store, state, effect) => {
-                }
             },
         ];
         this.set = 'MEW';

@@ -26,7 +26,6 @@ class Eternatus extends pokemon_card_1.PokemonCard {
                 name: 'World\'s End',
                 cost: [R, D, D],
                 damage: 230,
-                damageCalculation: '+',
                 text: 'Discard a Stadium in play. If you can\'t, this attack does nothing.'
             }
         ];
@@ -48,16 +47,16 @@ class Eternatus extends pokemon_card_1.PokemonCard {
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const stadiumCard = game_1.StateUtils.getStadiumCard(state);
-            if (stadiumCard == undefined) {
-                effect.damage == 0;
-            }
-            if (stadiumCard !== undefined) {
-                // Discard Stadium
-                const cardList = game_1.StateUtils.findCardList(state, stadiumCard);
-                const player = game_1.StateUtils.findOwner(state, cardList);
-                cardList.moveTo(player.discard);
+            if (stadiumCard === undefined) {
+                effect.damage = 0;
                 return state;
             }
+            // Discard Stadium
+            const cardList = game_1.StateUtils.findCardList(state, stadiumCard);
+            const player = game_1.StateUtils.findOwner(state, cardList);
+            cardList.moveTo(player.discard);
+            effect.damage = 230; // Set the damage to 230 as specified in the original attack
+            return state;
         }
         return state;
     }

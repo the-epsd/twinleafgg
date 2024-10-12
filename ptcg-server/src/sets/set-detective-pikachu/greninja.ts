@@ -9,7 +9,7 @@ import { CoinFlipEffect } from '../../game/store/effects/play-card-effects';
 
 export class Greninja extends PokemonCard {
 
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.STAGE_2;
 
   public evolvesFrom = 'Frogadier';
 

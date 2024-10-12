@@ -19,6 +19,7 @@ export declare class AlolanExeggutorex extends PokemonCard {
         damage: number;
         text: string;
     }[];
+    regulationMark: string;
     set: string;
     setNumber: string;
     cardImage: string;

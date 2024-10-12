@@ -17,7 +17,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   if (!playerHasBench && !opponentHasBench) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
-  
+
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
   player.hand.moveCardTo(effect.trainerCard, player.supporter);
@@ -28,7 +28,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
       opponent.id,
       GameMessage.CHOOSE_POKEMON_TO_SWITCH,
       PlayerType.BOTTOM_PLAYER,
-      [ SlotType.BENCH ],
+      [SlotType.BENCH],
       { allowCancel: false }
     ), results => {
       targets = results || [];
@@ -45,7 +45,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
       player.id,
       GameMessage.CHOOSE_POKEMON_TO_SWITCH,
       PlayerType.BOTTOM_PLAYER,
-      [ SlotType.BENCH ],
+      [SlotType.BENCH],
       { allowCancel: false }
     ), results => {
       targets = results || [];
@@ -57,7 +57,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     }
     player.supporter.moveCardTo(effect.trainerCard, player.discard);
   }
-
+  player.supporter.moveCardTo(effect.trainerCard, player.discard);
   return state;
 }
 

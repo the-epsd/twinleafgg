@@ -63,6 +63,7 @@ exports.setParadoxRift = [
     new card_images_1.TechnicalMachineEvolutionArt(),
     new card_images_1.TechnicalMachineTurboEnergizeArt(),
     new card_images_1.TinkatuffArt(),
+    new card_images_1.ToedscruelArt(),
     new card_images_1.TechnoRadarArt(),
     new card_images_1.TsareenaexArt(),
     new card_images_1.TulipArt(),
@@ -71,6 +72,7 @@ exports.setParadoxRift = [
     new card_images_1.ZacianArt(),
     new card_images_1.BombirdierexArt(),
     //Full Arts
+    new full_art_1.ToedscruelIR(),
     new full_art_1.SnoruntIR(),
     new full_art_1.GimmighoulIR(),
     new full_art_1.GroudonIR(),

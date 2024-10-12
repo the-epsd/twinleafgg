@@ -42,8 +42,9 @@ class Peonia extends trainer_card_1.TrainerCard {
                         player.prizes.forEach(p => {
                             if (p.cards.length === 0) {
                                 p.cards = newPrizeCards.cards.splice(0, 1);
+                                p.isSecret = true; // Only set the new cards to secret
                             }
-                            p.isSecret = true;
+                            // Remove this line: newPrizeCards.isSecret = true;
                         });
                         return state;
                     });

@@ -27,6 +27,7 @@ import { Treecko } from './treecko';
 import { WhiteKyurem } from './white-kyurem';
 import { Wurmple } from './wurmple';
 import { Zebstrika } from './zebstrika';
+import { Cascoon } from './cascoon';
 export declare class AdventureBagArt extends AdventureBag {
     cardImage: string;
 }
@@ -34,6 +35,9 @@ export declare class AlolanMeowthArt extends AlolanMeowth {
     cardImage: string;
 }
 export declare class BlitzleArt extends Blitzle {
+    cardImage: string;
+}
+export declare class CascoonArt extends Cascoon {
     cardImage: string;
 }
 export declare class ChikoritaArt extends Chikorita {

@@ -3,10 +3,10 @@ import { TrainerType, SuperType, EnergyType } from '../../game/store/card/card-t
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { DiscardToHandEffect, TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
-import { Card} from '../../game/store/card/card';
+import { Card } from '../../game/store/card/card';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { CardList } from '../../game/store/state/card-list';
 import { EnergyCard } from '../../game/store/card/energy-card';
@@ -16,7 +16,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   self: SuperiorEnergyRetrieval, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
   let cards: Card[] = [];
-  
+
   cards = player.hand.cards.filter(c => c !== self);
   if (cards.length < 2) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
@@ -44,7 +44,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
     player.id,
     GameMessage.CHOOSE_CARD_TO_DISCARD,
     handTemp,
-    { },
+    {},
     { min: 2, max: 2, allowCancel: true }
   ), selected => {
     cards = selected || [];
@@ -97,14 +97,27 @@ export class SuperiorEnergyRetrieval extends TrainerCard {
 
   public text: string =
     'You can use this card only if you discard 2 other cards from ' +
-  'your hand.'+
-  ''+
-  'Put up to 4 Basic Energy cards from your discard pile into ' +
-  'your hand. (You can\'t choose a card you discarded with the ' +
-  'effect of this card.)';
+    'your hand.' +
+    '' +
+    'Put up to 4 Basic Energy cards from your discard pile into ' +
+    'your hand. (You can\'t choose a card you discarded with the ' +
+    'effect of this card.)';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+      const player = effect.player;
+
+      // Check if DiscardToHandEffect is prevented
+      const toolEffect = new DiscardToHandEffect(player, this);
+      store.reduceEffect(state, toolEffect);
+
+      if (toolEffect.preventDefault) {
+        // If prevented, just discard the card and return
+        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+        return state;
+      }
+
+      // If not prevented, proceed with the original effect
       const generator = playCard(() => generator.next(), store, state, this, effect);
       return generator.next().value;
     }

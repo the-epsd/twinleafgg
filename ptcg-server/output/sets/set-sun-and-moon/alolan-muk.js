@@ -61,18 +61,18 @@ class AlolanMuk extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.PowerEffect && effect.power.powerType === pokemon_types_1.PowerType.ABILITY) {
             const player = effect.player;
             const opponent = state_utils_1.StateUtils.getOpponent(state, player);
-            let isGarbodorWithToolInPlay = false;
+            let isAlolanMukInPlay = false;
             player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
                 if (card === this) {
-                    isGarbodorWithToolInPlay = true;
+                    isAlolanMukInPlay = true;
                 }
             });
             opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList, card) => {
                 if (card === this) {
-                    isGarbodorWithToolInPlay = true;
+                    isAlolanMukInPlay = true;
                 }
             });
-            if (!isGarbodorWithToolInPlay) {
+            if (!isAlolanMukInPlay) {
                 return state;
             }
             const cardList = state_utils_1.StateUtils.findCardList(state, effect.card);

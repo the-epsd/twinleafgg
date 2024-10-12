@@ -3,7 +3,7 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { AfterDamageEffect, ApplyWeaknessEffect } from '../../game/store/effects/attack-effects';
+import { AfterDamageEffect } from '../../game/store/effects/attack-effects';
 
 export class Zacian extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -40,22 +40,20 @@ export class Zacian extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
+      //Get number of benched pokemon
+      const opponentBenched = opponent.bench.reduce((left, b) => left + (b.cards.length ? 1 : 0), 0);
 
-      const benchedPokemon = player.bench.length;
-      const bonusDamage = benchedPokemon * 10;
-
-      const applyWeakness = new ApplyWeaknessEffect(effect, 20 + bonusDamage);
-      store.reduceEffect(state, applyWeakness);
-      const damage = applyWeakness.damage;
+      const totalBenched = opponentBenched;
+      const damage = 20 + (totalBenched * 10);
 
       effect.damage = 0;
+      effect.ignoreWeakness = true;
 
       if (damage > 0) {
         opponent.active.damage += damage;
         const afterDamage = new AfterDamageEffect(effect, damage);
         state = store.reduceEffect(state, afterDamage);
       }
-
     }
 
     return state;

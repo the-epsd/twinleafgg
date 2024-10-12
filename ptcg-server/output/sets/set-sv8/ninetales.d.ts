@@ -13,7 +13,7 @@ export declare class Ninetales extends PokemonCard {
     evolvesFrom: string;
     attacks: {
         name: string;
-        cost: CardType[];
+        cost: CardType.FIRE[];
         damage: number;
         text: string;
     }[];

@@ -7,7 +7,7 @@ import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Stage, TrainerType, SuperType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
-import { TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { SupporterEffect, TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
@@ -20,7 +20,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   if (supporterTurn > 0) {
     throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
   }
-  
+
   player.hand.moveCardTo(effect.trainerCard, player.supporter);
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
@@ -30,7 +30,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   }
   // Check if bench has open slots
   const openSlots = opponent.bench.filter(b => b.cards.length === 0);
-      
+
   if (openSlots.length === 0) {
     // No open slots, throw error
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
@@ -50,18 +50,26 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   });
 
   player.supporter.moveCardTo(effect.trainerCard, player.discard);
-  
+
   // Operation canceled by the user
   if (cards.length === 0) {
     return state;
   }
-  
+
+  try {
+    const supporterEffect = new SupporterEffect(player, effect.trainerCard);
+    store.reduceEffect(state, supporterEffect);
+  } catch {
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
+    return state;
+  }
+
   cards.forEach((card, index) => {
     opponent.hand.moveCardTo(card, slots[index]);
     slots[index].pokemonPlayedTurn = state.turn;
-    opponent.switchPokemon(slots[index]); 
+    opponent.switchPokemon(slots[index]);
   });
-  
+
 
 }
 export class EreikasInvitation extends TrainerCard {

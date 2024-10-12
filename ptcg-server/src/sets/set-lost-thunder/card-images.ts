@@ -27,6 +27,7 @@ import { Treecko } from './treecko';
 import { WhiteKyurem } from './white-kyurem';
 import { Wurmple } from './wurmple';
 import { Zebstrika } from './zebstrika';
+import { Cascoon } from './cascoon';
 
 export class AdventureBagArt extends AdventureBag {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_167_R_EN_LG.png';
@@ -38,6 +39,10 @@ export class AlolanMeowthArt extends AlolanMeowth {
 
 export class BlitzleArt extends Blitzle {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_081_R_EN_LG.png';
+}
+
+export class CascoonArt extends Cascoon {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_027_R_EN_LG.png';
 }
 
 export class ChikoritaArt extends Chikorita {

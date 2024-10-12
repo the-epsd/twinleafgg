@@ -10,7 +10,8 @@ const check_effects_1 = require("../../game/store/effects/check-effects");
 class Lurantis extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.stage = card_types_1.Stage.BASIC;
+        this.stage = card_types_1.Stage.STAGE_1;
+        this.evolvesFrom = 'Fomantis';
         this.cardType = card_types_1.CardType.GRASS;
         this.hp = 100;
         this.weakness = [{ type: card_types_1.CardType.FIRE }];
@@ -47,7 +48,7 @@ class Lurantis extends pokemon_card_1.PokemonCard {
             catch (_a) {
                 return state;
             }
-            let hasLurantisInPlay = player.bench.some(b => b.cards.includes(this)) || player.active.cards.includes(this);
+            const hasLurantisInPlay = player.bench.some(b => b.cards.includes(this)) || player.active.cards.includes(this);
             let numberOfLurantisInPlay = 0;
             if (hasLurantisInPlay) {
                 player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {

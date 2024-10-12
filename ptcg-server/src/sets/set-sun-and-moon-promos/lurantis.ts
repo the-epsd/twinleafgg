@@ -7,7 +7,8 @@ import { PowerEffect } from '../../game/store/effects/game-effects';
 import { CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
 
 export class Lurantis extends PokemonCard {
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.STAGE_1;
+  public evolvesFrom = 'Fomantis';
   public cardType: CardType = CardType.GRASS;
   public hp: number = 100;
   public weakness = [{ type: CardType.FIRE }];
@@ -49,8 +50,8 @@ export class Lurantis extends PokemonCard {
         return state;
       }
 
-      let hasLurantisInPlay = player.bench.some(b => b.cards.includes(this)) || player.active.cards.includes(this);
-      let numberOfLurantisInPlay = 0
+      const hasLurantisInPlay = player.bench.some(b => b.cards.includes(this)) || player.active.cards.includes(this);
+      let numberOfLurantisInPlay = 0;
 
       if (hasLurantisInPlay) {
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {

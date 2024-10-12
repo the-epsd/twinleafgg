@@ -24,6 +24,7 @@ import { SandyShocksex } from './sandy-shocks-ex';
 import { SlitherWing } from './slither-wing';
 import { Snorunt } from './snorunt';
 import { TapuKokoex } from './tapu-koko-ex';
+import { Toedscruel } from './toedscruel';
 import { Tsareenaex } from './tsareena-ex';
 import { Tulip } from './tulip';
 
@@ -39,11 +40,11 @@ import { Tulip } from './tulip';
 //   public fullName: string = 'DottlerIR PAR';
 // }
 
-// export class ToedscruelIR extends Toedscruel {
-//   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_185_R_EN_LG.png';
-//   public setNumber = '185';
-//   public fullName: string = 'ToedscruelIR PAR';
-// }
+export class ToedscruelIR extends Toedscruel {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_185_R_EN_LG.png';
+  public setNumber = '185';
+  public fullName: string = 'ToedscruelIR PAR';
+}
 
 // export class MagbyIR extends Magby {
 //   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_186_R_EN_LG.png';

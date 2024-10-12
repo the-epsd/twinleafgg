@@ -306,12 +306,21 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
         }
       }
     }
-
     this.tempList = this.list = list;
     this.deckItemsChange.next(list);
-    this.tempList.sort((a, b) => a.card.fullName.localeCompare(b.card.fullName));
-    this.tempList.sort((a, b) => a.card.superType - b.card.superType);
-    this.tempList = this.sortByPokemonEvolution([...this.tempList]);
+
+    // Sort by supertype first
+    this.tempList.sort((a, b) => {
+      if (a.card.superType !== b.card.superType) {
+        return a.card.superType - b.card.superType;
+      }
+      // If supertypes are the same, sort alphabetically
+      return a.card.fullName.localeCompare(b.card.fullName);
+    });
+
+    // Then apply specific sorting for Pokémon and Trainers
+    this.sortPokemonCards();
+    this.sortTrainerCards();
   }
 
   public async removeCardFromDeck(item: DeckItem) {
@@ -355,27 +364,75 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
   }
 
   private sortTrainerCards() {
+    const trainerTypeOrder = [
+      TrainerType.SUPPORTER,
+      TrainerType.ITEM,
+      TrainerType.TOOL,
+      TrainerType.STADIUM
+    ];
+
     const trainerCards = this.tempList.filter(item => item.card.superType === SuperType.TRAINER);
     trainerCards.sort((a, b) => {
       const aType = (a.card as TrainerCard).trainerType;
       const bType = (b.card as TrainerCard).trainerType;
-      return aType - bType || a.card.fullName.localeCompare(b.card.fullName);
-    });
-  }
+      const aIndex = trainerTypeOrder.indexOf(aType);
+      const bIndex = trainerTypeOrder.indexOf(bType);
 
+      if (aIndex !== bIndex) {
+        return aIndex - bIndex;
+      }
+
+      // If trainer types are the same, sort alphabetically
+      return a.card.fullName.localeCompare(b.card.fullName);
+    });
+
+    // Update the tempList with the sorted trainer cards
+    const firstTrainerIndex = this.tempList.findIndex(item => item.card.superType === SuperType.TRAINER);
+    const lastTrainerIndex = this.tempList.length - 1 - [...this.tempList].reverse().findIndex(item => item.card.superType === SuperType.TRAINER);
+    this.tempList.splice(firstTrainerIndex, lastTrainerIndex - firstTrainerIndex + 1, ...trainerCards);
+  }
 
   @ViewChild('deckPane') deckPane: ElementRef;
 
-  public exportDeckImage() {
+  async preloadImages(imageUrls: string[]): Promise<Map<string, string>> {
+    const imageMap = new Map<string, string>();
+
+    for (const url of imageUrls) {
+      try {
+        const response = await fetch(url, { mode: 'no-cors' });
+        const blob = await response.blob();
+        const blobUrl = URL.createObjectURL(blob);
+        imageMap.set(url, blobUrl);
+      } catch (error) {
+        console.error(`Failed to preload image: ${url}`, error);
+      }
+    }
+
+    return imageMap;
+  }
+
+  public async exportDeckImage() {
     const element = this.deckPane.nativeElement;
     const clone = element.cloneNode(true) as HTMLElement;
     document.body.appendChild(clone);
 
+    // Collect all image URLs
+    const imageUrls = Array.from(clone.querySelectorAll('img')).map(img => img.src);
+    const preloadedImages = await this.preloadImages(imageUrls);
+
+    // Replace image sources with preloaded blob URLs
+    clone.querySelectorAll('img').forEach((img: HTMLImageElement) => {
+      const blobUrl = preloadedImages.get(img.src);
+      if (blobUrl) {
+        img.src = blobUrl;
+      }
+    });
+
     const deckCardElements = clone.querySelectorAll('.ptcg-deck-card');
     deckCardElements.forEach((card: HTMLElement) => {
-      card.style.transform = 'scale(1.25)'; // Adjust the scale factor as needed
+      card.style.transform = 'scale(1.25)';
       card.style.transformOrigin = 'center';
-      card.style.margin = '23px 15px'; // Add some margin to prevent overlap
+      card.style.margin = '23px 15px';
     });
 
     clone.style.position = 'absolute';
@@ -395,21 +452,9 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
     clone.style.backgroundSize = 'cover';
     clone.style.backgroundPosition = 'center';
 
-    // const cardElements = clone.querySelectorAll('.card-element');
-    // cardElements.forEach((card: HTMLElement) => {
-    //   card.style.transform = 'scale(3)';
-    //   card.style.margin = '10px';
-    // });
-
-    // const cardTextElements = clone.querySelectorAll('.card-text');
-    // cardTextElements.forEach((text: HTMLElement) => {
-    //   text.style.display = 'none';
-    // });
-
     html2canvas(clone, {
       width: 1920,
       height: 1080,
-      // scale: 4,
       allowTaint: true,
       useCORS: true,
       scrollX: 0,
@@ -417,14 +462,15 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
     }).then(canvas => {
       document.body.removeChild(clone);
 
+      // Revoke blob URLs to free up memory
+      preloadedImages.forEach(blobUrl => URL.revokeObjectURL(blobUrl));
+
       const link = document.createElement('a');
       link.download = 'deck_image.png';
       link.href = canvas.toDataURL();
       link.click();
     });
   }
-
-
 
   public async setCardCount(item: DeckItem) {
     const MAX_CARD_VALUE = 99;
@@ -466,6 +512,8 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.cards = this.loadLibraryCards();
+    this.sortPokemonCards();
+    this.sortTrainerCards();
   }
 
   ngOnDestroy() {

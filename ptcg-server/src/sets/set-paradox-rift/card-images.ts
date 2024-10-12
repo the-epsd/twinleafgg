@@ -64,6 +64,7 @@ import { Tsareenaex } from './tsareena-ex';
 import { Tulip } from './tulip';
 import { Veluza } from './veluza';
 import { Xatu } from './xatu';
+import { Toedscruel } from './toedscruel';
 
 export class AncientBoosterEnergyCapsuleArt extends AncientBoosterEnergyCapsule {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_159_R_EN_LG.png';
@@ -307,6 +308,10 @@ export class TechnoRadarArt extends TechnoRadar {
 
 export class TinkatuffArt extends Tinkatuff {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_084_R_EN.png';
+}
+
+export class ToedscruelArt extends Toedscruel {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_017_R_EN_LG.png';
 }
 
 export class TsareenaexArt extends Tsareenaex {

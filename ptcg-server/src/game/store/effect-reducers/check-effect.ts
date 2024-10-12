@@ -3,7 +3,6 @@ import { StoreLike } from '../store-like';
 import { CheckHpEffect, CheckProvidedEnergyEffect, CheckTableStateEffect } from '../effects/check-effects';
 import { PokemonCardList } from '../state/pokemon-card-list';
 import { ChoosePokemonPrompt } from '../prompts/choose-pokemon-prompt';
-import { GameError } from '../../game-error';
 import { GameMessage, GameLog } from '../../game-message';
 import { ChoosePrizePrompt } from '../prompts/choose-prize-prompt';
 import { CardList } from '../state/card-list';
@@ -139,7 +138,7 @@ function choosePrizeCards(state: State, prizesToTake: [number, number]): ChooseP
 export function endGame(store: StoreLike, state: State, winner: GameWinner): State {
 
   if (state.players.length !== 2) {
-    throw new GameError(GameMessage.ILLEGAL_ACTION);
+    return state;
   }
 
   if ([
@@ -148,7 +147,7 @@ export function endGame(store: StoreLike, state: State, winner: GameWinner): Sta
     GamePhase.ATTACK,
     GamePhase.BETWEEN_TURNS
   ].includes(state.phase) === false) {
-    throw new GameError(GameMessage.ILLEGAL_ACTION);
+    return state;
   }
 
   switch (winner) {
@@ -228,7 +227,7 @@ function handlePrompts(
 
   const player = state.players.find(p => p.id === prompt.playerId);
   if (player === undefined) {
-    throw new GameError(GameMessage.ILLEGAL_ACTION);
+    return state;
   }
 
   return store.prompt(state, prompt, (result) => {
@@ -239,11 +238,11 @@ function handlePrompts(
     } else if (prompt instanceof ChoosePokemonPrompt) {
       const selectedPokemon = result as PokemonCardList[];
       if (selectedPokemon.length !== 1) {
-        throw new GameError(GameMessage.ILLEGAL_ACTION);
+        return state;
       }
       const benchIndex = player.bench.indexOf(selectedPokemon[0]);
       if (benchIndex === -1 || player.active.cards.length > 0) {
-        throw new GameError(GameMessage.ILLEGAL_ACTION);
+        return state;
       }
       const temp = player.active;
       player.active = player.bench[benchIndex];
