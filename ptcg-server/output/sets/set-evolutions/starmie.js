@@ -8,6 +8,7 @@ const game_1 = require("../../game");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
+const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 function* useSpaceBeacon(next, store, state, effect) {
     const player = effect.player;
     let cards = [];
@@ -87,6 +88,12 @@ class Starmie extends pokemon_card_1.PokemonCard {
             const player = effect.player;
             if (player.marker.hasMarker(this.SPACE_BEACON_MARKER, this)) {
                 throw new game_1.GameError(game_1.GameMessage.POWER_ALREADY_USED);
+            }
+            // Check if DiscardToHandEffect is prevented
+            const discardEffect = new play_card_effects_1.DiscardToHandEffect(player, this);
+            store.reduceEffect(state, discardEffect);
+            if (discardEffect.preventDefault) {
+                return state;
             }
             const generator = useSpaceBeacon(() => generator.next(), store, state, effect);
             player.marker.addMarker(this.SPACE_BEACON_MARKER, this);

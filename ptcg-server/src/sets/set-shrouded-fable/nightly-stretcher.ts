@@ -99,10 +99,10 @@ export class NightlyStretcher extends TrainerCard {
       const player = effect.player;
 
       // Check if DiscardToHandEffect is prevented
-      const toolEffect = new DiscardToHandEffect(player, this);
-      store.reduceEffect(state, toolEffect);
+      const discardEffect = new DiscardToHandEffect(player, this);
+      store.reduceEffect(state, discardEffect);
 
-      if (toolEffect.preventDefault) {
+      if (discardEffect.preventDefault) {
         // If prevented, just discard the card and return
         player.supporter.moveCardTo(effect.trainerCard, player.discard);
         return state;

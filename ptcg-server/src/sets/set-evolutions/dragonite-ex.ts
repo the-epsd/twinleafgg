@@ -1,7 +1,7 @@
 import { PokemonCard, Stage, CardType, CardTag, PowerType, StoreLike, State, ConfirmPrompt, GameMessage, SuperType, StateUtils, ChooseCardsPrompt, Card, EnergyCard } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
-import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { DiscardToHandEffect, PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 
 export class DragoniteEX extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -44,6 +44,14 @@ export class DragoniteEX extends PokemonCard {
           && c.stage === Stage.BASIC;
       });
       if (!hasBasicPokemonInDiscard) {
+        return state;
+      }
+
+      // Check if DiscardToHandEffect is prevented
+      const discardEffect = new DiscardToHandEffect(player, this);
+      store.reduceEffect(state, discardEffect);
+
+      if (discardEffect.preventDefault) {
         return state;
       }
 

@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Banette = void 0;
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
+const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class Banette extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -42,6 +43,12 @@ class Banette extends game_1.PokemonCard {
             });
             if (!hasSupporter) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
+            }
+            // Check if DiscardToHandEffect is prevented
+            const discardEffect = new play_card_effects_1.DiscardToHandEffect(player, this);
+            store.reduceEffect(state, discardEffect);
+            if (discardEffect.preventDefault) {
+                return state;
             }
             let cards = [];
             state = store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_DECK, player.discard, { superType: game_1.SuperType.TRAINER, trainerType: game_1.TrainerType.SUPPORTER }, { min: 1, max: 1, allowCancel: false }), selected => {

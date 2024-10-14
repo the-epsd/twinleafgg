@@ -5,7 +5,7 @@ import { TrainerType, SuperType, EnergyType } from '../../game/store/card/card-t
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { DiscardToHandEffect, TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { ShowCardsPrompt, StateUtils } from '../../game';
@@ -37,7 +37,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     { min: 1, max: min, allowCancel: false }
   ), cards => {
     cards = cards || [];
-    
+
     if (cards.length > 0) {
       player.discard.moveCardsTo(cards, player.hand);
       cards.forEach((card, index) => {
@@ -81,6 +81,19 @@ export class EnergyRetrieval extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+
+      const player = effect.player;
+
+      // Check if DiscardToHandEffect is prevented
+      const discardEffect = new DiscardToHandEffect(player, this);
+      store.reduceEffect(state, discardEffect);
+
+      if (discardEffect.preventDefault) {
+        // If prevented, just discard the card and return
+        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+        return state;
+      }
+
       const generator = playCard(() => generator.next(), store, state, effect);
       return generator.next().value;
     }

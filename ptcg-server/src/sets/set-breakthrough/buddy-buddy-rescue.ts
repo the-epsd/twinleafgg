@@ -2,7 +2,7 @@ import { Card, ChooseCardsPrompt, GameError, GameLog, GameMessage, PokemonCard, 
 import { SuperType, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
-import { TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { DiscardToHandEffect, TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
@@ -29,7 +29,7 @@ export class BuddyBuddyRescue extends TrainerCard {
 
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      
+
       let pokemonInPlayersDiscard: number = 0;
       const blocked: number[] = [];
       player.discard.cards.forEach((c, index) => {
@@ -51,11 +51,21 @@ export class BuddyBuddyRescue extends TrainerCard {
           blocked.push(index);
         }
       });
-      
+
       if (pokemonInOpponentsDiscard === 0 && pokemonInPlayersDiscard === 0) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
-      
+
+      // Check if DiscardToHandEffect is prevented
+      const discardEffect = new DiscardToHandEffect(player, this);
+      store.reduceEffect(state, discardEffect);
+
+      if (discardEffect.preventDefault) {
+        // If prevented, just discard the card and return
+        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+        return state;
+      }
+
       if (pokemonInOpponentsDiscard > 0) {
         let cards: Card[] = [];
 
@@ -67,16 +77,16 @@ export class BuddyBuddyRescue extends TrainerCard {
           { min: 1, max: 1, allowCancel: false, blocked }
         ), selected => {
           cards = selected || [];
-          
+
           cards.forEach((card, index) => {
             store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: opponent.name, card: card.name });
           });
 
           opponent.discard.moveCardsTo(cards, opponent.hand);
           opponent.supporter.moveCardTo(effect.trainerCard, opponent.discard);
-        });            
+        });
       }
-      
+
       if (pokemonInPlayersDiscard > 0) {
         let cards: Card[] = [];
 
@@ -88,20 +98,20 @@ export class BuddyBuddyRescue extends TrainerCard {
           { min: 1, max: 1, allowCancel: false, blocked: blockedOpponent }
         ), selected => {
           cards = selected || [];
-          
+
           cards.forEach((card, index) => {
             store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
           });
 
           player.discard.moveCardsTo(cards, player.hand);
           player.supporter.moveCardTo(effect.trainerCard, player.discard);
-        });            
+        });
       }
-      
+
       return state;
     }
-    
+
     return state;
   }
-      
+
 }

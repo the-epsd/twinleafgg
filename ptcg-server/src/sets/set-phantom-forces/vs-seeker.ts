@@ -3,7 +3,7 @@ import { TrainerType, SuperType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { DiscardToHandEffect, TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { GameError } from '../../game/game-error';
 import { GameLog, GameMessage } from '../../game/game-message';
 import { Card } from '../../game/store/card/card';
@@ -79,6 +79,19 @@ export class VsSeeker extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+
+      const player = effect.player;
+
+      // Check if DiscardToHandEffect is prevented
+      const discardEffect = new DiscardToHandEffect(player, this);
+      store.reduceEffect(state, discardEffect);
+
+      if (discardEffect.preventDefault) {
+        // If prevented, just discard the card and return
+        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+        return state;
+      }
+
       const generator = playCard(() => generator.next(), store, state, this, effect);
       return generator.next().value;
     }

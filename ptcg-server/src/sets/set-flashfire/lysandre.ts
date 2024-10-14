@@ -1,5 +1,5 @@
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { TrainerType } from '../../game/store/card/card-types';
+import { Stage, TrainerType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
@@ -41,6 +41,17 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     { allowCancel: false }
   ), result => {
     const cardList = result[0];
+
+    if (cardList.stage == Stage.BASIC) {
+      try {
+        const supporterEffect = new SupporterEffect(player, effect.trainerCard);
+        store.reduceEffect(state, supporterEffect);
+      } catch {
+        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+        return state;
+      }
+    }
+
     opponent.switchPokemon(cardList);
     player.supporter.moveCardTo(effect.trainerCard, player.discard);
     return state;

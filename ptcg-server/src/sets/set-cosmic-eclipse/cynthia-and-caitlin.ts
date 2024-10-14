@@ -5,7 +5,7 @@ import { Card } from '../../game/store/card/card';
 import { CardTag, SuperType, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
-import { TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { DiscardToHandEffect, TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
@@ -147,6 +147,19 @@ export class CynthiaAndCaitlin extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+
+      const player = effect.player;
+
+      // Check if DiscardToHandEffect is prevented
+      const discardEffect = new DiscardToHandEffect(player, this);
+      store.reduceEffect(state, discardEffect);
+
+      if (discardEffect.preventDefault) {
+        // If prevented, just discard the card and return
+        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+        return state;
+      }
+
       const generator = playCard(() => generator.next(), store, state, this, effect);
       return generator.next().value;
     }

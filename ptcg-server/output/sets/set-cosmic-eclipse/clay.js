@@ -29,6 +29,14 @@ class Clay extends trainer_card_1.TrainerCard {
             player.deck.moveTo(deckTop, 7);
             // Filter for item cards
             const itemCards = deckTop.cards.filter(c => c instanceof trainer_card_1.TrainerCard && c.trainerType === card_types_1.TrainerType.ITEM);
+            // Check if DiscardToHandEffect is prevented
+            const discardEffect = new play_card_effects_1.DiscardToHandEffect(player, this);
+            store.reduceEffect(state, discardEffect);
+            if (discardEffect.preventDefault) {
+                // If prevented, just discard the card and return
+                player.supporter.moveCardTo(effect.trainerCard, player.discard);
+                return state;
+            }
             // Move all cards to discard
             deckTop.moveTo(player.discard, deckTop.cards.length);
             itemCards.forEach((card, index) => {

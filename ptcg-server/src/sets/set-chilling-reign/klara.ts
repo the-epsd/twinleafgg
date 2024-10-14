@@ -4,7 +4,7 @@ import { Card } from '../../game/store/card/card';
 import { EnergyType, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
-import { TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { DiscardToHandEffect, TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { ShowCardsPrompt } from '../../game/store/prompts/show-cards-prompt';
 import { StateUtils } from '../../game/store/state-utils';
@@ -18,21 +18,21 @@ function* playCard(next: Function, store: StoreLike, state: State,
   let cards: Card[] = [];
 
   const pokemonAndEnergyInDiscardPile = player.discard.cards.filter(c => c instanceof PokemonCard || (c instanceof EnergyCard && c.energyType === EnergyType.BASIC)).length;
-  
+
   if (pokemonAndEnergyInDiscardPile === 0) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
-  
+
   const supporterTurn = player.supporterTurn;
 
   if (supporterTurn > 0) {
     throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
   }
-  
+
   player.hand.moveCardTo(effect.trainerCard, player.supporter);
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
-    
+
   let pokemons = 0;
   let energies = 0;
   const blocked: number[] = [];
@@ -54,7 +54,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
     player.id,
     GameMessage.CHOOSE_CARD_TO_HAND,
     player.discard,
-    { },
+    {},
     { min: 0, max: count, allowCancel: false, blocked, maxPokemons, maxEnergies }
   ), selected => {
     cards = selected || [];
@@ -64,9 +64,9 @@ function* playCard(next: Function, store: StoreLike, state: State,
   cards.forEach((card, index) => {
     store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
   });
-  
+
   player.discard.moveCardsTo(cards, player.hand);
-  
+
   player.supporter.moveCardTo(effect.trainerCard, player.discard);
 
   if (cards.length > 0) {
@@ -76,7 +76,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
       cards
     ), () => next());
   }
-  
+
   return state;
 }
 
@@ -106,11 +106,24 @@ export class Klara extends TrainerCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+
+      const player = effect.player;
+
+      // Check if DiscardToHandEffect is prevented
+      const discardEffect = new DiscardToHandEffect(player, this);
+      store.reduceEffect(state, discardEffect);
+
+      if (discardEffect.preventDefault) {
+        // If prevented, just discard the card and return
+        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+        return state;
+      }
+
       const generator = playCard(() => generator.next(), store, state, this, effect);
       return generator.next().value;
     }
-      
+
     return state;
   }
-      
+
 }

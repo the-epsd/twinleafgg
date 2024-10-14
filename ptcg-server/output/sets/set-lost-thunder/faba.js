@@ -55,6 +55,17 @@ class Faba extends trainer_card_1.TrainerCard {
                         if (targets.length === 0) {
                             return state;
                         }
+                        const cardList = targets[0];
+                        if (cardList.stage == card_types_1.Stage.BASIC) {
+                            try {
+                                const supporterEffect = new play_card_effects_1.SupporterEffect(player, effect.trainerCard);
+                                store.reduceEffect(state, supporterEffect);
+                            }
+                            catch (_a) {
+                                player.supporter.moveCardTo(effect.trainerCard, player.discard);
+                                return state;
+                            }
+                        }
                         targets.forEach(target => {
                             const owner = game_1.StateUtils.findOwner(state, target);
                             if (target.tool !== undefined) {
@@ -87,6 +98,7 @@ class Faba extends trainer_card_1.TrainerCard {
             const specialEnergyBlocked = [];
             opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList, card, target) => {
                 if (cardList.cards.some(c => c instanceof game_1.EnergyCard && c.energyType === card_types_1.EnergyType.SPECIAL)) {
+                    return;
                 }
                 else {
                     specialEnergyBlocked.push(target);

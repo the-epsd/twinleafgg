@@ -30,7 +30,9 @@ class SuperScoopUp extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.set = 'DP';
         this.name = 'Super Scoop Up';
-        this.fullName = 'Super Scoop Up CES';
+        this.fullName = 'Super Scoop Up DP';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '115';
         this.text = 'Flip a coin. If heads, put 1 of your Pokemon ' +
             'and all cards attached to it into your hand.';
     }

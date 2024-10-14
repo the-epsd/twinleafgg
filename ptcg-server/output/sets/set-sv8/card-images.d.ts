@@ -1,6 +1,7 @@
 import { ScrambleSwitch } from '../set-plasma-storm/scramble-switch';
 import { Magneton } from '../set-scarlet-and-violet-promos/magneton';
 import { Azelf } from './azelf';
+import { Ceruledge } from './ceruledge';
 import { Crocalor } from './crocalor';
 import { Cyrano } from './cyrano';
 import { Deino } from './deino';
@@ -103,5 +104,8 @@ export declare class ScrambleSwitchArt extends ScrambleSwitch {
     regulationMark: string;
 }
 export declare class NinetalesArt extends Ninetales {
+    cardImage: string;
+}
+export declare class CeruledgeArt extends Ceruledge {
     cardImage: string;
 }

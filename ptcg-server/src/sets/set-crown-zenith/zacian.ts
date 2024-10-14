@@ -41,9 +41,9 @@ export class Zacian extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       //Get number of benched pokemon
-      const opponentBenched = opponent.bench.reduce((left, b) => left + (b.cards.length ? 1 : 0), 0);
+      const playerBenched = player.bench.reduce((left, b) => left + (b.cards.length ? 1 : 0), 0);
 
-      const totalBenched = opponentBenched;
+      const totalBenched = playerBenched;
       const damage = 20 + (totalBenched * 10);
 
       effect.damage = 0;

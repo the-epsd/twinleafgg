@@ -4,7 +4,7 @@ import { Card } from '../../game/store/card/card';
 import { CardType, EnergyType, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
-import { TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { DiscardToHandEffect, TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { ShowCardsPrompt } from '../../game/store/prompts/show-cards-prompt';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
@@ -49,7 +49,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
     player.id,
     GameMessage.CHOOSE_CARD_TO_HAND,
     player.discard,
-    { },
+    {},
     { min: 0, max: count, allowCancel: false, blocked, maxPokemons, maxEnergies }
   ), selected => {
     cards = selected || [];
@@ -58,7 +58,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
   player.discard.moveCardsTo(cards, player.hand);
   player.supporter.moveCardTo(effect.trainerCard, player.discard);
-  
+
 
   if (cards.length > 0) {
     yield store.prompt(state, new ShowCardsPrompt(
@@ -96,11 +96,24 @@ export class Nessa extends TrainerCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+
+      const player = effect.player;
+
+      // Check if DiscardToHandEffect is prevented
+      const discardEffect = new DiscardToHandEffect(player, this);
+      store.reduceEffect(state, discardEffect);
+
+      if (discardEffect.preventDefault) {
+        // If prevented, just discard the card and return
+        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+        return state;
+      }
+
       const generator = playCard(() => generator.next(), store, state, this, effect);
       return generator.next().value;
     }
-      
+
     return state;
   }
-      
+
 }

@@ -94,3 +94,7 @@ export * from './set-sv7a';
 export * from './set-sv8';
 export * from './set-sv9';
 export * from './set-test';
+export * from './set-legends-awakened';
+export * from './set-stormfront';
+export * from './set-majestic-dawn';
+export * from './set-arceus';

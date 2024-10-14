@@ -1,6 +1,7 @@
 import { ScrambleSwitch } from '../set-plasma-storm/scramble-switch';
 import { Magneton } from '../set-scarlet-and-violet-promos/magneton';
 import { Azelf } from './azelf';
+import { Ceruledge } from './ceruledge';
 import { Crocalor } from './crocalor';
 import { Cyrano } from './cyrano';
 import { Deino } from './deino';
@@ -129,4 +130,8 @@ export class ScrambleSwitchArt extends ScrambleSwitch {
 
 export class NinetalesArt extends Ninetales {
   public cardImage = 'https://pokemonproxies.com/static/media/7b-002-Ninetales.0e37fb5a6a0a97fc50c5.png';
+}
+
+export class CeruledgeArt extends Ceruledge {
+  public cardImage = 'https://pokemonproxies.com/static/media/8i-022-Ceruledge.9eb169e8f4aacd3df85f.png';
 }

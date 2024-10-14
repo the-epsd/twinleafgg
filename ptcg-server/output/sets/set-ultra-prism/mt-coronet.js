@@ -7,6 +7,7 @@ const game_message_1 = require("../../game/game-message");
 const card_types_1 = require("../../game/store/card/card-types");
 const trainer_card_1 = require("../../game/store/card/trainer-card");
 const game_effects_1 = require("../../game/store/effects/game-effects");
+const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 const state_utils_1 = require("../../game/store/state-utils");
 function* useStadium(next, store, state, effect) {
     const player = effect.player;
@@ -60,6 +61,15 @@ class MtCoronet extends trainer_card_1.TrainerCard {
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.UseStadiumEffect && state_utils_1.StateUtils.getStadiumCard(state) === this) {
+            const player = effect.player;
+            // Check if DiscardToHandEffect is prevented
+            const discardEffect = new play_card_effects_1.DiscardToHandEffect(player, this);
+            store.reduceEffect(state, discardEffect);
+            if (discardEffect.preventDefault) {
+                // If prevented, just discard the card and return
+                player.supporter.moveCardTo(effect.stadium, player.discard);
+                return state;
+            }
             const generator = useStadium(() => generator.next(), store, state, effect);
             return generator.next().value;
         }

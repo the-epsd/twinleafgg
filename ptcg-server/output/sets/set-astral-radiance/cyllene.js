@@ -49,9 +49,9 @@ class Cyllene extends trainer_card_1.TrainerCard {
                     const nonTrainerCards = cards.filter(card => !(card instanceof trainer_card_1.TrainerCard));
                     let canMoveTrainerCards = true;
                     if (trainerCards.length > 0) {
-                        const toolEffect = new play_card_effects_1.TrainerToDeckEffect(player, this);
-                        store.reduceEffect(state, toolEffect);
-                        canMoveTrainerCards = !toolEffect.preventDefault;
+                        const discardEffect = new play_card_effects_1.TrainerToDeckEffect(player, this);
+                        store.reduceEffect(state, discardEffect);
+                        canMoveTrainerCards = !discardEffect.preventDefault;
                     }
                     const cardsToMove = canMoveTrainerCards ? cards : nonTrainerCards;
                     if (cardsToMove.length > 0) {

@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DarknessEnergyArt = exports.StarmieArt = exports.PoliwhirlArt = exports.PokedexArt = exports.ElectabuzzArt = exports.DragoniteEXArt = exports.DevolutionSprayArt = void 0;
 const pokedex_1 = require("../set-black-and-white/pokedex");
-const darkness_energy_1 = require("../set-diamond-and-pearl/darkness-energy");
+const darkness_energy_1 = require("../set-scarlet-and-violet-energy/darkness-energy");
 const devolution_spray_1 = require("./devolution-spray");
 const dragonite_ex_1 = require("./dragonite-ex");
 const electabuzz_1 = require("./electabuzz");

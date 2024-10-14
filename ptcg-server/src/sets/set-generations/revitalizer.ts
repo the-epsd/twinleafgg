@@ -4,7 +4,7 @@ import { Card } from '../../game/store/card/card';
 import { CardType, SuperType, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
-import { TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { DiscardToHandEffect, TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
@@ -46,6 +46,16 @@ export class Revitalizer extends TrainerCard {
       // Player does not have correct cards in discard
       if (pokemonInDiscard === 0) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      }
+
+      // Check if DiscardToHandEffect is prevented
+      const discardEffect = new DiscardToHandEffect(player, this);
+      store.reduceEffect(state, discardEffect);
+
+      if (discardEffect.preventDefault) {
+        // If prevented, just discard the card and return
+        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+        return state;
       }
 
       player.hand.moveCardTo(effect.trainerCard, player.supporter);

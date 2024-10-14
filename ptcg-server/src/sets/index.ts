@@ -118,3 +118,10 @@ export * from './set-sv9';
 
 //TEST
 export * from './set-test';
+
+
+//Sort Later
+export * from './set-legends-awakened';
+export * from './set-stormfront';
+export * from './set-majestic-dawn';
+export * from './set-arceus';

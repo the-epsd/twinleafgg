@@ -6,6 +6,7 @@ import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effe
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { DiscardToHandEffect } from '../../game/store/effects/play-card-effects';
 
 function* useSpaceBeacon(next: Function, store: StoreLike, state: State,
   effect: PowerEffect): IterableIterator<State> {
@@ -126,6 +127,14 @@ export class Starmie extends PokemonCard {
       const player = effect.player;
       if (player.marker.hasMarker(this.SPACE_BEACON_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
+      }
+
+      // Check if DiscardToHandEffect is prevented
+      const discardEffect = new DiscardToHandEffect(player, this);
+      store.reduceEffect(state, discardEffect);
+
+      if (discardEffect.preventDefault) {
+        return state;
       }
 
       const generator = useSpaceBeacon(() => generator.next(), store, state, effect);

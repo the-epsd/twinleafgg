@@ -35,6 +35,14 @@ class Revitalizer extends trainer_card_1.TrainerCard {
             if (pokemonInDiscard === 0) {
                 throw new game_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
             }
+            // Check if DiscardToHandEffect is prevented
+            const discardEffect = new play_card_effects_1.DiscardToHandEffect(player, this);
+            store.reduceEffect(state, discardEffect);
+            if (discardEffect.preventDefault) {
+                // If prevented, just discard the card and return
+                player.supporter.moveCardTo(effect.trainerCard, player.discard);
+                return state;
+            }
             player.hand.moveCardTo(effect.trainerCard, player.supporter);
             // We will discard this card after prompt confirmation
             effect.preventDefault = true;

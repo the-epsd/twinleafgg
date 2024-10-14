@@ -28,4 +28,5 @@ exports.setSV8 = [
     new card_images_1.MespritArt(),
     new card_images_1.ScrambleSwitchArt(),
     new card_images_1.NinetalesArt(),
+    new card_images_1.CeruledgeArt(),
 ];

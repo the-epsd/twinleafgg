@@ -117,3 +117,8 @@ __exportStar(require("./set-sv8"), exports);
 __exportStar(require("./set-sv9"), exports);
 //TEST
 __exportStar(require("./set-test"), exports);
+//Sort Later
+__exportStar(require("./set-legends-awakened"), exports);
+__exportStar(require("./set-stormfront"), exports);
+__exportStar(require("./set-majestic-dawn"), exports);
+__exportStar(require("./set-arceus"), exports);

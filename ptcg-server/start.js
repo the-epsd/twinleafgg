@@ -21,7 +21,7 @@ cardManager.defineSet(sets.setVendingSeries);
 
 cardManager.defineSet(sets.setBaseSetEnergy);
 
-// cardManager.defineSet(sets.setDiamondAndPearl);
+cardManager.defineSet(sets.setDiamondAndPearl);
 // cardManager.defineSet(sets.setOP9);
 cardManager.defineSet(sets.setGreatEncounters);
 cardManager.defineSet(sets.setPlatinum);
@@ -126,6 +126,11 @@ cardManager.defineSet(sets.setSV8);
 cardManager.defineSet(sets.setSV9);
 
 cardManager.defineSet(sets.setTest);
+
+cardManager.defineSet(sets.setLegendsAwakened);
+cardManager.defineSet(sets.setStormfront);
+cardManager.defineSet(sets.setMajesticDawn);
+cardManager.defineSet(sets.setArceus);
 
 StateSerializer.setKnownCards(cardManager.getAllCards());
 

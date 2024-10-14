@@ -1,9 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.NinetalesArt = exports.ScrambleSwitchArt = exports.MespritArt = exports.UxieArt = exports.AzelfArt = exports.VivillionArt = exports.EternatusArt = exports.HydreigonexArt = exports.ZweilousArt = exports.DeinoArt = exports.TogekissArt = exports.TogeticArt = exports.TogepiArt = exports.MiloticexArt = exports.SkeledirgeArt = exports.CrocalorArt = exports.FuecocoArt = exports.CyranoArt = exports.MiraculousIntercomArt = exports.ExcitingStadiumArt = exports.GravityMountainArt = exports.MagnetonArt = exports.MagnemiteArt = exports.TerapagosArt = exports.PikachuexArt = void 0;
+exports.CeruledgeArt = exports.NinetalesArt = exports.ScrambleSwitchArt = exports.MespritArt = exports.UxieArt = exports.AzelfArt = exports.VivillionArt = exports.EternatusArt = exports.HydreigonexArt = exports.ZweilousArt = exports.DeinoArt = exports.TogekissArt = exports.TogeticArt = exports.TogepiArt = exports.MiloticexArt = exports.SkeledirgeArt = exports.CrocalorArt = exports.FuecocoArt = exports.CyranoArt = exports.MiraculousIntercomArt = exports.ExcitingStadiumArt = exports.GravityMountainArt = exports.MagnetonArt = exports.MagnemiteArt = exports.TerapagosArt = exports.PikachuexArt = void 0;
 const scramble_switch_1 = require("../set-plasma-storm/scramble-switch");
 const magneton_1 = require("../set-scarlet-and-violet-promos/magneton");
 const azelf_1 = require("./azelf");
+const ceruledge_1 = require("./ceruledge");
 const crocalor_1 = require("./crocalor");
 const cyrano_1 = require("./cyrano");
 const deino_1 = require("./deino");
@@ -208,3 +209,10 @@ class NinetalesArt extends ninetales_1.Ninetales {
     }
 }
 exports.NinetalesArt = NinetalesArt;
+class CeruledgeArt extends ceruledge_1.Ceruledge {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pokemonproxies.com/static/media/8i-022-Ceruledge.9eb169e8f4aacd3df85f.png';
+    }
+}
+exports.CeruledgeArt = CeruledgeArt;
