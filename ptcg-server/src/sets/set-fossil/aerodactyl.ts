@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
+import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
 import { GameError, GameMessage, PlayerType, PokemonCardList, PowerType, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { EvolveEffect, PowerEffect } from '../../game/store/effects/game-effects';
@@ -74,7 +74,13 @@ export class Aerodactyl extends PokemonCard {
 
         const cardList = StateUtils.findCardList(state, this) as PokemonCardList;
 
-        if (cardList.specialConditions.length > 0) {
+        if (cardList.specialConditions.includes(SpecialCondition.ASLEEP)) {
+          return state;
+        }
+        if (cardList.specialConditions.includes(SpecialCondition.CONFUSED)) {
+          return state;
+        }
+        if (cardList.specialConditions.includes(SpecialCondition.PARALYZED)) {
           return state;
         }
 

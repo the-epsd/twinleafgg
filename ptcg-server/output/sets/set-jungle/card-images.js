@@ -1,8 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ScytherArt = exports.PokeBallArt = exports.DodrioArt = exports.ClefableArt = void 0;
+exports.ScytherArt = exports.PokeBallArt = exports.ElectrodeArt = exports.DodrioArt = exports.ClefableArt = void 0;
 const clefable_1 = require("./clefable");
 const dodrio_1 = require("./dodrio");
+const electrode_1 = require("./electrode");
 const pokeball_1 = require("./pokeball");
 const scyther_1 = require("./scyther");
 class ClefableArt extends clefable_1.Clefable {
@@ -19,6 +20,13 @@ class DodrioArt extends dodrio_1.Dodrio {
     }
 }
 exports.DodrioArt = DodrioArt;
+class ElectrodeArt extends electrode_1.Electrode {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pkmncards.com/wp-content/uploads/electrode-jungle-ju-2.jpg';
+    }
+}
+exports.ElectrodeArt = ElectrodeArt;
 class PokeBallArt extends pokeball_1.PokeBall {
     constructor() {
         super(...arguments);

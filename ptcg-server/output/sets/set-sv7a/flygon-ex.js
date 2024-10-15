@@ -9,7 +9,7 @@ const game_phase_effects_1 = require("../../game/store/effects/game-phase-effect
 class Flygonex extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.stage = card_types_1.Stage.BASIC;
+        this.stage = card_types_1.Stage.STAGE_2;
         this.evolvesFrom = 'Vibrava';
         this.tags = [card_types_1.CardTag.POKEMON_ex, card_types_1.CardTag.POKEMON_TERA];
         this.regulationMark = 'H';
