@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, EnergyType, SuperType } from '../../game/store/card/card-types';
+import { Stage, CardType, EnergyType, SuperType, SpecialCondition } from '../../game/store/card/card-types';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
@@ -36,7 +36,7 @@ export class Malamar extends PokemonCard {
     text: ''
   }];
 
- 
+
   public set: string = 'FLI';
   public name: string = 'Malamar';
   public fullName: string = 'Malamar FLI';
@@ -75,7 +75,7 @@ export class Malamar extends PokemonCard {
         GameMessage.ATTACH_ENERGY_TO_BENCH,
         player.discard,
         PlayerType.BOTTOM_PLAYER,
-        [ SlotType.BENCH ],
+        [SlotType.BENCH],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Psychic Energy' },
         { allowCancel: true, min: 1, max: 1 }
       ), transfers => {
@@ -84,6 +84,12 @@ export class Malamar extends PokemonCard {
         if (transfers.length === 0) {
           return;
         }
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+          if (cardList.getPokemonCard() === this) {
+            cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+          }
+        });
+
         player.marker.addMarker(this.PSYCHIC_RECHARGE_MARKER, this);
         for (const transfer of transfers) {
           const target = StateUtils.getTarget(state, player, transfer.to);

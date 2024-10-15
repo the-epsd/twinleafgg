@@ -69,6 +69,11 @@ class Malamar extends pokemon_card_1.PokemonCard {
                 if (transfers.length === 0) {
                     return;
                 }
+                player.forEachPokemon(play_card_action_1.PlayerType.BOTTOM_PLAYER, cardList => {
+                    if (cardList.getPokemonCard() === this) {
+                        cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
+                    }
+                });
                 player.marker.addMarker(this.PSYCHIC_RECHARGE_MARKER, this);
                 for (const transfer of transfers) {
                     const target = state_utils_1.StateUtils.getTarget(state, player, transfer.to);
