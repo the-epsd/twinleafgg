@@ -81,6 +81,7 @@ class AttackEffect {
         this.opponent = opponent;
         this.attack = attack;
         this.damage = attack.damage;
+        this.source = player.active;
     }
 }
 exports.AttackEffect = AttackEffect;
