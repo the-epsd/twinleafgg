@@ -16,6 +16,7 @@ import { Oricorio } from './oricorio';
 import { Swampert } from './swampert';
 import { TateAndLiza } from './tate-and-liza';
 import { Whismur } from './whismur';
+import { RayquazaGX } from './rayquaza-gx';
 
 export class ApricornMakerArt extends ApricornMaker {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CES/CES_124_R_EN_LG.png';
@@ -63,6 +64,10 @@ export class NuzleafArt extends Nuzleaf {
 
 export class OricorioArt extends Oricorio {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CES/CES_030_R_EN_LG.png';
+}
+
+export class RayquazaGXArt extends RayquazaGX {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CES/CES_109_R_EN_LG.png';
 }
 
 export class SableyeArt extends Sableye {

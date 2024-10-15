@@ -50,6 +50,7 @@ import { Thorton } from './thorton';
 import { Tynamo } from './tynamo';
 import { Volo } from './volo';
 import { Wurmple } from './wurmple';
+import { HisuianArcanine } from './hisuian-arcanine';
 
 export class ArezuArt extends Arezu {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOR/LOR_153_R_EN_LG.png';
@@ -117,6 +118,10 @@ export class GiratinaVArt extends GiratinaV {
 
 export class GiratinaVSTARArt extends GiratinaVSTAR {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOR/LOR_131_R_EN_LG.png';
+}
+
+export class HisuianArcanineArt extends HisuianArcanine {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOR/LOR_084_R_EN_LG.png';
 }
 
 export class HisuianBasculegionArt extends HisuianBasculegion {

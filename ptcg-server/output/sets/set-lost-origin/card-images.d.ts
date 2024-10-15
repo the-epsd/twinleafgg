@@ -50,6 +50,7 @@ import { Thorton } from './thorton';
 import { Tynamo } from './tynamo';
 import { Volo } from './volo';
 import { Wurmple } from './wurmple';
+import { HisuianArcanine } from './hisuian-arcanine';
 export declare class ArezuArt extends Arezu {
     cardImage: string;
 }
@@ -99,6 +100,9 @@ export declare class GiratinaVArt extends GiratinaV {
     cardImage: string;
 }
 export declare class GiratinaVSTARArt extends GiratinaVSTAR {
+    cardImage: string;
+}
+export declare class HisuianArcanineArt extends HisuianArcanine {
     cardImage: string;
 }
 export declare class HisuianBasculegionArt extends HisuianBasculegion {

@@ -5,10 +5,15 @@ import { Gloom } from './gloom';
 import { Guzma } from './guzma';
 import { Plumeria } from './plumeria';
 import { WishfulBaton } from './wishful-baton';
+import { GardevoirGX } from './gardevoir-gx';
+import { NecrozmaGX } from './necrozma-gx';
 export declare class AcerolaArt extends Acerola {
     cardImage: string;
 }
 export declare class DarkraiGXArt extends DarkraiGX {
+    cardImage: string;
+}
+export declare class GardevoirGXArt extends GardevoirGX {
     cardImage: string;
 }
 export declare class GloomArt extends Gloom {
@@ -18,6 +23,9 @@ export declare class GuzmaArt extends Guzma {
     cardImage: string;
 }
 export declare class MarillArt extends Marill {
+    cardImage: string;
+}
+export declare class NecrozmaGXArt extends NecrozmaGX {
     cardImage: string;
 }
 export declare class PlumeriaArt extends Plumeria {

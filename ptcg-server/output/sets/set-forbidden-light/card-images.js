@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UnitEnergyFDYArt = exports.MysteriousTreasureArt = exports.MetalFryingPanArt = exports.MalamarArt = exports.MagnezoneArt = exports.LysandreLabsArt = exports.InkayArt = exports.FrogadierArt = exports.BeastRingArt = void 0;
+exports.UltraNecrozmaGXArt = exports.UnitEnergyFDYArt = exports.MysteriousTreasureArt = exports.MetalFryingPanArt = exports.MalamarArt = exports.MagnezoneArt = exports.LysandreLabsArt = exports.InkayArt = exports.GreninjaGXArt = exports.FrogadierArt = exports.BuzzwoleArt = exports.BeastRingArt = void 0;
 const beast_ring_1 = require("./beast-ring");
 const lysandre_labs_1 = require("./lysandre_labs");
 const frogadier_1 = require("./frogadier");
@@ -10,6 +10,9 @@ const malamar_1 = require("./malamar");
 const metal_frying_pan_1 = require("./metal-frying-pan");
 const mysterious_treasure_1 = require("./mysterious-treasure");
 const unit_energy_fdy_1 = require("./unit-energy-fdy");
+const buzzwole_1 = require("./buzzwole");
+const greninja_gx_1 = require("./greninja-gx");
+const ultra_necrozma_gx_1 = require("./ultra-necrozma-gx");
 class BeastRingArt extends beast_ring_1.BeastRing {
     constructor() {
         super(...arguments);
@@ -17,6 +20,13 @@ class BeastRingArt extends beast_ring_1.BeastRing {
     }
 }
 exports.BeastRingArt = BeastRingArt;
+class BuzzwoleArt extends buzzwole_1.Buzzwole {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FLI/FLI_102_R_EN_LG.png';
+    }
+}
+exports.BuzzwoleArt = BuzzwoleArt;
 class FrogadierArt extends frogadier_1.Frogadier {
     constructor() {
         super(...arguments);
@@ -24,6 +34,13 @@ class FrogadierArt extends frogadier_1.Frogadier {
     }
 }
 exports.FrogadierArt = FrogadierArt;
+class GreninjaGXArt extends greninja_gx_1.GreninjaGX {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FLI/FLI_024_R_EN_LG.png';
+    }
+}
+exports.GreninjaGXArt = GreninjaGXArt;
 class InkayArt extends inkay_1.Inkay {
     constructor() {
         super(...arguments);
@@ -73,3 +90,10 @@ class UnitEnergyFDYArt extends unit_energy_fdy_1.UnitEnergyFDY {
     }
 }
 exports.UnitEnergyFDYArt = UnitEnergyFDYArt;
+class UltraNecrozmaGXArt extends ultra_necrozma_gx_1.UltraNecrozmaGX {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FLI/FLI_095_R_EN_LG.png';
+    }
+}
+exports.UltraNecrozmaGXArt = UltraNecrozmaGXArt;

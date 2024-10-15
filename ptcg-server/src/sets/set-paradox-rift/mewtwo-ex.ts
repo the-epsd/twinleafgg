@@ -78,17 +78,20 @@ export class Mewtwoex extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
 
-      let energies = 0;
+      let psychicEnergies = 0;
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
         const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player, cardList);
         store.reduceEffect(state, checkProvidedEnergyEffect);
         checkProvidedEnergyEffect.energyMap.forEach(energy => {
-          energies += energy.provides.length;
+          if (energy.provides.includes(CardType.PSYCHIC)) {
+            psychicEnergies += 1;
+          }
         });
       });
 
-      effect.damage = 10 + energies * 30;
+      effect.damage = 10 + psychicEnergies * 30;
     }
+
 
     if (effect instanceof PutDamageEffect) {
       const player = effect.player;

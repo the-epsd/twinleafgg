@@ -1,14 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TapuLeleGXArt = exports.RescueStretcherArt = exports.MimikyuArt = exports.MallowArt = exports.MachokeArt = exports.FieldBlowerArt = exports.EnhancedHammerArt = exports.BrookletHillArt = exports.AquaPatchArt = exports.AlolanVulpixArt = exports.AetherParadiseConvserationAreaArt = void 0;
+exports.TapuLeleGXArt = exports.RescueStretcherArt = exports.MimikyuArt = exports.MetagrossGXArt = exports.MallowArt = exports.MachokeArt = exports.LycanrocGXArt = exports.FieldBlowerArt = exports.EnhancedHammerArt = exports.BrookletHillArt = exports.AquaPatchArt = exports.AlolanVulpixArt = exports.AetherParadiseConvserationAreaArt = void 0;
 const alolan_vulpix_1 = require("../set-hidden-fates/alolan-vulpix");
 const enhanced_hammer_1 = require("../set-twilight-masquerade/enhanced-hammer");
 const aether_paradise_conservation_area_1 = require("./aether-paradise-conservation-area");
 const aqua_patch_1 = require("./aqua-patch");
 const brooklet_hill_1 = require("./brooklet-hill");
 const field_blower_1 = require("./field-blower");
+const lycanroc_gx_1 = require("./lycanroc-gx");
 const machoke_1 = require("./machoke");
 const mallow_1 = require("./mallow");
+const metagross_gx_1 = require("./metagross-gx");
 const mimikyu_1 = require("./mimikyu");
 const rescue_stretcher_1 = require("./rescue-stretcher");
 const tapu_lele_gx_1 = require("./tapu-lele-gx");
@@ -56,6 +58,13 @@ class FieldBlowerArt extends field_blower_1.FieldBlower {
     }
 }
 exports.FieldBlowerArt = FieldBlowerArt;
+class LycanrocGXArt extends lycanroc_gx_1.LycanrocGX {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/GRI/GRI_074_R_EN_LG.png';
+    }
+}
+exports.LycanrocGXArt = LycanrocGXArt;
 class MachokeArt extends machoke_1.Machoke {
     constructor() {
         super(...arguments);
@@ -70,6 +79,13 @@ class MallowArt extends mallow_1.Mallow {
     }
 }
 exports.MallowArt = MallowArt;
+class MetagrossGXArt extends metagross_gx_1.MetagrossGX {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/GRI/GRI_085_R_EN_LG.png';
+    }
+}
+exports.MetagrossGXArt = MetagrossGXArt;
 class MimikyuArt extends mimikyu_1.Mimikyu {
     constructor() {
         super(...arguments);

@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { AmpharosexArt, CeruledgeexArt, CharcadetArt, CharmanderArt, EeveeArt, MagnetonArt, MimikyuexArt, PecharuntArt, SylveonexArt } from './card-images';
+import { AmpharosexArt, CeruledgeexArt, CharcadetArt, CharmanderArt, EeveeArt, MagnetonArt, MimikyuexArt, PecharuntArt, SylveonexArt, TinkatonexArt } from './card-images';
 
 
 export const setScarletAndVioletPromos: Card[] = [
@@ -12,4 +12,5 @@ export const setScarletAndVioletPromos: Card[] = [
   new MimikyuexArt(),
   new PecharuntArt(),
   new SylveonexArt(),
+  new TinkatonexArt(),
 ];

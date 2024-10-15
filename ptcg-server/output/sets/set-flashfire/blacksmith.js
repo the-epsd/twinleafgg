@@ -25,12 +25,10 @@ class Blacksmith extends trainer_card_1.TrainerCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
             const player = effect.player;
-            const hasEnergyInDiscard = player.discard.cards.some(c => {
-                return c instanceof energy_card_1.EnergyCard
-                    && c.energyType === card_types_1.EnergyType.BASIC
-                    && c.provides.includes(card_types_1.CardType.FIRE);
-            });
-            if (!hasEnergyInDiscard) {
+            const fireEnergyCount = player.discard.cards.filter(c => c instanceof energy_card_1.EnergyCard
+                && c.energyType === card_types_1.EnergyType.BASIC
+                && c.provides.includes(card_types_1.CardType.FIRE)).length;
+            if (fireEnergyCount < 2) {
                 throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
             }
             let hasFirePokemon = false;

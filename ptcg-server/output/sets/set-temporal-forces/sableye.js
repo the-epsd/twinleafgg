@@ -51,8 +51,14 @@ class Sableye extends game_1.PokemonCard {
                 }
             });
             if (!hasDamagedBench) {
-                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_ATTACK);
+                return state;
             }
+            const blockedTo = [];
+            opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList, card, target) => {
+                if (cardList !== opponent.active) {
+                    blockedTo.push(target);
+                }
+            });
             const maxAllowedDamage = [];
             opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList, card, target) => {
                 const checkHpEffect = new check_effects_1.CheckHpEffect(opponent, cardList);
@@ -62,8 +68,7 @@ class Sableye extends game_1.PokemonCard {
             return store.prompt(state, new game_1.MoveDamagePrompt(effect.player.id, game_1.GameMessage.MOVE_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], maxAllowedDamage, {
                 min: 0,
                 allowCancel: false,
-                blockedFrom: blocked,
-                blockedTo: blocked,
+                blockedTo: blockedTo,
                 singleDestinationTarget: true
             }), transfers => {
                 if (transfers === null) {
@@ -72,7 +77,10 @@ class Sableye extends game_1.PokemonCard {
                 for (const transfer of transfers) {
                     const source = game_1.StateUtils.getTarget(state, player, transfer.from);
                     const target = game_1.StateUtils.getTarget(state, player, transfer.to);
-                    if (target == opponent.active) {
+                    if (target !== opponent.active) {
+                        throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
+                    }
+                    if (source == opponent.active) {
                         throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
                     }
                     if (source.damage > 0) {

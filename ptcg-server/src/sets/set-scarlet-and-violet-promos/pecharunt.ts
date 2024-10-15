@@ -39,15 +39,25 @@ export class Pecharunt extends PokemonCard {
   private POISON_MODIFIER_MARKER = 'POISON_MODIFIER_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof BetweenTurnsEffect) {
-      const player = effect.player;
 
-      if (player.active.cards[0] !== this) {
-        return state; // Not active
+    if (effect instanceof BetweenTurnsEffect) {
+      const currentPlayer = effect.player;
+      const opponent = StateUtils.getOpponent(state, currentPlayer);
+
+      // Check if Pecharunt is in play for either player
+      let pecharuntOwner = null;
+      [currentPlayer, opponent].forEach(player => {
+        if (player.active.cards[0] === this) {
+          pecharuntOwner = player;
+        }
+      });
+
+      if (!pecharuntOwner) {
+        return state; // Pecharunt is not active for either player
       }
 
       try {
-        const stub = new PowerEffect(player, {
+        const stub = new PowerEffect(pecharuntOwner, {
           name: 'test',
           powerType: PowerType.ABILITY,
           text: ''
@@ -61,9 +71,9 @@ export class Pecharunt extends PokemonCard {
         return state;
       }
 
-      const opponent = StateUtils.getOpponent(state, player);
-      if (opponent.active.specialConditions.includes(SpecialCondition.POISONED)) {
-        opponent.active.poisonDamage += 50;
+      const pecharuntOpponent = StateUtils.getOpponent(state, pecharuntOwner);
+      if (pecharuntOpponent.active.specialConditions.includes(SpecialCondition.POISONED)) {
+        pecharuntOpponent.active.poisonDamage += 50;
         this.marker.addMarker(this.POISON_MODIFIER_MARKER, this);
       }
     }

@@ -55,15 +55,17 @@ class Mewtwoex extends pokemon_card_1.PokemonCard {
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
-            let energies = 0;
+            let psychicEnergies = 0;
             player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
                 const checkProvidedEnergyEffect = new check_effects_1.CheckProvidedEnergyEffect(player, cardList);
                 store.reduceEffect(state, checkProvidedEnergyEffect);
                 checkProvidedEnergyEffect.energyMap.forEach(energy => {
-                    energies += energy.provides.length;
+                    if (energy.provides.includes(card_types_1.CardType.PSYCHIC)) {
+                        psychicEnergies += 1;
+                    }
                 });
             });
-            effect.damage = 10 + energies * 30;
+            effect.damage = 10 + psychicEnergies * 30;
         }
         if (effect instanceof attack_effects_1.PutDamageEffect) {
             const player = effect.player;

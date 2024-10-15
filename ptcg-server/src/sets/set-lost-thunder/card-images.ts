@@ -28,6 +28,10 @@ import { WhiteKyurem } from './white-kyurem';
 import { Wurmple } from './wurmple';
 import { Zebstrika } from './zebstrika';
 import { Cascoon } from './cascoon';
+import { AlolanNinetalesGX } from './alolan-ninetales-gx';
+import { Granbull } from './granbull';
+import { Naganadel } from './naganadel';
+import { Poipole } from './poipole';
 
 export class AdventureBagArt extends AdventureBag {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_167_R_EN_LG.png';
@@ -35,6 +39,10 @@ export class AdventureBagArt extends AdventureBag {
 
 export class AlolanMeowthArt extends AlolanMeowth {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_118_R_EN.png';
+}
+
+export class AlolanNinetalesGXArt extends AlolanNinetalesGX {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_132_R_EN.png';
 }
 
 export class BlitzleArt extends Blitzle {
@@ -85,6 +93,10 @@ export class GiratinaArt extends Giratina {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_097_R_EN_LG.png';
 }
 
+export class GranbullArt extends Granbull {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_138_R_EN_LG.png';
+}
+
 export class GrovleArt extends Grovyle {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_021_R_EN_LG.png';
 }
@@ -109,12 +121,20 @@ export class MinaArt extends Mina {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_183_R_EN_LG.png';
 }
 
+export class NaganadelArt extends Naganadel {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_108_R_EN_LG.png';
+}
+
 export class NetBallArt extends NetBall {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_187_R_EN_LG.png';
 }
 
 export class NihilegoArt extends Nihilego {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_106_R_EN_LG.png';
+}
+
+export class PoipoleArt extends Poipole {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_107_R_EN_LG.png';
 }
 
 export class SlowkingArt extends Slowking {

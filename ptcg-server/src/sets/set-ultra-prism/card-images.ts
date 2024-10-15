@@ -16,6 +16,7 @@ import { Riolu } from './riolu';
 import { Bastiodon } from './bastiodon';
 import { Volkner } from './volkner';
 import { Weavile } from './weavile';
+import { Lillie } from './lillie';
 
 export class BastiodonArt extends Bastiodon {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UPR/UPR_085_R_EN_LG.png';
@@ -39,6 +40,10 @@ export class GardeniaArt extends Gardenia {
 
 export class GibleArt extends Gible {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UPR/UPR_096_R_EN.png';
+}
+
+export class LillieArt extends Lillie {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UPR/UPR_125_R_EN_LG.png';
 }
 
 export class MagnemiteArt extends Magnemite {

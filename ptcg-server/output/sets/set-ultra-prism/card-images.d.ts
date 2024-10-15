@@ -16,6 +16,7 @@ import { Riolu } from './riolu';
 import { Bastiodon } from './bastiodon';
 import { Volkner } from './volkner';
 import { Weavile } from './weavile';
+import { Lillie } from './lillie';
 export declare class BastiodonArt extends Bastiodon {
     cardImage: string;
 }
@@ -32,6 +33,9 @@ export declare class GardeniaArt extends Gardenia {
     cardImage: string;
 }
 export declare class GibleArt extends Gible {
+    cardImage: string;
+}
+export declare class LillieArt extends Lillie {
     cardImage: string;
 }
 export declare class MagnemiteArt extends Magnemite {
