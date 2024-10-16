@@ -6,6 +6,7 @@ exports.setSunAndMoon = [
     new card_images_1.AlolanGrimerArt(),
     new card_images_1.AlolanMukArt(),
     new card_images_1.AlolanRattataArt(),
+    new card_images_1.DecidueyeGXArt(),
     new card_images_1.DragonairArt(),
     new card_images_1.EnergyRetrievalArt(),
     new card_images_1.ExpShareArt(),

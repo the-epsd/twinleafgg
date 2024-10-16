@@ -1,5 +1,5 @@
 import { Pokedex } from '../set-black-and-white/pokedex';
-import { DarknessEnergy } from '../set-diamond-and-pearl/darkness-energy';
+import { DarknessEnergy } from '../set-scarlet-and-violet-energy/darkness-energy';
 import { DevolutionSpray } from './devolution-spray';
 import { DragoniteEX } from './dragonite-ex';
 import { Electabuzz } from './electabuzz';

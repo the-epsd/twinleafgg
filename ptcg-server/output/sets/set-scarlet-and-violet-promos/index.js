@@ -12,4 +12,5 @@ exports.setScarletAndVioletPromos = [
     new card_images_1.MimikyuexArt(),
     new card_images_1.PecharuntArt(),
     new card_images_1.SylveonexArt(),
+    new card_images_1.TinkatonexArt(),
 ];

@@ -3,7 +3,7 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State, PowerType, ChooseCardsPrompt, ConfirmPrompt, GameMessage, ShowCardsPrompt, StateUtils, ChoosePokemonPrompt, PlayerType, SlotType, GameLog } from '../../game';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { DiscardToHandEffect, PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { AfterDamageEffect } from '../../game/store/effects/attack-effects';
 
 export class Milotic extends PokemonCard {
@@ -52,6 +52,16 @@ export class Milotic extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       if (player.deck.cards.length === 0) {
+        return state;
+      }
+
+      // Check if DiscardToHandEffect is prevented
+      const discardEffect = new DiscardToHandEffect(player, this);
+      store.reduceEffect(state, discardEffect);
+
+      if (discardEffect.preventDefault) {
+        // If prevented, just discard the card and return
+        player.supporter.moveCardTo(effect.pokemonCard, player.discard);
         return state;
       }
 

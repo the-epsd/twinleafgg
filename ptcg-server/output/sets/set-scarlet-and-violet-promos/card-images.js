@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SylveonexArt = exports.PecharuntArt = exports.MimikyuexArt = exports.MagnetonArt = exports.EeveeArt = exports.CharmanderArt = exports.CharcadetArt = exports.CeruledgeexArt = exports.AnnihilapeexArt = exports.AmpharosexArt = void 0;
+exports.TinkatonexArt = exports.SylveonexArt = exports.PecharuntArt = exports.MimikyuexArt = exports.MagnetonArt = exports.EeveeArt = exports.CharmanderArt = exports.CharcadetArt = exports.CeruledgeexArt = exports.AnnihilapeexArt = exports.AmpharosexArt = void 0;
 const ampharos_ex_1 = require("./ampharos-ex");
 const annihilape_ex_1 = require("./annihilape-ex");
 const ceruledge_ex_1 = require("./ceruledge-ex");
@@ -11,6 +11,7 @@ const magneton_1 = require("./magneton");
 const mimikyu_ex_1 = require("./mimikyu-ex");
 const pecharunt_1 = require("./pecharunt");
 const sylveon_ex_1 = require("./sylveon-ex");
+const tinkaton_ex_1 = require("./tinkaton-ex");
 class AmpharosexArt extends ampharos_ex_1.Ampharosex {
     constructor() {
         super(...arguments);
@@ -81,3 +82,10 @@ class SylveonexArt extends sylveon_ex_1.Sylveonex {
     }
 }
 exports.SylveonexArt = SylveonexArt;
+class TinkatonexArt extends tinkaton_ex_1.Tinkatonex {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVP/SVP_031_R_EN.png';
+    }
+}
+exports.TinkatonexArt = TinkatonexArt;

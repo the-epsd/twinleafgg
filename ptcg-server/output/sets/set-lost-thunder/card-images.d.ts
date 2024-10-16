@@ -28,10 +28,17 @@ import { WhiteKyurem } from './white-kyurem';
 import { Wurmple } from './wurmple';
 import { Zebstrika } from './zebstrika';
 import { Cascoon } from './cascoon';
+import { AlolanNinetalesGX } from './alolan-ninetales-gx';
+import { Granbull } from './granbull';
+import { Naganadel } from './naganadel';
+import { Poipole } from './poipole';
 export declare class AdventureBagArt extends AdventureBag {
     cardImage: string;
 }
 export declare class AlolanMeowthArt extends AlolanMeowth {
+    cardImage: string;
+}
+export declare class AlolanNinetalesGXArt extends AlolanNinetalesGX {
     cardImage: string;
 }
 export declare class BlitzleArt extends Blitzle {
@@ -70,6 +77,9 @@ export declare class GirafarigArt extends Girafarig {
 export declare class GiratinaArt extends Giratina {
     cardImage: string;
 }
+export declare class GranbullArt extends Granbull {
+    cardImage: string;
+}
 export declare class GrovleArt extends Grovyle {
     cardImage: string;
 }
@@ -88,10 +98,16 @@ export declare class MeganiumArt extends Meganium {
 export declare class MinaArt extends Mina {
     cardImage: string;
 }
+export declare class NaganadelArt extends Naganadel {
+    cardImage: string;
+}
 export declare class NetBallArt extends NetBall {
     cardImage: string;
 }
 export declare class NihilegoArt extends Nihilego {
+    cardImage: string;
+}
+export declare class PoipoleArt extends Poipole {
     cardImage: string;
 }
 export declare class SlowkingArt extends Slowking {

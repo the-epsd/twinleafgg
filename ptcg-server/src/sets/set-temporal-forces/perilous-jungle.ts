@@ -40,6 +40,7 @@ export class PerilousJungle extends TrainerCard {
       }
 
       effect.poisonDamage += 20;
+      console.log('jungle:', effect.poisonDamage);
       return state;
     }
 

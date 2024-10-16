@@ -8,6 +8,7 @@ const pokemon_types_1 = require("../../game/store/card/pokemon-types");
 const game_message_1 = require("../../game/game-message");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 const game_error_1 = require("../../game/game-error");
+const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class Exeggcute extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -47,6 +48,12 @@ class Exeggcute extends pokemon_card_1.PokemonCard {
             // Power already used
             if (player.marker.hasMarker(this.PROPAGATION_MAREKER, this)) {
                 throw new game_error_1.GameError(game_message_1.GameMessage.POWER_ALREADY_USED);
+            }
+            // Check if DiscardToHandEffect is prevented
+            const discardEffect = new play_card_effects_1.DiscardToHandEffect(player, this);
+            store.reduceEffect(state, discardEffect);
+            if (discardEffect.preventDefault) {
+                return state;
             }
             player.marker.addMarker(this.PROPAGATION_MAREKER, this);
             player.discard.moveCardTo(this, player.hand);

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TimerBallArt = exports.RepelArt = exports.RareCandyArt = exports.RainbowEnergyArt = exports.ProfessorKukuiArt = exports.OranguruArt = exports.NestBallArt = exports.HerdierArt = exports.GolduckArt = exports.FomantisArt = exports.ExpShareArt = exports.EnergyRetrievalArt = exports.DragonairArt = exports.AlolanRattataArt = exports.AlolanMukArt = exports.AlolanGrimerArt = void 0;
+exports.TimerBallArt = exports.RepelArt = exports.RareCandyArt = exports.RainbowEnergyArt = exports.ProfessorKukuiArt = exports.OranguruArt = exports.NestBallArt = exports.HerdierArt = exports.GolduckArt = exports.FomantisArt = exports.ExpShareArt = exports.EnergyRetrievalArt = exports.DragonairArt = exports.DecidueyeGXArt = exports.AlolanRattataArt = exports.AlolanMukArt = exports.AlolanGrimerArt = void 0;
 const energy_retrieval_1 = require("../set-scarlet-and-violet/energy-retrieval");
 const exp_share_1 = require("../set-scarlet-and-violet/exp-share");
 const nest_ball_1 = require("../set-scarlet-and-violet/nest-ball");
@@ -17,6 +17,7 @@ const fomantis_1 = require("./fomantis");
 const golduck_1 = require("./golduck");
 const alolan_rattata_1 = require("./alolan_rattata");
 const timer_ball_1 = require("./timer-ball");
+const decidueye_gx_1 = require("./decidueye-gx");
 class AlolanGrimerArt extends alolan_grimer_1.AlolanGrimer {
     constructor() {
         super(...arguments);
@@ -38,6 +39,13 @@ class AlolanRattataArt extends alolan_rattata_1.AlolanRattata {
     }
 }
 exports.AlolanRattataArt = AlolanRattataArt;
+class DecidueyeGXArt extends decidueye_gx_1.DecidueyeGX {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SUM/SUM_057_R_EN_LG.png';
+    }
+}
+exports.DecidueyeGXArt = DecidueyeGXArt;
 class DragonairArt extends dragonair_1.Dragonair {
     constructor() {
         super(...arguments);

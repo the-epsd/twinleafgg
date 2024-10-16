@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZeraoraGXArt = exports.ZebstrikaArt = exports.WurmpleArt = exports.WhiteKyuremArt = exports.TreeckoArt = exports.ThunderMountainPrismStarArt = exports.SpellTagArt = exports.SlowkingArt = exports.NihilegoArt = exports.NetBallArt = exports.MinaArt = exports.MeganiumArt = exports.MareepArt = exports.LostBlenderArt = exports.LanturnArt = exports.GrovleArt = exports.GiratinaArt = exports.GirafarigArt = exports.FabaArt = exports.ElectropowerArt = exports.DittoPrismStarArt = exports.CustomCatcherArt = exports.CounterGainArt = exports.ChinchouArt = exports.ChikoritaArt2 = exports.ChikoritaArt = exports.CascoonArt = exports.BlitzleArt = exports.AlolanMeowthArt = exports.AdventureBagArt = void 0;
+exports.ZeraoraGXArt = exports.ZebstrikaArt = exports.WurmpleArt = exports.WhiteKyuremArt = exports.TreeckoArt = exports.ThunderMountainPrismStarArt = exports.SpellTagArt = exports.SlowkingArt = exports.PoipoleArt = exports.NihilegoArt = exports.NetBallArt = exports.NaganadelArt = exports.MinaArt = exports.MeganiumArt = exports.MareepArt = exports.LostBlenderArt = exports.LanturnArt = exports.GrovleArt = exports.GranbullArt = exports.GiratinaArt = exports.GirafarigArt = exports.FabaArt = exports.ElectropowerArt = exports.DittoPrismStarArt = exports.CustomCatcherArt = exports.CounterGainArt = exports.ChinchouArt = exports.ChikoritaArt2 = exports.ChikoritaArt = exports.CascoonArt = exports.BlitzleArt = exports.AlolanNinetalesGXArt = exports.AlolanMeowthArt = exports.AdventureBagArt = void 0;
 const adventure_bag_1 = require("./adventure-bag");
 const alolan_meowth_1 = require("./alolan-meowth");
 const blitzle_1 = require("./blitzle");
@@ -31,6 +31,10 @@ const white_kyurem_1 = require("./white-kyurem");
 const wurmple_1 = require("./wurmple");
 const zebstrika_1 = require("./zebstrika");
 const cascoon_1 = require("./cascoon");
+const alolan_ninetales_gx_1 = require("./alolan-ninetales-gx");
+const granbull_1 = require("./granbull");
+const naganadel_1 = require("./naganadel");
+const poipole_1 = require("./poipole");
 class AdventureBagArt extends adventure_bag_1.AdventureBag {
     constructor() {
         super(...arguments);
@@ -45,6 +49,13 @@ class AlolanMeowthArt extends alolan_meowth_1.AlolanMeowth {
     }
 }
 exports.AlolanMeowthArt = AlolanMeowthArt;
+class AlolanNinetalesGXArt extends alolan_ninetales_gx_1.AlolanNinetalesGX {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_132_R_EN.png';
+    }
+}
+exports.AlolanNinetalesGXArt = AlolanNinetalesGXArt;
 class BlitzleArt extends blitzle_1.Blitzle {
     constructor() {
         super(...arguments);
@@ -129,6 +140,13 @@ class GiratinaArt extends giratina_1.Giratina {
     }
 }
 exports.GiratinaArt = GiratinaArt;
+class GranbullArt extends granbull_1.Granbull {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_138_R_EN_LG.png';
+    }
+}
+exports.GranbullArt = GranbullArt;
 class GrovleArt extends grovyle_1.Grovyle {
     constructor() {
         super(...arguments);
@@ -171,6 +189,13 @@ class MinaArt extends mina_1.Mina {
     }
 }
 exports.MinaArt = MinaArt;
+class NaganadelArt extends naganadel_1.Naganadel {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_108_R_EN_LG.png';
+    }
+}
+exports.NaganadelArt = NaganadelArt;
 class NetBallArt extends net_ball_1.NetBall {
     constructor() {
         super(...arguments);
@@ -185,6 +210,13 @@ class NihilegoArt extends nihilego_1.Nihilego {
     }
 }
 exports.NihilegoArt = NihilegoArt;
+class PoipoleArt extends poipole_1.Poipole {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_107_R_EN_LG.png';
+    }
+}
+exports.PoipoleArt = PoipoleArt;
 class SlowkingArt extends slowking_1.Slowking {
     constructor() {
         super(...arguments);

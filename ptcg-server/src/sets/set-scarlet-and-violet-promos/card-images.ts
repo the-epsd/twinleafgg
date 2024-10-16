@@ -8,6 +8,7 @@ import { Magneton } from './magneton';
 import { Mimikyuex } from './mimikyu-ex';
 import { Pecharunt } from './pecharunt';
 import { Sylveonex } from './sylveon-ex';
+import { Tinkatonex } from './tinkaton-ex';
 
 export class AmpharosexArt extends Ampharosex {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVP/SVP_016_R_EN_LG.png';
@@ -47,4 +48,8 @@ export class PecharuntArt extends Pecharunt {
 
 export class SylveonexArt extends Sylveonex {
   public cardImage = 'https://images.squarespace-cdn.com/content/v1/5cf4cfa4382ac0000123aa1b/1721958763940-NX5527U2FDTBX1PCAPGO/Sylveon+ex.png?format=1500w';
+}
+
+export class TinkatonexArt extends Tinkatonex {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVP/SVP_031_R_EN.png';
 }

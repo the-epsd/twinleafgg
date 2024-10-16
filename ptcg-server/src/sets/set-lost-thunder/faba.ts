@@ -1,8 +1,8 @@
 import { Card, CardTarget, ChooseCardsPrompt, ChoosePokemonPrompt, EnergyCard, GameError, GameMessage, PlayerType, PokemonCardList, SelectPrompt, SlotType, StateUtils } from '../../game';
-import { EnergyType, SuperType, TrainerType } from '../../game/store/card/card-types';
+import { EnergyType, Stage, SuperType, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
-import { TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { SupporterEffect, TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
@@ -31,7 +31,7 @@ export class Faba extends TrainerCard {
       if (player.supporterTurn > 0) {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
-      
+
       let pokemonsWithTool = 0;
       const blocked: CardTarget[] = [];
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
@@ -41,14 +41,14 @@ export class Faba extends TrainerCard {
           blocked.push(target);
         }
       });
-      
+
       let specialEnergy = 0;
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
         if (cardList.cards.some(c => c instanceof EnergyCard && c.energyType === EnergyType.SPECIAL)) {
           specialEnergy += 1;
         }
       });
-      
+
       const stadiumCard = StateUtils.getStadiumCard(state);
 
       if (pokemonsWithTool === 0 && stadiumCard == undefined && specialEnergy === 0) {
@@ -76,6 +76,18 @@ export class Faba extends TrainerCard {
               return state;
             }
 
+            const cardList = targets[0];
+
+            if (cardList.stage == Stage.BASIC) {
+              try {
+                const supporterEffect = new SupporterEffect(player, effect.trainerCard);
+                store.reduceEffect(state, supporterEffect);
+              } catch {
+                player.supporter.moveCardTo(effect.trainerCard, player.discard);
+                return state;
+              }
+            }
+
             targets.forEach(target => {
               const owner = StateUtils.findOwner(state, target);
               if (target.tool !== undefined) {
@@ -92,7 +104,7 @@ export class Faba extends TrainerCard {
           });
         }
       };
-      
+
       const stadiumOption = {
         message: GameMessage.CHOICE_STADIUM,
         action: () => {
@@ -110,16 +122,16 @@ export class Faba extends TrainerCard {
           return state;
         }
       };
-      
+
       const specialEnergyBlocked: CardTarget[] = [];
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
         if (cardList.cards.some(c => c instanceof EnergyCard && c.energyType === EnergyType.SPECIAL)) {
-          
+          return;
         } else {
           specialEnergyBlocked.push(target);
         }
       });
-      
+
       const specialEnergyOption = {
         message: GameMessage.CHOICE_SPECIAL_ENERGY,
         action: () => {
@@ -127,17 +139,17 @@ export class Faba extends TrainerCard {
             player.id,
             GameMessage.CHOOSE_POKEMON_TO_DISCARD_CARDS,
             PlayerType.TOP_PLAYER,
-            [ SlotType.ACTIVE, SlotType.BENCH ],
+            [SlotType.ACTIVE, SlotType.BENCH],
             { allowCancel: false, blocked: specialEnergyBlocked }
           ), results => {
-            
+
             if (results.length === 0) {
               return state;
             }
 
             const target = results[0];
             let cards: Card[] = [];
-            
+
             state = store.prompt(state, new ChooseCardsPrompt(
               player.id,
               GameMessage.CHOOSE_CARD_TO_DISCARD,
@@ -146,19 +158,19 @@ export class Faba extends TrainerCard {
               { min: 1, max: 1, allowCancel: false }
             ), selected => {
               cards = selected || [];
-                if (cards.length > 0) {
+              if (cards.length > 0) {
                 player.supporter.moveCardTo(effect.trainerCard, player.discard);
                 target.moveCardsTo(cards, opponent.lostzone);
               }
-              
+
               return state;
             });
           });
         }
-      }
-      
+      };
+
       const options: { message: GameMessage, action: () => void }[] = [];
-      
+
       if (pokemonsWithTool > 0) {
         options.push(toolOption);
       }
@@ -170,7 +182,7 @@ export class Faba extends TrainerCard {
       if (stadiumCard !== undefined) {
         options.push(stadiumOption);
       }
-      
+
       return store.prompt(state, new SelectPrompt(
         player.id,
         GameMessage.DISCARD_STADIUM_OR_TOOL,
@@ -181,12 +193,12 @@ export class Faba extends TrainerCard {
 
         if (option.action) {
           option.action();
-      }
-      
+        }
+
         player.supporter.moveCardTo(this, player.discard);
         return state;
       });
-      
+
     }
     return state;
   }

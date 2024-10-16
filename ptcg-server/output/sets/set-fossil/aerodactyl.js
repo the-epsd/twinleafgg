@@ -56,7 +56,13 @@ class Aerodactyl extends pokemon_card_1.PokemonCard {
             }
             if (isAerodactylInPlay) {
                 const cardList = game_1.StateUtils.findCardList(state, this);
-                if (cardList.specialConditions.length > 0) {
+                if (cardList.specialConditions.includes(card_types_1.SpecialCondition.ASLEEP)) {
+                    return state;
+                }
+                if (cardList.specialConditions.includes(card_types_1.SpecialCondition.CONFUSED)) {
+                    return state;
+                }
+                if (cardList.specialConditions.includes(card_types_1.SpecialCondition.PARALYZED)) {
                     return state;
                 }
                 // Try reducing ability

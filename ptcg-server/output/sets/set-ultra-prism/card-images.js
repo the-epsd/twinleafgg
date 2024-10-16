@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WeavileArt = exports.VolknerArt = exports.UnitEnergyLPMArt = exports.UnitEnergyGRWArt = exports.TurtwigArt = exports.SneaselArt = exports.RoseliaArt = exports.RioluArt = exports.PokemonFanClubArt = exports.MtCoronetArt = exports.MagnezoneArt = exports.MagnemiteArt = exports.GibleArt = exports.GardeniaArt = exports.EscapeBoardArt = exports.DialgaGXArt = exports.CynthiaArt = exports.BastiodonArt = void 0;
+exports.WeavileArt = exports.VolknerArt = exports.UnitEnergyLPMArt = exports.UnitEnergyGRWArt = exports.TurtwigArt = exports.SneaselArt = exports.RoseliaArt = exports.RioluArt = exports.PokemonFanClubArt = exports.MtCoronetArt = exports.MagnezoneArt = exports.MagnemiteArt = exports.LillieArt = exports.GibleArt = exports.GardeniaArt = exports.EscapeBoardArt = exports.DialgaGXArt = exports.CynthiaArt = exports.BastiodonArt = void 0;
 const cynthia_1 = require("./cynthia");
 const dialga_gx_1 = require("./dialga-gx");
 const escape_board_1 = require("./escape-board");
@@ -19,6 +19,7 @@ const riolu_1 = require("./riolu");
 const bastiodon_1 = require("./bastiodon");
 const volkner_1 = require("./volkner");
 const weavile_1 = require("./weavile");
+const lillie_1 = require("./lillie");
 class BastiodonArt extends bastiodon_1.Bastiodon {
     constructor() {
         super(...arguments);
@@ -61,6 +62,13 @@ class GibleArt extends gible_1.Gible {
     }
 }
 exports.GibleArt = GibleArt;
+class LillieArt extends lillie_1.Lillie {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UPR/UPR_125_R_EN_LG.png';
+    }
+}
+exports.LillieArt = LillieArt;
 class MagnemiteArt extends magnemite_1.Magnemite {
     constructor() {
         super(...arguments);

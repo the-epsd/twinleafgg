@@ -8,6 +8,7 @@ import { Magneton } from './magneton';
 import { Mimikyuex } from './mimikyu-ex';
 import { Pecharunt } from './pecharunt';
 import { Sylveonex } from './sylveon-ex';
+import { Tinkatonex } from './tinkaton-ex';
 export declare class AmpharosexArt extends Ampharosex {
     cardImage: string;
 }
@@ -36,5 +37,8 @@ export declare class PecharuntArt extends Pecharunt {
     cardImage: string;
 }
 export declare class SylveonexArt extends Sylveonex {
+    cardImage: string;
+}
+export declare class TinkatonexArt extends Tinkatonex {
     cardImage: string;
 }

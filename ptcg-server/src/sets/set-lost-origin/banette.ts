@@ -1,6 +1,7 @@
 import { PokemonCard, Stage, CardType, PowerType, State, StoreLike, PlayerType, Card, GameError, GameMessage, TrainerCard, TrainerType, ChooseCardsPrompt, SuperType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
+import { DiscardToHandEffect } from '../../game/store/effects/play-card-effects';
 
 export class Banette extends PokemonCard {
 
@@ -57,6 +58,14 @@ export class Banette extends PokemonCard {
 
       if (!hasSupporter) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      }
+
+      // Check if DiscardToHandEffect is prevented
+      const discardEffect = new DiscardToHandEffect(player, this);
+      store.reduceEffect(state, discardEffect);
+
+      if (discardEffect.preventDefault) {
+        return state;
       }
 
       let cards: Card[] = [];

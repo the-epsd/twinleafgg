@@ -4,8 +4,10 @@ import { AetherParadiseConvserationArea } from './aether-paradise-conservation-a
 import { AquaPatch } from './aqua-patch';
 import { BrookletHill } from './brooklet-hill';
 import { FieldBlower } from './field-blower';
+import { LycanrocGX } from './lycanroc-gx';
 import { Machoke } from './machoke';
 import { Mallow } from './mallow';
+import { MetagrossGX } from './metagross-gx';
 import { Mimikyu } from './mimikyu';
 import { RescueStretcher } from './rescue-stretcher';
 import { TapuLeleGX } from './tapu-lele-gx';
@@ -29,10 +31,16 @@ export declare class EnhancedHammerArt extends EnhancedHammer {
 export declare class FieldBlowerArt extends FieldBlower {
     cardImage: string;
 }
+export declare class LycanrocGXArt extends LycanrocGX {
+    cardImage: string;
+}
 export declare class MachokeArt extends Machoke {
     cardImage: string;
 }
 export declare class MallowArt extends Mallow {
+    cardImage: string;
+}
+export declare class MetagrossGXArt extends MetagrossGX {
     cardImage: string;
 }
 export declare class MimikyuArt extends Mimikyu {

@@ -1,9 +1,13 @@
+import { BuzzwoleGX } from './buzzwole-gx';
 import { Chimecho } from './chimecho';
 import { CounterEnergy } from './counter-energy';
 import { DevouredField } from './devoured-field';
 import { Gladion } from './gladion';
 import { Lusamine } from './lusamine';
 import { Misdreavus } from './misdreavus';
+export declare class BuzzwoleGXArt extends BuzzwoleGX {
+    cardImage: string;
+}
 export declare class ChimechoArt extends Chimecho {
     cardImage: string;
 }

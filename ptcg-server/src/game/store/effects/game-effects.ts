@@ -106,6 +106,7 @@ export class AttackEffect implements Effect {
   public damage: number;
   public ignoreWeakness = false;
   public ignoreResistance = false;
+  public source: PokemonCardList;
   target: any;
 
   constructor(player: Player, opponent: Player, attack: Attack) {
@@ -113,6 +114,7 @@ export class AttackEffect implements Effect {
     this.opponent = opponent;
     this.attack = attack;
     this.damage = attack.damage;
+    this.source = player.active;
   }
 }
 

@@ -3,7 +3,7 @@ import { TrainerType, CardType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { StateUtils } from '../../game/store/state-utils';
 import { CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
 import { ToolEffect } from '../../game/store/effects/play-card-effects';
@@ -28,7 +28,8 @@ export class DarkClaw extends TrainerCard {
     '(before applying Weakness and Resistance).';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof DealDamageEffect && effect.source.tool === this) {
+
+    if (effect instanceof PutDamageEffect && effect.source.tool === this) {
       const opponent = StateUtils.findOwner(state, effect.target);
       const player = effect.player;
 

@@ -26,8 +26,10 @@ class PokedexHandy extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.set = 'DP';
-        this.name = 'Pokedex Handy910is';
-        this.fullName = 'Pokedex Handy PL';
+        this.name = 'Pokedex HANDY910is';
+        this.fullName = 'Pokedex HANDY910is DP';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '111';
         this.text = 'Look at the top 2 cards of your deck, choose 1 of them, and put it into ' +
             'your hand. Put the other card on the bottom of your deck.';
     }

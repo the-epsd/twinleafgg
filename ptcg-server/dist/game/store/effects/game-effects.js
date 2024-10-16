@@ -72,6 +72,7 @@ export class AttackEffect {
         this.opponent = opponent;
         this.attack = attack;
         this.damage = attack.damage;
+        this.source = player.active;
     }
 }
 // how many prizes when target Pokemon is KO

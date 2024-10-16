@@ -81,10 +81,10 @@ export class PalPad extends TrainerCard {
       const player = effect.player;
 
       // Check if TrainerToDeckEffect is prevented
-      const toolEffect = new TrainerToDeckEffect(player, this);
-      store.reduceEffect(state, toolEffect);
+      const discardEffect = new TrainerToDeckEffect(player, this);
+      store.reduceEffect(state, discardEffect);
 
-      if (toolEffect.preventDefault) {
+      if (discardEffect.preventDefault) {
         // If prevented, just discard the card and return
         player.supporter.moveCardTo(effect.trainerCard, player.discard);
         return state;

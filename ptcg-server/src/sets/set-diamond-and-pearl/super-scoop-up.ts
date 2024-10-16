@@ -43,7 +43,11 @@ export class SuperScoopUp extends TrainerCard {
 
   public name: string = 'Super Scoop Up';
 
-  public fullName: string = 'Super Scoop Up CES';
+  public fullName: string = 'Super Scoop Up DP';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '115';
 
   public text: string =
     'Flip a coin. If heads, put 1 of your Pokemon ' +

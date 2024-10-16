@@ -71,6 +71,7 @@ export declare class AttackEffect implements Effect {
     damage: number;
     ignoreWeakness: boolean;
     ignoreResistance: boolean;
+    source: PokemonCardList;
     target: any;
     constructor(player: Player, opponent: Player, attack: Attack);
 }

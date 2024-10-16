@@ -39,6 +39,17 @@ function* playCard(next, store, state, effect) {
     if (targets.length === 0) {
         return state;
     }
+    const cardList = targets[0];
+    if (cardList.stage == card_types_1.Stage.BASIC) {
+        try {
+            const supporterEffect = new play_card_effects_1.SupporterEffect(player, effect.trainerCard);
+            store.reduceEffect(state, supporterEffect);
+        }
+        catch (_a) {
+            player.supporter.moveCardTo(effect.trainerCard, player.discard);
+            return state;
+        }
+    }
     const target = targets[0];
     let cards = [];
     yield store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, target, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.SPECIAL }, { min: 1, max: 1, allowCancel: true }), selected => {

@@ -45,6 +45,14 @@ class BuddyBuddyRescue extends trainer_card_1.TrainerCard {
             if (pokemonInOpponentsDiscard === 0 && pokemonInPlayersDiscard === 0) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
             }
+            // Check if DiscardToHandEffect is prevented
+            const discardEffect = new play_card_effects_1.DiscardToHandEffect(player, this);
+            store.reduceEffect(state, discardEffect);
+            if (discardEffect.preventDefault) {
+                // If prevented, just discard the card and return
+                player.supporter.moveCardTo(effect.trainerCard, player.discard);
+                return state;
+            }
             if (pokemonInOpponentsDiscard > 0) {
                 let cards = [];
                 store.prompt(state, new game_1.ChooseCardsPrompt(opponent.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, opponent.discard, { superType: card_types_1.SuperType.POKEMON }, { min: 1, max: 1, allowCancel: false, blocked }), selected => {

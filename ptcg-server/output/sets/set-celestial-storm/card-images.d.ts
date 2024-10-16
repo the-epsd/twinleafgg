@@ -16,6 +16,7 @@ import { Oricorio } from './oricorio';
 import { Swampert } from './swampert';
 import { TateAndLiza } from './tate-and-liza';
 import { Whismur } from './whismur';
+import { RayquazaGX } from './rayquaza-gx';
 export declare class ApricornMakerArt extends ApricornMaker {
     cardImage: string;
 }
@@ -50,6 +51,9 @@ export declare class NuzleafArt extends Nuzleaf {
     cardImage: string;
 }
 export declare class OricorioArt extends Oricorio {
+    cardImage: string;
+}
+export declare class RayquazaGXArt extends RayquazaGX {
     cardImage: string;
 }
 export declare class SableyeArt extends Sableye {

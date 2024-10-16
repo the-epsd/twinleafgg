@@ -1,7 +1,7 @@
 import { Effect } from '../../game/store/effects/effect';
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
-import { TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { DiscardToHandEffect, TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 import { TrainerCard } from '../../game/store/card/trainer-card';
@@ -21,7 +21,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   player.hand.moveCardTo(effect.trainerCard, player.supporter);
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
-  
+
   let pokemonsOrEnergyInDiscard: number = 0;
   const blocked: number[] = [];
   player.discard.cards.forEach((c, index) => {
@@ -33,28 +33,28 @@ function* playCard(next: Function, store: StoreLike, state: State,
       blocked.push(index);
     }
   });
-  
+
   // Player does not have correct cards in discard
   if (pokemonsOrEnergyInDiscard === 0) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
-  
+
   let cards: Card[] = [];
   yield store.prompt(state, new ChooseCardsPrompt(
     player.id,
     GameMessage.CHOOSE_CARD_TO_DECK,
     player.discard,
-    { },
+    {},
     { min: 1, max: 3, allowCancel: false, blocked }
   ), selected => {
     cards = selected || [];
     next();
   });
-  
+
   player.discard.moveCardsTo(cards, player.hand);
   player.supporter.moveCardTo(effect.trainerCard, player.discard);
-  
-  
+
+
 }
 
 export class LanasAssistance extends TrainerCard {
@@ -78,12 +78,24 @@ export class LanasAssistance extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+
+      const player = effect.player;
+
+      // Check if DiscardToHandEffect is prevented
+      const discardEffect = new DiscardToHandEffect(player, this);
+      store.reduceEffect(state, discardEffect);
+
+      if (discardEffect.preventDefault) {
+        // If prevented, just discard the card and return
+        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+        return state;
+      }
+
       const generator = playCard(() => generator.next(), store, state, this, effect);
       return generator.next().value;
     }
-    
+
     return state;
   }
-    
+
 }
-    

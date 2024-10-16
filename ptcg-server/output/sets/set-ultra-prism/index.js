@@ -9,6 +9,7 @@ exports.setUltraPrism = [
     new card_images_1.EscapeBoardArt(),
     new card_images_1.GardeniaArt(),
     new card_images_1.GibleArt(),
+    new card_images_1.LillieArt(),
     new card_images_1.MagnemiteArt(),
     new card_images_1.MagnezoneArt(),
     new card_images_1.MtCoronetArt(),

@@ -14,6 +14,7 @@ import { Fomantis } from './fomantis';
 import { Golduck } from './golduck';
 import { AlolanRattata } from './alolan_rattata';
 import { TimerBall } from './timer-ball';
+import { DecidueyeGX } from './decidueye-gx';
 
 export class AlolanGrimerArt extends AlolanGrimer {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SUM/SUM_057_R_EN_LG.png';
@@ -25,6 +26,10 @@ export class AlolanMukArt extends AlolanMuk {
 
 export class AlolanRattataArt extends AlolanRattata {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SUM/SUM_076_R_EN_LG.png';
+}
+
+export class DecidueyeGXArt extends DecidueyeGX {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SUM/SUM_057_R_EN_LG.png';
 }
 
 export class DragonairArt extends Dragonair {

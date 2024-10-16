@@ -1,10 +1,11 @@
 import { Card } from '../../game/store/card/card';
-import { AlolanGrimerArt, AlolanMukArt, AlolanRattataArt, DragonairArt, EnergyRetrievalArt, ExpShareArt, FomantisArt, GolduckArt, HerdierArt, OranguruArt, ProfessorKukuiArt, RainbowEnergyArt, RareCandyArt, RepelArt, TimerBallArt } from './card-images';
+import { AlolanGrimerArt, AlolanMukArt, AlolanRattataArt, DecidueyeGXArt, DragonairArt, EnergyRetrievalArt, ExpShareArt, FomantisArt, GolduckArt, HerdierArt, OranguruArt, ProfessorKukuiArt, RainbowEnergyArt, RareCandyArt, RepelArt, TimerBallArt } from './card-images';
 
 export const setSunAndMoon: Card[] = [
   new AlolanGrimerArt(),
   new AlolanMukArt(),
   new AlolanRattataArt(),
+  new DecidueyeGXArt(),
   new DragonairArt(),
   new EnergyRetrievalArt(),
   new ExpShareArt(),

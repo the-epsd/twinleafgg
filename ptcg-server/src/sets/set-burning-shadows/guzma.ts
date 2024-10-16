@@ -1,7 +1,7 @@
 import { GameError, PokemonCardList } from '../../game';
 import { GameLog, GameMessage } from '../../game/game-message';
 import { PlayerType, SlotType } from '../../game/store/actions/play-card-action';
-import { TrainerType } from '../../game/store/card/card-types';
+import { Stage, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { SupporterEffect, TrainerEffect } from '../../game/store/effects/play-card-effects';
@@ -19,7 +19,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   if (supporterTurn > 0) {
     throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
   }
-  
+
   // Don't allow to play both Guzmas when opponen has an empty bench
   const benchCount = opponent.bench.reduce((sum, b) => {
     return sum + (b.cards.length > 0 ? 1 : 0);
@@ -28,7 +28,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   //let playTwoCards = false;
 
   if (benchCount > 0) {
-    
+
     try {
       const supporterEffect = new SupporterEffect(player, effect.trainerCard);
       store.reduceEffect(state, supporterEffect);
@@ -36,43 +36,43 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
       player.supporter.moveCardTo(effect.trainerCard, player.discard);
       return state;
     }
-    
-  // playTwoCards = true;
+
+    // playTwoCards = true;
 
     return store.prompt(state, new ChoosePokemonPrompt(
       player.id,
       GameMessage.CHOOSE_POKEMON_TO_SWITCH,
       PlayerType.TOP_PLAYER,
-      [ SlotType.BENCH ],
+      [SlotType.BENCH],
       { allowCancel: false }
     ), targets => {
       if (!targets || targets.length === 0) {
         return;
       }
-      
+
       opponent.active.clearEffects();
       opponent.switchPokemon(targets[0]);
-      
+
       store.log(state, GameLog.LOG_PLAYER_SWITCHES_POKEMON_TO_ACTIVE, { name: player.name, card: targets[0].getPokemonCard()!.name });
-      
+
       next();
-    
+
       // Do not discard the card yet
       effect.preventDefault = true;
-    
+
       const playerHasBench = player.bench.some(b => b.cards.length > 0);
-      
+
       if (!playerHasBench) {
         player.supporter.moveCardTo(effect.trainerCard, player.discard);
         return state;
       }
-      
+
       let target: PokemonCardList[] = [];
       return store.prompt(state, new ChoosePokemonPrompt(
         player.id,
         GameMessage.CHOOSE_POKEMON_TO_SWITCH,
         PlayerType.BOTTOM_PLAYER,
-        [ SlotType.BENCH ],
+        [SlotType.BENCH],
         { allowCancel: false }
       ), results => {
         target = results || [];
@@ -81,12 +81,24 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
         if (target.length === 0) {
           return state;
         }
-    
+
+        const cardList = results[0];
+
+        if (cardList.stage == Stage.BASIC) {
+          try {
+            const supporterEffect = new SupporterEffect(player, effect.trainerCard);
+            store.reduceEffect(state, supporterEffect);
+          } catch {
+            player.supporter.moveCardTo(effect.trainerCard, player.discard);
+            return state;
+          }
+        }
+
         player.active.clearEffects();
         player.switchPokemon(target[0]);
-        
+
         store.log(state, GameLog.LOG_PLAYER_SWITCHES_POKEMON_TO_ACTIVE, { name: player.name, card: target[0].getPokemonCard()!.name });
-        
+
         player.supporter.moveCardTo(effect.trainerCard, player.discard);
         return state;
       });

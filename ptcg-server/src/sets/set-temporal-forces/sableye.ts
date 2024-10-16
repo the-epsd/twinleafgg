@@ -64,8 +64,16 @@ export class Sableye extends PokemonCard {
       });
 
       if (!hasDamagedBench) {
-        throw new GameError(GameMessage.CANNOT_USE_ATTACK);
+        return state;
       }
+      const blockedTo: CardTarget[] = [];
+
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
+        if (cardList !== opponent.active) {
+          blockedTo.push(target);
+        }
+      });
+
 
       const maxAllowedDamage: DamageMap[] = [];
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
@@ -83,8 +91,7 @@ export class Sableye extends PokemonCard {
         {
           min: 0,
           allowCancel: false,
-          blockedFrom: blocked,
-          blockedTo: blocked,
+          blockedTo: blockedTo,
           singleDestinationTarget: true
         }
       ), transfers => {
@@ -96,7 +103,11 @@ export class Sableye extends PokemonCard {
           const source = StateUtils.getTarget(state, player, transfer.from);
           const target = StateUtils.getTarget(state, player, transfer.to);
 
-          if (target == opponent.active) {
+          if (target !== opponent.active) {
+            throw new GameError(GameMessage.CANNOT_USE_POWER);
+          }
+
+          if (source == opponent.active) {
             throw new GameError(GameMessage.CANNOT_USE_POWER);
           }
 

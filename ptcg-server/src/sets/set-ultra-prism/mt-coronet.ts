@@ -5,6 +5,7 @@ import { EnergyType, SuperType, TrainerType } from '../../game/store/card/card-t
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { UseStadiumEffect } from '../../game/store/effects/game-effects';
+import { DiscardToHandEffect } from '../../game/store/effects/play-card-effects';
 import { StateUtils } from '../../game/store/state-utils';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
@@ -12,7 +13,7 @@ import { StoreLike } from '../../game/store/store-like';
 function* useStadium(next: Function, store: StoreLike, state: State, effect: UseStadiumEffect): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
-  
+
   let basicEnergyInDiscard: number = 0;
   const blocked: number[] = [];
   player.discard.cards.forEach((c, index) => {
@@ -23,7 +24,7 @@ function* useStadium(next: Function, store: StoreLike, state: State, effect: Use
       blocked.push(index);
     }
   });
-  
+
   if (basicEnergyInDiscard === 0) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
@@ -50,11 +51,11 @@ function* useStadium(next: Function, store: StoreLike, state: State, effect: Use
         cards
       ), () => next());
     }
-    
+
     cards.forEach((card, index) => {
       player.discard.moveCardTo(card, player.hand);
     });
-    
+
     cards.forEach((card, index) => {
       store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
     });
@@ -71,7 +72,7 @@ export class MtCoronet extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '130';
-  
+
   public trainerType = TrainerType.STADIUM;
 
   public set = 'UPR';
@@ -79,11 +80,24 @@ export class MtCoronet extends TrainerCard {
   public name = 'Mt. Coronet';
 
   public fullName = 'Mt. Coronet RCL';
-  
-  public  text = 'Once during each player\'s turn, that player may put 2 [M] Energy cards from their discard pile into their hand.';
-    
+
+  public text = 'Once during each player\'s turn, that player may put 2 [M] Energy cards from their discard pile into their hand.';
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof UseStadiumEffect && StateUtils.getStadiumCard(state) === this) {
+
+      const player = effect.player;
+
+      // Check if DiscardToHandEffect is prevented
+      const discardEffect = new DiscardToHandEffect(player, this);
+      store.reduceEffect(state, discardEffect);
+
+      if (discardEffect.preventDefault) {
+        // If prevented, just discard the card and return
+        player.supporter.moveCardTo(effect.stadium, player.discard);
+        return state;
+      }
+
       const generator = useStadium(() => generator.next(), store, state, effect);
       return generator.next().value;
     }

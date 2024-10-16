@@ -42,6 +42,14 @@ class Milotic extends pokemon_card_1.PokemonCard {
             if (player.deck.cards.length === 0) {
                 return state;
             }
+            // Check if DiscardToHandEffect is prevented
+            const discardEffect = new play_card_effects_1.DiscardToHandEffect(player, this);
+            store.reduceEffect(state, discardEffect);
+            if (discardEffect.preventDefault) {
+                // If prevented, just discard the card and return
+                player.supporter.moveCardTo(effect.pokemonCard, player.discard);
+                return state;
+            }
             // Try to reduce PowerEffect, to check if something is blocking our ability
             try {
                 const stub = new game_effects_1.PowerEffect(player, {

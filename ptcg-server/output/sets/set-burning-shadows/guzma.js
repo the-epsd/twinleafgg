@@ -53,6 +53,17 @@ function* playCard(next, store, state, effect) {
                 if (target.length === 0) {
                     return state;
                 }
+                const cardList = results[0];
+                if (cardList.stage == card_types_1.Stage.BASIC) {
+                    try {
+                        const supporterEffect = new play_card_effects_1.SupporterEffect(player, effect.trainerCard);
+                        store.reduceEffect(state, supporterEffect);
+                    }
+                    catch (_a) {
+                        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+                        return state;
+                    }
+                }
                 player.active.clearEffects();
                 player.switchPokemon(target[0]);
                 store.log(state, game_message_1.GameLog.LOG_PLAYER_SWITCHES_POKEMON_TO_ACTIVE, { name: player.name, card: target[0].getPokemonCard().name });

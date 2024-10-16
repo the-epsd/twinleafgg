@@ -1,7 +1,7 @@
 import { CardType, ChooseCardsPrompt, ConfirmPrompt, GameLog, GameMessage, PokemonCard, PowerType, ShowCardsPrompt, Stage, State, StateUtils, StoreLike, SuperType, TrainerCard, TrainerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
-import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { DiscardToHandEffect, PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 
 export class Delcatty extends PokemonCard {
 
@@ -33,15 +33,15 @@ export class Delcatty extends PokemonCard {
       text: ''
     }
   ];
-  
+
   public set: string = 'CES';
 
   public cardImage: string = 'assets/cardback.png';
-  
+
   public setNumber: string = '121';
-  
+
   public name: string = 'Delcatty';
-  
+
   public fullName: string = 'Delcatty CES';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -49,13 +49,21 @@ export class Delcatty extends PokemonCard {
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-  
+
       const supportersInDiscard = player.discard.cards.filter(c => c instanceof TrainerCard && c.trainerType === TrainerType.SUPPORTER).length;
-      
+
       if (supportersInDiscard === 0) {
         return state;
       }
-      
+
+      // Check if DiscardToHandEffect is prevented
+      const discardEffect = new DiscardToHandEffect(player, this);
+      store.reduceEffect(state, discardEffect);
+
+      if (discardEffect.preventDefault) {
+        return state;
+      }
+
       try {
         const stub = new PowerEffect(player, {
           name: 'test',
@@ -66,15 +74,15 @@ export class Delcatty extends PokemonCard {
       } catch {
         return state;
       }
-      
+
       state = store.prompt(state, new ConfirmPrompt(
         effect.player.id,
         GameMessage.WANT_TO_USE_ABILITY,
       ), wantToUse => {
         if (wantToUse) {
-          
+
           const max = Math.min(supportersInDiscard, 2);
-      
+
           state = store.prompt(state, new ChooseCardsPrompt(
             player.id,
             GameMessage.CHOOSE_CARD_TO_HAND,
@@ -83,7 +91,7 @@ export class Delcatty extends PokemonCard {
             { min: max, max: max, allowCancel: false }
           ), selected => {
             const cards = selected || [];
-            
+
             store.prompt(state, [new ShowCardsPrompt(
               opponent.id,
               GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
@@ -91,11 +99,11 @@ export class Delcatty extends PokemonCard {
             )], () => {
               player.discard.moveCardsTo(cards, player.hand);
             });
-            
+
             cards.forEach(card => {
               store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
             });
-            
+
             return state;
           });
         }

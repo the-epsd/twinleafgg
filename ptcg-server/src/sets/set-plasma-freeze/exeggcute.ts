@@ -8,6 +8,7 @@ import { PowerType } from '../../game/store/card/pokemon-types';
 import { GameMessage } from '../../game/game-message';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { GameError } from '../../game/game-error';
+import { DiscardToHandEffect } from '../../game/store/effects/play-card-effects';
 
 export class Exeggcute extends PokemonCard {
 
@@ -63,6 +64,14 @@ export class Exeggcute extends PokemonCard {
       // Power already used
       if (player.marker.hasMarker(this.PROPAGATION_MAREKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
+      }
+
+      // Check if DiscardToHandEffect is prevented
+      const discardEffect = new DiscardToHandEffect(player, this);
+      store.reduceEffect(state, discardEffect);
+
+      if (discardEffect.preventDefault) {
+        return state;
       }
 
       player.marker.addMarker(this.PROPAGATION_MAREKER, this);

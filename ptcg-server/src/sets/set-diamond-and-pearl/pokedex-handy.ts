@@ -38,9 +38,13 @@ export class PokedexHandy extends TrainerCard {
 
   public set: string = 'DP';
 
-  public name: string = 'Pokedex Handy910is';
+  public name: string = 'Pokedex HANDY910is';
 
-  public fullName: string = 'Pokedex Handy PL';
+  public fullName: string = 'Pokedex HANDY910is DP';
+
+  public cardImage: string = 'assets/cardback.png';
+
+  public setNumber: string = '111';
 
   public text: string =
     'Look at the top 2 cards of your deck, choose 1 of them, and put it into ' +

@@ -5,6 +5,7 @@ import { Blitzle } from './blitzle';
 import { Chandelure } from './chandelure';
 import { Durant } from './durant';
 import { Eelektrik } from './eelektrik';
+import { Eviolite } from './eviolite';
 import { Kyurem } from './kyurem';
 import { Lampent } from './lampent';
 import { PlumeFossil } from './plume-fossil';
@@ -35,6 +36,9 @@ export declare class EelektrikArt extends Eelektrik {
     cardImage: string;
 }
 export declare class KyuremArt extends Kyurem {
+    cardImage: string;
+}
+export declare class EvioliteArt extends Eviolite {
     cardImage: string;
 }
 export declare class LampentArt extends Lampent {

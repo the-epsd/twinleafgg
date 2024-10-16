@@ -8,10 +8,10 @@ import {
   SlotType,
   StateUtils
 } from '../../game';
-import { SuperType, TrainerType } from '../../game/store/card/card-types';
+import { Stage, SuperType, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
-import { TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { SupporterEffect, TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
@@ -23,14 +23,14 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   if (player.supporterTurn > 0) {
     throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
   }
-  
+
   let cardsInHand: Card[] = [];
-  
+
   cardsInHand = player.hand.cards.filter(c => c !== effect.trainerCard);
   if (cardsInHand.length < 2) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
-  
+
   let hasPokemonWithEnergy = false;
   const blocked: CardTarget[] = [];
   opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
@@ -46,8 +46,8 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   }
 
   effect.preventDefault = true;
-  player.hand.moveCardTo(effect.trainerCard, player.supporter);  
-  
+  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+
   let targets: PokemonCardList[] = [];
   yield store.prompt(state, new ChoosePokemonPrompt(
     player.id,
@@ -65,6 +65,18 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     return state;
   }
 
+  const cardList = targets[0];
+
+  if (cardList.stage == Stage.BASIC) {
+    try {
+      const supporterEffect = new SupporterEffect(player, effect.trainerCard);
+      store.reduceEffect(state, supporterEffect);
+    } catch {
+      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+      return state;
+    }
+  }
+
   const target = targets[0];
   let cards: Card[] = [];
   yield store.prompt(state, new ChooseCardsPrompt(
@@ -77,7 +89,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     cards = selected;
     next();
   });
-  
+
   player.supporter.moveCardTo(effect.trainerCard, player.discard);
   target.moveCardsTo(cards, opponent.discard);
   return state;

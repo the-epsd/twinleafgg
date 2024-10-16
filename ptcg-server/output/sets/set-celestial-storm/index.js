@@ -15,6 +15,7 @@ exports.setCelestialStorm = [
     new card_images_1.MudkipArt(),
     new card_images_1.NuzleafArt(),
     new card_images_1.OricorioArt(),
+    new card_images_1.RayquazaGXArt(),
     new card_images_1.SableyeArt(),
     new card_images_1.SlakingArt(),
     new card_images_1.SlakothArt(),

@@ -41,6 +41,12 @@ class Delcatty extends game_1.PokemonCard {
             if (supportersInDiscard === 0) {
                 return state;
             }
+            // Check if DiscardToHandEffect is prevented
+            const discardEffect = new play_card_effects_1.DiscardToHandEffect(player, this);
+            store.reduceEffect(state, discardEffect);
+            if (discardEffect.preventDefault) {
+                return state;
+            }
             try {
                 const stub = new game_effects_1.PowerEffect(player, {
                     name: 'test',

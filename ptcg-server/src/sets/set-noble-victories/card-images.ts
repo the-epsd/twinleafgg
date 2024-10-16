@@ -5,6 +5,7 @@ import { Blitzle } from './blitzle';
 import { Chandelure } from './chandelure';
 import { Durant } from './durant';
 import { Eelektrik } from './eelektrik';
+import { Eviolite } from './eviolite';
 import { Kyurem } from './kyurem';
 import { Lampent } from './lampent';
 import { PlumeFossil } from './plume-fossil';
@@ -43,6 +44,10 @@ export class EelektrikArt extends Eelektrik {
 
 export class KyuremArt extends Kyurem {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/NVI/NVI_034_R_EN.png';
+}
+
+export class EvioliteArt extends Eviolite {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/NVI/NVI_091_R_EN.png';
 }
 
 export class LampentArt extends Lampent {

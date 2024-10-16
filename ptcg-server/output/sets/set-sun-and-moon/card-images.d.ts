@@ -14,6 +14,7 @@ import { Fomantis } from './fomantis';
 import { Golduck } from './golduck';
 import { AlolanRattata } from './alolan_rattata';
 import { TimerBall } from './timer-ball';
+import { DecidueyeGX } from './decidueye-gx';
 export declare class AlolanGrimerArt extends AlolanGrimer {
     cardImage: string;
 }
@@ -21,6 +22,9 @@ export declare class AlolanMukArt extends AlolanMuk {
     cardImage: string;
 }
 export declare class AlolanRattataArt extends AlolanRattata {
+    cardImage: string;
+}
+export declare class DecidueyeGXArt extends DecidueyeGX {
     cardImage: string;
 }
 export declare class DragonairArt extends Dragonair {

@@ -53,9 +53,9 @@ class DarkraiVSTAR extends pokemon_card_1.PokemonCard {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
             // Check if DiscardToHandEffect is prevented
-            const toolEffect = new play_card_effects_1.DiscardToHandEffect(player, this);
-            store.reduceEffect(state, toolEffect);
-            if (toolEffect.preventDefault) {
+            const discardEffect = new play_card_effects_1.DiscardToHandEffect(player, this);
+            store.reduceEffect(state, discardEffect);
+            if (discardEffect.preventDefault) {
                 // If prevented, just return
                 player.usedVSTAR = true;
                 player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {

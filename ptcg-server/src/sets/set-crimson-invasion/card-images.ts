@@ -1,9 +1,14 @@
+import { BuzzwoleGX } from './buzzwole-gx';
 import { Chimecho } from './chimecho';
 import { CounterEnergy } from './counter-energy';
 import { DevouredField } from './devoured-field';
 import { Gladion } from './gladion';
 import { Lusamine } from './lusamine';
 import { Misdreavus } from './misdreavus';
+
+export class BuzzwoleGXArt extends BuzzwoleGX {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CIN/CIN_057_R_EN.png';
+}
 
 export class ChimechoArt extends Chimecho {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CIN/CIN_043_R_EN_LG.png';
