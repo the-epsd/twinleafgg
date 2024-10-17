@@ -18,6 +18,9 @@ import {
 import { CoinFlipPrompt } from '../prompts/coin-flip-prompt';
 import { DealDamageEffect, ApplyWeaknessEffect } from '../effects/attack-effects';
 import { TrainerEffect } from '../effects/play-card-effects';
+import { ConfirmPrompt } from '../prompts/confirm-prompt';
+import { checkState } from './check-effect';
+import { ChooseAttackPrompt } from '../prompts/choose-attack-prompt';
 
 function applyWeaknessAndResistance(
   damage: number,
@@ -121,8 +124,66 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
     yield store.waitPrompt(state, () => next());
   }
 
+  // Check for knockouts and process them
+  state = checkState(store, state);
+
+  // Check if the opponent's active Pokémon is knocked out
+  if (opponent.active.cards.length === 0) {
+    // Wait for the opponent to select a new active Pokémon
+    yield store.waitPrompt(state, () => next());
+  }
+
+  const attackThisTurn = player.active.attacksThisTurn;
+  const playerActive = player.active.getPokemonCard();
+
+  // Now, we can check if the Pokémon can attack again
+  const canAttackAgain = playerActive && playerActive.canAttackTwice && attackThisTurn && attackThisTurn < 2;
+  const hasBarrageAbility = player.active.getPokemonCard()?.powers.some(power => power.barrage === true);
+
+  if (canAttackAgain || hasBarrageAbility) {
+    // Prompt the player if they want to attack again
+    yield store.prompt(state, new ConfirmPrompt(
+      player.id,
+      GameMessage.WANT_TO_ATTACK_AGAIN
+    ), wantToAttackAgain => {
+      if (wantToAttackAgain) {
+        if (hasBarrageAbility) {
+          // Use ChooseAttackPrompt for Barrage ability
+          store.prompt(state, new ChooseAttackPrompt(
+            player.id,
+            GameMessage.CHOOSE_ATTACK_TO_COPY,
+            [player.active.cards[0]],
+            { allowCancel: false }
+          ), selectedAttack => {
+            if (selectedAttack) {
+              const secondAttackEffect = new AttackEffect(player, opponent, selectedAttack);
+              state = useAttack(() => next(), store, state, secondAttackEffect).next().value;
+
+              if (store.hasPrompts()) {
+                state = store.waitPrompt(state, () => next());
+              }
+
+              if (secondAttackEffect.damage > 0) {
+                const dealDamage = new DealDamageEffect(secondAttackEffect, secondAttackEffect.damage);
+                state = store.reduceEffect(state, dealDamage);
+              }
+
+              return state; // Successfully executed attack, exit the function
+            }
+            next();
+          });
+        } else {
+          // Recursively call useAttack for the second attack (for non-Barrage abilities)
+          const dealDamage = new DealDamageEffect(attackEffect, attackEffect.damage);
+          state = store.reduceEffect(state, dealDamage);
+        }
+      }
+      next();
+    });
+  }
   return store.reduceEffect(state, new EndTurnEffect(player));
 }
+
 export function gameReducer(store: StoreLike, state: State, effect: Effect): State {
 
   if (effect instanceof KnockOutEffect) {

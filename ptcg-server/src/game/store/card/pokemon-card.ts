@@ -46,6 +46,8 @@ export abstract class PokemonCard extends Card {
 
   public archetype: CardType[] = [];
 
+  public canAttackTwice?: boolean;
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect) {
       for (let i = 0; i < this.attacks.length; i++) {

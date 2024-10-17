@@ -49,8 +49,12 @@ class AlolanNinetalesGX extends game_1.PokemonCard {
             const player = effect.player;
             // Try to reduce PowerEffect, to check if something is blocking our ability
             try {
-                const powerEffect = new game_effects_1.PowerEffect(player, this.powers[0], this);
-                store.reduceEffect(state, powerEffect);
+                const stub = new game_effects_1.PowerEffect(player, {
+                    name: 'test',
+                    powerType: game_1.PowerType.ABILITY,
+                    text: ''
+                }, this);
+                store.reduceEffect(state, stub);
             }
             catch (_a) {
                 return state;
@@ -61,6 +65,11 @@ class AlolanNinetalesGX extends game_1.PokemonCard {
                         new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: game_1.SuperType.TRAINER, trainerType: game_1.TrainerType.ITEM }, { min: 0, max: 2, allowCancel: false })
                     ], selected => {
                         const cards = selected || [];
+                        player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
+                            if (cardList.getPokemonCard() === this) {
+                                cardList.addSpecialCondition(game_1.SpecialCondition.ABILITY_USED);
+                            }
+                        });
                         player.deck.moveCardsTo(cards, player.hand);
                     });
                 }

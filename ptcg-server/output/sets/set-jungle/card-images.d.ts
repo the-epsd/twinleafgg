@@ -1,6 +1,7 @@
 import { Bellsprout } from './bellsprout';
 import { Butterfree } from './butterfree';
 import { Clefable } from './clefable';
+import { Cubone } from './cubone';
 import { Dodrio } from './dodrio';
 import { Electrode } from './electrode';
 import { Jigglypuff } from './jigglypuff';
@@ -20,6 +21,9 @@ export declare class ButterfreeArt extends Butterfree {
     cardImage: string;
 }
 export declare class ClefableArt extends Clefable {
+    cardImage: string;
+}
+export declare class CuboneArt extends Cubone {
     cardImage: string;
 }
 export declare class DodrioArt extends Dodrio {

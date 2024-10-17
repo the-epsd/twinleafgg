@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SuperType, CardTag, EnergyType } from '../../game/store/card/card-types';
+import { Stage, CardType, SuperType, CardTag, EnergyType, SpecialCondition } from '../../game/store/card/card-types';
 import {
   PowerType, StoreLike, State, StateUtils, GameError, GameMessage,
   PlayerType, SlotType,
@@ -97,12 +97,19 @@ export class MetagrossGX extends PokemonCard {
         player.discard,
         PlayerType.BOTTOM_PLAYER,
         [SlotType.ACTIVE],
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Metal Energy' },
-        { allowCancel: false, min: 1, max: 1 }
+        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+        { allowCancel: false, min: 1, max: 1, differentTypes: true, validCardTypes: [CardType.METAL, CardType.PSYCHIC] },
       ), transfers => {
         transfers = transfers || [];
 
         player.marker.addMarker(this.GEOTECH_MARKER, this);
+
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+          if (cardList.getPokemonCard() === this) {
+            cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+          }
+        });
+
         for (const transfer of transfers) {
           const target = StateUtils.getTarget(state, player, transfer.to);
           player.discard.moveCardTo(transfer.card, target);

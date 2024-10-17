@@ -1,9 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.VenonatArt = exports.SpearowArt = exports.ScytherArt = exports.PokeBallArt = exports.PikachuArt = exports.ParasArt = exports.OddishArt = exports.NidoranFemaleArt = exports.MeowthArt = exports.JigglypuffArt = exports.ElectrodeArt = exports.DodrioArt = exports.ClefableArt = exports.ButterfreeArt = exports.BellsproutArt = void 0;
+exports.VenonatArt = exports.SpearowArt = exports.ScytherArt = exports.PokeBallArt = exports.PikachuArt = exports.ParasArt = exports.OddishArt = exports.NidoranFemaleArt = exports.MeowthArt = exports.JigglypuffArt = exports.ElectrodeArt = exports.DodrioArt = exports.CuboneArt = exports.ClefableArt = exports.ButterfreeArt = exports.BellsproutArt = void 0;
 const bellsprout_1 = require("./bellsprout");
 const butterfree_1 = require("./butterfree");
 const clefable_1 = require("./clefable");
+const cubone_1 = require("./cubone");
 const dodrio_1 = require("./dodrio");
 const electrode_1 = require("./electrode");
 const jigglypuff_1 = require("./jigglypuff");
@@ -37,6 +38,13 @@ class ClefableArt extends clefable_1.Clefable {
     }
 }
 exports.ClefableArt = ClefableArt;
+class CuboneArt extends cubone_1.Cubone {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pkmncards.com/wp-content/uploads/cubone-jungle-ju-50.jpg';
+    }
+}
+exports.CuboneArt = CuboneArt;
 class DodrioArt extends dodrio_1.Dodrio {
     constructor() {
         super(...arguments);

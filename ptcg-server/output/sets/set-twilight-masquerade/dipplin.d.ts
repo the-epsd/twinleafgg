@@ -12,6 +12,7 @@ export declare class Dipplin extends PokemonCard {
         type: CardType;
     }[];
     retreat: CardType[];
+    canAttackTwice: boolean;
     powers: {
         name: string;
         powerType: PowerType;

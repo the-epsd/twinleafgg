@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SuperType, CardTag } from '../../game/store/card/card-types';
+import { Stage, CardType, SuperType, CardTag, SpecialCondition } from '../../game/store/card/card-types';
 import {
   PowerType, StoreLike, State, StateUtils, GameError, GameMessage,
   PlayerType, SlotType,
@@ -86,6 +86,10 @@ export class GardevoirGX extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
+      if (player.marker.hasMarker(this.SPRING_MARKER, this)) {
+        throw new GameError(GameMessage.POWER_ALREADY_USED);
+      }
+
       return store.prompt(state, new AttachEnergyPrompt(
         player.id,
         GameMessage.ATTACH_ENERGY_TO_BENCH,
@@ -97,6 +101,13 @@ export class GardevoirGX extends PokemonCard {
       ), transfers => {
         transfers = transfers || [];
         player.marker.addMarker(this.SPRING_MARKER, this);
+
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+          if (cardList.getPokemonCard() === this) {
+            cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+          }
+        });
+
         for (const transfer of transfers) {
           const target = StateUtils.getTarget(state, player, transfer.to);
           player.hand.moveCardTo(transfer.card, target);

@@ -77,20 +77,20 @@ class Clefable extends pokemon_card_1.PokemonCard {
             const opponent = game_1.StateUtils.getOpponent(state, player);
             player.active.marker.addMarker(this.REDUCE_DAMAGE_MARKER, this);
             opponent.marker.addMarker(this.CLEAR_REDUCE_DAMAGE_MARKER, this);
-            if (effect instanceof attack_effects_1.PutDamageEffect
-                && effect.target.marker.hasMarker(this.REDUCE_DAMAGE_MARKER)) {
-                effect.damage -= 20;
-                return state;
-            }
-            if (effect instanceof game_phase_effects_1.EndTurnEffect
-                && effect.player.marker.hasMarker(this.CLEAR_REDUCE_DAMAGE_MARKER, this)) {
-                effect.player.marker.removeMarker(this.CLEAR_REDUCE_DAMAGE_MARKER, this);
-                const opponent = game_1.StateUtils.getOpponent(state, effect.player);
-                opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList) => {
-                    cardList.marker.removeMarker(this.REDUCE_DAMAGE_MARKER, this);
-                });
-            }
             return state;
+        }
+        if (effect instanceof attack_effects_1.PutDamageEffect
+            && effect.target.marker.hasMarker(this.REDUCE_DAMAGE_MARKER)) {
+            effect.damage -= 20;
+            return state;
+        }
+        if (effect instanceof game_phase_effects_1.EndTurnEffect
+            && effect.player.marker.hasMarker(this.CLEAR_REDUCE_DAMAGE_MARKER, this)) {
+            effect.player.marker.removeMarker(this.CLEAR_REDUCE_DAMAGE_MARKER, this);
+            const opponent = game_1.StateUtils.getOpponent(state, effect.player);
+            opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList) => {
+                cardList.marker.removeMarker(this.REDUCE_DAMAGE_MARKER, this);
+            });
         }
         return state;
     }

@@ -60,9 +60,17 @@ class GardevoirGX extends pokemon_card_1.PokemonCard {
             if (!hasEnergyInHand) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
+            if (player.marker.hasMarker(this.SPRING_MARKER, this)) {
+                throw new game_1.GameError(game_1.GameMessage.POWER_ALREADY_USED);
+            }
             return store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.hand, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { superType: card_types_1.SuperType.ENERGY, name: 'Fairy Energy' }, { allowCancel: false, min: 1, max: 1 }), transfers => {
                 transfers = transfers || [];
                 player.marker.addMarker(this.SPRING_MARKER, this);
+                player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
+                    if (cardList.getPokemonCard() === this) {
+                        cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
+                    }
+                });
                 for (const transfer of transfers) {
                     const target = game_1.StateUtils.getTarget(state, player, transfer.to);
                     player.hand.moveCardTo(transfer.card, target);

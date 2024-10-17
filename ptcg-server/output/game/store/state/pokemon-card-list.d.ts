@@ -42,6 +42,7 @@ export declare class PokemonCardList extends CardList {
     tool: Card | undefined;
     stadium: Card | undefined;
     stage: Stage;
+    attacksThisTurn?: number;
     getPokemons(): PokemonCard[];
     getPokemonCard(): PokemonCard | undefined;
     isBasic(): boolean;

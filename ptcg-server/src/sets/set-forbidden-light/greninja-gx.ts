@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
+import { Stage, CardType, CardTag, SpecialCondition } from '../../game/store/card/card-types';
 import {
   PowerType, StoreLike, State, StateUtils, GameError, GameMessage,
   PlayerType, SlotType,
@@ -65,10 +65,15 @@ export class GreninjaGX extends PokemonCard {
     // Shuriken Flurry
     if (effect instanceof EvolveEffect && effect.pokemonCard === this) {
       const player = effect.player;
+
       // Try to reduce PowerEffect, to check if something is blocking our ability
       try {
-        const powerEffect = new PowerEffect(player, this.powers[0], this);
-        store.reduceEffect(state, powerEffect);
+        const stub = new PowerEffect(player, {
+          name: 'test',
+          powerType: PowerType.ABILITY,
+          text: ''
+        }, this);
+        store.reduceEffect(state, stub);
       } catch {
         return state;
       }
@@ -88,6 +93,13 @@ export class GreninjaGX extends PokemonCard {
             if (!targets || targets.length === 0) {
               return;
             }
+
+            player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+              if (cardList.getPokemonCard() === this) {
+                cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+              }
+            });
+
             targets.forEach(target => {
               target.damage += 30;
             });

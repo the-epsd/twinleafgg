@@ -12,6 +12,9 @@ const game_effects_1 = require("../effects/game-effects");
 const coin_flip_prompt_1 = require("../prompts/coin-flip-prompt");
 const attack_effects_1 = require("../effects/attack-effects");
 const play_card_effects_1 = require("../effects/play-card-effects");
+const confirm_prompt_1 = require("../prompts/confirm-prompt");
+const check_effect_1 = require("./check-effect");
+const choose_attack_prompt_1 = require("../prompts/choose-attack-prompt");
 function applyWeaknessAndResistance(damage, cardTypes, weakness, resistance) {
     let multiply = 1;
     let modifier = 0;
@@ -33,6 +36,7 @@ function applyWeaknessAndResistance(damage, cardTypes, weakness, resistance) {
     return (damage * multiply) + modifier;
 }
 function* useAttack(next, store, state, effect) {
+    var _a;
     const player = effect.player;
     const opponent = state_utils_1.StateUtils.getOpponent(state, player);
     if (card_types_1.Format.STANDARD) {
@@ -87,6 +91,49 @@ function* useAttack(next, store, state, effect) {
     }
     if (store.hasPrompts()) {
         yield store.waitPrompt(state, () => next());
+    }
+    // Check for knockouts and process them
+    state = check_effect_1.checkState(store, state);
+    // Check if the opponent's active Pokémon is knocked out
+    if (opponent.active.cards.length === 0) {
+        // Wait for the opponent to select a new active Pokémon
+        yield store.waitPrompt(state, () => next());
+    }
+    const attackThisTurn = player.active.attacksThisTurn;
+    const playerActive = player.active.getPokemonCard();
+    // Now, we can check if the Pokémon can attack again
+    const canAttackAgain = playerActive && playerActive.canAttackTwice && attackThisTurn && attackThisTurn < 2;
+    const hasBarrageAbility = (_a = player.active.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.powers.some(power => power.barrage === true);
+    if (canAttackAgain || hasBarrageAbility) {
+        // Prompt the player if they want to attack again
+        yield store.prompt(state, new confirm_prompt_1.ConfirmPrompt(player.id, game_message_1.GameMessage.WANT_TO_ATTACK_AGAIN), wantToAttackAgain => {
+            if (wantToAttackAgain) {
+                if (hasBarrageAbility) {
+                    // Use ChooseAttackPrompt for Barrage ability
+                    store.prompt(state, new choose_attack_prompt_1.ChooseAttackPrompt(player.id, game_message_1.GameMessage.CHOOSE_ATTACK_TO_COPY, [player.active.cards[0]], { allowCancel: false }), selectedAttack => {
+                        if (selectedAttack) {
+                            const secondAttackEffect = new game_effects_1.AttackEffect(player, opponent, selectedAttack);
+                            state = useAttack(() => next(), store, state, secondAttackEffect).next().value;
+                            if (store.hasPrompts()) {
+                                state = store.waitPrompt(state, () => next());
+                            }
+                            if (secondAttackEffect.damage > 0) {
+                                const dealDamage = new attack_effects_1.DealDamageEffect(secondAttackEffect, secondAttackEffect.damage);
+                                state = store.reduceEffect(state, dealDamage);
+                            }
+                            return state; // Successfully executed attack, exit the function
+                        }
+                        next();
+                    });
+                }
+                else {
+                    // Recursively call useAttack for the second attack (for non-Barrage abilities)
+                    const dealDamage = new attack_effects_1.DealDamageEffect(attackEffect, attackEffect.damage);
+                    state = store.reduceEffect(state, dealDamage);
+                }
+            }
+            next();
+        });
     }
     return store.reduceEffect(state, new game_phase_effects_1.EndTurnEffect(player));
 }

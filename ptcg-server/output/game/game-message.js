@@ -158,6 +158,7 @@ var GameCardMessage;
     GameCardMessage["WANT_TO_ATTACH_ONLY_WATER_ENERGY"] = "WANT_TO_ATTACH_ONLY_WATER_ENERGY";
     GameCardMessage["WANT_TO_ATTACH_ONE_OF_EACH"] = "WANT_TO_ATTACH_ONE_OF_EACH";
     GameCardMessage["WANT_TO_DISCARD_CARDS"] = "WANT_DISCARD_CARDS";
+    GameCardMessage["WANT_TO_ATTACK_AGAIN"] = "WANT_TO_ATTACK_AGAIN";
     GameCardMessage["MULLIGAN_CARDS"] = "MULLIGAN_CARDS";
     GameCardMessage["DRAW"] = "DRAW";
     GameCardMessage["CARD"] = "CARD";

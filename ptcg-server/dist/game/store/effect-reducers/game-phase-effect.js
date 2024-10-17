@@ -141,6 +141,9 @@ export function gamePhaseReducer(store, state, effect) {
         player.canEvolve = false;
         player.canAttackFirstTurn = false;
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+            cardList.attacksThisTurn = 0;
+        });
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
             const pokemonCard = cardList.getPokemonCard();
             if (pokemonCard && player.active.cards.includes(pokemonCard)) {
                 cardList.removeSpecialCondition(SpecialCondition.ABILITY_USED);

@@ -6,6 +6,7 @@ exports.setJungle = [
     new card_images_1.BellsproutArt(),
     new card_images_1.ButterfreeArt(),
     new card_images_1.ClefableArt(),
+    new card_images_1.CuboneArt(),
     new card_images_1.DodrioArt(),
     new card_images_1.ElectrodeArt(),
     new card_images_1.JigglypuffArt(),

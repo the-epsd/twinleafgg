@@ -47,10 +47,14 @@ class RayquazaGX extends pokemon_card_1.PokemonCard {
         // Stormy Winds
         if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {
             const player = effect.player;
-            // Try to reduce PowerEffect
+            // Try to reduce PowerEffect, to check if something is blocking our ability
             try {
-                const powerEffect = new game_effects_1.PowerEffect(player, this.powers[0], this);
-                store.reduceEffect(state, powerEffect);
+                const stub = new game_effects_1.PowerEffect(player, {
+                    name: 'test',
+                    powerType: game_1.PowerType.ABILITY,
+                    text: ''
+                }, this);
+                store.reduceEffect(state, stub);
             }
             catch (_a) {
                 return state;
@@ -77,6 +81,11 @@ class RayquazaGX extends pokemon_card_1.PokemonCard {
                             if (transfers.length === 0) {
                                 return;
                             }
+                            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
+                                if (cardList.getPokemonCard() === this) {
+                                    cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
+                                }
+                            });
                             for (const transfer of transfers) {
                                 const target = game_1.StateUtils.getTarget(state, player, transfer.to);
                                 player.discard.moveCardTo(transfer.card, target);

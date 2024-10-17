@@ -1,23 +1,19 @@
-import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { PowerType } from '../../game/store/card/pokemon-types';
+import { Stage, CardType } from '../../game/store/card/card-types';
+import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { State } from '../../game/store/state/state';
-import { StoreLike } from '../../game/store/store-like';
-export declare class Bunnelby extends PokemonCard {
+export declare class Cubone extends PokemonCard {
     stage: Stage;
     cardType: CardType;
     hp: number;
     weakness: {
         type: CardType;
     }[];
-    retreat: CardType[];
-    powers: {
-        name: string;
-        powerType: PowerType;
-        barrage: boolean;
-        text: string;
+    resistance: {
+        type: CardType;
+        value: number;
     }[];
+    retreat: CardType[];
     attacks: {
         name: string;
         cost: CardType[];
@@ -25,9 +21,11 @@ export declare class Bunnelby extends PokemonCard {
         text: string;
     }[];
     set: string;
-    name: string;
-    fullName: string;
     cardImage: string;
     setNumber: string;
+    name: string;
+    fullName: string;
+    REDUCE_DAMAGE_MARKER: string;
+    CLEAR_REDUCE_DAMAGE_MARKER: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

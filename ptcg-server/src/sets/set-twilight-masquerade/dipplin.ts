@@ -1,8 +1,7 @@
 import { CardType, Stage } from '../../game/store/card/card-types';
-import { Attack, ChooseAttackPrompt, ConfirmPrompt, GameLog, GameMessage, GamePhase, PokemonCard, PowerType, State, StateUtils, StoreLike } from '../../game';
+import { PokemonCard, PowerType, State, StateUtils, StoreLike } from '../../game';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 
 export class Dipplin extends PokemonCard {
 
@@ -21,6 +20,8 @@ export class Dipplin extends PokemonCard {
   public weakness = [{ type: CardType.FIRE }];
 
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+
+  public canAttackTwice: boolean = false;
 
   public powers = [{
     name: 'Festival Lead',
@@ -59,75 +60,28 @@ export class Dipplin extends PokemonCard {
         effect.damage = playerBenched * 20;
       }
 
-      // Handle PowerEffect after damage is resolved
+      // Try to reduce PowerEffect, to check if something is blocking our ability
+      try {
+        const stub = new PowerEffect(player, {
+          name: 'test',
+          powerType: PowerType.ABILITY,
+          text: ''
+        }, this);
+        store.reduceEffect(state, stub);
+      } catch {
+        return state;
+      }
+
       // Check if 'Festival Plaza' stadium is in play
       if (stadiumCard && stadiumCard.name === 'Festival Grounds') {
-        if (effect.damage > 0) {
-          const dealDamage = new DealDamageEffect(effect, effect.damage);
-          state = store.reduceEffect(state, dealDamage);
-
-          try {
-            const stub = new PowerEffect(player, {
-              name: 'test',
-              powerType: PowerType.ABILITY,
-              text: ''
-            }, this);
-            store.reduceEffect(state, stub);
-          } catch {
-            return state;
-          }
-
-          state = store.prompt(state, new ConfirmPrompt(
-            effect.player.id,
-            GameMessage.WANT_TO_USE_FESTIVAL_FEVER,
-          ), wantToUse => {
-            if (!wantToUse) {
-              effect.damage = 0;
-              return state;
-            }
-            const opponent = StateUtils.getOpponent(state, player);
-
-            // Do not activate between turns, or when it's not the opponent's turn.
-            if (state.phase !== GamePhase.ATTACK || state.players[state.activePlayer] !== opponent) {
-              return state;
-            }
-            const activeDipplin = player.active.cards.filter(card => card instanceof PokemonCard) as PokemonCard[];
-
-            let selected: Attack | null;
-            store.prompt(state, new ChooseAttackPrompt(
-              player.id,
-              GameMessage.CHOOSE_ATTACK_TO_COPY,
-              activeDipplin,
-              { allowCancel: false }
-            ), result => {
-              selected = result;
-
-              const attack: Attack | null = selected;
-
-              if (attack !== null) {
-                store.log(state, GameLog.LOG_PLAYER_COPIES_ATTACK, {
-                  name: player.name,
-                  attack: attack.name
-                });
-
-                // Perform attack
-                const attackEffect = new AttackEffect(player, opponent, attack);
-                store.reduceEffect(state, attackEffect);
-
-                if (store.hasPrompts()) {
-                  store.waitPrompt(state, () => { });
-                }
-
-                if (attackEffect.damage > 0) {
-                  const dealDamage = new DealDamageEffect(attackEffect, attackEffect.damage);
-                  state = store.reduceEffect(state, dealDamage);
-                }
-              }
-              return state;
-            });
-          });
-        }
+        this.canAttackTwice = true;
+      } else {
+        this.canAttackTwice = false;
       }
+
+      // Increment attacksThisTurn
+      player.active.attacksThisTurn = (player.active.attacksThisTurn || 0) + 1;
+
     }
     return state;
   }
