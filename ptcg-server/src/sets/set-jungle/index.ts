@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { BellsproutArt, ButterfreeArt, ClefableArt, CuboneArt, DodrioArt, ElectrodeArt, JigglypuffArt, MeowthArt, NidoranFemaleArt, OddishArt, ParasArt, PikachuArt, PokeBallArt, ScytherArt, SpearowArt, VenonatArt } from './card-images';
+import { BellsproutArt, ButterfreeArt, ClefableArt, CuboneArt, DodrioArt, EeveeArt, ElectrodeArt, ExeggcuteArt, ExeggutorArt, FearowArt, FlareonArt, JigglypuffArt, MeowthArt, NidoranFemaleArt, OddishArt, ParasArt, PikachuArt, PokeBallArt, ScytherArt, SpearowArt, VenonatArt } from './card-images';
 
 
 export const setJungle: Card[] = [
@@ -9,7 +9,12 @@ export const setJungle: Card[] = [
   new ClefableArt(),
   new CuboneArt(),
   new DodrioArt(),
+  new EeveeArt(),
   new ElectrodeArt(),
+  new ExeggcuteArt(),
+  new ExeggutorArt(),
+  new FearowArt(),
+  new FlareonArt(),
   new JigglypuffArt(),
   new MeowthArt(),
   new NidoranFemaleArt(),

@@ -3,7 +3,12 @@ import { Butterfree } from './butterfree';
 import { Clefable } from './clefable';
 import { Cubone } from './cubone';
 import { Dodrio } from './dodrio';
+import { Eevee } from './eevee';
 import { Electrode } from './electrode';
+import { Exeggcute } from './exeggcute';
+import { Exeggutor } from './exeggutor';
+import { Fearow } from './fearow';
+import { Flareon } from './flareon';
 import { Jigglypuff } from './jigglypuff';
 import { Meowth } from './meowth';
 import { NidoranFemale } from './nidoran-female';
@@ -35,8 +40,28 @@ export class DodrioArt extends Dodrio {
   public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/dodrio-jungle-ju-34.jpg?fit=600%2C825&ssl=1';
 }
 
+export class EeveeArt extends Eevee {
+  public cardImage = 'https://pkmncards.com/wp-content/uploads/eevee-jungle-ju-51.jpg';
+}
+
 export class ElectrodeArt extends Electrode {
   public cardImage = 'https://pkmncards.com/wp-content/uploads/electrode-jungle-ju-2.jpg';
+}
+
+export class ExeggcuteArt extends Exeggcute {
+  public cardImage = 'https://pkmncards.com/wp-content/uploads/exeggcute-jungle-ju-52.jpg';
+}
+
+export class ExeggutorArt extends Exeggutor {
+  public cardImage = 'https://pkmncards.com/wp-content/uploads/exeggutor-jungle-ju-35.jpg';
+}
+
+export class FearowArt extends Fearow {
+  public cardImage = 'https://pkmncards.com/wp-content/uploads/fearow-jungle-ju-36.jpg';
+}
+
+export class FlareonArt extends Flareon {
+  public cardImage = 'https://pkmncards.com/wp-content/uploads/flareon-jungle-ju-3.jpg';
 }
 
 export class JigglypuffArt extends Jigglypuff {

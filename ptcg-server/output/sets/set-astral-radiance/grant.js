@@ -43,11 +43,12 @@ class Grant extends trainer_card_1.TrainerCard {
             // We will discard this card after prompt confirmation
             effect.preventDefault = true;
             player.marker.addMarker(this.GRANT_MARKER, this);
-            if (effect instanceof attack_effects_1.DealDamageEffect) {
-                if (player.marker.hasMarker(this.GRANT_MARKER, this) && effect.damage > 0) {
-                    effect.damage += 30;
-                    player.supporter.moveCardTo(effect.trainerCard, player.discard);
-                }
+            player.supporter.moveCardTo(effect.trainerCard, player.discard);
+        }
+        if (effect instanceof attack_effects_1.DealDamageEffect) {
+            const player = effect.player;
+            if (player.marker.hasMarker(this.GRANT_MARKER, this) && effect.damage > 0) {
+                effect.damage += 30;
             }
         }
         if (effect instanceof game_phase_effects_1.EndTurnEffect) {

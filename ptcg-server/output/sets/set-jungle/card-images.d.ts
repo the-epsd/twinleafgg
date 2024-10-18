@@ -3,7 +3,12 @@ import { Butterfree } from './butterfree';
 import { Clefable } from './clefable';
 import { Cubone } from './cubone';
 import { Dodrio } from './dodrio';
+import { Eevee } from './eevee';
 import { Electrode } from './electrode';
+import { Exeggcute } from './exeggcute';
+import { Exeggutor } from './exeggutor';
+import { Fearow } from './fearow';
+import { Flareon } from './flareon';
 import { Jigglypuff } from './jigglypuff';
 import { Meowth } from './meowth';
 import { NidoranFemale } from './nidoran-female';
@@ -29,7 +34,22 @@ export declare class CuboneArt extends Cubone {
 export declare class DodrioArt extends Dodrio {
     cardImage: string;
 }
+export declare class EeveeArt extends Eevee {
+    cardImage: string;
+}
 export declare class ElectrodeArt extends Electrode {
+    cardImage: string;
+}
+export declare class ExeggcuteArt extends Exeggcute {
+    cardImage: string;
+}
+export declare class ExeggutorArt extends Exeggutor {
+    cardImage: string;
+}
+export declare class FearowArt extends Fearow {
+    cardImage: string;
+}
+export declare class FlareonArt extends Flareon {
     cardImage: string;
 }
 export declare class JigglypuffArt extends Jigglypuff {
