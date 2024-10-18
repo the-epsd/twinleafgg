@@ -10,15 +10,25 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class TypeIconsComponent {
   cardType = CardType;
-  
+
   @Input() align: 'center' | 'start' = 'center';
   @Input() showAll = true;
-  @Input() 
+  @Input()
   set typeSetter(cardType: CardType) {
     this.selectedType.next(cardType);
   }
 
   @Output() typeSelected = new EventEmitter<CardType | null>();
-  
+
+  onTypeClick(type: CardType): void {
+    if (this.selectedType.value === type) {
+      this.selectedType.next(null);
+      this.typeSelected.emit(CardType.ANY);
+    } else {
+      this.selectedType.next(type);
+      this.typeSelected.emit(type);
+    }
+  }
+
   selectedType = new BehaviorSubject<CardType | null>(null);
 }

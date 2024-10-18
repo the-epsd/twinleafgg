@@ -14,7 +14,7 @@ class Swampert extends pokemon_card_1.PokemonCard {
         super(...arguments);
         this.stage = card_types_1.Stage.STAGE_2;
         this.cardType = card_types_1.CardType.WATER;
-        this.hp = 140;
+        this.hp = 160;
         this.weakness = [{ type: card_types_1.CardType.GRASS }];
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.evolvesFrom = 'Marshtomp';

@@ -13,12 +13,14 @@
   >button {
     margin-left: map-get($padding, small);
     min-width: 80px;
+    border-radius: 32px;
   }
 }
 
 .mat-toolbar-row {
 
   place-items: center;
+
 
   >mat-form-field,
   >ptcg-search-box {
@@ -32,4 +34,5 @@
   >*:first-child {
     margin-left: 0;
   }
+
 }

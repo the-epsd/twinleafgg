@@ -7,10 +7,10 @@ import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effect
 
 export class TapuKokoV extends PokemonCard {
 
-  public tags = [ CardTag.POKEMON_V ];
+  public tags = [CardTag.POKEMON_V];
 
   public regulationMark = 'E';
-  
+
   public stage: Stage = Stage.BASIC;
 
   public cardType: CardType = CardType.LIGHTNING;
@@ -19,7 +19,7 @@ export class TapuKokoV extends PokemonCard {
 
   public weakness = [{ type: CardType.FIGHTING }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [
     {
@@ -29,11 +29,12 @@ export class TapuKokoV extends PokemonCard {
       text: ''
     },
     {
-      name: 'Max Shock',
-      cost: [CardType.COLORLESS],
+      name: 'Spiral Thunder',
+      cost: [L, L, C],
       damage: 20,
+      damageCalculation: '+',
       text: 'This attack does 40 more damage for each Energy' +
-      'attached to all of your opponent\'s Pokémon.'
+        'attached to all of your opponent\'s Pokémon.'
     }
   ];
 
@@ -59,7 +60,7 @@ export class TapuKokoV extends PokemonCard {
       const energyCount = checkProvidedEnergyEffect.energyMap
         .reduce((left, p) => left + p.provides.length, 0);
 
-      effect.damage += energyCount * 20;
+      effect.damage = 20 + (energyCount * 40);
     }
     return state;
   }

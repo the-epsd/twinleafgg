@@ -22,9 +22,9 @@ export function playTrainerReducer(store: StoreLike, state: State, effect: Effec
       name: effect.player.name,
       card: effect.trainerCard.name
     });
-    
+
     player.supporterTurn += 1;
-    
+
     return state;
   }
 
@@ -80,7 +80,7 @@ export function playTrainerReducer(store: StoreLike, state: State, effect: Effec
       name: effect.player.name,
       card: effect.trainerCard.name
     });
-    
+
     // const player = effect.player;
     // player.supporter.moveCardTo(effect.trainerCard, player.discard);
     return state;

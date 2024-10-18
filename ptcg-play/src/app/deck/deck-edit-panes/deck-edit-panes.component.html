@@ -20,12 +20,9 @@
 
 <div class="ptcg-deck-edit-pane-secondary" [dropTarget]="deckTarget" ptcgDropHighlight
   [ptcgDropHighlightVisible]="deckHighlight$ | async">
-  <div class="deck-validity">
-    <ptcg-deck-validity [deck]="tempList"></ptcg-deck-validity>
-    <!-- <button mat-raised-button (click)="exportDeckImage()">
+  <!-- <button mat-raised-button (click)="exportDeckImage()">
       {{ 'EXPORT_IMAGE' | translate }}
     </button> -->
-  </div>
   <div #deckPane>
     <dnd-sortable-list listId="CARD_LIBRARY_LIST" hoverTrigger="fixed" [children]="tempList" [spec]="deckSpec">
       <ng-template dndSortableTemplate let-context>
@@ -38,6 +35,8 @@
         </ptcg-deck-card>
       </ng-template>
     </dnd-sortable-list>
-
+  </div>
+  <div class="deck-validity">
+    <ptcg-deck-validity [deck]="tempList"></ptcg-deck-validity>
   </div>
 </div>

@@ -45,7 +45,7 @@ class UltraNecrozmaGX extends pokemon_card_1.PokemonCard {
             const discardEnergy = new attack_effects_1.DiscardCardsEffect(effect, psychicEnergy);
             discardEnergy.target = player.active;
             store.reduceEffect(state, discardEnergy);
-            const damageAmount = psychicEnergy.length * 60;
+            const damageAmount = psychicEnergy.length * 80;
             const damageEffect = new attack_effects_1.PutDamageEffect(effect, damageAmount);
             damageEffect.target = opponent.active;
             store.reduceEffect(state, damageEffect);
@@ -64,9 +64,6 @@ class UltraNecrozmaGX extends pokemon_card_1.PokemonCard {
             // set GX attack as used for game
             player.usedGX = true;
             opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList, card) => {
-                if (cardList === opponent.active) {
-                    return;
-                }
                 const damageEffect = new attack_effects_1.PutCountersEffect(effect, 60);
                 damageEffect.target = cardList;
                 store.reduceEffect(state, damageEffect);

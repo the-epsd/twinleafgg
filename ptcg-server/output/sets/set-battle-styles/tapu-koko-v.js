@@ -24,9 +24,10 @@ class TapuKokoV extends pokemon_card_1.PokemonCard {
                 text: ''
             },
             {
-                name: 'Max Shock',
-                cost: [card_types_1.CardType.COLORLESS],
+                name: 'Spiral Thunder',
+                cost: [L, L, C],
                 damage: 20,
+                damageCalculation: '+',
                 text: 'This attack does 40 more damage for each Energy' +
                     'attached to all of your opponent\'s Pokémon.'
             }
@@ -45,7 +46,7 @@ class TapuKokoV extends pokemon_card_1.PokemonCard {
             store.reduceEffect(state, checkProvidedEnergyEffect);
             const energyCount = checkProvidedEnergyEffect.energyMap
                 .reduce((left, p) => left + p.provides.length, 0);
-            effect.damage += energyCount * 20;
+            effect.damage = 20 + (energyCount * 40);
         }
         return state;
     }

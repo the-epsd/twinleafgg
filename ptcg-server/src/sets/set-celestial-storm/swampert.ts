@@ -11,7 +11,7 @@ import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 export class Swampert extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public cardType: CardType = CardType.WATER;
-  public hp: number = 140;
+  public hp: number = 160;
   public weakness = [{ type: CardType.GRASS }];
   public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
   public evolvesFrom: string = 'Marshtomp';
@@ -27,7 +27,7 @@ export class Swampert extends PokemonCard {
     name: 'Hydro Pump',
     cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
     damage: 80,
-    damageCalculation: '+',    
+    damageCalculation: '+',
     text: 'This attack does 20 more damage times the amount of [W] Energy attached to this Pokémon.'
   }];
 
@@ -47,28 +47,28 @@ export class Swampert extends PokemonCard {
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
-      
+
       if (player.hand.cards.length === 0) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
-      
+
       if (player.marker.hasMarker(this.POWER_DRAW_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
-      
+
       state = store.prompt(state, new ChooseCardsPrompt(
         player.id,
         GameMessage.CHOOSE_CARD_TO_DISCARD,
         player.hand,
-        { },
+        {},
         { allowCancel: false, min: 1, max: 1 }
       ), cards => {
         cards = cards || [];
-        
+
         if (cards.length === 0) {
           return;
         }
-        
+
         player.marker.addMarker(this.POWER_DRAW_MARKER, this);
 
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
@@ -83,7 +83,7 @@ export class Swampert extends PokemonCard {
 
       return state;
     }
-    
+
     if (effect instanceof EndTurnEffect) {
       state.players.forEach(player => {
         if (!player.marker.hasMarker(this.POWER_DRAW_MARKER)) {
@@ -92,7 +92,7 @@ export class Swampert extends PokemonCard {
         player.marker.removeMarker(this.POWER_DRAW_MARKER, this);
       });
     }
-    
+
     if (effect instanceof AttackEffect && effect.attack == this.attacks[0]) {
       const player = effect.player;
 
@@ -100,18 +100,18 @@ export class Swampert extends PokemonCard {
       store.reduceEffect(state, checkProvidedEnergyEffect);
 
       let energyCount = 0;
-      
+
       checkProvidedEnergyEffect.energyMap.forEach(em => {
         energyCount += em.provides.filter(cardType => {
           return cardType === CardType.WATER;
         }).length;
       });
-      
+
       effect.damage += energyCount * 20;
-      
+
       return state;
     }
-    
+
     return state;
   }
 }

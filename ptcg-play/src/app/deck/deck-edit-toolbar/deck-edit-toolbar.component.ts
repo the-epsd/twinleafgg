@@ -43,6 +43,8 @@ export class DeckEditToolbarComponent implements OnDestroy {
     this.clearDeck.emit();
   }
 
+  public selectedSuperTypes: SuperType[] = [];
+
   public cardTypes = [
     { value: CardType.NONE, label: 'LABEL_NONE' },
     { value: CardType.COLORLESS, label: 'LABEL_COLORLESS' },
@@ -183,26 +185,38 @@ export class DeckEditToolbarComponent implements OnDestroy {
     tap(value => this.filterChange.emit({ ...value }))
   );
 
-  onPokemonSuperTypeRemoved$ = this.formValue$.pipe(
-    filter(value => !value.superTypes.includes(1) && value.superTypes.length > 0),
-    tap(_ => this.resetPokemonFilters())
-  );
+  // onPokemonSuperTypeRemoved$ = this.formValue$.pipe(
+  //   filter(value => !value.superTypes.includes(1) && value.superTypes.length > 0),
+  //   tap(_ => this.resetPokemonFilters())
+  // );
 
-  onTrainerSuperTypeRemoved$ = this.formValue$.pipe(
-    filter(value => !value.superTypes.includes(2) && value.superTypes.length > 0),
-    tap(_ => this.resetTrainerFilters())
-  );
+  // onTrainerSuperTypeRemoved$ = this.formValue$.pipe(
+  //   filter(value => !value.superTypes.includes(2) && value.superTypes.length > 0),
+  //   tap(_ => this.resetTrainerFilters())
+  // );
 
-  onEnergySuperTypeRemoved$ = this.formValue$.pipe(
-    filter(value => !value.superTypes.includes(3) && value.superTypes.length > 0),
-    tap(_ => this.resetEnergyFilters())
-  );
+  // onEnergySuperTypeRemoved$ = this.formValue$.pipe(
+  //   filter(value => !value.superTypes.includes(3) && value.superTypes.length > 0),
+  //   tap(_ => this.resetEnergyFilters())
+  // );
+
+  isPokemonSelected(): boolean {
+    return this.selectedSuperTypes.includes(SuperType.POKEMON);
+  }
+
+  isTrainerSelected(): boolean {
+    return this.selectedSuperTypes.includes(SuperType.TRAINER);
+  }
+
+  isEnergySelected(): boolean {
+    return this.selectedSuperTypes.includes(SuperType.ENERGY);
+  }
 
   subscription = merge(
     this.onFormChange$,
-    this.onPokemonSuperTypeRemoved$,
-    this.onTrainerSuperTypeRemoved$,
-    this.onEnergySuperTypeRemoved$
+    // this.onPokemonSuperTypeRemoved$,
+    // this.onTrainerSuperTypeRemoved$,
+    // this.onEnergySuperTypeRemoved$
   ).subscribe();
 
   constructor(private formBuilder: FormBuilder) { }
@@ -267,6 +281,20 @@ export class DeckEditToolbarComponent implements OnDestroy {
       this.form.patchValue({ cardTypes: [type] });
     }
   }
+
+  public toggleSuperType(superType: SuperType): void {
+    if (this.selectedSuperTypes.includes(superType)) {
+      // If the clicked supertype is already selected, unselect it
+      this.selectedSuperTypes = [];
+    } else {
+      // Otherwise, select only this supertype
+      this.selectedSuperTypes = [superType];
+    }
+
+    // Update the form control
+    this.form.patchValue({ superTypes: this.selectedSuperTypes });
+  }
+
 
   public exportToFile() {
     this.export.next();
