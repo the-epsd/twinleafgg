@@ -12,7 +12,7 @@ class DecidueyeGX extends pokemon_card_1.PokemonCard {
         super(...arguments);
         this.tags = [card_types_1.CardTag.POKEMON_GX];
         this.stage = card_types_1.Stage.STAGE_2;
-        this.evolvesFrom = 'Dartix';
+        this.evolvesFrom = 'Dartrix';
         this.cardType = card_types_1.CardType.GRASS;
         this.hp = 240;
         this.weakness = [{ type: card_types_1.CardType.FIRE }];

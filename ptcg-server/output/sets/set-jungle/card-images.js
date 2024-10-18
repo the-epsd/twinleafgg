@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.VenonatArt = exports.SpearowArt = exports.ScytherArt = exports.PokeBallArt = exports.PikachuArt = exports.ParasArt = exports.OddishArt = exports.NidoranFemaleArt = exports.MeowthArt = exports.JigglypuffArt = exports.FlareonArt = exports.FearowArt = exports.ExeggutorArt = exports.ExeggcuteArt = exports.ElectrodeArt = exports.EeveeArt = exports.DodrioArt = exports.CuboneArt = exports.ClefableArt = exports.ButterfreeArt = exports.BellsproutArt = void 0;
+exports.VenonatArt = exports.SpearowArt = exports.ScytherArt = exports.PokeBallArt = exports.PikachuArt = exports.ParasArt = exports.OddishArt = exports.NidoranFemaleArt = exports.NidorinaArt = exports.NidoqueenArt = exports.MeowthArt = exports.MarowakArt = exports.LickitungArt = exports.KangaskhanArt = exports.JolteonArt = exports.JigglypuffArt = exports.GoldeenArt = exports.GloomArt = exports.FlareonArt = exports.FearowArt = exports.ExeggutorArt = exports.ExeggcuteArt = exports.ElectrodeArt = exports.EeveeArt = exports.DodrioArt = exports.CuboneArt = exports.ClefableArt = exports.ButterfreeArt = exports.BellsproutArt = void 0;
 const bellsprout_1 = require("./bellsprout");
 const butterfree_1 = require("./butterfree");
 const clefable_1 = require("./clefable");
@@ -12,9 +12,17 @@ const exeggcute_1 = require("./exeggcute");
 const exeggutor_1 = require("./exeggutor");
 const fearow_1 = require("./fearow");
 const flareon_1 = require("./flareon");
+const gloom_1 = require("./gloom");
+const goldeen_1 = require("./goldeen");
 const jigglypuff_1 = require("./jigglypuff");
+const jolteon_1 = require("./jolteon");
+const kangaskhan_1 = require("./kangaskhan");
+const lickitung_1 = require("./lickitung");
+const marowak_1 = require("./marowak");
 const meowth_1 = require("./meowth");
+const nidoqueen_1 = require("./nidoqueen");
 const nidoran_female_1 = require("./nidoran-female");
+const nidorina_1 = require("./nidorina");
 const oddish_1 = require("./oddish");
 const paras_1 = require("./paras");
 const pikachu_1 = require("./pikachu");
@@ -99,6 +107,20 @@ class FlareonArt extends flareon_1.Flareon {
     }
 }
 exports.FlareonArt = FlareonArt;
+class GloomArt extends gloom_1.Gloom {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pkmncards.com/wp-content/uploads/gloom-jungle-ju-37.jpg';
+    }
+}
+exports.GloomArt = GloomArt;
+class GoldeenArt extends goldeen_1.Goldeen {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pkmncards.com/wp-content/uploads/goldeen-jungle-ju-53.jpg';
+    }
+}
+exports.GoldeenArt = GoldeenArt;
 class JigglypuffArt extends jigglypuff_1.Jigglypuff {
     constructor() {
         super(...arguments);
@@ -106,6 +128,34 @@ class JigglypuffArt extends jigglypuff_1.Jigglypuff {
     }
 }
 exports.JigglypuffArt = JigglypuffArt;
+class JolteonArt extends jolteon_1.Jolteon {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pkmncards.com/wp-content/uploads/jolteon-jungle-ju-4.jpg';
+    }
+}
+exports.JolteonArt = JolteonArt;
+class KangaskhanArt extends kangaskhan_1.Kangaskhan {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pkmncards.com/wp-content/uploads/kangaskhan-jungle-ju-5.jpg';
+    }
+}
+exports.KangaskhanArt = KangaskhanArt;
+class LickitungArt extends lickitung_1.Lickitung {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pkmncards.com/wp-content/uploads/lickitung-jungle-ju-38.jpg';
+    }
+}
+exports.LickitungArt = LickitungArt;
+class MarowakArt extends marowak_1.Marowak {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pkmncards.com/wp-content/uploads/marowak-jungle-ju-39.jpg';
+    }
+}
+exports.MarowakArt = MarowakArt;
 class MeowthArt extends meowth_1.Meowth {
     constructor() {
         super(...arguments);
@@ -113,6 +163,20 @@ class MeowthArt extends meowth_1.Meowth {
     }
 }
 exports.MeowthArt = MeowthArt;
+class NidoqueenArt extends nidoqueen_1.Nidoqueen {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pkmncards.com/wp-content/uploads/nidoqueen-jungle-ju-7.jpg';
+    }
+}
+exports.NidoqueenArt = NidoqueenArt;
+class NidorinaArt extends nidorina_1.Nidorina {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pkmncards.com/wp-content/uploads/nidorina-jungle-ju-40.jpg';
+    }
+}
+exports.NidorinaArt = NidorinaArt;
 class NidoranFemaleArt extends nidoran_female_1.NidoranFemale {
     constructor() {
         super(...arguments);

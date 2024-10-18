@@ -9,12 +9,22 @@ import { Exeggcute } from './exeggcute';
 import { Exeggutor } from './exeggutor';
 import { Fearow } from './fearow';
 import { Flareon } from './flareon';
+import { Gloom } from './gloom';
+import { Goldeen } from './goldeen';
 import { Jigglypuff } from './jigglypuff';
+import { Jolteon } from './jolteon';
+import { Kangaskhan } from './kangaskhan';
+import { Lickitung } from './lickitung';
+import { Marowak } from './marowak';
 import { Meowth } from './meowth';
+import { Nidoqueen } from './nidoqueen';
 import { NidoranFemale } from './nidoran-female';
+import { Nidorina } from './nidorina';
 import { Oddish } from './oddish';
 import { Paras } from './paras';
+import { Parasect } from './parasect';
 import { Pikachu } from './pikachu';
+import { Pinsir } from './pinsir';
 import { PokeBall } from './pokeball';
 import { Scyther } from './scyther';
 import { Spearow } from './spearow';
@@ -64,12 +74,44 @@ export class FlareonArt extends Flareon {
   public cardImage = 'https://pkmncards.com/wp-content/uploads/flareon-jungle-ju-3.jpg';
 }
 
+export class GloomArt extends Gloom {
+  public cardImage = 'https://pkmncards.com/wp-content/uploads/gloom-jungle-ju-37.jpg';
+}
+
+export class GoldeenArt extends Goldeen {
+  public cardImage = 'https://pkmncards.com/wp-content/uploads/goldeen-jungle-ju-53.jpg';
+}
+
 export class JigglypuffArt extends Jigglypuff {
   public cardImage = 'https://pkmncards.com/wp-content/uploads/jigglypuff-jungle-ju-54.jpg';
 }
 
+export class JolteonArt extends Jolteon {
+  public cardImage = 'https://pkmncards.com/wp-content/uploads/jolteon-jungle-ju-4.jpg';
+}
+
+export class KangaskhanArt extends Kangaskhan {
+  public cardImage = 'https://pkmncards.com/wp-content/uploads/kangaskhan-jungle-ju-5.jpg';
+}
+
+export class LickitungArt extends Lickitung {
+  public cardImage = 'https://pkmncards.com/wp-content/uploads/lickitung-jungle-ju-38.jpg';
+}
+
+export class MarowakArt extends Marowak {
+  public cardImage = 'https://pkmncards.com/wp-content/uploads/marowak-jungle-ju-39.jpg';
+}
+
 export class MeowthArt extends Meowth {
   public cardImage = 'https://pkmncards.com/wp-content/uploads/meowth-jungle-ju-56.jpg';
+}
+
+export class NidoqueenArt extends Nidoqueen {
+  public cardImage = 'https://pkmncards.com/wp-content/uploads/nidoqueen-jungle-ju-7.jpg';
+}
+
+export class NidorinaArt extends Nidorina {
+  public cardImage = 'https://pkmncards.com/wp-content/uploads/nidorina-jungle-ju-40.jpg';
 }
 
 export class NidoranFemaleArt extends NidoranFemale {
@@ -84,8 +126,16 @@ export class ParasArt extends Paras {
   public cardImage = 'https://pkmncards.com/wp-content/uploads/paras-jungle-ju-59.jpg';
 }
 
+export class ParasectArt extends Parasect {
+  public cardImage = 'https://pkmncards.com/wp-content/uploads/parasect-jungle-ju-41.jpg';
+}
+
 export class PikachuArt extends Pikachu {
   public cardImage = 'https://pkmncards.com/wp-content/uploads/pikachu-jungle-ju-60.jpg';
+}
+
+export class PinsirArt extends Pinsir {
+  public cardImage = 'https://pkmncards.com/wp-content/uploads/pinsir-jungle-ju-9.jpg';
 }
 
 export class PokeBallArt extends PokeBall {

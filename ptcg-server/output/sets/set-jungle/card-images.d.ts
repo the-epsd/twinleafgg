@@ -9,9 +9,17 @@ import { Exeggcute } from './exeggcute';
 import { Exeggutor } from './exeggutor';
 import { Fearow } from './fearow';
 import { Flareon } from './flareon';
+import { Gloom } from './gloom';
+import { Goldeen } from './goldeen';
 import { Jigglypuff } from './jigglypuff';
+import { Jolteon } from './jolteon';
+import { Kangaskhan } from './kangaskhan';
+import { Lickitung } from './lickitung';
+import { Marowak } from './marowak';
 import { Meowth } from './meowth';
+import { Nidoqueen } from './nidoqueen';
 import { NidoranFemale } from './nidoran-female';
+import { Nidorina } from './nidorina';
 import { Oddish } from './oddish';
 import { Paras } from './paras';
 import { Pikachu } from './pikachu';
@@ -52,10 +60,34 @@ export declare class FearowArt extends Fearow {
 export declare class FlareonArt extends Flareon {
     cardImage: string;
 }
+export declare class GloomArt extends Gloom {
+    cardImage: string;
+}
+export declare class GoldeenArt extends Goldeen {
+    cardImage: string;
+}
 export declare class JigglypuffArt extends Jigglypuff {
     cardImage: string;
 }
+export declare class JolteonArt extends Jolteon {
+    cardImage: string;
+}
+export declare class KangaskhanArt extends Kangaskhan {
+    cardImage: string;
+}
+export declare class LickitungArt extends Lickitung {
+    cardImage: string;
+}
+export declare class MarowakArt extends Marowak {
+    cardImage: string;
+}
 export declare class MeowthArt extends Meowth {
+    cardImage: string;
+}
+export declare class NidoqueenArt extends Nidoqueen {
+    cardImage: string;
+}
+export declare class NidorinaArt extends Nidorina {
     cardImage: string;
 }
 export declare class NidoranFemaleArt extends NidoranFemale {

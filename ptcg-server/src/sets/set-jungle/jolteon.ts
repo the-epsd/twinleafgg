@@ -3,16 +3,15 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State, CoinFlipPrompt, GameMessage } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../game/store/prefabs/prefabs';
 
-export class Flareon extends PokemonCard {
+export class Jolteon extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
 
-  public cardType: CardType = CardType.FIRE;
+  public cardType: CardType = CardType.LIGHTNING;
 
   public hp: number = 70;
 
-  public weakness = [{ type: CardType.WATER }];
+  public weakness = [{ type: CardType.FIGHTING }];
 
   public retreat = [CardType.COLORLESS];
 
@@ -25,12 +24,12 @@ export class Flareon extends PokemonCard {
     text: 'Flip a coin. If heads, this attack does 10 damage plus 20 more damage; if tails, this attack does 10 damage.'
   },
   {
-    name: 'Flamethrower',
-    cost: [CardType.FIRE, CardType.FIRE, CardType.COLORLESS, CardType.COLORLESS],
-    damage: 60,
-    text: 'Discard 1 {R} Energy card attached to Flareon in order to use this attack.'
+    name: 'Pin Missile',
+    cost: [CardType.COLORLESS],
+    damage: 20,
+    damageCalculation: 'x',
+    text: 'Flip 4 coins. This attack does 20 damage times the number of heads.'
   }];
-
 
   public set: string = 'JU';
 
@@ -38,12 +37,11 @@ export class Flareon extends PokemonCard {
 
   public setNumber: string = '3';
 
-  public name: string = 'Flareon';
+  public name: string = 'Jolteon';
 
-  public fullName: string = 'Flareon JU';
+  public fullName: string = 'Jolteon JU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
 
@@ -59,7 +57,18 @@ export class Flareon extends PokemonCard {
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-      DISCARD_X_ENERGY_FROM_THIS_POKEMON(state, effect, store, CardType.FIRE, 1);
+      const player = effect.player;
+      state = store.prompt(state, [
+        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP),
+        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP),
+        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP),
+        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
+      ], results => {
+        let heads: number = 0;
+        results.forEach(r => { heads += r ? 1 : 0; });
+        effect.damage = 20 * heads;
+      });
+      return state;
     }
 
     return state;

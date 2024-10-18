@@ -13,6 +13,7 @@ export declare class Exeggutor extends PokemonCard {
         type: CardType;
         value: number;
     }[];
+    retreat: CardType[];
     evolvesFrom: string;
     attacks: ({
         name: string;
