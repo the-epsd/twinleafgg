@@ -1,12 +1,10 @@
-import { ChooseAttackPrompt, ChooseCardsPrompt, ConfirmPrompt, ShowCardsPrompt, ShuffleDeckPrompt } from '../../game';
-import { GameLog, GameMessage } from '../../game/game-message';
+import { ChooseCardsPrompt, ShowCardsPrompt, ShuffleDeckPrompt } from '../../game';
+import { GameMessage } from '../../game/game-message';
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Attack, PowerType } from '../../game/store/card/pokemon-types';
-import { DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { PowerType } from '../../game/store/card/pokemon-types';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { StateUtils } from '../../game/store/state-utils';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
@@ -26,6 +24,7 @@ export class Bunnelby extends PokemonCard {
   public powers = [{
     name: 'Barrage',
     powerType: PowerType.ANCIENT_TRAIT,
+    barrage: true,
     text: 'This Pokémon may attack twice a turn. (If the first attack Knocks Out your opponent\'s Active Pokémon, you may attack again after your opponent chooses a new Active Pokémon.)'
   }];
 
@@ -51,149 +50,19 @@ export class Bunnelby extends PokemonCard {
 
   public setNumber: string = '121';
 
-  public attacksThisTurn = 0;
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof EndTurnEffect) {
-      this.attacksThisTurn = 0;
-    }
-
-    if (effect instanceof AttackEffect && effect.attack !== this.attacks[0] &&
-      effect.attack !== this.attacks[1] && effect.player.active.cards.includes(this)) {
-      if (this.attacksThisTurn >= 2) {
-        return state;
-      }
-
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      const thisPokemon = player.active.cards;
-
-      //do the attack that's NOT on the pokemon
-
-      this.attacksThisTurn += 1;
-
-      if (this.attacksThisTurn >= 2) {
-        return state;
-      }
-
-      state = store.prompt(state, new ConfirmPrompt(
-        effect.player.id,
-        GameMessage.WANT_TO_USE_BARRAGE,
-      ), wantToUse => {
-        if (wantToUse) {
-          let selected: Attack | null;
-          store.prompt(state, new ChooseAttackPrompt(
-            player.id,
-            GameMessage.CHOOSE_ATTACK_TO_COPY,
-            thisPokemon,
-            { allowCancel: false }
-          ), result => {
-            selected = result;
-            const attack: Attack | null = selected;
-
-            if (attack !== null) {
-              store.log(state, GameLog.LOG_PLAYER_COPIES_ATTACK, {
-                name: player.name,
-                attack: attack.name
-              });
-
-              // Perform attack
-              const attackEffect = new AttackEffect(player, opponent, attack);
-              store.reduceEffect(state, attackEffect);
-
-              if (store.hasPrompts()) {
-                store.waitPrompt(state, () => { });
-              }
-
-              if (attackEffect.damage > 0) {
-                const dealDamage = new DealDamageEffect(attackEffect, attackEffect.damage);
-                state = store.reduceEffect(state, dealDamage);
-              }
-
-            }
-
-            return state;
-          });
-        };
-      });
-
-    }
-
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      if (this.attacksThisTurn >= 2) {
-        return state;
-      }
-
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-
-      const thisPokemon = player.active.cards;
-
       opponent.deck.moveTo(opponent.discard, 1);
-
-      this.attacksThisTurn += 1;
-
-      if (this.attacksThisTurn >= 2) {
-        return state;
-      }
-
-      state = store.prompt(state, new ConfirmPrompt(
-        effect.player.id,
-        GameMessage.WANT_TO_USE_BARRAGE,
-      ), wantToUse => {
-        if (wantToUse) {
-          let selected: Attack | null;
-          store.prompt(state, new ChooseAttackPrompt(
-            player.id,
-            GameMessage.CHOOSE_ATTACK_TO_COPY,
-            thisPokemon,
-            { allowCancel: false }
-          ), result => {
-            selected = result;
-            const attack: Attack | null = selected;
-
-            if (attack !== null) {
-              store.log(state, GameLog.LOG_PLAYER_COPIES_ATTACK, {
-                name: player.name,
-                attack: attack.name
-              });
-
-              // Perform attack
-              const attackEffect = new AttackEffect(player, opponent, attack);
-              store.reduceEffect(state, attackEffect);
-
-              if (store.hasPrompts()) {
-                store.waitPrompt(state, () => { });
-              }
-
-              if (attackEffect.damage > 0) {
-                const dealDamage = new DealDamageEffect(attackEffect, attackEffect.damage);
-                state = store.reduceEffect(state, dealDamage);
-              }
-
-            }
-
-            return state;
-          });
-        };
-      });
+      return state;
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-      if (this.attacksThisTurn >= 2) {
-        return state;
-      }
-
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-
-      const thisPokemon = player.active.cards;
-
-      if (player.discard.cards.length === 0) {
-        this.attacksThisTurn += 1;
-      } else {
+      if (player.discard.cards.length > 0) {
         state = store.prompt(state, new ChooseCardsPrompt(
           player.id,
           GameMessage.CHOOSE_CARD_TO_HAND,
@@ -202,9 +71,6 @@ export class Bunnelby extends PokemonCard {
           { min: 1, max: 1, allowCancel: false }
         ), selected => {
           const cards = selected || [];
-
-          this.attacksThisTurn += 1;
-
           store.prompt(state, [new ShowCardsPrompt(
             opponent.id,
             GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
@@ -213,62 +79,13 @@ export class Bunnelby extends PokemonCard {
             player.discard.moveCardsTo(cards, player.deck);
           });
 
-          cards.forEach(card => {
-            store.log(state, GameLog.LOG_PLAYER_RETURNS_TO_DECK_FROM_DISCARD, { name: player.name, card: card.name });
-          });
-
-          store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+          return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
             player.deck.applyOrder(order);
           });
+
         });
       }
-
-      if (this.attacksThisTurn >= 2) {
-        return state;
-      }
-
-      state = store.prompt(state, new ConfirmPrompt(
-        effect.player.id,
-        GameMessage.WANT_TO_USE_BARRAGE,
-      ), wantToUse => {
-        if (wantToUse) {
-          let selected: Attack | null;
-          store.prompt(state, new ChooseAttackPrompt(
-            player.id,
-            GameMessage.CHOOSE_ATTACK_TO_COPY,
-            thisPokemon,
-            { allowCancel: false }
-          ), result => {
-            selected = result;
-            const attack: Attack | null = selected;
-
-            if (attack !== null) {
-              store.log(state, GameLog.LOG_PLAYER_COPIES_ATTACK, {
-                name: player.name,
-                attack: attack.name
-              });
-
-              // Perform attack
-              const attackEffect = new AttackEffect(player, opponent, attack);
-              store.reduceEffect(state, attackEffect);
-
-              if (store.hasPrompts()) {
-                store.waitPrompt(state, () => { });
-              }
-
-              if (attackEffect.damage > 0) {
-                const dealDamage = new DealDamageEffect(attackEffect, attackEffect.damage);
-                state = store.reduceEffect(state, dealDamage);
-              }
-            }
-
-            return state;
-          });
-        };
-      });
     }
-
     return state;
   }
-
 }

@@ -49,8 +49,12 @@ class GreninjaGX extends pokemon_card_1.PokemonCard {
             const player = effect.player;
             // Try to reduce PowerEffect, to check if something is blocking our ability
             try {
-                const powerEffect = new game_effects_1.PowerEffect(player, this.powers[0], this);
-                store.reduceEffect(state, powerEffect);
+                const stub = new game_effects_1.PowerEffect(player, {
+                    name: 'test',
+                    powerType: game_1.PowerType.ABILITY,
+                    text: ''
+                }, this);
+                store.reduceEffect(state, stub);
             }
             catch (_a) {
                 return state;
@@ -61,6 +65,11 @@ class GreninjaGX extends pokemon_card_1.PokemonCard {
                         if (!targets || targets.length === 0) {
                             return;
                         }
+                        player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
+                            if (cardList.getPokemonCard() === this) {
+                                cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
+                            }
+                        });
                         targets.forEach(target => {
                             target.damage += 30;
                         });

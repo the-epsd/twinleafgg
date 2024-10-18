@@ -29,7 +29,7 @@ export class AlolanRattataArt extends AlolanRattata {
 }
 
 export class DecidueyeGXArt extends DecidueyeGX {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SUM/SUM_057_R_EN_LG.png';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SUM/SUM_012_R_EN_LG.png';
 }
 
 export class DragonairArt extends Dragonair {

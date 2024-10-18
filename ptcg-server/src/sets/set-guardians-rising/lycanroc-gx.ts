@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
+import { Stage, CardType, CardTag, SpecialCondition } from '../../game/store/card/card-types';
 import {
   PowerType, StoreLike, State, StateUtils, GameError, GameMessage,
   PlayerType, SlotType,
@@ -85,6 +85,13 @@ export class LycanrocGX extends PokemonCard {
             { allowCancel: false }
           ), result => {
             const cardList = result[0];
+
+            player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+              if (cardList.getPokemonCard() === this) {
+                cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+              }
+            });
+
             opponent.switchPokemon(cardList);
           });
         }

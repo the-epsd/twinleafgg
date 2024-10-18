@@ -65,9 +65,14 @@ class MetagrossGX extends pokemon_card_1.PokemonCard {
             if (player.marker.hasMarker(this.GEOTECH_MARKER, this)) {
                 throw new game_1.GameError(game_1.GameMessage.POWER_ALREADY_USED);
             }
-            state = store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_ACTIVE, player.discard, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Metal Energy' }, { allowCancel: false, min: 1, max: 1 }), transfers => {
+            state = store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_ACTIVE, player.discard, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC }, { allowCancel: false, min: 1, max: 1, differentTypes: true, validCardTypes: [card_types_1.CardType.METAL, card_types_1.CardType.PSYCHIC] }), transfers => {
                 transfers = transfers || [];
                 player.marker.addMarker(this.GEOTECH_MARKER, this);
+                player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
+                    if (cardList.getPokemonCard() === this) {
+                        cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
+                    }
+                });
                 for (const transfer of transfers) {
                     const target = game_1.StateUtils.getTarget(state, player, transfer.to);
                     player.discard.moveCardTo(transfer.card, target);

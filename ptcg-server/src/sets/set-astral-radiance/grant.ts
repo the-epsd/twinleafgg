@@ -6,7 +6,9 @@ import { State } from '../../game/store/state/state';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { Card, ChooseCardsPrompt, GameError, GameMessage } from '../../game';
+import { GameError, GameMessage, PowerType } from '../../game';
+import { PowerEffect } from '../../game/store/effects/game-effects';
+import { CheckPokemonPowersEffect } from '../../game/store/effects/check-effects';
 
 export class Grant extends TrainerCard {
 
@@ -25,19 +27,26 @@ export class Grant extends TrainerCard {
   public fullName: string = 'Grant ASR';
 
   public text: string =
-    'During this turn, your [F] Pokémon\'s attacks do 30 more damage to your opponent\'s Active Pokémon (before applying Weakness and Resistance).' +
-    '' +
-    'During your turn, if this Grant is in your discard pile, you may discard 2 cards, except any Grant, from your hand. If you do, put this Grant into your hand. (This effect doesn\'t use up your Supporter card for the turn.)';
+    'During this turn, your [F] Pokémon\'s attacks do 30 more damage to your opponent\'s Active Pokémon (before applying Weakness and Resistance).';
+
+  public powers = [{
+    name: 'Grant',
+    useFromDiscard: true,
+    powerType: PowerType.ABILITY,
+    text: 'During your turn, if this Grant is in your discard pile, you may discard 2 cards, except any Grant, from your hand. If you do, put this Grant into your hand. (This effect doesn\'t use up your Supporter card for the turn.)'
+  }];
 
   private readonly GRANT_MARKER = 'GRANT_MARKER';
 
-  public readonly RETURN_TO_HAND_MARKER = 'RETURN_TO_HAND_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
+    if (effect instanceof CheckPokemonPowersEffect &&
+      !effect.powers.find(p => p.name === this.powers[0].name)) {
+      effect.powers.push(this.powers[0]);
+    }
+
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-
       const player = effect.player;
-
       const supporterTurn = player.supporterTurn;
 
       if (supporterTurn > 0) {
@@ -49,54 +58,31 @@ export class Grant extends TrainerCard {
       effect.preventDefault = true;
 
       player.marker.addMarker(this.GRANT_MARKER, this);
-      if (effect instanceof DealDamageEffect) {
-        const marker = effect.player.marker;
-        if (marker.hasMarker(this.GRANT_MARKER, this) && effect.damage > 0) {
-          effect.damage += 30;
-          player.supporter.moveCardTo(effect.trainerCard, player.discard);
+      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+    }
 
-        }
-
-        // Check if card is in the discard
-        if (player.discard.cards.includes(this) === false) {
-          throw new GameError(GameMessage.CANNOT_USE_POWER);
-        }
-
-        // Power already used
-        if (player.marker.hasMarker(this.RETURN_TO_HAND_MARKER, this)) {
-          throw new GameError(GameMessage.POWER_ALREADY_USED);
-        }
-
-        let cards: Card[] = [];
-
-        return store.prompt(state, new ChooseCardsPrompt(
-          player.id,
-          GameMessage.CHOOSE_CARD_TO_DISCARD,
-          player.hand,
-          {},
-          { min: 2, max: 2, allowCancel: true }
-        ), selected => {
-          cards = selected || [];
-
-          // Operation canceled by the user
-          if (cards.length === 0) {
-            return state;
-          }
-          player.marker.addMarker(this.RETURN_TO_HAND_MARKER, this);
-          player.hand.moveCardsTo(cards, player.discard);
-          player.discard.moveCardTo(this, player.hand);
-
-        });
+    if (effect instanceof DealDamageEffect) {
+      const player = effect.player;
+      if (player.marker.hasMarker(this.GRANT_MARKER, this) && effect.damage > 0) {
+        effect.damage += 30;
       }
     }
 
     if (effect instanceof EndTurnEffect) {
-      effect.player.marker.removeMarker(this.RETURN_TO_HAND_MARKER, this);
+      const player = effect.player;
+      player.marker.removeMarker(this.GRANT_MARKER, this);
+      return state;
     }
 
-    if (effect instanceof EndTurnEffect) {
-      effect.player.marker.removeMarker(this.GRANT_MARKER, this);
-      return state;
+    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+      const player = effect.player;
+
+      // Check if card is in the discard
+      if (!player.discard.cards.includes(this)) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
+      }
+
+      player.discard.moveCardTo(this, player.hand);
     }
 
     return state;

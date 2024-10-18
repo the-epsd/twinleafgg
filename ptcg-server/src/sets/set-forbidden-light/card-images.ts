@@ -16,7 +16,7 @@ export class BeastRingArt extends BeastRing {
 }
 
 export class BuzzwoleArt extends Buzzwole {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FLI/FLI_102_R_EN_LG.png';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FLI/FLI_077_R_EN_LG.png';
 }
 
 export class FrogadierArt extends Frogadier {

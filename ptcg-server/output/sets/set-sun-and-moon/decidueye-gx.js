@@ -65,6 +65,11 @@ class DecidueyeGX extends pokemon_card_1.PokemonCard {
                 if (!targets || targets.length === 0) {
                     return;
                 }
+                player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
+                    if (cardList.getPokemonCard() === this) {
+                        cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
+                    }
+                });
                 targets.forEach(target => {
                     target.damage += 20;
                 });

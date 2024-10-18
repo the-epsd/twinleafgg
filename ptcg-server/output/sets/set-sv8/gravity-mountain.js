@@ -23,25 +23,23 @@ class GravityMountain extends trainer_card_1.TrainerCard {
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof check_effects_1.CheckHpEffect && state_utils_1.StateUtils.getStadiumCard(state) === this) {
-            if (effect instanceof check_effects_1.CheckHpEffect && state_utils_1.StateUtils.getStadiumCard(state) === this) {
-                const player = effect.player;
-                const opponent = state_utils_1.StateUtils.getOpponent(state, player);
-                player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList) => {
-                    const pokemonCard = cardList.getPokemonCard();
-                    if (pokemonCard && pokemonCard.stage === card_types_1.Stage.STAGE_2) {
-                        effect.hp -= 30;
-                    }
-                });
-                opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList) => {
-                    const pokemonCard = cardList.getPokemonCard();
-                    if (pokemonCard && pokemonCard.stage === card_types_1.Stage.STAGE_2) {
-                        effect.hp -= 30;
-                    }
-                });
-            }
-            if (effect instanceof game_effects_1.UseStadiumEffect && state_utils_1.StateUtils.getStadiumCard(state) === this) {
-                throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_USE_STADIUM);
-            }
+            const player = effect.player;
+            const opponent = state_utils_1.StateUtils.getOpponent(state, player);
+            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList) => {
+                const pokemonCard = cardList.getPokemonCard();
+                if ((pokemonCard === null || pokemonCard === void 0 ? void 0 : pokemonCard.stage) === card_types_1.Stage.STAGE_2) {
+                    effect.hp -= 30;
+                }
+            });
+            opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList) => {
+                const pokemonCard = cardList.getPokemonCard();
+                if ((pokemonCard === null || pokemonCard === void 0 ? void 0 : pokemonCard.stage) === card_types_1.Stage.STAGE_2) {
+                    effect.hp -= 30;
+                }
+            });
+        }
+        if (effect instanceof game_effects_1.UseStadiumEffect && state_utils_1.StateUtils.getStadiumCard(state) === this) {
+            throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_USE_STADIUM);
         }
         return state;
     }

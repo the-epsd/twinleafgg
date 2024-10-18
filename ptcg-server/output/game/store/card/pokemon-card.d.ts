@@ -25,5 +25,6 @@ export declare abstract class PokemonCard extends Card {
     movedToActiveThisTurn: boolean;
     tools: TrainerCard[];
     archetype: CardType[];
+    canAttackTwice?: boolean;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

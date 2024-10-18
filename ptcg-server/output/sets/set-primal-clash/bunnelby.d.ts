@@ -15,6 +15,7 @@ export declare class Bunnelby extends PokemonCard {
     powers: {
         name: string;
         powerType: PowerType;
+        barrage: boolean;
         text: string;
     }[];
     attacks: {
@@ -28,6 +29,5 @@ export declare class Bunnelby extends PokemonCard {
     fullName: string;
     cardImage: string;
     setNumber: string;
-    attacksThisTurn: number;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

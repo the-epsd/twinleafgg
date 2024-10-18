@@ -57,6 +57,7 @@ export class PokemonCardList extends CardList {
   public tool: Card | undefined;
   public stadium: Card | undefined;
   public stage: Stage = Stage.BASIC;
+  public attacksThisTurn?: number;
 
   public getPokemons(): PokemonCard[] {
     const result: PokemonCard[] = [];

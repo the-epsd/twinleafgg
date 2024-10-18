@@ -42,7 +42,7 @@ exports.AlolanRattataArt = AlolanRattataArt;
 class DecidueyeGXArt extends decidueye_gx_1.DecidueyeGX {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SUM/SUM_057_R_EN_LG.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SUM/SUM_012_R_EN_LG.png';
     }
 }
 exports.DecidueyeGXArt = DecidueyeGXArt;

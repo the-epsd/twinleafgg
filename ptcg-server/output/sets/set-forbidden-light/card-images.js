@@ -23,7 +23,7 @@ exports.BeastRingArt = BeastRingArt;
 class BuzzwoleArt extends buzzwole_1.Buzzwole {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FLI/FLI_102_R_EN_LG.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FLI/FLI_077_R_EN_LG.png';
     }
 }
 exports.BuzzwoleArt = BuzzwoleArt;

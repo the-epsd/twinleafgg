@@ -22,47 +22,31 @@ export class Lillie extends TrainerCard {
   public setNumber: string = '125';
 
   public text: string =
-    'Draw cards until you have 6 cards in your hand. If it\'s your first turn, draw cards until you have 8 cards in your hand. ';
+    'Draw cards until you have 6 cards in your hand. If it\'s your first turn, draw cards until you have 8 cards in your hand.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
+      const targetHandSize = state.turn <= 2 ? 8 : 6;
 
-      if (player.deck.cards.length === 0) {
+      if (player.hand.cards.length >= targetHandSize || player.deck.cards.length === 0) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      if (state.turn <= 2) {
-        // checking if the player can even use the card
-        if (player.hand.cards.length >= 8) {
-          throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-        }
+      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      effect.preventDefault = true;
 
-        while (player.hand.cards.length < 8) {
-          if (player.deck.cards.length === 0) {
-            break;
-          }
-          player.deck.moveTo(player.hand, 1);
+      while (player.hand.cards.length < targetHandSize && player.deck.cards.length > 0) {
+        player.deck.moveTo(player.hand, 1);
+        if (player.deck.cards.length === 0) {
+          break;
         }
       }
 
-      if (state.turn > 2) {
-        // checking if the player can even use the card
-        if (player.hand.cards.length >= 6) {
-          throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-        }
-
-        while (player.hand.cards.length < 6) {
-          if (player.deck.cards.length === 0) {
-            break;
-          }
-          player.deck.moveTo(player.hand, 1);
-        }
-      }
+      player.supporter.moveCardTo(effect.trainerCard, player.discard);
 
     }
 
     return state;
   }
-
 }

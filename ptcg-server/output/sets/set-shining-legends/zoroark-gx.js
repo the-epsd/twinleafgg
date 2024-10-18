@@ -96,6 +96,11 @@ class ZoroarkGX extends pokemon_card_1.PokemonCard {
                 if (cards.length === 0) {
                     return;
                 }
+                player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
+                    if (cardList.getPokemonCard() === this) {
+                        cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
+                    }
+                });
                 player.marker.addMarker(this.TRADE_MARKER, this);
                 player.hand.moveCardsTo(cards, player.discard);
                 player.deck.moveTo(player.hand, 2);

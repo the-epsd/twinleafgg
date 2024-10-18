@@ -34,7 +34,6 @@ export class DeckEditInfoComponent {
     });
   }
 
-
   constructor() { }
 
 }

@@ -1,4 +1,4 @@
-import { PokemonCard, CardTag, Stage, CardType, PowerType, StoreLike, State, ConfirmPrompt, GameMessage, ChooseCardsPrompt, SuperType, TrainerType, StateUtils, ChoosePokemonPrompt, PlayerType, SlotType, GameError } from '../../game';
+import { PokemonCard, CardTag, Stage, CardType, PowerType, StoreLike, State, ConfirmPrompt, GameMessage, ChooseCardsPrompt, SuperType, TrainerType, StateUtils, ChoosePokemonPrompt, PlayerType, SlotType, GameError, SpecialCondition } from '../../game';
 import { PutDamageEffect, KnockOutOpponentEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect, AttackEffect } from '../../game/store/effects/game-effects';
@@ -61,10 +61,15 @@ export class AlolanNinetalesGX extends PokemonCard {
     // Mysterious Guidance
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const player = effect.player;
+
       // Try to reduce PowerEffect, to check if something is blocking our ability
       try {
-        const powerEffect = new PowerEffect(player, this.powers[0], this);
-        store.reduceEffect(state, powerEffect);
+        const stub = new PowerEffect(player, {
+          name: 'test',
+          powerType: PowerType.ABILITY,
+          text: ''
+        }, this);
+        store.reduceEffect(state, stub);
       } catch {
         return state;
       }
@@ -83,6 +88,13 @@ export class AlolanNinetalesGX extends PokemonCard {
               { min: 0, max: 2, allowCancel: false }
             )], selected => {
               const cards = selected || [];
+
+              player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+                if (cardList.getPokemonCard() === this) {
+                  cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+                }
+              });
+
               player.deck.moveCardsTo(cards, player.hand);
             });
         }

@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
+import { Stage, CardType, CardTag, SpecialCondition } from '../../game/store/card/card-types';
 import {
   PowerType, StoreLike, State, StateUtils, GameError, GameMessage,
   PlayerType, ChooseAttackPrompt,
@@ -139,6 +139,13 @@ export class ZoroarkGX extends PokemonCard {
         if (cards.length === 0) {
           return;
         }
+
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+          if (cardList.getPokemonCard() === this) {
+            cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+          }
+        });
+
         player.marker.addMarker(this.TRADE_MARKER, this);
         player.hand.moveCardsTo(cards, player.discard);
         player.deck.moveTo(player.hand, 2);

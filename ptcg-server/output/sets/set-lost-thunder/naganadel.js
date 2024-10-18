@@ -43,14 +43,14 @@ class Naganadel extends pokemon_card_1.PokemonCard {
         if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {
             const player = effect.player;
             player.marker.removeMarker(this.CHARGE_MARKER, this);
-        }
-        // Eye Opener
-        if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {
-            const player = effect.player;
             // Try to reduce PowerEffect, to check if something is blocking our ability
             try {
-                const powerEffect = new game_effects_1.PowerEffect(player, this.powers[0], this);
-                store.reduceEffect(state, powerEffect);
+                const stub = new game_effects_1.PowerEffect(player, {
+                    name: 'test',
+                    powerType: game_1.PowerType.ABILITY,
+                    text: ''
+                }, this);
+                store.reduceEffect(state, stub);
             }
             catch (_a) {
                 return state;

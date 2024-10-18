@@ -41,4 +41,5 @@ export interface Power {
   useFromDiscard?: boolean;
   exemptFromAbilityLock?: boolean;
   exemptFromInitialize?: boolean;
+  barrage?: boolean;
 }
