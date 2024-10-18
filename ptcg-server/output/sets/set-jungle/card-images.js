@@ -1,12 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.VenonatArt = exports.SpearowArt = exports.ScytherArt = exports.PokeBallArt = exports.PikachuArt = exports.ParasArt = exports.OddishArt = exports.NidoranFemaleArt = exports.MeowthArt = exports.JigglypuffArt = exports.ElectrodeArt = exports.DodrioArt = exports.CuboneArt = exports.ClefableArt = exports.ButterfreeArt = exports.BellsproutArt = void 0;
+exports.VenonatArt = exports.SpearowArt = exports.ScytherArt = exports.PokeBallArt = exports.PikachuArt = exports.ParasArt = exports.OddishArt = exports.NidoranFemaleArt = exports.MeowthArt = exports.JigglypuffArt = exports.FlareonArt = exports.FearowArt = exports.ExeggutorArt = exports.ExeggcuteArt = exports.ElectrodeArt = exports.EeveeArt = exports.DodrioArt = exports.CuboneArt = exports.ClefableArt = exports.ButterfreeArt = exports.BellsproutArt = void 0;
 const bellsprout_1 = require("./bellsprout");
 const butterfree_1 = require("./butterfree");
 const clefable_1 = require("./clefable");
 const cubone_1 = require("./cubone");
 const dodrio_1 = require("./dodrio");
+const eevee_1 = require("./eevee");
 const electrode_1 = require("./electrode");
+const exeggcute_1 = require("./exeggcute");
+const exeggutor_1 = require("./exeggutor");
+const fearow_1 = require("./fearow");
+const flareon_1 = require("./flareon");
 const jigglypuff_1 = require("./jigglypuff");
 const meowth_1 = require("./meowth");
 const nidoran_female_1 = require("./nidoran-female");
@@ -52,6 +57,13 @@ class DodrioArt extends dodrio_1.Dodrio {
     }
 }
 exports.DodrioArt = DodrioArt;
+class EeveeArt extends eevee_1.Eevee {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pkmncards.com/wp-content/uploads/eevee-jungle-ju-51.jpg';
+    }
+}
+exports.EeveeArt = EeveeArt;
 class ElectrodeArt extends electrode_1.Electrode {
     constructor() {
         super(...arguments);
@@ -59,6 +71,34 @@ class ElectrodeArt extends electrode_1.Electrode {
     }
 }
 exports.ElectrodeArt = ElectrodeArt;
+class ExeggcuteArt extends exeggcute_1.Exeggcute {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pkmncards.com/wp-content/uploads/exeggcute-jungle-ju-52.jpg';
+    }
+}
+exports.ExeggcuteArt = ExeggcuteArt;
+class ExeggutorArt extends exeggutor_1.Exeggutor {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pkmncards.com/wp-content/uploads/exeggutor-jungle-ju-35.jpg';
+    }
+}
+exports.ExeggutorArt = ExeggutorArt;
+class FearowArt extends fearow_1.Fearow {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pkmncards.com/wp-content/uploads/fearow-jungle-ju-36.jpg';
+    }
+}
+exports.FearowArt = FearowArt;
+class FlareonArt extends flareon_1.Flareon {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pkmncards.com/wp-content/uploads/flareon-jungle-ju-3.jpg';
+    }
+}
+exports.FlareonArt = FlareonArt;
 class JigglypuffArt extends jigglypuff_1.Jigglypuff {
     constructor() {
         super(...arguments);
