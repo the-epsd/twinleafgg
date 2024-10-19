@@ -22,11 +22,20 @@ import { NidoranFemale } from './nidoran-female';
 import { Nidorina } from './nidorina';
 import { Oddish } from './oddish';
 import { Paras } from './paras';
+import { Parasect } from './parasect';
 import { Pikachu } from './pikachu';
+import { Pinsir } from './pinsir';
 import { PokeBall } from './pokeball';
+import { Primeape } from './primeape';
+import { Rapidash } from './rapidash';
 import { Scyther } from './scyther';
+import { Seaking } from './seaking';
 import { Spearow } from './spearow';
+import { Vaporeon } from './vaporeon';
 import { Venonat } from './venonat';
+import { Victreebel } from './victreebel';
+import { Weepinbell } from './weepinbell';
+import { Wigglytuff } from './wigglytuff';
 export declare class BellsproutArt extends Bellsprout {
     cardImage: string;
 }
@@ -99,18 +108,45 @@ export declare class OddishArt extends Oddish {
 export declare class ParasArt extends Paras {
     cardImage: string;
 }
+export declare class ParasectArt extends Parasect {
+    cardImage: string;
+}
 export declare class PikachuArt extends Pikachu {
+    cardImage: string;
+}
+export declare class PinsirArt extends Pinsir {
     cardImage: string;
 }
 export declare class PokeBallArt extends PokeBall {
     cardImage: string;
 }
+export declare class PrimeapeArt extends Primeape {
+    cardImage: string;
+}
+export declare class RapidashArt extends Rapidash {
+    cardImage: string;
+}
 export declare class ScytherArt extends Scyther {
+    cardImage: string;
+}
+export declare class SeakingArt extends Seaking {
     cardImage: string;
 }
 export declare class SpearowArt extends Spearow {
     cardImage: string;
 }
+export declare class VaporeonArt extends Vaporeon {
+    cardImage: string;
+}
 export declare class VenonatArt extends Venonat {
+    cardImage: string;
+}
+export declare class VictreebelArt extends Victreebel {
+    cardImage: string;
+}
+export declare class WeepinbellArt extends Weepinbell {
+    cardImage: string;
+}
+export declare class WigglytuffArt extends Wigglytuff {
     cardImage: string;
 }

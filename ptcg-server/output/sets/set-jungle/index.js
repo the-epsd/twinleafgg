@@ -27,9 +27,17 @@ exports.setJungle = [
     new card_images_1.NidoranFemaleArt(),
     new card_images_1.OddishArt(),
     new card_images_1.ParasArt(),
+    new card_images_1.ParasectArt(),
     new card_images_1.PikachuArt(),
+    new card_images_1.PinsirArt(),
     new card_images_1.PokeBallArt(),
+    new card_images_1.PrimeapeArt(),
+    new card_images_1.RapidashArt(),
     new card_images_1.ScytherArt(),
     new card_images_1.SpearowArt(),
-    new card_images_1.VenonatArt()
+    new card_images_1.VaporeonArt(),
+    new card_images_1.VenonatArt(),
+    new card_images_1.VictreebelArt(),
+    new card_images_1.WeepinbellArt(),
+    new card_images_1.WigglytuffArt()
 ];

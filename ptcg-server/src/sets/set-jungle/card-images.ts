@@ -26,9 +26,16 @@ import { Parasect } from './parasect';
 import { Pikachu } from './pikachu';
 import { Pinsir } from './pinsir';
 import { PokeBall } from './pokeball';
+import { Primeape } from './primeape';
+import { Rapidash } from './rapidash';
 import { Scyther } from './scyther';
+import { Seaking } from './seaking';
 import { Spearow } from './spearow';
+import { Vaporeon } from './vaporeon';
 import { Venonat } from './venonat';
+import { Victreebel } from './victreebel';
+import { Weepinbell } from './weepinbell';
+import { Wigglytuff } from './wigglytuff';
 
 export class BellsproutArt extends Bellsprout {
   public cardImage = 'https://pkmncards.com/wp-content/uploads/bellsprout-jungle-ju-49.jpg';
@@ -142,14 +149,42 @@ export class PokeBallArt extends PokeBall {
   public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/poke-ball-jungle-ju-64.jpg?fit=600%2C825&ssl=1';
 }
 
+export class PrimeapeArt extends Primeape {
+  public cardImage = 'https://pkmncards.com/wp-content/uploads/primeape-jungle-ju-43.jpg';
+}
+
+export class RapidashArt extends Rapidash {
+  public cardImage = 'https://pkmncards.com/wp-content/uploads/rapidash-jungle-ju-44.jpg';
+}
+
 export class ScytherArt extends Scyther {
   public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/scyther-jungle-ju-10.jpg?fit=600%2C825&ssl=1';
+}
+
+export class SeakingArt extends Seaking {
+  public cardImage = 'https://pkmncards.com/wp-content/uploads/seaking-jungle-ju-46.jpg';
 }
 
 export class SpearowArt extends Spearow {
   public cardImage = 'https://pkmncards.com/wp-content/uploads/spearow-jungle-ju-62.jpg';
 }
 
+export class VaporeonArt extends Vaporeon {
+  public cardImage = 'https://pkmncards.com/wp-content/uploads/vaporeon-jungle-ju-12.jpg';
+}
+
 export class VenonatArt extends Venonat {
   public cardImage = 'https://pkmncards.com/wp-content/uploads/venonat-jungle-ju-63.jpg';
+}
+
+export class VictreebelArt extends Victreebel {
+  public cardImage = 'https://pkmncards.com/wp-content/uploads/victreebel-jungle-ju-14.jpg';
+}
+
+export class WeepinbellArt extends Weepinbell {
+  public cardImage = 'https://pkmncards.com/wp-content/uploads/weepinbell-jungle-ju-48.jpg';
+}
+
+export class WigglytuffArt extends Wigglytuff {
+  public cardImage = 'https://pkmncards.com/wp-content/uploads/wigglytuff-jungle-ju-16.jpg';
 }
