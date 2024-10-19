@@ -14,6 +14,8 @@ export class Flareon extends PokemonCard {
 
   public weakness = [{ type: CardType.WATER }];
 
+  public retreat = [CardType.COLORLESS];
+
   public evolvesFrom = 'Eevee';
 
   public attacks = [{

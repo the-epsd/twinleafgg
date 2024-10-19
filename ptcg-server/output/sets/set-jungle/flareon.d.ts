@@ -9,6 +9,7 @@ export declare class Flareon extends PokemonCard {
     weakness: {
         type: CardType;
     }[];
+    retreat: CardType[];
     evolvesFrom: string;
     attacks: {
         name: string;

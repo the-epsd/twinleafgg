@@ -13,6 +13,7 @@ class Flareon extends pokemon_card_1.PokemonCard {
         this.cardType = card_types_1.CardType.FIRE;
         this.hp = 70;
         this.weakness = [{ type: card_types_1.CardType.WATER }];
+        this.retreat = [card_types_1.CardType.COLORLESS];
         this.evolvesFrom = 'Eevee';
         this.attacks = [{
                 name: 'Quick Attack',

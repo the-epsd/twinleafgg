@@ -16,6 +16,8 @@ export class Exeggutor extends PokemonCard {
 
   public resistance = [{ type: CardType.FIGHTING, value: -30 }];
 
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
+
   public evolvesFrom = 'Exeggcute';
 
   public attacks = [{
