@@ -23,17 +23,23 @@ import { Nidorina } from './nidorina';
 import { Oddish } from './oddish';
 import { Paras } from './paras';
 import { Parasect } from './parasect';
+import { Persian } from './persian';
+import { Pidgeot } from './pidgeot';
 import { Pikachu } from './pikachu';
 import { Pinsir } from './pinsir';
 import { PokeBall } from './pokeball';
 import { Primeape } from './primeape';
 import { Rapidash } from './rapidash';
+import { Rhydon } from './rhydon';
+import { Rhyhorn } from './rhyhorn';
 import { Scyther } from './scyther';
 import { Seaking } from './seaking';
 import { Spearow } from './spearow';
 import { Vaporeon } from './vaporeon';
+import { Venomoth } from './venomoth';
 import { Venonat } from './venonat';
 import { Victreebel } from './victreebel';
+import { Vileplume } from './vileplume';
 import { Weepinbell } from './weepinbell';
 import { Wigglytuff } from './wigglytuff';
 export declare class BellsproutArt extends Bellsprout {
@@ -111,6 +117,12 @@ export declare class ParasArt extends Paras {
 export declare class ParasectArt extends Parasect {
     cardImage: string;
 }
+export declare class PersianArt extends Persian {
+    cardImage: string;
+}
+export declare class PidgeotArt extends Pidgeot {
+    cardImage: string;
+}
 export declare class PikachuArt extends Pikachu {
     cardImage: string;
 }
@@ -126,6 +138,12 @@ export declare class PrimeapeArt extends Primeape {
 export declare class RapidashArt extends Rapidash {
     cardImage: string;
 }
+export declare class RhydonArt extends Rhydon {
+    cardImage: string;
+}
+export declare class RhyhornArt extends Rhyhorn {
+    cardImage: string;
+}
 export declare class ScytherArt extends Scyther {
     cardImage: string;
 }
@@ -138,10 +156,16 @@ export declare class SpearowArt extends Spearow {
 export declare class VaporeonArt extends Vaporeon {
     cardImage: string;
 }
+export declare class VenomothArt extends Venomoth {
+    cardImage: string;
+}
 export declare class VenonatArt extends Venonat {
     cardImage: string;
 }
 export declare class VictreebelArt extends Victreebel {
+    cardImage: string;
+}
+export declare class VileplumeArt extends Vileplume {
     cardImage: string;
 }
 export declare class WeepinbellArt extends Weepinbell {

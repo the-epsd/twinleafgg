@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { BellsproutArt, ButterfreeArt, ClefableArt, CuboneArt, DodrioArt, EeveeArt, ElectrodeArt, ExeggcuteArt, ExeggutorArt, FearowArt, FlareonArt, GloomArt, GoldeenArt, JigglypuffArt, JolteonArt, KangaskhanArt, LickitungArt, MarowakArt, MeowthArt, NidoqueenArt, NidoranFemaleArt, NidorinaArt, OddishArt, ParasArt, ParasectArt, PikachuArt, PinsirArt, PokeBallArt, PrimeapeArt, RapidashArt, ScytherArt, SpearowArt, VaporeonArt, VenonatArt, VictreebelArt, WeepinbellArt, WigglytuffArt } from './card-images';
+import { BellsproutArt, ButterfreeArt, ClefableArt, CuboneArt, DodrioArt, EeveeArt, ElectrodeArt, ExeggcuteArt, ExeggutorArt, FearowArt, FlareonArt, GloomArt, GoldeenArt, JigglypuffArt, JolteonArt, KangaskhanArt, LickitungArt, MarowakArt, MeowthArt, NidoqueenArt, NidoranFemaleArt, NidorinaArt, OddishArt, ParasArt, ParasectArt, PersianArt, PidgeotArt, PikachuArt, PinsirArt, PokeBallArt, PrimeapeArt, RapidashArt, RhydonArt, RhyhornArt, ScytherArt, SpearowArt, VaporeonArt, VenomothArt, VenonatArt, VictreebelArt, VileplumeArt, WeepinbellArt, WigglytuffArt } from './card-images';
 
 
 export const setJungle: Card[] = [
@@ -29,16 +29,22 @@ export const setJungle: Card[] = [
   new OddishArt(),
   new ParasArt(),
   new ParasectArt(),
+  new PersianArt(),
+  new PidgeotArt(),
   new PikachuArt(),
   new PinsirArt(),
   new PokeBallArt(),
   new PrimeapeArt(),
   new RapidashArt(),
+  new RhydonArt(),
+  new RhyhornArt(),
   new ScytherArt(),
   new SpearowArt(),
   new VaporeonArt(),
+  new VenomothArt(),
   new VenonatArt(),
   new VictreebelArt(),
+  new VileplumeArt(),
   new WeepinbellArt(),
   new WigglytuffArt()
 

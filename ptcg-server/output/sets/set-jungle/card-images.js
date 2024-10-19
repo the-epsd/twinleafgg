@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WigglytuffArt = exports.WeepinbellArt = exports.VictreebelArt = exports.VenonatArt = exports.VaporeonArt = exports.SpearowArt = exports.SeakingArt = exports.ScytherArt = exports.RapidashArt = exports.PrimeapeArt = exports.PokeBallArt = exports.PinsirArt = exports.PikachuArt = exports.ParasectArt = exports.ParasArt = exports.OddishArt = exports.NidoranFemaleArt = exports.NidorinaArt = exports.NidoqueenArt = exports.MeowthArt = exports.MarowakArt = exports.LickitungArt = exports.KangaskhanArt = exports.JolteonArt = exports.JigglypuffArt = exports.GoldeenArt = exports.GloomArt = exports.FlareonArt = exports.FearowArt = exports.ExeggutorArt = exports.ExeggcuteArt = exports.ElectrodeArt = exports.EeveeArt = exports.DodrioArt = exports.CuboneArt = exports.ClefableArt = exports.ButterfreeArt = exports.BellsproutArt = void 0;
+exports.WigglytuffArt = exports.WeepinbellArt = exports.VileplumeArt = exports.VictreebelArt = exports.VenonatArt = exports.VenomothArt = exports.VaporeonArt = exports.SpearowArt = exports.SeakingArt = exports.ScytherArt = exports.RhyhornArt = exports.RhydonArt = exports.RapidashArt = exports.PrimeapeArt = exports.PokeBallArt = exports.PinsirArt = exports.PikachuArt = exports.PidgeotArt = exports.PersianArt = exports.ParasectArt = exports.ParasArt = exports.OddishArt = exports.NidoranFemaleArt = exports.NidorinaArt = exports.NidoqueenArt = exports.MeowthArt = exports.MarowakArt = exports.LickitungArt = exports.KangaskhanArt = exports.JolteonArt = exports.JigglypuffArt = exports.GoldeenArt = exports.GloomArt = exports.FlareonArt = exports.FearowArt = exports.ExeggutorArt = exports.ExeggcuteArt = exports.ElectrodeArt = exports.EeveeArt = exports.DodrioArt = exports.CuboneArt = exports.ClefableArt = exports.ButterfreeArt = exports.BellsproutArt = void 0;
 const bellsprout_1 = require("./bellsprout");
 const butterfree_1 = require("./butterfree");
 const clefable_1 = require("./clefable");
@@ -26,17 +26,23 @@ const nidorina_1 = require("./nidorina");
 const oddish_1 = require("./oddish");
 const paras_1 = require("./paras");
 const parasect_1 = require("./parasect");
+const persian_1 = require("./persian");
+const pidgeot_1 = require("./pidgeot");
 const pikachu_1 = require("./pikachu");
 const pinsir_1 = require("./pinsir");
 const pokeball_1 = require("./pokeball");
 const primeape_1 = require("./primeape");
 const rapidash_1 = require("./rapidash");
+const rhydon_1 = require("./rhydon");
+const rhyhorn_1 = require("./rhyhorn");
 const scyther_1 = require("./scyther");
 const seaking_1 = require("./seaking");
 const spearow_1 = require("./spearow");
 const vaporeon_1 = require("./vaporeon");
+const venomoth_1 = require("./venomoth");
 const venonat_1 = require("./venonat");
 const victreebel_1 = require("./victreebel");
+const vileplume_1 = require("./vileplume");
 const weepinbell_1 = require("./weepinbell");
 const wigglytuff_1 = require("./wigglytuff");
 class BellsproutArt extends bellsprout_1.Bellsprout {
@@ -214,6 +220,20 @@ class ParasectArt extends parasect_1.Parasect {
     }
 }
 exports.ParasectArt = ParasectArt;
+class PersianArt extends persian_1.Persian {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pkmncards.com/wp-content/uploads/persian-jungle-ju-42.jpg';
+    }
+}
+exports.PersianArt = PersianArt;
+class PidgeotArt extends pidgeot_1.Pidgeot {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pkmncards.com/wp-content/uploads/pidgeot-jungle-ju-8.jpg';
+    }
+}
+exports.PidgeotArt = PidgeotArt;
 class PikachuArt extends pikachu_1.Pikachu {
     constructor() {
         super(...arguments);
@@ -249,6 +269,20 @@ class RapidashArt extends rapidash_1.Rapidash {
     }
 }
 exports.RapidashArt = RapidashArt;
+class RhydonArt extends rhydon_1.Rhydon {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pkmncards.com/wp-content/uploads/rhydon-jungle-ju-45.jpg';
+    }
+}
+exports.RhydonArt = RhydonArt;
+class RhyhornArt extends rhyhorn_1.Rhyhorn {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pkmncards.com/wp-content/uploads/rhyhorn-jungle-ju-61.jpg';
+    }
+}
+exports.RhyhornArt = RhyhornArt;
 class ScytherArt extends scyther_1.Scyther {
     constructor() {
         super(...arguments);
@@ -277,6 +311,13 @@ class VaporeonArt extends vaporeon_1.Vaporeon {
     }
 }
 exports.VaporeonArt = VaporeonArt;
+class VenomothArt extends venomoth_1.Venomoth {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pkmncards.com/wp-content/uploads/venomoth-jungle-ju-13.jpg';
+    }
+}
+exports.VenomothArt = VenomothArt;
 class VenonatArt extends venonat_1.Venonat {
     constructor() {
         super(...arguments);
@@ -291,6 +332,13 @@ class VictreebelArt extends victreebel_1.Victreebel {
     }
 }
 exports.VictreebelArt = VictreebelArt;
+class VileplumeArt extends vileplume_1.Vileplume {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pkmncards.com/wp-content/uploads/vileplume-jungle-ju-15.jpg';
+    }
+}
+exports.VileplumeArt = VileplumeArt;
 class WeepinbellArt extends weepinbell_1.Weepinbell {
     constructor() {
         super(...arguments);

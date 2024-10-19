@@ -23,17 +23,23 @@ import { Nidorina } from './nidorina';
 import { Oddish } from './oddish';
 import { Paras } from './paras';
 import { Parasect } from './parasect';
+import { Persian } from './persian';
+import { Pidgeot } from './pidgeot';
 import { Pikachu } from './pikachu';
 import { Pinsir } from './pinsir';
 import { PokeBall } from './pokeball';
 import { Primeape } from './primeape';
 import { Rapidash } from './rapidash';
+import { Rhydon } from './rhydon';
+import { Rhyhorn } from './rhyhorn';
 import { Scyther } from './scyther';
 import { Seaking } from './seaking';
 import { Spearow } from './spearow';
 import { Vaporeon } from './vaporeon';
+import { Venomoth } from './venomoth';
 import { Venonat } from './venonat';
 import { Victreebel } from './victreebel';
+import { Vileplume } from './vileplume';
 import { Weepinbell } from './weepinbell';
 import { Wigglytuff } from './wigglytuff';
 
@@ -137,6 +143,14 @@ export class ParasectArt extends Parasect {
   public cardImage = 'https://pkmncards.com/wp-content/uploads/parasect-jungle-ju-41.jpg';
 }
 
+export class PersianArt extends Persian {
+  public cardImage = 'https://pkmncards.com/wp-content/uploads/persian-jungle-ju-42.jpg';
+}
+
+export class PidgeotArt extends Pidgeot {
+  public cardImage = 'https://pkmncards.com/wp-content/uploads/pidgeot-jungle-ju-8.jpg';
+}
+
 export class PikachuArt extends Pikachu {
   public cardImage = 'https://pkmncards.com/wp-content/uploads/pikachu-jungle-ju-60.jpg';
 }
@@ -157,6 +171,14 @@ export class RapidashArt extends Rapidash {
   public cardImage = 'https://pkmncards.com/wp-content/uploads/rapidash-jungle-ju-44.jpg';
 }
 
+export class RhydonArt extends Rhydon {
+  public cardImage = 'https://pkmncards.com/wp-content/uploads/rhydon-jungle-ju-45.jpg';
+}
+
+export class RhyhornArt extends Rhyhorn {
+  public cardImage = 'https://pkmncards.com/wp-content/uploads/rhyhorn-jungle-ju-61.jpg';
+}
+
 export class ScytherArt extends Scyther {
   public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/scyther-jungle-ju-10.jpg?fit=600%2C825&ssl=1';
 }
@@ -173,12 +195,20 @@ export class VaporeonArt extends Vaporeon {
   public cardImage = 'https://pkmncards.com/wp-content/uploads/vaporeon-jungle-ju-12.jpg';
 }
 
+export class VenomothArt extends Venomoth {
+  public cardImage = 'https://pkmncards.com/wp-content/uploads/venomoth-jungle-ju-13.jpg';
+}
+
 export class VenonatArt extends Venonat {
   public cardImage = 'https://pkmncards.com/wp-content/uploads/venonat-jungle-ju-63.jpg';
 }
 
 export class VictreebelArt extends Victreebel {
   public cardImage = 'https://pkmncards.com/wp-content/uploads/victreebel-jungle-ju-14.jpg';
+}
+
+export class VileplumeArt extends Vileplume {
+  public cardImage = 'https://pkmncards.com/wp-content/uploads/vileplume-jungle-ju-15.jpg';
 }
 
 export class WeepinbellArt extends Weepinbell {

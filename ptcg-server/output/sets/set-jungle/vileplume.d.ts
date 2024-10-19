@@ -1,23 +1,27 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
+import { PowerType, State, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-export declare class Eevee extends PokemonCard {
+export declare class Vileplume extends PokemonCard {
     stage: Stage;
+    evolvesFrom: string;
     cardType: CardType;
     hp: number;
-    resistance: {
-        type: CardType;
-        value: number;
-    }[];
     weakness: {
         type: CardType;
     }[];
     retreat: CardType[];
+    powers: {
+        name: string;
+        useWhenInPlay: boolean;
+        powerType: PowerType;
+        text: string;
+    }[];
     attacks: {
         name: string;
-        cost: CardType[];
+        cost: CardType.GRASS[];
         damage: number;
+        damageCalculation: string;
         text: string;
     }[];
     set: string;
@@ -25,6 +29,6 @@ export declare class Eevee extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
-    readonly DEFENDING_POKEMON_CANNOT_ATTACK_MARKER = "DEFENDING_POKEMON_CANNOT_ATTACK_MARKER";
+    readonly HEAL_MARKER = "HEAL_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

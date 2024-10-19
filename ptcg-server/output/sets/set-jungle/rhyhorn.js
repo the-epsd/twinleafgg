@@ -1,37 +1,37 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Eevee = void 0;
+exports.Rhyhorn = void 0;
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
-class Eevee extends pokemon_card_1.PokemonCard {
+class Rhyhorn extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.BASIC;
-        this.cardType = card_types_1.CardType.COLORLESS;
-        this.hp = 50;
-        this.resistance = [{ type: card_types_1.CardType.PSYCHIC, value: -30 }];
-        this.weakness = [{ type: card_types_1.CardType.FIGHTING }];
-        this.retreat = [card_types_1.CardType.COLORLESS];
+        this.cardType = card_types_1.CardType.FIGHTING;
+        this.hp = 70;
+        this.resistance = [{ type: card_types_1.CardType.LIGHTNING, value: -30 }];
+        this.weakness = [{ type: card_types_1.CardType.GRASS }];
+        this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.attacks = [{
-                name: 'Tail Wag',
-                cost: [card_types_1.CardType.COLORLESS],
+                name: 'Leer',
+                cost: [C],
                 damage: 0,
-                text: 'Flip a coin. If heads, the Defending Pokémon can\'t attack Eevee during your opponent\'s next turn. (Benching either Pokémon ends this effect.)'
+                text: 'Flip a coin. If heads, the Defending Pokémon can\'t attack Rhyhorn during your opponent\'s next turn. (Benching either Pokémon ends this effect.)'
             },
             {
-                name: 'Quick Attack',
-                cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
-                damage: 10,
-                text: 'Flip a coin. If heads, this attack does 10 damage plus 20 more damage; if tails, this attack does 10 damage.'
+                name: 'Horn Attack',
+                cost: [F, C, C],
+                damage: 30,
+                text: ''
             }];
         this.set = 'JU';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '51';
-        this.name = 'Eevee';
-        this.fullName = 'Eevee JU';
+        this.setNumber = '61';
+        this.name = 'Rhyhorn';
+        this.fullName = 'Rhyhorn JU';
         this.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER = 'DEFENDING_POKEMON_CANNOT_ATTACK_MARKER';
     }
     reduceEffect(store, state, effect) {
@@ -48,27 +48,14 @@ class Eevee extends pokemon_card_1.PokemonCard {
             return state;
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.player.active.marker.hasMarker(this.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER, this)) {
-            if (effect.target.name === 'Eevee') {
+            if (effect.target.name === 'Rhyhorn') {
                 throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);
             }
         }
         if (effect instanceof game_phase_effects_1.EndTurnEffect) {
             effect.player.active.marker.removeMarker(this.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER, this);
         }
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
-            const player = effect.player;
-            return store.prompt(state, [
-                new game_1.CoinFlipPrompt(player.id, game_1.GameMessage.COIN_FLIP)
-            ], result => {
-                if (result) {
-                    effect.damage += 20;
-                }
-                else {
-                    effect.damage += 10;
-                }
-            });
-        }
         return state;
     }
 }
-exports.Eevee = Eevee;
+exports.Rhyhorn = Rhyhorn;
