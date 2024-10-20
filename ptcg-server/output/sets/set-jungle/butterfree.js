@@ -55,7 +55,7 @@ class Butterfree extends pokemon_card_1.PokemonCard {
             const damageEffect = new attack_effects_1.DealDamageEffect(effect, 40);
             damageEffect.target = effect.target;
             state = store.reduceEffect(state, damageEffect);
-            const damageToHeal = damageEffect.damage;
+            const damageToHeal = damageEffect.damage / 2;
             // rounding to nearest 10
             const damageToHealLow = (damageToHeal / 10) * 10;
             const damageToHealHigh = damageToHealLow + 10;

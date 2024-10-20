@@ -17,7 +17,7 @@ export class DecidueyeGX extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_2;
 
-  public evolvesFrom = 'Dartix';
+  public evolvesFrom = 'Dartrix';
 
   public cardType: CardType = CardType.GRASS;
 
