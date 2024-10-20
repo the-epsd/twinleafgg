@@ -45,6 +45,18 @@ class Togekiss extends game_1.PokemonCard {
             if (state.phase !== game_1.GamePhase.ATTACK || state.players[state.activePlayer] !== opponent) {
                 return state;
             }
+            // Try to reduce PowerEffect, to check if something is blocking our ability
+            try {
+                const stub = new game_effects_1.PowerEffect(player, {
+                    name: 'test',
+                    powerType: game_1.PowerType.ABILITY,
+                    text: ''
+                }, this);
+                store.reduceEffect(state, stub);
+            }
+            catch (_a) {
+                return state;
+            }
             // Check if ability has already been activated for this knockout
             if (player.marker.hasMarker('TOGEKISS_KNOCKOUT_FLIP')) {
                 return state;

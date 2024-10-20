@@ -14,7 +14,6 @@ class Baxcalibur extends pokemon_card_1.PokemonCard {
         this.stage = card_types_1.Stage.STAGE_2;
         this.evolvesFrom = 'Arctibax';
         this.cardType = card_types_1.CardType.WATER;
-        this.cardTypez = card_types_1.CardType.BAXCALIBUR;
         this.hp = 160;
         this.weakness = [{ type: card_types_1.CardType.METAL }];
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];

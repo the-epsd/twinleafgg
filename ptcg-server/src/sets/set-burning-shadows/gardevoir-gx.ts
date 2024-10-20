@@ -13,6 +13,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect, AttackEffect } from '../../game/store/effects/game-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 // BUS Gardevoir-GX 93 (https://limitlesstcg.com/cards/BUS/93)
 export class GardevoirGX extends PokemonCard {
@@ -71,6 +72,11 @@ export class GardevoirGX extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
+      const player = effect.player;
+      player.marker.removeMarker(this.SPRING_MARKER, this);
+    }
+
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.SPRING_MARKER, this)) {
       const player = effect.player;
       player.marker.removeMarker(this.SPRING_MARKER, this);
     }
@@ -159,7 +165,6 @@ export class GardevoirGX extends PokemonCard {
         cards = selected || [];
       });
 
-      player.hand.moveCardTo(this, player.discard);
       player.discard.moveCardsTo(cards, player.deck);
 
       return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {

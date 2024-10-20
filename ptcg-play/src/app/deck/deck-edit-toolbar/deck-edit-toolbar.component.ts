@@ -185,21 +185,6 @@ export class DeckEditToolbarComponent implements OnDestroy {
     tap(value => this.filterChange.emit({ ...value }))
   );
 
-  // onPokemonSuperTypeRemoved$ = this.formValue$.pipe(
-  //   filter(value => !value.superTypes.includes(1) && value.superTypes.length > 0),
-  //   tap(_ => this.resetPokemonFilters())
-  // );
-
-  // onTrainerSuperTypeRemoved$ = this.formValue$.pipe(
-  //   filter(value => !value.superTypes.includes(2) && value.superTypes.length > 0),
-  //   tap(_ => this.resetTrainerFilters())
-  // );
-
-  // onEnergySuperTypeRemoved$ = this.formValue$.pipe(
-  //   filter(value => !value.superTypes.includes(3) && value.superTypes.length > 0),
-  //   tap(_ => this.resetEnergyFilters())
-  // );
-
   isPokemonSelected(): boolean {
     return this.selectedSuperTypes.includes(SuperType.POKEMON);
   }
@@ -214,9 +199,6 @@ export class DeckEditToolbarComponent implements OnDestroy {
 
   subscription = merge(
     this.onFormChange$,
-    // this.onPokemonSuperTypeRemoved$,
-    // this.onTrainerSuperTypeRemoved$,
-    // this.onEnergySuperTypeRemoved$
   ).subscribe();
 
   constructor(private formBuilder: FormBuilder) { }

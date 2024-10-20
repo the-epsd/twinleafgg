@@ -8,7 +8,6 @@ export declare class KyuremVMAX extends PokemonCard {
     tags: CardTag[];
     evolvesFrom: string;
     cardType: CardType;
-    cardTypez: CardType;
     hp: number;
     weakness: {
         type: CardType;

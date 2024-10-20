@@ -7,7 +7,6 @@ export declare class ChienPaoex extends PokemonCard {
     tags: CardTag[];
     stage: Stage;
     cardType: CardType;
-    cardTypez: CardType;
     hp: number;
     weakness: {
         type: CardType;

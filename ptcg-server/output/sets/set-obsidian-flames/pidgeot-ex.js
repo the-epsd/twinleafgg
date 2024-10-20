@@ -17,7 +17,6 @@ class Pidgeotex extends pokemon_card_1.PokemonCard {
         this.stage = card_types_1.Stage.STAGE_2;
         this.evolvesFrom = 'Pidgeotto';
         this.cardType = card_types_1.CardType.COLORLESS;
-        this.cardTypez = card_types_1.CardType.PIDGEOT_EX;
         this.hp = 280;
         this.weakness = [{ type: card_types_1.CardType.LIGHTNING }];
         this.resistance = [{ type: card_types_1.CardType.FIGHTING, value: -30 }];

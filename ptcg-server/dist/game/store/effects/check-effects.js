@@ -72,6 +72,9 @@ export class CheckPokemonTypeEffect {
         this.target = target;
         const pokemonCard = target.getPokemonCard();
         this.cardTypes = pokemonCard ? [pokemonCard.cardType] : [];
+        if (pokemonCard && pokemonCard.additionalCardTypes) {
+            this.cardTypes = [...this.cardTypes, ...pokemonCard.additionalCardTypes];
+        }
     }
 }
 export class CheckRetreatCostEffect {

@@ -18,8 +18,6 @@ export class Thwackey extends PokemonCard {
 
   public cardType: CardType = CardType.GRASS;
 
-  public cardTypez: CardType = CardType.THWACKEY;
-
   public hp: number = 100;
 
   public weakness = [{ type: CardType.FIRE }];

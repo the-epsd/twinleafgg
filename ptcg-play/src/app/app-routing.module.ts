@@ -14,22 +14,24 @@ import { ReplaysComponent } from './replays/replays.component';
 import { ResetPasswordComponent } from './login/reset-password/reset-password.component';
 import { SetNewPasswordComponent } from './login/set-new-password/set-new-password.component';
 import { TableComponent } from './table/table.component';
+import { TournamentListComponent } from './tournaments/tournament-list/tournament-list.component';
 
 const routes: Routes = [
-    { path: 'deck', component: DeckComponent, canActivate: [ CanActivateService ] },
-    { path: 'deck/:deckId', component: DeckEditComponent, canActivate: [ CanActivateService ] },
-    { path: 'games', component: GamesComponent, canActivate: [ CanActivateService ] },
-    { path: 'login', component: LoginComponent },
-    { path: 'message', redirectTo: 'message/', pathMatch: 'full' },
-    { path: 'message/:userId', component: MessagesComponent, canActivate: [ CanActivateService ] },
-    { path: 'ranking', component: RankingComponent, canActivate: [ CanActivateService ] },
-    { path: 'register', component: RegisterComponent },
-    { path: 'replays', component: ReplaysComponent, canActivate: [ CanActivateService ] },
-    { path: 'profile/:userId', component: ProfileComponent, canActivate: [ CanActivateService ] },
-    { path: 'reset-password', component: ResetPasswordComponent, pathMatch: 'full' },
-    { path: 'reset-password/:token', component: SetNewPasswordComponent },
-    { path: 'table/:gameId', component: TableComponent, canActivate: [ CanActivateService ] },
-    { path: '', redirectTo: '/games', pathMatch: 'full' },
+  { path: 'deck', component: DeckComponent, canActivate: [CanActivateService] },
+  { path: 'deck/:deckId', component: DeckEditComponent, canActivate: [CanActivateService] },
+  { path: 'games', component: GamesComponent, canActivate: [CanActivateService] },
+  { path: 'login', component: LoginComponent },
+  { path: 'message', redirectTo: 'message/', pathMatch: 'full' },
+  { path: 'message/:userId', component: MessagesComponent, canActivate: [CanActivateService] },
+  { path: 'ranking', component: RankingComponent, canActivate: [CanActivateService] },
+  { path: 'register', component: RegisterComponent },
+  { path: 'replays', component: ReplaysComponent, canActivate: [CanActivateService] },
+  { path: 'profile/:userId', component: ProfileComponent, canActivate: [CanActivateService] },
+  { path: 'reset-password', component: ResetPasswordComponent, pathMatch: 'full' },
+  { path: 'reset-password/:token', component: SetNewPasswordComponent },
+  { path: 'table/:gameId', component: TableComponent, canActivate: [CanActivateService] },
+  { path: 'tournaments', component: TournamentListComponent },
+  { path: '', redirectTo: '/games', pathMatch: 'full' },
 ];
 
 @NgModule({

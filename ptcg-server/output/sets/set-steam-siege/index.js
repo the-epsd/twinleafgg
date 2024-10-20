@@ -8,4 +8,5 @@ exports.setSteamSiege = [
     new card_images_1.PokemonRangerArt(),
     new card_images_1.SpecialChargeArt(),
     new card_images_1.TalonflameArt(),
+    new card_images_1.VolcanionEXArt(),
 ];

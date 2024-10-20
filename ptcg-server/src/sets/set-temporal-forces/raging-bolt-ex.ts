@@ -17,8 +17,6 @@ export class RagingBoltex extends PokemonCard {
 
   public cardType: CardType = CardType.DRAGON;
 
-  public cardTypez: CardType = CardType.RAGING_BOLT_EX;
-
   public hp: number = 240;
 
   public weakness = [];

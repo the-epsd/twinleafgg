@@ -39,7 +39,7 @@ export class PromptChooseCardsComponent {
   public isInvalid = false;
   public isSecret: boolean;
   public revealed = false;
-  public cardbackMap: {[index: number]: boolean} = {};
+  public cardbackMap: { [index: number]: boolean } = {};
   private promptValue: ChooseCardsPrompt;
   private result: number[] = [];
 
@@ -69,7 +69,7 @@ export class PromptChooseCardsComponent {
     this.result = result;
     this.isInvalid = isInvalid;
 
-    
+
   }
 
 }

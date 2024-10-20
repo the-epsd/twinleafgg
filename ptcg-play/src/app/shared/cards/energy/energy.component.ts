@@ -46,48 +46,6 @@ export class EnergyComponent {
       case CardType.FAIRY:
         this.typeClass = 'fairy';
         break;
-      case CardType.CHARIZARD_EX:
-        this.archetypeClass = 'charizard';
-        break;
-      case CardType.PIDGEOT_EX:
-        this.archetypeClass = 'pidgeot';
-        break;
-      case CardType.ARCEUS_VSTAR:
-        this.archetypeClass = 'arceus';
-        break;
-      case CardType.GIRATINA_VSTAR:
-        this.archetypeClass = 'giratina';
-        break;
-      case CardType.CHIEN_PAO_EX:
-        this.archetypeClass = 'chien-pao';
-        break;
-      case CardType.BAXCALIBUR:
-        this.archetypeClass = 'baxcalibur';
-        break;
-      case CardType.COMFEY:
-        this.archetypeClass = 'comfey';
-        break;
-      case CardType.SABLEYE:
-        this.archetypeClass = 'sableye';
-        break;
-      case CardType.RAGING_BOLT_EX:
-        this.archetypeClass = 'raging-bolt';
-        break;
-      case CardType.SOLROCK:
-        this.archetypeClass = 'solrock';
-        break;
-      case CardType.LUNATONE:
-        this.archetypeClass = 'lunatone';
-        break;
-      case CardType.MURKROW:
-        this.archetypeClass = 'murkrow';
-        break;
-      case CardType.FLAMIGO:
-        this.archetypeClass = 'flamigo';
-        break;
-      case CardType.KYUREM_VMAX:
-        this.archetypeClass = 'kyurem';
-        break;
       default:
         this.typeClass = 'energyless';
         this.archetypeClass = 'energyless';

@@ -9,6 +9,7 @@ export class Card {
         this.cardImage = '';
         this.retreat = [];
         this.attacks = [];
+        this.powers = [];
         this.cards = new CardList;
         this.marker = new Marker();
     }

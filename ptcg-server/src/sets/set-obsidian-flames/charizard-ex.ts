@@ -21,8 +21,6 @@ export class Charizardex extends PokemonCard {
 
   public cardType: CardType = CardType.DARK;
 
-  public cardTypez: CardType = CardType.CHARIZARD_EX;
-
   public hp: number = 330;
 
   public weakness = [{ type: CardType.GRASS }];

@@ -67,7 +67,7 @@ export class ChoosePokemonsPaneComponent implements OnDestroy {
     }
   }
 
-  private initDropTarget(item: PokemonItem): [DropTargetType, Observable<boolean>]  {
+  private initDropTarget(item: PokemonItem): [DropTargetType, Observable<boolean>] {
     let dropTarget: DropTargetType;
     let highlight$: Observable<boolean>;
 
@@ -88,7 +88,7 @@ export class ChoosePokemonsPaneComponent implements OnDestroy {
 
     highlight$ = dropState.pipe(map(state => state.canDrop && state.isOver));
 
-    return [ dropTarget, highlight$ ];
+    return [dropTarget, highlight$];
   }
 
   public onCardClick(item: PokemonItem) {

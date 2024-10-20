@@ -9,7 +9,6 @@ export declare class GiratinaVSTAR extends PokemonCard {
     evolvesFrom: string;
     regulationMark: string;
     cardType: CardType;
-    cardTypez: CardType;
     hp: number;
     retreat: CardType[];
     attacks: {

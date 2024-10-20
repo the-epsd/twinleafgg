@@ -19,8 +19,6 @@ export class Luxrayex extends PokemonCard {
 
   public cardType: CardType = CardType.LIGHTNING;
 
-  public cardTypez: CardType = CardType.LUXRAY_EX;
-
   public weakness = [{ type: CardType.FIGHTING }];
 
   public hp: number = 310;

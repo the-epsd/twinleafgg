@@ -32,6 +32,7 @@ import { AlolanNinetalesGX } from './alolan-ninetales-gx';
 import { Granbull } from './granbull';
 import { Naganadel } from './naganadel';
 import { Poipole } from './poipole';
+import { Snubbull } from './snubbull';
 
 export class AdventureBagArt extends AdventureBag {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_167_R_EN_LG.png';
@@ -139,6 +140,10 @@ export class PoipoleArt extends Poipole {
 
 export class SlowkingArt extends Slowking {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_055_R_EN_LG.png';
+}
+
+export class SnubbullArt extends Snubbull {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_137_R_EN.png';
 }
 
 export class SpellTagArt extends SpellTag {

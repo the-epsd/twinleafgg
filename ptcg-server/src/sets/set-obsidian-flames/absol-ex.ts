@@ -20,8 +20,6 @@ export class Absolex extends PokemonCard {
 
   public cardType: CardType = CardType.DARK;
 
-  public cardTypez: CardType = CardType.ABSOL_EX;
-
   public hp: number = 210;
 
   public weakness = [{ type: CardType.GRASS }];

@@ -15,8 +15,6 @@ export class IronCrownex extends PokemonCard {
 
   public cardType: CardType = CardType.PSYCHIC;
 
-  public cardTypez: CardType = CardType.IRON_CROWN_EX;
-
   public hp: number = 220;
 
   public weakness = [{ type: CardType.DARK }];

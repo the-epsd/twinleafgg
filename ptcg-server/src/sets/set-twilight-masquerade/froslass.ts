@@ -16,8 +16,6 @@ export class Froslass extends PokemonCard {
 
   public cardType: CardType = CardType.WATER;
 
-  public cardTypez: CardType = CardType.FROSLASS;
-
   public weakness = [{ type: CardType.METAL }];
 
   public hp: number = 90;

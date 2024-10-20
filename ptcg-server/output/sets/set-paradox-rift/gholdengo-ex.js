@@ -17,7 +17,6 @@ class Gholdengoex extends pokemon_card_1.PokemonCard {
         this.stage = card_types_1.Stage.STAGE_1;
         this.evolvesFrom = 'Gimmighoul';
         this.cardType = card_types_1.CardType.METAL;
-        this.cardTypez = card_types_1.CardType.GHOLDENGO_EX;
         this.hp = 260;
         this.weakness = [{ type: card_types_1.CardType.FIRE }];
         this.resistance = [{ type: card_types_1.CardType.GRASS, value: -30 }];

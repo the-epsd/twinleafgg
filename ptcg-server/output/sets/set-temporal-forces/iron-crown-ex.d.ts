@@ -7,7 +7,6 @@ export declare class IronCrownex extends PokemonCard {
     regulationMark: string;
     stage: Stage;
     cardType: CardType;
-    cardTypez: CardType;
     hp: number;
     weakness: {
         type: CardType;

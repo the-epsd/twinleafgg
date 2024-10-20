@@ -19,8 +19,6 @@ export class ChienPaoex extends PokemonCard {
 
   public cardType: CardType = CardType.WATER;
 
-  public cardTypez: CardType = CardType.CHIEN_PAO_EX;
-
   public hp: number = 220;
 
   public weakness = [{ type: CardType.METAL }];

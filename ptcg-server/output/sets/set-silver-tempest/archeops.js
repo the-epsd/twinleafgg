@@ -14,7 +14,6 @@ class Archeops extends pokemon_card_1.PokemonCard {
         this.regulationMark = 'F';
         this.evolvesFrom = 'Archen';
         this.cardType = card_types_1.CardType.COLORLESS;
-        this.cardTypez = card_types_1.CardType.ARCHEOPS;
         this.hp = 150;
         this.weakness = [{ type: card_types_1.CardType.LIGHTNING }];
         this.resistance = [{ type: card_types_1.CardType.FIGHTING, value: -30 }];

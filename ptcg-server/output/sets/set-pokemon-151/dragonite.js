@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Dragonite = void 0;
+const game_1 = require("../../game");
 const card_types_1 = require("../../game/store/card/card-types");
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const pokemon_types_1 = require("../../game/store/card/pokemon-types");
@@ -46,6 +47,16 @@ class Dragonite extends pokemon_card_1.PokemonCard {
             const cardList = state_utils_1.StateUtils.findCardList(state, this);
             const owner = state_utils_1.StateUtils.findOwner(state, cardList);
             if (player === owner) {
+                let isDragoniteInPlay = false;
+                player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+                    if (card === this) {
+                        isDragoniteInPlay = true;
+                    }
+                });
+                if (!isDragoniteInPlay) {
+                    return state;
+                }
+                // Try to reduce PowerEffect, to check if something is blocking our ability
                 try {
                     const stub = new game_effects_1.PowerEffect(player, {
                         name: 'test',

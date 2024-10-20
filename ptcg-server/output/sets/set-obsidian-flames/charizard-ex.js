@@ -15,7 +15,6 @@ class Charizardex extends pokemon_card_1.PokemonCard {
         this.stage = card_types_1.Stage.STAGE_2;
         this.evolvesFrom = 'Charmeleon';
         this.cardType = card_types_1.CardType.DARK;
-        this.cardTypez = card_types_1.CardType.CHARIZARD_EX;
         this.hp = 330;
         this.weakness = [{ type: card_types_1.CardType.GRASS }];
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];

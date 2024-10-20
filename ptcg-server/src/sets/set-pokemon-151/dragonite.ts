@@ -1,3 +1,4 @@
+import { PlayerType } from '../../game';
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { PowerType } from '../../game/store/card/pokemon-types';
@@ -35,7 +36,6 @@ export class Dragonite extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '149';
 
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
@@ -45,14 +45,26 @@ export class Dragonite extends PokemonCard {
       player.deck.moveTo(player.discard, 2);
       return state;
     }
-    
+
     if (effect instanceof CheckRetreatCostEffect) {
-      const player = effect.player
+      const player = effect.player;
       const cardList = StateUtils.findCardList(state, this);
       const owner = StateUtils.findOwner(state, cardList);
-      
+
       if (player === owner) {
-                
+
+        let isDragoniteInPlay = false;
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+          if (card === this) {
+            isDragoniteInPlay = true;
+          }
+        });
+
+        if (!isDragoniteInPlay) {
+          return state;
+        }
+
+        // Try to reduce PowerEffect, to check if something is blocking our ability
         try {
           const stub = new PowerEffect(player, {
             name: 'test',
@@ -63,13 +75,10 @@ export class Dragonite extends PokemonCard {
         } catch {
           return state;
         }
-        
-        effect.cost = [];        
+        effect.cost = [];
       }
-      
       return state;
     }
-    
     return state;
   }
 }

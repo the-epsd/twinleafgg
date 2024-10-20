@@ -21,8 +21,6 @@ export class OriginFormePalkiaVSTAR extends PokemonCard {
 
   public cardType: CardType = CardType.WATER;
 
-  public cardTypez: CardType = CardType.PALKIA_VSTAR;
-
   public hp: number = 280;
 
   public weakness = [{ type: CardType.LIGHTNING }];

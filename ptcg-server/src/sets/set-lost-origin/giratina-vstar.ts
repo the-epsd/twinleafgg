@@ -20,8 +20,6 @@ export class GiratinaVSTAR extends PokemonCard {
 
   public cardType: CardType = CardType.DRAGON;
 
-  public cardTypez: CardType = CardType.GIRATINA_VSTAR;
-
   public hp: number = 280;
 
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];

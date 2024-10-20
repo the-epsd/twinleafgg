@@ -15,7 +15,7 @@ export class PromptChoosePrizeComponent implements OnChanges {
   @Input() gameState: LocalGameState;
 
   public cards: Card[];
-  public cardbackMap: {[index: number]: boolean} = {};
+  public cardbackMap: { [index: number]: boolean } = {};
   public allowedCancel: boolean;
   public promptId: number;
   public message: string;
@@ -60,7 +60,7 @@ export class PromptChoosePrizeComponent implements OnChanges {
       }
 
       const cards: Card[] = [];
-      const cardbackMap: {[index: number]: boolean} = {};
+      const cardbackMap: { [index: number]: boolean } = {};
       player.prizes.forEach((prize) => {
         prize.cards.forEach(card => {
           cardbackMap[cards.length] = prize.isSecret;

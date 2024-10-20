@@ -26,6 +26,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { PromptRemoveDamageComponent } from './prompt-remove-damage/prompt-remove-damage.component';
 import { PromptDiscardEnergyComponent } from './prompt-discard-energy/prompt-discard-energy.component';
 import { PromptConfirmCardsComponent } from './prompt-confirm-card/prompt-confirm-cards.component';
+import { ChooseStartingPokemonPromptComponent } from './choose-starting-pokemon-prompt/choose-starting-pokemon-prompt.component';
 
 
 @NgModule({
@@ -53,6 +54,7 @@ import { PromptConfirmCardsComponent } from './prompt-confirm-card/prompt-confir
     PromptRemoveDamageComponent,
     PromptDiscardEnergyComponent,
     PromptConfirmCardsComponent,
+    ChooseStartingPokemonPromptComponent
   ],
   imports: [
     BoardModule,

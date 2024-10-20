@@ -18,8 +18,6 @@ export class RotomV extends PokemonCard {
 
   public cardType: CardType = CardType.LIGHTNING;
 
-  public cardTypez: CardType = CardType.ROTOM_V;
-
   public hp: number = 190;
 
   public weakness = [{ type: CardType.FIGHTING }];

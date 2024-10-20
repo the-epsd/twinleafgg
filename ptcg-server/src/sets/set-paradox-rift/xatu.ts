@@ -18,8 +18,6 @@ export class Xatu extends PokemonCard {
 
   public cardType: CardType = CardType.PSYCHIC;
 
-  public cardTypez: CardType = CardType.XATU;
-
   public hp: number = 100;
 
   public weakness = [{ type: CardType.DARK }];

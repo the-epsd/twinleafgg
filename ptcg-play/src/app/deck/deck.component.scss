@@ -20,7 +20,7 @@ ptcg-archetype,
 
 .deck-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(460px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   grid-gap: 1rem;
   justify-content: center;
   margin: 0 auto;
@@ -78,9 +78,7 @@ ptcg-archetype,
   transform: scale(0.8);
 }
 
-
 .deck-actions {
   display: flex;
   justify-content: flex-end;
 }
-

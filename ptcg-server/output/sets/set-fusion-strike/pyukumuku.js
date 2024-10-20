@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Pyukumuku = void 0;
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
+const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 class Pyukumuku extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -29,16 +30,20 @@ class Pyukumuku extends game_1.PokemonCard {
         this.setNumber = '77';
         this.name = 'Pyukumuku';
         this.fullName = 'Pyukumuku FST';
+        this.PYUK_MARKER = 'PYUK_MARKER';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_effects_1.PowerEffect && effect.power.name === 'Pitch a Pyukumuku') {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.PYUK_MARKER, this)) {
+            effect.player.marker.removeMarker(this.PYUK_MARKER, this);
+        }
+        if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
-            const cards = [this];
-            const deckBottom = new game_1.CardList();
-            if (player.deck.cards.length === 0) {
-                throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
+            if (player.marker.hasMarker(this.PYUK_MARKER, this)) {
+                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
-            player.hand.moveCardsTo(cards, deckBottom);
+            const deckBottom = new game_1.CardList();
+            player.marker.addMarker(this.PYUK_MARKER, this);
+            player.hand.moveCardTo(this, deckBottom);
             deckBottom.moveTo(player.deck);
             player.deck.moveTo(player.hand, 1);
         }

@@ -18,8 +18,6 @@ export class KyuremVMAX extends PokemonCard {
 
   public cardType: CardType = CardType.WATER;
 
-  public cardTypez: CardType = CardType.KYUREM_VMAX;
-
   public hp = 330;
 
   public weakness = [{ type: CardType.METAL }];

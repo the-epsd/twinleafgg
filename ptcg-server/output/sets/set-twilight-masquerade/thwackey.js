@@ -15,7 +15,6 @@ class Thwackey extends pokemon_card_1.PokemonCard {
         this.stage = card_types_1.Stage.STAGE_1;
         this.evolvesFrom = 'Grookey';
         this.cardType = card_types_1.CardType.GRASS;
-        this.cardTypez = card_types_1.CardType.THWACKEY;
         this.hp = 100;
         this.weakness = [{ type: card_types_1.CardType.FIRE }];
         this.resistance = [];

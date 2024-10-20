@@ -1,11 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TalonflameArt = exports.SpecialChargeArt = exports.PokemonRangerArt = exports.NinjaBoyArt = exports.CobalionArt = void 0;
+exports.VolcanionEXArt = exports.TalonflameArt = exports.SpecialChargeArt = exports.PokemonRangerArt = exports.NinjaBoyArt = exports.CobalionArt = void 0;
 const cobalion_1 = require("./cobalion");
 const ninja_boy_1 = require("./ninja-boy");
 const pokemon_ranger_1 = require("./pokemon-ranger");
 const special_charge_1 = require("./special-charge");
 const talonflame_1 = require("./talonflame");
+const volcanion_ex_1 = require("./volcanion-ex");
 class CobalionArt extends cobalion_1.Cobalion {
     constructor() {
         super(...arguments);
@@ -41,3 +42,10 @@ class TalonflameArt extends talonflame_1.Talonflame {
     }
 }
 exports.TalonflameArt = TalonflameArt;
+class VolcanionEXArt extends volcanion_ex_1.VolcanionEX {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/STS/STS_026_R_EN.png';
+    }
+}
+exports.VolcanionEXArt = VolcanionEXArt;

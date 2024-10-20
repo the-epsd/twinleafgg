@@ -8,7 +8,6 @@ export declare class Gholdengoex extends PokemonCard {
     stage: Stage;
     evolvesFrom: string;
     cardType: CardType;
-    cardTypez: CardType;
     hp: number;
     weakness: {
         type: CardType;

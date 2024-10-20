@@ -3,6 +3,7 @@ import { NinjaBoy } from './ninja-boy';
 import { PokemonRanger } from './pokemon-ranger';
 import { SpeicalCharge } from './special-charge';
 import { Talonflame } from './talonflame';
+import { VolcanionEX } from './volcanion-ex';
 export declare class CobalionArt extends Cobalion {
     cardImage: string;
 }
@@ -16,5 +17,8 @@ export declare class SpecialChargeArt extends SpeicalCharge {
     cardImage: string;
 }
 export declare class TalonflameArt extends Talonflame {
+    cardImage: string;
+}
+export declare class VolcanionEXArt extends VolcanionEX {
     cardImage: string;
 }
