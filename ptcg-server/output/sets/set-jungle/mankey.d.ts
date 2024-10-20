@@ -26,5 +26,6 @@ export declare class Mankey extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
+    readonly PEEK_MARKER = "PEEK_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

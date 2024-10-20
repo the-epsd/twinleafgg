@@ -1,8 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { Card, CardList, ChooseCardsPrompt, GameError, GameMessage, PowerType, SelectPrompt, ShowCardsPrompt, State, StateUtils, StoreLike } from '../../game';
+import { Card, CardList, ChooseCardsPrompt, GameError, GameMessage, PokemonCardList, PowerType, SelectPrompt, ShowCardsPrompt, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class Mankey extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -37,11 +38,22 @@ export class Mankey extends PokemonCard {
 
   public fullName: string = 'Mankey JU';
 
+  public readonly PEEK_MARKER = 'PEEK_MARKER';
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
+      const cardList = StateUtils.findCardList(state, this) as PokemonCardList;
+
+      if (cardList.specialConditions.length > 0) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
+      }
+
+      if (player.marker.hasMarker(this.PEEK_MARKER)) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
+      }
 
       const options: { message: GameMessage, action: () => void }[] = [
         {
@@ -58,6 +70,8 @@ export class Mankey extends PokemonCard {
             );
 
             deckTop.moveToTopOfDestination(player.deck);
+
+            player.marker.addMarker(this.PEEK_MARKER, this);
 
             return state;
           }
@@ -76,6 +90,9 @@ export class Mankey extends PokemonCard {
             );
 
             deckTop.moveToTopOfDestination(opponent.deck);
+
+            player.marker.addMarker(this.PEEK_MARKER, this);
+
 
             return state;
           }
@@ -105,6 +122,9 @@ export class Mankey extends PokemonCard {
                 ), () => state);
               }
             });
+
+            player.marker.addMarker(this.PEEK_MARKER, this);
+
             return state;
           }
         },
@@ -140,6 +160,9 @@ export class Mankey extends PokemonCard {
                 ), () => state);
               }
             });
+
+            player.marker.addMarker(this.PEEK_MARKER, this);
+
             return state;
           }
         },
@@ -175,6 +198,9 @@ export class Mankey extends PokemonCard {
                 ), () => state);
               }
             });
+
+            player.marker.addMarker(this.PEEK_MARKER, this);
+
             return state;
           }
         }
@@ -189,6 +215,10 @@ export class Mankey extends PokemonCard {
         const option = options[choice];
         option.action();
       });
+    }
+
+    if (effect instanceof EndTurnEffect) {
+      effect.player.marker.removeMarker(this.PEEK_MARKER, this);
     }
 
     return state;

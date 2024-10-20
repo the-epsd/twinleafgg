@@ -5,6 +5,7 @@ const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
+const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 class Mankey extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -29,11 +30,19 @@ class Mankey extends pokemon_card_1.PokemonCard {
         this.setNumber = '55';
         this.name = 'Mankey';
         this.fullName = 'Mankey JU';
+        this.PEEK_MARKER = 'PEEK_MARKER';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
+            const cardList = game_1.StateUtils.findCardList(state, this);
+            if (cardList.specialConditions.length > 0) {
+                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
+            }
+            if (player.marker.hasMarker(this.PEEK_MARKER)) {
+                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
+            }
             const options = [
                 {
                     message: game_1.GameMessage.REVEAL_YOUR_TOP_DECK,
@@ -42,6 +51,7 @@ class Mankey extends pokemon_card_1.PokemonCard {
                         player.deck.moveTo(deckTop, 1);
                         state = store.prompt(state, new game_1.ShowCardsPrompt(player.id, game_1.GameMessage.REVEAL_YOUR_TOP_DECK, deckTop.cards), () => state);
                         deckTop.moveToTopOfDestination(player.deck);
+                        player.marker.addMarker(this.PEEK_MARKER, this);
                         return state;
                     }
                 },
@@ -52,6 +62,7 @@ class Mankey extends pokemon_card_1.PokemonCard {
                         opponent.deck.moveTo(deckTop, 1);
                         state = store.prompt(state, new game_1.ShowCardsPrompt(player.id, game_1.GameMessage.REVEAL_OPPONENT_TOP_DECK, deckTop.cards), () => state);
                         deckTop.moveToTopOfDestination(opponent.deck);
+                        player.marker.addMarker(this.PEEK_MARKER, this);
                         return state;
                     }
                 },
@@ -68,6 +79,7 @@ class Mankey extends pokemon_card_1.PokemonCard {
                                 state = store.prompt(state, new game_1.ShowCardsPrompt(player.id, game_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards), () => state);
                             }
                         });
+                        player.marker.addMarker(this.PEEK_MARKER, this);
                         return state;
                     }
                 },
@@ -91,6 +103,7 @@ class Mankey extends pokemon_card_1.PokemonCard {
                                 state = store.prompt(state, new game_1.ShowCardsPrompt(player.id, game_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, list), () => state);
                             }
                         });
+                        player.marker.addMarker(this.PEEK_MARKER, this);
                         return state;
                     }
                 },
@@ -114,6 +127,7 @@ class Mankey extends pokemon_card_1.PokemonCard {
                                 state = store.prompt(state, new game_1.ShowCardsPrompt(player.id, game_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, list), () => state);
                             }
                         });
+                        player.marker.addMarker(this.PEEK_MARKER, this);
                         return state;
                     }
                 }
@@ -122,6 +136,9 @@ class Mankey extends pokemon_card_1.PokemonCard {
                 const option = options[choice];
                 option.action();
             });
+        }
+        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+            effect.player.marker.removeMarker(this.PEEK_MARKER, this);
         }
         return state;
     }
