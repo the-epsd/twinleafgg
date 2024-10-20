@@ -15,8 +15,10 @@ import { Jigglypuff } from './jigglypuff';
 import { Jolteon } from './jolteon';
 import { Kangaskhan } from './kangaskhan';
 import { Lickitung } from './lickitung';
+import { Mankey } from './mankey';
 import { Marowak } from './marowak';
 import { Meowth } from './meowth';
+import { MrMime } from './mr-mime';
 import { Nidoqueen } from './nidoqueen';
 import { NidoranFemale } from './nidoran-female';
 import { Nidorina } from './nidorina';
@@ -34,6 +36,7 @@ import { Rhydon } from './rhydon';
 import { Rhyhorn } from './rhyhorn';
 import { Scyther } from './scyther';
 import { Seaking } from './seaking';
+import { Snorlax } from './snorlax';
 import { Spearow } from './spearow';
 import { Vaporeon } from './vaporeon';
 import { Venomoth } from './venomoth';
@@ -111,12 +114,20 @@ export class LickitungArt extends Lickitung {
   public cardImage = 'https://pkmncards.com/wp-content/uploads/lickitung-jungle-ju-38.jpg';
 }
 
+export class MankeyArt extends Mankey {
+  public cardImage = 'https://pkmncards.com/wp-content/uploads/mankey-jungle-ju-55.jpg';
+}
+
 export class MarowakArt extends Marowak {
   public cardImage = 'https://pkmncards.com/wp-content/uploads/marowak-jungle-ju-39.jpg';
 }
 
 export class MeowthArt extends Meowth {
   public cardImage = 'https://pkmncards.com/wp-content/uploads/meowth-jungle-ju-56.jpg';
+}
+
+export class MrMimeArt extends MrMime {
+  public cardImage = 'https://pkmncards.com/wp-content/uploads/mr.-mime-jungle-ju-6.jpg';
 }
 
 export class NidoqueenArt extends Nidoqueen {
@@ -185,6 +196,10 @@ export class ScytherArt extends Scyther {
 
 export class SeakingArt extends Seaking {
   public cardImage = 'https://pkmncards.com/wp-content/uploads/seaking-jungle-ju-46.jpg';
+}
+
+export class SnorlaxArt extends Snorlax {
+  public cardImage = 'https://pkmncards.com/wp-content/uploads/snorlax-jungle-ju-11.jpg';
 }
 
 export class SpearowArt extends Spearow {

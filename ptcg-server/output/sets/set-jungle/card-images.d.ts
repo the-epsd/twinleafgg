@@ -15,8 +15,10 @@ import { Jigglypuff } from './jigglypuff';
 import { Jolteon } from './jolteon';
 import { Kangaskhan } from './kangaskhan';
 import { Lickitung } from './lickitung';
+import { Mankey } from './mankey';
 import { Marowak } from './marowak';
 import { Meowth } from './meowth';
+import { MrMime } from './mr-mime';
 import { Nidoqueen } from './nidoqueen';
 import { NidoranFemale } from './nidoran-female';
 import { Nidorina } from './nidorina';
@@ -34,6 +36,7 @@ import { Rhydon } from './rhydon';
 import { Rhyhorn } from './rhyhorn';
 import { Scyther } from './scyther';
 import { Seaking } from './seaking';
+import { Snorlax } from './snorlax';
 import { Spearow } from './spearow';
 import { Vaporeon } from './vaporeon';
 import { Venomoth } from './venomoth';
@@ -93,10 +96,16 @@ export declare class KangaskhanArt extends Kangaskhan {
 export declare class LickitungArt extends Lickitung {
     cardImage: string;
 }
+export declare class MankeyArt extends Mankey {
+    cardImage: string;
+}
 export declare class MarowakArt extends Marowak {
     cardImage: string;
 }
 export declare class MeowthArt extends Meowth {
+    cardImage: string;
+}
+export declare class MrMimeArt extends MrMime {
     cardImage: string;
 }
 export declare class NidoqueenArt extends Nidoqueen {
@@ -148,6 +157,9 @@ export declare class ScytherArt extends Scyther {
     cardImage: string;
 }
 export declare class SeakingArt extends Seaking {
+    cardImage: string;
+}
+export declare class SnorlaxArt extends Snorlax {
     cardImage: string;
 }
 export declare class SpearowArt extends Spearow {
