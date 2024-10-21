@@ -36,7 +36,7 @@ class Zorua extends pokemon_card_1.PokemonCard {
         this.fullName = 'Zorua SFA';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             return store.prompt(state, [
                 new game_1.CoinFlipPrompt(effect.player.id, game_1.GameMessage.COIN_FLIP),
                 new game_1.CoinFlipPrompt(effect.player.id, game_1.GameMessage.COIN_FLIP)
