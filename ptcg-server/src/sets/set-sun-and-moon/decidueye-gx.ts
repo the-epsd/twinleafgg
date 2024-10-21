@@ -87,12 +87,14 @@ export class DecidueyeGX extends PokemonCard {
         player.id,
         GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
         PlayerType.TOP_PLAYER,
-        [SlotType.BENCH],
+        [SlotType.BENCH, SlotType.ACTIVE],
         { allowCancel: false }
       ), targets => {
         if (!targets || targets.length === 0) {
           return;
         }
+
+        player.marker.addMarker(this.FEATHER_ARROW_MARKER, this);
 
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
           if (cardList.getPokemonCard() === this) {
