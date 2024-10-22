@@ -22,8 +22,6 @@ export class Gardevoirex extends PokemonCard {
 
   public cardType: CardType = CardType.PSYCHIC;
 
-  public cardTypez: CardType = CardType.GARDEVOIR_EX;
-
   public hp: number = 310;
 
   public weakness = [{ type: CardType.DARK }];

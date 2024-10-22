@@ -1,6 +1,7 @@
-import { PokemonCard, Stage, CardType, PowerType, State, StoreLike, CardList, GameError, GameMessage, Card } from '../../game';
+import { PokemonCard, Stage, CardType, PowerType, State, StoreLike, GameError, GameMessage, CardList } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 
 export class Pyukumuku extends PokemonCard {
@@ -8,12 +9,12 @@ export class Pyukumuku extends PokemonCard {
   public stage: Stage = Stage.BASIC;
 
   public cardType: CardType = CardType.WATER;
-  
+
   public hp = 80;
-  
+
   public weakness = [{ type: CardType.LIGHTNING }];
-  
-  public retreat = [ CardType.COLORLESS ];
+
+  public retreat = [CardType.COLORLESS];
 
   public powers = [{
     name: 'Pitch a Pyukumuku',
@@ -41,22 +42,25 @@ export class Pyukumuku extends PokemonCard {
 
   public fullName: string = 'Pyukumuku FST';
 
+  public readonly PYUK_MARKER = 'PYUK_MARKER';
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PowerEffect && effect.power.name === 'Pitch a Pyukumuku') {
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.PYUK_MARKER, this)) {
+      effect.player.marker.removeMarker(this.PYUK_MARKER, this);
+    }
+
+    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
 
-      const cards: Card[] = [this];
-      const deckBottom = new CardList();
-
-      if (player.deck.cards.length === 0) {
-        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      if (player.marker.hasMarker(this.PYUK_MARKER, this)) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      player.hand.moveCardsTo(cards, deckBottom);
-
+      const deckBottom = new CardList();
+      player.marker.addMarker(this.PYUK_MARKER, this);
+      player.hand.moveCardTo(this, deckBottom);
       deckBottom.moveTo(player.deck);
-
       player.deck.moveTo(player.hand, 1);
     }
 

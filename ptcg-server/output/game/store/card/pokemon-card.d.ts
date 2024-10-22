@@ -9,7 +9,7 @@ import { TrainerCard } from './trainer-card';
 export declare abstract class PokemonCard extends Card {
     superType: SuperType;
     cardType: CardType;
-    cardTypez: CardType;
+    additionalCardTypes?: CardType[];
     cardTag: CardTag[];
     pokemonType: PokemonType;
     evolvesFrom: string;

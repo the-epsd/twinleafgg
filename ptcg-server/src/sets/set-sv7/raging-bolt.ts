@@ -1,5 +1,5 @@
 import { ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, State, StoreLike } from '../../game';
-import { CardType, Stage } from '../../game/store/card/card-types';
+import { CardTag, CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
@@ -9,6 +9,8 @@ import { AttackEffect } from '../../game/store/effects/game-effects';
 export class RagingBolt extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
+
+  public tags = [CardTag.ANCIENT];
 
   public cardType: CardType = CardType.DRAGON;
 
@@ -56,19 +58,19 @@ export class RagingBolt extends PokemonCard {
         { min: 1, max: 1, allowCancel: false }
       ), selected => {
         const targets = selected || [];
-        
+
         const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player, player.active);
         store.reduceEffect(state, checkProvidedEnergyEffect);
-        
+
         const providedEnergy = checkProvidedEnergyEffect.energyMap.reduce((acc, curr) => acc + curr.provides.length, 0);
         const damage = providedEnergy * 30;
-        
+
         targets.forEach(target => {
           const damageEffect = new PutDamageEffect(effect, damage);
           damageEffect.target = target;
           store.reduceEffect(state, damageEffect);
         });
-        
+
         return state;
       });
     }

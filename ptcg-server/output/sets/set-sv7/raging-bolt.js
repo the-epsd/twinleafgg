@@ -11,6 +11,7 @@ class RagingBolt extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.BASIC;
+        this.tags = [card_types_1.CardTag.ANCIENT];
         this.cardType = card_types_1.CardType.DRAGON;
         this.hp = 130;
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];

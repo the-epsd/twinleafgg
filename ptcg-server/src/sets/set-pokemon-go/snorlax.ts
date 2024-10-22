@@ -12,13 +12,11 @@ export class Snorlax extends PokemonCard {
 
   public cardType: CardType = CardType.COLORLESS;
 
-  public cardTypez: CardType = CardType.SNORLAX_STALL;
-
   public hp: number = 150;
 
   public weakness = [{ type: CardType.FIGHTING }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Block',
@@ -29,7 +27,7 @@ export class Snorlax extends PokemonCard {
   public attacks = [
     {
       name: 'Collapse',
-      cost: [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
       damage: 150,
       text: 'This Pokemon is now Asleep.'
     }
@@ -65,11 +63,11 @@ export class Snorlax extends PokemonCard {
         // Try to reduce PowerEffect, to check if something is blocking our ability
         try {
           const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
+            name: 'test',
+            powerType: PowerType.ABILITY,
+            text: ''
+          }, this);
+          store.reduceEffect(state, stub);
         } catch {
           return state;
         }

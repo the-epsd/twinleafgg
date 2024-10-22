@@ -14,7 +14,7 @@ export abstract class PokemonCard extends Card {
 
   public cardType: CardType = CardType.NONE;
 
-  public cardTypez: CardType = CardType.NONE;
+  public additionalCardTypes?: CardType[];
 
   public cardTag: CardTag[] = [];
 

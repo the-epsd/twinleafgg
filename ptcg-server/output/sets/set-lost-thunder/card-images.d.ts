@@ -32,6 +32,7 @@ import { AlolanNinetalesGX } from './alolan-ninetales-gx';
 import { Granbull } from './granbull';
 import { Naganadel } from './naganadel';
 import { Poipole } from './poipole';
+import { Snubbull } from './snubbull';
 export declare class AdventureBagArt extends AdventureBag {
     cardImage: string;
 }
@@ -111,6 +112,9 @@ export declare class PoipoleArt extends Poipole {
     cardImage: string;
 }
 export declare class SlowkingArt extends Slowking {
+    cardImage: string;
+}
+export declare class SnubbullArt extends Snubbull {
     cardImage: string;
 }
 export declare class SpellTagArt extends SpellTag {

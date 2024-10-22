@@ -319,8 +319,8 @@ export class BoardComponent implements OnDestroy {
       const isOnBench = cardList !== this.gameState.state.players[this.gameState.state.activePlayer].active;
       const options = {
         enableAbility: { useWhenInPlay: true },
-        enableAttack: true,
-        enableBenchAttack: isOnBench
+        enableAttack: !isOnBench,
+        enableBenchAttack: false
       };
       this.cardsBaseService.showCardInfo({ card, cardList, options })
         .then(result => {
@@ -333,12 +333,13 @@ export class BoardComponent implements OnDestroy {
           if (result.ability) {
             this.gameService.ability(gameId, result.ability, target);
 
-            // Use attack from the card (including from bench)
-          } else if (result.attack) {
+            // Use only the second attack from the card
+          } else if (result.attack && result.attack === card.attacks[1].name) {
             this.gameService.attack(gameId, result.attack);
           }
         });
     }
+
 
     else {
 
@@ -407,6 +408,31 @@ export class BoardComponent implements OnDestroy {
         // Use stadium card effect
         if (result.trainer) {
           this.gameService.stadium(this.gameState.gameId);
+        }
+      });
+  }
+
+  public onHandCardClick(card: Card, cardList: CardList, index: number) {
+    const isBottomOwner = this.bottomPlayer && this.bottomPlayer.id === this.clientId;
+    const isDeleted = this.gameState.deleted;
+
+    if (!isBottomOwner || isDeleted) {
+      return this.onCardClick(card, cardList);
+    }
+    const player = PlayerType.BOTTOM_PLAYER;
+    const slot = SlotType.HAND;
+    const target: CardTarget = { player, slot, index };
+
+    const options = { enableAbility: { useFromHand: true }, enableAttack: false };
+    this.cardsBaseService.showCardInfo({ card, cardList, options })
+      .then(result => {
+        if (!result) {
+          return;
+        }
+        const gameId = this.gameState.gameId;
+
+        if (result.ability) {
+          this.gameService.ability(gameId, result.ability, target);
         }
       });
   }

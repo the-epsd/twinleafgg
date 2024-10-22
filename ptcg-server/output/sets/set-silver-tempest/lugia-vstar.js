@@ -13,7 +13,6 @@ class LugiaVSTAR extends pokemon_card_1.PokemonCard {
         this.stage = card_types_1.Stage.VSTAR;
         this.evolvesFrom = 'Lugia V';
         this.cardType = card_types_1.CardType.COLORLESS;
-        this.cardTypez = card_types_1.CardType.LUGIA_VSTAR;
         this.hp = 280;
         this.weakness = [{ type: card_types_1.CardType.LIGHTNING }];
         this.resistance = [{ type: card_types_1.CardType.FIGHTING, value: -30 }];

@@ -75,12 +75,12 @@ export class DeckAnalyser {
 
     for (let i = 0; i < this.cards.length; i++) {
       const card = this.cards[i];
-      let cardTypez = CardType.NONE;
+      let cardType = CardType.NONE;
 
       if (card instanceof PokemonCard) {
-        cardTypez = card.cardTypez;
-        if (cardTypez !== CardType.NONE && cardTypes.indexOf(cardTypez) === -1) {
-          cardTypes.push(cardTypez);
+        cardType = card.cardType;
+        if (cardType !== CardType.NONE && cardTypes.indexOf(cardType) === -1) {
+          cardTypes.push(cardType);
         }
       }
     }

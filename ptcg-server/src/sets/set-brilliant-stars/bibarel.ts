@@ -19,8 +19,6 @@ export class Bibarel extends PokemonCard {
 
   public cardType: CardType = CardType.COLORLESS;
 
-  public cardTypez: CardType = CardType.BIBAREL;
-
   public hp: number = 120;
 
   public weakness = [{ type: CardType.FIGHTING }];

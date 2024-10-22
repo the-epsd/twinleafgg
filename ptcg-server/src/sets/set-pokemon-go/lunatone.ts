@@ -13,8 +13,6 @@ export class Lunatone extends PokemonCard {
 
   public cardType: CardType = CardType.PSYCHIC;
 
-  public cardTypez: CardType = CardType.LUNATONE;
-
   public hp: number = 90;
 
   public weakness = [{ type: CardType.DARK }];

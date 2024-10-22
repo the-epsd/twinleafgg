@@ -36,7 +36,6 @@ class ArceusVSTAR extends pokemon_card_1.PokemonCard {
         this.stage = card_types_1.Stage.VSTAR;
         this.evolvesFrom = 'Arceus V';
         this.cardType = card_types_1.CardType.COLORLESS;
-        this.cardTypez = card_types_1.CardType.ARCEUS_VSTAR;
         this.hp = 280;
         this.weakness = [{ type: card_types_1.CardType.FIGHTING }];
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];

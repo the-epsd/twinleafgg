@@ -9,7 +9,6 @@ export declare class Luxrayex extends PokemonCard {
     tags: CardTag[];
     regulationMark: string;
     cardType: CardType;
-    cardTypez: CardType;
     weakness: {
         type: CardType;
     }[];

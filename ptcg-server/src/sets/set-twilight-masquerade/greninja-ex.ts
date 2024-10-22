@@ -16,8 +16,6 @@ export class Greninjaex extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_2;
 
-  public cardTypez: CardType = CardType.GRENINJA_EX;
-
   public evolvesFrom = 'Frogadier';
 
   public cardType: CardType = CardType.FIGHTING;

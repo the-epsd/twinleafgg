@@ -7,7 +7,6 @@ export class PokemonCard extends Card {
         super(...arguments);
         this.superType = SuperType.POKEMON;
         this.cardType = CardType.NONE;
-        this.cardTypez = CardType.NONE;
         this.cardTag = [];
         this.pokemonType = PokemonType.NORMAL;
         this.evolvesFrom = '';

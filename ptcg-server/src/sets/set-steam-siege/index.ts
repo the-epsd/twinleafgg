@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { CobalionArt, NinjaBoyArt, PokemonRangerArt, SpecialChargeArt, TalonflameArt } from './card-images';
+import { CobalionArt, NinjaBoyArt, PokemonRangerArt, SpecialChargeArt, TalonflameArt, VolcanionEXArt } from './card-images';
 
 export const setSteamSiege: Card[] = [
   new CobalionArt(),
@@ -7,4 +7,5 @@ export const setSteamSiege: Card[] = [
   new PokemonRangerArt(),
   new SpecialChargeArt(),
   new TalonflameArt(),
+  new VolcanionEXArt(),
 ];

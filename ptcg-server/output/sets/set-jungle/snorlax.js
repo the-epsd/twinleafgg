@@ -6,6 +6,7 @@ const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
+const check_effects_1 = require("../../game/store/effects/check-effects");
 class Snorlax extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -33,6 +34,18 @@ class Snorlax extends pokemon_card_1.PokemonCard {
         this.fullName = 'Snorlax JU';
     }
     reduceEffect(store, state, effect) {
+        if (effect instanceof check_effects_1.CheckTableStateEffect) {
+            const cardList = game_1.StateUtils.findCardList(state, this);
+            if (cardList instanceof game_1.PokemonCardList && cardList.getPokemonCard() === this) {
+                const hasSpecialCondition = cardList.specialConditions.some(condition => condition !== card_types_1.SpecialCondition.ABILITY_USED);
+                if (cardList.specialConditions.length > 0) {
+                    throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
+                }
+                if (!hasSpecialCondition) {
+                    cardList.specialConditions = cardList.specialConditions.filter(condition => condition === card_types_1.SpecialCondition.ABILITY_USED);
+                }
+            }
+        }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             state = store.prompt(state, [

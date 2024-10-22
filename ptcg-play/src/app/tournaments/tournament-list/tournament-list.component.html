@@ -1,0 +1,20 @@
+<div class="tournament-list">
+  <h2>Tournaments</h2>
+  <button mat-raised-button color="primary" (click)="createTournament()">Create Tournament</button>
+
+  <h3>Active Tournaments</h3>
+  <mat-list>
+    <mat-list-item *ngFor="let tournament of activeTournaments">
+      {{ tournament.name }} - {{ tournament.startTime | date:'medium' }}
+      <button mat-button (click)="viewTournament(tournament.id)">View</button>
+    </mat-list-item>
+  </mat-list>
+
+  <h3>Upcoming Tournaments</h3>
+  <mat-list>
+    <mat-list-item *ngFor="let tournament of upcomingTournaments">
+      {{ tournament.name }} - {{ tournament.startTime | date:'medium' }}
+      <button mat-button (click)="joinTournament(tournament.id)">Join</button>
+    </mat-list-item>
+  </mat-list>
+</div>

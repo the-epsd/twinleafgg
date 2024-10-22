@@ -9,9 +9,9 @@ import { DeckService } from '../api/services/deck.service';
 import { AlertService } from '../shared/alert/alert.service';
 import { CardsBaseService } from '../shared/cards/cards-base.service';
 import { DeckItem } from './deck-card/deck-card.interface';
+import { Archetype, CardType } from 'ptcg-server';
 
 @UntilDestroy()
-
 
 @Component({
   selector: 'ptcg-deck',
@@ -163,6 +163,48 @@ export class DeckComponent implements OnInit {
     });
   }
 
+  getArchetype(deckItems: any[]): Archetype {
+
+    const archetypeCombinations = [
+      { archetype: Archetype.CHARIZARD, cards: ['Charizard ex', 'Pidgeot ex'] },
+      { archetype: Archetype.CHARIZARD, cards: ['Charizard', 'Leon'] },
+    ];
+
+    const archetypeMapping: { [key: string]: Archetype } = {
+      'Arceus VSTAR': Archetype.ARCEUS,
+      'Charizard ex': Archetype.CHARIZARD,
+      'Pidgeot ex': Archetype.PIDGEOT,
+      'Miraidon ex': Archetype.MIRAIDON,
+      'Pikachu ex': Archetype.PIKACHU,
+      // Add more mappings as needed
+    };
+
+    for (const combination of archetypeCombinations) {
+      if (combination.cards.every(card => deckItems.some(item => item.card.fullName.includes(card)))) {
+        return combination.archetype;
+      }
+    }
+
+    const typeCount: { [key in Archetype]?: number } = {};
+    let maxCount = 0;
+    let primaryArchetype = Archetype.UNOWN;
+
+    for (const item of deckItems) {
+      if (item.card && item.card.fullName) {
+        const cardName = item.card.fullName.split(' ')[0] + ' ' + item.card.fullName.split(' ')[1];
+        if (archetypeMapping[cardName]) {
+          const cardType = archetypeMapping[cardName];
+          typeCount[cardType] = (typeCount[cardType] || 0) + (item.card.count || 1);
+          if (typeCount[cardType] > maxCount) {
+            maxCount = typeCount[cardType];
+            primaryArchetype = cardType;
+          }
+        }
+      }
+    }
+    return primaryArchetype;
+  }
+
   getDeckBackground(deckName: string): string {
     let backgroundImage: string;
 
@@ -180,11 +222,9 @@ export class DeckComponent implements OnInit {
     `;
   }
 
-
   private handleError(error: ApiError): void {
     if (!error.handled) {
       this.alertService.toast(this.translate.instant('ERROR_UNKNOWN'));
     }
   }
-
 }

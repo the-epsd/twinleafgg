@@ -25,7 +25,11 @@
       </div>
       <div class="subtitle-card-type">
         <ptcg-energy [type]="card.cardType"></ptcg-energy>
+        <ng-container *ngIf="card.additionalCardTypes">
+          <ptcg-energy *ngFor="let type of card.additionalCardTypes" [type]="type"></ptcg-energy>
+        </ng-container>
       </div>
+
     </div>
 
     <ptcg-hover-highlight *ngFor="let power of card.powers"

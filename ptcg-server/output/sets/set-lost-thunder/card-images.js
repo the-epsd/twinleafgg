@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZeraoraGXArt = exports.ZebstrikaArt = exports.WurmpleArt = exports.WhiteKyuremArt = exports.TreeckoArt = exports.ThunderMountainPrismStarArt = exports.SpellTagArt = exports.SlowkingArt = exports.PoipoleArt = exports.NihilegoArt = exports.NetBallArt = exports.NaganadelArt = exports.MinaArt = exports.MeganiumArt = exports.MareepArt = exports.LostBlenderArt = exports.LanturnArt = exports.GrovleArt = exports.GranbullArt = exports.GiratinaArt = exports.GirafarigArt = exports.FabaArt = exports.ElectropowerArt = exports.DittoPrismStarArt = exports.CustomCatcherArt = exports.CounterGainArt = exports.ChinchouArt = exports.ChikoritaArt2 = exports.ChikoritaArt = exports.CascoonArt = exports.BlitzleArt = exports.AlolanNinetalesGXArt = exports.AlolanMeowthArt = exports.AdventureBagArt = void 0;
+exports.ZeraoraGXArt = exports.ZebstrikaArt = exports.WurmpleArt = exports.WhiteKyuremArt = exports.TreeckoArt = exports.ThunderMountainPrismStarArt = exports.SpellTagArt = exports.SnubbullArt = exports.SlowkingArt = exports.PoipoleArt = exports.NihilegoArt = exports.NetBallArt = exports.NaganadelArt = exports.MinaArt = exports.MeganiumArt = exports.MareepArt = exports.LostBlenderArt = exports.LanturnArt = exports.GrovleArt = exports.GranbullArt = exports.GiratinaArt = exports.GirafarigArt = exports.FabaArt = exports.ElectropowerArt = exports.DittoPrismStarArt = exports.CustomCatcherArt = exports.CounterGainArt = exports.ChinchouArt = exports.ChikoritaArt2 = exports.ChikoritaArt = exports.CascoonArt = exports.BlitzleArt = exports.AlolanNinetalesGXArt = exports.AlolanMeowthArt = exports.AdventureBagArt = void 0;
 const adventure_bag_1 = require("./adventure-bag");
 const alolan_meowth_1 = require("./alolan-meowth");
 const blitzle_1 = require("./blitzle");
@@ -35,6 +35,7 @@ const alolan_ninetales_gx_1 = require("./alolan-ninetales-gx");
 const granbull_1 = require("./granbull");
 const naganadel_1 = require("./naganadel");
 const poipole_1 = require("./poipole");
+const snubbull_1 = require("./snubbull");
 class AdventureBagArt extends adventure_bag_1.AdventureBag {
     constructor() {
         super(...arguments);
@@ -224,6 +225,13 @@ class SlowkingArt extends slowking_1.Slowking {
     }
 }
 exports.SlowkingArt = SlowkingArt;
+class SnubbullArt extends snubbull_1.Snubbull {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_137_R_EN.png';
+    }
+}
+exports.SnubbullArt = SnubbullArt;
 class SpellTagArt extends spell_tag_1.SpellTag {
     constructor() {
         super(...arguments);

@@ -59,8 +59,6 @@ export class ArceusVSTAR extends PokemonCard {
 
   public cardType: CardType = CardType.COLORLESS;
 
-  public cardTypez: CardType = CardType.ARCEUS_VSTAR;
-
   public hp: number = 280;
 
   public weakness = [{ type: CardType.FIGHTING }];

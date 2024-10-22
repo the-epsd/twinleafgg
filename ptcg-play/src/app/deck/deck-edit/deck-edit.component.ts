@@ -2,7 +2,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { switchMap, finalize } from 'rxjs/operators';
+import { switchMap, finalize, debounceTime } from 'rxjs/operators';
 
 import { ApiError } from '../../api/api.error';
 import { AlertService } from '../../shared/alert/alert.service';
@@ -12,10 +12,11 @@ import { DeckItem } from '../deck-card/deck-card.interface';
 import { DeckEditPane } from '../deck-edit-panes/deck-edit-pane.interface';
 import { DeckEditToolbarFilter } from '../deck-edit-toolbar/deck-edit-toolbar-filter.interface';
 import { DeckService } from '../../api/services/deck.service';
-import { FileDownloadService } from '../../shared/file-download/file-download.service';
+// import { FileDownloadService } from '../../shared/file-download/file-download.service';
 import { Card, PokemonCard, SuperType } from 'ptcg-server';
 import { cardReplacements, exportReplacements } from './card-replacements';
-
+// import { interval, Subject, Subscription } from 'rxjs';
+// import { takeUntil } from 'rxjs/operators';
 
 @UntilDestroy()
 @Component({
@@ -24,7 +25,8 @@ import { cardReplacements, exportReplacements } from './card-replacements';
   styleUrls: ['./deck-edit.component.scss']
 })
 export class DeckEditComponent implements OnInit {
-
+  // private ngUnsubscribe = new Subject<void>();
+  // private autoSaveSubscription: Subscription;
   public loading = false;
   public deck: Deck;
   public deckItems: DeckItem[] = [];
@@ -35,13 +37,16 @@ export class DeckEditComponent implements OnInit {
     private alertService: AlertService,
     private cardsBaseService: CardsBaseService,
     private deckService: DeckService,
-    private fileDownloadService: FileDownloadService,
+    // private fileDownloadService: FileDownloadService,
     private route: ActivatedRoute,
     private router: Router,
     private translate: TranslateService
   ) { }
 
+
+
   ngOnInit() {
+    // this.setupAutoSave();
     this.route.paramMap.pipe(
       switchMap(paramMap => {
         this.loading = true;
@@ -59,6 +64,24 @@ export class DeckEditComponent implements OnInit {
         this.router.navigate(['/decks']);
       });
   }
+
+  // private setupAutoSave() {
+  //   this.autoSaveSubscription = interval(15000)
+  //     .pipe(
+  //       takeUntil(this.ngUnsubscribe)
+  //     )
+  //     .subscribe(() => {
+  //       this.saveDeck();
+  //     });
+  // }
+
+  // ngOnDestroy() {
+  //   // ... existing ngOnDestroy code
+  //   if (this.autoSaveSubscription) {
+  //     this.autoSaveSubscription.unsubscribe();
+  //   }
+  // }
+
   public clearDeck() {
     this.deckItems = [];
   }
@@ -157,7 +180,6 @@ export class DeckEditComponent implements OnInit {
     }));
   }
 
-
   public async exportDeck() {
     const cardNames = [];
     for (const item of this.deckItems) {
@@ -185,18 +207,13 @@ export class DeckEditComponent implements OnInit {
     }
   }
 
-
+  // Modify the existing saveDeck method to be more suitable for incremental saves
   public saveDeck() {
     if (!this.deck) {
       return;
     }
 
-    const items = [];
-    for (const item of this.deckItems) {
-      for (let i = 0; i < item.count; i++) {
-        items.push(item.card.fullName);
-      }
-    }
+    const items = this.deckItems.flatMap(item => Array(item.count).fill(item.card.fullName));
 
     this.loading = true;
     this.deckService.saveDeck(this.deck.id, this.deck.name, items).pipe(
@@ -204,11 +221,12 @@ export class DeckEditComponent implements OnInit {
       untilDestroyed(this)
     ).subscribe(() => {
       this.alertService.toast(this.translate.instant('DECK_EDIT_SAVED'));
+      // Consider using a less intrusive notification for incremental saves
+      console.log('Deck saved incrementally');
     }, (error: ApiError) => {
       if (!error.handled) {
         this.alertService.toast(this.translate.instant('ERROR_UNKNOWN'));
       }
     });
   }
-
 }

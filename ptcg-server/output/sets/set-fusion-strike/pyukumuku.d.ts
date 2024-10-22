@@ -26,5 +26,6 @@ export declare class Pyukumuku extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
+    readonly PYUK_MARKER = "PYUK_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

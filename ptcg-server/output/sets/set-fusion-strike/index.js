@@ -28,7 +28,7 @@ exports.setFusionStrike = [
     new card_images_1.MewVMAXArt(),
     new card_images_1.OricorioArt(),
     new card_images_1.PowerTabletArt(),
-    // new PyukumukuArt(),
+    new card_images_1.PyukumukuArt(),
     new card_images_1.YveltalArt(),
     new card_images_1.ShaunaArt(),
     new card_images_1.AdventurersDiscoveryArt(),

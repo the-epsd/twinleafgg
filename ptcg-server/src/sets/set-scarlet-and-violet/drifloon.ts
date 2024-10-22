@@ -12,8 +12,6 @@ export class Drifloon extends PokemonCard {
 
   public cardType: CardType = CardType.PSYCHIC;
 
-  public cardTypez: CardType = CardType.DRIFLOON;
-
   public hp: number = 70;
 
   public weakness = [{ type: CardType.DARK }];

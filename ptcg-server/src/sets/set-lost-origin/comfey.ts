@@ -11,45 +11,43 @@ import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 
 export class Comfey extends PokemonCard {
-  
+
   public stage: Stage = Stage.BASIC;
 
   public regulationMark = 'F';
-  
+
   public cardType: CardType = CardType.PSYCHIC;
 
-  public cardTypez: CardType = CardType.COMFEY;
-  
   public hp: number = 70;
-  
+
   public weakness = [{ type: CardType.METAL }];
-  
-  public retreat = [ CardType.COLORLESS ];
-  
+
+  public retreat = [CardType.COLORLESS];
+
   public powers = [{
     name: 'Flower Selecting',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
     text: 'Once during your turn, if this Pokémon is in the Active Spot, you may look at the top 2 cards of your deck and put 1 of them into your hand. Put the other card in the Lost Zone.'
   }];
-  
+
   public attacks = [
     {
       name: 'Spinning Attack',
-      cost: [ CardType.PSYCHIC, CardType.COLORLESS ],
+      cost: [CardType.PSYCHIC, CardType.COLORLESS],
       damage: 30,
       text: ''
     }
   ];
-  
+
   public set: string = 'LOR';
 
   public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '79';
-  
+
   public name: string = 'Comfey';
-  
+
   public fullName: string = 'Comfey LOR';
 
   public readonly FLOWER_SELECTING_MARKER = 'FLOWER_SELECTING_MARKER';
@@ -64,11 +62,11 @@ export class Comfey extends PokemonCard {
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
-  
+
       if (player.deck.cards.length === 0) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
-  
+
       if (player.marker.hasMarker(this.FLOWER_SELECTING_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
@@ -76,7 +74,7 @@ export class Comfey extends PokemonCard {
       if (player.active.cards[0] !== this) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
-  
+
       const deckTop = new CardList();
       player.deck.moveTo(deckTop, 2);
 
@@ -85,12 +83,12 @@ export class Comfey extends PokemonCard {
           cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
         }
       });
-  
+
       return store.prompt(state, new ChooseCardsPrompt(
         player.id,
         GameMessage.CHOOSE_CARD_TO_HAND,
         deckTop,
-        { },
+        {},
         { min: 1, max: 1, allowCancel: false }
       ), selected => {
         player.marker.addMarker(this.FLOWER_SELECTING_MARKER, this);
@@ -99,13 +97,12 @@ export class Comfey extends PokemonCard {
         return state;
       });
     }
-    
+
     if (effect instanceof EndTurnEffect) {
       const player = (effect as EndTurnEffect).player;
       player.marker.removeMarker(this.FLOWER_SELECTING_MARKER, this);
     }
-    
+
     return state;
   }
 }
-    

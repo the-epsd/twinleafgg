@@ -12,11 +12,12 @@ import { TrainerEffect } from '../effects/play-card-effects';
 import { ConfirmPrompt } from '../prompts/confirm-prompt';
 import { checkState } from './check-effect';
 import { ChooseAttackPrompt } from '../prompts/choose-attack-prompt';
-function applyWeaknessAndResistance(damage, cardTypes, weakness, resistance) {
+function applyWeaknessAndResistance(damage, cardTypes, additionalCardTypes, weakness, resistance) {
     let multiply = 1;
     let modifier = 0;
+    const allTypes = [...cardTypes, ...additionalCardTypes];
     for (const item of weakness) {
-        if (cardTypes.includes(item.type)) {
+        if (allTypes.includes(item.type)) {
             if (item.value === undefined) {
                 multiply *= 2;
             }
@@ -26,7 +27,7 @@ function applyWeaknessAndResistance(damage, cardTypes, weakness, resistance) {
         }
     }
     for (const item of resistance) {
-        if (cardTypes.includes(item.type)) {
+        if (allTypes.includes(item.type)) {
             modifier += item.value;
         }
     }
@@ -161,9 +162,10 @@ export function gameReducer(store, state, effect) {
         const checkPokemonStats = new CheckPokemonStatsEffect(effect.target);
         state = store.reduceEffect(state, checkPokemonStats);
         const cardType = checkPokemonType.cardTypes;
+        const additionalCardTypes = checkPokemonType.cardTypes;
         const weakness = effect.ignoreWeakness ? [] : checkPokemonStats.weakness;
         const resistance = effect.ignoreResistance ? [] : checkPokemonStats.resistance;
-        effect.damage = applyWeaknessAndResistance(effect.damage, cardType, weakness, resistance);
+        effect.damage = applyWeaknessAndResistance(effect.damage, cardType, additionalCardTypes, weakness, resistance);
         return state;
     }
     if (effect instanceof UseAttackEffect) {

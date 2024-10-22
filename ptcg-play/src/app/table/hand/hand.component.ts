@@ -1,5 +1,5 @@
 import { Component, HostBinding, Input, OnChanges } from '@angular/core';
-import { Player, Card, CardList } from 'ptcg-server';
+import { Player, Card, CardList, CardTarget, PlayerType, SlotType } from 'ptcg-server';
 import { SortableSpec, DraggedItem } from '@ng-dnd/sortable';
 
 import { CardsBaseService } from '../../shared/cards/cards-base.service';
@@ -85,6 +85,30 @@ export class HandComponent implements OnChanges {
     const allowReveal = facedown && !!this.gameState.replay;
     this.cardsBaseService.showCardInfo({ card, allowReveal, facedown });
   }
+
+  public onCardClick(card: Card, index: number) {
+    if (!this.isOwner || this.isDeleted) {
+      return this.showCardInfo(card);
+    }
+
+    const player = PlayerType.BOTTOM_PLAYER;
+    const slot = SlotType.HAND;
+    const target: CardTarget = { player, slot, index };
+
+    const options = { enableAbility: { useFromHand: true }, enableAttack: false };
+    this.cardsBaseService.showCardInfo({ card, options })
+      .then(result => {
+        if (!result) {
+          return;
+        }
+        const gameId = this.gameState.gameId;
+
+        if (result.ability) {
+          this.gameService.ability(gameId, result.ability, target);
+        }
+      });
+  }
+
 
   private dispatchAction(list: HandItem[]) {
     if (!this.gameState) {

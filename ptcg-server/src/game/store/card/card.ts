@@ -4,7 +4,7 @@ import { State } from '../state/state';
 import { StoreLike } from '../store-like';
 import { CardList } from '../state/card-list';
 import { Marker } from '../state/card-marker';
-import { Attack } from './pokemon-types';
+import { Attack, Power } from './pokemon-types';
 
 export abstract class Card {
 
@@ -33,6 +33,8 @@ export abstract class Card {
   public retreat: CardType[] = [];
 
   public attacks: Attack[] = [];
+
+  public powers: Power[] = [];
 
   static tags: any;
 

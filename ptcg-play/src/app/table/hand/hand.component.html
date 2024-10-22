@@ -1,19 +1,16 @@
 <div class="ptcg-hand">
   <div class="ptcg-hand" [class.opponent]="isOpponent">
     <div class="ptcg-hand-container">
-
       <dnd-sortable-list [spec]="handSpec" hoverTrigger="fixed" [children]="tempList" [listId]="handListId">
         <ng-template dndSortableTemplate let-context>
-          <!-- <div class="ptcg-card-damage"><ptcg-badge color="warn">{{context.data.card.name}}</ptcg-badge></div> -->
           <ptcg-card [style.margin]="calculateContainerMargin()" [dndSortableRender]="context"
             #render="dndSortableRender" [dragSource]="render.source" [noHTML5Preview]="true" [card]="context.data.card"
-            (click)="showCardInfo(context.data.card)" [class.draggable]="!gameState.deleted && player?.id === clientId"
-            [ptcgCardPlaceholder]="render.isDragging$" [class.cardback]="isFaceDown">
+            (click)="onCardClick(context.data.card, context.index)"
+            [class.draggable]="!gameState.deleted && player?.id === clientId" [ptcgCardPlaceholder]="render.isDragging$"
+            [class.cardback]="isFaceDown">
           </ptcg-card>
         </ng-template>
       </dnd-sortable-list>
-
     </div>
-
   </div>
 </div>

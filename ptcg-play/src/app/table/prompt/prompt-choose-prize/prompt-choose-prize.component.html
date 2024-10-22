@@ -9,28 +9,22 @@
 <div class="ptcg-prompt-content">
   <p [translate]="'GAME_MESSAGES.' + message"></p>
 
-  <ptcg-choose-cards-panes
-    [cards]="cards"
-    [blocked]="prompt.options.blocked"
-    [cardbackMap]="revealed === false ? cardbackMap : {}"
-    (changeCards)="onChange($event)">
+  <ptcg-choose-cards-panes [cards]="cards" [blocked]="prompt.options.blocked"
+    [cardbackMap]="revealed === false ? cardbackMap : {}" (changeCards)="onChange($event)">
   </ptcg-choose-cards-panes>
 </div>
 
 <div class="ptcg-prompt-actions">
   <section class="ptcg-card-info-reveal-cards" *ngIf="hasSecret && gameState.replay">
-    <mat-checkbox color="primary" name="reveal-card"
-      [checked]="revealed" (change)="revealed = !revealed">
+    <mat-checkbox color="primary" name="reveal-card" [checked]="revealed" (change)="revealed = !revealed">
       {{ 'CARDS_REVEAL_CARDS' | translate }}
     </mat-checkbox>
   </section>
   <span class="ptcg-u-spacer"></span>
-  <button mat-raised-button *ngIf="allowedCancel" [disabled]="gameState.deleted"
-    (click)="cancel()">
+  <button mat-raised-button *ngIf="allowedCancel" [disabled]="gameState.deleted" (click)="cancel()">
     {{ 'BUTTON_CANCEL' | translate }}
   </button>
-  <button mat-raised-button color="primary" [disabled]="gameState.deleted || isInvalid"
-    (click)="confirm()">
+  <button mat-raised-button color="primary" [disabled]="gameState.deleted || isInvalid" (click)="confirm()">
     {{ 'BUTTON_OK' | translate }}
   </button>
 </div>

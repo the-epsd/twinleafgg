@@ -15,7 +15,6 @@ class GiratinaVSTAR extends game_1.PokemonCard {
         this.evolvesFrom = 'Giratina V';
         this.regulationMark = 'F';
         this.cardType = card_types_1.CardType.DRAGON;
-        this.cardTypez = card_types_1.CardType.GIRATINA_VSTAR;
         this.hp = 280;
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.attacks = [

@@ -18,8 +18,6 @@ export class SandyShocksex extends PokemonCard {
 
   public cardType = CardType.FIGHTING;
 
-  public cardTypez: CardType = CardType.SANDY_SHOCKS_EX;
-
   public hp = 220;
 
   public weakness = [{ type: CardType.GRASS }];

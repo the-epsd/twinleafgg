@@ -54,6 +54,13 @@
   margin-right: math.div(map-get($padding, small), 2);
 }
 
+.subtitle-card-type {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: -12px; // Adjust this value to control spacing between icons
+}
+
 .attack,
 .power {
   margin: map-get($padding, small) 0;

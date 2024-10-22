@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WigglytuffArt = exports.WeepinbellArt = exports.VileplumeArt = exports.VictreebelArt = exports.VenonatArt = exports.VenomothArt = exports.VaporeonArt = exports.SpearowArt = exports.SeakingArt = exports.ScytherArt = exports.RhyhornArt = exports.RhydonArt = exports.RapidashArt = exports.PrimeapeArt = exports.PokeBallArt = exports.PinsirArt = exports.PikachuArt = exports.PidgeotArt = exports.PersianArt = exports.ParasectArt = exports.ParasArt = exports.OddishArt = exports.NidoranFemaleArt = exports.NidorinaArt = exports.NidoqueenArt = exports.MeowthArt = exports.MarowakArt = exports.LickitungArt = exports.KangaskhanArt = exports.JolteonArt = exports.JigglypuffArt = exports.GoldeenArt = exports.GloomArt = exports.FlareonArt = exports.FearowArt = exports.ExeggutorArt = exports.ExeggcuteArt = exports.ElectrodeArt = exports.EeveeArt = exports.DodrioArt = exports.CuboneArt = exports.ClefableArt = exports.ButterfreeArt = exports.BellsproutArt = void 0;
+exports.WigglytuffArt = exports.WeepinbellArt = exports.VileplumeArt = exports.VictreebelArt = exports.VenonatArt = exports.VenomothArt = exports.VaporeonArt = exports.SpearowArt = exports.SnorlaxArt = exports.SeakingArt = exports.ScytherArt = exports.RhyhornArt = exports.RhydonArt = exports.RapidashArt = exports.PrimeapeArt = exports.PokeBallArt = exports.PinsirArt = exports.PikachuArt = exports.PidgeotArt = exports.PersianArt = exports.ParasectArt = exports.ParasArt = exports.OddishArt = exports.NidoranFemaleArt = exports.NidorinaArt = exports.NidoqueenArt = exports.MrMimeArt = exports.MeowthArt = exports.MarowakArt = exports.MankeyArt = exports.LickitungArt = exports.KangaskhanArt = exports.JolteonArt = exports.JigglypuffArt = exports.GoldeenArt = exports.GloomArt = exports.FlareonArt = exports.FearowArt = exports.ExeggutorArt = exports.ExeggcuteArt = exports.ElectrodeArt = exports.EeveeArt = exports.DodrioArt = exports.CuboneArt = exports.ClefableArt = exports.ButterfreeArt = exports.BellsproutArt = void 0;
 const bellsprout_1 = require("./bellsprout");
 const butterfree_1 = require("./butterfree");
 const clefable_1 = require("./clefable");
@@ -18,8 +18,10 @@ const jigglypuff_1 = require("./jigglypuff");
 const jolteon_1 = require("./jolteon");
 const kangaskhan_1 = require("./kangaskhan");
 const lickitung_1 = require("./lickitung");
+const mankey_1 = require("./mankey");
 const marowak_1 = require("./marowak");
 const meowth_1 = require("./meowth");
+const mr_mime_1 = require("./mr-mime");
 const nidoqueen_1 = require("./nidoqueen");
 const nidoran_female_1 = require("./nidoran-female");
 const nidorina_1 = require("./nidorina");
@@ -37,6 +39,7 @@ const rhydon_1 = require("./rhydon");
 const rhyhorn_1 = require("./rhyhorn");
 const scyther_1 = require("./scyther");
 const seaking_1 = require("./seaking");
+const snorlax_1 = require("./snorlax");
 const spearow_1 = require("./spearow");
 const vaporeon_1 = require("./vaporeon");
 const venomoth_1 = require("./venomoth");
@@ -164,6 +167,13 @@ class LickitungArt extends lickitung_1.Lickitung {
     }
 }
 exports.LickitungArt = LickitungArt;
+class MankeyArt extends mankey_1.Mankey {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pkmncards.com/wp-content/uploads/mankey-jungle-ju-55.jpg';
+    }
+}
+exports.MankeyArt = MankeyArt;
 class MarowakArt extends marowak_1.Marowak {
     constructor() {
         super(...arguments);
@@ -178,6 +188,13 @@ class MeowthArt extends meowth_1.Meowth {
     }
 }
 exports.MeowthArt = MeowthArt;
+class MrMimeArt extends mr_mime_1.MrMime {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pkmncards.com/wp-content/uploads/mr.-mime-jungle-ju-6.jpg';
+    }
+}
+exports.MrMimeArt = MrMimeArt;
 class NidoqueenArt extends nidoqueen_1.Nidoqueen {
     constructor() {
         super(...arguments);
@@ -297,6 +314,13 @@ class SeakingArt extends seaking_1.Seaking {
     }
 }
 exports.SeakingArt = SeakingArt;
+class SnorlaxArt extends snorlax_1.Snorlax {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pkmncards.com/wp-content/uploads/snorlax-jungle-ju-11.jpg';
+    }
+}
+exports.SnorlaxArt = SnorlaxArt;
 class SpearowArt extends spearow_1.Spearow {
     constructor() {
         super(...arguments);

@@ -7,7 +7,6 @@ export declare class RagingBoltex extends PokemonCard {
     tags: CardTag[];
     stage: Stage;
     cardType: CardType;
-    cardTypez: CardType;
     hp: number;
     weakness: never[];
     retreat: CardType[];

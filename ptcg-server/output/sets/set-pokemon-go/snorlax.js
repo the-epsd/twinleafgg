@@ -11,7 +11,6 @@ class Snorlax extends pokemon_card_1.PokemonCard {
         super(...arguments);
         this.stage = card_types_1.Stage.BASIC;
         this.cardType = card_types_1.CardType.COLORLESS;
-        this.cardTypez = card_types_1.CardType.SNORLAX_STALL;
         this.hp = 150;
         this.weakness = [{ type: card_types_1.CardType.FIGHTING }];
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];

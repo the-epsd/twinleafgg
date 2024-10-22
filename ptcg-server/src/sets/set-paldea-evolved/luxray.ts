@@ -1,9 +1,8 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, PowerType } from '../../game';
+import { StoreLike, State, StateUtils, PowerType, GameError, GameLog, GameMessage, PokemonCardList, ConfirmPrompt, PlayerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
-import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 
 
 export class Luxray extends PokemonCard {
@@ -50,30 +49,42 @@ export class Luxray extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof PowerEffect
-      && effect.power.powerType === PowerType.ABILITY
-      && effect.power.name !== 'Swelling Flash') {
+      && effect.power.powerType === PowerType.ABILITY) {
 
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
+      const slots: PokemonCardList[] = player.bench.filter(b => b.cards.length === 0);
 
-      if (player.getPrizeLeft() < opponent.getPrizeLeft()) {
+      if (player.getPrizeLeft() > opponent.getPrizeLeft()) {
+        // Check if bench has open slots
+        const openSlots = player.bench.filter(b => b.cards.length === 0);
 
-        const canPlayLuxray = player.hand.cards.some(c => {
-          return c instanceof PokemonCard && c.cards.filter(this);
-        });
-
-        if (canPlayLuxray) {
-          this.stage = Stage.BASIC;
+        if (openSlots.length === 0) {
+          // No open slots, throw error
+          throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
         }
-        return state;
+
+        state = store.prompt(state, new ConfirmPrompt(
+          effect.player.id,
+          GameMessage.WANT_TO_USE_ABILITY,
+        ), wantToUse => {
+          if (wantToUse) {
+            player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+              if (cardList.getPokemonCard() === this) {
+                store.log(state, GameLog.LOG_PLAYER_USES_ABILITY, { name: player.name, ability: 'Swelling Flash' });
+              }
+            });
+
+            const card = this;
+            player.hand.moveCardTo(card, slots[0]);
+            slots[0].pokemonPlayedTurn = state.turn;
+            store.log(state, GameLog.LOG_PLAYER_PLAYS_BASIC_POKEMON, { name: player.name, card: card.name });
+
+            return state;
+          }
+        });
       }
-      return state;
     }
-
-    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
-      this.stage = Stage.STAGE_2;
-    }
-
     return state;
   }
 }

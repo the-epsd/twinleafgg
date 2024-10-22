@@ -15,7 +15,6 @@ class Koraidon extends pokemon_card_1.PokemonCard {
         this.regulationMark = 'H';
         this.stage = card_types_1.Stage.BASIC;
         this.cardType = card_types_1.CardType.DRAGON;
-        this.cardTypez = card_types_1.CardType.KORAIDON;
         this.hp = 140;
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.attacks = [

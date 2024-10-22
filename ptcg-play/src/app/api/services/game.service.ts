@@ -16,6 +16,7 @@ import { SocketService } from '../socket.service';
 import { SessionService } from '../../shared/session/session.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { TournamentService } from './tournament.service';
 
 export interface GameUserInfo {
   gameId: number;
@@ -34,7 +35,8 @@ export class GameService {
     private alertService: AlertService,
     private sessionService: SessionService,
     private socketService: SocketService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private tournamentService: TournamentService
   ) { }
 
   public getPlayerStats(gameId: number) {

@@ -1,6 +1,6 @@
 import { PokemonCard, Stage, CardType, StoreLike, State, StateUtils, PowerType, CoinFlipPrompt, GameMessage, GamePhase } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { KnockOutEffect } from '../../game/store/effects/game-effects';
+import { KnockOutEffect, PowerEffect } from '../../game/store/effects/game-effects';
 
 export class Togekiss extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -46,6 +46,18 @@ export class Togekiss extends PokemonCard {
 
       // Do not activate between turns, or when it's not opponents turn.
       if (state.phase !== GamePhase.ATTACK || state.players[state.activePlayer] !== opponent) {
+        return state;
+      }
+
+      // Try to reduce PowerEffect, to check if something is blocking our ability
+      try {
+        const stub = new PowerEffect(player, {
+          name: 'test',
+          powerType: PowerType.ABILITY,
+          text: ''
+        }, this);
+        store.reduceEffect(state, stub);
+      } catch {
         return state;
       }
 

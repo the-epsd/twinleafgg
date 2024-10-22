@@ -3,6 +3,7 @@ import { NinjaBoy } from './ninja-boy';
 import { PokemonRanger } from './pokemon-ranger';
 import { SpeicalCharge } from './special-charge';
 import { Talonflame } from './talonflame';
+import { VolcanionEX } from './volcanion-ex';
 
 export class CobalionArt extends Cobalion {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/STS/STS_074_R_EN.png';
@@ -22,4 +23,8 @@ export class SpecialChargeArt extends SpeicalCharge {
 
 export class TalonflameArt extends Talonflame {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/STS/STS_096_R_EN_LG.png';
+}
+
+export class VolcanionEXArt extends VolcanionEX {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/STS/STS_026_R_EN.png';
 }

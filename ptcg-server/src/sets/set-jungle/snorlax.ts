@@ -1,9 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
-import { CoinFlipPrompt, GameMessage, PowerType, State, StoreLike } from '../../game';
+import { CoinFlipPrompt, GameError, GameMessage, PokemonCardList, PowerType, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
+import { CheckTableStateEffect } from '../../game/store/effects/check-effects';
 
 export class Snorlax extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -42,6 +43,21 @@ export class Snorlax extends PokemonCard {
   public fullName: string = 'Snorlax JU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
+    if (effect instanceof CheckTableStateEffect) {
+      const cardList = StateUtils.findCardList(state, this);
+      if (cardList instanceof PokemonCardList && cardList.getPokemonCard() === this) {
+        const hasSpecialCondition = cardList.specialConditions.some(condition => condition !== SpecialCondition.ABILITY_USED);
+
+        if (cardList.specialConditions.length > 0) {
+          throw new GameError(GameMessage.CANNOT_USE_POWER);
+        }
+
+        if (!hasSpecialCondition) {
+          cardList.specialConditions = cardList.specialConditions.filter(condition => condition === SpecialCondition.ABILITY_USED);
+        }
+      }
+    }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;

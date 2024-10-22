@@ -7,6 +7,7 @@ const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const check_effects_1 = require("../../game/store/effects/check-effects");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
+const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 // BUS Gardevoir-GX 93 (https://limitlesstcg.com/cards/BUS/93)
 class GardevoirGX extends pokemon_card_1.PokemonCard {
     constructor() {
@@ -48,6 +49,10 @@ class GardevoirGX extends pokemon_card_1.PokemonCard {
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {
+            const player = effect.player;
+            player.marker.removeMarker(this.SPRING_MARKER, this);
+        }
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.SPRING_MARKER, this)) {
             const player = effect.player;
             player.marker.removeMarker(this.SPRING_MARKER, this);
         }
@@ -108,7 +113,6 @@ class GardevoirGX extends pokemon_card_1.PokemonCard {
             state = store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_DECK, player.discard, {}, { min: 1, max: 10, allowCancel: false }), selected => {
                 cards = selected || [];
             });
-            player.hand.moveCardTo(this, player.discard);
             player.discard.moveCardsTo(cards, player.deck);
             return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
                 player.deck.applyOrder(order);

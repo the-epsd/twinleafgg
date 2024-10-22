@@ -59,8 +59,6 @@ export class Dragapultex extends PokemonCard {
 
   public cardType: CardType = CardType.DRAGON;
 
-  public cardTypez: CardType = CardType.DRAGAPULT_EX;
-
   public hp: number = 320;
 
   public weakness = [];

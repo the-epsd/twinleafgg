@@ -462,7 +462,12 @@
     "LABEL_GX_USED": "GX Attack used.",
     "LABEL_VSTAR_USED": "VSTAR Power Used.",
     "ORDER_OPPONENT_DECK": "Order Opponent's deck",
-    "ORDER_YOUR_DECK": "Order your deck"
+    "ORDER_YOUR_DECK": "Order your deck",
+    "REVEAL_YOUR_TOP_DECK": "Reveal the top card of your deck.",
+    "REVEAL_OPPONENT_TOP_DECK": "Reveal the top card of your opponent's deck.",
+    "REVEAL_RANDOM_CARD_IN_OPPONENT_HAND": "Reveal a random card in your opponent's hand.",
+    "REVEAL_AN_OPPONENT_PRIZES": "Reveal one of your opponent's prize cards.",
+    "REVEAL_ONE_OF_YOUR_PRIZES": "Reveal one of your prize cards."
   },
   "GAME_LOGS": {
     "LOG_BANNED_BY_ARBITER": "{{name}} made an invalid move multiple times and was banned by the arbiter.",

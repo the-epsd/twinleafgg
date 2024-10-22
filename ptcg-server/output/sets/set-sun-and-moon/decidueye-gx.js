@@ -61,10 +61,11 @@ class DecidueyeGX extends pokemon_card_1.PokemonCard {
             if (!hasBenched) {
                 return state;
             }
-            return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH], { allowCancel: false }), targets => {
+            return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { allowCancel: false }), targets => {
                 if (!targets || targets.length === 0) {
                     return;
                 }
+                player.marker.addMarker(this.FEATHER_ARROW_MARKER, this);
                 player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
                     if (cardList.getPokemonCard() === this) {
                         cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
