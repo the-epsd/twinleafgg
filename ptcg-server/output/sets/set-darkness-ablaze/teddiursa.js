@@ -20,7 +20,7 @@ class Teddiursa extends pokemon_card_1.PokemonCard {
                 name: 'Baby-Doll Eyes',
                 cost: [card_types_1.CardType.COLORLESS],
                 damage: 0,
-                text: 'During your opponen\'s next turn, the Defending Pokémon can\'t retreat.'
+                text: 'During your opponent\'s next turn, the Defending Pokémon can\'t retreat.'
             },
             {
                 name: 'Dig Claws',

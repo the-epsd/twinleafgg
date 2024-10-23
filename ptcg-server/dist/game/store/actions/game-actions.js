@@ -13,6 +13,14 @@ export class UseAbilityAction {
         this.type = 'USE_ABILITY_ACTION';
     }
 }
+export class UseTrainerAbilityAction {
+    constructor(clientId, name, target) {
+        this.clientId = clientId;
+        this.name = name;
+        this.target = target;
+        this.type = 'USE_ABILITY_ACTION';
+    }
+}
 export class UseStadiumAction {
     constructor(clientId) {
         this.clientId = clientId;
