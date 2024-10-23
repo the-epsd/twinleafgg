@@ -47,9 +47,9 @@ class PokemonTrader extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.ITEM;
-        this.set = 'TEU';
+        this.set = 'BS';
         this.name = 'Pokémon Trader';
-        this.fullName = 'Pokémon Trader TEU';
+        this.fullName = 'Pokémon Trader BS';
         this.text = 'Trade 1 of the Basic Pokémon or Evolution cards in your hand for 1 of the Basic Pokémon or Evolution cards from your deck. Show both cards to your opponent. Shuffle your deck afterward.';
     }
     reduceEffect(store, state, effect) {

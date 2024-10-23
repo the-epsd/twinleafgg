@@ -17,19 +17,19 @@ export class Teddiursa extends PokemonCard {
 
   public weakness = [{ type: CardType.FIGHTING }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
-  public attacks = 
+  public attacks =
     [
       {
         name: 'Baby-Doll Eyes',
-        cost: [ CardType.COLORLESS ],
+        cost: [CardType.COLORLESS],
         damage: 0,
-        text: 'During your opponen\'s next turn, the Defending Pokémon can\'t retreat.'
+        text: 'During your opponent\'s next turn, the Defending Pokémon can\'t retreat.'
       },
       {
         name: 'Dig Claws',
-        cost: [ CardType.COLORLESS, CardType.COLORLESS ],
+        cost: [CardType.COLORLESS, CardType.COLORLESS],
         damage: 90,
         text: ''
       }
@@ -52,18 +52,18 @@ export class Teddiursa extends PokemonCard {
     if (effect instanceof RetreatEffect && effect.player.active.attackMarker.hasMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this)) {
       throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
     }
-    
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
       opponent.active.attackMarker.addMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
     }
-    
+
     if (effect instanceof EndTurnEffect && effect.player.active.attackMarker.hasMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this)) {
-      effect.player.active.attackMarker.removeMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);      
+      effect.player.active.attackMarker.removeMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
     }
-    
+
     return state;
   }
 }

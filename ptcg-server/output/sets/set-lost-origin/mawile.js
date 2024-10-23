@@ -21,7 +21,7 @@ class Mawile extends pokemon_card_1.PokemonCard {
                 name: 'Tempting Trap',
                 cost: [card_types_1.CardType.COLORLESS],
                 damage: 0,
-                text: 'During your opponen\'s next turn, the Defending Pokémon can\'t retreat. During your next turn, the Defending Pokémon takes 90 more damage from attacks (after applying Weakness and Resistance).'
+                text: 'During your opponent\'s next turn, the Defending Pokémon can\'t retreat. During your next turn, the Defending Pokémon takes 90 more damage from attacks (after applying Weakness and Resistance).'
             },
             {
                 name: 'Bite',

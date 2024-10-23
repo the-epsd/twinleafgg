@@ -81,11 +81,11 @@ export class PokemonTrader extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
 
-  public set: string = 'TEU';
+  public set: string = 'BS';
 
   public name: string = 'Pokémon Trader';
 
-  public fullName: string = 'Pokémon Trader TEU';
+  public fullName: string = 'Pokémon Trader BS';
 
   public text: string =
     'Trade 1 of the Basic Pokémon or Evolution cards in your hand for 1 of the Basic Pokémon or Evolution cards from your deck. Show both cards to your opponent. Shuffle your deck afterward.';
