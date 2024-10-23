@@ -91,9 +91,6 @@ class Electrode extends pokemon_card_1.PokemonCard {
                         const target = game_1.StateUtils.getTarget(state, player, transfer.to);
                         const attachEnergyEffect = new play_card_effects_1.AttachEnergyEffect(player, electrodeEnergy, target);
                         store.reduceEffect(state, attachEnergyEffect);
-                        // Move the energy card to the target and unshift it
-                        energyList.moveCardTo(electrodeEnergy, target);
-                        target.cards.unshift(target.cards.pop());
                     }
                     return state;
                 });

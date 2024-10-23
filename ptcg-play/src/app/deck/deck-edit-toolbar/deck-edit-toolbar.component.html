@@ -16,8 +16,6 @@
 
       <!-- <span class="ptcg-u-spacer"></span> -->
 
-
-
       <div class="super-type-buttons" style="width: 235px;">
         <button mat-button *ngFor="let superType of superTypes; let first = first; let last = last"
           (click)="toggleSuperType(superType.value)" [class.selected]="selectedSuperTypes.includes(superType.value)"
@@ -122,7 +120,7 @@
 
       <span class="ptcg-u-spacer"></span>
 
-      <button mat-raised-button (click)="onSave()" [routerLink]="['/deck']">
+      <button class="green-button" mat-raised-button (click)="onSave()" [routerLink]="['/deck']">
         <!-- <mat-icon>arrow_back</mat-icon> -->
         <span translate>DECK_EDIT_BACK</span>
       </button>
@@ -130,15 +128,15 @@
       <!-- <button mat-raised-button [disabled]="disabled" (click)="onClearDeck()">
                     {{ 'BUTTON_CLEAR_DECK' | translate }}
                   </button> -->
-      <button mat-raised-button [disabled]="disabled" (click)="exportToFile()">
+      <button mat-raised-button class="green-button" (click)="exportToFile()">
         {{ 'BUTTON_EXPORT' | translate }}
       </button>
 
-      <button mat-raised-button [disabled]="disabled" (click)="importFromClipboard()">
+      <button mat-raised-button class="green-button" (click)="importFromClipboard()">
         {{ 'BUTTON_IMPORT' | translate }}
       </button>
 
-      <button mat-raised-button color="primary" [disabled]="disabled" (click)="onSave()">
+      <button mat-raised-button class="green-button" (click)="onSave()">
         {{ 'BUTTON_SAVE' | translate }}
       </button>
 

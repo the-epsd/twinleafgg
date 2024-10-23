@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.EvolveEffect = exports.HealEffect = exports.KnockOutAttackEffect = exports.KnockOutEffect = exports.AttackEffect = exports.useToolEffect = exports.UseStadiumEffect = exports.UseAttackEffect = exports.PowerEffect = exports.UsePowerEffect = exports.RetreatEffect = exports.GameEffects = void 0;
+exports.EvolveEffect = exports.HealEffect = exports.KnockOutAttackEffect = exports.KnockOutEffect = exports.AttackEffect = exports.useToolEffect = exports.UseStadiumEffect = exports.UseAttackEffect = exports.TrainerPowerEffect = exports.PowerEffect = exports.UseTrainerPowerEffect = exports.UsePowerEffect = exports.RetreatEffect = exports.GameEffects = void 0;
 var GameEffects;
 (function (GameEffects) {
     GameEffects["RETREAT_EFFECT"] = "RETREAT_EFFECT";
@@ -34,6 +34,17 @@ class UsePowerEffect {
     }
 }
 exports.UsePowerEffect = UsePowerEffect;
+class UseTrainerPowerEffect {
+    constructor(player, power, card, target) {
+        this.type = GameEffects.USE_POWER_EFFECT;
+        this.preventDefault = false;
+        this.player = player;
+        this.power = power;
+        this.card = card;
+        this.target = target;
+    }
+}
+exports.UseTrainerPowerEffect = UseTrainerPowerEffect;
 class PowerEffect {
     constructor(player, power, card) {
         this.type = GameEffects.POWER_EFFECT;
@@ -44,6 +55,16 @@ class PowerEffect {
     }
 }
 exports.PowerEffect = PowerEffect;
+class TrainerPowerEffect {
+    constructor(player, power, card) {
+        this.type = GameEffects.POWER_EFFECT;
+        this.preventDefault = false;
+        this.player = player;
+        this.power = power;
+        this.card = card;
+    }
+}
+exports.TrainerPowerEffect = TrainerPowerEffect;
 class UseAttackEffect {
     constructor(player, attack) {
         this.type = GameEffects.USE_ATTACK_EFFECT;

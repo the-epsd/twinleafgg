@@ -34,11 +34,12 @@
 
 .ptcg-deck-edit-pane {
   flex: 0 0 269px;
+  background-color: #222a3a;
 }
 
 .ptcg-deck-edit-pane-secondary {
   flex: 1 1 auto;
-  background-color: rgb(57, 60, 62);
+  background-color: #2D3748;
 }
 
 ptcg-deck-card {
@@ -64,6 +65,14 @@ ptcg-deck-card.placeholder {
   margin-bottom: 10px;
   justify-content: center;
   align-items: bottom;
+}
+
+.deck-validity-container {
+  position: fixed;
+  bottom: 5.5%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
 }
 
 // .deck-pane-container {

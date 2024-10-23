@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CeruledgeArt = exports.NinetalesArt = exports.ScrambleSwitchArt = exports.MespritArt = exports.UxieArt = exports.AzelfArt = exports.VivillionArt = exports.EternatusArt = exports.HydreigonexArt = exports.ZweilousArt = exports.DeinoArt = exports.TogekissArt = exports.TogeticArt = exports.TogepiArt = exports.MiloticexArt = exports.SkeledirgeArt = exports.CrocalorArt = exports.FuecocoArt = exports.CyranoArt = exports.MiraculousIntercomArt = exports.ExcitingStadiumArt = exports.GravityMountainArt = exports.MagnetonArt = exports.MagnemiteArt = exports.TerapagosArt = exports.PikachuexArt = void 0;
+exports.LisiasAppealArt = exports.CeruledgeArt = exports.NinetalesArt = exports.ScrambleSwitchArt = exports.MespritArt = exports.UxieArt = exports.AzelfArt = exports.VivillionArt = exports.EternatusArt = exports.HydreigonexArt = exports.ZweilousArt = exports.DeinoArt = exports.TogekissArt = exports.TogeticArt = exports.TogepiArt = exports.MiloticexArt = exports.SkeledirgeArt = exports.CrocalorArt = exports.FuecocoArt = exports.CyranoArt = exports.MiraculousIntercomArt = exports.ExcitingStadiumArt = exports.GravityMountainArt = exports.MagnetonArt = exports.MagnemiteArt = exports.TerapagosArt = exports.PikachuexArt = void 0;
 const scramble_switch_1 = require("../set-plasma-storm/scramble-switch");
 const magneton_1 = require("../set-scarlet-and-violet-promos/magneton");
 const azelf_1 = require("./azelf");
@@ -13,6 +13,7 @@ const exciting_stadium_1 = require("./exciting-stadium");
 const fuecoco_1 = require("./fuecoco");
 const gravity_mountain_1 = require("./gravity-mountain");
 const hydreigon_ex_1 = require("./hydreigon-ex");
+const lisias_appeal_1 = require("./lisias-appeal");
 const magnemite_1 = require("./magnemite");
 const mesprit_1 = require("./mesprit");
 const milotic_ex_1 = require("./milotic-ex");
@@ -216,3 +217,10 @@ class CeruledgeArt extends ceruledge_1.Ceruledge {
     }
 }
 exports.CeruledgeArt = CeruledgeArt;
+class LisiasAppealArt extends lisias_appeal_1.LisiasAppeal {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pokemonproxies.com/static/media/7a-063-Lisia\'s_Appeal.296bb51220ddb6bf81f5.png';
+    }
+}
+exports.LisiasAppealArt = LisiasAppealArt;

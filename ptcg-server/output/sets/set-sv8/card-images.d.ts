@@ -10,6 +10,7 @@ import { ExcitingStadium } from './exciting-stadium';
 import { Fuecoco } from './fuecoco';
 import { GravityMountain } from './gravity-mountain';
 import { Hydreigonex } from './hydreigon-ex';
+import { LisiasAppeal } from './lisias-appeal';
 import { Magnemite } from './magnemite';
 import { Mesprit } from './mesprit';
 import { Miloticex } from './milotic-ex';
@@ -107,5 +108,8 @@ export declare class NinetalesArt extends Ninetales {
     cardImage: string;
 }
 export declare class CeruledgeArt extends Ceruledge {
+    cardImage: string;
+}
+export declare class LisiasAppealArt extends LisiasAppeal {
     cardImage: string;
 }

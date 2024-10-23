@@ -273,10 +273,21 @@ export class DeckEditToolbarComponent implements OnDestroy {
       this.selectedSuperTypes = [superType];
     }
 
+    // Reset all filters
+    this.resetPokemonFilters();
+    this.resetTrainerFilters();
+    this.resetEnergyFilters();
+
+    // Reset additional filters
+    this.form.patchValue({
+      formats: [],
+      tags: [],
+      searchValue: null
+    }, { emitEvent: false });
+
     // Update the form control
     this.form.patchValue({ superTypes: this.selectedSuperTypes });
   }
-
 
   public exportToFile() {
     this.export.next();

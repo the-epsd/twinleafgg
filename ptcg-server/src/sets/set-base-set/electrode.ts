@@ -115,7 +115,7 @@ export class Electrode extends PokemonCard {
 
         // }
 
-        const electrodeEnergy = this as EnergyCard;
+        const electrodeEnergy = this as unknown as EnergyCard;
         const energyList = new CardList();
         energyList.cards.push(electrodeEnergy);
 
@@ -135,12 +135,8 @@ export class Electrode extends PokemonCard {
           transfers = transfers || [];
           for (const transfer of transfers) {
             const target = StateUtils.getTarget(state, player, transfer.to) as PokemonCardList;
-            const attachEnergyEffect = new AttachEnergyEffect(player, electrodeEnergy, target);
+            const attachEnergyEffect = new AttachEnergyEffect(player, electrodeEnergy as EnergyCard, target);
             store.reduceEffect(state, attachEnergyEffect);
-
-            // Move the energy card to the target and unshift it
-            energyList.moveCardTo(electrodeEnergy, target);
-            target.cards.unshift(target.cards.pop()!);
           }
           return state;
         });

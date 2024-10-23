@@ -5,6 +5,7 @@ import { PokemonCard } from '../card/pokemon-card';
 import { PokemonCardList } from '../state/pokemon-card-list';
 import { Card } from '../card/card';
 import { CardTarget } from '../actions/play-card-action';
+import { TrainerCard } from '../card/trainer-card';
 
 export enum GameEffects {
   RETREAT_EFFECT = 'RETREAT_EFFECT',
@@ -46,6 +47,22 @@ export class UsePowerEffect implements Effect {
   }
 }
 
+export class UseTrainerPowerEffect implements Effect {
+  readonly type: string = GameEffects.USE_POWER_EFFECT;
+  public preventDefault = false;
+  public player: Player;
+  public power: Power;
+  public card: TrainerCard;
+  public target: CardTarget;
+
+  constructor(player: Player, power: Power, card: TrainerCard, target: CardTarget) {
+    this.player = player;
+    this.power = power;
+    this.card = card;
+    this.target = target;
+  }
+}
+
 
 export class PowerEffect implements Effect {
   readonly type: string = GameEffects.POWER_EFFECT;
@@ -55,6 +72,20 @@ export class PowerEffect implements Effect {
   public card: PokemonCard;
 
   constructor(player: Player, power: Power, card: PokemonCard) {
+    this.player = player;
+    this.power = power;
+    this.card = card;
+  }
+}
+
+export class TrainerPowerEffect implements Effect {
+  readonly type: string = GameEffects.POWER_EFFECT;
+  public preventDefault = false;
+  public player: Player;
+  public power: Power;
+  public card: TrainerCard;
+
+  constructor(player: Player, power: Power, card: TrainerCard) {
     this.player = player;
     this.power = power;
     this.card = card;

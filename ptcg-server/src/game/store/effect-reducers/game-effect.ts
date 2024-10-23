@@ -13,7 +13,9 @@ import { Weakness, Resistance } from '../card/pokemon-types';
 import { CardType, SpecialCondition, CardTag, TrainerType, Format } from '../card/card-types';
 import {
   AttackEffect, UseAttackEffect, HealEffect, KnockOutEffect,
-  UsePowerEffect, PowerEffect, UseStadiumEffect, EvolveEffect
+  UsePowerEffect, PowerEffect, UseStadiumEffect, EvolveEffect,
+  UseTrainerPowerEffect,
+  TrainerPowerEffect
 } from '../effects/game-effects';
 import { CoinFlipPrompt } from '../prompts/coin-flip-prompt';
 import { DealDamageEffect, ApplyWeaknessEffect } from '../effects/attack-effects';
@@ -240,6 +242,16 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
 
     store.log(state, GameLog.LOG_PLAYER_USES_ABILITY, { name: player.name, ability: power.name });
     state = store.reduceEffect(state, new PowerEffect(player, power, card));
+    return state;
+  }
+
+  if (effect instanceof UseTrainerPowerEffect) {
+    const player = effect.player;
+    const power = effect.power;
+    const card = effect.card;
+
+    store.log(state, GameLog.LOG_PLAYER_USES_ABILITY, { name: player.name, ability: power.name });
+    state = store.reduceEffect(state, new TrainerPowerEffect(player, power, card));
     return state;
   }
 
