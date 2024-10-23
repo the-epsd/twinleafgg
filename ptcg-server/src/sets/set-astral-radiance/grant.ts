@@ -6,8 +6,8 @@ import { State } from '../../game/store/state/state';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { GameError, GameMessage, PowerType } from '../../game';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+import { Card, CardList, ChooseCardsPrompt, GameError, GameLog, GameMessage, PowerType } from '../../game';
+import { TrainerPowerEffect } from '../../game/store/effects/game-effects';
 import { CheckPokemonPowersEffect } from '../../game/store/effects/check-effects';
 
 export class Grant extends TrainerCard {
@@ -74,15 +74,56 @@ export class Grant extends TrainerCard {
       return state;
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (effect instanceof TrainerPowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
-
       // Check if card is in the discard
+      console.log('Used Grant from discard');
+      let cards: Card[] = [];
+
+      cards = player.hand.cards.filter(c => c !== this);
+      if (cards.length < 2) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      }
+
       if (!player.discard.cards.includes(this)) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      player.discard.moveCardTo(this, player.hand);
+      const blocked: number[] = [];
+
+      player.hand.cards.forEach((card, index) => {
+        if (card.name === 'Grant') {
+          blocked.push(index);
+        }
+      })
+
+      const handTemp = new CardList();
+      handTemp.cards = player.hand.cards.filter(c => c !== this);
+
+      state = store.prompt(state, new ChooseCardsPrompt(
+        player.id,
+        GameMessage.CHOOSE_CARD_TO_DISCARD,
+        handTemp,
+        {},
+        { min: 2, max: 2, allowCancel: true, blocked: blocked }
+      ), selected => {
+        cards = selected || [];
+
+        cards.forEach((card, index) => {
+          store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD_FROM_HAND, { name: player.name, card: card.name });
+        });
+
+        if (cards.length === 0) {
+          return state;
+        }
+
+        player.hand.moveCardsTo(cards, player.discard);
+
+        player.discard.moveCardTo(this, player.hand);
+
+      });
+
+      return state;
     }
 
     return state;

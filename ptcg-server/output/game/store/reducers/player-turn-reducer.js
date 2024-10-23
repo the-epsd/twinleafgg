@@ -11,6 +11,7 @@ const state_utils_1 = require("../state-utils");
 const play_card_action_1 = require("../actions/play-card-action");
 const pokemon_card_1 = require("../card/pokemon-card");
 const check_effects_1 = require("../effects/check-effects");
+const trainer_card_1 = require("../card/trainer-card");
 function playerTurnReducer(store, state, action) {
     var _a;
     if (state.phase === state_1.GamePhase.PLAYER_TURN) {
@@ -60,6 +61,32 @@ function playerTurnReducer(store, state, action) {
             state = store.reduceEffect(state, useAttackEffect);
             state.lastAttack = attack;
             return state;
+        }
+        if (action instanceof game_actions_1.UseAbilityAction) {
+            const player = state.players[state.activePlayer];
+            if (player === undefined || player.id !== action.clientId) {
+                throw new game_error_1.GameError(game_message_1.GameMessage.NOT_YOUR_TURN);
+            }
+            let trainerCard;
+            const discardCard = player.discard.cards[action.target.index];
+            if (discardCard instanceof trainer_card_1.TrainerCard) {
+                trainerCard = discardCard;
+                if (trainerCard !== undefined) {
+                    let power;
+                    if (action.target.slot === play_card_action_1.SlotType.DISCARD) {
+                        power = trainerCard.powers.find(a => a.name === action.name);
+                    }
+                    if (power === undefined) {
+                        throw new game_error_1.GameError(game_message_1.GameMessage.UNKNOWN_POWER);
+                    }
+                    const slot = action.target.slot;
+                    if (slot === play_card_action_1.SlotType.DISCARD && !power.useFromDiscard) {
+                        throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_USE_POWER);
+                    }
+                    state = store.reduceEffect(state, new game_effects_1.UseTrainerPowerEffect(player, power, trainerCard, action.target));
+                    return state;
+                }
+            }
         }
         if (action instanceof game_actions_1.UseAbilityAction) {
             const player = state.players[state.activePlayer];

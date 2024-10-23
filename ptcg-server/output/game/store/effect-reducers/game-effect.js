@@ -183,6 +183,14 @@ function gameReducer(store, state, effect) {
         state = store.reduceEffect(state, new game_effects_1.PowerEffect(player, power, card));
         return state;
     }
+    if (effect instanceof game_effects_1.UseTrainerPowerEffect) {
+        const player = effect.player;
+        const power = effect.power;
+        const card = effect.card;
+        store.log(state, game_message_1.GameLog.LOG_PLAYER_USES_ABILITY, { name: player.name, ability: power.name });
+        state = store.reduceEffect(state, new game_effects_1.TrainerPowerEffect(player, power, card));
+        return state;
+    }
     if (effect instanceof game_effects_1.UseStadiumEffect) {
         const player = effect.player;
         store.log(state, game_message_1.GameLog.LOG_PLAYER_USES_STADIUM, { name: player.name, stadium: effect.stadium.name });

@@ -56,13 +56,38 @@ class Grant extends trainer_card_1.TrainerCard {
             player.marker.removeMarker(this.GRANT_MARKER, this);
             return state;
         }
-        if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
+        if (effect instanceof game_effects_1.TrainerPowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
             // Check if card is in the discard
+            console.log('Used Grant from discard');
+            let cards = [];
+            cards = player.hand.cards.filter(c => c !== this);
+            if (cards.length < 2) {
+                throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
+            }
             if (!player.discard.cards.includes(this)) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
-            player.discard.moveCardTo(this, player.hand);
+            const blocked = [];
+            player.hand.cards.forEach((card, index) => {
+                if (card.name === 'Grant') {
+                    blocked.push(index);
+                }
+            });
+            const handTemp = new game_1.CardList();
+            handTemp.cards = player.hand.cards.filter(c => c !== this);
+            state = store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, handTemp, {}, { min: 2, max: 2, allowCancel: true, blocked: blocked }), selected => {
+                cards = selected || [];
+                cards.forEach((card, index) => {
+                    store.log(state, game_1.GameLog.LOG_PLAYER_DISCARDS_CARD_FROM_HAND, { name: player.name, card: card.name });
+                });
+                if (cards.length === 0) {
+                    return state;
+                }
+                player.hand.moveCardsTo(cards, player.discard);
+                player.discard.moveCardTo(this, player.hand);
+            });
+            return state;
         }
         return state;
     }
