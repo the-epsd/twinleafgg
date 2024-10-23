@@ -1,5 +1,5 @@
 import { Action } from '../actions/action';
-import { PassTurnAction, RetreatAction, AttackAction, UseAbilityAction, UseStadiumAction } from '../actions/game-actions';
+import { PassTurnAction, RetreatAction, AttackAction, UseAbilityAction, UseStadiumAction, UseTrainerAbilityAction } from '../actions/game-actions';
 import { State, GamePhase } from '../state/state';
 import { StoreLike } from '../store-like';
 import { GameError } from '../../game-error';
@@ -91,43 +91,6 @@ export function playerTurnReducer(store: StoreLike, state: State, action: Action
         throw new GameError(GameMessage.NOT_YOUR_TURN);
       }
 
-      let trainerCard: TrainerCard | undefined;
-
-      const discardCard = player.discard.cards[action.target.index];
-      if (discardCard instanceof TrainerCard) {
-        trainerCard = discardCard;
-
-        if (trainerCard !== undefined) {
-          let power;
-          if (action.target.slot === SlotType.DISCARD) {
-            power = trainerCard.powers.find(a => a.name === action.name);
-          }
-
-          if (power === undefined) {
-            throw new GameError(GameMessage.UNKNOWN_POWER);
-          }
-
-          const slot = action.target.slot;
-
-          if (slot === SlotType.DISCARD && !power.useFromDiscard) {
-            throw new GameError(GameMessage.CANNOT_USE_POWER);
-          }
-
-          state = store.reduceEffect(state, new UseTrainerPowerEffect(player, power, trainerCard, action.target));
-          return state;
-        }
-      }
-
-    }
-
-
-    if (action instanceof UseAbilityAction) {
-      const player = state.players[state.activePlayer];
-
-      if (player === undefined || player.id !== action.clientId) {
-        throw new GameError(GameMessage.NOT_YOUR_TURN);
-      }
-
       let pokemonCard: PokemonCard | undefined;
 
       switch (action.target.slot) {
@@ -153,43 +116,80 @@ export function playerTurnReducer(store: StoreLike, state: State, action: Action
         }
       }
 
-      if (pokemonCard === undefined) {
-        throw new GameError(GameMessage.INVALID_TARGET);
-      }
+      if (pokemonCard !== undefined) {
+        //throw new GameError(GameMessage.INVALID_TARGET);
+        let power;
+        if (action.target.slot === SlotType.ACTIVE || action.target.slot === SlotType.BENCH) {
+          const target = StateUtils.getTarget(state, player, action.target);
 
-      let power;
-      if (action.target.slot === SlotType.ACTIVE || action.target.slot === SlotType.BENCH) {
-        const target = StateUtils.getTarget(state, player, action.target);
+          const powersEffect = new CheckPokemonPowersEffect(player, target);
+          state = store.reduceEffect(state, powersEffect);
 
-        const powersEffect = new CheckPokemonPowersEffect(player, target);
-        state = store.reduceEffect(state, powersEffect);
+          power = [...pokemonCard.powers, ...powersEffect.powers].find(a => a.name === action.name);
+        } else {
+          power = pokemonCard.powers.find(a => a.name === action.name);
+        }
 
-        power = [...pokemonCard.powers, ...powersEffect.powers].find(a => a.name === action.name);
-      } else {
-        power = pokemonCard.powers.find(a => a.name === action.name);
-      }
+        if (power === undefined) {
+          throw new GameError(GameMessage.UNKNOWN_POWER);
+        }
 
-      if (power === undefined) {
-        throw new GameError(GameMessage.UNKNOWN_POWER);
-      }
+        const slot = action.target.slot;
+        if (slot === SlotType.ACTIVE || slot === SlotType.BENCH) {
+          if (!power.useWhenInPlay) {
+            throw new GameError(GameMessage.CANNOT_USE_POWER);
+          }
+        }
 
-      const slot = action.target.slot;
-      if (slot === SlotType.ACTIVE || slot === SlotType.BENCH) {
-        if (!power.useWhenInPlay) {
+        if (slot === SlotType.HAND && !power.useFromHand) {
           throw new GameError(GameMessage.CANNOT_USE_POWER);
         }
-      }
 
-      if (slot === SlotType.HAND && !power.useFromHand) {
-        throw new GameError(GameMessage.CANNOT_USE_POWER);
-      }
+        if (slot === SlotType.DISCARD && !power.useFromDiscard) {
+          throw new GameError(GameMessage.CANNOT_USE_POWER);
+        }
 
-      if (slot === SlotType.DISCARD && !power.useFromDiscard) {
-        throw new GameError(GameMessage.CANNOT_USE_POWER);
+        state = store.reduceEffect(state, new UsePowerEffect(player, power, pokemonCard, action.target));
+        return state;
       }
+    }
 
-      state = store.reduceEffect(state, new UsePowerEffect(player, power, pokemonCard, action.target));
-      return state;
+
+
+  }
+
+  if (action instanceof UseTrainerAbilityAction) {
+    const player = state.players[state.activePlayer];
+
+    if (player === undefined || player.id !== action.clientId) {
+      throw new GameError(GameMessage.NOT_YOUR_TURN);
+    }
+
+    let trainerCard: TrainerCard | undefined;
+
+    const discardCard = player.discard.cards[action.target.index];
+    if (discardCard instanceof TrainerCard) {
+      trainerCard = discardCard;
+
+      if (trainerCard !== undefined) {
+        let power;
+        if (action.target.slot === SlotType.DISCARD) {
+          power = trainerCard.powers.find(a => a.name === action.name);
+        }
+
+        if (power === undefined) {
+          throw new GameError(GameMessage.UNKNOWN_POWER);
+        }
+
+        const slot = action.target.slot;
+
+        if (slot === SlotType.DISCARD && !power.useFromDiscard) {
+          throw new GameError(GameMessage.CANNOT_USE_POWER);
+        }
+
+        state = store.reduceEffect(state, new UseTrainerPowerEffect(player, power, trainerCard, action.target));
+        return state;
+      }
     }
 
 

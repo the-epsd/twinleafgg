@@ -1,7 +1,10 @@
-import { AddPlayerAction, AppendLogAction, Action, PassTurnAction,
+import {
+  AddPlayerAction, AppendLogAction, Action, PassTurnAction,
   ReorderHandAction, ReorderBenchAction, PlayCardAction, CardTarget,
   RetreatAction, AttackAction, UseAbilityAction, StateSerializer,
-  UseStadiumAction, GameLog} from '../../game';
+  UseStadiumAction, GameLog,
+  UseTrainerAbilityAction
+} from '../../game';
 import { Base64 } from '../../utils';
 import { ChangeAvatarAction } from '../../game/store/actions/change-avatar-action';
 import { Client } from '../../game/client/client.interface';
@@ -36,6 +39,7 @@ export class GameSocket {
     this.socket.addListener('game:leave', this.leaveGame.bind(this));
     this.socket.addListener('game:getStatus', this.getGameStatus.bind(this));
     this.socket.addListener('game:action:ability', this.ability.bind(this));
+    this.socket.addListener('game:action:ability', this.trainerability.bind(this));
     this.socket.addListener('game:action:attack', this.attack.bind(this));
     this.socket.addListener('game:action:stadium', this.stadium.bind(this));
     this.socket.addListener('game:action:play', this.playGame.bind(this));
@@ -115,32 +119,37 @@ export class GameSocket {
     response('ok');
   }
 
-  private ability(params: {gameId: number, ability: string, target: CardTarget}, response: Response<void>) {
+  private ability(params: { gameId: number, ability: string, target: CardTarget }, response: Response<void>) {
     const action = new UseAbilityAction(this.client.id, params.ability, params.target);
     this.dispatch(params.gameId, action, response);
   }
 
-  private attack(params: {gameId: number, attack: string}, response: Response<void>) {
+  private trainerability(params: { gameId: number, ability: string, target: CardTarget }, response: Response<void>) {
+    const action = new UseTrainerAbilityAction(this.client.id, params.ability, params.target);
+    this.dispatch(params.gameId, action, response);
+  }
+
+  private attack(params: { gameId: number, attack: string }, response: Response<void>) {
     const action = new AttackAction(this.client.id, params.attack);
     this.dispatch(params.gameId, action, response);
   }
 
-  private stadium(params: {gameId: number}, response: Response<void>) {
+  private stadium(params: { gameId: number }, response: Response<void>) {
     const action = new UseStadiumAction(this.client.id);
     this.dispatch(params.gameId, action, response);
   }
 
-  private playGame(params: {gameId: number, deck: string[]}, response: Response<void>) {
+  private playGame(params: { gameId: number, deck: string[] }, response: Response<void>) {
     const action = new AddPlayerAction(this.client.id, this.client.user.name, params.deck);
     this.dispatch(params.gameId, action, response);
   }
 
-  private playCard(params: {gameId: number, handIndex: number, target: CardTarget}, response: Response<void>) {
+  private playCard(params: { gameId: number, handIndex: number, target: CardTarget }, response: Response<void>) {
     const action = new PlayCardAction(this.client.id, params.handIndex, params.target);
     this.dispatch(params.gameId, action, response);
   }
 
-  private resolvePrompt(params: {gameId: number, id: number, result: any}, response: Response<void>) {
+  private resolvePrompt(params: { gameId: number, id: number, result: any }, response: Response<void>) {
     const game = this.core.games.find(g => g.id === params.gameId);
     if (game === undefined) {
       response('error', ApiErrorEnum.GAME_INVALID_ID);
@@ -167,27 +176,27 @@ export class GameSocket {
     this.dispatch(params.gameId, action, response);
   }
 
-  private reorderBench(params: {gameId: number, from: number, to: number}, response: Response<void>) {
+  private reorderBench(params: { gameId: number, from: number, to: number }, response: Response<void>) {
     const action = new ReorderBenchAction(this.client.id, params.from, params.to);
     this.dispatch(params.gameId, action, response);
   }
 
-  private reorderHand(params: {gameId: number, order: number[]}, response: Response<void>) {
+  private reorderHand(params: { gameId: number, order: number[] }, response: Response<void>) {
     const action = new ReorderHandAction(this.client.id, params.order);
     this.dispatch(params.gameId, action, response);
   }
 
-  private retreat(params: {gameId: number, to: number}, response: Response<void>) {
+  private retreat(params: { gameId: number, to: number }, response: Response<void>) {
     const action = new RetreatAction(this.client.id, params.to);
     this.dispatch(params.gameId, action, response);
   }
 
-  private passTurn(params: {gameId: number}, response: Response<void>) {
+  private passTurn(params: { gameId: number }, response: Response<void>) {
     const action = new PassTurnAction(this.client.id);
     this.dispatch(params.gameId, action, response);
   }
 
-  private appendLog(params: {gameId: number, message: string}, response: Response<void>) {
+  private appendLog(params: { gameId: number, message: string }, response: Response<void>) {
     const message = (params.message || '').trim();
     if (message.length === 0 || message.length > 256) {
       response('error', ApiErrorEnum.CANNOT_SEND_MESSAGE);
@@ -196,7 +205,7 @@ export class GameSocket {
     this.dispatch(params.gameId, action, response);
   }
 
-  private changeAvatar(params: {gameId: number, avatarName: string}, response: Response<void>) {
+  private changeAvatar(params: { gameId: number, avatarName: string }, response: Response<void>) {
     const action = new ChangeAvatarAction(this.client.id, params.avatarName);
     this.dispatch(params.gameId, action, response);
   }

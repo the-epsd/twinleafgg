@@ -20,6 +20,7 @@ class GameSocket {
         this.socket.addListener('game:leave', this.leaveGame.bind(this));
         this.socket.addListener('game:getStatus', this.getGameStatus.bind(this));
         this.socket.addListener('game:action:ability', this.ability.bind(this));
+        this.socket.addListener('game:action:ability', this.trainerability.bind(this));
         this.socket.addListener('game:action:attack', this.attack.bind(this));
         this.socket.addListener('game:action:stadium', this.stadium.bind(this));
         this.socket.addListener('game:action:play', this.playGame.bind(this));
@@ -93,6 +94,10 @@ class GameSocket {
     }
     ability(params, response) {
         const action = new game_1.UseAbilityAction(this.client.id, params.ability, params.target);
+        this.dispatch(params.gameId, action, response);
+    }
+    trainerability(params, response) {
+        const action = new game_1.UseTrainerAbilityAction(this.client.id, params.ability, params.target);
         this.dispatch(params.gameId, action, response);
     }
     attack(params, response) {

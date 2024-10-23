@@ -7,42 +7,42 @@ import { AttackEffect } from '../../game/store/effects/game-effects';
 export class Gallade extends PokemonCard {
 
   public regulationMark = 'E';
-  
-  public stage: Stage = Stage.BASIC;
-  
+
+  public stage: Stage = Stage.STAGE_2;
+
   public evolvesFrom = 'Kirlia';
-  
+
   public cardType: CardType = CardType.FIGHTING;
-  
+
   public hp: number = 170;
-  
+
   public weakness = [{ type: CardType.PSYCHIC }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
-  
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+
   public attacks = [
     {
       name: 'Feint',
-      cost: [ CardType.PSYCHIC ],
+      cost: [CardType.PSYCHIC],
       damage: 60,
       text: 'This attack\'s damage isn\'t affected by Resistance.'
     },
     {
       name: 'Dynablade',
-      cost: [  ],
+      cost: [C, C],
       damage: 60,
-      text: 'This attack does 60 damage for each of your opponen\'s Pokémon V in play.'
+      text: 'This attack does 60 damage for each of your opponent\'s Pokémon V in play.'
     }
   ];
-  
+
   public set: string = 'CRE';
-  
+
   public cardImage: string = 'assets/cardback.png';
-  
+
   public setNumber: string = '81';
-  
+
   public name: string = 'Gallade';
-  
+
   public fullName: string = 'Gallade CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

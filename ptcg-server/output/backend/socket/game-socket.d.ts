@@ -19,6 +19,7 @@ export declare class GameSocket {
     private getGameStatus;
     private dispatch;
     private ability;
+    private trainerability;
     private attack;
     private stadium;
     private playGame;

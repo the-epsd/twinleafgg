@@ -9,7 +9,7 @@ class Gallade extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.regulationMark = 'E';
-        this.stage = card_types_1.Stage.BASIC;
+        this.stage = card_types_1.Stage.STAGE_2;
         this.evolvesFrom = 'Kirlia';
         this.cardType = card_types_1.CardType.FIGHTING;
         this.hp = 170;
@@ -24,9 +24,9 @@ class Gallade extends pokemon_card_1.PokemonCard {
             },
             {
                 name: 'Dynablade',
-                cost: [],
+                cost: [C, C],
                 damage: 60,
-                text: 'This attack does 60 damage for each of your opponen\'s Pokémon V in play.'
+                text: 'This attack does 60 damage for each of your opponent\'s Pokémon V in play.'
             }
         ];
         this.set = 'CRE';

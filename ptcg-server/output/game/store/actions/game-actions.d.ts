@@ -13,6 +13,13 @@ export declare class UseAbilityAction implements Action {
     readonly type: string;
     constructor(clientId: number, name: string, target: CardTarget);
 }
+export declare class UseTrainerAbilityAction implements Action {
+    clientId: number;
+    name: string;
+    target: CardTarget;
+    readonly type: string;
+    constructor(clientId: number, name: string, target: CardTarget);
+}
 export declare class UseStadiumAction implements Action {
     clientId: number;
     readonly type: string;

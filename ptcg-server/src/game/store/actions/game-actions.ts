@@ -8,7 +8,7 @@ export class AttackAction implements Action {
   constructor(
     public clientId: number,
     public name: string
-  ) {}
+  ) { }
 
 }
 
@@ -20,7 +20,19 @@ export class UseAbilityAction implements Action {
     public clientId: number,
     public name: string,
     public target: CardTarget
-  ) {}
+  ) { }
+
+}
+
+export class UseTrainerAbilityAction implements Action {
+
+  readonly type: string = 'USE_ABILITY_ACTION';
+
+  constructor(
+    public clientId: number,
+    public name: string,
+    public target: CardTarget
+  ) { }
 
 }
 
@@ -30,7 +42,7 @@ export class UseStadiumAction implements Action {
 
   constructor(
     public clientId: number
-  ) {}
+  ) { }
 
 }
 
@@ -41,7 +53,7 @@ export class RetreatAction implements Action {
   constructor(
     public clientId: number,
     public benchIndex: number
-  ) {}
+  ) { }
 
 }
 
@@ -49,6 +61,6 @@ export class PassTurnAction implements Action {
 
   readonly type: string = 'PASS_TURN';
 
-  constructor(public clientId: number) {}
+  constructor(public clientId: number) { }
 
 }
