@@ -1,7 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.LilliesClefairyexArt = void 0;
+exports.BlazikenexArt = exports.CombuskenArt = exports.TorthicArt = exports.LilliesClefairyexArt = void 0;
+const blaziken_ex_1 = require("./blaziken-ex");
+const combusken_1 = require("./combusken");
 const lillies_clefairy_ex_1 = require("./lillies-clefairy-ex");
+const torchic_1 = require("./torchic");
 class LilliesClefairyexArt extends lillies_clefairy_ex_1.LilliesClefairyex {
     constructor() {
         super(...arguments);
@@ -9,3 +12,24 @@ class LilliesClefairyexArt extends lillies_clefairy_ex_1.LilliesClefairyex {
     }
 }
 exports.LilliesClefairyexArt = LilliesClefairyexArt;
+class TorthicArt extends torchic_1.Torchic {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://www.pokebeach.com/news/2024/10/modal-decklist-3-card-1-1.png';
+    }
+}
+exports.TorthicArt = TorthicArt;
+class CombuskenArt extends combusken_1.Combusken {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://www.pokebeach.com/news/2024/10/modal-decklist-3-card-2-1.png';
+    }
+}
+exports.CombuskenArt = CombuskenArt;
+class BlazikenexArt extends blaziken_ex_1.Blazikenex {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://www.pokebeach.com/news/2024/10/modal-deck-3-card-2.png';
+    }
+}
+exports.BlazikenexArt = BlazikenexArt;

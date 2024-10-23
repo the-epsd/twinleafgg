@@ -52,14 +52,14 @@ class Sylveonex extends pokemon_card_1.PokemonCard {
             });
             console.log('marker removed');
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect
-            && effect.player.marker.hasMarker(this.CLEAR_ANGELITE_MARKER, this)) {
-            effect.player.marker.removeMarker(this.CLEAR_ANGELITE_MARKER, this);
-            const opponent = __1.StateUtils.getOpponent(state, effect.player);
-            opponent.forEachPokemon(__1.PlayerType.TOP_PLAYER, (cardList) => {
-                cardList.marker.removeMarker(this.ANGELITE_MARKER, this);
-            });
-            console.log('marker removed');
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.attackMarker.hasMarker(this.CLEAR_ANGELITE_MARKER, this)) {
+            effect.player.attackMarker.removeMarker(this.ANGELITE_MARKER, this);
+            effect.player.attackMarker.removeMarker(this.CLEAR_ANGELITE_MARKER, this);
+            console.log('marker cleared');
+        }
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.attackMarker.hasMarker(this.ANGELITE_MARKER, this)) {
+            effect.player.attackMarker.addMarker(this.CLEAR_ANGELITE_MARKER, this);
+            console.log('second marker added');
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
@@ -81,13 +81,15 @@ class Sylveonex extends pokemon_card_1.PokemonCard {
             if (hasBench === false) {
                 return state;
             }
-            if (player.marker.hasMarker(this.ANGELITE_MARKER, this)) {
-                throw new __1.GameError(__1.GameMessage.CANNOT_USE_POWER);
+            if (effect.player.attackMarker.hasMarker(this.ANGELITE_MARKER, this)) {
+                console.log('attack blocked');
+                throw new __1.GameError(__1.GameMessage.BLOCKED_BY_EFFECT);
             }
+            effect.player.attackMarker.addMarker(this.ANGELITE_MARKER, this);
+            console.log('marker added');
             return store.prompt(state, new __1.ChoosePokemonPrompt(player.id, __1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, __1.PlayerType.TOP_PLAYER, [__1.SlotType.BENCH], { min: 1, max: 2, allowCancel: false }), selected => {
                 const targets = selected || [];
                 player.marker.addMarker(this.ANGELITE_MARKER, this);
-                opponent.marker.addMarker(this.ANGELITE_MARKER, this);
                 targets.forEach(target => {
                     target.clearEffects();
                     target.moveTo(opponent.deck);

@@ -95,7 +95,7 @@ export class DeckComponent implements OnInit {
   private generateDeckList(deck: DeckListEntry): string {
     const cardCounts = new Map<string, number>();
     deck.deckItems.forEach(item => {
-      const cardName = item.card.fullName;
+      const cardName = item.card.name;
       cardCounts.set(cardName, (cardCounts.get(cardName) || 0) + 1);
     });
 
@@ -176,11 +176,26 @@ export class DeckComponent implements OnInit {
       'Pidgeot ex': Archetype.PIDGEOT,
       'Miraidon ex': Archetype.MIRAIDON,
       'Pikachu ex': Archetype.PIKACHU,
+      'Raging Bolt ex': Archetype.RAGING_BOLT,
+      'Giratina VSTAR': Archetype.GIRATINA,
+      'Origin Forme Palkia VSTAR': Archetype.PALKIA_ORIGIN,
+      'Comfey': Archetype.COMFEY,
+      'Iron Thorns ex': Archetype.IRON_THORNS,
+      'Terapagos ex': Archetype.TERAPAGOS,
+      'Regidrago': Archetype.REGIDRAGO,
+      'Snorlax': Archetype.SNORLAX,
+      'Gardevoir ex': Archetype.GARDEVOIR,
+      'Roaring Moon ex': Archetype.ROARING_MOON,
+      'Lugia VSTAR': Archetype.LUGIA,
+      'Ceruledge ex': Archetype.CERULEDGE,
+      'Dragapult ex': Archetype.DRAGAPULT,
       // Add more mappings as needed
     };
 
     for (const combination of archetypeCombinations) {
-      if (combination.cards.every(card => deckItems.some(item => item.card.fullName.includes(card)))) {
+      if (combination.cards.every(card =>
+        deckItems.some(item => item?.card?.fullName?.includes(card))
+      )) {
         return combination.archetype;
       }
     }
@@ -190,8 +205,8 @@ export class DeckComponent implements OnInit {
     let primaryArchetype = Archetype.UNOWN;
 
     for (const item of deckItems) {
-      if (item.card && item.card.fullName) {
-        const cardName = item.card.fullName.split(' ')[0] + ' ' + item.card.fullName.split(' ')[1];
+      if (item?.card?.fullName) {
+        const cardName = item.card.fullName.split(' ').slice(0, 2).join(' ');
         if (archetypeMapping[cardName]) {
           const cardType = archetypeMapping[cardName];
           typeCount[cardType] = (typeCount[cardType] || 0) + (item.card.count || 1);

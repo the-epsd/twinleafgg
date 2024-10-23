@@ -5,7 +5,7 @@ import { GamePhase } from '../state/state';
 import { StateUtils } from '../state-utils';
 import { CheckPokemonTypeEffect, CheckPokemonStatsEffect, CheckProvidedEnergyEffect, CheckAttackCostEffect } from '../effects/check-effects';
 import { SpecialCondition, CardTag, TrainerType, Format } from '../card/card-types';
-import { AttackEffect, UseAttackEffect, HealEffect, KnockOutEffect, UsePowerEffect, PowerEffect, UseStadiumEffect, EvolveEffect } from '../effects/game-effects';
+import { AttackEffect, UseAttackEffect, HealEffect, KnockOutEffect, UsePowerEffect, PowerEffect, UseStadiumEffect, EvolveEffect, UseTrainerPowerEffect, TrainerPowerEffect } from '../effects/game-effects';
 import { CoinFlipPrompt } from '../prompts/coin-flip-prompt';
 import { DealDamageEffect, ApplyWeaknessEffect } from '../effects/attack-effects';
 import { TrainerEffect } from '../effects/play-card-effects';
@@ -178,6 +178,14 @@ export function gameReducer(store, state, effect) {
         const card = effect.card;
         store.log(state, GameLog.LOG_PLAYER_USES_ABILITY, { name: player.name, ability: power.name });
         state = store.reduceEffect(state, new PowerEffect(player, power, card));
+        return state;
+    }
+    if (effect instanceof UseTrainerPowerEffect) {
+        const player = effect.player;
+        const power = effect.power;
+        const card = effect.card;
+        store.log(state, GameLog.LOG_PLAYER_USES_ABILITY, { name: player.name, ability: power.name });
+        state = store.reduceEffect(state, new TrainerPowerEffect(player, power, card));
         return state;
     }
     if (effect instanceof UseStadiumEffect) {

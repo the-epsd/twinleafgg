@@ -31,6 +31,42 @@ export class ArchetypeComponent {
       case Archetype.PIKACHU:
         this.archetype = 'pikachu';
         break;
+      case Archetype.RAGING_BOLT:
+        this.archetype = 'raging-bolt';
+        break;
+      case Archetype.GIRATINA:
+        this.archetype = 'giratina';
+        break;
+      case Archetype.PALKIA_ORIGIN:
+        this.archetype = 'palkia-origin';
+        break;
+      case Archetype.COMFEY:
+        this.archetype = 'comfey';
+        break;
+      case Archetype.IRON_THORNS:
+        this.archetype = 'iron-thorns';
+        break;
+      case Archetype.TERAPAGOS:
+        this.archetype = 'terapagos';
+        break;
+      case Archetype.REGIDRAGO:
+        this.archetype = 'regidrago';
+        break;
+      case Archetype.SNORLAX:
+        this.archetype = 'snorlax';
+        break;
+      case Archetype.GARDEVOIR:
+        this.archetype = 'gardevoir';
+        break;
+      case Archetype.ROARING_MOON:
+        this.archetype = 'roaring-moon';
+        break;
+      case Archetype.CERULEDGE:
+        this.archetype = 'ceruledge';
+        break;
+      case Archetype.DRAGAPULT:
+        this.archetype = 'dragapult';
+        break;
       default:
         this.archetype = 'unown';
     }

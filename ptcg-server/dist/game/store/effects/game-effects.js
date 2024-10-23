@@ -29,7 +29,26 @@ export class UsePowerEffect {
         this.target = target;
     }
 }
+export class UseTrainerPowerEffect {
+    constructor(player, power, card, target) {
+        this.type = GameEffects.USE_POWER_EFFECT;
+        this.preventDefault = false;
+        this.player = player;
+        this.power = power;
+        this.card = card;
+        this.target = target;
+    }
+}
 export class PowerEffect {
+    constructor(player, power, card) {
+        this.type = GameEffects.POWER_EFFECT;
+        this.preventDefault = false;
+        this.player = player;
+        this.power = power;
+        this.card = card;
+    }
+}
+export class TrainerPowerEffect {
     constructor(player, power, card) {
         this.type = GameEffects.POWER_EFFECT;
         this.preventDefault = false;

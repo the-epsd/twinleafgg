@@ -67,14 +67,15 @@ export class Sylveonex extends PokemonCard {
       console.log('marker removed');
     }
 
-    if (effect instanceof EndTurnEffect
-      && effect.player.marker.hasMarker(this.CLEAR_ANGELITE_MARKER, this)) {
-      effect.player.marker.removeMarker(this.CLEAR_ANGELITE_MARKER, this);
-      const opponent = StateUtils.getOpponent(state, effect.player);
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-        cardList.marker.removeMarker(this.ANGELITE_MARKER, this);
-      });
-      console.log('marker removed');
+    if (effect instanceof EndTurnEffect && effect.player.attackMarker.hasMarker(this.CLEAR_ANGELITE_MARKER, this)) {
+      effect.player.attackMarker.removeMarker(this.ANGELITE_MARKER, this);
+      effect.player.attackMarker.removeMarker(this.CLEAR_ANGELITE_MARKER, this);
+      console.log('marker cleared');
+    }
+
+    if (effect instanceof EndTurnEffect && effect.player.attackMarker.hasMarker(this.ANGELITE_MARKER, this)) {
+      effect.player.attackMarker.addMarker(this.CLEAR_ANGELITE_MARKER, this);
+      console.log('second marker added');
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
@@ -102,9 +103,12 @@ export class Sylveonex extends PokemonCard {
         return state;
       }
 
-      if (player.marker.hasMarker(this.ANGELITE_MARKER, this)) {
-        throw new GameError(GameMessage.CANNOT_USE_POWER);
+      if (effect.player.attackMarker.hasMarker(this.ANGELITE_MARKER, this)) {
+        console.log('attack blocked');
+        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
       }
+      effect.player.attackMarker.addMarker(this.ANGELITE_MARKER, this);
+      console.log('marker added');
 
       return store.prompt(state, new ChoosePokemonPrompt(
         player.id,
@@ -115,7 +119,6 @@ export class Sylveonex extends PokemonCard {
       ), selected => {
         const targets = selected || [];
         player.marker.addMarker(this.ANGELITE_MARKER, this);
-        opponent.marker.addMarker(this.ANGELITE_MARKER, this);
         targets.forEach(target => {
           target.clearEffects();
           target.moveTo(opponent.deck);

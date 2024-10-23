@@ -20,7 +20,7 @@ export class RegisterComponent {
 
   public loading = false;
   public name: string;
-  public email: string;
+  email: string = `user_${Math.random().toString(36).substring(2, 10)}@example.com`;
   public password: string;
   public confirmPassword: string;
   public invalidName: string;
@@ -32,7 +32,9 @@ export class RegisterComponent {
     private serverPasswordPopupService: ServerPasswordPopupService,
     private router: Router,
     private translate: TranslateService
-  ) { }
+  ) {
+    this.email = this.generateRandomEmail();
+  }
 
   public register(code?: string): void {
     this.loading = true;
@@ -47,6 +49,16 @@ export class RegisterComponent {
       }, (error: ApiError) => {
         this.handleError(error);
       });
+  }
+
+  private generateRandomEmail(): string {
+    const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
+    const length = 10;
+    let result = '';
+    for (let i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    return `${result}@example.com`;
   }
 
   private handleError(error: ApiError) {

@@ -10,6 +10,7 @@ import { ExcitingStadium } from './exciting-stadium';
 import { Fuecoco } from './fuecoco';
 import { GravityMountain } from './gravity-mountain';
 import { Hydreigonex } from './hydreigon-ex';
+import { LisiasAppeal } from './lisias-appeal';
 import { Magnemite } from './magnemite';
 import { Mesprit } from './mesprit';
 import { Miloticex } from './milotic-ex';
@@ -134,4 +135,8 @@ export class NinetalesArt extends Ninetales {
 
 export class CeruledgeArt extends Ceruledge {
   public cardImage = 'https://pokemonproxies.com/static/media/8i-022-Ceruledge.9eb169e8f4aacd3df85f.png';
+}
+
+export class LisiasAppealArt extends LisiasAppeal {
+  public cardImage = 'https://pokemonproxies.com/static/media/7a-063-Lisia\'s_Appeal.296bb51220ddb6bf81f5.png';
 }

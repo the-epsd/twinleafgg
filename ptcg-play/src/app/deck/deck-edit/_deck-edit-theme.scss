@@ -46,7 +46,7 @@
           border-bottom-left-radius: 32px;
           border-top-right-radius: 0px;
           border-bottom-right-radius: 0px;
-          background-color: $deck-edit-background-color;
+          background-color: #090b0f;
           margin-left: 1rem;
         }
 
@@ -55,32 +55,32 @@
           border-bottom-right-radius: 32px;
           border-top-left-radius: 0px;
           border-bottom-left-radius: 0px;
-          background-color: $deck-edit-background-color;
+          background-color: #090b0f;
         }
 
         &:not(:first-child):not(:last-child) {
           border-radius: 0;
-          border-left: 1px solid #212121;
-          border-right: 1px solid #212121;
-          background-color: $deck-edit-background-color;
+          border-left: 1px solid #1a1f29;
+          border-right: 1px solid #1a1f29;
+          background-color: #090b0f;
         }
 
         &.selected,
         &:not(:first-child):not(:last-child).selected {
-          background-color: mat.get-color-from-palette($primary);
-          color: mat.get-color-from-palette($primary, default-contrast);
+          background-color: #283142;
+          color: white;
         }
 
         &:not(:first-child):not(:last-child) {
           border-radius: 0;
-          border-left: 1px solid #212121;
-          border-right: 1px solid #212121;
+          border-left: 1px solid #1a1f29;
+          border-right: 1px solid #1a1f29;
         }
       }
     }
 
     .mat-button-toggle-checked {
-      background-color: mat.get-color-from-palette($primary);
+      background-color: #283142;
       color: mat.get-color-from-palette($primary, default-contrast) !important;
     }
 
@@ -88,7 +88,7 @@
 
 
       .mat-form-field-flex {
-        background-color: $deck-edit-background-color;
+        background-color: #090b0f;
         border-radius: 32px;
         padding: 0.5rem 1rem;
         align-items: center;
@@ -107,12 +107,13 @@
       // }
 
       .mat-select-value {
-        color: mat.get-color-from-palette($primary, text);
+        color: #283142;
         font-size: 14px;
       }
 
       .mat-form-field-label {
         font-size: 14px;
+        color: #283142;
       }
 
       .mat-form-field-underline {
@@ -121,7 +122,7 @@
       }
 
       &.mat-focused .mat-form-field-flex {
-        background-color: mat.get-color-from-palette($primary);
+        background-color: #283142;
 
         .mat-select-value {
           color: mat.get-color-from-palette($primary, default-contrast);

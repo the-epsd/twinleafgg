@@ -13,9 +13,9 @@
 
           <mat-form-field>
             <mat-label translate>REGISTER_NAME</mat-label>
-            <input matInput [placeholder]="'REGISTER_NAME' | translate" name="name"
-              [(ngModel)]="name" [disabled]="loading" #nameField="ngModel"
-              ptcgPlayerNameValidator [ptcgInvalidValue]="invalidName" required maxlength="32">
+            <input matInput [placeholder]="'REGISTER_NAME' | translate" name="name" [(ngModel)]="name"
+              [disabled]="loading" #nameField="ngModel" ptcgPlayerNameValidator [ptcgInvalidValue]="invalidName"
+              required maxlength="32">
             <mat-hint translate>
               REGISTER_NAME_HINT
             </mat-hint>
@@ -26,7 +26,7 @@
           </mat-form-field>
 
           <!-- E-mail -->
-          <mat-form-field>
+          <!-- <mat-form-field>
             <mat-label translate>LABEL_EMAIL</mat-label>
             <input matInput [placeholder]="'LABEL_EMAIL' | translate" name="email"
               [(ngModel)]="email" [disabled]="loading" #emailField="ngModel"
@@ -38,14 +38,15 @@
               <div *ngIf="emailField.errors?.email" translate>VALIDATION_INVALID_EMAIL_FORMAT</div>
               <div *ngIf="emailField.errors?.invalidValue" translate>REGISTER_EMAIL_TAKEN</div>
             </mat-error>
-          </mat-form-field>
+          </mat-form-field> -->
+          <input type="hidden" name="email" [(ngModel)]="email">
 
           <!-- Password -->
           <mat-form-field>
             <mat-label translate>REGISTER_PASSWORD</mat-label>
             <input type="password" matInput [placeholder]="'REGISTER_PASSWORD' | translate" name="password"
-              [(ngModel)]="password" [disabled]="loading" #passwordField="ngModel"
-              ptcgPasswordValidator required maxlength="32">
+              [(ngModel)]="password" [disabled]="loading" #passwordField="ngModel" ptcgPasswordValidator required
+              maxlength="32">
             <mat-hint translate>
               REGISTER_PASSWORD_HINT
             </mat-hint>
@@ -57,8 +58,8 @@
           <!-- Confirm Password -->
           <mat-form-field>
             <mat-label translate>REGISTER_PASSWORD_CONFIRM</mat-label>
-            <input type="password" matInput [placeholder]="'REGISTER_PASSWORD_CONFIRM' | translate" name="confirmPassword"
-              [(ngModel)]="confirmPassword" [disabled]="loading" #confirmPasswordField="ngModel"
+            <input type="password" matInput [placeholder]="'REGISTER_PASSWORD_CONFIRM' | translate"
+              name="confirmPassword" [(ngModel)]="confirmPassword" [disabled]="loading" #confirmPasswordField="ngModel"
               [ptcgPasswordMatchValidator]="password" required maxlength="32">
             <mat-hint translate>
               REGISTER_PASSWORD_CONFIRM_HINT
@@ -78,10 +79,8 @@
     </p>
 
     <p>
-      <button mat-raised-button color="primary"
-        [disabled]="loading || form.invalid"
-        [ngClass]="{'ptcg-u-loading': loading}"
-        (click)="register()">
+      <button mat-raised-button color="primary" [disabled]="loading || form.invalid"
+        [ngClass]="{'ptcg-u-loading': loading}" (click)="register()">
         {{ 'REGISTER_BUTTON' | translate }}
       </button>
     </p>

@@ -4,6 +4,8 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
+import { PlayerType, StateUtils } from '../../game';
+import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 
 export class Magneton extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -41,10 +43,35 @@ export class Magneton extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      // Implement Sonicboom logic
+      effect.ignoreResistance = true;
+      effect.ignoreWeakness = true;
     }
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-      // Implement Selfdestruct logic
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+        if (cardList.getPokemonCard() === this) {
+          cardList.damage += 100;
+        }
+      });
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+        if (cardList === player.active) {
+          return;
+        }
+        const damageEffect = new PutDamageEffect(effect, 20);
+        damageEffect.target = cardList;
+        store.reduceEffect(state, damageEffect);
+      });
+
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
+        if (cardList === opponent.active) {
+          return;
+        }
+        const damageEffect = new PutDamageEffect(effect, 20);
+        damageEffect.target = cardList;
+        store.reduceEffect(state, damageEffect);
+      });
     }
     return state;
   }

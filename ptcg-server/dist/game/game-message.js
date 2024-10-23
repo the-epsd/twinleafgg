@@ -171,6 +171,11 @@ export var GameCardMessage;
     GameCardMessage["LABEL_VSTAR_USED"] = "LABEL_VSTAR_USED";
     GameCardMessage["ORDER_OPPONENT_DECK"] = "ORDER_OPPONENT_DECK";
     GameCardMessage["ORDER_YOUR_DECK"] = "ORDER_YOUR_DECK";
+    GameCardMessage["REVEAL_YOUR_TOP_DECK"] = "REVEAL_YOUR_TOP_DECK";
+    GameCardMessage["REVEAL_OPPONENT_TOP_DECK"] = "REVEAL_OPPONENT_TOP_DECK";
+    GameCardMessage["REVEAL_RANDOM_CARD_IN_OPPONENT_HAND"] = "REVEAL_RANDOM_CARD_IN_OPPONENT_HAND";
+    GameCardMessage["REVEAL_AN_OPPONENT_PRIZES"] = "REVEAL_AN_OPPONENT_PRIZES";
+    GameCardMessage["REVEAL_ONE_OF_YOUR_PRIZES"] = "REVEAL_ONE_OF_YOUR_PRIZES";
 })(GameCardMessage || (GameCardMessage = {}));
 export var GameLog;
 (function (GameLog) {

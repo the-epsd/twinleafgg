@@ -109,7 +109,6 @@ export class HandComponent implements OnChanges {
       });
   }
 
-
   private dispatchAction(list: HandItem[]) {
     if (!this.gameState) {
       return;
