@@ -1,8 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.MysteriousFossilArt = exports.MrFujiArt = exports.LaprasArt = exports.EnergySearchArt = exports.ArticunoArt = exports.AerodactylArt = void 0;
+exports.MysteriousFossilArt = exports.MrFujiArt = exports.LaprasArt = exports.EnergySearchArt = exports.DragoniteArt = exports.ArticunoArt = exports.AerodactylArt = void 0;
 const aerodactyl_1 = require("./aerodactyl");
 const articuno_1 = require("./articuno");
+const dragonite_1 = require("./dragonite");
 const energy_search_1 = require("./energy-search");
 const lapras_1 = require("./lapras");
 const mr_fuji_1 = require("./mr-fuji");
@@ -21,6 +22,13 @@ class ArticunoArt extends articuno_1.Articuno {
     }
 }
 exports.ArticunoArt = ArticunoArt;
+class DragoniteArt extends dragonite_1.Dragonite {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pkmncards.com/wp-content/uploads/dragonite-fossil-fo-4.jpg';
+    }
+}
+exports.DragoniteArt = DragoniteArt;
 class EnergySearchArt extends energy_search_1.EnergySearch {
     constructor() {
         super(...arguments);

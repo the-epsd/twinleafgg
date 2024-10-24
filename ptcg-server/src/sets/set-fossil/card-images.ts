@@ -1,5 +1,6 @@
 import { Aerodactyl } from './aerodactyl';
 import { Articuno } from './articuno';
+import { Dragonite } from './dragonite';
 import { EnergySearch } from './energy-search';
 import { Lapras } from './lapras';
 import { MrFuji } from './mr-fuji';
@@ -11,6 +12,10 @@ export class AerodactylArt extends Aerodactyl {
 
 export class ArticunoArt extends Articuno {
   public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/articuno-fossil-fo-2.jpg?fit=600%2C825&ssl=1';
+}
+
+export class DragoniteArt extends Dragonite {
+  public cardImage = 'https://pkmncards.com/wp-content/uploads/dragonite-fossil-fo-4.jpg';
 }
 
 export class EnergySearchArt extends EnergySearch {
