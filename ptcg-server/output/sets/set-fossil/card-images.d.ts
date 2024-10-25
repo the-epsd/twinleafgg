@@ -1,5 +1,6 @@
 import { Aerodactyl } from './aerodactyl';
 import { Articuno } from './articuno';
+import { Dragonite } from './dragonite';
 import { EnergySearch } from './energy-search';
 import { Lapras } from './lapras';
 import { MrFuji } from './mr-fuji';
@@ -8,6 +9,9 @@ export declare class AerodactylArt extends Aerodactyl {
     cardImage: string;
 }
 export declare class ArticunoArt extends Articuno {
+    cardImage: string;
+}
+export declare class DragoniteArt extends Dragonite {
     cardImage: string;
 }
 export declare class EnergySearchArt extends EnergySearch {

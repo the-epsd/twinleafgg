@@ -154,41 +154,38 @@ export function playerTurnReducer(store: StoreLike, state: State, action: Action
       }
     }
 
+    if (action instanceof UseTrainerAbilityAction) {
+      const player = state.players[state.activePlayer];
 
+      if (player === undefined || player.id !== action.clientId) {
+        throw new GameError(GameMessage.NOT_YOUR_TURN);
+      }
 
-  }
+      let trainerCard: TrainerCard | undefined;
 
-  if (action instanceof UseTrainerAbilityAction) {
-    const player = state.players[state.activePlayer];
+      const discardCard = player.discard.cards[action.target.index];
+      if (discardCard instanceof TrainerCard) {
+        trainerCard = discardCard;
 
-    if (player === undefined || player.id !== action.clientId) {
-      throw new GameError(GameMessage.NOT_YOUR_TURN);
-    }
+        if (trainerCard !== undefined) {
+          let power;
+          if (action.target.slot === SlotType.DISCARD) {
+            power = trainerCard.powers.find(a => a.name === action.name);
+          }
 
-    let trainerCard: TrainerCard | undefined;
+          if (power === undefined) {
+            throw new GameError(GameMessage.UNKNOWN_POWER);
+          }
 
-    const discardCard = player.discard.cards[action.target.index];
-    if (discardCard instanceof TrainerCard) {
-      trainerCard = discardCard;
+          const slot = action.target.slot;
 
-      if (trainerCard !== undefined) {
-        let power;
-        if (action.target.slot === SlotType.DISCARD) {
-          power = trainerCard.powers.find(a => a.name === action.name);
+          if (slot === SlotType.DISCARD && !power.useFromDiscard) {
+            throw new GameError(GameMessage.CANNOT_USE_POWER);
+          }
+
+          state = store.reduceEffect(state, new UseTrainerPowerEffect(player, power, trainerCard, action.target));
+          return state;
         }
-
-        if (power === undefined) {
-          throw new GameError(GameMessage.UNKNOWN_POWER);
-        }
-
-        const slot = action.target.slot;
-
-        if (slot === SlotType.DISCARD && !power.useFromDiscard) {
-          throw new GameError(GameMessage.CANNOT_USE_POWER);
-        }
-
-        state = store.reduceEffect(state, new UseTrainerPowerEffect(player, power, trainerCard, action.target));
-        return state;
       }
     }
 
