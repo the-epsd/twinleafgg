@@ -2,21 +2,18 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-export declare class Butterfree extends PokemonCard {
+export declare class Arbok extends PokemonCard {
     stage: Stage;
+    evolvesFrom: string;
     cardType: CardType;
     hp: number;
     weakness: {
         type: CardType;
     }[];
-    resistance: {
-        type: CardType;
-        value: number;
-    }[];
-    evolvesFrom: string;
+    retreat: CardType[];
     attacks: {
         name: string;
-        cost: CardType[];
+        cost: CardType.GRASS[];
         damage: number;
         text: string;
     }[];
@@ -25,6 +22,6 @@ export declare class Butterfree extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
-    USED_WHIRLWIND: boolean;
+    USED_TERROR_STRIKE: boolean;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

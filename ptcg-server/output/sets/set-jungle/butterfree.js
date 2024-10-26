@@ -6,6 +6,7 @@ const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
+const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 class Butterfree extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -32,9 +33,13 @@ class Butterfree extends pokemon_card_1.PokemonCard {
         this.setNumber = '33';
         this.name = 'Butterfree';
         this.fullName = 'Butterfree JU';
+        this.USED_WHIRLWIND = false;
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+            this.USED_WHIRLWIND = true;
+        }
+        if (effect instanceof attack_effects_1.AfterDamageEffect && this.USED_WHIRLWIND) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             const hasBench = opponent.bench.some(b => b.cards.length > 0);
@@ -48,6 +53,9 @@ class Butterfree extends pokemon_card_1.PokemonCard {
                     return state;
                 }
             });
+        }
+        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+            this.USED_WHIRLWIND = false;
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
