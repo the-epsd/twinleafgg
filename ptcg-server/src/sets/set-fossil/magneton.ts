@@ -27,7 +27,7 @@ export class Magneton extends PokemonCard {
       name: 'Selfdestruct',
       cost: [CardType.LIGHTNING, CardType.LIGHTNING, CardType.LIGHTNING, CardType.LIGHTNING],
       damage: 100,
-      text: 'Does 20 damage to each Pokémon on each player\'s Bench. (Don\'t apply Weakness and Resistance for Benched Pokémon.) Magneton does 100 damage to itself.'
+      text: 'Does 20 damage to each Pokémon on each player\'s Bench. (Don\'t apply Weakness and Resistance for Benched Pokémon.) Magneton does 80 damage to itself.'
     }
   ];
 
@@ -52,7 +52,7 @@ export class Magneton extends PokemonCard {
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
         if (cardList.getPokemonCard() === this) {
-          cardList.damage += 100;
+          cardList.damage += 80;
         }
       });
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {

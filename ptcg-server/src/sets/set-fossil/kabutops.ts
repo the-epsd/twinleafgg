@@ -2,8 +2,9 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect, HealEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
+import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 
 export class Kabutops extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -40,7 +41,26 @@ export class Kabutops extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-      // Implement Absorb logic
+      const player = effect.player;
+      const target = player.active;
+
+      const damageEffect = new DealDamageEffect(effect, 40);
+      damageEffect.target = effect.target;
+
+      state = store.reduceEffect(state, damageEffect);
+
+
+      const damageToHeal = damageEffect.damage / 2;
+
+      // rounding to nearest 10
+      const damageToHealLow = (damageToHeal / 10) * 10;
+      const damageToHealHigh = damageToHealLow + 10;
+      const heal = (damageToHeal - damageToHealLow >= damageToHealHigh - damageToHeal) ? damageToHealHigh : damageToHealLow;
+
+      // Heal damage
+      const healEffect = new HealEffect(player, target, heal);
+      state = store.reduceEffect(state, healEffect);
+      return state;
     }
     return state;
   }

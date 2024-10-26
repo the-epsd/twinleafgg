@@ -4,6 +4,8 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
+import { StateUtils, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, CardList, GameError, OrderCardsPrompt, SelectPrompt } from '../../game';
+import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 
 export class Hypno extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -40,10 +42,101 @@ export class Hypno extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      // Implement Prophecy logic
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      const options: { message: GameMessage, action: () => void }[] = [
+        {
+          message: GameMessage.ORDER_YOUR_DECK,
+          action: () => {
+
+            if (player.deck.cards.length === 0) {
+              throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+            }
+
+            const deckTop = new CardList();
+            player.deck.moveTo(deckTop, 3);
+
+            return store.prompt(state, new OrderCardsPrompt(
+              player.id,
+              GameMessage.CHOOSE_CARDS_ORDER,
+              deckTop,
+              { allowCancel: false },
+            ), order => {
+              if (order === null) {
+                return state;
+              }
+
+              deckTop.applyOrder(order);
+              deckTop.moveToTopOfDestination(player.deck);
+
+            });
+
+          }
+        },
+        {
+          message: GameMessage.ORDER_OPPONENT_DECK,
+          action: () => {
+            if (opponent.deck.cards.length === 0) {
+              throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+            }
+
+            const deckTop = new CardList();
+            opponent.deck.moveTo(deckTop, 3);
+
+            return store.prompt(state, new OrderCardsPrompt(
+              player.id,
+              GameMessage.CHOOSE_CARDS_ORDER,
+              deckTop,
+              { allowCancel: false },
+            ), order => {
+              if (order === null) {
+                return state;
+              }
+
+              deckTop.applyOrder(order);
+              deckTop.moveToTopOfDestination(opponent.deck);
+
+            });
+
+          }
+        }
+      ];
+
+      return store.prompt(state, new SelectPrompt(
+        player.id,
+        GameMessage.CHOOSE_OPTION,
+        options.map(opt => opt.message),
+        { allowCancel: false }
+      ), choice => {
+        const option = options[choice];
+        option.action();
+      });
     }
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-      // Implement Dark Mind logic
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      const hasBenched = opponent.bench.some(b => b.cards.length > 0);
+      if (!hasBenched) {
+        return state;
+      }
+
+      return store.prompt(state, new ChoosePokemonPrompt(
+        player.id,
+        GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+        PlayerType.TOP_PLAYER,
+        [SlotType.BENCH],
+        { allowCancel: false }
+      ), targets => {
+        if (!targets || targets.length === 0) {
+          return;
+        }
+        const damageEffect = new PutDamageEffect(effect, 10);
+        damageEffect.target = targets[0];
+        store.reduceEffect(state, damageEffect);
+      });
     }
     return state;
   }

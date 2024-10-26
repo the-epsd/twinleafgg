@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.MysteriousFossilArt = exports.MrFujiArt = exports.LaprasArt = exports.GastlyArt = exports.GamblerArt = exports.EnergySearchArt = exports.EkansArt = exports.DragoniteArt = exports.CloysterArt = exports.ArticunoArt = exports.ArbokoArt = exports.AerodactylArt = void 0;
+exports.MysteriousFossilArt = exports.MukArt = exports.MrFujiArt = exports.MagmarArt = exports.LaprasArt = exports.KrabbyArt = exports.KinglerArt = exports.KabutopsArt = exports.HypnoArt = exports.HorseaArt = exports.HitmonleeArt = exports.GrimerArt = exports.GravelerArt = exports.GolemArt = exports.GolduckArt = exports.GolbatArt = exports.GeodudeArt = exports.GastlyArt = exports.GamblerArt = exports.EnergySearchArt = exports.EkansArt = exports.DragoniteArt = exports.CloysterArt = exports.ArticunoArt = exports.ArbokoArt = exports.AerodactylArt = void 0;
 const aerodactyl_1 = require("./aerodactyl");
 const arbok_1 = require("./arbok");
 const articuno_1 = require("./articuno");
@@ -10,8 +10,22 @@ const ekans_1 = require("./ekans");
 const energy_search_1 = require("./energy-search");
 const gambler_1 = require("./gambler");
 const gastly_1 = require("./gastly");
+const geodude_1 = require("./geodude");
+const golbat_1 = require("./golbat");
+const golduck_1 = require("./golduck");
+const golem_1 = require("./golem");
+const graveler_1 = require("./graveler");
+const grimer_1 = require("./grimer");
+const hitmonlee_1 = require("./hitmonlee");
+const horsea_1 = require("./horsea");
+const hypno_1 = require("./hypno");
+const kabutops_1 = require("./kabutops");
+const kingler_1 = require("./kingler");
+const krabby_1 = require("./krabby");
 const lapras_1 = require("./lapras");
+const magmar_1 = require("./magmar");
 const mr_fuji_1 = require("./mr-fuji");
+const muk_1 = require("./muk");
 const mysterious_fossil_1 = require("./mysterious-fossil");
 class AerodactylArt extends aerodactyl_1.Aerodactyl {
     constructor() {
@@ -76,6 +90,90 @@ class GastlyArt extends gastly_1.Gastly {
     }
 }
 exports.GastlyArt = GastlyArt;
+class GeodudeArt extends geodude_1.Geodude {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pkmncards.com/wp-content/uploads/geodude-fossil-fo-47.jpg';
+    }
+}
+exports.GeodudeArt = GeodudeArt;
+class GolbatArt extends golbat_1.Golbat {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pkmncards.com/wp-content/uploads/golbat-fossil-fo-34.jpg';
+    }
+}
+exports.GolbatArt = GolbatArt;
+class GolduckArt extends golduck_1.Golduck {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pkmncards.com/wp-content/uploads/golduck-fossil-fo-35.jpg';
+    }
+}
+exports.GolduckArt = GolduckArt;
+class GolemArt extends golem_1.Golem {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pkmncards.com/wp-content/uploads/golem-fossil-fo-36.jpg';
+    }
+}
+exports.GolemArt = GolemArt;
+class GravelerArt extends graveler_1.Graveler {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pkmncards.com/wp-content/uploads/graveler-fossil-fo-37.jpg';
+    }
+}
+exports.GravelerArt = GravelerArt;
+class GrimerArt extends grimer_1.Grimer {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pkmncards.com/wp-content/uploads/grimer-fossil-fo-48.jpg';
+    }
+}
+exports.GrimerArt = GrimerArt;
+class HitmonleeArt extends hitmonlee_1.Hitmonlee {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pkmncards.com/wp-content/uploads/hitmonlee-fossil-fo-7.jpg';
+    }
+}
+exports.HitmonleeArt = HitmonleeArt;
+class HorseaArt extends horsea_1.Horsea {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pkmncards.com/wp-content/uploads/horsea-fossil-fo-49.jpg';
+    }
+}
+exports.HorseaArt = HorseaArt;
+class HypnoArt extends hypno_1.Hypno {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pkmncards.com/wp-content/uploads/hypno-fossil-fo-8.jpg';
+    }
+}
+exports.HypnoArt = HypnoArt;
+class KabutopsArt extends kabutops_1.Kabutops {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pkmncards.com/wp-content/uploads/kabutops-fossil-fo-9.jpg';
+    }
+}
+exports.KabutopsArt = KabutopsArt;
+class KinglerArt extends kingler_1.Kingler {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pkmncards.com/wp-content/uploads/kingler-fossil-fo-38.jpg';
+    }
+}
+exports.KinglerArt = KinglerArt;
+class KrabbyArt extends krabby_1.Krabby {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pkmncards.com/wp-content/uploads/krabby-fossil-fo-51.jpg';
+    }
+}
+exports.KrabbyArt = KrabbyArt;
 class LaprasArt extends lapras_1.Lapras {
     constructor() {
         super(...arguments);
@@ -83,6 +181,13 @@ class LaprasArt extends lapras_1.Lapras {
     }
 }
 exports.LaprasArt = LaprasArt;
+class MagmarArt extends magmar_1.Magmar {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pkmncards.com/wp-content/uploads/magmar-fossil-fo-39.jpg';
+    }
+}
+exports.MagmarArt = MagmarArt;
 class MrFujiArt extends mr_fuji_1.MrFuji {
     constructor() {
         super(...arguments);
@@ -90,6 +195,13 @@ class MrFujiArt extends mr_fuji_1.MrFuji {
     }
 }
 exports.MrFujiArt = MrFujiArt;
+class MukArt extends muk_1.Muk {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pkmncards.com/wp-content/uploads/muk-fossil-fo-13.jpg';
+    }
+}
+exports.MukArt = MukArt;
 class MysteriousFossilArt extends mysterious_fossil_1.MysteriousFossil {
     constructor() {
         super(...arguments);
