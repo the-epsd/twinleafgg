@@ -24,6 +24,18 @@ import { Magmar } from './magmar';
 import { MrFuji } from './mr-fuji';
 import { Muk } from './muk';
 import { MysteriousFossil } from './mysterious-fossil';
+import { Omastar } from './omastar';
+import { Psyduck } from './psyduck';
+import { Raichu } from './raichu';
+import { Recycle } from './recycle';
+import { Sandslash } from './sandslash';
+import { Seadra } from './seadra';
+import { Shellder } from './shellder';
+import { Slowpoke } from './slowpoke';
+import { Tentacruel } from './tentacruel';
+import { Weezing } from './weezing';
+import { Zapdos } from './zapdos';
+import { Zubat } from './zubat';
 
 export class AerodactylArt extends Aerodactyl {
   public cardImage = 'https://pkmncards.com/wp-content/uploads/aerodactyl-fossil-fo-1.jpg';
@@ -127,4 +139,52 @@ export class MukArt extends Muk {
 
 export class MysteriousFossilArt extends MysteriousFossil {
   public cardImage = 'https://i0.wp.com/pkmncards.com/wp-content/uploads/mysterious-fossil-fossil-fo-62.jpg?fit=600%2C825&ssl=1';
+}
+
+export class OmastarArt extends Omastar {
+  public cardImage = 'https://pkmncards.com/wp-content/uploads/omastar-fossil-fo-40.jpg';
+}
+
+export class PsyduckArt extends Psyduck {
+  public cardImage = 'https://pkmncards.com/wp-content/uploads/psyduck-fossil-fo-53.jpg';
+}
+
+export class RaichuArt extends Raichu {
+  public cardImage = 'https://pkmncards.com/wp-content/uploads/raichu-fossil-fo-14.jpg';
+}
+
+export class RecycleArt extends Recycle {
+  public cardImage = 'https://pkmncards.com/wp-content/uploads/recycle-fossil-fo-61.jpg';
+}
+
+export class SandslashArt extends Sandslash {
+  public cardImage = 'https://pkmncards.com/wp-content/uploads/sandslash-fossil-fo-41.jpg';
+}
+
+export class SeadraArt extends Seadra {
+  public cardImage = 'https://pkmncards.com/wp-content/uploads/seadra-fossil-fo-42.jpg';
+}
+
+export class ShellderArt extends Shellder {
+  public cardImage = 'https://pkmncards.com/wp-content/uploads/shellder-fossil-fo-54.jpg';
+}
+
+export class SlowpokeArt extends Slowpoke {
+  public cardImage = 'https://pkmncards.com/wp-content/uploads/slowpoke-fossil-fo-55.jpg';
+}
+
+export class TentacruelArt extends Tentacruel {
+  public cardImage = 'https://pkmncards.com/wp-content/uploads/tentacruel-fossil-fo-44.jpg';
+}
+
+export class WeezingArt extends Weezing {
+  public cardImage = 'https://pkmncards.com/wp-content/uploads/weezing-fossil-fo-45.jpg';
+}
+
+export class ZapdosArt extends Zapdos {
+  public cardImage = 'https://pkmncards.com/wp-content/uploads/zapdos-fossil-fo-15.jpg';
+}
+
+export class ZubatArt extends Zubat {
+  public cardImage = 'https://pkmncards.com/wp-content/uploads/zubat-fossil-fo-57.jpg';
 }

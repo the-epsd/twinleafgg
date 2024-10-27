@@ -24,6 +24,18 @@ import { Magmar } from './magmar';
 import { MrFuji } from './mr-fuji';
 import { Muk } from './muk';
 import { MysteriousFossil } from './mysterious-fossil';
+import { Omastar } from './omastar';
+import { Psyduck } from './psyduck';
+import { Raichu } from './raichu';
+import { Recycle } from './recycle';
+import { Sandslash } from './sandslash';
+import { Seadra } from './seadra';
+import { Shellder } from './shellder';
+import { Slowpoke } from './slowpoke';
+import { Tentacruel } from './tentacruel';
+import { Weezing } from './weezing';
+import { Zapdos } from './zapdos';
+import { Zubat } from './zubat';
 export declare class AerodactylArt extends Aerodactyl {
     cardImage: string;
 }
@@ -100,5 +112,41 @@ export declare class MukArt extends Muk {
     cardImage: string;
 }
 export declare class MysteriousFossilArt extends MysteriousFossil {
+    cardImage: string;
+}
+export declare class OmastarArt extends Omastar {
+    cardImage: string;
+}
+export declare class PsyduckArt extends Psyduck {
+    cardImage: string;
+}
+export declare class RaichuArt extends Raichu {
+    cardImage: string;
+}
+export declare class RecycleArt extends Recycle {
+    cardImage: string;
+}
+export declare class SandslashArt extends Sandslash {
+    cardImage: string;
+}
+export declare class SeadraArt extends Seadra {
+    cardImage: string;
+}
+export declare class ShellderArt extends Shellder {
+    cardImage: string;
+}
+export declare class SlowpokeArt extends Slowpoke {
+    cardImage: string;
+}
+export declare class TentacruelArt extends Tentacruel {
+    cardImage: string;
+}
+export declare class WeezingArt extends Weezing {
+    cardImage: string;
+}
+export declare class ZapdosArt extends Zapdos {
+    cardImage: string;
+}
+export declare class ZubatArt extends Zubat {
     cardImage: string;
 }

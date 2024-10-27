@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { AerodactylArt, ArbokoArt, ArticunoArt, CloysterArt, DragoniteArt, EkansArt, EnergySearchArt, GamblerArt, GastlyArt, GeodudeArt, GolbatArt, GolduckArt, GolemArt, GravelerArt, GrimerArt, HitmonleeArt, HorseaArt, HypnoArt, KabutopsArt, KinglerArt, KrabbyArt, LaprasArt, MagmarArt, MrFujiArt, MukArt, MysteriousFossilArt } from './card-images';
+import { AerodactylArt, ArbokoArt, ArticunoArt, CloysterArt, DragoniteArt, EkansArt, EnergySearchArt, GamblerArt, GastlyArt, GeodudeArt, GolbatArt, GolduckArt, GolemArt, GravelerArt, GrimerArt, HitmonleeArt, HorseaArt, HypnoArt, KabutopsArt, KinglerArt, KrabbyArt, LaprasArt, MagmarArt, MrFujiArt, MukArt, MysteriousFossilArt, OmastarArt, PsyduckArt, RaichuArt, RecycleArt, SandslashArt, SeadraArt, ShellderArt, SlowpokeArt, TentacruelArt, WeezingArt, ZapdosArt, ZubatArt } from './card-images';
 
 
 export const setFossil: Card[] = [
@@ -30,5 +30,17 @@ export const setFossil: Card[] = [
   new MrFujiArt(),
   new MukArt(),
   new MysteriousFossilArt(),
+  new OmastarArt(),
+  new PsyduckArt(),
+  new RaichuArt(),
+  new RecycleArt(),
+  new SandslashArt(),
+  new SeadraArt(),
+  new ShellderArt(),
+  new SlowpokeArt(),
+  new TentacruelArt(),
+  new WeezingArt(),
+  new ZapdosArt(),
+  new ZubatArt()
 
 ];

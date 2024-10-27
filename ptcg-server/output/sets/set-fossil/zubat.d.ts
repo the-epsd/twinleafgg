@@ -2,19 +2,20 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-export declare class Kingler extends PokemonCard {
+export declare class Zubat extends PokemonCard {
     stage: Stage;
-    evolvesFrom: string;
     cardType: CardType;
     hp: number;
     weakness: {
         type: CardType;
     }[];
-    resistance: never[];
-    retreat: CardType[];
+    resistance: {
+        type: CardType;
+        value: number;
+    }[];
     attacks: {
         name: string;
-        cost: (CardType.WATER | CardType.COLORLESS)[];
+        cost: (CardType.GRASS | CardType.COLORLESS)[];
         damage: number;
         text: string;
     }[];

@@ -19,6 +19,12 @@ class Kingler extends pokemon_card_1.PokemonCard {
                 cost: [W],
                 damage: 10,
                 text: 'Does 10 damage times the number of damage counters on Kingler.'
+            },
+            {
+                name: 'Crabhammer',
+                cost: [W, W, C],
+                damage: 40,
+                text: ''
             }];
         this.set = 'FO';
         this.cardImage = 'assets/cardback.png';

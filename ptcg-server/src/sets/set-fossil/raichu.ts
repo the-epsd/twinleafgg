@@ -4,6 +4,8 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
+import { StateUtils, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType } from '../../game';
+import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 
 export class Raichu extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -35,7 +37,42 @@ export class Raichu extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      // Implement Gigashock logic
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      const hasBenched = opponent.bench.some(b => b.cards.length > 0);
+      if (!hasBenched) {
+        return state;
+      }
+
+      const opponentBenched = opponent.bench.reduce((left, b) => left + (b.cards.length ? 1 : 0), 0);
+
+      if (opponentBenched < 3) {
+        opponent.bench.forEach(target => {
+          const damageEffect = new PutDamageEffect(effect, 10);
+          damageEffect.target = target;
+          store.reduceEffect(state, damageEffect);
+        });
+
+        return state;
+      } else {
+        return store.prompt(state, new ChoosePokemonPrompt(
+          player.id,
+          GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+          PlayerType.TOP_PLAYER,
+          [SlotType.BENCH],
+          { min: 1, max: 3, allowCancel: false }
+        ), targets => {
+          if (!targets || targets.length === 0) {
+            return;
+          }
+          const damageEffect = new PutDamageEffect(effect, 10);
+          damageEffect.target = targets[0];
+          store.reduceEffect(state, damageEffect);
+        });
+      }
+
+
     }
     return state;
   }

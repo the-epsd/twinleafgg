@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.MysteriousFossilArt = exports.MukArt = exports.MrFujiArt = exports.MagmarArt = exports.LaprasArt = exports.KrabbyArt = exports.KinglerArt = exports.KabutopsArt = exports.HypnoArt = exports.HorseaArt = exports.HitmonleeArt = exports.GrimerArt = exports.GravelerArt = exports.GolemArt = exports.GolduckArt = exports.GolbatArt = exports.GeodudeArt = exports.GastlyArt = exports.GamblerArt = exports.EnergySearchArt = exports.EkansArt = exports.DragoniteArt = exports.CloysterArt = exports.ArticunoArt = exports.ArbokoArt = exports.AerodactylArt = void 0;
+exports.ZubatArt = exports.ZapdosArt = exports.WeezingArt = exports.TentacruelArt = exports.SlowpokeArt = exports.ShellderArt = exports.SeadraArt = exports.SandslashArt = exports.RecycleArt = exports.RaichuArt = exports.PsyduckArt = exports.OmastarArt = exports.MysteriousFossilArt = exports.MukArt = exports.MrFujiArt = exports.MagmarArt = exports.LaprasArt = exports.KrabbyArt = exports.KinglerArt = exports.KabutopsArt = exports.HypnoArt = exports.HorseaArt = exports.HitmonleeArt = exports.GrimerArt = exports.GravelerArt = exports.GolemArt = exports.GolduckArt = exports.GolbatArt = exports.GeodudeArt = exports.GastlyArt = exports.GamblerArt = exports.EnergySearchArt = exports.EkansArt = exports.DragoniteArt = exports.CloysterArt = exports.ArticunoArt = exports.ArbokoArt = exports.AerodactylArt = void 0;
 const aerodactyl_1 = require("./aerodactyl");
 const arbok_1 = require("./arbok");
 const articuno_1 = require("./articuno");
@@ -27,6 +27,18 @@ const magmar_1 = require("./magmar");
 const mr_fuji_1 = require("./mr-fuji");
 const muk_1 = require("./muk");
 const mysterious_fossil_1 = require("./mysterious-fossil");
+const omastar_1 = require("./omastar");
+const psyduck_1 = require("./psyduck");
+const raichu_1 = require("./raichu");
+const recycle_1 = require("./recycle");
+const sandslash_1 = require("./sandslash");
+const seadra_1 = require("./seadra");
+const shellder_1 = require("./shellder");
+const slowpoke_1 = require("./slowpoke");
+const tentacruel_1 = require("./tentacruel");
+const weezing_1 = require("./weezing");
+const zapdos_1 = require("./zapdos");
+const zubat_1 = require("./zubat");
 class AerodactylArt extends aerodactyl_1.Aerodactyl {
     constructor() {
         super(...arguments);
@@ -209,3 +221,87 @@ class MysteriousFossilArt extends mysterious_fossil_1.MysteriousFossil {
     }
 }
 exports.MysteriousFossilArt = MysteriousFossilArt;
+class OmastarArt extends omastar_1.Omastar {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pkmncards.com/wp-content/uploads/omastar-fossil-fo-40.jpg';
+    }
+}
+exports.OmastarArt = OmastarArt;
+class PsyduckArt extends psyduck_1.Psyduck {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pkmncards.com/wp-content/uploads/psyduck-fossil-fo-53.jpg';
+    }
+}
+exports.PsyduckArt = PsyduckArt;
+class RaichuArt extends raichu_1.Raichu {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pkmncards.com/wp-content/uploads/raichu-fossil-fo-14.jpg';
+    }
+}
+exports.RaichuArt = RaichuArt;
+class RecycleArt extends recycle_1.Recycle {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pkmncards.com/wp-content/uploads/recycle-fossil-fo-61.jpg';
+    }
+}
+exports.RecycleArt = RecycleArt;
+class SandslashArt extends sandslash_1.Sandslash {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pkmncards.com/wp-content/uploads/sandslash-fossil-fo-41.jpg';
+    }
+}
+exports.SandslashArt = SandslashArt;
+class SeadraArt extends seadra_1.Seadra {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pkmncards.com/wp-content/uploads/seadra-fossil-fo-42.jpg';
+    }
+}
+exports.SeadraArt = SeadraArt;
+class ShellderArt extends shellder_1.Shellder {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pkmncards.com/wp-content/uploads/shellder-fossil-fo-54.jpg';
+    }
+}
+exports.ShellderArt = ShellderArt;
+class SlowpokeArt extends slowpoke_1.Slowpoke {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pkmncards.com/wp-content/uploads/slowpoke-fossil-fo-55.jpg';
+    }
+}
+exports.SlowpokeArt = SlowpokeArt;
+class TentacruelArt extends tentacruel_1.Tentacruel {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pkmncards.com/wp-content/uploads/tentacruel-fossil-fo-44.jpg';
+    }
+}
+exports.TentacruelArt = TentacruelArt;
+class WeezingArt extends weezing_1.Weezing {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pkmncards.com/wp-content/uploads/weezing-fossil-fo-45.jpg';
+    }
+}
+exports.WeezingArt = WeezingArt;
+class ZapdosArt extends zapdos_1.Zapdos {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pkmncards.com/wp-content/uploads/zapdos-fossil-fo-15.jpg';
+    }
+}
+exports.ZapdosArt = ZapdosArt;
+class ZubatArt extends zubat_1.Zubat {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://pkmncards.com/wp-content/uploads/zubat-fossil-fo-57.jpg';
+    }
+}
+exports.ZubatArt = ZubatArt;

@@ -58,6 +58,18 @@ class Dragonite extends pokemon_card_1.PokemonCard {
             const player = effect.player;
             player.marker.removeMarker(this.STEP_IN_MARKER, this);
         }
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+            const player = effect.player;
+            state = store.prompt(state, [
+                new game_1.CoinFlipPrompt(player.id, game_1.GameMessage.COIN_FLIP),
+                new game_1.CoinFlipPrompt(player.id, game_1.GameMessage.COIN_FLIP)
+            ], results => {
+                let heads = 0;
+                results.forEach(r => { heads += r ? 1 : 0; });
+                effect.damage = 40 * heads;
+            });
+            return state;
+        }
         return state;
     }
 }

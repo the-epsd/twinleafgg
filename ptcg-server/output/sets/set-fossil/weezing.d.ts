@@ -2,7 +2,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-export declare class Kingler extends PokemonCard {
+export declare class Weezing extends PokemonCard {
     stage: Stage;
     evolvesFrom: string;
     cardType: CardType;
@@ -10,11 +10,10 @@ export declare class Kingler extends PokemonCard {
     weakness: {
         type: CardType;
     }[];
-    resistance: never[];
     retreat: CardType[];
     attacks: {
         name: string;
-        cost: (CardType.WATER | CardType.COLORLESS)[];
+        cost: (CardType.GRASS | CardType.COLORLESS)[];
         damage: number;
         text: string;
     }[];

@@ -29,4 +29,16 @@ exports.setFossil = [
     new card_images_1.MrFujiArt(),
     new card_images_1.MukArt(),
     new card_images_1.MysteriousFossilArt(),
+    new card_images_1.OmastarArt(),
+    new card_images_1.PsyduckArt(),
+    new card_images_1.RaichuArt(),
+    new card_images_1.RecycleArt(),
+    new card_images_1.SandslashArt(),
+    new card_images_1.SeadraArt(),
+    new card_images_1.ShellderArt(),
+    new card_images_1.SlowpokeArt(),
+    new card_images_1.TentacruelArt(),
+    new card_images_1.WeezingArt(),
+    new card_images_1.ZapdosArt(),
+    new card_images_1.ZubatArt()
 ];

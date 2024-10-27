@@ -4,13 +4,15 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
+import { CoinFlipPrompt, GameMessage, StateUtils } from '../../game';
+import { DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 
 export class Zapdos extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = CardType.LIGHTNING;
   public hp: number = 80;
   public weakness = [];
-  public resistance = [{ type: CardType.FIGHTING, value: 30 }];
+  public resistance = [{ type: CardType.FIGHTING, value: -30 }];
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
   public attacks = [
     {
@@ -33,7 +35,31 @@ export class Zapdos extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      // Implement Thunderstorm logic
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      let tailsCount = 0;
+
+      opponent.bench.forEach(target => {
+        state = store.prompt(
+          state,
+          new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP),
+          flipResult => {
+            if (flipResult) {
+              const damageEffect = new PutDamageEffect(effect, 30);
+              damageEffect.target = target;
+              store.reduceEffect(state, damageEffect);
+            } else {
+              tailsCount++;
+            }
+          });
+      });
+
+      const dealDamage = new DealDamageEffect(effect, 10 * tailsCount);
+      dealDamage.target = player.active;
+      store.reduceEffect(state, dealDamage);
+
+      return state;
     }
     return state;
   }

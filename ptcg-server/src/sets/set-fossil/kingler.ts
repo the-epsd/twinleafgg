@@ -18,6 +18,12 @@ export class Kingler extends PokemonCard {
     cost: [W],
     damage: 10,
     text: 'Does 10 damage times the number of damage counters on Kingler.'
+  },
+  {
+    name: 'Crabhammer',
+    cost: [W, W, C],
+    damage: 40,
+    text: ''
   }];
 
   public set: string = 'FO';

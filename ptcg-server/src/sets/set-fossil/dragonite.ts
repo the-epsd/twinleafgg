@@ -1,8 +1,8 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
-import { GameError, GameMessage, PlayerType, PokemonCardList, PowerType, State, StateUtils, StoreLike } from '../../game';
+import { CoinFlipPrompt, GameError, GameMessage, PlayerType, PokemonCardList, PowerType, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class Dragonite extends PokemonCard {
@@ -68,6 +68,20 @@ export class Dragonite extends PokemonCard {
       const player = effect.player;
       player.marker.removeMarker(this.STEP_IN_MARKER, this);
     }
+
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+      const player = effect.player;
+      state = store.prompt(state, [
+        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP),
+        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
+      ], results => {
+        let heads: number = 0;
+        results.forEach(r => { heads += r ? 1 : 0; });
+        effect.damage = 40 * heads;
+      });
+      return state;
+    }
+
 
 
     return state;
