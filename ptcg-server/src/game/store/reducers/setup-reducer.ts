@@ -17,11 +17,12 @@ import { GameMessage, GameLog } from '../../game-message';
 import { PlayerType } from '../actions/play-card-action';
 import { PokemonCardList } from '../state/pokemon-card-list';
 import { StoreLike } from '../store-like';
-import { SuperType, Stage } from '../card/card-types';
+import { SuperType, Stage, CardTag } from '../card/card-types';
 import { endGame } from '../effect-reducers/check-effect';
 import { initNextTurn } from '../effect-reducers/game-phase-effect';
 import { SelectPrompt } from '../prompts/select-prompt';
 import { WhoBeginsEffect } from '../effects/game-phase-effects';
+import { PokemonCard } from '../card/pokemon-card';
 
 function putStartingPokemonsAndPrizes(player: Player, cards: Card[]): void {
   if (cards.length === 0) {
@@ -78,7 +79,7 @@ function* setupGame(next: Function, store: StoreLike, state: State): IterableIte
       yield store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
         player.deck.applyOrder(order);
         player.deck.moveTo(player.hand, 7);
-        playerHasBasic = player.hand.count(basicPokemon) > 0;
+        playerHasBasic = player.hand.count(basicPokemon) > 0 || player.hand.cards.some(c => c.tags.includes(CardTag.PLAY_DURING_SETUP));
         next();
       });
     }
@@ -88,7 +89,7 @@ function* setupGame(next: Function, store: StoreLike, state: State): IterableIte
       yield store.prompt(state, new ShuffleDeckPrompt(opponent.id), order => {
         opponent.deck.applyOrder(order);
         opponent.deck.moveTo(opponent.hand, 7);
-        opponentHasBasic = opponent.hand.count(basicPokemon) > 0;
+        opponentHasBasic = opponent.hand.count(basicPokemon) > 0 || opponent.hand.cards.some(c => c.tags.includes(CardTag.PLAY_DURING_SETUP));
         next();
       });
     }
@@ -116,12 +117,30 @@ function* setupGame(next: Function, store: StoreLike, state: State): IterableIte
       });
     }
   }
+  
+  const blocked: number[] = [];
+  player.hand.cards.forEach((c, index) => {
+    if (c.tags.includes((CardTag.PLAY_DURING_SETUP)) || (c instanceof PokemonCard && c.stage === Stage.BASIC)) {
+      
+    } else {
+      blocked.push(index);
+    }
+  });
+  
+  const blockedOpponent: number[] = [];
+  opponent.hand.cards.forEach((c, index) => {
+    if (c.tags.includes((CardTag.PLAY_DURING_SETUP)) || (c instanceof PokemonCard && c.stage === Stage.BASIC)) {
+      
+    } else {
+      blockedOpponent.push(index);
+    }
+  });
 
   yield store.prompt(state, [
     new ChooseCardsPrompt(player.id, GameMessage.CHOOSE_STARTING_POKEMONS,
-      player.hand, basicPokemon, chooseCardsOptions),
+      player.hand, {}, { ...chooseCardsOptions, blocked }),
     new ChooseCardsPrompt(opponent.id, GameMessage.CHOOSE_STARTING_POKEMONS,
-      opponent.hand, basicPokemon, chooseCardsOptions)
+      opponent.hand, {}, { ...chooseCardsOptions, blocked: blockedOpponent })
   ], choice => {
     putStartingPokemonsAndPrizes(player, choice[0]);
     putStartingPokemonsAndPrizes(opponent, choice[1]);

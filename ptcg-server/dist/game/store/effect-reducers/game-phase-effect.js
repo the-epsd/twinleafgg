@@ -1,4 +1,4 @@
-import { EndTurnEffect, BetweenTurnsEffect, BeginTurnEffect } from '../effects/game-phase-effects';
+import { EndTurnEffect, BetweenTurnsEffect, BeginTurnEffect, DrewTopdeckEffect } from '../effects/game-phase-effects';
 import { GameError } from '../../game-error';
 import { GameMessage, GameLog } from '../../game-message';
 import { BoardEffect, SpecialCondition } from '../card/card-types';
@@ -65,11 +65,14 @@ export function initNextTurn(store, state) {
     }
     player.deck.moveTo(player.hand, 1);
     // Check the drawn card
-    //   const drawnCard = player.hand.cards[player.hand.cards.length - 1];
-    //   if (drawnCard.name === 'CARD NAME') {
-    // EFFECT HERE
-    //     console.log('DREW CARD');
-    //   }
+    const drawnCard = player.hand.cards[player.hand.cards.length - 1];
+    try {
+        const drewTopdeck = new DrewTopdeckEffect(player, drawnCard);
+        store.reduceEffect(state, drewTopdeck);
+    }
+    catch (_b) {
+        return state;
+    }
     return state;
 }
 function startNextTurn(store, state) {
@@ -159,7 +162,6 @@ export function gamePhaseReducer(store, state, effect) {
             cardList.removeBoardEffect(BoardEffect.ABILITY_USED);
         });
         player.supporterTurn = 0;
-        // console.log('player.supporterTurn', player.supporterTurn);
         if (player === undefined) {
             throw new GameError(GameMessage.NOT_YOUR_TURN);
         }
