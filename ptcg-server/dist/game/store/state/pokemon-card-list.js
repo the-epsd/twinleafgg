@@ -1,4 +1,4 @@
-import { CardTag, SpecialCondition, Stage, SuperType } from '../card/card-types';
+import { BoardEffect, CardTag, SpecialCondition, Stage, SuperType } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
 import { CardList } from './card-list';
 import { Marker } from './card-marker';
@@ -15,7 +15,9 @@ export class PokemonCardList extends CardList {
         this.abilityMarker = new Marker();
         this.pokemonPlayedTurn = 0;
         this.sleepFlips = 1;
+        this.boardEffect = [];
         this.stage = Stage.BASIC;
+        this.isActivatingCard = false;
     }
     getPokemons() {
         const result = [];
@@ -124,6 +126,25 @@ export class PokemonCardList extends CardList {
             SpecialCondition.ABILITY_USED,
         ].includes(s) === false);
         this.specialConditions.push(sp);
+    }
+    removeBoardEffect(sp) {
+        if (!this.boardEffect.includes(sp)) {
+            return;
+        }
+        this.boardEffect = this.boardEffect
+            .filter(s => s !== sp);
+    }
+    addBoardEffect(sp) {
+        if (this.boardEffect.includes(sp)) {
+            return;
+        }
+        this.boardEffect = this.boardEffect.filter(s => [
+            BoardEffect.ABILITY_USED,
+            BoardEffect.POWER_GLOW,
+            BoardEffect.POWER_NEGATED_GLOW,
+            BoardEffect.POWER_RETURN,
+        ].includes(s) === false);
+        this.boardEffect.push(sp);
     }
     hasRuleBox() {
         return this.cards.some(c => c.tags.includes(CardTag.POKEMON_ex) || c.tags.includes(CardTag.RADIANT) || c.tags.includes(CardTag.ACE_SPEC) || c.tags.includes(CardTag.POKEMON_V) || c.tags.includes(CardTag.POKEMON_VMAX) || c.tags.includes(CardTag.POKEMON_VSTAR));

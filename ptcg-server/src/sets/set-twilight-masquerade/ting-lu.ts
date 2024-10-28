@@ -8,6 +8,7 @@ import {
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { BetweenTurnsEffect } from '../../game/store/effects/game-phase-effects';
 
 export class TingLu extends PokemonCard {
 
@@ -51,14 +52,11 @@ export class TingLu extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-
       const stadiumCard = StateUtils.getStadiumCard(state);
       if (stadiumCard == undefined) {
         return state;
       }
-      // Discard Stadium
-      const cardList = StateUtils.findCardList(state, stadiumCard);
-      const owner = StateUtils.findOwner(state, cardList);
+
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -70,8 +68,18 @@ export class TingLu extends PokemonCard {
         damageEffect.target = cardList;
         store.reduceEffect(state, damageEffect);
       });
-      cardList.moveTo(owner.discard);
     }
+
+    if (effect instanceof BetweenTurnsEffect) {
+      // Add stadium discard logic
+      const stadiumCard = StateUtils.getStadiumCard(state);
+      if (stadiumCard) {
+        const cardList = StateUtils.findCardList(state, stadiumCard);
+        const owner = StateUtils.findOwner(state, cardList);
+        cardList.moveTo(owner.discard);
+      }
+    }
+
     return state;
   }
 }

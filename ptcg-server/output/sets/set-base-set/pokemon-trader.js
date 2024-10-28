@@ -48,7 +48,8 @@ class PokemonTrader extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.set = 'BS';
-        this.name = 'Pokémon Trader';
+        this.setNumber = '77';
+        this.name = 'Pokemon Trader';
         this.fullName = 'Pokémon Trader BS';
         this.text = 'Trade 1 of the Basic Pokémon or Evolution cards in your hand for 1 of the Basic Pokémon or Evolution cards from your deck. Show both cards to your opponent. Shuffle your deck afterward.';
     }

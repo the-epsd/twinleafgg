@@ -94,8 +94,8 @@ class PokemonBreeder extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.set = 'BS';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '77';
-        this.name = 'Pokémon Breeder';
+        this.setNumber = '76';
+        this.name = 'Pokemon Breeder';
         this.fullName = 'Pokémon Breeder BS';
         this.text = 'Trade 1 of the Basic Pokémon or Evolution cards in your hand for 1 of the Basic Pokémon or Evolution cards from your deck. Show both cards to your opponent. Shuffle your deck afterward.';
     }

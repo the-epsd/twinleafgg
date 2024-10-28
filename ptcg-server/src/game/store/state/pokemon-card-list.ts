@@ -1,5 +1,5 @@
 import { Card } from '../card/card';
-import { CardTag, SpecialCondition, Stage, SuperType } from '../card/card-types';
+import { BoardEffect, CardTag, SpecialCondition, Stage, SuperType } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
 import { Attack, Power } from '../card/pokemon-types';
 import { CardList } from './card-list';
@@ -26,6 +26,8 @@ export class PokemonCardList extends CardList {
   public pokemonPlayedTurn: number = 0;
 
   public sleepFlips = 1;
+
+  public boardEffect: BoardEffect[] = [];
 
   public static readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
   public static readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
@@ -58,6 +60,7 @@ export class PokemonCardList extends CardList {
   public stadium: Card | undefined;
   public stage: Stage = Stage.BASIC;
   public attacksThisTurn?: number;
+  isActivatingCard: boolean = false;
 
   public getPokemons(): PokemonCard[] {
     const result: PokemonCard[] = [];
@@ -170,6 +173,27 @@ export class PokemonCardList extends CardList {
       SpecialCondition.ABILITY_USED,
     ].includes(s) === false);
     this.specialConditions.push(sp);
+  }
+
+  removeBoardEffect(sp: BoardEffect): void {
+    if (!this.boardEffect.includes(sp)) {
+      return;
+    }
+    this.boardEffect = this.boardEffect
+      .filter(s => s !== sp);
+  }
+
+  addBoardEffect(sp: BoardEffect): void {
+    if (this.boardEffect.includes(sp)) {
+      return;
+    }
+    this.boardEffect = this.boardEffect.filter(s => [
+      BoardEffect.ABILITY_USED,
+      BoardEffect.POWER_GLOW,
+      BoardEffect.POWER_NEGATED_GLOW,
+      BoardEffect.POWER_RETURN,
+    ].includes(s) === false);
+    this.boardEffect.push(sp);
   }
 
   hasRuleBox(): boolean {

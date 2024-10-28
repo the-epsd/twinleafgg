@@ -12,6 +12,10 @@ export const cardReplacements = [
 
   { from: 'Grass Energy SVE 1', to: 'Grass Energy 1' },
 
+  //BS
+  { from: 'Pokemon Breeder BS 76', to: 'Pokémon Breeder BS 76' },
+  { from: 'Pokemon Trader BS 77', to: 'Pokémon Trader BS 77' },
+
   //BKP
   { from: 'Delinquent BKP 98', to: 'Delinquent BKT 98' },
 
@@ -239,6 +243,10 @@ export const cardReplacements = [
 ];
 
 export const exportReplacements = [
+
+  //BS
+  { from: 'Pokémon Breeder BS 76', to: 'Pokemon Breeder BS 76' },
+  { from: 'Pokémon Trader BS 77', to: 'Pokemon Trader BS 77' },
 
   //BKP
   { from: 'Delinquent BKT 98', to: 'Delinquent BKP 98' },

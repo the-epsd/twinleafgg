@@ -1,5 +1,5 @@
 import { Card } from '../card/card';
-import { SpecialCondition, Stage } from '../card/card-types';
+import { BoardEffect, SpecialCondition, Stage } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
 import { Attack, Power } from '../card/pokemon-types';
 import { CardList } from './card-list';
@@ -15,6 +15,7 @@ export declare class PokemonCardList extends CardList {
     abilityMarker: Marker;
     pokemonPlayedTurn: number;
     sleepFlips: number;
+    boardEffect: BoardEffect[];
     static readonly ATTACK_USED_MARKER = "ATTACK_USED_MARKER";
     static readonly ATTACK_USED_2_MARKER = "ATTACK_USED_2_MARKER";
     static readonly CLEAR_KNOCKOUT_MARKER = "CLEAR_KNOCKOUT_MARKER";
@@ -43,6 +44,7 @@ export declare class PokemonCardList extends CardList {
     stadium: Card | undefined;
     stage: Stage;
     attacksThisTurn?: number;
+    isActivatingCard: boolean;
     getPokemons(): PokemonCard[];
     getPokemonCard(): PokemonCard | undefined;
     isBasic(): boolean;
@@ -50,6 +52,8 @@ export declare class PokemonCardList extends CardList {
     clearEffects(): void;
     removeSpecialCondition(sp: SpecialCondition): void;
     addSpecialCondition(sp: SpecialCondition): void;
+    removeBoardEffect(sp: BoardEffect): void;
+    addBoardEffect(sp: BoardEffect): void;
     hasRuleBox(): boolean;
     vPokemon(): boolean;
     exPokemon(): boolean;

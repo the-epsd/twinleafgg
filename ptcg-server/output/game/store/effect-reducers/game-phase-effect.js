@@ -69,11 +69,14 @@ function initNextTurn(store, state) {
     }
     player.deck.moveTo(player.hand, 1);
     // Check the drawn card
-    //   const drawnCard = player.hand.cards[player.hand.cards.length - 1];
-    //   if (drawnCard.name === 'CARD NAME') {
-    // EFFECT HERE
-    //     console.log('DREW CARD');
-    //   }
+    const drawnCard = player.hand.cards[player.hand.cards.length - 1];
+    try {
+        const drewTopdeck = new game_phase_effects_1.DrewTopdeckEffect(player, drawnCard);
+        store.reduceEffect(state, drewTopdeck);
+    }
+    catch (_b) {
+        return state;
+    }
     return state;
 }
 exports.initNextTurn = initNextTurn;
@@ -152,6 +155,7 @@ function gamePhaseReducer(store, state, effect) {
             const pokemonCard = cardList.getPokemonCard();
             if (pokemonCard && player.active.cards.includes(pokemonCard)) {
                 cardList.removeSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
+                cardList.removeBoardEffect(card_types_1.BoardEffect.ABILITY_USED);
             }
         });
         effect.player.marker.removeMarker(effect.player.DAMAGE_DEALT_MARKER);
@@ -160,9 +164,9 @@ function gamePhaseReducer(store, state, effect) {
                 return;
             }
             cardList.removeSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
+            cardList.removeBoardEffect(card_types_1.BoardEffect.ABILITY_USED);
         });
         player.supporterTurn = 0;
-        // console.log('player.supporterTurn', player.supporterTurn);
         if (player === undefined) {
             throw new game_error_1.GameError(game_message_1.GameMessage.NOT_YOUR_TURN);
         }

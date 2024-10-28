@@ -11,11 +11,11 @@ class Psyduck extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.BASIC;
-        this.cardType = card_types_1.CardType.WATER;
+        this.cardType = W;
         this.hp = 70;
-        this.weakness = [{ type: card_types_1.CardType.LIGHTNING }];
+        this.weakness = [{ type: L }];
         this.resistance = [];
-        this.retreat = [card_types_1.CardType.COLORLESS];
+        this.retreat = [C];
         this.attaacks = [{
                 name: 'Headache',
                 cost: [P],
@@ -55,6 +55,12 @@ class Psyduck extends pokemon_card_1.PokemonCard {
             }
         }
         if (effect instanceof play_card_effects_1.PlayStadiumEffect) {
+            const player = effect.player;
+            if (player.marker.hasMarker(this.OPPONENT_CANNOT_PLAY_TRAINERS_CARDS_MARKER, this)) {
+                throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);
+            }
+        }
+        if (effect instanceof play_card_effects_1.AttachPokemonToolEffect) {
             const player = effect.player;
             if (player.marker.hasMarker(this.OPPONENT_CANNOT_PLAY_TRAINERS_CARDS_MARKER, this)) {
                 throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);

@@ -4,15 +4,15 @@ import { StoreLike, State, CoinFlipPrompt, GameMessage, GameError, StateUtils } 
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { PlayItemEffect, PlayStadiumEffect, PlaySupporterEffect } from '../../game/store/effects/play-card-effects';
+import { AttachPokemonToolEffect, PlayItemEffect, PlayStadiumEffect, PlaySupporterEffect } from '../../game/store/effects/play-card-effects';
 
 export class Psyduck extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.WATER;
+  public cardType: CardType = W;
   public hp: number = 70;
-  public weakness = [{ type: CardType.LIGHTNING }];
+  public weakness = [{ type: L }];
   public resistance = [];
-  public retreat = [CardType.COLORLESS];
+  public retreat = [C];
 
   public attaacks = [{
     name: 'Headache',
@@ -66,6 +66,13 @@ export class Psyduck extends PokemonCard {
       }
     }
 
+    if (effect instanceof AttachPokemonToolEffect) {
+      const player = effect.player;
+      if (player.marker.hasMarker(this.OPPONENT_CANNOT_PLAY_TRAINERS_CARDS_MARKER, this)) {
+        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+      }
+    }
+
     if (effect instanceof EndTurnEffect) {
       effect.player.marker.removeMarker(this.OPPONENT_CANNOT_PLAY_TRAINERS_CARDS_MARKER, this);
     }
@@ -83,7 +90,6 @@ export class Psyduck extends PokemonCard {
       });
       return state;
     }
-
     return state;
   }
 }

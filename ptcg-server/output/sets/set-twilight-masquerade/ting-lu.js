@@ -6,6 +6,7 @@ const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
+const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 class TingLu extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -41,9 +42,6 @@ class TingLu extends pokemon_card_1.PokemonCard {
             if (stadiumCard == undefined) {
                 return state;
             }
-            // Discard Stadium
-            const cardList = game_1.StateUtils.findCardList(state, stadiumCard);
-            const owner = game_1.StateUtils.findOwner(state, cardList);
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList, card) => {
@@ -54,7 +52,15 @@ class TingLu extends pokemon_card_1.PokemonCard {
                 damageEffect.target = cardList;
                 store.reduceEffect(state, damageEffect);
             });
-            cardList.moveTo(owner.discard);
+        }
+        if (effect instanceof game_phase_effects_1.BetweenTurnsEffect) {
+            // Add stadium discard logic
+            const stadiumCard = game_1.StateUtils.getStadiumCard(state);
+            if (stadiumCard) {
+                const cardList = game_1.StateUtils.findCardList(state, stadiumCard);
+                const owner = game_1.StateUtils.findOwner(state, cardList);
+                cardList.moveTo(owner.discard);
+            }
         }
         return state;
     }

@@ -7,10 +7,10 @@ export declare class Psyduck extends PokemonCard {
     cardType: CardType;
     hp: number;
     weakness: {
-        type: CardType;
+        type: CardType.LIGHTNING;
     }[];
     resistance: never[];
-    retreat: CardType[];
+    retreat: CardType.COLORLESS[];
     attaacks: ({
         name: string;
         cost: CardType.PSYCHIC[];

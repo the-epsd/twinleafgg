@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Card, CardList, CardTag, PokemonCardList, Power, SpecialCondition, StadiumDirection, SuperType } from 'ptcg-server';
+import { Card, CardList, CardTag, PokemonCardList, Power, BoardEffect, SpecialCondition, StadiumDirection, SuperType } from 'ptcg-server';
 
 const MAX_ENERGY_CARDS = 8;
 
@@ -23,6 +23,7 @@ export class BoardCardComponent {
     this.specialConditions = [];
     this.isFaceDown = false;
     this.isUpsideDown = value.stadiumDirection === StadiumDirection.DOWN;
+    this.boardEffect = [];
 
     this.isEmpty = !value || !value.cards.length;
     if (this.isEmpty) {
@@ -60,6 +61,7 @@ export class BoardCardComponent {
     this.specialConditions = [];
     this.isEmpty = !value;
     this.isHolo = value ? value.tags.includes(CardTag.HOLO) : false;
+    this.boardEffect = [];
   }
 
   @Input() isFaceDown = false;
@@ -76,6 +78,8 @@ export class BoardCardComponent {
   public SpecialCondition = SpecialCondition;
   public isUpsideDown = false;
   public isHolo: boolean = false;
+  public boardEffect: BoardEffect[] = [];
+  public BoardEffect = BoardEffect;
 
   private isSecret = false;
   private isPublic = false;
@@ -86,6 +90,7 @@ export class BoardCardComponent {
   private initPokemonCardList(cardList: PokemonCardList) {
     this.damage = cardList.damage;
     this.specialConditions = cardList.specialConditions;
+    this.boardEffect = cardList.boardEffect;
     this.trainerCard = undefined;
     this.mainCard = cardList.getPokemonCard();
     this.trainerCard = cardList.tool;

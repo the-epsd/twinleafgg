@@ -1,4 +1,5 @@
-<div class="ptcg-board-card" [ngClass]="{empty: isEmpty, 'face-down': isFaceDown, 'upside-down': isUpsideDown}">
+<div class="ptcg-board-card"
+  [ngClass]="{empty: isEmpty, 'face-down': isFaceDown, 'upside-down': isUpsideDown, 'power-glow': boardEffect.includes(BoardEffect.POWER_GLOW), 'power-activate': boardEffect.includes(BoardEffect.POWER_GLOW), 'power-deactivate': boardEffect.includes(BoardEffect.POWER_RETURN), 'power-negated-glow': boardEffect.includes(BoardEffect.POWER_NEGATED_GLOW), 'rising-sun': boardEffect.includes(BoardEffect.EVOLVE)}">
   <div class="ptcg-board-card" [class.asleep-position]="specialConditions.includes(SpecialCondition.ASLEEP)">
     <div class="ptcg-card-container" [class.rotate-180]="specialConditions.includes(SpecialCondition.ASLEEP)">
       <ptcg-card *ngIf="mainCard" [data]="mainCard"></ptcg-card>
@@ -62,6 +63,12 @@
           </div>
         </div>
 
+        <div class="ptcg-ability-used" style="pointer-events: none;"
+          *ngIf="boardEffect.includes(BoardEffect.ABILITY_USED)">
+          <ptcg-badge color="warn">
+            {{ 'LABEL_ABILITY_USED' | translate }}
+          </ptcg-badge>
+        </div>
 
         <div class="ptcg-ability-used" style="pointer-events: none;"
           *ngIf="specialConditions.includes(SpecialCondition.ABILITY_USED)">

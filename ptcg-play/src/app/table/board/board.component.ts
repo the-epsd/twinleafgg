@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
 import { DraggedItem } from '@ng-dnd/sortable';
 import { DropTarget, DndService } from '@ng-dnd/core';
 import { Observable } from 'rxjs';
@@ -23,11 +23,17 @@ type DropTargetType = DropTarget<DraggedItem<HandItem> | BoardCardItem, any>;
 })
 export class BoardComponent implements OnDestroy {
 
-  @Input() clientId: number;
   @Input() gameState: LocalGameState;
   @Input() topPlayer: Player;
   @Input() bottomPlayer: Player;
+  @Input() player: Player;
+  @Input() clientId: number;
+  @Output() deckClick = new EventEmitter<Card>();
+  @Output() discardClick = new EventEmitter<Card>();
 
+  public deck: CardList;
+  public discard: CardList;
+  public isOwner: boolean;
   public readonly defaultBenchSize = DEFAULT_BENCH_SIZE;
   public topBench = new Array(MAX_BENCH_SIZE);
   public bottomActive: BoardCardItem;
@@ -42,12 +48,12 @@ export class BoardComponent implements OnDestroy {
   public isUpsideDown: boolean = false;
   public stateUtils = StateUtils;
 
-
   constructor(
     private cardsBaseService: CardsBaseService,
     private dnd: DndService,
     private gameService: GameService
   ) {
+
     // Bottom Player
     this.bottomActive = this.createBoardCardItem(PlayerType.BOTTOM_PLAYER, SlotType.ACTIVE);
     [this.bottomActiveTarget, this.bottomActiveHighlight$] = this.initDropTarget(PlayerType.BOTTOM_PLAYER, SlotType.ACTIVE);
@@ -67,6 +73,31 @@ export class BoardComponent implements OnDestroy {
 
     // Dropping
     [this.boardTarget, this.boardHighlight$] = this.initDropTarget(PlayerType.ANY, SlotType.BOARD);
+  }
+
+  // Add property to track deck size
+  public deckSize: number = 0;
+  public discardSize: number = 0;
+
+  ngOnChanges() {
+    if (this.player) {
+      this.deck = this.player.deck;
+      this.discard = this.player.discard;
+      this.isOwner = this.player.id === this.clientId;
+      // Update deck size when deck changes
+      this.deckSize = this.deck.cards.length;
+      this.discardSize = this.discard.cards.length;
+    } else {
+      this.deck = undefined;
+      this.discard = undefined;
+      this.isOwner = false;
+      this.deckSize = 0;
+      this.discardSize = 0;
+    }
+  }
+
+  createRange(length: number): number[] {
+    return Array.from({ length }, (_, i) => i);
   }
 
   private initDropTarget(

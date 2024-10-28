@@ -1,7 +1,7 @@
 import { EndTurnEffect, BetweenTurnsEffect, BeginTurnEffect } from '../effects/game-phase-effects';
 import { GameError } from '../../game-error';
 import { GameMessage, GameLog } from '../../game-message';
-import { SpecialCondition } from '../card/card-types';
+import { BoardEffect, SpecialCondition } from '../card/card-types';
 import { GamePhase, GameWinner } from '../state/state';
 import { checkState, endGame } from './check-effect';
 import { CoinFlipPrompt } from '../prompts/coin-flip-prompt';
@@ -147,6 +147,7 @@ export function gamePhaseReducer(store, state, effect) {
             const pokemonCard = cardList.getPokemonCard();
             if (pokemonCard && player.active.cards.includes(pokemonCard)) {
                 cardList.removeSpecialCondition(SpecialCondition.ABILITY_USED);
+                cardList.removeBoardEffect(BoardEffect.ABILITY_USED);
             }
         });
         effect.player.marker.removeMarker(effect.player.DAMAGE_DEALT_MARKER);
@@ -155,6 +156,7 @@ export function gamePhaseReducer(store, state, effect) {
                 return;
             }
             cardList.removeSpecialCondition(SpecialCondition.ABILITY_USED);
+            cardList.removeBoardEffect(BoardEffect.ABILITY_USED);
         });
         player.supporterTurn = 0;
         // console.log('player.supporterTurn', player.supporterTurn);

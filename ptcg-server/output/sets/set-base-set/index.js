@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.setBaseSet = void 0;
 const card_images_1 = require("./card-images");
 exports.setBaseSet = [
+    new card_images_1.AbraArt(),
     new card_images_1.AlakazamArt(),
     new card_images_1.ArcanineArt(),
     new card_images_1.BeedrillArt(),
