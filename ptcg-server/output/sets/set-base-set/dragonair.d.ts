@@ -9,6 +9,7 @@ export declare class Dragonair extends PokemonCard {
     name: string;
     fullName: string;
     stage: Stage;
+    evolvesFrom: string;
     cardType: CardType;
     hp: number;
     cardImage: string;
