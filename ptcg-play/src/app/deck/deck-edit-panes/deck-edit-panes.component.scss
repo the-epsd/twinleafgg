@@ -20,6 +20,7 @@
   flex: 1 1 auto;
   flex-direction: row;
   overflow: auto;
+  min-width: 250px;
 }
 
 .ptcg-deck-edit-pane,
@@ -33,7 +34,7 @@
 }
 
 .ptcg-deck-edit-pane {
-  flex: 0 0 269px;
+  flex: 0 0 300px;
   background-color: #222a3a;
 }
 
