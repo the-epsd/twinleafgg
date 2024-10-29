@@ -13,7 +13,7 @@ import { DeckEditPane } from '../deck-edit-panes/deck-edit-pane.interface';
 import { DeckEditToolbarFilter } from '../deck-edit-toolbar/deck-edit-toolbar-filter.interface';
 import { DeckService } from '../../api/services/deck.service';
 // import { FileDownloadService } from '../../shared/file-download/file-download.service';
-import { Card, PokemonCard, SuperType } from 'ptcg-server';
+import { Card, EnergyCard, EnergyType, PokemonCard, SuperType, TrainerCard, TrainerType } from 'ptcg-server';
 import { cardReplacements, exportReplacements } from './card-replacements';
 // import { interval, Subject, Subscription } from 'rxjs';
 // import { takeUntil } from 'rxjs/operators';
@@ -103,12 +103,49 @@ export class DeckEditComponent implements OnInit {
             scanUrl: this.cardsBaseService.getScanUrl(card),
           };
           deckItems.push(itemMap[name]);
-          deckItems.sort((a, b) => a.card.fullName.localeCompare(b.card.fullName));
-          deckItems.sort((a, b) => a.card.superType - b.card.superType);
+          
+          deckItems.sort((a, b) => {
+            const result = this.compareSupertype(a.card.superType) - this.compareSupertype(b.card.superType);
+
+            // not of the same supertype
+            if (result !== 0) {
+              return result;
+            }
+
+            // cards match supertype, so sort by subtype
+            if ((<any>a.card).trainerType != null) {
+              const cardA = a.card as TrainerCard;
+              if (cardA.trainerType  != null && (<any>b.card).trainerType  != null) {
+                const cardB = b.card as TrainerCard;
+                const subtypeCompare = this.compareTrainerType(cardA.trainerType) - this.compareTrainerType(cardB.trainerType);
+                if (subtypeCompare !== 0) {
+                  return subtypeCompare;
+                }
+              }
+            }
+            else if ((<any>a.card).energyType != null) {
+              const cardA = a.card as EnergyCard;
+              if (cardA.energyType != null && (<any>b.card).energyType != null) {
+                const cardB = b.card as TrainerCard;
+                const subtypeCompare = this.compareEnergyType(cardA.energyType) - this.compareEnergyType(cardB.energyType);
+                if (subtypeCompare !== 0) {
+                  return subtypeCompare;
+                }
+              }
+            }
+            
+            // subtype matches, sort by name
+            if (a.card.name < b.card.name) {
+              return -1;
+            } else {
+              return 1;
+            }
+          });
+          
         }
       }
     }
-
+    
     deckItems = this.sortByPokemonEvolution(deckItems);
 
     return deckItems;
@@ -229,4 +266,25 @@ export class DeckEditComponent implements OnInit {
       }
     });
   }
+ 
+  compareSupertype = (input: SuperType) => {
+    if (input === SuperType.POKEMON) return 1;
+    if (input === SuperType.TRAINER) return 2;
+    if (input === SuperType.ENERGY) return 3;
+    return Infinity;
+  };
+  
+  compareTrainerType = (input: TrainerType) => {
+    if (input === TrainerType.SUPPORTER) return 1;
+    if (input === TrainerType.ITEM) return 2;
+    if (input === TrainerType.TOOL) return 3;
+    if (input === TrainerType.STADIUM) return 4;
+    return Infinity;
+  };
+  
+  compareEnergyType = (input: EnergyType) => {
+    if (input === EnergyType.BASIC) return 1;
+    if (input === EnergyType.SPECIAL) return 2;
+    return Infinity;
+  };
 }
