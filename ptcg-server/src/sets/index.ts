@@ -111,9 +111,8 @@ export * from './set-paldea-fates';
 export * from './set-temporal-forces';
 export * from './set-twilight-masquerade';
 export * from './set-shrouded-fable';
-export * from './set-sv7';
-export * from './set-sv7a';
-export * from './set-sv8';
+export * from './set-stellar-crown';
+export * from './set-surging-sparks';
 export * from './set-sv9';
 
 //TEST

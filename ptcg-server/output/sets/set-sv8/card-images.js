@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.LisiasAppealArt = exports.CeruledgeArt = exports.NinetalesArt = exports.ScrambleSwitchArt = exports.MespritArt = exports.UxieArt = exports.AzelfArt = exports.VivillionArt = exports.EternatusArt = exports.HydreigonexArt = exports.ZweilousArt = exports.DeinoArt = exports.TogekissArt = exports.TogeticArt = exports.TogepiArt = exports.MiloticexArt = exports.SkeledirgeArt = exports.CrocalorArt = exports.FuecocoArt = exports.CyranoArt = exports.MiraculousIntercomArt = exports.ExcitingStadiumArt = exports.GravityMountainArt = exports.MagnetonArt = exports.MagnemiteArt = exports.TerapagosArt = exports.PikachuexArt = void 0;
+exports.LisiasAppealArt = exports.CeruledgeArt = exports.NinetalesArt = exports.ScrambleSwitchArt = exports.MespritArt = exports.UxieArt = exports.AzelfArt = exports.VivillionArt = exports.EternatusArt = exports.HydreigonexArt = exports.ZweilousArt = exports.DeinoArt = exports.TogekissArt = exports.TogeticArt = exports.TogepiArt = exports.MiloticexArt = exports.SkeledirgeArt = exports.CrocalorArt = exports.FuecocoArt = exports.CyranoArt = exports.MiraculousIntercomArt = exports.ExcitingStadiumArt = exports.GravityMountainArt = exports.MagnetonArt = exports.MagnemiteArt = exports.TerapagosArt = exports.TatsugiriexArt = exports.PikachuexArt = void 0;
 const scramble_switch_1 = require("../set-plasma-storm/scramble-switch");
 const magneton_1 = require("../set-scarlet-and-violet-promos/magneton");
 const azelf_1 = require("./azelf");
@@ -21,6 +21,7 @@ const miraculous_intercom_1 = require("./miraculous-intercom");
 const ninetales_1 = require("./ninetales");
 const pikachu_ex_1 = require("./pikachu-ex");
 const skeledirge_1 = require("./skeledirge");
+const tatsugiri_ex_1 = require("./tatsugiri-ex");
 const terapagos_1 = require("./terapagos");
 const togekiss_1 = require("./togekiss");
 const togepi_1 = require("./togepi");
@@ -35,6 +36,13 @@ class PikachuexArt extends pikachu_ex_1.Pikachuex {
     }
 }
 exports.PikachuexArt = PikachuexArt;
+class TatsugiriexArt extends tatsugiri_ex_1.Tatsugiriex {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpc/SV8/SV8_81_R_JP.png';
+    }
+}
+exports.TatsugiriexArt = TatsugiriexArt;
 class TerapagosArt extends terapagos_1.Terapagos {
     constructor() {
         super(...arguments);
