@@ -25,5 +25,6 @@ export declare class Butterfree extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
+    USED_WHIRLWIND: boolean;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

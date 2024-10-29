@@ -4,6 +4,7 @@ exports.Kabutops = void 0;
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const game_effects_1 = require("../../game/store/effects/game-effects");
+const attack_effects_1 = require("../../game/store/effects/attack-effects");
 class Kabutops extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -36,7 +37,20 @@ class Kabutops extends pokemon_card_1.PokemonCard {
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
-            // Implement Absorb logic
+            const player = effect.player;
+            const target = player.active;
+            const damageEffect = new attack_effects_1.DealDamageEffect(effect, 40);
+            damageEffect.target = effect.target;
+            state = store.reduceEffect(state, damageEffect);
+            const damageToHeal = damageEffect.damage / 2;
+            // rounding to nearest 10
+            const damageToHealLow = (damageToHeal / 10) * 10;
+            const damageToHealHigh = damageToHealLow + 10;
+            const heal = (damageToHeal - damageToHealLow >= damageToHealHigh - damageToHeal) ? damageToHealHigh : damageToHealLow;
+            // Heal damage
+            const healEffect = new game_effects_1.HealEffect(player, target, heal);
+            state = store.reduceEffect(state, healEffect);
+            return state;
         }
         return state;
     }

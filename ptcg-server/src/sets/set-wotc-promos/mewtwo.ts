@@ -50,20 +50,20 @@ export class Mewtwo extends PokemonCard {
 
       const hasEnergyInDiscard = player.discard.cards.some(c => {
         return c instanceof EnergyCard
-              && c.energyType === EnergyType.BASIC
-              && c.provides.includes(CardType.PSYCHIC);
+          && c.energyType === EnergyType.BASIC
+          && c.provides.includes(CardType.PSYCHIC);
       });
       if (!hasEnergyInDiscard) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
-        
+
       state = store.prompt(state, new AttachEnergyPrompt(
         player.id,
         GameMessage.ATTACH_ENERGY_TO_BENCH,
         player.discard,
         PlayerType.BOTTOM_PLAYER,
-        [ SlotType.ACTIVE ],
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Psychic Energy' },
+        [SlotType.ACTIVE],
+        { superType: SuperType.ENERGY },
         { allowCancel: false, min: 1, max: 2 },
       ), transfers => {
         transfers = transfers || [];
@@ -76,8 +76,8 @@ export class Mewtwo extends PokemonCard {
           player.discard.moveCardTo(transfer.card, target);
         }
       });
-      
-      return state; 
+
+      return state;
     }
     return state;
   }

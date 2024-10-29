@@ -18,7 +18,9 @@ class PokemonCardList extends card_list_1.CardList {
         this.abilityMarker = new card_marker_1.Marker();
         this.pokemonPlayedTurn = 0;
         this.sleepFlips = 1;
+        this.boardEffect = [];
         this.stage = card_types_1.Stage.BASIC;
+        this.isActivatingCard = false;
     }
     getPokemons() {
         const result = [];
@@ -127,6 +129,25 @@ class PokemonCardList extends card_list_1.CardList {
             card_types_1.SpecialCondition.ABILITY_USED,
         ].includes(s) === false);
         this.specialConditions.push(sp);
+    }
+    removeBoardEffect(sp) {
+        if (!this.boardEffect.includes(sp)) {
+            return;
+        }
+        this.boardEffect = this.boardEffect
+            .filter(s => s !== sp);
+    }
+    addBoardEffect(sp) {
+        if (this.boardEffect.includes(sp)) {
+            return;
+        }
+        this.boardEffect = this.boardEffect.filter(s => [
+            card_types_1.BoardEffect.ABILITY_USED,
+            card_types_1.BoardEffect.POWER_GLOW,
+            card_types_1.BoardEffect.POWER_NEGATED_GLOW,
+            card_types_1.BoardEffect.POWER_RETURN,
+        ].includes(s) === false);
+        this.boardEffect.push(sp);
     }
     hasRuleBox() {
         return this.cards.some(c => c.tags.includes(card_types_1.CardTag.POKEMON_ex) || c.tags.includes(card_types_1.CardTag.RADIANT) || c.tags.includes(card_types_1.CardTag.ACE_SPEC) || c.tags.includes(card_types_1.CardTag.POKEMON_V) || c.tags.includes(card_types_1.CardTag.POKEMON_VMAX) || c.tags.includes(card_types_1.CardTag.POKEMON_VSTAR));

@@ -157,7 +157,16 @@ export var SpecialCondition;
     SpecialCondition[SpecialCondition["POISONED"] = 3] = "POISONED";
     SpecialCondition[SpecialCondition["BURNED"] = 4] = "BURNED";
     SpecialCondition[SpecialCondition["ABILITY_USED"] = 5] = "ABILITY_USED";
+    SpecialCondition[SpecialCondition["POWER_GLOW"] = 6] = "POWER_GLOW";
 })(SpecialCondition || (SpecialCondition = {}));
+export var BoardEffect;
+(function (BoardEffect) {
+    BoardEffect[BoardEffect["ABILITY_USED"] = 0] = "ABILITY_USED";
+    BoardEffect[BoardEffect["POWER_GLOW"] = 1] = "POWER_GLOW";
+    BoardEffect[BoardEffect["POWER_NEGATED_GLOW"] = 2] = "POWER_NEGATED_GLOW";
+    BoardEffect[BoardEffect["POWER_RETURN"] = 3] = "POWER_RETURN";
+    BoardEffect[BoardEffect["EVOLVE"] = 4] = "EVOLVE";
+})(BoardEffect || (BoardEffect = {}));
 export var Format;
 (function (Format) {
     Format[Format["NONE"] = 0] = "NONE";

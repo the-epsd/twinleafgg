@@ -156,7 +156,16 @@ export enum SpecialCondition {
   ASLEEP,
   POISONED,
   BURNED,
-  ABILITY_USED
+  ABILITY_USED,
+  POWER_GLOW
+}
+
+export enum BoardEffect {
+  ABILITY_USED,
+  POWER_GLOW,
+  POWER_NEGATED_GLOW,
+  POWER_RETURN,
+  EVOLVE
 }
 
 export enum Format {

@@ -14,11 +14,12 @@ import { GameError } from '../../game-error';
 import { GameMessage, GameLog } from '../../game-message';
 import { PlayerType } from '../actions/play-card-action';
 import { PokemonCardList } from '../state/pokemon-card-list';
-import { SuperType, Stage } from '../card/card-types';
+import { SuperType, Stage, CardTag } from '../card/card-types';
 import { endGame } from '../effect-reducers/check-effect';
 import { initNextTurn } from '../effect-reducers/game-phase-effect';
 import { SelectPrompt } from '../prompts/select-prompt';
 import { WhoBeginsEffect } from '../effects/game-phase-effects';
+import { PokemonCard } from '../card/pokemon-card';
 function putStartingPokemonsAndPrizes(player, cards) {
     if (cards.length === 0) {
         return;
@@ -35,10 +36,7 @@ function* setupGame(next, store, state) {
     const player = state.players[0];
     const opponent = state.players[1];
     const basicPokemon = { superType: SuperType.POKEMON, stage: Stage.BASIC };
-    // const nonBasicStart = { superType: SuperType.POKEMON };
-    // const basicLuxray = { superType: SuperType.POKEMON, fullName: 'Luxray CRZ' };
-    // const basicTalonflame = { superType: SuperType.POKEMON, fullName: 'Luxray CRZ' };
-    // const basicManectric = { superType: SuperType.POKEMON, fullName: 'Luxray CES' };
+    const chooseCardsOptions = { min: 1, max: 6, allowCancel: false };
     const whoBeginsEffect = new WhoBeginsEffect();
     store.reduceEffect(state, whoBeginsEffect);
     if (whoBeginsEffect.player) {
@@ -69,8 +67,7 @@ function* setupGame(next, store, state) {
             yield store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
                 player.deck.applyOrder(order);
                 player.deck.moveTo(player.hand, 7);
-                playerHasBasic = player.hand.count(basicPokemon) > 0;
-                // playerHasBasic = player.hand.count(basicPokemon) > 0 || player.hand.count(basicLuxray) > 0 || player.hand.count(basicTalonflame) > 0 || player.hand.count(basicManectric) > 0;
+                playerHasBasic = player.hand.count(basicPokemon) > 0 || player.hand.cards.some(c => c.tags.includes(CardTag.PLAY_DURING_SETUP));
                 next();
             });
         }
@@ -79,8 +76,7 @@ function* setupGame(next, store, state) {
             yield store.prompt(state, new ShuffleDeckPrompt(opponent.id), order => {
                 opponent.deck.applyOrder(order);
                 opponent.deck.moveTo(opponent.hand, 7);
-                opponentHasBasic = opponent.hand.count(basicPokemon) > 0;
-                // opponentHasBasic = opponent.hand.count(basicPokemon) > 0 || opponent.hand.count(basicLuxray) > 0 || opponent.hand.count(basicTalonflame) > 0 || opponent.hand.count(basicManectric) > 0;
+                opponentHasBasic = opponent.hand.count(basicPokemon) > 0 || opponent.hand.cards.some(c => c.tags.includes(CardTag.PLAY_DURING_SETUP));
                 next();
             });
         }
@@ -105,21 +101,25 @@ function* setupGame(next, store, state) {
             });
         }
     }
-    // const blocked: number[] = [];
-    // player.hand.cards.forEach((card, index) => {
-    //   if (card instanceof PokemonCard) {
-    //     if (card.stage === Stage.BASIC || card.tags.includes(CardTag.PLAY_DURING_SETUP)) {
-    //       // Do not block these cards
-    //     } else {
-    //       blocked.push(index);
-    //     }
-    //   }
-    // });
-    // const chooseCardsOptions = { min: 1, max: 6, allowCancel: false, blocked };
-    const chooseCardsOptions = { min: 1, max: 6, allowCancel: false };
+    const blocked = [];
+    player.hand.cards.forEach((c, index) => {
+        if (c.tags.includes((CardTag.PLAY_DURING_SETUP)) || (c instanceof PokemonCard && c.stage === Stage.BASIC)) {
+        }
+        else {
+            blocked.push(index);
+        }
+    });
+    const blockedOpponent = [];
+    opponent.hand.cards.forEach((c, index) => {
+        if (c.tags.includes((CardTag.PLAY_DURING_SETUP)) || (c instanceof PokemonCard && c.stage === Stage.BASIC)) {
+        }
+        else {
+            blockedOpponent.push(index);
+        }
+    });
     yield store.prompt(state, [
-        new ChooseCardsPrompt(player.id, GameMessage.CHOOSE_STARTING_POKEMONS, player.hand, basicPokemon, chooseCardsOptions),
-        new ChooseCardsPrompt(opponent.id, GameMessage.CHOOSE_STARTING_POKEMONS, opponent.hand, basicPokemon, chooseCardsOptions)
+        new ChooseCardsPrompt(player.id, GameMessage.CHOOSE_STARTING_POKEMONS, player.hand, {}, Object.assign(Object.assign({}, chooseCardsOptions), { blocked })),
+        new ChooseCardsPrompt(opponent.id, GameMessage.CHOOSE_STARTING_POKEMONS, opponent.hand, {}, Object.assign(Object.assign({}, chooseCardsOptions), { blocked: blockedOpponent }))
     ], choice => {
         putStartingPokemonsAndPrizes(player, choice[0]);
         putStartingPokemonsAndPrizes(opponent, choice[1]);
@@ -130,8 +130,6 @@ function* setupGame(next, store, state) {
     const second = state.players[state.activePlayer ? 0 : 1];
     first.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => { cardList.pokemonPlayedTurn = 1; });
     second.forEachPokemon(PlayerType.TOP_PLAYER, cardList => { cardList.pokemonPlayedTurn = 2; });
-    // player.deck.moveTo(player.hand, playerCardsToDraw);
-    // opponent.deck.moveTo(opponent.hand, opponentCardsToDraw);
     if (playerCardsToDraw > 0) {
         const options = [];
         for (let i = playerCardsToDraw; i >= 0; i--) {

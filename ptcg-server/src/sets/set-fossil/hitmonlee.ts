@@ -4,6 +4,8 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
+import { StateUtils, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType } from '../../game';
+import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 
 export class Hitmonlee extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -12,6 +14,7 @@ export class Hitmonlee extends PokemonCard {
   public weakness = [{ type: CardType.PSYCHIC, value: 2 }];
   public resistance = [];
   public retreat = [CardType.COLORLESS];
+
   public attacks = [
     {
       name: 'Stretch Kick',
@@ -39,7 +42,28 @@ export class Hitmonlee extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      // Implement Stretch Kick logic
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      const hasBenched = opponent.bench.some(b => b.cards.length > 0);
+      if (!hasBenched) {
+        return state;
+      }
+
+      return store.prompt(state, new ChoosePokemonPrompt(
+        player.id,
+        GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+        PlayerType.TOP_PLAYER,
+        [SlotType.BENCH],
+        { allowCancel: false }
+      ), targets => {
+        if (!targets || targets.length === 0) {
+          return;
+        }
+        const damageEffect = new PutDamageEffect(effect, 20);
+        damageEffect.target = targets[0];
+        store.reduceEffect(state, damageEffect);
+      });
     }
     return state;
   }

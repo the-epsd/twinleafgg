@@ -1,10 +1,11 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
+import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { PowerEffect, AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerType } from '../../game';
+import { CoinFlipPrompt, GameError, GameMessage, PokemonCardList, PowerType, StateUtils } from '../../game';
+import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 
 export class Muk extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -44,11 +45,55 @@ export class Muk extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
-      // Implement Toxic Gas logic
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      const cardList = StateUtils.findCardList(state, this);
+      const owner = StateUtils.findOwner(state, cardList);
+
+      const thisMuk = StateUtils.findCardList(state, this) as PokemonCardList;
+
+      if (thisMuk.specialConditions.length > 0) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
+      }
+
+      if (!player.active.cards.includes(this) &&
+        !opponent.active.cards.includes(this)) {
+        return state;
+      }
+
+      if (owner === player) {
+        return state;
+      }
+
+      // Try reducing ability for opponent
+      try {
+        const stub = new PowerEffect(player, {
+          name: 'test',
+          powerType: PowerType.ABILITY,
+          text: ''
+        }, this);
+        store.reduceEffect(state, stub);
+      } catch {
+
+        if (!effect.power.exemptFromAbilityLock) {
+          throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
+        }
+      }
+      return state;
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      // Implement Sludge logic
+      const player = effect.player;
+      state = store.prompt(state, [
+        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
+      ], results => {
+        if (results) {
+          const specialConditionEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.POISONED]);
+          store.reduceEffect(state, specialConditionEffect);
+        }
+      });
+      return state;
     }
     return state;
   }

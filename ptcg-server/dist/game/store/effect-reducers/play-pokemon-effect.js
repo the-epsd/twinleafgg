@@ -1,7 +1,7 @@
 import { PlayPokemonEffect } from '../effects/play-card-effects';
 import { GameError } from '../../game-error';
 import { GameMessage, GameLog } from '../../game-message';
-import { SpecialCondition, Stage } from '../card/card-types';
+import { BoardEffect, SpecialCondition, Stage } from '../card/card-types';
 import { CheckPokemonPlayedTurnEffect } from '../effects/check-effects';
 import { EvolveEffect } from '../effects/game-effects';
 export function playPokemonReducer(store, state, effect) {
@@ -51,6 +51,9 @@ export function playPokemonReducer(store, state, effect) {
             effect.target.abilityMarker.markers = [];
             if (effect.target.specialConditions.includes(SpecialCondition.ABILITY_USED)) {
                 effect.target.removeSpecialCondition(SpecialCondition.ABILITY_USED);
+            }
+            if (effect.target.boardEffect.includes(BoardEffect.ABILITY_USED)) {
+                effect.target.removeBoardEffect(BoardEffect.ABILITY_USED);
             }
             return state;
         }

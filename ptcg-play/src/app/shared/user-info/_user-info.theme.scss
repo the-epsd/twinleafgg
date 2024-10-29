@@ -9,6 +9,7 @@
     'banned': #4e1a19,
     'bot': rgb(57, 80, 105),
     'admin': #459058,
+    'mod': #27c2a8,
   );
 
 @each $rank, $color in $rank-colors {

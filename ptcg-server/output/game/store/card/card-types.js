@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Energy = exports.Format = exports.SpecialCondition = exports.CardType = exports.Archetype = exports.Stage = exports.PokemonType = exports.TrainerType = exports.EnergyType = exports.SuperType = exports.CardTag = void 0;
+exports.Energy = exports.Format = exports.BoardEffect = exports.SpecialCondition = exports.CardType = exports.Archetype = exports.Stage = exports.PokemonType = exports.TrainerType = exports.EnergyType = exports.SuperType = exports.CardTag = void 0;
 var CardTag;
 (function (CardTag) {
     CardTag["POKEMON_SP"] = "SP";
@@ -160,7 +160,16 @@ var SpecialCondition;
     SpecialCondition[SpecialCondition["POISONED"] = 3] = "POISONED";
     SpecialCondition[SpecialCondition["BURNED"] = 4] = "BURNED";
     SpecialCondition[SpecialCondition["ABILITY_USED"] = 5] = "ABILITY_USED";
+    SpecialCondition[SpecialCondition["POWER_GLOW"] = 6] = "POWER_GLOW";
 })(SpecialCondition = exports.SpecialCondition || (exports.SpecialCondition = {}));
+var BoardEffect;
+(function (BoardEffect) {
+    BoardEffect[BoardEffect["ABILITY_USED"] = 0] = "ABILITY_USED";
+    BoardEffect[BoardEffect["POWER_GLOW"] = 1] = "POWER_GLOW";
+    BoardEffect[BoardEffect["POWER_NEGATED_GLOW"] = 2] = "POWER_NEGATED_GLOW";
+    BoardEffect[BoardEffect["POWER_RETURN"] = 3] = "POWER_RETURN";
+    BoardEffect[BoardEffect["EVOLVE"] = 4] = "EVOLVE";
+})(BoardEffect = exports.BoardEffect || (exports.BoardEffect = {}));
 var Format;
 (function (Format) {
     Format[Format["NONE"] = 0] = "NONE";

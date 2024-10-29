@@ -40,6 +40,31 @@ class Metagross extends pokemon_card_1.PokemonCard {
         this.ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
     }
     reduceEffect(store, state, effect) {
+        if (effect instanceof game_phase_effects_1.DrewTopdeckEffect && effect.handCard === this) {
+            const player = effect.player;
+            const slots = player.bench.filter(b => b.cards.length === 0);
+            // Try to reduce PowerEffect, to check if something is blocking our ability
+            try {
+                const stub = new game_effects_1.PowerEffect(player, {
+                    name: 'test',
+                    powerType: game_1.PowerType.ABILITY,
+                    text: ''
+                }, this);
+                store.reduceEffect(state, stub);
+            }
+            catch (_a) {
+                return state;
+            }
+            state = store.prompt(state, new game_1.ConfirmPrompt(effect.player.id, game_1.GameMessage.WANT_TO_USE_ABILITY), wantToUse => {
+                if (wantToUse) {
+                    const cards = player.hand.cards.filter(c => c.cards === this.cards);
+                    cards.forEach((card, index) => {
+                        player.hand.moveCardTo(card, slots[index]);
+                        slots[index].pokemonPlayedTurn = state.turn;
+                    });
+                }
+            });
+        }
         if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
             effect.player.attackMarker.removeMarker(this.ATTACK_USED_MARKER, this);
             effect.player.attackMarker.removeMarker(this.ATTACK_USED_2_MARKER, this);

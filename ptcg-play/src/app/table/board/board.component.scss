@@ -60,7 +60,6 @@ $board-min-height: calc(6 * var(--card-size) * #{$card-aspect-ratio} + 2 * #{map
   transform: scale(-1, -1);
 }
 
-
 .ptcg-board-player {
   display: grid;
   grid-template-columns: 2fr repeat(3, #{math.div($ptcg-bench-slots, 3)}fr) 2fr;
@@ -73,8 +72,6 @@ $board-min-height: calc(6 * var(--card-size) * #{$card-aspect-ratio} + 2 * #{map
     transform: rotate(180deg);
   }
 }
-
-//div style
 
 .ptcg-board-container {
   position: relative;
@@ -93,23 +90,6 @@ $board-min-height: calc(6 * var(--card-size) * #{$card-aspect-ratio} + 2 * #{map
   height: 100%;
   pointer-events: none;
 }
-
-// #bottom_div:after {
-//   content: '';
-//   position: absolute;
-//   top: 55%;
-//   left: -55%;
-//   right: -55%;
-//   height: 100%;
-//   // background: linear-gradient(0deg, #1a202cb5, #0d1016af), rgba(0, 90, 207, 0.75);
-//   background: rgba(0, 90, 207, 0.225);
-//   background-size: 56%;
-//   background-position: center, top;
-//   border-top-left-radius: 50% 100%;
-//   border-top-right-radius: 50% 100%;
-//   margin-top: -50px;
-//   z-index: -1;
-// }
 
 #bottom_div:after {
   content: '';
@@ -160,29 +140,6 @@ $board-min-height: calc(6 * var(--card-size) * #{$card-aspect-ratio} + 2 * #{map
   opacity: 0.5;
 }
 
-// .background-image-container {
-//   position: absolute;
-//   background-image: url(~src/assets/twinleaf-board-center.png);
-//   background-size: 10%;
-//   background-repeat: no-repeat;
-//   top: 42.5%;
-//   left: 45%;
-//   // transform: translate(-50%, -50%);
-//   width: 100%;
-//   height: 100%;
-//   z-index: -1;
-//   pointer-events: none;
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-// }
-
-// .background-image-container img {
-//   width: 50%;
-//   height: auto;
-//   opacity: 0.2;
-// }
-
 .ptcg-board-row {
   align-items: center;
   display: flex;
@@ -222,6 +179,7 @@ $board-min-height: calc(6 * var(--card-size) * #{$card-aspect-ratio} + 2 * #{map
 .ptcg-board-stadium,
 .ptcg-board-deck,
 .ptcg-board-prizes,
+.ptcg-board-discard,
 .lost-zone {
 
   >ptcg-board-card,
@@ -245,30 +203,103 @@ ptcg-board-prizes {
   grid-area: prizes;
 }
 
-ptcg-board-deck {
-  grid-area: deck / deck / discard / discard;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
 .ptcg-board-active {
   grid-area: active;
   // transform: scale(1.25);
   transform-origin: center bottom;
 }
 
-.ptcg-board-bench {
-  grid-area: bench;
+.deck-container {
+  grid-area: deck;
+  align-self: start;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .deck-card {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
 }
 
-.ptcg-board-stadium {
-  grid-area: stadium;
+.discard-container {
+  grid-area: discard;
+  align-self: start;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .discard-card {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
 }
 
 .ptcg-board-supporter {
   grid-area: supporter;
-  align-self: end;
+  align-self: start;
+}
+
+.ptcg-board-deck {
+  grid-area: deck;
+  align-self: center;
+
+  .deck-container {
+    grid-area: deck;
+    align-self: center;
+    width: calc(var(--card-size) * 1.15);
+    height: calc(var(--card-size) * 1.15 * #{$card-aspect-ratio});
+
+    .deck-card {
+      grid-area: deck;
+      align-self: center;
+      width: calc(var(--card-size) * 1.15);
+      height: calc(var(--card-size) * 1.15 * #{$card-aspect-ratio});
+    }
+  }
+}
+
+.card-count {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.ptcg-board-bench {
+  grid-area: bench;
+}
+
+.ptcg-board-discard {
+  grid-area: discard;
+  align-self: center;
+
+  .discard-container {
+    grid-area: discard;
+    align-self: center;
+    width: calc(var(--card-size) * 1.15);
+    height: calc(var(--card-size) * 1.15 * #{$card-aspect-ratio});
+
+    .discard-card {
+      grid-area: discard;
+      align-self: center;
+      width: calc(var(--card-size) * 1.15);
+      height: calc(var(--card-size) * 1.15 * #{$card-aspect-ratio});
+    }
+  }
+}
+
+.ptcg-board-stadium {
+  grid-area: stadium;
 }
 
 .lost-zone {
@@ -291,69 +322,4 @@ ptcg-board-deck {
   width: 91.2px; // Increased from var(--card-size)
   transform: translate(15%, -55%); // Center on cursor
   pointer-events: none;
-}
-
-// @media (max-width: 768px) {
-//   .ptcg-board-player {
-//     grid-template-columns: repeat(3, 1fr);
-//     grid-template-areas:
-//       "prizes active deck"
-//       "stadium bench supporter";
-//   }
-// }
-
-
-@media (orientation: portrait) {
-  .ptcg-board-player {
-    // margin-top: 15%;
-    display: grid;
-    grid-template-columns: 2fr repeat(3, #{math.div($ptcg-bench-slots, 3)}fr) 2fr;
-    grid-template-rows: auto;
-    grid-template-areas:
-      "prizes stadium active supporter deck"
-      "prizes bench bench bench deck";
-  }
-
-  ptcg-board-prizes {
-    grid-area: prizes;
-  }
-
-  ptcg-board-deck {
-    grid-area: deck;
-  }
-
-  .ptcg-board-active {
-    grid-area: active;
-    transform: scale(1.25);
-    transform-origin: center bottom;
-  }
-
-  .ptcg-board-bench {
-    grid-area: bench;
-    margin-top: 15%;
-    transform: scale(1.05);
-    transform-origin: center bottom;
-  }
-
-  .ptcg-board-stadium {
-    grid-area: stadium;
-  }
-
-  .ptcg-board-supporter {
-    grid-area: supporter;
-    align-self: end;
-  }
-
-  //div style
-
-  .ptcg-board-container {
-    position: relative;
-    overflow: hidden;
-  }
-
-  .ptcg-board-player {
-    position: relative;
-    z-index: 1;
-  }
-
 }

@@ -147,7 +147,15 @@ export declare enum SpecialCondition {
     ASLEEP = 2,
     POISONED = 3,
     BURNED = 4,
-    ABILITY_USED = 5
+    ABILITY_USED = 5,
+    POWER_GLOW = 6
+}
+export declare enum BoardEffect {
+    ABILITY_USED = 0,
+    POWER_GLOW = 1,
+    POWER_NEGATED_GLOW = 2,
+    POWER_RETURN = 3,
+    EVOLVE = 4
 }
 export declare enum Format {
     NONE = 0,

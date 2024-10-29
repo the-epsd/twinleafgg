@@ -1,12 +1,14 @@
 import { Effect } from './effect';
 import { Player } from '../state/player';
+import { Card } from '../card/card';
 
 export enum GamePhaseEffects {
   BEGIN_TURN_EFFECT = 'BEGIN_TURN_EFFECT',
   END_TURN_EFFECT = 'END_TURN_EFFECT',
   WHO_BEGINS_EFFECT = 'WHO_BEGINS_EFFECT',
   BETWEEN_TURNS_EFFECT = 'BETWEEN_TURNS_EFFECT',
-  CHOOSE_STARTING_POKEMON_EFFECT = 'CHOOSE_STARTING_POKEMON_EFFECT'
+  CHOOSE_STARTING_POKEMON_EFFECT = 'CHOOSE_STARTING_POKEMON_EFFECT',
+  DREW_TOPDECK_EFFECT = 'DREW_TOPDECK_EFFECT'
 }
 
 export class BeginTurnEffect implements Effect {
@@ -16,6 +18,18 @@ export class BeginTurnEffect implements Effect {
 
   constructor(player: Player) {
     this.player = player;
+  }
+}
+
+export class DrewTopdeckEffect implements Effect {
+  readonly type: string = GamePhaseEffects.DREW_TOPDECK_EFFECT;
+  public preventDefault = false;
+  public player: Player;
+  public handCard: Card;
+
+  constructor(player: Player, handCard: Card) {
+    this.player = player;
+    this.handCard = handCard;
   }
 }
 

@@ -10,12 +10,15 @@
         {{ user.name }}
       </span>
       <ptcg-badge
-        *ngIf="['Lugia', 'Charizard', 'Gardevoir', 'Dragapult', 'LostBox', 'Standard', 'GLC'].includes(user.name)"
+        *ngIf="['Lugia', 'Charizard', 'Gardevoir', 'Dragapult', 'LostBox', 'Standard', 'GLC', 'Retro'].includes(user.name)"
         color="bot">
         BOT
       </ptcg-badge>
       <ptcg-badge *ngIf="['TheEPSD', 'OkamiAstra', 'wheatr', 'DanTDM', 'Charlie'].includes(user.name)" color="admin">
         ADMIN
+      </ptcg-badge>
+      <ptcg-badge *ngIf="['Shutterstock'].includes(user.name)" color="mod">
+        MODERATOR
       </ptcg-badge>
     </div>
     <div class="ptcg-user-ranking">

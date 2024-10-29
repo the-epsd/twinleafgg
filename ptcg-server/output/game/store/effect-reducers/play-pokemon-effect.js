@@ -55,6 +55,9 @@ function playPokemonReducer(store, state, effect) {
             if (effect.target.specialConditions.includes(card_types_1.SpecialCondition.ABILITY_USED)) {
                 effect.target.removeSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
             }
+            if (effect.target.boardEffect.includes(card_types_1.BoardEffect.ABILITY_USED)) {
+                effect.target.removeBoardEffect(card_types_1.BoardEffect.ABILITY_USED);
+            }
             return state;
         }
         throw new game_error_1.GameError(game_message_1.GameMessage.INVALID_TARGET);

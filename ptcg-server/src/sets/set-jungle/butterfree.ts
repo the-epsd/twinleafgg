@@ -3,7 +3,8 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, HealEffect } from '../../game/store/effects/game-effects';
-import { DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { AfterDamageEffect, DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class Butterfree extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -41,9 +42,15 @@ export class Butterfree extends PokemonCard {
 
   public fullName: string = 'Butterfree JU';
 
+  public USED_WHIRLWIND: boolean = false;
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+      this.USED_WHIRLWIND = true;
+    }
+
+    if (effect instanceof AfterDamageEffect && this.USED_WHIRLWIND) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const hasBench = opponent.bench.some(b => b.cards.length > 0);
@@ -65,6 +72,10 @@ export class Butterfree extends PokemonCard {
           return state;
         }
       });
+    }
+
+    if (effect instanceof EndTurnEffect) {
+      this.USED_WHIRLWIND = false;
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {

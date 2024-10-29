@@ -18,6 +18,7 @@ import { MiraculousIntercom } from './miraculous-intercom';
 import { Ninetales } from './ninetales';
 import { Pikachuex } from './pikachu-ex';
 import { Skeledirge } from './skeledirge';
+import { Tatsugiriex } from './tatsugiri-ex';
 import { Terapagos } from './terapagos';
 import { Togekiss } from './togekiss';
 import { Togepi } from './togepi';
@@ -26,6 +27,9 @@ import { Uxie } from './uxie';
 import { Vivillion } from './vivillion';
 import { Zweilous } from './zweilous';
 export declare class PikachuexArt extends Pikachuex {
+    cardImage: string;
+}
+export declare class TatsugiriexArt extends Tatsugiriex {
     cardImage: string;
 }
 export declare class TerapagosArt extends Terapagos {

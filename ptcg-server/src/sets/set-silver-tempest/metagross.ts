@@ -1,9 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { PowerType, State, StoreLike } from '../../game';
+import { ConfirmPrompt, GameMessage, PokemonCardList, PowerType, State, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { DrewTopdeckEffect, EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class Metagross extends PokemonCard {
 
@@ -53,6 +53,38 @@ export class Metagross extends PokemonCard {
   public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
+    if (effect instanceof DrewTopdeckEffect && effect.handCard === this) {
+      const player = effect.player;
+      const slots: PokemonCardList[] = player.bench.filter(b => b.cards.length === 0);
+
+      // Try to reduce PowerEffect, to check if something is blocking our ability
+      try {
+        const stub = new PowerEffect(player, {
+          name: 'test',
+          powerType: PowerType.ABILITY,
+          text: ''
+        }, this);
+        store.reduceEffect(state, stub);
+      } catch {
+        return state;
+      }
+      state = store.prompt(state, new ConfirmPrompt(
+        effect.player.id,
+        GameMessage.WANT_TO_USE_ABILITY,
+      ), wantToUse => {
+        if (wantToUse) {
+
+          const cards = player.hand.cards.filter(c => c.cards === this.cards);
+
+          cards.forEach((card, index) => {
+            player.hand.moveCardTo(card, slots[index]);
+            slots[index].pokemonPlayedTurn = state.turn;
+          });
+        }
+      });
+    }
+
 
     if (effect instanceof EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
       effect.player.attackMarker.removeMarker(this.ATTACK_USED_MARKER, this);

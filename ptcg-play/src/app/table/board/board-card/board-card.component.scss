@@ -8,6 +8,51 @@ $ptcg-energy-card-offset: 13%;
   min-width: map-get($ptcg-size, board-card);
   position: relative;
 
+  &.power-activate {
+    z-index: 9999;
+    position: absolute;
+    animation: powerActivateStart 0.5s ease-in-out forwards;
+
+    &.upside-down {
+      z-index: 9999;
+      animation: powerActivateStartOpponent 0.5s ease-in-out forwards;
+    }
+  }
+
+  &.power-deactivate {
+    z-index: 9999;
+    position: absolute;
+    animation: powerActivateEnd 0.5s ease-in-out forwards;
+
+    &.upside-down {
+      z-index: 9999;
+      animation: powerActivateEndOpponent 0.5s ease-in-out forwards;
+    }
+  }
+
+  @keyframes powerActivateStart {
+    0% {
+      transform: rotate(0) scale(1);
+      z-index: 9999;
+    }
+
+    100% {
+      transform: translate(500px, -275px) rotate(180deg) scale(4);
+      z-index: 9999;
+    }
+  }
+
+  @keyframes powerActivateEnd {
+    0% {
+      transform: translate(500px, -275px) rotate(180deg) scale(4);
+      z-index: 9999;
+    }
+
+    100% {
+      transform: rotate(0) scale(1);
+    }
+  }
+
   &.empty:after {
     content: "";
     display: block;
@@ -26,6 +71,55 @@ $ptcg-energy-card-offset: 13%;
     content: "";
     display: block;
     padding-bottom: $card-aspect-ratio * 100%;
+  }
+}
+
+
+.rising-sun {
+  width: 300px; // Increased from 200px
+  height: 300px; // Increased from 200px
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 100;
+  pointer-events: none;
+  background: radial-gradient(circle at center,
+      rgba(255, 255, 255, 1) 0%,
+      rgba(255, 255, 255, 1) 15%,
+      rgba(255, 255, 255, 0.9) 16%,
+      rgba(255, 255, 255, 0.7) 17%,
+      rgba(255, 255, 255, 0.4) 18%,
+      rgba(255, 255, 255, 0.2) 19%,
+      transparent 20%),
+    repeating-conic-gradient(transparent 0deg,
+      transparent 20deg,
+      rgba(255, 255, 255, 1) 20deg,
+      rgba(255, 255, 255, 1) 30deg);
+  animation: risingSun 3s linear;
+
+  &.ptcg-board-card {
+    animation: cardFlash 3s ease-in-out;
+  }
+}
+
+@keyframes risingSun {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@keyframes cardFlash {
+  0% {
+    filter: brightness(2);
+  }
+
+  100% {
+    filter: brightness(1);
   }
 }
 
@@ -243,5 +337,106 @@ $ptcg-energy-card-offset: 13%;
 
   :host-context(.upside-down) & {
     transform: translateX(-100%) translateY(150%) rotate(180deg);
+  }
+}
+
+// Ability Effects
+
+// .power-glow {
+//   box-shadow: 0 0 12px #00ff00;
+//   animation: glow 2s ease-in-out forwards;
+// }
+
+// @keyframes glow {
+//   0% {
+//     box-shadow: 0 0 0 #00ff00;
+//   }
+
+//   50% {
+//     box-shadow: 0 0 12px #00ff00;
+//   }
+
+//   100% {
+//     box-shadow: 0 0 0 #00ff00;
+//   }
+// }
+
+
+// .power-activate {
+//   position: absolute;
+//   z-index: 9999;
+//   max-width: map-get($ptcg-size, card);
+//   min-width: map-get($ptcg-size, board-card);
+//   animation: powerActivateStart 0.5s ease-in-out forwards;
+// }
+
+// .power-deactivate {
+//   position: absolute;
+//   z-index: 9999;
+//   max-width: map-get($ptcg-size, card);
+//   min-width: map-get($ptcg-size, board-card);
+//   animation: powerActivateEnd 0.5s ease-in-out forwards;
+// }
+
+.power-negated-glow {
+  box-shadow: 0 0 12px #00ff00;
+  animation: glow2 2s ease-in-out forwards;
+}
+
+@keyframes glow2 {
+  0% {
+    box-shadow: 0 0 0 #00ff00;
+  }
+
+  50% {
+    box-shadow: 0 0 12px #00ff00;
+  }
+
+  100% {
+    box-shadow: 0 0 0 #00ff00;
+  }
+}
+
+@keyframes risingSun {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes risingSun {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes risingSun {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes cardFlash {
+  0% {
+    filter: brightness(1);
+  }
+
+  50% {
+    filter: brightness(2);
+  }
+
+  100% {
+    filter: brightness(1);
   }
 }

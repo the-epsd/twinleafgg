@@ -120,9 +120,8 @@ cardManager.defineSet(sets.setPaldeaFates);
 cardManager.defineSet(sets.setTemporalForces);
 cardManager.defineSet(sets.setTwilightMasquerade);
 cardManager.defineSet(sets.setShroudedFable);
-cardManager.defineSet(sets.setSV7);
-cardManager.defineSet(sets.setSV7a);
-cardManager.defineSet(sets.setSV8);
+cardManager.defineSet(sets.setStellarCrown);
+cardManager.defineSet(sets.setSurgingSparks);
 cardManager.defineSet(sets.setSV9);
 
 cardManager.defineSet(sets.setTest);
@@ -142,6 +141,7 @@ const botManager = BotManager.getInstance();
 // botManager.registerBot(new SimpleBot('Dragapult'));
 botManager.registerBot(new SimpleBot('Standard'));
 botManager.registerBot(new SimpleBot('GLC'));
+botManager.registerBot(new SimpleBot('Retro'));
 
 const app = new App();
 
