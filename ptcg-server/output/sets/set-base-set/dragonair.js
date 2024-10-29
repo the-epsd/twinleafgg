@@ -13,6 +13,7 @@ class Dragonair extends pokemon_card_1.PokemonCard {
         this.name = 'Dragonair';
         this.fullName = 'Dragonair BS';
         this.stage = card_types_1.Stage.STAGE_1;
+        this.evolvesFrom = 'Dratini';
         this.cardType = card_types_1.CardType.COLORLESS;
         this.hp = 80;
         this.cardImage = 'assets/cardback.png';

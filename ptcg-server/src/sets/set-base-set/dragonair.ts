@@ -11,13 +11,15 @@ import { StoreLike } from '../../game/store/store-like';
 export class Dragonair extends PokemonCard {
 
   public set = 'BS';
-  
+
   public name = 'Dragonair';
-  
+
   public fullName = 'Dragonair BS';
-  
+
   public stage: Stage = Stage.STAGE_1;
-  
+
+  public evolvesFrom = 'Dratini';
+
   public cardType: CardType = CardType.COLORLESS;
 
   public hp: number = 80;
@@ -51,7 +53,7 @@ export class Dragonair extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      
+
       return store.prompt(state, [
         new CoinFlipPrompt(effect.player.id, GameMessage.COIN_FLIP),
         new CoinFlipPrompt(effect.player.id, GameMessage.COIN_FLIP)
@@ -61,18 +63,18 @@ export class Dragonair extends PokemonCard {
       });
 
     }
-    
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-    
+
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      
+
       if (!opponent.active.cards.some(c => c instanceof EnergyCard)) {
         return state;
       }
-      
+
       let card: Card;
-            
+
       store.prompt(state, new ChooseCardsPrompt(
         player.id,
         GameMessage.CHOOSE_CARD_TO_DISCARD,
@@ -81,11 +83,11 @@ export class Dragonair extends PokemonCard {
         { min: 1, max: 1, allowCancel: false }
       ), selected => {
         card = selected[0];
-    
+
         opponent.active.moveCardTo(card, opponent.discard);
         return state;
       });
-      
+
       return state;
     }
 
