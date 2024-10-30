@@ -6,6 +6,7 @@ import { Chewtle } from './chewtle';
 import { Cinderaceex } from './cinderace-ex';
 import { Comfey } from './comfey';
 import { Crispin } from './crispin';
+import { Diancie } from './diancie';
 import { Drednaw } from './drednaw';
 import { Drifblim } from './drifblim';
 import { Electabuzz } from './electabuzz';
@@ -59,6 +60,10 @@ export class CinderaceexArt extends Cinderaceex {
 
 export class CrispinArt extends Crispin {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SCR/SCR_133_R_EN.png';
+}
+
+export class DiancieArt extends Diancie {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SCR/SCR_086_R_EN.png';
 }
 
 export class DrednawArt extends Drednaw {

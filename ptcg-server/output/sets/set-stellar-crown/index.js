@@ -10,6 +10,7 @@ exports.setStellarCrown = [
     new card_images_1.ChewtleArt(),
     new card_images_1.CinderaceexArt(),
     new card_images_1.CrispinArt(),
+    new card_images_1.DiancieArt(),
     new card_images_1.DrednawArt(),
     new card_images_1.DrifblimArt(),
     new card_images_1.ElectabuzzArt(),

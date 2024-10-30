@@ -6,6 +6,7 @@ import { Chewtle } from './chewtle';
 import { Cinderaceex } from './cinderace-ex';
 import { Comfey } from './comfey';
 import { Crispin } from './crispin';
+import { Diancie } from './diancie';
 import { Drednaw } from './drednaw';
 import { Drifblim } from './drifblim';
 import { Electabuzz } from './electabuzz';
@@ -50,6 +51,9 @@ export declare class CinderaceexArt extends Cinderaceex {
     cardImage: string;
 }
 export declare class CrispinArt extends Crispin {
+    cardImage: string;
+}
+export declare class DiancieArt extends Diancie {
     cardImage: string;
 }
 export declare class DrednawArt extends Drednaw {
