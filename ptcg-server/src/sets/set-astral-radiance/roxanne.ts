@@ -13,10 +13,6 @@ function* playCard(next: Function, store: StoreLike, state: State,
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
 
-  if (player.deck.cards.length === 0) {
-    throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-  }
-
   const oppPrizes = opponent.getPrizeLeft();
 
   const supporterTurn = player.supporterTurn;

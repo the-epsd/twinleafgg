@@ -10,9 +10,6 @@ const game_1 = require("../../game");
 function* playCard(next, store, state, self, effect) {
     const player = effect.player;
     const opponent = state_utils_1.StateUtils.getOpponent(state, player);
-    if (player.deck.cards.length === 0) {
-        throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
-    }
     const oppPrizes = opponent.getPrizeLeft();
     const supporterTurn = player.supporterTurn;
     if (supporterTurn > 0) {
