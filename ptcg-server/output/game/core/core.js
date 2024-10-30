@@ -59,6 +59,19 @@ class Core {
         }
         return game;
     }
+    createGameWithDecks(client, deck, gameSettings = new game_settings_1.GameSettings(), client2, deck2) {
+        if (this.clients.indexOf(client) === -1) {
+            throw new game_error_1.GameError(game_message_1.GameMessage.ERROR_CLIENT_NOT_CONNECTED);
+        }
+        const game = new game_1.Game(this, utils_1.generateId(this.games), gameSettings);
+        game.dispatch(client, new add_player_action_1.AddPlayerAction(client.id, client.name, deck));
+        game.dispatch(client, new add_player_action_1.AddPlayerAction(client2.id, client2.name, deck2));
+        this.games.push(game);
+        this.emit(c => c.onGameAdd(game));
+        this.joinGame(client, game);
+        this.joinGame(client2, game);
+        return game;
+    }
     joinGame(client, game) {
         if (this.clients.indexOf(client) === -1) {
             throw new game_error_1.GameError(game_message_1.GameMessage.ERROR_CLIENT_NOT_CONNECTED);

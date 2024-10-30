@@ -1,9 +1,9 @@
 import { Server, Socket } from 'socket.io';
 import { Client } from '../../game/client/client.interface';
+import { Core } from '../../game/core/core';
 import { Game } from '../../game/core/game';
 import { State } from '../../game/store/state/state';
-import { User, Message } from '../../storage';
-import { Core } from '../../game/core/core';
+import { Message, User } from '../../storage';
 export declare class SocketClient implements Client {
     id: number;
     name: string;
@@ -15,6 +15,7 @@ export declare class SocketClient implements Client {
     private coreSocket;
     private gameSocket;
     private messageSocket;
+    private matchmakingSocket;
     constructor(user: User, core: Core, io: Server, socket: Socket);
     onConnect(client: Client): void;
     onDisconnect(client: Client): void;
@@ -24,6 +25,8 @@ export declare class SocketClient implements Client {
     onStateChange(game: Game, state: State): void;
     onGameJoin(game: Game, client: Client): void;
     onGameLeave(game: Game, client: Client): void;
+    onJoinQueue(from: Client, message: Message): void;
+    onLeaveQueue(client: Client): void;
     onMessage(from: Client, message: Message): void;
     onMessageRead(user: User): void;
     attachListeners(): void;

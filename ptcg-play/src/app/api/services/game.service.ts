@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import {
   ClientInfo, GameState, State, CardTarget, StateLog, Replay,
-  Base64, StateSerializer, PlayerStats
+  Base64, StateSerializer, PlayerStats,
+  Format
 } from 'ptcg-server';
 import { BehaviorSubject, merge, Observable, throwError } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
@@ -295,8 +296,8 @@ export class GameService {
     });
   }
 
-  joinMatchmakingQueue(format: string): Observable<any> {
-    return this.socketService.joinMatchmakingQueue(format);
+  joinMatchmakingQueue(format: Format, deck: string[]): Observable<any> {
+    return this.socketService.joinMatchmakingQueue(format, deck);
   }
 
 
@@ -304,7 +305,7 @@ export class GameService {
     return this.socketService.emit('leaveQueue');
   }
 
-  checkQueueStatus(format: string): Observable<any> {
+  checkQueueStatus(format: Format): Observable<any> {
     return this.socketService.emit('checkQueueStatus', { format });
   }
 

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ApiErrorEnum } from 'ptcg-server';
+import { ApiErrorEnum, Format } from 'ptcg-server';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { Socket, io } from 'socket.io-client';
 import { timeout, catchError, retry } from 'rxjs/operators';
@@ -48,8 +48,8 @@ export class SocketService {
     return this.emit('joinLobby', { format });
   }
 
-  joinMatchmakingQueue(format: string): Observable<any> {
-    return this.emit('joinQueue', { format }).pipe(
+  joinMatchmakingQueue(format: Format, deck: string[]): Observable<any> {
+    return this.emit('matchmaking:joinQueue', { format: Format[format], deck }).pipe(
       timeout(5000),
       retry(2),
       catchError((error) => {

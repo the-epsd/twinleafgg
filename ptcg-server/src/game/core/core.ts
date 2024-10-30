@@ -68,6 +68,27 @@ export class Core {
     }
     return game;
   }
+  
+  public createGameWithDecks(
+    client: Client,
+    deck: string[],
+    gameSettings: GameSettings = new GameSettings(),
+    client2: Client,
+    deck2: string[]
+  ): Game {
+    if (this.clients.indexOf(client) === -1) {
+      throw new GameError(GameMessage.ERROR_CLIENT_NOT_CONNECTED);
+    }
+
+    const game = new Game(this, generateId(this.games), gameSettings);
+    game.dispatch(client, new AddPlayerAction(client.id, client.name, deck));
+    game.dispatch(client, new AddPlayerAction(client2.id, client2.name, deck2));
+    this.games.push(game);
+    this.emit(c => c.onGameAdd(game));
+    this.joinGame(client, game);
+    this.joinGame(client2, game);
+    return game;
+  }
 
   public joinGame(client: Client, game: Game): void {
     if (this.clients.indexOf(client) === -1) {

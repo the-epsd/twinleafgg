@@ -1,11 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SocketClient = void 0;
-const socket_wrapper_1 = require("./socket-wrapper");
-const socket_cache_1 = require("./socket-cache");
 const core_socket_1 = require("./core-socket");
 const game_socket_1 = require("./game-socket");
 const message_socket_1 = require("./message-socket");
+const socket_cache_1 = require("./socket-cache");
+const socket_wrapper_1 = require("./socket-wrapper");
+const matchmaking_socket_1 = require("./matchmaking-socket");
 class SocketClient {
     constructor(user, core, io, socket) {
         this.id = 0;
@@ -18,6 +19,7 @@ class SocketClient {
         this.coreSocket = new core_socket_1.CoreSocket(this, this.socket, core, this.cache);
         this.gameSocket = new game_socket_1.GameSocket(this, this.socket, core, this.cache);
         this.messageSocket = new message_socket_1.MessageSocket(this, this.socket, core);
+        this.matchmakingSocket = new matchmaking_socket_1.MatchmakingSocket(this, this.socket, core);
     }
     onConnect(client) {
         this.coreSocket.onConnect(client);
@@ -43,6 +45,12 @@ class SocketClient {
     }
     onGameLeave(game, client) {
         this.gameSocket.onGameLeave(game, client);
+    }
+    onJoinQueue(from, message) {
+        this.matchmakingSocket.onJoinQueue(from, message);
+    }
+    onLeaveQueue(client) {
+        this.matchmakingSocket.onLeaveQueue();
     }
     onMessage(from, message) {
         this.messageSocket.onMessage(from, message);

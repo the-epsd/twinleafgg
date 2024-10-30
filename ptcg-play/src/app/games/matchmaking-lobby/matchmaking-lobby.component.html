@@ -1,14 +1,22 @@
 <div class="matchmaking-lobby">
   <mat-form-field>
     <mat-label>{{ 'LABEL_SELECT_FORMAT' | translate }}</mat-label>
-    <mat-select [(ngModel)]="selectedFormat" [disabled]="inQueue">
+    <mat-select [(ngModel)]="selectedFormat" [disabled]="inQueue" (selectionChange)="onFormatSelected($event.value)">
       <mat-option *ngFor="let format of formats" [value]="format.value">
         {{ format.label | translate }}
       </mat-option>
     </mat-select>
   </mat-form-field>
+  <mat-form-field>
+    <mat-label>{{ 'GAMES_YOUR_DECK' | translate }}</mat-label>
+    <mat-select [(ngModel)]="deckId" [disabled]="inQueue">
+      <mat-option *ngFor="let deck of decksByFormat" [value]="deck.id">
+        {{ deck.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
 
-  <button mat-raised-button color="primary" (click)="joinQueue()" *ngIf="!inQueue">
+  <button mat-raised-button color="primary" (click)="joinQueue()" *ngIf="!inQueue" [disabled]="!deckId">
     {{ 'BUTTON_FIND_MATCH' | translate }}
   </button>
   <button mat-raised-button color="warn" (click)="leaveQueue()" *ngIf="inQueue">

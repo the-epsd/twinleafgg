@@ -1,14 +1,15 @@
 import { Server, Socket } from 'socket.io';
 import { Client } from '../../game/client/client.interface';
+import { Core } from '../../game/core/core';
 import { Game } from '../../game/core/game';
 import { State } from '../../game/store/state/state';
-import { User, Message } from '../../storage';
-import { Core } from '../../game/core/core';
-import { SocketWrapper } from './socket-wrapper';
-import { SocketCache } from './socket-cache';
+import { Message, User } from '../../storage';
 import { CoreSocket } from './core-socket';
 import { GameSocket } from './game-socket';
 import { MessageSocket } from './message-socket';
+import { SocketCache } from './socket-cache';
+import { SocketWrapper } from './socket-wrapper';
+import { MatchmakingSocket } from './matchmaking-socket';
 
 export class SocketClient implements Client {
 
@@ -22,6 +23,7 @@ export class SocketClient implements Client {
   private coreSocket: CoreSocket;
   private gameSocket: GameSocket;
   private messageSocket: MessageSocket;
+  private matchmakingSocket: MatchmakingSocket;
 
   constructor(user: User, core: Core, io: Server, socket: Socket) {
     this.user = user;
@@ -31,6 +33,7 @@ export class SocketClient implements Client {
     this.coreSocket = new CoreSocket(this, this.socket, core, this.cache);
     this.gameSocket = new GameSocket(this, this.socket, core, this.cache);
     this.messageSocket = new MessageSocket(this, this.socket, core);
+    this.matchmakingSocket = new MatchmakingSocket(this, this.socket, core);
   }
 
   public onConnect(client: Client): void {
@@ -52,7 +55,7 @@ export class SocketClient implements Client {
   public onUsersUpdate(users: User[]): void {
     this.coreSocket.onUsersUpdate(users);
   }
-
+  
   public onStateChange(game: Game, state: State): void {
     this.coreSocket.onStateChange(game, state);
     this.gameSocket.onStateChange(game, state);
@@ -64,6 +67,14 @@ export class SocketClient implements Client {
 
   public onGameLeave(game: Game, client: Client): void {
     this.gameSocket.onGameLeave(game, client);
+  }
+  
+  public onJoinQueue(from: Client, message: Message): void {
+    this.matchmakingSocket.onJoinQueue(from, message);
+  }
+  
+  public onLeaveQueue(client: Client): void {
+    this.matchmakingSocket.onLeaveQueue();
   }
 
   public onMessage(from: Client, message: Message): void {

@@ -21,4 +21,6 @@ export var ApiErrorEnum;
     ApiErrorEnum["CONVERSATION_INVALID"] = "CONVERSATION_INVALID";
     ApiErrorEnum["UNSUPPORTED_VERSION"] = "UNSUPPORTED_VERSION";
     ApiErrorEnum["SOCKET_ERROR"] = "SOCKET_ERROR";
+    ApiErrorEnum["INVALID_FORMAT"] = "INVALID_FORMAT";
+    ApiErrorEnum["INVALID_USER"] = "INVALID_USER";
 })(ApiErrorEnum || (ApiErrorEnum = {}));
