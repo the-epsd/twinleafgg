@@ -9,7 +9,7 @@ export class Dragonite extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Dragonair';
   public cardType: CardType = CardType.COLORLESS;
-  public hp: number = 80;
+  public hp: number = 100;
   public resistance = [{ type: CardType.FIGHTING, value: -30 }];
   public retreat = [CardType.COLORLESS];
 

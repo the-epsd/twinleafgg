@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZeraoraArt = exports.TerapagosexArt = exports.ScorbunnyArt = exports.RagingBoltArt = exports.RabootArt = exports.OrthwormexArt = exports.NoctowlArt = exports.MedititeArt = exports.MedichamexArt = exports.LaprasexArt = exports.JoltikArt = exports.IronBoulderArt = exports.HydrappleexArt = exports.HoothootArt = exports.GreatTreeArt = exports.GlisteningCrystalArt = exports.GlassTrumpetArt = exports.GalvantulexaArt = exports.FanRotomArt = exports.ElectabuzzArt = exports.DrifblimArt = exports.DrednawArt = exports.CrispinArt = exports.CinderaceexArt = exports.ComfeyArt = exports.ChewtleArt = exports.BriarArt = exports.BouffalantArt = exports.AreaZeroUnderdepthsArt = exports.ArchaludonArt = void 0;
+exports.ZeraoraArt = exports.TerapagosexArt = exports.ScorbunnyArt = exports.RagingBoltArt = exports.RabootArt = exports.OrthwormexArt = exports.NoctowlArt = exports.MedititeArt = exports.MedichamexArt = exports.LaprasexArt = exports.JoltikArt = exports.IronBoulderArt = exports.HydrappleexArt = exports.HoothootArt = exports.GreatTreeArt = exports.GlisteningCrystalArt = exports.GlassTrumpetArt = exports.GalvantulexaArt = exports.FanRotomArt = exports.ElectabuzzArt = exports.DrifblimArt = exports.DrednawArt = exports.DiancieArt = exports.CrispinArt = exports.CinderaceexArt = exports.ComfeyArt = exports.ChewtleArt = exports.BriarArt = exports.BouffalantArt = exports.AreaZeroUnderdepthsArt = exports.ArchaludonArt = void 0;
 const archaludon_1 = require("./archaludon");
 const area_zero_underdepths_1 = require("./area-zero-underdepths");
 const bouffalant_1 = require("./bouffalant");
@@ -9,6 +9,7 @@ const chewtle_1 = require("./chewtle");
 const cinderace_ex_1 = require("./cinderace-ex");
 const comfey_1 = require("./comfey");
 const crispin_1 = require("./crispin");
+const diancie_1 = require("./diancie");
 const drednaw_1 = require("./drednaw");
 const drifblim_1 = require("./drifblim");
 const electabuzz_1 = require("./electabuzz");
@@ -87,6 +88,13 @@ class CrispinArt extends crispin_1.Crispin {
     }
 }
 exports.CrispinArt = CrispinArt;
+class DiancieArt extends diancie_1.Diancie {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SCR/SCR_086_R_EN.png';
+    }
+}
+exports.DiancieArt = DiancieArt;
 class DrednawArt extends drednaw_1.Drednaw {
     constructor() {
         super(...arguments);
