@@ -19,7 +19,7 @@ class RagingBoltex extends pokemon_card_1.PokemonCard {
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.attacks = [
             {
-                name: 'Bursting Roar',
+                name: 'Burst Roar',
                 cost: [card_types_1.CardType.COLORLESS],
                 damage: 0,
                 text: 'Discard your hand and draw 6 cards.'

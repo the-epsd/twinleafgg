@@ -7,7 +7,6 @@ import { Froslassex } from './froslass-ex';
 import { Garchompex } from './garchomp-ex';
 import { Garganacl } from './garganacl';
 import { Gholdengoex } from './gholdengo-ex';
-import { Gimmighoul } from './gimmighoul';
 import { Groudon } from './groudon';
 import { Hoopaex } from './hoopa-ex';
 import { IronHandsex } from './iron-hands-ex';
@@ -33,11 +32,6 @@ export declare class ToedscruelIR extends Toedscruel {
     fullName: string;
 }
 export declare class SnoruntIR extends Snorunt {
-    cardImage: string;
-    setNumber: string;
-    fullName: string;
-}
-export declare class GimmighoulIR extends Gimmighoul {
     cardImage: string;
     setNumber: string;
     fullName: string;
