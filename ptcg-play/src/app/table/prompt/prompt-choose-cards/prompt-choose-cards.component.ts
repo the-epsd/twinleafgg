@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ChooseCardsPrompt, CardList, Card } from 'ptcg-server';
+import { Card, CardList, ChooseCardsPrompt } from 'ptcg-server';
 
 import { GameService } from '../../../api/services/game.service';
 import { LocalGameState } from '../../../shared/session/session.interface';
@@ -14,6 +14,8 @@ export class PromptChooseCardsComponent {
   @Input() set prompt(prompt: ChooseCardsPrompt) {
     this.promptValue = prompt;
     this.cards = prompt.cards;
+    this.cards.sort();
+    
     this.filter = prompt.filter;
     this.allowedCancel = prompt.options.allowCancel;
     this.blocked = prompt.options.blocked;
@@ -68,8 +70,6 @@ export class PromptChooseCardsComponent {
     const isInvalid = !this.promptValue.validate(cards);
     this.result = result;
     this.isInvalid = isInvalid;
-
-
   }
 
 }

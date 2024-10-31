@@ -88,23 +88,23 @@ export class PromptAttachEnergyComponent implements OnChanges {
     // Map new order first
     this.cardListCards = result.map(index => cards[index]);
   
-this.cardListCards.sort((a, b) => {
-if (a.superType === SuperType.ENERGY) {
-if (b.superType === SuperType.ENERGY) {
-return a.name.localeCompare(b.name);
-} else {
-return -1;
-}
-} else if (b.superType === SuperType.ENERGY) {
-return 1;
-} else {
-if (a.superType === b.superType) {
-return a.name.localeCompare(b.name);
-} else {
-return a.superType - b.superType;
-}
-}
-});
+    this.cardListCards.sort((a, b) => {
+      if (a.superType === SuperType.ENERGY) {
+        if (b.superType === SuperType.ENERGY) {
+          return a.name.localeCompare(b.name);
+        } else {
+          return -1;
+        }
+        } else if (b.superType === SuperType.ENERGY) {
+          return 1;
+        } else {
+          if (a.superType === b.superType) {
+            return a.name.localeCompare(b.name);
+          } else {
+            return a.superType - b.superType;
+          }
+      }
+    });
   }
 
   public reset() {

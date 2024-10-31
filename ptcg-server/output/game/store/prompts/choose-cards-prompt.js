@@ -11,6 +11,7 @@ class ChooseCardsPrompt extends prompt_1.Prompt {
         this.cards = cards;
         this.filter = filter;
         this.type = exports.ChooseCardsPromptType;
+        this.blockedCardNames = [];
         // Default options
         this.options = Object.assign({}, {
             min: 0,
@@ -30,6 +31,24 @@ class ChooseCardsPrompt extends prompt_1.Prompt {
             maxSpecialEnergies: undefined,
             maxItems: undefined,
         }, options);
+        if (this.options.blocked.length > 0) {
+            for (let i = 0; i < this.cards.cards.length; i++) {
+                if (this.options.blocked.indexOf(i) !== -1) {
+                    if (this.blockedCardNames.indexOf(this.cards.cards[i].name) === -1) {
+                        this.blockedCardNames.push(this.cards.cards[i].name);
+                    }
+                }
+            }
+        }
+        this.cards.sort();
+        if (this.options.blocked.length > 0) {
+            this.options.blocked = [];
+            this.cards.cards.forEach((card, index) => {
+                if (this.blockedCardNames.indexOf(card.name) !== -1) {
+                    this.options.blocked.push(index);
+                }
+            });
+        }
     }
     decode(result) {
         if (result === null) {

@@ -4,6 +4,7 @@ exports.CardList = exports.StadiumDirection = void 0;
 const card_manager_1 = require("../../cards/card-manager");
 const game_error_1 = require("../../game-error");
 const game_message_1 = require("../../game-message");
+const card_types_1 = require("../card/card-types");
 var StadiumDirection;
 (function (StadiumDirection) {
     StadiumDirection["UP"] = "up";
@@ -88,6 +89,72 @@ class CardList {
     }
     count(query) {
         return this.filter(query).length;
+    }
+    sort(superType = card_types_1.SuperType.POKEMON) {
+        this.cards.sort((a, b) => {
+            const result = this.compareSupertype(a.superType) - this.compareSupertype(b.superType);
+            // not of the same supertype
+            if (result !== 0) {
+                return result;
+            }
+            // cards match supertype, so sort by subtype
+            if (a.trainerType != null) {
+                const cardA = a;
+                if (cardA.trainerType != null && b.trainerType != null) {
+                    const cardB = b;
+                    const subtypeCompare = this.compareTrainerType(cardA.trainerType) - this.compareTrainerType(cardB.trainerType);
+                    if (subtypeCompare !== 0) {
+                        return subtypeCompare;
+                    }
+                }
+            }
+            else if (a.energyType != null) {
+                const cardA = a;
+                if (cardA.energyType != null && b.energyType != null) {
+                    const cardB = b;
+                    const subtypeCompare = this.compareEnergyType(cardA.energyType) - this.compareEnergyType(cardB.energyType);
+                    if (subtypeCompare !== 0) {
+                        return subtypeCompare;
+                    }
+                }
+            }
+            // subtype matches, sort by name
+            if (a.name < b.name) {
+                return -1;
+            }
+            else {
+                return 1;
+            }
+        });
+    }
+    compareSupertype(input) {
+        if (input === card_types_1.SuperType.POKEMON)
+            return 1;
+        if (input === card_types_1.SuperType.TRAINER)
+            return 2;
+        if (input === card_types_1.SuperType.ENERGY)
+            return 3;
+        return Infinity;
+    }
+    ;
+    compareTrainerType(input) {
+        if (input === card_types_1.TrainerType.SUPPORTER)
+            return 1;
+        if (input === card_types_1.TrainerType.ITEM)
+            return 2;
+        if (input === card_types_1.TrainerType.TOOL)
+            return 3;
+        if (input === card_types_1.TrainerType.STADIUM)
+            return 4;
+        return Infinity;
+    }
+    ;
+    compareEnergyType(input) {
+        if (input === card_types_1.EnergyType.BASIC)
+            return 1;
+        if (input === card_types_1.EnergyType.SPECIAL)
+            return 2;
+        return Infinity;
     }
 }
 exports.CardList = CardList;

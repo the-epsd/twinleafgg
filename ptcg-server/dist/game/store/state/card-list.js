@@ -1,6 +1,7 @@
 import { CardManager } from '../../cards/card-manager';
 import { GameError } from '../../game-error';
 import { GameMessage } from '../../game-message';
+import { EnergyType, SuperType, TrainerType } from '../card/card-types';
 export var StadiumDirection;
 (function (StadiumDirection) {
     StadiumDirection["UP"] = "up";
@@ -85,5 +86,71 @@ export class CardList {
     }
     count(query) {
         return this.filter(query).length;
+    }
+    sort(superType = SuperType.POKEMON) {
+        this.cards.sort((a, b) => {
+            const result = this.compareSupertype(a.superType) - this.compareSupertype(b.superType);
+            // not of the same supertype
+            if (result !== 0) {
+                return result;
+            }
+            // cards match supertype, so sort by subtype
+            if (a.trainerType != null) {
+                const cardA = a;
+                if (cardA.trainerType != null && b.trainerType != null) {
+                    const cardB = b;
+                    const subtypeCompare = this.compareTrainerType(cardA.trainerType) - this.compareTrainerType(cardB.trainerType);
+                    if (subtypeCompare !== 0) {
+                        return subtypeCompare;
+                    }
+                }
+            }
+            else if (a.energyType != null) {
+                const cardA = a;
+                if (cardA.energyType != null && b.energyType != null) {
+                    const cardB = b;
+                    const subtypeCompare = this.compareEnergyType(cardA.energyType) - this.compareEnergyType(cardB.energyType);
+                    if (subtypeCompare !== 0) {
+                        return subtypeCompare;
+                    }
+                }
+            }
+            // subtype matches, sort by name
+            if (a.name < b.name) {
+                return -1;
+            }
+            else {
+                return 1;
+            }
+        });
+    }
+    compareSupertype(input) {
+        if (input === SuperType.POKEMON)
+            return 1;
+        if (input === SuperType.TRAINER)
+            return 2;
+        if (input === SuperType.ENERGY)
+            return 3;
+        return Infinity;
+    }
+    ;
+    compareTrainerType(input) {
+        if (input === TrainerType.SUPPORTER)
+            return 1;
+        if (input === TrainerType.ITEM)
+            return 2;
+        if (input === TrainerType.TOOL)
+            return 3;
+        if (input === TrainerType.STADIUM)
+            return 4;
+        return Infinity;
+    }
+    ;
+    compareEnergyType(input) {
+        if (input === EnergyType.BASIC)
+            return 1;
+        if (input === EnergyType.SPECIAL)
+            return 2;
+        return Infinity;
     }
 }

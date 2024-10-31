@@ -35,6 +35,7 @@ export class ChooseCardsPrompt extends Prompt<Card[]> {
   readonly type: string = ChooseCardsPromptType;
 
   public options: ChooseCardsOptions;
+  private blockedCardNames: string[] = [];
 
   constructor(
     playerId: number,
@@ -44,7 +45,7 @@ export class ChooseCardsPrompt extends Prompt<Card[]> {
     options?: Partial<ChooseCardsOptions>
   ) {
     super(playerId);
-
+    
     // Default options
     this.options = Object.assign({}, {
       min: 0,
@@ -64,6 +65,27 @@ export class ChooseCardsPrompt extends Prompt<Card[]> {
       maxSpecialEnergies: undefined,
       maxItems: undefined,
     }, options);
+    
+    if (this.options.blocked.length > 0) {
+      for (let i = 0; i < this.cards.cards.length; i++) {
+        if (this.options.blocked.indexOf(i) !== -1) {
+          if (this.blockedCardNames.indexOf(this.cards.cards[i].name) === -1) {
+            this.blockedCardNames.push(this.cards.cards[i].name);
+          }
+        }
+      }
+    }
+
+    this.cards.sort();
+
+    if (this.options.blocked.length > 0) {
+      this.options.blocked = [];
+      this.cards.cards.forEach((card, index) => {
+        if (this.blockedCardNames.indexOf(card.name) !== -1) {
+          this.options.blocked.push(index);
+        }
+      });      
+    }
   }
 
   public decode(result: number[] | null): Card[] | null {
