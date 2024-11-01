@@ -65,7 +65,7 @@ class MatchmakingService {
     }
     emitLobbyUpdate(format) {
         const lobby = this.lobbies.get(format) || [];
-        this.queueUpdates.emit('lobbyUpdate', { format, players: lobby });
+        this.queueUpdates.emit('matchmaking:lobbyUpdate', { format, players: lobby });
     }
     createMatch(player1, player2, format) {
         const player1Client = this.core.clients.find(client => client.id === player1[0]);

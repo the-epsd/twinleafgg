@@ -56,10 +56,10 @@ class TateAndLiza extends trainer_card_1.TrainerCard {
             ];
             const hasBench = player.bench.some(b => b.cards.length > 0);
             if (!hasBench) {
-                options.splice(1, 1);
+                options.splice(0, 1);
             }
             if (player.deck.cards.length === 0) {
-                options.splice(0, 1);
+                options.splice(1, 1);
             }
             return store.prompt(state, new game_1.SelectPrompt(player.id, game_message_1.GameMessage.CHOOSE_OPTION, options.map(opt => opt.message), { allowCancel: false }), choice => {
                 const option = options[choice];

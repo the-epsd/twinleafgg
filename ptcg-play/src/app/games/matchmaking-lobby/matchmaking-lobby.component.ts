@@ -95,7 +95,7 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
     ).subscribe({
       next: () => {
         console.log('Joined queue successfully');
-        this.startPolling();
+        // this.startPolling();
       },
       error: (error) => console.error('Error joining queue:', error)
     });
@@ -128,11 +128,16 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
+    
+    this.leaveQueue();
   }
 
   leaveQueue() {
     this.inQueue = false;
-    this.gameService.leaveMatchmakingQueue();
+    this.gameService.leaveMatchmakingQueue().subscribe(
+      () => console.log('Left queue successfully'),
+      error => console.error('Error leaving queue:', error)
+    );
   }
   
   onFormatSelected(format: Format) {

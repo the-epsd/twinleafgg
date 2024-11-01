@@ -72,7 +72,7 @@ class MatchmakingService {
 
   private emitLobbyUpdate(format: string) {
     const lobby = this.lobbies.get(format) || [];
-    this.queueUpdates.emit('lobbyUpdate', { format, players: lobby });
+    this.queueUpdates.emit('matchmaking:lobbyUpdate', { format, players: lobby });
   }
 
   private createMatch(player1: [number, string[]], player2: [number, string[]], format: string) {
