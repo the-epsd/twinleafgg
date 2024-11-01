@@ -32,6 +32,7 @@ export declare class ChooseCardsPrompt extends Prompt<Card[]> {
     filter: FilterType;
     readonly type: string;
     options: ChooseCardsOptions;
+    private blockedCardNames;
     constructor(playerId: number, message: GameMessage, cards: CardList, filter: FilterType, options?: Partial<ChooseCardsOptions>);
     decode(result: number[] | null): Card[] | null;
     validate(result: Card[] | null): boolean;

@@ -74,7 +74,7 @@ exports.setParadoxRift = [
     //Full Arts
     new full_art_1.ToedscruelIR(),
     new full_art_1.SnoruntIR(),
-    new full_art_1.GimmighoulIR(),
+    //new GimmighoulIR(),
     new full_art_1.GroudonIR(),
     new full_art_1.MiniorIR(),
     new full_art_1.GarganacIR(),

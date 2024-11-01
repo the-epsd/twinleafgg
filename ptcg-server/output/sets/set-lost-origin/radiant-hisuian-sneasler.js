@@ -23,7 +23,7 @@ class RadiantHisuianSneasler extends pokemon_card_1.PokemonCard {
             }];
         this.attacks = [{
                 name: 'Poison Jab',
-                cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
+                cost: [D, C, C],
                 damage: 90,
                 text: 'Your opponent\'s Active Pokémon is now Poisoned.'
             }];

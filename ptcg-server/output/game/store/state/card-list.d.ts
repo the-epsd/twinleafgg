@@ -1,4 +1,5 @@
 import { Card } from '../card/card';
+import { SuperType } from '../card/card-types';
 export declare enum StadiumDirection {
     UP = "up",
     DOWN = "down"
@@ -18,4 +19,8 @@ export declare class CardList {
     moveToTopOfDestination(destination: CardList): void;
     filter(query: Partial<Card>): Card[];
     count(query: Partial<Card>): number;
+    sort(superType?: SuperType): void;
+    private compareSupertype;
+    private compareTrainerType;
+    private compareEnergyType;
 }
