@@ -1,22 +1,29 @@
 import { Injectable } from '@angular/core';
-import {
-  ClientInfo, GameState, State, CardTarget, StateLog, Replay,
-  Base64, StateSerializer, PlayerStats,
-  Format
-} from 'ptcg-server';
-import { BehaviorSubject, merge, Observable, throwError } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
-import { catchError, finalize, switchMap, takeUntil, timeout } from 'rxjs/operators';
+import {
+  Base64,
+  CardTarget,
+  ClientInfo,
+  Format,
+  GameState,
+  PlayerStats,
+  Replay,
+  State,
+  StateLog,
+  StateSerializer
+} from 'ptcg-server';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { finalize, switchMap, takeUntil } from 'rxjs/operators';
 
-import { AlertService } from '../../shared/alert/alert.service';
-import { ApiError } from '../api.error';
-import { ApiService } from '../api.service';
-import { LocalGameState } from '../../shared/session/session.interface';
-import { PlayerStatsResponse } from '../interfaces/game.interface';
-import { SocketService } from '../socket.service';
-import { SessionService } from '../../shared/session/session.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { AlertService } from '../../shared/alert/alert.service';
+import { LocalGameState } from '../../shared/session/session.interface';
+import { SessionService } from '../../shared/session/session.service';
+import { ApiError } from '../api.error';
+import { ApiService } from '../api.service';
+import { PlayerStatsResponse } from '../interfaces/game.interface';
+import { SocketService } from '../socket.service';
 import { TournamentService } from './tournament.service';
 
 export interface GameUserInfo {
@@ -276,7 +283,7 @@ export class GameService {
   joinMatchmakingLobby(format: string): Observable<any> {
     return this.socketService.joinLobby(format).pipe(
       switchMap(() => new Observable<any>(observer => {
-        this.socketService.on('lobbyUpdate', (data: any) => observer.next(data));
+        this.socketService.on('matchmaking:lobbyUpdate', (data: any) => observer.next(data));
       })),
       takeUntil(new Observable<any>(observer => {
         this.socketService.on('gameStarted', () => observer.next());
@@ -302,7 +309,7 @@ export class GameService {
 
 
   leaveMatchmakingQueue(): Observable<any> {
-    return this.socketService.emit('leaveQueue');
+    return this.socketService.emit('matchmaking:leaveQueue');
   }
 
   checkQueueStatus(format: Format): Observable<any> {

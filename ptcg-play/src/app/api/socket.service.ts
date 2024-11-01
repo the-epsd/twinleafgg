@@ -51,7 +51,6 @@ export class SocketService {
   joinMatchmakingQueue(format: Format, deck: string[]): Observable<any> {
     return this.emit('matchmaking:joinQueue', { format: Format[format], deck }).pipe(
       timeout(5000),
-      retry(2),
       catchError((error) => {
         const apiError = ApiError.fromError(error);
         console.log('Failed - Could not Join Queue.', error);
