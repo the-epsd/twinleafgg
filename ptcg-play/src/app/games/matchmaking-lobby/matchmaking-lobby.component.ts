@@ -1,8 +1,11 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { GameService } from 'src/app/api/services/game.service';
-import { Subscription, throwError } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { catchError, retry } from 'rxjs/operators';
+import { Format } from 'ptcg-server';
+import { Subscription, throwError } from 'rxjs';
+import { catchError, map, retry, switchMap } from 'rxjs/operators';
+import { DeckListEntry } from 'src/app/api/interfaces/deck.interface';
+import { DeckService } from 'src/app/api/services/deck.service';
+import { GameService } from 'src/app/api/services/game.service';
 
 interface QueueUpdate {
   format: string;
@@ -22,17 +25,24 @@ interface GameStartedUpdate {
 })
 export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
   formats = [
-    { value: 'STANDARD', label: 'LABEL_STANDARD' },
-    { value: 'GLC', label: 'LABEL_GLC' },
-    { value: 'EXPANDED', label: 'LABEL_EXPANDED' }
+    { value: Format.STANDARD, label: 'LABEL_STANDARD' },
+    { value: Format.GLC, label: 'LABEL_GLC' },
+    { value: Format.EXPANDED, label: 'LABEL_EXPANDED' },
+    { value: Format.RETRO, label: 'LABEL_RETRO' }
   ];
-  selectedFormat: string = 'STANDARD';
+  
+  selectedFormat: Format = Format.STANDARD;
   inQueue: boolean = false;
   queuedPlayers: string[] = [];
+  decks: DeckListEntry[];
+  deckId: number;
   private subscription: Subscription;
   private pollingInterval: any;
+  decksByFormat = [];
 
-  constructor(private gameService: GameService, private router: Router) { }
+  constructor(private gameService: GameService,
+              private router: Router,
+              private deckService: DeckService) { }
 
   ngOnInit() {
     this.subscription = this.gameService.getQueueUpdates().subscribe(
@@ -47,6 +57,15 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
         }
       }
     );
+    
+    this.deckService.getListByFormat(Format.STANDARD).pipe(
+      map(d => d.filter(deck => deck.isValid))
+    ).subscribe(decks => {
+      this.decksByFormat = decks;
+      if (decks.length > 0) {
+        this.deckId = decks[0].id;
+      }
+    });
   }
 
 
@@ -60,22 +79,26 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
 
   joinQueue() {
     this.inQueue = true;
-    this.gameService.joinMatchmakingQueue(this.selectedFormat)
-      .pipe(
-        retry(3),
-        catchError(error => {
-          this.inQueue = false;
-          console.error('Failed to join queue:', error);
-          return throwError(() => error);
-        })
+    this.deckService.getDeck(this.deckId).pipe(
+      map(response => response.deck.cards),
+      switchMap(cards => 
+        this.gameService.joinMatchmakingQueue(this.selectedFormat, cards)
+          .pipe(
+            retry(3),
+            catchError(error => {
+              this.inQueue = false;
+              console.error('Failed to join queue:', error);
+              return throwError(() => error);
+            })
+        )
       )
-      .subscribe({
-        next: () => {
-          console.log('Joined queue successfully');
-          this.startPolling();
-        },
-        error: (error) => console.error('Error joining queue:', error)
-      });
+    ).subscribe({
+      next: () => {
+        console.log('Joined queue successfully');
+        this.startPolling();
+      },
+      error: (error) => console.error('Error joining queue:', error)
+    });
   }
 
   startPolling() {
@@ -91,7 +114,7 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
         },
         error => console.error('Error checking queue status:', error)
       );
-    }, 5000); // Poll every 5 seconds
+    }, 1000);
   }
 
   stopPolling() {
@@ -107,9 +130,21 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
     }
   }
 
-
   leaveQueue() {
     this.inQueue = false;
     this.gameService.leaveMatchmakingQueue();
+  }
+  
+  onFormatSelected(format: Format) {
+    this.deckService.getListByFormat(format).pipe(
+      map(d => d.filter(deck => deck.isValid))
+    ).subscribe(decks => {
+      this.decksByFormat = decks;
+      
+      if (decks.length > 0) {
+        this.deckId = decks[0].id;
+      }
+    });
+    
   }
 }

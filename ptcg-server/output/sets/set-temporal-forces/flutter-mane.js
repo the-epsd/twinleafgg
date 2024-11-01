@@ -42,7 +42,7 @@ class FlutterMane extends pokemon_card_1.PokemonCard {
         this.powers = [{
                 name: 'Midnight Fluttering',
                 powerType: pokemon_types_1.PowerType.ABILITY,
-                text: 'As long as this Pokémon is in the Active Spot, your opponent\'s Active Pokémon has no Abilities, except for Witching Hour Flutter.'
+                text: 'As long as this Pokémon is in the Active Spot, your opponent\'s Active Pokémon has no Abilities, except for Midnight Fluttering.'
             }];
         this.attacks = [{
                 name: 'Hex Hurl',

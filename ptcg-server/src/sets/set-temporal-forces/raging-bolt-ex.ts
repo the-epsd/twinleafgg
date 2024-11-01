@@ -25,7 +25,7 @@ export class RagingBoltex extends PokemonCard {
 
   public attacks = [
     {
-      name: 'Bursting Roar',
+      name: 'Burst Roar',
       cost: [CardType.COLORLESS],
       damage: 0,
       text: 'Discard your hand and draw 6 cards.'

@@ -18,7 +18,7 @@ export declare class RadiantHisuianSneasler extends PokemonCard {
     }[];
     attacks: {
         name: string;
-        cost: CardType[];
+        cost: (CardType.DARK | CardType.COLORLESS)[];
         damage: number;
         text: string;
     }[];

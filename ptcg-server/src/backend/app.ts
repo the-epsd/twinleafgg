@@ -1,17 +1,17 @@
-import * as express from 'express';
 import { json } from 'body-parser';
+import * as express from 'express';
 
-import { Core } from '../game/core/core';
-import { BotManager } from '../game/bots/bot-manager';
-import { Storage } from '../storage';
-import { WebSocketServer } from './socket/websocket-server';
 import { config } from '../config';
+import { BotManager } from '../game/bots/bot-manager';
+import { Core } from '../game/core/core';
+import { Storage } from '../storage';
 import { cors } from './services/cors';
+import { WebSocketServer } from './socket/websocket-server';
 
 import {
   Avatars,
-  ControllerClass,
   Cards,
+  ControllerClass,
   Decks,
   Game,
   Login,
@@ -20,10 +20,7 @@ import {
   Ranking,
   Replays,
   ResetPassword,
-
 } from './controllers';
-import { MatchmakingController } from './controllers/matchmaking.controller';
-import { Server } from 'socket.io';
 
 export class App {
 
@@ -42,13 +39,6 @@ export class App {
     const storage = this.storage;
     const core = this.core;
     const app = express();
-    const io = new Server();
-
-    const matchmakingController = new MatchmakingController('/matchmaking', app, storage, core, io, core);
-    app.use('/matchmaking', matchmakingController.joinQueue.bind(matchmakingController));
-
-    app.post('/matchmaking/join', matchmakingController.joinQueue.bind(matchmakingController));
-    app.post('/matchmaking/leave', matchmakingController.leaveQueue.bind(matchmakingController));
 
     const define = function (path: string, controller: ControllerClass): void {
       const instance = new controller(path, app, storage, core);

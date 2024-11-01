@@ -1,7 +1,10 @@
-import { Card } from '../card/card';
 import { CardManager } from '../../cards/card-manager';
 import { GameError } from '../../game-error';
 import { GameMessage } from '../../game-message';
+import { Card } from '../card/card';
+import { EnergyType, SuperType, TrainerType } from '../card/card-types';
+import { EnergyCard } from '../card/energy-card';
+import { TrainerCard } from '../card/trainer-card';
 
 export enum StadiumDirection {
   UP = 'up',
@@ -101,5 +104,66 @@ export class CardList {
   public count(query: Partial<Card>): number {
     return this.filter(query).length;
   }
+  
+  public sort(superType: SuperType = SuperType.POKEMON) {
+    this.cards.sort((a, b) => {
+      
+      const result = this.compareSupertype(a.superType) - this.compareSupertype(b.superType);
 
+      // not of the same supertype
+      if (result !== 0) {
+        return result;
+      }
+
+      // cards match supertype, so sort by subtype
+      if ((<any>a).trainerType != null) {
+        const cardA = a as TrainerCard;
+        if (cardA.trainerType != null && (<any>b).trainerType != null) {
+          const cardB = b as TrainerCard;
+          const subtypeCompare = this.compareTrainerType(cardA.trainerType) - this.compareTrainerType(cardB.trainerType);
+          if (subtypeCompare !== 0) {
+            return subtypeCompare;
+          }
+        }
+      }
+      else if ((<any>a).energyType != null) {
+        const cardA = a as EnergyCard;
+        if (cardA.energyType != null && (<any>b).energyType != null) {
+          const cardB = b as TrainerCard;
+          const subtypeCompare = this.compareEnergyType(cardA.energyType) - this.compareEnergyType(cardB.energyType!);
+          if (subtypeCompare !== 0) {
+            return subtypeCompare;
+          }
+        }
+      }
+      
+      // subtype matches, sort by name
+      if (a.name < b.name) {
+        return -1;
+      } else {
+        return 1;
+      }
+    });
+  }
+  
+  private compareSupertype(input: SuperType) {
+    if (input === SuperType.POKEMON) return 1;
+    if (input === SuperType.TRAINER) return 2;
+    if (input === SuperType.ENERGY) return 3;
+    return Infinity;
+  };
+  
+  private compareTrainerType(input: TrainerType) {
+    if (input === TrainerType.SUPPORTER) return 1;
+    if (input === TrainerType.ITEM) return 2;
+    if (input === TrainerType.TOOL) return 3;
+    if (input === TrainerType.STADIUM) return 4;
+    return Infinity;
+  };
+  
+  private compareEnergyType (input: EnergyType) {
+    if (input === EnergyType.BASIC) return 1;
+    if (input === EnergyType.SPECIAL) return 2;
+    return Infinity;
+  }
 }

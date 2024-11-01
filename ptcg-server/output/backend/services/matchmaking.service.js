@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.MatchmakingService = void 0;
 const events_1 = require("events");
 const game_1 = require("../../game");
 class MatchmakingService {
@@ -11,18 +10,24 @@ class MatchmakingService {
         this.lobbyCache = new Map();
         this.core = core;
     }
+    static getInstance(core) {
+        if (!MatchmakingService.instance) {
+            MatchmakingService.instance = new MatchmakingService(core);
+        }
+        return MatchmakingService.instance;
+    }
     getLobby(format) {
         if (!this.lobbyCache.has(format)) {
             this.lobbyCache.set(format, this.lobbies.get(format) || []);
         }
         return this.lobbyCache.get(format) || [];
     }
-    async addToQueue(userId, format) {
+    async addToQueue(userId, format, deck) {
         var _a;
         if (!this.lobbies.has(format)) {
             this.lobbies.set(format, []);
         }
-        (_a = this.lobbies.get(format)) === null || _a === void 0 ? void 0 : _a.push(userId);
+        (_a = this.lobbies.get(format)) === null || _a === void 0 ? void 0 : _a.push([userId, deck]);
         this.playerFormat.set(userId, format);
         await this.emitLobbyUpdate(format);
         await this.checkForMatch(format);
@@ -32,7 +37,7 @@ class MatchmakingService {
         if (format) {
             const lobby = this.lobbies.get(format);
             if (lobby) {
-                const index = lobby.indexOf(userId);
+                const index = lobby.findIndex(l => l[0] === userId);
                 if (index > -1) {
                     lobby.splice(index, 1);
                 }
@@ -63,21 +68,21 @@ class MatchmakingService {
         this.queueUpdates.emit('lobbyUpdate', { format, players: lobby });
     }
     createMatch(player1, player2, format) {
-        const player1Client = this.core.clients.find(client => client.id.toString() === player1);
-        const player2Client = this.core.clients.find(client => client.id.toString() === player2);
+        const player1Client = this.core.clients.find(client => client.id === player1[0]);
+        const player2Client = this.core.clients.find(client => client.id === player2[0]);
         if (player1Client && player2Client) {
             const gameSettings = new game_1.GameSettings();
             gameSettings.format = format;
-            const game = this.core.createGame(player1Client, [], gameSettings, player2Client);
-            // Use InvitePlayerAction to add the second player
-            game.dispatch(player1Client, new game_1.InvitePlayerAction(player2Client.id, player2Client.name));
+            const game = this.core.createGameWithDecks(player1Client, player1[1], gameSettings, player2Client, player2[1]);
+            // // Use InvitePlayerAction to add the second player
+            // game.dispatch(player1Client, new InvitePlayerAction(player2Client.id, player2Client.name));
             this.queueUpdates.emit('gameStarted', { format, gameId: game.id, players: [player1, player2] });
         }
         else {
             console.error('Error creating match: Player not found');
-            this.addToQueue(player1, format);
-            this.addToQueue(player2, format);
+            this.addToQueue(player1[0], format, player1[1]);
+            this.addToQueue(player2[0], format, player2[1]);
         }
     }
 }
-exports.MatchmakingService = MatchmakingService;
+exports.default = MatchmakingService;

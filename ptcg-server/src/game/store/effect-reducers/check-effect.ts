@@ -10,6 +10,7 @@ import { PlayerType, SlotType } from '../actions/play-card-action';
 import { KnockOutEffect } from '../effects/game-effects';
 import { Effect } from '../effects/effect';
 import { EnergyCard } from '../card/energy-card';
+import { GameError } from '../../game-error';
 
 interface PokemonItem {
   playerNum: number;
@@ -138,7 +139,7 @@ function choosePrizeCards(state: State, prizesToTake: [number, number]): ChooseP
 export function endGame(store: StoreLike, state: State, winner: GameWinner): State {
 
   if (state.players.length !== 2) {
-    return state;
+    throw new GameError(GameMessage.ILLEGAL_ACTION);
   }
 
   if ([
@@ -147,7 +148,7 @@ export function endGame(store: StoreLike, state: State, winner: GameWinner): Sta
     GamePhase.ATTACK,
     GamePhase.BETWEEN_TURNS
   ].includes(state.phase) === false) {
-    return state;
+    throw new GameError(GameMessage.ILLEGAL_ACTION);
   }
 
   switch (winner) {
@@ -227,7 +228,7 @@ function handlePrompts(
 
   const player = state.players.find(p => p.id === prompt.playerId);
   if (player === undefined) {
-    return state;
+    throw new GameError(GameMessage.ILLEGAL_ACTION);
   }
 
   return store.prompt(state, prompt, (result) => {
@@ -238,11 +239,11 @@ function handlePrompts(
     } else if (prompt instanceof ChoosePokemonPrompt) {
       const selectedPokemon = result as PokemonCardList[];
       if (selectedPokemon.length !== 1) {
-        return state;
+        throw new GameError(GameMessage.ILLEGAL_ACTION);
       }
       const benchIndex = player.bench.indexOf(selectedPokemon[0]);
       if (benchIndex === -1 || player.active.cards.length > 0) {
-        return state;
+        throw new GameError(GameMessage.ILLEGAL_ACTION);
       }
       const temp = player.active;
       player.active = player.bench[benchIndex];

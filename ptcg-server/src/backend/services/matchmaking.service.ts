@@ -1,41 +1,49 @@
 import { EventEmitter } from 'events';
+import { Format, GameSettings } from '../../game';
 import { Core } from '../../game/core/core';
-import { Format, GameSettings, InvitePlayerAction } from '../../game';
 
-export class MatchmakingService {
-  private lobbies: Map<string, string[]> = new Map();
-  private playerFormat: Map<string, string> = new Map();
+class MatchmakingService {
+  private static instance: MatchmakingService;
+  private lobbies: Map<string, [number, string[]][]> = new Map();
+  private playerFormat: Map<number, string> = new Map();
   public queueUpdates: EventEmitter = new EventEmitter();
-  private lobbyCache: Map<string, string[]> = new Map();
+  private lobbyCache: Map<string, [number, string[]][]> = new Map();
   private core: Core;
 
-  constructor(core: Core) {
+  private constructor(core: Core) {
     this.core = core;
   }
-
-  getLobby(format: string): string[] {
+  
+  public static getInstance(core: Core): MatchmakingService {
+    if (!MatchmakingService.instance) {
+      MatchmakingService.instance = new MatchmakingService(core);
+    }
+    return MatchmakingService.instance;
+  }
+  
+  getLobby(format: string): [number, string[]][] {
     if (!this.lobbyCache.has(format)) {
       this.lobbyCache.set(format, this.lobbies.get(format) || []);
     }
     return this.lobbyCache.get(format) || [];
   }
 
-  async addToQueue(userId: string, format: string): Promise<void> {
+  async addToQueue(userId: number, format: string, deck: string[]): Promise<void> {
     if (!this.lobbies.has(format)) {
       this.lobbies.set(format, []);
     }
-    this.lobbies.get(format)?.push(userId);
+    this.lobbies.get(format)?.push([userId, deck]);
     this.playerFormat.set(userId, format);
     await this.emitLobbyUpdate(format);
     await this.checkForMatch(format);
   }
 
-  removeFromQueue(userId: string) {
+  removeFromQueue(userId: number) {
     const format = this.playerFormat.get(userId);
     if (format) {
       const lobby = this.lobbies.get(format);
       if (lobby) {
-        const index = lobby.indexOf(userId);
+        const index = lobby.findIndex(l => l[0] === userId);
         if (index > -1) {
           lobby.splice(index, 1);
         }
@@ -67,23 +75,24 @@ export class MatchmakingService {
     this.queueUpdates.emit('lobbyUpdate', { format, players: lobby });
   }
 
-  private createMatch(player1: string, player2: string, format: string) {
-    const player1Client = this.core.clients.find(client => client.id.toString() === player1);
-    const player2Client = this.core.clients.find(client => client.id.toString() === player2);
+  private createMatch(player1: [number, string[]], player2: [number, string[]], format: string) {
+    const player1Client = this.core.clients.find(client => client.id === player1[0]);
+    const player2Client = this.core.clients.find(client => client.id === player2[0]);
 
     if (player1Client && player2Client) {
       const gameSettings = new GameSettings();
       gameSettings.format = format as unknown as Format;
-      const game = this.core.createGame(player1Client, [], gameSettings, player2Client);
+      const game = this.core.createGameWithDecks(player1Client, player1[1], gameSettings, player2Client, player2[1]);
 
-      // Use InvitePlayerAction to add the second player
-      game.dispatch(player1Client, new InvitePlayerAction(player2Client.id, player2Client.name));
-
+      // // Use InvitePlayerAction to add the second player
+      // game.dispatch(player1Client, new InvitePlayerAction(player2Client.id, player2Client.name));
       this.queueUpdates.emit('gameStarted', { format, gameId: game.id, players: [player1, player2] });
     } else {
       console.error('Error creating match: Player not found');
-      this.addToQueue(player1, format);
-      this.addToQueue(player2, format);
+      this.addToQueue(player1[0], format, player1[1]);
+      this.addToQueue(player2[0], format, player2[1]);
     }
   }
 }
+
+export default MatchmakingService;

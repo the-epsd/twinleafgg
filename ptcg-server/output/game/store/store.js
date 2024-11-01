@@ -111,7 +111,7 @@ class Store {
         const prompt = state.prompts.find(item => item.id === action.id);
         const promptItem = this.promptItems.find(item => item.ids.indexOf(action.id) !== -1);
         if (prompt === undefined || promptItem === undefined) {
-            return state;
+            throw new game_error_1.GameError(game_message_1.GameMessage.ILLEGAL_ACTION);
         }
         if (prompt.result !== undefined) {
             throw new game_error_1.GameError(game_message_1.GameMessage.PROMPT_ALREADY_RESOLVED);

@@ -10,6 +10,7 @@ export declare class Core {
     connect(client: Client): Client;
     disconnect(client: Client): void;
     createGame(client: Client, deck: string[], gameSettings?: GameSettings, invited?: Client): Game;
+    createGameWithDecks(client: Client, deck: string[], gameSettings: GameSettings | undefined, client2: Client, deck2: string[]): Game;
     joinGame(client: Client, game: Game): void;
     deleteGame(game: Game): void;
     leaveGame(client: Client, game: Game): void;
