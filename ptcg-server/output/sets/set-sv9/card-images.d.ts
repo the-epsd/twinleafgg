@@ -5,7 +5,7 @@ import { Torchic } from './torchic';
 export declare class LilliesClefairyexArt extends LilliesClefairyex {
     cardImage: string;
 }
-export declare class TorthicArt extends Torchic {
+export declare class TorchicArt extends Torchic {
     cardImage: string;
 }
 export declare class CombuskenArt extends Combusken {

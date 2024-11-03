@@ -7,7 +7,7 @@ export class LilliesClefairyexArt extends LilliesClefairyex {
   public cardImage = 'https://i.imgur.com/QhiYThD.png';
 }
 
-export class TorthicArt extends Torchic {
+export class TorchicArt extends Torchic {
   public cardImage = 'https://www.pokebeach.com/news/2024/10/modal-decklist-3-card-1-1.png';
 }
 

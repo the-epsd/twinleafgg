@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BlazikenexArt = exports.CombuskenArt = exports.TorthicArt = exports.LilliesClefairyexArt = void 0;
+exports.BlazikenexArt = exports.CombuskenArt = exports.TorchicArt = exports.LilliesClefairyexArt = void 0;
 const blaziken_ex_1 = require("./blaziken-ex");
 const combusken_1 = require("./combusken");
 const lillies_clefairy_ex_1 = require("./lillies-clefairy-ex");
@@ -12,13 +12,13 @@ class LilliesClefairyexArt extends lillies_clefairy_ex_1.LilliesClefairyex {
     }
 }
 exports.LilliesClefairyexArt = LilliesClefairyexArt;
-class TorthicArt extends torchic_1.Torchic {
+class TorchicArt extends torchic_1.Torchic {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://www.pokebeach.com/news/2024/10/modal-decklist-3-card-1-1.png';
     }
 }
-exports.TorthicArt = TorthicArt;
+exports.TorchicArt = TorchicArt;
 class CombuskenArt extends combusken_1.Combusken {
     constructor() {
         super(...arguments);
