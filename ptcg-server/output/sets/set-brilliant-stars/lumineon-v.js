@@ -70,7 +70,7 @@ class LumineonV extends pokemon_card_1.PokemonCard {
                             store.prompt(state, [new game_1.ShowCardsPrompt(opponent.id, game_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards)], () => {
                                 player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
                                     if (cardList.getPokemonCard() === this) {
-                                        cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
+                                        cardList.addBoardEffect(card_types_1.BoardEffect.ABILITY_USED);
                                     }
                                 });
                                 cards.forEach((card, index) => {

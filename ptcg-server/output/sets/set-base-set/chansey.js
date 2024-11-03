@@ -11,54 +11,62 @@ const game_phase_effects_1 = require("../../game/store/effects/game-phase-effect
 class Chansey extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.set = 'BS';
-        this.fullName = 'Chansey BS';
-        this.name = 'Chansey';
-        this.cardType = card_types_1.CardType.COLORLESS;
         this.stage = card_types_1.Stage.BASIC;
-        this.cardImage = 'assets/cardback.png';
-        this.setNumber = '3';
+        this.cardType = C;
         this.hp = 120;
-        this.weakness = [{ type: card_types_1.CardType.LIGHTNING }];
-        this.resistance = [{ type: card_types_1.CardType.PSYCHIC, value: -30 }];
-        this.retreat = [card_types_1.CardType.COLORLESS];
+        this.weakness = [{ type: F }];
+        this.resistance = [{ type: P, value: -30 }];
+        this.retreat = [C];
         this.attacks = [
             {
                 name: 'Scrunch',
-                cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
+                cost: [C, C],
                 damage: 0,
-                text: 'Flip a coin. If heads, prevent all damage done to Chansey during your opponent’s next turn. (Any other effects of attacks still happen.)'
+                text: 'Flip a coin. If heads, prevent all damage done to Chansey during your opponent\'s next turn. (Any other effects of attacks still happen.)'
             },
             {
                 name: 'Double-edge',
-                cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
+                cost: [C, C, C, C],
                 damage: 80,
                 text: 'Chansey does 80 damage to itself.'
             }
         ];
+        this.set = 'BS';
+        this.fullName = 'Chansey BS';
+        this.name = 'Chansey';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '3';
+        this.PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER = 'PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER';
+        this.CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER = 'CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            return store.prompt(state, new coin_flip_prompt_1.CoinFlipPrompt(player.id, game_1.GameMessage.COIN_FLIP), flipResult => {
+            state = store.prompt(state, new coin_flip_prompt_1.CoinFlipPrompt(player.id, game_1.GameMessage.COIN_FLIP), flipResult => {
                 if (flipResult) {
-                    player.active.marker.addMarker(game_1.PokemonCardList.PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER, this);
-                    opponent.marker.addMarker(game_1.PokemonCardList.CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER, this);
+                    player.active.attackMarker.addMarker(this.PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER, this);
+                    opponent.attackMarker.addMarker(this.CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER, this);
                 }
             });
+            return state;
         }
-        if (effect instanceof attack_effects_1.PutDamageEffect
-            && effect.target.marker.hasMarker(game_1.PokemonCardList.PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER)) {
+        if (effect instanceof attack_effects_1.AbstractAttackEffect
+            && effect.target.attackMarker.hasMarker(this.PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER)) {
             effect.preventDefault = true;
             return state;
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect &&
-            effect.player.marker.hasMarker(game_1.PokemonCardList.CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER, this)) {
-            effect.player.marker.removeMarker(game_1.PokemonCardList.CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER, this);
+        if (effect instanceof attack_effects_1.PutDamageEffect
+            && effect.target.attackMarker.hasMarker(this.PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER)) {
+            effect.preventDefault = true;
+            return state;
+        }
+        if (effect instanceof game_phase_effects_1.EndTurnEffect
+            && effect.player.attackMarker.hasMarker(this.CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER, this)) {
+            effect.player.attackMarker.removeMarker(this.CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER, this);
             const opponent = game_1.StateUtils.getOpponent(state, effect.player);
             opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList) => {
-                cardList.marker.removeMarker(game_1.PokemonCardList.PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER, this);
+                cardList.attackMarker.removeMarker(this.PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER, this);
             });
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {

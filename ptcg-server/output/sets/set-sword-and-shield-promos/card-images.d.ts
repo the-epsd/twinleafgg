@@ -1,4 +1,3 @@
-import { EscapeRope } from '../set-battle-styles/escape-rope';
 import { ChampionsFestival } from './champions-festival';
 import { DeoxysV } from './deoxys-v';
 import { DeoxysVSTAR } from './deoxys-vstar';
@@ -42,12 +41,6 @@ export declare class OricorioArt extends Oricorio {
 }
 export declare class ProfessorBurnettArt extends ProfessorBurnet {
     cardImage: string;
-}
-export declare class EscapeRopeArt extends EscapeRope {
-    cardImage: string;
-    set: string;
-    setNumber: string;
-    fullName: string;
 }
 export declare class ScorbunnyArt extends Scorbunny {
     cardImage: string;

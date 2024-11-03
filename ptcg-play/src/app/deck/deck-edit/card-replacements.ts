@@ -10,7 +10,14 @@ export const cardReplacements = [
   { from: 'Basic {D} Energy GEN 81', to: 'Darkness Energy 7' },
   { from: 'Basic {D} Energy XY 138', to: 'Darkness Energy 7' },
 
-  { from: 'Grass Energy SVE 1', to: 'Grass Energy 1' },
+  { from: 'Grass Energy SVE 9', to: 'Grass Energy 1' },
+  { from: 'Fire Energy SVE 10', to: 'Fire Energy 2' },
+  { from: 'Water Energy SVE 11', to: 'Water Energy 3' },
+  { from: 'Lightning Energy SVE 12', to: 'Lightning Energy 4' },
+  { from: 'Psychic Energy SVE 13', to: 'Psychic Energy 5' },
+  { from: 'Fighting Energy SVE 14', to: 'Fighting Energy 6' },
+  { from: 'Darkness Energy SVE 15', to: 'Darkness Energy 7' },
+  { from: 'Metal Energy SVE 16', to: 'Metal Energy 8' },
 
   //BS
   { from: 'Pokemon Breeder BS 76', to: 'Pokémon Breeder BS 76' },
@@ -29,7 +36,7 @@ export const cardReplacements = [
   { from: 'Klara CRE 145', to: 'Klara CRE 145 145' },
 
   //PGO
-  { from: 'PokéStop PGO 68', to: 'Pokestop PGO 68' },
+  { from: 'PokéStop PGO 68', to: 'PokeStop PGO 68' },
 
   //CRZ
   { from: 'Zacian VSTAR CRZ 96', to: 'Zacian VSTAR' },
@@ -303,6 +310,15 @@ export const cardReplacements = [
 ];
 
 export const exportReplacements = [
+  //Energy
+  { from: 'Grass Energy 1', to: 'Grass Energy SVE 9' },
+  { from: 'Fire Energy 2', to: 'Fire Energy SVE 10' },
+  { from: 'Water Energy 3', to: 'Water Energy SVE 11' },
+  { from: 'Lightning Energy 4', to: 'Lightning Energy SVE 12' },
+  { from: 'Psychic Energy 5', to: 'Psychic Energy SVE 13' },
+  { from: 'Fighting Energy 6', to: 'Fighting Energy SVE 14' },
+  { from: 'Darkness Energy 7', to: 'Darkness Energy SVE 15' },
+  { from: 'Metal Energy 8', to: 'Metal Energy SVE 16' },
 
   //BS
   { from: 'Pokémon Breeder BS 76', to: 'Pokemon Breeder BS 76' },
@@ -321,7 +337,7 @@ export const exportReplacements = [
   { from: 'Klara CRE 145 145', to: 'Klara CRE 145' },
 
   //PGO
-  { from: 'Pokestop PGO 68', to: 'PokéStop PGO 68' },
+  { from: 'PokeStop PGO 68', to: 'PokéStop PGO 68' },
 
   //CRZ
   { from: 'Zacian VSTAR', to: 'Zacian VSTAR CRZ 96' },

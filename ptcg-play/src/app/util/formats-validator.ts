@@ -16,6 +16,20 @@ export class FormatValidator {
 
     let formatList = formats.reduce((a, b) => a.filter(c => b.includes(c)))
 
+    // Add Professor validation check here
+    const set = new Set(cards.map(c => c.name));
+    if ((set.has('Professor Sycamore') && set.has('Professor Juniper')) ||
+      (set.has('Professor Juniper') && set.has('Professor\'s Research')) ||
+      (set.has('Professor Sycamore') && set.has('Professor\'s Research')) ||
+      (set.has('Lysandre') && set.has('Boss\'s Orders'))) {
+      return formatList.filter(f =>
+        f !== Format.GLC &&
+        f !== Format.EXPANDED &&
+        f !== Format.STANDARD &&
+        f !== Format.UNLIMITED
+      );
+    }
+
     if (formatList.includes(Format.GLC)) {
 
       // check for singleton violation
@@ -24,14 +38,6 @@ export class FormatValidator {
       const set = new Set(nonBasicEnergyCards.map(c => c.name));
 
       if (set.size < nonBasicEnergyCards.length) {
-        formatList = formatList.filter(f => f !== Format.GLC);
-        return formatList;
-      }
-
-      if ((set.has('Professor Sycamore') && set.has('Professor Juniper')) ||
-        (set.has('Professor Juniper') && set.has('Professor\'s Research')) ||
-        (set.has('Professor Sycamore') && set.has('Professor\'s Research')) ||
-        (set.has('Lysandre') && set.has('Boss\'s Orders'))) {
         formatList = formatList.filter(f => f !== Format.GLC);
         return formatList;
       }
@@ -46,9 +52,10 @@ export class FormatValidator {
         return formatList;
       }
     }
-
     return formatList
   }
+
+
 
   static getValidFormats(card: Card): Format[] {
     const formats = [Format.UNLIMITED];
@@ -173,7 +180,7 @@ export const BanLists: { [key: number]: string[] } = {
     'Shaymin-EX ROS 106',
     'Unown LOT 90',
     'Unown LOT 91',
-    // 'Duskull CEC 83',
+    'Duskull CEC 83',
   ],
   [Format.RETRO]: [],
   [Format.UNLIMITED]: [],
@@ -320,4 +327,6 @@ export const SetReleaseDates: { [key: string]: Date } = {
   'SFA': new Date('2024-08-02'),
   'SCR': new Date('2024-09-13'),
   'SV7a': new Date('2024-09-13'),
+  'SV8': new Date('2024-10-25'),
+  'SSP': new Date('2024-11-04'),
 }

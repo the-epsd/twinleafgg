@@ -113,6 +113,7 @@ export * from './set-twilight-masquerade';
 export * from './set-shrouded-fable';
 export * from './set-stellar-crown';
 export * from './set-surging-sparks';
+export * from './set-prismatic-evolution';
 export * from './set-sv9';
 
 //TEST

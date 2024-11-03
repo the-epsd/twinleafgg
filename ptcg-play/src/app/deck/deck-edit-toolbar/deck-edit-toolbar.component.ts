@@ -282,7 +282,6 @@ export class DeckEditToolbarComponent implements OnDestroy {
     this.form.patchValue({
       formats: [],
       tags: [],
-      searchValue: null
     }, { emitEvent: false });
 
     // Update the form control

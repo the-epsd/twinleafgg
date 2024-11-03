@@ -22,5 +22,6 @@ export declare class TingLu extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
+    discardedStadiumCard: boolean;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

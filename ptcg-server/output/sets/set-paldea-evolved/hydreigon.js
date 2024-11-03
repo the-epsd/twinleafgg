@@ -68,16 +68,16 @@ class Hydreigon extends pokemon_card_1.PokemonCard {
                 // Prompt to attach energy if any were drawn
                 return store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_CARDS, temp, // Only show drawn energies
                 game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY }, { min: 0, max: energyCardsDrawn.length, allowCancel: false }), transfers => {
-                    //if transfers = 0, put both in hand
+                    player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
+                        if (cardList.getPokemonCard() === this) {
+                            cardList.addBoardEffect(card_types_1.BoardEffect.ABILITY_USED);
+                        }
+                    });
+                    //if transfers = 0, put both in discard
                     if (transfers.length === 0) {
                         temp.cards.slice(0, 3).forEach(card => {
                             temp.moveCardTo(card, player.discard);
                             player.marker.addMarker(this.TRI_HOWL_MARKER, this);
-                            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
-                                if (cardList.getPokemonCard() === this) {
-                                    cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
-                                }
-                            });
                         });
                     }
                     // Attach energy based on prompt selection
@@ -89,13 +89,9 @@ class Hydreigon extends pokemon_card_1.PokemonCard {
                         temp.cards.forEach(card => {
                             temp.moveCardTo(card, player.discard); // Move card to hand
                             player.marker.addMarker(this.TRI_HOWL_MARKER, this);
-                            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
-                                if (cardList.getPokemonCard() === this) {
-                                    cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
-                                }
-                            });
                         });
                     }
+                    return state;
                 });
             }
         }

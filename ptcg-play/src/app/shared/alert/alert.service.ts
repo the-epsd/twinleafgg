@@ -18,7 +18,7 @@ export class AlertService {
     private translate: TranslateService
   ) { }
 
-  public alert(message: string, title?: string): Promise<void> {
+  public alert(message: string, title?: string, p0?: string[]): Promise<void> {
     const dialog = this.dialog.open(AlertPopupComponent, {
       maxWidth: '100%',
       width: '350px',

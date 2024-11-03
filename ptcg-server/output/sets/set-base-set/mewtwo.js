@@ -12,28 +12,26 @@ const game_phase_effects_1 = require("../../game/store/effects/game-phase-effect
 class Mewtwo extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.set = 'BS';
-        this.name = 'Mewtwo';
-        this.fullName = 'Mewtwo BS';
         this.stage = card_types_1.Stage.BASIC;
-        this.cardType = card_types_1.CardType.PSYCHIC;
+        this.cardType = P;
         this.hp = 60;
-        this.weakness = [{
-                type: card_types_1.CardType.PSYCHIC
-            }];
-        this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
+        this.weakness = [{ type: P }];
+        this.retreat = [C, C, C];
         this.attacks = [{
                 name: 'Psychic',
-                cost: [card_types_1.CardType.PSYCHIC, card_types_1.CardType.COLORLESS],
+                cost: [P, C],
                 damage: 10,
                 text: 'Does 10 damage plus 10 more damage for each Energy card attached to the Defending Pokémon.'
             }, {
                 name: 'Barrier',
-                cost: [card_types_1.CardType.PSYCHIC, card_types_1.CardType.PSYCHIC],
+                cost: [P, P],
                 text: 'Discard 1 {P} Energy card attached to Mewtwo in order to prevent all effects of attacks, including damage, done to Mewtwo during your opponent’s next turn.',
                 damage: 0
             }];
-        this.powers = [];
+        this.set = 'BS';
+        this.name = 'Mewtwo';
+        this.fullName = 'Mewtwo BS';
+        this.setNumber = '10';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

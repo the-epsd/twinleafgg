@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SuperType, SpecialCondition } from '../../game/store/card/card-types';
+import { Stage, CardType, SuperType, BoardEffect } from '../../game/store/card/card-types';
 import { AttachEnergyPrompt, CardList, EnergyCard, GameError, GameMessage, PlayerType, PowerType, SlotType, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
@@ -87,17 +87,17 @@ export class Hydreigon extends PokemonCard {
           { min: 0, max: energyCardsDrawn.length, allowCancel: false }
         ), transfers => {
 
-          //if transfers = 0, put both in hand
+          player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+            if (cardList.getPokemonCard() === this) {
+              cardList.addBoardEffect(BoardEffect.ABILITY_USED);
+            }
+          });
 
+          //if transfers = 0, put both in discard
           if (transfers.length === 0) {
             temp.cards.slice(0, 3).forEach(card => {
               temp.moveCardTo(card, player.discard);
               player.marker.addMarker(this.TRI_HOWL_MARKER, this);
-              player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-                if (cardList.getPokemonCard() === this) {
-                  cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
-                }
-              });
             });
           }
 
@@ -110,13 +110,9 @@ export class Hydreigon extends PokemonCard {
             temp.cards.forEach(card => {
               temp.moveCardTo(card, player.discard); // Move card to hand
               player.marker.addMarker(this.TRI_HOWL_MARKER, this);
-              player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-                if (cardList.getPokemonCard() === this) {
-                  cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
-                }
-              });
             });
           }
+          return state;
         });
       }
     }

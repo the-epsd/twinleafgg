@@ -1,12 +1,13 @@
 import { GamePhase, GameWinner } from '../state/state';
-import { GameLog } from '../../game-message';
+import { GameLog, GameMessage } from '../../game-message';
 import { AbortGameAction, AbortGameReason } from '../actions/abort-game-action';
 import { endGame } from '../effect-reducers/check-effect';
+import { GameError } from '../../game-error';
 export function abortGameReducer(store, state, action) {
     if (state.phase !== GamePhase.FINISHED && action instanceof AbortGameAction) {
         const culprit = state.players.find(p => p.id === action.culpritId);
         if (culprit === undefined) {
-            return state;
+            throw new GameError(GameMessage.ILLEGAL_ACTION);
         }
         // Mark all prompts as resolved, so they won't mess with our state anymore.
         state.prompts.forEach(prompt => {

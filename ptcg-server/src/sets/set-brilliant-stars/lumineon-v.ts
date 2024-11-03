@@ -1,7 +1,7 @@
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, SuperType, TrainerType, SpecialCondition } from '../../game/store/card/card-types';
+import { Stage, CardType, CardTag, SuperType, TrainerType, BoardEffect } from '../../game/store/card/card-types';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import {
   PowerType, StoreLike, State, GameMessage, ChooseCardsPrompt,
@@ -106,7 +106,7 @@ export class LumineonV extends PokemonCard {
 
                 player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
                   if (cardList.getPokemonCard() === this) {
-                    cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+                    cardList.addBoardEffect(BoardEffect.ABILITY_USED);
                   }
                 });
 
@@ -118,7 +118,6 @@ export class LumineonV extends PokemonCard {
                 return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
                   player.deck.applyOrder(order);
                 });
-
               });
             }
           });

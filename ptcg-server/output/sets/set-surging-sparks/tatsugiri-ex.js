@@ -18,14 +18,13 @@ class Tatsugiriex extends game_1.PokemonCard {
         this.attacks = [
             {
                 name: 'Surprise Pump',
-                cost: [F, W],
+                cost: [R, W],
                 damage: 100,
                 text: 'This attack\'s damage isn\'t affected by any effects on your opponent\'s Active Pokémon.'
             },
             {
                 name: 'Cinnabar Lure',
-                cost: [],
-                // cost: [F, W, D],
+                cost: [F, W, D],
                 damage: 0,
                 text: 'Look at the top 10 cards of your deck. You may put any number of Pokémon you find there onto your Bench. Shuffle the other cards back into your deck.'
             }
@@ -52,8 +51,6 @@ class Tatsugiriex extends game_1.PokemonCard {
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
-            // Allow player to search deck and choose up to 2 Basic Pokemon
-            const slots = player.bench.filter(b => b.cards.length === 0);
             if (player.deck.cards.length === 0) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
             }
@@ -71,10 +68,10 @@ class Tatsugiriex extends game_1.PokemonCard {
             return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH, deckTop, { superType: card_types_1.SuperType.POKEMON }, { min: 0, max: maxPokemons, allowCancel: false }), selectedCards => {
                 cards = selectedCards || [];
                 cards.forEach((card, index) => {
-                    deckTop.moveCardTo(card, slots[index]);
-                    slots[index].pokemonPlayedTurn = state.turn;
-                    deckTop.moveTo(player.deck);
+                    deckTop.moveCardTo(card, openSlots[index]);
+                    openSlots[index].pokemonPlayedTurn = state.turn;
                 });
+                deckTop.moveTo(player.deck);
                 return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
                     player.deck.applyOrder(order);
                     return state;

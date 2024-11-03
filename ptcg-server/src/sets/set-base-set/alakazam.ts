@@ -17,13 +17,15 @@ export class Alakazam extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_2;
 
+  public evolvesFrom = 'Kadabra';
+
   public cardType: CardType = CardType.PSYCHIC;
 
   public hp: number = 80;
 
   public weakness = [{ type: CardType.PSYCHIC }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Damage Swap',
@@ -34,7 +36,7 @@ export class Alakazam extends PokemonCard {
 
   public attacks = [{
     name: 'Shadow Punch',
-    cost: [ CardType.PSYCHIC, CardType.PSYCHIC, CardType.PSYCHIC ],
+    cost: [CardType.PSYCHIC, CardType.PSYCHIC, CardType.PSYCHIC],
     damage: 30,
     text: 'Flip a coin. If heads, the Defending Pokémon is now Confused.'
   }];
@@ -51,29 +53,28 @@ export class Alakazam extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
-      
+
       const maxAllowedDamage: DamageMap[] = [];
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
         const checkHpEffect = new CheckHpEffect(player, cardList);
         store.reduceEffect(state, checkHpEffect);
         maxAllowedDamage.push({ target, damage: checkHpEffect.hp });
       });
-      
+
       return store.prompt(state, new MoveDamagePrompt(
         effect.player.id,
         GameMessage.MOVE_DAMAGE,
         PlayerType.BOTTOM_PLAYER,
-        [ SlotType.ACTIVE, SlotType.BENCH ],
+        [SlotType.ACTIVE, SlotType.BENCH],
         maxAllowedDamage,
         { allowCancel: true }
       ), transfers => {
         if (transfers === null) {
           return;
         }
-      
+
         for (const transfer of transfers) {
           const source = StateUtils.getTarget(state, player, transfer.from);
           const target = StateUtils.getTarget(state, player, transfer.to);

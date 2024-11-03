@@ -113,6 +113,7 @@ __exportStar(require("./set-twilight-masquerade"), exports);
 __exportStar(require("./set-shrouded-fable"), exports);
 __exportStar(require("./set-stellar-crown"), exports);
 __exportStar(require("./set-surging-sparks"), exports);
+__exportStar(require("./set-prismatic-evolution"), exports);
 __exportStar(require("./set-sv9"), exports);
 //TEST
 __exportStar(require("./set-test"), exports);

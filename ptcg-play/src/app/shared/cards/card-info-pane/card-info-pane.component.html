@@ -7,18 +7,6 @@
     <div class="title">
       <span>{{card.name}}</span>
       <div class="ptcg-u-spacer"></div>
-      <div class="subtitle-evolves-from" *ngIf="card.evolvesFrom">
-        {{ 'CARDS_EVOLVES_FROM' | translate: { name: card.evolvesFrom } }}
-      </div>
-    </div>
-    <div class="subtitle">
-      <div class="subtitle-stage" [ngSwitch]="card.stage">
-        <span *ngSwitchCase="Stage.BASIC" translate>CARDS_BASIC</span>
-        <span *ngSwitchCase="Stage.RESTORED" translate>CARDS_RESTORED</span>
-        <span *ngSwitchCase="Stage.STAGE_1" translate>CARDS_STAGE_1</span>
-        <span *ngSwitchCase="Stage.STAGE_2" translate>CARDS_STAGE_2</span>
-      </div>
-      <div class="ptcg-u-spacer"></div>
       <div class="subtitle-hp">
         <span class="subtitle-hp-unit" translate>CARDS_HP</span>
         <span class="subtitle-hp-value">{{card.hp}}</span>
@@ -29,7 +17,18 @@
           <ptcg-energy *ngFor="let type of card.additionalCardTypes" [type]="type"></ptcg-energy>
         </ng-container>
       </div>
-
+    </div>
+    <div class="subtitle">
+      <div class="subtitle-stage" [ngSwitch]="card.stage">
+        <span *ngSwitchCase="Stage.BASIC" translate>CARDS_BASIC</span>
+        <span *ngSwitchCase="Stage.RESTORED" translate>CARDS_RESTORED</span>
+        <span *ngSwitchCase="Stage.STAGE_1" translate>CARDS_STAGE_1</span>
+        <span *ngSwitchCase="Stage.STAGE_2" translate>CARDS_STAGE_2</span>
+      </div>
+      <div class="ptcg-u-spacer"></div>
+      <div class="subtitle-evolves-from" *ngIf="card.evolvesFrom">
+        {{ 'CARDS_EVOLVES_FROM' | translate: { name: card.evolvesFrom } }}
+      </div>
     </div>
 
     <ptcg-hover-highlight *ngFor="let power of card.powers"

@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.VenusaurVMAXArt = exports.VenusaurVArt = exports.TepigArt = exports.ScorbunnyArt = exports.EscapeRopeArt = exports.ProfessorBurnettArt = exports.OricorioArt = exports.ManaphyArt = exports.LucarioVSTARArt = exports.LeafeonVSTARArt = exports.HisuianElectrodeVArt = exports.DeoxysVSTARArt = exports.DeoxysVArt = exports.CharmanderArt = exports.ChampionsFestivalArt = void 0;
-const escape_rope_1 = require("../set-battle-styles/escape-rope");
+exports.VenusaurVMAXArt = exports.VenusaurVArt = exports.TepigArt = exports.ScorbunnyArt = exports.ProfessorBurnettArt = exports.OricorioArt = exports.ManaphyArt = exports.LucarioVSTARArt = exports.LeafeonVSTARArt = exports.HisuianElectrodeVArt = exports.DeoxysVSTARArt = exports.DeoxysVArt = exports.CharmanderArt = exports.ChampionsFestivalArt = void 0;
 const champions_festival_1 = require("./champions-festival");
 const deoxys_v_1 = require("./deoxys-v");
 const deoxys_vstar_1 = require("./deoxys-vstar");
@@ -89,16 +88,12 @@ class ProfessorBurnettArt extends professor_burnett_1.ProfessorBurnet {
     }
 }
 exports.ProfessorBurnettArt = ProfessorBurnettArt;
-class EscapeRopeArt extends escape_rope_1.EscapeRope {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://www.serebii.net/card/ggend/51.jpg';
-        this.set = 'SM10a';
-        this.setNumber = '51';
-        this.fullName = 'Escape Rope SM10a';
-    }
-}
-exports.EscapeRopeArt = EscapeRopeArt;
+// export class EscapeRopeArt extends EscapeRope {
+//   public cardImage = 'https://www.serebii.net/card/ggend/51.jpg';
+//   public set = 'SM10a';
+//   public setNumber = '51';
+//   public fullName = 'Escape Rope SM10a';
+// }
 class ScorbunnyArt extends scorbunny_1.Scorbunny {
     constructor() {
         super(...arguments);

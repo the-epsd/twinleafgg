@@ -59,4 +59,5 @@ exports.setSurgingSparks = [
     new card_images_1.CharcadetArt(),
     new card_images_1.EeveeArt(),
     new card_images_1.SylveonexArt(),
+    new card_images_1.LisiasAppealArt(),
 ];
