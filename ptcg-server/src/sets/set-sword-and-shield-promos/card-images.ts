@@ -1,4 +1,3 @@
-import { EscapeRope } from '../set-battle-styles/escape-rope';
 import { ChampionsFestival } from './champions-festival';
 import { DeoxysV } from './deoxys-v';
 import { DeoxysVSTAR } from './deoxys-vstar';
@@ -58,15 +57,15 @@ export class ProfessorBurnettArt extends ProfessorBurnet {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_167_R_EN_LG.png';
 }
 
-export class EscapeRopeArt extends EscapeRope {
-  public cardImage = 'https://www.serebii.net/card/ggend/51.jpg';
-  public set = 'SM10a';
-  public setNumber = '51';
-  public fullName = 'Escape Rope SM10a';
-}
+// export class EscapeRopeArt extends EscapeRope {
+//   public cardImage = 'https://www.serebii.net/card/ggend/51.jpg';
+//   public set = 'SM10a';
+//   public setNumber = '51';
+//   public fullName = 'Escape Rope SM10a';
+// }
 
 export class ScorbunnyArt extends Scorbunny {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_071_R_EN_LG.png'
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_071_R_EN_LG.png';
 }
 
 export class TepigArt extends Tepig {

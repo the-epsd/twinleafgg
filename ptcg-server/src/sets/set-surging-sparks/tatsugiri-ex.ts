@@ -2,7 +2,7 @@ import { CardType, Stage, SuperType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { Card, CardList, ChooseCardsPrompt, GameError, GameMessage, PokemonCard, PokemonCardList, ShuffleDeckPrompt, StateUtils } from '../../game';
+import { Card, CardList, ChooseCardsPrompt, GameError, GameMessage, PokemonCard, ShuffleDeckPrompt, StateUtils } from '../../game';
 import { ApplyWeaknessEffect, AfterDamageEffect } from '../../game/store/effects/attack-effects';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 
@@ -25,14 +25,13 @@ export class Tatsugiriex extends PokemonCard {
   public attacks = [
     {
       name: 'Surprise Pump',
-      cost: [F, W],
+      cost: [R, W],
       damage: 100,
       text: 'This attack\'s damage isn\'t affected by any effects on your opponent\'s Active Pokémon.'
     },
     {
       name: 'Cinnabar Lure',
-      cost: [],
-      // cost: [F, W, D],
+      cost: [F, W, D],
       damage: 0,
       text: 'Look at the top 10 cards of your deck. You may put any number of Pokémon you find there onto your Bench. Shuffle the other cards back into your deck.'
     }
@@ -71,9 +70,6 @@ export class Tatsugiriex extends PokemonCard {
 
       const player = effect.player;
 
-      // Allow player to search deck and choose up to 2 Basic Pokemon
-      const slots: PokemonCardList[] = player.bench.filter(b => b.cards.length === 0);
-
       if (player.deck.cards.length === 0) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
@@ -102,10 +98,10 @@ export class Tatsugiriex extends PokemonCard {
         cards = selectedCards || [];
 
         cards.forEach((card, index) => {
-          deckTop.moveCardTo(card, slots[index]);
-          slots[index].pokemonPlayedTurn = state.turn;
-          deckTop.moveTo(player.deck);
+          deckTop.moveCardTo(card, openSlots[index]);
+          openSlots[index].pokemonPlayedTurn = state.turn;
         });
+        deckTop.moveTo(player.deck);
 
         return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
           player.deck.applyOrder(order);

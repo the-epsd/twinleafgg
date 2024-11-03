@@ -67,7 +67,7 @@ export class Greninjaex extends PokemonCard {
 
       state = store.prompt(state, new ConfirmPrompt(
         effect.player.id,
-        GameMessage.WANT_TO_USE_ABILITY,
+        GameMessage.SEARCH_DECK_FOR_CARD,
       ), wantToUse => {
         if (wantToUse) {
 

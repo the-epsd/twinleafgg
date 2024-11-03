@@ -62,6 +62,7 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
     this.deckSpec = {
       type: DeckCardType,
       trackBy: item => item.card.fullName + item.pane,
+      canDrag: () => false,
       hover: item => {
         this.tempList = this.moveDeckCards(item);
       },
@@ -77,42 +78,42 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
       endDrag: () => {
         this.hasDropped = false;
         this.tempList = this.list.sort((a, b) => {
-            const result = this.compareSupertype(a.card.superType) - this.compareSupertype(b.card.superType);
+          const result = this.compareSupertype(a.card.superType) - this.compareSupertype(b.card.superType);
 
-            // not of the same supertype
-            if (result !== 0) {
-              return result;
-            }
+          // not of the same supertype
+          if (result !== 0) {
+            return result;
+          }
 
-            // cards match supertype, so sort by subtype
-            if ((<any>a.card).trainerType != null) {
-              const cardA = a.card as TrainerCard;
-              if (cardA.trainerType  != null && (<any>b.card).trainerType  != null) {
-                const cardB = b.card as TrainerCard;
-                const subtypeCompare = this.compareTrainerType(cardA.trainerType) - this.compareTrainerType(cardB.trainerType);
-                if (subtypeCompare !== 0) {
-                  return subtypeCompare;
-                }
+          // cards match supertype, so sort by subtype
+          if ((<any>a.card).trainerType != null) {
+            const cardA = a.card as TrainerCard;
+            if (cardA.trainerType != null && (<any>b.card).trainerType != null) {
+              const cardB = b.card as TrainerCard;
+              const subtypeCompare = this.compareTrainerType(cardA.trainerType) - this.compareTrainerType(cardB.trainerType);
+              if (subtypeCompare !== 0) {
+                return subtypeCompare;
               }
             }
-            else if ((<any>a.card).energyType != null) {
-              const cardA = a.card as EnergyCard;
-              if (cardA.energyType != null && (<any>b.card).energyType != null) {
-                const cardB = b.card as TrainerCard;
-                const subtypeCompare = this.compareEnergyType(cardA.energyType) - this.compareEnergyType(cardB.energyType);
-                if (subtypeCompare !== 0) {
-                  return subtypeCompare;
-                }
+          }
+          else if ((<any>a.card).energyType != null) {
+            const cardA = a.card as EnergyCard;
+            if (cardA.energyType != null && (<any>b.card).energyType != null) {
+              const cardB = b.card as TrainerCard;
+              const subtypeCompare = this.compareEnergyType(cardA.energyType) - this.compareEnergyType(cardB.energyType);
+              if (subtypeCompare !== 0) {
+                return subtypeCompare;
               }
             }
-            
-            // subtype matches, sort by name
-            if (a.card.name < b.card.name) {
-              return -1;
-            } else {
-              return 1;
-            }
-          });
+          }
+
+          // subtype matches, sort by name
+          if (a.card.name < b.card.name) {
+            return -1;
+          } else {
+            return 1;
+          }
+        });
         this.tempList = this.sortByPokemonEvolution([...this.tempList]);
       },
       isDragging: (ground: DeckItem, inFlight: DraggedItem<DeckItem>) => {
@@ -215,14 +216,14 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
     }
     return -1;
   }
-  
+
   compareSupertype = (input: SuperType) => {
     if (input === SuperType.POKEMON) return 1;
     if (input === SuperType.TRAINER) return 2;
     if (input === SuperType.ENERGY) return 3;
     return Infinity;
   };
-  
+
   compareTrainerType = (input: TrainerType) => {
     if (input === TrainerType.SUPPORTER) return 1;
     if (input === TrainerType.ITEM) return 2;
@@ -230,7 +231,7 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
     if (input === TrainerType.STADIUM) return 4;
     return Infinity;
   };
-  
+
   compareEnergyType = (input: EnergyType) => {
     if (input === EnergyType.BASIC) return 1;
     if (input === EnergyType.SPECIAL) return 2;
@@ -377,7 +378,7 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
       // cards match supertype, so sort by subtype
       if ((<any>a.card).trainerType != null) {
         const cardA = a.card as TrainerCard;
-        if (cardA.trainerType  != null && (<any>b.card).trainerType  != null) {
+        if (cardA.trainerType != null && (<any>b.card).trainerType != null) {
           const cardB = b.card as TrainerCard;
           const subtypeCompare = this.compareTrainerType(cardA.trainerType) - this.compareTrainerType(cardB.trainerType);
           if (subtypeCompare !== 0) {
@@ -395,7 +396,7 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
           }
         }
       }
-      
+
       // subtype matches, sort by name
       if (a.card.name < b.card.name) {
         return -1;
@@ -403,11 +404,11 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
         return 1;
       }
     });
-    
+
     list = this.sortByPokemonEvolution(list);
-    
+
     this.tempList = this.list = list;
-    this.deckItemsChange.next(list);    
+    this.deckItemsChange.next(list);
   }
 
   public async removeCardFromDeck(item: DeckItem) {
@@ -435,7 +436,7 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
       // cards match supertype, so sort by subtype
       if ((<any>a.card).trainerType != null) {
         const cardA = a.card as TrainerCard;
-        if (cardA.trainerType  != null && (<any>b.card).trainerType  != null) {
+        if (cardA.trainerType != null && (<any>b.card).trainerType != null) {
           const cardB = b.card as TrainerCard;
           const subtypeCompare = this.compareTrainerType(cardA.trainerType) - this.compareTrainerType(cardB.trainerType);
           if (subtypeCompare !== 0) {
@@ -453,7 +454,7 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
           }
         }
       }
-      
+
       // subtype matches, sort by name
       if (a.card.name < b.card.name) {
         return -1;
@@ -461,9 +462,9 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
         return 1;
       }
     });
-    
+
     list = this.sortByPokemonEvolution(list);
-    
+
     this.tempList = this.list = list;
     this.deckItemsChange.next(list);
   }

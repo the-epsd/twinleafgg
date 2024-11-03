@@ -11,22 +11,22 @@ export class AlolanMeowth extends PokemonCard {
 
   public cardType: CardType = CardType.DARK;
 
-  public hp: number = 120;
+  public hp: number = 60;
 
   public weakness = [{ type: CardType.FIGHTING }];
 
-  public resistance = [{ type: CardType.PSYCHIC, value: -20}];
-  
+  public resistance = [{ type: CardType.PSYCHIC, value: -20 }];
+
   public retreat = [CardType.COLORLESS];
 
   public attacks = [
-  {
-    name: 'Spoil the Fun',
-    cost: [],
-    damage: 10,
-    damageCalculation: '+',
-    text: 'If you go second, this attack does 60 more damage during your first turn.'
-  }];
+    {
+      name: 'Spoil the Fun',
+      cost: [],
+      damage: 10,
+      damageCalculation: '+',
+      text: 'If you go second, this attack does 60 more damage during your first turn.'
+    }];
 
   public set: string = 'LOT';
 
@@ -45,7 +45,7 @@ export class AlolanMeowth extends PokemonCard {
         effect.damage += 60;
       }
     }
-    
+
     return state;
   }
 }

@@ -35,6 +35,7 @@ class TingLu extends pokemon_card_1.PokemonCard {
         this.setNumber = '110';
         this.name = 'Ting-Lu';
         this.fullName = 'Ting-Lu TWM';
+        this.discardedStadiumCard = false;
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
@@ -44,6 +45,7 @@ class TingLu extends pokemon_card_1.PokemonCard {
             }
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
+            this.discardedStadiumCard = true;
             opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList, card) => {
                 if (cardList === opponent.active) {
                     return;
@@ -53,13 +55,14 @@ class TingLu extends pokemon_card_1.PokemonCard {
                 store.reduceEffect(state, damageEffect);
             });
         }
-        if (effect instanceof game_phase_effects_1.BetweenTurnsEffect) {
+        if (effect instanceof game_phase_effects_1.BetweenTurnsEffect && this.discardedStadiumCard) {
             // Add stadium discard logic
             const stadiumCard = game_1.StateUtils.getStadiumCard(state);
             if (stadiumCard) {
                 const cardList = game_1.StateUtils.findCardList(state, stadiumCard);
                 const owner = game_1.StateUtils.findOwner(state, cardList);
                 cardList.moveTo(owner.discard);
+                this.discardedStadiumCard = false;
             }
         }
         return state;

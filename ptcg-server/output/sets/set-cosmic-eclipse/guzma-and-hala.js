@@ -35,7 +35,30 @@ class GuzmaAndHala extends trainer_card_1.TrainerCard {
                 throw new game_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
             }
             state = store.prompt(state, new game_1.ConfirmPrompt(effect.player.id, game_message_1.GameMessage.WANT_TO_DISCARD_CARDS), wantToUse => {
-                // taking stadium + special energy + tool
+                if (!wantToUse) {
+                    // only taking stadium
+                    const blocked = [];
+                    player.deck.cards.forEach((card, index) => {
+                        // eslint-disable-next-line no-empty
+                        if ((card instanceof trainer_card_1.TrainerCard && card.trainerType === card_types_1.TrainerType.STADIUM)) {
+                            /**/
+                        }
+                        else {
+                            blocked.push(index);
+                        }
+                    });
+                    return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, {}, { allowCancel: false, min: 0, max: 1, maxStadiums: 1, blocked }), cards => {
+                        cards = cards || [];
+                        player.deck.moveCardsTo(cards, player.hand);
+                        if (cards.length > 0)
+                            state = store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
+                                player.deck.applyOrder(order);
+                                return state;
+                            });
+                        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+                        return store.prompt(state, new game_1.ShowCardsPrompt(opponent.id, game_message_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards), () => state);
+                    });
+                }
                 if (wantToUse) {
                     state = store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_DISCARD, player.hand, {}, { allowCancel: false, min: 2, max: 2 }), cards => {
                         cards = cards || [];
@@ -59,25 +82,42 @@ class GuzmaAndHala extends trainer_card_1.TrainerCard {
                         return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, {}, { allowCancel: false, min: 0, max: 3, maxSpecialEnergies: 1, maxTools: 1, maxStadiums: 1, blocked }), cards => {
                             cards = cards || [];
                             player.deck.moveCardsTo(cards, player.hand);
+                            if (cards.length > 0) {
+                                state = store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
+                                    player.deck.applyOrder(order);
+                                    return state;
+                                });
+                            }
+                            player.supporter.moveCardTo(effect.trainerCard, player.discard);
                             return store.prompt(state, new game_1.ShowCardsPrompt(opponent.id, game_message_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards), () => state);
                         });
                     });
                 }
-                else {
-                    state = store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.TRAINER, trainerType: card_types_1.TrainerType.STADIUM }, { allowCancel: false, min: 0, max: 1 }), cards => {
-                        cards = cards || [];
-                        player.deck.moveCardsTo(cards, player.hand);
-                        state = store.prompt(state, new game_1.ShowCardsPrompt(opponent.id, game_message_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards), () => state);
-                    });
-                }
-                state = store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
-                    player.deck.applyOrder(order);
-                    return state;
-                });
-                player.supporter.moveCardTo(effect.trainerCard, player.discard);
             });
         }
         return state;
     }
 }
 exports.GuzmaAndHala = GuzmaAndHala;
+// } else {
+//   state = store.prompt(state, new ChooseCardsPrompt(
+//     player.id,
+//     GameMessage.CHOOSE_CARD_TO_HAND,
+//     player.deck,
+//     { superType: SuperType.TRAINER, trainerType: TrainerType.STADIUM },
+//     { allowCancel: false, min: 0, max: 1 }
+//   ), cards => {
+//     cards = cards || [];
+//     player.deck.moveCardsTo(cards, player.hand);
+//     state = store.prompt(state, new ShowCardsPrompt(
+//       opponent.id,
+//       GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
+//       cards), () => state);
+//   });
+// }
+// state = store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+//   player.deck.applyOrder(order);
+//   return state;
+// });
+// player.supporter.moveCardTo(effect.trainerCard, player.discard);
+// });

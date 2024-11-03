@@ -1,6 +1,6 @@
 import { ChooseCardsPrompt, ConfirmPrompt, EnergyCard, GameError, ShowCardsPrompt, ShuffleDeckPrompt, StateUtils } from '../../game';
 import { GameLog, GameMessage } from '../../game/game-message';
-import { CardTag, EnergyType, SuperType, TrainerType } from '../../game/store/card/card-types';
+import { CardTag, EnergyType, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
@@ -53,7 +53,46 @@ export class GuzmaAndHala extends TrainerCard {
         effect.player.id,
         GameMessage.WANT_TO_DISCARD_CARDS,
       ), wantToUse => {
-        // taking stadium + special energy + tool
+
+        if (!wantToUse) {
+
+          // only taking stadium
+          const blocked: number[] = [];
+          player.deck.cards.forEach((card, index) => {
+            // eslint-disable-next-line no-empty
+            if ((card instanceof TrainerCard && card.trainerType === TrainerType.STADIUM)) {
+              /**/
+            } else {
+              blocked.push(index);
+            }
+          });
+
+          return store.prompt(state, new ChooseCardsPrompt(
+            player.id,
+            GameMessage.CHOOSE_CARD_TO_HAND,
+            player.deck,
+            {},
+            { allowCancel: false, min: 0, max: 1, maxStadiums: 1, blocked }
+          ), cards => {
+            cards = cards || [];
+
+            player.deck.moveCardsTo(cards, player.hand);
+
+            if (cards.length > 0)
+              state = store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+                player.deck.applyOrder(order);
+                return state;
+              });
+
+            player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
+            return store.prompt(state, new ShowCardsPrompt(
+              opponent.id,
+              GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
+              cards), () => state);
+          });
+        }
+
         if (wantToUse) {
           state = store.prompt(state, new ChooseCardsPrompt(
             player.id,
@@ -94,45 +133,52 @@ export class GuzmaAndHala extends TrainerCard {
 
               player.deck.moveCardsTo(cards, player.hand);
 
+              if (cards.length > 0) {
+                state = store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+                  player.deck.applyOrder(order);
+                  return state;
+                });
+              }
+
+              player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
               return store.prompt(state, new ShowCardsPrompt(
                 opponent.id,
                 GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
                 cards), () => state);
             });
           });
-        } else {
-
-          state = store.prompt(state, new ChooseCardsPrompt(
-            player.id,
-            GameMessage.CHOOSE_CARD_TO_HAND,
-            player.deck,
-            { superType: SuperType.TRAINER, trainerType: TrainerType.STADIUM },
-            { allowCancel: false, min: 0, max: 1 }
-          ), cards => {
-            cards = cards || [];
-
-            player.deck.moveCardsTo(cards, player.hand);
-
-            state = store.prompt(state, new ShowCardsPrompt(
-              opponent.id,
-              GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-              cards), () => state);
-          });
         }
-
-        state = store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-          player.deck.applyOrder(order);
-          return state;
-        });
-
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
-
       });
     }
-
     return state;
   }
-
-
-
 }
+// } else {
+
+//   state = store.prompt(state, new ChooseCardsPrompt(
+//     player.id,
+//     GameMessage.CHOOSE_CARD_TO_HAND,
+//     player.deck,
+//     { superType: SuperType.TRAINER, trainerType: TrainerType.STADIUM },
+//     { allowCancel: false, min: 0, max: 1 }
+//   ), cards => {
+//     cards = cards || [];
+
+//     player.deck.moveCardsTo(cards, player.hand);
+
+//     state = store.prompt(state, new ShowCardsPrompt(
+//       opponent.id,
+//       GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
+//       cards), () => state);
+//   });
+// }
+
+// state = store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+//   player.deck.applyOrder(order);
+//   return state;
+// });
+
+// player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
+// });

@@ -59,8 +59,8 @@ export class DeckEditComponent implements OnInit {
         this.loading = false;
         this.deck = response.deck;
         this.deckItems = this.loadDeckItems(response.deck.cards);
-      }, async error => {
-        await this.alertService.error(this.translate.instant('DECK_EDIT_LOADING_ERROR'));
+      }, async () => {
+        await this.alertService.confirm(this.translate.instant('DECK_EDIT_LOADING_ERROR'));
         this.router.navigate(['/decks']);
       });
   }
@@ -103,7 +103,7 @@ export class DeckEditComponent implements OnInit {
             scanUrl: this.cardsBaseService.getScanUrl(card),
           };
           deckItems.push(itemMap[name]);
-          
+
           deckItems.sort((a, b) => {
             const result = this.compareSupertype(a.card.superType) - this.compareSupertype(b.card.superType);
 
@@ -115,7 +115,7 @@ export class DeckEditComponent implements OnInit {
             // cards match supertype, so sort by subtype
             if ((<any>a.card).trainerType != null) {
               const cardA = a.card as TrainerCard;
-              if (cardA.trainerType  != null && (<any>b.card).trainerType  != null) {
+              if (cardA.trainerType != null && (<any>b.card).trainerType != null) {
                 const cardB = b.card as TrainerCard;
                 const subtypeCompare = this.compareTrainerType(cardA.trainerType) - this.compareTrainerType(cardB.trainerType);
                 if (subtypeCompare !== 0) {
@@ -133,7 +133,7 @@ export class DeckEditComponent implements OnInit {
                 }
               }
             }
-            
+
             // subtype matches, sort by name
             if (a.card.name < b.card.name) {
               return -1;
@@ -141,11 +141,11 @@ export class DeckEditComponent implements OnInit {
               return 1;
             }
           });
-          
+
         }
       }
     }
-    
+
     deckItems = this.sortByPokemonEvolution(deckItems);
 
     return deckItems;
@@ -211,10 +211,29 @@ export class DeckEditComponent implements OnInit {
   }
 
   public importDeck(cardDetails: { cardName: string }[]) {
-    this.deckItems = this.loadDeckItems(cardDetails.map(card => {
+    const failedImports: string[] = [];
+    const failedCardCounts = new Map<string, number>();
+
+    const successfulCards = cardDetails.map(card => {
       const parts = card.cardName.split(' ');
-      return parts.slice(0, -1).join(' '); // Remove set number for loadDeckItems
-    }));
+      const cardName = parts.slice(0, -1).join(' ');
+
+      // Check if card exists in database
+      if (!this.cardsBaseService.getCardByName(cardName)) {
+        failedCardCounts.set(card.cardName, (failedCardCounts.get(card.cardName) || 0) + 1);
+      }
+
+      return cardName;
+    }).filter(name => this.cardsBaseService.getCardByName(name));
+
+    this.deckItems = this.loadDeckItems(successfulCards);
+
+    if (failedCardCounts.size > 0) {
+      const formattedFailures = Array.from(failedCardCounts.entries())
+        .map(([cardName, count]) => `${count} ${cardName}`);
+      const message = `${this.translate.instant('FAILED_IMPORTS')}:\n${formattedFailures.join('\n')}`;
+      this.alertService.alert(this.translate.instant('IMPORT_RESULTS'), message, []);
+    }
   }
 
   public async exportDeck() {
@@ -266,14 +285,14 @@ export class DeckEditComponent implements OnInit {
       }
     });
   }
- 
+
   compareSupertype = (input: SuperType) => {
     if (input === SuperType.POKEMON) return 1;
     if (input === SuperType.TRAINER) return 2;
     if (input === SuperType.ENERGY) return 3;
     return Infinity;
   };
-  
+
   compareTrainerType = (input: TrainerType) => {
     if (input === TrainerType.SUPPORTER) return 1;
     if (input === TrainerType.ITEM) return 2;
@@ -281,7 +300,7 @@ export class DeckEditComponent implements OnInit {
     if (input === TrainerType.STADIUM) return 4;
     return Infinity;
   };
-  
+
   compareEnergyType = (input: EnergyType) => {
     if (input === EnergyType.BASIC) return 1;
     if (input === EnergyType.SPECIAL) return 2;

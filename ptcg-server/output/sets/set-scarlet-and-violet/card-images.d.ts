@@ -295,6 +295,3 @@ export declare class VitalityBandArt extends VitalityBand {
 export declare class YoungsterArt extends Youngster {
     cardImage: string;
 }
-export declare class NestBallArt2 extends NestBall {
-    cardImage: string;
-}
