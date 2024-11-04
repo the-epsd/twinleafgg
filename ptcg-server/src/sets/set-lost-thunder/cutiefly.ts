@@ -1,6 +1,6 @@
-import { CardTarget, CardType, ChoosePokemonPrompt, GameMessage, PlayerType, PokemonCard, PokemonCardList, SlotType, Stage, State, StoreLike } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
-import { AttackEffect, HealEffect } from "../../game/store/effects/game-effects";
+import { CardTarget, CardType, ChoosePokemonPrompt, GameMessage, PlayerType, PokemonCard, PokemonCardList, SlotType, Stage, State, StoreLike } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { AttackEffect, HealEffect } from '../../game/store/effects/game-effects';
 
 export class Cutiefly extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -20,6 +20,7 @@ export class Cutiefly extends PokemonCard {
   public name: string = 'Cutiefly';
   public fullName: string = 'Cutiefly LOT';
   public setNumber: string = '145';
+  public cardImage: string = 'assets/cardback.png';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

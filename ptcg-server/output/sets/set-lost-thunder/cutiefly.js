@@ -21,6 +21,7 @@ class Cutiefly extends game_1.PokemonCard {
         this.name = 'Cutiefly';
         this.fullName = 'Cutiefly LOT';
         this.setNumber = '145';
+        this.cardImage = 'assets/cardback.png';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

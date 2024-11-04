@@ -1,5 +1,5 @@
-import { CardType, PokemonCard, Stage, State, StoreLike } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
+import { CardType, PokemonCard, Stage, State, StoreLike } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
 export declare class Cutiefly extends PokemonCard {
     stage: Stage;
     cardType: CardType;
@@ -21,5 +21,6 @@ export declare class Cutiefly extends PokemonCard {
     name: string;
     fullName: string;
     setNumber: string;
+    cardImage: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }
