@@ -33,6 +33,7 @@ import { Granbull } from './granbull';
 import { Naganadel } from './naganadel';
 import { Poipole } from './poipole';
 import { Snubbull } from './snubbull';
+import { Cutiefly } from './cutiefly';
 
 export class AdventureBagArt extends AdventureBag {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_167_R_EN_LG.png';
@@ -72,6 +73,10 @@ export class CounterGainArt extends CounterGain {
 
 export class CustomCatcherArt extends CustomCatcher {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_171_R_EN_LG.png';
+}
+
+export class CutieflyArt extends Cutiefly {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_145_R_EN_LG.png';
 }
 
 export class DittoPrismStarArt extends DittoPrismStar {

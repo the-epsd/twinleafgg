@@ -369,3 +369,7 @@ export class VitalityBandArt extends VitalityBand {
 export class YoungsterArt extends Youngster {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_198_R_EN_LG.png';
 }
+
+export class NestBallArt2 extends NestBall {
+  public cardImage = 'https://www.serebii.net/card/ggend/52.jpg';
+}
