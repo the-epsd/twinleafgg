@@ -13,6 +13,7 @@ exports.setLostThunder = [
     new card_images_1.ChinchouArt(),
     new card_images_1.CounterGainArt(),
     new card_images_1.CustomCatcherArt(),
+    new card_images_1.CutieflyArt(),
     new card_images_1.ElectropowerArt(),
     new card_images_1.FabaArt(),
     new card_images_1.GirafarigArt(),

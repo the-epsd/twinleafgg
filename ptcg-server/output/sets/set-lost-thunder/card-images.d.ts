@@ -33,6 +33,7 @@ import { Granbull } from './granbull';
 import { Naganadel } from './naganadel';
 import { Poipole } from './poipole';
 import { Snubbull } from './snubbull';
+import { Cutiefly } from './cutiefly';
 export declare class AdventureBagArt extends AdventureBag {
     cardImage: string;
 }
@@ -61,6 +62,9 @@ export declare class CounterGainArt extends CounterGain {
     cardImage: string;
 }
 export declare class CustomCatcherArt extends CustomCatcher {
+    cardImage: string;
+}
+export declare class CutieflyArt extends Cutiefly {
     cardImage: string;
 }
 export declare class DittoPrismStarArt extends DittoPrismStar {
