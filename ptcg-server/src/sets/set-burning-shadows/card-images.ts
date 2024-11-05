@@ -7,9 +7,14 @@ import { Plumeria } from './plumeria';
 import { WishfulBaton } from './wishful-baton';
 import { GardevoirGX } from './gardevoir-gx';
 import { NecrozmaGX } from './necrozma-gx';
+import { Bruxish } from './bruxish';
 
 export class AcerolaArt extends Acerola {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BUS/BUS_112_R_EN_LG.png';
+}
+
+export class BruxishArt extends Bruxish {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BUS/BUS_038_R_EN.png';
 }
 
 export class DarkraiGXArt extends DarkraiGX {

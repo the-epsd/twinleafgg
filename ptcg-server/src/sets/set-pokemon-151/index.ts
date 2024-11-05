@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { AbraArt, AlakazamexArt, ArbokexArt, BlastoiseexArt, BulbasaurArt, CharizardexArt, CharmanderArt, CharmeleonArt, CyclingRoadArt, DittoArt, DodrioArt, DoduoArt, DragoniteArt, EeveeArt, EkansArt, ElectabuzzArt, EnergyStickerArt, EreikasInvitationArt, GiovannisCharismaArt, GloomArt, GrabberArt, IvysaurArt, JolteonArt, KangaskhanexArt, MachokeArt, MachopArt, MagmarArt, MewexArt, MoltresArt, NidokingArt, NidoqueenArt, NidoranFemaleArt, NidoranMaleArt, NidorinaArt, NidorinoArt, OddishArt, PidgeottoArt, PidgeyArt, RigidBandArt, SandshrewArt, ScytherArt, SquirtleArt, StaryuArt, VenomothArt, VenonatArt, VenusaurexArt, VileplumeArt, WartortleArt, ZapdosexArt } from './card-images';
+import { AbraArt, AlakazamexArt, ArbokexArt, ArticunoArt, BlastoiseexArt, BulbasaurArt, CharizardexArt, CharmanderArt, CharmeleonArt, CyclingRoadArt, DittoArt, DodrioArt, DoduoArt, DragoniteArt, EeveeArt, EkansArt, ElectabuzzArt, EnergyStickerArt, EreikasInvitationArt, GiovannisCharismaArt, GloomArt, GrabberArt, IvysaurArt, JolteonArt, KangaskhanexArt, MachokeArt, MachopArt, MagmarArt, MewexArt, MoltresArt, NidokingArt, NidoqueenArt, NidoranFemaleArt, NidoranMaleArt, NidorinaArt, NidorinoArt, OddishArt, PidgeottoArt, PidgeyArt, RigidBandArt, SandshrewArt, ScytherArt, SquirtleArt, StaryuArt, VenomothArt, VenonatArt, VenusaurexArt, VileplumeArt, WartortleArt, ZapdosexArt } from './card-images';
 import { ArbokexFA, BasicPsychicEnergyHR, BlastoiseexFA, BlastoiseexSIR, BulbasaurIR, CharizardexFA, CharizardexSIR, CharmanderIR, CharmeleonIR, ErikasInvitationFA, ErikasInvitationSIR, GiovannisCharismaFA, GiovannisCharismaSIR, IvysaurIR, KangaskhanexFA, MewexFA, MewexHR, NidokingIR, SquirtleIR, SwitchHR, VenusaurexFA, VenusaurexSIR, WartortleIR, ZapdosexFA, ZapdosexSIR } from './full-art';
 
 export const setPokemon151: Card[] = [
@@ -7,6 +7,7 @@ export const setPokemon151: Card[] = [
   // new AntiqueHelixFossilArt(),
   new AlakazamexArt(),
   new ArbokexArt(),
+  new ArticunoArt(),
   new BlastoiseexArt(),
   new BulbasaurArt(),
   new CharizardexArt(),

@@ -7,7 +7,11 @@ import { Plumeria } from './plumeria';
 import { WishfulBaton } from './wishful-baton';
 import { GardevoirGX } from './gardevoir-gx';
 import { NecrozmaGX } from './necrozma-gx';
+import { Bruxish } from './bruxish';
 export declare class AcerolaArt extends Acerola {
+    cardImage: string;
+}
+export declare class BruxishArt extends Bruxish {
     cardImage: string;
 }
 export declare class DarkraiGXArt extends DarkraiGX {

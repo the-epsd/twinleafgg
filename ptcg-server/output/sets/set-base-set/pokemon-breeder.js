@@ -97,7 +97,7 @@ class PokemonBreeder extends trainer_card_1.TrainerCard {
         this.setNumber = '76';
         this.name = 'Pokemon Breeder';
         this.fullName = 'Pokémon Breeder BS';
-        this.text = 'Trade 1 of the Basic Pokémon or Evolution cards in your hand for 1 of the Basic Pokémon or Evolution cards from your deck. Show both cards to your opponent. Shuffle your deck afterward.';
+        this.text = 'Put a Stage 2 Evolution card from your hand on the matching Basic Pokémon. You can only play this card when you would be allowed to evolve that Pokémon anyway.';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {

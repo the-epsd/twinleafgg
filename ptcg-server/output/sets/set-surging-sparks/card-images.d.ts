@@ -18,6 +18,7 @@ import { Dialga } from './dialga';
 import { DragonsElixir } from './dragons-elixir';
 import { Drayton } from './drayton';
 import { Duraludon } from './duraludon';
+import { Durantex } from './durant-ex';
 import { DuskBall } from './dusk-ball';
 import { Eevee } from './eevee';
 import { Eternatus } from './eternatus';
@@ -40,9 +41,11 @@ import { Miloticex } from './milotic-ex';
 import { MiraculousIntercom } from './miraculous-intercom';
 import { Ninetales } from './ninetales';
 import { Palkia } from './palkia';
+import { Palossandex } from './palossand-ex';
 import { PerfectMixer } from './perfect-mixer';
 import { Pikachuex } from './pikachu-ex';
 import { RichEnergy } from './rich-energy';
+import { Sandygast } from './sandygast';
 import { Skeledirge } from './skeledirge';
 import { Smoochum } from './smoochum';
 import { Sylveonex } from './sylveon-ex';
@@ -248,5 +251,14 @@ export declare class CeruledgeexArt extends Ceruledgeex {
     cardImage: string;
 }
 export declare class CharcadetArt extends Charcadet {
+    cardImage: string;
+}
+export declare class DurantexArt extends Durantex {
+    cardImage: string;
+}
+export declare class SandygastArt extends Sandygast {
+    cardImage: string;
+}
+export declare class PalossandexArt extends Palossandex {
     cardImage: string;
 }

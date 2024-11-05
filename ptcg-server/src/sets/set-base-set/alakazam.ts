@@ -78,14 +78,23 @@ export class Alakazam extends PokemonCard {
         for (const transfer of transfers) {
           const source = StateUtils.getTarget(state, player, transfer.from);
           const target = StateUtils.getTarget(state, player, transfer.to);
-          if (target.hp <= 10) {
-            throw new GameError(GameMessage.CANNOT_USE_POWER);
+
+          // Get target's max HP from the Pokemon card
+          const targetPokemon = target.getPokemonCard();
+          const targetMaxHp = targetPokemon ? targetPokemon.hp : 0;
+          const targetCurrentHp = targetMaxHp - target.damage;
+
+          // Only allow damage transfer if target has more than 10 HP remaining
+          if (targetCurrentHp <= 10) {
+            throw new GameError(GameMessage.CANNOT_MOVE_DAMAGE);
           }
+
           if (source.damage >= 10) {
             source.damage -= 10;
             target.damage += 10;
           }
         }
+
       });
     }
 

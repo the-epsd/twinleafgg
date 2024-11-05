@@ -24,7 +24,7 @@ class Tatsugiriex extends game_1.PokemonCard {
             },
             {
                 name: 'Cinnabar Lure',
-                cost: [F, W, D],
+                cost: [R, W, D],
                 damage: 0,
                 text: 'Look at the top 10 cards of your deck. You may put any number of Pokémon you find there onto your Bench. Shuffle the other cards back into your deck.'
             }

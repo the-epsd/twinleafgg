@@ -33,6 +33,7 @@ import { Tympole } from './tympole';
 import { Varoom } from './varoom';
 import { VengefulPunch } from './vengeful-punch';
 import { Whiscash } from './whiscash';
+import { Froakie } from './froakie';
 export declare class AbsolexArt extends Absolex {
     cardImage: string;
 }
@@ -73,6 +74,9 @@ export declare class EnteiArt extends Entei {
     cardImage: string;
 }
 export declare class FinizenArt extends Finizen {
+    cardImage: string;
+}
+export declare class FroakieArt extends Froakie {
     cardImage: string;
 }
 export declare class LetterOfEncouragementArt extends LetterOfEncouragement {

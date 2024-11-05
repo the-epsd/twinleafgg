@@ -4,6 +4,7 @@ exports.setBurningShadows = void 0;
 const card_images_1 = require("./card-images");
 exports.setBurningShadows = [
     new card_images_1.AcerolaArt(),
+    new card_images_1.BruxishArt(),
     new card_images_1.DarkraiGXArt(),
     new card_images_1.GardevoirGXArt(),
     new card_images_1.GloomArt(),
@@ -11,5 +12,5 @@ exports.setBurningShadows = [
     new card_images_1.MarillArt(),
     new card_images_1.NecrozmaGXArt(),
     new card_images_1.PlumeriaArt(),
-    new card_images_1.WishfulBatonArt()
+    new card_images_1.WishfulBatonArt(),
 ];

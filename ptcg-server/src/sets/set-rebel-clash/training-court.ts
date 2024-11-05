@@ -83,7 +83,7 @@ export class TrainingCourt extends TrainerCard {
 
   public fullName = 'Training Court RCL';
 
-  public text = 'Once during each player\'s turn, that player may search their deck for an Evolution [G] Pokémon, reveal it, and put it into their hand. Then, that player shuffles their deck.';
+  public text = 'Once during each player\'s turn, that player may put a basic Energy card from their discard pile into their hand.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof UseStadiumEffect && StateUtils.getStadiumCard(state) === this) {

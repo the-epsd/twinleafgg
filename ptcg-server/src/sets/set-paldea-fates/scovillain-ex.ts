@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
-import { StoreLike, State, GameError, GameMessage, StateUtils, Card, ChooseCardsPrompt, CardList } from '../../game';
+import { StoreLike, State, GameError, GameMessage, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 import { AttackEffect, RetreatEffect } from '../../game/store/effects/game-effects';
@@ -71,26 +71,14 @@ export class Scovillainex extends PokemonCard {
 
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      let cards: Card[] = [];
-      store.prompt(state, new ChooseCardsPrompt(
-        player.id,
-        GameMessage.CHOOSE_CARD_TO_DISCARD,
-        opponent.hand,
-        {},
-        { min: 1, max: 1, allowCancel: false }
-      ), selected => {
-        cards = selected || [];
-        effect.opponent.hand.moveCardsTo(cards, effect.opponent.discard);
-
-        const deckTop = new CardList();
-        opponent.deck.moveTo(deckTop, 1);
-
-        deckTop.moveTo(opponent.discard);
-      });
+      if (opponent.hand.cards.length > 0) {
+        const randomIndex = Math.floor(Math.random() * opponent.hand.cards.length);
+        const randomCard = opponent.hand.cards[randomIndex];
+        opponent.hand.moveCardTo(randomCard, opponent.discard);
+      }
     }
     return state;
   }

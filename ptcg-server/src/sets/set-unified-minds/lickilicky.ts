@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, ChooseCardsPrompt, GameMessage, Card, ChooseEnergyPrompt } from '../../game';
+import { StoreLike, State, StateUtils, GameMessage, Card, ChooseEnergyPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
@@ -39,17 +39,12 @@ export class Lickilicky extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      let cards: Card[] = [];
-      store.prompt(state, new ChooseCardsPrompt(
-        player.id,
-        GameMessage.CHOOSE_CARD_TO_DISCARD,
-        opponent.hand,
-        {},
-        { min: 1, max: 1, allowCancel: false, isSecret: true }
-      ), selected => {
-        cards = selected || [];
-        opponent.hand.moveCardsTo(cards, opponent.discard);
-      });
+      if (opponent.hand.cards.length > 0) {
+        const randomIndex = Math.floor(Math.random() * opponent.hand.cards.length);
+        const randomCard = opponent.hand.cards[randomIndex];
+        opponent.hand.moveCardTo(randomCard, opponent.discard);
+      }
+
 
       opponent.deck.moveTo(opponent.discard, 1);
 

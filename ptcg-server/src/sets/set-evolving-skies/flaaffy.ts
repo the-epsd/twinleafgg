@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, EnergyType, SuperType } from '../../game/store/card/card-types';
+import { Stage, CardType, EnergyType, SuperType, BoardEffect } from '../../game/store/card/card-types';
 import {
   PowerType, StoreLike, State, StateUtils,
   GameError, GameMessage, EnergyCard, PlayerType, SlotType
@@ -90,6 +90,13 @@ export class Flaaffy extends PokemonCard {
         { allowCancel: false, min: 1, max: 1 }
       ), transfers => {
         transfers = transfers || [];
+
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+          if (cardList.getPokemonCard() === this) {
+            cardList.addBoardEffect(BoardEffect.ABILITY_USED);
+          }
+        });
+
         // cancelled by user
         if (transfers.length === 0) {
           return;
