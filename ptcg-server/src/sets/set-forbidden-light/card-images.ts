@@ -10,6 +10,9 @@ import { UnitEnergyFDY } from './unit-energy-fdy';
 import { Buzzwole } from './buzzwole';
 import { GreninjaGX } from './greninja-gx';
 import { UltraNecrozmaGX } from './ultra-necrozma-gx';
+import { Flabebe } from './flabebe';
+import { Florges } from './florges';
+import { Klefki } from './klefki';
 
 export class BeastRingArt extends BeastRing {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FLI/FLI_102_R_EN_LG.png';
@@ -17,6 +20,14 @@ export class BeastRingArt extends BeastRing {
 
 export class BuzzwoleArt extends Buzzwole {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FLI/FLI_077_R_EN_LG.png';
+}
+
+export class FlabebeArt extends Flabebe {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FLI/FLI_083_R_EN_LG.png';
+}
+
+export class FlorgesArt extends Florges {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FLI/FLI_086_R_EN_LG.png';
 }
 
 export class FrogadierArt extends Frogadier {
@@ -29,6 +40,10 @@ export class GreninjaGXArt extends GreninjaGX {
 
 export class InkayArt extends Inkay {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FLI/FLI_050_R_EN_LG.png';
+}
+
+export class KlefkiArt extends Klefki {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FLI/FLI_089_R_EN_LG.png';
 }
 
 export class LysandreLabsArt extends LysandreLabs {

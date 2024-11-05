@@ -26,6 +26,7 @@ import { Slugma } from './slugma';
 import { Sunkern } from './sunkern';
 import { TagCall } from './tag-call';
 import { UltraNecrozma } from './ultra-necrozma';
+import { Floette } from './floette';
 export declare class ArceusDialgaPalkiaGXArt extends ArceusDialgaPalkiaGX {
     cardImage: string;
 }
@@ -54,6 +55,9 @@ export declare class DusclopsArt extends Dusclops {
     cardImage: string;
 }
 export declare class DuskullArt extends Duskull {
+    cardImage: string;
+}
+export declare class FloetteArt extends Floette {
     cardImage: string;
 }
 export declare class GolettArt extends Golett {

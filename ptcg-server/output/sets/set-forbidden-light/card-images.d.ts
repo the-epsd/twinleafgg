@@ -10,10 +10,19 @@ import { UnitEnergyFDY } from './unit-energy-fdy';
 import { Buzzwole } from './buzzwole';
 import { GreninjaGX } from './greninja-gx';
 import { UltraNecrozmaGX } from './ultra-necrozma-gx';
+import { Flabebe } from './flabebe';
+import { Florges } from './florges';
+import { Klefki } from './klefki';
 export declare class BeastRingArt extends BeastRing {
     cardImage: string;
 }
 export declare class BuzzwoleArt extends Buzzwole {
+    cardImage: string;
+}
+export declare class FlabebeArt extends Flabebe {
+    cardImage: string;
+}
+export declare class FlorgesArt extends Florges {
     cardImage: string;
 }
 export declare class FrogadierArt extends Frogadier {
@@ -23,6 +32,9 @@ export declare class GreninjaGXArt extends GreninjaGX {
     cardImage: string;
 }
 export declare class InkayArt extends Inkay {
+    cardImage: string;
+}
+export declare class KlefkiArt extends Klefki {
     cardImage: string;
 }
 export declare class LysandreLabsArt extends LysandreLabs {

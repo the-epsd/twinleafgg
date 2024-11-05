@@ -34,6 +34,7 @@ import { Naganadel } from './naganadel';
 import { Poipole } from './poipole';
 import { Snubbull } from './snubbull';
 import { Cutiefly } from './cutiefly';
+import { Ribombee } from './ribombee';
 export declare class AdventureBagArt extends AdventureBag {
     cardImage: string;
 }
@@ -113,6 +114,9 @@ export declare class NihilegoArt extends Nihilego {
     cardImage: string;
 }
 export declare class PoipoleArt extends Poipole {
+    cardImage: string;
+}
+export declare class RibombeeArt extends Ribombee {
     cardImage: string;
 }
 export declare class SlowkingArt extends Slowking {
