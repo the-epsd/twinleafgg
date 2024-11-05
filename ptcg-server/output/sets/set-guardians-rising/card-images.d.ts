@@ -9,6 +9,7 @@ import { Machoke } from './machoke';
 import { Mallow } from './mallow';
 import { MetagrossGX } from './metagross-gx';
 import { Mimikyu } from './mimikyu';
+import { Oricorio } from './oricorio';
 import { RescueStretcher } from './rescue-stretcher';
 import { TapuLeleGX } from './tapu-lele-gx';
 export declare class AetherParadiseConvserationAreaArt extends AetherParadiseConvserationArea {
@@ -44,6 +45,9 @@ export declare class MetagrossGXArt extends MetagrossGX {
     cardImage: string;
 }
 export declare class MimikyuArt extends Mimikyu {
+    cardImage: string;
+}
+export declare class OricorioArt extends Oricorio {
     cardImage: string;
 }
 export declare class RescueStretcherArt extends RescueStretcher {

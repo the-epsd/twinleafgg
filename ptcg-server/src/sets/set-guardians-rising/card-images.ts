@@ -10,6 +10,7 @@ import { Machoke } from './machoke';
 import { Mallow } from './mallow';
 import { MetagrossGX } from './metagross-gx';
 import { Mimikyu } from './mimikyu';
+import { Oricorio } from './oricorio';
 import { RescueStretcher } from './rescue-stretcher';
 import { TapuLeleGX } from './tapu-lele-gx';
 
@@ -57,6 +58,10 @@ export class MetagrossGXArt extends MetagrossGX {
 
 export class MimikyuArt extends Mimikyu {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/GRI/GRI_058_R_EN_LG.png';
+}
+
+export class OricorioArt extends Oricorio {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/GRI/GRI_055_R_EN_LG.png';
 }
 
 export class RescueStretcherArt extends RescueStretcher {

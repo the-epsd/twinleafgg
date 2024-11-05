@@ -7,7 +7,7 @@ const game_effects_1 = require("../../game/store/effects/game-effects");
 class Greninja extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.stage = game_1.Stage.BASIC;
+        this.stage = game_1.Stage.STAGE_2;
         this.evolvesFrom = 'Frogadier';
         this.cardType = W;
         this.hp = 130;

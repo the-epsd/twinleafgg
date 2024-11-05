@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { AetherParadiseConvserationAreaArt, AlolanVulpixArt, AquaPatchArt, BrookletHillArt, FieldBlowerArt, LycanrocGXArt, MachokeArt, MallowArt, MetagrossGXArt, MimikyuArt, RescueStretcherArt, TapuLeleGXArt } from './card-images';
+import { AetherParadiseConvserationAreaArt, AlolanVulpixArt, AquaPatchArt, BrookletHillArt, FieldBlowerArt, LycanrocGXArt, MachokeArt, MallowArt, MetagrossGXArt, MimikyuArt, OricorioArt, RescueStretcherArt, TapuLeleGXArt } from './card-images';
 
 export const setGuardiansRising: Card[] = [
   new AetherParadiseConvserationAreaArt(),
@@ -12,6 +12,7 @@ export const setGuardiansRising: Card[] = [
   new MallowArt(),
   new MetagrossGXArt(),
   new MimikyuArt(),
+  new OricorioArt(),
   new RescueStretcherArt(),
   new TapuLeleGXArt(),
 ];
