@@ -55,14 +55,11 @@ class Scovillainex extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            let cards = [];
-            store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, opponent.hand, {}, { min: 1, max: 1, allowCancel: false }), selected => {
-                cards = selected || [];
-                effect.opponent.hand.moveCardsTo(cards, effect.opponent.discard);
-                const deckTop = new game_1.CardList();
-                opponent.deck.moveTo(deckTop, 1);
-                deckTop.moveTo(opponent.discard);
-            });
+            if (opponent.hand.cards.length > 0) {
+                const randomIndex = Math.floor(Math.random() * opponent.hand.cards.length);
+                const randomCard = opponent.hand.cards[randomIndex];
+                opponent.hand.moveCardTo(randomCard, opponent.discard);
+            }
         }
         return state;
     }

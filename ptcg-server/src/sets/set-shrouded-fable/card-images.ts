@@ -43,6 +43,7 @@ import { XerosicsScheme } from '../set-shrouded-fable/xerosics-scheme';
 import { Zoroark } from '../set-shrouded-fable/zoroark';
 import { Zorua } from '../set-shrouded-fable/zorua';
 import { BloodmoonUrsaluna } from './bloodmoon-ursaluna';
+import { Yveltal } from './yveltal';
 
 export class AbsolArt extends Absol {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SFA/SFA_030_R_EN.png';
@@ -214,6 +215,10 @@ export class WeavileArt extends Weavile {
 
 export class XerosicsSchemeArt extends XerosicsScheme {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SFA/SFA_064_R_EN.png';
+}
+
+export class YveltalArt extends Yveltal {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SFA/SFA_035_R_EN.png';
 }
 
 export class ZoroarkArt extends Zoroark {

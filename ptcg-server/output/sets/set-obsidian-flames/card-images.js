@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WhiscashArt = exports.VengefulPunchArt = exports.VaroomArt = exports.TympoleArt = exports.TownStoreArt = exports.ToedscruelexArt = exports.ThundurusArt = exports.SeismitoadArt = exports.ScizorArt = exports.RymeArt = exports.PoppyArt = exports.PokemonLeagueHeadquartersArt = exports.PidgeyArt = exports.PidgeottoArt = exports.PidgeotexArt = exports.PalpitoadArt = exports.PalafinArt = exports.OddishArt = exports.NinetalesArt = exports.MiraidonexArt = exports.LunatoneArt = exports.LetterOfEncouragementArt = exports.FinizenArt = exports.EnteiArt = exports.DratiniArt = exports.DragoniteexArt = exports.DragonairArt = exports.CleffaArt = exports.CharmanderArt = exports.CharmeleonArt = exports.CharizardexArt = exports.BelliboltArt = exports.BarboachArt = exports.ArvenArt = exports.AbsolexArt = void 0;
+exports.WhiscashArt = exports.VengefulPunchArt = exports.VaroomArt = exports.TympoleArt = exports.TownStoreArt = exports.ToedscruelexArt = exports.ThundurusArt = exports.SeismitoadArt = exports.ScizorArt = exports.RymeArt = exports.PoppyArt = exports.PokemonLeagueHeadquartersArt = exports.PidgeyArt = exports.PidgeottoArt = exports.PidgeotexArt = exports.PalpitoadArt = exports.PalafinArt = exports.OddishArt = exports.NinetalesArt = exports.MiraidonexArt = exports.LunatoneArt = exports.LetterOfEncouragementArt = exports.FroakieArt = exports.FinizenArt = exports.EnteiArt = exports.DratiniArt = exports.DragoniteexArt = exports.DragonairArt = exports.CleffaArt = exports.CharmanderArt = exports.CharmeleonArt = exports.CharizardexArt = exports.BelliboltArt = exports.BarboachArt = exports.ArvenArt = exports.AbsolexArt = void 0;
 const arven_1 = require("../set-scarlet-and-violet/arven");
 const absol_ex_1 = require("./absol-ex");
 const barboach_1 = require("./barboach");
@@ -36,6 +36,7 @@ const tympole_1 = require("./tympole");
 const varoom_1 = require("./varoom");
 const vengeful_punch_1 = require("./vengeful-punch");
 const whiscash_1 = require("./whiscash");
+const froakie_1 = require("./froakie");
 class AbsolexArt extends absol_ex_1.Absolex {
     constructor() {
         super(...arguments);
@@ -130,6 +131,13 @@ class FinizenArt extends finizen_1.Finizen {
     }
 }
 exports.FinizenArt = FinizenArt;
+class FroakieArt extends froakie_1.Froakie {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_056_R_EN.png';
+    }
+}
+exports.FroakieArt = FroakieArt;
 class LetterOfEncouragementArt extends letter_of_encouragement_1.LetterOfEncouragement {
     constructor() {
         super(...arguments);

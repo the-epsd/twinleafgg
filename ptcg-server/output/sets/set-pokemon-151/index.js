@@ -8,6 +8,7 @@ exports.setPokemon151 = [
     // new AntiqueHelixFossilArt(),
     new card_images_1.AlakazamexArt(),
     new card_images_1.ArbokexArt(),
+    new card_images_1.ArticunoArt(),
     new card_images_1.BlastoiseexArt(),
     new card_images_1.BulbasaurArt(),
     new card_images_1.CharizardexArt(),

@@ -43,6 +43,7 @@ import { XerosicsScheme } from '../set-shrouded-fable/xerosics-scheme';
 import { Zoroark } from '../set-shrouded-fable/zoroark';
 import { Zorua } from '../set-shrouded-fable/zorua';
 import { BloodmoonUrsaluna } from './bloodmoon-ursaluna';
+import { Yveltal } from './yveltal';
 export declare class AbsolArt extends Absol {
     cardImage: string;
 }
@@ -170,6 +171,9 @@ export declare class WeavileArt extends Weavile {
     cardImage: string;
 }
 export declare class XerosicsSchemeArt extends XerosicsScheme {
+    cardImage: string;
+}
+export declare class YveltalArt extends Yveltal {
     cardImage: string;
 }
 export declare class ZoroarkArt extends Zoroark {

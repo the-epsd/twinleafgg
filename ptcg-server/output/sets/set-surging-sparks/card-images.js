@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DraytonArt = exports.DuskBallArt = exports.DragonsElixirArt = exports.DialgaArt = exports.CelebrationFanfareArt = exports.ArchaludonexArt = exports.DuraludonArt = exports.SmoochumArt = exports.CounterGainArt = exports.FlygonexArt = exports.VibravaArt = exports.TrapinchArt = exports.MegatonBlowerArt = exports.HelperBellArt = exports.TeraOrbArt = exports.MarillArt = exports.CherishCarrierArt = exports.PerfectMixerArt = exports.AzumarillArt = exports.HoOhArt = exports.BlackKyuremexArt = exports.PalkiaArt = exports.LisiasAppealArt = exports.CeruledgeArt = exports.NinetalesArt = exports.ScrambleSwitchArt = exports.MespritArt = exports.UxieArt = exports.AzelfArt = exports.VivillionArt = exports.EternatusArt = exports.HydreigonexArt = exports.ZweilousArt = exports.DeinoArt = exports.TogekissArt = exports.TogeticArt = exports.TogepiArt = exports.MiloticexArt = exports.SkeledirgeArt = exports.CrocalorArt = exports.FuecocoArt = exports.CyranoArt = exports.MiraculousIntercomArt = exports.ExcitingStadiumArt = exports.GravityMountainArt = exports.MagnetonArt = exports.MagnemiteArt = exports.TerapagosArt = exports.TatsugiriexArt = exports.PikachuexArt = void 0;
-exports.CharcadetArt = exports.CeruledgeexArt = exports.SylveonexArt = exports.EeveeArt = exports.LatiasexArt = exports.VulpixArt = exports.AlolanExeggutorexArt = exports.ExeggcuteArt = exports.KlefkiArt = exports.RichEnergyArt = void 0;
+exports.PalossandexArt = exports.SandygastArt = exports.DurantexArt = exports.CharcadetArt = exports.CeruledgeexArt = exports.SylveonexArt = exports.EeveeArt = exports.LatiasexArt = exports.VulpixArt = exports.AlolanExeggutorexArt = exports.ExeggcuteArt = exports.KlefkiArt = exports.RichEnergyArt = void 0;
 const counter_gain_1 = require("../set-lost-thunder/counter-gain");
 const scramble_switch_1 = require("../set-plasma-storm/scramble-switch");
 const magneton_1 = require("../set-scarlet-and-violet-promos/magneton");
@@ -22,6 +22,7 @@ const dialga_1 = require("./dialga");
 const dragons_elixir_1 = require("./dragons-elixir");
 const drayton_1 = require("./drayton");
 const duraludon_1 = require("./duraludon");
+const durant_ex_1 = require("./durant-ex");
 const dusk_ball_1 = require("./dusk-ball");
 const eevee_1 = require("./eevee");
 const eternatus_1 = require("./eternatus");
@@ -44,9 +45,11 @@ const milotic_ex_1 = require("./milotic-ex");
 const miraculous_intercom_1 = require("./miraculous-intercom");
 const ninetales_1 = require("./ninetales");
 const palkia_1 = require("./palkia");
+const palossand_ex_1 = require("./palossand-ex");
 const perfect_mixer_1 = require("./perfect-mixer");
 const pikachu_ex_1 = require("./pikachu-ex");
 const rich_energy_1 = require("./rich-energy");
+const sandygast_1 = require("./sandygast");
 const skeledirge_1 = require("./skeledirge");
 const smoochum_1 = require("./smoochum");
 const sylveon_ex_1 = require("./sylveon-ex");
@@ -494,3 +497,24 @@ class CharcadetArt extends charcadet_1.Charcadet {
     }
 }
 exports.CharcadetArt = CharcadetArt;
+class DurantexArt extends durant_ex_1.Durantex {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpc/SV8/SV8_3_R_JP.png';
+    }
+}
+exports.DurantexArt = DurantexArt;
+class SandygastArt extends sandygast_1.Sandygast {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpc/SV8/SV8_56_R_JP.png';
+    }
+}
+exports.SandygastArt = SandygastArt;
+class PalossandexArt extends palossand_ex_1.Palossandex {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpc/SV8/SV8_57_R_JP.png';
+    }
+}
+exports.PalossandexArt = PalossandexArt;

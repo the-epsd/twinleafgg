@@ -38,11 +38,11 @@ class Lickilicky extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            let cards = [];
-            store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, opponent.hand, {}, { min: 1, max: 1, allowCancel: false, isSecret: true }), selected => {
-                cards = selected || [];
-                opponent.hand.moveCardsTo(cards, opponent.discard);
-            });
+            if (opponent.hand.cards.length > 0) {
+                const randomIndex = Math.floor(Math.random() * opponent.hand.cards.length);
+                const randomCard = opponent.hand.cards[randomIndex];
+                opponent.hand.moveCardTo(randomCard, opponent.discard);
+            }
             opponent.deck.moveTo(opponent.discard, 1);
             const checkProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(opponent, opponent.active);
             state = store.reduceEffect(state, checkProvidedEnergy);

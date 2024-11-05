@@ -33,6 +33,7 @@ import { Tympole } from './tympole';
 import { Varoom } from './varoom';
 import { VengefulPunch } from './vengeful-punch';
 import { Whiscash } from './whiscash';
+import { Froakie } from './froakie';
 
 export class AbsolexArt extends Absolex {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_135_R_EN.png';
@@ -88,6 +89,10 @@ export class EnteiArt extends Entei {
 
 export class FinizenArt extends Finizen {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_060_R_EN.png';
+}
+
+export class FroakieArt extends Froakie {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_056_R_EN.png';
 }
 
 export class LetterOfEncouragementArt extends LetterOfEncouragement {

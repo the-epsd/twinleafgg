@@ -2,6 +2,7 @@ import { Abra } from './abra';
 import { Alakazamex } from './alakazam-ex';
 import { AntiqueHelixFossil } from './antique-helix-fossil';
 import { Arbokex } from './arbok_ex';
+import { Articuno } from './articuno';
 import { Blastoiseex } from './blastoise-ex';
 import { Bulbasaur } from './bulbasaur';
 import { Charizardex } from './charizard-ex';
@@ -64,6 +65,10 @@ export class AlakazamexArt extends Alakazamex {
 
 export class ArbokexArt extends Arbokex {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/MEW/MEW_024_R_EN_LG.png';
+}
+
+export class ArticunoArt extends Articuno {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/MEW/MEW_144_R_EN_LG.png';
 }
 
 export class BlastoiseexArt extends Blastoiseex {

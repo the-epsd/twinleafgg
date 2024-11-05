@@ -2,6 +2,7 @@ import { Abra } from './abra';
 import { Alakazamex } from './alakazam-ex';
 import { AntiqueHelixFossil } from './antique-helix-fossil';
 import { Arbokex } from './arbok_ex';
+import { Articuno } from './articuno';
 import { Blastoiseex } from './blastoise-ex';
 import { Bulbasaur } from './bulbasaur';
 import { Charizardex } from './charizard-ex';
@@ -59,6 +60,9 @@ export declare class AlakazamexArt extends Alakazamex {
     cardImage: string;
 }
 export declare class ArbokexArt extends Arbokex {
+    cardImage: string;
+}
+export declare class ArticunoArt extends Articuno {
     cardImage: string;
 }
 export declare class BlastoiseexArt extends Blastoiseex {

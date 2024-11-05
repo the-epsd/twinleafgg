@@ -1,9 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.MeloettaArt = exports.JirachiArt = exports.AzelfArt = void 0;
+exports.MeloettaArt = exports.JirachiArt = exports.GreninjaArt = exports.AzelfArt = void 0;
 const jirachi_1 = require("./jirachi");
 const azelf_1 = require("./azelf");
 const meloetta_1 = require("./meloetta");
+const greninja_1 = require("./greninja");
 class AzelfArt extends azelf_1.Azelf {
     constructor() {
         super(...arguments);
@@ -11,6 +12,13 @@ class AzelfArt extends azelf_1.Azelf {
     }
 }
 exports.AzelfArt = AzelfArt;
+class GreninjaArt extends greninja_1.Greninja {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/XYP/XYP_162_R_EN.png';
+    }
+}
+exports.GreninjaArt = GreninjaArt;
 class JirachiArt extends jirachi_1.Jirachi {
     constructor() {
         super(...arguments);

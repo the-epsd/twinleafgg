@@ -181,6 +181,9 @@ var GameCardMessage;
     GameCardMessage["REVEAL_ONE_OF_YOUR_PRIZES"] = "REVEAL_ONE_OF_YOUR_PRIZES";
     GameCardMessage["SEARCH_DECK_FOR_CARD"] = "SEARCH_DECK_FOR_CARD";
     GameCardMessage["FAILED_IMPORTS"] = "FAILED_IMPORTS";
+    GameCardMessage["CANNOT_MOVE_DAMAGE"] = "CANNOT_MOVE_DAMAGE";
+    GameCardMessage["CANNOT_EVOLVE"] = "CANNOT_EVOLVE";
+    GameCardMessage["ABILITY_BLOCKED"] = "ABILITY_BLOCKED";
 })(GameCardMessage = exports.GameCardMessage || (exports.GameCardMessage = {}));
 var GameLog;
 (function (GameLog) {

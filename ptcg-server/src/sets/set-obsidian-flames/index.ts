@@ -1,6 +1,6 @@
 import { Card } from '../../game/store/card/card';
 
-import { AbsolexArt, ArvenArt, BarboachArt, BelliboltArt, CharizardexArt, CharmanderArt, CharmeleonArt, CleffaArt, DragonairArt, DragoniteexArt, DratiniArt, EnteiArt, FinizenArt, LetterOfEncouragementArt, NinetalesArt, OddishArt, PalafinArt, PalpitoadArt, PidgeotexArt, PidgeottoArt, PidgeyArt, PokemonLeagueHeadquartersArt, PoppyArt, RymeArt, ScizorArt, SeismitoadArt, ThundurusArt, ToedscruelexArt, TownStoreArt, TympoleArt, VaroomArt, VengefulPunchArt, WhiscashArt } from './card-images';
+import { AbsolexArt, ArvenArt, BarboachArt, BelliboltArt, CharizardexArt, CharmanderArt, CharmeleonArt, CleffaArt, DragonairArt, DragoniteexArt, DratiniArt, EnteiArt, FinizenArt, FroakieArt, LetterOfEncouragementArt, NinetalesArt, OddishArt, PalafinArt, PalpitoadArt, PidgeotexArt, PidgeottoArt, PidgeyArt, PokemonLeagueHeadquartersArt, PoppyArt, RymeArt, ScizorArt, SeismitoadArt, ThundurusArt, ToedscruelexArt, TownStoreArt, TympoleArt, VaroomArt, VengefulPunchArt, WhiscashArt } from './card-images';
 import { ArtazonHR, BelliboltIR, CharizardexFA, CharizardexHR, CharizardexSIR, CleffaIR, FireEnergyHR, PidgeotexFA, PidgeotexSIR, PidgeottoIR, PidgeyIR, PoppyFA, PoppySIR, ScizorIR, VaroomIR } from './full-arts';
 
 
@@ -18,6 +18,7 @@ export const setObsidianFlames: Card[] = [
   new DratiniArt(),
   new EnteiArt(),
   new FinizenArt(),
+  new FroakieArt(),
   new LetterOfEncouragementArt(),
   new NinetalesArt(),
   new OddishArt(),

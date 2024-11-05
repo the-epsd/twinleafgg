@@ -18,6 +18,7 @@ import { Dialga } from './dialga';
 import { DragonsElixir } from './dragons-elixir';
 import { Drayton } from './drayton';
 import { Duraludon } from './duraludon';
+import { Durantex } from './durant-ex';
 import { DuskBall } from './dusk-ball';
 import { Eevee } from './eevee';
 import { Eternatus } from './eternatus';
@@ -40,9 +41,11 @@ import { Miloticex } from './milotic-ex';
 import { MiraculousIntercom } from './miraculous-intercom';
 import { Ninetales } from './ninetales';
 import { Palkia } from './palkia';
+import { Palossandex } from './palossand-ex';
 import { PerfectMixer } from './perfect-mixer';
 import { Pikachuex } from './pikachu-ex';
 import { RichEnergy } from './rich-energy';
+import { Sandygast } from './sandygast';
 import { Skeledirge } from './skeledirge';
 import { Smoochum } from './smoochum';
 import { Sylveonex } from './sylveon-ex';
@@ -309,4 +312,16 @@ export class CeruledgeexArt extends Ceruledgeex {
 
 export class CharcadetArt extends Charcadet {
   public cardImage = 'https://images.squarespace-cdn.com/content/v1/5cf4cfa4382ac0000123aa1b/1721900292709-J44T566DBM8GDUUQWXB5/Charcadet.png?format=1500w';
+}
+
+export class DurantexArt extends Durantex {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpc/SV8/SV8_3_R_JP.png';
+}
+
+export class SandygastArt extends Sandygast {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpc/SV8/SV8_56_R_JP.png';
+}
+
+export class PalossandexArt extends Palossandex {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpc/SV8/SV8_57_R_JP.png';
 }

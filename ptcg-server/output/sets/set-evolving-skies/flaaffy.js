@@ -64,6 +64,11 @@ class Flaaffy extends pokemon_card_1.PokemonCard {
             }
             state = store.prompt(state, new attach_energy_prompt_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.discard, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Lightning Energy' }, { allowCancel: false, min: 1, max: 1 }), transfers => {
                 transfers = transfers || [];
+                player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
+                    if (cardList.getPokemonCard() === this) {
+                        cardList.addBoardEffect(card_types_1.BoardEffect.ABILITY_USED);
+                    }
+                });
                 // cancelled by user
                 if (transfers.length === 0) {
                     return;

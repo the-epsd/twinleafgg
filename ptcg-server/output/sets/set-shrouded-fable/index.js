@@ -45,6 +45,7 @@ exports.setShroudedFable = [
     new card_images_1.TapuBuluArt(),
     new card_images_1.WeavileArt(),
     new card_images_1.XerosicsSchemeArt(),
+    new card_images_1.YveltalArt(),
     new card_images_1.ZoroarkArt(),
     new card_images_1.ZoruaArt(),
 ];

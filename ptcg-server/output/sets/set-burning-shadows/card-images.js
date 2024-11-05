@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WishfulBatonArt = exports.PlumeriaArt = exports.NecrozmaGXArt = exports.MarillArt = exports.GuzmaArt = exports.GloomArt = exports.GardevoirGXArt = exports.DarkraiGXArt = exports.AcerolaArt = void 0;
+exports.WishfulBatonArt = exports.PlumeriaArt = exports.NecrozmaGXArt = exports.MarillArt = exports.GuzmaArt = exports.GloomArt = exports.GardevoirGXArt = exports.DarkraiGXArt = exports.BruxishArt = exports.AcerolaArt = void 0;
 const acerola_1 = require("./acerola");
 const marill_1 = require("./marill");
 const darkrai_gx_1 = require("./darkrai-gx");
@@ -10,6 +10,7 @@ const plumeria_1 = require("./plumeria");
 const wishful_baton_1 = require("./wishful-baton");
 const gardevoir_gx_1 = require("./gardevoir-gx");
 const necrozma_gx_1 = require("./necrozma-gx");
+const bruxish_1 = require("./bruxish");
 class AcerolaArt extends acerola_1.Acerola {
     constructor() {
         super(...arguments);
@@ -17,6 +18,13 @@ class AcerolaArt extends acerola_1.Acerola {
     }
 }
 exports.AcerolaArt = AcerolaArt;
+class BruxishArt extends bruxish_1.Bruxish {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BUS/BUS_038_R_EN.png';
+    }
+}
+exports.BruxishArt = BruxishArt;
 class DarkraiGXArt extends darkrai_gx_1.DarkraiGX {
     constructor() {
         super(...arguments);
