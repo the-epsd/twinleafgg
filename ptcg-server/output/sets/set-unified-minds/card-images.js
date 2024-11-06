@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WeaknessGuardEnergyArt = exports.UTurnBoardArt = exports.TagSwitchArt = exports.StadiumNavArt = exports.RioluArt = exports.ResetStampArt = exports.RecycleEnergyArt = exports.RaichuAlolanRaichuGXArt = exports.AlolanRaichuArt = exports.PurrloinArt = exports.NumelArt = exports.NecrozmaArt = exports.MunchlaxArt = exports.LickilickyArt = exports.KarateBeltArt = exports.HoopaArt = exports.FroslassArt = exports.FlyiniumZAirSlashArt = exports.DarkCityArt = exports.AlolanGrimerArt = void 0;
+exports.WhimsicottArt = exports.WeaknessGuardEnergyArt = exports.UTurnBoardArt = exports.TagSwitchArt = exports.StadiumNavArt = exports.RioluArt = exports.ResetStampArt = exports.RecycleEnergyArt = exports.RaichuAlolanRaichuGXArt = exports.AlolanRaichuArt = exports.PurrloinArt = exports.NumelArt = exports.NecrozmaArt = exports.MunchlaxArt = exports.LickilickyArt = exports.KarateBeltArt = exports.HoopaArt = exports.FroslassArt = exports.FlyiniumZAirSlashArt = exports.DarkCityArt = exports.CottoneeArt = exports.AlolanGrimerArt = void 0;
 const alolan_grimer_1 = require("./alolan-grimer");
 const dark_city_1 = require("./dark-city");
 const flyinium_z_air_slash_1 = require("./flyinium-z-air-slash");
@@ -21,6 +21,8 @@ const numel_1 = require("./numel");
 const froslass_1 = require("./froslass");
 const alolan_raichu_1 = require("./alolan_raichu");
 const weakness_guard_energy_1 = require("./weakness-guard-energy");
+const cottonee_1 = require("./cottonee");
+const whimsicott_1 = require("./whimsicott");
 class AlolanGrimerArt extends alolan_grimer_1.AlolanGrimer {
     constructor() {
         super(...arguments);
@@ -28,6 +30,13 @@ class AlolanGrimerArt extends alolan_grimer_1.AlolanGrimer {
     }
 }
 exports.AlolanGrimerArt = AlolanGrimerArt;
+class CottoneeArt extends cottonee_1.Cottonee {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNM/UNM_143_R_EN_LG.png';
+    }
+}
+exports.CottoneeArt = CottoneeArt;
 class DarkCityArt extends dark_city_1.DarkCity {
     constructor() {
         super(...arguments);
@@ -161,3 +170,10 @@ class WeaknessGuardEnergyArt extends weakness_guard_energy_1.WeaknessGuardEnergy
     }
 }
 exports.WeaknessGuardEnergyArt = WeaknessGuardEnergyArt;
+class WhimsicottArt extends whimsicott_1.Whimsicott {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNM/UNM_144_R_EN_LG.png';
+    }
+}
+exports.WhimsicottArt = WhimsicottArt;

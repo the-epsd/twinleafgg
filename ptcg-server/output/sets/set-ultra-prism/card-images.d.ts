@@ -17,6 +17,8 @@ import { Bastiodon } from './bastiodon';
 import { Volkner } from './volkner';
 import { Weavile } from './weavile';
 import { Lillie } from './lillie';
+import { Morelull } from './morelull';
+import { Shiinotic } from './shiinotic';
 export declare class BastiodonArt extends Bastiodon {
     cardImage: string;
 }
@@ -44,6 +46,9 @@ export declare class MagnemiteArt extends Magnemite {
 export declare class MagnezoneArt extends Magnezone {
     cardImage: string;
 }
+export declare class MorelullArt extends Morelull {
+    cardImage: string;
+}
 export declare class MtCoronetArt extends MtCoronet {
     cardImage: string;
 }
@@ -54,6 +59,9 @@ export declare class RioluArt extends Riolu {
     cardImage: string;
 }
 export declare class RoseliaArt extends Roselia {
+    cardImage: string;
+}
+export declare class ShiinoticArt extends Shiinotic {
     cardImage: string;
 }
 export declare class SneaselArt extends Sneasel {

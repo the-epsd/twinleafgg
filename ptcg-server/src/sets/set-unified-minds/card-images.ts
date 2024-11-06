@@ -18,9 +18,15 @@ import { Numel } from './numel';
 import { Froslass } from './froslass';
 import { AlolanRaichu } from './alolan_raichu';
 import { WeaknessGuardEnergy } from './weakness-guard-energy';
+import { Cottonee } from './cottonee';
+import { Whimsicott } from './whimsicott';
 
 export class AlolanGrimerArt extends AlolanGrimer {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNM/UNM_127_R_EN.png';
+}
+
+export class CottoneeArt extends Cottonee {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNM/UNM_143_R_EN_LG.png';
 }
 
 export class DarkCityArt extends DarkCity {
@@ -97,4 +103,8 @@ export class UTurnBoardArt extends UTurnBoard {
 
 export class WeaknessGuardEnergyArt extends WeaknessGuardEnergy {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNM/UNM_213_R_EN_LG.png';
+}
+
+export class WhimsicottArt extends Whimsicott {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNM/UNM_144_R_EN_LG.png';
 }

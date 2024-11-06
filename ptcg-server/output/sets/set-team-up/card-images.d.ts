@@ -20,6 +20,7 @@ import { Absol } from './absol';
 import { ViridianForest } from './viridian-forest';
 import { Yveltal } from './yveltal';
 import { Zapdos } from './zapdos';
+import { Mimikyu } from './mimikyu';
 export declare class AbsolArt extends Absol {
     cardImage: string;
 }
@@ -57,6 +58,9 @@ export declare class MareepArt extends Mareep {
     cardImage: string;
 }
 export declare class MetalGogglesArt extends MetalGoggles {
+    cardImage: string;
+}
+export declare class MimikyuArt extends Mimikyu {
     cardImage: string;
 }
 export declare class MoltresArt extends Moltres {

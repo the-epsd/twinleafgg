@@ -10,6 +10,7 @@ import { Phantump } from './phantump';
 import { ReverseValley } from './reverse-valley';
 import { SplashEnergy } from './splash-energy';
 import { Staryu } from './staryu';
+import { MrMime } from './mr-mime';
 
 export class BayleefArt extends Bayleef {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BKP/BKP_002_R_EN_LG.png';
@@ -33,6 +34,10 @@ export class KricketotArt extends Kricketot {
 
 export class MaxElixirArt extends MaxElixir {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BKP/BKP_102_R_EN_LG.png';
+}
+
+export class MrMimeArt extends MrMime {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BKT/BKT_097_R_EN_LG.png';
 }
 
 export class PhantumpArt extends Phantump {

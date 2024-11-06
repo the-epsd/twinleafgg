@@ -1,10 +1,11 @@
 import { Card } from '../../game/store/card/card';
-import { AlolanGrimerArt, AlolanRaichuArt, DarkCityArt, FlyiniumZAirSlashArt, FroslassArt, HoopaArt, KarateBeltArt, LickilickyArt, MunchlaxArt, NecrozmaArt, NumelArt, PurrloinArt, RaichuAlolanRaichuGXArt, RecycleEnergyArt, ResetStampArt, RioluArt, StadiumNavArt, TagSwitchArt, UTurnBoardArt, WeaknessGuardEnergyArt } from './card-images';
+import { AlolanGrimerArt, AlolanRaichuArt, CottoneeArt, DarkCityArt, FlyiniumZAirSlashArt, FroslassArt, HoopaArt, KarateBeltArt, LickilickyArt, MunchlaxArt, NecrozmaArt, NumelArt, PurrloinArt, RaichuAlolanRaichuGXArt, RecycleEnergyArt, ResetStampArt, RioluArt, StadiumNavArt, TagSwitchArt, UTurnBoardArt, WeaknessGuardEnergyArt, WhimsicottArt } from './card-images';
 
 
 export const setUnifiedMinds: Card[] = [
   new AlolanGrimerArt(),
   new AlolanRaichuArt(),
+  new CottoneeArt(),
   new DarkCityArt(),
   new FlyiniumZAirSlashArt(),
   new FroslassArt(),
@@ -22,5 +23,6 @@ export const setUnifiedMinds: Card[] = [
   new StadiumNavArt(),
   new TagSwitchArt(),
   new UTurnBoardArt(),
-  new WeaknessGuardEnergyArt()
+  new WeaknessGuardEnergyArt(),
+  new WhimsicottArt()
 ];

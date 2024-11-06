@@ -5,6 +5,7 @@ const card_images_1 = require("./card-images");
 exports.setUnifiedMinds = [
     new card_images_1.AlolanGrimerArt(),
     new card_images_1.AlolanRaichuArt(),
+    new card_images_1.CottoneeArt(),
     new card_images_1.DarkCityArt(),
     new card_images_1.FlyiniumZAirSlashArt(),
     new card_images_1.FroslassArt(),
@@ -22,5 +23,6 @@ exports.setUnifiedMinds = [
     new card_images_1.StadiumNavArt(),
     new card_images_1.TagSwitchArt(),
     new card_images_1.UTurnBoardArt(),
-    new card_images_1.WeaknessGuardEnergyArt()
+    new card_images_1.WeaknessGuardEnergyArt(),
+    new card_images_1.WhimsicottArt()
 ];
