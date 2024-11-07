@@ -20,6 +20,7 @@ import { Absol } from './absol';
 import { ViridianForest } from './viridian-forest';
 import { Yveltal } from './yveltal';
 import { Zapdos } from './zapdos';
+import { Mimikyu } from './mimikyu';
 
 export class AbsolArt extends Absol {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEU/TEU_088_R_EN_LG.png';
@@ -71,6 +72,10 @@ export class MareepArt extends Mareep {
 
 export class MetalGogglesArt extends MetalGoggles {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEU/TEU_148_R_EN.png';
+}
+
+export class MimikyuArt extends Mimikyu {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEU/TEU_112_R_EN_LG.png';
 }
 
 export class MoltresArt extends Moltres {

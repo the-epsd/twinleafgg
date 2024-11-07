@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.MisdreavusArt = exports.LusamineArt = exports.GladionArt = exports.DevouredFieldArt = exports.CounterEnergyArt = exports.ChimechoArt = exports.BuzzwoleGXArt = void 0;
+exports.XerneasArt = exports.MisdreavusArt = exports.LusamineArt = exports.GladionArt = exports.DevouredFieldArt = exports.CounterEnergyArt = exports.ChimechoArt = exports.BuzzwoleGXArt = void 0;
 const buzzwole_gx_1 = require("./buzzwole-gx");
 const chimecho_1 = require("./chimecho");
 const counter_energy_1 = require("./counter-energy");
@@ -8,6 +8,7 @@ const devoured_field_1 = require("./devoured-field");
 const gladion_1 = require("./gladion");
 const lusamine_1 = require("./lusamine");
 const misdreavus_1 = require("./misdreavus");
+const xerneas_1 = require("./xerneas");
 class BuzzwoleGXArt extends buzzwole_gx_1.BuzzwoleGX {
     constructor() {
         super(...arguments);
@@ -57,3 +58,10 @@ class MisdreavusArt extends misdreavus_1.Misdreavus {
     }
 }
 exports.MisdreavusArt = MisdreavusArt;
+class XerneasArt extends xerneas_1.Xerneas {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CIN/CIN_073_R_EN_LG.png';
+    }
+}
+exports.XerneasArt = XerneasArt;

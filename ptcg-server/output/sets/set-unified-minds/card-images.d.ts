@@ -18,7 +18,12 @@ import { Numel } from './numel';
 import { Froslass } from './froslass';
 import { AlolanRaichu } from './alolan_raichu';
 import { WeaknessGuardEnergy } from './weakness-guard-energy';
+import { Cottonee } from './cottonee';
+import { Whimsicott } from './whimsicott';
 export declare class AlolanGrimerArt extends AlolanGrimer {
+    cardImage: string;
+}
+export declare class CottoneeArt extends Cottonee {
     cardImage: string;
 }
 export declare class DarkCityArt extends DarkCity {
@@ -76,5 +81,8 @@ export declare class UTurnBoardArt extends UTurnBoard {
     cardImage: string;
 }
 export declare class WeaknessGuardEnergyArt extends WeaknessGuardEnergy {
+    cardImage: string;
+}
+export declare class WhimsicottArt extends Whimsicott {
     cardImage: string;
 }

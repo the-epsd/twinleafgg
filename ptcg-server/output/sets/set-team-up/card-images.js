@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZapdosArt = exports.YveltalArt = exports.ViridianForestArt = exports.TapuKokoPrismStarArt = exports.PokemonCommunicationArt = exports.PidgeottoArt = exports.PersianArt = exports.PawniardArt = exports.MoltresArt = exports.MetalGogglesArt = exports.MareepArt = exports.LaprasArt = exports.JirachiArt = exports.HitmonleeArt = exports.HitmonchanArt = exports.FerrothornArt = exports.DragoniteArt = exports.BronzorArt = exports.BisharpArt = exports.ArticunoArt = exports.AlolanMukArt = exports.AbsolArt = void 0;
+exports.ZapdosArt = exports.YveltalArt = exports.ViridianForestArt = exports.TapuKokoPrismStarArt = exports.PokemonCommunicationArt = exports.PidgeottoArt = exports.PersianArt = exports.PawniardArt = exports.MoltresArt = exports.MimikyuArt = exports.MetalGogglesArt = exports.MareepArt = exports.LaprasArt = exports.JirachiArt = exports.HitmonleeArt = exports.HitmonchanArt = exports.FerrothornArt = exports.DragoniteArt = exports.BronzorArt = exports.BisharpArt = exports.ArticunoArt = exports.AlolanMukArt = exports.AbsolArt = void 0;
 const alolan_muk_1 = require("./alolan-muk");
 const articuno_1 = require("./articuno");
 const bronzor_1 = require("./bronzor");
@@ -23,6 +23,7 @@ const absol_1 = require("./absol");
 const viridian_forest_1 = require("./viridian-forest");
 const yveltal_1 = require("./yveltal");
 const zapdos_1 = require("./zapdos");
+const mimikyu_1 = require("./mimikyu");
 class AbsolArt extends absol_1.Absol {
     constructor() {
         super(...arguments);
@@ -114,6 +115,13 @@ class MetalGogglesArt extends metal_goggles_1.MetalGoggles {
     }
 }
 exports.MetalGogglesArt = MetalGogglesArt;
+class MimikyuArt extends mimikyu_1.Mimikyu {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TEU/TEU_112_R_EN_LG.png';
+    }
+}
+exports.MimikyuArt = MimikyuArt;
 class MoltresArt extends moltres_1.Moltres {
     constructor() {
         super(...arguments);

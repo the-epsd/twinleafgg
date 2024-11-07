@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { BuzzwoleGXArt, ChimechoArt, CounterEnergyArt, DevouredFieldArt, GladionArt, LusamineArt, MisdreavusArt } from './card-images';
+import { BuzzwoleGXArt, ChimechoArt, CounterEnergyArt, DevouredFieldArt, GladionArt, LusamineArt, MisdreavusArt, XerneasArt } from './card-images';
 
 export const setCrimsonInvasion: Card[] = [
   new BuzzwoleGXArt(),
@@ -8,5 +8,6 @@ export const setCrimsonInvasion: Card[] = [
   new DevouredFieldArt(),
   new GladionArt(),
   new LusamineArt(),
-  new MisdreavusArt()
+  new MisdreavusArt(),
+  new XerneasArt()
 ];
