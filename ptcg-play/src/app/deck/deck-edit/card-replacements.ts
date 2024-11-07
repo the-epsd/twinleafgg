@@ -148,6 +148,7 @@ export const cardReplacements = [
   { from: 'Psychic Energy MEW 207', to: 'Psychic Energy MEW 207' },
 
   //PAR
+  { from: 'Gimmighoul PAR 88', to: 'Gimmighoul2 PAR 88' },
   //PAR FA
   { from: 'Toedscruel PAR 185', to: 'ToedscruelIR PAR 185' },
   { from: 'Iron Moth PAR 187', to: 'IronMothIR PAR 187' },
@@ -416,6 +417,7 @@ export const exportReplacements = [
   { from: 'Psychic Energy MEW 207', to: 'Psychic Energy MEW 207' },
 
   //PAR
+  { from: 'Gimmighoul2 PAR 88', to: 'Gimmighoul PAR 88' },
   //PAR FA
   { from: 'ToedscruelIR PAR 185', to: 'Toedscruel PAR 185' },
   { from: 'IronMothIR PAR 187', to: 'Iron Moth PAR 187' },
