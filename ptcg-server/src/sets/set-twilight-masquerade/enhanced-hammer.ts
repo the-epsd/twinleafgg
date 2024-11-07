@@ -5,8 +5,10 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { PlayerType, SlotType, StateUtils, CardTarget, GameError, GameMessage,
-  PokemonCardList, ChooseCardsPrompt, Card, EnergyCard } from '../../game';
+import {
+  PlayerType, SlotType, StateUtils, CardTarget, GameError, GameMessage,
+  PokemonCardList, ChooseCardsPrompt, Card, EnergyCard
+} from '../../game';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -34,8 +36,8 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     player.id,
     GameMessage.CHOOSE_POKEMON_TO_DISCARD_CARDS,
     PlayerType.TOP_PLAYER,
-    [ SlotType.ACTIVE, SlotType.BENCH ],
-    { allowCancel: true, blocked }
+    [SlotType.ACTIVE, SlotType.BENCH],
+    { allowCancel: false, blocked }
   ), results => {
     targets = results || [];
     next();
@@ -52,7 +54,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     GameMessage.CHOOSE_CARD_TO_DISCARD,
     target,
     { superType: SuperType.ENERGY, energyType: EnergyType.SPECIAL },
-    { min: 1, max: 1, allowCancel: true }
+    { min: 1, max: 1, allowCancel: false }
   ), selected => {
     cards = selected || [];
     next();

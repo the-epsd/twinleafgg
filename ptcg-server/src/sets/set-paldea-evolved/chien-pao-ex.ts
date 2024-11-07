@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, EnergyType, SuperType, SpecialCondition } from '../../game/store/card/card-types';
-import { StoreLike, State, ChooseCardsPrompt, ShuffleDeckPrompt, PowerType, PlayerType, SlotType, GameError, ShowCardsPrompt, StateUtils } from '../../game';
+import { StoreLike, State, ChooseCardsPrompt, ShuffleDeckPrompt, PowerType, PlayerType, SlotType, GameError, ShowCardsPrompt, StateUtils, EnergyCard } from '../../game';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { GameLog, GameMessage } from '../../game/game-message';
@@ -190,13 +190,23 @@ export class ChienPaoex extends PokemonCard {
       // ), targets => {
       //   targets.forEach(target => {
 
+      let totalWaterEnergy = 0;
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
+        const waterCount = cardList.cards.filter(card =>
+          card instanceof EnergyCard && card.name === 'Water Energy'
+        ).length;
+        totalWaterEnergy += waterCount;
+      });
+
+      console.log('Total Water Energy: ' + totalWaterEnergy);
+
       return store.prompt(state, new DiscardEnergyPrompt(
         player.id,
         GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
         PlayerType.BOTTOM_PLAYER,
         [SlotType.ACTIVE, SlotType.BENCH],// Card source is target Pokemon
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Water Energy' },
-        { min: 1, allowCancel: false }
+        { min: 1, max: totalWaterEnergy, allowCancel: false }
       ), transfers => {
 
         if (transfers === null) {

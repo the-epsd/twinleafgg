@@ -139,7 +139,7 @@ export class Store implements StoreLike {
     const promptItem = this.promptItems.find(item => item.ids.indexOf(action.id) !== -1);
 
     if (prompt === undefined || promptItem === undefined) {
-      throw new GameError(GameMessage.ILLEGAL_ACTION);
+      return state;
     }
 
     if (prompt.result !== undefined) {

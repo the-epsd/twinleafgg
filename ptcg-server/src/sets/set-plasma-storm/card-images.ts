@@ -39,7 +39,7 @@ export class EscapeRopeArt extends EscapeRope {
 }
 
 export class EtherArt extends Ether {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PLS/PLS_121s_R_EN.png';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PLS/PLS_121_R_EN.png';
 }
 
 export class GalladeArt extends Gallade {

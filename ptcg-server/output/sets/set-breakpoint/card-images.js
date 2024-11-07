@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZoroarkArt = exports.SudowoodoArt = exports.StaryuArt = exports.SplashEnergyArt = exports.ReverseValleyArt = exports.PhantumpArt = exports.MaxElixirArt = exports.KricketotArt = exports.FroakieArt = exports.FightingFuryBeltArt = exports.DelinquentArt = exports.BayleefArt = void 0;
+exports.ZoroarkArt = exports.SudowoodoArt = exports.StaryuArt = exports.SplashEnergyArt = exports.ReverseValleyArt = exports.PhantumpArt = exports.MrMimeArt = exports.MaxElixirArt = exports.KricketotArt = exports.FroakieArt = exports.FightingFuryBeltArt = exports.DelinquentArt = exports.BayleefArt = void 0;
 const bayleef_1 = require("./bayleef");
 const froakie_1 = require("./froakie");
 const sudowoodo_1 = require("./sudowoodo");
@@ -13,6 +13,7 @@ const phantump_1 = require("./phantump");
 const reverse_valley_1 = require("./reverse-valley");
 const splash_energy_1 = require("./splash-energy");
 const staryu_1 = require("./staryu");
+const mr_mime_1 = require("./mr-mime");
 class BayleefArt extends bayleef_1.Bayleef {
     constructor() {
         super(...arguments);
@@ -55,6 +56,13 @@ class MaxElixirArt extends max_elixir_1.MaxElixir {
     }
 }
 exports.MaxElixirArt = MaxElixirArt;
+class MrMimeArt extends mr_mime_1.MrMime {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BKT/BKT_097_R_EN_LG.png';
+    }
+}
+exports.MrMimeArt = MrMimeArt;
 class PhantumpArt extends phantump_1.Phantump {
     constructor() {
         super(...arguments);

@@ -1,10 +1,9 @@
 import { Action } from '../actions/action';
 import { State, GamePhase, GameWinner } from '../state/state';
-import { GameLog, GameMessage } from '../../game-message';
+import { GameLog } from '../../game-message';
 import { StoreLike } from '../store-like';
 import { AbortGameAction, AbortGameReason } from '../actions/abort-game-action';
 import { endGame } from '../effect-reducers/check-effect';
-import { GameError } from '../../game-error';
 
 
 export function abortGameReducer(store: StoreLike, state: State, action: Action): State {
@@ -13,7 +12,7 @@ export function abortGameReducer(store: StoreLike, state: State, action: Action)
 
     const culprit = state.players.find(p => p.id === action.culpritId);
     if (culprit === undefined) {
-      throw new GameError(GameMessage.ILLEGAL_ACTION);
+      return state;
     }
 
     // Mark all prompts as resolved, so they won't mess with our state anymore.

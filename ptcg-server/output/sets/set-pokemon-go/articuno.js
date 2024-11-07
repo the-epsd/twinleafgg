@@ -11,10 +11,10 @@ class Articuno extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.BASIC;
-        this.cardType = card_types_1.CardType.WATER;
+        this.cardType = W;
         this.hp = 120;
-        this.weakness = [{ type: card_types_1.CardType.METAL }];
-        this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
+        this.weakness = [{ type: M }];
+        this.retreat = [C, C];
         this.powers = [{
                 name: 'Ice Symbol',
                 powerType: game_1.PowerType.ABILITY,
@@ -23,7 +23,7 @@ class Articuno extends pokemon_card_1.PokemonCard {
         this.attacks = [
             {
                 name: 'Freezing Wind',
-                cost: [card_types_1.CardType.WATER, card_types_1.CardType.WATER, card_types_1.CardType.COLORLESS],
+                cost: [W, W, C],
                 damage: 110,
                 text: ''
             }
@@ -62,7 +62,7 @@ class Articuno extends pokemon_card_1.PokemonCard {
             }
             const checkPokemonTypeEffect = new check_effects_1.CheckPokemonTypeEffect(player.active);
             store.reduceEffect(state, checkPokemonTypeEffect);
-            if (checkPokemonTypeEffect.cardTypes.includes(card_types_1.CardType.LIGHTNING) && effect.target === opponent.active) {
+            if (checkPokemonTypeEffect.cardTypes.includes(W) && effect.target === opponent.active) {
                 if (((_a = effect.player.active.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.name) !== 'Articuno' && ((_b = effect.player.active.getPokemonCard()) === null || _b === void 0 ? void 0 : _b.stage) === card_types_1.Stage.BASIC) {
                     effect.damage += 10 * numberOfArticunoInPlay;
                 }

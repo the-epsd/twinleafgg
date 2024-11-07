@@ -57,7 +57,7 @@ export class Eeveeex extends PokemonCard {
         .map(c => player.deck.cards.indexOf(c));
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-        if (cardList.pokemonPlayedTurn === state.turn) {
+        if (cardList.getPokemonCard() === this && cardList.pokemonPlayedTurn === state.turn) {
           throw new GameError(GameMessage.CANNOT_USE_POWER);
         }
 
@@ -69,10 +69,12 @@ export class Eeveeex extends PokemonCard {
             { superType: SuperType.POKEMON, evolvesFrom: 'Eevee' },
             { allowCancel: false, min: 0, max: 1, blocked }
           ), cards => {
-            cards = cards || [];
-            player.hand.moveCardsTo(cards, cardList);
-            cardList.clearEffects();
-            cardList.pokemonPlayedTurn = state.turn;
+            if (cards.length > 0) {
+              cards = cards || [];
+              player.hand.moveCardsTo(cards, cardList);
+              cardList.clearEffects();
+              cardList.pokemonPlayedTurn = state.turn;
+            }
           });
         }
       });

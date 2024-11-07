@@ -6,7 +6,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { SpecialCondition } from '../../game/store/card/card-types';
 import { PlayerType, StateUtils } from '../../game';
-import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { AddSpecialConditionsEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 
 export class Bruxish extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -21,10 +21,6 @@ export class Bruxish extends PokemonCard {
       cost: [W],
       damage: 0,
       text: 'Your opponent\'s Active Pokémon is now Confused.',
-      effect: (store: StoreLike, state: State, effect: AttackEffect) => {
-        const opponent = StateUtils.getOpponent(state, effect.player);
-        opponent.active.specialConditions.push(SpecialCondition.CONFUSED);
-      }
     },
     {
       name: 'Synchronoise',
@@ -41,6 +37,11 @@ export class Bruxish extends PokemonCard {
   public setNumber: string = '38';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+      const specialConditionEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.CONFUSED]);
+      store.reduceEffect(state, specialConditionEffect);
+    }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;

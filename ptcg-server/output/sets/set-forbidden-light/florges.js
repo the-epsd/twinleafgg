@@ -1,0 +1,69 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Florges = void 0;
+const pokemon_card_1 = require("../../game/store/card/pokemon-card");
+const card_types_1 = require("../../game/store/card/card-types");
+const game_1 = require("../../game");
+const attack_effects_1 = require("../../game/store/effects/attack-effects");
+const game_effects_1 = require("../../game/store/effects/game-effects");
+const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
+class Florges extends pokemon_card_1.PokemonCard {
+    constructor() {
+        super(...arguments);
+        this.stage = card_types_1.Stage.STAGE_2;
+        this.cardType = Y;
+        this.hp = 120;
+        this.weakness = [{ type: M }];
+        this.resistance = [{ type: D, value: -20 }];
+        this.retreat = [C, C];
+        this.evolvesFrom = 'Floette';
+        this.powers = [{
+                name: "Wondrous Gift",
+                useWhenInPlay: true,
+                powerType: game_1.PowerType.ABILITY,
+                text: 'Once during your turn (before your attack), you may flip a coin. If heads, put an Item card from your discard pile on top of your deck.'
+            }];
+        this.attacks = [{
+                name: 'Mist Guard',
+                cost: [Y, Y, C],
+                damage: 70,
+                text: 'Prevent all damage done to this Pokémon by attacks from [N] Pokémon during your opponent\'s next turn.'
+            }];
+        this.set = 'FLI';
+        this.name = 'Florges';
+        this.fullName = 'Florges FLI';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '86';
+        this.MIST_GUARD_MARKER = 'MIST_GUARD_MARKER';
+        this.CLEAR_MIST_GUARD_MARKER = 'CLEAR_MIST_GUARD_MARKER';
+    }
+    reduceEffect(store, state, effect) {
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+            const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            player.active.marker.addMarker(this.MIST_GUARD_MARKER, this);
+            opponent.marker.addMarker(this.CLEAR_MIST_GUARD_MARKER, this);
+            return state;
+        }
+        if (effect instanceof attack_effects_1.PutDamageEffect
+            && effect.target.marker.hasMarker(this.MIST_GUARD_MARKER)) {
+            const card = effect.source.getPokemonCard();
+            const dragonPokemon = card && card.cardType == N;
+            if (dragonPokemon) {
+                effect.preventDefault = true;
+            }
+            return state;
+        }
+        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+            if (effect.player.marker.hasMarker(this.CLEAR_MIST_GUARD_MARKER, this)) {
+                effect.player.marker.removeMarker(this.CLEAR_MIST_GUARD_MARKER, this);
+                const opponent = game_1.StateUtils.getOpponent(state, effect.player);
+                opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList) => {
+                    cardList.marker.removeMarker(this.MIST_GUARD_MARKER, this);
+                });
+            }
+        }
+        return state;
+    }
+}
+exports.Florges = Florges;

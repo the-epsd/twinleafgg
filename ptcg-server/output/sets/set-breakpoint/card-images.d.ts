@@ -10,6 +10,7 @@ import { Phantump } from './phantump';
 import { ReverseValley } from './reverse-valley';
 import { SplashEnergy } from './splash-energy';
 import { Staryu } from './staryu';
+import { MrMime } from './mr-mime';
 export declare class BayleefArt extends Bayleef {
     cardImage: string;
 }
@@ -26,6 +27,9 @@ export declare class KricketotArt extends Kricketot {
     cardImage: string;
 }
 export declare class MaxElixirArt extends MaxElixir {
+    cardImage: string;
+}
+export declare class MrMimeArt extends MrMime {
     cardImage: string;
 }
 export declare class PhantumpArt extends Phantump {

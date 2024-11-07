@@ -10,13 +10,13 @@ export class Articuno extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = CardType.WATER;
+  public cardType: CardType = W;
 
   public hp: number = 120;
 
-  public weakness = [{ type: CardType.METAL }];
+  public weakness = [{ type: M }];
 
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public retreat = [C, C];
 
   public powers = [{
     name: 'Ice Symbol',
@@ -27,7 +27,7 @@ export class Articuno extends PokemonCard {
   public attacks = [
     {
       name: 'Freezing Wind',
-      cost: [CardType.WATER, CardType.WATER, CardType.COLORLESS],
+      cost: [W, W, C],
       damage: 110,
       text: ''
     }
@@ -76,7 +76,7 @@ export class Articuno extends PokemonCard {
       const checkPokemonTypeEffect = new CheckPokemonTypeEffect(player.active);
       store.reduceEffect(state, checkPokemonTypeEffect);
 
-      if (checkPokemonTypeEffect.cardTypes.includes(CardType.LIGHTNING) && effect.target === opponent.active) {
+      if (checkPokemonTypeEffect.cardTypes.includes(W) && effect.target === opponent.active) {
         if (effect.player.active.getPokemonCard()?.name !== 'Articuno' && effect.player.active.getPokemonCard()?.stage === Stage.BASIC) {
           effect.damage += 10 * numberOfArticunoInPlay;
         }

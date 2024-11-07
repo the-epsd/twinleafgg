@@ -58,7 +58,7 @@ exports.EscapeRopeArt = EscapeRopeArt;
 class EtherArt extends ether_1.Ether {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PLS/PLS_121s_R_EN.png';
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PLS/PLS_121_R_EN.png';
     }
 }
 exports.EtherArt = EtherArt;

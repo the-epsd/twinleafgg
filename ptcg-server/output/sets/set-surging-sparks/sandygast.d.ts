@@ -21,4 +21,7 @@ export declare class Sandygast extends PokemonCard {
     set: string;
     name: string;
     fullName: string;
+    regulationMark: string;
+    setNumber: string;
+    cardImage: string;
 }

@@ -65,6 +65,7 @@ import { Tulip } from './tulip';
 import { Veluza } from './veluza';
 import { Xatu } from './xatu';
 import { Toedscruel } from './toedscruel';
+import { Gimmighoul2 } from './gimmighoul2';
 export declare class AncientBoosterEnergyCapsuleArt extends AncientBoosterEnergyCapsule {
     cardImage: string;
 }
@@ -132,6 +133,9 @@ export declare class GibleArt extends Gible {
     cardImage: string;
 }
 export declare class GimmighoulArt extends Gimmighoul {
+    cardImage: string;
+}
+export declare class Gimmighoul2Art extends Gimmighoul2 {
     cardImage: string;
 }
 export declare class GroudonArt extends Groudon {

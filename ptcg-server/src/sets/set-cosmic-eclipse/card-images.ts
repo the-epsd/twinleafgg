@@ -28,6 +28,7 @@ import { Slugma } from './slugma';
 import { Sunkern } from './sunkern';
 import { TagCall } from './tag-call';
 import { UltraNecrozma } from './ultra-necrozma';
+import { Floette } from './floette';
 
 export class ArceusDialgaPalkiaGXArt extends ArceusDialgaPalkiaGX {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CEC/CEC_156_R_EN.png';
@@ -67,6 +68,10 @@ export class DusclopsArt extends Dusclops {
 
 export class DuskullArt extends Duskull {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CEC/CEC_083_R_EN_LG.png';
+}
+
+export class FloetteArt extends Floette {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CEC/CEC_151_R_EN_LG.png';
 }
 
 export class GolettArt extends Golett {

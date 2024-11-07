@@ -5,6 +5,7 @@ import { DevouredField } from './devoured-field';
 import { Gladion } from './gladion';
 import { Lusamine } from './lusamine';
 import { Misdreavus } from './misdreavus';
+import { Xerneas } from './xerneas';
 export declare class BuzzwoleGXArt extends BuzzwoleGX {
     cardImage: string;
 }
@@ -24,5 +25,8 @@ export declare class LusamineArt extends Lusamine {
     cardImage: string;
 }
 export declare class MisdreavusArt extends Misdreavus {
+    cardImage: string;
+}
+export declare class XerneasArt extends Xerneas {
     cardImage: string;
 }

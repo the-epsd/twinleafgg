@@ -1,7 +1,5 @@
 import { Action } from '../actions/action';
 import { ChangeAvatarAction } from '../actions/change-avatar-action';
-import { GameError } from '../../game-error';
-import { GameMessage } from '../../game-message';
 import { ReorderBenchAction, ReorderHandAction } from '../actions/reorder-actions';
 import { State } from '../state/state';
 import { StoreLike } from '../store-like';
@@ -12,7 +10,7 @@ export function playerStateReducer(store: StoreLike, state: State, action: Actio
   if (action instanceof ReorderBenchAction) {
     const player = state.players.find(p => p.id === action.id);
     if (player === undefined || player.bench[action.from] === undefined) {
-      throw new GameError(GameMessage.ILLEGAL_ACTION);
+      return state;
     }
 
     const temp = player.bench[action.from];
@@ -23,10 +21,10 @@ export function playerStateReducer(store: StoreLike, state: State, action: Actio
   }
 
   if (action instanceof ReorderHandAction) {
-    
+
     const player = state.players.find(p => p.id === action.id);
     if (player === undefined || player.hand.cards.length !== action.order.length) {
-      throw new GameError(GameMessage.ILLEGAL_ACTION);
+      return state;
     }
 
     player.hand.applyOrder(action.order);
@@ -38,7 +36,7 @@ export function playerStateReducer(store: StoreLike, state: State, action: Actio
 
     const player = state.players.find(p => p.id === action.id);
     if (player === undefined) {
-      throw new GameError(GameMessage.ILLEGAL_ACTION);
+      return state;
     }
 
     player.avatarName = action.avatarName;

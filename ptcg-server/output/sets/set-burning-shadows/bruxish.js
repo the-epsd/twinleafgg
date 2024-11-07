@@ -21,10 +21,6 @@ class Bruxish extends pokemon_card_1.PokemonCard {
                 cost: [W],
                 damage: 0,
                 text: 'Your opponent\'s Active Pokémon is now Confused.',
-                effect: (store, state, effect) => {
-                    const opponent = game_1.StateUtils.getOpponent(state, effect.player);
-                    opponent.active.specialConditions.push(card_types_2.SpecialCondition.CONFUSED);
-                }
             },
             {
                 name: 'Synchronoise',
@@ -40,6 +36,10 @@ class Bruxish extends pokemon_card_1.PokemonCard {
         this.setNumber = '38';
     }
     reduceEffect(store, state, effect) {
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+            const specialConditionEffect = new attack_effects_1.AddSpecialConditionsEffect(effect, [card_types_2.SpecialCondition.CONFUSED]);
+            store.reduceEffect(state, specialConditionEffect);
+        }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);

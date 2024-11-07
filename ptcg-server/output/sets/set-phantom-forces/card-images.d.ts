@@ -13,7 +13,9 @@ import { MysteryEnergy } from './mystery-energy';
 import { Pumpkaboo } from './pumpkaboo';
 import { Regigigas } from './regigigas';
 import { RoboSubstitute } from './robo-substitutue';
+import { Slurpuff } from './slurpuff';
 import { SteelShelter } from './steel-shelter';
+import { Swirlix } from './swirlix';
 import { TargetWhistle } from './target-whistle';
 import { VsSeeker } from './vs-seeker';
 import { Wobbuffet } from './wobbuffet';
@@ -62,7 +64,13 @@ export declare class RegigigasArt extends Regigigas {
 export declare class RoboSubstituteArt extends RoboSubstitute {
     cardImage: string;
 }
+export declare class SlurpuffArt extends Slurpuff {
+    cardImage: string;
+}
 export declare class SteelShelterArt extends SteelShelter {
+    cardImage: string;
+}
+export declare class SwirlixArt extends Swirlix {
     cardImage: string;
 }
 export declare class TargetWhistleArt extends TargetWhistle {

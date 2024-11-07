@@ -20,6 +20,8 @@ export class HexManiac extends TrainerCard {
 
   public fullName: string = 'Hex Maniac AOR';
 
+  public cardImage: string = 'assets/cardback.png';
+
   public text: string =
     'Until the end of your opponent\'s next turn, each Pokémon in play, in each player\'s hand, and in each player\'s discard pile has no Abilities. (This includes cards that come into play on that turn.)';
 
@@ -35,11 +37,12 @@ export class HexManiac extends TrainerCard {
       if (player.supporterTurn > 0) {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
+      player.supporterTurn = 1;
 
       player.marker.addMarker(this.HEX_MANIAC_MARKER, this);
       opponent.marker.addMarker(this.HEX_MANIAC_MARKER, this);
 
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+      player.supporter.moveCardTo(this, player.discard);
     }
 
     if (effect instanceof PowerEffect && effect.player.marker.hasMarker(this.HEX_MANIAC_MARKER, this)) {

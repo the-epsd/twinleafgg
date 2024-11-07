@@ -17,11 +17,10 @@ export class Drilbur extends PokemonCard {
 
   public weakness = [{ type: CardType.GRASS }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public powers = [{
     name: 'Dig Dig Dig',
-    useWhenInPlay: true,
     powerType: PowerType.ABILITY,
     text: 'When you play this Pokémon from your hand onto your Bench during your turn, you may search your deck for up to 3 Basic [F] Energy cards and discard them. Then, shuffle your deck.'
   }];
@@ -53,7 +52,7 @@ export class Drilbur extends PokemonCard {
       if (player.deck.cards.length === 0) {
         return state;
       }
-    
+
       // Try to reduce PowerEffect, to check if something is blocking our ability
       try {
         const stub = new PowerEffect(player, {
@@ -70,7 +69,7 @@ export class Drilbur extends PokemonCard {
         GameMessage.WANT_TO_USE_ABILITY,
       ), wantToUse => {
         if (wantToUse) {
-    
+
           state = store.prompt(state, new ChooseCardsPrompt(
             player.id,
             GameMessage.CHOOSE_CARD_TO_HAND,
@@ -79,16 +78,21 @@ export class Drilbur extends PokemonCard {
             { min: 0, max: 3, allowCancel: false }
           ), selected => {
             const cards = selected || [];
+
+            // Operation canceled by the user
+            if (cards.length === 0) {
+              return state;
+            }
+
             player.deck.moveCardsTo(cards, player.discard);
-          });
-    
-          return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-            player.deck.applyOrder(order);
+
+            return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+              player.deck.applyOrder(order);
+            });
           });
         }
         return state;
       });
-      return state;
     }
     return state;
   }

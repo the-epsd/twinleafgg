@@ -9,6 +9,7 @@ exports.setBreakpoint = [
     new card_images_1.FroakieArt(),
     new card_images_1.KricketotArt(),
     new card_images_1.MaxElixirArt(),
+    new card_images_1.MrMimeArt(),
     new card_images_1.PhantumpArt(),
     new card_images_1.ReverseValleyArt(),
     new card_images_1.SplashEnergyArt(),

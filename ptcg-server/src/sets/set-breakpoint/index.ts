@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { BayleefArt, DelinquentArt, FightingFuryBeltArt, FroakieArt, KricketotArt, MaxElixirArt, PhantumpArt, ReverseValleyArt, SplashEnergyArt, StaryuArt, SudowoodoArt, ZoroarkArt } from './card-images';
+import { BayleefArt, DelinquentArt, FightingFuryBeltArt, FroakieArt, KricketotArt, MaxElixirArt, MrMimeArt, PhantumpArt, ReverseValleyArt, SplashEnergyArt, StaryuArt, SudowoodoArt, ZoroarkArt } from './card-images';
 
 export const setBreakpoint: Card[] = [
   new BayleefArt(),
@@ -8,6 +8,7 @@ export const setBreakpoint: Card[] = [
   new FroakieArt(),
   new KricketotArt(),
   new MaxElixirArt(),
+  new MrMimeArt(),
   new PhantumpArt(),
   new ReverseValleyArt(),
   new SplashEnergyArt(),

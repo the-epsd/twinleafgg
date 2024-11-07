@@ -11,10 +11,10 @@ class Moltres extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.BASIC;
-        this.cardType = card_types_1.CardType.FIRE;
+        this.cardType = R;
         this.hp = 120;
-        this.weakness = [{ type: card_types_1.CardType.WATER }];
-        this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
+        this.weakness = [{ type: W }];
+        this.retreat = [C, C];
         this.powers = [{
                 name: 'Flare Symbol',
                 powerType: game_1.PowerType.ABILITY,
@@ -23,7 +23,7 @@ class Moltres extends pokemon_card_1.PokemonCard {
         this.attacks = [
             {
                 name: 'Fire Wing',
-                cost: [card_types_1.CardType.FIRE, card_types_1.CardType.FIRE, card_types_1.CardType.COLORLESS],
+                cost: [R, R, C],
                 damage: 110,
                 text: ''
             }
@@ -62,8 +62,8 @@ class Moltres extends pokemon_card_1.PokemonCard {
             }
             const checkPokemonTypeEffect = new check_effects_1.CheckPokemonTypeEffect(player.active);
             store.reduceEffect(state, checkPokemonTypeEffect);
-            if (checkPokemonTypeEffect.cardTypes.includes(card_types_1.CardType.LIGHTNING) && effect.target === opponent.active) {
-                if (((_a = effect.player.active.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.name) !== 'Zapdos' && ((_b = effect.player.active.getPokemonCard()) === null || _b === void 0 ? void 0 : _b.stage) === card_types_1.Stage.BASIC) {
+            if (checkPokemonTypeEffect.cardTypes.includes(R) && effect.target === opponent.active) {
+                if (((_a = effect.player.active.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.name) !== 'Moltres' && ((_b = effect.player.active.getPokemonCard()) === null || _b === void 0 ? void 0 : _b.stage) === card_types_1.Stage.BASIC) {
                     effect.damage += 10 * numberOfMoltresInPlay;
                 }
             }

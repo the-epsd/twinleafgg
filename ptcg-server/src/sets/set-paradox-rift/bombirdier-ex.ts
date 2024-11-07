@@ -1,7 +1,41 @@
-import { PokemonCard, Stage, CardType, StoreLike, State, ShuffleDeckPrompt, PokemonCardList, Card, ChooseCardsPrompt, GameError, GameMessage, SuperType, ConfirmPrompt } from '../../game';
+import { PokemonCard, Stage, CardType, StoreLike, State, ShuffleDeckPrompt, PokemonCardList, Card, ChooseCardsPrompt, GameMessage, SuperType, ConfirmPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 
+function* useCallForFamily(next: Function, store: StoreLike, state: State,
+  effect: AttackEffect): IterableIterator<State> {
+  const player = effect.player;
+  const slots: PokemonCardList[] = player.bench.filter(b => b.cards.length === 0);
+
+  if (slots.length === 0) {
+    return state;
+  }
+
+  let cards: Card[] = [];
+  yield store.prompt(state, new ChooseCardsPrompt(
+    player.id,
+    GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
+    player.deck,
+    { superType: SuperType.POKEMON, stage: Stage.BASIC },
+    { min: 0, max: 3, allowCancel: false }
+  ), selected => {
+    cards = selected || [];
+    next();
+  });
+
+  if (cards.length > slots.length) {
+    cards.length = slots.length;
+  }
+
+  cards.forEach((card, index) => {
+    player.deck.moveCardTo(card, slots[index]);
+    slots[index].pokemonPlayedTurn = state.turn;
+  });
+
+  return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+    player.deck.applyOrder(order);
+  });
+}
 
 export class Bombirdierex extends PokemonCard {
 
@@ -53,46 +87,9 @@ export class Bombirdierex extends PokemonCard {
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const player = effect.player;
-      // Allow player to search deck and choose up to 2 Basic Pokemon
-      const slots: PokemonCardList[] = player.bench.filter(b => b.cards.length === 0);
-
-      if (player.deck.cards.length === 0) {
-        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-      } else {
-        // Check if bench has open slots
-        const openSlots = player.bench.filter(b => b.cards.length === 0);
-
-        if (openSlots.length === 0) {
-          // No open slots, throw error
-          throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-        }
-
-        if (player.canAttackFirstTurn) {
-
-          let cards: Card[] = [];
-          return store.prompt(state, new ChooseCardsPrompt(
-            player.id,
-            GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
-            player.deck,
-            { superType: SuperType.POKEMON, stage: Stage.BASIC },
-            { min: 0, max: 3, allowCancel: true }
-          ), selectedCards => {
-            cards = selectedCards || [];
-
-
-            cards.forEach((card, index) => {
-              player.deck.moveCardTo(card, slots[index]);
-              slots[index].pokemonPlayedTurn = state.turn;
-            });
-
-            return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-              player.deck.applyOrder(order);
-
-              return state;
-            });
-          });
-        }
+      const generator = useCallForFamily(() => generator.next(), store, state, effect);
+      if (player.canAttackFirstTurn) {
+        return generator.next().value;
       }
     }
 

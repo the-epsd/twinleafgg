@@ -14,32 +14,32 @@ import { FormatValidator } from 'src/app/util/formats-validator';
 export class DeckValidityComponent {
 
   public formats = [
-    {value: Format.STANDARD, label: 'LABEL_STANDARD' },
-    {value: Format.GLC, label: 'LABEL_GLC' },
-    {value: Format.EXPANDED, label: 'LABEL_EXPANDED' },
-    {value: Format.RETRO, label: 'LABEL_RETRO' },
-    {value: Format.UNLIMITED, label: 'LABEL_UNLIMITED' },
+    { value: Format.STANDARD, label: 'LABEL_STANDARD' },
+    { value: Format.GLC, label: 'LABEL_GLC' },
+    { value: Format.EXPANDED, label: 'LABEL_EXPANDED' },
+    { value: Format.RETRO, label: 'LABEL_RETRO' },
+    { value: Format.UNLIMITED, label: 'LABEL_UNLIMITED' },
   ];
-  
+
   @Input() validOnly = false;
 
-  @Input() 
+  @Input()
   set deck(cards: DeckItem[]) {
     this._deck.next(cards);
   }
-  
+
   _deck = new BehaviorSubject<DeckItem[]>(null);
   deck$ = this._deck.asObservable();
-  
+
   validFormats$ = this.deck$.pipe(
     map(cards => {
       const cardList = [];
       cards.forEach(card => {
-        for(let i = 0; i < card.count; i++) {
+        for (let i = 0; i < card.count; i++) {
           cardList.push(card.card);
         }
       });
-      
+
       return cardList;
     }),
     map(cards => FormatValidator.getValidFormatsForCardList(cards)),

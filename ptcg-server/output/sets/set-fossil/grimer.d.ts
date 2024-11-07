@@ -7,10 +7,10 @@ export declare class Grimer extends PokemonCard {
     cardType: CardType;
     hp: number;
     weakness: {
-        type: CardType;
+        type: CardType.PSYCHIC;
     }[];
-    retreat: CardType[];
-    attack: ({
+    retreat: CardType.COLORLESS[];
+    attacks: ({
         name: string;
         cost: CardType.COLORLESS[];
         damage: number;

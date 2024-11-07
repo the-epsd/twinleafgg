@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WobbuffetArt = exports.VsSeekerArt = exports.TargetWhistleArt = exports.SteelShelterArt = exports.RoboSubstituteArt = exports.RegigigasArt = exports.PumpkabooArt = exports.MysteryEnergyArt = exports.LysandresTrumpCardArt = exports.LitwickArt = exports.LampentArt = exports.JoltikArt = exports.GolbatArt = exports.DimensionValleyArt = exports.CrobatArt = exports.BronzorArt = exports.BronzongArt = exports.BattleCompressorArt = exports.AZArt = void 0;
+exports.WobbuffetArt = exports.VsSeekerArt = exports.TargetWhistleArt = exports.SwirlixArt = exports.SteelShelterArt = exports.SlurpuffArt = exports.RoboSubstituteArt = exports.RegigigasArt = exports.PumpkabooArt = exports.MysteryEnergyArt = exports.LysandresTrumpCardArt = exports.LitwickArt = exports.LampentArt = exports.JoltikArt = exports.GolbatArt = exports.DimensionValleyArt = exports.CrobatArt = exports.BronzorArt = exports.BronzongArt = exports.BattleCompressorArt = exports.AZArt = void 0;
 const az_1 = require("./az");
 const battle_compressor_1 = require("./battle-compressor");
 const bronzong_1 = require("./bronzong");
@@ -16,7 +16,9 @@ const mystery_energy_1 = require("./mystery-energy");
 const pumpkaboo_1 = require("./pumpkaboo");
 const regigigas_1 = require("./regigigas");
 const robo_substitutue_1 = require("./robo-substitutue");
+const slurpuff_1 = require("./slurpuff");
 const steel_shelter_1 = require("./steel-shelter");
+const swirlix_1 = require("./swirlix");
 const target_whistle_1 = require("./target-whistle");
 const vs_seeker_1 = require("./vs-seeker");
 const wobbuffet_1 = require("./wobbuffet");
@@ -125,6 +127,13 @@ class RoboSubstituteArt extends robo_substitutue_1.RoboSubstitute {
     }
 }
 exports.RoboSubstituteArt = RoboSubstituteArt;
+class SlurpuffArt extends slurpuff_1.Slurpuff {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PHF/PHF_069_R_EN_LG.png';
+    }
+}
+exports.SlurpuffArt = SlurpuffArt;
 class SteelShelterArt extends steel_shelter_1.SteelShelter {
     constructor() {
         super(...arguments);
@@ -132,6 +141,13 @@ class SteelShelterArt extends steel_shelter_1.SteelShelter {
     }
 }
 exports.SteelShelterArt = SteelShelterArt;
+class SwirlixArt extends swirlix_1.Swirlix {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PHF/PHF_068_R_EN_LG.png';
+    }
+}
+exports.SwirlixArt = SwirlixArt;
 class TargetWhistleArt extends target_whistle_1.TargetWhistle {
     constructor() {
         super(...arguments);

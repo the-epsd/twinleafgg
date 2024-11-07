@@ -125,13 +125,23 @@ export class ElectrodeGX extends PokemonCard {
       // ), targets => {
       //   targets.forEach(target => {
 
+      let totalEnergy = 0;
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
+        const energyCount = cardList.cards.filter(card =>
+          card instanceof EnergyCard
+        ).length;
+        totalEnergy += energyCount;
+      });
+
+      console.log('Total Energy: ' + totalEnergy);
+
       return store.prompt(state, new DiscardEnergyPrompt(
         player.id,
         GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
         PlayerType.BOTTOM_PLAYER,
         [SlotType.ACTIVE, SlotType.BENCH],// Card source is target Pokemon
         { superType: SuperType.ENERGY },
-        { min: 1, allowCancel: false }
+        { min: 1, max: totalEnergy, allowCancel: false }
       ), transfers => {
 
         if (transfers === null) {

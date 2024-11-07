@@ -26,13 +26,19 @@ class DeckAnalyser {
         if (this.cards.length !== 60) {
             return false;
         }
+        // Check for invalid Professor/Boss combinations
+        const cardSet = new Set(this.cards.map(c => c.name));
+        if ((cardSet.has('Professor Sycamore') && cardSet.has('Professor Juniper')) ||
+            (cardSet.has('Professor Juniper') && cardSet.has('Professor\'s Research')) ||
+            (cardSet.has('Professor Sycamore') && cardSet.has('Professor\'s Research')) ||
+            (cardSet.has('Lysandre') && cardSet.has('Boss\'s Orders'))) {
+            return false;
+        }
         for (let i = 0; i < this.cards.length; i++) {
             const card = this.cards[i];
-            // Check if deck has a basic Pokemon card
             if (card instanceof pokemon_card_1.PokemonCard && card.stage === card_types_1.Stage.BASIC) {
                 hasBasicPokemon = true;
             }
-            // Count cards, except basic energies
             if (!(card instanceof energy_card_1.EnergyCard) || card.energyType !== card_types_1.EnergyType.BASIC) {
                 countMap[card.name] = (countMap[card.name] || 0) + 1;
                 if (countMap[card.name] > 4) {

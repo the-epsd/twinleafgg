@@ -17,7 +17,6 @@ class Drilbur extends pokemon_card_1.PokemonCard {
         this.retreat = [card_types_1.CardType.COLORLESS];
         this.powers = [{
                 name: 'Dig Dig Dig',
-                useWhenInPlay: true,
                 powerType: game_1.PowerType.ABILITY,
                 text: 'When you play this Pokémon from your hand onto your Bench during your turn, you may search your deck for up to 3 Basic [F] Energy cards and discard them. Then, shuffle your deck.'
             }];
@@ -57,15 +56,18 @@ class Drilbur extends pokemon_card_1.PokemonCard {
                 if (wantToUse) {
                     state = store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Fighting Energy' }, { min: 0, max: 3, allowCancel: false }), selected => {
                         const cards = selected || [];
+                        // Operation canceled by the user
+                        if (cards.length === 0) {
+                            return state;
+                        }
                         player.deck.moveCardsTo(cards, player.discard);
-                    });
-                    return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
-                        player.deck.applyOrder(order);
+                        return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
+                            player.deck.applyOrder(order);
+                        });
                     });
                 }
                 return state;
             });
-            return state;
         }
         return state;
     }

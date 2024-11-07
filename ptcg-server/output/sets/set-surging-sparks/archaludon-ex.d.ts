@@ -7,13 +7,13 @@ export declare class Archaludonex extends PokemonCard {
     cardType: CardType;
     hp: number;
     weakness: {
-        type: CardType;
+        type: CardType.FIRE;
     }[];
     resistance: {
-        type: CardType;
+        type: CardType.GRASS;
         value: number;
     }[];
-    retreat: CardType[];
+    retreat: CardType.COLORLESS[];
     powers: {
         name: string;
         powerType: PowerType;
@@ -21,7 +21,7 @@ export declare class Archaludonex extends PokemonCard {
     }[];
     attacks: {
         name: string;
-        cost: CardType[];
+        cost: CardType.METAL[];
         damage: number;
         text: string;
     }[];
@@ -31,5 +31,6 @@ export declare class Archaludonex extends PokemonCard {
     name: string;
     fullName: string;
     readonly METAL_DEFENDER_MARKER = "METAL_DEFENDER_MARKER";
+    readonly CLEAR_METAL_DEFENDER_MARKER = "CLEAR_METAL_DEFENDER_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

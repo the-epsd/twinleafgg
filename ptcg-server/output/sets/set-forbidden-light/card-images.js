@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UltraNecrozmaGXArt = exports.UnitEnergyFDYArt = exports.MysteriousTreasureArt = exports.MetalFryingPanArt = exports.MalamarArt = exports.MagnezoneArt = exports.LysandreLabsArt = exports.InkayArt = exports.GreninjaGXArt = exports.FrogadierArt = exports.BuzzwoleArt = exports.BeastRingArt = void 0;
+exports.UltraNecrozmaGXArt = exports.UnitEnergyFDYArt = exports.MysteriousTreasureArt = exports.MetalFryingPanArt = exports.MalamarArt = exports.MagnezoneArt = exports.LysandreLabsArt = exports.KlefkiArt = exports.InkayArt = exports.GreninjaGXArt = exports.FrogadierArt = exports.FlorgesArt = exports.FlabebeArt = exports.BuzzwoleArt = exports.BeastRingArt = void 0;
 const beast_ring_1 = require("./beast-ring");
 const lysandre_labs_1 = require("./lysandre_labs");
 const frogadier_1 = require("./frogadier");
@@ -13,6 +13,9 @@ const unit_energy_fdy_1 = require("./unit-energy-fdy");
 const buzzwole_1 = require("./buzzwole");
 const greninja_gx_1 = require("./greninja-gx");
 const ultra_necrozma_gx_1 = require("./ultra-necrozma-gx");
+const flabebe_1 = require("./flabebe");
+const florges_1 = require("./florges");
+const klefki_1 = require("./klefki");
 class BeastRingArt extends beast_ring_1.BeastRing {
     constructor() {
         super(...arguments);
@@ -27,6 +30,20 @@ class BuzzwoleArt extends buzzwole_1.Buzzwole {
     }
 }
 exports.BuzzwoleArt = BuzzwoleArt;
+class FlabebeArt extends flabebe_1.Flabebe {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FLI/FLI_083_R_EN_LG.png';
+    }
+}
+exports.FlabebeArt = FlabebeArt;
+class FlorgesArt extends florges_1.Florges {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FLI/FLI_086_R_EN_LG.png';
+    }
+}
+exports.FlorgesArt = FlorgesArt;
 class FrogadierArt extends frogadier_1.Frogadier {
     constructor() {
         super(...arguments);
@@ -48,6 +65,13 @@ class InkayArt extends inkay_1.Inkay {
     }
 }
 exports.InkayArt = InkayArt;
+class KlefkiArt extends klefki_1.Klefki {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FLI/FLI_089_R_EN_LG.png';
+    }
+}
+exports.KlefkiArt = KlefkiArt;
 class LysandreLabsArt extends lysandre_labs_1.LysandreLabs {
     constructor() {
         super(...arguments);

@@ -5,6 +5,7 @@ import { DevouredField } from './devoured-field';
 import { Gladion } from './gladion';
 import { Lusamine } from './lusamine';
 import { Misdreavus } from './misdreavus';
+import { Xerneas } from './xerneas';
 
 export class BuzzwoleGXArt extends BuzzwoleGX {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CIN/CIN_057_R_EN.png';
@@ -32,4 +33,8 @@ export class LusamineArt extends Lusamine {
 
 export class MisdreavusArt extends Misdreavus {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CIN/CIN_039_R_EN_LG.png';
+}
+
+export class XerneasArt extends Xerneas {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CIN/CIN_073_R_EN_LG.png';
 }

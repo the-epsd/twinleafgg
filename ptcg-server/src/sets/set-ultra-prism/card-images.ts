@@ -17,6 +17,8 @@ import { Bastiodon } from './bastiodon';
 import { Volkner } from './volkner';
 import { Weavile } from './weavile';
 import { Lillie } from './lillie';
+import { Morelull } from './morelull';
+import { Shiinotic } from './shiinotic';
 
 export class BastiodonArt extends Bastiodon {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UPR/UPR_085_R_EN_LG.png';
@@ -54,6 +56,10 @@ export class MagnezoneArt extends Magnezone {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UPR/UPR_083_R_EN_LG.png';
 }
 
+export class MorelullArt extends Morelull {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UPR/UPR_092_R_EN_LG.png';
+}
+
 export class MtCoronetArt extends MtCoronet {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UPR/UPR_130_R_EN_LG.png';
 }
@@ -68,6 +74,10 @@ export class RioluArt extends Riolu {
 
 export class RoseliaArt extends Roselia {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UPR/UPR_004_R_EN_LG.png';
+}
+
+export class ShiinoticArt extends Shiinotic {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UPR/UPR_093_R_EN_LG.png';
 }
 
 export class SneaselArt extends Sneasel {

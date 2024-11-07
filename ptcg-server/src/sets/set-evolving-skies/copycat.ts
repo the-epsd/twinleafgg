@@ -16,12 +16,12 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
   if (cards.length > 0) {
     player.hand.moveCardsTo(cards, player.deck);
-
-    yield store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-      player.deck.applyOrder(order);
-      next();
-    });
   }
+
+  yield store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+    player.deck.applyOrder(order);
+    next();
+  });
 
   const cardsNumber = opponent.hand.cards.length;
   player.deck.moveTo(player.hand, cardsNumber);

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TapuLeleGXArt = exports.RescueStretcherArt = exports.MimikyuArt = exports.MetagrossGXArt = exports.MallowArt = exports.MachokeArt = exports.LycanrocGXArt = exports.FieldBlowerArt = exports.EnhancedHammerArt = exports.BrookletHillArt = exports.AquaPatchArt = exports.AlolanVulpixArt = exports.AetherParadiseConvserationAreaArt = void 0;
+exports.TapuLeleGXArt = exports.RescueStretcherArt = exports.OricorioArt = exports.MimikyuArt = exports.MetagrossGXArt = exports.MallowArt = exports.MachokeArt = exports.LycanrocGXArt = exports.FieldBlowerArt = exports.EnhancedHammerArt = exports.BrookletHillArt = exports.AquaPatchArt = exports.AlolanVulpixArt = exports.AetherParadiseConvserationAreaArt = void 0;
 const alolan_vulpix_1 = require("../set-hidden-fates/alolan-vulpix");
 const enhanced_hammer_1 = require("../set-twilight-masquerade/enhanced-hammer");
 const aether_paradise_conservation_area_1 = require("./aether-paradise-conservation-area");
@@ -12,6 +12,7 @@ const machoke_1 = require("./machoke");
 const mallow_1 = require("./mallow");
 const metagross_gx_1 = require("./metagross-gx");
 const mimikyu_1 = require("./mimikyu");
+const oricorio_1 = require("./oricorio");
 const rescue_stretcher_1 = require("./rescue-stretcher");
 const tapu_lele_gx_1 = require("./tapu-lele-gx");
 class AetherParadiseConvserationAreaArt extends aether_paradise_conservation_area_1.AetherParadiseConvserationArea {
@@ -93,6 +94,13 @@ class MimikyuArt extends mimikyu_1.Mimikyu {
     }
 }
 exports.MimikyuArt = MimikyuArt;
+class OricorioArt extends oricorio_1.Oricorio {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/GRI/GRI_055_R_EN_LG.png';
+    }
+}
+exports.OricorioArt = OricorioArt;
 class RescueStretcherArt extends rescue_stretcher_1.RescueStretcher {
     constructor() {
         super(...arguments);

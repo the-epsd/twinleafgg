@@ -9,6 +9,7 @@ export declare class HexManiac extends TrainerCard {
     setNumber: string;
     name: string;
     fullName: string;
+    cardImage: string;
     text: string;
     HEX_MANIAC_MARKER: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
