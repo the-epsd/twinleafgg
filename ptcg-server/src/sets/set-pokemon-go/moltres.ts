@@ -10,13 +10,13 @@ export class Moltres extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = CardType.FIRE;
+  public cardType: CardType = R;
 
   public hp: number = 120;
 
-  public weakness = [{ type: CardType.WATER }];
+  public weakness = [{ type: W }];
 
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public retreat = [C, C];
 
   public powers = [{
     name: 'Flare Symbol',
@@ -27,7 +27,7 @@ export class Moltres extends PokemonCard {
   public attacks = [
     {
       name: 'Fire Wing',
-      cost: [CardType.FIRE, CardType.FIRE, CardType.COLORLESS],
+      cost: [R, R, C],
       damage: 110,
       text: ''
     }
@@ -76,8 +76,8 @@ export class Moltres extends PokemonCard {
       const checkPokemonTypeEffect = new CheckPokemonTypeEffect(player.active);
       store.reduceEffect(state, checkPokemonTypeEffect);
 
-      if (checkPokemonTypeEffect.cardTypes.includes(CardType.LIGHTNING) && effect.target === opponent.active) {
-        if (effect.player.active.getPokemonCard()?.name !== 'Zapdos' && effect.player.active.getPokemonCard()?.stage === Stage.BASIC) {
+      if (checkPokemonTypeEffect.cardTypes.includes(R) && effect.target === opponent.active) {
+        if (effect.player.active.getPokemonCard()?.name !== 'Moltres' && effect.player.active.getPokemonCard()?.stage === Stage.BASIC) {
           effect.damage += 10 * numberOfMoltresInPlay;
         }
       }

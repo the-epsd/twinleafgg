@@ -18,7 +18,7 @@ class Jolteonex extends pokemon_card_1.PokemonCard {
         this.cardType = L;
         this.hp = 260;
         this.weakness = [{ type: F }];
-        this.retreat = [C, C, C];
+        this.retreat = [];
         this.attacks = [
             {
                 name: 'Flash Spear',

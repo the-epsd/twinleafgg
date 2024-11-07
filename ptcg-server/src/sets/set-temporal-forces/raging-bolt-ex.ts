@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, EnergyType, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, PlayerType, SlotType, GameError, StateUtils } from '../../game';
+import { StoreLike, State, PlayerType, SlotType, GameError, StateUtils, EnergyCard } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { GameMessage } from '../../game/game-message';
@@ -74,13 +74,23 @@ export class RagingBoltex extends PokemonCard {
       // ), targets => {
       //   targets.forEach(target => {
 
+      let totalEnergy = 0;
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
+        const basicEnergyCount = cardList.cards.filter(card =>
+          card instanceof EnergyCard && card.energyType === EnergyType.BASIC
+        ).length;
+        totalEnergy += basicEnergyCount;
+      });
+
+      console.log('Total Energy: ' + totalEnergy);
+
       return store.prompt(state, new DiscardEnergyPrompt(
         player.id,
         GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
         PlayerType.BOTTOM_PLAYER,
         [SlotType.ACTIVE, SlotType.BENCH],// Card source is target Pokemon
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-        { min: 1, allowCancel: false }
+        { min: 1, max: totalEnergy, allowCancel: false }
       ), transfers => {
 
         if (transfers === null) {

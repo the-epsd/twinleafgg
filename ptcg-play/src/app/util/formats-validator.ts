@@ -1,4 +1,4 @@
-import { Card, CardTag, EnergyType, Format, PokemonCard, SuperType } from "ptcg-server";
+import { Card, CardTag, CardType, EnergyCard, EnergyType, Format, PokemonCard, SuperType } from "ptcg-server";
 
 export class FormatValidator {
 
@@ -10,7 +10,7 @@ export class FormatValidator {
 
     let formats = [];
 
-    cards.filter(c => !!c && c.superType !== SuperType.ENERGY && (<any>c).energyType !== EnergyType.BASIC).forEach(card => {
+    cards.filter(c => !!c && (c.superType !== SuperType.ENERGY || (<any>c).energyType === EnergyType.SPECIAL)).forEach(card => {
       formats.push(this.getValidFormats(card));
     });
 
@@ -27,6 +27,14 @@ export class FormatValidator {
         f !== Format.EXPANDED &&
         f !== Format.STANDARD &&
         f !== Format.UNLIMITED
+      );
+    }
+
+    if ((set.has('Fairy Energy')) ||
+      (set.has('Wonder Energy'))) {
+      return formatList.filter(f =>
+        f !== Format.STANDARD &&
+        f !== Format.RETRO
       );
     }
 
@@ -54,8 +62,6 @@ export class FormatValidator {
     }
     return formatList
   }
-
-
 
   static getValidFormats(card: Card): Format[] {
     const formats = [Format.UNLIMITED];
@@ -121,10 +127,9 @@ export class FormatValidator {
     if (banList.includes(`${card.name} ${card.set} ${card.setNumber}`)) {
       return false;
     }
+    return false;
   }
 }
-
-
 
 export const BanLists: { [key: number]: string[] } = {
   [Format.GLC]: [
@@ -184,8 +189,7 @@ export const BanLists: { [key: number]: string[] } = {
   ],
   [Format.RETRO]: [],
   [Format.UNLIMITED]: [],
-  [Format.STANDARD]: [
-  ]
+  [Format.STANDARD]: []
 }
 
 export const SetReleaseDates: { [key: string]: Date } = {

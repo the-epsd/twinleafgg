@@ -11,7 +11,7 @@ export declare class Jolteonex extends PokemonCard {
     weakness: {
         type: CardType.FIGHTING;
     }[];
-    retreat: CardType.COLORLESS[];
+    retreat: never[];
     attacks: ({
         name: string;
         cost: (CardType.LIGHTNING | CardType.COLORLESS)[];

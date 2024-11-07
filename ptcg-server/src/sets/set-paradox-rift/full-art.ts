@@ -7,6 +7,7 @@ import { Froslassex } from './froslass-ex';
 import { Garchompex } from './garchomp-ex';
 import { Garganacl } from './garganacl';
 import { Gholdengoex } from './gholdengo-ex';
+import { Gimmighoul2 } from './gimmighoul2';
 import { Groudon } from './groudon';
 import { Hoopaex } from './hoopa-ex';
 import { IronHandsex } from './iron-hands-ex';
@@ -117,11 +118,11 @@ export class SnoruntIR extends Snorunt {
 //   public fullName: string = 'EspathrIR PAR';
 // }
 
-/*export class GimmighoulIR extends Gimmighoul {
+export class GimmighoulIR extends Gimmighoul2 {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_198_R_EN_LG.png';
   public setNumber = '198';
   public fullName: string = 'GimmighoulIR PAR';
-}*/
+}
 
 export class GroudonIR extends Groudon {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_199_R_EN_LG.png';

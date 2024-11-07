@@ -18,6 +18,9 @@ class Sandygast extends pokemon_card_1.PokemonCard {
         this.set = 'SSP';
         this.name = 'Sandygast';
         this.fullName = 'Sandygast SSP';
+        this.regulationMark = 'H';
+        this.setNumber = '90';
+        this.cardImage = 'assets/cardback.png';
     }
 }
 exports.Sandygast = Sandygast;

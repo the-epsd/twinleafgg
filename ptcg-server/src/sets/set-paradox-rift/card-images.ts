@@ -65,6 +65,7 @@ import { Tulip } from './tulip';
 import { Veluza } from './veluza';
 import { Xatu } from './xatu';
 import { Toedscruel } from './toedscruel';
+import { Gimmighoul2 } from './gimmighoul2';
 
 export class AncientBoosterEnergyCapsuleArt extends AncientBoosterEnergyCapsule {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_159_R_EN_LG.png';
@@ -156,6 +157,9 @@ export class GibleArt extends Gible {
 
 export class GimmighoulArt extends Gimmighoul {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_087_R_EN_LG.png';
+}
+export class Gimmighoul2Art extends Gimmighoul2 {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_088_R_EN_LG.png';
 }
 
 export class GroudonArt extends Groudon {

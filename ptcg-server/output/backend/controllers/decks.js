@@ -91,11 +91,13 @@ class Decks extends controller_1.Controller {
             res.send({ error: errors_1.ApiErrorEnum.NAME_DUPLICATE });
             return;
         }
-        res.send({ ok: true, deck: {
+        res.send({
+            ok: true, deck: {
                 id: deck.id,
                 name: deck.name,
                 cards: body.cards
-            } });
+            }
+        });
     }
     async onDelete(req, res) {
         const body = req.body;
@@ -139,10 +141,12 @@ class Decks extends controller_1.Controller {
             res.send({ error: errors_1.ApiErrorEnum.NAME_DUPLICATE });
             return;
         }
-        res.send({ ok: true, deck: {
+        res.send({
+            ok: true, deck: {
                 id: deck.id,
                 name: deck.name
-            } });
+            }
+        });
     }
     async onDuplicate(req, res) {
         const body = req.body;

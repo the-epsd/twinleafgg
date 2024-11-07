@@ -13,7 +13,7 @@ export class Sandygast extends PokemonCard {
 
   public resistance = [{ type: F, value: -30 }];
 
-  public retreat = [ C, C, C ];
+  public retreat = [C, C, C];
 
   public attacks = [
     { name: 'Sand Spray', cost: [C, C, C], damage: 50, text: '' }
@@ -24,5 +24,11 @@ export class Sandygast extends PokemonCard {
   public name: string = 'Sandygast';
 
   public fullName: string = 'Sandygast SSP';
+
+  public regulationMark = 'H';
+
+  public setNumber: string = '90';
+
+  public cardImage: string = 'assets/cardback.png';
 
 }

@@ -11,11 +11,11 @@ class Grimer extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.BASIC;
-        this.cardType = card_types_1.CardType.GRASS;
+        this.cardType = G;
         this.hp = 60;
-        this.weakness = [{ type: card_types_1.CardType.PSYCHIC }];
-        this.retreat = [card_types_1.CardType.COLORLESS];
-        this.attack = [{
+        this.weakness = [{ type: P }];
+        this.retreat = [C];
+        this.attacks = [{
                 name: 'Nasty Goo',
                 cost: [C],
                 damage: 10,

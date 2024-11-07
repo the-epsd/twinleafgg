@@ -8,12 +8,12 @@ import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class Grimer extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType = G;
   public hp: number = 60;
-  public weakness = [{ type: CardType.PSYCHIC }];
-  public retreat = [CardType.COLORLESS];
+  public weakness = [{ type: P }];
+  public retreat = [C];
 
-  public attack = [{
+  public attacks = [{
     name: 'Nasty Goo',
     cost: [C],
     damage: 10,

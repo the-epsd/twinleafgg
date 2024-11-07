@@ -7,10 +7,10 @@ export declare class Magmar extends PokemonCard {
     cardType: CardType;
     hp: number;
     weakness: {
-        type: CardType;
+        type: CardType.WATER;
     }[];
     resistance: never[];
-    retreat: CardType[];
+    retreat: CardType.COLORLESS[];
     attacks: {
         name: string;
         cost: CardType.FIRE[];
@@ -22,5 +22,6 @@ export declare class Magmar extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
+    readonly DEFENDING_POKEMON_CANNOT_ATTACK_MARKER = "DEFENDING_POKEMON_CANNOT_ATTACK_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

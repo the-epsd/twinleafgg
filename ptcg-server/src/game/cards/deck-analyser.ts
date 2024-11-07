@@ -31,44 +31,54 @@ export class DeckAnalyser {
       return false;
     }
 
+    // Check for invalid Professor/Boss combinations
+    const cardSet = new Set(this.cards.map(c => c.name));
+    if ((cardSet.has('Professor Sycamore') && cardSet.has('Professor Juniper')) ||
+      (cardSet.has('Professor Juniper') && cardSet.has('Professor\'s Research')) ||
+      (cardSet.has('Professor Sycamore') && cardSet.has('Professor\'s Research')) ||
+      (cardSet.has('Lysandre') && cardSet.has('Boss\'s Orders'))) {
+      return false;
+    }
+
     for (let i = 0; i < this.cards.length; i++) {
       const card = this.cards[i];
 
-      // Check if deck has a basic Pokemon card
       if (card instanceof PokemonCard && card.stage === Stage.BASIC) {
         hasBasicPokemon = true;
       }
 
-      // Count cards, except basic energies
       if (!(card instanceof EnergyCard) || card.energyType !== EnergyType.BASIC) {
         countMap[card.name] = (countMap[card.name] || 0) + 1;
         if (countMap[card.name] > 4) {
           return false;
         }
       }
+
       if (card.tags.includes(CardTag.ACE_SPEC)) {
         if (hasAceSpec) {
           return false;
         }
         hasAceSpec = true;
       }
+
       if (card.tags.includes(CardTag.RADIANT)) {
         if (hasRadiant) {
           return false;
         }
         hasRadiant = true;
       }
+
       if (card.tags.includes(CardTag.PRISM_STAR)) {
         if (prismStarCards.has(card.name)) {
           return false;
         }
         prismStarCards.add(card.name);
       }
-
     }
 
     return hasBasicPokemon;
   }
+
 
   public getDeckType(): CardType[] {
     const cardTypes: CardType[] = [];

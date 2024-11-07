@@ -1,0 +1,21 @@
+::ng-deep .mat-dialog-title,
+::ng-deep .mat-dialog-content,
+::ng-deep .mat-form-field-label,
+::ng-deep .mat-form-field-underline,
+::ng-deep .mat-form-field-ripple {
+  color: #449058 !important;
+}
+
+::ng-deep .mat-form-field-underline,
+::ng-deep .mat-form-field-ripple {
+  background-color: #449058 !important;
+}
+
+::ng-deep .mat-input-element::placeholder {
+  color: #44905896 !important;
+}
+
+::ng-deep .mat-input-element {
+  caret-color: #449058 !important;
+
+}

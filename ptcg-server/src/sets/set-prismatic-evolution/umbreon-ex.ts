@@ -21,8 +21,7 @@ export class Umbreonex extends PokemonCard {
     },
     {
       name: 'Onyx',
-      cost: [],
-      // cost: [L, P, D],
+      cost: [L, P, D],
       damage: 0,
       text: 'Discard all Energy from this Pokémon. Draw 1 Prize card.',
     }

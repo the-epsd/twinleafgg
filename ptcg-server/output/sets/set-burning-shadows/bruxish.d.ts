@@ -3,7 +3,6 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
 export declare class Bruxish extends PokemonCard {
     stage: Stage;
     cardType: CardType;
@@ -12,19 +11,12 @@ export declare class Bruxish extends PokemonCard {
         type: CardType.GRASS;
     }[];
     retreat: CardType.COLORLESS[];
-    attacks: ({
-        name: string;
-        cost: CardType.WATER[];
-        damage: number;
-        text: string;
-        effect: (store: StoreLike, state: State, effect: AttackEffect) => void;
-    } | {
+    attacks: {
         name: string;
         cost: (CardType.WATER | CardType.COLORLESS)[];
         damage: number;
         text: string;
-        effect?: undefined;
-    })[];
+    }[];
     set: string;
     name: string;
     fullName: string;

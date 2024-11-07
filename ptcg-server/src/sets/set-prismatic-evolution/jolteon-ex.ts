@@ -23,7 +23,7 @@ export class Jolteonex extends PokemonCard {
 
   public weakness = [{ type: F }];
 
-  public retreat = [C, C, C];
+  public retreat = [];
 
   public attacks = [
     {

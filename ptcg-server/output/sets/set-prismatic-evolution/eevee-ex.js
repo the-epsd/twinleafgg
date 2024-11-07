@@ -48,15 +48,17 @@ class Eeveeex extends pokemon_card_1.PokemonCard {
                 .filter(c => !c.tags.includes(card_types_1.CardTag.POKEMON_ex))
                 .map(c => player.deck.cards.indexOf(c));
             player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-                if (cardList.pokemonPlayedTurn === state.turn) {
+                if (cardList.getPokemonCard() === this && cardList.pokemonPlayedTurn === state.turn) {
                     throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
                 }
                 if (cardList.getPokemonCard() === this) {
                     return store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_EVOLVE, player.hand, { superType: card_types_1.SuperType.POKEMON, evolvesFrom: 'Eevee' }, { allowCancel: false, min: 0, max: 1, blocked }), cards => {
-                        cards = cards || [];
-                        player.hand.moveCardsTo(cards, cardList);
-                        cardList.clearEffects();
-                        cardList.pokemonPlayedTurn = state.turn;
+                        if (cards.length > 0) {
+                            cards = cards || [];
+                            player.hand.moveCardsTo(cards, cardList);
+                            cardList.clearEffects();
+                            cardList.pokemonPlayedTurn = state.turn;
+                        }
                     });
                 }
             });

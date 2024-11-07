@@ -26,6 +26,7 @@ exports.setParadoxRift = [
     new card_images_1.GholdengoexArt(),
     new card_images_1.GibleArt(),
     new card_images_1.GimmighoulArt(),
+    new card_images_1.Gimmighoul2Art(),
     new card_images_1.GroudonArt(),
     new card_images_1.HonedgeArt(),
     new card_images_1.HoopaexArt(),
@@ -74,7 +75,7 @@ exports.setParadoxRift = [
     //Full Arts
     new full_art_1.ToedscruelIR(),
     new full_art_1.SnoruntIR(),
-    //new GimmighoulIR(),
+    new full_art_1.GimmighoulIR(),
     new full_art_1.GroudonIR(),
     new full_art_1.MiniorIR(),
     new full_art_1.GarganacIR(),

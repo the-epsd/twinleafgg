@@ -1,6 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-export declare class Sandygast extends PokemonCard {
+import { StoreLike, State } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+export declare class Gimmighoul2 extends PokemonCard {
+    regulationMark: string;
     stage: Stage;
     cardType: CardType;
     hp: number;
@@ -8,7 +11,7 @@ export declare class Sandygast extends PokemonCard {
         type: CardType.DARK;
     }[];
     resistance: {
-        type: CardType.FIGHTING;
+        type: CardType;
         value: number;
     }[];
     retreat: CardType.COLORLESS[];
@@ -16,12 +19,13 @@ export declare class Sandygast extends PokemonCard {
         name: string;
         cost: CardType.COLORLESS[];
         damage: number;
+        damageCalculation: string;
         text: string;
     }[];
     set: string;
+    cardImage: string;
+    setNumber: string;
     name: string;
     fullName: string;
-    regulationMark: string;
-    setNumber: string;
-    cardImage: string;
+    reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

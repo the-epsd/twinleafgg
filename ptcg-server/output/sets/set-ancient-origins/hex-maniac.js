@@ -15,6 +15,7 @@ class HexManiac extends trainer_card_1.TrainerCard {
         this.setNumber = '75';
         this.name = 'Hex Maniac';
         this.fullName = 'Hex Maniac AOR';
+        this.cardImage = 'assets/cardback.png';
         this.text = 'Until the end of your opponent\'s next turn, each Pokémon in play, in each player\'s hand, and in each player\'s discard pile has no Abilities. (This includes cards that come into play on that turn.)';
         this.HEX_MANIAC_MARKER = 'HEX_MANIAC_MARKER';
     }
@@ -25,9 +26,10 @@ class HexManiac extends trainer_card_1.TrainerCard {
             if (player.supporterTurn > 0) {
                 throw new game_1.GameError(game_1.GameMessage.SUPPORTER_ALREADY_PLAYED);
             }
+            player.supporterTurn = 1;
             player.marker.addMarker(this.HEX_MANIAC_MARKER, this);
             opponent.marker.addMarker(this.HEX_MANIAC_MARKER, this);
-            player.supporter.moveCardTo(effect.trainerCard, player.discard);
+            player.supporter.moveCardTo(this, player.discard);
         }
         if (effect instanceof game_effects_1.PowerEffect && effect.player.marker.hasMarker(this.HEX_MANIAC_MARKER, this)) {
             throw new game_1.GameError(game_1.GameMessage.ABILITY_BLOCKED);
