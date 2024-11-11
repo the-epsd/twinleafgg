@@ -100,19 +100,27 @@ class Finizen extends pokemon_card_1.PokemonCard {
                 const target = selected[0];
                 player.switchPokemon(target);
                 let cards = [];
-                state = store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_EVOLVE, player.deck, { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.STAGE_1, evolvesFrom: 'Finizen' }, { min: 1, max: 1, allowCancel: true }), selected => {
-                    cards = selected || [];
-                    const cardList = game_1.StateUtils.findCardList(state, this);
-                    const benchIndex = player.bench.indexOf(cardList);
-                    if (cards.length === 0) {
-                        return state;
+                state = store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_EVOLVE, player.deck, { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.STAGE_1, evolvesFrom: 'Finizen' }, { min: 0, max: 1, allowCancel: false }), selected => {
+                    cards = (selected || []);
+                    // Find Finizen's new location after the switch
+                    let finizensNewBenchIndex = -1;
+                    player.bench.forEach((benchSpot, index) => {
+                        if (benchSpot.cards.includes(this)) {
+                            finizensNewBenchIndex = index;
+                        }
+                    });
+                    if (!selected || selected.length === 0) {
+                        return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
+                            player.deck.applyOrder(order);
+                        });
                     }
-                    const evolution = cards[0];
-                    // Evolve Pokemon
-                    player.deck.moveCardTo(evolution, player.bench[benchIndex]);
-                });
-                return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
-                    player.deck.applyOrder(order);
+                    // Move the evolution card from deck to bench first
+                    player.deck.moveCardTo(cards[0], player.bench[finizensNewBenchIndex]);
+                    const evolveEffect = new game_effects_1.EvolveEffect(player, player.bench[finizensNewBenchIndex], cards[0]);
+                    store.reduceEffect(state, evolveEffect);
+                    return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
+                        player.deck.applyOrder(order);
+                    });
                 });
             });
         }

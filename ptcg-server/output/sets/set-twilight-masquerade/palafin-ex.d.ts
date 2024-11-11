@@ -1,6 +1,6 @@
 import { PokemonCard, Stage, CardType, CardTag, PowerType, StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-export declare class PalafinEx extends PokemonCard {
+export declare class Palafinex extends PokemonCard {
     stage: Stage;
     evolvesFrom: string;
     cardType: CardType;

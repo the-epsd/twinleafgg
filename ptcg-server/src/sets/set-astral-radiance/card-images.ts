@@ -2,10 +2,8 @@ import { Adaman } from './adaman';
 import { Shieldon } from './shieldon';
 import { Bronzor } from './bronzor';
 import { Yanma } from './yanma';
-import { HisuianGrowlithe } from './hisuian_growllithe';
-import { HisuianQwilfish2 } from './hisuian_qwilfish';
-import { HisuianQwilfish } from './hisuian_qwilfish2';
-import { HisuianOverqwil } from './hisuian_overqwil';
+import { HisuianGrowlithe } from './hisuian-growllithe';
+import { HisuianOverqwil } from './hisuian-overqwil';
 import { CancelingCologne } from './canceling-cologne';
 import { Cyllene } from './cyllene';
 import { DarkPatch } from './dark-patch';
@@ -25,7 +23,7 @@ import { HisuianBasculin } from './hisuian-basculin';
 import { HisuianHeavyBall } from './hisuian-heavy-ball';
 import { HisuianSamurottV } from './hisuian-samurott-v';
 import { HisuianSamurottVSTAR } from './hisuian-samurott-vstar';
-import { HisuianBasculegion } from './hisuian_basculegion';
+import { HisuianBasculegion } from './hisuian-basculegion';
 import { Irida } from './irida';
 import { JubilifeVillage } from './jubilife-village';
 import { Keldeo } from './keldeo';
@@ -60,6 +58,8 @@ import { TempleofSinnoh } from './temple-of-sinnoh';
 import { TrekkingShoes } from './trekking-shoes';
 import { Ursaluna } from './ursaluna';
 import { WyrdeerV } from './wyrdeer-v';
+import { HisuianQwilfish } from './hisuian-qwilfish';
+import { HisuianQwilfish2 } from './hisuian-qwilfish2';
 
 export class AdamanArt extends Adaman {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ASR/ASR_135_R_EN_LG.png';
@@ -150,11 +150,11 @@ export class HisuianOverqwilArt extends HisuianOverqwil {
 }
 
 export class HisuianQwilfishArt extends HisuianQwilfish {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ASR/ASR_089_R_EN_LG.png';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ASR/ASR_088_R_EN_LG.png';
 }
 
 export class HisuianQwilfishArt2 extends HisuianQwilfish2 {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ASR/ASR_088_R_EN_LG.png';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ASR/ASR_089_R_EN_LG.png';
 }
 
 export class HisuianSamurottVArt extends HisuianSamurottV {

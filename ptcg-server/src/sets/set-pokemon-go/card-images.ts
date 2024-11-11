@@ -9,7 +9,7 @@ import { Moltres } from './moltres';
 import { Camerupt } from './camerupt';
 import { Slowpoke } from './slowpoke';
 import { Ivysaur } from './ivysaur';
-import { AlolanRaticate } from './alolan_raticate';
+import { AlolanRaticate } from './alolan-raticate';
 import { Pokestop } from './pokestop';
 import { RadiantVenusaur } from './radiant-venusaur';
 import { SlakingV } from './slaking-v';

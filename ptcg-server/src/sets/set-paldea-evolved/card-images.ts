@@ -18,7 +18,7 @@ import { Flamigo } from './flamigo';
 import { Floragato } from './floragato';
 import { Forretressex } from './forretress-ex';
 import { Frigibax } from './frigibax';
-import { Frigibax2 } from './frigibax2';
+import { Frigibax2 } from './frigibax-2';
 import { Giacomo } from './giacomo';
 import { GreatBall } from './great-ball';
 import { Grusha } from './grusha';

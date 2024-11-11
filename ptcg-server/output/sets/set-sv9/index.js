@@ -7,4 +7,5 @@ exports.setSV9 = [
     new card_images_1.TorchicArt(),
     new card_images_1.CombuskenArt(),
     new card_images_1.BlazikenexArt(),
+    new card_images_1.BudewArt(),
 ];

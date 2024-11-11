@@ -12,7 +12,7 @@ const game_phase_effects_1 = require("../../game/store/effects/game-phase-effect
 class Jolteonex extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.tags = [card_types_1.CardTag.POKEMON_ex];
+        this.tags = [card_types_1.CardTag.POKEMON_ex, card_types_1.CardTag.POKEMON_TERA];
         this.stage = card_types_1.Stage.STAGE_1;
         this.evolvesFrom = 'Eevee';
         this.cardType = L;

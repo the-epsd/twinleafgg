@@ -69,7 +69,7 @@ export class Armarouge extends PokemonCard {
 
   public regulationMark = 'G';
 
-  public stage: Stage = Stage.STAGE_1;
+  public stage: Stage = Stage.BASIC;
 
   public evolvesFrom = 'Charcadet';
 

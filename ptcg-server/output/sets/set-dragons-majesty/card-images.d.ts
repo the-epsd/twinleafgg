@@ -6,6 +6,7 @@ import { FieryFlint } from './fiery-flint';
 import { Quagsire } from './quagsire';
 import { SwitchRaft } from './switch-raft';
 import { Wooper } from './wooper';
+import { VictiniPrismStar } from './victini-prism-star';
 export declare class BlazikenArt extends Blaziken {
     cardImage: string;
 }
@@ -25,6 +26,9 @@ export declare class QuagsireArt extends Quagsire {
     cardImage: string;
 }
 export declare class SwitchRaftArt extends SwitchRaft {
+    cardImage: string;
+}
+export declare class VictiniPrismStarArt extends VictiniPrismStar {
     cardImage: string;
 }
 export declare class WooperArt extends Wooper {

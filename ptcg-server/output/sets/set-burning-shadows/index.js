@@ -12,5 +12,6 @@ exports.setBurningShadows = [
     new card_images_1.MarillArt(),
     new card_images_1.NecrozmaGXArt(),
     new card_images_1.PlumeriaArt(),
+    new card_images_1.SalazzleGXArt(),
     new card_images_1.WishfulBatonArt(),
 ];

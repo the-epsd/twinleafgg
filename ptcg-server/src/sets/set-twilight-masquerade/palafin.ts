@@ -79,8 +79,6 @@ export class Palafin extends PokemonCard {
               return state;
             }
 
-            const activePalafin = player.active.getPokemonCard();
-
             let cards: Card[] = [];
             state = store.prompt(state, new ChooseCardsPrompt(
               player.id,
@@ -89,19 +87,19 @@ export class Palafin extends PokemonCard {
               { superType: SuperType.POKEMON, name: 'Palafin ex' },
               { min: 0, max: 1, allowCancel: false }
             ), selected => {
-              cards = selected || [];
-            });
+              cards = (selected || []) as PokemonCard[];
 
-            if (cards.length > 0) {
-              // Evolve Pokemon
-              activePalafin?.cards.moveTo(player.deck);
-              player.deck.moveCardsTo(cards, player.active);
-              player.active.clearEffects();
-              player.active.pokemonPlayedTurn = state.turn;
-            }
+              if (cards.length > 0) {
+                // Move Palafin ex from deck to active
+                player.deck.moveCardTo(cards[0], player.active);
 
-            return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-              player.deck.applyOrder(order);
+                // Move this Palafin to deck
+                player.active.moveCardTo(this, player.deck);
+              }
+
+              return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+                player.deck.applyOrder(order);
+              });
             });
           }
         });

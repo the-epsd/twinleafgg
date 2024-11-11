@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PalafinEx = void 0;
+exports.Palafinex = void 0;
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
-class PalafinEx extends game_1.PokemonCard {
+class Palafinex extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = game_1.Stage.STAGE_1;
@@ -34,6 +34,9 @@ class PalafinEx extends game_1.PokemonCard {
         this.ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
     }
     reduceEffect(store, state, effect) {
+        if (effect instanceof game_effects_1.EvolveEffect && effect.pokemonCard === this) {
+            throw new game_1.GameError(game_1.GameMessage.CANNOT_EVOLVE);
+        }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             effect.player.attackMarker.addMarker(this.ATTACK_USED_MARKER, this);
         }
@@ -43,4 +46,4 @@ class PalafinEx extends game_1.PokemonCard {
         return state;
     }
 }
-exports.PalafinEx = PalafinEx;
+exports.Palafinex = Palafinex;

@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { AcerolaArt, BruxishArt, DarkraiGXArt, GardevoirGXArt, GloomArt, GuzmaArt, MarillArt, NecrozmaGXArt, PlumeriaArt, WishfulBatonArt } from './card-images';
+import { AcerolaArt, BruxishArt, DarkraiGXArt, GardevoirGXArt, GloomArt, GuzmaArt, MarillArt, NecrozmaGXArt, PlumeriaArt, SalazzleGXArt, WishfulBatonArt } from './card-images';
 
 export const setBurningShadows: Card[] = [
   new AcerolaArt(),
@@ -11,5 +11,6 @@ export const setBurningShadows: Card[] = [
   new MarillArt(),
   new NecrozmaGXArt(),
   new PlumeriaArt(),
+  new SalazzleGXArt(),
   new WishfulBatonArt(),
 ];

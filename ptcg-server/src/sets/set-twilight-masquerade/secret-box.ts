@@ -10,13 +10,18 @@ import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { ShowCardsPrompt } from '../../game/store/prompts/show-cards-prompt';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
-import { CardList } from '../../game';
+import { CardList, GameError } from '../../game';
 
 function* playCard(next: Function, store: StoreLike, state: State,
   self: SecretBox, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
   let cards: Card[] = [];
+
+  const handCards = player.hand.cards.filter(c => c !== effect.trainerCard);
+  if (handCards.length < 3) {
+    throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+  }
 
   player.hand.moveCardTo(effect.trainerCard, player.supporter);
   // We will discard this card after prompt confirmation

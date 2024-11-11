@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UltraNecrozmaGXArt = exports.UnitEnergyFDYArt = exports.MysteriousTreasureArt = exports.MetalFryingPanArt = exports.MalamarArt = exports.MagnezoneArt = exports.LysandreLabsArt = exports.KlefkiArt = exports.InkayArt = exports.GreninjaGXArt = exports.FrogadierArt = exports.FlorgesArt = exports.FlabebeArt = exports.BuzzwoleArt = exports.BeastRingArt = void 0;
 const beast_ring_1 = require("./beast-ring");
-const lysandre_labs_1 = require("./lysandre_labs");
+const lysandre_labs_1 = require("./lysandre-labs");
 const frogadier_1 = require("./frogadier");
 const magnezone_1 = require("./magnezone");
 const inkay_1 = require("./inkay");

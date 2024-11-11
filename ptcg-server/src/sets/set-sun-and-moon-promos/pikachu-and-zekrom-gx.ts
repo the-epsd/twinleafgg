@@ -33,7 +33,7 @@ export class PikachuZekromGX extends PokemonCard {
   public set: string = 'SMP';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = 'SM168';
-  public name: string = 'Pikachu & Zekrom GX';
+  public name: string = 'Pikachu & Zekrom-GX';
   public fullName: string = 'Pikachu & Zekrom GX SMP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -95,7 +95,7 @@ export class PikachuZekromGX extends PokemonCard {
         ).length;
       });
 
-      let extraLightningEnergy = energyCount - effect.attack.cost.length;
+      const extraLightningEnergy = energyCount - effect.attack.cost.length;
 
       if (extraLightningEnergy < 3) {
         return state;

@@ -16,7 +16,7 @@ class Psyduck extends pokemon_card_1.PokemonCard {
         this.weakness = [{ type: L }];
         this.resistance = [];
         this.retreat = [C];
-        this.attaacks = [{
+        this.attacks = [{
                 name: 'Headache',
                 cost: [P],
                 damage: 0,

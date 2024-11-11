@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { BlazikenexArt, CombuskenArt, LilliesClefairyexArt, TorchicArt } from './card-images';
+import { BlazikenexArt, BudewArt, CombuskenArt, LilliesClefairyexArt, TorchicArt } from './card-images';
 
 export const setSV9: Card[] = [
 
@@ -7,5 +7,5 @@ export const setSV9: Card[] = [
   new TorchicArt(),
   new CombuskenArt(),
   new BlazikenexArt(),
-
+  new BudewArt(),
 ];

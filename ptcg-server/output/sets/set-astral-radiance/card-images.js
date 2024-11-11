@@ -6,10 +6,8 @@ const adaman_1 = require("./adaman");
 const shieldon_1 = require("./shieldon");
 const bronzor_1 = require("./bronzor");
 const yanma_1 = require("./yanma");
-const hisuian_growllithe_1 = require("./hisuian_growllithe");
-const hisuian_qwilfish_1 = require("./hisuian_qwilfish");
-const hisuian_qwilfish2_1 = require("./hisuian_qwilfish2");
-const hisuian_overqwil_1 = require("./hisuian_overqwil");
+const hisuian_growllithe_1 = require("./hisuian-growllithe");
+const hisuian_overqwil_1 = require("./hisuian-overqwil");
 const canceling_cologne_1 = require("./canceling-cologne");
 const cyllene_1 = require("./cyllene");
 const dark_patch_1 = require("./dark-patch");
@@ -29,7 +27,7 @@ const hisuian_basculin_1 = require("./hisuian-basculin");
 const hisuian_heavy_ball_1 = require("./hisuian-heavy-ball");
 const hisuian_samurott_v_1 = require("./hisuian-samurott-v");
 const hisuian_samurott_vstar_1 = require("./hisuian-samurott-vstar");
-const hisuian_basculegion_1 = require("./hisuian_basculegion");
+const hisuian_basculegion_1 = require("./hisuian-basculegion");
 const irida_1 = require("./irida");
 const jubilife_village_1 = require("./jubilife-village");
 const keldeo_1 = require("./keldeo");
@@ -64,6 +62,8 @@ const temple_of_sinnoh_1 = require("./temple-of-sinnoh");
 const trekking_shoes_1 = require("./trekking-shoes");
 const ursaluna_1 = require("./ursaluna");
 const wyrdeer_v_1 = require("./wyrdeer-v");
+const hisuian_qwilfish_1 = require("./hisuian-qwilfish");
+const hisuian_qwilfish2_1 = require("./hisuian-qwilfish2");
 class AdamanArt extends adaman_1.Adaman {
     constructor() {
         super(...arguments);
@@ -218,17 +218,17 @@ class HisuianOverqwilArt extends hisuian_overqwil_1.HisuianOverqwil {
     }
 }
 exports.HisuianOverqwilArt = HisuianOverqwilArt;
-class HisuianQwilfishArt extends hisuian_qwilfish2_1.HisuianQwilfish {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ASR/ASR_089_R_EN_LG.png';
-    }
-}
-exports.HisuianQwilfishArt = HisuianQwilfishArt;
-class HisuianQwilfishArt2 extends hisuian_qwilfish_1.HisuianQwilfish2 {
+class HisuianQwilfishArt extends hisuian_qwilfish_1.HisuianQwilfish {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ASR/ASR_088_R_EN_LG.png';
+    }
+}
+exports.HisuianQwilfishArt = HisuianQwilfishArt;
+class HisuianQwilfishArt2 extends hisuian_qwilfish2_1.HisuianQwilfish2 {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/ASR/ASR_089_R_EN_LG.png';
     }
 }
 exports.HisuianQwilfishArt2 = HisuianQwilfishArt2;

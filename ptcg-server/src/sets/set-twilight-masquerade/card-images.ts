@@ -71,6 +71,8 @@ import { Monferno } from './monferno';
 import { Rillaboom } from './rillaboom';
 import { Zapdos } from './zapdos';
 import { Sunkern } from './sunkern';
+import { Palafinex } from './palafin-ex';
+import { Palafin } from './palafin';
 
 
 export class AggronArt extends Aggron {
@@ -279,6 +281,14 @@ export class MunkidoriArt extends Munkidori {
 
 export class OkidogiArt extends Okidogi {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_111_R_EN.png';
+}
+
+export class PalafinexArt extends Palafinex {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_061_R_EN.png';
+}
+
+export class PalafinArt extends Palafin {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/TWM/TWM_060_R_EN.png';
 }
 
 export class PerformanceFluteArt extends PerformanceFlute {

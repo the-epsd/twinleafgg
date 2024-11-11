@@ -14,6 +14,10 @@ function* playCard(next, store, state, self, effect) {
     const player = effect.player;
     const opponent = state_utils_1.StateUtils.getOpponent(state, player);
     let cards = [];
+    const handCards = player.hand.cards.filter(c => c !== effect.trainerCard);
+    if (handCards.length < 3) {
+        throw new game_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
+    }
     player.hand.moveCardTo(effect.trainerCard, player.supporter);
     // We will discard this card after prompt confirmation
     effect.preventDefault = true;

@@ -8,6 +8,7 @@ import { WishfulBaton } from './wishful-baton';
 import { GardevoirGX } from './gardevoir-gx';
 import { NecrozmaGX } from './necrozma-gx';
 import { Bruxish } from './bruxish';
+import { SalazzleGX } from './salazzle-gx';
 
 export class AcerolaArt extends Acerola {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BUS/BUS_112_R_EN_LG.png';
@@ -43,6 +44,10 @@ export class NecrozmaGXArt extends NecrozmaGX {
 
 export class PlumeriaArt extends Plumeria {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BUS/BUS_120_R_EN_LG.png';
+}
+
+export class SalazzleGXArt extends SalazzleGX {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BUS/BUS_025_R_EN_LG.png';
 }
 
 export class WishfulBatonArt extends WishfulBaton {

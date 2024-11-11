@@ -8,6 +8,7 @@ import { WishfulBaton } from './wishful-baton';
 import { GardevoirGX } from './gardevoir-gx';
 import { NecrozmaGX } from './necrozma-gx';
 import { Bruxish } from './bruxish';
+import { SalazzleGX } from './salazzle-gx';
 export declare class AcerolaArt extends Acerola {
     cardImage: string;
 }
@@ -33,6 +34,9 @@ export declare class NecrozmaGXArt extends NecrozmaGX {
     cardImage: string;
 }
 export declare class PlumeriaArt extends Plumeria {
+    cardImage: string;
+}
+export declare class SalazzleGXArt extends SalazzleGX {
     cardImage: string;
 }
 export declare class WishfulBatonArt extends WishfulBaton {

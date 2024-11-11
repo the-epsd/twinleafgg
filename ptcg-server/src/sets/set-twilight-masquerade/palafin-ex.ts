@@ -1,9 +1,9 @@
-import { PokemonCard, Stage, CardType, CardTag, PowerType, StoreLike, State } from '../../game';
+import { PokemonCard, Stage, CardType, CardTag, PowerType, StoreLike, State, GameError, GameMessage } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect, EvolveEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
-export class PalafinEx extends PokemonCard {
+export class Palafinex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Finizen';
   public cardType: CardType = W;
@@ -33,6 +33,11 @@ export class PalafinEx extends PokemonCard {
   public name: string = 'Palafin ex';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
+    if (effect instanceof EvolveEffect && effect.pokemonCard === this) {
+      throw new GameError(GameMessage.CANNOT_EVOLVE);
+    }
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       effect.player.attackMarker.addMarker(this.ATTACK_USED_MARKER, this);
     }

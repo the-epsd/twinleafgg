@@ -15,7 +15,7 @@ import { Pawniard } from './pawniard';
 import { Bisharp } from './bisharp';
 import { Persian } from './persian';
 import { Moltres } from './moltres';
-import { TapuKokoPrismStar } from './tapu_koko_prism_star';
+import { TapuKokoPrismStar } from './tapu-koko-prism-star';
 import { Absol } from './absol';
 import { ViridianForest } from './viridian-forest';
 import { Yveltal } from './yveltal';

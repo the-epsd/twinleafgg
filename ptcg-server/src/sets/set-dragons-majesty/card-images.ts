@@ -6,6 +6,7 @@ import { FieryFlint } from './fiery-flint';
 import { Quagsire } from './quagsire';
 import { SwitchRaft } from './switch-raft';
 import { Wooper } from './wooper';
+import { VictiniPrismStar } from './victini-prism-star';
 
 export class BlazikenArt extends Blaziken {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/DRM/DRM_006_R_EN_LG.png';
@@ -33,6 +34,10 @@ export class QuagsireArt extends Quagsire {
 
 export class SwitchRaftArt extends SwitchRaft {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/DRM/DRM_062_R_EN_LG.png';
+}
+
+export class VictiniPrismStarArt extends VictiniPrismStar {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/DRM/DRM_007_R_EN.png';
 }
 
 export class WooperArt extends Wooper {

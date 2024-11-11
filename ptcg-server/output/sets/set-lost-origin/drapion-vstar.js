@@ -53,8 +53,9 @@ class DrapionVSTAR extends pokemon_card_1.PokemonCard {
                     cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
                 }
             });
-            opponent.active.specialConditions.push(card_types_1.SpecialCondition.POISONED);
-            opponent.active.poisonDamage = 30;
+            opponent.active.addSpecialCondition(card_types_1.SpecialCondition.POISONED);
+            opponent.active.addSpecialCondition(card_types_1.SpecialCondition.PARALYZED);
+            opponent.active.poisonDamage = 60;
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             effect.damage -= effect.player.active.damage;

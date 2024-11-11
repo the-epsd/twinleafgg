@@ -22,7 +22,7 @@ const flamigo_1 = require("./flamigo");
 const floragato_1 = require("./floragato");
 const forretress_ex_1 = require("./forretress-ex");
 const frigibax_1 = require("./frigibax");
-const frigibax2_1 = require("./frigibax2");
+const frigibax_2_1 = require("./frigibax-2");
 const giacomo_1 = require("./giacomo");
 const great_ball_1 = require("./great-ball");
 const grusha_1 = require("./grusha");
@@ -208,7 +208,7 @@ class FrigibaxArt extends frigibax_1.Frigibax {
     }
 }
 exports.FrigibaxArt = FrigibaxArt;
-class Frigibax2Art extends frigibax2_1.Frigibax2 {
+class Frigibax2Art extends frigibax_2_1.Frigibax2 {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_058_R_EN_LG.png';

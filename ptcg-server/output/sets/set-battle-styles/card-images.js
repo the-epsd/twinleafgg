@@ -4,7 +4,7 @@ exports.WeepinbellArt = exports.VictreebelArt = exports.VictiniVMAXArt = exports
 const bellsprout_1 = require("./bellsprout");
 const bronzong_1 = require("./bronzong");
 const bruno_1 = require("./bruno");
-const BST_9_Carnivine_1 = require("./BST_9_Carnivine");
+const carnivine_1 = require("./carnivine");
 const carkol_1 = require("./carkol");
 const cherrim_1 = require("./cherrim");
 const cherubi_1 = require("./cherubi");
@@ -77,7 +77,7 @@ class CarkolArt extends carkol_1.Carkol {
     }
 }
 exports.CarkolArt = CarkolArt;
-class CarnivineArt extends BST_9_Carnivine_1.Carnivine {
+class CarnivineArt extends carnivine_1.Carnivine {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BST/BST_009_R_EN_LG.png';

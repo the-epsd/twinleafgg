@@ -5,6 +5,7 @@ const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
+const attack_effects_1 = require("../../game/store/effects/attack-effects");
 class Toxicroakex extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -49,10 +50,9 @@ class Toxicroakex extends pokemon_card_1.PokemonCard {
             });
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
-            const player = effect.player;
-            const opponent = game_1.StateUtils.getOpponent(state, player);
-            opponent.active.specialConditions.push(card_types_1.SpecialCondition.POISONED);
-            opponent.active.poisonDamage = 60;
+            const specialCondition = new attack_effects_1.AddSpecialConditionsEffect(effect, [card_types_1.SpecialCondition.POISONED]);
+            specialCondition.poisonDamage = 60;
+            store.reduceEffect(state, specialCondition);
         }
         return state;
     }

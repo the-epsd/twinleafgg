@@ -70,6 +70,8 @@ import { Monferno } from './monferno';
 import { Rillaboom } from './rillaboom';
 import { Zapdos } from './zapdos';
 import { Sunkern } from './sunkern';
+import { Palafinex } from './palafin-ex';
+import { Palafin } from './palafin';
 export declare class AggronArt extends Aggron {
     cardImage: string;
 }
@@ -224,6 +226,12 @@ export declare class MunkidoriArt extends Munkidori {
     cardImage: string;
 }
 export declare class OkidogiArt extends Okidogi {
+    cardImage: string;
+}
+export declare class PalafinexArt extends Palafinex {
+    cardImage: string;
+}
+export declare class PalafinArt extends Palafin {
     cardImage: string;
 }
 export declare class PerformanceFluteArt extends PerformanceFlute {

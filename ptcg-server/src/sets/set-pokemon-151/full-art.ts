@@ -8,7 +8,7 @@ import { GiovannisCharisma } from './giovannis-charisma';
 import { Ivysaur } from './ivysaur';
 import { Kangaskhanex } from './kangaskhan-ex';
 import { Mewex } from './mew-ex';
-import { Arbokex } from './arbok_ex';
+import { Arbokex } from './arbok-ex';
 import { Nidoking } from './nidoking';
 import { Squirtle } from './squirtle';
 import { Venusaurex } from './venusaur-ex';

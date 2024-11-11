@@ -23,6 +23,11 @@ function* useTricksterGX(next: Function, store: StoreLike, state: State,
 
   const allOpponentPokemon = oppActive ? [oppActive, ...oppBenched.map(b => b.getPokemonCard())].filter((pokemon): pokemon is PokemonCard => pokemon !== undefined) : [];
 
+  // Check if player has used GX attack
+  if (player.usedGX == true) {
+    throw new GameError(GameMessage.LABEL_GX_USED);
+  }
+
   let selected: any;
   yield store.prompt(state, new ChooseAttackPrompt(
     player.id,
@@ -45,6 +50,9 @@ function* useTricksterGX(next: Function, store: StoreLike, state: State,
     attack: attack.name
   });
 
+  // set GX attack as used for game
+  player.usedGX = true;
+  
   // Perform attack
   const attackEffect = new AttackEffect(player, opponent, attack);
   store.reduceEffect(state, attackEffect);
@@ -161,13 +169,6 @@ export class ZoroarkGX extends PokemonCard {
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-      const player = effect.player;
-      // Check if player has used GX attack
-      if (player.usedGX == true) {
-        throw new GameError(GameMessage.LABEL_GX_USED);
-      }
-      // set GX attack as used for game
-      player.usedGX = true;
       const generator = useTricksterGX(() => generator.next(), store, state, effect);
       return generator.next().value;
     }

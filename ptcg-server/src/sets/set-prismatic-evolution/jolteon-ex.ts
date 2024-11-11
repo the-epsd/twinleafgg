@@ -11,7 +11,7 @@ import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class Jolteonex extends PokemonCard {
 
-  public tags = [CardTag.POKEMON_ex];
+  public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
 
   public stage: Stage = Stage.STAGE_1;
 

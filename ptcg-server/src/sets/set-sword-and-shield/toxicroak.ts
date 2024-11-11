@@ -3,9 +3,9 @@ import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-ty
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { StoreLike, State, PlayerType, StateUtils, CoinFlipPrompt, GameMessage } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, KnockOutEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
-import { BeginTurnEffect, BetweenTurnsEffect } from '../../game/store/effects/game-phase-effects';
+import { BetweenTurnsEffect } from '../../game/store/effects/game-phase-effects';
 
 export class Toxicroak extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -35,58 +35,29 @@ export class Toxicroak extends PokemonCard {
   public name: string = 'Toxicroak';
   public fullName: string = 'Toxicroak SSH';
 
-  private POISON_MODIFIER_MARKER = 'POISON_MODIFIER_MARKER';
+  // private POISON_MODIFIER_MARKER = 'POISON_MODIFIER_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    // if (effect instanceof BetweenTurnsEffect) {
-    //   const player = effect.player;
-
-    //   player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-    //     if (card === this) {
-
-    //       try {
-    //         const stub = new PowerEffect(player, {
-    //           name: 'test',
-    //           powerType: PowerType.ABILITY,
-    //           text: ''
-    //         }, this);
-    //         store.reduceEffect(state, stub);
-    //       } catch {
-    //         return state;
-    //       }
-
-    //       if (this.marker.hasMarker(this.POISON_MODIFIER_MARKER)) {
-    //         return state;
-    //       }
-
-    //       const opponent = StateUtils.getOpponent(state, player);
-    //       if (opponent.active.specialConditions.includes(SpecialCondition.POISONED)) {
-    //         opponent.active.poisonDamage += 20;
-    //         this.marker.addMarker(this.POISON_MODIFIER_MARKER, this);
-    //       }
-    //     }
-    //   });
-    // }
 
     if (effect instanceof BetweenTurnsEffect) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      let isToxicroakInPlay = false;
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-        if (card === this) {
-          isToxicroakInPlay = true;
-        }
+      let toxicroakOwner = null;
+      [player, opponent].forEach(p => {
+        p.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+          if (card === this) {
+            toxicroakOwner = p;
+          }
+        });
       });
 
-      if (!isToxicroakInPlay) {
+      if (!toxicroakOwner) {
         return state;
       }
 
-      // Try to reduce PowerEffect, to check if something is blocking our ability
       try {
-        const stub = new PowerEffect(player, {
+        const stub = new PowerEffect(toxicroakOwner, {
           name: 'test',
           powerType: PowerType.ABILITY,
           text: ''
@@ -95,29 +66,12 @@ export class Toxicroak extends PokemonCard {
       } catch {
         return state;
       }
-      opponent.active.poisonDamage += 20;
-    }
 
-    if (effect instanceof KnockOutEffect && effect.target.getPokemonCard() === this) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-        if (card === this && this.marker.hasMarker(this.POISON_MODIFIER_MARKER)) {
-          this.marker.removeMarker(this.POISON_MODIFIER_MARKER, this);
-          opponent.active.poisonDamage -= 20;
-        }
-      });
-    }
-
-    if (effect instanceof BeginTurnEffect) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-        if (card === this && this.marker.hasMarker(this.POISON_MODIFIER_MARKER)) {
-          this.marker.removeMarker(this.POISON_MODIFIER_MARKER, this);
-          opponent.active.poisonDamage -= 20;
-        }
-      });
+      const toxicroakOpponent = StateUtils.getOpponent(state, toxicroakOwner);
+      if (effect.player === toxicroakOpponent && toxicroakOpponent.active.specialConditions.includes(SpecialCondition.POISONED)) {
+        effect.poisonDamage += 20;
+        console.log('toxicroak:', effect.poisonDamage);
+      }
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
