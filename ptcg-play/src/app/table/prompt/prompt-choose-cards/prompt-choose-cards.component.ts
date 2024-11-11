@@ -21,6 +21,7 @@ export class PromptChooseCardsComponent {
     this.message = prompt.message;
     this.promptId = prompt.id;
     this.isSecret = prompt.options.isSecret;
+    this.isInvalid = true; // Start with invalid state until proper selection
 
     if (prompt.options.isSecret) {
       prompt.cards.cards.forEach((c, i) => {
@@ -61,15 +62,35 @@ export class PromptChooseCardsComponent {
   }
 
   public confirm() {
+    if (this.isInvalid || !this.result || this.result.length === 0) {
+      return;
+    }
+
     const gameId = this.gameState.gameId;
     const id = this.promptId;
-    this.gameService.resolvePrompt(gameId, id, this.result);
+
+    // Final validation before sending
+    const selectedCards = this.result.map(index => this.cards.cards[index]);
+    if (this.promptValue.validate(selectedCards)) {
+      this.gameService.resolvePrompt(gameId, id, this.result);
+    }
   }
 
   public onChange(result: number[]) {
-    const cards = result.map(index => this.cards.cards[index]);
-    const isInvalid = !this.promptValue.validate(cards);
-    this.result = result;
-    this.isInvalid = isInvalid;
+    if (!result || !this.promptValue) {
+      this.isInvalid = true;
+      this.result = [];
+      return;
+    }
+
+    const selectedCards = result.map(index => this.cards.cards[index]);
+    const isValidSelection = this.promptValue.validate(selectedCards);
+
+    // Store valid results
+    if (isValidSelection) {
+      this.result = result;
+    }
+
+    this.isInvalid = !isValidSelection;
   }
 }

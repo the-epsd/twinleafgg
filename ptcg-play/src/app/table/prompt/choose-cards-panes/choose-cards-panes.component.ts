@@ -55,7 +55,6 @@ export class ChooseCardsPanesComponent implements OnChanges {
     return this.promptValue?.message === 'ATTACH_ENERGY_CARDS';
   }
 
-
   toggleCardSelection(card: any) {
     if (this.noBottomPane || !this.filterMap[card.fullName]) {
       return;
@@ -63,32 +62,60 @@ export class ChooseCardsPanesComponent implements OnChanges {
 
     const index = this.selectedCards.indexOf(card);
     if (index === -1 && this.selectedCards.length < this.maxCards) {
+      // Adding card to selection
+      const originalCard = this.cards[this.cards.indexOf(card)];
       const selectedCard = {
-        ...card,
+        ...originalCard,
         isSecret: this.promptValue?.options?.isSecret || false,
         cardImage: this.promptValue?.options?.isSecret ? 'assets/cardback.png' : card.cardImage,
         originalIndex: this.cards.indexOf(card)
       };
       this.selectedCards.push(selectedCard);
+
+      // Remove from available cards
       const cardIndex = this.topSortable.tempList.findIndex(item => item.card === card);
       if (cardIndex !== -1) {
         this.topSortable.tempList.splice(cardIndex, 1);
       }
     } else if (index !== -1) {
+      // Removing card from selection
+      const unselectedCard = this.selectedCards[index];
+      const originalCard = this.cards[unselectedCard.originalIndex];
+
+      // Remove from selected cards
       this.selectedCards.splice(index, 1);
+
+      // Add back to available cards
       this.topSortable.tempList = [...this.topSortable.tempList, {
-        card,
-        index: this.cards.indexOf(card),
-        isAvailable: this.filterMap[card.fullName],
-        isSecret: !!this.cardbackMap[this.cards.indexOf(card)],
-        scanUrl: this.cardsBaseService.getScanUrl(card)
+        card: originalCard,
+        index: unselectedCard.originalIndex,
+        isAvailable: true,
+        isSecret: !!this.cardbackMap[unselectedCard.originalIndex],
+        scanUrl: this.cardsBaseService.getScanUrl(originalCard)
       }];
     }
 
-    const selectedIndices = this.selectedCards.map(selectedCard =>
-      selectedCard.originalIndex);
-
+    const selectedIndices = this.selectedCards.map(selectedCard => selectedCard.originalIndex);
     this.changeCards.emit(selectedIndices);
+  }
+
+  private validateSelection() {
+    // Validate all selected cards
+    this.selectedCards = this.selectedCards.filter(card => {
+      const isValid = this.filterMap[card.fullName]
+        && this.selectedCards.length <= this.maxCards;
+      if (!isValid) {
+        // Return card to top pane if invalid
+        this.topSortable.tempList = [...this.topSortable.tempList, {
+          card,
+          index: this.cards.indexOf(card),
+          isAvailable: this.filterMap[card.fullName],
+          isSecret: !!this.cardbackMap[this.cards.indexOf(card)],
+          scanUrl: this.cardsBaseService.getScanUrl(card)
+        }];
+      }
+      return isValid;
+    });
   }
 
   isCardSelected(card: any): boolean {
