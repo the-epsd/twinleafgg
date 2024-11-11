@@ -155,7 +155,8 @@ export declare enum BoardEffect {
     POWER_GLOW = 1,
     POWER_NEGATED_GLOW = 2,
     POWER_RETURN = 3,
-    EVOLVE = 4
+    EVOLVE = 4,
+    REVEAL_OPPONENT_HAND = 5
 }
 export declare enum Format {
     NONE = 0,

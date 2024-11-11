@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WishfulBatonArt = exports.PlumeriaArt = exports.NecrozmaGXArt = exports.MarillArt = exports.GuzmaArt = exports.GloomArt = exports.GardevoirGXArt = exports.DarkraiGXArt = exports.BruxishArt = exports.AcerolaArt = void 0;
+exports.WishfulBatonArt = exports.SalazzleGXArt = exports.PlumeriaArt = exports.NecrozmaGXArt = exports.MarillArt = exports.GuzmaArt = exports.GloomArt = exports.GardevoirGXArt = exports.DarkraiGXArt = exports.BruxishArt = exports.AcerolaArt = void 0;
 const acerola_1 = require("./acerola");
 const marill_1 = require("./marill");
 const darkrai_gx_1 = require("./darkrai-gx");
@@ -11,6 +11,7 @@ const wishful_baton_1 = require("./wishful-baton");
 const gardevoir_gx_1 = require("./gardevoir-gx");
 const necrozma_gx_1 = require("./necrozma-gx");
 const bruxish_1 = require("./bruxish");
+const salazzle_gx_1 = require("./salazzle-gx");
 class AcerolaArt extends acerola_1.Acerola {
     constructor() {
         super(...arguments);
@@ -74,6 +75,13 @@ class PlumeriaArt extends plumeria_1.Plumeria {
     }
 }
 exports.PlumeriaArt = PlumeriaArt;
+class SalazzleGXArt extends salazzle_gx_1.SalazzleGX {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BUS/BUS_025_R_EN_LG.png';
+    }
+}
+exports.SalazzleGXArt = SalazzleGXArt;
 class WishfulBatonArt extends wishful_baton_1.WishfulBaton {
     constructor() {
         super(...arguments);

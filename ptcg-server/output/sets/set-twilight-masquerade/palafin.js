@@ -70,20 +70,18 @@ class Palafin extends game_1.PokemonCard {
                         if (player.deck.cards.length === 0) {
                             return state;
                         }
-                        const activePalafin = player.active.getPokemonCard();
                         let cards = [];
                         state = store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_EVOLVE, player.deck, { superType: game_1.SuperType.POKEMON, name: 'Palafin ex' }, { min: 0, max: 1, allowCancel: false }), selected => {
-                            cards = selected || [];
-                        });
-                        if (cards.length > 0) {
-                            // Evolve Pokemon
-                            activePalafin === null || activePalafin === void 0 ? void 0 : activePalafin.cards.moveTo(player.deck);
-                            player.deck.moveCardsTo(cards, player.active);
-                            player.active.clearEffects();
-                            player.active.pokemonPlayedTurn = state.turn;
-                        }
-                        return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
-                            player.deck.applyOrder(order);
+                            cards = (selected || []);
+                            if (cards.length > 0) {
+                                // Move Palafin ex from deck to active
+                                player.deck.moveCardTo(cards[0], player.active);
+                                // Move this Palafin to deck
+                                player.active.moveCardTo(this, player.deck);
+                            }
+                            return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
+                                player.deck.applyOrder(order);
+                            });
                         });
                     }
                 });

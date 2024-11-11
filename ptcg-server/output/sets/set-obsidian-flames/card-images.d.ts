@@ -15,7 +15,7 @@ import { LetterOfEncouragement } from './letter-of-encouragement';
 import { Lunatone } from './lunatone';
 import { Miraidonex } from './miraidon-ex';
 import { Oddish } from './oddish';
-import { Toedscruelex } from './Toedscruel_ex';
+import { Toedscruelex } from './toedscruel-ex';
 import { Ninetales } from './ninetales';
 import { Palafin } from './palafin';
 import { Palpitoad } from './palpitoad';

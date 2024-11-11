@@ -1,5 +1,5 @@
-import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
-import { Card } from 'ptcg-server';
+import { Component, Input, Output, EventEmitter, OnChanges, ElementRef, ViewChild } from '@angular/core';
+import { Card, ChooseCardsPrompt, ChooseEnergyPrompt, DiscardEnergyPrompt, EnergyCard } from 'ptcg-server';
 import { DraggedItem } from '@ng-dnd/sortable';
 
 import { CardsBaseService } from '../../../shared/cards/cards-base.service';
@@ -13,9 +13,12 @@ import { ChooseCardsSortable } from './choose-cards-panes.interface';
   styleUrls: ['./choose-cards-panes.component.scss']
 })
 export class ChooseCardsPanesComponent implements OnChanges {
-
+  selectedCards: any[] = [];
+  currentIndex = 0;
+  visibleCards: any[] = [];
   public readonly topListId = 'CHOOSE_CARDS_TOP_LIST';
   public readonly bottomListId = 'CHOOSE_CARDS_BOTTOM_LIST';
+  public showButtons = false;
 
   @Input() cards: Card[];
   @Input() filter: Partial<Card> = {};
@@ -23,6 +26,12 @@ export class ChooseCardsPanesComponent implements OnChanges {
   @Input() cardbackMap: { [index: number]: boolean } = {};
   @Input() singlePaneMode = false;
   @Output() changeCards = new EventEmitter<number[]>();
+  @Input() promptValue: ChooseCardsPrompt;
+  @Input() maxCards: number;
+  @ViewChild('viewport') viewport: ElementRef;
+  @Input() showDetailButtons = true;
+  @Input() noBottomPane = false;
+
 
   public allowedCancel: boolean;
   public promptId: number;
@@ -38,7 +47,55 @@ export class ChooseCardsPanesComponent implements OnChanges {
     this.bottomSortable = this.buildPromptSortable();
   }
 
-  public showCardPopup(context: DraggedItem<PromptItem>) {
+  get isSetupGame(): boolean {
+    return this.promptValue?.message === 'CHOOSE_STARTING_POKEMONS';
+  }
+
+  get isAttachEnergyPrompt(): boolean {
+    return this.promptValue?.message === 'ATTACH_ENERGY_CARDS';
+  }
+
+
+  toggleCardSelection(card: any) {
+    if (this.noBottomPane || !this.filterMap[card.fullName]) {
+      return;
+    }
+
+    const index = this.selectedCards.indexOf(card);
+    if (index === -1 && this.selectedCards.length < this.maxCards) {
+      const selectedCard = {
+        ...card,
+        isSecret: this.promptValue?.options?.isSecret || false,
+        cardImage: this.promptValue?.options?.isSecret ? 'assets/cardback.png' : card.cardImage,
+        originalIndex: this.cards.indexOf(card)
+      };
+      this.selectedCards.push(selectedCard);
+      const cardIndex = this.topSortable.tempList.findIndex(item => item.card === card);
+      if (cardIndex !== -1) {
+        this.topSortable.tempList.splice(cardIndex, 1);
+      }
+    } else if (index !== -1) {
+      this.selectedCards.splice(index, 1);
+      this.topSortable.tempList = [...this.topSortable.tempList, {
+        card,
+        index: this.cards.indexOf(card),
+        isAvailable: this.filterMap[card.fullName],
+        isSecret: !!this.cardbackMap[this.cards.indexOf(card)],
+        scanUrl: this.cardsBaseService.getScanUrl(card)
+      }];
+    }
+
+    const selectedIndices = this.selectedCards.map(selectedCard =>
+      selectedCard.originalIndex);
+
+    this.changeCards.emit(selectedIndices);
+  }
+
+  isCardSelected(card: any): boolean {
+    return this.selectedCards.includes(card);
+  }
+
+  public showCardInfo(context: DraggedItem<PromptItem>) {
     const card = context.data.card;
     const facedown = this.cardbackMap[context.data.index];
     this.cardsBaseService.showCardInfo({ card, facedown });
@@ -136,6 +193,11 @@ export class ChooseCardsPanesComponent implements OnChanges {
     }
   }
 
+  getSlotArray(): number[] {
+    const slots = (this.promptValue as unknown as ChooseEnergyPrompt)?.cost?.length || this.maxCards;
+    return Array(slots).fill(0).map((_, i) => i);
+  }
+
   private commitTempLists() {
     this.topSortable.list = this.topSortable.tempList.slice();
     this.bottomSortable.list = this.bottomSortable.tempList.slice();
@@ -152,11 +214,25 @@ export class ChooseCardsPanesComponent implements OnChanges {
     this.bottomSortable.tempList = this.bottomSortable.list.slice();
   }
 
+  ngOnInit() {
+    const cost = (this.promptValue as unknown as ChooseEnergyPrompt)?.cost?.length;
+    console.log('Cost length:', cost);
+    console.log('Options max:', this.promptValue?.options?.max);
+    this.maxCards = cost || this.promptValue?.options?.max || 1;
+    console.log('Final maxCards:', this.maxCards);
+  }
+
   ngOnChanges() {
     if (this.cards && this.filter && this.blocked) {
       this.filterMap = this.buildFilterMap(this.cards, this.filter, this.blocked);
       this.topSortable.tempList = this.buildCardList(this.cards);
       this.bottomSortable.tempList = [];
+
+      // Get total energy count for max slots while preserving prompt settings
+      const totalEnergy = this.cards.filter(card => card instanceof EnergyCard).length;
+      const cost = (this.promptValue as unknown as ChooseEnergyPrompt)?.cost?.length;
+      this.maxCards = cost || totalEnergy || this.promptValue?.options?.max || 1;
+
       this.commitTempLists();
     }
   }

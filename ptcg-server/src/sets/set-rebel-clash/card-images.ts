@@ -12,7 +12,7 @@ import { Metapod } from './metapod';
 import { Morpeko } from './morpeko';
 import { Natu } from './natu';
 import { Palpitoad } from './palpitoad';
-import { GalarianMeowth } from './galarian_meowth';
+import { GalarianMeowth } from './galarian-meowth';
 import { Honedge } from './honedge';
 import { Vulpix } from './vulpix';
 import { Arrokuda } from './arrokuda';

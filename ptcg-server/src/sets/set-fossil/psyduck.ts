@@ -14,7 +14,7 @@ export class Psyduck extends PokemonCard {
   public resistance = [];
   public retreat = [C];
 
-  public attaacks = [{
+  public attacks = [{
     name: 'Headache',
     cost: [P],
     damage: 0,

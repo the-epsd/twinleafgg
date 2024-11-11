@@ -38,6 +38,9 @@ export const cardReplacements = [
   //PGO
   { from: 'PokéStop PGO 68', to: 'PokeStop PGO 68' },
 
+  //ASR
+  { from: 'Hisuian Qwilfish ASR 89', to: 'Hisuian Qwilfish2 ASR 89' },
+
   //CRZ
   { from: 'Zacian VSTAR CRZ 96', to: 'Zacian VSTAR' },
 
@@ -339,6 +342,9 @@ export const exportReplacements = [
 
   //PGO
   { from: 'PokeStop PGO 68', to: 'PokéStop PGO 68' },
+
+  //ASR
+  { from: 'Hisuian Qwilfish2 ASR 89', to: 'Hisuian Qwilfish ASR 89' },
 
   //CRZ
   { from: 'Zacian VSTAR', to: 'Zacian VSTAR CRZ 96' },

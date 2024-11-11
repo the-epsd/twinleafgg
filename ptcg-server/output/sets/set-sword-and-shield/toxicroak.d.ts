@@ -29,6 +29,5 @@ export declare class Toxicroak extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
-    private POISON_MODIFIER_MARKER;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

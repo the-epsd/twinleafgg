@@ -15,7 +15,6 @@ export class PromptChooseCardsComponent {
     this.promptValue = prompt;
     this.cards = prompt.cards;
     this.cards.sort();
-    
     this.filter = prompt.filter;
     this.allowedCancel = prompt.options.allowCancel;
     this.blocked = prompt.options.blocked;
@@ -42,7 +41,9 @@ export class PromptChooseCardsComponent {
   public isSecret: boolean;
   public revealed = false;
   public cardbackMap: { [index: number]: boolean } = {};
-  private promptValue: ChooseCardsPrompt;
+  public promptValue: ChooseCardsPrompt;
+  public currentTab = 'All';
+  public filteredCards: Card[] = [];
   private result: number[] = [];
 
   constructor(
@@ -71,5 +72,4 @@ export class PromptChooseCardsComponent {
     this.result = result;
     this.isInvalid = isInvalid;
   }
-
 }

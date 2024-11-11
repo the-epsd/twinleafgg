@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BlazikenexArt = exports.CombuskenArt = exports.TorchicArt = exports.LilliesClefairyexArt = void 0;
+exports.BudewArt = exports.BlazikenexArt = exports.CombuskenArt = exports.TorchicArt = exports.LilliesClefairyexArt = void 0;
 const blaziken_ex_1 = require("./blaziken-ex");
+const budew_1 = require("./budew");
 const combusken_1 = require("./combusken");
 const lillies_clefairy_ex_1 = require("./lillies-clefairy-ex");
 const torchic_1 = require("./torchic");
@@ -33,3 +34,10 @@ class BlazikenexArt extends blaziken_ex_1.Blazikenex {
     }
 }
 exports.BlazikenexArt = BlazikenexArt;
+class BudewArt extends budew_1.Budew {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://www.pokebeach.com/news/2024/11/Budew.png';
+    }
+}
+exports.BudewArt = BudewArt;

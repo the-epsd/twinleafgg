@@ -16,10 +16,10 @@ const hoopa_1 = require("./hoopa");
 const lickilicky_1 = require("./lickilicky");
 const munchlax_1 = require("./munchlax");
 const tag_switch_1 = require("./tag_switch");
-const RaichuAlolanRaichuGX_1 = require("./RaichuAlolanRaichuGX");
+const raichu_and_alolan_raichu_gx_1 = require("./raichu-and-alolan-raichu-gx");
 const numel_1 = require("./numel");
 const froslass_1 = require("./froslass");
-const alolan_raichu_1 = require("./alolan_raichu");
+const alolan_raichu_1 = require("./alolan-raichu");
 const weakness_guard_energy_1 = require("./weakness-guard-energy");
 const cottonee_1 = require("./cottonee");
 const whimsicott_1 = require("./whimsicott");
@@ -114,7 +114,7 @@ class AlolanRaichuArt extends alolan_raichu_1.AlolanRaichu {
     }
 }
 exports.AlolanRaichuArt = AlolanRaichuArt;
-class RaichuAlolanRaichuGXArt extends RaichuAlolanRaichuGX_1.RaichuAlolanRaichuGX {
+class RaichuAlolanRaichuGXArt extends raichu_and_alolan_raichu_gx_1.RaichuAlolanRaichuGX {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNM/UNM_221_R_EN_LG.png';

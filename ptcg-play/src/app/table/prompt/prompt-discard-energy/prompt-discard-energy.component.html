@@ -12,8 +12,10 @@
     <ptcg-choose-pokemons-pane [pokemonData]="pokemonData" (cardClick)="onCardClick($event)">
     </ptcg-choose-pokemons-pane>
 
-    <ptcg-choose-cards-panes [cards]="getAllCards()" [filter]="filter" [blocked]="blocked" [singlePaneMode]="false"
-      (changeCards)="onCardsDropped($event)"></ptcg-choose-cards-panes>
+    <ptcg-choose-cards-panes [cards]="getAllCards()" [filter]="filter" [blocked]="blocked" [maxCards]="max"
+      [promptValue]="{options: {max: max}}" (changeCards)="onChange($event)">
+    </ptcg-choose-cards-panes>
+
   </div>
 
   <div class="ptcg-prompt-actions">

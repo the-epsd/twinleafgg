@@ -13,6 +13,8 @@ export class PromptChoosePrizeComponent implements OnChanges {
 
   @Input() prompt: ChoosePrizePrompt;
   @Input() gameState: LocalGameState;
+  @Input() maxCards: number;
+  @Input() promptValue: ChoosePrizePrompt;
 
   public cards: Card[];
   public cardbackMap: { [index: number]: boolean } = {};
@@ -23,6 +25,7 @@ export class PromptChoosePrizeComponent implements OnChanges {
   public hasSecret: boolean;
   public revealed = false;
   private result: number[] = [];
+  public prizeIndexMap: { [cardIndex: number]: number } = {};
 
   constructor(
     private gameService: GameService
@@ -44,16 +47,20 @@ export class PromptChoosePrizeComponent implements OnChanges {
     this.gameService.resolvePrompt(gameId, id, this.result);
   }
 
+  ngOnInit() {
+    this.maxCards = this.promptValue?.options?.count || 1;
+  }
+
   public onChange(result: number[]) {
-    const count = this.prompt.options.count;
-    this.result = result;
-    this.isInvalid = result.length !== count;
+    const cardIndex = result[0];
+    const prizeIndex = this.prizeIndexMap[cardIndex];
+    this.result = [prizeIndex];
+    this.isInvalid = this.result.length !== this.prompt.options.count;
   }
 
   ngOnChanges() {
     if (this.prompt && this.gameState && !this.promptId) {
       const state = this.gameState.state;
-      const prompt = this.prompt;
       const player = state.players.find(p => p.id === this.prompt.playerId);
       if (player === undefined) {
         return;
@@ -61,8 +68,11 @@ export class PromptChoosePrizeComponent implements OnChanges {
 
       const cards: Card[] = [];
       const cardbackMap: { [index: number]: boolean } = {};
-      player.prizes.forEach((prize) => {
+      const prizeIndexMap: { [cardIndex: number]: number } = {};
+
+      player.prizes.forEach((prize, prizeIndex) => {
         prize.cards.forEach(card => {
+          prizeIndexMap[cards.length] = prizeIndex;
           cardbackMap[cards.length] = prize.isSecret;
           cards.push(card);
         });
@@ -71,10 +81,10 @@ export class PromptChoosePrizeComponent implements OnChanges {
       this.hasSecret = player.prizes.some(p => p.cards.length > 0 && p.isSecret);
       this.cards = cards;
       this.cardbackMap = cardbackMap;
-      this.allowedCancel = prompt.options.allowCancel;
-      this.message = prompt.message;
-      this.promptId = prompt.id;
+      this.prizeIndexMap = prizeIndexMap;
+      this.allowedCancel = this.prompt.options.allowCancel;
+      this.message = this.prompt.message;
+      this.promptId = this.prompt.id;
     }
   }
-
 }

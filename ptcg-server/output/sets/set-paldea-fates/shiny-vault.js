@@ -6,7 +6,7 @@ const charizard_ex_1 = require("../set-obsidian-flames/charizard-ex");
 const cleffa_1 = require("../set-obsidian-flames/cleffa");
 const entei_1 = require("../set-obsidian-flames/entei");
 const finizen_1 = require("../set-obsidian-flames/finizen");
-const Toedscruel_ex_1 = require("../set-obsidian-flames/Toedscruel_ex");
+const toedscruel_ex_1 = require("../set-obsidian-flames/toedscruel-ex");
 const palafin_1 = require("../set-obsidian-flames/palafin");
 const pidgeot_ex_1 = require("../set-obsidian-flames/pidgeot-ex");
 const scizor_1 = require("../set-obsidian-flames/scizor");
@@ -537,7 +537,7 @@ class ForretressexArt extends forretress_ex_1.Forretressex {
     }
 }
 exports.ForretressexArt = ForretressexArt;
-class ToedscruelexArt extends Toedscruel_ex_1.Toedscruelex {
+class ToedscruelexArt extends toedscruel_ex_1.Toedscruelex {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_213_R_EN_LG.png';

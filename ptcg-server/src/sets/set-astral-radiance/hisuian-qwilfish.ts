@@ -1,7 +1,7 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 
-export class HisuianQwilfish2 extends PokemonCard {
+export class HisuianQwilfish extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = CardType.DARK;
   public hp: number = 80;

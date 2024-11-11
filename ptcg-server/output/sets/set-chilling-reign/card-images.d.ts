@@ -1,7 +1,6 @@
 import { Agatha } from './agatha';
 import { Avery } from './avery';
 import { Banette } from './banette';
-import { Beedrill } from './beedril';
 import { BlazikenV } from './blaziken-v';
 import { BlazikenVMAX } from './blaziken-vmax';
 import { BlisseyV } from './blissey-v';
@@ -48,6 +47,7 @@ import { Snorunt } from './snorunt';
 import { Sobble } from './sobble';
 import { SpiralEnergy } from './spiral-energy';
 import { Zarude } from './zarude';
+import { Beedrill } from './beedrill';
 export declare class AgathaArt extends Agatha {
     cardImage: string;
 }

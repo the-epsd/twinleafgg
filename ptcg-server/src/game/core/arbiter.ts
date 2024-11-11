@@ -5,7 +5,7 @@ import { ShuffleDeckPrompt } from '../store/prompts/shuffle-prompt';
 import { StateLog } from '../store/state/state-log';
 import { State } from '../store/state/state';
 import { ResolvePromptAction } from '../store/actions/resolve-prompt-action';
-import {GameLog} from '../game-message';
+import { GameLog } from '../game-message';
 
 
 export class Arbiter {
@@ -52,4 +52,26 @@ export class Arbiter {
     return order;
   }
 
+  // private shuffle(cards: CardList): number[] {
+  //   const len = cards.cards.length;
+  //   const order: number[] = [];
+
+  //   // Initialize the order array with indices 0 to len - 1
+  //   for (let i = 0; i < len; i++) {
+  //     order.push(i);
+  //   }
+
+  //   // Fisher-Yates Shuffle
+  //   for (let i = len - 1; i > 0; i--) {
+  //     // Pick a remaining element randomly
+  //     const j = Math.floor(Math.random() * (i + 1));
+
+  //     // Swap order[i] with the element at random index j
+  //     const tmp = order[i];
+  //     order[i] = order[j];
+  //     order[j] = tmp;
+  //   }
+
+  //   return order;
+  // }
 }

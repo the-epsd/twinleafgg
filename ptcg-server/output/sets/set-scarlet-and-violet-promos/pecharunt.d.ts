@@ -29,6 +29,5 @@ export declare class Pecharunt extends PokemonCard {
     cardImage: string;
     setNumber: string;
     readonly DEFENDING_POKEMON_CANNOT_RETREAT_MARKER = "DEFENDING_POKEMON_CANNOT_RETREAT_MARKER";
-    private POISON_MODIFIER_MARKER;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

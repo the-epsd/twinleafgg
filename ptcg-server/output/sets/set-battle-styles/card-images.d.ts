@@ -1,7 +1,7 @@
 import { Bellsprout } from './bellsprout';
 import { Bronzong } from './bronzong';
 import { Bruno } from './bruno';
-import { Carnivine } from './BST_9_Carnivine';
+import { Carnivine } from './carnivine';
 import { Carkol } from './carkol';
 import { Cherrim } from './cherrim';
 import { Cherubi } from './cherubi';

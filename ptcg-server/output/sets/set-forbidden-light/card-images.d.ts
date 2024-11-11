@@ -1,5 +1,5 @@
 import { BeastRing } from './beast-ring';
-import { LysandreLabs } from './lysandre_labs';
+import { LysandreLabs } from './lysandre-labs';
 import { Frogadier } from './frogadier';
 import { Magnezone } from './magnezone';
 import { Inkay } from './inkay';

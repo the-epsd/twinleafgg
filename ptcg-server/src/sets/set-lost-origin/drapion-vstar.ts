@@ -58,7 +58,6 @@ export class DrapionVSTAR extends PokemonCard {
 
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-
       if (player.usedVSTAR) {
         throw new GameError(GameMessage.LABEL_VSTAR_USED);
       }
@@ -70,9 +69,9 @@ export class DrapionVSTAR extends PokemonCard {
           cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
         }
       });
-
-      opponent.active.specialConditions.push(SpecialCondition.POISONED);
-      opponent.active.poisonDamage = 30;
+      opponent.active.addSpecialCondition(SpecialCondition.POISONED);
+      opponent.active.addSpecialCondition(SpecialCondition.PARALYZED);
+      opponent.active.poisonDamage = 60;
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

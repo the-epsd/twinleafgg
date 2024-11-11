@@ -9,9 +9,9 @@ import { FilterType } from './choose-cards-prompt';
 
 export const DiscardEnergyPromptType = 'Discard energy';
 
-export type DiscardEnergyResultType = {from: CardTarget, to: CardTarget, index: number}[];
+export type DiscardEnergyResultType = { from: CardTarget, to: CardTarget, index: number }[];
 
-export interface CardTransfer {
+export interface DiscardEnergyTransfer {
   from: CardTarget;
   to: CardTarget;
   card: Card;
@@ -26,7 +26,7 @@ export interface DiscardEnergyOptions {
   blockedMap: { source: CardTarget, blocked: number[] }[];
 }
 
-export class DiscardEnergyPrompt extends Prompt<CardTransfer[]> {
+export class DiscardEnergyPrompt extends Prompt<DiscardEnergyTransfer[]> {
 
   readonly type: string = DiscardEnergyPromptType;
 
@@ -53,7 +53,7 @@ export class DiscardEnergyPrompt extends Prompt<CardTransfer[]> {
     }, options);
   }
 
-  public decode(result: DiscardEnergyResultType | null, state: State): CardTransfer[] | null {
+  public decode(result: DiscardEnergyResultType | null, state: State): DiscardEnergyTransfer[] | null {
     if (result === null) {
       return result;  // operation cancelled
     }
@@ -61,7 +61,7 @@ export class DiscardEnergyPrompt extends Prompt<CardTransfer[]> {
     if (player === undefined) {
       throw new GameError(GameMessage.INVALID_PROMPT_RESULT);
     }
-    const transfers: CardTransfer[] = [];
+    const transfers: DiscardEnergyTransfer[] = [];
     result.forEach(t => {
       const cardList = StateUtils.getTarget(state, player, t.from);
       const card = cardList.cards[t.index];
@@ -70,7 +70,7 @@ export class DiscardEnergyPrompt extends Prompt<CardTransfer[]> {
     return transfers;
   }
 
-  public validate(result: CardTransfer[] | null): boolean {
+  public validate(result: DiscardEnergyTransfer[] | null): boolean {
     if (result === null) {
       return this.options.allowCancel;  // operation cancelled
     }

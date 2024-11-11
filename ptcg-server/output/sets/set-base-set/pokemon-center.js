@@ -21,10 +21,12 @@ class PokemonCenter extends trainer_card_1.TrainerCard {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
             const player = effect.player;
             player.forEachPokemon(__1.PlayerType.BOTTOM_PLAYER, (cardList) => {
-                const healEffect = new game_effects_1.HealEffect(player, cardList, cardList.damage);
-                state = store.reduceEffect(state, healEffect);
-                const cards = cardList.cards.filter(c => c instanceof __1.EnergyCard);
-                cardList.moveCardsTo(cards, player.discard);
+                if (cardList.damage > 0) {
+                    const healEffect = new game_effects_1.HealEffect(player, cardList, cardList.damage);
+                    state = store.reduceEffect(state, healEffect);
+                    const cards = cardList.cards.filter(c => c instanceof __1.EnergyCard);
+                    cardList.moveCardsTo(cards, player.discard);
+                }
             });
             player.supporter.moveCardTo(effect.trainerCard, player.discard);
             return state;

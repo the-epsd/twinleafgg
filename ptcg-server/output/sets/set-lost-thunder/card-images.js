@@ -16,8 +16,8 @@ const girafarig_1 = require("./girafarig");
 const grovyle_1 = require("./grovyle");
 const lanturn_1 = require("./lanturn");
 const lost_blender_1 = require("./lost-blender");
-const ThunderMountainPrismStar_1 = require("./ThunderMountainPrismStar");
-const ZeraoraGX_1 = require("./ZeraoraGX");
+const thunder_mountain_prism_star_1 = require("./thunder-mountain-prism-star");
+const zeraora_gx_1 = require("./zeraora-gx");
 const slowking_1 = require("./slowking");
 const giratina_1 = require("./giratina");
 const mareep_1 = require("./mareep");
@@ -255,7 +255,7 @@ class SpellTagArt extends spell_tag_1.SpellTag {
     }
 }
 exports.SpellTagArt = SpellTagArt;
-class ThunderMountainPrismStarArt extends ThunderMountainPrismStar_1.ThunderMountainPrismStar {
+class ThunderMountainPrismStarArt extends thunder_mountain_prism_star_1.ThunderMountainPrismStar {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_191_R_EN_LG.png';
@@ -290,7 +290,7 @@ class ZebstrikaArt extends zebstrika_1.Zebstrika {
     }
 }
 exports.ZebstrikaArt = ZebstrikaArt;
-class ZeraoraGXArt extends ZeraoraGX_1.ZeraoraGX {
+class ZeraoraGXArt extends zeraora_gx_1.ZeraoraGX {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_201_R_EN_LG.png';

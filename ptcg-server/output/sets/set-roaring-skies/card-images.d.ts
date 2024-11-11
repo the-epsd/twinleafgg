@@ -6,7 +6,7 @@ import { Natu } from './natu';
 import { Voltorb } from './voltorb';
 import { Swellow } from './swellow';
 import { Dustox } from './dustox';
-import { WideLens } from './wide_lens';
+import { WideLens } from './wide-lens';
 import { ShayminEx } from './shaymin-ex';
 import { Shuppet } from './shuppet';
 import { Silcoon } from './silcoon';

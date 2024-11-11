@@ -1,7 +1,7 @@
 import { Abra } from './abra';
 import { Alakazamex } from './alakazam-ex';
 import { AntiqueHelixFossil } from './antique-helix-fossil';
-import { Arbokex } from './arbok_ex';
+import { Arbokex } from './arbok-ex';
 import { Articuno } from './articuno';
 import { Blastoiseex } from './blastoise-ex';
 import { Bulbasaur } from './bulbasaur';

@@ -2,7 +2,7 @@ import { Charizardex } from '../set-obsidian-flames/charizard-ex';
 import { Cleffa } from '../set-obsidian-flames/cleffa';
 import { Entei } from '../set-obsidian-flames/entei';
 import { Finizen } from '../set-obsidian-flames/finizen';
-import { Toedscruelex } from '../set-obsidian-flames/Toedscruel_ex';
+import { Toedscruelex } from '../set-obsidian-flames/toedscruel-ex';
 import { Palafin } from '../set-obsidian-flames/palafin';
 import { Pidgeotex } from '../set-obsidian-flames/pidgeot-ex';
 import { Scizor } from '../set-obsidian-flames/scizor';

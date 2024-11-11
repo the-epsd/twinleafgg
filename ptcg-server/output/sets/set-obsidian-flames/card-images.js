@@ -18,7 +18,7 @@ const letter_of_encouragement_1 = require("./letter-of-encouragement");
 const lunatone_1 = require("./lunatone");
 const miraidon_ex_1 = require("./miraidon-ex");
 const oddish_1 = require("./oddish");
-const Toedscruel_ex_1 = require("./Toedscruel_ex");
+const toedscruel_ex_1 = require("./toedscruel-ex");
 const ninetales_1 = require("./ninetales");
 const palafin_1 = require("./palafin");
 const palpitoad_1 = require("./palpitoad");
@@ -250,7 +250,7 @@ class ThundurusArt extends thundurus_1.Thundurus {
     }
 }
 exports.ThundurusArt = ThundurusArt;
-class ToedscruelexArt extends Toedscruel_ex_1.Toedscruelex {
+class ToedscruelexArt extends toedscruel_ex_1.Toedscruelex {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_022_R_EN_LG.png';

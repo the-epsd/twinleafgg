@@ -5,7 +5,7 @@ exports.ZapdosexArt = exports.WartortleArt = void 0;
 const abra_1 = require("./abra");
 const alakazam_ex_1 = require("./alakazam-ex");
 const antique_helix_fossil_1 = require("./antique-helix-fossil");
-const arbok_ex_1 = require("./arbok_ex");
+const arbok_ex_1 = require("./arbok-ex");
 const articuno_1 = require("./articuno");
 const blastoise_ex_1 = require("./blastoise-ex");
 const bulbasaur_1 = require("./bulbasaur");

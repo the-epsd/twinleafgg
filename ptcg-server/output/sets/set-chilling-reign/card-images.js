@@ -4,7 +4,6 @@ exports.ZarudeArt = exports.TaurosArt = exports.SpiralEnergyArt = exports.Sobble
 const agatha_1 = require("./agatha");
 const avery_1 = require("./avery");
 const banette_1 = require("./banette");
-const beedril_1 = require("./beedril");
 const blaziken_v_1 = require("./blaziken-v");
 const blaziken_vmax_1 = require("./blaziken-vmax");
 const blissey_v_1 = require("./blissey-v");
@@ -51,6 +50,7 @@ const snorunt_1 = require("./snorunt");
 const sobble_1 = require("./sobble");
 const spiral_energy_1 = require("./spiral-energy");
 const zarude_1 = require("./zarude");
+const beedrill_1 = require("./beedrill");
 class AgathaArt extends agatha_1.Agatha {
     constructor() {
         super(...arguments);
@@ -72,7 +72,7 @@ class BanetteArt extends banette_1.Banette {
     }
 }
 exports.BanetteArt = BanetteArt;
-class BeedrillArt extends beedril_1.Beedrill {
+class BeedrillArt extends beedrill_1.Beedrill {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CRE/CRE_003_R_EN_LG.png';

@@ -26,8 +26,8 @@ const aron_1 = require("./aron");
 const lairon_1 = require("./lairon");
 const meowth_1 = require("./meowth");
 const lickitung_1 = require("./lickitung");
-const electromagnetic_radar_1 = require("./electromagnetic_radar");
-const dedenneGX_1 = require("./dedenneGX");
+const electromagnetic_radar_1 = require("./electromagnetic-radar");
+const dedenne_gx_1 = require("./dedenne-gx");
 const kartana_1 = require("./kartana");
 const salazzle_1 = require("./salazzle");
 const poliwag_1 = require("./poliwag");
@@ -55,7 +55,7 @@ class CleffaArt extends cleffa_1.Cleffa {
     }
 }
 exports.CleffaArt = CleffaArt;
-class DedenneGXArt extends dedenneGX_1.DedenneGX {
+class DedenneGXArt extends dedenne_gx_1.DedenneGX {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_195_R_EN_LG.png';

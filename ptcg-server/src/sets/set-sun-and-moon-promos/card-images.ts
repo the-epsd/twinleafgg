@@ -1,6 +1,6 @@
 import { FirefighterPikachu } from './firefighter-pikachu';
 import { PalaceBook } from './palace-book';
-import { PikachuZekromGX } from './Pikachu&ZekromGX';
+import { PikachuZekromGX } from './pikachu-and-zekrom-gx';
 import { Lurantis } from './lurantis';
 import { TapuKoko } from './tapu-koko';
 

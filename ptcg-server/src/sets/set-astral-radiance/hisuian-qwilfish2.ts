@@ -4,7 +4,7 @@ import { StoreLike, State, CoinFlipPrompt, GameMessage } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 
-export class HisuianQwilfish extends PokemonCard {
+export class HisuianQwilfish2 extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = CardType.DARK;
   public hp: number = 80;
@@ -23,7 +23,7 @@ export class HisuianQwilfish extends PokemonCard {
   public regulationMark: string = 'F';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Hisuian Qwilfish';
-  public fullName: string = 'Hisuian Qwilfish ASR';
+  public fullName: string = 'Hisuian Qwilfish2 ASR';
 
   public COIN_FLIP_TAILS: boolean = false;
 

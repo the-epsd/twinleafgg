@@ -28,17 +28,17 @@ export class PokemonCenter extends TrainerCard {
       const player = effect.player;
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
-
-        const healEffect = new HealEffect(player, cardList, cardList.damage);
-        state = store.reduceEffect(state, healEffect);
-        const cards = cardList.cards.filter(c => c instanceof EnergyCard);
-        cardList.moveCardsTo(cards, player.discard);
-
+        if (cardList.damage > 0) {
+          const healEffect = new HealEffect(player, cardList, cardList.damage);
+          state = store.reduceEffect(state, healEffect);
+          const cards = cardList.cards.filter(c => c instanceof EnergyCard);
+          cardList.moveCardsTo(cards, player.discard);
+        }
       });
+
       player.supporter.moveCardTo(effect.trainerCard, player.discard);
       return state;
     }
     return state;
   }
-
 }
