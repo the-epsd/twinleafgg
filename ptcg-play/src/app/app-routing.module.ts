@@ -15,6 +15,7 @@ import { ResetPasswordComponent } from './login/reset-password/reset-password.co
 import { SetNewPasswordComponent } from './login/set-new-password/set-new-password.component';
 import { TableComponent } from './table/table.component';
 import { TournamentListComponent } from './tournaments/tournament-list/tournament-list.component';
+import { VsScreenComponent } from './table/vs-screen/vs-screen.component';
 
 const routes: Routes = [
   { path: 'deck', component: DeckComponent, canActivate: [CanActivateService] },
@@ -29,6 +30,7 @@ const routes: Routes = [
   { path: 'profile/:userId', component: ProfileComponent, canActivate: [CanActivateService] },
   { path: 'reset-password', component: ResetPasswordComponent, pathMatch: 'full' },
   { path: 'reset-password/:token', component: SetNewPasswordComponent },
+  { path: 'vs-screen', component: VsScreenComponent },
   { path: 'table/:gameId', component: TableComponent, canActivate: [CanActivateService] },
   { path: 'tournaments', component: TournamentListComponent },
   { path: '', redirectTo: '/games', pathMatch: 'full' },

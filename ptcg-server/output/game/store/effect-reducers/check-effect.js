@@ -6,11 +6,11 @@ const check_effects_1 = require("../effects/check-effects");
 const pokemon_card_list_1 = require("../state/pokemon-card-list");
 const choose_pokemon_prompt_1 = require("../prompts/choose-pokemon-prompt");
 const game_message_1 = require("../../game-message");
-const choose_prize_prompt_1 = require("../prompts/choose-prize-prompt");
+const card_list_1 = require("../state/card-list");
 const play_card_action_1 = require("../actions/play-card-action");
 const game_effects_1 = require("../effects/game-effects");
 const energy_card_1 = require("../card/energy-card");
-const game_error_1 = require("../../game-error");
+const choose_cards_prompt_1 = require("../prompts/choose-cards-prompt");
 function findKoPokemons(store, state) {
     const pokemons = [];
     for (let i = 0; i < state.players.length; i++) {
@@ -92,7 +92,15 @@ function choosePrizeCards(state, prizesToTake) {
             prizesToTake[i] = prizeLeft;
         }
         if (prizesToTake[i] > 0) {
-            const prompt = new choose_prize_prompt_1.ChoosePrizePrompt(player.id, game_message_1.GameMessage.CHOOSE_PRIZE_CARD, { count: prizesToTake[i] });
+            const allPrizeCards = new card_list_1.CardList();
+            // allPrizeCards.isSecret = true;  // Set the CardList as secret
+            // allPrizeCards.isPublic = false;
+            // allPrizeCards.faceUpPrize = false;
+            player.prizes.forEach(prizeList => {
+                allPrizeCards.cards.push(...prizeList.cards);
+            });
+            const prompt = new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_PRIZE_CARD, allPrizeCards, {}, // No specific filter needed for prizes
+            { min: prizesToTake[i], max: prizesToTake[i], isSecret: true });
             prompts.push(prompt);
         }
     }
@@ -100,7 +108,7 @@ function choosePrizeCards(state, prizesToTake) {
 }
 function endGame(store, state, winner) {
     if (state.players.length !== 2) {
-        throw new game_error_1.GameError(game_message_1.GameMessage.ILLEGAL_ACTION);
+        return state;
     }
     if ([
         state_1.GamePhase.WAITING_FOR_PLAYERS,
@@ -108,7 +116,7 @@ function endGame(store, state, winner) {
         state_1.GamePhase.ATTACK,
         state_1.GamePhase.BETWEEN_TURNS
     ].includes(state.phase) === false) {
-        throw new game_error_1.GameError(game_message_1.GameMessage.ILLEGAL_ACTION);
+        return state;
     }
     switch (winner) {
         case state_1.GameWinner.NONE:
@@ -135,12 +143,11 @@ function checkWinner(store, state, onComplete) {
     const points = [0, 0];
     for (let i = 0; i < state.players.length; i++) {
         const player = state.players[i];
-        // Player has no active Pokemon, opponent wins.
+        // Check for no active Pokemon
         if (player.active.cards.length === 0) {
             store.log(state, game_message_1.GameLog.LOG_PLAYER_NO_ACTIVE_POKEMON, { name: player.name });
             points[i === 0 ? 1 : 0]++;
         }
-        // Player has no Prize cards left, player wins.
         if (player.prizes.every(p => p.cards.length === 0)) {
             store.log(state, game_message_1.GameLog.LOG_PLAYER_NO_PRIZE_CARD, { name: player.name });
             points[i]++;
@@ -149,6 +156,7 @@ function checkWinner(store, state, onComplete) {
     if (points[0] + points[1] === 0) {
         if (onComplete) {
             onComplete();
+            console.log('it pointed');
         }
         return state;
     }
@@ -162,6 +170,7 @@ function checkWinner(store, state, onComplete) {
     state = endGame(store, state, winner);
     if (onComplete) {
         onComplete();
+        console.log('it end gamed');
     }
     return state;
 }
@@ -169,41 +178,48 @@ function handlePrompts(store, state, prompts, onComplete) {
     const prompt = prompts.shift();
     if (prompt === undefined) {
         onComplete();
+        console.log('it completed');
         return state;
     }
     const player = state.players.find(p => p.id === prompt.playerId);
     if (player === undefined) {
-        throw new game_error_1.GameError(game_message_1.GameMessage.ILLEGAL_ACTION);
+        return state;
     }
-    return store.prompt(state, prompt, (result) => {
-        if (prompt instanceof choose_prize_prompt_1.ChoosePrizePrompt) {
-            const prizes = result;
-            prizes.forEach(prize => prize.moveTo(player.hand));
+    if (prompt instanceof choose_cards_prompt_1.ChooseCardsPrompt) {
+        return store.prompt(state, prompt, (result) => {
+            result.forEach(card => {
+                const prizeList = player.prizes.find(p => p.cards.includes(card));
+                if (prizeList) {
+                    prizeList.moveTo(player.hand);
+                }
+            });
             handlePrompts(store, state, prompts, onComplete);
-        }
-        else if (prompt instanceof choose_pokemon_prompt_1.ChoosePokemonPrompt) {
-            const selectedPokemon = result;
-            if (selectedPokemon.length !== 1) {
-                throw new game_error_1.GameError(game_message_1.GameMessage.ILLEGAL_ACTION);
+            console.log('this one');
+        });
+    }
+    else if (prompt instanceof choose_pokemon_prompt_1.ChoosePokemonPrompt) {
+        return store.prompt(state, prompt, (result) => {
+            if (result.length !== 1) {
+                return state;
             }
-            const benchIndex = player.bench.indexOf(selectedPokemon[0]);
+            const benchIndex = player.bench.indexOf(result[0]);
             if (benchIndex === -1 || player.active.cards.length > 0) {
-                throw new game_error_1.GameError(game_message_1.GameMessage.ILLEGAL_ACTION);
+                return state;
             }
             const temp = player.active;
             player.active = player.bench[benchIndex];
             player.bench[benchIndex] = temp;
             handlePrompts(store, state, prompts, onComplete);
-        }
-    });
+            console.log('that one');
+        });
+    }
+    return state;
 }
 function* executeCheckState(next, store, state, onComplete) {
     const prizesToTake = [0, 0];
     // This effect checks the general data from the table (bench size)
-    // In the file where you create the instance
-    const checkTableStateEffect = new check_effects_1.CheckTableStateEffect([5, 5]); // Pass the benchSizes array
+    const checkTableStateEffect = new check_effects_1.CheckTableStateEffect([5, 5]);
     store.reduceEffect(state, checkTableStateEffect);
-    // Size of the bench has changed. This may require some Pokemons to be discarded
     handleBenchSizeChange(store, state, checkTableStateEffect.benchSizes);
     if (store.hasPrompts()) {
         yield store.waitPrompt(state, () => next());
@@ -233,6 +249,7 @@ function* executeCheckState(next, store, state, onComplete) {
             completed[i] = true;
             if (completed.every(c => c)) {
                 checkWinner(store, state, onComplete);
+                console.log('winner checked');
             }
         });
     }
@@ -242,6 +259,7 @@ function checkState(store, state, onComplete) {
     if ([state_1.GamePhase.PLAYER_TURN, state_1.GamePhase.ATTACK, state_1.GamePhase.BETWEEN_TURNS].includes(state.phase) === false) {
         if (onComplete !== undefined) {
             onComplete();
+            console.log('did complete idk undefined');
         }
         return state;
     }

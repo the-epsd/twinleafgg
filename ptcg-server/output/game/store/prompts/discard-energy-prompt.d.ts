@@ -10,7 +10,7 @@ export declare type DiscardEnergyResultType = {
     to: CardTarget;
     index: number;
 }[];
-export interface CardTransfer {
+export interface DiscardEnergyTransfer {
     from: CardTarget;
     to: CardTarget;
     card: Card;
@@ -26,7 +26,7 @@ export interface DiscardEnergyOptions {
         blocked: number[];
     }[];
 }
-export declare class DiscardEnergyPrompt extends Prompt<CardTransfer[]> {
+export declare class DiscardEnergyPrompt extends Prompt<DiscardEnergyTransfer[]> {
     message: GameMessage;
     playerType: PlayerType;
     slots: SlotType[];
@@ -34,6 +34,6 @@ export declare class DiscardEnergyPrompt extends Prompt<CardTransfer[]> {
     readonly type: string;
     options: DiscardEnergyOptions;
     constructor(playerId: number, message: GameMessage, playerType: PlayerType, slots: SlotType[], filter: FilterType, options?: Partial<DiscardEnergyOptions>);
-    decode(result: DiscardEnergyResultType | null, state: State): CardTransfer[] | null;
-    validate(result: CardTransfer[] | null): boolean;
+    decode(result: DiscardEnergyResultType | null, state: State): DiscardEnergyTransfer[] | null;
+    validate(result: DiscardEnergyTransfer[] | null): boolean;
 }

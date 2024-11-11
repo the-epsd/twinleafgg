@@ -1,11 +1,15 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Format } from 'ptcg-server';
+import { Archetype, Format, RankLevel, UserInfo } from 'ptcg-server';
 import { Subscription, throwError } from 'rxjs';
 import { catchError, map, retry, switchMap } from 'rxjs/operators';
 import { DeckListEntry } from 'src/app/api/interfaces/deck.interface';
 import { DeckService } from 'src/app/api/services/deck.service';
 import { GameService } from 'src/app/api/services/game.service';
+import { ArchetypeService } from 'src/app/deck/deck-archetype-service/archetype.service';
+import { ArchetypeUtils } from 'src/app/deck/deck-archetype-service/archetype.utils';
+import { DeckComponent } from 'src/app/deck/deck.component';
+import { CardsBaseService } from 'src/app/shared/cards/cards-base.service';
 
 interface QueueUpdate {
   format: string;
@@ -30,7 +34,7 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
     { value: Format.EXPANDED, label: 'LABEL_EXPANDED' },
     { value: Format.RETRO, label: 'LABEL_RETRO' }
   ];
-  
+
   selectedFormat: Format = Format.STANDARD;
   inQueue: boolean = false;
   queuedPlayers: string[] = [];
@@ -39,25 +43,56 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
   private subscription: Subscription;
   private pollingInterval: any;
   decksByFormat = [];
+  public playerRank: RankLevel;
+  defaultDeck: DeckListEntry;
 
-  constructor(private gameService: GameService,
-              private router: Router,
-              private deckService: DeckService) { }
+
+  constructor(
+    private gameService: GameService,
+    private router: Router,
+    private deckService: DeckService,
+    private cardsBaseService: CardsBaseService,
+  ) {
+    this.playerRank = this.playerRank;
+  }
+
+  getArchetype(deckItems: any[]): Archetype {
+    return ArchetypeUtils.getArchetype(deckItems);
+  }
+
+  getCurrentDeckName(): string {
+    return this.decksByFormat.find(deck => deck.id === this.deckId)?.name || '';
+  }
 
   ngOnInit() {
-    this.subscription = this.gameService.getQueueUpdates().subscribe(
-      (update: any) => {
-        if (Array.isArray(update)) {
-          this.queuedPlayers = update;
-        } else if (typeof update === 'object' && update !== null && 'players' in update) {
-          this.queuedPlayers = update.players;
-          if ('gameId' in update) {
-            this.router.navigate(['/game', update.gameId]);
-          }
+    const defaultDeckId = localStorage.getItem('defaultDeckId');
+    if (defaultDeckId) {
+      this.deckService.getDeck(parseInt(defaultDeckId, 10)).subscribe(
+        response => {
+          this.defaultDeck = {
+            ...response.deck,
+            deckItems: response.deck.cards.map(cardName => ({
+              card: this.cardsBaseService.getCardByName(cardName),
+              count: 1,
+              pane: null,
+              scanUrl: null
+            }))
+          };
+          this.deckId = response.deck.id;
         }
-      }
-    );
-    
+      );
+    } else {
+      // If no default deck, get regular deck list
+      this.deckService.getListByFormat(Format.STANDARD).pipe(
+        map(d => d.filter(deck => deck.isValid))
+      ).subscribe(decks => {
+        this.decksByFormat = decks;
+        if (decks.length > 0) {
+          this.deckId = decks[0].id;
+        }
+      });
+    }
+
     this.deckService.getListByFormat(Format.STANDARD).pipe(
       map(d => d.filter(deck => deck.isValid))
     ).subscribe(decks => {
@@ -67,8 +102,6 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
       }
     });
   }
-
-
   // private isQueueUpdate(update: any): update is QueueUpdate {
   //   return 'players' in update && Array.isArray(update.players);
   // }
@@ -81,7 +114,7 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
     this.inQueue = true;
     this.deckService.getDeck(this.deckId).pipe(
       map(response => response.deck.cards),
-      switchMap(cards => 
+      switchMap(cards =>
         this.gameService.joinMatchmakingQueue(this.selectedFormat, cards)
           .pipe(
             retry(3),
@@ -90,7 +123,7 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
               console.error('Failed to join queue:', error);
               return throwError(() => error);
             })
-        )
+          )
       )
     ).subscribe({
       next: () => {
@@ -128,7 +161,7 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
-    
+
     this.leaveQueue();
   }
 
@@ -139,17 +172,17 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
       error => console.error('Error leaving queue:', error)
     );
   }
-  
+
   onFormatSelected(format: Format) {
     this.deckService.getListByFormat(format).pipe(
       map(d => d.filter(deck => deck.isValid))
     ).subscribe(decks => {
       this.decksByFormat = decks;
-      
+
       if (decks.length > 0) {
         this.deckId = decks[0].id;
       }
     });
-    
+
   }
 }

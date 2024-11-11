@@ -166,6 +166,7 @@ export var BoardEffect;
     BoardEffect[BoardEffect["POWER_NEGATED_GLOW"] = 2] = "POWER_NEGATED_GLOW";
     BoardEffect[BoardEffect["POWER_RETURN"] = 3] = "POWER_RETURN";
     BoardEffect[BoardEffect["EVOLVE"] = 4] = "EVOLVE";
+    BoardEffect[BoardEffect["REVEAL_OPPONENT_HAND"] = 5] = "REVEAL_OPPONENT_HAND";
 })(BoardEffect || (BoardEffect = {}));
 export var Format;
 (function (Format) {

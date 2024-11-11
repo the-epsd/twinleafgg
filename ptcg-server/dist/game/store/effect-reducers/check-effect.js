@@ -3,10 +3,11 @@ import { CheckHpEffect, CheckProvidedEnergyEffect, CheckTableStateEffect } from 
 import { PokemonCardList } from '../state/pokemon-card-list';
 import { ChoosePokemonPrompt } from '../prompts/choose-pokemon-prompt';
 import { GameMessage, GameLog } from '../../game-message';
-import { ChoosePrizePrompt } from '../prompts/choose-prize-prompt';
+import { CardList } from '../state/card-list';
 import { PlayerType, SlotType } from '../actions/play-card-action';
 import { KnockOutEffect } from '../effects/game-effects';
 import { EnergyCard } from '../card/energy-card';
+import { ChooseCardsPrompt } from '../prompts/choose-cards-prompt';
 function findKoPokemons(store, state) {
     const pokemons = [];
     for (let i = 0; i < state.players.length; i++) {
@@ -88,7 +89,15 @@ function choosePrizeCards(state, prizesToTake) {
             prizesToTake[i] = prizeLeft;
         }
         if (prizesToTake[i] > 0) {
-            const prompt = new ChoosePrizePrompt(player.id, GameMessage.CHOOSE_PRIZE_CARD, { count: prizesToTake[i] });
+            const allPrizeCards = new CardList();
+            // allPrizeCards.isSecret = true;  // Set the CardList as secret
+            // allPrizeCards.isPublic = false;
+            // allPrizeCards.faceUpPrize = false;
+            player.prizes.forEach(prizeList => {
+                allPrizeCards.cards.push(...prizeList.cards);
+            });
+            const prompt = new ChooseCardsPrompt(player.id, GameMessage.CHOOSE_PRIZE_CARD, allPrizeCards, {}, // No specific filter needed for prizes
+            { min: prizesToTake[i], max: prizesToTake[i], isSecret: true });
             prompts.push(prompt);
         }
     }
@@ -130,12 +139,11 @@ function checkWinner(store, state, onComplete) {
     const points = [0, 0];
     for (let i = 0; i < state.players.length; i++) {
         const player = state.players[i];
-        // Player has no active Pokemon, opponent wins.
+        // Check for no active Pokemon
         if (player.active.cards.length === 0) {
             store.log(state, GameLog.LOG_PLAYER_NO_ACTIVE_POKEMON, { name: player.name });
             points[i === 0 ? 1 : 0]++;
         }
-        // Player has no Prize cards left, player wins.
         if (player.prizes.every(p => p.cards.length === 0)) {
             store.log(state, GameLog.LOG_PLAYER_NO_PRIZE_CARD, { name: player.name });
             points[i]++;
@@ -144,6 +152,7 @@ function checkWinner(store, state, onComplete) {
     if (points[0] + points[1] === 0) {
         if (onComplete) {
             onComplete();
+            console.log('it pointed');
         }
         return state;
     }
@@ -157,6 +166,7 @@ function checkWinner(store, state, onComplete) {
     state = endGame(store, state, winner);
     if (onComplete) {
         onComplete();
+        console.log('it end gamed');
     }
     return state;
 }
@@ -164,24 +174,31 @@ function handlePrompts(store, state, prompts, onComplete) {
     const prompt = prompts.shift();
     if (prompt === undefined) {
         onComplete();
+        console.log('it completed');
         return state;
     }
     const player = state.players.find(p => p.id === prompt.playerId);
     if (player === undefined) {
         return state;
     }
-    return store.prompt(state, prompt, (result) => {
-        if (prompt instanceof ChoosePrizePrompt) {
-            const prizes = result;
-            prizes.forEach(prize => prize.moveTo(player.hand));
+    if (prompt instanceof ChooseCardsPrompt) {
+        return store.prompt(state, prompt, (result) => {
+            result.forEach(card => {
+                const prizeList = player.prizes.find(p => p.cards.includes(card));
+                if (prizeList) {
+                    prizeList.moveTo(player.hand);
+                }
+            });
             handlePrompts(store, state, prompts, onComplete);
-        }
-        else if (prompt instanceof ChoosePokemonPrompt) {
-            const selectedPokemon = result;
-            if (selectedPokemon.length !== 1) {
+            console.log('this one');
+        });
+    }
+    else if (prompt instanceof ChoosePokemonPrompt) {
+        return store.prompt(state, prompt, (result) => {
+            if (result.length !== 1) {
                 return state;
             }
-            const benchIndex = player.bench.indexOf(selectedPokemon[0]);
+            const benchIndex = player.bench.indexOf(result[0]);
             if (benchIndex === -1 || player.active.cards.length > 0) {
                 return state;
             }
@@ -189,16 +206,16 @@ function handlePrompts(store, state, prompts, onComplete) {
             player.active = player.bench[benchIndex];
             player.bench[benchIndex] = temp;
             handlePrompts(store, state, prompts, onComplete);
-        }
-    });
+            console.log('that one');
+        });
+    }
+    return state;
 }
 function* executeCheckState(next, store, state, onComplete) {
     const prizesToTake = [0, 0];
     // This effect checks the general data from the table (bench size)
-    // In the file where you create the instance
-    const checkTableStateEffect = new CheckTableStateEffect([5, 5]); // Pass the benchSizes array
+    const checkTableStateEffect = new CheckTableStateEffect([5, 5]);
     store.reduceEffect(state, checkTableStateEffect);
-    // Size of the bench has changed. This may require some Pokemons to be discarded
     handleBenchSizeChange(store, state, checkTableStateEffect.benchSizes);
     if (store.hasPrompts()) {
         yield store.waitPrompt(state, () => next());
@@ -228,6 +245,7 @@ function* executeCheckState(next, store, state, onComplete) {
             completed[i] = true;
             if (completed.every(c => c)) {
                 checkWinner(store, state, onComplete);
+                console.log('winner checked');
             }
         });
     }
@@ -237,6 +255,7 @@ export function checkState(store, state, onComplete) {
     if ([GamePhase.PLAYER_TURN, GamePhase.ATTACK, GamePhase.BETWEEN_TURNS].includes(state.phase) === false) {
         if (onComplete !== undefined) {
             onComplete();
+            console.log('did complete idk undefined');
         }
         return state;
     }

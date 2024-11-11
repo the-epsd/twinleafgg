@@ -152,8 +152,13 @@ export function gameReducer(store, state, effect) {
                 effect.prizeCount += 2;
             }
             store.log(state, GameLog.LOG_POKEMON_KO, { name: card.name });
-            effect.target.moveTo(effect.player.discard);
-            effect.target.clearEffects();
+            if (card.tags.includes(CardTag.PRISM_STAR)) {
+                effect.target.moveTo(effect.player.lostzone);
+            }
+            else {
+                effect.target.moveTo(effect.player.discard);
+                effect.target.clearEffects();
+            }
         }
     }
     if (effect instanceof ApplyWeaknessEffect) {

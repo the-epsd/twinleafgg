@@ -10,6 +10,8 @@ import { AlertService } from '../shared/alert/alert.service';
 import { CardsBaseService } from '../shared/cards/cards-base.service';
 import { DeckItem } from './deck-card/deck-card.interface';
 import { Archetype, CardType } from 'ptcg-server';
+import { ArchetypeService } from './deck-archetype-service/archetype.service';
+import { ArchetypeUtils } from './deck-archetype-service/archetype.utils';
 
 @UntilDestroy()
 
@@ -23,17 +25,31 @@ export class DeckComponent implements OnInit {
   public displayedColumns: string[] = ['name', 'formats', 'cardTypes', 'isValid', 'actions'];
   public decks: DeckListEntry[] = [];
   public loading = false;
+  public defaultDeckId: number | null = null;
 
   constructor(
     private alertService: AlertService,
     private deckService: DeckService,
     private cardsBaseService: CardsBaseService,
     private translate: TranslateService,
-    private router: Router // Add this line
+    private router: Router,
+    private archetypeService: ArchetypeService,
   ) { }
 
   public ngOnInit() {
     this.refreshList();
+    const savedDefaultDeckId = localStorage.getItem('defaultDeckId');
+    if (savedDefaultDeckId) {
+      this.defaultDeckId = parseInt(savedDefaultDeckId, 10);
+    }
+  }
+
+  // Add to existing menu items
+  public async setAsDefault(deckId: number) {
+    this.defaultDeckId = deckId;
+    // Save to localStorage or your backend
+    localStorage.setItem('defaultDeckId', deckId.toString());
+    this.alertService.toast(this.translate.instant('DECK_SET_AS_DEFAULT'));
   }
 
   private refreshList() {
@@ -164,60 +180,7 @@ export class DeckComponent implements OnInit {
   }
 
   getArchetype(deckItems: any[]): Archetype {
-
-    const archetypeCombinations = [
-      { archetype: Archetype.CHARIZARD, cards: ['Charizard ex', 'Pidgeot ex'] },
-      { archetype: Archetype.CHARIZARD, cards: ['Charizard', 'Leon'] },
-    ];
-
-    const archetypeMapping: { [key: string]: Archetype } = {
-      'Arceus VSTAR': Archetype.ARCEUS,
-      'Charizard ex': Archetype.CHARIZARD,
-      'Pidgeot ex': Archetype.PIDGEOT,
-      'Miraidon ex': Archetype.MIRAIDON,
-      'Pikachu ex': Archetype.PIKACHU,
-      'Raging Bolt ex': Archetype.RAGING_BOLT,
-      'Giratina VSTAR': Archetype.GIRATINA,
-      'Origin Forme Palkia VSTAR': Archetype.PALKIA_ORIGIN,
-      'Comfey': Archetype.COMFEY,
-      'Iron Thorns ex': Archetype.IRON_THORNS,
-      'Terapagos ex': Archetype.TERAPAGOS,
-      'Regidrago': Archetype.REGIDRAGO,
-      'Snorlax': Archetype.SNORLAX,
-      'Gardevoir ex': Archetype.GARDEVOIR,
-      'Roaring Moon ex': Archetype.ROARING_MOON,
-      'Lugia VSTAR': Archetype.LUGIA,
-      'Ceruledge ex': Archetype.CERULEDGE,
-      'Dragapult ex': Archetype.DRAGAPULT,
-      // Add more mappings as needed
-    };
-
-    for (const combination of archetypeCombinations) {
-      if (combination.cards.every(card =>
-        deckItems.some(item => item?.card?.fullName?.includes(card))
-      )) {
-        return combination.archetype;
-      }
-    }
-
-    const typeCount: { [key in Archetype]?: number } = {};
-    let maxCount = 0;
-    let primaryArchetype = Archetype.UNOWN;
-
-    for (const item of deckItems) {
-      if (item?.card?.fullName) {
-        const cardName = item.card.fullName.split(' ').slice(0, 2).join(' ');
-        if (archetypeMapping[cardName]) {
-          const cardType = archetypeMapping[cardName];
-          typeCount[cardType] = (typeCount[cardType] || 0) + (item.card.count || 1);
-          if (typeCount[cardType] > maxCount) {
-            maxCount = typeCount[cardType];
-            primaryArchetype = cardType;
-          }
-        }
-      }
-    }
-    return primaryArchetype;
+    return ArchetypeUtils.getArchetype(deckItems);
   }
 
   getDeckBackground(deckName: string): string {

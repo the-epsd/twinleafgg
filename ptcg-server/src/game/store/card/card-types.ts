@@ -165,7 +165,8 @@ export enum BoardEffect {
   POWER_GLOW,
   POWER_NEGATED_GLOW,
   POWER_RETURN,
-  EVOLVE
+  EVOLVE,
+  REVEAL_OPPONENT_HAND
 }
 
 export enum Format {

@@ -1,32 +1,45 @@
 <div class="matchmaking-lobby">
-  <mat-form-field>
-    <mat-label>{{ 'LABEL_SELECT_FORMAT' | translate }}</mat-label>
-    <mat-select [(ngModel)]="selectedFormat" [disabled]="inQueue" (selectionChange)="onFormatSelected($event.value)">
-      <mat-option *ngFor="let format of formats" [value]="format.value">
-        {{ format.label | translate }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>{{ 'GAMES_YOUR_DECK' | translate }}</mat-label>
-    <mat-select [(ngModel)]="deckId" [disabled]="inQueue">
-      <mat-option *ngFor="let deck of decksByFormat" [value]="deck.id">
-        {{ deck.name }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+  <div class="lobby-content">
+    <div class="top-section">
 
-  <button mat-raised-button color="primary" (click)="joinQueue()" *ngIf="!inQueue" [disabled]="!deckId">
-    {{ 'BUTTON_FIND_MATCH' | translate }}
-  </button>
-  <button mat-raised-button color="warn" (click)="leaveQueue()" *ngIf="inQueue">
-    {{ 'BUTTON_LEAVE_QUEUE' | translate }}
-  </button>
+      <mat-form-field appearance="fill">
+        <mat-label>{{ 'LABEL_SELECT_FORMAT' | translate }}</mat-label>
+        <mat-select [(ngModel)]="selectedFormat" [disabled]="inQueue"
+          (selectionChange)="onFormatSelected($event.value)">
+          <mat-option *ngFor="let format of formats" [value]="format.value">
+            {{ format.label | translate }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
 
-  <div *ngIf="inQueue">
-    <h3>{{ 'LABEL_PLAYERS_IN_QUEUE' | translate }}</h3>
-    <ul>
-      <li *ngFor="let player of queuedPlayers">{{ player }}</li>
-    </ul>
+    <div class="deck-tile" *ngIf="defaultDeck">
+      <!-- <div class="deck-validity">
+        <mat-icon *ngIf="defaultDeck.isValid" color="primary">check</mat-icon>
+        <mat-icon *ngIf="!defaultDeck.isValid">remove</mat-icon>
+      </div> -->
+      <ptcg-archetype [class]="getArchetype(defaultDeck.deckItems)"></ptcg-archetype>
+      <div class="deck-name">{{ defaultDeck.name }}</div>
+    </div>
+
+    <div class="action-buttons">
+      <button mat-raised-button class="battle-button" (click)="joinQueue()" *ngIf="!inQueue"
+        [disabled]="!defaultDeck?.isValid">
+        <mat-icon>sports_kabaddi</mat-icon>
+        {{ 'BUTTON_FIND_MATCH' | translate }}
+      </button>
+
+      <button mat-raised-button class="leave-button" (click)="leaveQueue()" *ngIf="inQueue">
+        <mat-icon>exit_to_app</mat-icon>
+        {{ 'BUTTON_LEAVE_QUEUE' | translate }}
+      </button>
+    </div>
+
+    <div class="queue-status" *ngIf="inQueue">
+      <h3>{{ 'LABEL_PLAYERS_IN_QUEUE' | translate }}</h3>
+      <ul>
+        <li *ngFor="let player of queuedPlayers">{{ player }}</li>
+      </ul>
+    </div>
   </div>
 </div>

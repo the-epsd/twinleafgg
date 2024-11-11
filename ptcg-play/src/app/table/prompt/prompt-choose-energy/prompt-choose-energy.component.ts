@@ -1,6 +1,8 @@
 import { Component, Input } from '@angular/core';
-import { ChooseEnergyPrompt, CardList, Card, SuperType, CardType, StateUtils,
-  EnergyMap } from 'ptcg-server';
+import {
+  ChooseEnergyPrompt, CardList, Card, SuperType, CardType, StateUtils,
+  EnergyMap
+} from 'ptcg-server';
 
 import { GameService } from '../../../api/services/game.service';
 import { LocalGameState } from '../../../shared/session/session.interface';
@@ -33,12 +35,16 @@ export class PromptChooseEnergyComponent {
   public filter: Partial<Card>;
   public isInvalid = false;
   private energy: EnergyMap[] = [];
-  private cost: CardType[];
+  public cost: CardType[];
   private result: number[] = [];
 
   constructor(
     private gameService: GameService
   ) { }
+
+  getSlotArray(): number[] {
+    return Array(this.cost.length).fill(0).map((_, i) => i);
+  }
 
   public minimize() {
     this.gameService.setPromptMinimized(this.gameState.localId, true);
@@ -65,7 +71,7 @@ export class PromptChooseEnergyComponent {
     const enough = StateUtils.checkExactEnergy(energy, this.cost);
     this.result = result;
     this.isInvalid = !enough;
-    
+
     this.cards.cards.sort((a, b) => {
       if (a.superType === SuperType.ENERGY) {
         if (b.superType === SuperType.ENERGY) {
