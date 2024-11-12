@@ -62,7 +62,7 @@ export class PromptChooseCardsComponent {
   }
 
   public confirm() {
-    if (this.isInvalid || !this.result || this.result.length === 0) {
+    if (this.isInvalid) {
       return;
     }
 
@@ -70,11 +70,12 @@ export class PromptChooseCardsComponent {
     const id = this.promptId;
 
     // Final validation before sending
-    const selectedCards = this.result.map(index => this.cards.cards[index]);
+    const selectedCards = this.result ? this.result.map(index => this.cards.cards[index]) : [];
     if (this.promptValue.validate(selectedCards)) {
-      this.gameService.resolvePrompt(gameId, id, this.result);
+      this.gameService.resolvePrompt(gameId, id, this.result || []);
     }
   }
+
 
   public onChange(result: number[]) {
     if (!result || !this.promptValue) {
