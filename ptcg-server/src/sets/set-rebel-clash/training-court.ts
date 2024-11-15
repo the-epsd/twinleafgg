@@ -1,4 +1,4 @@
-import { Card, ChooseCardsPrompt, EnergyCard, ShowCardsPrompt, ShuffleDeckPrompt } from '../../game';
+import { Card, ChooseCardsPrompt, EnergyCard, ShowCardsPrompt } from '../../game';
 import { GameError } from '../../game/game-error';
 import { GameLog, GameMessage } from '../../game/game-message';
 import { EnergyType, SuperType, TrainerType } from '../../game/store/card/card-types';
@@ -58,11 +58,6 @@ function* useStadium(next: Function, store: StoreLike, state: State, effect: Use
 
     cards.forEach((card, index) => {
       store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
-    });
-
-    return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-      player.deck.applyOrder(order);
-      return state;
     });
   });
 }

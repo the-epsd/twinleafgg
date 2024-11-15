@@ -11,6 +11,7 @@ const choose_pokemon_prompt_1 = require("../../game/store/prompts/choose-pokemon
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_manager_1 = require("../../game/cards/card-manager");
 const choose_cards_prompt_1 = require("../../game/store/prompts/choose-cards-prompt");
+const game_1 = require("../../game");
 function* playCard(next, store, state, effect) {
     const player = effect.player;
     if (player.deck.cards.length === 0) {
@@ -88,7 +89,9 @@ function* playCard(next, store, state, effect) {
     targets[0].clearEffects();
     targets[0].pokemonPlayedTurn = state.turn;
     player.supporter.moveCardTo(effect.trainerCard, player.discard);
-    return state;
+    return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
+        player.deck.applyOrder(order);
+    });
 }
 class DuskStone extends trainer_card_1.TrainerCard {
     constructor() {

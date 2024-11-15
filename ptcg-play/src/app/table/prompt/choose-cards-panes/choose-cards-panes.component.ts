@@ -145,7 +145,7 @@ export class ChooseCardsPanesComponent implements OnChanges {
         this.updateTempLists(sortable, item);
         this.commitTempLists();
       },
-      canDrag: item => item.isAvailable,
+      canDrag: () => false, // This will disable dragging for all items
       endDrag: () => {
         this.revertTempLists();
       }

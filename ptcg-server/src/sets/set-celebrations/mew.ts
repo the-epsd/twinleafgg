@@ -97,14 +97,11 @@ export class Mew extends PokemonCard {
             GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
             selected
           ), () => {
-
-            return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-              player.deck.applyOrder(order);
-              return state;
-            });
           });
         }
-        return state;
+        return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+          player.deck.applyOrder(order);
+        });
       });
     }
     if (effect instanceof EndTurnEffect) {

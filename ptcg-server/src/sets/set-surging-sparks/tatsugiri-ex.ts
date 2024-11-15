@@ -105,8 +105,6 @@ export class Tatsugiriex extends PokemonCard {
 
         return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
           player.deck.applyOrder(order);
-
-          return state;
         });
       });
     }

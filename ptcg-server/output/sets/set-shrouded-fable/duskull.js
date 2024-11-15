@@ -27,9 +27,6 @@ function* useKingsOrder(next, store, state, effect) {
         player.discard.moveCardTo(card, slots[index]);
         slots[index].pokemonPlayedTurn = state.turn;
     });
-    return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
-        player.deck.applyOrder(order);
-    });
 }
 class Duskull extends pokemon_card_1.PokemonCard {
     constructor() {

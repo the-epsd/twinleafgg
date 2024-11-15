@@ -65,7 +65,7 @@ export class RadiantJirachi extends PokemonCard {
       } catch {
         return state;
       }
-      
+
       let cards: any[] = [];
       return store.prompt(state, new ChooseCardsPrompt(
         player.id,

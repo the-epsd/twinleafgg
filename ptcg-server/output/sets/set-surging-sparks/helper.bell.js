@@ -45,7 +45,6 @@ class HelperBell extends trainer_card_1.TrainerCard {
                     player.supporter.moveCardTo(this, player.discard);
                     return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
                         player.deck.applyOrder(order);
-                        return state;
                     });
                 });
             }

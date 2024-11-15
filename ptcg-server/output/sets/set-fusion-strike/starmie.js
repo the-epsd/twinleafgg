@@ -48,7 +48,9 @@ class Starmie extends pokemon_card_1.PokemonCard {
             { superType: card_types_1.SuperType.ENERGY }, { allowCancel: false, blocked: blocked }), selected => {
                 const cards = selected || [];
                 if (cards.length > 0) {
-                    const discardEnergy = new attack_effects_1.DiscardCardsEffect(effect, cards);
+                    const energyToDiscard = new game_1.CardList();
+                    energyToDiscard.cards.push(...cards);
+                    const discardEnergy = new attack_effects_1.DiscardCardsEffect(effect, energyToDiscard.cards);
                     discardEnergy.target = player.active;
                     store.reduceEffect(state, discardEnergy);
                     const damage = cards.length * 30;

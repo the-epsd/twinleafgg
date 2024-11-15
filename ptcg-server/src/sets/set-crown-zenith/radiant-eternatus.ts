@@ -109,15 +109,17 @@ export class RadiantEternatus extends PokemonCard {
 
             // Operation canceled by the user
             if (cards.length === 0) {
-              return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-                player.deck.applyOrder(order);
-              });
+              return state;
             }
 
             cards.forEach((card, index) => {
               player.deck.moveCardTo(card, slots[index]);
               slots[index].pokemonPlayedTurn = state.turn;
               return state;
+            });
+
+            state = store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+              player.deck.applyOrder(order);
             });
 
             const endTurnEffect = new EndTurnEffect(player);

@@ -1,7 +1,7 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, TrainerType } from '../../game/store/card/card-types';
 import { PowerType } from '../../game/store/card/pokemon-types';
-import { StoreLike, State, StateUtils, ConfirmPrompt, GameMessage, ChooseCardsPrompt, ShowCardsPrompt } from '../../game';
+import { StoreLike, State, StateUtils, ConfirmPrompt, GameMessage, ChooseCardsPrompt, ShowCardsPrompt, ShuffleDeckPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { PowerEffect } from '../../game/store/effects/game-effects';
@@ -77,6 +77,9 @@ export class Meowstic extends PokemonCard {
               cards
             )], () => {
               player.deck.moveCardsTo(cards, player.hand);
+            });
+            return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+              player.deck.applyOrder(order);
             });
           });
         }

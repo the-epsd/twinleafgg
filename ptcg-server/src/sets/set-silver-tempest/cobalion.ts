@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, EnergyType, SuperType } from '../../game/store/card/card-types';
-import { CardList, ChooseCardsPrompt, GameMessage, PowerType, State, StateUtils, StoreLike } from '../..';
+import { CardList, ChooseCardsPrompt, GameMessage, PowerType, ShuffleDeckPrompt, State, StateUtils, StoreLike } from '../..';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
@@ -81,6 +81,9 @@ export class Cobalion extends PokemonCard {
         for (const card of cards) {
           player.deck.moveCardTo(card, basicPokemon as unknown as CardList);
         }
+        return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+          player.deck.applyOrder(order);
+        });
       });
     }
     return state;

@@ -101,11 +101,11 @@ export class Shiinotic extends PokemonCard {
             GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
             cards
           ), () => {
-            return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-              player.deck.applyOrder(order);
-            });
           });
         }
+        return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+          player.deck.applyOrder(order);
+        });
       });
     }
 

@@ -94,9 +94,8 @@ export class Clefable extends PokemonCard {
 
   public fullName: string = 'Clefable JU';
 
-  public REDUCE_DAMAGE_MARKER = 'REDUCE_DAMAGE_MARKER';
-
-  public CLEAR_REDUCE_DAMAGE_MARKER = 'CLEAR_REDUCE_DAMAGE_MARKER';
+  public readonly DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';
+  public readonly CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -105,30 +104,30 @@ export class Clefable extends PokemonCard {
       return generator.next().value;
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      player.active.marker.addMarker(this.REDUCE_DAMAGE_MARKER, this);
-      opponent.marker.addMarker(this.CLEAR_REDUCE_DAMAGE_MARKER, this);
-
-
-      return state;
+      player.active.marker.addMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
+      opponent.marker.addMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
+      console.log('marker added');
     }
 
-    if (effect instanceof PutDamageEffect
-      && effect.target.marker.hasMarker(this.REDUCE_DAMAGE_MARKER)) {
-      effect.damage -= 20;
-      return state;
+    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {
+      if (effect.target.marker.hasMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this)) {
+        effect.damage -= 20;
+        return state;
+      }
     }
 
     if (effect instanceof EndTurnEffect
-      && effect.player.marker.hasMarker(this.CLEAR_REDUCE_DAMAGE_MARKER, this)) {
-      effect.player.marker.removeMarker(this.CLEAR_REDUCE_DAMAGE_MARKER, this);
+      && effect.player.active.marker.hasMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this)) {
+      effect.player.active.marker.removeMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
       const opponent = StateUtils.getOpponent(state, effect.player);
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-        cardList.marker.removeMarker(this.REDUCE_DAMAGE_MARKER, this);
+        cardList.marker.removeMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
       });
+      console.log('marker removed');
     }
     return state;
   }

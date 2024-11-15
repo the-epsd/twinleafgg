@@ -31,7 +31,7 @@ export class AlolanMuk extends PokemonCard {
 
   public resistance = [{ type: CardType.PSYCHIC, value: -20 }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Adventurous Appetite',
@@ -42,7 +42,7 @@ export class AlolanMuk extends PokemonCard {
   public attacks = [
     {
       name: 'Gunk Shot',
-      cost: [ CardType.DARK, CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.DARK, CardType.COLORLESS, CardType.COLORLESS],
       damage: 80,
       text: 'Your opponent\'s Active Pokémon is now Poisoned.'
     }
@@ -78,7 +78,7 @@ export class AlolanMuk extends PokemonCard {
 
       const deckTop = new CardList();
       opponent.deck.moveTo(deckTop, 6);
-    
+
       return store.prompt(state, new ChooseCardsPrompt(
         player.id,
         GameMessage.CHOOSE_CARD_TO_DISCARD,
@@ -92,25 +92,23 @@ export class AlolanMuk extends PokemonCard {
         selected.forEach((card, index) => {
           store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD, { name: player.name, card: card.name, effectName: this.powers[0].name });
         });
-        
+
         store.prompt(state, new ShowCardsPrompt(
           opponent.id,
           GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
           selected
         ), () => { });
-        
-        store.prompt(state, new ShuffleDeckPrompt(opponent.id), order => {
-          opponent.deck.applyOrder(order);
+
+        return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+          player.deck.applyOrder(order);
         });
-        
-        return state;
       });
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const poisonEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.POISONED]);
       store.reduceEffect(state, poisonEffect);
-      
+
       return state;
     }
 

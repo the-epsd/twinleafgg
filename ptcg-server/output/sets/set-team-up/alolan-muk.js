@@ -62,10 +62,9 @@ class AlolanMuk extends pokemon_card_1.PokemonCard {
                     store.log(state, game_message_1.GameLog.LOG_PLAYER_DISCARDS_CARD, { name: player.name, card: card.name, effectName: this.powers[0].name });
                 });
                 store.prompt(state, new game_1.ShowCardsPrompt(opponent.id, game_message_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, selected), () => { });
-                store.prompt(state, new game_1.ShuffleDeckPrompt(opponent.id), order => {
-                    opponent.deck.applyOrder(order);
+                return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
+                    player.deck.applyOrder(order);
                 });
-                return state;
             });
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

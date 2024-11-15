@@ -17,6 +17,9 @@ function* useMagneticLift(next, store, state, effect) {
         next();
     });
     player.deck.moveCardsTo(cards, deckTop);
+    state = store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
+        player.deck.applyOrder(order);
+    });
     deckTop.moveToTopOfDestination(player.deck);
 }
 class Beldum extends pokemon_card_1.PokemonCard {

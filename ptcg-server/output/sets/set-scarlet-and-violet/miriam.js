@@ -40,13 +40,12 @@ function* playCard(next, store, state, self, effect) {
         cards = selected || [];
         next();
     });
-    player.hand.moveCardTo(self, player.discard);
     player.discard.moveCardsTo(cards, player.deck);
-    return store.prompt(state, new shuffle_prompt_1.ShuffleDeckPrompt(player.id), order => {
+    state = store.prompt(state, new shuffle_prompt_1.ShuffleDeckPrompt(player.id), order => {
         player.deck.applyOrder(order);
-        player.deck.moveTo(player.hand, 3);
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
     });
+    player.deck.moveTo(player.hand, 3);
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
 }
 class Miriam extends trainer_card_1.TrainerCard {
     constructor() {

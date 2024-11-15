@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Wally = void 0;
+const game_1 = require("../../game");
 const card_manager_1 = require("../../game/cards/card-manager");
 const game_error_1 = require("../../game/game-error");
 const game_message_1 = require("../../game/game-message");
@@ -83,7 +84,9 @@ function* playCard(next, store, state, effect) {
     player.deck.moveCardTo(evolution, targets[0]);
     targets[0].clearEffects();
     targets[0].pokemonPlayedTurn = state.turn;
-    return state;
+    return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
+        player.deck.applyOrder(order);
+    });
 }
 class Wally extends trainer_card_1.TrainerCard {
     constructor() {

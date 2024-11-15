@@ -28,10 +28,19 @@ class Peonia extends trainer_card_1.TrainerCard {
             // we'll discard peonia later
             effect.preventDefault = true;
             player.hand.moveCardTo(effect.trainerCard, player.supporter);
-            return store.prompt(state, new game_1.ChoosePrizePrompt(player.id, game_message_1.GameMessage.CHOOSE_PRIZE_CARD, { count: 3, allowCancel: false }), chosenPrizes => {
+            const allPrizeCards = new game_1.CardList();
+            // allPrizeCards.isSecret = true;  // Set the CardList as secret
+            // allPrizeCards.isPublic = false;
+            // allPrizeCards.faceUpPrize = false;
+            player.prizes.forEach(prizeList => {
+                allPrizeCards.cards.push(...prizeList.cards);
+            });
+            return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_PRIZE_CARD, allPrizeCards, {}, { min: 3, max: 3, allowCancel: false }), chosenPrizes => {
                 chosenPrizes = chosenPrizes || [];
                 const hand = player.hand;
-                chosenPrizes.forEach(prize => prize.moveTo(hand, 1));
+                chosenPrizes.forEach(prize => {
+                    allPrizeCards.moveCardTo(prize, hand);
+                });
                 store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARDS_TO_RETURN_TO_PRIZES, player.hand, {}, { min: chosenPrizes.length, max: chosenPrizes.length, allowCancel: false }), cards => {
                     cards = cards || [];
                     const newPrizeCards = new game_1.CardList();

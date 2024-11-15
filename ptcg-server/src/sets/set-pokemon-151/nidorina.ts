@@ -1,4 +1,4 @@
-import { PokemonCard, Stage, CardType, ChooseCardsPrompt, GameError, GameMessage, ShowCardsPrompt, State, StateUtils, StoreLike, SuperType } from '../../game';
+import { PokemonCard, Stage, CardType, ChooseCardsPrompt, GameError, GameMessage, ShowCardsPrompt, State, StateUtils, StoreLike, SuperType, ShuffleDeckPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 
@@ -60,6 +60,11 @@ export class Nidorina extends PokemonCard {
             player.deck.moveCardsTo(cards, player.hand);
           });
         }
+
+        return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+          player.deck.applyOrder(order);
+        });
+
       });
     }
     return state;

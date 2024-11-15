@@ -58,6 +58,9 @@ class Cobalion extends pokemon_card_1.PokemonCard {
                 for (const card of cards) {
                     player.deck.moveCardTo(card, basicPokemon);
                 }
+                return store.prompt(state, new __1.ShuffleDeckPrompt(player.id), order => {
+                    player.deck.applyOrder(order);
+                });
             });
         }
         return state;

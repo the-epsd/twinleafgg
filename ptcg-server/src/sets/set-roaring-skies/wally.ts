@@ -1,3 +1,4 @@
+import { ShuffleDeckPrompt } from '../../game';
 import { CardManager } from '../../game/cards/card-manager';
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
@@ -20,16 +21,16 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   if (player.deck.cards.length === 0) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
-  
+
   const supporterTurn = player.supporterTurn;
-  
+
   if (supporterTurn > 0) {
     throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
   }
 
   player.hand.moveCardTo(effect.trainerCard, player.supporter);
   // We will discard this card after prompt confirmation
-  effect.preventDefault = true;  
+  effect.preventDefault = true;
 
   // Look through all known cards to find out if Pokemon can evolve
   const cm = CardManager.getInstance();
@@ -76,7 +77,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   // Canceled by user, he didn't found the card in the deck
   if (cards.length === 0) {
     player.supporter.moveCardTo(effect.trainerCard, player.discard);
-    
+
     return state;
   }
 
@@ -94,7 +95,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     player.id,
     GameMessage.CHOOSE_POKEMON_TO_EVOLVE,
     PlayerType.BOTTOM_PLAYER,
-    [ SlotType.ACTIVE, SlotType.BENCH ],
+    [SlotType.ACTIVE, SlotType.BENCH],
     { allowCancel: false, blocked: blocked2 }
   ), selection => {
     targets = selection || [];
@@ -102,8 +103,8 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   });
 
   player.supporter.moveCardTo(effect.trainerCard, player.discard);
-  
-  
+
+
   if (targets.length === 0) {
     return state; // canceled by user
   }
@@ -117,7 +118,9 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   targets[0].clearEffects();
   targets[0].pokemonPlayedTurn = state.turn;
 
-  return state;
+  return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+    player.deck.applyOrder(order);
+  });
 }
 
 export class Wally extends TrainerCard {

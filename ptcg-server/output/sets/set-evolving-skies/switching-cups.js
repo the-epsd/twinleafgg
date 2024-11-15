@@ -6,7 +6,6 @@ const trainer_card_1 = require("../../game/store/card/trainer-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 const choose_cards_prompt_1 = require("../../game/store/prompts/choose-cards-prompt");
-const shuffle_prompt_1 = require("../../game/store/prompts/shuffle-prompt");
 const __1 = require("../..");
 function* playCard(next, store, state, effect) {
     const player = effect.player;
@@ -22,9 +21,6 @@ function* playCard(next, store, state, effect) {
     cards.forEach(c => c.cards.moveToTopOfDestination(player.deck));
     deckTop.moveTo(player.hand, 1);
     player.supporter.moveCardTo(effect.trainerCard, player.discard);
-    return store.prompt(state, new shuffle_prompt_1.ShuffleDeckPrompt(player.id), order => {
-        player.deck.applyOrder(order);
-    });
 }
 class SwitchingCups extends trainer_card_1.TrainerCard {
     constructor() {

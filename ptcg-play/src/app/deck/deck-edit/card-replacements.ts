@@ -29,6 +29,9 @@ export const cardReplacements = [
   //GRI
   { from: 'Mallow GRI 127', to: 'Mallow TEF 121' },
 
+  //UPR
+  { from: 'Mt. Coronet UPR 130', to: 'Mt. Coronet RCL 130' },
+
   //RCL
   { from: 'Horror Psychic Energy RCL 172', to: 'Horror Psychic Energy DAA 172' },
 
@@ -333,6 +336,9 @@ export const exportReplacements = [
 
   //GRI
   { from: 'Mallow TEF 121', to: 'Mallow GRI 127' },
+
+  //UPR
+  { from: 'Mt. Coronet RCL 130', to: 'Mt. Coronet UPR 130' },
 
   //RCL
   { from: 'Horror Psychic Energy DAA 172', to: 'Horror Psychic Energy RCL 172' },

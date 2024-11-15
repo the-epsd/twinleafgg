@@ -84,7 +84,9 @@ class Noctowl extends game_1.PokemonCard {
                                 player.deck.moveCardsTo(cards, player.hand);
                                 player.marker.addMarker(this.JEWEL_HUNT_MARKER, this);
                             });
-                            return state;
+                            return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
+                                player.deck.applyOrder(order);
+                            });
                         });
                     }
                 });

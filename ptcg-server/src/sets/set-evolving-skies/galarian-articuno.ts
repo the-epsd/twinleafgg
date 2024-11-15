@@ -104,35 +104,34 @@ export class GalarianArticuno extends PokemonCard {
             }
           });
         }
-
-        if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-          const player = effect.player;
-          const cards = player.active.cards.filter(c => c instanceof EnergyCard);
-          const discardEnergy = new DiscardCardsEffect(effect, cards);
-          discardEnergy.target = player.active;
-
-          state = store.prompt(state, new ChoosePokemonPrompt(
-            player.id,
-            GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-            PlayerType.TOP_PLAYER,
-            [SlotType.ACTIVE, SlotType.BENCH],
-            { max: 1, allowCancel: false }
-          ), targets => {
-            if (!targets || targets.length === 0) {
-              return;
-            }
-            let damage = 0;
-            targets[0].cards.forEach(c => {
-              damage = 120;
-
-            });
-            const damageEffect = new PutDamageEffect(effect, damage);
-            damageEffect.target = targets[0];
-            store.reduceEffect(state, damageEffect);
-          });
-        }
-        return state;
       });
+
+      if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+        const player = effect.player;
+        const cards = player.active.cards.filter(c => c instanceof EnergyCard);
+        const discardEnergy = new DiscardCardsEffect(effect, cards);
+        discardEnergy.target = player.active;
+
+        state = store.prompt(state, new ChoosePokemonPrompt(
+          player.id,
+          GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+          PlayerType.TOP_PLAYER,
+          [SlotType.ACTIVE, SlotType.BENCH],
+          { max: 1, allowCancel: false }
+        ), targets => {
+          if (!targets || targets.length === 0) {
+            return;
+          }
+          let damage = 0;
+          targets[0].cards.forEach(c => {
+            damage = 120;
+
+          });
+          const damageEffect = new PutDamageEffect(effect, damage);
+          damageEffect.target = targets[0];
+          store.reduceEffect(state, damageEffect);
+        });
+      }
     }
     return state;
   }

@@ -45,29 +45,26 @@ export class Ivysaur extends PokemonCard {
         GameMessage.CHOOSE_CARD_TO_HAND,
         player.deck,
         { superType: SuperType.POKEMON },
-        { min: 0, max: 2, allowCancel: true }
+        { min: 0, max: 2, allowCancel: false }
       ), selected => {
         cards = selected || [];
 
         cards.forEach((card, index) => {
           player.deck.moveCardTo(card, player.hand);
-
           store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
-
-          return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-            player.deck.applyOrder(order);
-            return state;
-          });
         });
 
-        return store.prompt(state, new ShowCardsPrompt(
+        state = store.prompt(state, new ShowCardsPrompt(
           opponent.id,
           GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
           cards), () => state
         );
+
+        return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+          player.deck.applyOrder(order);
+        });
       });
     }
-
     return state;
   }
 }

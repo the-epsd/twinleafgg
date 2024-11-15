@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-types';
-import { ChooseCardsPrompt, GameMessage, PowerType, ShowCardsPrompt, State, StateUtils, StoreLike } from '../../game';
+import { ChooseCardsPrompt, GameMessage, PowerType, ShowCardsPrompt, ShuffleDeckPrompt, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 
@@ -75,7 +75,9 @@ export class Luxray extends PokemonCard {
         )], () => {
           player.deck.moveCardsTo(cards, player.hand);
         });
-        return state;
+        return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+          player.deck.applyOrder(order);
+        });
       });
     }
     return state;

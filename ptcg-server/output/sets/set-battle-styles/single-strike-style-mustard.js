@@ -8,6 +8,7 @@ const trainer_card_1 = require("../../game/store/card/trainer-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const choose_cards_prompt_1 = require("../../game/store/prompts/choose-cards-prompt");
+const game_1 = require("../../game");
 class SingleStrikeStyleMustard extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -52,6 +53,9 @@ class SingleStrikeStyleMustard extends trainer_card_1.TrainerCard {
                 player.deck.moveCardsTo(cards, slot);
                 slot.pokemonPlayedTurn = state.turn;
                 player.deck.moveTo(player.hand, 5);
+                return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
+                    player.deck.applyOrder(order);
+                });
             });
         }
         return state;

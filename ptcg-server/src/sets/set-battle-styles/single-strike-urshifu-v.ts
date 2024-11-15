@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, EnergyType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, ChooseCardsPrompt, GameError } from '../../game';
+import { StoreLike, State, StateUtils, ChooseCardsPrompt, GameError, ShuffleDeckPrompt } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { GameMessage } from '../../game/game-message';
@@ -12,7 +12,7 @@ export class SingleStrikeUrshifuV extends PokemonCard {
 
   public regulationMark = 'E';
 
-  public tags = [ CardTag.POKEMON_V, CardTag.SINGLE_STRIKE ];
+  public tags = [CardTag.POKEMON_V, CardTag.SINGLE_STRIKE];
 
   public cardType: CardType = CardType.FIGHTING;
 
@@ -20,22 +20,22 @@ export class SingleStrikeUrshifuV extends PokemonCard {
 
   public weakness = [{ type: CardType.PSYCHIC }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Laser Focus',
-      cost: [ CardType.COLORLESS ],
+      cost: [CardType.COLORLESS],
       damage: 0,
       text: 'Search your deck for up to 2 F Energy cards and attach ' +
         'them to this Pokémon. Then, shuffle your deck.'
     },
     {
       name: 'Impact Blow',
-      cost: [ CardType.FIGHTING, CardType.FIGHTING, CardType.COLORLESS ],
+      cost: [CardType.FIGHTING, CardType.FIGHTING, CardType.COLORLESS],
       damage: 180,
       text: 'During your next turn, this Pokémon can\'t use ' +
-      'Impact Blow.'
+        'Impact Blow.'
     }
   ];
 
@@ -84,6 +84,9 @@ export class SingleStrikeUrshifuV extends PokemonCard {
         if (cards.length > 0) {
           player.deck.moveCardsTo(cards, cardList);
         }
+        return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+          player.deck.applyOrder(order);
+        });
       });
     }
 

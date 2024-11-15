@@ -44,7 +44,7 @@ class Espathraex extends pokemon_card_1.PokemonCard {
             const player = effect.player;
             const cardList = game_1.StateUtils.findCardList(state, this);
             const owner = game_1.StateUtils.findOwner(state, cardList);
-            // Check if Flutter Mane is in the active position
+            // Check if Espathra ex is in the active position
             if (owner.active.getPokemonCard() === this) {
                 try {
                     const stub = new game_effects_1.PowerEffect(player, {

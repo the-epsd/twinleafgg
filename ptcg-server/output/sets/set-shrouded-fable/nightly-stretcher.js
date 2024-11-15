@@ -8,7 +8,6 @@ const state_utils_1 = require("../../game/store/state-utils");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 const choose_cards_prompt_1 = require("../../game/store/prompts/choose-cards-prompt");
 const show_cards_prompt_1 = require("../../game/store/prompts/show-cards-prompt");
-const shuffle_prompt_1 = require("../../game/store/prompts/shuffle-prompt");
 const game_1 = require("../../game");
 function* playCard(next, store, state, self, effect) {
     const player = effect.player;
@@ -46,9 +45,6 @@ function* playCard(next, store, state, self, effect) {
         yield store.prompt(state, new show_cards_prompt_1.ShowCardsPrompt(opponent.id, game_message_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards), () => next());
     }
     player.supporter.moveCardTo(effect.trainerCard, player.discard);
-    return store.prompt(state, new shuffle_prompt_1.ShuffleDeckPrompt(player.id), order => {
-        player.deck.applyOrder(order);
-    });
 }
 class NightlyStretcher extends trainer_card_1.TrainerCard {
     constructor() {

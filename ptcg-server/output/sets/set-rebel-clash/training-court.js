@@ -42,10 +42,6 @@ function* useStadium(next, store, state, effect) {
         cards.forEach((card, index) => {
             store.log(state, game_message_1.GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
         });
-        return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
-            player.deck.applyOrder(order);
-            return state;
-        });
     });
 }
 class TrainingCourt extends trainer_card_1.TrainerCard {

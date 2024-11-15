@@ -1,7 +1,6 @@
-import { PokemonCard, Stage, CardType, StoreLike, State, PowerType, ChooseCardsPrompt, ConfirmPrompt, GameMessage, ShowCardsPrompt, StateUtils, SuperType, PlayerType, SpecialCondition } from '../../game';
+import { PokemonCard, Stage, CardType, StoreLike, State, PowerType, ChooseCardsPrompt, ConfirmPrompt, GameMessage, ShowCardsPrompt, StateUtils, SuperType, PlayerType, SpecialCondition, ShuffleDeckPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
-import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { EvolveEffect, PowerEffect } from '../../game/store/effects/game-effects';
 
 export class Drizzile extends PokemonCard {
 
@@ -48,7 +47,7 @@ export class Drizzile extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
+    if (effect instanceof EvolveEffect && effect.pokemonCard === this) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -95,7 +94,10 @@ export class Drizzile extends PokemonCard {
             )], () => {
               player.deck.moveCardsTo(cards, player.hand);
             });
-            return state;
+
+            return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+              player.deck.applyOrder(order);
+            });
           });
         }
       });

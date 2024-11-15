@@ -71,7 +71,9 @@ class Duskull extends game_1.PokemonCard {
                         player.deck.moveCardTo(evolution, targets[0]);
                         targets[0].clearEffects();
                         targets[0].pokemonPlayedTurn = state.turn;
-                        return state;
+                        return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
+                            player.deck.applyOrder(order);
+                        });
                     });
                 });
             });

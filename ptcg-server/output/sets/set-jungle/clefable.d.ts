@@ -26,7 +26,7 @@ export declare class Clefable extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
-    REDUCE_DAMAGE_MARKER: string;
-    CLEAR_REDUCE_DAMAGE_MARKER: string;
+    readonly DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = "DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER";
+    readonly CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = "CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

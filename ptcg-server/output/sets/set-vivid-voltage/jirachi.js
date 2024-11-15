@@ -10,7 +10,6 @@ const play_card_effects_1 = require("../../game/store/effects/play-card-effects"
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 function* useDreamyRevelation(next, store, state, effect) {
     const player = effect.player;
-    const opponent = game_1.StateUtils.getOpponent(state, player);
     const deckTop = new game_1.CardList();
     player.deck.moveTo(deckTop, 2);
     let cards = [];
@@ -20,9 +19,6 @@ function* useDreamyRevelation(next, store, state, effect) {
     });
     deckTop.moveCardsTo(cards, player.hand);
     deckTop.moveToTopOfDestination(player.deck);
-    if (cards.length > 0) {
-        yield store.prompt(state, new game_1.ShowCardsPrompt(opponent.id, game_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards), () => next());
-    }
 }
 class Jirachi extends pokemon_card_1.PokemonCard {
     constructor() {

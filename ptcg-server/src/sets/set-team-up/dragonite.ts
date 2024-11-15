@@ -9,7 +9,7 @@ import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt'
 import { GameMessage } from '../../game/game-message';
 import { ShowCardsPrompt } from '../../game/store/prompts/show-cards-prompt';
 import { StateUtils } from '../../game/store/state-utils';
-import { GameError, PlayerType } from '../../game';
+import { GameError, PlayerType, ShuffleDeckPrompt } from '../../game';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class Dragonite extends PokemonCard {
@@ -84,8 +84,11 @@ export class Dragonite extends PokemonCard {
           player.marker.addMarker(this.FAST_CALL_MARKER, this);
           player.deck.moveCardsTo(cards, player.hand);
         });
-      });
 
+        return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+          player.deck.applyOrder(order);
+        });
+      });
     }
     return state;
   }

@@ -13,6 +13,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { CardManager } from '../../game/cards/card-manager';
 import { PokemonCardList } from '../../game/store/state/pokemon-card-list';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
+import { ShuffleDeckPrompt } from '../../game';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -107,7 +108,10 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   targets[0].clearEffects();
   targets[0].pokemonPlayedTurn = state.turn;
   player.supporter.moveCardTo(effect.trainerCard, player.discard);
-  return state;
+
+  return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+    player.deck.applyOrder(order);
+  });
 }
 
 export class Evosoda extends TrainerCard {

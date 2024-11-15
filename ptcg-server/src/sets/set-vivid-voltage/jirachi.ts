@@ -1,7 +1,7 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, EnergyType } from '../../game/store/card/card-types';
 import { PowerType } from '../../game/store/card/pokemon-types';
-import { StoreLike, State, StateUtils, CardList, ChooseCardsPrompt, GameMessage, Card, ShowCardsPrompt, GameError, AttachEnergyPrompt, PlayerType, SlotType, ShuffleDeckPrompt } from '../../game';
+import { StoreLike, State, StateUtils, CardList, ChooseCardsPrompt, GameMessage, Card, GameError, AttachEnergyPrompt, PlayerType, SlotType, ShuffleDeckPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
@@ -9,7 +9,6 @@ import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 function* useDreamyRevelation(next: Function, store: StoreLike, state: State, effect: PowerEffect): IterableIterator<State> {
   const player = effect.player;
-  const opponent = StateUtils.getOpponent(state, player);
 
   const deckTop = new CardList();
   player.deck.moveTo(deckTop, 2);
@@ -28,15 +27,6 @@ function* useDreamyRevelation(next: Function, store: StoreLike, state: State, ef
 
   deckTop.moveCardsTo(cards, player.hand);
   deckTop.moveToTopOfDestination(player.deck);
-
-  if (cards.length > 0) {
-    yield store.prompt(state, new ShowCardsPrompt(
-      opponent.id,
-      GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-      cards
-    ), () => next());
-  }
-
 }
 
 export class Jirachi extends PokemonCard {

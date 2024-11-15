@@ -37,7 +37,7 @@ export class Peony extends TrainerCard {
 
       const cards = player.hand.cards.filter(c => c !== this);
       player.hand.moveCardsTo(cards, player.discard);
-  
+
       return store.prompt(state, new ChooseCardsPrompt(
         player.id,
         GameMessage.CHOOSE_CARD_TO_ATTACH,
@@ -52,12 +52,10 @@ export class Peony extends TrainerCard {
           cards.forEach((card, index) => {
             store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
           });
-          
-          state = store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-            player.deck.applyOrder(order);
-          });
         }
-        return state;
+        return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+          player.deck.applyOrder(order);
+        });
       });
     }
     return state;

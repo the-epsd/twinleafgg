@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, ChooseCardsPrompt, GameMessage, PlayerType, SlotType, DamageMap, PutDamagePrompt, StateUtils, EnergyCard } from '../../game';
+import { StoreLike, State, ChooseCardsPrompt, GameMessage, PlayerType, SlotType, DamageMap, PutDamagePrompt, StateUtils, EnergyCard, CardList } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { DiscardCardsEffect, PutCountersEffect } from '../../game/store/effects/attack-effects';
@@ -57,9 +57,11 @@ export class Starmie extends PokemonCard {
         const cards = selected || [];
         if (cards.length > 0) {
 
-          const discardEnergy = new DiscardCardsEffect(effect, cards);
-          discardEnergy.target = player.active;
+          const energyToDiscard = new CardList();
+          energyToDiscard.cards.push(...cards);
 
+          const discardEnergy = new DiscardCardsEffect(effect, energyToDiscard.cards);
+          discardEnergy.target = player.active;
           store.reduceEffect(state, discardEnergy);
 
           const damage = cards.length * 30;

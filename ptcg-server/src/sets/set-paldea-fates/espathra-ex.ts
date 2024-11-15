@@ -61,7 +61,7 @@ export class Espathraex extends PokemonCard {
       const cardList = StateUtils.findCardList(state, this);
       const owner = StateUtils.findOwner(state, cardList);
 
-      // Check if Flutter Mane is in the active position
+      // Check if Espathra ex is in the active position
       if (owner.active.getPokemonCard() === this) {
 
         try {

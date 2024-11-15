@@ -62,6 +62,9 @@ class SingleStrikeUrshifuV extends pokemon_card_1.PokemonCard {
                 if (cards.length > 0) {
                     player.deck.moveCardsTo(cards, cardList);
                 }
+                return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
+                    player.deck.applyOrder(order);
+                });
             });
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {

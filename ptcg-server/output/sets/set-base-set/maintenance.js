@@ -37,9 +37,6 @@ function* playCard(next, store, state, self, effect) {
         player.deck.applyOrder(order);
         player.deck.moveTo(player.hand, 1);
         player.supporter.moveCardTo(self, player.discard);
-        return store.prompt(state, new shuffle_prompt_1.ShuffleDeckPrompt(player.id), order => {
-            player.deck.applyOrder(order);
-        });
     });
 }
 class Maintenance extends trainer_card_1.TrainerCard {
