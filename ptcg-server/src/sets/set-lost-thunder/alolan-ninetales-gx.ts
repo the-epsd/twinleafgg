@@ -1,4 +1,4 @@
-import { PokemonCard, CardTag, Stage, CardType, PowerType, StoreLike, State, ConfirmPrompt, GameMessage, ChooseCardsPrompt, SuperType, TrainerType, StateUtils, ChoosePokemonPrompt, PlayerType, SlotType, GameError, SpecialCondition } from '../../game';
+import { PokemonCard, CardTag, Stage, CardType, PowerType, StoreLike, State, ConfirmPrompt, GameMessage, ChooseCardsPrompt, SuperType, TrainerType, StateUtils, ChoosePokemonPrompt, PlayerType, SlotType, GameError, SpecialCondition, ShuffleDeckPrompt } from '../../game';
 import { PutDamageEffect, KnockOutOpponentEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect, AttackEffect } from '../../game/store/effects/game-effects';
@@ -96,6 +96,10 @@ export class AlolanNinetalesGX extends PokemonCard {
               });
 
               player.deck.moveCardsTo(cards, player.hand);
+
+              return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+                player.deck.applyOrder(order);
+              });
             });
         }
       });

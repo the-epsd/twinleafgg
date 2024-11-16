@@ -1,4 +1,4 @@
-import { PokemonCard, Stage, CardType, StoreLike, State, PowerType, ChooseCardsPrompt, ConfirmPrompt, GameMessage, ShowCardsPrompt, StateUtils, SuperType, CardTag, GameError } from '../../game';
+import { PokemonCard, Stage, CardType, StoreLike, State, PowerType, ChooseCardsPrompt, ConfirmPrompt, GameMessage, ShowCardsPrompt, StateUtils, SuperType, CardTag, GameError, ShuffleDeckPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
@@ -120,7 +120,9 @@ export class Noctowl extends PokemonCard {
                 player.deck.moveCardsTo(cards, player.hand);
                 player.marker.addMarker(this.JEWEL_HUNT_MARKER, this);
               });
-              return state;
+              return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+                player.deck.applyOrder(order);
+              });
             });
           }
         });

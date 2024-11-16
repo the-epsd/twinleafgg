@@ -14,7 +14,7 @@ import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
 function* playCard(next: Function, store: StoreLike, state: State,
   self: Miriam, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
-  
+
   const supporterTurn = player.supporterTurn;
 
   if (supporterTurn > 0) {
@@ -55,14 +55,15 @@ function* playCard(next: Function, store: StoreLike, state: State,
     next();
   });
 
-  player.hand.moveCardTo(self, player.discard);
   player.discard.moveCardsTo(cards, player.deck);
-  return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+
+  state = store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);
-    player.deck.moveTo(player.hand, 3);
-    player.supporter.moveCardTo(effect.trainerCard, player.discard);
-    
   });
+
+  player.deck.moveTo(player.hand, 3);
+  player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
 }
 
 export class Miriam extends TrainerCard {

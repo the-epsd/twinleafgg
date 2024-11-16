@@ -55,14 +55,13 @@ export class DeliveryBox extends TrainerCard {
             GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
             cards
           ), () => {
-
-            const endTurnEffect = new EndTurnEffect(player);
-            store.reduceEffect(state, endTurnEffect);
-            return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-              player.deck.applyOrder(order);
-            });
           });
         }
+        const endTurnEffect = new EndTurnEffect(player);
+        store.reduceEffect(state, endTurnEffect);
+        return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+          player.deck.applyOrder(order);
+        });
       });
     }
     return state;

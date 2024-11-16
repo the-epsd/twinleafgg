@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, EnergyType, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, ChooseCardsPrompt, GameMessage, StateUtils } from '../../game';
+import { StoreLike, State, ChooseCardsPrompt, GameMessage, StateUtils, ShuffleDeckPrompt } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 
@@ -15,7 +15,7 @@ export class Charmander extends PokemonCard {
 
   public weakness = [{ type: CardType.WATER }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [
     {
@@ -29,13 +29,13 @@ export class Charmander extends PokemonCard {
   public regulationMark = 'F';
 
   public set: string = 'PGO';
-  
+
   public cardImage: string = 'assets/cardback.png';
-  
+
   public setNumber: string = '8';
-  
+
   public name: string = 'Charmander';
-  
+
   public fullName: string = 'Charmander PGO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -58,6 +58,9 @@ export class Charmander extends PokemonCard {
         if (cards.length > 0) {
           player.deck.moveCardsTo(cards, cardList);
         }
+        return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+          player.deck.applyOrder(order);
+        });
       });
     }
 

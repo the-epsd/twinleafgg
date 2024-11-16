@@ -46,15 +46,12 @@ class StudentsInPaldea extends trainer_card_1.TrainerCard {
                 cards = selected || [];
                 player.deck.moveCardsTo(cards, player.hand);
                 state = store.prompt(state, new game_1.ShowCardsPrompt(opponent.id, game_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards), () => {
-                    state = store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
-                        player.deck.applyOrder(order);
-                        return state;
-                    });
                     player.supporter.moveCardTo(effect.trainerCard, player.discard);
                 });
-                return state;
+                return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
+                    player.deck.applyOrder(order);
+                });
             });
-            return state;
         }
         return state;
     }

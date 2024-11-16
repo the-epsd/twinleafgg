@@ -35,12 +35,11 @@ class Mesagoza extends trainer_card_1.TrainerCard {
                     player.deck.moveCardsTo(cards, player.hand);
                     if (cards.length > 0) {
                         return store.prompt(state, new game_1.ShowCardsPrompt(opponent.id, game_message_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards), () => {
-                            return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
-                                player.deck.applyOrder(order);
-                            });
                         });
                     }
-                    return state;
+                    return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
+                        player.deck.applyOrder(order);
+                    });
                 });
             }
             return state;

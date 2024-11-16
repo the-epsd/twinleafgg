@@ -10,7 +10,6 @@ const choose_cards_prompt_1 = require("../../game/store/prompts/choose-cards-pro
 const card_list_1 = require("../../game/store/state/card-list");
 const show_cards_prompt_1 = require("../../game/store/prompts/show-cards-prompt");
 const state_utils_1 = require("../../game/store/state-utils");
-const shuffle_prompt_1 = require("../../game/store/prompts/shuffle-prompt");
 function* playCard(next, store, state, self, effect) {
     const player = effect.player;
     const opponent = state_utils_1.StateUtils.getOpponent(state, player);
@@ -52,9 +51,6 @@ function* playCard(next, store, state, self, effect) {
     }
     player.discard.moveCardsTo(cards, player.hand);
     player.supporter.moveCardTo(self, player.discard);
-    return store.prompt(state, new shuffle_prompt_1.ShuffleDeckPrompt(player.id), order => {
-        player.deck.applyOrder(order);
-    });
 }
 class ItemFinder extends trainer_card_1.TrainerCard {
     constructor() {

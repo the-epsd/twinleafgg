@@ -5,7 +5,7 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { ChooseCardsPrompt, TrainerCard, StateUtils } from '../../game';
+import { ChooseCardsPrompt, TrainerCard, StateUtils, ShuffleDeckPrompt } from '../../game';
 import { GameMessage, GameLog } from '../../game/game-message';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { CheckHpEffect } from '../../game/store/effects/check-effects';
@@ -110,7 +110,9 @@ export class Sableye extends PokemonCard {
         }
       });
 
-      return state;
+      return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+        player.deck.applyOrder(order);
+      });
     }
 
     // Overconfident

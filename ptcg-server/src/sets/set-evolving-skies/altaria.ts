@@ -11,6 +11,7 @@ import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { CardList } from '../../game/store/state/card-list';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
+import { ShuffleDeckPrompt } from '../../game';
 
 
 export class Altaria extends PokemonCard {
@@ -23,7 +24,7 @@ export class Altaria extends PokemonCard {
 
   public hp: number = 90;
 
-  public retreat = [  ];
+  public retreat = [];
 
   public powers = [{
     name: 'Tempting Tune',
@@ -34,7 +35,7 @@ export class Altaria extends PokemonCard {
 
   public attacks = [{
     name: 'Glide',
-    cost: [ CardType.WATER, CardType.METAL ],
+    cost: [CardType.WATER, CardType.METAL],
     damage: 60,
     text: ''
   }];
@@ -70,19 +71,25 @@ export class Altaria extends PokemonCard {
       }
       player.marker.addMarker(this.FOREWARN_MARKER, this);
 
-      const deckTop = new CardList();
-      deckTop.cards = player.deck.cards;
-
       return store.prompt(state, new ChooseCardsPrompt(
         player.id,
         GameMessage.CHOOSE_CARD_TO_HAND,
-        deckTop,
+        player.deck,
         { superType: SuperType.TRAINER, trainerType: TrainerType.SUPPORTER },
-        { min: 0, max: 1, allowCancel: true }
+        { min: 0, max: 1, allowCancel: false }
       ), selected => {
         if (selected.length > 0) {
           const card = selected[0];
-          player.deck.moveCardTo(card, player.deck);
+
+          const deckTop = new CardList();
+
+          player.deck.moveCardTo(card, deckTop);
+
+          state = store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+            player.deck.applyOrder(order);
+          });
+
+          deckTop.moveToTopOfDestination(player.deck);
         }
       });
     }

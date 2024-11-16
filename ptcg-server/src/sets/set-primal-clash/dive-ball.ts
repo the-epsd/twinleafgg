@@ -21,7 +21,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
   effect.preventDefault = true;
   player.hand.moveCardTo(effect.trainerCard, player.supporter);
-  
+
   let cards: Card[] = [];
   yield store.prompt(state, new ChooseCardsPrompt(
     player.id,
@@ -36,11 +36,12 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
   // Operation canceled by the user
   if (cards.length === 0) {
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
     return state;
   }
 
   player.supporter.moveCardTo(effect.trainerCard, player.discard);
-  
+
   cards.forEach((card, index) => {
     player.deck.moveCardTo(card, player.hand);
   });

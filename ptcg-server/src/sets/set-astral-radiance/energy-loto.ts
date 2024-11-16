@@ -71,13 +71,12 @@ export class EnergyLoto extends TrainerCard {
               GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
               chosenCards), () => state);
           }
-
-          return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-            player.deck.applyOrder(order);
-            return state;
-          });
         }
         player.supporter.moveCardTo(this, player.discard);
+
+        return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+          player.deck.applyOrder(order);
+        });
       });
     }
     return state;

@@ -95,15 +95,6 @@ class Miraidonex extends pokemon_card_1.PokemonCard {
                 });
                 return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
                     player.deck.applyOrder(order);
-                    if (effect instanceof game_phase_effects_1.EndTurnEffect) {
-                        effect.player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, player => {
-                            if (player instanceof Miraidonex) {
-                                player.abilityMarker.removeMarker(this.TANDEM_UNIT_MARKER);
-                                return state;
-                            }
-                        });
-                        return state;
-                    }
                 });
             });
         }

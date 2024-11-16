@@ -37,7 +37,6 @@ function* useStadium(next, store, state, effect) {
             });
             return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
                 player.deck.applyOrder(order);
-                return state;
             });
         });
     }

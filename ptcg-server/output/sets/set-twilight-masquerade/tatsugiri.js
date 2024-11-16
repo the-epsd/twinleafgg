@@ -71,13 +71,11 @@ class Tatsugiri extends game_1.PokemonCard {
                 deckTop.moveTo(player.deck);
                 if (selected.length > 0) {
                     return store.prompt(state, new game_1.ShowCardsPrompt(opponent.id, game_message_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, selected), () => {
-                        return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
-                            player.deck.applyOrder(order);
-                            return state;
-                        });
                     });
                 }
-                return state;
+                return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
+                    player.deck.applyOrder(order);
+                });
             });
         }
         if (effect instanceof game_phase_effects_1.EndTurnEffect) {

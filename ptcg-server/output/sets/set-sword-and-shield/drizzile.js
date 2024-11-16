@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Drizzile = void 0;
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
-const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class Drizzile extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -35,7 +34,7 @@ class Drizzile extends game_1.PokemonCard {
         this.fullName = 'Drizzile SSH';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {
+        if (effect instanceof game_effects_1.EvolveEffect && effect.pokemonCard === this) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             if (player.deck.cards.length === 0) {
@@ -65,7 +64,9 @@ class Drizzile extends game_1.PokemonCard {
                         store.prompt(state, [new game_1.ShowCardsPrompt(opponent.id, game_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards)], () => {
                             player.deck.moveCardsTo(cards, player.hand);
                         });
-                        return state;
+                        return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
+                            player.deck.applyOrder(order);
+                        });
                     });
                 }
             });

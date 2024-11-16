@@ -61,10 +61,25 @@ class FlutterMane extends pokemon_card_1.PokemonCard {
             const player = effect.player;
             const cardList = game_1.StateUtils.findCardList(state, this);
             const owner = game_1.StateUtils.findOwner(state, cardList);
-            // Check if Flutter Mane is in the active position
-            if (owner.active.getPokemonCard() === this) {
-                // Block only the opponent's active Pokémon abilities
-                if (player !== owner && player.active.getPokemonCard() === effect.card && !effect.power.exemptFromAbilityLock) {
+            // Only proceed if Flutter Mane is in the Active spot
+            if (owner.active.getPokemonCard() !== this) {
+                return state;
+            }
+            // Only check opponent's Active Pokemon
+            if (player === owner || player.active.getPokemonCard() !== effect.card) {
+                return state;
+            }
+            // Try reducing ability
+            try {
+                const stub = new game_effects_1.PowerEffect(player, {
+                    name: 'test',
+                    powerType: pokemon_types_1.PowerType.ABILITY,
+                    text: ''
+                }, this);
+                store.reduceEffect(state, stub);
+            }
+            catch (_a) {
+                if (!effect.power.exemptFromAbilityLock) {
                     throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_ABILITY);
                 }
             }

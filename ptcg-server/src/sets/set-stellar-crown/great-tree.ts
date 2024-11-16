@@ -3,7 +3,7 @@ import { CardTag, Stage, SuperType, TrainerType } from '../../game/store/card/ca
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { GameError, GameMessage, CardManager, PokemonCard, PlayerType, CardTarget, PokemonCardList, ChoosePokemonPrompt, SlotType, Card, ChooseCardsPrompt, StateUtils } from '../../game';
+import { GameError, GameMessage, CardManager, PokemonCard, PlayerType, CardTarget, PokemonCardList, ChoosePokemonPrompt, SlotType, Card, ChooseCardsPrompt, StateUtils, ShuffleDeckPrompt } from '../../game';
 import { UseStadiumEffect } from '../../game/store/effects/game-effects';
 import { CheckPokemonPlayedTurnEffect } from '../../game/store/effects/check-effects';
 
@@ -133,8 +133,9 @@ function* useStadium(next: Function, store: StoreLike, state: State, effect: Use
       target.pokemonPlayedTurn = state.turn;
     }
   }
-
-  return state;
+  return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+    player.deck.applyOrder(order);
+  });
 }
 
 

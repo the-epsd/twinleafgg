@@ -35,9 +35,6 @@ class DuskBall extends trainer_card_1.TrainerCard {
                     temp.cards.forEach(card => {
                         temp.moveTo(player.deck);
                         player.supporter.moveCardTo(this, player.discard);
-                        return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
-                            player.deck.applyOrder(order);
-                        });
                     });
                 }
                 if (chosenCards.length > 0) {
@@ -52,12 +49,11 @@ class DuskBall extends trainer_card_1.TrainerCard {
                     if (chosenCards.length > 0) {
                         state = store.prompt(state, new game_1.ShowCardsPrompt(opponent.id, game_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, chosenCards), () => state);
                     }
-                    return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
-                        player.deck.applyOrder(order);
-                        return state;
-                    });
                 }
                 player.supporter.moveCardTo(this, player.discard);
+                return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
+                    player.deck.applyOrder(order);
+                });
             });
         }
         return state;

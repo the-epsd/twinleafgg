@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, PokemonCardList, Card, ChooseCardsPrompt, GameMessage, ShuffleDeckPrompt, GameError } from '../../game';
+import { StoreLike, State, PokemonCardList, Card, ChooseCardsPrompt, GameMessage, GameError } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 
@@ -36,10 +36,6 @@ function* useKingsOrder(next: Function, store: StoreLike, state: State,
   cards.forEach((card, index) => {
     player.discard.moveCardTo(card, slots[index]);
     slots[index].pokemonPlayedTurn = state.turn;
-  });
-
-  return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-    player.deck.applyOrder(order);
   });
 }
 

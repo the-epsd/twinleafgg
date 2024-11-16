@@ -97,7 +97,9 @@ function* useStadium(next, store, state, effect) {
             target.pokemonPlayedTurn = state.turn;
         }
     }
-    return state;
+    return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
+        player.deck.applyOrder(order);
+    });
 }
 class GreatTree extends trainer_card_1.TrainerCard {
     constructor() {

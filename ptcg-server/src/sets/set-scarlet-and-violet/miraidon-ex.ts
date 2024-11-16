@@ -74,6 +74,7 @@ export class Miraidonex extends PokemonCard {
       effect.player.attackMarker.addMarker(this.ATTACK_USED_2_MARKER, this);
       console.log('second marker added');
     }
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
 
       // Check marker
@@ -132,16 +133,6 @@ export class Miraidonex extends PokemonCard {
 
         return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
           player.deck.applyOrder(order);
-
-          if (effect instanceof EndTurnEffect) {
-            effect.player.forEachPokemon(PlayerType.BOTTOM_PLAYER, player => {
-              if (player instanceof Miraidonex) {
-                player.abilityMarker.removeMarker(this.TANDEM_UNIT_MARKER);
-                return state;
-              }
-            });
-            return state;
-          }
         });
       });
     }

@@ -46,6 +46,9 @@ class CaptureEnergy extends energy_card_1.EnergyCard {
                     player.deck.moveCardTo(card, openSlots[index]);
                     openSlots[index].pokemonPlayedTurn = state.turn;
                 });
+                return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
+                    player.deck.applyOrder(order);
+                });
             });
         }
         return state;

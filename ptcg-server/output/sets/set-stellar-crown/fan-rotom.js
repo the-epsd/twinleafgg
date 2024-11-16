@@ -77,6 +77,9 @@ class FanRotom extends game_1.PokemonCard {
                             player.usedFanCall = true;
                         });
                     }
+                    return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
+                        player.deck.applyOrder(order);
+                    });
                 });
             }
         }

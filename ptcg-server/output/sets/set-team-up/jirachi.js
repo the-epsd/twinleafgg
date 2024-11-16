@@ -72,13 +72,11 @@ class Jirachi extends pokemon_card_1.PokemonCard {
                 });
                 if (selected.length > 0) {
                     return store.prompt(state, new game_1.ShowCardsPrompt(opponent.id, game_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, selected), () => {
-                        return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
-                            player.deck.applyOrder(order);
-                            return state;
-                        });
                     });
                 }
-                return state;
+                return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
+                    player.deck.applyOrder(order);
+                });
             });
         }
         return state;

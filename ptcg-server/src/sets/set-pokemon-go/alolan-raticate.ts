@@ -48,11 +48,9 @@ export class AlolanRaticate extends PokemonCard {
       ), cards => {
         player.deck.moveCardsTo(cards, player.hand);
 
-        state = store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+        return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
           player.deck.applyOrder(order);
         });
-
-        return state;
       });
     }
 

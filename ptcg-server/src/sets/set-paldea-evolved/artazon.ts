@@ -56,13 +56,10 @@ function* useStadium(next: Function, store: StoreLike, state: State, effect: Use
           player.deck.moveCardTo(card, slots[index]);
           slots[index].pokemonPlayedTurn = state.turn;
         });
-
-
-        return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-          player.deck.applyOrder(order);
-          return state;
-        });
       }
+      return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+        player.deck.applyOrder(order);
+      });
     });
   }
 }

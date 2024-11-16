@@ -29,31 +29,31 @@ export class Clavell extends TrainerCard {
 
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      
+
       if (player.supporterTurn > 0) {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
-          
+
       if (player.deck.cards.length === 0) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-      } 
-      
+      }
+
       const blocked: number[] = [];
       player.deck.cards.forEach((c, index) => {
         // eslint-disable-next-line no-empty
         if (c instanceof PokemonCard && c.stage === Stage.BASIC && c.hp <= 120) {
-          
+
         } else {
           blocked.push(index);
         }
       });
-      
+
       player.hand.moveCardTo(effect.trainerCard, player.supporter);
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
       let cards: Card[] = [];
-      
+
       return store.prompt(state, new ChooseCardsPrompt(
         player.id,
         GameMessage.CHOOSE_CARD_TO_HAND,
@@ -62,28 +62,26 @@ export class Clavell extends TrainerCard {
         { min: 0, max: 3, allowCancel: false }
       ), selectedCards => {
         cards = selectedCards || [];
-    
+
         cards.forEach((card, index) => {
           store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
         });
-        
-        player.deck.moveCardsTo(cards, player.hand);        
+
+        player.deck.moveCardsTo(cards, player.hand);
         player.supporter.moveCardTo(this, player.discard);
-        
-        return store.prompt(state, new ShowCardsPrompt(
+
+        state = store.prompt(state, new ShowCardsPrompt(
           opponent.id,
           GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
           cards
         ), () => {
-          return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-            player.deck.applyOrder(order);
-            
-            return state;
-          });
+        });
+        return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+          player.deck.applyOrder(order);
         });
       });
     }
-    
+
     return state;
   }
 }

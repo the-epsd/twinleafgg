@@ -11,6 +11,7 @@ const game_phase_effects_1 = require("../../game/store/effects/game-phase-effect
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 const card_list_1 = require("../../game/store/state/card-list");
 const choose_cards_prompt_1 = require("../../game/store/prompts/choose-cards-prompt");
+const game_1 = require("../../game");
 class Altaria extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -52,12 +53,15 @@ class Altaria extends pokemon_card_1.PokemonCard {
                 throw new game_error_1.GameError(game_message_1.GameMessage.POWER_ALREADY_USED);
             }
             player.marker.addMarker(this.FOREWARN_MARKER, this);
-            const deckTop = new card_list_1.CardList();
-            deckTop.cards = player.deck.cards;
-            return store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, deckTop, { superType: card_types_1.SuperType.TRAINER, trainerType: card_types_1.TrainerType.SUPPORTER }, { min: 0, max: 1, allowCancel: true }), selected => {
+            return store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.TRAINER, trainerType: card_types_1.TrainerType.SUPPORTER }, { min: 0, max: 1, allowCancel: false }), selected => {
                 if (selected.length > 0) {
                     const card = selected[0];
-                    player.deck.moveCardTo(card, player.deck);
+                    const deckTop = new card_list_1.CardList();
+                    player.deck.moveCardTo(card, deckTop);
+                    state = store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
+                        player.deck.applyOrder(order);
+                    });
+                    deckTop.moveToTopOfDestination(player.deck);
                 }
             });
         }

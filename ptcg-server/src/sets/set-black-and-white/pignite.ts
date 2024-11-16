@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, EnergyType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, ChooseCardsPrompt } from '../../game';
+import { StoreLike, State, StateUtils, ChooseCardsPrompt, ShuffleDeckPrompt } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { GameMessage } from '../../game/game-message';
@@ -17,19 +17,19 @@ export class Pignite extends PokemonCard {
 
   public weakness = [{ type: CardType.WATER }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Flame Charge',
-      cost: [ CardType.COLORLESS ],
+      cost: [CardType.COLORLESS],
       damage: 0,
       text: 'Search your deck for a R Energy card and attach it to this ' +
         'Pokemon. Shuffle your deck afterward.'
     },
     {
       name: 'Heat Crash',
-      cost: [ CardType.FIRE, CardType.FIRE, CardType.COLORLESS ],
+      cost: [CardType.FIRE, CardType.FIRE, CardType.COLORLESS],
       damage: 50,
       text: ''
     }
@@ -65,6 +65,9 @@ export class Pignite extends PokemonCard {
         if (cards.length > 0) {
           player.deck.moveCardsTo(cards, cardList);
         }
+        return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+          player.deck.applyOrder(order);
+        });
       });
     }
 

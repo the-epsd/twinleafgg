@@ -34,6 +34,12 @@ class ForestSealStone extends game_1.TrainerCard {
         if (effect instanceof check_effects_1.CheckPokemonPowersEffect && effect.target.cards.includes(this) &&
             !effect.powers.find(p => p.name === this.powers[0].name)) {
             const player = effect.player;
+            const hasValidCard = effect.target.cards.some(card => card.tags.some(tag => tag === card_types_1.CardTag.POKEMON_V ||
+                tag === card_types_1.CardTag.POKEMON_VSTAR ||
+                tag === card_types_1.CardTag.POKEMON_VMAX));
+            if (!hasValidCard) {
+                return state;
+            }
             try {
                 const toolEffect = new play_card_effects_1.ToolEffect(player, this);
                 store.reduceEffect(state, toolEffect);
@@ -58,7 +64,7 @@ class ForestSealStone extends game_1.TrainerCard {
             player.usedVSTAR = true;
             state = store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, {}, { min: 0, max: 1, allowCancel: false }), cards => {
                 player.deck.moveCardsTo(cards, player.hand);
-                state = store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
+                return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
                     player.deck.applyOrder(order);
                 });
                 return state;

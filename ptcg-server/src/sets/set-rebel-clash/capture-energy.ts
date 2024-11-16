@@ -1,4 +1,4 @@
-import { Card, ChooseCardsPrompt, GameMessage } from '../../game';
+import { Card, ChooseCardsPrompt, GameMessage, ShuffleDeckPrompt } from '../../game';
 import { CardType, EnergyType, Stage, SuperType } from '../../game/store/card/card-types';
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { Effect } from '../../game/store/effects/effect';
@@ -8,7 +8,7 @@ import { StoreLike } from '../../game/store/store-like';
 
 export class CaptureEnergy extends EnergyCard {
 
-  public provides: CardType[] = [ CardType.COLORLESS ];
+  public provides: CardType[] = [CardType.COLORLESS];
 
   public energyType = EnergyType.SPECIAL;
 
@@ -32,7 +32,7 @@ export class CaptureEnergy extends EnergyCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttachEnergyEffect && effect.energyCard === this) {
       const player = effect.player;
-      
+
       const slots = player.bench.filter(b => b.cards.length === 0).length;
 
       if (slots === 0) {
@@ -45,7 +45,7 @@ export class CaptureEnergy extends EnergyCard {
       } catch {
         return state;
       }
-      
+
       let cards: Card[] = [];
       return store.prompt(state, new ChooseCardsPrompt(
         player.id,
@@ -60,18 +60,20 @@ export class CaptureEnergy extends EnergyCard {
         if (cards.length === 0) {
           return state;
         }
-        
-        const openSlots = player.bench.filter(b => b.cards.length === 0);        
-        
+
+        const openSlots = player.bench.filter(b => b.cards.length === 0);
+
         cards.forEach((card, index) => {
           player.deck.moveCardTo(card, openSlots[index]);
           openSlots[index].pokemonPlayedTurn = state.turn;
         });
+        return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+          player.deck.applyOrder(order);
+        });
       });
-    }      
-      
+    }
+
     return state;
   }
-      
+
 }
-      

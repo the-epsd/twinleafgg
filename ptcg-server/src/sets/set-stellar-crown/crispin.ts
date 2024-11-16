@@ -3,7 +3,7 @@ import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { EnergyType, SuperType, TrainerType } from '../../game/store/card/card-types';
-import { GameError, GameMessage, PlayerType, AttachEnergyPrompt, SlotType, StateUtils, ChooseCardsPrompt, CardList, ShowCardsPrompt } from '../../game';
+import { GameError, GameMessage, PlayerType, AttachEnergyPrompt, SlotType, StateUtils, ChooseCardsPrompt, CardList, ShowCardsPrompt, ShuffleDeckPrompt } from '../../game';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 
 export class Crispin extends TrainerCard {
@@ -99,6 +99,9 @@ export class Crispin extends TrainerCard {
 
         player.supporter.moveCardTo(effect.trainerCard, player.discard);
 
+        return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+          player.deck.applyOrder(order);
+        });
       }
       );
     }

@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, Card, CardList, ChooseCardsPrompt, GameError, GameMessage } from '../../game';
+import { StoreLike, State, Card, CardList, ChooseCardsPrompt, GameError, GameMessage, ShuffleDeckPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 
@@ -13,21 +13,26 @@ function* useMagneticLift(next: Function, store: StoreLike, state: State,
   if (player.deck.cards.length === 0) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
-  
+
   const deckTop = new CardList();
-  
+
   yield store.prompt(state, new ChooseCardsPrompt(
     player.id,
     GameMessage.CHOOSE_CARD_TO_HAND,
     player.deck,
-    { },
+    {},
     { min: 1, max: 1, allowCancel: false }
   ), selected => {
     cards = selected || [];
     next();
   });
-  
+
   player.deck.moveCardsTo(cards, deckTop);
+
+  state = store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+    player.deck.applyOrder(order);
+  });
+
   deckTop.moveToTopOfDestination(player.deck);
 }
 
@@ -45,7 +50,7 @@ export class Beldum extends PokemonCard {
 
   public weakness = [{ type: CardType.FIRE }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [
     {

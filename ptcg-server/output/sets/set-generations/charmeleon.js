@@ -44,6 +44,9 @@ class Charmeleon extends pokemon_card_1.PokemonCard {
                 store.prompt(state, [new game_1.ShowCardsPrompt(opponent.id, game_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards)], () => {
                     player.deck.moveCardsTo(cards, player.hand);
                 });
+                return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
+                    player.deck.applyOrder(order);
+                });
             });
         }
         return state;

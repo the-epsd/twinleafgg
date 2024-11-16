@@ -41,6 +41,9 @@ class Talonflame extends game_1.PokemonCard {
                 const cards = selected || [];
                 player.deck.moveCardsTo(cards, player.hand);
             });
+            return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
+                player.deck.applyOrder(order);
+            });
         }
         return state;
     }

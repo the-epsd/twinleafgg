@@ -51,7 +51,7 @@ export class Chansey extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       state = store.prompt(state, new CoinFlipPrompt(
@@ -64,6 +64,14 @@ export class Chansey extends PokemonCard {
       });
 
       return state;
+    }
+
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+      const player = effect.player;
+
+      const dealDamage = new DealDamageEffect(effect, 80);
+      dealDamage.target = player.active;
+      return store.reduceEffect(state, dealDamage);
     }
 
     if (effect instanceof AbstractAttackEffect
@@ -89,14 +97,7 @@ export class Chansey extends PokemonCard {
       });
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
 
-      const player = effect.player;
-
-      const dealDamage = new DealDamageEffect(effect, 80);
-      dealDamage.target = player.active;
-      return store.reduceEffect(state, dealDamage);
-    }
 
     return state;
   }

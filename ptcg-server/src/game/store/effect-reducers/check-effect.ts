@@ -141,7 +141,7 @@ function choosePrizeCards(state: State, prizesToTake: [number, number]): ChooseC
         GameMessage.CHOOSE_PRIZE_CARD,
         allPrizeCards,
         {},  // No specific filter needed for prizes
-        { min: prizesToTake[i], max: prizesToTake[i], isSecret: true }
+        { min: prizesToTake[i], max: prizesToTake[i], isSecret: true, allowCancel: false }
       );
       prompts.push(prompt);
     }

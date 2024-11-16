@@ -47,6 +47,9 @@ class Nidorina extends game_1.PokemonCard {
                         player.deck.moveCardsTo(cards, player.hand);
                     });
                 }
+                return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
+                    player.deck.applyOrder(order);
+                });
             });
         }
         return state;

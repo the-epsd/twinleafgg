@@ -1,4 +1,4 @@
-import { CardList, ChooseCardsPrompt, ChoosePrizePrompt, OrderCardsPrompt } from '../../game';
+import { CardList, ChooseCardsPrompt, OrderCardsPrompt } from '../../game';
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
 import { TrainerType } from '../../game/store/card/card-types';
@@ -40,15 +40,27 @@ export class Peonia extends TrainerCard {
 
       player.hand.moveCardTo(effect.trainerCard, player.supporter);
 
-      return store.prompt(state, new ChoosePrizePrompt(
+      const allPrizeCards = new CardList();
+      // allPrizeCards.isSecret = true;  // Set the CardList as secret
+      // allPrizeCards.isPublic = false;
+      // allPrizeCards.faceUpPrize = false;
+      player.prizes.forEach(prizeList => {
+        allPrizeCards.cards.push(...prizeList.cards);
+      });
+
+      return store.prompt(state, new ChooseCardsPrompt(
         player.id,
         GameMessage.CHOOSE_PRIZE_CARD,
-        { count: 3, allowCancel: false }
+        allPrizeCards,
+        {},
+        { min: 3, max: 3, allowCancel: false }
       ), chosenPrizes => {
         chosenPrizes = chosenPrizes || [];
         const hand = player.hand;
 
-        chosenPrizes.forEach(prize => prize.moveTo(hand, 1));
+        chosenPrizes.forEach(prize => {
+          allPrizeCards.moveCardTo(prize, hand);
+        });
 
         store.prompt(state, new ChooseCardsPrompt(
           player.id,

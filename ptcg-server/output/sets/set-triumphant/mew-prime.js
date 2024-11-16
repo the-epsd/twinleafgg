@@ -95,10 +95,9 @@ class Mew extends pokemon_card_1.PokemonCard {
                 cards.forEach((card, index) => {
                     player.deck.moveCardTo(card, player.lostzone);
                     store.log(state, game_1.GameLog.LOG_PLAYER_PUTS_CARD_IN_LOST_ZONE, { name: player.name, card: card.name });
-                    return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
-                        player.deck.applyOrder(order);
-                        return state;
-                    });
+                });
+                return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
+                    player.deck.applyOrder(order);
                 });
             });
         }

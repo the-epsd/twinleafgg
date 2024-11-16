@@ -58,6 +58,9 @@ class Crispin extends trainer_card_1.TrainerCard {
                     cardList.moveCardTo(remainingCard, player.hand);
                 }
                 player.supporter.moveCardTo(effect.trainerCard, player.discard);
+                return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
+                    player.deck.applyOrder(order);
+                });
             });
         }
         return state;

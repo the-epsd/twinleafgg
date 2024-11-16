@@ -52,7 +52,6 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);
   });
-
 }
 export class NestBall extends TrainerCard {
 

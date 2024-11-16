@@ -7,7 +7,6 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
-import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
 import { CardList } from '../..';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
@@ -35,10 +34,6 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   deckTop.moveTo(player.hand, 1);
 
   player.supporter.moveCardTo(effect.trainerCard, player.discard);
-
-  return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-    player.deck.applyOrder(order);
-  });
 }
 
 export class SwitchingCups extends TrainerCard {

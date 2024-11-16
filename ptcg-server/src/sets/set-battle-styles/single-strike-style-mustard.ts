@@ -8,23 +8,24 @@ import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType, SuperType, CardTag } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
+import { ShuffleDeckPrompt } from '../../game';
 
 export class SingleStrikeStyleMustard extends TrainerCard {
 
   public regulationMark = 'E';
 
-  public tags = [ CardTag.SINGLE_STRIKE ];
-  
+  public tags = [CardTag.SINGLE_STRIKE];
+
   public trainerType: TrainerType = TrainerType.SUPPORTER;
-  
+
   public set: string = 'BST';
-  
+
   public cardImage: string = 'assets/cardback.png';
-  
+
   public setNumber: string = '132';
-  
+
   public name: string = 'Single Strike Style Mustard';
-  
+
   public fullName: string = 'Single Strike Style Mustard BST';
 
   public text: string =
@@ -73,6 +74,10 @@ export class SingleStrikeStyleMustard extends TrainerCard {
         player.deck.moveCardsTo(cards, slot);
         slot.pokemonPlayedTurn = state.turn;
         player.deck.moveTo(player.hand, 5);
+
+        return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+          player.deck.applyOrder(order);
+        });
       });
     }
 

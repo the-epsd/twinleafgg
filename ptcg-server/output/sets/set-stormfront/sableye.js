@@ -91,7 +91,9 @@ class Sableye extends pokemon_card_1.PokemonCard {
                     throw error;
                 }
             });
-            return state;
+            return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
+                player.deck.applyOrder(order);
+            });
         }
         // Overconfident
         if (effect instanceof attack_effects_1.DealDamageEffect && effect.attack === this.attacks[1]) {

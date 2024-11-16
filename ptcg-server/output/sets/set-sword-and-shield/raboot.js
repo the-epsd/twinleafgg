@@ -45,6 +45,9 @@ class Raboot extends pokemon_card_1.PokemonCard {
                 if (cards.length > 0) {
                     player.deck.moveCardsTo(cards, cardList);
                 }
+                return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
+                    player.deck.applyOrder(order);
+                });
             });
         }
         return state;

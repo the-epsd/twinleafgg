@@ -141,11 +141,9 @@ export class Mew extends PokemonCard {
           player.deck.moveCardTo(card, player.lostzone);
 
           store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_LOST_ZONE, { name: player.name, card: card.name });
-
-          return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-            player.deck.applyOrder(order);
-            return state;
-          });
+        });
+        return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+          player.deck.applyOrder(order);
         });
       });
     }

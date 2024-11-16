@@ -53,7 +53,6 @@ function* playCard(next, store, state, effect) {
     player.supporter.moveCardTo(effect.trainerCard, player.discard);
     return store.prompt(state, new shuffle_prompt_1.ShuffleDeckPrompt(player.id), order => {
         player.deck.applyOrder(order);
-        return state;
     });
 }
 class FurisodeGirl extends trainer_card_1.TrainerCard {

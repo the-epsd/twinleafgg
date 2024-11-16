@@ -54,17 +54,13 @@ export class Bulbasaur extends PokemonCard {
       ), selectedCards => {
         cards = selectedCards || [];
 
-
         cards.forEach((card, index) => {
           player.deck.moveCardTo(card, player.hand);
-
           return state;
         });
 
         return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
           player.deck.applyOrder(order);
-
-          return state;
         });
       });
     }

@@ -37,12 +37,15 @@ export class HexManiac extends TrainerCard {
       if (player.supporterTurn > 0) {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
+
+      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+
       player.supporterTurn = 1;
 
       player.marker.addMarker(this.HEX_MANIAC_MARKER, this);
       opponent.marker.addMarker(this.HEX_MANIAC_MARKER, this);
 
-      player.supporter.moveCardTo(this, player.discard);
+      player.supporter.moveCardTo(effect.trainerCard, player.discard);
     }
 
     if (effect instanceof PowerEffect && effect.player.marker.hasMarker(this.HEX_MANIAC_MARKER, this)) {

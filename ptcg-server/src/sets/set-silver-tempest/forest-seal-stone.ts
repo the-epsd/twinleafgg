@@ -1,7 +1,7 @@
 
 import { ChooseCardsPrompt, GameError, GameMessage, PowerType, ShuffleDeckPrompt, State, StoreLike, TrainerCard } from '../../game';
 
-import { TrainerType } from '../../game/store/card/card-types';
+import { CardTag, TrainerType } from '../../game/store/card/card-types';
 import { CheckPokemonPowersEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
@@ -44,6 +44,17 @@ export class ForestSealStone extends TrainerCard {
     if (effect instanceof CheckPokemonPowersEffect && effect.target.cards.includes(this) &&
       !effect.powers.find(p => p.name === this.powers[0].name)) {
       const player = effect.player;
+      const hasValidCard = effect.target.cards.some(card =>
+        card.tags.some(tag =>
+          tag === CardTag.POKEMON_V ||
+          tag === CardTag.POKEMON_VSTAR ||
+          tag === CardTag.POKEMON_VMAX
+        )
+      );
+
+      if (!hasValidCard) {
+        return state;
+      }
 
       try {
         const toolEffect = new ToolEffect(player, this);
@@ -57,6 +68,8 @@ export class ForestSealStone extends TrainerCard {
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
+
+
 
       if (player.usedVSTAR === true) {
         throw new GameError(GameMessage.LABEL_VSTAR_USED);
@@ -80,7 +93,7 @@ export class ForestSealStone extends TrainerCard {
       ), cards => {
         player.deck.moveCardsTo(cards, player.hand);
 
-        state = store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+        return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
           player.deck.applyOrder(order);
         });
 

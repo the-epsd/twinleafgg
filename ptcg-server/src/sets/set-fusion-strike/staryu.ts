@@ -10,7 +10,7 @@ export class Staryu extends PokemonCard {
   public stage: Stage = Stage.BASIC;
 
   public cardType: CardType = CardType.WATER;
-  
+
   public tags = [CardTag.RAPID_STRIKE];
 
   public hp: number = 60;
@@ -58,7 +58,7 @@ export class Staryu extends PokemonCard {
           && c.energyType === EnergyType.BASIC
           && c.provides.includes(CardType.WATER);
       });
-      
+
       if (!hasEnergyInHand) {
         return state;
       }
@@ -72,9 +72,8 @@ export class Staryu extends PokemonCard {
       ), cards => {
         cards = cards || [];
         if (cards.length > 0) {
-          const cardList = StateUtils.findCardList(state, this);          
+          const cardList = StateUtils.findCardList(state, this);
           player.hand.moveCardsTo(cards, cardList);
-          player.deck.moveTo(player.hand, 1);
         }
       });
     }

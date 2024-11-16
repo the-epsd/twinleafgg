@@ -1,4 +1,4 @@
-import { PokemonCard, Stage, CardType, PowerType, StoreLike, State, CardTag, ChooseCardsPrompt, GameMessage } from '../../game'; import { Effect } from '../../game/store/effects/effect';
+import { PokemonCard, Stage, CardType, PowerType, StoreLike, State, CardTag, ChooseCardsPrompt, GameMessage, ShuffleDeckPrompt } from '../../game'; import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 
 export class Talonflame extends PokemonCard {
@@ -60,6 +60,9 @@ export class Talonflame extends PokemonCard {
       ), selected => {
         const cards = selected || [];
         player.deck.moveCardsTo(cards, player.hand);
+      });
+      return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+        player.deck.applyOrder(order);
       });
     }
     return state;

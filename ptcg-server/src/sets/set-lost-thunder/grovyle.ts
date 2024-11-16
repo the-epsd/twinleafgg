@@ -52,19 +52,6 @@ export class Grovyle extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      // Check to see if anything is blocking our Ability
-      try {
-        const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
-      } catch {
-        return state;
-      }
-
-
       if (player.marker.hasMarker(this.SUNSHINE_GRACE_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
@@ -78,16 +65,15 @@ export class Grovyle extends PokemonCard {
       ), cards => {
         player.deck.moveCardsTo(cards, player.hand);
 
-        state = store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-          player.deck.applyOrder(order);
-          player.marker.addMarker(this.SUNSHINE_GRACE_MARKER, this);
-        });
-
-        return store.prompt(state, new ShowCardsPrompt(
+        state = store.prompt(state, new ShowCardsPrompt(
           opponent.id,
           GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
           cards), () => state
         );
+
+        return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+          player.deck.applyOrder(order);
+        });
       });
     }
     if (effect instanceof EndTurnEffect) {

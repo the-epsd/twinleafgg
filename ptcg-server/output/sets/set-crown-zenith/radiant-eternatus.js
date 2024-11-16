@@ -77,14 +77,15 @@ class RadiantEternatus extends game_1.PokemonCard {
                         cards = selected || [];
                         // Operation canceled by the user
                         if (cards.length === 0) {
-                            return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
-                                player.deck.applyOrder(order);
-                            });
+                            return state;
                         }
                         cards.forEach((card, index) => {
                             player.deck.moveCardTo(card, slots[index]);
                             slots[index].pokemonPlayedTurn = state.turn;
                             return state;
+                        });
+                        state = store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
+                            player.deck.applyOrder(order);
                         });
                         const endTurnEffect = new game_phase_effects_1.EndTurnEffect(player);
                         store.reduceEffect(state, endTurnEffect);

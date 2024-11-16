@@ -25,6 +25,13 @@
   //   color: mat.get-color-from-palette($foreground, text);
   // }
 
+  .host {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
   ptcg-board-card,
   ptcg-board-card-list {
     .empty {

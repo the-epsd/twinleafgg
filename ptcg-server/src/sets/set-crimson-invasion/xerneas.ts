@@ -10,7 +10,7 @@ export class Xerneas extends PokemonCard {
   public cardType: CardType = Y;
   public hp: number = 130;
   public weakness = [{ type: M }];
-  public resistance = [{ type: D, value: -20 }]
+  public resistance = [{ type: D, value: -20 }];
   public retreat = [C, C];
 
   public attacks = [{
@@ -53,6 +53,7 @@ export class Xerneas extends PokemonCard {
         { min: 0, max: 1, allowCancel: false }
       ), selected => {
         const cards = selected || [];
+
         if (cards.length > 0) {
           store.prompt(state, [new ShowCardsPrompt(
             opponent.id,
@@ -64,12 +65,11 @@ export class Xerneas extends PokemonCard {
               store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
             });
             player.deck.moveCardsTo(cards, player.hand);
-
-            return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-              player.deck.applyOrder(order);
-            });
           });
         }
+        return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+          player.deck.applyOrder(order);
+        });
       });
     }
 

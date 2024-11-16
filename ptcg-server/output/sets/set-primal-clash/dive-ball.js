@@ -24,6 +24,7 @@ function* playCard(next, store, state, effect) {
     });
     // Operation canceled by the user
     if (cards.length === 0) {
+        player.supporter.moveCardTo(effect.trainerCard, player.discard);
         return state;
     }
     player.supporter.moveCardTo(effect.trainerCard, player.discard);

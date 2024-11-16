@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, EnergyType } from '../../game/store/card/card-types';
-import { StoreLike, State, ChooseCardsPrompt, GameMessage, StateUtils } from '../../game';
+import { StoreLike, State, ChooseCardsPrompt, GameMessage, StateUtils, ShuffleDeckPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 
@@ -53,6 +53,9 @@ export class Raboot extends PokemonCard {
         if (cards.length > 0) {
           player.deck.moveCardsTo(cards, cardList);
         }
+        return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+          player.deck.applyOrder(order);
+        });
       });
     }
 

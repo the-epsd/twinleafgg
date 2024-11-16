@@ -52,7 +52,6 @@ class Staryu extends pokemon_card_1.PokemonCard {
                 if (cards.length > 0) {
                     const cardList = game_1.StateUtils.findCardList(state, this);
                     player.hand.moveCardsTo(cards, cardList);
-                    player.deck.moveTo(player.hand, 1);
                 }
             });
         }
