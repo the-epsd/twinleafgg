@@ -5,13 +5,15 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { PlayerType, SlotType, StateUtils, CardTarget,
-  GameError, GameMessage, ChooseCardsPrompt, Card, PokemonCardList } from '../../game';
+import {
+  PlayerType, SlotType, StateUtils, CardTarget,
+  GameError, GameMessage, ChooseCardsPrompt, Card, PokemonCardList
+} from '../../game';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
-  
+
   let hasPokemonWithEnergy = false;
   const blocked: CardTarget[] = [];
   opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
@@ -21,30 +23,30 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
       blocked.push(target);
     }
   });
-  
+
   if (!hasPokemonWithEnergy) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
-  
+
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
-  
+
   let targets: PokemonCardList[] = [];
   yield store.prompt(state, new ChoosePokemonPrompt(
     player.id,
     GameMessage.CHOOSE_POKEMON_TO_DISCARD_CARDS,
     PlayerType.TOP_PLAYER,
-    [ SlotType.ACTIVE, SlotType.BENCH ],
+    [SlotType.ACTIVE, SlotType.BENCH],
     { allowCancel: false, blocked }
   ), results => {
     targets = results || [];
     next();
   });
-  
+
   if (targets.length === 0) {
     return state;
   }
-  
+
   const target = targets[0];
   let cards: Card[] = [];
   yield store.prompt(state, new ChooseCardsPrompt(
@@ -57,10 +59,10 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     cards = selected;
     next();
   });
-  
+
   target.moveCardsTo(cards, opponent.discard);
   player.supporter.moveCardTo(effect.trainerCard, player.discard);
-  
+
   return state;
 }
 

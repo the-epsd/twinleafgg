@@ -21,7 +21,7 @@ class Hitmontop extends pokemon_card_1.PokemonCard {
         this.retreat = [card_types_1.CardType.COLORLESS];
         this.attacks = [
             {
-                name: 'Special Combo',
+                name: 'Finishing Combo',
                 cost: [card_types_1.CardType.FIGHTING],
                 damage: 0,
                 text: 'You can use this attack only if your Hitmonlee used Special Combo during your last turn. This attack does 60 damage to each of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'

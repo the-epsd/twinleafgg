@@ -1,4 +1,4 @@
-import { Card, CardTag, CardTarget, CardType, EnergyCard, GameMessage, MoveEnergyPrompt, PlayerType, PokemonCard, PowerType, SlotType, Stage, State, StateUtils, StoreLike, SuperType } from '../../game';
+import { CardTag, CardTarget, CardType, EnergyCard, GameMessage, MoveEnergyPrompt, PlayerType, PokemonCard, PowerType, SlotType, Stage, State, StateUtils, StoreLike, SuperType } from '../../game';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
@@ -128,23 +128,23 @@ export class WyrdeerV extends PokemonCard {
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-
       const player = effect.player;
+      let totalDamage = 0;
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
         const checkProvidedEnergy = new CheckProvidedEnergyEffect(player, cardList);
         store.reduceEffect(state, checkProvidedEnergy);
 
-        const blockedCards: Card[] = [];
-
         checkProvidedEnergy.energyMap.forEach(em => {
-          if (!em.provides.includes(CardType.ANY)) {
-            blockedCards.push(em.card);
-          }
+          em.provides.forEach(energyType => {
+            if (energyType !== CardType.ANY) {
+              totalDamage += 40;
+            }
+          });
         });
-
-        effect.damage = 40 * checkProvidedEnergy.energyMap.length;
       });
+
+      effect.damage = totalDamage;
     }
     return state;
   }

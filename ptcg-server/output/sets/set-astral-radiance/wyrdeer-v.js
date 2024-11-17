@@ -98,17 +98,19 @@ class WyrdeerV extends game_1.PokemonCard {
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
+            let totalDamage = 0;
             player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
                 const checkProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(player, cardList);
                 store.reduceEffect(state, checkProvidedEnergy);
-                const blockedCards = [];
                 checkProvidedEnergy.energyMap.forEach(em => {
-                    if (!em.provides.includes(game_1.CardType.ANY)) {
-                        blockedCards.push(em.card);
-                    }
+                    em.provides.forEach(energyType => {
+                        if (energyType !== game_1.CardType.ANY) {
+                            totalDamage += 40;
+                        }
+                    });
                 });
-                effect.damage = 40 * checkProvidedEnergy.energyMap.length;
             });
+            effect.damage = totalDamage;
         }
         return state;
     }

@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { GameError, GameMessage, PowerType, State, StateUtils, StoreLike } from '../../game';
+import { PowerType, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { AttackEffect } from '../../game/store/effects/game-effects';
@@ -41,13 +41,13 @@ export class MrMime extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof DealDamageEffect && effect.target.cards.includes(this) && effect.damage >= 30) {
-
-      if (effect.target.specialConditions.length > 0) {
-        throw new GameError(GameMessage.CANNOT_USE_POWER);
+    if (effect instanceof DealDamageEffect && effect.target.cards.includes(this)) {
+      if (effect.damage >= 30) {
+        if (effect.target.specialConditions.length > 0) {
+          return state;
+        }
+        effect.damage = 0;
       }
-
-      effect.damage = 0;
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

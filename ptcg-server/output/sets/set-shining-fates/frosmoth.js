@@ -22,7 +22,7 @@ class Frosmoth extends pokemon_card_1.PokemonCard {
                 useWhenInPlay: true,
                 powerType: game_1.PowerType.ABILITY,
                 text: 'As often as you like during your turn, you may attach a ' +
-                    'Basic W Energy card from your hand to 1 of your Pokémon.'
+                    'Basic W Energy card from your hand to 1 of your Benched W Pokémon.'
             }];
         this.attacks = [
             {

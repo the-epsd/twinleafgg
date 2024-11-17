@@ -7,6 +7,13 @@ export declare class TapuKoko extends PokemonCard {
     cardType: CardType;
     hp: number;
     retreat: CardType[];
+    weakness: {
+        type: CardType;
+    }[];
+    resistance: {
+        type: CardType;
+        value: number;
+    }[];
     attacks: {
         name: string;
         cost: CardType[];

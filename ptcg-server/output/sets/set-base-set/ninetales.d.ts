@@ -7,6 +7,7 @@ import { StoreLike } from '../../game/store/store-like';
 export declare class Ninetales extends PokemonCard {
     set: string;
     name: string;
+    evolvesFrom: string;
     fullName: string;
     stage: Stage;
     cardType: CardType;

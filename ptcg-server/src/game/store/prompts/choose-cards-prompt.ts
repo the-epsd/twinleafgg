@@ -45,7 +45,7 @@ export class ChooseCardsPrompt extends Prompt<Card[]> {
     options?: Partial<ChooseCardsOptions>
   ) {
     super(playerId);
-    
+
     // Default options
     this.options = Object.assign({}, {
       min: 0,
@@ -65,7 +65,7 @@ export class ChooseCardsPrompt extends Prompt<Card[]> {
       maxSpecialEnergies: undefined,
       maxItems: undefined,
     }, options);
-    
+
     if (this.options.blocked.length > 0) {
       for (let i = 0; i < this.cards.cards.length; i++) {
         if (this.options.blocked.indexOf(i) !== -1) {
@@ -76,7 +76,7 @@ export class ChooseCardsPrompt extends Prompt<Card[]> {
       }
     }
 
-    this.cards.sort();
+    // this.cards.sort();
 
     if (this.options.blocked.length > 0) {
       this.options.blocked = [];
@@ -84,7 +84,7 @@ export class ChooseCardsPrompt extends Prompt<Card[]> {
         if (this.blockedCardNames.indexOf(card.name) !== -1) {
           this.options.blocked.push(index);
         }
-      });      
+      });
     }
   }
 

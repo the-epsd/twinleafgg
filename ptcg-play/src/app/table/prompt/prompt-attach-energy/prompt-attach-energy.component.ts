@@ -1,7 +1,9 @@
 import { Component, Input, OnChanges } from '@angular/core';
-import { Card, AttachEnergyPrompt, FilterType, CardList, AttachEnergyOptions,
-  PokemonCardList, 
-  SuperType} from 'ptcg-server';
+import {
+  Card, AttachEnergyPrompt, FilterType, CardList, AttachEnergyOptions,
+  PokemonCardList,
+  SuperType
+} from 'ptcg-server';
 
 import { GameService } from '../../../api/services/game.service';
 import { LocalGameState } from '../../../shared/session/session.interface';
@@ -33,6 +35,10 @@ export class PromptAttachEnergyComponent implements OnChanges {
   public results: AttachEnergyResult[] = [];
   private options: Partial<AttachEnergyOptions> = {};
   private initialCards: Card[];
+  public dragSpec = {
+    beginDrag: (item: Card) => ({ card: item }),
+    canDrag: () => true
+  };
 
   constructor(
     private gameService: GameService
@@ -56,6 +62,37 @@ export class PromptAttachEnergyComponent implements OnChanges {
       index: this.initialCards.indexOf(r.card)
     }));
     this.gameService.resolvePrompt(gameId, id, results);
+  }
+
+
+  public dropSpec = {
+    drop: (item: PokemonItem, monitor) => {
+      const draggedCard = monitor.getItem().card;
+      this.onCardDrop([item, draggedCard]);
+    },
+    canDrop: (item: PokemonItem) => {
+      return !this.pokemonData.matchesTarget(item, this.options.blockedTo);
+    }
+  };
+
+  // Add collect functions
+  public dragCollect = (connect, monitor) => ({
+    connectDragSource: connect.dragSource(),
+    isDragging: monitor.isDragging()
+  });
+
+  public dropCollect = (connect, monitor) => ({
+    connectDropTarget: connect.dropTarget(),
+    isOver: monitor.isOver(),
+    canDrop: monitor.canDrop()
+  });
+
+  // Pass the drag configuration to choose-cards-panes
+  public getCardsPanesConfig() {
+    return {
+      dragEnabled: true,
+      dragType: 'ENERGY_CARD'
+    };
   }
 
   public onCardDrop([item, card]: [PokemonItem, Card]) {
@@ -84,10 +121,10 @@ export class PromptAttachEnergyComponent implements OnChanges {
   public onChange(result: number[]) {
 
     const cards = this.cardListCards;
-  
+
     // Map new order first
     this.cardListCards = result.map(index => cards[index]);
-  
+
     this.cardListCards.sort((a, b) => {
       if (a.superType === SuperType.ENERGY) {
         if (b.superType === SuperType.ENERGY) {
@@ -95,14 +132,14 @@ export class PromptAttachEnergyComponent implements OnChanges {
         } else {
           return -1;
         }
-        } else if (b.superType === SuperType.ENERGY) {
-          return 1;
+      } else if (b.superType === SuperType.ENERGY) {
+        return 1;
+      } else {
+        if (a.superType === b.superType) {
+          return a.name.localeCompare(b.name);
         } else {
-          if (a.superType === b.superType) {
-            return a.name.localeCompare(b.name);
-          } else {
-            return a.superType - b.superType;
-          }
+          return a.superType - b.superType;
+        }
       }
     });
   }
@@ -113,7 +150,7 @@ export class PromptAttachEnergyComponent implements OnChanges {
       item.cardList = Object.assign(new PokemonCardList(), item.cardList);
       item.cardList.cards = item.cardList.cards.filter(c => c !== r.card);
     });
-    this.cardListCards = [ ...this.initialCards ];
+    this.cardListCards = [...this.initialCards];
     this.results = [];
     this.updateIsInvalid(this.results);
   }

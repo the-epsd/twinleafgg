@@ -14,7 +14,7 @@ export class PromptChooseCardsComponent {
   @Input() set prompt(prompt: ChooseCardsPrompt) {
     this.promptValue = prompt;
     this.cards = prompt.cards;
-    this.cards.sort();
+    // this.cards.sort();
     this.filter = prompt.filter;
     this.allowedCancel = prompt.options.allowCancel;
     this.blocked = prompt.options.blocked;

@@ -89,10 +89,10 @@ export class Archaludon extends PokemonCard {
           inPlay = true;
         }
       });
-      
+
       const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player, player.active);
       store.reduceEffect(state, checkProvidedEnergyEffect);
-      
+
       const activeHasMetalEnergy = checkProvidedEnergyEffect.energyMap.some(p => p.provides.includes(CardType.METAL));
 
       if (inPlay && activeHasMetalEnergy) {
@@ -112,12 +112,14 @@ export class Archaludon extends PokemonCard {
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const player = effect.player;
 
       // Check marker
-      if (player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+      if (effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+        console.log('attack blocked');
         throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
       }
+      effect.player.attackMarker.addMarker(this.ATTACK_USED_MARKER, this);
+      console.log('marker added');
     }
 
     return state;

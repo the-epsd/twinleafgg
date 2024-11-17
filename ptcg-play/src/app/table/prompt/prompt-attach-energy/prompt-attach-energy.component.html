@@ -13,7 +13,7 @@
   </ptcg-choose-pokemons-pane>
 
   <ptcg-choose-cards-panes [cards]="cardListCards" [filter]="filter" [blocked]="blocked" [singlePaneMode]="true"
-    [noBottomPane]="true" (changeCards)="onChange($event)">
+    [noBottomPane]="true" [dragConfig]="getCardsPanesConfig()" (changeCards)="onChange($event)">
   </ptcg-choose-cards-panes>
 </div>
 
