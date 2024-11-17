@@ -8,9 +8,9 @@ import { AttackEffect } from '../../game/store/effects/game-effects';
 export class Hitmontop extends PokemonCard {
 
   public name = 'Hitmontop';
-  
+
   public set = 'UNB';
-  
+
   public fullName = 'Hitmontop UNB';
 
   public stage = Stage.BASIC;
@@ -20,7 +20,7 @@ export class Hitmontop extends PokemonCard {
   public setNumber: string = '101';
 
   public hp = 90;
-  
+
   public cardType = CardType.FIGHTING;
 
   public weakness = [{ type: CardType.PSYCHIC }]
@@ -29,7 +29,7 @@ export class Hitmontop extends PokemonCard {
 
   public attacks = [
     {
-      name: 'Special Combo',
+      name: 'Finishing Combo',
       cost: [CardType.FIGHTING],
       damage: 0,
       text: 'You can use this attack only if your Hitmonlee used Special Combo during your last turn. This attack does 60 damage to each of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
@@ -43,7 +43,7 @@ export class Hitmontop extends PokemonCard {
   ];
 
   public specialComboTurn = -10;
-  
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       if (state.turn !== this.specialComboTurn + 2) {

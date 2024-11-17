@@ -55,22 +55,23 @@ export class IronBundle extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
-
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      const hasBench = opponent.bench.some(b => b.cards.length > 0);
       const cardList = StateUtils.findCardList(state, this);
 
-      if (player.active.cards[0] == this) {
+      // Check if this card is in active spot
+      if (player.active.cards[0] === this) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      if (hasBench === false) {
-        return state;
-      }
-
+      // Check if this card is on bench
       const benchIndex = player.bench.indexOf(cardList as PokemonCardList);
       if (benchIndex === -1) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
+      }
+
+      // Check if opponent has any benched Pokemon
+      if (!opponent.bench.some(b => b.cards.length > 0)) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 

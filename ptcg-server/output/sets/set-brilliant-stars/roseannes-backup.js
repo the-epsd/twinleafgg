@@ -15,6 +15,13 @@ function* playCard(next, store, state, self, effect) {
     const player = effect.player;
     const opponent = state_utils_1.StateUtils.getOpponent(state, player);
     let cards = [];
+    const hasValidCard = player.discard.cards.some(c => c instanceof pokemon_card_1.PokemonCard ||
+        (c instanceof trainer_card_1.TrainerCard && c.trainerType === card_types_1.TrainerType.TOOL) ||
+        (c instanceof trainer_card_1.TrainerCard && c.trainerType === card_types_1.TrainerType.STADIUM) ||
+        c instanceof game_1.EnergyCard);
+    if (!hasValidCard) {
+        throw new game_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
+    }
     const supporterTurn = player.supporterTurn;
     if (supporterTurn > 0) {
         throw new game_1.GameError(game_message_1.GameMessage.SUPPORTER_ALREADY_PLAYED);

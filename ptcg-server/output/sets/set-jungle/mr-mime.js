@@ -32,11 +32,13 @@ class MrMime extends pokemon_card_1.PokemonCard {
         this.fullName = 'Mr Mime JU';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof attack_effects_1.DealDamageEffect && effect.target.cards.includes(this) && effect.damage >= 30) {
-            if (effect.target.specialConditions.length > 0) {
-                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
+        if (effect instanceof attack_effects_1.DealDamageEffect && effect.target.cards.includes(this)) {
+            if (effect.damage >= 30) {
+                if (effect.target.specialConditions.length > 0) {
+                    return state;
+                }
+                effect.damage = 0;
             }
-            effect.damage = 0;
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const opponent = game_1.StateUtils.getOpponent(state, effect.player);

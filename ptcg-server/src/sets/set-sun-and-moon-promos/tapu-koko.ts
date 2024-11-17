@@ -6,15 +6,19 @@ import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 
 export class TapuKoko extends PokemonCard {
-  
+
   public stage: Stage = Stage.BASIC;
-  
+
   public cardType: CardType = CardType.LIGHTNING;
-  
+
   public hp: number = 110;
-  
+
   public retreat: CardType[] = [];
-  
+
+  public weakness = [{ type: CardType.FIGHTING }];
+
+  public resistance = [{ type: CardType.METAL, value: -20 }];
+
   public attacks = [
     {
       name: 'Flying Flip',
@@ -42,7 +46,7 @@ export class TapuKoko extends PokemonCard {
       const benched = opponent.bench.filter(b => b.cards.length > 0);
 
       effect.damage = 20;
-      
+
       benched.forEach(target => {
         const damageEffect = new PutDamageEffect(effect, 20);
         damageEffect.target = target;

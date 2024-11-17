@@ -12,6 +12,8 @@ class TapuKoko extends pokemon_card_1.PokemonCard {
         this.cardType = card_types_1.CardType.LIGHTNING;
         this.hp = 110;
         this.retreat = [];
+        this.weakness = [{ type: card_types_1.CardType.FIGHTING }];
+        this.resistance = [{ type: card_types_1.CardType.METAL, value: -20 }];
         this.attacks = [
             {
                 name: 'Flying Flip',

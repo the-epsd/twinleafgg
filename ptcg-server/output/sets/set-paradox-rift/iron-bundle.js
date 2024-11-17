@@ -44,16 +44,18 @@ class IronBundle extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            const hasBench = opponent.bench.some(b => b.cards.length > 0);
             const cardList = game_1.StateUtils.findCardList(state, this);
-            if (player.active.cards[0] == this) {
+            // Check if this card is in active spot
+            if (player.active.cards[0] === this) {
                 throw new game_1.GameError(game_message_1.GameMessage.CANNOT_USE_POWER);
             }
-            if (hasBench === false) {
-                return state;
-            }
+            // Check if this card is on bench
             const benchIndex = player.bench.indexOf(cardList);
             if (benchIndex === -1) {
+                throw new game_1.GameError(game_message_1.GameMessage.CANNOT_USE_POWER);
+            }
+            // Check if opponent has any benched Pokemon
+            if (!opponent.bench.some(b => b.cards.length > 0)) {
                 throw new game_1.GameError(game_message_1.GameMessage.CANNOT_USE_POWER);
             }
             return store.prompt(state, new game_1.ChoosePokemonPrompt(opponent.id, game_message_1.GameMessage.CHOOSE_POKEMON_TO_SWITCH, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { allowCancel: false }), targets => {

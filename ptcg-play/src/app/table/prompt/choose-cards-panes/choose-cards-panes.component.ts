@@ -31,6 +31,7 @@ export class ChooseCardsPanesComponent implements OnChanges {
   @ViewChild('viewport') viewport: ElementRef;
   @Input() showDetailButtons = true;
   @Input() noBottomPane = false;
+  @Input() dragConfig: { dragEnabled: boolean } = { dragEnabled: false };
 
 
   public allowedCancel: boolean;
@@ -145,7 +146,7 @@ export class ChooseCardsPanesComponent implements OnChanges {
         this.updateTempLists(sortable, item);
         this.commitTempLists();
       },
-      canDrag: () => false, // This will disable dragging for all items
+      canDrag: () => this.dragConfig.dragEnabled,
       endDrag: () => {
         this.revertTempLists();
       }

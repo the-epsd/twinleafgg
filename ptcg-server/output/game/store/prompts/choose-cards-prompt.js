@@ -40,7 +40,7 @@ class ChooseCardsPrompt extends prompt_1.Prompt {
                 }
             }
         }
-        this.cards.sort();
+        // this.cards.sort();
         if (this.options.blocked.length > 0) {
             this.options.blocked = [];
             this.cards.cards.forEach((card, index) => {

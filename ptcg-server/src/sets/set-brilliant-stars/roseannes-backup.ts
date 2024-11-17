@@ -19,6 +19,17 @@ function* playCard(next: Function, store: StoreLike, state: State,
   const opponent = StateUtils.getOpponent(state, player);
   let cards: Card[] = [];
 
+  const hasValidCard = player.discard.cards.some(c =>
+    c instanceof PokemonCard ||
+    (c instanceof TrainerCard && c.trainerType === TrainerType.TOOL) ||
+    (c instanceof TrainerCard && c.trainerType === TrainerType.STADIUM) ||
+    c instanceof EnergyCard
+  );
+
+  if (!hasValidCard) {
+    throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+  }
+
   const supporterTurn = player.supporterTurn;
 
   if (supporterTurn > 0) {

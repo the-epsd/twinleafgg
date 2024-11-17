@@ -12,6 +12,7 @@ class Ninetales extends pokemon_card_1.PokemonCard {
         super(...arguments);
         this.set = 'BS';
         this.name = 'Ninetales';
+        this.evolvesFrom = 'Vulpix';
         this.fullName = 'Ninetales BS';
         this.stage = card_types_1.Stage.STAGE_1;
         this.cardType = card_types_1.CardType.FIRE;
