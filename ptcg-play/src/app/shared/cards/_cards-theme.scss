@@ -23,23 +23,20 @@
     box-shadow: $cards-drop-highlight-shadow;
   }
 
-  ptcg-card {
-    &.placeholder .ptcg-card:after {
-      background-color: $ptcg-card-placeholder-background;
-      box-shadow: inset 0 0 0 1px $ptcg-card-placeholder-border-color;
-    }
-  }
-
   ptcg-card-info-pane {
     .title {
       background-color: $ptcg-card-info-title-background;
     }
-    .subtitle, .stats {
+
+    .subtitle,
+    .stats {
       background-color: $ptcg-card-info-subtitle-background;
     }
+
     .power-type .ability {
       color: mat.get-color-from-palette($ptcg, ability);
     }
+
     .power-type .poke-body {
       color: mat.get-color-from-palette($ptcg, poke-body);
     }
@@ -55,15 +52,22 @@
 
 @mixin ptcg-cards-typography($config) {
   ptcg-card-info-pane {
-    .title, .subtitle-hp-value {
+
+    .title,
+    .subtitle-hp-value {
       @include mat.typography-level($config, title);
     }
 
-    .subtitle-stage, .stats-item-header, .attack-name, .power-name {
+    .subtitle-stage,
+    .stats-item-header,
+    .attack-name,
+    .power-name {
       @include mat.typography-level($config, body-2);
     }
 
-    .subtitle-hp-unit, .stats-item-value-modifier, .subtitle-evolves-from {
+    .subtitle-hp-unit,
+    .stats-item-value-modifier,
+    .subtitle-evolves-from {
       @include mat.typography-level($config, caption);
     }
 

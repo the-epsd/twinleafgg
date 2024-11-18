@@ -10,7 +10,7 @@ import { ChooseEnergyPrompt } from '../../game/store/prompts/choose-energy-promp
 
 export class GarchompV extends PokemonCard {
 
-  public tags = [CardTag.POKEMON_V, CardTag.HOLO];
+  public tags = [CardTag.POKEMON_V];
 
   public regulationMark = 'F';
 

@@ -13,7 +13,7 @@ export class RoaringMoonex extends PokemonCard {
 
   public regulationMark = 'G';
 
-  public tags = [CardTag.POKEMON_ex, CardTag.ANCIENT, CardTag.HOLO];
+  public tags = [CardTag.POKEMON_ex, CardTag.ANCIENT];
 
   public stage = Stage.BASIC;
 

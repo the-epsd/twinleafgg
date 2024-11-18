@@ -13,7 +13,7 @@ import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class RadiantGreninja extends PokemonCard {
 
-  public tags = [CardTag.RADIANT, CardTag.HOLO];
+  public tags = [CardTag.RADIANT];
 
   public regulationMark = 'F';
 

@@ -10,6 +10,7 @@ import { BoardCardItem, BoardCardType } from './board-item.interface';
 import { CardsBaseService } from '../../shared/cards/cards-base.service';
 import { GameService } from '../../api/services/game.service';
 import { LocalGameState } from 'src/app/shared/session/session.interface';
+import { trigger, transition, style, animate, query, stagger } from '@angular/animations';
 
 const MAX_BENCH_SIZE = 8;
 const DEFAULT_BENCH_SIZE = 5;
@@ -19,7 +20,23 @@ type DropTargetType = DropTarget<DraggedItem<HandItem> | BoardCardItem, any>;
 @Component({
   selector: 'ptcg-board',
   templateUrl: './board.component.html',
-  styleUrls: ['./board.component.scss']
+  styleUrls: ['./board.component.scss'],
+  animations: [
+    trigger('phaseTransition', [
+      transition(':enter', [
+        style({ opacity: 0, transform: 'translateY(-20px)' }),
+        animate('300ms ease-out')
+      ])
+    ]),
+    trigger('gameStateChange', [
+      transition('* => *', [
+        query(':enter', [
+          style({ opacity: 0 }),
+          stagger(100, animate('200ms ease-out'))
+        ])
+      ])
+    ])
+  ]
 })
 export class BoardComponent implements OnDestroy {
 

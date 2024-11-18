@@ -1,11 +1,14 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, SpecialCondition } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, 
-  GameMessage, 
+import {
+  PowerType, StoreLike, State,
+  GameMessage,
   ChooseCardsPrompt,
   ShuffleDeckPrompt,
   GameError,
-  PlayerType} from '../../game';
+  PlayerType,
+  ShowCardsPrompt
+} from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
@@ -23,7 +26,7 @@ export class Gabite extends PokemonCard {
 
   public weakness = [{ type: CardType.DRAGON }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public powers = [{
     name: 'Dragon Call',
@@ -35,7 +38,7 @@ export class Gabite extends PokemonCard {
   public attacks = [
     {
       name: 'Dragonslice',
-      cost: [ CardType.WATER, CardType.FIGHTING ],
+      cost: [CardType.WATER, CardType.FIGHTING],
       damage: 20,
       text: ''
     }
@@ -50,42 +53,54 @@ export class Gabite extends PokemonCard {
   public name: string = 'Gabite';
 
   public fullName: string = 'Gabite DRX';
-  
+
   public readonly DRAGON_CALL_MARKER = 'DRAGON_CALL_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-  
+
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const player = effect.player;
       player.marker.removeMarker(this.DRAGON_CALL_MARKER, this);
     }
-      
+
     if (effect instanceof EndTurnEffect) {
       const player = effect.player;
       player.marker.removeMarker(this.DRAGON_CALL_MARKER, this);
     }
-      
+
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
+      const opponent = effect.player;
+
       if (player.marker.hasMarker(this.DRAGON_CALL_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
-      
+
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
         if (cardList.getPokemonCard() === this) {
           cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
         }
       });
-        
+
       return store.prompt(state, new ChooseCardsPrompt(
-        player.id, 
+        player.id,
         GameMessage.CHOOSE_CARD_TO_HAND,
-        player.deck, 
+        player.deck,
         { superType: SuperType.POKEMON, cardType: CardType.DRAGON },
         { min: 0, max: 1, allowCancel: true }
       ), cards => {
-        player.deck.moveCardsTo(cards, player.hand);
-  
+
+        if (cards.length > 0) {
+          player.deck.moveCardsTo(cards, player.hand);
+
+          store.prompt(state, [new ShowCardsPrompt(
+            opponent.id,
+            GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
+            cards
+          )], () => {
+          });
+        }
+
         return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
           player.deck.applyOrder(order);
           player.marker.addMarker(this.DRAGON_CALL_MARKER, this);
@@ -93,7 +108,7 @@ export class Gabite extends PokemonCard {
       });
     }
     if (effect instanceof EndTurnEffect) {
-    
+
       effect.player.forEachPokemon(PlayerType.BOTTOM_PLAYER, player => {
         if (player instanceof Gabite) {
           player.marker.removeMarker(this.DRAGON_CALL_MARKER);
