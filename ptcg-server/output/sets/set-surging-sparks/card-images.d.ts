@@ -6,6 +6,7 @@ import { Archaludonex } from './archaludon-ex';
 import { Azelf } from './azelf';
 import { Azumarill } from './azulmarill';
 import { BlackKyuremex } from './black-kyurem-ex';
+import { Capsakid } from './capsakid.';
 import { CelebrationFanfare } from './celebration-fanfare';
 import { Ceruledge } from './ceruledge';
 import { Ceruledgeex } from './ceruledge-ex';
@@ -44,8 +45,10 @@ import { Palkia } from './palkia';
 import { Palossandex } from './palossand-ex';
 import { PerfectMixer } from './perfect-mixer';
 import { Pikachuex } from './pikachu-ex';
+import { Quaxwell } from './quaxwell';
 import { RichEnergy } from './rich-energy';
 import { Sandygast } from './sandygast';
+import { Shroodle } from './shroodle';
 import { Skeledirge } from './skeledirge';
 import { Smoochum } from './smoochum';
 import { Sylveonex } from './sylveon-ex';
@@ -71,6 +74,15 @@ export declare class TerapagosArt extends Terapagos {
     cardImage: string;
 }
 export declare class MagnemiteArt extends Magnemite {
+    cardImage: string;
+}
+export declare class ShroodleArt extends Shroodle {
+    cardImage: string;
+}
+export declare class QuaxwellArt extends Quaxwell {
+    cardImage: string;
+}
+export declare class CapsakidArt extends Capsakid {
     cardImage: string;
 }
 export declare class MagnetonArt extends Magneton {

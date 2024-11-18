@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core
 import { DraggedItem } from '@ng-dnd/sortable';
 import { DropTarget, DndService } from '@ng-dnd/core';
 import { Observable } from 'rxjs';
-import { Player, SlotType, PlayerType, CardTarget, Card, CardList, PokemonCardList, StateUtils } from 'ptcg-server';
+import { Player, SlotType, PlayerType, CardTarget, Card, CardList, PokemonCardList, StateUtils, CoinFlipPrompt } from 'ptcg-server';
 import { map } from 'rxjs/operators';
 
 import { HandItem, HandCardType } from '../hand/hand-item.interface';
@@ -111,6 +111,37 @@ export class BoardComponent implements OnDestroy {
       this.deckSize = 0;
       this.discardSize = 0;
     }
+  }
+
+  private lastCoinFlipPrompt: CoinFlipPrompt | null = null;
+  private lastProcessedId: number = -1;
+
+  get activeCoinFlipPrompt(): CoinFlipPrompt | undefined {
+    // Find current coin flip prompt
+    const currentPrompt = this.gameState?.state?.prompts?.find(prompt => {
+      return prompt.type === 'Coin flip' &&
+        (prompt as CoinFlipPrompt).message === 'COIN_FLIP';
+    }) as CoinFlipPrompt;
+
+    // Process new prompts
+    if (currentPrompt) {
+      this.lastCoinFlipPrompt = currentPrompt;
+      return currentPrompt;
+    }
+
+    // Reset when no active prompt
+    if (!this.gameState?.state?.prompts?.length) {
+      this.lastCoinFlipPrompt = null;
+    }
+
+    return undefined;
+  }
+
+
+  handleCoinFlipComplete(result: boolean) {
+    // Now we can process the result after animation
+    console.log('Animation complete, processing result:', result);
+    // This is where we'll trigger the prompt display
   }
 
   createRange(length: number): number[] {

@@ -323,3 +323,17 @@ ptcg-board-prizes {
   transform: translate(15%, -55%); // Center on cursor
   pointer-events: none;
 }
+
+.coin-flip-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000; // Higher z-index to ensure visibility
+  pointer-events: auto; // Enable interactions if needed
+  width: 100px; // Set specific dimensions
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
