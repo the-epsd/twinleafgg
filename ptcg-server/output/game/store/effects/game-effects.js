@@ -111,6 +111,7 @@ class KnockOutEffect {
     constructor(player, target) {
         this.type = GameEffects.KNOCK_OUT_EFFECT;
         this.preventDefault = false;
+        this.isLostCity = false;
         this.player = player;
         this.target = target;
         this.prizeCount = 1;

@@ -40,9 +40,6 @@ class Ether extends game_1.TrainerCard {
                             const target = game_1.StateUtils.getTarget(state, player, transfer.to);
                             temp.moveCardTo(transfer.card, target); // Move card to target
                         }
-                        store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
-                            player.deck.applyOrder(order);
-                        });
                     }
                     player.supporter.moveCardTo(effect.trainerCard, player.discard);
                     return state;

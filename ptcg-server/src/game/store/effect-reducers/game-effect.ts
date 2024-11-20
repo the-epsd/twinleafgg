@@ -1,28 +1,36 @@
 import { GameError } from '../../game-error';
-import { GameMessage, GameLog } from '../../game-message';
-import { EndTurnEffect } from '../effects/game-phase-effects';
-import { Effect } from '../effects/effect';
-import { State, GamePhase } from '../state/state';
-import { StoreLike } from '../store-like';
-import { StateUtils } from '../state-utils';
+import { GameLog, GameMessage } from '../../game-message';
+import { CardTag, CardType, Format, SpecialCondition, Stage, SuperType, TrainerType } from '../card/card-types';
+import { Resistance, Weakness } from '../card/pokemon-types';
+import { ApplyWeaknessEffect, DealDamageEffect } from '../effects/attack-effects';
 import {
-  CheckPokemonTypeEffect, CheckPokemonStatsEffect,
-  CheckProvidedEnergyEffect, CheckAttackCostEffect
+  CheckAttackCostEffect,
+  CheckPokemonStatsEffect,
+  CheckPokemonTypeEffect,
+  CheckProvidedEnergyEffect
 } from '../effects/check-effects';
-import { Weakness, Resistance } from '../card/pokemon-types';
-import { CardType, SpecialCondition, CardTag, TrainerType, Format } from '../card/card-types';
+import { Effect } from '../effects/effect';
 import {
-  AttackEffect, UseAttackEffect, HealEffect, KnockOutEffect,
-  UsePowerEffect, PowerEffect, UseStadiumEffect, EvolveEffect,
-  UseTrainerPowerEffect,
-  TrainerPowerEffect
+  AttackEffect,
+  EvolveEffect,
+  HealEffect, KnockOutEffect,
+  PowerEffect,
+  TrainerPowerEffect,
+  UseAttackEffect,
+  UsePowerEffect,
+  UseStadiumEffect,
+  UseTrainerPowerEffect
 } from '../effects/game-effects';
-import { CoinFlipPrompt } from '../prompts/coin-flip-prompt';
-import { DealDamageEffect, ApplyWeaknessEffect } from '../effects/attack-effects';
+import { EndTurnEffect } from '../effects/game-phase-effects';
 import { TrainerEffect } from '../effects/play-card-effects';
-import { ConfirmPrompt } from '../prompts/confirm-prompt';
-import { checkState } from './check-effect';
 import { ChooseAttackPrompt } from '../prompts/choose-attack-prompt';
+import { CoinFlipPrompt } from '../prompts/coin-flip-prompt';
+import { ConfirmPrompt } from '../prompts/confirm-prompt';
+import { StateUtils } from '../state-utils';
+import { CardList } from '../state/card-list';
+import { GamePhase, State } from '../state/state';
+import { StoreLike } from '../store-like';
+import { checkState } from './check-effect';
 
 function applyWeaknessAndResistance(
   damage: number,
@@ -211,8 +219,20 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
       }
 
       store.log(state, GameLog.LOG_POKEMON_KO, { name: card.name });
-      if (card.tags.includes(CardTag.PRISM_STAR)) {
-        effect.target.moveTo(effect.player.lostzone);
+      if (card.tags.includes(CardTag.PRISM_STAR) || StateUtils.getStadiumCard(state)?.name === 'Lost City') {
+        const lostZoned = new CardList();
+        const pokemonIndices = effect.target.cards.map((card, index) => index);
+
+        for (let i = pokemonIndices.length - 1; i >= 0; i--) {
+          const removedCard = effect.target.cards.splice(pokemonIndices[i], 1)[0];
+
+          // the basic check handles lillie's poke doll and the like
+          if (removedCard.superType === SuperType.POKEMON || (<any>removedCard).stage === Stage.BASIC) {
+            lostZoned.cards.push(removedCard);
+          }
+        }
+
+        lostZoned.moveTo(effect.player.lostzone);
       } else {
         effect.target.moveTo(effect.player.discard);
         effect.target.clearEffects();
