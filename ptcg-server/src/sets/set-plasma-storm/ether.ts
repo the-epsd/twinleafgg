@@ -1,4 +1,4 @@
-import { AttachEnergyPrompt, CardList, EnergyCard, GameError, GameMessage, PlayerType, ShowCardsPrompt, ShuffleDeckPrompt, SlotType, State, StateUtils, StoreLike, TrainerCard } from '../../game';
+import { AttachEnergyPrompt, CardList, EnergyCard, GameError, GameMessage, PlayerType, ShowCardsPrompt, SlotType, State, StateUtils, StoreLike, TrainerCard } from '../../game';
 import { EnergyType, SuperType, TrainerType } from '../../game/store/card/card-types';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
@@ -65,10 +65,6 @@ export class Ether extends TrainerCard {
               const target = StateUtils.getTarget(state, player, transfer.to);
               temp.moveCardTo(transfer.card, target); // Move card to target
             }
-
-            store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-              player.deck.applyOrder(order);
-            });
           }
 
           player.supporter.moveCardTo(effect.trainerCard, player.discard);

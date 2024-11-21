@@ -8,51 +8,6 @@ $ptcg-energy-card-offset: 13%;
   min-width: map-get($ptcg-size, board-card);
   position: relative;
 
-  &.power-activate {
-    z-index: 9999;
-    position: absolute;
-    animation: powerActivateStart 0.5s ease-in-out forwards;
-
-    &.upside-down {
-      z-index: 9999;
-      animation: powerActivateStartOpponent 0.5s ease-in-out forwards;
-    }
-  }
-
-  &.power-deactivate {
-    z-index: 9999;
-    position: absolute;
-    animation: powerActivateEnd 0.5s ease-in-out forwards;
-
-    &.upside-down {
-      z-index: 9999;
-      animation: powerActivateEndOpponent 0.5s ease-in-out forwards;
-    }
-  }
-
-  @keyframes powerActivateStart {
-    0% {
-      transform: rotate(0) scale(1);
-      z-index: 9999;
-    }
-
-    100% {
-      transform: translate(500px, -275px) rotate(180deg) scale(4);
-      z-index: 9999;
-    }
-  }
-
-  @keyframes powerActivateEnd {
-    0% {
-      transform: translate(500px, -275px) rotate(180deg) scale(4);
-      z-index: 9999;
-    }
-
-    100% {
-      transform: rotate(0) scale(1);
-    }
-  }
-
   &.empty:after {
     content: "";
     display: block;
@@ -74,94 +29,15 @@ $ptcg-energy-card-offset: 13%;
   }
 }
 
-
-.rising-sun {
-  width: 300px; // Increased from 200px
-  height: 300px; // Increased from 200px
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 100;
-  pointer-events: none;
-  background: radial-gradient(circle at center,
-      rgba(255, 255, 255, 1) 0%,
-      rgba(255, 255, 255, 1) 15%,
-      rgba(255, 255, 255, 0.9) 16%,
-      rgba(255, 255, 255, 0.7) 17%,
-      rgba(255, 255, 255, 0.4) 18%,
-      rgba(255, 255, 255, 0.2) 19%,
-      transparent 20%),
-    repeating-conic-gradient(transparent 0deg,
-      transparent 20deg,
-      rgba(255, 255, 255, 1) 20deg,
-      rgba(255, 255, 255, 1) 30deg);
-  animation: risingSun 3s linear;
-
-  &.ptcg-board-card {
-    animation: cardFlash 3s ease-in-out;
-  }
-}
-
-@keyframes risingSun {
-  from {
-    transform: translate(-50%, -50%) rotate(0deg);
-  }
-
-  to {
-    transform: translate(-50%, -50%) rotate(360deg);
-  }
-}
-
-@keyframes cardFlash {
-  0% {
-    filter: brightness(2);
-  }
-
-  100% {
-    filter: brightness(1);
-  }
-}
-
 .ptcg-energy-cards {
   ptcg-card {
     width: 30%;
-    // height: 25px;
-    // width: 25px;
     top: 80%;
     left: -11%;
     z-index: 3;
     position: absolute;
     clip-path: circle(34%);
 
-    // // Set custom energy card images based on their names
-    // &[data-name="Grass Energy"] {
-    //   background-image: url('#{$custom-grass-energy-image}');
-    //   background-size: cover;
-    //   background-repeat: no-repeat;
-    //   &:after {
-    //     content: '';
-    //     display: block;
-    //     padding-bottom: 100%;
-    //   }
-    // }
-
-    // &[data-name="Fire Energy"] {
-    //   background-image: url('#{$custom-fire-energy-image}');
-    //   background-size: cover;
-    //   background-repeat: no-repeat;
-    //   &:after {
-    //     content: '';
-    //     display: block;
-    //     padding-bottom: 100%;
-    //   }
-    // }
-
-    // &:first-child {
-    //   // Keep the first energy card at top: 76%, left: -11%
-    // }
-
-    // Move every subsequent energy card to the right
     @for $i from 2 through $ptcg-max-energy-cards {
       &:nth-child(#{$i}) {
         left: calc(-11% + (#{$i - 1} * #{$ptcg-energy-card-offset}));
@@ -197,7 +73,7 @@ $ptcg-energy-card-offset: 13%;
 }
 
 .ptcg-trainer-card {
-  width: 100%; // Same as the card size
+  width: 100%;
   left: 35%;
   position: absolute;
   transform: rotate(90deg);
@@ -236,7 +112,6 @@ $ptcg-energy-card-offset: 13%;
   }
 }
 
-
 .ptcg-card-marker {
   z-index: 5;
   left: 0;
@@ -254,47 +129,22 @@ $ptcg-energy-card-offset: 13%;
   }
 }
 
-.holo {
-  z-index: 2;
-  position: relative;
-  max-width: map-get($ptcg-size, card);
-  min-width: map-get($ptcg-size, board-card);
-  background: linear-gradient(100deg, #34DCE7 -6.37%, #7F5FFE 43.87%, #FF87A3 97.22%);
-  border-radius: 4px;
-}
-
-.holo::after {
-  content: '';
-  opacity: 85%;
-  border-radius: 4px;
+.poison-marker {
   position: absolute;
-  inset: 0;
-  animation: holographic 3.5s linear infinite;
-  background:
-    linear-gradient(218deg,
-      rgba(255, 255, 255, 0.00) 0%,
-      #FFF 25%,
-      rgba(255, 255, 255, 0.00) 50%,
-      #FFF 75%,
-      rgba(255, 255, 255, 0.00) 100%);
-  background-size: 350% 100%;
+  top: 50%;
+  left: 50%;
+  transform: translate(50%, 115%) rotate(15deg);
+  width: 200%;
+  height: 200%;
+  background-image: url('/assets/poison-marker.webp');
+  background-size: contain;
   background-repeat: no-repeat;
-  mix-blend-mode: overlay;
-}
+  background-position: center;
+  pointer-events: none;
+  z-index: 10;
 
-@keyframes holographic {
-  0% {
-    background-position: 100% 0;
-  }
-
-  100% {
-    background-position: -350% 0;
-  }
-}
-
-@keyframes holographic {
-  to {
-    background-position: 100%, 0;
+  :host-context(.upside-down) & {
+    transform: translate(-185%, -150%) rotate(15deg);
   }
 }
 
@@ -340,103 +190,136 @@ $ptcg-energy-card-offset: 13%;
   }
 }
 
-// Ability Effects
-
-// .power-glow {
-//   box-shadow: 0 0 12px #00ff00;
-//   animation: glow 2s ease-in-out forwards;
-// }
-
-// @keyframes glow {
-//   0% {
-//     box-shadow: 0 0 0 #00ff00;
-//   }
-
-//   50% {
-//     box-shadow: 0 0 12px #00ff00;
-//   }
-
-//   100% {
-//     box-shadow: 0 0 0 #00ff00;
-//   }
-// }
-
-
-// .power-activate {
-//   position: absolute;
-//   z-index: 9999;
-//   max-width: map-get($ptcg-size, card);
-//   min-width: map-get($ptcg-size, board-card);
-//   animation: powerActivateStart 0.5s ease-in-out forwards;
-// }
-
-// .power-deactivate {
-//   position: absolute;
-//   z-index: 9999;
-//   max-width: map-get($ptcg-size, card);
-//   min-width: map-get($ptcg-size, board-card);
-//   animation: powerActivateEnd 0.5s ease-in-out forwards;
-// }
-
-.power-negated-glow {
-  box-shadow: 0 0 12px #00ff00;
-  animation: glow2 2s ease-in-out forwards;
+.holo {
+  position: relative;
+  max-width: map-get($ptcg-size, card);
+  min-width: map-get($ptcg-size, board-card);
+  background:
+    linear-gradient(75deg,
+      #92f2f2 5%,
+      #a8d0f0 25%,
+      #d6cff1 45%,
+      #eed5f2 65%,
+      #c4f2e5 90%);
+  border-radius: 4px;
+  background-size: 200% 100%;
+  will-change: transform;
+  transform: translateZ(0);
 }
 
-@keyframes glow2 {
-  0% {
-    box-shadow: 0 0 0 #00ff00;
-  }
+.holo::after {
+  content: '';
+  opacity: 1;
+  border-radius: 4px;
+  position: absolute;
+  inset: 0;
+  animation: GradientScroll 2s linear infinite;
+  background: linear-gradient(110deg,
+      transparent 35%,
+      rgba(146, 242, 242, 0.5),
+      rgba(255, 255, 255, 0.6),
+      rgba(214, 207, 241, 0.5),
+      transparent 65%);
+  background-size: 300% 300%;
+  mix-blend-mode: soft-light;
+  -webkit-mask-image: url('/assets/card-mask.png');
+  mask-image: url('/assets/card-mask.png');
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  will-change: background-position;
+  transform: translateZ(0);
+}
 
-  50% {
-    box-shadow: 0 0 12px #00ff00;
-  }
+.fullart-holo {
+  position: relative;
+  max-width: map-get($ptcg-size, card);
+  min-width: map-get($ptcg-size, board-card);
+  background:
+    linear-gradient(75deg,
+      #92f2f2 5%,
+      #a8d0f0 25%,
+      #d6cff1 45%,
+      #eed5f2 65%,
+      #c4f2e5 90%);
+  border-radius: 4px;
+  background-size: 200% 100%;
+  will-change: transform;
+  transform: translateZ(0);
+}
 
-  100% {
-    box-shadow: 0 0 0 #00ff00;
+.fullart-holo::after {
+  content: '';
+  opacity: 1;
+  border-radius: 4px;
+  position: absolute;
+  inset: 0;
+  animation: GradientScroll 2s linear infinite;
+  background: linear-gradient(110deg,
+      transparent 35%,
+      rgba(146, 242, 242, 0.5),
+      rgba(255, 255, 255, 0.6),
+      rgba(214, 207, 241, 0.5),
+      transparent 65%);
+  background-size: 300% 300%;
+  mix-blend-mode: soft-light;
+  -webkit-mask-image: url('/assets/fa-card-mask.png');
+  mask-image: url('/assets/fa-card-mask.png');
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  will-change: background-position;
+  transform: translateZ(0);
+}
+
+.radiant-holo {
+  position: relative;
+  max-width: map-get($ptcg-size, card);
+  min-width: map-get($ptcg-size, board-card);
+  background: linear-gradient(75deg,
+      #92f2f2 5%,
+      #a8d0f0 25%,
+      #d6cff1 45%,
+      #eed5f2 65%,
+      #c4f2e5 90%);
+  border-radius: 4px;
+  background-size: 200% 100%;
+  will-change: transform;
+  transform: translateZ(0);
+
+  // ptcg-card {
+  //   position: relative;
+  //   z-index: 1;
+  // }
+
+  &::after {
+    content: '';
+    opacity: 4;
+    border-radius: 4px;
+    position: absolute;
+    inset: 0;
+    animation: GradientScroll 2s linear infinite;
+    background: linear-gradient(110deg,
+        transparent 35%,
+        rgba(146, 242, 242, 0.5),
+        rgba(255, 255, 255, 0.6),
+        rgba(214, 207, 241, 0.5),
+        transparent 65%);
+    background-size: 300% 300%;
+    mix-blend-mode: soft-light;
+    -webkit-mask-image: url('/assets/card-mask-radiant.png');
+    mask-image: url('/assets/card-mask-radiant.png');
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+    will-change: background-position;
+    transform: translateZ(0);
   }
 }
 
-@keyframes risingSun {
+@keyframes GradientScroll {
   from {
-    transform: rotate(0deg);
+    background-position: 100% 100%
   }
 
   to {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes risingSun {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes risingSun {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes cardFlash {
-  0% {
-    filter: brightness(1);
-  }
-
-  50% {
-    filter: brightness(2);
-  }
-
-  100% {
-    filter: brightness(1);
+    background-position: 0% 0%
   }
 }

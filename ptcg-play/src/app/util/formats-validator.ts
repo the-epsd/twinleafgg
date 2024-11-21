@@ -17,7 +17,11 @@ export class FormatValidator {
     let formatList = formats.reduce((a, b) => a.filter(c => b.includes(c)))
 
     // Add Professor validation check here
-    const set = new Set(cards.map(c => c.name));
+    if (!cards) {
+      return [];
+    }
+    
+    const set = new Set(cards.filter(c => !!c).map(c => c.name));
     if ((set.has('Professor Sycamore') && set.has('Professor Juniper')) ||
       (set.has('Professor Juniper') && set.has('Professor\'s Research')) ||
       (set.has('Professor Sycamore') && set.has('Professor\'s Research')) ||

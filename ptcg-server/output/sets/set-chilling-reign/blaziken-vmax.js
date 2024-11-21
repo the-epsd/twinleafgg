@@ -15,15 +15,15 @@ class BlazikenVMAX extends game_1.PokemonCard {
         this.weakness = [{ type: game_1.CardType.WATER }];
         this.retreat = [game_1.CardType.COLORLESS, game_1.CardType.COLORLESS];
         this.attacks = [{
-                name: 'Clutch',
+                name: 'DEFENDING_POKEMON_CANNOT_RETREAT',
                 cost: [game_1.CardType.FIRE],
                 damage: 60,
                 text: 'During your opponent\'s next turn, the Defending Pokémon can\'t retreat.'
             },
             {
                 name: 'Max Blaze',
-                cost: [game_1.CardType.FIRE, game_1.CardType.FIRE, game_1.CardType.COLORLESS, game_1.CardType.COLORLESS],
-                damage: 210,
+                cost: [C, C],
+                damage: 130,
                 text: 'Choose up to 2 of your Benched Rapid Strike Pokémon and attach an Energy card from your discard pile to each of them.'
             }
         ];
@@ -33,19 +33,19 @@ class BlazikenVMAX extends game_1.PokemonCard {
         this.setNumber = '21';
         this.name = 'Blaziken VMAX';
         this.fullName = 'Blaziken VMAX CRE';
-        this.CLUTCH_MARKER = 'CLUTCH_MARKER';
+        this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER = 'DEFENDING_POKEMON_CANNOT_RETREAT_MARKER';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            opponent.active.marker.addMarker(this.CLUTCH_MARKER, this);
+            opponent.active.marker.addMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
         }
-        if (effect instanceof game_effects_1.RetreatEffect && effect.player.active.marker.hasMarker(this.CLUTCH_MARKER, this)) {
+        if (effect instanceof game_effects_1.RetreatEffect && effect.player.active.marker.hasMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this)) {
             throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);
         }
         if (effect instanceof game_phase_effects_1.EndTurnEffect) {
-            effect.player.active.marker.removeMarker(this.CLUTCH_MARKER, this);
+            effect.player.active.marker.removeMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;

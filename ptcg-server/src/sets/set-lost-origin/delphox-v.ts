@@ -5,7 +5,7 @@ import { AttackEffect } from '../../game/store/effects/game-effects';
 import { StoreLike } from '../../game/store/store-like';
 import { Effect } from '../../game/store/effects/effect';
 import { Card, ChooseEnergyPrompt, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, StateUtils } from '../../game';
-import { AddSpecialConditionsEffect, LostZoneCardsEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { LostZoneCardsEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 
 export class DelphoxV extends PokemonCard {
@@ -52,10 +52,12 @@ export class DelphoxV extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const burnEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.BURNED]);
-      store.reduceEffect(state, burnEffect);
-      const confusedEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.CONFUSED]);
-      store.reduceEffect(state, confusedEffect);
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      const active = opponent.active;
+      active.addSpecialCondition(SpecialCondition.BURNED);
+      active.addSpecialCondition(SpecialCondition.CONFUSED);
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {

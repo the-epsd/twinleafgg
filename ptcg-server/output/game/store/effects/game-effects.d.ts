@@ -99,6 +99,7 @@ export declare class KnockOutEffect implements Effect {
     player: Player;
     target: PokemonCardList;
     prizeCount: number;
+    isLostCity: boolean;
     constructor(player: Player, target: PokemonCardList);
 }
 export declare class KnockOutAttackEffect implements Effect {

@@ -48,6 +48,7 @@ class Gabite extends pokemon_card_1.PokemonCard {
         }
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
+            const opponent = effect.player;
             if (player.marker.hasMarker(this.DRAGON_CALL_MARKER, this)) {
                 throw new game_1.GameError(game_1.GameMessage.POWER_ALREADY_USED);
             }
@@ -57,7 +58,11 @@ class Gabite extends pokemon_card_1.PokemonCard {
                 }
             });
             return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.POKEMON, cardType: card_types_1.CardType.DRAGON }, { min: 0, max: 1, allowCancel: true }), cards => {
-                player.deck.moveCardsTo(cards, player.hand);
+                if (cards.length > 0) {
+                    player.deck.moveCardsTo(cards, player.hand);
+                    store.prompt(state, [new game_1.ShowCardsPrompt(opponent.id, game_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards)], () => {
+                    });
+                }
                 return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
                     player.deck.applyOrder(order);
                     player.marker.addMarker(this.DRAGON_CALL_MARKER, this);

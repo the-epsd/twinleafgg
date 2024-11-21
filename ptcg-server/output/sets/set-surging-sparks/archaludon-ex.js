@@ -27,6 +27,7 @@ class Archaludonex extends game_1.PokemonCard {
                 damage: 220,
                 text: 'During your opponent\'s next turn, this Pokemon has no Weakness.'
             }];
+        this.regulationMark = 'H';
         this.set = 'SSP';
         this.setNumber = '130';
         this.cardImage = 'assets/cardback.png';
@@ -38,7 +39,7 @@ class Archaludonex extends game_1.PokemonCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.EvolveEffect && effect.pokemonCard === this) {
             const player = effect.player;
-            const hasMetalEnergyInDiscard = player.hand.cards.some(c => {
+            const hasMetalEnergyInDiscard = player.discard.cards.some(c => {
                 return c instanceof game_1.EnergyCard && c.name === 'Metal Energy';
             });
             if (!hasMetalEnergyInDiscard) {

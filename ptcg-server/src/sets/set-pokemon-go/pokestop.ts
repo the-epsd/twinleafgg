@@ -6,7 +6,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { CardList } from '../../game/store/state/card-list';
-import { GameLog } from '../../game';
+import { GameLog, GameMessage, ShowCardsPrompt } from '../../game';
 
 export class Pokestop extends TrainerCard {
 
@@ -44,6 +44,8 @@ export class Pokestop extends TrainerCard {
       c instanceof TrainerCard && 
           c.trainerType === TrainerType.ITEM
     );
+
+    const discards = deckTop.cards.filter(c => !itemCards.includes(c));
   
     // Move all cards to discard
     deckTop.moveTo(player.discard, deckTop.cards.length);
@@ -51,10 +53,19 @@ export class Pokestop extends TrainerCard {
     itemCards.forEach((card, index) => {
       store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
     });
+
+    discards.forEach((card, index) => {
+      store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD, { name: player.name, card: card.name });
+    });
     
     // Move item cards to hand
     player.discard.moveCardsTo(itemCards, player.hand);
   
-    return state;
+    const opponent = StateUtils.getOpponent(state, player);
+    return store.prompt(state, new ShowCardsPrompt(
+      opponent.id,
+      GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
+      itemCards
+    ), () => { });;
   }
 }

@@ -10,7 +10,7 @@ class Squawkabillyex extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.BASIC;
-        this.tags = [card_types_1.CardTag.POKEMON_ex, card_types_1.CardTag.HOLO];
+        this.tags = [card_types_1.CardTag.POKEMON_ex];
         this.regulationMark = 'G';
         this.cardType = card_types_1.CardType.COLORLESS;
         this.hp = 160;
@@ -59,7 +59,7 @@ class Squawkabillyex extends pokemon_card_1.PokemonCard {
                 // Return updated state
                 player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
                     if (cardList.getPokemonCard() === this) {
-                        cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
+                        cardList.addBoardEffect(card_types_1.BoardEffect.ABILITY_USED);
                     }
                 });
             }

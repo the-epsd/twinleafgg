@@ -6,6 +6,7 @@ import { Archaludonex } from './archaludon-ex';
 import { Azelf } from './azelf';
 import { Azumarill } from './azulmarill';
 import { BlackKyuremex } from './black-kyurem-ex';
+import { Capsakid } from './capsakid.';
 import { CelebrationFanfare } from './celebration-fanfare';
 import { Ceruledge } from './ceruledge';
 import { Ceruledgeex } from './ceruledge-ex';
@@ -44,8 +45,10 @@ import { Palkia } from './palkia';
 import { Palossandex } from './palossand-ex';
 import { PerfectMixer } from './perfect-mixer';
 import { Pikachuex } from './pikachu-ex';
+import { Quaxwell } from './quaxwell';
 import { RichEnergy } from './rich-energy';
 import { Sandygast } from './sandygast';
+import { Shroodle } from './shroodle';
 import { Skeledirge } from './skeledirge';
 import { Smoochum } from './smoochum';
 import { Sylveonex } from './sylveon-ex';
@@ -76,6 +79,18 @@ export class TerapagosArt extends Terapagos {
 
 export class MagnemiteArt extends Magnemite {
   public cardImage = 'https://pokemonproxies.com/static/media/8i-034-Magnemite.43bcb4c967f83f8ca1a3.png';
+}
+
+export class ShroodleArt extends Shroodle {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_120_R_EN_LG.png';
+}
+
+export class QuaxwellArt extends Quaxwell {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_051_R_EN_LG.png';
+}
+
+export class CapsakidArt extends Capsakid {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_012_R_EN_LG.png';
 }
 
 export class MagnetonArt extends Magneton {

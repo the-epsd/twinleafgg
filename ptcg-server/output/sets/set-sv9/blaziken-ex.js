@@ -39,6 +39,10 @@ class Blazikenex extends game_1.PokemonCard {
         this.ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
     }
     reduceEffect(store, state, effect) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+            const player = effect.player;
+            player.marker.removeMarker(this.OVERFLOWING_SPIRIT_MARKER, this);
+        }
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
             const hasEnergyInDiscard = player.discard.cards.some(c => {
@@ -46,10 +50,14 @@ class Blazikenex extends game_1.PokemonCard {
                     && c.energyType === game_1.EnergyType.BASIC;
             });
             if (!hasEnergyInDiscard) {
-                throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
+                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
+            }
+            if (player.marker.hasMarker(this.OVERFLOWING_SPIRIT_MARKER, this)) {
+                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
             state = store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_ACTIVE, player.discard, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { superType: game_1.SuperType.ENERGY, energyType: game_1.EnergyType.BASIC }, { allowCancel: false, min: 1, max: 1 }), transfers => {
                 transfers = transfers || [];
+                player.marker.addMarker(this.OVERFLOWING_SPIRIT_MARKER, this);
                 if (transfers.length === 0) {
                     return;
                 }

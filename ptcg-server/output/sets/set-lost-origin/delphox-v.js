@@ -39,10 +39,11 @@ class DelphoxV extends pokemon_card_1.PokemonCard {
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
-            const burnEffect = new attack_effects_1.AddSpecialConditionsEffect(effect, [card_types_1.SpecialCondition.BURNED]);
-            store.reduceEffect(state, burnEffect);
-            const confusedEffect = new attack_effects_1.AddSpecialConditionsEffect(effect, [card_types_1.SpecialCondition.CONFUSED]);
-            store.reduceEffect(state, confusedEffect);
+            const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            const active = opponent.active;
+            active.addSpecialCondition(card_types_1.SpecialCondition.BURNED);
+            active.addSpecialCondition(card_types_1.SpecialCondition.CONFUSED);
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;

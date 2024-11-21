@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core
 import { DraggedItem } from '@ng-dnd/sortable';
 import { DropTarget, DndService } from '@ng-dnd/core';
 import { Observable } from 'rxjs';
-import { Player, SlotType, PlayerType, CardTarget, Card, CardList, PokemonCardList, StateUtils } from 'ptcg-server';
+import { Player, SlotType, PlayerType, CardTarget, Card, CardList, PokemonCardList, StateUtils, CoinFlipPrompt } from 'ptcg-server';
 import { map } from 'rxjs/operators';
 
 import { HandItem, HandCardType } from '../hand/hand-item.interface';
@@ -10,6 +10,7 @@ import { BoardCardItem, BoardCardType } from './board-item.interface';
 import { CardsBaseService } from '../../shared/cards/cards-base.service';
 import { GameService } from '../../api/services/game.service';
 import { LocalGameState } from 'src/app/shared/session/session.interface';
+import { trigger, transition, style, animate, query, stagger } from '@angular/animations';
 
 const MAX_BENCH_SIZE = 8;
 const DEFAULT_BENCH_SIZE = 5;
@@ -19,7 +20,23 @@ type DropTargetType = DropTarget<DraggedItem<HandItem> | BoardCardItem, any>;
 @Component({
   selector: 'ptcg-board',
   templateUrl: './board.component.html',
-  styleUrls: ['./board.component.scss']
+  styleUrls: ['./board.component.scss'],
+  animations: [
+    trigger('phaseTransition', [
+      transition(':enter', [
+        style({ opacity: 0, transform: 'translateY(-20px)' }),
+        animate('300ms ease-out')
+      ])
+    ]),
+    trigger('gameStateChange', [
+      transition('* => *', [
+        query(':enter', [
+          style({ opacity: 0 }),
+          stagger(100, animate('200ms ease-out'))
+        ])
+      ])
+    ])
+  ]
 })
 export class BoardComponent implements OnDestroy {
 
@@ -94,6 +111,37 @@ export class BoardComponent implements OnDestroy {
       this.deckSize = 0;
       this.discardSize = 0;
     }
+  }
+
+  private lastCoinFlipPrompt: CoinFlipPrompt | null = null;
+  private lastProcessedId: number = -1;
+
+  get activeCoinFlipPrompt(): CoinFlipPrompt | undefined {
+    // Find current coin flip prompt
+    const currentPrompt = this.gameState?.state?.prompts?.find(prompt => {
+      return prompt.type === 'Coin flip' &&
+        (prompt as CoinFlipPrompt).message === 'COIN_FLIP';
+    }) as CoinFlipPrompt;
+
+    // Process new prompts
+    if (currentPrompt) {
+      this.lastCoinFlipPrompt = currentPrompt;
+      return currentPrompt;
+    }
+
+    // Reset when no active prompt
+    if (!this.gameState?.state?.prompts?.length) {
+      this.lastCoinFlipPrompt = null;
+    }
+
+    return undefined;
+  }
+
+
+  handleCoinFlipComplete(result: boolean) {
+    // Now we can process the result after animation
+    console.log('Animation complete, processing result:', result);
+    // This is where we'll trigger the prompt display
   }
 
   createRange(length: number): number[] {

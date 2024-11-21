@@ -3,18 +3,19 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.gameReducer = void 0;
 const game_error_1 = require("../../game-error");
 const game_message_1 = require("../../game-message");
-const game_phase_effects_1 = require("../effects/game-phase-effects");
-const state_1 = require("../state/state");
-const state_utils_1 = require("../state-utils");
-const check_effects_1 = require("../effects/check-effects");
 const card_types_1 = require("../card/card-types");
-const game_effects_1 = require("../effects/game-effects");
-const coin_flip_prompt_1 = require("../prompts/coin-flip-prompt");
 const attack_effects_1 = require("../effects/attack-effects");
+const check_effects_1 = require("../effects/check-effects");
+const game_effects_1 = require("../effects/game-effects");
+const game_phase_effects_1 = require("../effects/game-phase-effects");
 const play_card_effects_1 = require("../effects/play-card-effects");
-const confirm_prompt_1 = require("../prompts/confirm-prompt");
-const check_effect_1 = require("./check-effect");
 const choose_attack_prompt_1 = require("../prompts/choose-attack-prompt");
+const coin_flip_prompt_1 = require("../prompts/coin-flip-prompt");
+const confirm_prompt_1 = require("../prompts/confirm-prompt");
+const state_utils_1 = require("../state-utils");
+const card_list_1 = require("../state/card-list");
+const state_1 = require("../state/state");
+const check_effect_1 = require("./check-effect");
 function applyWeaknessAndResistance(damage, cardTypes, additionalCardTypes, weakness, resistance) {
     let multiply = 1;
     let modifier = 0;
@@ -139,6 +140,7 @@ function* useAttack(next, store, state, effect) {
     return store.reduceEffect(state, new game_phase_effects_1.EndTurnEffect(player));
 }
 function gameReducer(store, state, effect) {
+    var _a;
     if (effect instanceof game_effects_1.KnockOutEffect) {
         // const player = effect.player;
         const card = effect.target.getPokemonCard();
@@ -155,8 +157,17 @@ function gameReducer(store, state, effect) {
                 effect.prizeCount += 2;
             }
             store.log(state, game_message_1.GameLog.LOG_POKEMON_KO, { name: card.name });
-            if (card.tags.includes(card_types_1.CardTag.PRISM_STAR)) {
-                effect.target.moveTo(effect.player.lostzone);
+            if (card.tags.includes(card_types_1.CardTag.PRISM_STAR) || ((_a = state_utils_1.StateUtils.getStadiumCard(state)) === null || _a === void 0 ? void 0 : _a.name) === 'Lost City') {
+                const lostZoned = new card_list_1.CardList();
+                const pokemonIndices = effect.target.cards.map((card, index) => index);
+                for (let i = pokemonIndices.length - 1; i >= 0; i--) {
+                    const removedCard = effect.target.cards.splice(pokemonIndices[i], 1)[0];
+                    // the basic check handles lillie's poke doll and the like
+                    if (removedCard.superType === card_types_1.SuperType.POKEMON || removedCard.stage === card_types_1.Stage.BASIC) {
+                        lostZoned.cards.push(removedCard);
+                    }
+                }
+                lostZoned.moveTo(effect.player.lostzone);
             }
             else {
                 effect.target.moveTo(effect.player.discard);

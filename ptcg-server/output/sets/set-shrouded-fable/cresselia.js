@@ -59,10 +59,10 @@ class Cresselia extends pokemon_card_1.PokemonCard {
                                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
                             }
                             if (chosenPrize === null || chosenPrize.length === 0) {
-                                prizes.forEach(p => { p.isSecret = true; });
+                                return state;
                             }
-                            prizeCard.isSecret = false;
-                            prizeCard.isPublic = true;
+                            // prizeCard.isSecret = false;
+                            // prizeCard.isPublic = true;
                             prizeCard.faceUpPrize = true;
                             effect.damage += 80;
                         });

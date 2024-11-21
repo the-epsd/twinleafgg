@@ -48,7 +48,9 @@ export class HexManiac extends TrainerCard {
       player.supporter.moveCardTo(effect.trainerCard, player.discard);
     }
 
-    if (effect instanceof PowerEffect && effect.player.marker.hasMarker(this.HEX_MANIAC_MARKER, this)) {
+    if (effect instanceof PowerEffect && (
+        effect.player.marker.hasMarker(this.HEX_MANIAC_MARKER, this) || 
+        StateUtils.getOpponent(state, effect.player).marker.hasMarker(this.HEX_MANIAC_MARKER, this))) {
       throw new GameError(GameMessage.ABILITY_BLOCKED);
     }
 

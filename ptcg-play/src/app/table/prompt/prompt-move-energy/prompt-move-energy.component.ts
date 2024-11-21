@@ -30,6 +30,10 @@ export class PromptMoveEnergyComponent implements OnChanges {
   public isInvalid = false;
   public blocked: number[] = [];
   public results: MoveEnergyResult[] = [];
+  public dragSpec = {
+    beginDrag: (item: Card) => ({ card: item }),
+    canDrag: () => true
+  };
 
   private min: number;
   private max: number | undefined;
@@ -61,6 +65,36 @@ export class PromptMoveEnergyComponent implements OnChanges {
       index: this.pokemonData.getCardIndex(r.card)
     }));
     this.gameService.resolvePrompt(gameId, id, results);
+  }
+
+  public dropSpec = {
+    drop: (item: PokemonItem, monitor) => {
+      const draggedCard = monitor.getItem().card;
+      this.onCardDrop([item, draggedCard]);
+    },
+    canDrop: (item: PokemonItem) => {
+      return !this.pokemonData.matchesTarget(item, this.blockedTo);
+    }
+  };
+
+  // Add collect functions
+  public dragCollect = (connect, monitor) => ({
+    connectDragSource: connect.dragSource(),
+    isDragging: monitor.isDragging()
+  });
+
+  public dropCollect = (connect, monitor) => ({
+    connectDropTarget: connect.dropTarget(),
+    isOver: monitor.isOver(),
+    canDrop: monitor.canDrop()
+  });
+
+  // Pass the drag configuration to choose-cards-panes
+  public getCardsPanesConfig() {
+    return {
+      dragEnabled: true,
+      dragType: 'ENERGY_CARD'
+    };
   }
 
   public onCardClick(item: PokemonItem) {

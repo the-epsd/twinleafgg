@@ -156,6 +156,7 @@ export class KnockOutEffect implements Effect {
   public player: Player;
   public target: PokemonCardList;
   public prizeCount: number;
+  public isLostCity: boolean = false;
 
   constructor(player: Player, target: PokemonCardList) {
     this.player = player;
