@@ -62,6 +62,7 @@ class Metagross extends pokemon_card_1.PokemonCard {
                         player.hand.moveCardTo(card, slots[index]);
                         slots[index].pokemonPlayedTurn = state.turn;
                     });
+                    player.deck.moveTo(player.hand, 3);
                 }
             });
         }

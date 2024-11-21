@@ -53,6 +53,11 @@ export class Blazikenex extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
+    if (effect instanceof EndTurnEffect) {
+      const player = effect.player;
+      player.marker.removeMarker(this.OVERFLOWING_SPIRIT_MARKER, this);
+    }
+
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
 
@@ -62,7 +67,11 @@ export class Blazikenex extends PokemonCard {
       });
 
       if (!hasEnergyInDiscard) {
-        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
+      }
+
+      if (player.marker.hasMarker(this.OVERFLOWING_SPIRIT_MARKER, this)) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
       state = store.prompt(state, new AttachEnergyPrompt(
@@ -75,7 +84,7 @@ export class Blazikenex extends PokemonCard {
         { allowCancel: false, min: 1, max: 1 }
       ), transfers => {
         transfers = transfers || [];
-
+        player.marker.addMarker(this.OVERFLOWING_SPIRIT_MARKER, this);
         if (transfers.length === 0) {
           return;
         }

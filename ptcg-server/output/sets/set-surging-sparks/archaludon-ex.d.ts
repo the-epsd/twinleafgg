@@ -25,6 +25,7 @@ export declare class Archaludonex extends PokemonCard {
         damage: number;
         text: string;
     }[];
+    regulationMark: string;
     set: string;
     setNumber: string;
     cardImage: string;

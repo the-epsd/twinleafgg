@@ -32,7 +32,8 @@ class HexManiac extends trainer_card_1.TrainerCard {
             opponent.marker.addMarker(this.HEX_MANIAC_MARKER, this);
             player.supporter.moveCardTo(effect.trainerCard, player.discard);
         }
-        if (effect instanceof game_effects_1.PowerEffect && effect.player.marker.hasMarker(this.HEX_MANIAC_MARKER, this)) {
+        if (effect instanceof game_effects_1.PowerEffect && (effect.player.marker.hasMarker(this.HEX_MANIAC_MARKER, this) ||
+            game_1.StateUtils.getOpponent(state, effect.player).marker.hasMarker(this.HEX_MANIAC_MARKER, this))) {
             throw new game_1.GameError(game_1.GameMessage.ABILITY_BLOCKED);
         }
         if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.HEX_MANIAC_MARKER)) {

@@ -88,56 +88,66 @@ class Munkidori extends game_1.PokemonCard {
                     const checkEnergy = new check_effects_1.CheckProvidedEnergyEffect(player, cardList);
                     store.reduceEffect(state, checkEnergy);
                     checkEnergy.energyMap.forEach(em => {
+                        var _a;
+                        if (em.provides.includes(game_1.CardType.ANY)) {
+                            hasDarkAttached = true;
+                        }
+                        if (em.provides.includes(game_1.CardType.DARK)) {
+                            hasDarkAttached = true;
+                        }
                         const energyCard = em.card;
-                        if (energyCard instanceof game_1.EnergyCard && energyCard.provides.includes(game_1.CardType.DARK) || energyCard instanceof game_1.EnergyCard && energyCard.provides.includes(game_1.CardType.ANY) || (energyCard instanceof game_1.EnergyCard && energyCard.blendedEnergies.includes(game_1.CardType.DARK))) {
+                        if (energyCard instanceof game_1.EnergyCard && energyCard.provides.includes(game_1.CardType.DARK)) {
+                            hasDarkAttached = true;
+                        }
+                        if (energyCard instanceof game_1.EnergyCard && energyCard.provides.includes(game_1.CardType.ANY)) {
+                            hasDarkAttached = true;
+                        }
+                        if (energyCard instanceof game_1.EnergyCard && ((_a = energyCard.blendedEnergies) === null || _a === void 0 ? void 0 : _a.includes(game_1.CardType.DARK))) {
                             hasDarkAttached = true;
                         }
                     });
                     if (!hasDarkAttached) {
                         throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
                     }
-                    if (hasDarkAttached) {
-                        return store.prompt(state, new game_1.RemoveDamagePrompt(effect.player.id, game_1.GameMessage.MOVE_DAMAGE, game_1.PlayerType.ANY, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], maxAllowedDamage, { min: 1, max: 3, allowCancel: false, sameTarget: true, blockedTo: blockedTo, blockedFrom: blockedFrom }), transfers => {
-                            if (transfers === null) {
-                                return state;
-                            }
-                            let totalDamageMoved = 0;
-                            for (const transfer of transfers) {
-                                const source = game_1.StateUtils.getTarget(state, player, transfer.from);
-                                const target = game_1.StateUtils.getTarget(state, player, transfer.to);
-                                // if (source.cards.length > 1) {
-                                //   throw new GameError(GameMessage.INVALID_TARGET);
-                                // }
-                                // if (target.cards.length > 1) {
-                                //   throw new GameError(GameMessage.INVALID_TARGET);
-                                // }
-                                player.marker.addMarker(this.ADRENA_BRAIN_MARKER, this);
-                                player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
-                                    if (cardList.getPokemonCard() === this) {
-                                        cardList.addSpecialCondition(game_1.SpecialCondition.ABILITY_USED);
-                                    }
-                                });
-                                /*blockedFrom.forEach(blocked => {
-                                  if (transfer.from === blocked && transfer.to === blocked) {
-                                    throw new GameError(GameMessage.CANNOT_USE_POWER);;
-                                  }
-                                });
-                      
-                                if (blockedFrom.includes(transfer.from)) {
-                                  throw new GameError(GameMessage.CANNOT_USE_POWER);
-                                }*/
-                                const damageToMove = Math.min(30 - totalDamageMoved, Math.min(10, source.damage));
-                                if (damageToMove > 0) {
-                                    source.damage -= damageToMove;
-                                    target.damage += damageToMove;
-                                    totalDamageMoved += damageToMove;
-                                }
-                                if (totalDamageMoved >= 30)
-                                    break;
-                            }
+                    return store.prompt(state, new game_1.RemoveDamagePrompt(effect.player.id, game_1.GameMessage.MOVE_DAMAGE, game_1.PlayerType.ANY, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], maxAllowedDamage, { min: 1, max: 3, allowCancel: false, sameTarget: true, blockedTo: blockedTo, blockedFrom: blockedFrom }), transfers => {
+                        if (transfers === null) {
                             return state;
-                        });
-                    }
+                        }
+                        let totalDamageMoved = 0;
+                        for (const transfer of transfers) {
+                            const source = game_1.StateUtils.getTarget(state, player, transfer.from);
+                            const target = game_1.StateUtils.getTarget(state, player, transfer.to);
+                            // if (source.cards.length > 1) {
+                            //   throw new GameError(GameMessage.INVALID_TARGET);
+                            // }
+                            // if (target.cards.length > 1) {
+                            //   throw new GameError(GameMessage.INVALID_TARGET);
+                            // }
+                            player.marker.addMarker(this.ADRENA_BRAIN_MARKER, this);
+                            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
+                                if (cardList.getPokemonCard() === this) {
+                                    cardList.addSpecialCondition(game_1.SpecialCondition.ABILITY_USED);
+                                }
+                            });
+                            /*blockedFrom.forEach(blocked => {
+                              if (transfer.from === blocked && transfer.to === blocked) {
+                                throw new GameError(GameMessage.CANNOT_USE_POWER);;
+                              }
+                            });
+                  
+                            if (blockedFrom.includes(transfer.from)) {
+                              throw new GameError(GameMessage.CANNOT_USE_POWER);
+                            }*/
+                            const damageToMove = Math.min(30 - totalDamageMoved, Math.min(10, source.damage));
+                            if (damageToMove > 0) {
+                                source.damage -= damageToMove;
+                                target.damage += damageToMove;
+                                totalDamageMoved += damageToMove;
+                            }
+                            if (totalDamageMoved >= 30)
+                                break;
+                        }
+                    });
                 }
             });
         }

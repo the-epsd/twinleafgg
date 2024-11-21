@@ -15,7 +15,6 @@ export declare class Luxray extends PokemonCard {
     powers: {
         name: string;
         powerType: PowerType;
-        useFromHand: boolean;
         text: string;
     }[];
     attacks: {
