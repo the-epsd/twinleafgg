@@ -8,6 +8,7 @@ exports.setCrimsonInvasion = [
     new card_images_1.CounterEnergyArt(),
     new card_images_1.DevouredFieldArt(),
     new card_images_1.GladionArt(),
+    new card_images_1.KartanaGXArt(),
     new card_images_1.LusamineArt(),
     new card_images_1.MisdreavusArt(),
     new card_images_1.XerneasArt()

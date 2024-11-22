@@ -12,6 +12,9 @@ import { RoseTower } from './rose-tower';
 import { TapuKoko } from './tapu-koko';
 import { Teddiursa } from './teddiursa';
 import { Ursaring } from './ursaring';
+import { Rowlet } from './rowlet';
+import { Starly } from './starly';
+import { Swanna } from './swanna';
 export declare class BirdKeeperArt extends BirdKeeper {
     cardImage: string;
 }
@@ -43,6 +46,15 @@ export declare class RareFossilArt extends RareFossil {
     cardImage: string;
 }
 export declare class RoseTowerArt extends RoseTower {
+    cardImage: string;
+}
+export declare class RowletArt extends Rowlet {
+    cardImage: string;
+}
+export declare class StarlyArt extends Starly {
+    cardImage: string;
+}
+export declare class SwannaArt extends Swanna {
     cardImage: string;
 }
 export declare class TapuKokoArt extends TapuKoko {

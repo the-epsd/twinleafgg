@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZeraoraArt = exports.TerapagosexArt = exports.ScorbunnyArt = exports.RagingBoltArt = exports.RabootArt = exports.OrthwormexArt = exports.NoctowlArt = exports.MedititeArt = exports.MedichamexArt = exports.LaprasexArt = exports.JoltikArt = exports.IronBoulderArt = exports.HydrappleexArt = exports.HoothootArt = exports.GreatTreeArt = exports.GlisteningCrystalArt = exports.GlassTrumpetArt = exports.GalvantulexaArt = exports.FanRotomArt = exports.ElectabuzzArt = exports.DrifblimArt = exports.DrednawArt = exports.DiancieArt = exports.CrispinArt = exports.CinderaceexArt = exports.ComfeyArt = exports.ChewtleArt = exports.BriarArt = exports.BouffalantArt = exports.AreaZeroUnderdepthsArt = exports.ArchaludonArt = void 0;
+exports.ZeraoraArt = exports.TerapagosexArt = exports.ScorbunnyArt = exports.RagingBoltArt = exports.RabootArt = exports.OrthwormexArt = exports.NoctowlArt = exports.MedititeArt = exports.MedichamexArt = exports.LaprasexArt = exports.JoltikArt = exports.IronBoulderArt = exports.HydrappleexArt = exports.HoothootArt = exports.GreatTreeArt = exports.GlisteningCrystalArt = exports.GlassTrumpetArt = exports.GarganaclexArt = exports.GalvantulexaArt = exports.FanRotomArt = exports.ElectabuzzArt = exports.DrifblimArt = exports.DrednawArt = exports.DiancieArt = exports.CrispinArt = exports.CinderaceexArt = exports.ComfeyArt = exports.ChewtleArt = exports.BriarArt = exports.BouffalantArt = exports.AreaZeroUnderdepthsArt = exports.ArchaludonArt = void 0;
 const archaludon_1 = require("./archaludon");
 const area_zero_underdepths_1 = require("./area-zero-underdepths");
 const bouffalant_1 = require("./bouffalant");
@@ -15,6 +15,7 @@ const drifblim_1 = require("./drifblim");
 const electabuzz_1 = require("./electabuzz");
 const fan_rotom_1 = require("./fan-rotom");
 const galvantula_ex_1 = require("./galvantula-ex");
+const garganacl_ex_1 = require("./garganacl-ex");
 const glass_trumpet_1 = require("./glass-trumpet");
 const glistening_crystal_1 = require("./glistening-crystal");
 const great_tree_1 = require("./great-tree");
@@ -130,6 +131,13 @@ class GalvantulexaArt extends galvantula_ex_1.Galvantulaex {
     }
 }
 exports.GalvantulexaArt = GalvantulexaArt;
+class GarganaclexArt extends garganacl_ex_1.Garganaclex {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SCR/SCR_089_R_EN.png';
+    }
+}
+exports.GarganaclexArt = GarganaclexArt;
 class GlassTrumpetArt extends glass_trumpet_1.GlassTrumpet {
     constructor() {
         super(...arguments);

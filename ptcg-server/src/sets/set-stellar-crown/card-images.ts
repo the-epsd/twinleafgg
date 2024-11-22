@@ -12,6 +12,7 @@ import { Drifblim } from './drifblim';
 import { Electabuzz } from './electabuzz';
 import { FanRotom } from './fan-rotom';
 import { Galvantulaex } from './galvantula-ex';
+import { Garganaclex } from './garganacl-ex';
 import { GlassTrumpet } from './glass-trumpet';
 import { GlisteningCrystal } from './glistening-crystal';
 import { GreatTree } from './great-tree';
@@ -84,6 +85,10 @@ export class FanRotomArt extends FanRotom {
 
 export class GalvantulexaArt extends Galvantulaex {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SCR/SCR_051_R_EN.png';
+}
+
+export class GarganaclexArt extends Garganaclex {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SCR/SCR_089_R_EN.png';
 }
 
 export class GlassTrumpetArt extends GlassTrumpet {

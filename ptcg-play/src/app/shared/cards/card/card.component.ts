@@ -1,24 +1,18 @@
 import { Component, Input } from '@angular/core';
-import { Card } from 'ptcg-server';
+import { Card, CardTag, Player, State, StoreLike } from 'ptcg-server';
 import { CardsBaseService } from '../cards-base.service';
+import { SettingsService } from 'src/app/table/table-sidebar/settings-dialog/settings.service';
 
 @Component({
   selector: 'ptcg-card',
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.scss'],
   exportAs: 'ptcgCard',
-  template: `
-    <div class="card" 
-         [@cardMove]
-         [@cardFlip]="isFaceUp ? 'front' : 'back'"
-         (@cardMove.done)="onAnimationComplete($event)">
-      <img [src]="cardImage" [alt]="card.name">
-    </div>
-  `
 })
 export class CardComponent {
   public scanUrl: string;
   public data: Card;
+  private holoEnabled = true;
 
   @Input() cardback = false;
   @Input() placeholder = false;
@@ -29,9 +23,94 @@ export class CardComponent {
     this.scanUrl = this.customImageUrl || this.cardsBaseService.getScanUrl(this.data);
   }
 
-  onAnimationComplete(event: AnimationEvent): void {
-    // Handle animation completion if needed
+
+  getCardClass(): string {
+    let classes = '';
+
+    if (!this.data || !this.data.tags || this.cardback || !this.holoEnabled) {
+      return '';
+    }
+
+    if (this.isHoloCard()) {
+      return 'holo';
+    }
+
+    if (this.isHoloTrainer()) {
+      return 'trainer-holo';
+    }
+
+    if (this.data.tags.includes(CardTag.POKEMON_V)
+      || this.data.tags.includes(CardTag.POKEMON_ex)
+      || this.data.tags.includes(CardTag.POKEMON_EX)
+      || this.data.tags.includes(CardTag.POKEMON_GX)
+      || this.data.tags.includes(CardTag.POKEMON_VMAX)
+      || this.data.tags.includes(CardTag.POKEMON_VSTAR)) {
+      return 'fullart-holo';
+    }
+
+    if (this.data.tags.includes(CardTag.RADIANT)) {
+      return 'radiant-holo';
+    }
+
+    return '';
   }
 
-  constructor(private cardsBaseService: CardsBaseService) { }
+  private isHoloCard(): boolean {
+    const holoCards = [
+      'Armarouge SVI',
+      'Hawlucha SVI',
+      'Klefki SVI',
+      'Revavroom SVI',
+      'Baxcalibur PAL',
+      'Hydreigon PAL',
+      'Lokix PAL',
+      'Luxray PAL',
+      'Mimikyu PAL',
+      'Spiritomb PAL',
+      'Tinkaton PAL',
+      'Entei OBF',
+      'Scizor OBF',
+      'Thundurus OBF',
+      'Brute Bonnet PAR',
+      'Chi-Yu PAR',
+      'Deoxys PAR',
+      'Groudon PAR',
+      'Latios PAR',
+      'Morpeko PAR',
+      'Xatu PAR',
+      'Zacian PAR',
+      'Dudunsparce TEF',
+      'Feraligatr TEF',
+      'Flutter Mane TEF',
+      'Iron Thorns TEF',
+      'Iron Jugulis TEF',
+      'Koraidon TEF',
+      'Miraidon TEF',
+      'Roaring Moon TEF',
+      'Froslass TWM',
+      'Infernape TWM',
+      'Iron Leaves TWM',
+      'Munkidori TWM',
+      'Okidogi TWM',
+      'Ting-Lu TWM',
+      'Walking Wake TWM',
+      'Zapdos TWM',
+
+    ];
+    return holoCards.includes(this.data.fullName);
+  }
+
+  private isHoloTrainer(): boolean {
+    const holoTrainers = [
+      'Professors Research SVI',
+      'Professor\'s Research PAF',
+      'Boss\'s Orders PAL',
+    ];
+    return holoTrainers.includes(this.data.fullName);
+  }
+
+  constructor(private cardsBaseService: CardsBaseService,
+    private settingsService: SettingsService) {
+    settingsService.holoEnabled$.subscribe(enabled => this.holoEnabled = enabled);
+  }
 }

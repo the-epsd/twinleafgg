@@ -15,6 +15,7 @@ import { Golduck } from './golduck';
 import { AlolanRattata } from './alolan_rattata';
 import { TimerBall } from './timer-ball';
 import { DecidueyeGX } from './decidueye-gx';
+import { LurantisGX } from './lurantis-gx';
 export declare class AlolanGrimerArt extends AlolanGrimer {
     cardImage: string;
 }
@@ -53,6 +54,9 @@ export declare class NestBallArt extends NestBall {
     cardImage: string;
     setNumber: string;
     fullName: string;
+}
+export declare class LurantisGXArt extends LurantisGX {
+    cardImage: string;
 }
 export declare class OranguruArt extends Oranguru {
     cardImage: string;

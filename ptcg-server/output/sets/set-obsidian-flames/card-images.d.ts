@@ -34,6 +34,8 @@ import { Varoom } from './varoom';
 import { VengefulPunch } from './vengeful-punch';
 import { Whiscash } from './whiscash';
 import { Froakie } from './froakie';
+import { Rowlet } from './rowlet';
+import { Dartrix } from './dartrix';
 export declare class AbsolexArt extends Absolex {
     cardImage: string;
 }
@@ -59,6 +61,9 @@ export declare class CharmanderArt extends Charmander {
     cardImage: string;
 }
 export declare class CleffaArt extends Cleffa {
+    cardImage: string;
+}
+export declare class DartrixArt extends Dartrix {
     cardImage: string;
 }
 export declare class DragonairArt extends Dragonair {
@@ -113,6 +118,9 @@ export declare class PokemonLeagueHeadquartersArt extends PokemonLeagueHeadquart
     cardImage: string;
 }
 export declare class PoppyArt extends Poppy {
+    cardImage: string;
+}
+export declare class RowletArt extends Rowlet {
     cardImage: string;
 }
 export declare class RymeArt extends Ryme {

@@ -35,7 +35,7 @@ function* useFeatherSlice(next: Function, store: StoreLike, state: State, effect
   return state;
 }
 
-export class SwannaDAA extends PokemonCard {
+export class Swanna extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_1;
 

@@ -16,6 +16,7 @@ exports.setStellarCrown = [
     new card_images_1.ElectabuzzArt(),
     new card_images_1.FanRotomArt(),
     new card_images_1.GalvantulexaArt(),
+    new card_images_1.GarganaclexArt(),
     new card_images_1.GlassTrumpetArt(),
     new card_images_1.GlisteningCrystalArt(),
     new card_images_1.GreatTreeArt(),

@@ -20,7 +20,7 @@ export class FormatValidator {
     if (!cards) {
       return [];
     }
-    
+
     const set = new Set(cards.filter(c => !!c).map(c => c.name));
     if ((set.has('Professor Sycamore') && set.has('Professor Juniper')) ||
       (set.has('Professor Juniper') && set.has('Professor\'s Research')) ||
@@ -335,6 +335,6 @@ export const SetReleaseDates: { [key: string]: Date } = {
   'SFA': new Date('2024-08-02'),
   'SCR': new Date('2024-09-13'),
   'SV7a': new Date('2024-09-13'),
-  'SV8': new Date('2024-10-25'),
+  'SV8': new Date('2024-11-04'),
   'SSP': new Date('2024-11-04'),
 }

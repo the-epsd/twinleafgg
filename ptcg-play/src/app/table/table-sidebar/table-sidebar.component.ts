@@ -5,6 +5,8 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { LocalGameState } from '../../shared/session/session.interface';
 import { GameService } from '../../api/services/game.service';
 import { SessionService } from 'src/app/shared/session/session.service';
+import { MatDialog } from '@angular/material/dialog';
+import { SettingsDialogComponent } from './settings-dialog/settings-dialog.component';
 
 @UntilDestroy()
 @Component({
@@ -34,12 +36,28 @@ export class TableSidebarComponent implements OnDestroy, OnChanges {
 
   constructor(
     private gameService: GameService,
-    private sessionService: SessionService
+    private sessionService: SessionService,
+    private dialog: MatDialog
   ) { }
 
   ngOnDestroy() {
     this.stopTimer();
   }
+
+  openSettings() {
+    const dialogRef = this.dialog.open(SettingsDialogComponent, {
+      width: '300px',
+      position: { top: '20%' },
+      panelClass: 'settings-dialog'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result !== undefined) {
+        // Handle the holoEnabled setting
+      }
+    });
+  }
+
 
   private isPlayerActive(state: State, player: Player): boolean {
     if (!state || !player || !state.players[state.activePlayer]) {

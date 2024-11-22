@@ -35,6 +35,7 @@ import { Poipole } from './poipole';
 import { Snubbull } from './snubbull';
 import { Cutiefly } from './cutiefly';
 import { Ribombee } from './ribombee';
+import { ShuckleGX } from './shuckle-gx';
 
 export class AdventureBagArt extends AdventureBag {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_167_R_EN_LG.png';
@@ -146,6 +147,10 @@ export class PoipoleArt extends Poipole {
 
 export class RibombeeArt extends Ribombee {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_146_R_EN_LG.png';
+}
+
+export class ShuckleGXArt extends ShuckleGX {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/LOT/LOT_017_R_EN.png';
 }
 
 export class SlowkingArt extends Slowking {

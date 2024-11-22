@@ -31,6 +31,7 @@ import { Poliwag } from './poliwag';
 import { Zeraora } from './zeraora';
 import { Gloom } from './gloom';
 import { Volcanion } from './volcanion';
+import { ReshiramCharizardGX } from './reshiram-and-charizard-gx';
 export declare class ArcanineArt extends Arcanine {
     cardImage: string;
 }
@@ -113,6 +114,9 @@ export declare class Porygon2Art extends Porygon2 {
     cardImage: string;
 }
 export declare class PorygonZArt extends PorygonZ {
+    cardImage: string;
+}
+export declare class ReshiramCharizardGXArt extends ReshiramCharizardGX {
     cardImage: string;
 }
 export declare class SalazzleArt extends Salazzle {

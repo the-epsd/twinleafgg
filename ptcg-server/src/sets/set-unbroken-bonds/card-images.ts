@@ -31,6 +31,7 @@ import { Poliwag } from './poliwag';
 import { Zeraora } from './zeraora';
 import { Gloom } from './gloom';
 import { Volcanion } from './volcanion';
+import { ReshiramCharizardGX } from './reshiram-and-charizard-gx';
 
 export class ArcanineArt extends Arcanine {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_022_R_EN_LG.png';
@@ -142,6 +143,10 @@ export class Porygon2Art extends Porygon2 {
 
 export class PorygonZArt extends PorygonZ {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_157_R_EN_LG.png';
+}
+
+export class ReshiramCharizardGXArt extends ReshiramCharizardGX {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_020_R_EN_LG.png';
 }
 
 export class SalazzleArt extends Salazzle {

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WailordExArt = exports.TorchicArt = exports.TeammatesArt = exports.SlugmaArt = exports.SilentLabArt = exports.ShieldEnergArt = exports.ScorchedEarthArt = exports.SceptileArt = exports.RoughSeasArt = exports.MiloticArt = exports.MaxiesHiddenBallTrickArt = exports.DiveBallArt = exports.BunnelbyArt = exports.ArchiesAceInTheHoleArt = exports.AcroBikeArt = void 0;
+exports.WeedleArt = exports.WailordExArt = exports.TorchicArt = exports.TeammatesArt = exports.SlugmaArt = exports.SilentLabArt = exports.ShieldEnergArt = exports.ScorchedEarthArt = exports.SceptileArt = exports.RoughSeasArt = exports.MiloticArt = exports.MaxiesHiddenBallTrickArt = exports.DiveBallArt = exports.BunnelbyArt = exports.ArchiesAceInTheHoleArt = exports.AcroBikeArt = void 0;
 const acro_bike_1 = require("./acro-bike");
 const archies_ace_in_the_hole_1 = require("./archies-ace-in-the hole");
 const bunnelby_1 = require("./bunnelby");
@@ -16,6 +16,7 @@ const shield_energy_1 = require("./shield-energy");
 const silent_lab_1 = require("./silent-lab");
 const teammates_1 = require("./teammates");
 const wailord_ex_1 = require("./wailord-ex");
+const weedle_1 = require("./weedle");
 class AcroBikeArt extends acro_bike_1.AcroBike {
     constructor() {
         super(...arguments);
@@ -121,3 +122,10 @@ class WailordExArt extends wailord_ex_1.WailordEx {
     }
 }
 exports.WailordExArt = WailordExArt;
+class WeedleArt extends weedle_1.Weedle {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PRC/PRC_122_R_EN.png';
+    }
+}
+exports.WeedleArt = WeedleArt;

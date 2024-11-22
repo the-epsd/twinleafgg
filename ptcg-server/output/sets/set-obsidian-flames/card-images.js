@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WhiscashArt = exports.VengefulPunchArt = exports.VaroomArt = exports.TympoleArt = exports.TownStoreArt = exports.ToedscruelexArt = exports.ThundurusArt = exports.SeismitoadArt = exports.ScizorArt = exports.RymeArt = exports.PoppyArt = exports.PokemonLeagueHeadquartersArt = exports.PidgeyArt = exports.PidgeottoArt = exports.PidgeotexArt = exports.PalpitoadArt = exports.PalafinArt = exports.OddishArt = exports.NinetalesArt = exports.MiraidonexArt = exports.LunatoneArt = exports.LetterOfEncouragementArt = exports.FroakieArt = exports.FinizenArt = exports.EnteiArt = exports.DratiniArt = exports.DragoniteexArt = exports.DragonairArt = exports.CleffaArt = exports.CharmanderArt = exports.CharmeleonArt = exports.CharizardexArt = exports.BelliboltArt = exports.BarboachArt = exports.ArvenArt = exports.AbsolexArt = void 0;
+exports.WhiscashArt = exports.VengefulPunchArt = exports.VaroomArt = exports.TympoleArt = exports.TownStoreArt = exports.ToedscruelexArt = exports.ThundurusArt = exports.SeismitoadArt = exports.ScizorArt = exports.RymeArt = exports.RowletArt = exports.PoppyArt = exports.PokemonLeagueHeadquartersArt = exports.PidgeyArt = exports.PidgeottoArt = exports.PidgeotexArt = exports.PalpitoadArt = exports.PalafinArt = exports.OddishArt = exports.NinetalesArt = exports.MiraidonexArt = exports.LunatoneArt = exports.LetterOfEncouragementArt = exports.FroakieArt = exports.FinizenArt = exports.EnteiArt = exports.DratiniArt = exports.DragoniteexArt = exports.DragonairArt = exports.DartrixArt = exports.CleffaArt = exports.CharmanderArt = exports.CharmeleonArt = exports.CharizardexArt = exports.BelliboltArt = exports.BarboachArt = exports.ArvenArt = exports.AbsolexArt = void 0;
 const arven_1 = require("../set-scarlet-and-violet/arven");
 const absol_ex_1 = require("./absol-ex");
 const barboach_1 = require("./barboach");
@@ -37,6 +37,8 @@ const varoom_1 = require("./varoom");
 const vengeful_punch_1 = require("./vengeful-punch");
 const whiscash_1 = require("./whiscash");
 const froakie_1 = require("./froakie");
+const rowlet_1 = require("./rowlet");
+const dartrix_1 = require("./dartrix");
 class AbsolexArt extends absol_ex_1.Absolex {
     constructor() {
         super(...arguments);
@@ -96,6 +98,13 @@ class CleffaArt extends cleffa_1.Cleffa {
     }
 }
 exports.CleffaArt = CleffaArt;
+class DartrixArt extends dartrix_1.Dartrix {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_014_R_EN_LG.png';
+    }
+}
+exports.DartrixArt = DartrixArt;
 class DragonairArt extends dragonair_1.Dragonair {
     constructor() {
         super(...arguments);
@@ -222,6 +231,13 @@ class PoppyArt extends poppy_1.Poppy {
     }
 }
 exports.PoppyArt = PoppyArt;
+class RowletArt extends rowlet_1.Rowlet {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_013_R_EN_LG.png';
+    }
+}
+exports.RowletArt = RowletArt;
 class RymeArt extends ryme_1.Ryme {
     constructor() {
         super(...arguments);

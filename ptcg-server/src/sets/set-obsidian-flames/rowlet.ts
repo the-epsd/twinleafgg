@@ -1,7 +1,7 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 
-export class RowletOBF extends PokemonCard {
+export class Rowlet extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 

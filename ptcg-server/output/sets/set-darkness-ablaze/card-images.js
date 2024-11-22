@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UrsaringArt = exports.TeddiursaArt = exports.TapuKokoArt = exports.RoseTowerArt = exports.RareFossilArt = exports.PowerfulColorlessEnergyArt = exports.LugiaArt = exports.KlangArt = exports.KangaskhanArt = exports.HidingDarknessEnergyArt = exports.CrobatVArt = exports.CombuskenArt = exports.CapeOfToughnessArt = exports.BirdKeeperArt = void 0;
+exports.UrsaringArt = exports.TeddiursaArt = exports.TapuKokoArt = exports.SwannaArt = exports.StarlyArt = exports.RowletArt = exports.RoseTowerArt = exports.RareFossilArt = exports.PowerfulColorlessEnergyArt = exports.LugiaArt = exports.KlangArt = exports.KangaskhanArt = exports.HidingDarknessEnergyArt = exports.CrobatVArt = exports.CombuskenArt = exports.CapeOfToughnessArt = exports.BirdKeeperArt = void 0;
 const bird_keeper_1 = require("./bird-keeper");
 const cape_of_toughness_1 = require("./cape-of-toughness");
 const crobat_v_1 = require("./crobat-v");
@@ -15,6 +15,9 @@ const rose_tower_1 = require("./rose-tower");
 const tapu_koko_1 = require("./tapu-koko");
 const teddiursa_1 = require("./teddiursa");
 const ursaring_1 = require("./ursaring");
+const rowlet_1 = require("./rowlet");
+const starly_1 = require("./starly");
+const swanna_1 = require("./swanna");
 class BirdKeeperArt extends bird_keeper_1.BirdKeeper {
     constructor() {
         super(...arguments);
@@ -92,6 +95,27 @@ class RoseTowerArt extends rose_tower_1.RoseTower {
     }
 }
 exports.RoseTowerArt = RoseTowerArt;
+class RowletArt extends rowlet_1.Rowlet {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/DAA/DAA_011_R_EN.png';
+    }
+}
+exports.RowletArt = RowletArt;
+class StarlyArt extends starly_1.Starly {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/DAA/DAA_145_R_EN.png';
+    }
+}
+exports.StarlyArt = StarlyArt;
+class SwannaArt extends swanna_1.Swanna {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/DAA/DAA_149_R_EN.png';
+    }
+}
+exports.SwannaArt = SwannaArt;
 class TapuKokoArt extends tapu_koko_1.TapuKoko {
     constructor() {
         super(...arguments);

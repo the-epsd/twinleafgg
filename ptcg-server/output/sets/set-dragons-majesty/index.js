@@ -9,6 +9,7 @@ exports.setDragonsMajesty = [
     new card_images_1.FeraligatrArt(),
     new card_images_1.FieryFlintArt(),
     new card_images_1.QuagsireArt(),
+    new card_images_1.SalanditArt(),
     new card_images_1.SwitchRaftArt(),
     new card_images_1.VictiniPrismStarArt(),
     new card_images_1.WooperArt()

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UltraNecrozmaGXArt = exports.UnitEnergyFDYArt = exports.MysteriousTreasureArt = exports.MetalFryingPanArt = exports.MalamarArt = exports.MagnezoneArt = exports.LysandreLabsArt = exports.KlefkiArt = exports.InkayArt = exports.GreninjaGXArt = exports.FrogadierArt = exports.FlorgesArt = exports.FlabebeArt = exports.BuzzwoleArt = exports.BeastRingArt = void 0;
+exports.UltraNecrozmaGXArt = exports.UnitEnergyFDYArt = exports.MysteriousTreasureArt = exports.MetalFryingPanArt = exports.MalamarArt = exports.MagnezoneArt = exports.LysandreLabsArt = exports.KlefkiArt = exports.InkayArt = exports.GreninjaGXArt = exports.FrogadierArt = exports.FlorgesArt = exports.FlabebeArt = exports.BuzzwoleArt = exports.BeastRingArt = exports.AlolanExeggutorArt = void 0;
 const beast_ring_1 = require("./beast-ring");
 const lysandre_labs_1 = require("./lysandre-labs");
 const frogadier_1 = require("./frogadier");
@@ -16,6 +16,14 @@ const ultra_necrozma_gx_1 = require("./ultra-necrozma-gx");
 const flabebe_1 = require("./flabebe");
 const florges_1 = require("./florges");
 const klefki_1 = require("./klefki");
+const alolan_exeggutor_1 = require("./alolan-exeggutor");
+class AlolanExeggutorArt extends alolan_exeggutor_1.AlolanExeggutor {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FLI/FLI_002_R_EN.png';
+    }
+}
+exports.AlolanExeggutorArt = AlolanExeggutorArt;
 class BeastRingArt extends beast_ring_1.BeastRing {
     constructor() {
         super(...arguments);

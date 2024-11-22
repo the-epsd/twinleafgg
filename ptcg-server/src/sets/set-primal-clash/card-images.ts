@@ -13,6 +13,7 @@ import { ShieldEnergy } from './shield-energy';
 import { SilentLab } from './silent-lab';
 import { Teammates } from './teammates';
 import { WailordEx } from './wailord-ex';
+import { Weedle } from './weedle';
 
 export class AcroBikeArt extends AcroBike {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PRC/PRC_122_R_EN.png';
@@ -72,4 +73,8 @@ export class TorchicArt extends Torchic {
 
 export class WailordExArt extends WailordEx {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PRC/PRC_038_R_EN.png';
+}
+
+export class WeedleArt extends Weedle {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PRC/PRC_122_R_EN.png';
 }

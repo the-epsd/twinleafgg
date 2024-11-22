@@ -31,7 +31,7 @@ function* useMultiply(next: Function, store: StoreLike, state: State,
   });
 }
 
-export class WeedlePRC extends PokemonCard {
+export class Weedle extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 

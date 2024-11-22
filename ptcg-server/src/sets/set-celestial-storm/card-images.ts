@@ -17,9 +17,14 @@ import { Swampert } from './swampert';
 import { TateAndLiza } from './tate-and-liza';
 import { Whismur } from './whismur';
 import { RayquazaGX } from './rayquaza-gx';
+import { ArticunoGX } from './articuno-gx';
 
 export class ApricornMakerArt extends ApricornMaker {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CES/CES_124_R_EN_LG.png';
+}
+
+export class ArticunoGXArt extends ArticunoGX {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CES/CES_031_R_EN.png';
 }
 
 export class CopycatArt extends Copycat {

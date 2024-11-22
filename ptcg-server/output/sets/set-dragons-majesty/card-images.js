@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WooperArt = exports.VictiniPrismStarArt = exports.SwitchRaftArt = exports.QuagsireArt = exports.FieryFlintArt = exports.FeraligatrArt = exports.FeebasArt = exports.CroconawArt = exports.BlazikenArt = void 0;
+exports.WooperArt = exports.VictiniPrismStarArt = exports.SwitchRaftArt = exports.SalanditArt = exports.QuagsireArt = exports.FieryFlintArt = exports.FeraligatrArt = exports.FeebasArt = exports.CroconawArt = exports.BlazikenArt = void 0;
 const croconaw_1 = require("./croconaw");
 const feraligatr_1 = require("./feraligatr");
 const blaziken_1 = require("./blaziken");
@@ -10,6 +10,7 @@ const quagsire_1 = require("./quagsire");
 const switch_raft_1 = require("./switch-raft");
 const wooper_1 = require("./wooper");
 const victini_prism_star_1 = require("./victini-prism-star");
+const salandit_1 = require("./salandit");
 class BlazikenArt extends blaziken_1.Blaziken {
     constructor() {
         super(...arguments);
@@ -52,6 +53,13 @@ class QuagsireArt extends quagsire_1.Quagsire {
     }
 }
 exports.QuagsireArt = QuagsireArt;
+class SalanditArt extends salandit_1.Salandit {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/DRM/DRM_013_R_EN.png';
+    }
+}
+exports.SalanditArt = SalanditArt;
 class SwitchRaftArt extends switch_raft_1.SwitchRaft {
     constructor() {
         super(...arguments);
