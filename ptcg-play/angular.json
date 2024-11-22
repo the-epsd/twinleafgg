@@ -91,10 +91,10 @@
                 }
               },
               "outputHashing": "all",
-              "sourceMap": true,
-              "namedChunks": true,
-              "extractLicenses": true,
-              "vendorChunk": false,
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": false,
+              "vendorChunk": true,
               "buildOptimizer": true,
               "budgets": [
                 {
