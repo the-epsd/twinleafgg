@@ -6,34 +6,22 @@
     <ptcg-badge>
       {{ 'TABLE_TURN_NUMBER' | translate: { turn: turn } }}
     </ptcg-badge>
+    <mat-icon class="settings-icon" (click)="openSettings()">settings</mat-icon>
   </div>
 
-  <ptcg-player-bar
-    [gameState]="gameState"
-    [clientId]="clientId"
-    [player]="topPlayer"
-    [replayPlayer]="topReplayPlayer"
-    [playerStats]="topPlayerStats"
-    [active]="isTopPlayerActive">
+
+  <ptcg-player-bar [gameState]="gameState" [clientId]="clientId" [player]="topPlayer" [replayPlayer]="topReplayPlayer"
+    [playerStats]="topPlayerStats" [active]="isTopPlayerActive">
   </ptcg-player-bar>
 
-  <ptcg-player-bar
-    [gameState]="gameState"
-    [clientId]="clientId"
-    [player]="bottomPlayer"
-    [replayPlayer]="bottomReplayPlayer"
-    [playerStats]="bottomPlayerStats"
-    [active]="isBottomPlayerActive">
+  <ptcg-player-bar [gameState]="gameState" [clientId]="clientId" [player]="bottomPlayer"
+    [replayPlayer]="bottomReplayPlayer" [playerStats]="bottomPlayerStats" [active]="isBottomPlayerActive">
   </ptcg-player-bar>
 
-  <ptcg-player-actions
-    [gameState]="gameState"
-    [clientId]="clientId"
-    (join)="join.next()">
+  <ptcg-player-actions [gameState]="gameState" [clientId]="clientId" (join)="join.next()">
   </ptcg-player-actions>
 
-  <ptcg-replay-controls *ngIf="gameState?.replay"
-    [gameState]="gameState">
+  <ptcg-replay-controls *ngIf="gameState?.replay" [gameState]="gameState">
   </ptcg-replay-controls>
 
   <ptcg-game-logs [gameState]="gameState"></ptcg-game-logs>

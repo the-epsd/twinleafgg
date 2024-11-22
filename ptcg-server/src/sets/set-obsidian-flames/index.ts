@@ -1,6 +1,6 @@
 import { Card } from '../../game/store/card/card';
 
-import { AbsolexArt, ArvenArt, BarboachArt, BelliboltArt, CharizardexArt, CharmanderArt, CharmeleonArt, CleffaArt, DragonairArt, DragoniteexArt, DratiniArt, EnteiArt, FinizenArt, FroakieArt, LetterOfEncouragementArt, NinetalesArt, OddishArt, PalafinArt, PalpitoadArt, PidgeotexArt, PidgeottoArt, PidgeyArt, PokemonLeagueHeadquartersArt, PoppyArt, RymeArt, ScizorArt, SeismitoadArt, ThundurusArt, ToedscruelexArt, TownStoreArt, TympoleArt, VaroomArt, VengefulPunchArt, WhiscashArt } from './card-images';
+import { AbsolexArt, ArvenArt, BarboachArt, BelliboltArt, CharizardexArt, CharmanderArt, CharmeleonArt, CleffaArt, DartrixArt, DragonairArt, DragoniteexArt, DratiniArt, EnteiArt, FinizenArt, FroakieArt, LetterOfEncouragementArt, NinetalesArt, OddishArt, PalafinArt, PalpitoadArt, PidgeotexArt, PidgeottoArt, PidgeyArt, PokemonLeagueHeadquartersArt, PoppyArt, RowletArt, RymeArt, ScizorArt, SeismitoadArt, ThundurusArt, ToedscruelexArt, TownStoreArt, TympoleArt, VaroomArt, VengefulPunchArt, WhiscashArt } from './card-images';
 import { ArtazonHR, BelliboltIR, CharizardexFA, CharizardexHR, CharizardexSIR, CleffaIR, FireEnergyHR, PidgeotexFA, PidgeotexSIR, PidgeottoIR, PidgeyIR, PoppyFA, PoppySIR, ScizorIR, VaroomIR } from './full-arts';
 
 
@@ -13,6 +13,7 @@ export const setObsidianFlames: Card[] = [
   new CharmanderArt(),
   new CharmeleonArt(),
   new CleffaArt(),
+  new DartrixArt(),
   new DragonairArt(),
   new DragoniteexArt(),
   new DratiniArt(),
@@ -29,6 +30,7 @@ export const setObsidianFlames: Card[] = [
   new PidgeyArt(),
   new PokemonLeagueHeadquartersArt(),
   new PoppyArt(),
+  new RowletArt(),
   new RymeArt(),
   new ScizorArt(),
   new SeismitoadArt(),

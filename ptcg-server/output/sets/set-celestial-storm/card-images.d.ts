@@ -17,7 +17,11 @@ import { Swampert } from './swampert';
 import { TateAndLiza } from './tate-and-liza';
 import { Whismur } from './whismur';
 import { RayquazaGX } from './rayquaza-gx';
+import { ArticunoGX } from './articuno-gx';
 export declare class ApricornMakerArt extends ApricornMaker {
+    cardImage: string;
+}
+export declare class ArticunoGXArt extends ArticunoGX {
     cardImage: string;
 }
 export declare class CopycatArt extends Copycat {

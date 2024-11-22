@@ -13,6 +13,7 @@ import { ShieldEnergy } from './shield-energy';
 import { SilentLab } from './silent-lab';
 import { Teammates } from './teammates';
 import { WailordEx } from './wailord-ex';
+import { Weedle } from './weedle';
 export declare class AcroBikeArt extends AcroBike {
     cardImage: string;
 }
@@ -56,5 +57,8 @@ export declare class TorchicArt extends Torchic {
     cardImage: string;
 }
 export declare class WailordExArt extends WailordEx {
+    cardImage: string;
+}
+export declare class WeedleArt extends Weedle {
     cardImage: string;
 }

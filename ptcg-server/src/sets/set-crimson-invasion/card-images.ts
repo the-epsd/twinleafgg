@@ -3,6 +3,7 @@ import { Chimecho } from './chimecho';
 import { CounterEnergy } from './counter-energy';
 import { DevouredField } from './devoured-field';
 import { Gladion } from './gladion';
+import { KartanaGX } from './kartana-gx';
 import { Lusamine } from './lusamine';
 import { Misdreavus } from './misdreavus';
 import { Xerneas } from './xerneas';
@@ -25,6 +26,10 @@ export class DevouredFieldArt extends DevouredField {
 
 export class GladionArt extends Gladion {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CIN/CIN_095_R_EN_LG.png';
+}
+
+export class KartanaGXArt extends KartanaGX {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CIN/CIN_070_R_EN.png';
 }
 
 export class LusamineArt extends Lusamine {

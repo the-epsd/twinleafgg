@@ -1,5 +1,8 @@
 <div class="ptcg-card" *ngIf="data">
-  <img *ngIf="customImageUrl" class="ptcg-card-scan" [src]="customImageUrl" alt="Card Image" draggable="false">
-  <img *ngIf="!customImageUrl" class="ptcg-card-scan" [src]="scanUrl" alt="Card Image" draggable="false">
+  <div class="card-container" [class]="getCardClass()">
+    <img *ngIf="customImageUrl" class="ptcg-card-scan" [src]="customImageUrl" alt="Card Image" draggable="false">
+    <img *ngIf="!customImageUrl" class="ptcg-card-scan" [src]="scanUrl" alt="Card Image" draggable="false">
+    <div class="holo-overlay"></div>
+  </div>
   <ng-content></ng-content>
 </div>

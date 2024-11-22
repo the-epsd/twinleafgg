@@ -13,6 +13,10 @@ import { UltraNecrozmaGX } from './ultra-necrozma-gx';
 import { Flabebe } from './flabebe';
 import { Florges } from './florges';
 import { Klefki } from './klefki';
+import { AlolanExeggutor } from './alolan-exeggutor';
+export declare class AlolanExeggutorArt extends AlolanExeggutor {
+    cardImage: string;
+}
 export declare class BeastRingArt extends BeastRing {
     cardImage: string;
 }

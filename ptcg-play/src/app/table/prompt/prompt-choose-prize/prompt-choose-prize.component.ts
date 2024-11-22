@@ -25,7 +25,9 @@ export class PromptChoosePrizeComponent implements OnChanges {
   public hasSecret: boolean;
   public revealed = false;
   private result: number[] = [];
+  public selectedCardIsSecret = false;
   public prizeIndexMap: { [cardIndex: number]: number } = {};
+  public selectedCardbackMap: { [index: number]: boolean } = {};
 
   constructor(
     private gameService: GameService
@@ -56,6 +58,8 @@ export class PromptChoosePrizeComponent implements OnChanges {
     const prizeIndex = this.prizeIndexMap[cardIndex];
     this.result = [prizeIndex];
     this.isInvalid = this.result.length !== this.prompt.options.count;
+    // Update the selected card's visibility based on the original cardbackMap
+    this.selectedCardbackMap[cardIndex] = this.cardbackMap[cardIndex];
   }
 
   ngOnChanges() {

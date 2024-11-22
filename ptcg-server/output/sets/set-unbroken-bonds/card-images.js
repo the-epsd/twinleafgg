@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZeraoraArt = exports.VolcanionArt = exports.TripleAccelerationEnergyArt = exports.SpiritombArt = exports.SalazzleArt = exports.PorygonZArt = exports.Porygon2Art = exports.PorygonArt = exports.PoliwagArt = exports.Pokegear30Art = exports.OddishArt = exports.MismagiusArt = exports.MewtwoArt = exports.MewArt = exports.MetalCoreBarrierArt = exports.MeowthArt = exports.MartialArtsDojoArt = exports.MarshadowArt = exports.LtSurgesStrategyArt = exports.LickitungArt = exports.LaironArt = exports.KartanaArt = exports.HitmontopArt = exports.GreensExplorationArt = exports.GloomArt = exports.FireCrystalArt = exports.EspurrArt = exports.ElectromagneticRadarArt = exports.DuskStoneArt = exports.DedenneGXArt = exports.CleffaArt = exports.AronArt = exports.ArcanineArt = void 0;
+exports.ZeraoraArt = exports.VolcanionArt = exports.TripleAccelerationEnergyArt = exports.SpiritombArt = exports.SalazzleArt = exports.ReshiramCharizardGXArt = exports.PorygonZArt = exports.Porygon2Art = exports.PorygonArt = exports.PoliwagArt = exports.Pokegear30Art = exports.OddishArt = exports.MismagiusArt = exports.MewtwoArt = exports.MewArt = exports.MetalCoreBarrierArt = exports.MeowthArt = exports.MartialArtsDojoArt = exports.MarshadowArt = exports.LtSurgesStrategyArt = exports.LickitungArt = exports.LaironArt = exports.KartanaArt = exports.HitmontopArt = exports.GreensExplorationArt = exports.GloomArt = exports.FireCrystalArt = exports.EspurrArt = exports.ElectromagneticRadarArt = exports.DuskStoneArt = exports.DedenneGXArt = exports.CleffaArt = exports.AronArt = exports.ArcanineArt = void 0;
 const arcanine_1 = require("./arcanine");
 const cleffa_1 = require("./cleffa");
 const dusk_stone_1 = require("./dusk-stone");
@@ -34,6 +34,7 @@ const poliwag_1 = require("./poliwag");
 const zeraora_1 = require("./zeraora");
 const gloom_1 = require("./gloom");
 const volcanion_1 = require("./volcanion");
+const reshiram_and_charizard_gx_1 = require("./reshiram-and-charizard-gx");
 class ArcanineArt extends arcanine_1.Arcanine {
     constructor() {
         super(...arguments);
@@ -230,6 +231,13 @@ class PorygonZArt extends porygon_z_1.PorygonZ {
     }
 }
 exports.PorygonZArt = PorygonZArt;
+class ReshiramCharizardGXArt extends reshiram_and_charizard_gx_1.ReshiramCharizardGX {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNB/UNB_020_R_EN_LG.png';
+    }
+}
+exports.ReshiramCharizardGXArt = ReshiramCharizardGXArt;
 class SalazzleArt extends salazzle_1.Salazzle {
     constructor() {
         super(...arguments);

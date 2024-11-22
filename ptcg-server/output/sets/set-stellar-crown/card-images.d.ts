@@ -12,6 +12,7 @@ import { Drifblim } from './drifblim';
 import { Electabuzz } from './electabuzz';
 import { FanRotom } from './fan-rotom';
 import { Galvantulaex } from './galvantula-ex';
+import { Garganaclex } from './garganacl-ex';
 import { GlassTrumpet } from './glass-trumpet';
 import { GlisteningCrystal } from './glistening-crystal';
 import { GreatTree } from './great-tree';
@@ -69,6 +70,9 @@ export declare class FanRotomArt extends FanRotom {
     cardImage: string;
 }
 export declare class GalvantulexaArt extends Galvantulaex {
+    cardImage: string;
+}
+export declare class GarganaclexArt extends Garganaclex {
     cardImage: string;
 }
 export declare class GlassTrumpetArt extends GlassTrumpet {

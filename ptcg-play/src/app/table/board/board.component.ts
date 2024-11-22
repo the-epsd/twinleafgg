@@ -11,6 +11,7 @@ import { CardsBaseService } from '../../shared/cards/cards-base.service';
 import { GameService } from '../../api/services/game.service';
 import { LocalGameState } from 'src/app/shared/session/session.interface';
 import { trigger, transition, style, animate, query, stagger } from '@angular/animations';
+import { SettingsService } from '../table-sidebar/settings-dialog/settings.service';
 
 const MAX_BENCH_SIZE = 8;
 const DEFAULT_BENCH_SIZE = 5;
@@ -68,8 +69,13 @@ export class BoardComponent implements OnDestroy {
   constructor(
     private cardsBaseService: CardsBaseService,
     private dnd: DndService,
-    private gameService: GameService
+    private gameService: GameService,
+    private settingsService: SettingsService
   ) {
+
+    this.settingsService.cardSize$.subscribe(size => {
+      document.documentElement.style.setProperty('--card-scale', (size / 100).toString());
+    });
 
     // Bottom Player
     this.bottomActive = this.createBoardCardItem(PlayerType.BOTTOM_PLAYER, SlotType.ACTIVE);
@@ -113,36 +119,36 @@ export class BoardComponent implements OnDestroy {
     }
   }
 
-  private lastCoinFlipPrompt: CoinFlipPrompt | null = null;
-  private lastProcessedId: number = -1;
+  // private lastCoinFlipPrompt: CoinFlipPrompt | null = null;
+  // private lastProcessedId: number = -1;
 
-  get activeCoinFlipPrompt(): CoinFlipPrompt | undefined {
-    // Find current coin flip prompt
-    const currentPrompt = this.gameState?.state?.prompts?.find(prompt => {
-      return prompt.type === 'Coin flip' &&
-        (prompt as CoinFlipPrompt).message === 'COIN_FLIP';
-    }) as CoinFlipPrompt;
+  // get activeCoinFlipPrompt(): CoinFlipPrompt | undefined {
+  //   // Find current coin flip prompt
+  //   const currentPrompt = this.gameState?.state?.prompts?.find(prompt => {
+  //     return prompt.type === 'Coin flip' &&
+  //       (prompt as CoinFlipPrompt).message === 'COIN_FLIP';
+  //   }) as CoinFlipPrompt;
 
-    // Process new prompts
-    if (currentPrompt) {
-      this.lastCoinFlipPrompt = currentPrompt;
-      return currentPrompt;
-    }
+  //   // Process new prompts
+  //   if (currentPrompt) {
+  //     this.lastCoinFlipPrompt = currentPrompt;
+  //     return currentPrompt;
+  //   }
 
-    // Reset when no active prompt
-    if (!this.gameState?.state?.prompts?.length) {
-      this.lastCoinFlipPrompt = null;
-    }
+  //   // Reset when no active prompt
+  //   if (!this.gameState?.state?.prompts?.length) {
+  //     this.lastCoinFlipPrompt = null;
+  //   }
 
-    return undefined;
-  }
+  //   return undefined;
+  // }
 
 
-  handleCoinFlipComplete(result: boolean) {
-    // Now we can process the result after animation
-    console.log('Animation complete, processing result:', result);
-    // This is where we'll trigger the prompt display
-  }
+  // handleCoinFlipComplete(result: boolean) {
+  //   // Now we can process the result after animation
+  //   console.log('Animation complete, processing result:', result);
+  //   // This is where we'll trigger the prompt display
+  // }
 
   createRange(length: number): number[] {
     return Array.from({ length }, (_, i) => i);

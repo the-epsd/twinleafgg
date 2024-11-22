@@ -13,6 +13,11 @@ import { UltraNecrozmaGX } from './ultra-necrozma-gx';
 import { Flabebe } from './flabebe';
 import { Florges } from './florges';
 import { Klefki } from './klefki';
+import { AlolanExeggutor } from './alolan-exeggutor';
+
+export class AlolanExeggutorArt extends AlolanExeggutor {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FLI/FLI_002_R_EN.png';
+}
 
 export class BeastRingArt extends BeastRing {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FLI/FLI_102_R_EN_LG.png';

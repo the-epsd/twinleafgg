@@ -34,6 +34,8 @@ import { Varoom } from './varoom';
 import { VengefulPunch } from './vengeful-punch';
 import { Whiscash } from './whiscash';
 import { Froakie } from './froakie';
+import { Rowlet } from './rowlet';
+import { Dartrix } from './dartrix';
 
 export class AbsolexArt extends Absolex {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_135_R_EN.png';
@@ -58,7 +60,6 @@ export class CharizardexArt extends Charizardex {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_125_R_EN_LG.png';
 }
 
-
 export class CharmeleonArt extends Charmeleon {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_027_R_EN_LG.png';
 }
@@ -69,6 +70,10 @@ export class CharmanderArt extends Charmander {
 
 export class CleffaArt extends Cleffa {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_080_R_EN_LG.png';
+}
+
+export class DartrixArt extends Dartrix {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_014_R_EN_LG.png';
 }
 
 export class DragonairArt extends Dragonair {
@@ -141,6 +146,10 @@ export class PokemonLeagueHeadquartersArt extends PokemonLeagueHeadquarters {
 
 export class PoppyArt extends Poppy {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_193_R_EN_LG.png';
+}
+
+export class RowletArt extends Rowlet {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/OBF/OBF_013_R_EN_LG.png';
 }
 
 export class RymeArt extends Ryme {

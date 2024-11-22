@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WhismurArt = exports.TateAndLizaArt = exports.SwampertArt = exports.SlakothArt = exports.SlakingArt = exports.SableyeArt = exports.RayquazaGXArt = exports.OricorioArt = exports.NuzleafArt = exports.MarshtompArt = exports.MudkipArt = exports.MagcargoArt = exports.LastChancePotionArt = exports.HustleBeltArt = exports.FishermanArt = exports.ElectrodeGXArt = exports.DelcattyArt = exports.CopycatArt = exports.ApricornMakerArt = void 0;
+exports.WhismurArt = exports.TateAndLizaArt = exports.SwampertArt = exports.SlakothArt = exports.SlakingArt = exports.SableyeArt = exports.RayquazaGXArt = exports.OricorioArt = exports.NuzleafArt = exports.MarshtompArt = exports.MudkipArt = exports.MagcargoArt = exports.LastChancePotionArt = exports.HustleBeltArt = exports.FishermanArt = exports.ElectrodeGXArt = exports.DelcattyArt = exports.CopycatArt = exports.ArticunoGXArt = exports.ApricornMakerArt = void 0;
 const apricorn_maker_1 = require("./apricorn-maker");
 const slakoth_1 = require("./slakoth");
 const slaking_1 = require("./slaking");
@@ -20,6 +20,7 @@ const swampert_1 = require("./swampert");
 const tate_and_liza_1 = require("./tate-and-liza");
 const whismur_1 = require("./whismur");
 const rayquaza_gx_1 = require("./rayquaza-gx");
+const articuno_gx_1 = require("./articuno-gx");
 class ApricornMakerArt extends apricorn_maker_1.ApricornMaker {
     constructor() {
         super(...arguments);
@@ -27,6 +28,13 @@ class ApricornMakerArt extends apricorn_maker_1.ApricornMaker {
     }
 }
 exports.ApricornMakerArt = ApricornMakerArt;
+class ArticunoGXArt extends articuno_gx_1.ArticunoGX {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CES/CES_031_R_EN.png';
+    }
+}
+exports.ArticunoGXArt = ArticunoGXArt;
 class CopycatArt extends copycat_1.Copycat {
     constructor() {
         super(...arguments);

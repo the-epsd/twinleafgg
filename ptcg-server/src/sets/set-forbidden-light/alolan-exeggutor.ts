@@ -4,7 +4,7 @@ import { StoreLike, State, EnergyCard } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 
-export class AlolanExeggutorFLI extends PokemonCard {
+export class AlolanExeggutor extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_1;
 

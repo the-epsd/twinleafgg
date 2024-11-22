@@ -13,6 +13,7 @@ exports.setSunAndMoon = [
     new card_images_1.FomantisArt(),
     new card_images_1.GolduckArt(),
     new card_images_1.HerdierArt(),
+    new card_images_1.LurantisGXArt(),
     new card_images_1.OranguruArt(),
     new card_images_1.ProfessorKukuiArt(),
     new card_images_1.RainbowEnergyArt(),

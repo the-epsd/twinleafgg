@@ -2,8 +2,9 @@
 @import '../../../theme/variables.scss';
 
 :root {
-  --sidebar-width: 400px; // Adjust this value to match your sidebar width
-  --card-size: 8vmin;
+  --card-scale: 1;
+  --sidebar-width: 400px;
+  --card-size: calc(8vmin * var(--card-scale));
   --padding-small: 1vmin;
   --padding-normal: 2vmin;
 }
@@ -149,8 +150,8 @@ $board-min-height: calc(6 * var(--card-size) * #{$card-aspect-ratio} + 2 * #{map
 
   >ptcg-board-card,
   >.ptcg-board-drop-target {
-    width: var(--card-size);
-    height: calc(var(--card-size) * #{$card-aspect-ratio});
+    width: calc(var(--card-size) * var(--card-scale));
+    height: calc(var(--card-size) * #{$card-aspect-ratio} * var(--card-scale));
     max-width: 100%;
   }
 }
@@ -159,8 +160,8 @@ $board-min-height: calc(6 * var(--card-size) * #{$card-aspect-ratio} + 2 * #{map
 
   >ptcg-board-card,
   >.ptcg-board-drop-target {
-    width: calc(var(--card-size) * 1.45);
-    height: calc(var(--card-size) * 1.45 * #{$card-aspect-ratio});
+    width: calc(var(--card-size) * 1.45 * var(--card-scale));
+    height: calc(var(--card-size) * 1.45 * #{$card-aspect-ratio} * var(--card-scale));
     max-width: 100%;
   }
 }
@@ -169,8 +170,8 @@ $board-min-height: calc(6 * var(--card-size) * #{$card-aspect-ratio} + 2 * #{map
 
   >ptcg-board-card,
   >.ptcg-board-drop-target {
-    width: calc(var(--card-size) * 1.15);
-    height: calc(var(--card-size) * 1.15 * #{$card-aspect-ratio});
+    width: calc(var(--card-size) * 1.15 * var(--card-scale));
+    height: calc(var(--card-size) * 1.15 * #{$card-aspect-ratio} * var(--card-scale));
     max-width: 100%;
   }
 }
@@ -184,15 +185,15 @@ $board-min-height: calc(6 * var(--card-size) * #{$card-aspect-ratio} + 2 * #{map
 
   >ptcg-board-card,
   >.ptcg-board-drop-target {
-    width: calc(var(--card-size) * 1.15);
-    height: calc(var(--card-size) * 1.15 * #{$card-aspect-ratio});
+    width: calc(var(--card-size) * 1.15 * var(--card-scale));
+    height: calc(var(--card-size) * 1.15 * #{$card-aspect-ratio} * var(--card-scale));
     max-width: 100%;
   }
 }
 
 .ptcg-board-drop-target>ptcg-board-card {
   display: block;
-  width: 100%;
+  width: calc(100% * var(--card-scale));
 }
 
 ptcg-board-card.draggable {
@@ -251,14 +252,14 @@ ptcg-board-prizes {
   .deck-container {
     grid-area: deck;
     align-self: center;
-    width: calc(var(--card-size) * 1.15);
-    height: calc(var(--card-size) * 1.15 * #{$card-aspect-ratio});
+    width: calc(var(--card-size) * 1.15 * var(--card-scale));
+    height: calc(var(--card-size) * 1.15 * #{$card-aspect-ratio} * var(--card-scale));
 
     .deck-card {
       grid-area: deck;
       align-self: center;
-      width: calc(var(--card-size) * 1.15);
-      height: calc(var(--card-size) * 1.15 * #{$card-aspect-ratio});
+      width: calc(var(--card-size) * 1.15 * var(--card-scale));
+      height: calc(var(--card-size) * 1.15 * #{$card-aspect-ratio} * var(--card-scale));
     }
   }
 }
@@ -286,14 +287,14 @@ ptcg-board-prizes {
   .discard-container {
     grid-area: discard;
     align-self: center;
-    width: calc(var(--card-size) * 1.15);
-    height: calc(var(--card-size) * 1.15 * #{$card-aspect-ratio});
+    width: calc(var(--card-size) * 1.15 * var(--card-scale));
+    height: calc(var(--card-size) * 1.15 * #{$card-aspect-ratio} * var(--card-scale));
 
     .discard-card {
       grid-area: discard;
       align-self: center;
-      width: calc(var(--card-size) * 1.15);
-      height: calc(var(--card-size) * 1.15 * #{$card-aspect-ratio});
+      width: calc(var(--card-size) * 1.15 * var(--card-scale));
+      height: calc(var(--card-size) * 1.15 * #{$card-aspect-ratio} * var(--card-scale));
     }
   }
 }
@@ -310,6 +311,8 @@ ptcg-board-prizes {
 .stadium-card {
   align-self: flex-start;
   margin-top: -40px;
+  width: calc(var(--card-size) * 1.15 * var(--card-scale));
+  height: calc(var(--card-size) * 1.15 * #{$card-aspect-ratio} * var(--card-scale));
 
   &.stadium-card-down {
     transform: rotate(180deg);
@@ -324,16 +327,16 @@ ptcg-board-prizes {
   pointer-events: none;
 }
 
-.coin-flip-container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 1000; // Higher z-index to ensure visibility
-  pointer-events: auto; // Enable interactions if needed
-  width: 100px; // Set specific dimensions
-  height: 100px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+// .coin-flip-container {
+//   position: absolute;
+//   top: 50%;
+//   left: 50%;
+//   transform: translate(-50%, -50%);
+//   z-index: 1000; // Higher z-index to ensure visibility
+//   pointer-events: auto; // Enable interactions if needed
+//   width: 100px; // Set specific dimensions
+//   height: 100px;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+// }

@@ -27,6 +27,7 @@ export class Duraludon extends PokemonCard {
     }
   ];
 
+  public regulationMark = 'H';
   public set: string = 'SSP';
   public setNumber: string = '129';
   public cardImage: string = 'assets/cardback.png';

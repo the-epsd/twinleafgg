@@ -28,6 +28,7 @@ class Duraludon extends game_1.PokemonCard {
                 text: 'Discard 2 Energy from this Pokemon.'
             }
         ];
+        this.regulationMark = 'H';
         this.set = 'SSP';
         this.setNumber = '129';
         this.cardImage = 'assets/cardback.png';

@@ -1,11 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.XerneasArt = exports.MisdreavusArt = exports.LusamineArt = exports.GladionArt = exports.DevouredFieldArt = exports.CounterEnergyArt = exports.ChimechoArt = exports.BuzzwoleGXArt = void 0;
+exports.XerneasArt = exports.MisdreavusArt = exports.LusamineArt = exports.KartanaGXArt = exports.GladionArt = exports.DevouredFieldArt = exports.CounterEnergyArt = exports.ChimechoArt = exports.BuzzwoleGXArt = void 0;
 const buzzwole_gx_1 = require("./buzzwole-gx");
 const chimecho_1 = require("./chimecho");
 const counter_energy_1 = require("./counter-energy");
 const devoured_field_1 = require("./devoured-field");
 const gladion_1 = require("./gladion");
+const kartana_gx_1 = require("./kartana-gx");
 const lusamine_1 = require("./lusamine");
 const misdreavus_1 = require("./misdreavus");
 const xerneas_1 = require("./xerneas");
@@ -44,6 +45,13 @@ class GladionArt extends gladion_1.Gladion {
     }
 }
 exports.GladionArt = GladionArt;
+class KartanaGXArt extends kartana_gx_1.KartanaGX {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/CIN/CIN_070_R_EN.png';
+    }
+}
+exports.KartanaGXArt = KartanaGXArt;
 class LusamineArt extends lusamine_1.Lusamine {
     constructor() {
         super(...arguments);

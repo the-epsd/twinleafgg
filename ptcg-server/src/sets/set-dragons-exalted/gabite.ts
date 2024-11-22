@@ -7,7 +7,8 @@ import {
   ShuffleDeckPrompt,
   GameError,
   PlayerType,
-  ShowCardsPrompt
+  ShowCardsPrompt,
+  StateUtils
 } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
@@ -70,7 +71,7 @@ export class Gabite extends PokemonCard {
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
-      const opponent = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
 
       if (player.marker.hasMarker(this.DRAGON_CALL_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);

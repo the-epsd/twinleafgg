@@ -14,6 +14,9 @@ exports.setDarknessAblaze = [
     new card_images_1.PowerfulColorlessEnergyArt(),
     new card_images_1.RareFossilArt(),
     new card_images_1.RoseTowerArt(),
+    new card_images_1.RowletArt(),
+    new card_images_1.StarlyArt(),
+    new card_images_1.SwannaArt(),
     new card_images_1.TapuKokoArt(),
     new card_images_1.TeddiursaArt(),
     new card_images_1.UrsaringArt()

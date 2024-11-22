@@ -15,6 +15,7 @@ import { Golduck } from './golduck';
 import { AlolanRattata } from './alolan_rattata';
 import { TimerBall } from './timer-ball';
 import { DecidueyeGX } from './decidueye-gx';
+import { LurantisGX } from './lurantis-gx';
 
 export class AlolanGrimerArt extends AlolanGrimer {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SUM/SUM_057_R_EN_LG.png';
@@ -64,6 +65,10 @@ export class NestBallArt extends NestBall {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SUM/SUM_123_R_EN.png';
   public setNumber = '123';
   public fullName: string = 'Nest Ball SUM';
+}
+
+export class LurantisGXArt extends LurantisGX {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SUM/SUM_015_R_EN.png';
 }
 
 export class OranguruArt extends Oranguru {

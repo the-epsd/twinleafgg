@@ -12,6 +12,9 @@ import { RoseTower } from './rose-tower';
 import { TapuKoko } from './tapu-koko';
 import { Teddiursa } from './teddiursa';
 import { Ursaring } from './ursaring';
+import { Rowlet } from './rowlet';
+import { Starly } from './starly';
+import { Swanna } from './swanna';
 
 export class BirdKeeperArt extends BirdKeeper {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/DAA/DAA_159_R_EN_LG.png';
@@ -55,6 +58,18 @@ export class RareFossilArt extends RareFossil {
 
 export class RoseTowerArt extends RoseTower {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/DAA/DAA_169_R_EN_LG.png';
+}
+
+export class RowletArt extends Rowlet {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/DAA/DAA_011_R_EN.png';
+}
+
+export class StarlyArt extends Starly {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/DAA/DAA_145_R_EN.png';
+}
+
+export class SwannaArt extends Swanna {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/DAA/DAA_149_R_EN.png';
 }
 
 export class TapuKokoArt extends TapuKoko {
