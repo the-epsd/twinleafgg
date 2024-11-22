@@ -22,7 +22,7 @@ function* useBabyEvolution(next: Function, store: StoreLike, state: State,
 
   let cards: Card[] = [];
   return store.prompt(state, new ChooseCardsPrompt(
-    player.id,
+    player,
     GameMessage.CHOOSE_POKEMON_TO_EVOLVE,
     player.hand,
     { superType: SuperType.POKEMON, name: 'Pikachu' },
@@ -64,7 +64,7 @@ function* useFindAFriend(next: Function, store: StoreLike, state: State,
 
   let cards: Card[] = [];
   yield store.prompt(state, new ChooseCardsPrompt(
-    player.id,
+    player,
     GameMessage.CHOOSE_CARD_TO_HAND,
     player.deck,
     { superType: SuperType.POKEMON },

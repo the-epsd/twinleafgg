@@ -50,7 +50,7 @@ class AlolanMuk extends pokemon_card_1.PokemonCard {
             ], result => {
                 if (result === true) {
                     let card;
-                    return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_DISCARD, opponent.active, { superType: card_types_1.SuperType.ENERGY }, { min: 1, max: 1, allowCancel: false }), selected => {
+                    return store.prompt(state, new game_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_DISCARD, opponent.active, { superType: card_types_1.SuperType.ENERGY }, { min: 1, max: 1, allowCancel: false }), selected => {
                         card = selected[0];
                         opponent.active.moveCardTo(card, opponent.discard);
                         return state;

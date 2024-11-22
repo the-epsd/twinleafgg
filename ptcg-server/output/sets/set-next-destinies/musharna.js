@@ -64,7 +64,7 @@ class Musharna extends pokemon_card_1.PokemonCard {
             player.marker.addMarker(this.FOREWARN_MARKER, this);
             const deckTop = new card_list_1.CardList();
             deckTop.cards = player.deck.cards.slice(0, 2);
-            return store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, deckTop, {}, { min: 1, max: 1, allowCancel: false }), selected => {
+            return store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, deckTop, {}, { min: 1, max: 1, allowCancel: false }), selected => {
                 player.deck.moveCardsTo(selected, player.hand);
             });
         }

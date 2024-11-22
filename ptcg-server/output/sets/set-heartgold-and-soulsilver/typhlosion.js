@@ -16,7 +16,7 @@ function* useFlareDestroy(next, store, state, effect) {
     const checkProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(player);
     state = store.reduceEffect(state, checkProvidedEnergy);
     if (player.active.cards.some(c => c instanceof game_1.EnergyCard)) {
-        yield store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, player.active, { superType: card_types_1.SuperType.ENERGY }, { min: 1, max: 1, allowCancel: false }), selected => {
+        yield store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, player.active, { superType: card_types_1.SuperType.ENERGY }, { min: 1, max: 1, allowCancel: false }), selected => {
             const cards = selected || [];
             const discardEnergy = new attack_effects_1.DiscardCardsEffect(effect, cards);
             discardEnergy.target = player.active;
@@ -26,7 +26,7 @@ function* useFlareDestroy(next, store, state, effect) {
     }
     // Defending Pokemon has no energy cards attached
     if (opponent.active.cards.some(c => c instanceof game_1.EnergyCard)) {
-        yield store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, opponent.active, { superType: card_types_1.SuperType.ENERGY }, { min: 1, max: 1, allowCancel: false }), selected => {
+        yield store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, opponent.active, { superType: card_types_1.SuperType.ENERGY }, { min: 1, max: 1, allowCancel: false }), selected => {
             const cards = selected || [];
             const discardEnergy = new attack_effects_1.DiscardCardsEffect(effect, cards);
             return store.reduceEffect(state, discardEnergy);

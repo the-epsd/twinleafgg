@@ -31,7 +31,7 @@ function* useStadium(next: Function, store: StoreLike, state: State, effect: Use
 
   let cards: Card[] = [];
   return store.prompt(state, new ChooseCardsPrompt(
-    player.id,
+    player,
     GameMessage.CHOOSE_CARD_TO_HAND,
     player.discard,
     { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },

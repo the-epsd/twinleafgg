@@ -106,7 +106,7 @@ export class Mankey extends PokemonCard {
 
             let cards: Card[] = [];
             state = store.prompt(state, new ChooseCardsPrompt(
-              player.id,
+              player,
               GameMessage.REVEAL_RANDOM_CARD_IN_OPPONENT_HAND,
               opponent.hand,
               {},
@@ -144,7 +144,7 @@ export class Mankey extends PokemonCard {
               allPrizeCards.cards.push(...prizeList.cards);
             });
             state = store.prompt(state, new ChooseCardsPrompt(
-              player.id,
+              player,
               GameMessage.REVEAL_ONE_OF_YOUR_PRIZES,
               allPrizeCards,
               {},
@@ -182,7 +182,7 @@ export class Mankey extends PokemonCard {
               allPrizeCards.cards.push(...prizeList.cards);
             });
             state = store.prompt(state, new ChooseCardsPrompt(
-              player.id,
+              player,
               GameMessage.REVEAL_ONE_OF_YOUR_PRIZES,
               allPrizeCards,
               {},

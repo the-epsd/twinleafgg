@@ -48,7 +48,7 @@ class BattleVIPPass extends trainer_card_1.TrainerCard {
                     effect.preventDefault = true;
                     const maxCards = Math.min(2, openSlots.length);
                     let cards = [];
-                    return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH, player.deck, { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.BASIC }, { min: 0, max: maxCards, allowCancel: false }), selectedCards => {
+                    return store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH, player.deck, { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.BASIC }, { min: 0, max: maxCards, allowCancel: false }), selectedCards => {
                         cards = selectedCards || [];
                         cards.forEach((card, index) => {
                             player.deck.moveCardTo(card, slots[index]);

@@ -67,7 +67,7 @@ export class Blastoiseex extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
       state = store.prompt(state, new ChooseCardsPrompt(
-        player.id,
+        player,
         GameMessage.CHOOSE_CARD_TO_DISCARD,
         player.hand,
         { superType: SuperType.ENERGY },

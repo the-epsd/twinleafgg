@@ -50,7 +50,7 @@ export class Wurmple extends PokemonCard {
       });
 
       return store.prompt(state, new ChooseCardsPrompt(
-        player.id,
+        player,
         GameMessage.CHOOSE_CARD_TO_HAND,
         player.deck,
         { superType: SuperType.POKEMON },

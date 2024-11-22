@@ -65,7 +65,7 @@ class Tatsugiriex extends game_1.PokemonCard {
             const deckTop = new game_1.CardList();
             player.deck.moveTo(deckTop, 8);
             let cards = [];
-            return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH, deckTop, { superType: card_types_1.SuperType.POKEMON }, { min: 0, max: maxPokemons, allowCancel: false }), selectedCards => {
+            return store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH, deckTop, { superType: card_types_1.SuperType.POKEMON }, { min: 0, max: maxPokemons, allowCancel: false }), selectedCards => {
                 cards = selectedCards || [];
                 cards.forEach((card, index) => {
                     deckTop.moveCardTo(card, openSlots[index]);

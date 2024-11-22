@@ -34,7 +34,7 @@ export class DeliveryBox extends TrainerCard {
       const opponent = StateUtils.getOpponent(state, player);
       let cards: Card[] = [];
       store.prompt(state, new ChooseCardsPrompt(
-        player.id,
+        player,
         GameMessage.CHOOSE_CARD_TO_HAND,
         player.deck,
         { superType: SuperType.TRAINER, trainerType: TrainerType.ITEM },

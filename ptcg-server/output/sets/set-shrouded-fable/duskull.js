@@ -16,7 +16,7 @@ function* useKingsOrder(next, store, state, effect) {
         throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
     }
     let cards = [];
-    yield store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH, player.discard, { superType: card_types_1.SuperType.POKEMON, name: 'Duskull' }, { min: 1, max, allowCancel: false }), selected => {
+    yield store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH, player.discard, { superType: card_types_1.SuperType.POKEMON, name: 'Duskull' }, { min: 1, max, allowCancel: false }), selected => {
         cards = selected || [];
         next();
     });

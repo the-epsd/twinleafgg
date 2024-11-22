@@ -32,7 +32,7 @@ function* playCard(next, store, state, self, effect) {
             blocked.push(index);
         }
     });
-    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.discard, {}, { min: Math.min(2, supportersAndStadiumsInDiscard), max: Math.min(2, supportersAndStadiumsInDiscard), allowCancel: false, blocked }), selected => {
+    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.discard, {}, { min: Math.min(2, supportersAndStadiumsInDiscard), max: Math.min(2, supportersAndStadiumsInDiscard), allowCancel: false, blocked }), selected => {
         cards = selected || [];
         next();
     });

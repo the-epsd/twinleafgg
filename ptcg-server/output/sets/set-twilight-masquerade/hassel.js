@@ -33,7 +33,7 @@ function* playCard(next, store, state, self, effect) {
     }
     const deckTop = new game_1.CardList();
     player.deck.moveTo(deckTop, 8);
-    return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, deckTop, {}, { min: 0, max: 3, allowCancel: false }), selected => {
+    return store.prompt(state, new game_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, deckTop, {}, { min: 0, max: 3, allowCancel: false }), selected => {
         deckTop.moveCardsTo(selected, player.hand);
         deckTop.moveTo(player.deck);
         player.supporter.moveCardTo(effect.trainerCard, player.discard);

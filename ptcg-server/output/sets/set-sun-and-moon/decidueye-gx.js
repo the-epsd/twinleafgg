@@ -93,7 +93,7 @@ class DecidueyeGX extends pokemon_card_1.PokemonCard {
                 const max = Math.min(3);
                 const min = max;
                 return store.prompt(state, [
-                    new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.discard, {}, { min, max, allowCancel: false })
+                    new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.discard, {}, { min, max, allowCancel: false })
                 ], selected => {
                     const cards = selected || [];
                     player.discard.moveCardsTo(cards, player.hand);

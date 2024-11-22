@@ -60,7 +60,7 @@ function* useRebirth(next: Function, store: StoreLike, state: State,
 
   const count = Math.min(3, basicEnergies);
   return store.prompt(state, new ChooseCardsPrompt(
-    player.id,
+    player,
     GameMessage.CHOOSE_CARD_TO_ATTACH,
     player.discard,
     { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },

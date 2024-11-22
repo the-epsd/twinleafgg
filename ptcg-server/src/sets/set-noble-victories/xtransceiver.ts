@@ -30,7 +30,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   if (coin1Result) {
     let cards: any[] = [];
     yield store.prompt(state, new ChooseCardsPrompt(
-      player.id,
+      player,
       GameMessage.CHOOSE_CARD_TO_HAND,
       player.deck,
       { superType: SuperType.TRAINER, trainerType: TrainerType.SUPPORTER },

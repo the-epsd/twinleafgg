@@ -47,7 +47,7 @@ function* useRebirth(next, store, state, self, effect) {
         return state;
     }
     const count = Math.min(3, basicEnergies);
-    return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_ATTACH, player.discard, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC }, { min: count, max: count, allowCancel: false, differentTypes: true }), selected => {
+    return store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_ATTACH, player.discard, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC }, { min: count, max: count, allowCancel: false, differentTypes: true }), selected => {
         const cards = selected || [];
         player.discard.moveCardsTo(cards, slots[0]);
     });

@@ -28,7 +28,7 @@ function* useMysteriousBeam(next: Function, store: StoreLike, state: State,
   
   let cards: Card[] = [];
   yield store.prompt(state, new ChooseCardsPrompt(
-    player.id,
+    player,
     GameMessage.CHOOSE_CARD_TO_DISCARD,
     opponent.active,
     { superType: SuperType.ENERGY },

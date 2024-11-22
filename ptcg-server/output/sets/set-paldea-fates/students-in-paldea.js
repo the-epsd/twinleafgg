@@ -42,7 +42,7 @@ class StudentsInPaldea extends trainer_card_1.TrainerCard {
                 }
             });
             let cards = [];
-            state = store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.POKEMON }, { min: 0, max: cardsToTake, allowCancel: false, blocked }), selected => {
+            state = store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.POKEMON }, { min: 0, max: cardsToTake, allowCancel: false, blocked }), selected => {
                 cards = selected || [];
                 player.deck.moveCardsTo(cards, player.hand);
                 state = store.prompt(state, new game_1.ShowCardsPrompt(opponent.id, game_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards), () => {

@@ -46,7 +46,7 @@ class Delinquent extends trainer_card_1.TrainerCard {
             }
             if (opponentCards.length > 3) {
                 let cards = [];
-                state = store.prompt(state, new game_1.ChooseCardsPrompt(opponent.id, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, opponent.hand, {}, { min: 3, max: 3, allowCancel: false }), selected => {
+                state = store.prompt(state, new game_1.ChooseCardsPrompt(opponent, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, opponent.hand, {}, { min: 3, max: 3, allowCancel: false }), selected => {
                     cards = selected || [];
                     opponent.hand.moveCardsTo(cards, opponent.discard);
                 });

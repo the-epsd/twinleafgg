@@ -63,7 +63,7 @@ class Sneasel extends pokemon_card_1.PokemonCard {
                 if (targets.length === 0) {
                     return state;
                 }
-                return store.prompt(state, new game_1.ChooseCardsPrompt(opponent.id, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, targets[0], { superType: game_1.SuperType.ENERGY }, { min: 1, max: 1, allowCancel: false }), selected => {
+                return store.prompt(state, new game_1.ChooseCardsPrompt(opponent, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, targets[0], { superType: game_1.SuperType.ENERGY }, { min: 1, max: 1, allowCancel: false }), selected => {
                     targets[0].moveCardTo(selected[0], opponent.discard);
                     return state;
                 });

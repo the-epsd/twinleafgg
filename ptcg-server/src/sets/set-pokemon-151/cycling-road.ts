@@ -44,7 +44,7 @@ export class CyclingRoad extends TrainerCard {
     }
 
     state = store.prompt(state, new ChooseCardsPrompt(
-      player.id,
+      player,
       GameMessage.CHOOSE_CARD_TO_DISCARD,
       player.hand,
       { superType: SuperType.ENERGY },

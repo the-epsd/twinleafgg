@@ -63,7 +63,7 @@ class GreensExploration extends trainer_card_1.TrainerCard {
             if (pokemonWithAbilities.length > 0) {
                 throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
             }
-            return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_ATTACH, player.deck, { superType: card_types_1.SuperType.TRAINER }, { min: 0, max: 2, allowCancel: false }), cards => {
+            return store.prompt(state, new game_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_ATTACH, player.deck, { superType: card_types_1.SuperType.TRAINER }, { min: 0, max: 2, allowCancel: false }), cards => {
                 cards = cards || [];
                 if (cards.length > 0) {
                     player.deck.moveCardsTo(cards, player.hand);

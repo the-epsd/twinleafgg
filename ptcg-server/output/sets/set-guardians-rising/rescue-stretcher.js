@@ -56,7 +56,7 @@ class RescueStretcher extends trainer_card_1.TrainerCard {
                     message: game_message_1.GameMessage.CHOOSE_CARD_TO_DECK,
                     action: () => {
                         let cards = [];
-                        store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_DECK, player.discard, { superType: card_types_1.SuperType.POKEMON }, { min: Math.min(pokemonInDiscard, 3), max: 3, allowCancel: false, blocked }), selected => {
+                        store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_DECK, player.discard, { superType: card_types_1.SuperType.POKEMON }, { min: Math.min(pokemonInDiscard, 3), max: 3, allowCancel: false, blocked }), selected => {
                             cards = selected || [];
                             cards.forEach((card, index) => {
                                 store.log(state, game_message_1.GameLog.LOG_PLAYER_RETURNS_TO_DECK_FROM_DISCARD, { name: player.name, card: card.name });
@@ -73,7 +73,7 @@ class RescueStretcher extends trainer_card_1.TrainerCard {
                     message: game_message_1.GameMessage.CHOOSE_CARD_TO_HAND,
                     action: () => {
                         let cards = [];
-                        store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.discard, { superType: card_types_1.SuperType.POKEMON }, { min: 1, max: 1, allowCancel: false, blocked }), selected => {
+                        store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.discard, { superType: card_types_1.SuperType.POKEMON }, { min: 1, max: 1, allowCancel: false, blocked }), selected => {
                             cards = selected || [];
                             cards.forEach((card, index) => {
                                 store.log(state, game_message_1.GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });

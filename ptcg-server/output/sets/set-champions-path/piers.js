@@ -41,7 +41,7 @@ function* playCard(next, store, state, self, effect) {
     // Total max is sum of max for each 
     const count = maxEnergy + maxPokemon;
     // Pass max counts to prompt options
-    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_ONE_DARK_POKEMON_AND_ONE_ENERGY_TO_HAND, player.deck, {}, { min: 0, max: count, allowCancel: false, blocked, maxEnergies: maxEnergy, maxPokemons: maxPokemon }), selected => {
+    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_ONE_DARK_POKEMON_AND_ONE_ENERGY_TO_HAND, player.deck, {}, { min: 0, max: count, allowCancel: false, blocked, maxEnergies: maxEnergy, maxPokemons: maxPokemon }), selected => {
         cards = selected || [];
         next();
     });

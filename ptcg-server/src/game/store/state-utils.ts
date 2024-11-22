@@ -193,6 +193,14 @@ export class StateUtils {
     return true;
   }
 
+  public static getPlayerById(state: State, playerId: number): Player {
+    const player = state.players.find(p => p.id === playerId);
+    if (player === undefined) {
+      throw new GameError(GameMessage.INVALID_GAME_STATE);
+    }
+    return player;
+  }
+  
   public static getOpponent(state: State, player: Player): Player {
     const opponent = state.players.find(p => p.id !== player.id);
     if (opponent === undefined) {

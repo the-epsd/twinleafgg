@@ -23,7 +23,7 @@ function* useTimeControl(next: Function, store: StoreLike, state: State,
   const deckTop = new CardList();
 
   yield store.prompt(state, new ChooseCardsPrompt(
-    player.id,
+    player,
     GameMessage.CHOOSE_CARD_TO_HAND,
     player.deck,
     {},

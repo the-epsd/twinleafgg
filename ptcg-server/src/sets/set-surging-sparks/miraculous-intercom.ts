@@ -28,7 +28,7 @@ function* playCard(next: Function, store: StoreLike, state: State, self: Miracul
 
   let cards: Card[] = [];
   yield store.prompt(state, new ChooseCardsPrompt(
-    player.id,
+    player,
     GameMessage.CHOOSE_CARD_TO_HAND,
     player.discard,
     { superType: SuperType.TRAINER, trainerType: TrainerType.SUPPORTER },

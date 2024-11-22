@@ -51,7 +51,7 @@ export class TeamStarGrunt extends TrainerCard {
 
       const target = opponent.active;
       state = store.prompt(state, new ChooseCardsPrompt(
-        player.id,
+        player,
         GameMessage.CHOOSE_CARD_TO_DISCARD,
         target,
         { superType: SuperType.ENERGY },

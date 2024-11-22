@@ -39,7 +39,7 @@ function* playCard(next, store, state, self, effect) {
     if (count === 0) {
         throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
     }
-    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_DECK, player.discard, {}, { min: count, max: count, allowCancel: false, blocked, maxPokemons, maxEnergies }), selected => {
+    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_DECK, player.discard, {}, { min: count, max: count, allowCancel: false, blocked, maxPokemons, maxEnergies }), selected => {
         cards = selected || [];
         next();
     });

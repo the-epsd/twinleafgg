@@ -76,7 +76,7 @@ export class Giacomo extends TrainerCard {
       const target = targets[0];
       let cards: Card[] = [];
       store.prompt(state, new ChooseCardsPrompt(
-        player.id,
+        player,
         GameMessage.CHOOSE_CARD_TO_DISCARD,
         target,
         { superType: SuperType.ENERGY, energyType: EnergyType.SPECIAL },

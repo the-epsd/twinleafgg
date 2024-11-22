@@ -71,7 +71,7 @@ export class GalarianMeowth extends PokemonCard {
       }
 
       store.prompt(state, new ChooseCardsPrompt(
-        player.id,
+        player,
         GameMessage.CHOOSE_CARD_TO_DISCARD,
         player.hand,
         {},
@@ -86,7 +86,7 @@ export class GalarianMeowth extends PokemonCard {
         player.hand.moveCardsTo(cards, player.discard);
 
         store.prompt(state, new ChooseCardsPrompt(
-          player.id,
+          player,
           GameMessage.CHOOSE_CARD_TO_HAND,
           player.deck,
           { superType: SuperType.POKEMON, name: 'Galarian Perrserker' },

@@ -137,7 +137,7 @@ function choosePrizeCards(state: State, prizesToTake: [number, number]): ChooseC
       });
 
       const prompt = new ChooseCardsPrompt(
-        player.id,
+        player,
         GameMessage.CHOOSE_PRIZE_CARD,
         allPrizeCards,
         {},  // No specific filter needed for prizes

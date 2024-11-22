@@ -38,7 +38,7 @@ export class Revive extends TrainerCard {
 
       let cards: Card[] = [];
       return store.prompt(state, new ChooseCardsPrompt(
-        player.id,
+        player,
         GameMessage.CHOOSE_BASIC_POKEMON_TO_BENCH,
         player.discard,
         { superType: SuperType.POKEMON, stage: Stage.BASIC },

@@ -43,7 +43,7 @@ export class HandTrimmer extends TrainerCard {
       // Opponent discards first
       if (opponent.hand.cards.length > 5) {
         store.prompt(state, new ChooseCardsPrompt(
-          opponent.id,
+          opponent,
           GameMessage.CHOOSE_CARD_TO_DISCARD,
           opponent.hand,
           {},
@@ -64,7 +64,7 @@ export class HandTrimmer extends TrainerCard {
       // Player discards next
       if (player.hand.cards.length > 5) {
         store.prompt(state, new ChooseCardsPrompt(
-          player.id,
+          player,
           GameMessage.CHOOSE_CARD_TO_DISCARD,
           player.hand,
           {},

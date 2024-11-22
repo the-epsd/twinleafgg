@@ -79,7 +79,7 @@ class GalarianObstagoon extends pokemon_card_1.PokemonCard {
             catch (_a) {
                 throw new game_1.GameError(game_message_1.GameMessage.CANNOT_USE_POWER);
             }
-            return store.prompt(state, new game_1.ChooseCardsPrompt(opponent.id, game_message_1.GameMessage.CHOOSE_CARD_TO_DISCARD, opponent.hand, {}, { min: cardsToRemove, max: cardsToRemove, allowCancel: false }), selected => {
+            return store.prompt(state, new game_1.ChooseCardsPrompt(opponent, game_message_1.GameMessage.CHOOSE_CARD_TO_DISCARD, opponent.hand, {}, { min: cardsToRemove, max: cardsToRemove, allowCancel: false }), selected => {
                 opponent.hand.moveCardsTo(selected, opponent.discard);
                 selected.forEach((card, index) => {
                     store.log(state, game_message_1.GameLog.LOG_PLAYER_DISCARDS_CARD, { name: opponent.name, card: card.name, effectName: this.powers[0].name });

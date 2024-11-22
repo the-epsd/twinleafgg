@@ -81,7 +81,7 @@ function* useStadium(next: Function, store: StoreLike, state: State, effect: Use
 
   let cards: Card[] = [];
   yield store.prompt(state, new ChooseCardsPrompt(
-    player.id,
+    player,
     GameMessage.CHOOSE_CARD_TO_EVOLVE,
     player.deck,
     { superType: SuperType.POKEMON, stage: Stage.STAGE_1, evolvesFrom: pokemonCard.name },
@@ -116,7 +116,7 @@ function* useStadium(next: Function, store: StoreLike, state: State, effect: Use
 
     let stage2Cards: Card[] = [];
     yield store.prompt(state, new ChooseCardsPrompt(
-      player.id,
+      player,
       GameMessage.CHOOSE_CARD_TO_EVOLVE,
       player.deck,
       { superType: SuperType.POKEMON, stage: Stage.STAGE_2, evolvesFrom: evolution.name },

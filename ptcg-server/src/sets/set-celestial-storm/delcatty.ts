@@ -84,7 +84,7 @@ export class Delcatty extends PokemonCard {
           const max = Math.min(supportersInDiscard, 2);
 
           state = store.prompt(state, new ChooseCardsPrompt(
-            player.id,
+            player,
             GameMessage.CHOOSE_CARD_TO_HAND,
             player.discard,
             { superType: SuperType.TRAINER, trainerType: TrainerType.SUPPORTER },

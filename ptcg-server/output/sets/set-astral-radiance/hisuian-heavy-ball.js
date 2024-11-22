@@ -53,7 +53,7 @@ class HisuianHeavyBall extends game_1.TrainerCard {
             player.prizes.forEach(prizeList => {
                 allPrizeCards.cards.push(...prizeList.cards);
             });
-            store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, allPrizeCards, { superType: game_1.SuperType.POKEMON, stage: game_1.Stage.BASIC }, { min: 0, max: 1, allowCancel: false }), chosenPrize => {
+            store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_HAND, allPrizeCards, { superType: game_1.SuperType.POKEMON, stage: game_1.Stage.BASIC }, { min: 0, max: 1, allowCancel: false }), chosenPrize => {
                 if (chosenPrize === null || chosenPrize.length === 0) {
                     player.prizes.forEach((p, index) => {
                         if (originallyFaceDown[index]) {

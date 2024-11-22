@@ -60,7 +60,7 @@ export class MysteriousPearl extends TrainerCard {
       });
 
       store.prompt(state, new ChooseCardsPrompt(
-        player.id,
+        player,
         GameMessage.CHOOSE_CARD_TO_HAND,
         allPrizeCards,
         { superType: SuperType.POKEMON },

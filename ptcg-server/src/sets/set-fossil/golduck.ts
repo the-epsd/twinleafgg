@@ -58,7 +58,7 @@ export class Golduck extends PokemonCard {
 
       let card: Card;
       return store.prompt(state, new ChooseCardsPrompt(
-        player.id,
+        player,
         GameMessage.CHOOSE_CARD_TO_DISCARD,
         opponent.active,
         { superType: SuperType.ENERGY },

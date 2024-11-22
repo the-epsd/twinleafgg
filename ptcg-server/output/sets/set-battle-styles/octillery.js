@@ -21,7 +21,7 @@ function* useRapidStrikeSearch(next, store, state, self, effect) {
         throw new game_1.GameError(game_message_1.GameMessage.POWER_ALREADY_USED);
     }
     player.usedRapidStrikeSearchThisTurn = true;
-    yield store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, {}, { min: 1, max: 1, allowCancel: true, blocked }), selected => {
+    yield store.prompt(state, new game_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, {}, { min: 1, max: 1, allowCancel: true, blocked }), selected => {
         cards = selected || [];
         next();
     });

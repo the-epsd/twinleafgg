@@ -5,13 +5,14 @@ const card_types_1 = require("../card/card-types");
 const prompt_1 = require("./prompt");
 exports.ChooseCardsPromptType = 'Choose cards';
 class ChooseCardsPrompt extends prompt_1.Prompt {
-    constructor(playerId, message, cards, filter, options) {
-        super(playerId);
+    constructor(player, message, cards, filter, options) {
+        super(player.id);
         this.message = message;
         this.cards = cards;
         this.filter = filter;
         this.type = exports.ChooseCardsPromptType;
         this.blockedCardNames = [];
+        this.player = player;
         // Default options
         this.options = Object.assign({}, {
             min: 0,
@@ -40,7 +41,9 @@ class ChooseCardsPrompt extends prompt_1.Prompt {
                 }
             }
         }
-        // this.cards.sort();
+        if (this.cards === this.player.deck || this.cards === this.player.discard) {
+            this.cards.sort();
+        }
         if (this.options.blocked.length > 0) {
             this.options.blocked = [];
             this.cards.cards.forEach((card, index) => {

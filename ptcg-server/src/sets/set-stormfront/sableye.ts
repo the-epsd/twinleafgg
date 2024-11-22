@@ -88,7 +88,7 @@ export class Sableye extends PokemonCard {
       const player = effect.player;
 
       store.prompt(state, new ChooseCardsPrompt(
-        player.id,
+        player,
         GameMessage.CHOOSE_CARD_TO_COPY_EFFECT,
         player.deck,
         { superType: SuperType.TRAINER, trainerType: TrainerType.SUPPORTER },

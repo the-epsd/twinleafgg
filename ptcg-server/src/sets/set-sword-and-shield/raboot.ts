@@ -43,7 +43,7 @@ export class Raboot extends PokemonCard {
       }
 
       return store.prompt(state, new ChooseCardsPrompt(
-        player.id,
+        player,
         GameMessage.CHOOSE_CARD_TO_ATTACH,
         player.deck,
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fire Energy' },

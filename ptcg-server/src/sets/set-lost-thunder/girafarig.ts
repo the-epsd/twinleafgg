@@ -42,7 +42,7 @@ export class Girafarig extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       return store.prompt(state, new ChooseCardsPrompt(
-        player.id,
+        player,
         GameMessage.CHOOSE_CARD_TO_DISCARD,
         opponent.discard,
         {},

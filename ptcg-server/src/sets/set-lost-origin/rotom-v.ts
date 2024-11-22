@@ -59,7 +59,7 @@ export class RotomV extends PokemonCard {
 
       // Prompt player to choose tools to send to lost zone 
       return store.prompt(state, new ChooseCardsPrompt(
-        player.id,
+        player,
         GameMessage.CHOOSE_CARD_TO_DISCARD,
         player.discard,
         { superType: SuperType.TRAINER, trainerType: TrainerType.TOOL },

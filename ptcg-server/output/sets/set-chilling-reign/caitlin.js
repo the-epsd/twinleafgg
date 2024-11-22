@@ -11,7 +11,7 @@ function* playCard(next, store, state, effect) {
     //   throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
     // }
     const max = player.hand.cards.length;
-    return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.hand, {}, { min: 1, max: max, allowCancel: false }), selected => {
+    return store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.hand, {}, { min: 1, max: max, allowCancel: false }), selected => {
         const selectedLength = selected.length;
         const deckTop = new game_1.CardList();
         player.hand.moveCardsTo(selected, deckTop);

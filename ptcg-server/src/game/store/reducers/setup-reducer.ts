@@ -137,9 +137,9 @@ function* setupGame(next: Function, store: StoreLike, state: State): IterableIte
   });
 
   yield store.prompt(state, [
-    new ChooseCardsPrompt(player.id, GameMessage.CHOOSE_STARTING_POKEMONS,
+    new ChooseCardsPrompt(player, GameMessage.CHOOSE_STARTING_POKEMONS,
       player.hand, {}, { ...chooseCardsOptions, blocked }),
-    new ChooseCardsPrompt(opponent.id, GameMessage.CHOOSE_STARTING_POKEMONS,
+    new ChooseCardsPrompt(opponent, GameMessage.CHOOSE_STARTING_POKEMONS,
       opponent.hand, {}, { ...chooseCardsOptions, blocked: blockedOpponent })
   ], choice => {
     putStartingPokemonsAndPrizes(player, choice[0]);

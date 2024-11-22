@@ -45,7 +45,7 @@ export class Nuzleaf extends PokemonCard {
 
       if (opponent.hand.cards.length > 0) {
         store.prompt(state, new ChooseCardsPrompt(
-          player.id,
+          player,
           GameMessage.CHOOSE_CARD_TO_SHUFFLE,
           opponent.hand,
           { trainerType: TrainerType.SUPPORTER },

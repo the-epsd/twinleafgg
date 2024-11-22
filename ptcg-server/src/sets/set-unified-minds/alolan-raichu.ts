@@ -41,7 +41,7 @@ export class AlolanRaichu extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       return store.prompt(state, new ChooseCardsPrompt(
-        player.id,
+        player,
         GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
         player.active, // Card source is target Pokemon
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Lightning Energy' },

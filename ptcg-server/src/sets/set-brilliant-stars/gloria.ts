@@ -74,7 +74,7 @@ export class Gloria extends TrainerCard {
         const maxCards = Math.min(3, openSlots.length);
 
         return store.prompt(state, new ChooseCardsPrompt(
-          player.id,
+          player,
           GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
           player.deck,
           { superType: SuperType.POKEMON, stage: Stage.BASIC },

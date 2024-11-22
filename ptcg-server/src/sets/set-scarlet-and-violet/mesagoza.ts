@@ -40,7 +40,7 @@ export class Mesagoza extends TrainerCard {
     return store.prompt(state, new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP), flipResult => {
       if (flipResult) {
         return store.prompt(state, new ChooseCardsPrompt(
-          player.id,
+          player,
           GameMessage.CHOOSE_CARD_TO_HAND,
           player.deck,
           { superType: SuperType.POKEMON },

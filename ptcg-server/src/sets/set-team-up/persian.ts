@@ -44,7 +44,7 @@ export class Persian extends PokemonCard {
         let minMaxDiscardAmt = opponent.hand.cards.length - 4;
 
         store.prompt(state, new ChooseCardsPrompt(
-          player.id,
+          player,
           GameMessage.CHOOSE_CARD_TO_DISCARD,
           opponent.hand,
           {},

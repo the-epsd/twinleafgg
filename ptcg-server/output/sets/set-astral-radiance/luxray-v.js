@@ -43,7 +43,7 @@ class LuxrayV extends pokemon_card_1.PokemonCard {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             const cards = opponent.hand.cards.filter(c => c instanceof game_1.TrainerCard);
-            store.prompt(state, new game_1.ChooseCardsPrompt(effect.player.id, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, opponent.hand, { superType: card_types_1.SuperType.TRAINER }, { min: 0, max: 1, allowCancel: false }), selected => {
+            store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, opponent.hand, { superType: card_types_1.SuperType.TRAINER }, { min: 0, max: 1, allowCancel: false }), selected => {
                 selected = cards || [];
                 opponent.hand.moveCardsTo(cards, opponent.discard);
             });
@@ -53,7 +53,7 @@ class LuxrayV extends pokemon_card_1.PokemonCard {
             const opponent = game_1.StateUtils.getOpponent(state, player);
             const checkProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(opponent);
             state = store.reduceEffect(state, checkProvidedEnergy);
-            store.prompt(state, new game_1.ChooseCardsPrompt(effect.player.id, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, player.active, { superType: card_types_1.SuperType.ENERGY }, { min: 2, max: 2, allowCancel: false }), selected => {
+            store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, player.active, { superType: card_types_1.SuperType.ENERGY }, { min: 2, max: 2, allowCancel: false }), selected => {
                 selected = selected || [];
                 player.active.moveCardsTo(selected, player.discard);
             });

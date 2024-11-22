@@ -35,7 +35,7 @@ class TeamStarGrunt extends trainer_card_1.TrainerCard {
             }
             const deckTop = new game_1.CardList();
             const target = opponent.active;
-            state = store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_DISCARD, target, { superType: card_types_1.SuperType.ENERGY }, { min: 1, max: 1, allowCancel: true }), energy => {
+            state = store.prompt(state, new game_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_DISCARD, target, { superType: card_types_1.SuperType.ENERGY }, { min: 1, max: 1, allowCancel: true }), energy => {
                 const cards = (energy || []).map(e => e.cards);
                 if (cards.length > 0) {
                     target.moveCardsTo(energy, deckTop);

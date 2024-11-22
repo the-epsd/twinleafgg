@@ -66,7 +66,7 @@ export class FirefighterPikachu extends PokemonCard {
       const target = opponent.active;
       let cards: Card[] = [];
       state = store.prompt(state, new ChooseCardsPrompt(
-        player.id,
+        player,
         GameMessage.CHOOSE_CARD_TO_DISCARD,
         target,
         { superType: SuperType.ENERGY },

@@ -47,7 +47,7 @@ class Barraskewda extends pokemon_card_1.PokemonCard {
                 return state;
             }
             if (numberOfEnergy >= 2) {
-                state = store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, player.hand, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Water Energy' }, { allowCancel: false, min: 2, max: 2 }), cards => {
+                state = store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, player.hand, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Water Energy' }, { allowCancel: false, min: 2, max: 2 }), cards => {
                     cards = cards || [];
                     player.hand.moveCardsTo(cards, player.discard);
                     return state;

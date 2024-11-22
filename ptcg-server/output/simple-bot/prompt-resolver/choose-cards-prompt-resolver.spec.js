@@ -32,7 +32,7 @@ describe('ChooseCardsPromptResolver', () => {
         opponent.id = 2;
         state = new game_1.State();
         state.players = [player, opponent];
-        prompt = new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, {});
+        prompt = new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, {});
     });
     it('Should return undefined when other prompt type', () => {
         // given

@@ -64,7 +64,7 @@ class FanRotom extends game_1.PokemonCard {
                     }
                 });
                 const maxPokemons = Math.min(pokemons, 3);
-                state = store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: game_1.SuperType.POKEMON }, { min: 0, max: 3, allowCancel: false, blocked, maxPokemons }), selected => {
+                state = store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: game_1.SuperType.POKEMON }, { min: 0, max: 3, allowCancel: false, blocked, maxPokemons }), selected => {
                     const cards = selected || [];
                     player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
                         if (cardList.getPokemonCard() === this) {

@@ -61,7 +61,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   handTemp.cards = player.hand.cards.filter(c => c !== self);
 
   yield store.prompt(state, new ChooseCardsPrompt(
-    player.id,
+    player,
     GameMessage.CHOOSE_CARD_TO_DISCARD,
     handTemp,
     {},
@@ -75,7 +75,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
   // Pass max counts to prompt options
   yield store.prompt(state, new ChooseCardsPrompt(
-    player.id,
+    player,
     GameMessage.CHOOSE_CARD_TO_HAND,
     player.deck,
     {},

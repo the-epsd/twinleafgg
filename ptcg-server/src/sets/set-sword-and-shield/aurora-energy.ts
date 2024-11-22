@@ -72,7 +72,7 @@ function* playCard(next: Function, store: StoreLike, state: State, self: AuroraE
   handTemp.cards = player.hand.cards.filter(c => c !== self);
   
   yield store.prompt(state, new ChooseCardsPrompt(
-    player.id,
+    player,
     GameMessage.CHOOSE_CARD_TO_DISCARD,
     handTemp,
     { },

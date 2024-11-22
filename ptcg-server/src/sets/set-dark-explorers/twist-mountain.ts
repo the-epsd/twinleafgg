@@ -38,7 +38,7 @@ function* useStadium(next: Function, store: StoreLike, state: State, effect: Use
 
   let cards: Card[] = [];
   yield store.prompt(state, new ChooseCardsPrompt(
-    player.id,
+    player,
     GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
     player.hand,
     { superType: SuperType.POKEMON, stage: Stage.RESTORED },

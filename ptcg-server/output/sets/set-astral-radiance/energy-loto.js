@@ -25,7 +25,7 @@ class EnergyLoto extends trainer_card_1.TrainerCard {
             // We will discard this card after prompt confirmation
             effect.preventDefault = true;
             player.deck.moveTo(temp, 7);
-            return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, temp, { superType: card_types_1.SuperType.ENERGY }, { allowCancel: false, min: 0, max: 1 }), chosenCards => {
+            return store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_HAND, temp, { superType: card_types_1.SuperType.ENERGY }, { allowCancel: false, min: 0, max: 1 }), chosenCards => {
                 if (chosenCards.length == 0) {
                     // No Energy chosen, shuffle all back
                     temp.cards.forEach(card => {

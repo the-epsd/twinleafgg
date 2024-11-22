@@ -55,7 +55,7 @@ class Skiploom extends pokemon_card_1.PokemonCard {
             return store.prompt(state, new game_1.ConfirmPrompt(effect.player.id, game_1.GameMessage.WANT_TO_USE_ABILITY), wantToUse => {
                 if (wantToUse) {
                     let cards = [];
-                    state = store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_EVOLVE, player.deck, { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.STAGE_2, evolvesFrom: 'Skiploom' }, { min: 1, max: 1, allowCancel: true }), selected => {
+                    state = store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_EVOLVE, player.deck, { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.STAGE_2, evolvesFrom: 'Skiploom' }, { min: 1, max: 1, allowCancel: true }), selected => {
                         cards = selected || [];
                         if (cards.length > 0) {
                             if (effect.target.cards === player.active.cards) {

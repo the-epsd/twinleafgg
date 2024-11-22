@@ -63,7 +63,7 @@ export class Eeveeex extends PokemonCard {
 
         if (cardList.getPokemonCard() === this) {
           return store.prompt(state, new ChooseCardsPrompt(
-            player.id,
+            player,
             GameMessage.CHOOSE_POKEMON_TO_EVOLVE,
             player.hand,
             { superType: SuperType.POKEMON, evolvesFrom: 'Eevee' },

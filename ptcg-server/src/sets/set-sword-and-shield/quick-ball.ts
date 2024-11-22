@@ -41,7 +41,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   handTemp.cards = player.hand.cards.filter(c => c !== self);
   if (cards.length > 1) {
     yield store.prompt(state, new ChooseCardsPrompt(
-      player.id,
+      player,
       GameMessage.CHOOSE_CARD_TO_DISCARD,
       handTemp,
       {},
@@ -65,7 +65,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   player.hand.moveCardsTo(cards, player.discard);
 
   yield store.prompt(state, new ChooseCardsPrompt(
-    player.id,
+    player,
     GameMessage.CHOOSE_CARD_TO_HAND,
     player.deck,
     { superType: SuperType.POKEMON, stage: Stage.BASIC },

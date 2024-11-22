@@ -16,7 +16,7 @@ function* useBabyEvolution(next, store, state, self, effect) {
         throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
     }
     let cards = [];
-    return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_EVOLVE, player.hand, { superType: card_types_1.SuperType.POKEMON, name: 'Pikachu' }, { min: 1, max: 1, allowCancel: true }), selected => {
+    return store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_POKEMON_TO_EVOLVE, player.hand, { superType: card_types_1.SuperType.POKEMON, name: 'Pikachu' }, { min: 1, max: 1, allowCancel: true }), selected => {
         cards = selected || [];
         if (cards.length > 0) {
             const pokemonCard = cards[0];
@@ -41,7 +41,7 @@ function* useFindAFriend(next, store, state, effect) {
         return state;
     }
     let cards = [];
-    yield store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.POKEMON }, { allowCancel: true, min: 1, max: 1 }), selected => {
+    yield store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.POKEMON }, { allowCancel: true, min: 1, max: 1 }), selected => {
         cards = selected || [];
         next();
     });

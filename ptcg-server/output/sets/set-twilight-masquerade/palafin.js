@@ -71,7 +71,7 @@ class Palafin extends game_1.PokemonCard {
                             return state;
                         }
                         let cards = [];
-                        state = store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_EVOLVE, player.deck, { superType: game_1.SuperType.POKEMON, name: 'Palafin ex' }, { min: 0, max: 1, allowCancel: false }), selected => {
+                        state = store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_EVOLVE, player.deck, { superType: game_1.SuperType.POKEMON, name: 'Palafin ex' }, { min: 0, max: 1, allowCancel: false }), selected => {
                             cards = (selected || []);
                             if (cards.length > 0) {
                                 // Move Palafin ex from deck to active

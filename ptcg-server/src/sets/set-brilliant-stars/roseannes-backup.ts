@@ -76,7 +76,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
   // Pass max counts to prompt options
   yield store.prompt(state, new ChooseCardsPrompt(
-    player.id,
+    player,
     GameMessage.CHOOSE_ONE_ITEM_AND_ONE_TOOL_TO_HAND,
     player.discard,
     {},

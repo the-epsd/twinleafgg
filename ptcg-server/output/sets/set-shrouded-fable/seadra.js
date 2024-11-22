@@ -8,7 +8,7 @@ const game_effects_1 = require("../../game/store/effects/game-effects");
 function* useCallForBackup(next, store, state, effect) {
     const player = effect.player;
     let cards = [];
-    yield store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.POKEMON }, { min: 0, max: 3, allowCancel: false }), selected => {
+    yield store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.POKEMON }, { min: 0, max: 3, allowCancel: false }), selected => {
         cards = selected || [];
         next();
     });

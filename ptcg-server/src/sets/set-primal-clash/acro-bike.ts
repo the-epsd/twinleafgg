@@ -41,7 +41,7 @@ export class AcroBike extends TrainerCard {
       player.deck.moveTo(deckTop, 2);
 
       return store.prompt(state, new ChooseCardsPrompt(
-        player.id,
+        player,
         GameMessage.CHOOSE_CARD_TO_HAND,
         deckTop,
         { },

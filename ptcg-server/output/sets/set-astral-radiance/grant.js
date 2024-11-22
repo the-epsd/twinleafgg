@@ -76,7 +76,7 @@ class Grant extends trainer_card_1.TrainerCard {
             });
             const handTemp = new game_1.CardList();
             handTemp.cards = player.hand.cards.filter(c => c !== this);
-            state = store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, handTemp, {}, { min: 2, max: 2, allowCancel: true, blocked: blocked }), selected => {
+            state = store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, handTemp, {}, { min: 2, max: 2, allowCancel: true, blocked: blocked }), selected => {
                 cards = selected || [];
                 cards.forEach((card, index) => {
                     store.log(state, game_1.GameLog.LOG_PLAYER_DISCARDS_CARD_FROM_HAND, { name: player.name, card: card.name });

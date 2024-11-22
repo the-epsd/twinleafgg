@@ -76,7 +76,7 @@ export class RescueStretcher extends TrainerCard {
             let cards: Card[] = [];
 
             store.prompt(state, new ChooseCardsPrompt(
-              player.id,
+              player,
               GameMessage.CHOOSE_CARD_TO_DECK,
               player.discard,
               { superType: SuperType.POKEMON },
@@ -102,7 +102,7 @@ export class RescueStretcher extends TrainerCard {
             let cards: Card[] = [];
 
             store.prompt(state, new ChooseCardsPrompt(
-              player.id,
+              player,
               GameMessage.CHOOSE_CARD_TO_HAND,
               player.discard,
               { superType: SuperType.POKEMON },

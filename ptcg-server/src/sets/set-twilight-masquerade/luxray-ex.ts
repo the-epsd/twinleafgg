@@ -62,7 +62,7 @@ export class Luxrayex extends PokemonCard {
       }
 
       return store.prompt(state, new ChooseCardsPrompt(
-        player.id,
+        player,
         GameMessage.CHOOSE_CARD_TO_DECK,
         opponent.hand,
         {},

@@ -47,7 +47,7 @@ class GuzmaAndHala extends trainer_card_1.TrainerCard {
                             blocked.push(index);
                         }
                     });
-                    return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, {}, { allowCancel: false, min: 0, max: 1, maxStadiums: 1, blocked }), cards => {
+                    return store.prompt(state, new game_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, {}, { allowCancel: false, min: 0, max: 1, maxStadiums: 1, blocked }), cards => {
                         cards = cards || [];
                         player.deck.moveCardsTo(cards, player.hand);
                         if (cards.length > 0)
@@ -60,7 +60,7 @@ class GuzmaAndHala extends trainer_card_1.TrainerCard {
                     });
                 }
                 if (wantToUse) {
-                    state = store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_DISCARD, player.hand, {}, { allowCancel: false, min: 2, max: 2 }), cards => {
+                    state = store.prompt(state, new game_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_DISCARD, player.hand, {}, { allowCancel: false, min: 2, max: 2 }), cards => {
                         cards = cards || [];
                         player.hand.moveCardsTo(cards, player.discard);
                         cards.forEach((card, index) => {
@@ -79,7 +79,7 @@ class GuzmaAndHala extends trainer_card_1.TrainerCard {
                                 blocked.push(index);
                             }
                         });
-                        return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, {}, { allowCancel: false, min: 0, max: 3, maxSpecialEnergies: 1, maxTools: 1, maxStadiums: 1, blocked }), cards => {
+                        return store.prompt(state, new game_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, {}, { allowCancel: false, min: 0, max: 3, maxSpecialEnergies: 1, maxTools: 1, maxStadiums: 1, blocked }), cards => {
                             cards = cards || [];
                             player.deck.moveCardsTo(cards, player.hand);
                             if (cards.length > 0) {

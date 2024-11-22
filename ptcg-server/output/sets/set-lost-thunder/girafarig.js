@@ -37,7 +37,7 @@ class Girafarig extends game_1.PokemonCard {
             // Get Lost
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, opponent.discard, {}, { min: 2, max: 2 }), selected => {
+            return store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, opponent.discard, {}, { min: 2, max: 2 }), selected => {
                 if (selected && selected.length === 2) {
                     selected.forEach(card => {
                         opponent.discard.moveCardsTo(selected, player.lostzone);

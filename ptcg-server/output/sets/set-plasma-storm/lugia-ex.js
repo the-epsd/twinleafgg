@@ -51,7 +51,7 @@ class LugiaEx extends pokemon_card_1.PokemonCard {
                     return state;
                 }
                 if (energyCard instanceof game_1.EnergyCard && energyCard.name == 'Plasma Energy')
-                    return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, player.active, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.SPECIAL, name: 'Plasma Energy' }, { min: 1, max: 1, allowCancel: false }), selected => {
+                    return store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, player.active, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.SPECIAL, name: 'Plasma Energy' }, { min: 1, max: 1, allowCancel: false }), selected => {
                         cards = selected || [];
                         if (cards.length === 0) {
                             return;

@@ -51,7 +51,7 @@ export class Duskull extends PokemonCard {
       }
 
       return store.prompt(state, new ChooseCardsPrompt(
-        player.id,
+        player,
         GameMessage.CHOOSE_CARD_TO_DISCARD,
         player.hand,
         {},
@@ -75,7 +75,7 @@ export class Duskull extends PokemonCard {
 
         let selectedCards: Card[] = [];
         store.prompt(state, new ChooseCardsPrompt(
-          player.id,
+          player,
           GameMessage.CHOOSE_CARD_TO_EVOLVE,
           player.deck,
           { superType: SuperType.POKEMON },

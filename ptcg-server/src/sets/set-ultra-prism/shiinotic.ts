@@ -70,7 +70,7 @@ export class Shiinotic extends PokemonCard {
 
       let cards: Card[] = [];
       state = store.prompt(state, new ChooseCardsPrompt(
-        player.id,
+        player,
         GameMessage.CHOOSE_CARD_TO_HAND,
         player.deck,
         { superType: SuperType.POKEMON, cardType: Y },

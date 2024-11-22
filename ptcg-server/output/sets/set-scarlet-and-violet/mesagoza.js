@@ -30,7 +30,7 @@ class Mesagoza extends trainer_card_1.TrainerCard {
         const opponent = state_utils_1.StateUtils.getOpponent(state, player);
         return store.prompt(state, new game_1.CoinFlipPrompt(player.id, game_message_1.GameMessage.COIN_FLIP), flipResult => {
             if (flipResult) {
-                return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.POKEMON }, { min: 0, max: 1, allowCancel: false }), selected => {
+                return store.prompt(state, new game_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.POKEMON }, { min: 0, max: 1, allowCancel: false }), selected => {
                     const cards = selected || [];
                     player.deck.moveCardsTo(cards, player.hand);
                     if (cards.length > 0) {

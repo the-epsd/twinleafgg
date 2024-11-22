@@ -48,7 +48,7 @@ export class BuddyBuddyPoffin extends TrainerCard {
     player.hand.moveCardTo(effect.trainerCard, player.supporter);
 
     return store.prompt(state, new ChooseCardsPrompt(
-      player.id,
+      player,
       GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
       player.deck,
       { superType: SuperType.POKEMON, stage: Stage.BASIC },

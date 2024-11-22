@@ -48,7 +48,7 @@ export class Starmie extends PokemonCard {
       });
 
       return store.prompt(state, new ChooseCardsPrompt(
-        player.id,
+        player,
         GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
         player.active, // Card source is target Pokemon
         { superType: SuperType.ENERGY },

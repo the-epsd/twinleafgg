@@ -32,7 +32,7 @@ export class Kricketot extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       return store.prompt(state, new ChooseCardsPrompt(
-        player.id, 
+        player, 
         GameMessage.CHOOSE_CARD_TO_HAND,
         player.deck, 
         { superType: SuperType.POKEMON, cardType: CardType.GRASS },

@@ -71,7 +71,7 @@ export class LostVacuum extends TrainerCard {
       handTemp.cards = player.hand.cards;
 
       store.prompt(state, new ChooseCardsPrompt(
-        player.id,
+        player,
         GameMessage.CHOOSE_CARD_TO_DISCARD,
         handTemp,
         {},

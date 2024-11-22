@@ -60,7 +60,7 @@ class Jirachi extends pokemon_card_1.PokemonCard {
             const deckTop = new game_1.CardList();
             player.deck.moveTo(deckTop, 5);
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, deckTop, { superType: card_types_1.SuperType.TRAINER }, { min: 0, max: 1, allowCancel: false }), selected => {
+            return store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_HAND, deckTop, { superType: card_types_1.SuperType.TRAINER }, { min: 0, max: 1, allowCancel: false }), selected => {
                 player.marker.addMarker(this.STELLAR_WISH_MARKER, this);
                 deckTop.moveCardsTo(selected, player.hand);
                 deckTop.moveTo(player.deck);

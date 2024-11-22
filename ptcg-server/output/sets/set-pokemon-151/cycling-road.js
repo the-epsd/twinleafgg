@@ -33,7 +33,7 @@ class CyclingRoad extends trainer_card_1.TrainerCard {
         if (!hasEnergyInHand) {
             throw new game_1.GameError(game_message_1.GameMessage.CANNOT_USE_POWER);
         }
-        state = store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_DISCARD, player.hand, { superType: card_types_1.SuperType.ENERGY }, { allowCancel: true, min: 1, max: 1 }), cards => {
+        state = store.prompt(state, new game_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_DISCARD, player.hand, { superType: card_types_1.SuperType.ENERGY }, { allowCancel: true, min: 1, max: 1 }), cards => {
             cards = cards || [];
             if (cards.length === 0) {
                 return;

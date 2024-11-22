@@ -41,7 +41,7 @@ function* playCard(next, store, state, self, effect) {
     const maxEnergies = 1;
     const maxTrainers = 1;
     let cards = [];
-    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, {}, { min: 0, max: 3, allowCancel: true, blocked, maxPokemons, maxEnergies, maxTrainers }), selected => {
+    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, {}, { min: 0, max: 3, allowCancel: true, blocked, maxPokemons, maxEnergies, maxTrainers }), selected => {
         cards = selected || [];
         next();
     });

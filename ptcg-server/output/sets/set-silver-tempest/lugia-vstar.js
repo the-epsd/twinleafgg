@@ -55,7 +55,7 @@ class LugiaVSTAR extends pokemon_card_1.PokemonCard {
             });
             player.usedVSTAR = true;
             let cards = [];
-            return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH, player.discard, { superType: card_types_1.SuperType.POKEMON, cardType: card_types_1.CardType.COLORLESS }, { min: 1, max, allowCancel: true, blocked }), selected => {
+            return store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH, player.discard, { superType: card_types_1.SuperType.POKEMON, cardType: card_types_1.CardType.COLORLESS }, { min: 1, max, allowCancel: true, blocked }), selected => {
                 cards = selected || [];
                 cards.forEach((card, index) => {
                     player.discard.moveCardTo(card, slots[index]);

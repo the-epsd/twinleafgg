@@ -43,7 +43,7 @@ export class GreatBall extends TrainerCard {
       player.deck.moveTo(temp, 7);
 
       return store.prompt(state, new ChooseCardsPrompt(
-        player.id,
+        player,
         GameMessage.CHOOSE_CARD_TO_HAND,
         temp,
         { superType: SuperType.POKEMON },

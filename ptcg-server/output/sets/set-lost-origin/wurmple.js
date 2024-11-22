@@ -46,7 +46,7 @@ class Wurmple extends pokemon_card_1.PokemonCard {
                     blocked.push(index);
                 }
             });
-            return store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.POKEMON }, { min: 0, max: 59, blocked }), cards => {
+            return store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.POKEMON }, { min: 0, max: 59, blocked }), cards => {
                 cards = cards || [];
                 cards.forEach(card => player.deck.moveCardTo(card, player.hand));
                 return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {

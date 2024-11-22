@@ -50,7 +50,7 @@ function* playCard(next, store, state, self, effect) {
                 player.discard.moveCardTo(transfer.card, target);
             }
             let cards = [];
-            return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, {}, { min: 1, max: 1, allowCancel: false }), selected => {
+            return store.prompt(state, new game_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, {}, { min: 1, max: 1, allowCancel: false }), selected => {
                 cards = selected || [];
                 next();
                 player.hand.moveCardTo(self, player.supporter);

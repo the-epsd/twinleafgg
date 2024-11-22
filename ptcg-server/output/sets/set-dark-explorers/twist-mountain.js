@@ -28,7 +28,7 @@ function* useStadium(next, store, state, effect) {
         return state;
     }
     let cards = [];
-    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH, player.hand, { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.RESTORED }, { min: 1, max: 1, allowCancel: false }), selected => {
+    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH, player.hand, { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.RESTORED }, { min: 1, max: 1, allowCancel: false }), selected => {
         cards = selected || [];
         next();
     });

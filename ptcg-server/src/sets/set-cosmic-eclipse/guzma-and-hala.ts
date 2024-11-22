@@ -68,7 +68,7 @@ export class GuzmaAndHala extends TrainerCard {
           });
 
           return store.prompt(state, new ChooseCardsPrompt(
-            player.id,
+            player,
             GameMessage.CHOOSE_CARD_TO_HAND,
             player.deck,
             {},
@@ -95,7 +95,7 @@ export class GuzmaAndHala extends TrainerCard {
 
         if (wantToUse) {
           state = store.prompt(state, new ChooseCardsPrompt(
-            player.id,
+            player,
             GameMessage.CHOOSE_CARD_TO_DISCARD,
             player.hand,
             {},
@@ -123,7 +123,7 @@ export class GuzmaAndHala extends TrainerCard {
             });
 
             return store.prompt(state, new ChooseCardsPrompt(
-              player.id,
+              player,
               GameMessage.CHOOSE_CARD_TO_HAND,
               player.deck,
               {},

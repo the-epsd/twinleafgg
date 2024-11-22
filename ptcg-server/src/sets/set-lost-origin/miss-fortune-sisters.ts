@@ -45,7 +45,7 @@ export class MissFortuneSisters extends TrainerCard {
       opponent.deck.moveTo(deckTop, 5);
 
       return store.prompt(state, new ChooseCardsPrompt(
-        player.id,
+        player,
         GameMessage.CHOOSE_CARD_TO_DISCARD,
         deckTop,
         { superType: SuperType.TRAINER, trainerType: TrainerType.ITEM },

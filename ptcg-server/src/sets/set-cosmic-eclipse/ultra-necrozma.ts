@@ -90,7 +90,7 @@ export class UltraNecrozma extends PokemonCard {
 
       let cards: Card[] = [];
       state = store.prompt(state, new ChooseCardsPrompt(
-        player.id,
+        player,
         GameMessage.CHOOSE_CARD_TO_DISCARD,
         opponent.active,
         { superType: SuperType.ENERGY },

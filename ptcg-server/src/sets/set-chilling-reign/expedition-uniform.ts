@@ -23,7 +23,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   player.deck.moveTo(deckBottom, 3);
 
   return store.prompt(state, new ChooseCardsPrompt(
-    player.id,
+    player,
     GameMessage.CHOOSE_CARDS_ORDER,
     deckBottom,
     {},

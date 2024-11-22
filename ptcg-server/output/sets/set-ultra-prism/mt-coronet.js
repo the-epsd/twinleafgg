@@ -27,7 +27,7 @@ function* useStadium(next, store, state, effect) {
         throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
     }
     let cards = [];
-    return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.discard, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Metal Energy' }, { min: Math.min(basicEnergyInDiscard, 2), max: 2, allowCancel: false, blocked }), selectedCards => {
+    return store.prompt(state, new game_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.discard, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Metal Energy' }, { min: Math.min(basicEnergyInDiscard, 2), max: 2, allowCancel: false, blocked }), selectedCards => {
         cards = selectedCards || [];
         // Operation canceled by the user
         if (cards.length === 0) {

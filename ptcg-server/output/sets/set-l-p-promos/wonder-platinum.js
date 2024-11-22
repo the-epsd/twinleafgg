@@ -44,7 +44,7 @@ class WonderPlatinum extends game_1.TrainerCard {
             player.prizes.forEach(prizeList => {
                 allPrizeCards.cards.push(...prizeList.cards);
             });
-            store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, allPrizeCards, { superType: game_1.SuperType.ENERGY }, { min: 0, max: 1, allowCancel: false, blocked: blocked }), chosenPrize => {
+            store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_HAND, allPrizeCards, { superType: game_1.SuperType.ENERGY }, { min: 0, max: 1, allowCancel: false, blocked: blocked }), chosenPrize => {
                 if (chosenPrize === null || chosenPrize.length === 0) {
                     player.prizes.forEach(p => { p.isSecret = true; });
                     player.supporter.moveCardTo(effect.trainerCard, player.discard);

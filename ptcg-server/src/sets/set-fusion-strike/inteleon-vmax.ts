@@ -80,7 +80,7 @@ export class InteleonVMAX extends PokemonCard {
           cardList.cards = energyCards;
 
           state = store.prompt(state, new ChooseCardsPrompt(
-            player.id,
+            player,
             GameMessage.CHOOSE_ENERGIES_TO_HAND,
             cardList,
             { superType: SuperType.ENERGY },
@@ -117,7 +117,7 @@ export class InteleonVMAX extends PokemonCard {
       }
 
       state = store.prompt(state, new ChooseCardsPrompt(
-        player.id,
+        player,
         GameMessage.CHOOSE_CARD_TO_DISCARD,
         player.hand,
         { superType: SuperType.ENERGY },

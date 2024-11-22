@@ -73,7 +73,7 @@ class RadiantEternatus extends game_1.PokemonCard {
                             blocked.push(index);
                         }
                     });
-                    return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH, player.deck, { superType: game_1.SuperType.POKEMON }, { min: 0, max: maxPokemons, allowCancel: false, blocked }), selected => {
+                    return store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH, player.deck, { superType: game_1.SuperType.POKEMON }, { min: 0, max: maxPokemons, allowCancel: false, blocked }), selected => {
                         cards = selected || [];
                         // Operation canceled by the user
                         if (cards.length === 0) {

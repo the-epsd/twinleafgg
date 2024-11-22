@@ -31,7 +31,7 @@ function* useMixedCall(next: Function, store: StoreLike, state: State,
 
   // Pass max counts to prompt options
   yield store.prompt(state, new ChooseCardsPrompt(
-    player.id,
+    player,
     GameMessage.CHOOSE_ONE_POKEMON_AND_ONE_SUPPORTER_TO_HAND,
     player.deck,
     {},

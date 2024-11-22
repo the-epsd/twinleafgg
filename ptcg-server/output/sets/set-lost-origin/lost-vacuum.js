@@ -54,7 +54,7 @@ class LostVacuum extends trainer_card_1.TrainerCard {
             // prepare card list without Junk Arm
             const handTemp = new game_1.CardList();
             handTemp.cards = player.hand.cards;
-            store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, handTemp, {}, { min: 1, max: 1, allowCancel: false }), selected => {
+            store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, handTemp, {}, { min: 1, max: 1, allowCancel: false }), selected => {
                 cards = selected || [];
                 // Operation canceled by the user
                 if (cards.length === 0) {

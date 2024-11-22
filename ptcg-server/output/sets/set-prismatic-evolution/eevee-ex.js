@@ -52,7 +52,7 @@ class Eeveeex extends pokemon_card_1.PokemonCard {
                     throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
                 }
                 if (cardList.getPokemonCard() === this) {
-                    return store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_EVOLVE, player.hand, { superType: card_types_1.SuperType.POKEMON, evolvesFrom: 'Eevee' }, { allowCancel: false, min: 0, max: 1, blocked }), cards => {
+                    return store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_POKEMON_TO_EVOLVE, player.hand, { superType: card_types_1.SuperType.POKEMON, evolvesFrom: 'Eevee' }, { allowCancel: false, min: 0, max: 1, blocked }), cards => {
                         if (cards.length > 0) {
                             cards = cards || [];
                             player.hand.moveCardsTo(cards, cardList);

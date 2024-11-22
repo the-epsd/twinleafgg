@@ -10,7 +10,7 @@ function* useCallForFamily(next, store, state, effect) {
     const slots = player.bench.filter(b => b.cards.length === 0);
     const max = Math.min(slots.length, 1);
     let cards = [];
-    yield store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH, player.deck, { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.BASIC, name: 'Krabby' }, { min: 0, max, allowCancel: true }), selected => {
+    yield store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH, player.deck, { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.BASIC, name: 'Krabby' }, { min: 0, max, allowCancel: true }), selected => {
         cards = selected || [];
         next();
     });

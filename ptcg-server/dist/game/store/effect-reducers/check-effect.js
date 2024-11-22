@@ -96,7 +96,7 @@ function choosePrizeCards(state, prizesToTake) {
             player.prizes.forEach(prizeList => {
                 allPrizeCards.cards.push(...prizeList.cards);
             });
-            const prompt = new ChooseCardsPrompt(player.id, GameMessage.CHOOSE_PRIZE_CARD, allPrizeCards, {}, // No specific filter needed for prizes
+            const prompt = new ChooseCardsPrompt(player, GameMessage.CHOOSE_PRIZE_CARD, allPrizeCards, {}, // No specific filter needed for prizes
             { min: prizesToTake[i], max: prizesToTake[i], isSecret: player.prizes[0].isSecret, allowCancel: false });
             prompts.push(prompt);
         }

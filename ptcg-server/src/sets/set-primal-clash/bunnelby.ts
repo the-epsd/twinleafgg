@@ -64,7 +64,7 @@ export class Bunnelby extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
       if (player.discard.cards.length > 0) {
         state = store.prompt(state, new ChooseCardsPrompt(
-          player.id,
+          player,
           GameMessage.CHOOSE_CARD_TO_HAND,
           player.discard,
           {},

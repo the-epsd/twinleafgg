@@ -30,7 +30,7 @@ function* playCard(next, store, state, self, effect) {
     const hasBoth = tools > 0 && pokemons > 0;
     const minCount = hasBoth ? 2 : (tools > 0 || pokemons > 0 ? 1 : 0);
     const maxCount = hasBoth ? 2 : 1;
-    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, hasBoth ? game_message_1.GameMessage.CHOOSE_CARD_TO_DECK : game_message_1.GameMessage.CHOOSE_CARD_TO_DECK, player.discard, {}, { min: minCount, max: maxCount, allowCancel: false, blocked, maxTools: 1, maxPokemons: 1 }), selected => {
+    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player, hasBoth ? game_message_1.GameMessage.CHOOSE_CARD_TO_DECK : game_message_1.GameMessage.CHOOSE_CARD_TO_DECK, player.discard, {}, { min: minCount, max: maxCount, allowCancel: false, blocked, maxTools: 1, maxPokemons: 1 }), selected => {
         cards = selected || [];
         next();
     });

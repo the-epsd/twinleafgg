@@ -37,7 +37,7 @@ class Talonflame extends game_1.PokemonCard {
             if (player.deck.cards.length === 0) {
                 return state;
             }
-            state = store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, {}, { min: 1, max: 2, allowCancel: false }), selected => {
+            state = store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, {}, { min: 1, max: 2, allowCancel: false }), selected => {
                 const cards = selected || [];
                 player.deck.moveCardsTo(cards, player.hand);
             });

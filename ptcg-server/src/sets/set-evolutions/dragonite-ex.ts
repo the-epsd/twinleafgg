@@ -80,7 +80,7 @@ export class DragoniteEX extends PokemonCard {
           });
 
           return store.prompt(state, new ChooseCardsPrompt(
-            player.id,
+            player,
             GameMessage.CHOOSE_CARD_TO_HAND,
             player.discard,
             { superType: SuperType.POKEMON, stage: Stage.BASIC },
@@ -112,7 +112,7 @@ export class DragoniteEX extends PokemonCard {
 
       let card: Card;
       return store.prompt(state, new ChooseCardsPrompt(
-        player.id,
+        player,
         GameMessage.CHOOSE_CARD_TO_DISCARD,
         opponent.active,
         { superType: SuperType.ENERGY },

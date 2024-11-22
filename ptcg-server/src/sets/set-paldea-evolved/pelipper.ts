@@ -72,7 +72,7 @@ export class Pelipper extends PokemonCard {
 
             let cards: Card[] = [];
             return store.prompt(state, new ChooseCardsPrompt(
-              player.id,
+              player,
               GameMessage.CHOOSE_CARD_TO_HAND,
               player.discard,
               { superType: SuperType.TRAINER, trainerType: TrainerType.SUPPORTER },
@@ -98,7 +98,7 @@ export class Pelipper extends PokemonCard {
           action: () => {
 
             return store.prompt(state, new ChooseCardsPrompt(
-              player.id,
+              player,
               GameMessage.CHOOSE_CARD_TO_HAND,
               player.deck,
               { superType: SuperType.TRAINER, trainerType: TrainerType.SUPPORTER },

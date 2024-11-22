@@ -65,7 +65,7 @@ export class RayquazaV extends PokemonCard {
           action: () => {
 
             store.prompt(state, new ChooseCardsPrompt(
-              player.id,
+              player,
               GameMessage.CHOOSE_CARD_TO_HAND,
               player.active,
               { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fire Energy' },
@@ -92,7 +92,7 @@ export class RayquazaV extends PokemonCard {
           action: () => {
 
             store.prompt(state, new ChooseCardsPrompt(
-              player.id,
+              player,
               GameMessage.CHOOSE_CARD_TO_HAND,
               player.active,
               { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Lightning Energy' },

@@ -70,7 +70,7 @@ export class OriginFormeDialgaV extends PokemonCard {
       }
         
       return store.prompt(state, new ChooseCardsPrompt(
-        player.id,
+        player,
         GameMessage.CHOOSE_CARD_TO_ATTACH,
         player.discard,
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Metal Energy' },

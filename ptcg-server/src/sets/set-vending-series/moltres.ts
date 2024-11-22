@@ -67,7 +67,7 @@ export class Moltres extends PokemonCard {
           targets.forEach(target => {
 
             return store.prompt(state, new ChooseCardsPrompt(
-              player.id,
+              player,
               GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
               target, // Card source is target Pokemon
               { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Water Energy' },

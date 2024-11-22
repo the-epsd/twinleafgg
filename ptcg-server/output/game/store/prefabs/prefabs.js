@@ -50,7 +50,7 @@ exports.DISCARD_A_STADIUM_CARD_IN_PLAY = DISCARD_A_STADIUM_CARD_IN_PLAY;
 function SEARCH_YOUR_DECK_FOR_X_POKEMON_AND_PUT_THEM_ONTO_YOUR_BENCH(store, state, effect, min, max, stage) {
     const player = effect.player;
     const slots = player.bench.filter(b => b.cards.length === 0);
-    return store.prompt(state, new __1.ChooseCardsPrompt(player.id, __1.GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH, player.deck, { superType: card_types_1.SuperType.POKEMON, stage }, { min, max: slots.length < max ? slots.length : max, allowCancel: true }), selected => {
+    return store.prompt(state, new __1.ChooseCardsPrompt(player, __1.GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH, player.deck, { superType: card_types_1.SuperType.POKEMON, stage }, { min, max: slots.length < max ? slots.length : max, allowCancel: true }), selected => {
         const cards = selected || [];
         cards.forEach((card, index) => {
             player.deck.moveCardTo(card, slots[index]);
@@ -156,7 +156,7 @@ function DISCARD_X_ENERGY_FROM_YOUR_HAND(effect, store, state, minAmount, maxAmo
     if (!hasEnergyInHand) {
         throw new __1.GameError(__1.GameMessage.CANNOT_USE_POWER);
     }
-    state = store.prompt(state, new __1.ChooseCardsPrompt(player.id, __1.GameMessage.CHOOSE_CARD_TO_DISCARD, player.hand, { superType: card_types_1.SuperType.ENERGY }, { allowCancel: true, min: minAmount, max: maxAmount }), cards => {
+    state = store.prompt(state, new __1.ChooseCardsPrompt(player, __1.GameMessage.CHOOSE_CARD_TO_DISCARD, player.hand, { superType: card_types_1.SuperType.ENERGY }, { allowCancel: true, min: minAmount, max: maxAmount }), cards => {
         cards = cards || [];
         if (cards.length === 0) {
             return;

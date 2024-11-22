@@ -2,13 +2,14 @@ import { CardType, EnergyType, SuperType, TrainerType } from '../card/card-types
 import { Prompt } from './prompt';
 export const ChooseCardsPromptType = 'Choose cards';
 export class ChooseCardsPrompt extends Prompt {
-    constructor(playerId, message, cards, filter, options) {
-        super(playerId);
+    constructor(player, message, cards, filter, options) {
+        super(player.id);
         this.message = message;
         this.cards = cards;
         this.filter = filter;
         this.type = ChooseCardsPromptType;
         this.blockedCardNames = [];
+        this.player = player;
         // Default options
         this.options = Object.assign({}, {
             min: 0,
@@ -37,7 +38,9 @@ export class ChooseCardsPrompt extends Prompt {
                 }
             }
         }
-        // this.cards.sort();
+        if (this.cards === this.player.deck) {
+            this.cards.sort();
+        }
         if (this.options.blocked.length > 0) {
             this.options.blocked = [];
             this.cards.cards.forEach((card, index) => {

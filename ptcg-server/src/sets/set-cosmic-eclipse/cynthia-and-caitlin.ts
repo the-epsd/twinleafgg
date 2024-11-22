@@ -37,7 +37,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   // no supporter to recover, has to draw cards
   if (!player.discard.cards.some(c => c instanceof TrainerCard && c.trainerType === TrainerType.SUPPORTER)) {
     state = store.prompt(state, new ChooseCardsPrompt(
-      player.id,
+      player,
       GameMessage.CHOOSE_CARD_TO_DISCARD,
       player.hand,
       {},
@@ -65,7 +65,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
     ), wantToUse => {
       if (wantToUse) {
         state = store.prompt(state, new ChooseCardsPrompt(
-          player.id,
+          player,
           GameMessage.CHOOSE_CARD_TO_DISCARD,
           player.hand,
           {},
@@ -78,7 +78,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
           });
 
           state = store.prompt(state, new ChooseCardsPrompt(
-            player.id,
+            player,
             GameMessage.CHOOSE_CARD_TO_HAND,
             player.discard,
             { superType: SuperType.TRAINER, trainerType: TrainerType.SUPPORTER },
@@ -98,7 +98,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
         });
       } else {
         state = store.prompt(state, new ChooseCardsPrompt(
-          player.id,
+          player,
           GameMessage.CHOOSE_CARD_TO_HAND,
           player.discard,
           { superType: SuperType.TRAINER, trainerType: TrainerType.SUPPORTER },

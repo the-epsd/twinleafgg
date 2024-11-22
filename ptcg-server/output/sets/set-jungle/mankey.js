@@ -73,7 +73,7 @@ class Mankey extends pokemon_card_1.PokemonCard {
                             throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
                         }
                         let cards = [];
-                        state = store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.REVEAL_RANDOM_CARD_IN_OPPONENT_HAND, opponent.hand, {}, { min: 1, max: 1, allowCancel: false, isSecret: true }), selected => {
+                        state = store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.REVEAL_RANDOM_CARD_IN_OPPONENT_HAND, opponent.hand, {}, { min: 1, max: 1, allowCancel: false, isSecret: true }), selected => {
                             cards = selected || [];
                             if (cards.length > 0) {
                                 state = store.prompt(state, new game_1.ShowCardsPrompt(player.id, game_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards), () => state);
@@ -97,7 +97,7 @@ class Mankey extends pokemon_card_1.PokemonCard {
                         opponent.prizes.forEach(prizeList => {
                             allPrizeCards.cards.push(...prizeList.cards);
                         });
-                        state = store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.REVEAL_ONE_OF_YOUR_PRIZES, allPrizeCards, {}, { min: 1, max: 1, allowCancel: false, isSecret: true }), chosenPrize => {
+                        state = store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.REVEAL_ONE_OF_YOUR_PRIZES, allPrizeCards, {}, { min: 1, max: 1, allowCancel: false, isSecret: true }), chosenPrize => {
                             list = chosenPrize || [];
                             if (list.length > 0) {
                                 state = store.prompt(state, new game_1.ShowCardsPrompt(player.id, game_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, list), () => state);
@@ -121,7 +121,7 @@ class Mankey extends pokemon_card_1.PokemonCard {
                         player.prizes.forEach(prizeList => {
                             allPrizeCards.cards.push(...prizeList.cards);
                         });
-                        state = store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.REVEAL_ONE_OF_YOUR_PRIZES, allPrizeCards, {}, { min: 1, max: 1, allowCancel: false, isSecret: true }), chosenPrize => {
+                        state = store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.REVEAL_ONE_OF_YOUR_PRIZES, allPrizeCards, {}, { min: 1, max: 1, allowCancel: false, isSecret: true }), chosenPrize => {
                             list = chosenPrize || [];
                             if (list.length > 0) {
                                 state = store.prompt(state, new game_1.ShowCardsPrompt(player.id, game_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, list), () => state);

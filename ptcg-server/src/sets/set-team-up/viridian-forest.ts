@@ -23,7 +23,7 @@ function* useStadium(next: Function, store: StoreLike, state: State, effect: Use
   }
 
   yield store.prompt(state, new ChooseCardsPrompt(
-    player.id,
+    player,
     GameMessage.CHOOSE_CARD_TO_DISCARD,
     player.hand,
     { },
@@ -41,7 +41,7 @@ function* useStadium(next: Function, store: StoreLike, state: State, effect: Use
   player.hand.moveCardsTo(cards, player.discard);
 
   yield store.prompt(state, new ChooseCardsPrompt(
-    player.id,
+    player,
     GameMessage.CHOOSE_CARD_TO_HAND,
     player.deck,
     { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },

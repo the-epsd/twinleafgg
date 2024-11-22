@@ -31,7 +31,7 @@ class MissFortuneSisters extends trainer_card_1.TrainerCard {
             effect.preventDefault = true;
             const deckTop = new game_1.CardList();
             opponent.deck.moveTo(deckTop, 5);
-            return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_DISCARD, deckTop, { superType: card_types_1.SuperType.TRAINER, trainerType: card_types_1.TrainerType.ITEM }, { min: 0, max: 5, allowCancel: false }), selected => {
+            return store.prompt(state, new game_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_DISCARD, deckTop, { superType: card_types_1.SuperType.TRAINER, trainerType: card_types_1.TrainerType.ITEM }, { min: 0, max: 5, allowCancel: false }), selected => {
                 deckTop.moveCardsTo(selected, opponent.discard);
                 deckTop.moveTo(opponent.deck);
                 player.supporter.moveCardTo(effect.trainerCard, player.discard);
