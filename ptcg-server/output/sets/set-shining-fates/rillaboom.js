@@ -56,12 +56,18 @@ class Rillaboom extends pokemon_card_1.PokemonCard {
                 if (transfers.length === 0) {
                     return state;
                 }
+                player.marker.addMarker(this.VOLTAGE_BEAT_MARKER, this);
                 for (const transfer of transfers) {
                     const target = game_1.StateUtils.getTarget(state, player, transfer.to);
                     player.deck.moveCardTo(transfer.card, target);
                 }
                 state = store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
                     player.deck.applyOrder(order);
+                });
+                player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
+                    if (cardList.getPokemonCard() === this) {
+                        cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
+                    }
                 });
             });
         }

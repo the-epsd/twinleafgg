@@ -11,6 +11,7 @@ const play_card_action_1 = require("../../game/store/actions/play-card-action");
 const move_damage_prompt_1 = require("../../game/store/prompts/move-damage-prompt");
 const game_message_1 = require("../../game/game-message");
 const game_1 = require("../../game");
+const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 class RadiantAlakazam extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -43,6 +44,7 @@ class RadiantAlakazam extends pokemon_card_1.PokemonCard {
         this.setNumber = '59';
         this.name = 'Radiant Alakazam';
         this.fullName = 'Radiant Alakazam SIT';
+        this.PAINFUL_SPOONS_MARKER = 'PAINFUL_SPOONS_MARKER';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
@@ -52,6 +54,9 @@ class RadiantAlakazam extends pokemon_card_1.PokemonCard {
                 ...opponent.bench.filter(b => b.cards.length > 0 && b.damage > 0),
                 ...(opponent.active.damage > 0 ? [opponent.active] : [])
             ];
+            if (player.marker.hasMarker(this.PAINFUL_SPOONS_MARKER, this)) {
+                throw new game_1.GameError(game_message_1.GameMessage.POWER_ALREADY_USED);
+            }
             if (damagedPokemon.length === 0) {
                 throw new game_1.GameError(game_message_1.GameMessage.CANNOT_USE_POWER);
             }
@@ -62,6 +67,7 @@ class RadiantAlakazam extends pokemon_card_1.PokemonCard {
                 maxAllowedDamage.push({ target, damage: checkHpEffect.hp });
             });
             return store.prompt(state, new move_damage_prompt_1.MoveDamagePrompt(effect.player.id, game_message_1.GameMessage.MOVE_DAMAGE, play_card_action_1.PlayerType.TOP_PLAYER, [play_card_action_1.SlotType.ACTIVE, play_card_action_1.SlotType.BENCH], maxAllowedDamage, { min: 1, max: 2, allowCancel: false, singleDestinationTarget: true }), transfers => {
+                player.marker.addMarker(this.PAINFUL_SPOONS_MARKER, this);
                 if (transfers === null) {
                     return;
                 }
@@ -76,12 +82,22 @@ class RadiantAlakazam extends pokemon_card_1.PokemonCard {
                         source.damage -= 20;
                         target.damage += 20;
                     }
+                    player.forEachPokemon(play_card_action_1.PlayerType.BOTTOM_PLAYER, cardList => {
+                        if (cardList.getPokemonCard() === this) {
+                            cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
+                        }
+                    });
                     return state;
                 }
             });
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             effect.ignoreResistance = true;
+            return state;
+        }
+        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+            const player = effect.player;
+            player.marker.removeMarker(this.PAINFUL_SPOONS_MARKER);
             return state;
         }
         return state;

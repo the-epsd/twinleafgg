@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
+import { Stage, CardType, CardTag, SpecialCondition } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
@@ -11,6 +11,7 @@ import { PlayerType, SlotType } from '../../game/store/actions/play-card-action'
 import { MoveDamagePrompt, DamageMap } from '../../game/store/prompts/move-damage-prompt';
 import { GameMessage } from '../../game/game-message';
 import { GameError } from '../../game';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 
 export class RadiantAlakazam extends PokemonCard {
@@ -59,6 +60,8 @@ export class RadiantAlakazam extends PokemonCard {
 
   public fullName: string = 'Radiant Alakazam SIT';
 
+  public readonly PAINFUL_SPOONS_MARKER = 'PAINFUL_SPOONS_MARKER';
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
 
@@ -70,9 +73,15 @@ export class RadiantAlakazam extends PokemonCard {
         ...opponent.bench.filter(b => b.cards.length > 0 && b.damage > 0),
         ...(opponent.active.damage > 0 ? [opponent.active] : [])
       ];
+
+      if (player.marker.hasMarker(this.PAINFUL_SPOONS_MARKER, this)) {
+        throw new GameError(GameMessage.POWER_ALREADY_USED);
+      }
+
       if (damagedPokemon.length === 0) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
+
 
       const maxAllowedDamage: DamageMap[] = [];
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
@@ -89,6 +98,9 @@ export class RadiantAlakazam extends PokemonCard {
         maxAllowedDamage,
         { min: 1, max: 2, allowCancel: false, singleDestinationTarget: true }
       ), transfers => {
+
+        player.marker.addMarker(this.PAINFUL_SPOONS_MARKER, this);
+
         if (transfers === null) {
           return;
         }
@@ -105,6 +117,12 @@ export class RadiantAlakazam extends PokemonCard {
             target.damage += 20;
           }
 
+          player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+            if (cardList.getPokemonCard() === this) {
+              cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+            }
+          });
+
           return state;
         }
       });
@@ -112,6 +130,12 @@ export class RadiantAlakazam extends PokemonCard {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       effect.ignoreResistance = true;
+      return state;
+    }
+
+    if (effect instanceof EndTurnEffect) {
+      const player = effect.player;
+      player.marker.removeMarker(this.PAINFUL_SPOONS_MARKER);
       return state;
     }
     return state;
