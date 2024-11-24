@@ -9,6 +9,7 @@ import { GardevoirGX } from './gardevoir-gx';
 import { NecrozmaGX } from './necrozma-gx';
 import { Bruxish } from './bruxish';
 import { SalazzleGX } from './salazzle-gx';
+import { Diancie } from './diancie';
 export declare class AcerolaArt extends Acerola {
     cardImage: string;
 }
@@ -16,6 +17,9 @@ export declare class BruxishArt extends Bruxish {
     cardImage: string;
 }
 export declare class DarkraiGXArt extends DarkraiGX {
+    cardImage: string;
+}
+export declare class DiancieArt extends Diancie {
     cardImage: string;
 }
 export declare class GardevoirGXArt extends GardevoirGX {

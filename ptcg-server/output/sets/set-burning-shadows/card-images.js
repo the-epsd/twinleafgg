@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WishfulBatonArt = exports.SalazzleGXArt = exports.PlumeriaArt = exports.NecrozmaGXArt = exports.MarillArt = exports.GuzmaArt = exports.GloomArt = exports.GardevoirGXArt = exports.DarkraiGXArt = exports.BruxishArt = exports.AcerolaArt = void 0;
+exports.WishfulBatonArt = exports.SalazzleGXArt = exports.PlumeriaArt = exports.NecrozmaGXArt = exports.MarillArt = exports.GuzmaArt = exports.GloomArt = exports.GardevoirGXArt = exports.DiancieArt = exports.DarkraiGXArt = exports.BruxishArt = exports.AcerolaArt = void 0;
 const acerola_1 = require("./acerola");
 const marill_1 = require("./marill");
 const darkrai_gx_1 = require("./darkrai-gx");
@@ -12,6 +12,7 @@ const gardevoir_gx_1 = require("./gardevoir-gx");
 const necrozma_gx_1 = require("./necrozma-gx");
 const bruxish_1 = require("./bruxish");
 const salazzle_gx_1 = require("./salazzle-gx");
+const diancie_1 = require("./diancie");
 class AcerolaArt extends acerola_1.Acerola {
     constructor() {
         super(...arguments);
@@ -33,6 +34,13 @@ class DarkraiGXArt extends darkrai_gx_1.DarkraiGX {
     }
 }
 exports.DarkraiGXArt = DarkraiGXArt;
+class DiancieArt extends diancie_1.Diancie {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BUS/BUS_094_R_EN_LG.png';
+    }
+}
+exports.DiancieArt = DiancieArt;
 class GardevoirGXArt extends gardevoir_gx_1.GardevoirGX {
     constructor() {
         super(...arguments);

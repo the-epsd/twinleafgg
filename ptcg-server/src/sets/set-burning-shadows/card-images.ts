@@ -9,6 +9,7 @@ import { GardevoirGX } from './gardevoir-gx';
 import { NecrozmaGX } from './necrozma-gx';
 import { Bruxish } from './bruxish';
 import { SalazzleGX } from './salazzle-gx';
+import { Diancie } from './diancie';
 
 export class AcerolaArt extends Acerola {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BUS/BUS_112_R_EN_LG.png';
@@ -20,6 +21,10 @@ export class BruxishArt extends Bruxish {
 
 export class DarkraiGXArt extends DarkraiGX {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BUS/BUS_088_R_EN.png';
+}
+
+export class DiancieArt extends Diancie {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BUS/BUS_094_R_EN_LG.png';
 }
 
 export class GardevoirGXArt extends GardevoirGX {
