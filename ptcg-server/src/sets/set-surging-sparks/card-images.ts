@@ -32,6 +32,7 @@ import { HelperBell } from './helper.bell';
 import { HoOh } from './ho-oh';
 import { Hydreigonex } from './hydreigon-ex';
 import { Klefki } from './klefki';
+import { Larvesta } from './larvesta-ir';
 import { Latiasex } from './latias-ex';
 import { LisiasAppeal } from './lisias-appeal';
 import { Magnemite } from './magnemite';
@@ -43,7 +44,9 @@ import { MiraculousIntercom } from './miraculous-intercom';
 import { Ninetales } from './ninetales';
 import { Palkia } from './palkia';
 import { Palossandex } from './palossand-ex';
+import { Pansear } from './pansear';
 import { PerfectMixer } from './perfect-mixer';
+import { Phanpy } from './phanpy-ir';
 import { Pikachuex } from './pikachu-ex';
 import { Quaxwell } from './quaxwell';
 import { RichEnergy } from './rich-energy';
@@ -83,6 +86,18 @@ export class MagnemiteArt extends Magnemite {
 
 export class ShroodleArt extends Shroodle {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_120_R_EN_LG.png';
+}
+
+export class PhanpyArt extends Phanpy {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_205_R_EN_LG.png';
+}
+
+export class LarvestaArt extends Larvesta {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_196_R_EN_LG.png';
+}
+
+export class PansearArt extends Pansear {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_022_R_EN_LG.png';
 }
 
 export class QuaxwellArt extends Quaxwell {

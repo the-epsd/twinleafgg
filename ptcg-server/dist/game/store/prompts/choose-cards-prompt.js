@@ -38,7 +38,7 @@ export class ChooseCardsPrompt extends Prompt {
                 }
             }
         }
-        if (this.cards === this.player.deck) {
+        if (this.cards === this.player.deck || this.cards === this.player.discard) {
             this.cards.sort();
         }
         if (this.options.blocked.length > 0) {

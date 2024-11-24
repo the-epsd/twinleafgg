@@ -66,4 +66,7 @@ exports.setSurgingSparks = [
     new card_images_1.CapsakidArt(),
     new card_images_1.ShroodleArt(),
     new card_images_1.QuaxwellArt(),
+    new card_images_1.PansearArt(),
+    new card_images_1.LarvestaArt(),
+    new card_images_1.PhanpyArt(),
 ];
