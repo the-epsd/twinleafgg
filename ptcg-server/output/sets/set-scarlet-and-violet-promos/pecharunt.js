@@ -7,6 +7,7 @@ const pokemon_types_1 = require("../../game/store/card/pokemon-types");
 const game_1 = require("../../game");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
+const attack_effects_1 = require("../../game/store/effects/attack-effects");
 class Pecharunt extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -121,6 +122,8 @@ class Pecharunt extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
+            const specialConditionEffect = new attack_effects_1.AddSpecialConditionsEffect(effect, [card_types_1.SpecialCondition.POISONED]);
+            store.reduceEffect(state, specialConditionEffect);
             opponent.active.attackMarker.addMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
         }
         if (effect instanceof game_effects_1.RetreatEffect && effect.player.active.attackMarker.hasMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this)) {

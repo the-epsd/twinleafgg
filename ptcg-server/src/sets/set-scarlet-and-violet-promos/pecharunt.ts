@@ -5,6 +5,7 @@ import { StoreLike, State, StateUtils, GameError, GameMessage } from '../../game
 import { Effect } from '../../game/store/effects/effect';
 import { BetweenTurnsEffect, EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { AttackEffect, PowerEffect, RetreatEffect } from '../../game/store/effects/game-effects';
+import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 
 export class Pecharunt extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -137,6 +138,8 @@ export class Pecharunt extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
+      const specialConditionEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.POISONED]);
+      store.reduceEffect(state, specialConditionEffect);
       opponent.active.attackMarker.addMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
     }
 
