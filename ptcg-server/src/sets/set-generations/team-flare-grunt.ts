@@ -21,7 +21,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   if (!activeHasEnergy) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
-  
+
   if (player.supporterTurn >= 1) {
     throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
   }
@@ -29,11 +29,11 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   player.hand.moveCardTo(effect.trainerCard, player.supporter);
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
-  
+
   let target: PokemonCardList = opponent.active as PokemonCardList;
-  
+
   let cards: Card[] = [];
-  
+
   yield store.prompt(state, new ChooseCardsPrompt(
     player,
     GameMessage.CHOOSE_CARD_TO_DISCARD,
@@ -44,16 +44,16 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     cards = selected;
     next();
   });
-  
+
   player.supporter.moveCardTo(effect.trainerCard, player.discard);
   target.moveCardsTo(cards, opponent.discard);
-  
+
   return state;
 }
 
 export class TeamFlareGrunt extends TrainerCard {
 
-  public trainerType: TrainerType = TrainerType.ITEM;
+  public trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public set: string = 'GEN';
 

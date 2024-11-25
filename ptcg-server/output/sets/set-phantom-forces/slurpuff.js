@@ -121,6 +121,11 @@ class Slurpuff extends pokemon_card_1.PokemonCard {
                 }
             });
         }
+        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+            const player = effect.player;
+            player.marker.removeMarker(this.TASTING_MARKER);
+            return state;
+        }
         return state;
     }
 }

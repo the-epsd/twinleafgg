@@ -140,6 +140,12 @@ export class Slurpuff extends PokemonCard {
       });
     }
 
+    if (effect instanceof EndTurnEffect) {
+      const player = effect.player;
+      player.marker.removeMarker(this.TASTING_MARKER);
+      return state;
+    }
+
     return state;
   }
 }
