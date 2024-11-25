@@ -5,9 +5,10 @@ const game_1 = require("../../game");
 const card_types_1 = require("../../game/store/card/card-types");
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const pokemon_types_1 = require("../../game/store/card/pokemon-types");
+const check_effect_1 = require("../../game/store/effect-reducers/check-effect");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
+const check_effects_1 = require("../../game/store/effects/check-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
-const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 const coin_flip_prompt_1 = require("../../game/store/prompts/coin-flip-prompt");
 class Electrode extends pokemon_card_1.PokemonCard {
     constructor() {
@@ -25,8 +26,8 @@ class Electrode extends pokemon_card_1.PokemonCard {
         this.retreat = [card_types_1.CardType.COLORLESS];
         this.powers = [
             {
-                useWhenInPlay: true,
                 powerType: pokemon_types_1.PowerType.POKEPOWER,
+                useWhenInPlay: true,
                 name: 'Buzzap',
                 text: 'At any time during your turn (before your attack), you may Knock Out Electrode and attach it to 1 of your other Pokémon. If you do, choose a type of Energy. Electrode is now an Energy card (instead of a Pokémon) that provides 2 energy of that type. You can’t use this power if Electrode is Asleep, Confused, or Paralyzed.',
             }
@@ -39,10 +40,8 @@ class Electrode extends pokemon_card_1.PokemonCard {
                 text: 'Flip a coin. If tails, Electrode does 10 damage to itself.'
             }
         ];
-        this.provides = [card_types_1.CardType.COLORLESS];
-        this.text = '';
-        this.isBlocked = false;
-        this.blendedEnergies = [];
+        this.provides = [];
+        this.energyType = card_types_1.EnergyType.SPECIAL;
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
@@ -51,6 +50,12 @@ class Electrode extends pokemon_card_1.PokemonCard {
             if (cardList.specialConditions.length > 0) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
+            cardList.damage = 999;
+            state = check_effect_1.checkState(store, state);
+            if (store.hasPrompts()) {
+                state = store.waitPrompt(state, () => { });
+            }
+            // Then handle energy type selection and attachment
             const options = [
                 { value: card_types_1.CardType.COLORLESS, message: 'Colorless' },
                 { value: card_types_1.CardType.DARK, message: 'Dark' },
@@ -65,36 +70,30 @@ class Electrode extends pokemon_card_1.PokemonCard {
                 { value: card_types_1.CardType.WATER, message: 'Water' }
             ];
             return store.prompt(state, new game_1.SelectPrompt(player.id, game_1.GameMessage.CHOOSE_ENERGY_TYPE, options.map(c => c.message), { allowCancel: false }), choice => {
+                // Inside PowerEffect block after selecting energy type
                 const option = options[choice];
                 if (!option) {
                     return state;
                 }
-                // class ElectrodeEnergyCard extends EnergyCard {
-                //   public superType: SuperType = SuperType.ENERGY;
-                //   public energyType: EnergyType = EnergyType.BASIC;
-                //   public format: Format = Format.NONE;
-                //   public provides: CardType[] = [];
-                //   public text: string = '';
-                //   public isBlocked = false;
-                //   public blendedEnergies: CardType[] = [];
-                //   public energyEffect: EnergyEffect | undefined;
-                // }
-                const electrodeEnergy = this;
+                // Transform Electrode properties to act as energy
+                this.chosenEnergyType = option.value;
+                this.provides = [option.value, option.value];
+                this.superType = card_types_1.SuperType.ENERGY;
+                // Create energy list and add transformed Electrode
                 const energyList = new game_1.CardList();
-                energyList.cards.push(electrodeEnergy);
-                // Remove Electrode from its current location
-                const currentList = game_1.StateUtils.findCardList(state, this);
-                currentList.moveCardTo(this, player.discard);
+                energyList.cards.push(this);
                 return store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_CARDS, energyList, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], {}, { allowCancel: true }), transfers => {
-                    transfers = transfers || [];
-                    for (const transfer of transfers) {
-                        const target = game_1.StateUtils.getTarget(state, player, transfer.to);
-                        const attachEnergyEffect = new play_card_effects_1.AttachEnergyEffect(player, electrodeEnergy, target);
-                        store.reduceEffect(state, attachEnergyEffect);
+                    if (transfers && transfers.length > 0) {
+                        const target = game_1.StateUtils.getTarget(state, player, transfers[0].to);
+                        player.discard.moveCardTo(this, target);
+                        target.cards.unshift(target.cards.splice(target.cards.length - 1, 1)[0]);
                     }
                     return state;
                 });
             });
+        }
+        if (effect instanceof check_effects_1.CheckProvidedEnergyEffect && effect.source.cards.includes(this) && effect.source.getPokemonCard() !== this) {
+            effect.energyMap.push({ card: this, provides: this.chosenEnergyType ? [this.chosenEnergyType] : [] });
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             return store.prompt(state, new coin_flip_prompt_1.CoinFlipPrompt(effect.player.id, game_1.GameMessage.FLIP_COIN), (result) => {

@@ -15,7 +15,7 @@ import { CoinFlipComponent } from '../prompt/coin-flip-prompt/coin-flip.componen
     BoardPrizesComponent,
     BoardDeckComponent,
     BoardCardComponent,
-    // CoinFlipComponent
+    CoinFlipComponent
   ],
   exports: [
     BoardComponent,

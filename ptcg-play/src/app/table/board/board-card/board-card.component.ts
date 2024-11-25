@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Card, CardList, CardTag, PokemonCardList, Power, BoardEffect, SpecialCondition, StadiumDirection, SuperType } from 'ptcg-server';
+import { Card, CardList, PokemonCardList, Power, BoardEffect, SpecialCondition, StadiumDirection, SuperType, EnergyCard, CardType } from 'ptcg-server';
 
 const MAX_ENERGY_CARDS = 8;
 
@@ -42,7 +42,6 @@ export class BoardCardComponent {
     }
 
     this.mainCard = value.cards[value.cards.length - 1];
-    this.isHolo = this.mainCard.tags.includes(CardTag.HOLO);
   }
 
   @Input() set owner(value: boolean) {
@@ -60,7 +59,6 @@ export class BoardCardComponent {
     this.damage = 0;
     this.specialConditions = [];
     this.isEmpty = !value;
-    this.isHolo = value ? value.tags.includes(CardTag.HOLO) : false;
     this.boardEffect = [];
   }
 
@@ -77,7 +75,6 @@ export class BoardCardComponent {
   public specialConditions: SpecialCondition[] = [];
   public SpecialCondition = SpecialCondition;
   public isUpsideDown = false;
-  public isHolo: boolean = false;
   public boardEffect: BoardEffect[] = [];
   public BoardEffect = BoardEffect;
 
@@ -94,7 +91,6 @@ export class BoardCardComponent {
     this.trainerCard = undefined;
     this.mainCard = cardList.getPokemonCard();
     this.trainerCard = cardList.tool;
-    this.isHolo = this.mainCard.tags.includes(CardTag.HOLO);
 
     for (const card of cardList.cards) {
       if (card.superType === SuperType.ENERGY) {
@@ -107,7 +103,9 @@ export class BoardCardComponent {
     }
   }
 
+
   getCustomImageUrl(card: Card): string {
+
     const customImageUrls = {
       'Grass Energy': 'assets/energy/grass.png',
       'Fire Energy': 'assets/energy/fire.png',
@@ -124,10 +122,12 @@ export class BoardCardComponent {
       'Mist Energy': 'assets/energy/mist.png',
       'Legacy Energy': 'assets/energy/legacy.png',
       'Neo Upper Energy': 'assets/energy/neo-upper.png',
+      'Electrode': 'assets/energy/neo-upper.png',
     };
 
     return customImageUrls[card.name] || '';
   }
+
 
   public onCardClick(card: Card) {
     this.cardClick.next(card);

@@ -88,11 +88,19 @@
     </div>
 
     <div class="background-image-container">
+      <div class="marker-container top-markers">
+        <div class="gx-marker" [class.used]="topPlayer?.usedGX"></div>
+        <div class="vstar-marker" [class.used]="topPlayer?.usedVSTAR"></div>
+      </div>
       <img src="https://i.imgur.com/cgxlMRq.png" alt="Twinleaf Logo">
-      <!-- <div class="coin-flip-container">
+      <div class="coin-flip-container">
         <ptcg-coin-flip [prompt]="activeCoinFlipPrompt">
         </ptcg-coin-flip>
-      </div> -->
+      </div>
+      <div class="marker-container bottom-markers">
+        <div class="vstar-marker" [class.used]="bottomPlayer?.usedVSTAR"></div>
+        <div class="gx-marker" [class.used]="bottomPlayer?.usedGX"></div>
+      </div>
     </div>
 
 
@@ -179,3 +187,5 @@
         (prizeClick)="onPrizeClick(bottomPlayer, $event)">
       </ptcg-board-prizes>
     </div>
+  </div>
+</div>

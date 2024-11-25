@@ -1,21 +1,19 @@
 <div class="host">
   <div class="ptcg-prompt-title">
-    <!-- <h2 translate>PROMPT_MOVE_ENERGY_TITLE</h2> -->
-    <!-- <div class="ptcg-u-spacer"></div> -->
+    <h2 translate>PROMPT_MOVE_ENERGY_TITLE</h2>
+    <div class="ptcg-u-spacer"></div>
     <button mat-button mat-icon-button (click)="minimize()">
       <mat-icon>keyboard_arrow_down</mat-icon>
     </button>
-
   </div>
 
   <div class="ptcg-damage-prompt-content">
     <ptcg-choose-pokemons-pane [pokemonData]="pokemonData" (cardClick)="onCardClick($event)">
     </ptcg-choose-pokemons-pane>
 
-    <ptcg-choose-cards-panes [cards]="getAllCards()" [filter]="filter" [blocked]="blocked" [maxCards]="max"
+    <ptcg-choose-cards-panes [cards]="currentPokemonCards" [filter]="filter" [blocked]="blocked" [maxCards]="max"
       [promptValue]="{options: {max: max}}" (changeCards)="onChange($event)">
     </ptcg-choose-cards-panes>
-
   </div>
 
   <div class="ptcg-prompt-actions">

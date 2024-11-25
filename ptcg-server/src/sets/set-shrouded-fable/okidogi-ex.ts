@@ -30,11 +30,11 @@ export class Okidogiex extends PokemonCard {
       text: 'Attach up to 2 Basic Darkness Energy from your deck to this Pokémon, then shuffle your deck. If you attached any Energy this way, this Pokémon is now Poisoned.'
     },
     {
-      name: 'CChain-Crazed',
+      name: 'Chain-Crazed',
       cost: [CardType.DARK, CardType.DARK, CardType.COLORLESS],
       damage: 130,
       damageCalculation: '+',
-      text: 'If this Pokémon is Poisoned, this attack does 130 more.'
+      text: 'If this Pokémon is Poisoned, this attack does 130 more damage.'
     }
   ];
 

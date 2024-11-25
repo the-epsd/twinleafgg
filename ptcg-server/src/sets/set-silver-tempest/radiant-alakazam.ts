@@ -64,7 +64,6 @@ export class RadiantAlakazam extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -81,7 +80,6 @@ export class RadiantAlakazam extends PokemonCard {
       if (damagedPokemon.length === 0) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
-
 
       const maxAllowedDamage: DamageMap[] = [];
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
