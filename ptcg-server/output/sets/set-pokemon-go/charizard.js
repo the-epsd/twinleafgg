@@ -12,7 +12,7 @@ class Charizard extends pokemon_card_1.PokemonCard {
         super(...arguments);
         this.set = 'PGO';
         this.setNumber = '53';
-        this.stage = card_types_1.Stage.BASIC;
+        this.stage = card_types_1.Stage.STAGE_2;
         this.cardImage = 'assets/cardback.png';
         this.fullName = 'Charizard PGO';
         this.name = 'Charizard';
