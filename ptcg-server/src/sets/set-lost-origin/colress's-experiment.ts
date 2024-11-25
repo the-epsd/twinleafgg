@@ -48,7 +48,7 @@ export class ColresssExperiment extends TrainerCard {
       player.deck.moveTo(deckTop, 5);
     
       return store.prompt(state, new ChooseCardsPrompt(
-        player.id,
+        player,
         GameMessage.CHOOSE_CARD_TO_HAND,
         deckTop,
         { },

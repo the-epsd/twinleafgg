@@ -83,7 +83,7 @@ export class FanRotom extends PokemonCard {
         const maxPokemons = Math.min(pokemons, 3);
 
         state = store.prompt(state, new ChooseCardsPrompt(
-          player.id,
+          player,
           GameMessage.CHOOSE_CARD_TO_HAND,
           player.deck,
           { superType: SuperType.POKEMON },

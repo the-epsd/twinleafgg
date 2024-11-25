@@ -35,7 +35,7 @@ class TowerOfDarkness extends trainer_card_1.TrainerCard {
                     blocked.push(index);
                 }
             });
-            state = store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_DISCARD, player.hand, {}, { allowCancel: true, min: 1, max: 1, blocked: blocked }), cards => {
+            state = store.prompt(state, new game_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_DISCARD, player.hand, {}, { allowCancel: true, min: 1, max: 1, blocked: blocked }), cards => {
                 cards = cards || [];
                 if (cards.length === 0) {
                     return;

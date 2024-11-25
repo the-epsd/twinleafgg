@@ -100,7 +100,7 @@ class Finizen extends pokemon_card_1.PokemonCard {
                 const target = selected[0];
                 player.switchPokemon(target);
                 let cards = [];
-                state = store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_EVOLVE, player.deck, { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.STAGE_1, evolvesFrom: 'Finizen' }, { min: 0, max: 1, allowCancel: false }), selected => {
+                state = store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_EVOLVE, player.deck, { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.STAGE_1, evolvesFrom: 'Finizen' }, { min: 0, max: 1, allowCancel: false }), selected => {
                     cards = (selected || []);
                     // Find Finizen's new location after the switch
                     let finizensNewBenchIndex = -1;

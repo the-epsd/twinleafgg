@@ -41,7 +41,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   player.deck.moveTo(deckTop, 7);
 
   yield store.prompt(state, new ChooseCardsPrompt(
-    player.id,
+    player,
     GameMessage.CHOOSE_CARD_TO_HAND,
     deckTop,
     {},

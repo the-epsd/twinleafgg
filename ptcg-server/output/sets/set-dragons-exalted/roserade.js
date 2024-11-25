@@ -25,7 +25,7 @@ function* useLeParfum(next, store, state, self, effect) {
     catch (_a) {
         return state;
     }
-    yield store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, {}, { min: 1, max: 1, allowCancel: true }), selected => {
+    yield store.prompt(state, new game_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, {}, { min: 1, max: 1, allowCancel: true }), selected => {
         const cards = selected || [];
         player.deck.moveCardsTo(cards, player.hand);
         next();

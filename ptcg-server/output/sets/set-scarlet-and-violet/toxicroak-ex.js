@@ -42,7 +42,7 @@ class Toxicroakex extends pokemon_card_1.PokemonCard {
             if (player.deck.cards.length == 0) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_ATTACK);
             }
-            state = store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, {}, { min: 1, max: 2, allowCancel: false }), cards => {
+            state = store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, {}, { min: 1, max: 2, allowCancel: false }), cards => {
                 player.deck.moveCardsTo(cards, player.hand);
                 state = store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
                     player.deck.applyOrder(order);

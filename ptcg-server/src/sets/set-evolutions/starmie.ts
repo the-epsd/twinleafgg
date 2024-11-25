@@ -29,7 +29,7 @@ function* useSpaceBeacon(next: Function, store: StoreLike, state: State,
   }
 
   yield store.prompt(state, new ChooseCardsPrompt(
-    player.id,
+    player,
     GameMessage.CHOOSE_CARD_TO_DISCARD,
     player.hand,
     {},
@@ -47,7 +47,7 @@ function* useSpaceBeacon(next: Function, store: StoreLike, state: State,
 
   let recovered: Card[] = [];
   yield store.prompt(state, new ChooseCardsPrompt(
-    player.id,
+    player,
     GameMessage.CHOOSE_CARD_TO_HAND,
     player.discard,
     { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },

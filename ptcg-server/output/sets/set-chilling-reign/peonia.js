@@ -35,7 +35,7 @@ class Peonia extends trainer_card_1.TrainerCard {
             player.prizes.forEach(prizeList => {
                 allPrizeCards.cards.push(...prizeList.cards);
             });
-            return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_PRIZE_CARD, allPrizeCards, {}, { min: 3, max: 3, allowCancel: false }), chosenPrizes => {
+            return store.prompt(state, new game_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_PRIZE_CARD, allPrizeCards, {}, { min: 3, max: 3, allowCancel: false }), chosenPrizes => {
                 chosenPrizes = chosenPrizes || [];
                 const hand = player.hand;
                 // Find all prize lists containing the chosen cards
@@ -47,7 +47,7 @@ class Peonia extends trainer_card_1.TrainerCard {
                         prizeList.moveCardTo(prize, hand);
                     }
                 });
-                store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARDS_TO_RETURN_TO_PRIZES, player.hand, {}, { min: chosenPrizes.length, max: chosenPrizes.length, allowCancel: false }), cards => {
+                store.prompt(state, new game_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARDS_TO_RETURN_TO_PRIZES, player.hand, {}, { min: chosenPrizes.length, max: chosenPrizes.length, allowCancel: false }), cards => {
                     cards = cards || [];
                     const newPrizeCards = new game_1.CardList();
                     player.hand.moveCardsTo(cards, newPrizeCards);

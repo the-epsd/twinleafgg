@@ -36,5 +36,6 @@ export declare class RadiantAlakazam extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
+    readonly PAINFUL_SPOONS_MARKER = "PAINFUL_SPOONS_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

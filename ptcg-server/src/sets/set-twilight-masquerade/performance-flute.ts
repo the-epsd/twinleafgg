@@ -55,7 +55,7 @@ export class PerformanceFlute extends TrainerCard {
       opponent.deck.moveTo(deckTop, 5);
       
       return store.prompt(state, new ChooseCardsPrompt(
-        player.id,
+        player,
         GameMessage.CHOOSE_CARD_TO_HAND,
         deckTop,
         { superType: SuperType.POKEMON, stage: Stage.BASIC },

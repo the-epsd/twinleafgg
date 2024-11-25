@@ -43,7 +43,7 @@ class GiratinaV extends game_1.PokemonCard {
             const player = effect.player;
             const deckTop = new card_list_1.CardList();
             player.deck.moveTo(deckTop, 4);
-            return store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, deckTop, {}, { min: 2, max: 2, allowCancel: true }), selected => {
+            return store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, deckTop, {}, { min: 2, max: 2, allowCancel: true }), selected => {
                 deckTop.moveCardsTo(selected, player.hand);
                 deckTop.moveTo(player.lostzone);
                 return state;

@@ -41,7 +41,7 @@ export class Zarude extends PokemonCard {
       if (turn == 2) {
         const player = effect.player;
         return store.prompt(state, new ChooseCardsPrompt(
-          player.id,
+          player,
           GameMessage.CHOOSE_CARD_TO_HAND,
           player.deck,
           { superType: SuperType.POKEMON, cardType: CardType.GRASS },
@@ -58,7 +58,7 @@ export class Zarude extends PokemonCard {
       if (turn > 2) {
         const player = effect.player;
         return store.prompt(state, new ChooseCardsPrompt(
-          player.id,
+          player,
           GameMessage.CHOOSE_CARD_TO_HAND,
           player.deck,
           { superType: SuperType.POKEMON, cardType: CardType.GRASS },

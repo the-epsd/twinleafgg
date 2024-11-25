@@ -44,7 +44,7 @@ class Luxrayex extends game_1.PokemonCard {
             if (opponent.hand.cards.length == 0) {
                 return state;
             }
-            return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_DECK, opponent.hand, {}, { allowCancel: false, min: 0, max: 1 }), selectedCard => {
+            return store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_DECK, opponent.hand, {}, { allowCancel: false, min: 0, max: 1 }), selectedCard => {
                 const selected = selectedCard || [];
                 if (selectedCard === null || selected.length === 0) {
                     return;

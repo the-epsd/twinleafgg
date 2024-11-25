@@ -39,7 +39,7 @@ class MaxiesHiddenBallTrick extends trainer_card_1.TrainerCard {
                 player.deck.moveTo(player.hand, 5);
                 return state;
             }
-            return store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH, player.discard, { superType: card_types_1.SuperType.POKEMON, cardType: card_types_1.CardType.FIGHTING }, { min: 1, max: 1, allowCancel: false }), selected => {
+            return store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH, player.discard, { superType: card_types_1.SuperType.POKEMON, cardType: card_types_1.CardType.FIGHTING }, { min: 1, max: 1, allowCancel: false }), selected => {
                 const cards = selected || [];
                 player.discard.moveCardsTo(cards, slot);
                 slot.pokemonPlayedTurn = state.turn;

@@ -28,7 +28,7 @@ function* useMixedCall(next, store, state, self, effect) {
     const maxSupporters = Math.min(supporters, 1);
     const count = maxPokemons + maxSupporters;
     // Pass max counts to prompt options
-    yield store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_ONE_POKEMON_AND_ONE_SUPPORTER_TO_HAND, player.deck, {}, { min: 0, max: count, allowCancel: false, blocked, maxPokemons, maxSupporters }), selected => {
+    yield store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_ONE_POKEMON_AND_ONE_SUPPORTER_TO_HAND, player.deck, {}, { min: 0, max: count, allowCancel: false, blocked, maxPokemons, maxSupporters }), selected => {
         cards = selected || [];
         next();
     });

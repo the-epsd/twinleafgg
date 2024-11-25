@@ -29,7 +29,7 @@ class HandTrimmer extends trainer_card_1.TrainerCard {
             effect.preventDefault = true;
             // Opponent discards first
             if (opponent.hand.cards.length > 5) {
-                store.prompt(state, new __1.ChooseCardsPrompt(opponent.id, __1.GameMessage.CHOOSE_CARD_TO_DISCARD, opponent.hand, {}, { min: discardAmount, max: discardAmount, allowCancel: false }), selected => {
+                store.prompt(state, new __1.ChooseCardsPrompt(opponent, __1.GameMessage.CHOOSE_CARD_TO_DISCARD, opponent.hand, {}, { min: discardAmount, max: discardAmount, allowCancel: false }), selected => {
                     const cards = selected || [];
                     opponent.hand.moveCardsTo(cards, opponent.discard);
                 });
@@ -41,7 +41,7 @@ class HandTrimmer extends trainer_card_1.TrainerCard {
             const playerDiscardAmount = playerHandLength - 5;
             // Player discards next
             if (player.hand.cards.length > 5) {
-                store.prompt(state, new __1.ChooseCardsPrompt(player.id, __1.GameMessage.CHOOSE_CARD_TO_DISCARD, player.hand, {}, { min: playerDiscardAmount, max: playerDiscardAmount, allowCancel: false }), selected => {
+                store.prompt(state, new __1.ChooseCardsPrompt(player, __1.GameMessage.CHOOSE_CARD_TO_DISCARD, player.hand, {}, { min: playerDiscardAmount, max: playerDiscardAmount, allowCancel: false }), selected => {
                     const cards = selected || [];
                     player.hand.moveCardsTo(cards, player.discard);
                 });

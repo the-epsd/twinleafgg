@@ -56,7 +56,7 @@ class Jirachi extends pokemon_card_1.PokemonCard {
                 store.reduceEffect(state, endTurnEffect);
                 return state;
             }
-            state = store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, opponent.active, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.SPECIAL }, { min: 1, max: 1, allowCancel: true }), energy => {
+            state = store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, opponent.active, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.SPECIAL }, { min: 1, max: 1, allowCancel: true }), energy => {
                 const cards = (energy || []);
                 const discardEnergy = new attack_effects_1.DiscardCardsEffect(effect, cards);
                 discardEnergy.target = opponent.active;

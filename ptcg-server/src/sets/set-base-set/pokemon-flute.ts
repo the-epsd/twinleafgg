@@ -39,7 +39,7 @@ export class PokemonFlute extends TrainerCard {
 
       let cards: Card[] = [];
       return store.prompt(state, new ChooseCardsPrompt(
-        player.id,
+        player,
         GameMessage.CHOOSE_OPPONENTS_BASIC_POKEMON_TO_BENCH,
         opponent.discard,
         { superType: SuperType.POKEMON, stage: Stage.BASIC },

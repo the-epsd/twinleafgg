@@ -39,7 +39,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   const count = maxPokemons || maxTrainers;
 
   yield store.prompt(state, new ChooseCardsPrompt(
-    player.id,
+    player,
     GameMessage.CHOOSE_CARD_TO_HAND,
     player.deck,
     { },

@@ -35,7 +35,7 @@ class BuddyBuddyPoffin extends trainer_card_1.TrainerCard {
         const maxPokemons = Math.min(openSlots.length, 2);
         effect.preventDefault = true;
         player.hand.moveCardTo(effect.trainerCard, player.supporter);
-        return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH, player.deck, { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.BASIC }, { min: 0, max: maxPokemons, allowCancel: false, blocked, maxPokemons }), selectedCards => {
+        return store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH, player.deck, { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.BASIC }, { min: 0, max: maxPokemons, allowCancel: false, blocked, maxPokemons }), selectedCards => {
             const cards = selectedCards || [];
             cards.forEach((card, index) => {
                 player.deck.moveCardTo(card, openSlots[index]);

@@ -137,7 +137,7 @@ function choosePrizeCards(state: State, prizesToTake: [number, number]): ChooseC
       });
 
       const prompt = new ChooseCardsPrompt(
-        player.id,
+        player,
         GameMessage.CHOOSE_PRIZE_CARD,
         allPrizeCards,
         {},  // No specific filter needed for prizes
@@ -208,7 +208,6 @@ function checkWinner(store: StoreLike, state: State, onComplete?: () => void): S
   if (points[0] + points[1] === 0) {
     if (onComplete) {
       onComplete();
-      console.log('it pointed');
     }
     return state;
   }
@@ -223,7 +222,6 @@ function checkWinner(store: StoreLike, state: State, onComplete?: () => void): S
   state = endGame(store, state, winner);
   if (onComplete) {
     onComplete();
-    console.log('it end gamed');
   }
   return state;
 }
@@ -232,7 +230,6 @@ function handlePrompts(store: StoreLike, state: State, prompts: (ChooseCardsProm
   const prompt = prompts.shift();
   if (prompt === undefined) {
     onComplete();
-    console.log('it completed');
     return state;
   }
 
@@ -250,7 +247,6 @@ function handlePrompts(store: StoreLike, state: State, prompts: (ChooseCardsProm
         }
       });
       handlePrompts(store, state, prompts, onComplete);
-      console.log('this one');
     });
   } else if (prompt instanceof ChoosePokemonPrompt) {
     return store.prompt(state, prompt, (result: PokemonCardList[]) => {
@@ -265,7 +261,6 @@ function handlePrompts(store: StoreLike, state: State, prompts: (ChooseCardsProm
       player.active = player.bench[benchIndex];
       player.bench[benchIndex] = temp;
       handlePrompts(store, state, prompts, onComplete);
-      console.log('that one');
     });
   }
   return state;
@@ -312,7 +307,6 @@ function* executeCheckState(next: Function, store: StoreLike, state: State, onCo
       completed[i] = true;
       if (completed.every(c => c)) {
         checkWinner(store, state, onComplete);
-        console.log('winner checked');
       }
     });
   }
@@ -323,7 +317,6 @@ export function checkState(store: StoreLike, state: State, onComplete?: () => vo
   if ([GamePhase.PLAYER_TURN, GamePhase.ATTACK, GamePhase.BETWEEN_TURNS].includes(state.phase) === false) {
     if (onComplete !== undefined) {
       onComplete();
-      console.log('did complete idk undefined');
     }
     return state;
   }

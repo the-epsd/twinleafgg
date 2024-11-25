@@ -34,7 +34,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   const max = Math.min(5, pokemonsInDiscard);
   let cards: Card[] = [];
   yield store.prompt(state, new ChooseCardsPrompt(
-    player.id,
+    player,
     GameMessage.CHOOSE_CARD_TO_DECK,
     player.discard,
     { superType: SuperType.POKEMON },

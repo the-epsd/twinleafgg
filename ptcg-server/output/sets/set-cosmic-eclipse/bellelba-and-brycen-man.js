@@ -59,7 +59,7 @@ class BellelbaAndBrycenMan extends trainer_card_1.TrainerCard {
             }
             state = store.prompt(state, new game_1.ConfirmPrompt(effect.player.id, game_message_1.GameMessage.WANT_TO_DISCARD_CARDS), wantToUse => {
                 if (wantToUse) {
-                    state = store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_DISCARD, player.hand, {}, { allowCancel: false, min: 3, max: 3 }), cards => {
+                    state = store.prompt(state, new game_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_DISCARD, player.hand, {}, { allowCancel: false, min: 3, max: 3 }), cards => {
                         cards = cards || [];
                         player.hand.moveCardsTo(cards, player.discard);
                         cards.forEach((card, index) => {

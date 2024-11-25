@@ -127,7 +127,7 @@ export class GalarianZapdosV extends PokemonCard {
 
           let cards: Card[] = [];
           store.prompt(state, new ChooseCardsPrompt(
-            player.id,
+            player,
             GameMessage.CHOOSE_CARD_TO_DISCARD,
             oppActive,
             { superType: SuperType.ENERGY, energyType: EnergyType.SPECIAL },

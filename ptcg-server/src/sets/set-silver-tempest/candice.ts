@@ -44,7 +44,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   const count = 7;
 
   yield store.prompt(state, new ChooseCardsPrompt(
-    player.id,
+    player,
     GameMessage.CHOOSE_CARD_TO_HAND,
     deckTop,
     {},

@@ -137,7 +137,7 @@ export class ZoroarkGX extends PokemonCard {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
       state = store.prompt(state, new ChooseCardsPrompt(
-        player.id,
+        player,
         GameMessage.CHOOSE_CARD_TO_DISCARD,
         player.hand,
         {},

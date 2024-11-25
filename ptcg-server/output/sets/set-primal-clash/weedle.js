@@ -11,7 +11,7 @@ function* useMultiply(next, store, state, effect) {
     } // Attack does nothing if no bench slots.
     const max = Math.min(slots.length, 1);
     let cards = [];
-    yield store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH, player.deck, { superType: game_1.SuperType.POKEMON, stage: game_1.Stage.BASIC, name: 'Weedle' }, { min: 0, max, allowCancel: true }), selected => {
+    yield store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH, player.deck, { superType: game_1.SuperType.POKEMON, stage: game_1.Stage.BASIC, name: 'Weedle' }, { min: 0, max, allowCancel: true }), selected => {
         cards = selected || [];
         next();
     });

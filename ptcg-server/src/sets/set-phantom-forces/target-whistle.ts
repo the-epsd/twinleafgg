@@ -31,7 +31,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
   let cards: Card[] = [];
   yield store.prompt(state, new ChooseCardsPrompt(
-    player.id,
+    player,
     GameMessage.CHOOSE_CARD_TO_HAND,
     opponent.discard,
     { superType: SuperType.POKEMON, stage: Stage.BASIC },

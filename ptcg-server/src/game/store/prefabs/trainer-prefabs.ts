@@ -30,7 +30,7 @@ export function DISCARD_X_CARDS_FROM_YOUR_HAND(effect: TrainerEffect, store: Sto
 
   if (cards.length > maxAmount) {
     state = store.prompt(state, new ChooseCardsPrompt(
-      player.id,
+      effect.player,
       GameMessage.CHOOSE_CARD_TO_DISCARD,
       player.hand,
       {},

@@ -131,7 +131,7 @@ export class Finizen extends PokemonCard {
         let cards: PokemonCard[] = [];
 
         state = store.prompt(state, new ChooseCardsPrompt(
-          player.id,
+          player,
           GameMessage.CHOOSE_CARD_TO_EVOLVE,
           player.deck,
           { superType: SuperType.POKEMON, stage: Stage.STAGE_1, evolvesFrom: 'Finizen' },

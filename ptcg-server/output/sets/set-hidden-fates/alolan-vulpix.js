@@ -33,7 +33,7 @@ class AlolanVulpix extends game_1.PokemonCard {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             let cards = [];
-            return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: game_1.SuperType.POKEMON }, { min: 0, max: 2, allowCancel: true }), selected => {
+            return store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: game_1.SuperType.POKEMON }, { min: 0, max: 2, allowCancel: true }), selected => {
                 cards = selected || [];
                 cards.forEach((card, index) => {
                     player.deck.moveCardTo(card, player.hand);

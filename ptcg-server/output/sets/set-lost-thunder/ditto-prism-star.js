@@ -55,7 +55,7 @@ class DittoPrismStar extends pokemon_card_1.PokemonCard {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
             let cards = [];
-            return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_EVOLVE, player.hand, { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.STAGE_1 }, { min: 1, max: 1, allowCancel: false }), selected => {
+            return store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_EVOLVE, player.hand, { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.STAGE_1 }, { min: 1, max: 1, allowCancel: false }), selected => {
                 cards = selected || [];
                 if (cards.length > 0) {
                     const pokemonCard = cards[0];

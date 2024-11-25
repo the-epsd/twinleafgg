@@ -37,7 +37,7 @@ class HelperBell extends trainer_card_1.TrainerCard {
                 // We will discard this card after prompt confirmation
                 effect.preventDefault = true;
                 let cards = [];
-                return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.TRAINER, trainerType: card_types_1.TrainerType.SUPPORTER }, { min: 0, max: 1, allowCancel: false }), selectedCards => {
+                return store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.TRAINER, trainerType: card_types_1.TrainerType.SUPPORTER }, { min: 0, max: 1, allowCancel: false }), selectedCards => {
                     cards = selectedCards || [];
                     cards.forEach((card, index) => {
                         player.deck.moveCardTo(card, player.hand);

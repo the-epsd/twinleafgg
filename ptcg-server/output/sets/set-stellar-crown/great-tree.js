@@ -62,7 +62,7 @@ function* useStadium(next, store, state, effect) {
         }
     });
     let cards = [];
-    yield store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_EVOLVE, player.deck, { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.STAGE_1, evolvesFrom: pokemonCard.name }, { min: 1, max: 1, allowCancel: true, blocked }), selected => {
+    yield store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_EVOLVE, player.deck, { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.STAGE_1, evolvesFrom: pokemonCard.name }, { min: 1, max: 1, allowCancel: true, blocked }), selected => {
         cards = selected || [];
         next();
     });
@@ -86,7 +86,7 @@ function* useStadium(next, store, state, effect) {
             }
         });
         let stage2Cards = [];
-        yield store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_EVOLVE, player.deck, { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.STAGE_2, evolvesFrom: evolution.name }, { min: 1, max: 1, allowCancel: true, blocked: blockedStage2 }), selected => {
+        yield store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_EVOLVE, player.deck, { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.STAGE_2, evolvesFrom: evolution.name }, { min: 1, max: 1, allowCancel: true, blocked: blockedStage2 }), selected => {
             stage2Cards = selected || [];
             next();
         });

@@ -63,7 +63,7 @@ class HisuianZoroark extends pokemon_card_1.PokemonCard {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_ATTACK);
             }
             return store.prompt(state, [
-                new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.discard, {}, { min: 1, max: 1, allowCancel: false })
+                new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.discard, {}, { min: 1, max: 1, allowCancel: false })
             ], selected => {
                 const cards = selected || [];
                 player.discard.moveCardsTo(cards, player.hand);

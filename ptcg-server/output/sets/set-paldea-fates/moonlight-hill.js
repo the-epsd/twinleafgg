@@ -32,7 +32,7 @@ class MoonlightHill extends game_1.TrainerCard {
         if (!hasEnergyInHand) {
             throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
         }
-        state = store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, player.hand, { superType: game_1.SuperType.ENERGY, cardType: game_1.CardType.PSYCHIC }, { allowCancel: true, min: 1, max: 1 }), cards => {
+        state = store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, player.hand, { superType: game_1.SuperType.ENERGY, cardType: game_1.CardType.PSYCHIC }, { allowCancel: true, min: 1, max: 1 }), cards => {
             cards = cards || [];
             if (cards.length === 0) {
                 return;

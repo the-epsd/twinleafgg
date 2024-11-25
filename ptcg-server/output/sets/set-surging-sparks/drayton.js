@@ -44,7 +44,7 @@ function* playCard(next, store, state, effect) {
     const deckTop = new card_list_1.CardList();
     player.deck.moveTo(deckTop, 7);
     let cards = [];
-    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, deckTop, {}, { min: 0, max: count, allowCancel: false, blocked, maxTrainers, maxPokemons }), selected => {
+    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, deckTop, {}, { min: 0, max: count, allowCancel: false, blocked, maxTrainers, maxPokemons }), selected => {
         cards = selected || [];
         next();
     });

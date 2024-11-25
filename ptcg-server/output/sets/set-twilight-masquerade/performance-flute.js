@@ -38,7 +38,7 @@ class PerformanceFlute extends trainer_card_1.TrainerCard {
             }
             const deckTop = new game_1.CardList();
             opponent.deck.moveTo(deckTop, 5);
-            return store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, deckTop, { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.BASIC }, { min: 0, max: openSlots.length, allowCancel: false }), selected => {
+            return store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, deckTop, { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.BASIC }, { min: 0, max: openSlots.length, allowCancel: false }), selected => {
                 const cards = selected || [];
                 // Operation canceled by the user
                 if (cards.length === 0) {

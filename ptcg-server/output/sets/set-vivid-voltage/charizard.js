@@ -60,7 +60,7 @@ class Charizard extends pokemon_card_1.PokemonCard {
             }
             const deckTop = new game_1.CardList();
             player.deck.moveTo(deckTop, 3);
-            return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, deckTop, {}, { min: 1, max: 1, allowCancel: false }), selected => {
+            return store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_HAND, deckTop, {}, { min: 1, max: 1, allowCancel: false }), selected => {
                 player.marker.addMarker(this.BATTLE_SENSE_MARKER, this);
                 deckTop.moveCardsTo(selected, player.hand);
                 deckTop.moveTo(player.discard);

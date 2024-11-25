@@ -29,7 +29,7 @@ class DuskBall extends trainer_card_1.TrainerCard {
             const startIndex = deckSize - numCardsToMove;
             const cardsToMove = player.deck.cards.splice(startIndex, numCardsToMove);
             temp.cards.push(...cardsToMove);
-            return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, temp, { superType: card_types_1.SuperType.POKEMON }, { allowCancel: false, min: 0, max: 1 }), chosenCards => {
+            return store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_HAND, temp, { superType: card_types_1.SuperType.POKEMON }, { allowCancel: false, min: 0, max: 1 }), chosenCards => {
                 if (chosenCards.length <= 0) {
                     // No Pokemon chosen, shuffle all back
                     temp.cards.forEach(card => {

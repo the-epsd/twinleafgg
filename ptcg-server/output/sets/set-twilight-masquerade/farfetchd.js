@@ -51,7 +51,7 @@ class Farfetchd extends pokemon_card_1.PokemonCard {
             catch (_a) {
                 return state;
             }
-            state = store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.TRAINER, trainerType: card_types_1.TrainerType.TOOL }, { min: 0, max: 1, allowCancel: false }), cards => {
+            state = store.prompt(state, new game_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.TRAINER, trainerType: card_types_1.TrainerType.TOOL }, { min: 0, max: 1, allowCancel: false }), cards => {
                 let benchSlot = 0;
                 player.bench.forEach((cardList, index) => {
                     if (cardList.getPokemonCard() === this) {

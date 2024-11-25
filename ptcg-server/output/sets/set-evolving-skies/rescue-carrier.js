@@ -21,7 +21,7 @@ function* playCard(next, store, state, effect) {
     });
     // We will discard this card after prompt confirmation
     effect.preventDefault = true;
-    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.discard, { superType: card_types_1.SuperType.POKEMON }, { min: 1, max: 2, allowCancel: false, blocked }), selected => {
+    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.discard, { superType: card_types_1.SuperType.POKEMON }, { min: 1, max: 2, allowCancel: false, blocked }), selected => {
         cards = selected || [];
         next();
     });

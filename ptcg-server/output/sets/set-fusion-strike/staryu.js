@@ -47,7 +47,7 @@ class Staryu extends pokemon_card_1.PokemonCard {
             if (!hasEnergyInHand) {
                 return state;
             }
-            return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_ATTACH, player.hand, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Water Energy' }, { min: 0, max: 1, allowCancel: false }), cards => {
+            return store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_ATTACH, player.hand, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Water Energy' }, { min: 0, max: 1, allowCancel: false }), cards => {
                 cards = cards || [];
                 if (cards.length > 0) {
                     const cardList = game_1.StateUtils.findCardList(state, this);

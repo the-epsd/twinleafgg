@@ -101,7 +101,7 @@ export class Grant extends TrainerCard {
       handTemp.cards = player.hand.cards.filter(c => c !== this);
 
       state = store.prompt(state, new ChooseCardsPrompt(
-        player.id,
+        player,
         GameMessage.CHOOSE_CARD_TO_DISCARD,
         handTemp,
         {},

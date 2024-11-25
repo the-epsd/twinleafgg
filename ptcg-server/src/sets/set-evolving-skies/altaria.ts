@@ -72,7 +72,7 @@ export class Altaria extends PokemonCard {
       player.marker.addMarker(this.FOREWARN_MARKER, this);
 
       return store.prompt(state, new ChooseCardsPrompt(
-        player.id,
+        player,
         GameMessage.CHOOSE_CARD_TO_HAND,
         player.deck,
         { superType: SuperType.TRAINER, trainerType: TrainerType.SUPPORTER },

@@ -11,6 +11,7 @@ export declare class StateUtils {
     static checkEnoughEnergy(energy: EnergyMap[], cost: CardType[]): boolean;
     static getCombinations(arr: CardType[][], n: number): CardType[][];
     static checkExactEnergy(energy: EnergyMap[], cost: CardType[]): boolean;
+    static getPlayerById(state: State, playerId: number): Player;
     static getOpponent(state: State, player: Player): Player;
     static getTarget(state: State, player: Player, target: CardTarget): PokemonCardList;
     static findCardList(state: State, card: Card): CardList;

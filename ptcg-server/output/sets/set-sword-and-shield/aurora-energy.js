@@ -56,7 +56,7 @@ function* playCard(next, store, state, self, effect) {
     }
     const handTemp = new game_1.CardList();
     handTemp.cards = player.hand.cards.filter(c => c !== self);
-    yield store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, handTemp, {}, { min: 1, max: 1, allowCancel: false }), selected => {
+    yield store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, handTemp, {}, { min: 1, max: 1, allowCancel: false }), selected => {
         cards = selected || [];
         next();
     });

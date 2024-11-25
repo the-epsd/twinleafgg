@@ -1,8 +1,7 @@
-import { CardType, Stage } from '../../game/store/card/card-types';
+import { CardType, EnergyType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Attack, Power } from '../../game/store/card/pokemon-types';
 import { Effect } from '../../game/store/effects/effect';
-import { EnergyEffect } from '../../game/store/effects/play-card-effects';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 export declare class Electrode extends PokemonCard {
@@ -22,9 +21,7 @@ export declare class Electrode extends PokemonCard {
     powers: Power[];
     attacks: Attack[];
     provides: CardType[];
-    text: string;
-    isBlocked: boolean;
-    blendedEnergies: CardType[];
-    energyEffect: EnergyEffect | undefined;
+    chosenEnergyType: CardType | undefined;
+    energyType: EnergyType;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

@@ -50,7 +50,7 @@ export class Slowking extends PokemonCard {
       handTemp.cards = opponent.hand.cards;
 
       store.prompt(state, new ChooseCardsPrompt(
-        player.id,
+        player,
         GameMessage.CHOOSE_CARD_TO_DISCARD,
         handTemp,
         {},

@@ -68,7 +68,7 @@ class ChienPaoex extends pokemon_card_1.PokemonCard {
             if (player.marker.hasMarker(this.SHIVERY_CHILL_MARKER, this)) {
                 throw new game_1.GameError(game_message_1.GameMessage.POWER_ALREADY_USED);
             }
-            return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Water Energy' }, { min: 0, max: 2, allowCancel: false }), cards => {
+            return store.prompt(state, new game_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Water Energy' }, { min: 0, max: 2, allowCancel: false }), cards => {
                 player.marker.addMarker(this.SHIVERY_CHILL_MARKER, this);
                 if (cards.length === 0) {
                     return state;

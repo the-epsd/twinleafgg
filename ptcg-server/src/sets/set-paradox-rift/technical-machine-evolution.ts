@@ -75,7 +75,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Attac
 
     let cards: Card[] = [];
     yield store.prompt(state, new ChooseCardsPrompt(
-      player.id,
+      player,
       GameMessage.CHOOSE_CARD_TO_EVOLVE,
       player.deck,
       { superType: SuperType.POKEMON },

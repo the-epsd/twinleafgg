@@ -118,8 +118,8 @@ function* setupGame(next, store, state) {
         }
     });
     yield store.prompt(state, [
-        new ChooseCardsPrompt(player.id, GameMessage.CHOOSE_STARTING_POKEMONS, player.hand, {}, Object.assign(Object.assign({}, chooseCardsOptions), { blocked })),
-        new ChooseCardsPrompt(opponent.id, GameMessage.CHOOSE_STARTING_POKEMONS, opponent.hand, {}, Object.assign(Object.assign({}, chooseCardsOptions), { blocked: blockedOpponent }))
+        new ChooseCardsPrompt(player, GameMessage.CHOOSE_STARTING_POKEMONS, player.hand, {}, Object.assign(Object.assign({}, chooseCardsOptions), { blocked })),
+        new ChooseCardsPrompt(opponent, GameMessage.CHOOSE_STARTING_POKEMONS, opponent.hand, {}, Object.assign(Object.assign({}, chooseCardsOptions), { blocked: blockedOpponent }))
     ], choice => {
         putStartingPokemonsAndPrizes(player, choice[0]);
         putStartingPokemonsAndPrizes(opponent, choice[1]);

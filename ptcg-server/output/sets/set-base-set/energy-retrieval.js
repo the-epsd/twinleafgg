@@ -27,7 +27,7 @@ function* playCard(next, store, state, effect) {
     // prepare card list without Junk Arm
     const handTemp = new game_1.CardList();
     handTemp.cards = player.hand.cards.filter(c => c !== effect.trainerCard);
-    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_DISCARD, handTemp, {}, { min: 1, max: 1, allowCancel: false }), selected => {
+    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_DISCARD, handTemp, {}, { min: 1, max: 1, allowCancel: false }), selected => {
         cards = selected || [];
         next();
     });
@@ -37,7 +37,7 @@ function* playCard(next, store, state, effect) {
     }
     player.hand.moveCardsTo(cards, player.discard);
     const max = Math.min(basicEnergyCards, 2);
-    return store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.discard, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC }, { min: 1, max: max, allowCancel: false }), cards => {
+    return store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.discard, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC }, { min: 1, max: max, allowCancel: false }), cards => {
         cards = cards || [];
         if (cards.length > 0) {
             // Recover discarded Pokemon

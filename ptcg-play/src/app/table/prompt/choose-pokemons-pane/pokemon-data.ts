@@ -20,6 +20,7 @@ export class PokemonData {
 
   private rows: PokemonRow[];
   private cardIndexes: CardIndex[] = [];
+  private selectedEnergyState = new Map<CardTarget, Card[]>();
 
   constructor(
     state: State,
@@ -28,6 +29,14 @@ export class PokemonData {
     slots: SlotType[]
   ) {
     this.rows = this.buildPokemonRows(state, playerId, playerType, slots);
+  }
+
+  public updatePokemonCardList(target: CardTarget, remainingCards: Card[]): void {
+    const item = this.getItemByTarget(target);
+    if (item) {
+      item.cardList.cards = remainingCards;
+      this.selectedEnergyState.set(target, remainingCards);
+    }
   }
 
   private buildRow(cardLists: PokemonCardList[], player: PlayerType, slot: SlotType): PokemonRow {
@@ -102,18 +111,21 @@ export class PokemonData {
     });
   }
 
-  getItemByTarget(target: CardTarget): PokemonItem | undefined {
+  public getItemByTarget(target: CardTarget): PokemonItem | undefined {
     const rows = this.getRows();
     for (const row of rows) {
       for (const item of row.items) {
         if (this.matchesTarget(item, [target])) {
+          // Restore saved state if it exists
+          if (this.selectedEnergyState.has(target)) {
+            item.cardList.cards = this.selectedEnergyState.get(target) || [];
+          }
           return item;
         }
       }
     }
     return undefined;
   }
-
 
   public getCardIndex(card: Card): number {
     const cardIndex = this.cardIndexes.find(c => c.card === card);

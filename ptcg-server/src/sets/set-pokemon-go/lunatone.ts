@@ -54,7 +54,7 @@ export class Lunatone extends PokemonCard {
       const player = effect.player;
 
       state = store.prompt(state, new ChooseCardsPrompt(
-        player.id,
+        player,
         GameMessage.CHOOSE_CARD_TO_DISCARD,
         player.hand,
         {},

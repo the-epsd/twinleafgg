@@ -74,7 +74,7 @@ function* playCard(next, store, state, effect) {
         }
     });
     let cards = [];
-    return store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_EVOLVE, player.hand, { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.STAGE_2 }, { min: 1, max: 1, allowCancel: true, blocked: blocked2 }), selected => {
+    return store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_EVOLVE, player.hand, { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.STAGE_2 }, { min: 1, max: 1, allowCancel: true, blocked: blocked2 }), selected => {
         cards = selected || [];
         if (cards.length > 0) {
             const pokemonCard = cards[0];

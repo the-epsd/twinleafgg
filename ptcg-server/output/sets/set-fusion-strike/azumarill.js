@@ -52,7 +52,7 @@ class Azumarill extends pokemon_card_1.PokemonCard {
             });
             if (hasSupporterOrPokemonInDiscard) {
                 let cards = [];
-                return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.discard, {}, { min: 1, max: 3, allowCancel: false, blocked }), selected => {
+                return store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.discard, {}, { min: 1, max: 3, allowCancel: false, blocked }), selected => {
                     cards = selected || [];
                     player.discard.moveCardsTo(cards, player.hand);
                 });

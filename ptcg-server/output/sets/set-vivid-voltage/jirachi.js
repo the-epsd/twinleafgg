@@ -13,7 +13,7 @@ function* useDreamyRevelation(next, store, state, effect) {
     const deckTop = new game_1.CardList();
     player.deck.moveTo(deckTop, 2);
     let cards = [];
-    yield store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, deckTop, {}, { min: 1, max: 1, allowCancel: true }), selected => {
+    yield store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_HAND, deckTop, {}, { min: 1, max: 1, allowCancel: true }), selected => {
         cards = selected || [];
         next();
     });

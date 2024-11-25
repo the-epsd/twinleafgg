@@ -49,7 +49,7 @@ export class Peonia extends TrainerCard {
       });
 
       return store.prompt(state, new ChooseCardsPrompt(
-        player.id,
+        player,
         GameMessage.CHOOSE_PRIZE_CARD,
         allPrizeCards,
         {},
@@ -72,7 +72,7 @@ export class Peonia extends TrainerCard {
         });
 
         store.prompt(state, new ChooseCardsPrompt(
-          player.id,
+          player,
           GameMessage.CHOOSE_CARDS_TO_RETURN_TO_PRIZES,
           player.hand,
           {},

@@ -102,7 +102,7 @@ class MetagrossGX extends pokemon_card_1.PokemonCard {
                 return state;
             }
             let cards = [];
-            state = store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, {}, { min: 1, max: 5, allowCancel: false }), selected => {
+            state = store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, {}, { min: 1, max: 5, allowCancel: false }), selected => {
                 cards = selected || [];
             });
             player.deck.moveCardsTo(cards, player.hand);

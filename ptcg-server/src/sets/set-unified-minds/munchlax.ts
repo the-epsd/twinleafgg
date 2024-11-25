@@ -56,7 +56,7 @@ export class Munchlax extends PokemonCard {
           const deckTop = new CardList();
 
           store.prompt(state, new ChooseCardsPrompt(
-            player.id,
+            player,
             GameMessage.CHOOSE_CARDS_TO_PUT_ON_TOP_OF_THE_DECK,
             player.discard,
             {},

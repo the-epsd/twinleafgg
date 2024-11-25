@@ -46,7 +46,7 @@ export class Eri extends TrainerCard {
       effect.preventDefault = true;
 
       return store.prompt(state, new ChooseCardsPrompt(
-        player.id,
+        player,
         GameMessage.CHOOSE_CARD_TO_DISCARD,
         opponent.hand,
         { superType: SuperType.TRAINER, trainerType: TrainerType.ITEM },

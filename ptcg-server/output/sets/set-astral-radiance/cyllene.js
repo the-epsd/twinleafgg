@@ -43,7 +43,7 @@ class Cyllene extends trainer_card_1.TrainerCard {
                     return state;
                 }
                 const deckTop = new game_1.CardList();
-                store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARDS_TO_PUT_ON_TOP_OF_THE_DECK, player.discard, {}, { min: Math.min(heads, player.discard.cards.length), max: heads, allowCancel: false }), selected => {
+                store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARDS_TO_PUT_ON_TOP_OF_THE_DECK, player.discard, {}, { min: Math.min(heads, player.discard.cards.length), max: heads, allowCancel: false }), selected => {
                     cards = selected || [];
                     const trainerCards = cards.filter(card => card instanceof trainer_card_1.TrainerCard);
                     const nonTrainerCards = cards.filter(card => !(card instanceof trainer_card_1.TrainerCard));

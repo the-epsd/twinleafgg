@@ -17,7 +17,7 @@ function* playCard(next, store, state, effect) {
     effect.preventDefault = true;
     const deckBottom = new card_list_1.CardList();
     player.deck.moveTo(deckBottom, 3);
-    return store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARDS_ORDER, deckBottom, {}, { min: 3, max: 3, allowCancel: false }), selected => {
+    return store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARDS_ORDER, deckBottom, {}, { min: 3, max: 3, allowCancel: false }), selected => {
         deckBottom.moveCardsTo(selected, player.deck);
         player.supporter.moveCardTo(effect.trainerCard, player.discard);
     });

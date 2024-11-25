@@ -86,7 +86,7 @@ export class Musharna extends PokemonCard {
       deckTop.cards = player.deck.cards.slice(0, 2);
 
       return store.prompt(state, new ChooseCardsPrompt(
-        player.id,
+        player,
         GameMessage.CHOOSE_CARD_TO_HAND,
         deckTop,
         { },

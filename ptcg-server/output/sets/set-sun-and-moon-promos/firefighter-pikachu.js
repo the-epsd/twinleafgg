@@ -55,7 +55,7 @@ class FirefighterPikachu extends pokemon_card_1.PokemonCard {
             }
             const target = opponent.active;
             let cards = [];
-            state = store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_DISCARD, target, { superType: card_types_1.SuperType.ENERGY }, { min: 1, max: 1, allowCancel: false, blocked: blocked }), selected => {
+            state = store.prompt(state, new game_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_DISCARD, target, { superType: card_types_1.SuperType.ENERGY }, { min: 1, max: 1, allowCancel: false, blocked: blocked }), selected => {
                 cards = selected || [];
             });
             if (cards.length > 0) {

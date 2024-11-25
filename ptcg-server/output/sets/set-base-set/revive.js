@@ -29,7 +29,7 @@ class Revive extends trainer_card_1.TrainerCard {
             effect.preventDefault = true;
             player.hand.moveCardTo(effect.trainerCard, player.supporter);
             let cards = [];
-            return store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_BASIC_POKEMON_TO_BENCH, player.discard, { superType: game_1.SuperType.POKEMON, stage: game_1.Stage.BASIC }, { min: 1, max: 1, allowCancel: true }), selected => {
+            return store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_BASIC_POKEMON_TO_BENCH, player.discard, { superType: game_1.SuperType.POKEMON, stage: game_1.Stage.BASIC }, { min: 1, max: 1, allowCancel: true }), selected => {
                 cards = selected || [];
                 if (cards.length > 0) {
                     const card = cards[0];

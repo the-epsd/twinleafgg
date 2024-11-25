@@ -70,7 +70,7 @@ export class BuddyBuddyRescue extends TrainerCard {
         let cards: Card[] = [];
 
         store.prompt(state, new ChooseCardsPrompt(
-          opponent.id,
+          opponent,
           GameMessage.CHOOSE_CARD_TO_HAND,
           opponent.discard,
           { superType: SuperType.POKEMON },
@@ -91,7 +91,7 @@ export class BuddyBuddyRescue extends TrainerCard {
         let cards: Card[] = [];
 
         store.prompt(state, new ChooseCardsPrompt(
-          player.id,
+          player,
           GameMessage.CHOOSE_CARD_TO_HAND,
           player.discard,
           { superType: SuperType.POKEMON },

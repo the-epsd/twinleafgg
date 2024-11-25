@@ -41,7 +41,7 @@ class ScorchedEarth extends trainer_card_1.TrainerCard {
             if (hasCardsInHand === false) {
                 throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_USE_POWER);
             }
-            return store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_DISCARD, player.hand, { superType: card_types_1.SuperType.ENERGY }, { allowCancel: true, min: 1, max: 1, blocked }), selected => {
+            return store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_DISCARD, player.hand, { superType: card_types_1.SuperType.ENERGY }, { allowCancel: true, min: 1, max: 1, blocked }), selected => {
                 selected = selected || [];
                 if (selected.length === 0) {
                     player.stadiumUsedTurn = stadiumUsedTurn;

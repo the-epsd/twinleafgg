@@ -56,7 +56,7 @@ export class Zeraora extends PokemonCard {
         return state;
       } else {
         return store.prompt(state, new ChooseCardsPrompt(
-          player.id,
+          player,
           GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
           opponentActive, // Card source is target Pokemon
           { superType: SuperType.ENERGY, energyType: EnergyType.SPECIAL },

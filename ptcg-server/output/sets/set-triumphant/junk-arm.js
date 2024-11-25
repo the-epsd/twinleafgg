@@ -30,7 +30,7 @@ function* playCard(next, store, state, self, effect) {
     // prepare card list without Junk Arm
     const handTemp = new card_list_1.CardList();
     handTemp.cards = player.hand.cards.filter(c => c !== self);
-    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_DISCARD, handTemp, {}, { min: 2, max: 2, allowCancel: true }), selected => {
+    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_DISCARD, handTemp, {}, { min: 2, max: 2, allowCancel: true }), selected => {
         cards = selected || [];
         next();
     });
@@ -50,7 +50,7 @@ function* playCard(next, store, state, self, effect) {
         }
     });
     let recovered = [];
-    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.discard, {}, { min: 1, max: 1, allowCancel: true, blocked }), selected => {
+    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.discard, {}, { min: 1, max: 1, allowCancel: true, blocked }), selected => {
         recovered = selected || [];
         next();
     });

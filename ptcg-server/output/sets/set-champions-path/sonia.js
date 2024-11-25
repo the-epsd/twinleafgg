@@ -34,7 +34,7 @@ function* playCard(next, store, state, self, effect) {
         }
     });
     // Pass max counts to prompt options
-    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_ONE_ITEM_AND_ONE_TOOL_TO_HAND, player.deck, {}, { min: 0, max: 2, allowCancel: false, blocked, allowDifferentSuperTypes: false }), selected => {
+    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_ONE_ITEM_AND_ONE_TOOL_TO_HAND, player.deck, {}, { min: 0, max: 2, allowCancel: false, blocked, allowDifferentSuperTypes: false }), selected => {
         cards = selected || [];
         next();
     });

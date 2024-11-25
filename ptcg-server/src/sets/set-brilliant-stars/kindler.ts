@@ -36,7 +36,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   effect.preventDefault = true;
   
   state = store.prompt(state, new ChooseCardsPrompt(
-    player.id,
+    player,
     GameMessage.CHOOSE_CARD_TO_DISCARD,
     player.hand,
     { superType: SuperType.ENERGY },
@@ -55,7 +55,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   player.deck.moveTo(deckTop, 7);
       
   return store.prompt(state, new ChooseCardsPrompt(
-    player.id,
+    player,
     GameMessage.CHOOSE_CARD_TO_HAND,
     deckTop,
     { },

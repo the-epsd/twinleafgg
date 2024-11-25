@@ -24,7 +24,7 @@ function* playCard(next, store, state, effect) {
     });
     if (coin1Result && coin2Result) {
         let cards = [];
-        yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, {}, { min: 0, max: 1, allowCancel: false }), (selected) => {
+        yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, {}, { min: 0, max: 1, allowCancel: false }), (selected) => {
             cards = selected || [];
             next();
         });

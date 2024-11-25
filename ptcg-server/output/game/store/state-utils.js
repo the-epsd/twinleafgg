@@ -170,6 +170,13 @@ class StateUtils {
         }
         return true;
     }
+    static getPlayerById(state, playerId) {
+        const player = state.players.find(p => p.id === playerId);
+        if (player === undefined) {
+            throw new game_error_1.GameError(game_message_1.GameMessage.INVALID_GAME_STATE);
+        }
+        return player;
+    }
     static getOpponent(state, player) {
         const opponent = state.players.find(p => p.id !== player.id);
         if (opponent === undefined) {

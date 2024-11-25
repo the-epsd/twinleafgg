@@ -40,7 +40,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
   let cards: Card[] = [];
   yield store.prompt(state, new ChooseCardsPrompt(
-    player.id,
+    player,
     GameMessage.CHOOSE_CARD_TO_DECK,
     player.discard,
     {},

@@ -33,7 +33,7 @@ function* playCard(next, store, state, self, effect) {
     const maxGrassPokemonOrEnergyCount = Math.min(grassPokemonOrEnergyCount, 2);
     const deckTop = new game_1.CardList();
     player.deck.moveTo(deckTop, 7);
-    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, deckTop, {}, { min: 0, max: maxGrassPokemonOrEnergyCount, allowCancel: false, blocked }), selected => {
+    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, deckTop, {}, { min: 0, max: maxGrassPokemonOrEnergyCount, allowCancel: false, blocked }), selected => {
         cards = selected || [];
         next();
     });

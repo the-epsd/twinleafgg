@@ -42,7 +42,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
   if (hasEnergies) {
     yield store.prompt(state, new ChooseCardsPrompt(
-      player.id,
+      player,
       GameMessage.ATTACH_ENERGY_TO_BENCH,
       player.active,
       { superType: SuperType.ENERGY },

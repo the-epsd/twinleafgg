@@ -41,7 +41,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
   cards = [];
   yield store.prompt(state, new ChooseCardsPrompt(
-    player.id,
+    player,
     GameMessage.CHOOSE_CARD_TO_DISCARD,
     handTemp,
     {},
@@ -58,7 +58,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
   let recovered: Card[] = [];
   yield store.prompt(state, new ChooseCardsPrompt(
-    player.id,
+    player,
     GameMessage.CHOOSE_CARD_TO_HAND,
     player.discard,
     { superType: SuperType.TRAINER },

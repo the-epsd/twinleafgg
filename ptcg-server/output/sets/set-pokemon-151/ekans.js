@@ -38,7 +38,7 @@ class Ekans extends pokemon_card_1.PokemonCard {
             return store.prompt(state, new game_1.CoinFlipPrompt(player.id, game_1.GameMessage.COIN_FLIP), result => {
                 if (result) {
                     let cards = [];
-                    return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, opponent.active, { superType: card_types_1.SuperType.ENERGY }, { min: 1, max: 1, allowCancel: false }), selected => {
+                    return store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, opponent.active, { superType: card_types_1.SuperType.ENERGY }, { min: 1, max: 1, allowCancel: false }), selected => {
                         cards = selected || [];
                         const discardEnergy = new attack_effects_1.DiscardCardsEffect(effect, cards);
                         discardEnergy.target = opponent.active;

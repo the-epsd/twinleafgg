@@ -20,7 +20,7 @@ function* useFlareDestroy(next: Function, store: StoreLike, state: State,
 
   if (player.active.cards.some(c => c instanceof EnergyCard)) {
     yield store.prompt(state, new ChooseCardsPrompt(
-      player.id,
+      player,
       GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
       player.active,
       { superType: SuperType.ENERGY },
@@ -37,7 +37,7 @@ function* useFlareDestroy(next: Function, store: StoreLike, state: State,
   // Defending Pokemon has no energy cards attached
   if (opponent.active.cards.some(c => c instanceof EnergyCard)) {
     yield store.prompt(state, new ChooseCardsPrompt(
-      player.id,
+      player,
       GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
       opponent.active,
       { superType: SuperType.ENERGY },

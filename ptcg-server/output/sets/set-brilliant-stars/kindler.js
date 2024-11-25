@@ -26,7 +26,7 @@ function* playCard(next, store, state, self, effect) {
     player.hand.moveCardTo(effect.trainerCard, player.supporter);
     // We will discard this card after prompt confirmation
     effect.preventDefault = true;
-    state = store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_DISCARD, player.hand, { superType: card_types_1.SuperType.ENERGY }, { allowCancel: false, min: 1, max: 1 }), cards => {
+    state = store.prompt(state, new game_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_DISCARD, player.hand, { superType: card_types_1.SuperType.ENERGY }, { allowCancel: false, min: 1, max: 1 }), cards => {
         cards = cards || [];
         if (cards.length === 0) {
             return;
@@ -35,7 +35,7 @@ function* playCard(next, store, state, self, effect) {
     });
     const deckTop = new game_1.CardList();
     player.deck.moveTo(deckTop, 7);
-    return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, deckTop, {}, { min: 0, max: 2, allowCancel: false }), selected => {
+    return store.prompt(state, new game_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, deckTop, {}, { min: 0, max: 2, allowCancel: false }), selected => {
         deckTop.moveCardsTo(selected, player.hand);
         deckTop.moveTo(player.deck);
         player.supporter.moveCardTo(effect.trainerCard, player.discard);

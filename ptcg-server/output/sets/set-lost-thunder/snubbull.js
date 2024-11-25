@@ -29,7 +29,7 @@ class Snubbull extends game_1.PokemonCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const hand = player.hand;
-            state = store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, hand, {}, { min: 0, max: 2, allowCancel: false }), selected => {
+            state = store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, hand, {}, { min: 0, max: 2, allowCancel: false }), selected => {
                 const discardCount = selected || [];
                 // Operation canceled by the user
                 if (discardCount.length === 0) {

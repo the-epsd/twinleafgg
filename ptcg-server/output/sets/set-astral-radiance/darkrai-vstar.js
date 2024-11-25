@@ -68,7 +68,7 @@ class DarkraiVSTAR extends pokemon_card_1.PokemonCard {
             // If not prevented, proceed with the original effect
             player.usedVSTAR = true;
             let cards = [];
-            return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.discard, { superType: card_types_1.SuperType.TRAINER, trainerType: card_types_1.TrainerType.ITEM }, { min: 1, max: 2, allowCancel: true }), selected => {
+            return store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.discard, { superType: card_types_1.SuperType.TRAINER, trainerType: card_types_1.TrainerType.ITEM }, { min: 1, max: 2, allowCancel: true }), selected => {
                 cards = selected || [];
                 if (cards.length > 0) {
                     player.discard.moveCardsTo(cards, player.hand);

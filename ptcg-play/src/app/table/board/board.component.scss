@@ -126,21 +126,6 @@ $board-min-height: calc(6 * var(--card-size) * #{$card-aspect-ratio} + 2 * #{map
   z-index: -1;
 }
 
-.background-image-container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-12.5%, -50%);
-  z-index: -1;
-  pointer-events: none;
-}
-
-.background-image-container img {
-  width: 25%;
-  height: auto;
-  opacity: 0.5;
-}
-
 .ptcg-board-row {
   align-items: center;
   display: flex;
@@ -327,16 +312,94 @@ ptcg-board-prizes {
   pointer-events: none;
 }
 
-// .coin-flip-container {
-//   position: absolute;
-//   top: 50%;
-//   left: 50%;
-//   transform: translate(-50%, -50%);
-//   z-index: 1000; // Higher z-index to ensure visibility
-//   pointer-events: auto; // Enable interactions if needed
-//   width: 100px; // Set specific dimensions
-//   height: 100px;
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-// }
+.coin-flip-container {
+  position: absolute;
+  top: 50%;
+  right: 28.5%; // Move it to the right of the bottom markers
+  transform: translateY(-50%);
+  z-index: 1000;
+  pointer-events: auto;
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.background-image-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.background-image-container img {
+  width: 12.5%;
+  height: auto;
+  opacity: 1;
+  margin: 0 auto;
+}
+
+.marker-container {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.top-markers {
+  left: 37%;
+}
+
+.bottom-markers {
+  right: 37%;
+}
+
+.top-markers {
+
+  .vstar-marker,
+  .gx-marker {
+    transform: rotate(180deg);
+  }
+}
+
+.vstar-marker,
+.gx-marker {
+  width: 60px;
+  height: 30px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  display: block;
+}
+
+.vstar-marker {
+  background-image: url('../../../assets/markers/vstar-marker.png');
+
+  &.used {
+    background-image: url('../../../assets/markers/vstar-used.png');
+  }
+}
+
+.gx-marker {
+  background-image: url('../../../assets/markers/gx-marker.png');
+
+  &.used {
+    background-image: url('../../../assets/markers/gx-used.png');
+  }
+}
+
+.top-markers {
+
+  .vstar-marker,
+  .gx-marker {
+    transform: rotate(180deg);
+  }
+}

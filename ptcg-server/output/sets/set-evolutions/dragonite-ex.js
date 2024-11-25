@@ -66,7 +66,7 @@ class DragoniteEX extends game_1.PokemonCard {
                             blocked.push(index);
                         }
                     });
-                    return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.discard, { superType: game_1.SuperType.POKEMON, stage: game_1.Stage.BASIC }, { min: 0, max: 2, allowCancel: false, blocked: blocked }), selected => {
+                    return store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.discard, { superType: game_1.SuperType.POKEMON, stage: game_1.Stage.BASIC }, { min: 0, max: 2, allowCancel: false, blocked: blocked }), selected => {
                         if (selected && selected.length > 0) {
                             selected.forEach(card => {
                                 player.discard.moveCardsTo(selected, player.hand);
@@ -86,7 +86,7 @@ class DragoniteEX extends game_1.PokemonCard {
                 return state;
             }
             let card;
-            return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, opponent.active, { superType: game_1.SuperType.ENERGY }, { min: 1, max: 1, allowCancel: false }), selected => {
+            return store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, opponent.active, { superType: game_1.SuperType.ENERGY }, { min: 1, max: 1, allowCancel: false }), selected => {
                 card = selected[0];
                 opponent.active.moveCardTo(card, opponent.discard);
                 return state;

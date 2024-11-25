@@ -33,7 +33,7 @@ class ExplorersGuidance extends trainer_card_1.TrainerCard {
             }
             const deckTop = new game_1.CardList();
             player.deck.moveTo(deckTop, 6);
-            return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, deckTop, {}, { min: 2, max: 2, allowCancel: false }), selected => {
+            return store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_HAND, deckTop, {}, { min: 2, max: 2, allowCancel: false }), selected => {
                 deckTop.moveCardsTo(selected, player.hand);
                 deckTop.moveTo(player.discard);
                 player.supporter.moveCardTo(effect.trainerCard, player.discard);

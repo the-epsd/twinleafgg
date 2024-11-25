@@ -22,7 +22,7 @@ function DISCARD_X_CARDS_FROM_YOUR_HAND(effect, store, state, minAmount, maxAmou
         player.hand.moveCardsTo(player.hand.cards, player.discard);
     }
     if (cards.length > maxAmount) {
-        state = store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_DISCARD, player.hand, {}, { allowCancel: false, min: minAmount, max: maxAmount }), cards => {
+        state = store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(effect.player, game_message_1.GameMessage.CHOOSE_CARD_TO_DISCARD, player.hand, {}, { allowCancel: false, min: minAmount, max: maxAmount }), cards => {
             cards = cards || [];
             if (cards.length === 0) {
                 return;

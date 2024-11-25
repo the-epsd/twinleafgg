@@ -67,7 +67,7 @@ export class Zoroark extends PokemonCard {
       const index = getBenchIndex(effect.player, this);
 
       return store.prompt(state, new ChooseCardsPrompt(
-        effect.player.id,
+        effect.player,
         GameMessage.CHOOSE_POKEMON_TO_DISCARD,
         effect.player.discard,
         { stage: Stage.STAGE_1 },

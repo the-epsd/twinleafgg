@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { AlolanExeggutorexArt, ArchaludonexArt, AzelfArt, AzumarillArt, CapsakidArt, CelebrationFanfareArt, CeruledgeArt, CeruledgeexArt, CharcadetArt, CherishCarrierArt, CounterGainArt, CrocalorArt, CyranoArt, DeinoArt, DragonsElixirArt, DraytonArt, DuraludonArt, EeveeArt, EternatusArt, ExcitingStadiumArt, ExeggcuteArt, FlygonexArt, FuecocoArt, GravityMountainArt, HelperBellArt, HoOhArt, HydreigonexArt, KlefkiArt, LatiasexArt, LisiasAppealArt, MagnemiteArt, MagnetonArt, MarillArt, MegatonBlowerArt, MespritArt, MiloticexArt, MiraculousIntercomArt, NinetalesArt, PalkiaArt, PalossandexArt, PerfectMixerArt, PikachuexArt, QuaxwellArt, RichEnergyArt, ScrambleSwitchArt, ShroodleArt, SkeledirgeArt, SmoochumArt, SylveonexArt, TatsugiriexArt, TeraOrbArt, TerapagosArt, TogekissArt, TogepiArt, TogeticArt, TrapinchArt, UxieArt, VibravaArt, VivillionArt, VulpixArt, ZweilousArt } from './card-images';
+import { AlolanExeggutorexArt, ArchaludonexArt, AzelfArt, AzumarillArt, CapsakidArt, CelebrationFanfareArt, CeruledgeArt, CeruledgeexArt, CharcadetArt, CherishCarrierArt, CounterGainArt, CrocalorArt, CyranoArt, DeinoArt, DragonsElixirArt, DraytonArt, DuraludonArt, EeveeArt, EternatusArt, ExcitingStadiumArt, ExeggcuteArt, FlygonexArt, FuecocoArt, GravityMountainArt, HelperBellArt, HoOhArt, HydreigonexArt, KlefkiArt, LarvestaArt, LatiasexArt, LisiasAppealArt, MagnemiteArt, MagnetonArt, MarillArt, MegatonBlowerArt, MespritArt, MiloticexArt, MiraculousIntercomArt, NinetalesArt, PalkiaArt, PalossandexArt, PansearArt, PerfectMixerArt, PhanpyArt, PikachuexArt, QuaxwellArt, RichEnergyArt, ScrambleSwitchArt, ShroodleArt, SkeledirgeArt, SmoochumArt, SylveonexArt, TatsugiriexArt, TeraOrbArt, TerapagosArt, TogekissArt, TogepiArt, TogeticArt, TrapinchArt, UxieArt, VibravaArt, VivillionArt, VulpixArt, ZweilousArt } from './card-images';
 import { Sandygast } from './sandygast';
 
 export const setSurgingSparks: Card[] = [
@@ -65,4 +65,7 @@ export const setSurgingSparks: Card[] = [
   new CapsakidArt(),
   new ShroodleArt(),
   new QuaxwellArt(),
+  new PansearArt(),
+  new LarvestaArt(),
+  new PhanpyArt(),
 ];

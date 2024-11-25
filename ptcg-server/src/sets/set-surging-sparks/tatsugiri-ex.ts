@@ -89,7 +89,7 @@ export class Tatsugiriex extends PokemonCard {
 
       let cards: Card[] = [];
       return store.prompt(state, new ChooseCardsPrompt(
-        player.id,
+        player,
         GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
         deckTop,
         { superType: SuperType.POKEMON },

@@ -83,7 +83,7 @@ export class ForestSealStone extends TrainerCard {
       player.usedVSTAR = true;
 
       state = store.prompt(state, new ChooseCardsPrompt(
-        player.id,
+        player,
         GameMessage.CHOOSE_CARD_TO_HAND,
         player.deck,
         {},

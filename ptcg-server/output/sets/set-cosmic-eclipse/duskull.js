@@ -38,7 +38,7 @@ class Duskull extends game_1.PokemonCard {
             if (player.hand.cards.length < 3) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
-            return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, player.hand, {}, { allowCancel: false, min: 3, max: 3 }), cards => {
+            return store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, player.hand, {}, { allowCancel: false, min: 3, max: 3 }), cards => {
                 cards = cards || [];
                 player.hand.moveCardsTo(cards, player.discard);
                 cards.forEach((card, index) => {
@@ -52,7 +52,7 @@ class Duskull extends game_1.PokemonCard {
                     }
                 });
                 let selectedCards = [];
-                store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_EVOLVE, player.deck, { superType: game_1.SuperType.POKEMON }, { min: 1, max: 1, allowCancel: true, blocked }), selected => {
+                store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_EVOLVE, player.deck, { superType: game_1.SuperType.POKEMON }, { min: 1, max: 1, allowCancel: true, blocked }), selected => {
                     selectedCards = selected || [];
                     if (selectedCards.length === 0) {
                         return state;

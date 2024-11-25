@@ -26,7 +26,7 @@ function* playCard(next, store, state, self, effect) {
     effect.preventDefault = true;
     const max = Math.min(5, pokemonsInDiscard);
     let cards = [];
-    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_DECK, player.discard, { superType: card_types_1.SuperType.POKEMON }, { min: max, max, allowCancel: true, blocked }), selected => {
+    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_DECK, player.discard, { superType: card_types_1.SuperType.POKEMON }, { min: max, max, allowCancel: true, blocked }), selected => {
         cards = selected || [];
         next();
     });

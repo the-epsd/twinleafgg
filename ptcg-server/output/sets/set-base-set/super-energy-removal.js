@@ -47,7 +47,7 @@ function* playCard(next, store, state, effect) {
     }
     const target = targets[0];
     let cards = [];
-    yield store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, target, { superType: card_types_1.SuperType.ENERGY }, { min: 1, max: 1, allowCancel: false }), selected => {
+    yield store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, target, { superType: card_types_1.SuperType.ENERGY }, { min: 1, max: 1, allowCancel: false }), selected => {
         cards = selected;
         next();
     });
@@ -62,7 +62,7 @@ function* playCard(next, store, state, effect) {
     }
     const target2 = targets2[0];
     let cards2 = [];
-    yield store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, target2, { superType: card_types_1.SuperType.ENERGY }, { min: 1, max: 2, allowCancel: false }), selected => {
+    yield store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, target2, { superType: card_types_1.SuperType.ENERGY }, { min: 1, max: 2, allowCancel: false }), selected => {
         cards2 = selected;
         next();
     });

@@ -58,7 +58,7 @@ class VolcanionEX extends game_1.PokemonCard {
             if (player.hand.cards.filter(c => c instanceof game_1.EnergyCard && c.energyType === game_1.EnergyType.BASIC && c.name === 'Fire Energy').length === 0) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
-            return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, player.hand, { superType: game_1.SuperType.ENERGY, energyType: game_1.EnergyType.BASIC, name: 'Fire Energy' }, { min: 1, max: 1, allowCancel: false }), selected => {
+            return store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, player.hand, { superType: game_1.SuperType.ENERGY, energyType: game_1.EnergyType.BASIC, name: 'Fire Energy' }, { min: 1, max: 1, allowCancel: false }), selected => {
                 if (selected && selected.length > 0) {
                     const energy = selected[0];
                     player.hand.moveCardTo(energy, player.discard);

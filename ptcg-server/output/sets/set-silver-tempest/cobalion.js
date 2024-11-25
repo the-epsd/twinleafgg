@@ -53,7 +53,7 @@ class Cobalion extends pokemon_card_1.PokemonCard {
             if (basicPokemon.length === 0) {
                 return state;
             }
-            return store.prompt(state, new __1.ChooseCardsPrompt(player.id, __1.GameMessage.CHOOSE_CARD_TO_ATTACH, player.deck, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC }, { min: 1, max: 2, allowCancel: true }), selected => {
+            return store.prompt(state, new __1.ChooseCardsPrompt(player, __1.GameMessage.CHOOSE_CARD_TO_ATTACH, player.deck, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC }, { min: 1, max: 2, allowCancel: true }), selected => {
                 const cards = selected || [];
                 for (const card of cards) {
                     player.deck.moveCardTo(card, basicPokemon);

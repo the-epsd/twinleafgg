@@ -53,7 +53,7 @@ class Zeraora extends pokemon_card_1.PokemonCard {
                 return state;
             }
             else {
-                return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, opponentActive, // Card source is target Pokemon
+                return store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, opponentActive, // Card source is target Pokemon
                 { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.SPECIAL }, { max: 1, allowCancel: false }), selected => {
                     const cards = selected || [];
                     if (cards.length > 0) {

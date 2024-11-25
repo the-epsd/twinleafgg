@@ -55,7 +55,7 @@ class BuddyBuddyRescue extends trainer_card_1.TrainerCard {
             }
             if (pokemonInOpponentsDiscard > 0) {
                 let cards = [];
-                store.prompt(state, new game_1.ChooseCardsPrompt(opponent.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, opponent.discard, { superType: card_types_1.SuperType.POKEMON }, { min: 1, max: 1, allowCancel: false, blocked }), selected => {
+                store.prompt(state, new game_1.ChooseCardsPrompt(opponent, game_1.GameMessage.CHOOSE_CARD_TO_HAND, opponent.discard, { superType: card_types_1.SuperType.POKEMON }, { min: 1, max: 1, allowCancel: false, blocked }), selected => {
                     cards = selected || [];
                     cards.forEach((card, index) => {
                         store.log(state, game_1.GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: opponent.name, card: card.name });
@@ -66,7 +66,7 @@ class BuddyBuddyRescue extends trainer_card_1.TrainerCard {
             }
             if (pokemonInPlayersDiscard > 0) {
                 let cards = [];
-                store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.discard, { superType: card_types_1.SuperType.POKEMON }, { min: 1, max: 1, allowCancel: false, blocked: blockedOpponent }), selected => {
+                store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.discard, { superType: card_types_1.SuperType.POKEMON }, { min: 1, max: 1, allowCancel: false, blocked: blockedOpponent }), selected => {
                     cards = selected || [];
                     cards.forEach((card, index) => {
                         store.log(state, game_1.GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });

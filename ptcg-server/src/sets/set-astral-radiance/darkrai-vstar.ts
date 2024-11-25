@@ -91,7 +91,7 @@ export class DarkraiVSTAR extends PokemonCard {
 
       let cards: Card[] = [];
       return store.prompt(state, new ChooseCardsPrompt(
-        player.id,
+        player,
         GameMessage.CHOOSE_CARD_TO_HAND,
         player.discard,
         { superType: SuperType.TRAINER, trainerType: TrainerType.ITEM },

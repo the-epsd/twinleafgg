@@ -74,7 +74,7 @@ export class Ursaluna extends PokemonCard {
       const max = Math.min(cardsInDiscardPile, 2);
       
       state = store.prompt(state, new ChooseCardsPrompt(
-        player.id,
+        player,
         GameMessage.CHOOSE_CARD_TO_HAND,
         player.discard,
         {  },

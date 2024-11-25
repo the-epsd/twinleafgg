@@ -26,7 +26,7 @@ function* playCard(next, store, state, effect) {
     // We will discard this card after prompt confirmation
     effect.preventDefault = true;
     player.hand.moveCardTo(effect.trainerCard, player.supporter);
-    return store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.discard, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Fire Energy' }, { min: max, max, allowCancel: false }), selected => {
+    return store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.discard, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Fire Energy' }, { min: max, max, allowCancel: false }), selected => {
         if (selected && selected.length > 0) {
             // Recover discarded energies
             player.discard.moveCardsTo(selected, player.hand);

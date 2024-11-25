@@ -26,7 +26,7 @@ function* playCard(next: Function, store: StoreLike, state: State, self: UrnOfVi
 
   let cards: Card[] = [];
   yield store.prompt(state, new ChooseCardsPrompt(
-    player.id,
+    player,
     GameMessage.CHOOSE_CARD_TO_DECK,
     player.discard,
     { superType: SuperType.ENERGY, energyType: EnergyType.SPECIAL, name: 'Single Strike Energy' },

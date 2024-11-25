@@ -29,7 +29,7 @@ class Recycle extends game_1.TrainerCard {
             ], results => {
                 if (results) {
                     const deckTop = new game_1.CardList();
-                    store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARDS_TO_PUT_ON_TOP_OF_THE_DECK, player.discard, {}, { min: 1, max: 1, allowCancel: false }), selected => {
+                    store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARDS_TO_PUT_ON_TOP_OF_THE_DECK, player.discard, {}, { min: 1, max: 1, allowCancel: false }), selected => {
                         cards = selected || [];
                         const trainerCards = cards.filter(card => card instanceof game_1.TrainerCard);
                         const nonTrainerCards = cards.filter(card => !(card instanceof game_1.TrainerCard));

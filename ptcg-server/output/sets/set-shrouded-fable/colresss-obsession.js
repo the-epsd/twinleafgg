@@ -42,7 +42,7 @@ function* playCard(next, store, state, self, effect) {
     // Total max is sum of max for each 
     const count = maxTrainers + maxEnergies;
     // Pass max counts to prompt options
-    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, {}, { min: 0, max: count, allowCancel: false, blocked, maxTrainers, maxEnergies }), selected => {
+    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, {}, { min: 0, max: count, allowCancel: false, blocked, maxTrainers, maxEnergies }), selected => {
         cards = selected || [];
         next();
     });

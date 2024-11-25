@@ -14,7 +14,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   const max = player.hand.cards.length;
 
   return store.prompt(state, new ChooseCardsPrompt(
-    player.id,
+    player,
     GameMessage.CHOOSE_CARD_TO_HAND,
     player.hand,
     { },

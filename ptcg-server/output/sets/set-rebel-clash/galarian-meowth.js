@@ -61,13 +61,13 @@ class GalarianMeowth extends pokemon_card_1.PokemonCard {
             if (player.deck.cards.length === 0) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
             }
-            store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, player.hand, {}, { min: 2, max: 2, allowCancel: false }), selected => {
+            store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, player.hand, {}, { min: 2, max: 2, allowCancel: false }), selected => {
                 cards = selected || [];
                 cards.forEach((card, index) => {
                     store.log(state, game_1.GameLog.LOG_PLAYER_DISCARDS_CARD_FROM_HAND, { name: player.name, card: card.name });
                 });
                 player.hand.moveCardsTo(cards, player.discard);
-                store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.POKEMON, name: 'Galarian Perrserker' }, { min: 1, max: 1, allowCancel: true }), selected => {
+                store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.POKEMON, name: 'Galarian Perrserker' }, { min: 1, max: 1, allowCancel: true }), selected => {
                     cards = selected || [];
                     player.deck.moveCardsTo(cards, player.hand);
                     store.prompt(state, new game_1.ShowCardsPrompt(opponent.id, game_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards), () => state);

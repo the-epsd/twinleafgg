@@ -53,7 +53,7 @@ class Altaria extends pokemon_card_1.PokemonCard {
                 throw new game_error_1.GameError(game_message_1.GameMessage.POWER_ALREADY_USED);
             }
             player.marker.addMarker(this.FOREWARN_MARKER, this);
-            return store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.TRAINER, trainerType: card_types_1.TrainerType.SUPPORTER }, { min: 0, max: 1, allowCancel: false }), selected => {
+            return store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.TRAINER, trainerType: card_types_1.TrainerType.SUPPORTER }, { min: 0, max: 1, allowCancel: false }), selected => {
                 if (selected.length > 0) {
                     const card = selected[0];
                     const deckTop = new card_list_1.CardList();

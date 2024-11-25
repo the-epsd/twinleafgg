@@ -29,7 +29,7 @@ function* playCard(next: Function, store: StoreLike, state: State, self: EcoArm,
   
   let cards: Card[] = [];
   yield store.prompt(state, new ChooseCardsPrompt(
-    player.id,
+    player,
     GameMessage.CHOOSE_CARD_TO_DECK,
     player.discard,
     { superType: SuperType.TRAINER, trainerType: TrainerType.TOOL },

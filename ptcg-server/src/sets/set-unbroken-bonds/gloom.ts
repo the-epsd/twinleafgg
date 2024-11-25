@@ -51,7 +51,7 @@ export class Gloom extends PokemonCard {
       ], result => {
         if (result) {
           store.prompt(state, new ChooseCardsPrompt(
-            player.id,
+            player,
             GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
             opponent.hand,
             { superType: SuperType.POKEMON, stage: Stage.BASIC },

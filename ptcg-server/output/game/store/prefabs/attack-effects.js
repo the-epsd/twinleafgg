@@ -46,7 +46,7 @@ function PUT_X_CARDS_FROM_YOUR_DISCARD_PILE_INTO_YOUR_HAND(x, filterFn = () => t
     const max = Math.min(x, cardCount);
     const min = max;
     return store.prompt(state, [
-        new __3.ChooseCardsPrompt(player.id, __2.GameMessage.CHOOSE_CARD_TO_HAND, 
+        new __3.ChooseCardsPrompt(player, __2.GameMessage.CHOOSE_CARD_TO_HAND, 
         // TODO: Make this work for more than just Items!
         player.discard, { superType: card_types_1.SuperType.TRAINER, trainerType: card_types_1.TrainerType.ITEM }, { min, max, allowCancel: false })
     ], selected => {

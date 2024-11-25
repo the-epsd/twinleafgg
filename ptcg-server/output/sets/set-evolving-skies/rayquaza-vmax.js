@@ -68,7 +68,7 @@ class RayquazaVMAX extends pokemon_card_1.PokemonCard {
                 {
                     message: game_message_1.GameMessage.ALL_FIRE_ENERGIES,
                     action: () => {
-                        store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.active, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Fire Energy' }, { min: 1, allowCancel: false }), selected => {
+                        store.prompt(state, new game_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.active, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Fire Energy' }, { min: 1, allowCancel: false }), selected => {
                             const cards = selected || [];
                             if (cards.length > 0) {
                                 let totalDiscarded = 0;
@@ -84,7 +84,7 @@ class RayquazaVMAX extends pokemon_card_1.PokemonCard {
                 {
                     message: game_message_1.GameMessage.ALL_LIGHTNING_ENERGIES,
                     action: () => {
-                        store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.active, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Lightning Energy' }, { min: 1, allowCancel: false }), selected => {
+                        store.prompt(state, new game_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.active, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Lightning Energy' }, { min: 1, allowCancel: false }), selected => {
                             const cards = selected || [];
                             if (cards.length > 0) {
                                 let totalDiscarded = 0;

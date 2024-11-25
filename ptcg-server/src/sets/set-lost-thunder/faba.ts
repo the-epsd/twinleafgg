@@ -151,7 +151,7 @@ export class Faba extends TrainerCard {
             let cards: Card[] = [];
 
             state = store.prompt(state, new ChooseCardsPrompt(
-              player.id,
+              player,
               GameMessage.CHOOSE_CARD_TO_DISCARD,
               target,
               { superType: SuperType.ENERGY, energyType: EnergyType.SPECIAL },

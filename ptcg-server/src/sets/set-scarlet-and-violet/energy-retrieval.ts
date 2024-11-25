@@ -30,7 +30,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
   const min = Math.min(basicEnergyCards, 2);
   return store.prompt(state, new ChooseCardsPrompt(
-    player.id,
+    player,
     GameMessage.CHOOSE_CARD_TO_HAND,
     player.discard,
     { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },

@@ -119,36 +119,36 @@ export class BoardComponent implements OnDestroy {
     }
   }
 
-  // private lastCoinFlipPrompt: CoinFlipPrompt | null = null;
-  // private lastProcessedId: number = -1;
+  private lastCoinFlipPrompt: CoinFlipPrompt | null = null;
+  private lastProcessedId: number = -1;
 
-  // get activeCoinFlipPrompt(): CoinFlipPrompt | undefined {
-  //   // Find current coin flip prompt
-  //   const currentPrompt = this.gameState?.state?.prompts?.find(prompt => {
-  //     return prompt.type === 'Coin flip' &&
-  //       (prompt as CoinFlipPrompt).message === 'COIN_FLIP';
-  //   }) as CoinFlipPrompt;
+  get activeCoinFlipPrompt(): CoinFlipPrompt | undefined {
+    // Find current coin flip prompt
+    const currentPrompt = this.gameState?.state?.prompts?.find(prompt => {
+      return prompt.type === 'Coin flip' &&
+        (prompt as CoinFlipPrompt).message === 'COIN_FLIP';
+    }) as CoinFlipPrompt;
 
-  //   // Process new prompts
-  //   if (currentPrompt) {
-  //     this.lastCoinFlipPrompt = currentPrompt;
-  //     return currentPrompt;
-  //   }
+    // Process new prompts
+    if (currentPrompt) {
+      this.lastCoinFlipPrompt = currentPrompt;
+      return currentPrompt;
+    }
 
-  //   // Reset when no active prompt
-  //   if (!this.gameState?.state?.prompts?.length) {
-  //     this.lastCoinFlipPrompt = null;
-  //   }
+    // Reset when no active prompt
+    if (!this.gameState?.state?.prompts?.length) {
+      this.lastCoinFlipPrompt = null;
+    }
 
-  //   return undefined;
-  // }
+    return undefined;
+  }
 
 
-  // handleCoinFlipComplete(result: boolean) {
-  //   // Now we can process the result after animation
-  //   console.log('Animation complete, processing result:', result);
-  //   // This is where we'll trigger the prompt display
-  // }
+  handleCoinFlipComplete(result: boolean) {
+    // Now we can process the result after animation
+    console.log('Animation complete, processing result:', result);
+    // This is where we'll trigger the prompt display
+  }
 
   createRange(length: number): number[] {
     return Array.from({ length }, (_, i) => i);
@@ -475,9 +475,6 @@ export class BoardComponent implements OnDestroy {
   public onStadiumClick(card: Card) {
     const isBottomOwner = this.bottomPlayer && this.bottomPlayer.id === this.clientId;
     const isDeleted = this.gameState.deleted;
-
-    console.log(this.bottomPlayer);
-    console.log(this.topPlayer);
 
     if (!isBottomOwner || isDeleted) {
       return this.onCardClick(card, undefined);

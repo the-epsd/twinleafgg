@@ -24,7 +24,7 @@ function* playCard(next, store, state, effect) {
         return state;
     }
     let cards = [];
-    yield store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.BASIC }, { allowCancel: true, min: 0, max: heads }), results => {
+    yield store.prompt(state, new game_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.BASIC }, { allowCancel: true, min: 0, max: heads }), results => {
         cards = results || [];
         next();
     });

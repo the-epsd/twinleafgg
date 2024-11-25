@@ -110,7 +110,7 @@ export class KartanaGX extends PokemonCard {
             const target = targets[0];
             let cards: Card[] = [];
             return store.prompt(state, new ChooseCardsPrompt(
-              player.id,
+              player,
               GameMessage.CHOOSE_CARD_TO_DISCARD,
               target,
               { superType: SuperType.ENERGY, energyType: EnergyType.SPECIAL },

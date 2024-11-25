@@ -32,6 +32,7 @@ import { HelperBell } from './helper.bell';
 import { HoOh } from './ho-oh';
 import { Hydreigonex } from './hydreigon-ex';
 import { Klefki } from './klefki';
+import { Larvesta } from './larvesta-ir';
 import { Latiasex } from './latias-ex';
 import { LisiasAppeal } from './lisias-appeal';
 import { Magnemite } from './magnemite';
@@ -43,7 +44,9 @@ import { MiraculousIntercom } from './miraculous-intercom';
 import { Ninetales } from './ninetales';
 import { Palkia } from './palkia';
 import { Palossandex } from './palossand-ex';
+import { Pansear } from './pansear';
 import { PerfectMixer } from './perfect-mixer';
+import { Phanpy } from './phanpy-ir';
 import { Pikachuex } from './pikachu-ex';
 import { Quaxwell } from './quaxwell';
 import { RichEnergy } from './rich-energy';
@@ -77,6 +80,15 @@ export declare class MagnemiteArt extends Magnemite {
     cardImage: string;
 }
 export declare class ShroodleArt extends Shroodle {
+    cardImage: string;
+}
+export declare class PhanpyArt extends Phanpy {
+    cardImage: string;
+}
+export declare class LarvestaArt extends Larvesta {
+    cardImage: string;
+}
+export declare class PansearArt extends Pansear {
     cardImage: string;
 }
 export declare class QuaxwellArt extends Quaxwell {

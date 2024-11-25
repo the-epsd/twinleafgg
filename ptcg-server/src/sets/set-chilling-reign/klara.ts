@@ -51,7 +51,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   const count = maxPokemons + maxEnergies;
 
   yield store.prompt(state, new ChooseCardsPrompt(
-    player.id,
+    player,
     GameMessage.CHOOSE_CARD_TO_HAND,
     player.discard,
     {},

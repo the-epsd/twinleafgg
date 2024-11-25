@@ -5,6 +5,7 @@ import { EnergyCard } from '../card/energy-card';
 import { PokemonCard } from '../card/pokemon-card';
 import { TrainerCard } from '../card/trainer-card';
 import { CardList } from '../state/card-list';
+import { Player } from '../state/player';
 import { Prompt } from './prompt';
 export declare const ChooseCardsPromptType = "Choose cards";
 export interface ChooseCardsOptions {
@@ -33,7 +34,8 @@ export declare class ChooseCardsPrompt extends Prompt<Card[]> {
     readonly type: string;
     options: ChooseCardsOptions;
     private blockedCardNames;
-    constructor(playerId: number, message: GameMessage, cards: CardList, filter: FilterType, options?: Partial<ChooseCardsOptions>);
+    player: Player;
+    constructor(player: Player, message: GameMessage, cards: CardList, filter: FilterType, options?: Partial<ChooseCardsOptions>);
     decode(result: number[] | null): Card[] | null;
     validate(result: Card[] | null): boolean;
     static getCardType(card: Card): CardType;

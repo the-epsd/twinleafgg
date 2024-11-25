@@ -27,7 +27,7 @@ class NightTimeAcademy extends trainer_card_1.TrainerCard {
                 throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_USE_POWER);
             }
             const deckTop = new game_1.CardList();
-            return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_DECK, player.hand, {}, { min: 1, max: 1, allowCancel: false }), selected => {
+            return store.prompt(state, new game_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_DECK, player.hand, {}, { min: 1, max: 1, allowCancel: false }), selected => {
                 const cards = selected || [];
                 if (cards.length > 0) {
                     player.hand.moveCardsTo(cards, deckTop);

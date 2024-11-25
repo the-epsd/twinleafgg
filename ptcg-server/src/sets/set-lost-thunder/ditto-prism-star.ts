@@ -62,7 +62,7 @@ export class DittoPrismStar extends PokemonCard {
 
       let cards: Card[] = [];
       return store.prompt(state, new ChooseCardsPrompt(
-        player.id,
+        player,
         GameMessage.CHOOSE_CARD_TO_EVOLVE,
         player.hand,
         { superType: SuperType.POKEMON, stage: Stage.STAGE_1 },

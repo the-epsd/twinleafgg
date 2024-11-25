@@ -22,7 +22,7 @@ function* playCard(next, store, state, self, effect) {
     player.hand.moveCardTo(effect.trainerCard, player.supporter);
     const min = Math.min(2, specialEnergyCards);
     let cards = [];
-    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_DECK, player.discard, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.SPECIAL }, { min, max: 2, allowCancel: false }), selected => {
+    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_DECK, player.discard, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.SPECIAL }, { min, max: 2, allowCancel: false }), selected => {
         cards = selected || [];
         next();
     });

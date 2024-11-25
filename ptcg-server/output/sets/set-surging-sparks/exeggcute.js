@@ -11,7 +11,7 @@ function* useAscension(next, store, state, effect) {
         return state;
     }
     let cards = [];
-    yield store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_EVOLVE, player.deck, { superType: card_types_1.SuperType.POKEMON, evolvesFrom: 'Exeggcute' }, { min: 0, max: 1, allowCancel: false }), selected => {
+    yield store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_EVOLVE, player.deck, { superType: card_types_1.SuperType.POKEMON, evolvesFrom: 'Exeggcute' }, { min: 0, max: 1, allowCancel: false }), selected => {
         cards = selected || [];
         next();
     });

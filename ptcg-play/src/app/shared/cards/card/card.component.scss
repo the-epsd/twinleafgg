@@ -1,8 +1,12 @@
 @import '../../../../theme/variables.scss';
 
 :host.placeholder {
-  img {
-    display: none;
+  .card-container {
+
+    img,
+    .holo-overlay {
+      display: none;
+    }
   }
 
   .ptcg-card:after {
@@ -63,10 +67,10 @@
   left: 0;
 }
 
-.ptcg-card-preview {
-  position: absolute;
-  width: map-get($ptcg-size, card);
-}
+// .ptcg-card-preview {
+//   position: absolute;
+//   width: map-get($ptcg-size, card);
+// }
 
 .holo-overlay {
   display: none;
@@ -117,6 +121,15 @@
   opacity: 4;
   -webkit-mask-image: url('/assets/card-mask-radiant.png');
   mask-image: url('/assets/card-mask-radiant.png');
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+}
+
+.ace-spec-holo .holo-overlay {
+  display: block;
+  opacity: 4;
+  -webkit-mask-image: url('/assets/card-mask-ace-spec.png');
+  mask-image: url('/assets/card-mask-ace-spec.png');
   -webkit-mask-size: 100% 100%;
   mask-size: 100% 100%;
 }

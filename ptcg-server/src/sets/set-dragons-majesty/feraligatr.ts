@@ -47,7 +47,7 @@ export class Feraligatr extends PokemonCard {
       }
 
       state = store.prompt(state, new ChooseCardsPrompt(
-        player.id,
+        player,
         GameMessage.CHOOSE_CARD_TO_DISCARD,
         player.hand,
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Water Energy' },

@@ -30,7 +30,7 @@ class LostBlender extends trainer_card_1.TrainerCard {
             // We will discard this card after prompt confirmation
             effect.preventDefault = true;
             player.hand.moveCardTo(effect.trainerCard, player.supporter);
-            store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, player.hand, {}, { min: 2, max: 2, allowCancel: false }), selected => {
+            store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, player.hand, {}, { min: 2, max: 2, allowCancel: false }), selected => {
                 cards = selected || [];
                 // Operation canceled by the user
                 if (cards.length === 0) {

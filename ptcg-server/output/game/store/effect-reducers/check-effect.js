@@ -99,7 +99,7 @@ function choosePrizeCards(state, prizesToTake) {
             player.prizes.forEach(prizeList => {
                 allPrizeCards.cards.push(...prizeList.cards);
             });
-            const prompt = new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_PRIZE_CARD, allPrizeCards, {}, // No specific filter needed for prizes
+            const prompt = new choose_cards_prompt_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_PRIZE_CARD, allPrizeCards, {}, // No specific filter needed for prizes
             { min: prizesToTake[i], max: prizesToTake[i], isSecret: player.prizes[0].isSecret, allowCancel: false });
             prompts.push(prompt);
         }
@@ -156,7 +156,6 @@ function checkWinner(store, state, onComplete) {
     if (points[0] + points[1] === 0) {
         if (onComplete) {
             onComplete();
-            console.log('it pointed');
         }
         return state;
     }
@@ -170,7 +169,6 @@ function checkWinner(store, state, onComplete) {
     state = endGame(store, state, winner);
     if (onComplete) {
         onComplete();
-        console.log('it end gamed');
     }
     return state;
 }
@@ -178,7 +176,6 @@ function handlePrompts(store, state, prompts, onComplete) {
     const prompt = prompts.shift();
     if (prompt === undefined) {
         onComplete();
-        console.log('it completed');
         return state;
     }
     const player = state.players.find(p => p.id === prompt.playerId);
@@ -194,7 +191,6 @@ function handlePrompts(store, state, prompts, onComplete) {
                 }
             });
             handlePrompts(store, state, prompts, onComplete);
-            console.log('this one');
         });
     }
     else if (prompt instanceof choose_pokemon_prompt_1.ChoosePokemonPrompt) {
@@ -210,7 +206,6 @@ function handlePrompts(store, state, prompts, onComplete) {
             player.active = player.bench[benchIndex];
             player.bench[benchIndex] = temp;
             handlePrompts(store, state, prompts, onComplete);
-            console.log('that one');
         });
     }
     return state;
@@ -249,7 +244,6 @@ function* executeCheckState(next, store, state, onComplete) {
             completed[i] = true;
             if (completed.every(c => c)) {
                 checkWinner(store, state, onComplete);
-                console.log('winner checked');
             }
         });
     }
@@ -259,7 +253,6 @@ function checkState(store, state, onComplete) {
     if ([state_1.GamePhase.PLAYER_TURN, state_1.GamePhase.ATTACK, state_1.GamePhase.BETWEEN_TURNS].includes(state.phase) === false) {
         if (onComplete !== undefined) {
             onComplete();
-            console.log('did complete idk undefined');
         }
         return state;
     }

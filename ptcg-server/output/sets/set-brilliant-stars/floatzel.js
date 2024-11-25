@@ -47,7 +47,7 @@ class Floatzel extends pokemon_card_1.PokemonCard {
             }
             const max = Math.min(2, itemCount);
             return store.prompt(state, [
-                new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.discard, { superType: card_types_1.SuperType.TRAINER, trainerType: card_types_1.TrainerType.ITEM }, { min: 1, max, allowCancel: false })
+                new game_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.discard, { superType: card_types_1.SuperType.TRAINER, trainerType: card_types_1.TrainerType.ITEM }, { min: 1, max, allowCancel: false })
             ], selected => {
                 const cards = selected || [];
                 cards.forEach((card, index) => {

@@ -40,7 +40,7 @@ class Persian extends pokemon_card_1.PokemonCard {
             let cards = [];
             if (opponent.hand.cards.length >= 4) {
                 let minMaxDiscardAmt = opponent.hand.cards.length - 4;
-                store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, opponent.hand, {}, { min: minMaxDiscardAmt, max: minMaxDiscardAmt, allowCancel: false }), selected => {
+                store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, opponent.hand, {}, { min: minMaxDiscardAmt, max: minMaxDiscardAmt, allowCancel: false }), selected => {
                     cards = selected || [];
                     opponent.hand.moveCardsTo(cards, opponent.discard);
                 });

@@ -51,7 +51,7 @@ class Banette extends game_1.PokemonCard {
                 return state;
             }
             let cards = [];
-            state = store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_DECK, player.discard, { superType: game_1.SuperType.TRAINER, trainerType: game_1.TrainerType.SUPPORTER }, { min: 1, max: 1, allowCancel: false }), selected => {
+            state = store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_DECK, player.discard, { superType: game_1.SuperType.TRAINER, trainerType: game_1.TrainerType.SUPPORTER }, { min: 1, max: 1, allowCancel: false }), selected => {
                 cards = selected || [];
                 player.discard.moveCardsTo(cards, player.hand);
             });

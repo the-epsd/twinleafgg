@@ -39,7 +39,7 @@ export class NightTimeAcademy extends TrainerCard {
       const deckTop = new CardList();
 
       return store.prompt(state, new ChooseCardsPrompt(
-        player.id,
+        player,
         GameMessage.CHOOSE_CARD_TO_DECK,
         player.hand,
         {},

@@ -35,7 +35,7 @@ function* playCard(next: Function, store: StoreLike, state: State, self: LanasFi
   const maxCount = hasBoth ? 2 : 1;
 
   yield store.prompt(state, new ChooseCardsPrompt(
-    player.id,
+    player,
     hasBoth ? GameMessage.CHOOSE_CARD_TO_DECK : GameMessage.CHOOSE_CARD_TO_DECK,
     player.discard,
     {},

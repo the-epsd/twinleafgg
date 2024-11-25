@@ -49,7 +49,7 @@ export class ExplorersGuidance extends TrainerCard {
       player.deck.moveTo(deckTop, 6);
       
       return store.prompt(state, new ChooseCardsPrompt(
-        player.id,
+        player,
         GameMessage.CHOOSE_CARD_TO_HAND,
         deckTop,
         { },

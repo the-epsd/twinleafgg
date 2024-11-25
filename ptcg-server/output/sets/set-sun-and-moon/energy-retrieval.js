@@ -23,7 +23,7 @@ function* playCard(next, store, state, effect) {
     // We will discard this card after prompt confirmation
     effect.preventDefault = true;
     const min = Math.min(basicEnergyCards, 2);
-    return store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.discard, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC }, { min, max: min, allowCancel: true }), cards => {
+    return store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.discard, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC }, { min, max: min, allowCancel: true }), cards => {
         cards = cards || [];
         if (cards.length > 0) {
             // Recover discarded Pokemon

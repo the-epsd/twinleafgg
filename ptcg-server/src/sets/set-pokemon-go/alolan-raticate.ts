@@ -40,7 +40,7 @@ export class AlolanRaticate extends PokemonCard {
       const player = effect.player;
 
       state = store.prompt(state, new ChooseCardsPrompt(
-        player.id,
+        player,
         GameMessage.CHOOSE_CARD_TO_HAND,
         player.deck,
         {},

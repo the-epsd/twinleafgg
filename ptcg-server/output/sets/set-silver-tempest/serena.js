@@ -36,7 +36,7 @@ class Serena extends trainer_card_1.TrainerCard {
                     message: game_message_1.GameMessage.DISCARD_AND_DRAW,
                     action: () => {
                         let cards = [];
-                        return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_DISCARD, player.hand, {}, { min: 1, max: 3, allowCancel: true }), selected => {
+                        return store.prompt(state, new game_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_DISCARD, player.hand, {}, { min: 1, max: 3, allowCancel: true }), selected => {
                             cards = selected || [];
                             player.hand.moveCardsTo(cards, player.discard);
                             while (player.hand.cards.length < 5) {

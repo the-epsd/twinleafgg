@@ -22,7 +22,7 @@ function* playCard(next, store, state, self, effect) {
     // prepare card list without Junk Arm
     const handTemp = new game_1.CardList();
     handTemp.cards = player.hand.cards.filter(c => c !== self);
-    yield store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, handTemp, {}, { min: 2, max: 2, allowCancel: false }), selected => {
+    yield store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, handTemp, {}, { min: 2, max: 2, allowCancel: false }), selected => {
         cards = selected || [];
         next();
     });
@@ -42,7 +42,7 @@ function* playCard(next, store, state, self, effect) {
             blocked.push(index);
         }
     });
-    yield store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.POKEMON, cardType: card_types_1.CardType.LIGHTNING }, { min: 0, max: 2, allowCancel: false, blocked }), selected => {
+    yield store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.POKEMON, cardType: card_types_1.CardType.LIGHTNING }, { min: 0, max: 2, allowCancel: false, blocked }), selected => {
         cards = selected || [];
         next();
     });

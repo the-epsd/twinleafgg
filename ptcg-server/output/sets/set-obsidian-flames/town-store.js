@@ -18,7 +18,7 @@ function* useStadium(next, store, state, effect) {
     else {
         // handle no open slots
         let cards = [];
-        return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.TRAINER, trainerType: card_types_1.TrainerType.TOOL }, { min: 0, max: 1, allowCancel: true }), selectedCards => {
+        return store.prompt(state, new game_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.TRAINER, trainerType: card_types_1.TrainerType.TOOL }, { min: 0, max: 1, allowCancel: true }), selectedCards => {
             cards = selectedCards || [];
             // Operation canceled by the user
             if (cards.length === 0) {

@@ -13,7 +13,7 @@ function* playCard(next, store, state, effect) {
     const blocked = player.deck.cards
         .filter(c => c instanceof game_1.PokemonCard && c.tags.includes(card_types_1.CardTag.POKEMON_LV_X))
         .map(c => player.deck.cards.indexOf(c));
-    yield store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.POKEMON }, { min: 1, max: 1, allowCancel: true, blocked }), selected => {
+    yield store.prompt(state, new game_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.POKEMON }, { min: 1, max: 1, allowCancel: true, blocked }), selected => {
         cards = selected;
         next();
     });

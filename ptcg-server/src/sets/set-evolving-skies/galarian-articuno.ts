@@ -92,7 +92,7 @@ export class GalarianArticuno extends PokemonCard {
 
 
           return store.prompt(state, new ChooseCardsPrompt(
-            player.id,
+            player,
             GameMessage.CHOOSE_CARD_TO_ATTACH,
             player.hand,
             { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Psychic Energy' },

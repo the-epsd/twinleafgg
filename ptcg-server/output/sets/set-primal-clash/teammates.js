@@ -26,7 +26,7 @@ function* playCard(next, store, state, self, effect) {
     // This will prevent unblocked supporter to appear in the discard pile
     effect.preventDefault = true;
     let cards = [];
-    return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, {}, { min: 1, max: Math.min(2, player.deck.cards.length), allowCancel: false }), selected => {
+    return store.prompt(state, new game_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, {}, { min: 1, max: Math.min(2, player.deck.cards.length), allowCancel: false }), selected => {
         cards = selected || [];
         next();
         player.deck.moveCardsTo(cards, player.hand);

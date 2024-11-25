@@ -54,7 +54,7 @@ export class XerosicsScheme extends TrainerCard {
 
       // Opponent discards first
       store.prompt(state, new ChooseCardsPrompt(
-        opponent.id,
+          opponent,
         GameMessage.CHOOSE_CARD_TO_DISCARD,
         opponent.hand,
         {},

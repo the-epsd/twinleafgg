@@ -50,7 +50,7 @@ class RadiantJirachi extends pokemon_card_1.PokemonCard {
                 return state;
             }
             let cards = [];
-            return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, {}, { min: 0, max: 3, allowCancel: false }), (selected) => {
+            return store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, {}, { min: 0, max: 3, allowCancel: false }), (selected) => {
                 cards = selected || [];
                 if (cards.length > 0) {
                     player.deck.moveCardsTo(cards, player.hand);

@@ -112,7 +112,7 @@ export class GalarianObstagoon extends PokemonCard {
 
       
       return store.prompt(state, new ChooseCardsPrompt(
-        opponent.id,
+          opponent,
         GameMessage.CHOOSE_CARD_TO_DISCARD,
         opponent.hand,
         {  },

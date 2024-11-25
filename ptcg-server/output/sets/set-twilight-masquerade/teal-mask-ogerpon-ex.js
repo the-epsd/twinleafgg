@@ -63,7 +63,7 @@ class TealMaskOgerponex extends pokemon_card_1.PokemonCard {
             if (cardList === undefined) {
                 return state;
             }
-            return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_ATTACH, player.hand, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Grass Energy' }, { min: 0, max: 1, allowCancel: false }), cards => {
+            return store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_ATTACH, player.hand, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Grass Energy' }, { min: 0, max: 1, allowCancel: false }), cards => {
                 cards = cards || [];
                 if (cards.length > 0) {
                     player.marker.addMarker(this.TEAL_DANCE_MARKER, this);

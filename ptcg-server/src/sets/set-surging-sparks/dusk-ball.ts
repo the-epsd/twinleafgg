@@ -44,7 +44,7 @@ export class DuskBall extends TrainerCard {
       temp.cards.push(...cardsToMove);
 
       return store.prompt(state, new ChooseCardsPrompt(
-        player.id,
+        player,
         GameMessage.CHOOSE_CARD_TO_HAND,
         temp,
         { superType: SuperType.POKEMON },

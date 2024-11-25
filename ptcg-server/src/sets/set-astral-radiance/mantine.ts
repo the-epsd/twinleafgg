@@ -66,7 +66,7 @@ export class Mantine extends PokemonCard {
 
       let cards: Card[] = [];
       store.prompt(state, new ChooseCardsPrompt(
-        player.id,
+        player,
         GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
         opponent.discard || player.discard,
         { superType: SuperType.POKEMON, stage: Stage.BASIC },

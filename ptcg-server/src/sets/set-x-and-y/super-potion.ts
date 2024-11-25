@@ -50,7 +50,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   const target = targets[0];
   let cards: Card[] = [];
   yield store.prompt(state, new ChooseCardsPrompt(
-    player.id,
+    player,
     GameMessage.CHOOSE_CARD_TO_DISCARD,
     target,
     { superType: SuperType.ENERGY },

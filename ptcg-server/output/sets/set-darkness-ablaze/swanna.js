@@ -16,7 +16,7 @@ function* useFeatherSlice(next, store, state, effect) {
         return state;
     }
     let cards = [];
-    yield store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_DISCARD, player.hand, {}, { min: 1, max: 1, allowCancel: true }), selected => {
+    yield store.prompt(state, new game_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_DISCARD, player.hand, {}, { min: 1, max: 1, allowCancel: true }), selected => {
         cards = selected || [];
         next();
     });

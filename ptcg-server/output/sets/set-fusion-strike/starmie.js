@@ -44,7 +44,7 @@ class Starmie extends pokemon_card_1.PokemonCard {
                     blocked.push();
                 }
             });
-            return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, player.active, // Card source is target Pokemon
+            return store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, player.active, // Card source is target Pokemon
             { superType: card_types_1.SuperType.ENERGY }, { allowCancel: false, blocked: blocked }), selected => {
                 const cards = selected || [];
                 if (cards.length > 0) {

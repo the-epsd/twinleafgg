@@ -49,7 +49,7 @@ class Phione extends pokemon_card_1.PokemonCard {
             const max = Math.min(1, itemCount);
             const min = max;
             return store.prompt(state, [
-                new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.discard, { superType: card_types_1.SuperType.TRAINER, trainerType: card_types_1.TrainerType.SUPPORTER }, { min, max, allowCancel: false })
+                new game_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.discard, { superType: card_types_1.SuperType.TRAINER, trainerType: card_types_1.TrainerType.SUPPORTER }, { min, max, allowCancel: false })
             ], selected => {
                 const cards = selected || [];
                 player.discard.moveCardsTo(cards, player.hand);

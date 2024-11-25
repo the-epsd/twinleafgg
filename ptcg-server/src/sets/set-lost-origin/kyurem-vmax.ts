@@ -71,7 +71,7 @@ export class KyuremVMAX extends PokemonCard {
 
       // Prompt player to choose cards to discard 
       return store.prompt(state, new ChooseCardsPrompt(
-        player.id,
+        player,
         GameMessage.CHOOSE_CARD_TO_DISCARD,
         player.active,
         { superType: SuperType.ENERGY },

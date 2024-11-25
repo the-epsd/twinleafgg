@@ -45,7 +45,7 @@ class Thorton extends trainer_card_1.TrainerCard {
                 if (targets.length === 0) {
                     throw new game_1.GameError(game_message_1.GameMessage.INVALID_TARGET);
                 }
-                return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH, player.discard, { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.BASIC }, { min: 1, max: 1, allowCancel: false }), selectedCards => {
+                return store.prompt(state, new game_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH, player.discard, { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.BASIC }, { min: 1, max: 1, allowCancel: false }), selectedCards => {
                     const card = selectedCards[0];
                     if (!card) {
                         throw new game_1.GameError(game_message_1.GameMessage.INVALID_TARGET);

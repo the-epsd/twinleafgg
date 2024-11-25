@@ -29,7 +29,7 @@ class PokemonFlute extends trainer_card_1.TrainerCard {
             // We will discard this card after prompt confirmation
             effect.preventDefault = true;
             let cards = [];
-            return store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_OPPONENTS_BASIC_POKEMON_TO_BENCH, opponent.discard, { superType: game_1.SuperType.POKEMON, stage: game_1.Stage.BASIC }, { min: 1, max: 1, allowCancel: false }), selected => {
+            return store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_OPPONENTS_BASIC_POKEMON_TO_BENCH, opponent.discard, { superType: game_1.SuperType.POKEMON, stage: game_1.Stage.BASIC }, { min: 1, max: 1, allowCancel: false }), selected => {
                 cards = selected || [];
                 if (cards.length > 0) {
                     const card = cards[0];

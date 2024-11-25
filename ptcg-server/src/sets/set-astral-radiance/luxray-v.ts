@@ -58,7 +58,7 @@ export class LuxrayV extends PokemonCard {
       const cards = opponent.hand.cards.filter(c => c instanceof TrainerCard);
 
       store.prompt(state, new ChooseCardsPrompt(
-        effect.player.id,
+        player,
         GameMessage.CHOOSE_CARD_TO_DISCARD,
         opponent.hand,
         { superType: SuperType.TRAINER },
@@ -78,7 +78,7 @@ export class LuxrayV extends PokemonCard {
       state = store.reduceEffect(state, checkProvidedEnergy);
 
       store.prompt(state, new ChooseCardsPrompt(
-        effect.player.id,
+        player,
         GameMessage.CHOOSE_CARD_TO_DISCARD,
         player.active,
         { superType: SuperType.ENERGY },

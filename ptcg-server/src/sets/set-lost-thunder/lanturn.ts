@@ -35,7 +35,7 @@ function* useAttack(next: Function, store: StoreLike, state: State, self: Lantur
   const max = Math.min(itemsInDiscardPile, 4);
   
   yield store.prompt(state, new ChooseCardsPrompt(
-    player.id,
+    player,
     GameMessage.CHOOSE_CARD_TO_DECK,
     player.discard,
     { superType: SuperType.TRAINER, trainerType: TrainerType.ITEM },

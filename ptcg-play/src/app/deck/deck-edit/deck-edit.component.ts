@@ -278,7 +278,7 @@ export class DeckEditComponent implements OnInit {
     ).subscribe(() => {
       this.alertService.toast(this.translate.instant('DECK_EDIT_SAVED'));
       // Consider using a less intrusive notification for incremental saves
-      console.log('Deck saved incrementally');
+      // console.log('Deck saved incrementally');
     }, (error: ApiError) => {
       if (!error.handled) {
         this.alertService.toast(this.translate.instant('ERROR_UNKNOWN'));

@@ -244,10 +244,7 @@ export class ChooseCardsPanesComponent implements OnChanges {
 
   ngOnInit() {
     const cost = (this.promptValue as unknown as ChooseEnergyPrompt)?.cost?.length;
-    console.log('Cost length:', cost);
-    console.log('Options max:', this.promptValue?.options?.max);
     this.maxCards = cost || this.promptValue?.options?.max || 1;
-    console.log('Final maxCards:', this.maxCards);
   }
 
   ngOnChanges() {
@@ -256,13 +253,16 @@ export class ChooseCardsPanesComponent implements OnChanges {
       this.topSortable.tempList = this.buildCardList(this.cards);
       this.bottomSortable.tempList = [];
 
-      // Get total energy count for max slots while preserving prompt settings
-      const totalEnergy = this.cards.filter(card => card instanceof EnergyCard).length;
-      const cost = (this.promptValue as unknown as ChooseEnergyPrompt)?.cost?.length;
-      this.maxCards = cost || totalEnergy || this.promptValue?.options?.max || 1;
+      // Set maxCards only if it hasn't been set yet or needs updating
+      if (!this.maxCards) {
+        const totalEnergy = this.cards.filter(card => card instanceof EnergyCard).length;
+        const cost = (this.promptValue as unknown as ChooseEnergyPrompt)?.cost?.length;
+        this.maxCards = cost || totalEnergy || this.promptValue?.options?.max || 1;
+      }
 
       this.commitTempLists();
     }
   }
+
 
 }

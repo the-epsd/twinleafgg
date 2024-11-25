@@ -56,7 +56,7 @@ class Arbokex extends pokemon_card_1.PokemonCard {
                 opponent.hand.moveCardsTo(cards, player.discard);
                 return state;
             }
-            store.prompt(state, new game_1.ChooseCardsPrompt(opponent.id, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, opponent.hand, {}, { min: 2, max: 2, allowCancel: false }), selected => {
+            store.prompt(state, new game_1.ChooseCardsPrompt(opponent, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, opponent.hand, {}, { min: 2, max: 2, allowCancel: false }), selected => {
                 const cards = selected || [];
                 opponent.hand.moveCardsTo(cards, opponent.discard);
             });

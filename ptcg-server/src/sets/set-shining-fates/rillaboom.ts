@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SuperType, EnergyType } from '../../game/store/card/card-types';
+import { Stage, CardType, SuperType, EnergyType, SpecialCondition } from '../../game/store/card/card-types';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { StoreLike, State, AttachEnergyPrompt, GameMessage, PlayerType, SlotType, ShuffleDeckPrompt, GameError, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
@@ -68,12 +68,20 @@ export class Rillaboom extends PokemonCard {
         if (transfers.length === 0) {
           return state;
         }
+        player.marker.addMarker(this.VOLTAGE_BEAT_MARKER, this);
+
         for (const transfer of transfers) {
           const target = StateUtils.getTarget(state, player, transfer.to);
           player.deck.moveCardTo(transfer.card, target);
         }
         state = store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
           player.deck.applyOrder(order);
+        });
+
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+          if (cardList.getPokemonCard() === this) {
+            cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+          }
         });
       });
 

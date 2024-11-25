@@ -98,7 +98,7 @@ export class RadiantEternatus extends PokemonCard {
           });
 
           return store.prompt(state, new ChooseCardsPrompt(
-            player.id,
+            player,
             GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
             player.deck,
             { superType: SuperType.POKEMON },

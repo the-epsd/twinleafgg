@@ -50,7 +50,7 @@ class Oranguru extends pokemon_card_1.PokemonCard {
             if (player.marker.hasMarker(this.PRIMATE_WISDOM_MARKER, this)) {
                 throw new game_1.GameError(game_1.GameMessage.POWER_ALREADY_USED);
             }
-            return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_DECK, player.hand, {}, { min: 1, max: 1, allowCancel: true }), selected => {
+            return store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_DECK, player.hand, {}, { min: 1, max: 1, allowCancel: true }), selected => {
                 const cards = selected || [];
                 if (cards.length > 0) {
                     player.deck.moveTo(player.hand, 1);

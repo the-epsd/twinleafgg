@@ -28,7 +28,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   if (coin1Result && coin2Result) {
     let cards: any[] = [];
     yield store.prompt(state, new ChooseCardsPrompt(
-      player.id,
+      player,
       GameMessage.CHOOSE_CARD_TO_HAND,
       player.deck,
       {},

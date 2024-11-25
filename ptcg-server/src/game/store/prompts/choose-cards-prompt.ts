@@ -5,6 +5,7 @@ import { EnergyCard } from '../card/energy-card';
 import { PokemonCard } from '../card/pokemon-card';
 import { TrainerCard } from '../card/trainer-card';
 import { CardList } from '../state/card-list';
+import { Player } from '../state/player';
 import { Prompt } from './prompt';
 
 export const ChooseCardsPromptType = 'Choose cards';
@@ -36,16 +37,17 @@ export class ChooseCardsPrompt extends Prompt<Card[]> {
 
   public options: ChooseCardsOptions;
   private blockedCardNames: string[] = [];
+  public player: Player;
 
   constructor(
-    playerId: number,
+    player: Player,
     public message: GameMessage,
     public cards: CardList,
     public filter: FilterType,
     options?: Partial<ChooseCardsOptions>
   ) {
-    super(playerId);
-
+    super(player.id);
+    this.player = player;
     // Default options
     this.options = Object.assign({}, {
       min: 0,
@@ -76,7 +78,9 @@ export class ChooseCardsPrompt extends Prompt<Card[]> {
       }
     }
 
-    // this.cards.sort();
+    if (this.cards === this.player.deck || this.cards === this.player.discard) {
+      this.cards.sort();
+    }
 
     if (this.options.blocked.length > 0) {
       this.options.blocked = [];

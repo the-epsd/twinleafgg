@@ -57,7 +57,7 @@ class InteleonVMAX extends pokemon_card_1.PokemonCard {
                     const energyCards = player.active.cards.filter(c => c instanceof game_1.EnergyCard);
                     const cardList = new game_1.CardList();
                     cardList.cards = energyCards;
-                    state = store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_ENERGIES_TO_HAND, cardList, { superType: card_types_1.SuperType.ENERGY }, { max: 1, allowCancel: false }), energies => {
+                    state = store.prompt(state, new game_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_ENERGIES_TO_HAND, cardList, { superType: card_types_1.SuperType.ENERGY }, { max: 1, allowCancel: false }), energies => {
                         effect.damage += 70;
                         const cardsToHand = new attack_effects_1.CardsToHandEffect(effect, energies);
                         cardsToHand.target = player.active;
@@ -83,7 +83,7 @@ class InteleonVMAX extends pokemon_card_1.PokemonCard {
             if (!hasBenched) {
                 return state;
             }
-            state = store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_message_1.GameMessage.CHOOSE_CARD_TO_DISCARD, player.hand, { superType: card_types_1.SuperType.ENERGY }, { allowCancel: true, min: 1, max: 1 }), cards => {
+            state = store.prompt(state, new game_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_DISCARD, player.hand, { superType: card_types_1.SuperType.ENERGY }, { allowCancel: true, min: 1, max: 1 }), cards => {
                 cards = cards || [];
                 if (cards.length === 0) {
                     return;

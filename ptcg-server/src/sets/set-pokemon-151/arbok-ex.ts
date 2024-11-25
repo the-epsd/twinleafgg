@@ -64,7 +64,7 @@ export class Arbokex extends PokemonCard {
       }
 
       store.prompt(state, new ChooseCardsPrompt(
-        opponent.id,
+          opponent,
         GameMessage.CHOOSE_CARD_TO_DISCARD,
         opponent.hand,
         {},

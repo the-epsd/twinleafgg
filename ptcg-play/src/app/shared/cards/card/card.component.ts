@@ -52,6 +52,10 @@ export class CardComponent {
       return 'radiant-holo';
     }
 
+    if (this.data.tags.includes(CardTag.ACE_SPEC)) {
+      return 'ace-spec-holo';
+    }
+
     return '';
   }
 

@@ -68,7 +68,7 @@ class Reuniclus extends pokemon_card_1.PokemonCard {
                 // We will discard this card after prompt confirmation
                 effect.preventDefault = true;
                 let cards = [];
-                return store.prompt(state, new game_1.ChooseCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH, deckTop, { superType: card_types_1.SuperType.POKEMON }, { min: 0, max: 8, allowCancel: false, blocked, maxPokemons }), selectedCards => {
+                return store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH, deckTop, { superType: card_types_1.SuperType.POKEMON }, { min: 0, max: 8, allowCancel: false, blocked, maxPokemons }), selectedCards => {
                     cards = selectedCards || [];
                     cards.forEach((card, index) => {
                         deckTop.moveCardTo(card, slots[index]);

@@ -49,7 +49,7 @@ class Zoroark extends pokemon_card_1.PokemonCard {
                 return -1;
             };
             const index = getBenchIndex(effect.player, this);
-            return store.prompt(state, new game_1.ChooseCardsPrompt(effect.player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DISCARD, effect.player.discard, { stage: card_types_1.Stage.STAGE_1 }, { min: 1, max: 1 }), selected => {
+            return store.prompt(state, new game_1.ChooseCardsPrompt(effect.player, game_1.GameMessage.CHOOSE_POKEMON_TO_DISCARD, effect.player.discard, { stage: card_types_1.Stage.STAGE_1 }, { min: 1, max: 1 }), selected => {
                 if (index >= 0) {
                     effect.player.bench[index].moveCardTo(this, effect.player.discard);
                 }

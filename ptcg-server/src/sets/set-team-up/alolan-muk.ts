@@ -80,7 +80,7 @@ export class AlolanMuk extends PokemonCard {
       opponent.deck.moveTo(deckTop, 6);
 
       return store.prompt(state, new ChooseCardsPrompt(
-        player.id,
+        player,
         GameMessage.CHOOSE_CARD_TO_DISCARD,
         deckTop,
         { superType: SuperType.TRAINER, trainerType: TrainerType.ITEM },

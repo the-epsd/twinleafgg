@@ -33,7 +33,7 @@ export function* useRapidStrikeSearch(next: Function, store: StoreLike, state: S
   player.usedRapidStrikeSearchThisTurn = true;
 
   yield store.prompt(state, new ChooseCardsPrompt(
-    player.id,
+    player,
     GameMessage.CHOOSE_CARD_TO_HAND,
     player.deck,
     {},

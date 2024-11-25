@@ -88,7 +88,7 @@ export class Sneasel extends PokemonCard {
           }
 
           return store.prompt(state, new ChooseCardsPrompt(
-            opponent.id,
+            opponent,
             GameMessage.CHOOSE_CARD_TO_DISCARD,
             targets[0],
             { superType: SuperType.ENERGY },
