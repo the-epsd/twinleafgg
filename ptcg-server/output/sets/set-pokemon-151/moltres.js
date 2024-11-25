@@ -79,15 +79,15 @@ class Moltres extends pokemon_card_1.PokemonCard {
                 const discardEnergy = new attack_effects_1.DiscardCardsEffect(effect, cards);
                 discardEnergy.target = player.active;
                 store.reduceEffect(state, discardEnergy);
-                return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH], { min: 1, max: 1, allowCancel: false }), selected => {
-                    const targets = selected || [];
-                    targets.forEach(target => {
-                        const damageEffect = new attack_effects_1.DealDamageEffect(effect, 120);
-                        damageEffect.target = target;
-                        store.reduceEffect(state, damageEffect);
-                    });
-                    return state;
+            });
+            return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH], { min: 1, max: 1, allowCancel: false }), selected => {
+                const targets = selected || [];
+                targets.forEach(target => {
+                    const damageEffect = new attack_effects_1.DealDamageEffect(effect, 120);
+                    damageEffect.target = target;
+                    store.reduceEffect(state, damageEffect);
                 });
+                return state;
             });
         }
         return state;
