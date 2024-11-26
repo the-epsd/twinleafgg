@@ -57,6 +57,7 @@ import { Tinkatuff } from './tinkatuff';
 import { Wattrel } from './wattrel';
 import { Wingull } from './wingull';
 import { WoChienex } from './wo-chien-ex';
+import { Tarountula } from './tarountula';
 
 export class ArctibaxArt extends Arctibax {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_059_R_EN_LG.png';
@@ -264,6 +265,10 @@ export class SprigatitoArt extends Sprigatito {
 
 export class TadbulbArt extends Tadbulb {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_077_R_EN_LG.png';
+}
+
+export class TarountulaArt extends Tarountula {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_017_R_EN_LG.png';
 }
 
 export class TherapeuticEnergyArt extends TherapeuticEnergy {

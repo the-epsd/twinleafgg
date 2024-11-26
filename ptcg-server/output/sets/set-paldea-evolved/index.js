@@ -55,6 +55,7 @@ exports.setPaldeaEvolved = [
     new card_images_1.SuperRodArt(),
     new card_images_1.SuperiorEnergyRetrievalArt(),
     new card_images_1.TadbulbArt(),
+    new card_images_1.TarountulaArt(),
     new card_images_1.TherapeuticEnergyArt(),
     new card_images_1.TingLuexArt(),
     new card_images_1.TinkatinkArt(),

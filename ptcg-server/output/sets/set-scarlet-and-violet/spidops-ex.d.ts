@@ -9,6 +9,7 @@ export declare class Spidopsex extends PokemonCard {
         type: CardType;
     }[];
     retreat: CardType[];
+    evolvesFrom: string;
     powers: {
         name: string;
         powerType: PowerType;

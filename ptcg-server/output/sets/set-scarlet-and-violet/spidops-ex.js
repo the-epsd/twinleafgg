@@ -8,11 +8,12 @@ class Spidopsex extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.regulationMark = 'G';
-        this.stage = game_1.Stage.BASIC;
+        this.stage = game_1.Stage.STAGE_1;
         this.cardType = game_1.CardType.GRASS;
         this.hp = 260;
         this.weakness = [{ type: game_1.CardType.FIRE }];
         this.retreat = [game_1.CardType.COLORLESS, game_1.CardType.COLORLESS];
+        this.evolvesFrom = 'Tarountula';
         this.powers = [{
                 name: 'Trap Territory',
                 powerType: game_1.PowerType.ABILITY,
@@ -27,7 +28,7 @@ class Spidopsex extends game_1.PokemonCard {
             }];
         this.set = 'SVI';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '151';
+        this.setNumber = '19';
         this.name = 'Spidops ex';
         this.fullName = 'Spidops ex SVI';
     }

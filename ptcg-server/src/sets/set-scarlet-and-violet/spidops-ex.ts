@@ -17,6 +17,8 @@ export class Spidopsex extends PokemonCard {
 
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
+  public evolvesFrom = 'Tarountula';
+
   public powers = [{
     name: 'Trap Territory',
     powerType: PowerType.ABILITY,

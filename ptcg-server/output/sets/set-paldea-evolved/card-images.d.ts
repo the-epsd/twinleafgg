@@ -57,6 +57,7 @@ import { Tinkatuff } from './tinkatuff';
 import { Wattrel } from './wattrel';
 import { Wingull } from './wingull';
 import { WoChienex } from './wo-chien-ex';
+import { Tarountula } from './tarountula';
 export declare class ArctibaxArt extends Arctibax {
     cardImage: string;
 }
@@ -211,6 +212,9 @@ export declare class SprigatitoArt extends Sprigatito {
     cardImage: string;
 }
 export declare class TadbulbArt extends Tadbulb {
+    cardImage: string;
+}
+export declare class TarountulaArt extends Tarountula {
     cardImage: string;
 }
 export declare class TherapeuticEnergyArt extends TherapeuticEnergy {
