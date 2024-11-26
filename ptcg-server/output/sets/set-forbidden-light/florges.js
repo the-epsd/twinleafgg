@@ -7,6 +7,7 @@ const game_1 = require("../../game");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
+const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class Florges extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -38,6 +39,44 @@ class Florges extends pokemon_card_1.PokemonCard {
         this.CLEAR_MIST_GUARD_MARKER = 'CLEAR_MIST_GUARD_MARKER';
     }
     reduceEffect(store, state, effect) {
+        if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
+            const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            let cards = [];
+            if (player.deck.cards.length === 0) {
+                throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
+            }
+            store.prompt(state, [
+                new game_1.CoinFlipPrompt(player.id, game_1.GameMessage.COIN_FLIP)
+            ], results => {
+                if (results === false) {
+                    return state;
+                }
+                const deckTop = new game_1.CardList();
+                store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARDS_TO_PUT_ON_TOP_OF_THE_DECK, player.discard, { superType: card_types_1.SuperType.TRAINER, trainerType: card_types_1.TrainerType.ITEM }, { min: 1, max: 1, allowCancel: false }), selected => {
+                    cards = selected || [];
+                    const itemCards = cards.filter(card => card instanceof game_1.TrainerCard && card.trainerType === card_types_1.TrainerType.ITEM);
+                    const nonTrainerCards = cards.filter(card => !(card instanceof game_1.TrainerCard));
+                    let canMoveTrainerCards = true;
+                    if (itemCards.length > 0) {
+                        const discardEffect = new play_card_effects_1.TrainerToDeckEffect(player, itemCards[0]);
+                        store.reduceEffect(state, discardEffect);
+                        canMoveTrainerCards = !discardEffect.preventDefault;
+                    }
+                    const cardsToMove = canMoveTrainerCards ? cards : nonTrainerCards;
+                    if (cardsToMove.length > 0) {
+                        cardsToMove.forEach(card => {
+                            player.discard.moveCardTo(card, deckTop);
+                        });
+                        deckTop.moveToTopOfDestination(player.deck);
+                        if (cardsToMove.length > 0) {
+                            return store.prompt(state, new game_1.ShowCardsPrompt(opponent.id, game_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cardsToMove), () => state);
+                        }
+                    }
+                    return state;
+                });
+            });
+        }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);

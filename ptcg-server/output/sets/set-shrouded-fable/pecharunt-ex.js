@@ -9,20 +9,36 @@ const game_phase_effects_1 = require("../../game/store/effects/game-phase-effect
 const check_effects_1 = require("../../game/store/effects/check-effects");
 function* useChainsOfControl(next, store, state, effect) {
     const player = effect.player;
-    const hasBench = player.bench.some(b => b.cards.length > 0);
+    const hasDarkBench = player.bench.some(b => {
+        var _a, _b;
+        return ((_a = b.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.cardType) === card_types_1.CardType.DARK &&
+            ((_b = b.getPokemonCard()) === null || _b === void 0 ? void 0 : _b.name) !== 'Pecharunt ex';
+    });
     if (player.chainsOfControlUsed == true) {
         throw new game_1.GameError(game_1.GameMessage.POWER_ALREADY_USED);
     }
+    if (hasDarkBench === false) {
+        throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
+    }
     const blocked = [];
     player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (list, card, target) => {
+        var _a;
         if (card.name === 'Pecharunt ex') {
             blocked.push(target);
         }
-        if (card.cardType !== card_types_1.CardType.DARK) {
+        if (((_a = list.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.cardType) !== card_types_1.CardType.DARK) {
             blocked.push(target);
         }
     });
-    if (hasBench === false) {
+    // Count Dark Pokemon in play
+    let darkPokemonCount = 0;
+    player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (list, card) => {
+        if (card.cardType === card_types_1.CardType.DARK) {
+            darkPokemonCount++;
+        }
+    });
+    // Block ability if Pecharunt is the only Dark Pokemon
+    if (darkPokemonCount <= 1) {
         throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
     }
     let target = [];
@@ -96,7 +112,6 @@ class Pecharuntex extends pokemon_card_1.PokemonCard {
                 player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
                     if (card === this) {
                         player.pecharuntexIsInPlay = true;
-                        console.log('Pecharunt ex is in play');
                     }
                 });
             });

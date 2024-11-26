@@ -152,7 +152,6 @@ function checkWinner(store, state, onComplete) {
     if (points[0] + points[1] === 0) {
         if (onComplete) {
             onComplete();
-            console.log('it pointed');
         }
         return state;
     }
@@ -166,7 +165,6 @@ function checkWinner(store, state, onComplete) {
     state = endGame(store, state, winner);
     if (onComplete) {
         onComplete();
-        console.log('it end gamed');
     }
     return state;
 }
@@ -174,7 +172,6 @@ function handlePrompts(store, state, prompts, onComplete) {
     const prompt = prompts.shift();
     if (prompt === undefined) {
         onComplete();
-        console.log('it completed');
         return state;
     }
     const player = state.players.find(p => p.id === prompt.playerId);
@@ -190,7 +187,6 @@ function handlePrompts(store, state, prompts, onComplete) {
                 }
             });
             handlePrompts(store, state, prompts, onComplete);
-            console.log('this one');
         });
     }
     else if (prompt instanceof ChoosePokemonPrompt) {
@@ -206,7 +202,6 @@ function handlePrompts(store, state, prompts, onComplete) {
             player.active = player.bench[benchIndex];
             player.bench[benchIndex] = temp;
             handlePrompts(store, state, prompts, onComplete);
-            console.log('that one');
         });
     }
     return state;
@@ -245,7 +240,6 @@ function* executeCheckState(next, store, state, onComplete) {
             completed[i] = true;
             if (completed.every(c => c)) {
                 checkWinner(store, state, onComplete);
-                console.log('winner checked');
             }
         });
     }
@@ -255,7 +249,6 @@ export function checkState(store, state, onComplete) {
     if ([GamePhase.PLAYER_TURN, GamePhase.ATTACK, GamePhase.BETWEEN_TURNS].includes(state.phase) === false) {
         if (onComplete !== undefined) {
             onComplete();
-            console.log('did complete idk undefined');
         }
         return state;
     }

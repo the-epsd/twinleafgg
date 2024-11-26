@@ -50,7 +50,7 @@ function* playCard(next: Function, store: StoreLike, state: State, self: TeamYel
     GameMessage.CHOOSE_CARD_TO_DECK,
     player.discard,
     {},
-    { min: 1, max: 3, allowCancel: false }
+    { min: 1, max: 3, allowCancel: false, blocked: blocked }
   ), selected => {
     cards = selected || [];
     next();

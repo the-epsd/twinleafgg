@@ -1,11 +1,10 @@
 import { GameError } from '../../game-error';
 import { GameLog, GameMessage } from '../../game-message';
-import { CardTag, Format, SpecialCondition, Stage, SuperType, TrainerType } from '../card/card-types';
+import { CardTag, SpecialCondition, Stage, SuperType } from '../card/card-types';
 import { ApplyWeaknessEffect, DealDamageEffect } from '../effects/attack-effects';
 import { CheckAttackCostEffect, CheckPokemonStatsEffect, CheckPokemonTypeEffect, CheckProvidedEnergyEffect } from '../effects/check-effects';
 import { AttackEffect, EvolveEffect, HealEffect, KnockOutEffect, PowerEffect, TrainerPowerEffect, UseAttackEffect, UsePowerEffect, UseStadiumEffect, UseTrainerPowerEffect } from '../effects/game-effects';
 import { EndTurnEffect } from '../effects/game-phase-effects';
-import { TrainerEffect } from '../effects/play-card-effects';
 import { ChooseAttackPrompt } from '../prompts/choose-attack-prompt';
 import { CoinFlipPrompt } from '../prompts/coin-flip-prompt';
 import { ConfirmPrompt } from '../prompts/confirm-prompt';
@@ -38,11 +37,9 @@ function* useAttack(next, store, state, effect) {
     var _a;
     const player = effect.player;
     const opponent = StateUtils.getOpponent(state, player);
-    if (Format.STANDARD) {
-        //Skip attack on first turn
-        if (state.turn === 1 && player.canAttackFirstTurn !== true && state.rules.attackFirstTurn == false) {
-            throw new GameError(GameMessage.CANNOT_ATTACK_ON_FIRST_TURN);
-        }
+    //Skip attack on first turn
+    if (state.turn === 1 && player.canAttackFirstTurn !== true && state.rules.attackFirstTurn == false) {
+        throw new GameError(GameMessage.CANNOT_ATTACK_ON_FIRST_TURN);
     }
     const sp = player.active.specialConditions;
     if (sp.includes(SpecialCondition.PARALYZED) || sp.includes(SpecialCondition.ASLEEP)) {
@@ -209,10 +206,10 @@ export function gameReducer(store, state, effect) {
         store.log(state, GameLog.LOG_PLAYER_USES_STADIUM, { name: player.name, stadium: effect.stadium.name });
         player.stadiumUsedTurn = state.turn;
     }
-    if (effect instanceof TrainerEffect && effect.trainerCard.trainerType === TrainerType.SUPPORTER) {
-        const player = effect.player;
-        store.log(state, GameLog.LOG_PLAYER_PLAYS_SUPPORTER, { name: player.name, stadium: effect.trainerCard.name });
-    }
+    // if (effect instanceof TrainerEffect && effect.trainerCard.trainerType === TrainerType.SUPPORTER) {
+    //   const player = effect.player;
+    //   store.log(state, GameLog.LOG_PLAYER_PLAYS_SUPPORTER, { name: player.name, stadium: effect.trainerCard.name });
+    // }
     if (effect instanceof HealEffect) {
         effect.target.damage = Math.max(0, effect.target.damage - effect.damage);
         return state;

@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setSurgingSparks = void 0;
 const card_images_1 = require("./card-images");
+const full_arts_1 = require("./full-arts");
 const sandygast_1 = require("./sandygast");
 exports.setSurgingSparks = [
     new card_images_1.PikachuexArt(),
@@ -69,4 +70,6 @@ exports.setSurgingSparks = [
     new card_images_1.PansearArt(),
     new card_images_1.LarvestaArt(),
     new card_images_1.PhanpyArt(),
+    //FA
+    new full_arts_1.LarvestaIRArt(),
 ];

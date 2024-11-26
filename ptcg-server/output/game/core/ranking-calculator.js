@@ -16,20 +16,16 @@ class RankingCalculator {
         }
         const rank1 = player1.getRank();
         const rank2 = player2.getRank();
-        const kValue = 50;
-        const totalDiff = player2.ranking - player1.ranking;
-        const diff = Math.max(-400, Math.min(400, totalDiff));
-        const winExp = 1.0 / (1 + Math.pow(10.0, diff / 400.0));
+        const rankDifference = Math.abs(player2.ranking - player1.ranking);
+        const kValue = rankDifference > 400 ? 75 : 50;
+        const diff = Math.max(-400, Math.min(400, player2.ranking - player1.ranking));
+        const winExp = 1.0 / (1 + Math.pow(10.0, diff / 500.0));
         let outcome;
-        let rankMultipier1 = 1;
-        let rankMultipier2 = 1;
         switch (match.winner) {
             case state_1.GameWinner.PLAYER_1:
                 outcome = 1;
-                rankMultipier1 = this.getRankMultipier(rank1);
                 break;
             case state_1.GameWinner.PLAYER_2:
-                rankMultipier2 = this.getRankMultipier(rank2);
                 outcome = 0;
                 break;
             default:
@@ -38,8 +34,10 @@ class RankingCalculator {
                 break;
         }
         const stake = kValue * (outcome - winExp);
-        const diff1 = this.getRankingDiff(rank1, rank2, Math.round(stake * rankMultipier1));
-        const diff2 = this.getRankingDiff(rank1, rank2, Math.round(stake * rankMultipier2));
+        const rankMultiplier1 = this.getRankMultiplier(player1.ranking);
+        const rankMultiplier2 = this.getRankMultiplier(player2.ranking);
+        const diff1 = this.getRankingDiff(rank1, rank2, Math.round(stake * rankMultiplier1));
+        const diff2 = this.getRankingDiff(rank1, rank2, Math.round(stake * rankMultiplier2));
         player1.ranking = Math.max(0, player1.ranking + diff1);
         player2.ranking = Math.max(0, player2.ranking - diff2);
         const today = Date.now();
@@ -48,35 +46,36 @@ class RankingCalculator {
         return [player1, player2];
     }
     getRankingDiff(rank1, rank2, diff) {
-        const sign = diff >= 0;
-        let value = Math.abs(diff);
-        // Maximum ranking change for different ranks = 10
-        if (rank1 !== rank2 && value > 10) {
-            value = 10;
-        }
-        // Minimum ranking change = 5
-        if (value < 5) {
-            value = 5;
-        }
-        return sign ? value : -value;
+        const rankGap = Math.abs(this.getRankPoints(rank2) - this.getRankPoints(rank1));
+        const sign = diff >= 0 ? 1 : -1;
+        let scaleFactor = 1;
+        if (rankGap >= 2000)
+            scaleFactor = 2.75;
+        else if (rankGap >= 1000)
+            scaleFactor = 2.25;
+        else if (rankGap >= 500)
+            scaleFactor = 1.8;
+        // Increased base minimum points
+        const minPoints = 10;
+        const maxPoints = 40;
+        const adjustedDiff = Math.max(minPoints, Math.min(maxPoints * scaleFactor, Math.abs(diff)));
+        return sign * adjustedDiff;
     }
-    getRankMultipier(rank) {
-        switch (rank) {
-            case backend_1.Rank.POKE:
-                return 2.0;
-            case backend_1.Rank.GREAT:
-                return 1.0;
-            case backend_1.Rank.ULTRA:
-                return 0.75;
-            case backend_1.Rank.MASTER:
-                return 0.5;
-            case backend_1.Rank.BANNED:
-                return -1;
-        }
-        return 1;
+    getRankMultiplier(rankPoints) {
+        if (rankPoints <= 250)
+            return 2.0;
+        if (rankPoints <= 1000)
+            return 1.5;
+        if (rankPoints <= 2500)
+            return 1.0;
+        return 0.5;
+    }
+    getRankPoints(rank) {
+        const rankLevel = backend_1.rankLevels.find(level => level.rank === rank);
+        return rankLevel ? rankLevel.points : 0;
     }
     async decreaseRanking() {
-        const rankingDecraseRate = config_1.config.core.rankingDecraseRate;
+        const rankingDecreaseRate = config_1.config.core.rankingDecraseRate;
         const oneDay = config_1.config.core.rankingDecraseTime;
         const today = Date.now();
         const yesterday = today - oneDay;
@@ -86,21 +85,17 @@ class RankingCalculator {
                 ranking: typeorm_1.MoreThan(0)
             }
         });
-        // calculate new ranking in the server
         users.forEach(user => {
             user.lastRankingChange = today;
-            user.ranking = Math.floor(user.ranking * rankingDecraseRate);
+            user.ranking = Math.floor(user.ranking * rankingDecreaseRate);
         });
-        // execute update query in the database
-        // sqlite doesn't support FLOOR, so we use ROUND(x - 0.5)
         await storage_1.User.update({
             lastRankingChange: typeorm_1.LessThan(yesterday),
             ranking: typeorm_1.MoreThan(0)
         }, {
             lastRankingChange: today,
-            ranking: () => `ROUND(${rankingDecraseRate} * ranking - 0.5)`
+            ranking: () => `ROUND(${rankingDecreaseRate} * ranking - 0.5)`
         });
-        // is it wise to emit all users to all connected clients by websockets?
         return users;
     }
 }

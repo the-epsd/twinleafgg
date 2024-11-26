@@ -8,7 +8,6 @@ const attack_effects_1 = require("../effects/attack-effects");
 const check_effects_1 = require("../effects/check-effects");
 const game_effects_1 = require("../effects/game-effects");
 const game_phase_effects_1 = require("../effects/game-phase-effects");
-const play_card_effects_1 = require("../effects/play-card-effects");
 const choose_attack_prompt_1 = require("../prompts/choose-attack-prompt");
 const coin_flip_prompt_1 = require("../prompts/coin-flip-prompt");
 const confirm_prompt_1 = require("../prompts/confirm-prompt");
@@ -41,11 +40,9 @@ function* useAttack(next, store, state, effect) {
     var _a;
     const player = effect.player;
     const opponent = state_utils_1.StateUtils.getOpponent(state, player);
-    if (card_types_1.Format.STANDARD) {
-        //Skip attack on first turn
-        if (state.turn === 1 && player.canAttackFirstTurn !== true && state.rules.attackFirstTurn == false) {
-            throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_ATTACK_ON_FIRST_TURN);
-        }
+    //Skip attack on first turn
+    if (state.turn === 1 && player.canAttackFirstTurn !== true && state.rules.attackFirstTurn == false) {
+        throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_ATTACK_ON_FIRST_TURN);
     }
     const sp = player.active.specialConditions;
     if (sp.includes(card_types_1.SpecialCondition.PARALYZED) || sp.includes(card_types_1.SpecialCondition.ASLEEP)) {
@@ -212,10 +209,10 @@ function gameReducer(store, state, effect) {
         store.log(state, game_message_1.GameLog.LOG_PLAYER_USES_STADIUM, { name: player.name, stadium: effect.stadium.name });
         player.stadiumUsedTurn = state.turn;
     }
-    if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard.trainerType === card_types_1.TrainerType.SUPPORTER) {
-        const player = effect.player;
-        store.log(state, game_message_1.GameLog.LOG_PLAYER_PLAYS_SUPPORTER, { name: player.name, stadium: effect.trainerCard.name });
-    }
+    // if (effect instanceof TrainerEffect && effect.trainerCard.trainerType === TrainerType.SUPPORTER) {
+    //   const player = effect.player;
+    //   store.log(state, GameLog.LOG_PLAYER_PLAYS_SUPPORTER, { name: player.name, stadium: effect.trainerCard.name });
+    // }
     if (effect instanceof game_effects_1.HealEffect) {
         effect.target.damage = Math.max(0, effect.target.damage - effect.damage);
         return state;

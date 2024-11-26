@@ -11,10 +11,17 @@ import { CheckTableStateEffect } from '../../game/store/effects/check-effects';
 function* useChainsOfControl(next: Function, store: StoreLike, state: State,
   effect: PowerEffect): IterableIterator<State> {
   const player = effect.player;
-  const hasBench = player.bench.some(b => b.cards.length > 0);
+  const hasDarkBench = player.bench.some(b =>
+    b.getPokemonCard()?.cardType === CardType.DARK &&
+    b.getPokemonCard()?.name !== 'Pecharunt ex'
+  );
 
   if (player.chainsOfControlUsed == true) {
     throw new GameError(GameMessage.POWER_ALREADY_USED);
+  }
+
+  if (hasDarkBench === false) {
+    throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
   const blocked: CardTarget[] = [];
@@ -22,12 +29,21 @@ function* useChainsOfControl(next: Function, store: StoreLike, state: State,
     if (card.name === 'Pecharunt ex') {
       blocked.push(target);
     }
-    if (card.cardType !== CardType.DARK) {
+    if (list.getPokemonCard()?.cardType !== CardType.DARK) {
       blocked.push(target);
     }
   });
 
-  if (hasBench === false) {
+  // Count Dark Pokemon in play
+  let darkPokemonCount = 0;
+  player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card) => {
+    if (card.cardType === CardType.DARK) {
+      darkPokemonCount++;
+    }
+  });
+
+  // Block ability if Pecharunt is the only Dark Pokemon
+  if (darkPokemonCount <= 1) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
@@ -131,7 +147,6 @@ export class Pecharuntex extends PokemonCard {
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
           if (card === this) {
             player.pecharuntexIsInPlay = true;
-            console.log('Pecharunt ex is in play');
           }
         });
       });

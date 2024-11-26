@@ -95,22 +95,22 @@ export class Moltres extends PokemonCard {
         const discardEnergy = new DiscardCardsEffect(effect, cards);
         discardEnergy.target = player.active;
         store.reduceEffect(state, discardEnergy);
+      });
 
-        return store.prompt(state, new ChoosePokemonPrompt(
-          player.id,
-          GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-          PlayerType.TOP_PLAYER,
-          [SlotType.BENCH],
-          { min: 1, max: 1, allowCancel: false }
-        ), selected => {
-          const targets = selected || [];
-          targets.forEach(target => {
-            const damageEffect = new DealDamageEffect(effect, 120);
-            damageEffect.target = target;
-            store.reduceEffect(state, damageEffect);
-          });
-          return state;
+      return store.prompt(state, new ChoosePokemonPrompt(
+        player.id,
+        GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+        PlayerType.TOP_PLAYER,
+        [SlotType.BENCH],
+        { min: 1, max: 1, allowCancel: false }
+      ), selected => {
+        const targets = selected || [];
+        targets.forEach(target => {
+          const damageEffect = new DealDamageEffect(effect, 120);
+          damageEffect.target = target;
+          store.reduceEffect(state, damageEffect);
         });
+        return state;
       });
     }
 
