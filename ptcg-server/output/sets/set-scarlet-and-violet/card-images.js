@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PrimeapeArt = exports.PotionArt = exports.PokemonCatcherArt = exports.Pokegear30Art = exports.PokeballArt = exports.PicnicBasketArt = exports.PennyArt = exports.PalPadArt = exports.NestBallArt = exports.NemonaArt = exports.MiriamArt = exports.MiraidonexArt = exports.MesagozaArt = exports.MareepArt = exports.MankeyArt = exports.MagnezoneexArt = exports.MagnetonArt = exports.MagnemiteArt = exports.MagikarpArt = exports.LucarioArt = exports.KoraidonexArt = exports.KlefkiArt = exports.KatyArt = exports.JudgeArt = exports.JacqArt = exports.HawluchaArt = exports.GyaradosexArt = exports.GrowlitheArt = exports.GardevoirexArt = exports.FlittleArt = exports.ExpShareArt = exports.EnergySwitchArt = exports.EnergySearchArt = exports.EnergyRetrievalArt = exports.ElectricGeneratorArt = exports.DrifloonArt = exports.DollivArt = exports.DefianceBandArt = exports.CyclizarArt = exports.CrushingHammerArt = exports.CroagunkArt = exports.CharcadetArt = exports.CapsakidArt = exports.BeachCourtArt = exports.BanetteexArt = exports.ArvenArt = exports.ArmarougeArt = exports.ArcanineexArt = exports.ArbolivaArt = exports.AnnihilapeArt = void 0;
-exports.NestBallArt2 = exports.YoungsterArt = exports.VitalityBandArt = exports.UltraBallArt = exports.TorkoalArt = exports.ToedscruelArt = exports.ToedscoolArt = exports.TeamStarGruntArt = exports.SwitchArt = exports.SpewpaArt = exports.SmolivArt = exports.SkwovetArt = exports.ShuppetArt = exports.SeviperArt = exports.ScovillainArt = exports.ScatterbugArt = exports.RockyHelmetArt = exports.RockChestplateArt = exports.RioluArt2 = exports.RioluArt = exports.RevavroomArt = exports.RareCandyArt = exports.RaltsArt = exports.ProfessorsResearchArt2 = exports.ProfessorsResearchArt1 = void 0;
+exports.NestBallArt2 = exports.YoungsterArt = exports.VitalityBandArt = exports.UltraBallArt = exports.TorkoalArt = exports.ToedscruelArt = exports.ToedscoolArt = exports.TeamStarGruntArt = exports.SwitchArt = exports.SpidopsexArt = exports.SpewpaArt = exports.SmolivArt = exports.SkwovetArt = exports.ShuppetArt = exports.SeviperArt = exports.ScovillainArt = exports.ScatterbugArt = exports.RockyHelmetArt = exports.RockChestplateArt = exports.RioluArt2 = exports.RioluArt = exports.RevavroomArt = exports.RareCandyArt = exports.RaltsArt = exports.ProfessorsResearchArt2 = exports.ProfessorsResearchArt1 = void 0;
 const annihilape_1 = require("./annihilape");
 const arboliva_1 = require("./arboliva");
 const arcanine_ex_1 = require("./arcanine-ex");
@@ -75,6 +75,7 @@ const vitality_band_1 = require("./vitality-band");
 const youngster_1 = require("./youngster");
 const scatterbug_1 = require("./scatterbug");
 const spewpa_1 = require("./spewpa");
+const spidops_ex_1 = require("./spidops-ex");
 class AnnihilapeArt extends annihilape_1.Annihilape {
     constructor() {
         super(...arguments);
@@ -539,6 +540,13 @@ class SpewpaArt extends spewpa_1.Spewpa {
     }
 }
 exports.SpewpaArt = SpewpaArt;
+class SpidopsexArt extends spidops_ex_1.Spidopsex {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_019_R_EN_LG.png';
+    }
+}
+exports.SpidopsexArt = SpidopsexArt;
 class SwitchArt extends switch_1.Switch {
     constructor() {
         super(...arguments);

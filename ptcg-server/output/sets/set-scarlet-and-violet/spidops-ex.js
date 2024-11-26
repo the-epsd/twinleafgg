@@ -16,14 +16,14 @@ class Spidopsex extends game_1.PokemonCard {
         this.powers = [{
                 name: 'Trap Territory',
                 powerType: game_1.PowerType.ABILITY,
-                text: ''
+                text: 'Your opponent\'s Active Pokémon\'s Retreat Cost is [C] more.'
             }];
         this.attacks = [{
                 name: 'Wire Hang',
                 cost: [game_1.CardType.GRASS, game_1.CardType.COLORLESS],
                 damage: 90,
                 damageCalculation: '+',
-                text: ''
+                text: 'This attack does 30 more damage for each [C] in your opponent\'s Active Pokémon\'s Retreat Cost.'
             }];
         this.set = 'SVI';
         this.cardImage = 'assets/cardback.png';
@@ -36,11 +36,11 @@ class Spidopsex extends game_1.PokemonCard {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             let isSpidopsexInPlay = false;
-            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-                if (card === this) {
-                    isSpidopsexInPlay = true;
-                }
-            });
+            /*player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+              if (card === this) {
+                isSpidopsexInPlay = true;
+              }
+            });*/
             opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList, card) => {
                 if (card === this) {
                     isSpidopsexInPlay = true;
@@ -61,10 +61,25 @@ class Spidopsex extends game_1.PokemonCard {
             catch (_a) {
                 return state;
             }
-            opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, () => {
-                // Add 1 more Colorless energy to the opponent's Active Pokemon's retreat cost
+            const pokemonCard = opponent.active.getPokemonCard();
+            /*opponent.forEachPokemon(PlayerType.TOP_PLAYER, () => {
+              // Add 1 more Colorless energy to the opponent's Active Pokemon's retreat cost
+              effect.cost.push(CardType.COLORLESS);
+            });*/
+            if (pokemonCard) {
                 effect.cost.push(game_1.CardType.COLORLESS);
-            });
+                return state;
+            }
+        }
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+            const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            const opponentActiveCard = opponent.active.getPokemonCard();
+            if (opponentActiveCard) {
+                const retreatCost = opponentActiveCard.retreat.filter(c => c === game_1.CardType.COLORLESS).length;
+                effect.damage += retreatCost * 30;
+            }
+            return state;
         }
         return state;
     }

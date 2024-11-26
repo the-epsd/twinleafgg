@@ -118,6 +118,7 @@ exports.setScarletAndViolet = [
     new card_images_46.YoungsterArt(),
     new card_images_1.BanetteexArt(),
     new card_images_1.ShuppetArt(),
+    new card_images_1.SpidopsexArt(),
     //Alt-Arts
     new full_arts_1.ArmarougeIR(),
     new full_arts_1.ArvenFA(),

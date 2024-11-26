@@ -1,13 +1,13 @@
 import { PokemonCard, Stage, CardType, PowerType, StoreLike, State, StateUtils, PlayerType } from '../../game';
 import { CheckRetreatCostEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 
 export class Spidopsex extends PokemonCard {
 
   public regulationMark = 'G';
 
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.STAGE_1;
 
   public cardType: CardType = CardType.GRASS;
 
@@ -15,27 +15,27 @@ export class Spidopsex extends PokemonCard {
 
   public weakness = [{ type: CardType.FIRE }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Trap Territory',
     powerType: PowerType.ABILITY,
-    text: ''
+    text: 'Your opponent\'s Active Pokémon\'s Retreat Cost is [C] more.'
   }];
 
   public attacks = [{
     name: 'Wire Hang',
-    cost: [ CardType.GRASS, CardType.COLORLESS ],
+    cost: [CardType.GRASS, CardType.COLORLESS],
     damage: 90,
     damageCalculation: '+',
-    text: ''
+    text: 'This attack does 30 more damage for each [C] in your opponent\'s Active Pokémon\'s Retreat Cost.'
   }];
 
   public set: string = 'SVI';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '151';
+  public setNumber: string = '19';
 
   public name: string = 'Spidops ex';
 
@@ -46,13 +46,13 @@ export class Spidopsex extends PokemonCard {
     if (effect instanceof CheckRetreatCostEffect) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-    
+
       let isSpidopsexInPlay = false;
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+      /*player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
         if (card === this) {
           isSpidopsexInPlay = true;
         }
-      });
+      });*/
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
         if (card === this) {
           isSpidopsexInPlay = true;
@@ -74,12 +74,32 @@ export class Spidopsex extends PokemonCard {
       } catch {
         return state;
       }
-    
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, () => {
+      const pokemonCard = opponent.active.getPokemonCard();
+
+      /*opponent.forEachPokemon(PlayerType.TOP_PLAYER, () => {
         // Add 1 more Colorless energy to the opponent's Active Pokemon's retreat cost
         effect.cost.push(CardType.COLORLESS);
-      });
+      });*/
+
+      if (pokemonCard) {
+        effect.cost.push(CardType.COLORLESS);
+        return state;
+      }
     }
+
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      const opponentActiveCard = opponent.active.getPokemonCard();
+      if (opponentActiveCard) {
+        const retreatCost = opponentActiveCard.retreat.filter(c => c === CardType.COLORLESS).length;
+
+        effect.damage += retreatCost * 30;
+      }
+      return state;
+    }
+
     return state;
   }
 }
@@ -106,11 +126,11 @@ export class Spidopsex extends PokemonCard {
 //   // Try to reduce PowerEffect, to check if something is blocking our ability
 //   try {
 //     const stub = new PowerEffect(player, {
-        //   name: 'test',
-        //   powerType: PowerType.ABILITY,
-        //   text: ''
-        // }, this);
-        // store.reduceEffect(state, stub);
+//   name: 'test',
+//   powerType: PowerType.ABILITY,
+//   text: ''
+// }, this);
+// store.reduceEffect(state, stub);
 //     store.reduceEffect(state, powerEffect);
 //   } catch {
 //     return state;
