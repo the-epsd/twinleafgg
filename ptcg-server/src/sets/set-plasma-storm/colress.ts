@@ -33,6 +33,10 @@ export class Colress extends TrainerCard {
       const opponent = StateUtils.getOpponent(state, player);
       const cards = player.hand.cards.filter(c => c !== this);
 
+      if (player.supporterTurn > 0) {
+        throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
+      }
+      
       if (cards.length === 0 && player.deck.cards.length === 0) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }

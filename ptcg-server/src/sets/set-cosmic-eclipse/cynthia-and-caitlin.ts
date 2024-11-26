@@ -56,8 +56,27 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
       return state;
     });
-    // supporter available, has to recover supporter, option to draw cards
-  } else {
+    
+  } else if (cards.length === 0) { // supporter available but can't discard
+    state = store.prompt(state, new ChooseCardsPrompt(
+      player,
+      GameMessage.CHOOSE_CARD_TO_HAND,
+      player.discard,
+      { superType: SuperType.TRAINER, trainerType: TrainerType.SUPPORTER },
+      { min: 1, max: 1, allowCancel: false }
+    ), selected => {
+      recovered = selected || [];
+
+      recovered.forEach(c => {
+        store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: c.name });
+      });
+
+      player.discard.moveCardsTo(recovered, player.hand);
+      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+      
+      return state;
+    });
+  } else { // supporter available, has to recover supporter, option to draw cards
     let discardedCards: Card[] = [];
     state = store.prompt(state, new ConfirmPrompt(
       effect.player.id,
