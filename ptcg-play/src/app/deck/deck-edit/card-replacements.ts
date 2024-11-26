@@ -314,6 +314,8 @@ export const cardReplacements = [
   { from: 'Vivillion SSP 7', to: 'Vivillion SV8 7' },
   { from: 'Vulpix SSP 16', to: 'Vulpix SVLS 16' },
   { from: 'Zweilous SSP 118', to: 'Zweilous SV8 118' },
+  //SSP FA
+  { from: 'Larvesta SSP 196', to: 'LarvestaIR SSP 196' },
 ];
 
 export const exportReplacements = [
@@ -622,5 +624,6 @@ export const exportReplacements = [
   { from: 'Vivillion SV8 7', to: 'Vivillion SSP 7' },
   { from: 'Vulpix SVLS 16', to: 'Vulpix SSP 16' },
   { from: 'Zweilous SV8 118', to: 'Zweilous SSP 118' },
-
+  //SSP FA
+  { from: 'LarvestaIR SSP 196', to: 'Larvesta SSP 196' },
 ];

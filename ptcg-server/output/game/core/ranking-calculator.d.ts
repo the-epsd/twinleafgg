@@ -3,6 +3,7 @@ export declare class RankingCalculator {
     constructor();
     calculateMatch(match: Match): User[];
     private getRankingDiff;
-    private getRankMultipier;
+    private getRankMultiplier;
+    private getRankPoints;
     decreaseRanking(): Promise<User[]>;
 }

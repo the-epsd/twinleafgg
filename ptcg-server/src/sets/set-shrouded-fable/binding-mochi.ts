@@ -43,7 +43,10 @@ export class BindingMochi extends TrainerCard {
       }
 
       if (player.active.specialConditions.includes(SpecialCondition.POISONED)) {
-        effect.damage += 40;
+        const opponentActive = opponent.active.getPokemonCard();
+        if (opponentActive && effect.target.cards.includes(opponentActive)) {
+          effect.damage += 40;
+        }
       }
     }
 

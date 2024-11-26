@@ -1,6 +1,6 @@
 import { GameError } from '../../game-error';
 import { GameLog, GameMessage } from '../../game-message';
-import { CardTag, CardType, Format, SpecialCondition, Stage, SuperType, TrainerType } from '../card/card-types';
+import { CardTag, CardType, SpecialCondition, Stage, SuperType } from '../card/card-types';
 import { Resistance, Weakness } from '../card/pokemon-types';
 import { ApplyWeaknessEffect, DealDamageEffect } from '../effects/attack-effects';
 import {
@@ -22,7 +22,6 @@ import {
   UseTrainerPowerEffect
 } from '../effects/game-effects';
 import { EndTurnEffect } from '../effects/game-phase-effects';
-import { TrainerEffect } from '../effects/play-card-effects';
 import { ChooseAttackPrompt } from '../prompts/choose-attack-prompt';
 import { CoinFlipPrompt } from '../prompts/coin-flip-prompt';
 import { ConfirmPrompt } from '../prompts/confirm-prompt';
@@ -68,11 +67,10 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
 
-  if (Format.STANDARD) {
-    //Skip attack on first turn
-    if (state.turn === 1 && player.canAttackFirstTurn !== true && state.rules.attackFirstTurn == false) {
-      throw new GameError(GameMessage.CANNOT_ATTACK_ON_FIRST_TURN);
-    }
+
+  //Skip attack on first turn
+  if (state.turn === 1 && player.canAttackFirstTurn !== true && state.rules.attackFirstTurn == false) {
+    throw new GameError(GameMessage.CANNOT_ATTACK_ON_FIRST_TURN);
   }
 
   const sp = player.active.specialConditions;
@@ -285,10 +283,10 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
     player.stadiumUsedTurn = state.turn;
   }
 
-  if (effect instanceof TrainerEffect && effect.trainerCard.trainerType === TrainerType.SUPPORTER) {
-    const player = effect.player;
-    store.log(state, GameLog.LOG_PLAYER_PLAYS_SUPPORTER, { name: player.name, stadium: effect.trainerCard.name });
-  }
+  // if (effect instanceof TrainerEffect && effect.trainerCard.trainerType === TrainerType.SUPPORTER) {
+  //   const player = effect.player;
+  //   store.log(state, GameLog.LOG_PLAYER_PLAYS_SUPPORTER, { name: player.name, stadium: effect.trainerCard.name });
+  // }
 
   if (effect instanceof HealEffect) {
     effect.target.damage = Math.max(0, effect.target.damage - effect.damage);

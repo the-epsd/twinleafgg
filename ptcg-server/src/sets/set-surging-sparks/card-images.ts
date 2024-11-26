@@ -32,7 +32,7 @@ import { HelperBell } from './helper.bell';
 import { HoOh } from './ho-oh';
 import { Hydreigonex } from './hydreigon-ex';
 import { Klefki } from './klefki';
-import { Larvesta } from './larvesta-ir';
+import { Larvesta } from './larvesta';
 import { Latiasex } from './latias-ex';
 import { LisiasAppeal } from './lisias-appeal';
 import { Magnemite } from './magnemite';
@@ -69,19 +69,19 @@ import { Vulpix } from './vulpix';
 import { Zweilous } from './zweilous';
 
 export class PikachuexArt extends Pikachuex {
-  public cardImage = 'https://pokemonproxies.com/static/media/8i-033-Pikachu_ex.59c3ad488393197a4f14.png';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_057_R_EN_LG.png';
 }
 
 export class TatsugiriexArt extends Tatsugiriex {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpc/SV8/SV8_81_R_JP.png';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_142_R_EN_LG.png';
 }
 
 export class TerapagosArt extends Terapagos {
-  public cardImage = 'https://pokemonproxies.com/static/media/8i-093-Terapagos.fbc2a55ff31d62c15914.png';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_161_R_EN_LG.png';
 }
 
 export class MagnemiteArt extends Magnemite {
-  public cardImage = 'https://pokemonproxies.com/static/media/8i-034-Magnemite.43bcb4c967f83f8ca1a3.png';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_058_R_EN_LG.png';
 }
 
 export class ShroodleArt extends Shroodle {
@@ -93,7 +93,7 @@ export class PhanpyArt extends Phanpy {
 }
 
 export class LarvestaArt extends Larvesta {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_196_R_EN_LG.png';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_024_R_EN_SM.png';
 }
 
 export class PansearArt extends Pansear {
@@ -109,162 +109,166 @@ export class CapsakidArt extends Capsakid {
 }
 
 export class MagnetonArt extends Magneton {
-  public cardImage = 'https://pokemonproxies.com/static/media/8i-035-Magneton.14142fde61a9aa63fd24.png';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_059_R_EN_LG.png';
   public set = 'SV8';
   public fullName = 'Magneton SV8';
   public setNumber = '35';
 }
 
 export class GravityMountainArt extends GravityMountain {
-  public cardImage = 'https://pokemonproxies.com/static/media/8i-106-Gravity_Mountain.764ab940ffe5c9af71a8.png';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_177_R_EN_LG.png';
 }
 
 export class ExcitingStadiumArt extends ExcitingStadium {
-  public cardImage = 'https://pokemonproxies.com/static/media/8i-105-Exciting_Stadium.c98c5a6a761ea270c5d4.png';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_180_R_EN_LG.png';
 }
 
 export class MiraculousIntercomArt extends MiraculousIntercom {
-  public cardImage = 'https://pokemonproxies.com/static/media/8i-097-Miraculous_Intercom.55d2409f22d0d359f25a.png';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_183_R_EN_LG.png';
 }
 
 export class CyranoArt extends Cyrano {
-  public cardImage = 'https://pokemonproxies.com/static/media/8i-102-Cyrano.027d5eba075c868bcc20.png';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_170_R_EN_LG.png';
 }
 
 export class FuecocoArt extends Fuecoco {
-  public cardImage = 'https://www.pokebeach.com/news/2024/09/IMG_8011.png';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_029_R_EN_LG.png';
 }
 
 export class CrocalorArt extends Crocalor {
-  public cardImage = 'https://www.pokebeach.com/news/2024/09/IMG_8010.png';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_030_R_EN_LG.png';
 }
 
 export class SkeledirgeArt extends Skeledirge {
-  public cardImage = 'https://www.pokebeach.com/news/2024/09/IMG_8009.jpeg';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_031_R_EN_LG.png';
 }
 
 export class MiloticexArt extends Miloticex {
-  public cardImage = 'https://pokemonproxies.com/static/media/8i-026-Milotic_ex.5ff152c4fc9e8baef0cc.png';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_042_R_EN_LG.png';
 }
 
 export class TogepiArt extends Togepi {
-  public cardImage = 'https://pokemonproxies.com/static/media/8i-045-Togepi.77d2eebef33e068469eb.png';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_070_R_EN_LG.png';
 }
 
 export class TogeticArt extends Togetic {
-  public cardImage = 'https://pokemonproxies.com/static/media/8i-046-Togetic.a233d366b39ba2ad3e61.png';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_071_R_EN_LG.png';
 }
 
 export class TogekissArt extends Togekiss {
-  public cardImage = 'https://pokemonproxies.com/static/media/8i-047-Togekiss.8981ab5bccce31f029ad.png';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_072_R_EN_LG.png';
 }
 
 export class DeinoArt extends Deino {
-  public cardImage = 'https://pokemonproxies.com/static/media/8i-070-Deino.7b5d3275fdbf0f26e3c2.png';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_117_R_EN_LG.png';
 }
 
 export class ZweilousArt extends Zweilous {
-  public cardImage = 'https://pokemonproxies.com/static/media/8i-071-Zweilous.9fe0d9e004f1da7080b8.png';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_118_R_EN_LG.png';
 }
 
 export class HydreigonexArt extends Hydreigonex {
-  public cardImage = 'https://pokemonproxies.com/static/media/8i-072-Hydreigon_ex.c6c39c693066ecba8124.png';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_119_R_EN_LG.png';
 }
 
 export class EternatusArt extends Eternatus {
-  public cardImage = 'https://pokemonproxies.com/static/media/8i-080-Eternatus.c644b266e5800c93414a.png';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_141_R_EN_LG.png';
 }
 
 export class VivillionArt extends Vivillion {
-  public cardImage = 'https://pokemonproxies.com/static/media/8i-006-Vivillon.f116fa10d05ef67bf440.png';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_007_R_EN_LG.png';
 }
 
 export class AzelfArt extends Azelf {
-  public cardImage = 'https://pokemonproxies.com/static/media/8i-050-Azelf.b2900055c513ab0df10f.png';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_080_R_EN_LG.png';
 }
 
 export class UxieArt extends Uxie {
-  public cardImage = 'https://pokemonproxies.com/static/media/8i-048-Uxie.fbd6d5e91202b3f17528.png';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_078_R_EN_LG.png';
 }
 
 export class MespritArt extends Mesprit {
-  public cardImage = 'https://pokemonproxies.com/static/media/8i-049-Mesprit.29fc30244daaa8ea082b.png';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_079_R_EN_LG.png';
 }
 
 export class ScrambleSwitchArt extends ScrambleSwitch {
-  public cardImage = 'https://pokemonproxies.com/static/media/8i-095-Scramble_Switch.9baab5dc20a503cd2bec.png';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_186_R_EN_LG.png';
   public set = 'SV8';
   public setNumber = '95';
   public fullName = 'Scramble Switch SV8';
   public regulationMark = 'H';
 }
 
+export class VulpixArt extends Vulpix {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_016_R_EN_LG.png';
+}
+
 export class NinetalesArt extends Ninetales {
-  public cardImage = 'https://pokemonproxies.com/static/media/7b-002-Ninetales.0e37fb5a6a0a97fc50c5.png';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_017_R_EN_LG.png';
 }
 
 export class CeruledgeArt extends Ceruledge {
-  public cardImage = 'https://pokemonproxies.com/static/media/8i-022-Ceruledge.9eb169e8f4aacd3df85f.png';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_035_R_EN_LG.png';
 }
 
 export class LisiasAppealArt extends LisiasAppeal {
-  public cardImage = 'https://pokemonproxies.com/static/media/7a-063-Lisia\'s_Appeal.296bb51220ddb6bf81f5.png';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_179_R_EN_LG.png';
 }
 
 export class PalkiaArt extends Palkia {
-  public cardImage = 'https://pbs.twimg.com/media/GWxHVtGa8AIClwa?format=jpg&name=large';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_136_R_EN_LG.png';
 }
 
 export class BlackKyuremexArt extends BlackKyuremex {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpc/SV7a/SV7a_11_R_JP.png';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_048_R_EN_LG.png';
 }
 
 export class HoOhArt extends HoOh {
-  public cardImage = 'https://pbs.twimg.com/media/GTY5hwSXMAIqBkf?format=jpg&name=large';
-}
-
-export class AzumarillArt extends Azumarill {
-  public cardImage = 'https://pbs.twimg.com/media/GTY4mvvWMAAxw7P?format=jpg&name=large';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_019_R_EN_LG.png';
 }
 
 export class PerfectMixerArt extends PerfectMixer {
-  public cardImage = 'https://pbs.twimg.com/media/GTY4JHhXoAAMtNV?format=jpg&name=large';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_164_R_EN_LG.png';
 }
 
 export class CherishCarrierArt extends CherishCarrier {
-  public cardImage = 'https://pbs.twimg.com/media/GTY3QxxXkAAqzhh?format=jpg&name=large';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_185_R_EN_LG.png';
 }
 
 export class MarillArt extends Marill {
-  public cardImage = 'https://pbs.twimg.com/media/GTZFCqaWIAAecHF?format=jpg&name=large';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_073_R_EN_LG.png';
+}
+
+export class AzumarillArt extends Azumarill {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_074_R_EN_LG.png';
 }
 
 export class TeraOrbArt extends TeraOrb {
-  public cardImage = 'https://pbs.twimg.com/media/GTY3wkfWAAAmv5O?format=jpg&name=large';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_189_R_EN_LG.png';
 }
 
 export class HelperBellArt extends HelperBell {
-  public cardImage = 'https://www.pokebeach.com/news/2024/08/Helper-Bell.png';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_165_R_EN_LG.png';
 }
 
 export class MegatonBlowerArt extends MegatonBlower {
-  public cardImage = 'https://www.pokebeach.com/news/2024/08/Megaton-Blower.png';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_182_R_EN_LG.png';
 }
 
 export class TrapinchArt extends Trapinch {
-  public cardImage = 'https://www.pokebeach.com/news/2024/08/Trapinch.png';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_104_R_EN_LG.png';
 }
 
 export class VibravaArt extends Vibrava {
-  public cardImage = 'https://www.pokebeach.com/news/2024/08/Vibrava.png';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_105_R_EN_LG.png';
 }
 
 export class FlygonexArt extends Flygonex {
-  public cardImage = 'https://www.pokebeach.com/news/2024/08/Tera-Flygon-ex.png';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_106_R_EN_LG.png';
 }
 
 export class CounterGainArt extends CounterGain {
-  public cardImage = 'https://pbs.twimg.com/media/GVPnDxPWgAAstfh?format=jpg&name=medium';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_169_R_EN_LG.png';
   public name = 'Counter Gain';
   public set = 'SV7a';
   public setNumber = '59';
@@ -273,15 +277,15 @@ export class CounterGainArt extends CounterGain {
 }
 
 export class SmoochumArt extends Smoochum {
-  public cardImage = 'https://www.pokebeach.com/news/2024/08/Smoochum.jpg';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_075_R_EN_LG.png';
 }
 
 export class DuraludonArt extends Duraludon {
-  public cardImage = 'https://www.pokebeach.com/news/2024/08/Duraludon.png';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_129_R_EN_LG.png';
 }
 
 export class ArchaludonexArt extends Archaludonex {
-  public cardImage = 'https://www.pokebeach.com/news/2024/08/Arcaludon-ex.jpg';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_130_R_EN_LG.png';
 }
 
 export class CelebrationFanfareArt extends CelebrationFanfare {
@@ -289,69 +293,65 @@ export class CelebrationFanfareArt extends CelebrationFanfare {
 }
 
 export class DialgaArt extends Dialga {
-  public cardImage = 'https://pbs.twimg.com/media/GVPjdKyWQAA9iwN?format=jpg&name=large';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_135_R_EN_LG.png';
 }
 
 export class DragonsElixirArt extends DragonsElixir {
-  public cardImage = 'https://www.pokebeach.com/news/2024/08/sv7a_s4_RyuNoHiyaku.jpg';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_172_R_EN_LG.png';
 }
 
 export class DuskBallArt extends DuskBall {
-  public cardImage = 'https://www.pokebeach.com/news/2024/08/sv7a_s4_DarkBall.jpg';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_175_R_EN_LG.png';
 }
 
 export class DraytonArt extends Drayton {
-  public cardImage = 'https://www.pokebeach.com/news/2024/08/sv7a_s4_Kakitsubata.jpg';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_174_R_EN_LG.png';
 }
 
 export class RichEnergyArt extends RichEnergy {
-  public cardImage = 'https://www.pokebeach.com/news/2024/08/sv7a_s3_RichEnergy.jpg';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_191_R_EN_LG.png';
 }
 
 export class KlefkiArt extends Klefki {
-  public cardImage = 'https://www.pokebeach.com/news/2024/08/sv7a_s2_CLEFFY.jpg';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_128_R_EN_LG.png';
 }
 
 export class ExeggcuteArt extends Exeggcute {
-  public cardImage = 'https://pokemonproxies.com/static/media/7a-001-Exeggcute.faf2a7e3b6fd643c2999.png';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_001_R_EN_LG.png';
 }
 
 export class AlolanExeggutorexArt extends AlolanExeggutorex {
-  public cardImage = 'https://pokemonproxies.com/static/media/7a-040-Alolan_Exeggutor_ex.72c98e0575d7ae603368.png';
-}
-
-export class VulpixArt extends Vulpix {
-  public cardImage = 'https://pokemonproxies.com/static/media/7b-001-Vulpix.c0bfa431ae08b6ffb68f.png';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_133_R_EN_LG.png';
 }
 
 export class LatiasexArt extends Latiasex {
-  public cardImage = 'https://pokemonproxies.com/static/media/7a-019-Latias_ex.127ba20282ca27e09fce.png';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_076_R_EN_LG.png';
 }
 
 export class EeveeArt extends Eevee {
-  public cardImage = 'https://images.squarespace-cdn.com/content/v1/5cf4cfa4382ac0000123aa1b/1721900292627-Z7DJUJWZJHZ4525SHSNE/Eevee.png?format=1500w';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_143_R_EN_LG.png';
 }
 
 export class SylveonexArt extends Sylveonex {
-  public cardImage = 'https://images.squarespace-cdn.com/content/v1/5cf4cfa4382ac0000123aa1b/1721958763940-NX5527U2FDTBX1PCAPGO/Sylveon+ex.png?format=1500w';
-}
-
-export class CeruledgeexArt extends Ceruledgeex {
-  public cardImage = 'https://images.squarespace-cdn.com/content/v1/5cf4cfa4382ac0000123aa1b/1721900585098-11M9Z2XFZGYMILPNRN8H/Ceruledge+ex.png?format=1500w';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_086_R_EN_LG.png';
 }
 
 export class CharcadetArt extends Charcadet {
-  public cardImage = 'https://images.squarespace-cdn.com/content/v1/5cf4cfa4382ac0000123aa1b/1721900292709-J44T566DBM8GDUUQWXB5/Charcadet.png?format=1500w';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_032_R_EN_LG.png';
+}
+
+export class CeruledgeexArt extends Ceruledgeex {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_036_R_EN_LG.png';
 }
 
 export class DurantexArt extends Durantex {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpc/SV8/SV8_3_R_JP.png';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_004_R_EN_LG.png';
 }
 
 export class SandygastArt extends Sandygast {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpc/SV8/SV8_56_R_JP.png';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_090_R_EN_LG.png';
 }
 
 export class PalossandexArt extends Palossandex {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpc/SV8/SV8_57_R_JP.png';
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_091_R_EN_LG.png';
 }

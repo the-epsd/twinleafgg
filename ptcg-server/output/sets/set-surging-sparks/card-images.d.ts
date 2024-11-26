@@ -32,7 +32,7 @@ import { HelperBell } from './helper.bell';
 import { HoOh } from './ho-oh';
 import { Hydreigonex } from './hydreigon-ex';
 import { Klefki } from './klefki';
-import { Larvesta } from './larvesta-ir';
+import { Larvesta } from './larvesta';
 import { Latiasex } from './latias-ex';
 import { LisiasAppeal } from './lisias-appeal';
 import { Magnemite } from './magnemite';
@@ -167,6 +167,9 @@ export declare class ScrambleSwitchArt extends ScrambleSwitch {
     fullName: string;
     regulationMark: string;
 }
+export declare class VulpixArt extends Vulpix {
+    cardImage: string;
+}
 export declare class NinetalesArt extends Ninetales {
     cardImage: string;
 }
@@ -185,9 +188,6 @@ export declare class BlackKyuremexArt extends BlackKyuremex {
 export declare class HoOhArt extends HoOh {
     cardImage: string;
 }
-export declare class AzumarillArt extends Azumarill {
-    cardImage: string;
-}
 export declare class PerfectMixerArt extends PerfectMixer {
     cardImage: string;
 }
@@ -195,6 +195,9 @@ export declare class CherishCarrierArt extends CherishCarrier {
     cardImage: string;
 }
 export declare class MarillArt extends Marill {
+    cardImage: string;
+}
+export declare class AzumarillArt extends Azumarill {
     cardImage: string;
 }
 export declare class TeraOrbArt extends TeraOrb {
@@ -259,9 +262,6 @@ export declare class ExeggcuteArt extends Exeggcute {
 export declare class AlolanExeggutorexArt extends AlolanExeggutorex {
     cardImage: string;
 }
-export declare class VulpixArt extends Vulpix {
-    cardImage: string;
-}
 export declare class LatiasexArt extends Latiasex {
     cardImage: string;
 }
@@ -271,10 +271,10 @@ export declare class EeveeArt extends Eevee {
 export declare class SylveonexArt extends Sylveonex {
     cardImage: string;
 }
-export declare class CeruledgeexArt extends Ceruledgeex {
+export declare class CharcadetArt extends Charcadet {
     cardImage: string;
 }
-export declare class CharcadetArt extends Charcadet {
+export declare class CeruledgeexArt extends Ceruledgeex {
     cardImage: string;
 }
 export declare class DurantexArt extends Durantex {

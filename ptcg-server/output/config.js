@@ -24,11 +24,11 @@ exports.config = {
         schedulerInterval: 60 * 60 * 1000,
         // Wait till next hour before running tasks
         schedulerStartNextHour: true,
-        // Decrease players' ranking every day by 0.95
+        // Decrease players' ranking every day
         // If you wish to disable this feature set IntervalCount to 0
-        rankingDecraseRate: 0,
-        rankingDecraseTime: 24 * 60 * 60 * 1000,
-        rankingDecreaseIntervalCount: 0,
+        rankingDecraseRate: 0.975,
+        rankingDecraseTime: 14 * 24 * 60 * 60 * 1000,
+        rankingDecreaseIntervalCount: 1,
         // Deletes matches older than `keepMatchTike` from the database, to keep it small.
         // If you wish to disable this feature set IntervalCount to 0
         keepMatchTime: 31 * 24 * 60 * 60 * 1000,

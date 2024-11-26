@@ -26,11 +26,11 @@ export const config = {
     // Wait till next hour before running tasks
     schedulerStartNextHour: true,
 
-    // Decrease players' ranking every day by 0.95
+    // Decrease players' ranking every day
     // If you wish to disable this feature set IntervalCount to 0
-    rankingDecraseRate: 0,
-    rankingDecraseTime: 24 * 60 * 60 * 1000,
-    rankingDecreaseIntervalCount: 0,  // run every X scheduler ticks
+    rankingDecraseRate: 0.975, // 1 - 0.025 for 2.5% decrease
+    rankingDecraseTime: 14 * 24 * 60 * 60 * 1000, // 7 days in milliseconds
+    rankingDecreaseIntervalCount: 1, // Check every scheduler tick
 
     // Deletes matches older than `keepMatchTike` from the database, to keep it small.
     // If you wish to disable this feature set IntervalCount to 0

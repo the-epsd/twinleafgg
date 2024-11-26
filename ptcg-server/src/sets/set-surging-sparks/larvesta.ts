@@ -26,7 +26,7 @@ export class Larvesta extends PokemonCard {
 
   public regulationMark = 'H';
 
-  public setNumber: string = '196';
+  public setNumber: string = '24';
 
   public cardImage: string = 'assets/cardback.png';
 
