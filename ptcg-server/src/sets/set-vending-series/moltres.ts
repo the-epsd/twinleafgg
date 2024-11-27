@@ -9,22 +9,28 @@ export class Moltres extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = CardType.FIRE;
+  public cardType: CardType = R;
 
   public hp: number = 80;
 
   public weakness = [];
 
-  public resistance = [{ type: CardType.FIGHTING, value: -30 }];
+  public resistance = [{ type: F, value: -30 }];
 
-  public retreat = [CardType.COLORLESS];
+  public retreat = [C];
 
   public attacks = [
     {
       name: 'Dry Up',
-      cost: [CardType.FIRE, CardType.FIRE],
+      cost: [R, R],
       damage: 0,
       text: 'Choose 1 of your opponent\'s Pokémon and flip a coin until you get tails. For each heads, discard 1 Water Energy card attached to that Pokémon, if any.'
+    },
+    {
+      name: 'Fire Wing',
+      cost: [R, R, R, C],
+      damage: 50,
+      text: ''
     }
   ];
 

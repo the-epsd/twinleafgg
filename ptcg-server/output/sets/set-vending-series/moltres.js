@@ -10,17 +10,23 @@ class Moltres extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.BASIC;
-        this.cardType = card_types_1.CardType.FIRE;
+        this.cardType = R;
         this.hp = 80;
         this.weakness = [];
-        this.resistance = [{ type: card_types_1.CardType.FIGHTING, value: -30 }];
-        this.retreat = [card_types_1.CardType.COLORLESS];
+        this.resistance = [{ type: F, value: -30 }];
+        this.retreat = [C];
         this.attacks = [
             {
                 name: 'Dry Up',
-                cost: [card_types_1.CardType.FIRE, card_types_1.CardType.FIRE],
+                cost: [R, R],
                 damage: 0,
                 text: 'Choose 1 of your opponent\'s Pokémon and flip a coin until you get tails. For each heads, discard 1 Water Energy card attached to that Pokémon, if any.'
+            },
+            {
+                name: 'Fire Wing',
+                cost: [R, R, R, C],
+                damage: 50,
+                text: ''
             }
         ];
         this.set = 'VS2';
