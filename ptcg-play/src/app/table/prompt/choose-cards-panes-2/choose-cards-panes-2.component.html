@@ -1,0 +1,28 @@
+<ptcg-cards-container [keepInitialSize]="true">
+  <dnd-sortable-list [spec]="topSortable.spec" hoverTrigger="fixed" [children]="topSortable.tempList"
+    [listId]="topListId">
+
+    <ng-template dndSortableTemplate let-context>
+      <ptcg-card [ngClass]="{unavailable: !filterMap[context.data.card.fullName],
+          cardback: cardbackMap[context.data.index]}" [dndSortableRender]="context" #render="dndSortableRender"
+        [dragSource]="render.source" [noHTML5Preview]="true" [ptcgCardPlaceholder]="render.isDragging$"
+        [card]="context.data.card" (click)="showCardPopup(context)">
+      </ptcg-card>
+    </ng-template>
+
+  </dnd-sortable-list>
+</ptcg-cards-container>
+
+<ptcg-cards-container [keepInitialSize]="true" *ngIf="singlePaneMode === false">
+  <dnd-sortable-list [spec]="bottomSortable.spec" hoverTrigger="fixed" [children]="bottomSortable.tempList"
+    [listId]="bottomListId">
+
+    <ng-template dndSortableTemplate let-context>
+      <ptcg-card showCardCount="true" [ngClass]="{cardback: cardbackMap[context.data.index]}"
+        [dndSortableRender]="context" #render="dndSortableRender" [dragSource]="render.source" [noHTML5Preview]="true"
+        [ptcgCardPlaceholder]="render.isDragging$" [card]="context.data.card" (click)="showCardPopup(context)">
+      </ptcg-card>
+    </ng-template>
+
+  </dnd-sortable-list>
+</ptcg-cards-container>

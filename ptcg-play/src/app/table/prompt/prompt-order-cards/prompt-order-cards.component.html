@@ -9,9 +9,8 @@
 <div class="ptcg-prompt-content">
   <p [translate]="'GAME_MESSAGES.' + message"></p>
 
-  <ptcg-choose-cards-panes [singlePaneMode]="true" [cards]="cards.cards" (changeCards)="onChange($event)"
-    [noBottomPane]="true">
-  </ptcg-choose-cards-panes>
+  <ptcg-choose-cards-panes-2 [singlePaneMode]="true" [cards]="cards.cards" (changeCards)="onChange($event)">
+  </ptcg-choose-cards-panes-2>
 </div>
 
 <div class="ptcg-prompt-actions">

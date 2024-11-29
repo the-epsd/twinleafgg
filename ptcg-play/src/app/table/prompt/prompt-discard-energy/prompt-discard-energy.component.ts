@@ -34,6 +34,7 @@ export class PromptDiscardEnergyComponent implements OnInit {
   private selectedEnergies: DiscardEnergyResult[] = [];
   private availableEnergyCards = new Map<PokemonItem, Card[]>();
   private selectedEnergyCards = new Map<PokemonItem, Card[]>();
+  private energySelectionsMap = new Map<string, DiscardEnergyResult[]>();
 
   constructor(private gameService: GameService) { }
 
@@ -71,28 +72,32 @@ export class PromptDiscardEnergyComponent implements OnInit {
   }
 
   public onCardClick(item: PokemonItem): void {
+    // Store current selections before switching Pokemon
     if (this.selectedItem) {
+      const key = `${this.selectedItem.target.player}-${this.selectedItem.target.slot}-${this.selectedItem.target.index}`;
+      this.energySelectionsMap.set(key, [...this.selectedEnergies]);
       this.selectedItem.selected = false;
     }
 
     this.selectedItem = item;
     this.selectedItem.selected = true;
 
-    // Log 2: Card list validation when switching Pokemon
-    console.log('Switching to Pokemon:', item.target);
+    // Restore previous selections for this Pokemon if they exist
+    const key = `${item.target.player}-${item.target.slot}-${item.target.index}`;
+    const previousSelections = this.energySelectionsMap.get(key) || [];
+    this.selectedEnergies = [...previousSelections];
+    this.results = [...this.selectedEnergies];
+
     this.currentPokemonCards = item.cardList.cards.filter(card =>
       card.superType === SuperType.ENERGY &&
       !this.selectedEnergies.some(selected => selected.card === card)
     );
-    console.log('Available energy cards for selected Pokemon:', this.currentPokemonCards);
 
     this.validateSelection();
   }
 
   public onChange(indices: number[]): void {
     if (!this.selectedItem) return;
-
-    console.log('Selected energy indices:', indices);
 
     // Use Set to ensure unique selections
     const uniqueIndices = [...new Set(indices)];
@@ -105,18 +110,16 @@ export class PromptDiscardEnergyComponent implements OnInit {
         container: this.cardsContainer
       }));
 
-    console.log('New energy selections:', newSelections);
+    // Store in map for this Pokemon
+    const key = `${this.selectedItem.target.player}-${this.selectedItem.target.slot}-${this.selectedItem.target.index}`;
+    this.energySelectionsMap.set(key, newSelections);
 
-    // Update selections for current Pokemon only
-    this.selectedEnergies = [
-      ...this.selectedEnergies.filter(result => result.from !== this.selectedItem),
-      ...newSelections
-    ];
-
+    // Update current selections
+    this.selectedEnergies = Array.from(this.energySelectionsMap.values()).flat();
     this.results = [...this.selectedEnergies];
+
     this.validateSelection();
   }
-
 
   private validateSelection(): void {
     const totalSelected = this.selectedEnergies.length;

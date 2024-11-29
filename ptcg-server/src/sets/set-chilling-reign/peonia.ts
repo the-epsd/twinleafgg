@@ -1,4 +1,4 @@
-import { CardList, ChooseCardsPrompt, OrderCardsPrompt } from '../../game';
+import { CardList, ChooseCardsPrompt, ChoosePrizePrompt, OrderCardsPrompt } from '../../game';
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
 import { TrainerType } from '../../game/store/card/card-types';
@@ -40,36 +40,15 @@ export class Peonia extends TrainerCard {
 
       player.hand.moveCardTo(effect.trainerCard, player.supporter);
 
-      const allPrizeCards = new CardList();
-      // allPrizeCards.isSecret = true;  // Set the CardList as secret
-      // allPrizeCards.isPublic = false;
-      // allPrizeCards.faceUpPrize = false;
-      player.prizes.forEach(prizeList => {
-        allPrizeCards.cards.push(...prizeList.cards);
-      });
-
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
+      return store.prompt(state, new ChoosePrizePrompt(
+        player.id,
         GameMessage.CHOOSE_PRIZE_CARD,
-        allPrizeCards,
-        {},
-        { min: 3, max: 3, allowCancel: false }
+        { count: 3, allowCancel: false }
       ), chosenPrizes => {
         chosenPrizes = chosenPrizes || [];
         const hand = player.hand;
 
-        // Find all prize lists containing the chosen cards
-        const chosenPrizeIndices = chosenPrizes.map(prize =>
-          player.prizes.findIndex(prizeList => prizeList.cards.includes(prize))
-        ).filter(index => index !== -1);
-
-        // Move chosen prizes to hand
-        chosenPrizes.forEach(prize => {
-          const prizeList = player.prizes.find(list => list.cards.includes(prize));
-          if (prizeList) {
-            prizeList.moveCardTo(prize, hand);
-          }
-        });
+        chosenPrizes.forEach(prize => prize.moveTo(hand, 1));
 
         store.prompt(state, new ChooseCardsPrompt(
           player,
@@ -79,6 +58,7 @@ export class Peonia extends TrainerCard {
           { min: chosenPrizes.length, max: chosenPrizes.length, allowCancel: false }
         ), cards => {
           cards = cards || [];
+
           const newPrizeCards = new CardList();
           player.hand.moveCardsTo(cards, newPrizeCards);
 
@@ -90,18 +70,21 @@ export class Peonia extends TrainerCard {
           ), (rearrangedCards) => {
             newPrizeCards.applyOrder(rearrangedCards);
 
-            // Move ordered cards to original prize slots
-            chosenPrizeIndices.forEach((prizeIndex, index) => {
-              if (newPrizeCards.cards[0] && player.prizes[prizeIndex]) {
-                newPrizeCards.moveCardTo(newPrizeCards.cards[0], player.prizes[prizeIndex]);
-                player.prizes[prizeIndex].isSecret = true;
+            // put rearranged cards into prize first prize slots available
+            player.prizes.forEach(p => {
+              if (p.cards.length === 0) {
+                p.cards = newPrizeCards.cards.splice(0, 1);
+                p.isSecret = true; // Only set the new cards to secret
               }
+              // Remove this line: newPrizeCards.isSecret = true;
             });
 
-            player.supporter.moveCardTo(effect.trainerCard, player.discard);
             return state;
           });
         });
+
+        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
       });
     }
     return state;

@@ -10,6 +10,7 @@ import { Messager } from './messager';
 import { RankingCalculator } from './ranking-calculator';
 import { Scheduler, generateId } from '../../utils';
 import { config } from '../../config';
+import { Format } from '../store/card/card-types';
 
 export class Core {
   public clients: Client[] = [];
@@ -55,6 +56,9 @@ export class Core {
     if (invited && this.clients.indexOf(invited) === -1) {
       throw new GameError(GameMessage.ERROR_CLIENT_NOT_CONNECTED);
     }
+    if (gameSettings.format === Format.RETRO) {
+      gameSettings.rules.attackFirstTurn = true;
+    }
     const game = new Game(this, generateId(this.games), gameSettings);
     game.dispatch(client, new AddPlayerAction(client.id, client.name, deck));
     if (invited) {
@@ -68,7 +72,7 @@ export class Core {
     }
     return game;
   }
-  
+
   public createGameWithDecks(
     client: Client,
     deck: string[],
@@ -78,6 +82,10 @@ export class Core {
   ): Game {
     if (this.clients.indexOf(client) === -1) {
       throw new GameError(GameMessage.ERROR_CLIENT_NOT_CONNECTED);
+    }
+
+    if (gameSettings.format === Format.RETRO) {
+      gameSettings.rules.attackFirstTurn = true;
     }
 
     const game = new Game(this, generateId(this.games), gameSettings);

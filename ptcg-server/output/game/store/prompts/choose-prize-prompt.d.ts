@@ -4,7 +4,9 @@ import { State } from '../state/state';
 import { GameMessage } from '../../game-message';
 export declare const ChoosePrizePromptType = "Choose prize";
 export interface ChoosePrizeOptions {
+    isSecret: boolean;
     count: number;
+    max: number;
     blocked: number[];
     allowCancel: boolean;
 }

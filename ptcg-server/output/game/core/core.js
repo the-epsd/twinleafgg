@@ -12,6 +12,7 @@ const messager_1 = require("./messager");
 const ranking_calculator_1 = require("./ranking-calculator");
 const utils_1 = require("../../utils");
 const config_1 = require("../../config");
+const card_types_1 = require("../store/card/card-types");
 class Core {
     constructor() {
         this.clients = [];
@@ -46,6 +47,9 @@ class Core {
         if (invited && this.clients.indexOf(invited) === -1) {
             throw new game_error_1.GameError(game_message_1.GameMessage.ERROR_CLIENT_NOT_CONNECTED);
         }
+        if (gameSettings.format === card_types_1.Format.RETRO) {
+            gameSettings.rules.attackFirstTurn = true;
+        }
         const game = new game_1.Game(this, utils_1.generateId(this.games), gameSettings);
         game.dispatch(client, new add_player_action_1.AddPlayerAction(client.id, client.name, deck));
         if (invited) {
@@ -62,6 +66,9 @@ class Core {
     createGameWithDecks(client, deck, gameSettings = new game_settings_1.GameSettings(), client2, deck2) {
         if (this.clients.indexOf(client) === -1) {
             throw new game_error_1.GameError(game_message_1.GameMessage.ERROR_CLIENT_NOT_CONNECTED);
+        }
+        if (gameSettings.format === card_types_1.Format.RETRO) {
+            gameSettings.rules.attackFirstTurn = true;
         }
         const game = new game_1.Game(this, utils_1.generateId(this.games), gameSettings);
         game.dispatch(client, new add_player_action_1.AddPlayerAction(client.id, client.name, deck));
