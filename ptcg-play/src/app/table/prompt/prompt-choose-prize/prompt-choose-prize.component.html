@@ -8,9 +8,10 @@
 
 <div class="ptcg-prompt-content">
   <p [translate]="'GAME_MESSAGES.' + message"></p>
-  <ptcg-choose-cards-panes [maxCards]="prompt.options.count" [cards]="cards" [blocked]="prompt.options.blocked"
-    [cardbackMap]="revealed === false ? cardbackMap : {}" (changeCards)="onChange($event)">
-  </ptcg-choose-cards-panes>
+
+  <ptcg-choose-cards-panes-2 [cards]="cards" [cardbackMap]="revealed === false ? cardbackMap : {}"
+    (changeCards)="onChange($event)">
+  </ptcg-choose-cards-panes-2>
 </div>
 
 <div class="ptcg-prompt-actions">

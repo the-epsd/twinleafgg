@@ -27,6 +27,7 @@ import { PromptRemoveDamageComponent } from './prompt-remove-damage/prompt-remov
 import { PromptDiscardEnergyComponent } from './prompt-discard-energy/prompt-discard-energy.component';
 import { PromptConfirmCardsComponent } from './prompt-confirm-card/prompt-confirm-cards.component';
 import { ChooseStartingPokemonPromptComponent } from './choose-starting-pokemon-prompt/choose-starting-pokemon-prompt.component';
+import { ChooseCardsPanes2Component } from './choose-cards-panes-2/choose-cards-panes-2.component';
 
 
 @NgModule({
@@ -54,7 +55,8 @@ import { ChooseStartingPokemonPromptComponent } from './choose-starting-pokemon-
     PromptRemoveDamageComponent,
     PromptDiscardEnergyComponent,
     PromptConfirmCardsComponent,
-    ChooseStartingPokemonPromptComponent
+    ChooseStartingPokemonPromptComponent,
+    ChooseCardsPanes2Component
   ],
   imports: [
     BoardModule,

@@ -7,7 +7,9 @@ import { GameMessage } from '../../game-message';
 export const ChoosePrizePromptType = 'Choose prize';
 
 export interface ChoosePrizeOptions {
+  isSecret: boolean;
   count: number;
+  max: number;
   blocked: number[];
   allowCancel: boolean;
 }
@@ -28,9 +30,14 @@ export class ChoosePrizePrompt extends Prompt<CardList[]> {
     // Default options
     this.options = Object.assign({}, {
       count: 1,
+      max: 1,
       blocked: [],
-      allowCancel: false
+      allowCancel: false,
+      isSecret: false,
     }, options);
+
+    this.options.max = this.options.count;
+
   }
 
   public decode(result: number[] | null, state: State): CardList[] | null {

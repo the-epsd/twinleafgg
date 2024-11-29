@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnChanges, ElementRef, ViewChild } from '@angular/core';
-import { Card, ChooseCardsPrompt, ChooseEnergyPrompt, DiscardEnergyPrompt, EnergyCard } from 'ptcg-server';
+import { Card, ChooseCardsPrompt, ChooseEnergyPrompt, ChoosePrizePrompt, DiscardEnergyPrompt, EnergyCard } from 'ptcg-server';
 import { DraggedItem } from '@ng-dnd/sortable';
 
 import { CardsBaseService } from '../../../shared/cards/cards-base.service';
@@ -24,6 +24,8 @@ export class ChooseCardsPanesComponent implements OnChanges {
   @Input() filter: Partial<Card> = {};
   @Input() blocked: number[] = [];
   @Input() cardbackMap: { [index: number]: boolean } = {};
+  @Input() topCardbackMap: { [index: number]: boolean } = {};
+  @Input() bottomCardbackMap: { [index: number]: boolean } = {};
   @Input() singlePaneMode = false;
   @Output() changeCards = new EventEmitter<number[]>();
   @Input() promptValue: ChooseCardsPrompt;
@@ -77,6 +79,7 @@ export class ChooseCardsPanesComponent implements OnChanges {
       const cardIndex = this.topSortable.tempList.findIndex(item => item.card === card);
       if (cardIndex !== -1) {
         this.topSortable.tempList.splice(cardIndex, 1);
+        this.topSortable.list = [...this.topSortable.tempList];
       }
     } else if (index !== -1) {
       // Removing card from selection
@@ -86,14 +89,19 @@ export class ChooseCardsPanesComponent implements OnChanges {
       // Remove from selected cards
       this.selectedCards.splice(index, 1);
 
-      // Add back to available cards
-      this.topSortable.tempList = [...this.topSortable.tempList, {
+      // Create new item for top list
+      const newItem = {
         card: originalCard,
         index: unselectedCard.originalIndex,
         isAvailable: true,
         isSecret: !!this.cardbackMap[unselectedCard.originalIndex],
         scanUrl: this.cardsBaseService.getScanUrl(originalCard)
-      }];
+      };
+
+      // Insert at original position and update both lists
+      const insertIndex = Math.min(unselectedCard.originalIndex, this.topSortable.list.length);
+      this.topSortable.list.splice(insertIndex, 0, newItem);
+      this.topSortable.tempList = [...this.topSortable.list];
     }
 
     const selectedIndices = this.selectedCards.map(selectedCard => selectedCard.originalIndex);
@@ -222,8 +230,16 @@ export class ChooseCardsPanesComponent implements OnChanges {
   }
 
   getSlotArray(): number[] {
-    const slots = (this.promptValue as unknown as ChooseEnergyPrompt)?.cost?.length || this.maxCards;
-    return Array(slots).fill(0).map((_, i) => i);
+    const prizePromptOptions = (this.promptValue as any)?.options;
+    if (prizePromptOptions?.count) {
+      return Array(prizePromptOptions.count).fill(0).map((_, i) => i);
+    }
+
+    if (this.promptValue instanceof ChooseEnergyPrompt && this.promptValue.cost) {
+      return Array(this.promptValue.cost.length).fill(0).map((_, i) => i);
+    }
+
+    return Array(this.maxCards).fill(0).map((_, i) => i);
   }
 
   private commitTempLists() {
@@ -253,16 +269,14 @@ export class ChooseCardsPanesComponent implements OnChanges {
       this.topSortable.tempList = this.buildCardList(this.cards);
       this.bottomSortable.tempList = [];
 
-      // Set maxCards only if it hasn't been set yet or needs updating
-      if (!this.maxCards) {
-        const totalEnergy = this.cards.filter(card => card instanceof EnergyCard).length;
-        const cost = (this.promptValue as unknown as ChooseEnergyPrompt)?.cost?.length;
-        this.maxCards = cost || totalEnergy || this.promptValue?.options?.max || 1;
-      }
+      // Set maxCards based on prompt type
+      const cost = (this.promptValue as unknown as ChooseEnergyPrompt)?.cost?.length;
+      const prizeCount = (this.promptValue as unknown as ChoosePrizePrompt)?.options?.count;
+      const totalEnergy = this.cards.filter(card => card instanceof EnergyCard).length;
+
+      this.maxCards = prizeCount || cost || totalEnergy || this.promptValue?.options?.max || 1;
 
       this.commitTempLists();
     }
   }
-
-
 }

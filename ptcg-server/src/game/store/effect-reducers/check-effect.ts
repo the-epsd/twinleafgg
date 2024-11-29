@@ -1,12 +1,12 @@
+import { GameError } from '../../game-error';
 import { GameLog, GameMessage } from '../../game-message';
 import { PlayerType, SlotType } from '../actions/play-card-action';
-import { Card } from '../card/card';
 import { EnergyCard } from '../card/energy-card';
 import { CheckHpEffect, CheckProvidedEnergyEffect, CheckTableStateEffect } from '../effects/check-effects';
 import { Effect } from '../effects/effect';
 import { KnockOutEffect } from '../effects/game-effects';
-import { ChooseCardsPrompt } from '../prompts/choose-cards-prompt';
 import { ChoosePokemonPrompt } from '../prompts/choose-pokemon-prompt';
+import { ChoosePrizePrompt } from '../prompts/choose-prize-prompt';
 import { CardList } from '../state/card-list';
 import { PokemonCardList } from '../state/pokemon-card-list';
 import { GamePhase, GameWinner, State } from '../state/state';
@@ -116,8 +116,8 @@ function chooseActivePokemons(state: State): ChoosePokemonPrompt[] {
   return prompts;
 }
 
-function choosePrizeCards(state: State, prizesToTake: [number, number]): ChooseCardsPrompt[] {
-  const prompts: ChooseCardsPrompt[] = [];
+function choosePrizeCards(state: State, prizesToTake: [number, number]): ChoosePrizePrompt[] {
+  const prompts: ChoosePrizePrompt[] = [];
 
   for (let i = 0; i < state.players.length; i++) {
     const player = state.players[i];
@@ -128,27 +128,47 @@ function choosePrizeCards(state: State, prizesToTake: [number, number]): ChooseC
     }
 
     if (prizesToTake[i] > 0) {
-      const allPrizeCards = new CardList();
-      // allPrizeCards.isSecret = true;  // Set the CardList as secret
-      // allPrizeCards.isPublic = false;
-      // allPrizeCards.faceUpPrize = false;
-      player.prizes.forEach(prizeList => {
-        allPrizeCards.cards.push(...prizeList.cards);
-      });
-
-      const prompt = new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_PRIZE_CARD,
-        allPrizeCards,
-        {},  // No specific filter needed for prizes
-        { min: prizesToTake[i], max: prizesToTake[i], isSecret: player.prizes[0].isSecret, allowCancel: false }
-      );
+      const prompt = new ChoosePrizePrompt(player.id, GameMessage.CHOOSE_PRIZE_CARD, { isSecret: player.prizes[0].isSecret, count: prizesToTake[i] });
       prompts.push(prompt);
     }
   }
 
   return prompts;
 }
+
+// function choosePrizeCards(state: State, prizesToTake: [number, number]): ChooseCardsPrompt[] {
+//   const prompts: ChooseCardsPrompt[] = [];
+
+//   for (let i = 0; i < state.players.length; i++) {
+//     const player = state.players[i];
+//     const prizeLeft = player.getPrizeLeft();
+
+//     if (prizesToTake[i] > prizeLeft) {
+//       prizesToTake[i] = prizeLeft;
+//     }
+
+//     if (prizesToTake[i] > 0) {
+//       const allPrizeCards = new CardList();
+//       // allPrizeCards.isSecret = true;  // Set the CardList as secret
+//       // allPrizeCards.isPublic = false;
+//       // allPrizeCards.faceUpPrize = false;
+//       player.prizes.forEach(prizeList => {
+//         allPrizeCards.cards.push(...prizeList.cards);
+//       });
+
+//       const prompt = new ChooseCardsPrompt(
+//         player,
+//         GameMessage.CHOOSE_PRIZE_CARD,
+//         allPrizeCards,
+//         {},  // No specific filter needed for prizes
+//         { min: prizesToTake[i], max: prizesToTake[i], isSecret: player.prizes[0].isSecret, allowCancel: false }
+//       );
+//       prompts.push(prompt);
+//     }
+//   }
+
+//   return prompts;
+// }
 
 
 export function endGame(store: StoreLike, state: State, winner: GameWinner): State {
@@ -226,7 +246,12 @@ function checkWinner(store: StoreLike, state: State, onComplete?: () => void): S
   return state;
 }
 
-function handlePrompts(store: StoreLike, state: State, prompts: (ChooseCardsPrompt | ChoosePokemonPrompt)[], onComplete: () => void): State {
+function handlePrompts(
+  store: StoreLike,
+  state: State,
+  prompts: (ChoosePrizePrompt | ChoosePokemonPrompt)[],
+  onComplete: () => void
+): State {
   const prompt = prompts.shift();
   if (prompt === undefined) {
     onComplete();
@@ -235,35 +260,29 @@ function handlePrompts(store: StoreLike, state: State, prompts: (ChooseCardsProm
 
   const player = state.players.find(p => p.id === prompt.playerId);
   if (player === undefined) {
-    return state;
+    throw new GameError(GameMessage.ILLEGAL_ACTION);
   }
 
-  if (prompt instanceof ChooseCardsPrompt) {
-    return store.prompt(state, prompt, (result: Card[]) => {
-      result.forEach(card => {
-        const prizeList = player.prizes.find(p => p.cards.includes(card));
-        if (prizeList) {
-          prizeList.moveTo(player.hand);
-        }
-      });
+  return store.prompt(state, prompt, (result) => {
+    if (prompt instanceof ChoosePrizePrompt) {
+      const prizes: CardList[] = result;
+      prizes.forEach(prize => prize.moveTo(player.hand));
       handlePrompts(store, state, prompts, onComplete);
-    });
-  } else if (prompt instanceof ChoosePokemonPrompt) {
-    return store.prompt(state, prompt, (result: PokemonCardList[]) => {
-      if (result.length !== 1) {
-        return state;
+    } else if (prompt instanceof ChoosePokemonPrompt) {
+      const selectedPokemon = result as PokemonCardList[];
+      if (selectedPokemon.length !== 1) {
+        throw new GameError(GameMessage.ILLEGAL_ACTION);
       }
-      const benchIndex = player.bench.indexOf(result[0]);
+      const benchIndex = player.bench.indexOf(selectedPokemon[0]);
       if (benchIndex === -1 || player.active.cards.length > 0) {
-        return state;
+        throw new GameError(GameMessage.ILLEGAL_ACTION);
       }
       const temp = player.active;
       player.active = player.bench[benchIndex];
       player.bench[benchIndex] = temp;
       handlePrompts(store, state, prompts, onComplete);
-    });
-  }
-  return state;
+    }
+  });
 }
 
 function* executeCheckState(next: Function, store: StoreLike, state: State, onComplete?: () => void): IterableIterator<State> {
@@ -294,7 +313,7 @@ function* executeCheckState(next: Function, store: StoreLike, state: State, onCo
     }
   }
 
-  const prompts: (ChooseCardsPrompt | ChoosePokemonPrompt)[] = [
+  const prompts: (ChoosePrizePrompt | ChoosePokemonPrompt)[] = [
     ...choosePrizeCards(state, prizesToTake),
     ...chooseActivePokemons(state)
   ];
