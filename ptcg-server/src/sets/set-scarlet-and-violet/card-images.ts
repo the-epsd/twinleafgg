@@ -71,6 +71,7 @@ import { VitalityBand } from './vitality-band';
 import { Youngster } from './youngster';
 import { Scatterbug } from './scatterbug';
 import { Spewpa } from './spewpa';
+import { Spidopsex } from './spidops-ex';
 
 export class AnnihilapeArt extends Annihilape {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_109_R_EN_LG.png';
@@ -336,6 +337,10 @@ export class SmolivArt extends Smoliv {
 
 export class SpewpaArt extends Spewpa {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_009_R_EN_LG.png';
+}
+
+export class SpidopsexArt extends Spidopsex {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVI/SVI_019_R_EN_LG.png';
 }
 
 export class SwitchArt extends Switch {

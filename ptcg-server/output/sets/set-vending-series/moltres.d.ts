@@ -8,13 +8,13 @@ export declare class Moltres extends PokemonCard {
     hp: number;
     weakness: never[];
     resistance: {
-        type: CardType;
+        type: CardType.FIGHTING;
         value: number;
     }[];
-    retreat: CardType[];
+    retreat: CardType.COLORLESS[];
     attacks: {
         name: string;
-        cost: CardType[];
+        cost: (CardType.FIRE | CardType.COLORLESS)[];
         damage: number;
         text: string;
     }[];

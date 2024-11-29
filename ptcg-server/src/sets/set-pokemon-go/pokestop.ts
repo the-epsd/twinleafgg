@@ -55,7 +55,7 @@ export class Pokestop extends TrainerCard {
     });
 
     discards.forEach((card, index) => {
-      store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD, { name: player.name, card: card.name });
+      store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD, { name: player.name, card: card.name, effectName: this.name });
     });
     
     // Move item cards to hand

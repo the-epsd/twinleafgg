@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ShinxArt = exports.WoChienexArt = exports.LuxrayArt = exports.WattrelArt = exports.SuperiorEnergyRetrievalArt = exports.SuperRodArt = exports.SquawkabillyexArt = exports.SpiritombArt = exports.ReversalEnergyArt = exports.PinecoArt = exports.PelipperArt = exports.OrthwormArt = exports.NoivernexArt = exports.NoibatArt = exports.MurkrowArt = exports.MisdreavusArt = exports.MimikyuArt = exports.MeowscaradaexArt = exports.MagnemiteArt = exports.LuminousEnergyArt = exports.LokixArt = exports.JetEnergyArt = exports.IonoArt = exports.HydreigonArt = exports.HoppipArt = exports.GrushaArt = exports.GreatBallArt = exports.GiacomoArt = exports.Frigibax2Art = exports.FrigibaxArt = exports.ForretressexArt = exports.FloragatoArt = exports.FlamigoArt = exports.FightingAuLaitArt = exports.DudunsparceArt = exports.DeliveryDroneArt = exports.DeinoArt = exports.CufantArt = exports.ClavellArt = exports.ChoiceBeltArt = exports.ChienPaoexArt = exports.ChiYuexArt = exports.CetoddleArt = exports.CetitanArt = exports.BraveyCharmArt = exports.BramblinArt = exports.BossOrdersArt = exports.BaxcaliburArt = exports.ArtazonArt = exports.ArctibaxArt = void 0;
-exports.ZweilousArt = exports.WingullArt = exports.TinkatonArt = exports.TinkatuffArt = exports.TinkatinkArt = exports.TingLuexArt = exports.TherapeuticEnergyArt = exports.TadbulbArt = exports.SprigatitoArt = void 0;
+exports.ZweilousArt = exports.WingullArt = exports.TinkatonArt = exports.TinkatuffArt = exports.TinkatinkArt = exports.TingLuexArt = exports.TherapeuticEnergyArt = exports.TarountulaArt = exports.TadbulbArt = exports.SprigatitoArt = void 0;
 const arctibax_1 = require("./arctibax");
 const artazon_1 = require("./artazon");
 const baxcalibur_1 = require("./baxcalibur");
@@ -61,6 +61,7 @@ const tinkatuff_1 = require("./tinkatuff");
 const wattrel_1 = require("./wattrel");
 const wingull_1 = require("./wingull");
 const wo_chien_ex_1 = require("./wo-chien-ex");
+const tarountula_1 = require("./tarountula");
 class ArctibaxArt extends arctibax_1.Arctibax {
     constructor() {
         super(...arguments);
@@ -425,6 +426,13 @@ class TadbulbArt extends tadbulb_1.Tadbulb {
     }
 }
 exports.TadbulbArt = TadbulbArt;
+class TarountulaArt extends tarountula_1.Tarountula {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAL/PAL_017_R_EN_LG.png';
+    }
+}
+exports.TarountulaArt = TarountulaArt;
 class TherapeuticEnergyArt extends theraputic_energy_1.TherapeuticEnergy {
     constructor() {
         super(...arguments);

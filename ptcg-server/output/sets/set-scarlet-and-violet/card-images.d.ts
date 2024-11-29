@@ -71,6 +71,7 @@ import { VitalityBand } from './vitality-band';
 import { Youngster } from './youngster';
 import { Scatterbug } from './scatterbug';
 import { Spewpa } from './spewpa';
+import { Spidopsex } from './spidops-ex';
 export declare class AnnihilapeArt extends Annihilape {
     cardImage: string;
 }
@@ -269,6 +270,9 @@ export declare class SmolivArt extends Smoliv {
     cardImage: string;
 }
 export declare class SpewpaArt extends Spewpa {
+    cardImage: string;
+}
+export declare class SpidopsexArt extends Spidopsex {
     cardImage: string;
 }
 export declare class SwitchArt extends Switch {
