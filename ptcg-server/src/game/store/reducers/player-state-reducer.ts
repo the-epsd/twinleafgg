@@ -1,6 +1,6 @@
 import { Action } from '../actions/action';
 import { ChangeAvatarAction } from '../actions/change-avatar-action';
-import { ReorderBenchAction, ReorderHandAction } from '../actions/reorder-actions';
+import { ReorderBenchAction } from '../actions/reorder-actions';
 import { State } from '../state/state';
 import { StoreLike } from '../store-like';
 
@@ -20,17 +20,17 @@ export function playerStateReducer(store: StoreLike, state: State, action: Actio
     return state;
   }
 
-  if (action instanceof ReorderHandAction) {
+  // if (action instanceof ReorderHandAction) {
 
-    const player = state.players.find(p => p.id === action.id);
-    if (player === undefined || player.hand.cards.length !== action.order.length) {
-      return state;
-    }
+  //   const player = state.players.find(p => p.id === action.id);
+  //   if (player === undefined || player.hand.cards.length !== action.order.length) {
+  //     return state;
+  //   }
 
-    player.hand.applyOrder(action.order);
+  //   player.hand.applyOrder(action.order);
 
-    return state;
-  }
+  //   return state;
+  // }
 
   if (action instanceof ChangeAvatarAction) {
 

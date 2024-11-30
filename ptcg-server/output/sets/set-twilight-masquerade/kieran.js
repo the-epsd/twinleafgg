@@ -19,9 +19,10 @@ class Kieran extends trainer_card_1.TrainerCard {
         this.name = 'Kieran';
         this.fullName = 'Kieran TWM';
         this.KIERAN_MARKER = 'KIERAN_MARKER';
-        this.text = 'Choose 1:' +
-            '• Switch your Active Pokémon with 1 of your Benched Pokémon.' +
-            '• Your Pokémon\'s attacks do 30 more damage to your opponent\'s Active Pokémon ex and Pokémon V this turn.';
+        this.text = `Choose 1:
+  
+    • Switch your Active Pokémon with 1 of your Benched Pokémon.
+    • Your Pokémon's attacks do 30 more damage to your opponent's Active Pokémon ex and Pokémon V this turn.`;
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_phase_effects_1.EndTurnEffect) {

@@ -116,7 +116,6 @@ class Okidogi extends pokemon_card_1.PokemonCard {
             });
             if (darkProvided) {
                 effect.hp += 100;
-                console.log('okidogi hp increased');
                 return state;
             }
             return state;

@@ -36,13 +36,11 @@ class Pikachuex extends game_1.PokemonCard {
         this.damageDealt = false;
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof attack_effects_1.DealDamageEffect && effect.target.cards.includes(this) && effect.player.marker.hasMarker(effect.player.DAMAGE_DEALT_MARKER)) {
+        if (effect instanceof attack_effects_1.PutDamageEffect && effect.target.cards.includes(this) && effect.target.damage == 0) {
             const player = game_1.StateUtils.findOwner(state, effect.target);
-            const pokemonCard = effect.target.getPokemonCard();
-            this.damageDealt = true;
-            if (pokemonCard === this && this.damageDealt === true) {
-                const checkHpEffect = new check_effects_1.CheckHpEffect(player, effect.target);
-                store.reduceEffect(state, checkHpEffect);
+            const checkHpEffect = new check_effects_1.CheckHpEffect(player, effect.target);
+            store.reduceEffect(state, checkHpEffect);
+            if (effect.target.damage === 0 && effect.damage >= checkHpEffect.hp) {
                 // Try to reduce PowerEffect, to check if something is blocking our ability
                 try {
                     const stub = new game_effects_1.PowerEffect(player, {
@@ -55,11 +53,8 @@ class Pikachuex extends game_1.PokemonCard {
                 catch (_a) {
                     return state;
                 }
-                if (effect.target.damage === 0 && effect.damage >= checkHpEffect.hp) {
-                    effect.preventDefault = true;
-                    effect.target.damage = checkHpEffect.hp - 10;
-                }
-                return state;
+                effect.preventDefault = true;
+                effect.target.damage = checkHpEffect.hp - 10;
             }
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

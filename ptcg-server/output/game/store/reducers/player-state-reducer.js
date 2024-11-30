@@ -14,14 +14,14 @@ function playerStateReducer(store, state, action) {
         player.bench[action.to] = temp;
         return state;
     }
-    if (action instanceof reorder_actions_1.ReorderHandAction) {
-        const player = state.players.find(p => p.id === action.id);
-        if (player === undefined || player.hand.cards.length !== action.order.length) {
-            return state;
-        }
-        player.hand.applyOrder(action.order);
-        return state;
-    }
+    // if (action instanceof ReorderHandAction) {
+    //   const player = state.players.find(p => p.id === action.id);
+    //   if (player === undefined || player.hand.cards.length !== action.order.length) {
+    //     return state;
+    //   }
+    //   player.hand.applyOrder(action.order);
+    //   return state;
+    // }
     if (action instanceof change_avatar_action_1.ChangeAvatarAction) {
         const player = state.players.find(p => p.id === action.id);
         if (player === undefined) {

@@ -45,12 +45,10 @@ class Grotle extends pokemon_card_1.PokemonCard {
             const opponent = game_1.StateUtils.getOpponent(state, player);
             player.active.marker.addMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
             opponent.marker.addMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
-            console.log('marker added');
         }
         if (effect instanceof attack_effects_1.PutDamageEffect && effect.target.cards.includes(this)) {
             if (effect.target.marker.hasMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this)) {
                 effect.damage -= 20;
-                console.log('damage reduced');
                 return state;
             }
         }
@@ -61,7 +59,6 @@ class Grotle extends pokemon_card_1.PokemonCard {
             opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList) => {
                 cardList.marker.removeMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
             });
-            console.log('marker removed');
         }
         return state;
     }

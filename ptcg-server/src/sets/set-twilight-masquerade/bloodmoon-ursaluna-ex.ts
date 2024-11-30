@@ -62,12 +62,10 @@ export class BloodmoonUrsalunaex extends PokemonCard {
     if (effect instanceof EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
       effect.player.attackMarker.removeMarker(this.ATTACK_USED_MARKER, this);
       effect.player.attackMarker.removeMarker(this.ATTACK_USED_2_MARKER, this);
-      console.log('marker cleared');
     }
 
     if (effect instanceof EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
       effect.player.attackMarker.addMarker(this.ATTACK_USED_2_MARKER, this);
-      console.log('second marker added');
     }
 
     if (effect instanceof CheckAttackCostEffect && effect.attack === this.attacks[0]) {
@@ -128,11 +126,9 @@ export class BloodmoonUrsalunaex extends PokemonCard {
 
       // Check marker
       if (effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-        console.log('attack blocked');
         throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
       }
       effect.player.attackMarker.addMarker(this.ATTACK_USED_MARKER, this);
-      console.log('marker added');
     }
     return state;
   }

@@ -59,35 +59,29 @@ export class Metagross extends PokemonCard {
 
     if (effect instanceof AttackEffect) {
       this.usedAttack = true;
-      console.log('attacked');
     }
 
     if (effect instanceof BeginTurnEffect) {
       if (this.usedAttack) {
         this.usedAttack = false;
-        console.log('reset');
       }
     }
 
     if (effect instanceof EndTurnEffect) {
       if (!this.usedAttack) {
         this.usedAttack = false;
-        console.log('did not attack');
         effect.player.attackMarker.removeMarker(this.NEXT_TURN_MORE_DAMAGE_MARKER, this);
         effect.player.attackMarker.removeMarker(this.NEXT_TURN_MORE_DAMAGE_MARKER_2, this);
-        console.log('remove all markers');
       }
     }
 
     if (effect instanceof EndTurnEffect && effect.player.attackMarker.hasMarker(this.NEXT_TURN_MORE_DAMAGE_MARKER, this)) {
       effect.player.attackMarker.addMarker(this.NEXT_TURN_MORE_DAMAGE_MARKER_2, this);
-      console.log('second marker added');
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       effect.player.attackMarker.removeMarker(this.NEXT_TURN_MORE_DAMAGE_MARKER, this);
       effect.player.attackMarker.removeMarker(this.NEXT_TURN_MORE_DAMAGE_MARKER_2, this);
-      console.log('attacked with different attack, remove meteor mash markers');
 
       const player = effect.player;
 
@@ -111,11 +105,9 @@ export class Metagross extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       // Check marker
       if (effect.player.attackMarker.hasMarker(this.NEXT_TURN_MORE_DAMAGE_MARKER, this)) {
-        console.log('attack added damage');
         effect.damage += 60;
       }
       effect.player.attackMarker.addMarker(this.NEXT_TURN_MORE_DAMAGE_MARKER, this);
-      console.log('marker added');
     }
     return state;
   }

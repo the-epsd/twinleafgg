@@ -82,8 +82,6 @@ export class RagingBoltex extends PokemonCard {
         totalEnergy += basicEnergyCount;
       });
 
-      console.log('Total Energy: ' + totalEnergy);
-
       return store.prompt(state, new DiscardEnergyPrompt(
         player.id,
         GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
@@ -109,27 +107,9 @@ export class RagingBoltex extends PokemonCard {
           effect.damage = totalDiscarded * 70;
 
         }
-        console.log('Total Damage: ' + effect.damage);
         return state;
       });
     }
     return state;
   }
 }
-
-
-// let totalDiscarded = 0;
-
-// const discardEnergy = new DiscardCardsEffect(effect, cards);
-// discardEnergy.target = target;
-
-// totalDiscarded += discardEnergy.cards.length;
-
-// store.reduceEffect(state, discardEnergy);
-
-// console.log('Total discarded:' + totalDiscarded);
-
-// effect.damage += totalDiscarded * 70;
-// console.log('Total Damage: ' + effect.damage);
-
-// return state;

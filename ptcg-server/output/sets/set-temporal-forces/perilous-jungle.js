@@ -29,7 +29,6 @@ class PerilousJungle extends trainer_card_1.TrainerCard {
                 return state;
             }
             effect.poisonDamage += 20;
-            console.log('jungle:', effect.poisonDamage);
             return state;
         }
         if (effect instanceof game_effects_1.UseStadiumEffect && state_utils_1.StateUtils.getStadiumCard(state) === this) {

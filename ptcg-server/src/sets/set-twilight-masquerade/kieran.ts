@@ -27,10 +27,10 @@ export class Kieran extends TrainerCard {
 
   private readonly KIERAN_MARKER = 'KIERAN_MARKER';
 
-  public text: string =
-    'Choose 1:' +
-    '• Switch your Active Pokémon with 1 of your Benched Pokémon.' +
-    '• Your Pokémon\'s attacks do 30 more damage to your opponent\'s Active Pokémon ex and Pokémon V this turn.';
+  public text: string = `Choose 1:
+  
+    • Switch your Active Pokémon with 1 of your Benched Pokémon.
+    • Your Pokémon's attacks do 30 more damage to your opponent's Active Pokémon ex and Pokémon V this turn.`;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

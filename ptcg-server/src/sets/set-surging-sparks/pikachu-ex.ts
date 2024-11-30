@@ -1,5 +1,5 @@
 import { PokemonCard, CardTag, Stage, CardType, StoreLike, State, StateUtils, PowerType, Card, ChooseEnergyPrompt, GameMessage } from '../../game';
-import { DealDamageEffect, DiscardCardsEffect } from '../../game/store/effects/attack-effects';
+import { DiscardCardsEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { CheckHpEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
@@ -37,15 +37,12 @@ export class Pikachuex extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof DealDamageEffect && effect.target.cards.includes(this) && effect.player.marker.hasMarker(effect.player.DAMAGE_DEALT_MARKER)) {
+    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this) && effect.target.damage == 0) {
       const player = StateUtils.findOwner(state, effect.target);
-      const pokemonCard = effect.target.getPokemonCard();
+      const checkHpEffect = new CheckHpEffect(player, effect.target);
+      store.reduceEffect(state, checkHpEffect);
 
-      this.damageDealt = true;
-
-      if (pokemonCard === this && this.damageDealt === true) {
-        const checkHpEffect = new CheckHpEffect(player, effect.target);
-        store.reduceEffect(state, checkHpEffect);
+      if (effect.target.damage === 0 && effect.damage >= checkHpEffect.hp) {
 
         // Try to reduce PowerEffect, to check if something is blocking our ability
         try {
@@ -59,11 +56,8 @@ export class Pikachuex extends PokemonCard {
           return state;
         }
 
-        if (effect.target.damage === 0 && effect.damage >= checkHpEffect.hp) {
-          effect.preventDefault = true;
-          effect.target.damage = checkHpEffect.hp - 10;
-        }
-        return state;
+        effect.preventDefault = true;
+        effect.target.damage = checkHpEffect.hp - 10;
       }
     }
 
