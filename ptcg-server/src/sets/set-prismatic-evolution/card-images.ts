@@ -4,6 +4,9 @@ import { Flareonex } from './flareon-ex';
 import { Glaceonex } from './glaceon-ex';
 import { Jolteonex } from './jolteon-ex';
 import { Leafeonex } from './leafeon-ex';
+import { MaxRod } from './max-rod';
+import { Regigigas } from './regigigas';
+import { TreasureGadget } from './treasure-gadget';
 import { Umbreonex } from './umbreon-ex';
 import { Vaporeonex } from './vaporeon-ex';
 
@@ -37,4 +40,16 @@ export class GlaceonexArt extends Glaceonex {
 
 export class LeafeonexArt extends Leafeonex {
   public cardImage = 'https://www.pokebeach.com/news/2024/10/hero-card-7.png';
+}
+
+export class MaxRodArt extends MaxRod {
+  public cardImage = 'https://archives.bulbagarden.net/media/upload/e/ed/FishingRodMAXTerastalFestex142.jpg';
+}
+
+export class TreasureGadgetArt extends TreasureGadget {
+  public cardImage = 'https://archives.bulbagarden.net/media/upload/f/f0/TreasureGadgetTerastalFestex146.jpg';
+}
+
+export class RegigigasArt extends Regigigas {
+  public cardImage = 'https://archives.bulbagarden.net/media/upload/a/a4/RegigigasTerastalFestex132.jpg';
 }

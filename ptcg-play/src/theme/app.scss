@@ -10,10 +10,10 @@
 @include mat.core();
 
 $ptcg-primary: mat.define-palette(mat.$grey-palette, A700);
-$ptcg-accent:  mat.define-palette(mat.$grey-palette, A200);
+$ptcg-accent: mat.define-palette(mat.$grey-palette, A200);
 
 // The warn palette is optional (defaults to red).
-$ptcg-warn:    mat.define-palette(mat.$deep-orange-palette);
+$ptcg-warn: mat.define-palette(mat.$deep-orange-palette);
 
 // Create the theme object (a Sass map containing all of the palettes).
 $ptcg-theme: mat.define-dark-theme($ptcg-primary, $ptcg-accent, $ptcg-warn);
@@ -35,8 +35,6 @@ $ptcg-theme: map-merge($ptcg-theme, (ptcg: $ptcg-colors));
 
 
 // Create a config with the default typography levels.
-$config: mat.define-typography-config(
-  $body-2:        mat.define-typography-level(14px, 24px, 700)
-);
+$config: mat.define-typography-config($body-2: mat.define-typography-level(14px, 24px, 700));
 
 @include ptcg-typography($config);

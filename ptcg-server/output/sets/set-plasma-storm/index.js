@@ -5,6 +5,7 @@ const card_images_1 = require("./card-images");
 exports.setPlasmaStorm = [
     new card_images_1.BicycleArt(),
     new card_images_1.ColressArt(),
+    new card_images_1.ColressMachineArt(),
     new card_images_1.DonphanArt(),
     new card_images_1.DowsingMachineArt(),
     new card_images_1.EscapeRopeArt(),

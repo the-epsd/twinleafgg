@@ -1,9 +1,10 @@
 import { Card } from '../../game/store/card/card';
-import { BicycleArt, ColressArt, DonphanArt, DowsingMachineArt, EscapeRopeArt, EtherArt, GalladeArt, HypnotoxicLaserArt, KirliaArt, LugiaExArt, PhanpyArt, PlasmaEnergyArt, RaltsArt, ScrambleSwitchArt, VirbankCityGymArt, ZubatArt } from './card-images';
+import { BicycleArt, ColressArt, ColressMachineArt, DonphanArt, DowsingMachineArt, EscapeRopeArt, EtherArt, GalladeArt, HypnotoxicLaserArt, KirliaArt, LugiaExArt, PhanpyArt, PlasmaEnergyArt, RaltsArt, ScrambleSwitchArt, VirbankCityGymArt, ZubatArt } from './card-images';
 
 export const setPlasmaStorm: Card[] = [
   new BicycleArt(),
   new ColressArt(),
+  new ColressMachineArt(),
   new DonphanArt(),
   new DowsingMachineArt(),
   new EscapeRopeArt(),

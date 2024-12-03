@@ -13,8 +13,8 @@
   </ng-template>
 </dnd-preview>
 
-<div id="top_div"></div>
-<div id="bottom_div"></div>
+<div id="top_div" [class.active]="isTopPlayerActive"></div>
+<div id="bottom_div" [class.active]="isBottomPlayerActive"></div>
 
 <div class="ptcg-board-outer-container responsive-board">
 

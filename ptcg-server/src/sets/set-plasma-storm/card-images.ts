@@ -1,6 +1,7 @@
 import { EscapeRope } from '../set-battle-styles/escape-rope';
 import { Bicycle } from './bicycle';
 import { Colress } from './colress';
+import { ColressMachine } from './colress-machine';
 import { Donphan } from './donphan';
 import { DowsingMachine } from './dowsing-machine';
 import { Ether } from './ether';
@@ -21,6 +22,10 @@ export class BicycleArt extends Bicycle {
 
 export class ColressArt extends Colress {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PLS/PLS_118_R_EN.png';
+}
+
+export class ColressMachineArt extends ColressMachine {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PLS/PLS_119_R_EN.png';
 }
 
 export class DonphanArt extends Donphan {

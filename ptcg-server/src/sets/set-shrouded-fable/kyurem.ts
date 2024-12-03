@@ -4,8 +4,8 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect, UseAttackEffect } from '../../game/store/effects/game-effects';
-import { Card, ChoosePokemonPrompt, GameMessage, PlayerType, PowerType, SlotType, StateUtils } from '../../game';
-import { CheckPokemonAttacksEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { Card, ChoosePokemonPrompt, GameMessage, PlayerType, PowerType, SlotType, StateUtils, TrainerCard } from '../../game';
+import { CheckAttackCostEffect, CheckPokemonAttacksEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { DiscardCardsEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 
 
@@ -45,6 +45,39 @@ export class Kyurem extends PokemonCard {
   public fullName: string = 'Kyurem SFA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
+    if (effect instanceof CheckAttackCostEffect && effect.attack === this.attacks[0]) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      try {
+        const stub = new PowerEffect(player, {
+          name: 'test',
+          powerType: PowerType.ABILITY,
+          text: ''
+        }, this);
+        store.reduceEffect(state, stub);
+      } catch {
+        console.log(effect.cost);
+        return state;
+      }
+
+      let isColressInOpponentsDiscard = false;
+      opponent.discard.cards.filter(card => {
+        if (card instanceof TrainerCard
+          && card.name.includes('Colress')) {
+          isColressInOpponentsDiscard = true;
+        }
+      });
+
+
+      if (isColressInOpponentsDiscard) {
+        // Remove the Water and Metal energy requirements
+        effect.cost = effect.cost.filter(type => type !== CardType.WATER && type !== CardType.METAL);
+      }
+
+      return state;
+    }
 
     if (effect instanceof UseAttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;

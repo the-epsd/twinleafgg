@@ -11,4 +11,7 @@ exports.setPrismaticEvolution = [
     new card_images_1.UmbreonexArt(),
     new card_images_1.LeafeonexArt(),
     new card_images_1.GlaceonexArt(),
+    new card_images_1.RegigigasArt(),
+    new card_images_1.MaxRodArt(),
+    new card_images_1.TreasureGadgetArt(),
 ];

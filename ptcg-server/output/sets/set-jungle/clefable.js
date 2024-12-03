@@ -72,7 +72,7 @@ class Clefable extends pokemon_card_1.PokemonCard {
             const generator = useMetronome(() => generator.next(), store, state, effect);
             return generator.next().value;
         }
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             player.active.marker.addMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);

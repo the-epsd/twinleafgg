@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { EeveeexArt, EspeonexArt, FlareonexArt, GlaceonexArt, JolteonexArt, LeafeonexArt, UmbreonexArt, VaporeonexArt } from './card-images';
+import { EeveeexArt, EspeonexArt, FlareonexArt, GlaceonexArt, JolteonexArt, LeafeonexArt, MaxRodArt, RegigigasArt, TreasureGadgetArt, UmbreonexArt, VaporeonexArt } from './card-images';
 
 export const setPrismaticEvolution: Card[] = [
   new EeveeexArt(),
@@ -10,4 +10,8 @@ export const setPrismaticEvolution: Card[] = [
   new UmbreonexArt(),
   new LeafeonexArt(),
   new GlaceonexArt(),
+
+  new RegigigasArt(),
+  new MaxRodArt(),
+  new TreasureGadgetArt(),
 ];

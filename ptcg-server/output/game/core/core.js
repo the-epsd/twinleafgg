@@ -122,6 +122,10 @@ class Core {
             game.handleClientLeave(client);
         }
         // Delete game, if there are no more clients left in the game
+        if (game.clients.length === 1) {
+            console.log('Deleting bot game');
+            this.deleteGame(game);
+        }
         if (game.clients.length === 0) {
             this.deleteGame(game);
         }
