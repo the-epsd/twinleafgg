@@ -48,11 +48,9 @@ class BloodmoonUrsalunaex extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
             effect.player.attackMarker.removeMarker(this.ATTACK_USED_MARKER, this);
             effect.player.attackMarker.removeMarker(this.ATTACK_USED_2_MARKER, this);
-            console.log('marker cleared');
         }
         if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
             effect.player.attackMarker.addMarker(this.ATTACK_USED_2_MARKER, this);
-            console.log('second marker added');
         }
         if (effect instanceof check_effects_1.CheckAttackCostEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
@@ -100,11 +98,9 @@ class BloodmoonUrsalunaex extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             // Check marker
             if (effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-                console.log('attack blocked');
                 throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);
             }
             effect.player.attackMarker.addMarker(this.ATTACK_USED_MARKER, this);
-            console.log('marker added');
         }
         return state;
     }

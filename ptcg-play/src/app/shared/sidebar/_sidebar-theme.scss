@@ -10,10 +10,10 @@
   $sidebar-background-color: #2D3748;
 
   ptcg-sidebar {
-    border-left: $sidebar-side-border;
+    // border-left: $sidebar-side-border;
     background-color: #2D3748;
     color: mat.get-color-from-palette($foreground, text);
   }
 }
 
-@mixin ptcg-sidebar-typography($config) { }
+@mixin ptcg-sidebar-typography($config) {}

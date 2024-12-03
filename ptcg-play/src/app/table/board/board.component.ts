@@ -66,6 +66,14 @@ export class BoardComponent implements OnDestroy {
   public isUpsideDown: boolean = false;
   public stateUtils = StateUtils;
 
+  get isTopPlayerActive(): boolean {
+    return this.gameState?.state?.players[this.gameState.state.activePlayer]?.id === this.topPlayer?.id;
+  }
+
+  get isBottomPlayerActive(): boolean {
+    return this.gameState?.state?.players[this.gameState.state.activePlayer]?.id === this.bottomPlayer?.id;
+  }
+
   constructor(
     private cardsBaseService: CardsBaseService,
     private dnd: DndService,

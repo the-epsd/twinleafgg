@@ -3,11 +3,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Chansey = void 0;
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
-const coin_flip_prompt_1 = require("../../game/store/prompts/coin-flip-prompt");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
+const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class Chansey extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -40,15 +40,27 @@ class Chansey extends pokemon_card_1.PokemonCard {
         this.CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER = 'CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER';
     }
     reduceEffect(store, state, effect) {
+        function simulateCoinFlip(store, state, player) {
+            const result = Math.random() < 0.5;
+            const gameMessage = result ? game_1.GameLog.LOG_PLAYER_FLIPS_HEADS : game_1.GameLog.LOG_PLAYER_FLIPS_TAILS;
+            store.log(state, gameMessage, { name: player.name });
+            return result;
+        }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            state = store.prompt(state, new coin_flip_prompt_1.CoinFlipPrompt(player.id, game_1.GameMessage.COIN_FLIP), flipResult => {
-                if (flipResult) {
-                    player.active.attackMarker.addMarker(this.PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER, this);
-                    opponent.attackMarker.addMarker(this.CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER, this);
-                }
-            });
+            try {
+                const coinFlip = new play_card_effects_1.CoinFlipEffect(player);
+                store.reduceEffect(state, coinFlip);
+            }
+            catch (_a) {
+                return state;
+            }
+            const coinFlipResult = simulateCoinFlip(store, state, player);
+            if (coinFlipResult) {
+                player.active.attackMarker.addMarker(this.PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER, this);
+                opponent.attackMarker.addMarker(this.CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER, this);
+            }
             return state;
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {

@@ -73,7 +73,7 @@ function* playCard(next, store, state, self, effect) {
     player.discard.moveCardsTo(cards, player.deck);
     player.supporter.moveCardTo(effect.trainerCard, player.discard);
     cards.forEach((card, index) => {
-        store.log(state, game_message_1.GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
+        store.log(state, game_message_1.GameLog.LOG_PLAYER_RETURNS_TO_DECK_FROM_DISCARD, { name: player.name, card: card.name });
     });
     if (cards.length > 0) {
         yield store.prompt(state, new show_cards_prompt_1.ShowCardsPrompt(opponent.id, game_message_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards), () => next());
@@ -92,12 +92,12 @@ class RoseannesBackup extends trainer_card_1.TrainerCard {
         this.setNumber = '148';
         this.name = 'Roseanne\'s Backup';
         this.fullName = 'Roseanne\'s Backup BRS';
-        this.text = 'Choose 1 or more:' +
-            '' +
-            '• Shuffle a Pokémon from your discard pile into your deck.' +
-            '• Shuffle a Pokémon Tool card from your discard pile into your deck.' +
-            '• Shuffle a Stadium card from your discard pile into your deck.' +
-            '• Shuffle an Energy card from your discard pile into your deck.';
+        this.text = `Choose 1 or more:
+
+  • Shuffle a Pokémon from your discard pile into your deck.
+  • Shuffle a Pokémon Tool card from your discard pile into your deck.
+  • Shuffle a Stadium card from your discard pile into your deck.
+  • Shuffle an Energy card from your discard pile into your deck.`;
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {

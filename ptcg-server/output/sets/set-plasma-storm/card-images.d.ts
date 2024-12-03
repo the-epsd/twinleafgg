@@ -1,6 +1,7 @@
 import { EscapeRope } from '../set-battle-styles/escape-rope';
 import { Bicycle } from './bicycle';
 import { Colress } from './colress';
+import { ColressMachine } from './colress-machine';
 import { Donphan } from './donphan';
 import { DowsingMachine } from './dowsing-machine';
 import { Ether } from './ether';
@@ -18,6 +19,9 @@ export declare class BicycleArt extends Bicycle {
     cardImage: string;
 }
 export declare class ColressArt extends Colress {
+    cardImage: string;
+}
+export declare class ColressMachineArt extends ColressMachine {
     cardImage: string;
 }
 export declare class DonphanArt extends Donphan {

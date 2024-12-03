@@ -33,6 +33,34 @@ class Kyurem extends pokemon_card_1.PokemonCard {
         this.fullName = 'Kyurem SFA';
     }
     reduceEffect(store, state, effect) {
+        if (effect instanceof check_effects_1.CheckAttackCostEffect && effect.attack === this.attacks[0]) {
+            const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            try {
+                const stub = new game_effects_1.PowerEffect(player, {
+                    name: 'test',
+                    powerType: game_1.PowerType.ABILITY,
+                    text: ''
+                }, this);
+                store.reduceEffect(state, stub);
+            }
+            catch (_a) {
+                console.log(effect.cost);
+                return state;
+            }
+            let isColressInOpponentsDiscard = false;
+            opponent.discard.cards.filter(card => {
+                if (card instanceof game_1.TrainerCard
+                    && card.name.includes('Colress')) {
+                    isColressInOpponentsDiscard = true;
+                }
+            });
+            if (isColressInOpponentsDiscard) {
+                // Remove the Water and Metal energy requirements
+                effect.cost = effect.cost.filter(type => type !== card_types_1.CardType.WATER && type !== card_types_1.CardType.METAL);
+            }
+            return state;
+        }
         if (effect instanceof game_effects_1.UseAttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
@@ -45,7 +73,7 @@ class Kyurem extends pokemon_card_1.PokemonCard {
                 }, this);
                 store.reduceEffect(state, stub);
             }
-            catch (_a) {
+            catch (_b) {
                 return state;
             }
             let isColressInOpponentsDiscard = false;

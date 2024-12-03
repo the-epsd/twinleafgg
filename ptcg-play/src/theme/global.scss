@@ -4,23 +4,37 @@
     padding: 0;
 }
 
-*::after, *::before {
+*::after,
+*::before {
     box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
     height: 100%;
 }
 
 body {
     background-color: #fff;
     color: #FFFFFF;
-    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 14px;
     line-height: 1.42857;
 }
 
-article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+menu,
+nav,
+section,
+summary {
     display: block;
 }
 
@@ -32,10 +46,10 @@ audio:not([controls]) {
 a {
     background-color: transparent;
     cursor: pointer;
-    border-left: #474f5e;
 }
 
-a:active, a:hover {
+a:active,
+a:hover {
     outline: 0 none;
     text-decoration: underline;
 }
@@ -44,7 +58,8 @@ abbr[title] {
     border-bottom: 1px dotted;
 }
 
-b, strong {
+b,
+strong {
     font-weight: 700;
 }
 
@@ -52,7 +67,11 @@ img {
     border: 0 none;
 }
 
-button, input, optgroup, select, textarea {
+button,
+input,
+optgroup,
+select,
+textarea {
     color: inherit;
     font: inherit;
     margin: 0;
@@ -62,19 +81,25 @@ button {
     overflow: visible;
 }
 
-button, select {
+button,
+select {
     text-transform: none;
 }
 
-button, html input[type="button"], input[type="reset"], input[type="submit"] {
+button,
+html input[type="button"],
+input[type="reset"],
+input[type="submit"] {
     cursor: pointer;
 }
 
-button[disabled], html input[disabled] {
+button[disabled],
+html input[disabled] {
     cursor: default;
 }
 
-button::-moz-focus-inner, input::-moz-focus-inner {
+button::-moz-focus-inner,
+input::-moz-focus-inner {
     border: 0 none;
     padding: 0;
 }
@@ -93,35 +118,35 @@ textarea {
 }
 
 p {
-  margin-bottom: map-get($padding, normal);
+    margin-bottom: map-get($padding, normal);
 }
 
 table {
-  width: 100%;
+    width: 100%;
 }
 
 [hidden] {
-  display: none !important;
+    display: none !important;
 }
 
 
 /* Some material overrides, and fixes */
 mat-dialog-container {
-  position: relative;
+    position: relative;
 }
 
 mat-dialog-actions {
-  justify-content: flex-end;
+    justify-content: flex-end;
 }
 
 mat-dialog-content {
-  > form mat-form-field {
-    width: 100%;
-  }
+    >form mat-form-field {
+        width: 100%;
+    }
 }
 
 .ptcg-no-padding-list-item {
-  > .mat-list-item-content {
-    padding: 0 !important;
-  }
+    >.mat-list-item-content {
+        padding: 0 !important;
+    }
 }

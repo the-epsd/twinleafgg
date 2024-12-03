@@ -22,4 +22,6 @@ export declare class Sudowoodo extends PokemonCard {
     name: string;
     fullName: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
+    private executeCopiedAttack;
+    private findOriginalCard;
 }

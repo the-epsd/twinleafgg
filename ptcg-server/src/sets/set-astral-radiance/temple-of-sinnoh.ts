@@ -1,8 +1,9 @@
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { CardType, TrainerType } from '../../game/store/card/card-types';
+import { TrainerType } from '../../game/store/card/card-types';
 import { GameError, GameMessage, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { EnergyEffect } from '../../game/store/effects/play-card-effects';
+import { UseStadiumEffect } from '../../game/store/effects/game-effects';
 
 export class TempleofSinnoh extends TrainerCard {
 
@@ -26,8 +27,9 @@ export class TempleofSinnoh extends TrainerCard {
 
     if (effect instanceof EnergyEffect && StateUtils.getStadiumCard(state) === this) {
       effect.preventDefault = true;
-      effect.card.provides = [CardType.COLORLESS];
-      console.log('Temple of Sinnoh blocks Special Energy Effects');
+    }
+
+    if (effect instanceof UseStadiumEffect && StateUtils.getStadiumCard(state) === this) {
       throw new GameError(GameMessage.CANNOT_USE_STADIUM);
     }
     return state;

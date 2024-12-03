@@ -54,7 +54,6 @@ export class GougingFireex extends PokemonCard {
       const player = effect.player;
       // Check marker
       if (player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-        console.log('attack blocked');
         throw new GameError(GameMessage.CANNOT_USE_ATTACK);
       }
 
@@ -63,7 +62,6 @@ export class GougingFireex extends PokemonCard {
       }
 
       player.attackMarker.addMarker(this.ATTACK_USED_MARKER, this);
-      console.log('marker added');
     }
 
     return state;

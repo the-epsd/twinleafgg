@@ -5,6 +5,7 @@ const trainer_card_1 = require("../../game/store/card/trainer-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
+const game_effects_1 = require("../../game/store/effects/game-effects");
 class TempleofSinnoh extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -20,8 +21,8 @@ class TempleofSinnoh extends trainer_card_1.TrainerCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.EnergyEffect && game_1.StateUtils.getStadiumCard(state) === this) {
             effect.preventDefault = true;
-            effect.card.provides = [card_types_1.CardType.COLORLESS];
-            console.log('Temple of Sinnoh blocks Special Energy Effects');
+        }
+        if (effect instanceof game_effects_1.UseStadiumEffect && game_1.StateUtils.getStadiumCard(state) === this) {
             throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_STADIUM);
         }
         return state;

@@ -92,7 +92,6 @@ class IronLeaves extends pokemon_card_1.PokemonCard {
             const owner = game_1.StateUtils.findOwner(state, cardList);
             if (owner === player) {
                 effect.player.marker.addMarkerToState(this.RETALIATE_MARKER);
-                console.log('Revenge Marker Added');
             }
             return state;
         }

@@ -91,7 +91,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
 
   cards.forEach((card, index) => {
-    store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
+    store.log(state, GameLog.LOG_PLAYER_RETURNS_TO_DECK_FROM_DISCARD, { name: player.name, card: card.name });
   });
 
   if (cards.length > 0) {
@@ -123,14 +123,12 @@ export class RoseannesBackup extends TrainerCard {
 
   public fullName: string = 'Roseanne\'s Backup BRS';
 
-  public text: string =
-    'Choose 1 or more:' +
-    '' +
-    '• Shuffle a Pokémon from your discard pile into your deck.' +
-    '• Shuffle a Pokémon Tool card from your discard pile into your deck.' +
-    '• Shuffle a Stadium card from your discard pile into your deck.' +
-    '• Shuffle an Energy card from your discard pile into your deck.';
+  public text: string = `Choose 1 or more:
 
+  • Shuffle a Pokémon from your discard pile into your deck.
+  • Shuffle a Pokémon Tool card from your discard pile into your deck.
+  • Shuffle a Stadium card from your discard pile into your deck.
+  • Shuffle an Energy card from your discard pile into your deck.`;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

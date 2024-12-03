@@ -47,7 +47,6 @@ export class Dhelmise extends PokemonCard {
       });
 
       if (hasSpecialEnergy) {
-        console.log('Boosting Damage by 60');
         effect.damage += 60;
       }
     }

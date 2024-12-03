@@ -43,13 +43,11 @@ export class Necrozma extends PokemonCard {
 
       player.active.marker.addMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
       opponent.marker.addMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
-      console.log('marker added');
     }
 
     if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {
       if (effect.target.marker.hasMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this)) {
         effect.damage -= 30;
-        console.log('damage reduced');
         return state;
       }
     }

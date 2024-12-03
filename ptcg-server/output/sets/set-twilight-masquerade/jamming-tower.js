@@ -7,6 +7,7 @@ const trainer_card_1 = require("../../game/store/card/trainer-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const state_utils_1 = require("../../game/store/state-utils");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
+const game_effects_1 = require("../../game/store/effects/game-effects");
 class JammingTower extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -21,10 +22,9 @@ class JammingTower extends trainer_card_1.TrainerCard {
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.ToolEffect && state_utils_1.StateUtils.getStadiumCard(state) === this) {
-            // effect.preventDefault = true;
-            // effect.card.provides = [CardType.COLORLESS];
             effect.preventDefault = true;
-            console.log('Jamming Tower blocks Tool Effect');
+        }
+        if (effect instanceof game_effects_1.UseStadiumEffect && state_utils_1.StateUtils.getStadiumCard(state) === this) {
             throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_USE_STADIUM);
         }
         return state;

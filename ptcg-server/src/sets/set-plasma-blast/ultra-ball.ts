@@ -19,7 +19,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
   let cards: Card[] = [];
-  
+
   cards = player.hand.cards.filter(c => c !== self);
   if (cards.length < 2) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
@@ -41,15 +41,15 @@ function* playCard(next: Function, store: StoreLike, state: State,
     player,
     GameMessage.CHOOSE_CARD_TO_DISCARD,
     handTemp,
-    { },
+    {},
     { min: 2, max: 2, allowCancel: true }
   ), selected => {
     cards = selected || [];
-    
+
     cards.forEach((card, index) => {
       store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD_FROM_HAND, { name: player.name, card: card.name });
     });
-    
+
     next();
   });
 
@@ -80,8 +80,8 @@ function* playCard(next: Function, store: StoreLike, state: State,
   }
 
   player.deck.moveCardsTo(cards, player.hand);
-  player.supporter.moveCardTo(effect.trainerCard, player.discard);  
-  
+  player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);
   });
@@ -103,10 +103,9 @@ export class UltraBall extends TrainerCard {
 
   public setNumber: string = '90';
 
-  public text: string =
-    'Discard 2 cards from your hand. (If you can\'t discard 2 cards, you ' +
-    'can\'t play this card.) Search your deck for a Pokemon, reveal it, and ' +
-    'put it into your hand. Shuffle your deck afterward.';
+  public text: string = `Discard 2 cards from your hand. (If you can't discard 2 cards, you can't play this card.
+    
+  Search your deck for a Pokemon, reveal it, and put it into your hand. Shuffle your deck afterward.`;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

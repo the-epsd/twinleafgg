@@ -69,12 +69,10 @@ export class DialgaGX extends PokemonCard {
       effect.player.marker.removeMarker(this.TIMELESS_GX_MARKER, this);
       effect.player.marker.removeMarker(this.TIMELESS_GX_MARKER_2, this);
       effect.player.usedTurnSkip = false;
-      console.log('marker cleared');
     }
 
     if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.TIMELESS_GX_MARKER, this)) {
       effect.player.marker.addMarker(this.TIMELESS_GX_MARKER_2, this);
-      console.log('marker added');
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

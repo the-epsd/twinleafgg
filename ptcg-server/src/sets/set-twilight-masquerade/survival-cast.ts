@@ -4,7 +4,7 @@ import { State, StateUtils, GameLog, PlayerType } from '../../game';
 import { CheckHpEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { ToolEffect } from '../../game/store/effects/play-card-effects';
-import { DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 
 // interface PokemonItem {
 //   playerNum: number;
@@ -37,12 +37,20 @@ export class SurvivalCast extends TrainerCard {
 
   public reduceEffect(store: any, state: State, effect: Effect): State {
 
-    if (effect instanceof DealDamageEffect && effect.target.tool === this && effect.player.marker.hasMarker(effect.player.DAMAGE_DEALT_MARKER)) {
+    if (effect instanceof PutDamageEffect && effect.target.tool === this && effect.target.damage == 0) {
       const player = StateUtils.findOwner(state, effect.target);
       const checkHpEffect = new CheckHpEffect(player, effect.target);
       store.reduceEffect(state, checkHpEffect);
 
       if (effect.target.damage === 0 && effect.damage >= checkHpEffect.hp) {
+
+        try {
+          const toolEffect = new ToolEffect(player, this);
+          store.reduceEffect(state, toolEffect);
+        } catch {
+          return state;
+        }
+
         effect.preventDefault = true;
         effect.target.damage = checkHpEffect.hp - 10;
         store.log(state, GameLog.LOG_PLAYER_PLAYS_TOOL, { card: this.name });
@@ -64,10 +72,7 @@ export class SurvivalCast extends TrainerCard {
             cardList.tool = undefined;
           }
         });
-
-        return state;
       }
-
     }
     return state;
   }

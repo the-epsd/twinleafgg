@@ -15,6 +15,8 @@ export class PromptShowCardsComponent implements OnInit, OnDestroy {
   @Input() prompt: ShowCardsPrompt;
   @Input() gameState: LocalGameState;
 
+  public isLoading = true;
+
   private isResolved = false;
   private timeoutId: any;
 
@@ -24,6 +26,7 @@ export class PromptShowCardsComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    this.isLoading = true;
     this.timeoutId = setTimeout(() => {
       this.resolvePrompt();
     }, 3000);
@@ -54,6 +57,9 @@ export class PromptShowCardsComponent implements OnInit, OnDestroy {
 
   public cancel() {
     this.resolvePrompt();
+    const gameId = this.gameState.gameId;
+    const id = this.prompt.id;
+    // this.gameService.resolvePrompt(gameId, id, null);
   }
 
   public onCardClick(card: Card) {

@@ -50,11 +50,9 @@ class DialgaGX extends pokemon_card_1.PokemonCard {
             effect.player.marker.removeMarker(this.TIMELESS_GX_MARKER, this);
             effect.player.marker.removeMarker(this.TIMELESS_GX_MARKER_2, this);
             effect.player.usedTurnSkip = false;
-            console.log('marker cleared');
         }
         if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.TIMELESS_GX_MARKER, this)) {
             effect.player.marker.addMarker(this.TIMELESS_GX_MARKER_2, this);
-            console.log('marker added');
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;

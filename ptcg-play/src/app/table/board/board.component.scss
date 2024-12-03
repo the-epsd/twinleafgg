@@ -95,6 +95,8 @@ $board-min-height: calc(6 * var(--card-size) * #{$card-aspect-ratio} + 2 * #{map
 #bottom_div:after {
   content: '';
   position: absolute;
+  border-image: linear-gradient(90deg, #0052ff, #00a2ff, #0052ff) 1;
+  opacity: var(--bottom-opacity, 0.2);
   top: 60%;
   left: -55%;
   right: -55%;
@@ -103,8 +105,6 @@ $board-min-height: calc(6 * var(--card-size) * #{$card-aspect-ratio} + 2 * #{map
   background: rgba(0, 90, 207, 0.225);
   background-size: 56%;
   background-position: center, top;
-  border-top-left-radius: 50% 100%;
-  border-top-right-radius: 50% 100%;
   margin-top: -50px;
   z-index: -1;
 }
@@ -112,6 +112,8 @@ $board-min-height: calc(6 * var(--card-size) * #{$card-aspect-ratio} + 2 * #{map
 #top_div:after {
   content: '';
   position: absolute;
+  border-image: linear-gradient(90deg, #ff0000, #ff6b6b, #ff0000) 1;
+  opacity: var(--top-opacity, 0.2);
   top: -20vh;
   left: -40%;
   right: -40%;
@@ -121,9 +123,76 @@ $board-min-height: calc(6 * var(--card-size) * #{$card-aspect-ratio} + 2 * #{map
   background-size: 56%;
   background-position: center;
   transform: scaleY(-1);
+  z-index: -1;
+}
+
+#bottom_div:after,
+#top_div:after {
+  border: 8px solid var(--border-color);
+  transition: all 0.3s ease, border-color 0.3s ease;
   border-top-left-radius: 50% 100%;
   border-top-right-radius: 50% 100%;
-  z-index: -1;
+  border-image-slice: 1;
+}
+
+#top_div:after {
+  --border-color: rgba(255, 0, 0, 0.225);
+}
+
+#bottom_div:after {
+  --border-color: rgba(0, 90, 207, 0.225);
+}
+
+#top_div.active:after {
+  --top-opacity: 1;
+  border-color: var(--border-color);
+  // animation: glowRed 3s linear infinite;
+}
+
+#bottom_div.active:after {
+  --bottom-opacity: 1;
+  border-color: var(--border-color);
+  // animation: glowBlue 10s linear infinite;
+}
+
+@keyframes glowRed {
+  0% {
+    --border-color: rgb(145, 48, 48, 1);
+  }
+
+  100% {
+    --border-color: rgb(145, 48, 48, 1);
+  }
+}
+
+@keyframes glowBlue {
+  0% {
+    --border-color: rgb(34, 67, 112, 1);
+  }
+
+  100% {
+    --border-color: rgb(34, 67, 112, 1);
+  }
+}
+
+@keyframes spin {
+  0% {
+    --rotate: 0deg;
+  }
+
+  100% {
+    --rotate: 360deg;
+  }
+}
+
+@keyframes borderRotate {
+  from {
+    background-position: 0% center;
+  }
+
+  to {
+    background-position: 200% center;
+  }
 }
 
 .ptcg-board-row {

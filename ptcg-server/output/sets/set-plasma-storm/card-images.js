@@ -1,9 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZubatArt = exports.VirbankCityGymArt = exports.ScrambleSwitchArt = exports.RaltsArt = exports.PlasmaEnergyArt = exports.PhanpyArt = exports.LugiaExArt = exports.KirliaArt = exports.HypnotoxicLaserArt = exports.GalladeArt = exports.EtherArt = exports.EscapeRopeArt = exports.DowsingMachineArt = exports.DonphanArt = exports.ColressArt = exports.BicycleArt = void 0;
+exports.ZubatArt = exports.VirbankCityGymArt = exports.ScrambleSwitchArt = exports.RaltsArt = exports.PlasmaEnergyArt = exports.PhanpyArt = exports.LugiaExArt = exports.KirliaArt = exports.HypnotoxicLaserArt = exports.GalladeArt = exports.EtherArt = exports.EscapeRopeArt = exports.DowsingMachineArt = exports.DonphanArt = exports.ColressMachineArt = exports.ColressArt = exports.BicycleArt = void 0;
 const escape_rope_1 = require("../set-battle-styles/escape-rope");
 const bicycle_1 = require("./bicycle");
 const colress_1 = require("./colress");
+const colress_machine_1 = require("./colress-machine");
 const donphan_1 = require("./donphan");
 const dowsing_machine_1 = require("./dowsing-machine");
 const ether_1 = require("./ether");
@@ -31,6 +32,13 @@ class ColressArt extends colress_1.Colress {
     }
 }
 exports.ColressArt = ColressArt;
+class ColressMachineArt extends colress_machine_1.ColressMachine {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PLS/PLS_119_R_EN.png';
+    }
+}
+exports.ColressMachineArt = ColressMachineArt;
 class DonphanArt extends donphan_1.Donphan {
     constructor() {
         super(...arguments);

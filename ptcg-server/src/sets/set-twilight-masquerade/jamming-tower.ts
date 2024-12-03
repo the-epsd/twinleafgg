@@ -7,6 +7,7 @@ import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType } from '../../game/store/card/card-types';
 import { StateUtils } from '../../game/store/state-utils';
 import { ToolEffect } from '../../game/store/effects/play-card-effects';
+import { UseStadiumEffect } from '../../game/store/effects/game-effects';
 
 export class JammingTower extends TrainerCard {
 
@@ -30,10 +31,10 @@ export class JammingTower extends TrainerCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof ToolEffect && StateUtils.getStadiumCard(state) === this) {
-      // effect.preventDefault = true;
-      // effect.card.provides = [CardType.COLORLESS];
       effect.preventDefault = true;
-      console.log('Jamming Tower blocks Tool Effect');
+    }
+
+    if (effect instanceof UseStadiumEffect && StateUtils.getStadiumCard(state) === this) {
       throw new GameError(GameMessage.CANNOT_USE_STADIUM);
     }
     return state;
