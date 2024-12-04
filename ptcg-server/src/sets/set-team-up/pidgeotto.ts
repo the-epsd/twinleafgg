@@ -1,6 +1,6 @@
 import { GameError, PlayerType, PokemonCard, PowerType } from '../../game';
 import { GameMessage } from '../../game/game-message';
-import { CardType, SpecialCondition, Stage } from '../../game/store/card/card-types';
+import { BoardEffect, CardType, Stage } from '../../game/store/card/card-types';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
@@ -87,7 +87,7 @@ export class Pidgeotto extends PokemonCard {
 
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
           if (cardList.getPokemonCard() === this) {
-            cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+            cardList.addBoardEffect(BoardEffect.ABILITY_USED);
           }
         });
 

@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SuperType, TrainerType, SpecialCondition } from '../../game/store/card/card-types';
+import { Stage, CardType, SuperType, TrainerType, BoardEffect } from '../../game/store/card/card-types';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
@@ -72,7 +72,7 @@ export class Dragonite extends PokemonCard {
 
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
           if (cardList.getPokemonCard() === this) {
-            cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+            cardList.addBoardEffect(BoardEffect.ABILITY_USED);
           }
         });
 

@@ -71,7 +71,7 @@ class Gengar extends pokemon_card_1.PokemonCard {
             effect.player.marker.addMarker(this.NIGHT_GATE_MARKER, this);
             player.forEachPokemon(__1.PlayerType.BOTTOM_PLAYER, cardList => {
                 if (cardList.getPokemonCard() === this) {
-                    cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
+                    cardList.addBoardEffect(card_types_1.BoardEffect.ABILITY_USED);
                 }
             });
             return generator.next().value;

@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
+import { Stage, CardType, BoardEffect } from '../../game/store/card/card-types';
 import {
   PowerType, StoreLike, State, GameError, GameMessage,
   ChooseCardsPrompt,
@@ -88,7 +88,7 @@ export class Kirlia extends PokemonCard {
 
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
           if (cardList.getPokemonCard() === this) {
-            cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+            cardList.addBoardEffect(BoardEffect.ABILITY_USED);
           }
         });
 

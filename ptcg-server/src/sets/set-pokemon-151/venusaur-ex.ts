@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { CardTag, CardType, SpecialCondition, Stage } from '../../game/store/card/card-types';
+import { BoardEffect, CardTag, CardType, SpecialCondition, Stage } from '../../game/store/card/card-types';
 import { AttackEffect, HealEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { StoreLike, State, PowerType, StateUtils, CardTarget, GameError, GameMessage, PlayerType, PokemonCardList, ChoosePokemonPrompt, SlotType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
@@ -90,7 +90,7 @@ export class Venusaurex extends PokemonCard {
 
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
           if (cardList.getPokemonCard() === this) {
-            cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+            cardList.addBoardEffect(BoardEffect.ABILITY_USED);
           }
         });
 

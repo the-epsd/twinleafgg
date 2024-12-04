@@ -1,4 +1,4 @@
-import { PokemonCard, Stage, CardType, StoreLike, State, PowerType, ChooseCardsPrompt, GameMessage, ShowCardsPrompt, StateUtils, SuperType, GameError, PlayerType, SpecialCondition, ShuffleDeckPrompt } from '../../game';
+import { PokemonCard, Stage, CardType, StoreLike, State, PowerType, ChooseCardsPrompt, GameMessage, ShowCardsPrompt, StateUtils, SuperType, GameError, PlayerType, ShuffleDeckPrompt, BoardEffect } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
@@ -93,7 +93,7 @@ export class FanRotom extends PokemonCard {
 
           player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
             if (cardList.getPokemonCard() === this) {
-              cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+              cardList.addBoardEffect(BoardEffect.ABILITY_USED);
             }
           });
 

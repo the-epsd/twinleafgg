@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SuperType, CardTag, SpecialCondition } from '../../game/store/card/card-types';
+import { Stage, CardType, SuperType, CardTag, BoardEffect } from '../../game/store/card/card-types';
 import { PowerType, StoreLike, Card, State, GameError, ChooseCardsPrompt, ChoosePokemonPrompt, PlayerType, SlotType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect, AttackEffect } from '../../game/store/effects/game-effects';
@@ -102,7 +102,7 @@ export class RadiantGreninja extends PokemonCard {
 
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
           if (cardList.getPokemonCard() === this) {
-            cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+            cardList.addBoardEffect(BoardEffect.ABILITY_USED);
           }
         });
 

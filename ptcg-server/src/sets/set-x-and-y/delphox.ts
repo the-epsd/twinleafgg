@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SpecialCondition, EnergyType } from '../../game/store/card/card-types';
+import { Stage, CardType, EnergyType, BoardEffect } from '../../game/store/card/card-types';
 import { StoreLike, State, PowerType, PlayerType, GameMessage, GameError, EnergyCard } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
@@ -67,7 +67,7 @@ export class Delphox extends PokemonCard {
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
         if (cardList.getPokemonCard() === this) {
-          cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+          cardList.addBoardEffect(BoardEffect.ABILITY_USED);
         }
       });
     }

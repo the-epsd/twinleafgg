@@ -86,7 +86,7 @@ class Solrock extends pokemon_card_1.PokemonCard {
                     player.marker.addMarker(this.SUN_ENERGY_MARKER, this);
                     player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
                         if (cardList.getPokemonCard() === this) {
-                            cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
+                            cardList.addBoardEffect(card_types_1.BoardEffect.ABILITY_USED);
                         }
                     });
                 }

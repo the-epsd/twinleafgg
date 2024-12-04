@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, EnergyType, SuperType, SpecialCondition } from '../../game/store/card/card-types';
+import { Stage, CardType, CardTag, EnergyType, SuperType, BoardEffect } from '../../game/store/card/card-types';
 import { AttachEnergyPrompt, EnergyCard, GameError, GameMessage, PlayerType, PowerType, SlotType, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, HealEffect, PowerEffect } from '../../game/store/effects/game-effects';
@@ -85,7 +85,7 @@ export class Hydrappleex extends PokemonCard {
 
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
           if (cardList.getPokemonCard() === this) {
-            cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+            cardList.addBoardEffect(BoardEffect.ABILITY_USED);
           }
         });
 

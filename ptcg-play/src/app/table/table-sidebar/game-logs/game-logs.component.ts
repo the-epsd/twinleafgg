@@ -12,6 +12,7 @@ interface GameLog {
   className: string;
   message: string;
   params: StateLogParam;
+  timestamp: string;
 }
 
 @Component({
@@ -123,28 +124,26 @@ export class GameLogsComponent {
       this.logs.splice(0, toDelete);
     }
 
-    this.scrollToBottom();
+    // this.scrollToBottom();
   }
 
   private buildGameLog(log: StateLog): GameLog | undefined {
     let name: string;
     let className: string;
+    const timestamp = String(log.params?.timestamp || '');
 
     const client = this.sessionService.session.clients.find(c => c.clientId === log.client);
     const user = client ? this.sessionService.session.users[client.userId] : undefined;
     const playerIndex = this.state.state.players.findIndex(p => p.id === log.client);
 
     if (user !== undefined) {
-      name = user.name;
-      className = playerIndex >= 0
-        ? `ptcg-player${playerIndex + 1}`
-        : 'ptcg-spectator';
       return {
         id: log.id,
         name,
         className,
         message: log.message,
-        params: log.params
+        params: log.params,
+        timestamp
       };
     } else if (log.client === 0) {
       return {
@@ -152,7 +151,8 @@ export class GameLogsComponent {
         name: 'System',
         className: 'ptcg-system',
         message: log.message,
-        params: log.params
+        params: log.params,
+        timestamp
       };
     }
     return undefined;
@@ -187,15 +187,14 @@ export class GameLogsComponent {
     });
   }
 
-
-  private scrollToBottom(): void {
-    try {
-      const scollablePane = this.elementRef.nativeElement
-        .getElementsByClassName('ptcg-game-logs-content')[0] as HTMLElement;
-      setTimeout(() => {
-        scollablePane.scrollTop = scollablePane.scrollHeight;
-      });
-    } catch (err) { }
-  }
+  // private scrollToBottom(): void {
+  //   try {
+  //     const scollablePane = this.elementRef.nativeElement
+  //       .getElementsByClassName('ptcg-game-logs-content')[0] as HTMLElement;
+  //     setTimeout(() => {
+  //       scollablePane.scrollTop = scollablePane.scrollHeight;
+  //     });
+  //   } catch (err) { }
+  // }
 
 }

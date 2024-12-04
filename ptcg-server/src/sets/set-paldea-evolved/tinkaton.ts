@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SpecialCondition, EnergyType } from '../../game/store/card/card-types';
+import { Stage, CardType, EnergyType, BoardEffect } from '../../game/store/card/card-types';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { StoreLike, State, GameError, GameMessage, PlayerType, ChooseCardsPrompt, EnergyCard } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
@@ -68,7 +68,7 @@ export class Tinkaton extends PokemonCard {
 
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
           if (cardList.getPokemonCard() === this) {
-            cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+            cardList.addBoardEffect(BoardEffect.ABILITY_USED);
           }
         });
 

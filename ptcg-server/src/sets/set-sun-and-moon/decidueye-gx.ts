@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, SpecialCondition } from '../../game/store/card/card-types';
+import { Stage, CardType, CardTag, BoardEffect } from '../../game/store/card/card-types';
 import {
   PowerType, StoreLike, State, StateUtils, GameError, GameMessage,
   PlayerType, SlotType,
@@ -98,7 +98,7 @@ export class DecidueyeGX extends PokemonCard {
 
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
           if (cardList.getPokemonCard() === this) {
-            cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+            cardList.addBoardEffect(BoardEffect.ABILITY_USED);
           }
         });
 

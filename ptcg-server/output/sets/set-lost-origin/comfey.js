@@ -60,7 +60,7 @@ class Comfey extends game_1.PokemonCard {
             player.deck.moveTo(deckTop, 2);
             player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
                 if (cardList.getPokemonCard() === this) {
-                    cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
+                    cardList.addBoardEffect(card_types_1.BoardEffect.ABILITY_USED);
                 }
             });
             return store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, deckTop, {}, { min: 1, max: 1, allowCancel: false }), selected => {

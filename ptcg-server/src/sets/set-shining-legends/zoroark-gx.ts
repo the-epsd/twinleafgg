@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, SpecialCondition } from '../../game/store/card/card-types';
+import { Stage, CardType, CardTag, BoardEffect } from '../../game/store/card/card-types';
 import {
   PowerType, StoreLike, State, StateUtils, GameError, GameMessage,
   PlayerType, ChooseAttackPrompt,
@@ -52,7 +52,7 @@ function* useTricksterGX(next: Function, store: StoreLike, state: State,
 
   // set GX attack as used for game
   player.usedGX = true;
-  
+
   // Perform attack
   const attackEffect = new AttackEffect(player, opponent, attack);
   store.reduceEffect(state, attackEffect);
@@ -150,7 +150,7 @@ export class ZoroarkGX extends PokemonCard {
 
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
           if (cardList.getPokemonCard() === this) {
-            cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+            cardList.addBoardEffect(BoardEffect.ABILITY_USED);
           }
         });
 

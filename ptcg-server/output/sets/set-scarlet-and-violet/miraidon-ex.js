@@ -82,7 +82,7 @@ class Miraidonex extends pokemon_card_1.PokemonCard {
             player.abilityMarker.addMarker(this.TANDEM_UNIT_MARKER, this);
             player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
                 if (cardList.getPokemonCard() === this) {
-                    cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
+                    cardList.addBoardEffect(card_types_1.BoardEffect.ABILITY_USED);
                 }
             });
             let cards = [];

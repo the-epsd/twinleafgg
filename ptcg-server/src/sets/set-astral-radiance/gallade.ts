@@ -13,7 +13,7 @@ import {
   StateUtils,
   StoreLike
 } from '../../game';
-import { CardType, SpecialCondition, Stage, SuperType, TrainerType } from '../../game/store/card/card-types';
+import { BoardEffect, CardType, Stage, SuperType, TrainerType } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
@@ -142,7 +142,7 @@ export class Gallade extends PokemonCard {
 
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
           if (cardList.getPokemonCard() === this) {
-            cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+            cardList.addBoardEffect(BoardEffect.ABILITY_USED);
           }
         });
 

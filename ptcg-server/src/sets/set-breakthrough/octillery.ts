@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
+import { Stage, CardType, BoardEffect } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
@@ -88,7 +88,7 @@ export class Octillery extends PokemonCard {
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
         if (cardList.getPokemonCard() === this) {
-          cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+          cardList.addBoardEffect(BoardEffect.ABILITY_USED);
         }
       });
 

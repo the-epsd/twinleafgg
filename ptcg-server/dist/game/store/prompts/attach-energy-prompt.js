@@ -72,7 +72,7 @@ export class AttachEnergyPrompt extends Prompt {
         }
         if (this.options.validCardTypes) {
             let onlyValidTypes = true;
-            for (let assign of result) {
+            for (const assign of result) {
                 const energyCard = assign.card;
                 if (energyCard.provides.every(p => !this.options.validCardTypes.includes(p))) {
                     onlyValidTypes = false;

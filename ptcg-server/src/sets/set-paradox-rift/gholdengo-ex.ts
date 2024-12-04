@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, SuperType, SpecialCondition } from '../../game/store/card/card-types';
+import { Stage, CardType, CardTag, SuperType, BoardEffect } from '../../game/store/card/card-types';
 import { StoreLike, State, ChooseCardsPrompt, PowerType, GameError, PlayerType } from '../../game';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
@@ -91,7 +91,7 @@ export class Gholdengoex extends PokemonCard {
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
         if (cardList.getPokemonCard() === this) {
-          cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+          cardList.addBoardEffect(BoardEffect.ABILITY_USED);
         }
       });
     }

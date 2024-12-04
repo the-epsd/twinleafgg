@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, SpecialCondition } from '../../game/store/card/card-types';
+import { Stage, CardType, CardTag, BoardEffect } from '../../game/store/card/card-types';
 import { StoreLike, State, ChoosePokemonPrompt, PlayerType, SlotType, StateUtils, GameError, PowerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
@@ -93,7 +93,7 @@ export class Inteleon extends PokemonCard {
 
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
           if (cardList.getPokemonCard() === this) {
-            cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+            cardList.addBoardEffect(BoardEffect.ABILITY_USED);
           }
         });
 

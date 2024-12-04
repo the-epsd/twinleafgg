@@ -99,7 +99,7 @@ class ShiningGenesect extends pokemon_card_1.PokemonCard {
                 for (const transfer of transfers) {
                     player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
                         if (cardList.getPokemonCard() === this) {
-                            cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
+                            cardList.addBoardEffect(card_types_1.BoardEffect.ABILITY_USED);
                         }
                     });
                     const source = game_1.StateUtils.getTarget(state, player, transfer.from);

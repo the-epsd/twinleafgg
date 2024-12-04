@@ -1,4 +1,4 @@
-import { PokemonCard, Stage, CardType, StoreLike, State, PowerType, ChooseCardsPrompt, ConfirmPrompt, GameMessage, ShowCardsPrompt, StateUtils, SuperType, PlayerType, SpecialCondition, ShuffleDeckPrompt } from '../../game';
+import { PokemonCard, Stage, CardType, StoreLike, State, PowerType, ChooseCardsPrompt, ConfirmPrompt, GameMessage, ShowCardsPrompt, StateUtils, SuperType, PlayerType, ShuffleDeckPrompt, BoardEffect } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { EvolveEffect, PowerEffect } from '../../game/store/effects/game-effects';
 
@@ -83,7 +83,7 @@ export class Drizzile extends PokemonCard {
 
             player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
               if (cardList.getPokemonCard() === this) {
-                cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+                cardList.addBoardEffect(BoardEffect.ABILITY_USED);
               }
             });
 
