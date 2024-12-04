@@ -1,6 +1,8 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { PowerType } from '../../game/store/card/pokemon-types';
+import { StoreLike, State } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
 export declare class Fraxure extends PokemonCard {
     stage: Stage;
     evolvesFrom: string;
@@ -26,4 +28,5 @@ export declare class Fraxure extends PokemonCard {
     cardImage: string;
     setNumber: string;
     regulationMark: string;
+    reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

@@ -60,7 +60,14 @@ class Haxorus extends pokemon_card_1.PokemonCard {
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
-            player.deck.moveTo(player.discard, 3);
+            const deckTop = new game_1.CardList();
+            player.deck.moveTo(deckTop, 3);
+            const discards = deckTop.cards;
+            deckTop.moveTo(player.discard, deckTop.cards.length);
+            discards.forEach((card, index) => {
+                store.log(state, game_1.GameLog.LOG_PLAYER_DISCARDS_CARD, { name: player.name, card: card.name, effectName: effect.attack.name });
+            });
+            return state;
         }
         return state;
     }

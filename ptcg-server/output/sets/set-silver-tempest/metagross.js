@@ -43,6 +43,9 @@ class Metagross extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_phase_effects_1.DrewTopdeckEffect && effect.handCard === this) {
             const player = effect.player;
             const slots = player.bench.filter(b => b.cards.length === 0);
+            if (slots.length === 0) {
+                return state;
+            }
             // Try to reduce PowerEffect, to check if something is blocking our ability
             try {
                 const stub = new game_effects_1.PowerEffect(player, {
