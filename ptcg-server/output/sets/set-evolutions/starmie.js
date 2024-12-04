@@ -43,7 +43,7 @@ function* useSpaceBeacon(next, store, state, effect) {
     }
     player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
         if (cardList.getPokemonCard() === effect.card) {
-            cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
+            cardList.addBoardEffect(card_types_1.BoardEffect.ABILITY_USED);
         }
     });
     player.hand.moveCardsTo(cards, player.discard);

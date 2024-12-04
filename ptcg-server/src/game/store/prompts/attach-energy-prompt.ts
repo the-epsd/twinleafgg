@@ -115,7 +115,7 @@ export class AttachEnergyPrompt extends Prompt<CardAssign[]> {
     if (this.options.validCardTypes) {
       let onlyValidTypes = true;
 
-      for (let assign of result) {
+      for (const assign of result) {
         const energyCard = assign.card as EnergyCard;
 
         if (energyCard.provides.every(p => !this.options.validCardTypes!.includes(p))) {

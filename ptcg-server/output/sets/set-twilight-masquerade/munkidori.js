@@ -126,7 +126,7 @@ class Munkidori extends game_1.PokemonCard {
                             player.marker.addMarker(this.ADRENA_BRAIN_MARKER, this);
                             player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
                                 if (cardList.getPokemonCard() === this) {
-                                    cardList.addSpecialCondition(game_1.SpecialCondition.ABILITY_USED);
+                                    cardList.addBoardEffect(game_1.BoardEffect.ABILITY_USED);
                                 }
                             });
                             /*blockedFrom.forEach(blocked => {

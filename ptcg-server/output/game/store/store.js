@@ -102,7 +102,14 @@ class Store {
         return state;
     }
     log(state, message, params, client) {
+        const timestamp = new Date().toLocaleTimeString('en-US', {
+            hour12: true,
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit'
+        }).toString();
         const log = new state_log_1.StateLog(message, params, client);
+        log.params = Object.assign(Object.assign({}, params), { timestamp });
         log.id = ++this.logId;
         state.logs.push(log);
     }

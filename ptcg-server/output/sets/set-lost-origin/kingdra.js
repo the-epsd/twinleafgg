@@ -87,7 +87,7 @@ class Kingdra extends pokemon_card_1.PokemonCard {
             player.marker.addMarker(this.SEETHING_CURRENTS_MARKER, this);
             player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
                 if (cardList.getPokemonCard() === this) {
-                    cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
+                    cardList.addBoardEffect(card_types_1.BoardEffect.ABILITY_USED);
                 }
             });
             return store.prompt(state, new game_1.SelectPrompt(player.id, game_1.GameMessage.CHOOSE_OPTION, options.map(opt => opt.message), { allowCancel: false }), choice => {

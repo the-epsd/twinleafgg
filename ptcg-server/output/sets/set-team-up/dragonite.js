@@ -58,7 +58,7 @@ class Dragonite extends pokemon_card_1.PokemonCard {
                 const cards = selected || [];
                 player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
                     if (cardList.getPokemonCard() === this) {
-                        cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
+                        cardList.addBoardEffect(card_types_1.BoardEffect.ABILITY_USED);
                     }
                 });
                 store.prompt(state, [new show_cards_prompt_1.ShowCardsPrompt(opponent.id, game_message_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards)], () => {

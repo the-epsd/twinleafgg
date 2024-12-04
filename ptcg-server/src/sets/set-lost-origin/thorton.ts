@@ -4,7 +4,7 @@ import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { SpecialCondition, Stage, SuperType, TrainerType } from '../../game/store/card/card-types';
+import { BoardEffect, Stage, SuperType, TrainerType } from '../../game/store/card/card-types';
 import { CardTarget, ChooseCardsPrompt, ChoosePokemonPrompt, GameError, PlayerType, PokemonCard, SlotType } from '../../game';
 
 export class Thorton extends TrainerCard {
@@ -82,7 +82,7 @@ export class Thorton extends TrainerCard {
           const targetList = targets[0];
 
           player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-            targetList.removeSpecialCondition(SpecialCondition.ABILITY_USED);
+            targetList.removeBoardEffect(BoardEffect.ABILITY_USED);
           });
 
           targetList.moveCardTo(targetList.cards[0], player.discard);

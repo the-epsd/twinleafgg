@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, SuperType, SpecialCondition } from '../../game/store/card/card-types';
+import { Stage, CardType, CardTag, SuperType, BoardEffect } from '../../game/store/card/card-types';
 import {
   PowerType, StoreLike, State,
   GameMessage, Card, ChooseCardsPrompt, ShuffleDeckPrompt, GameError, PokemonCardList, PlayerType
@@ -109,7 +109,7 @@ export class Miraidonex extends PokemonCard {
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
         if (cardList.getPokemonCard() === this) {
-          cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+          cardList.addBoardEffect(BoardEffect.ABILITY_USED);
         }
       });
 

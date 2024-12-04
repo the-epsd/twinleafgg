@@ -54,7 +54,7 @@ class Gabite extends pokemon_card_1.PokemonCard {
             }
             player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
                 if (cardList.getPokemonCard() === this) {
-                    cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
+                    cardList.addBoardEffect(card_types_1.BoardEffect.ABILITY_USED);
                 }
             });
             return store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.POKEMON, cardType: card_types_1.CardType.DRAGON }, { min: 0, max: 1, allowCancel: true }), cards => {

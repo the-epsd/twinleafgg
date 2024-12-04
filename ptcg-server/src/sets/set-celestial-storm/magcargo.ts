@@ -2,7 +2,7 @@ import { PlayerType } from '../../game';
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
 import { Card } from '../../game/store/card/card';
-import { CardType, SpecialCondition, Stage } from '../../game/store/card/card-types';
+import { BoardEffect, CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { Effect } from '../../game/store/effects/effect';
@@ -39,10 +39,10 @@ function* useSmoothOver(next: Function, store: StoreLike, state: State,
 
   player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
     if (cardList.getPokemonCard() === self) {
-      cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+      cardList.addBoardEffect(BoardEffect.ABILITY_USED);
     }
   });
-  
+
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);
     if (order === null) {

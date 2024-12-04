@@ -70,7 +70,7 @@ class Thwackey extends pokemon_card_1.PokemonCard {
                     player.marker.addMarker(this.BOOM_BOOM_DRUM_MARKER, this);
                     player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
                         if (cardList.getPokemonCard() === this) {
-                            cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
+                            cardList.addBoardEffect(card_types_1.BoardEffect.ABILITY_USED);
                         }
                     });
                     return store.prompt(state, new game_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, {}, { min: 1, max: 1, allowCancel: false }), cards => {

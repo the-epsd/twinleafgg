@@ -1,5 +1,5 @@
 import { ChooseCardsPrompt, GameError, GameMessage, PlayerType, State, StoreLike } from '../../game';
-import { CardType, SpecialCondition, Stage } from '../../game/store/card/card-types';
+import { BoardEffect, CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
@@ -73,7 +73,7 @@ export class Swampert extends PokemonCard {
 
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
           if (cardList.getPokemonCard() === this) {
-            cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+            cardList.addBoardEffect(BoardEffect.ABILITY_USED);
           }
         });
 

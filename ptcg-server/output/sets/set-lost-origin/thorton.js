@@ -53,7 +53,7 @@ class Thorton extends trainer_card_1.TrainerCard {
                     // Move the first selected Pokémon to the discard pile
                     const targetList = targets[0];
                     player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
-                        targetList.removeSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
+                        targetList.removeBoardEffect(card_types_1.BoardEffect.ABILITY_USED);
                     });
                     targetList.moveCardTo(targetList.cards[0], player.discard);
                     // Move the selected card from the discard to the target slot

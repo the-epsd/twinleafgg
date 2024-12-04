@@ -66,7 +66,7 @@ class Beautifly extends pokemon_card_1.PokemonCard {
             player.marker.addMarker(this.STOKED_STRAW_MARKER, this);
             player.forEachPokemon(play_card_action_1.PlayerType.BOTTOM_PLAYER, cardList => {
                 if (cardList.getPokemonCard() === this) {
-                    cardList.addSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
+                    cardList.addBoardEffect(card_types_1.BoardEffect.ABILITY_USED);
                 }
             });
         }

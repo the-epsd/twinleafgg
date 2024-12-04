@@ -1,4 +1,4 @@
-import { PokemonCard, Stage, CardType, PowerType, DamageMap, GameMessage, PlayerType, SlotType, State, StateUtils, StoreLike, CardTarget, RemoveDamagePrompt, GameError, SpecialCondition, EnergyCard } from '../../game';
+import { PokemonCard, Stage, CardType, PowerType, DamageMap, GameMessage, PlayerType, SlotType, State, StateUtils, StoreLike, CardTarget, RemoveDamagePrompt, GameError, SpecialCondition, EnergyCard, BoardEffect } from '../../game';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 import { CheckHpEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
@@ -166,7 +166,7 @@ export class Munkidori extends PokemonCard {
 
               player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
                 if (cardList.getPokemonCard() === this) {
-                  cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+                  cardList.addBoardEffect(BoardEffect.ABILITY_USED);
                 }
               });
 

@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SpecialCondition, EnergyType, SuperType } from '../../game/store/card/card-types';
+import { Stage, CardType, SpecialCondition, EnergyType, SuperType, BoardEffect } from '../../game/store/card/card-types';
 import { Attack, PowerType } from '../../game/store/card/pokemon-types';
 import { StoreLike, State, CoinFlipPrompt, GameMessage, Card, ChooseCardsPrompt, EnergyCard, GameError, PlayerType } from '../../game';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
@@ -64,7 +64,7 @@ function* useSpaceBeacon(next: Function, store: StoreLike, state: State,
 
   player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
     if (cardList.getPokemonCard() === effect.card) {
-      cardList.addSpecialCondition(SpecialCondition.ABILITY_USED);
+      cardList.addBoardEffect(BoardEffect.ABILITY_USED);
     }
   });
 

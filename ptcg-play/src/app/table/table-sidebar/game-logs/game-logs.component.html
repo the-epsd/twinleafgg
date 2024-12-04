@@ -12,6 +12,7 @@
 <div class="ptcg-game-logs-content">
   <ul>
     <li *ngFor="let log of logs; trackBy: trackByFn">
+      <span class="timestamp">[{{log.params?.timestamp}}]</span>
       <span [class]="log.className">{{log.name}}</span>
       <span [class.private-log]="log.isPrivate">
         {{ 'GAME_LOGS.' + log.message | translate: log.params }}
@@ -19,6 +20,7 @@
     </li>
   </ul>
 </div>
+
 
 <div class="ptcg-game-logs-footer">
   <form class="game-logs-form" autocomplete="off">
