@@ -36,6 +36,7 @@ class ArticunoGX extends pokemon_card_1.PokemonCard {
                 name: 'Cold Crush-GX',
                 cost: [card_types_1.CardType.WATER],
                 damage: 0,
+                gxAttack: true,
                 text: 'Discard all Energy from both Active Pokémon. (You can\'t use more than 1 GX attack in a game.)'
             }
         ];

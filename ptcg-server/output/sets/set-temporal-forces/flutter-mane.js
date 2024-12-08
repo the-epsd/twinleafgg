@@ -57,6 +57,7 @@ class FlutterMane extends pokemon_card_1.PokemonCard {
         this.fullName = 'Flutter Mane TEF';
     }
     reduceEffect(store, state, effect) {
+        var _a;
         if (effect instanceof game_effects_1.PowerEffect && effect.power.powerType === pokemon_types_1.PowerType.ABILITY) {
             const player = effect.player;
             const cardList = game_1.StateUtils.findCardList(state, this);
@@ -65,8 +66,12 @@ class FlutterMane extends pokemon_card_1.PokemonCard {
             if (owner.active.getPokemonCard() !== this) {
                 return state;
             }
+            const effectCardList = game_1.StateUtils.findCardList(state, effect.card);
+            const effectOwner = game_1.StateUtils.findOwner(state, effectCardList);
+            // handles evolution abilities in opponent's active
+            const effectEvolvesFromOpponentsActive = effectOwner !== owner && effect.card.evolvesFrom === ((_a = player.active.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.name);
             // Only check opponent's Active Pokemon
-            if (player === owner || player.active.getPokemonCard() !== effect.card) {
+            if (player === owner || (player.active.getPokemonCard() !== effect.card && !effectEvolvesFromOpponentsActive)) {
                 return state;
             }
             // Try reducing ability
@@ -78,12 +83,12 @@ class FlutterMane extends pokemon_card_1.PokemonCard {
                 }, this);
                 store.reduceEffect(state, stub);
             }
-            catch (_a) {
+            catch (_b) {
                 if (!effect.power.exemptFromAbilityLock) {
-                    throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_ABILITY);
+                    return state;
                 }
             }
-            return state;
+            throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_ABILITY);
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const generator = useHexHurl(() => generator.next(), store, state, effect);

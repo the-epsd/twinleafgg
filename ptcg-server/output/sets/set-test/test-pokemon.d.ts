@@ -1,7 +1,7 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+import { StoreLike, State, PowerType } from '../../game';
+import { AttackEffect, Effect } from '../../game/store/effects/game-effects';
 export declare class TestPokemon extends PokemonCard {
     regulationMark: string;
     stage: Stage;
@@ -11,6 +11,12 @@ export declare class TestPokemon extends PokemonCard {
         type: CardType;
     }[];
     retreat: never[];
+    powers: {
+        name: string;
+        useWhenInPlay: boolean;
+        powerType: PowerType;
+        text: string;
+    }[];
     attacks: {
         name: string;
         cost: never[];
@@ -23,4 +29,5 @@ export declare class TestPokemon extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
+    reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

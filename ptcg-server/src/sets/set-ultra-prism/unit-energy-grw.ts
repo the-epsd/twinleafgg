@@ -1,4 +1,4 @@
-import { CardType, EnergyType, SuperType } from '../../game/store/card/card-types';
+import { CardType, EnergyType } from '../../game/store/card/card-types';
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
@@ -42,33 +42,19 @@ export class UnitEnergyGRW extends EnergyCard {
 
       const pokemonCard = pokemon.getPokemonCard();
       const attackCosts = pokemonCard?.attacks.map(attack => attack.cost);
-      const existingEnergy = pokemon.cards.filter(c => c.superType === SuperType.ENERGY);
 
-      const grassCost = attackCosts?.reduce((sum, cost) => sum + cost.filter(t => t === CardType.GRASS).length, 0) || 0;
-      const fireCost = attackCosts?.reduce((sum, cost) => sum + cost.filter(t => t === CardType.FIRE).length, 0) || 0;
-      const waterCost = attackCosts?.reduce((sum, cost) => sum + cost.filter(t => t === CardType.WATER).length, 0) || 0;
+      const costs = attackCosts?.flat().filter(t => t !== CardType.COLORLESS) || [];
+      const alreadyProvided = effect.energyMap.flatMap(e => e.provides);
+      const neededType = costs.find(cost =>
+        this.blendedEnergies.includes(cost) &&
+        !alreadyProvided.includes(cost)
+      );
 
-      const existingGrass = existingEnergy.reduce((sum, e) => sum + (e instanceof EnergyCard ? e.provides.filter(t => t === CardType.GRASS).length : 0), 0);
-      const existingFire = existingEnergy.reduce((sum, e) => sum + (e instanceof EnergyCard ? e.provides.filter(t => t === CardType.FIRE).length : 0), 0);
-      const existingWater = existingEnergy.reduce((sum, e) => sum + (e instanceof EnergyCard ? e.provides.filter(t => t === CardType.WATER).length : 0), 0);
-
-      const needsGrass = grassCost > existingGrass;
-      const needsFire = fireCost > existingFire;
-      const needsWater = waterCost > existingWater;
-
-      const provides = [];
-      if (needsGrass) provides.push(CardType.GRASS);
-      if (needsFire) provides.push(CardType.FIRE);
-      if (needsWater) provides.push(CardType.WATER);
-
-      if (provides.length > 0) {
-        effect.energyMap.push({ card: this, provides });
-      } else {
-        effect.energyMap.push({ card: this, provides: [CardType.COLORLESS] });
-      }
-      console.log('Unit Energy GRW is providing:', effect.energyMap[effect.energyMap.length - 1].provides);
+      effect.energyMap.push({
+        card: this,
+        provides: neededType ? [neededType] : [CardType.COLORLESS]
+      });
     }
-
     return state;
   }
 }

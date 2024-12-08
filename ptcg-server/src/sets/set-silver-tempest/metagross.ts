@@ -58,6 +58,10 @@ export class Metagross extends PokemonCard {
       const player = effect.player;
       const slots: PokemonCardList[] = player.bench.filter(b => b.cards.length === 0);
 
+      if (slots.length === 0) {
+        return state;
+      }
+      
       // Try to reduce PowerEffect, to check if something is blocking our ability
       try {
         const stub = new PowerEffect(player, {

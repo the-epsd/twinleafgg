@@ -124,7 +124,7 @@ export class GameLogsComponent {
       this.logs.splice(0, toDelete);
     }
 
-    // this.scrollToBottom();
+    this.scrollToBottom();
   }
 
   private buildGameLog(log: StateLog): GameLog | undefined {
@@ -187,14 +187,14 @@ export class GameLogsComponent {
     });
   }
 
-  // private scrollToBottom(): void {
-  //   try {
-  //     const scollablePane = this.elementRef.nativeElement
-  //       .getElementsByClassName('ptcg-game-logs-content')[0] as HTMLElement;
-  //     setTimeout(() => {
-  //       scollablePane.scrollTop = scollablePane.scrollHeight;
-  //     });
-  //   } catch (err) { }
-  // }
+  private scrollToBottom(): void {
+    try {
+      const scollablePane = this.elementRef.nativeElement
+        .getElementsByClassName('ptcg-game-logs-content')[0] as HTMLElement;
+      setTimeout(() => {
+        scollablePane.scrollTop = scollablePane.scrollHeight;
+      });
+    } catch (err) { }
+  }
 
 }

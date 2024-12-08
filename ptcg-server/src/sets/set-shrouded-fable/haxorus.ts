@@ -5,7 +5,7 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { StateUtils } from '../../game/store/state-utils';
-import { EnergyCard } from '../../game';
+import { CardList, EnergyCard, GameLog } from '../../game';
 import { KnockOutOpponentEffect } from '../../game/store/effects/attack-effects';
 
 export class Haxorus extends PokemonCard {
@@ -67,7 +67,18 @@ export class Haxorus extends PokemonCard {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
-      player.deck.moveTo(player.discard, 3);
+      
+      const deckTop = new CardList();
+      player.deck.moveTo(deckTop, 3);
+      const discards = deckTop.cards;
+  
+      deckTop.moveTo(player.discard, deckTop.cards.length);
+
+      discards.forEach((card, index) => {
+        store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD, { name: player.name, card: card.name, effectName: effect.attack.name });
+      });
+      
+      return state;
     }
 
     return state;

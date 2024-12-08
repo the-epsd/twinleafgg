@@ -74,6 +74,13 @@ class Spiritomb extends pokemon_card_1.PokemonCard {
             }
             return state;
         }
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+            const player = effect.player;
+            player.active.clearEffects();
+            player.active.moveTo(player.hand);
+            const pokemon = player.active.getPokemonCard();
+            pokemon === null || pokemon === void 0 ? void 0 : pokemon.cards.moveCardsTo(pokemon.cards.cards, player.hand);
+        }
         return state;
     }
 }

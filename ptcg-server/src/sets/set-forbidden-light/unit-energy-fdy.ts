@@ -1,4 +1,4 @@
-import { CardType, EnergyType, SuperType } from '../../game/store/card/card-types';
+import { CardType, EnergyType } from '../../game/store/card/card-types';
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
@@ -42,34 +42,19 @@ export class UnitEnergyFDY extends EnergyCard {
 
       const pokemonCard = pokemon.getPokemonCard();
       const attackCosts = pokemonCard?.attacks.map(attack => attack.cost);
-      const existingEnergy = pokemon.cards.filter(c => c.superType === SuperType.ENERGY);
 
-      const fightingCost = attackCosts?.reduce((sum, cost) => sum + cost.filter(t => t === CardType.FIGHTING).length, 0) || 0;
-      const darkCost = attackCosts?.reduce((sum, cost) => sum + cost.filter(t => t === CardType.DARK).length, 0) || 0;
-      const fairyCost = attackCosts?.reduce((sum, cost) => sum + cost.filter(t => t === CardType.FAIRY).length, 0) || 0;
+      const costs = attackCosts?.flat().filter(t => t !== CardType.COLORLESS) || [];
+      const alreadyProvided = effect.energyMap.flatMap(e => e.provides);
+      const neededType = costs.find(cost =>
+        this.blendedEnergies.includes(cost) &&
+        !alreadyProvided.includes(cost)
+      );
 
-      const existingFighting = existingEnergy.reduce((sum, e) => sum + (e instanceof EnergyCard ? e.provides.filter(t => t === CardType.FIGHTING).length : 0), 0);
-      const existingDark = existingEnergy.reduce((sum, e) => sum + (e instanceof EnergyCard ? e.provides.filter(t => t === CardType.DARK).length : 0), 0);
-      const existingFairy = existingEnergy.reduce((sum, e) => sum + (e instanceof EnergyCard ? e.provides.filter(t => t === CardType.FAIRY).length : 0), 0);
-
-      const needsFighting = fightingCost > existingFighting;
-      const needsDark = darkCost > existingDark;
-      const needsFairy = fairyCost > existingFairy;
-
-      const provides = [];
-      if (needsFighting) provides.push(CardType.FIGHTING);
-      if (needsDark) provides.push(CardType.DARK);
-      if (needsFairy) provides.push(CardType.FAIRY);
-
-      if (provides.length > 0) {
-        effect.energyMap.push({ card: this, provides });
-      } else {
-        effect.energyMap.push({ card: this, provides: [CardType.COLORLESS] });
-      }
-
-      console.log('Unit Energy FDY is providing:', effect.energyMap[effect.energyMap.length - 1].provides);
+      effect.energyMap.push({
+        card: this,
+        provides: neededType ? [neededType] : [CardType.COLORLESS]
+      });
     }
-
     return state;
   }
 }

@@ -15,12 +15,19 @@ export declare class PikachuZekromGX extends PokemonCard {
         value: number;
     }[];
     retreat: CardType[];
-    attacks: {
+    attacks: ({
         name: string;
         cost: CardType[];
         damage: number;
         text: string;
-    }[];
+        gxAttack?: undefined;
+    } | {
+        name: string;
+        cost: CardType[];
+        damage: number;
+        gxAttack: boolean;
+        text: string;
+    })[];
     set: string;
     cardImage: string;
     setNumber: string;

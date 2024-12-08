@@ -19,6 +19,7 @@ export interface Attack {
   damageCalculation?: string;
   copycatAttack?: boolean;
   gxAttack?: boolean;
+  shredAttack?: boolean;
   name: string;
   text: string;
   effect?: (store: StoreLike, state: State, effect: AttackEffect) => void;

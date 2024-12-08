@@ -57,7 +57,10 @@ export class Tinkatuff extends PokemonCard {
       checkEnergy.energyMap.forEach(em => {
         const energyCard = em.card;
         if (energyCard instanceof EnergyCard &&
-          (energyCard.provides.includes(CardType.METAL) || energyCard.provides.includes(CardType.ANY))) {
+          (energyCard.provides.includes(CardType.METAL) ||
+            energyCard.provides.includes(CardType.ANY) ||
+            energyCard.blendedEnergies?.includes(CardType.METAL))
+        ) {
           damage += 40;
         }
       });

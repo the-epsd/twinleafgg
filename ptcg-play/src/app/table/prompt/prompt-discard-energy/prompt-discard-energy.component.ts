@@ -41,6 +41,7 @@ export class PromptDiscardEnergyComponent implements OnInit {
   ngOnInit() {
     if (this.prompt && this.gameState) {
       this.initializePrompt();
+      this.validateSelection();
     }
   }
 
@@ -122,6 +123,11 @@ export class PromptDiscardEnergyComponent implements OnInit {
   }
 
   private validateSelection(): void {
+    if (this.prompt.options.min === 0 && !this.selectedItem) {
+      this.isInvalid = false;
+      return;
+    }
+
     const totalSelected = this.selectedEnergies.length;
     const selectedTransfers = this.selectedEnergies.map(result => ({
       from: result.from.target,
@@ -129,8 +135,8 @@ export class PromptDiscardEnergyComponent implements OnInit {
       card: result.card
     }));
 
-    this.isInvalid = totalSelected === 0 ||
-      totalSelected < this.prompt.options.min ||
+    this.isInvalid =
+      (this.prompt.options.min > 0 && totalSelected < this.prompt.options.min) ||
       (this.prompt.options.max !== undefined && totalSelected > this.prompt.options.max) ||
       !this.prompt.validate(selectedTransfers);
   }

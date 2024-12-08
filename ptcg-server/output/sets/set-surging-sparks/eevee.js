@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Eevee = void 0;
 const game_1 = require("../../game");
+const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
@@ -33,6 +34,12 @@ class Eevee extends game_1.PokemonCard {
         this.EVOLUTIONARY_ADVANTAGE_MARKER = 'EVOLUTIONARY_ADVANTAGE_MARKER';
     }
     reduceEffect(store, state, effect) {
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+            const player = effect.player;
+            const dealDamage = new attack_effects_1.DealDamageEffect(effect, 10);
+            dealDamage.target = player.active;
+            return store.reduceEffect(state, dealDamage);
+        }
         if (effect instanceof game_phase_effects_1.EndTurnEffect) {
             const player = effect.player;
             player.marker.removeMarker(this.EVOLUTIONARY_ADVANTAGE_MARKER, this);

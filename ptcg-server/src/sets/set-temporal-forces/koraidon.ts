@@ -35,6 +35,7 @@ export class Koraidon extends PokemonCard {
       name: 'Shred',
       cost: [CardType.FIRE, CardType.FIGHTING, CardType.COLORLESS],
       damage: 130,
+      shred: true,
       text: 'This attack\'s damage isn\'t affected by any effects on your opponent\'s Active Pokémon.'
     }
   ];

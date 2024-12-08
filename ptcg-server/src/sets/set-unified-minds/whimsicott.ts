@@ -42,7 +42,7 @@ function* useProwl(next: Function, store: StoreLike, state: State,
 }
 
 export class Whimsicott extends PokemonCard {
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.STAGE_1;
   public cardType: CardType = Y;
   public hp: number = 80;
   public weakness = [{ type: M }];

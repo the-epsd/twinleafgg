@@ -36,6 +36,7 @@ export class UltraNecrozmaGX extends PokemonCard {
       name: 'Sky-Scorching Light-GX',
       cost: [CardType.PSYCHIC, CardType.METAL],
       damage: 0,
+      gxAttack: true,
       text: 'You can use this attack only if the total of both players\' remaining Prize cards is 6 or less. Put 6 damage counters on each of your opponent\'s Pokémon. (You can\'t use more than 1 GX attack in a game.)'
     }
   ];

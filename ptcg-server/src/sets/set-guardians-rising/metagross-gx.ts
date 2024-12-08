@@ -50,6 +50,7 @@ export class MetagrossGX extends PokemonCard {
       name: 'Algorithm-GX',
       cost: [CardType.COLORLESS],
       damage: 0,
+      gxAttack: true,
       text: 'Search your deck for up to 5 cards and put them into your hand. Then, shuffle your deck. (You can\'t use more than 1 GX attack in a game.)'
     }
   ];

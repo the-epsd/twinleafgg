@@ -60,8 +60,13 @@ export class Jolteonex extends PokemonCard {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
+      const hasBenched = player.bench.some(b => b.cards.length > 0);
 
-      return store.prompt(state, new DiscardEnergyPrompt(
+      if (!hasBenched) {
+        return state;
+      }
+
+      state = store.prompt(state, new DiscardEnergyPrompt(
         player.id,
         GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
         PlayerType.BOTTOM_PLAYER,
@@ -70,8 +75,8 @@ export class Jolteonex extends PokemonCard {
         { min: 0, max: 2, allowCancel: false }
       ), transfers => {
 
-        if (transfers === null) {
-          return;
+        if (transfers === null || transfers.length === 0) {
+          return state;
         }
 
         for (const transfer of transfers) {

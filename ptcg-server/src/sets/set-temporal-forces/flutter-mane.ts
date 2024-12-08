@@ -95,8 +95,15 @@ export class FlutterMane extends PokemonCard {
         return state;
       }
 
+      const effectCardList = StateUtils.findCardList(state, effect.card);
+      const effectOwner = StateUtils.findOwner(state, effectCardList);
+      
+      // handles evolution abilities in opponent's active
+      const effectEvolvesFromOpponentsActive = 
+        effectOwner !== owner && effect.card.evolvesFrom === player.active.getPokemonCard()?.name;
+      
       // Only check opponent's Active Pokemon
-      if (player === owner || player.active.getPokemonCard() !== effect.card) {
+      if (player === owner || (player.active.getPokemonCard() !== effect.card && !effectEvolvesFromOpponentsActive)) {
         return state;
       }
 
@@ -110,11 +117,11 @@ export class FlutterMane extends PokemonCard {
         store.reduceEffect(state, stub);
       } catch {
         if (!effect.power.exemptFromAbilityLock) {
-          throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
+          return state;
         }
       }
 
-      return state;
+      throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

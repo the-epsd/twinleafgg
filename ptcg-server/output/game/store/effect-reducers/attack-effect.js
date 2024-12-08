@@ -13,7 +13,6 @@ function attackReducer(store, state, effect) {
         if (pokemonCard === undefined) {
             throw new game_error_1.GameError(game_message_1.GameMessage.ILLEGAL_ACTION);
         }
-        // Check if the effect is part of an attack and the target is the opponent's active Pokemon
         const opponent = state_utils_1.StateUtils.getOpponent(state, effect.player);
         if (effect.attackEffect && target === opponent.active && !effect.weaknessApplied) {
             // Apply weakness
@@ -28,7 +27,6 @@ function attackReducer(store, state, effect) {
         target.damage += damage;
         const targetOwner = state_utils_1.StateUtils.findOwner(state, target);
         targetOwner.marker.addMarkerToState(effect.player.DAMAGE_DEALT_MARKER);
-        console.log('Damage Dealt Marker Added to target owner');
         if (damage > 0) {
             const afterDamageEffect = new attack_effects_1.AfterDamageEffect(effect.attackEffect, damage);
             afterDamageEffect.target = effect.target;
@@ -70,7 +68,6 @@ function attackReducer(store, state, effect) {
         target.damage += damage;
         const targetOwner = state_utils_1.StateUtils.findOwner(state, target);
         targetOwner.marker.addMarkerToState(effect.player.DAMAGE_DEALT_MARKER);
-        console.log('Damage Dealt Marker Added to target owner');
         if (damage > 0) {
             const afterDamageEffect = new attack_effects_1.AfterDamageEffect(effect.attackEffect, damage);
             afterDamageEffect.target = effect.target;
@@ -92,6 +89,10 @@ function attackReducer(store, state, effect) {
         }
         const damage = Math.max(0, effect.damage);
         target.damage += damage;
+    }
+    if (effect instanceof attack_effects_1.AfterDamageEffect) {
+        const targetOwner = state_utils_1.StateUtils.findOwner(state, effect.target);
+        targetOwner.marker.addMarkerToState(effect.player.DAMAGE_DEALT_MARKER);
     }
     if (effect instanceof attack_effects_1.DiscardCardsEffect) {
         const target = effect.target;

@@ -34,6 +34,7 @@ class LycanrocGX extends pokemon_card_1.PokemonCard {
                 name: 'Dangerous Rogue-GX',
                 cost: [card_types_1.CardType.FIGHTING, card_types_1.CardType.COLORLESS],
                 damage: 50,
+                gxAttack: true,
                 text: 'This attack does 50 damage for each of your opponent\'s Benched Pokémon. (You can\'t use more than 1 GX attack in a game.)'
             }
         ];

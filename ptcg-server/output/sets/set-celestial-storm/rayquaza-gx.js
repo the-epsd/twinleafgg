@@ -34,6 +34,7 @@ class RayquazaGX extends pokemon_card_1.PokemonCard {
                 name: 'Tempest-GX',
                 cost: [card_types_1.CardType.GRASS],
                 damage: 0,
+                gxAttack: true,
                 text: 'Discard your hand and draw 10 cards. (You can\'t use more than 1 GX attack in a game.)'
             }
         ];

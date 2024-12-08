@@ -4,6 +4,8 @@ exports.Fraxure = void 0;
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const pokemon_types_1 = require("../../game/store/card/pokemon-types");
+const game_1 = require("../../game");
+const game_effects_1 = require("../../game/store/effects/game-effects");
 class Fraxure extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -31,6 +33,20 @@ class Fraxure extends pokemon_card_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '45';
         this.regulationMark = 'H';
+    }
+    reduceEffect(store, state, effect) {
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+            const player = effect.player;
+            const deckTop = new game_1.CardList();
+            player.deck.moveTo(deckTop, 1);
+            const discards = deckTop.cards;
+            deckTop.moveTo(player.discard, deckTop.cards.length);
+            discards.forEach((card, index) => {
+                store.log(state, game_1.GameLog.LOG_PLAYER_DISCARDS_CARD, { name: player.name, card: card.name, effectName: effect.attack.name });
+            });
+            return state;
+        }
+        return state;
     }
 }
 exports.Fraxure = Fraxure;

@@ -4,7 +4,7 @@ import { Card } from '../../game/store/card/card';
 import { SuperType, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
-import { DiscardToHandEffect, TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
 import { State } from '../../game/store/state/state';
@@ -54,16 +54,6 @@ export class RescueStretcher extends TrainerCard {
       }
 
       player.hand.moveCardTo(effect.trainerCard, player.supporter);
-
-      // Check if DiscardToHandEffect is prevented
-      const discardEffect = new DiscardToHandEffect(player, this);
-      store.reduceEffect(state, discardEffect);
-
-      if (discardEffect.preventDefault) {
-        // If prevented, just discard the card and return
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
-        return state;
-      }
 
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;

@@ -47,6 +47,7 @@ export class GreninjaGX extends PokemonCard {
       name: 'Shadowy Hunter-GX',
       cost: [CardType.WATER, CardType.COLORLESS, CardType.COLORLESS],
       damage: 0,
+      gxAttack: true,
       text: 'This attack does 130 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.) (You can\'t use more than 1 GX attack in a game.)'
     }
   ];

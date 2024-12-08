@@ -43,6 +43,7 @@ export class AlolanNinetalesGX extends PokemonCard {
       name: 'Sublimation-GX',
       cost: [CardType.FAIRY, CardType.COLORLESS],
       damage: 0,
+      gxAttack: true,
       text: 'If your opponent\'s Active Pokémon is an Ultra Beast, it is Knocked Out. (You can\'t use more than 1 GX attack in a game.)'
     }
   ];

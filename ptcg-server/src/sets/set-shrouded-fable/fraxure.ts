@@ -1,6 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { PowerType } from '../../game/store/card/pokemon-types';
+import { StoreLike, State, CardList, GameLog } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { AttackEffect } from '../../game/store/effects/game-effects';
 
 export class Fraxure extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -30,4 +33,22 @@ export class Fraxure extends PokemonCard {
   public setNumber: string = '45';
   public regulationMark: string = 'H';
 
+  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+      const player = effect.player;
+      
+      const deckTop = new CardList();
+      player.deck.moveTo(deckTop, 1);
+      const discards = deckTop.cards;
+  
+      deckTop.moveTo(player.discard, deckTop.cards.length);
+
+      discards.forEach((card, index) => {
+        store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD, { name: player.name, card: card.name, effectName: effect.attack.name });
+      });
+      return state;
+    }
+    
+    return state;
+  }
 }

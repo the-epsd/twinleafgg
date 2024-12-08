@@ -5,7 +5,8 @@
 
       <span class="ptcg-u-spacer"></span>
 
-      <ptcg-search-box (search)="onSearch($event)"></ptcg-search-box>
+      <ptcg-search-box class="ptcg-deck-edit-toolbar" (search)="onSearch($event)" [showSearchButton]="false"
+        [isActivated]="true"></ptcg-search-box>
 
       <button mat-raised-button color="primary" (click)="refresh()">
         {{ 'BUTTON_REFRESH' | translate }}
@@ -33,9 +34,7 @@
       <ng-container matColumnDef="user">
         <th mat-header-cell *matHeaderCellDef translate>LABEL_PLAYER</th>
         <td mat-cell *matCellDef="let rank">
-          <ptcg-user-bar openUserPopup="true"
-            [user]="rank.user"
-            [marked]="loggedUserId === rank.user.userId">
+          <ptcg-user-bar openUserPopup="true" [user]="rank.user" [marked]="loggedUserId === rank.user.userId">
           </ptcg-user-bar>
         </td>
       </ng-container>
@@ -48,8 +47,7 @@
             {{ 'BUTTON_ACTIONS' | translate }}
           </button>
           <mat-menu #menu="matMenu">
-            <button mat-menu-item
-              [routerLink]="['/profile', rank.user.userId]">
+            <button mat-menu-item [routerLink]="['/profile', rank.user.userId]">
               {{ 'BUTTON_SHOW_PROFILE' | translate }}
             </button>
             <button mat-menu-item *ngIf="rank.user.userId !== loggedUserId"
@@ -64,13 +62,8 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
 
-    <mat-paginator hidePageSize="true"
-      [disabled]="loading"
-      [length]="rankingTotal"
-      [pageIndex]="pageIndex"
-      [pageSize]="pageSize"
-      [pageSizeOptions]="pageSizeOptions"
-      (page)="onPageChange($event)">
+    <mat-paginator hidePageSize="true" [disabled]="loading" [length]="rankingTotal" [pageIndex]="pageIndex"
+      [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="onPageChange($event)">
     </mat-paginator>
   </div>
 

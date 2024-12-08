@@ -33,6 +33,7 @@ class NecrozmaGX extends pokemon_card_1.PokemonCard {
                 name: 'Black Ray-GX',
                 cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
                 damage: 0,
+                gxAttack: true,
                 text: 'This attack does 100 damage to each of your opponent\'s Pokémon-GX and Pokémon-EX. This damage isn\'t affected by Weakness or Resistance. (You can\'t use more than 1 GX attack in a game.)'
             }
         ];

@@ -35,7 +35,7 @@ function* useProwl(next, store, state, self, effect) {
 class Whimsicott extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.stage = card_types_1.Stage.BASIC;
+        this.stage = card_types_1.Stage.STAGE_1;
         this.cardType = Y;
         this.hp = 80;
         this.weakness = [{ type: M }];

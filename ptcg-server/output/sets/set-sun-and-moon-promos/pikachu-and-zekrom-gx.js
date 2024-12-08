@@ -24,9 +24,10 @@ class PikachuZekromGX extends pokemon_card_1.PokemonCard {
                 text: 'Search your deck for up to 3 [L] Energy cards and attach them to 1 of your Pokémon. Then, shuffle your deck.'
             },
             {
-                name: 'Tag Bolt GX',
+                name: 'Tag Bolt-GX',
                 cost: [card_types_1.CardType.LIGHTNING, card_types_1.CardType.LIGHTNING, card_types_1.CardType.LIGHTNING],
                 damage: 200,
+                gxAttack: true,
                 text: ' If this Pokémon has at least 3 extra [L] Energy attached to it (in addition to this attack\'s cost),'
                     + ' this attack does 170 damage to 1 of your opponent\'s Benched Pokémon.'
                     + '(Don\'t apply Weakness and Resistance for Benched Pokémon.) (You can\'t use more than 1 GX attack in a game.) '

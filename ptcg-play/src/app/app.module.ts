@@ -22,6 +22,7 @@ import { TableModule } from './table/table.module';
 import { MatchmakingLobbyComponent } from './games/matchmaking-lobby/matchmaking-lobby.component';
 import { TournamentJoiningComponent } from './tournaments/tournament-join/tournament-join.component';
 import { TournamentListComponent } from './tournaments/tournament-list/tournament-list.component';
+import { NewsModule } from './news/news.module';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { TournamentListComponent } from './tournaments/tournament-list/tournamen
     LoginModule,
     MainModule,
     MessagesModule,
+    NewsModule,
     ProfileModule,
     RankingModule,
     ReplaysModule,
