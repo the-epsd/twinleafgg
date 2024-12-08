@@ -29,4 +29,5 @@ export declare class State {
     players: Player[];
     skipOpponentTurn: boolean;
     lastAttack: Attack | null;
+    isSuddenDeath?: boolean;
 }

@@ -34,6 +34,7 @@ class DecidueyeGX extends pokemon_card_1.PokemonCard {
                 name: 'Hollow Hunt-GX',
                 cost: [card_types_1.CardType.GRASS],
                 damage: 0,
+                gxAttack: true,
                 text: 'Put 3 cards from your discard pile into your hand. (You can\'t use more than 1 GX attack in a game.)'
             }
         ];

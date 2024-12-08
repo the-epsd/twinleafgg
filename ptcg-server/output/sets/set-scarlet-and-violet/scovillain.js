@@ -50,14 +50,12 @@ class Scovillain extends pokemon_card_1.PokemonCard {
             store.reduceEffect(state, checkEnergy);
             let damage = 90;
             checkEnergy.energyMap.forEach(em => {
+                var _a;
                 const energyCard = em.card;
-                if (energyCard instanceof game_1.EnergyCard && energyCard.provides.includes(card_types_1.CardType.FIRE)) {
-                    damage += 90;
-                }
-                if (energyCard instanceof game_1.EnergyCard && energyCard.provides.includes(card_types_1.CardType.ANY)) {
-                    damage += 90;
-                }
-                if (energyCard instanceof game_1.EnergyCard && energyCard.blendedEnergies.includes(card_types_1.CardType.FIRE)) {
+                if (energyCard instanceof game_1.EnergyCard &&
+                    (energyCard.provides.includes(card_types_1.CardType.FIRE) ||
+                        energyCard.provides.includes(card_types_1.CardType.ANY) ||
+                        ((_a = energyCard.blendedEnergies) === null || _a === void 0 ? void 0 : _a.includes(card_types_1.CardType.FIRE)))) {
                     damage += 90;
                 }
             });

@@ -70,13 +70,11 @@ export class Scovillain extends PokemonCard {
 
       checkEnergy.energyMap.forEach(em => {
         const energyCard = em.card;
-        if (energyCard instanceof EnergyCard && energyCard.provides.includes(CardType.FIRE)) {
-          damage += 90;
-        }
-        if (energyCard instanceof EnergyCard && energyCard.provides.includes(CardType.ANY)) {
-          damage += 90;
-        }
-        if (energyCard instanceof EnergyCard && energyCard.blendedEnergies.includes(CardType.FIRE)) {
+        if (energyCard instanceof EnergyCard &&
+          (energyCard.provides.includes(CardType.FIRE) ||
+            energyCard.provides.includes(CardType.ANY) ||
+            energyCard.blendedEnergies?.includes(CardType.FIRE))
+        ) {
           damage += 90;
         }
       });

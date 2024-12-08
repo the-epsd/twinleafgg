@@ -111,6 +111,7 @@ class CheckProvidedEnergyEffect {
         this.type = CheckEffects.CHECK_ENOUGH_ENERGY_EFFECT;
         this.preventDefault = false;
         this.energyMap = [];
+        this.totalProvidedTypes = [];
         this.player = player;
         this.source = source === undefined ? player.active : source;
     }

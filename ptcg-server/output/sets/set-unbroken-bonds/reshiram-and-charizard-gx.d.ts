@@ -9,12 +9,21 @@ export declare class ReshiramCharizardGX extends PokemonCard {
         type: CardType;
     }[];
     retreat: CardType[];
-    attacks: {
+    attacks: ({
         name: string;
         cost: CardType[];
         damage: number;
         text: string;
-    }[];
+        shred?: undefined;
+        gxAttack?: undefined;
+    } | {
+        name: string;
+        cost: CardType[];
+        damage: number;
+        shred: boolean;
+        gxAttack: boolean;
+        text: string;
+    })[];
     set: string;
     cardImage: string;
     setNumber: string;

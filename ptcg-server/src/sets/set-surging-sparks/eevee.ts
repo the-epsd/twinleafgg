@@ -1,6 +1,7 @@
 import { State, PowerType, PlayerType, CardType, PokemonCard, Stage, StoreLike } from '../../game';
+import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 
@@ -44,6 +45,14 @@ export class Eevee extends PokemonCard {
   public readonly EVOLUTIONARY_ADVANTAGE_MARKER = 'EVOLUTIONARY_ADVANTAGE_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+      const player = effect.player;
+
+      const dealDamage = new DealDamageEffect(effect, 10);
+      dealDamage.target = player.active;
+      return store.reduceEffect(state, dealDamage);
+    }
 
     if (effect instanceof EndTurnEffect) {
       const player = effect.player;

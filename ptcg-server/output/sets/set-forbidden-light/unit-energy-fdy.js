@@ -33,30 +33,14 @@ class UnitEnergyFDY extends energy_card_1.EnergyCard {
             }
             const pokemonCard = pokemon.getPokemonCard();
             const attackCosts = pokemonCard === null || pokemonCard === void 0 ? void 0 : pokemonCard.attacks.map(attack => attack.cost);
-            const existingEnergy = pokemon.cards.filter(c => c.superType === card_types_1.SuperType.ENERGY);
-            const fightingCost = (attackCosts === null || attackCosts === void 0 ? void 0 : attackCosts.reduce((sum, cost) => sum + cost.filter(t => t === card_types_1.CardType.FIGHTING).length, 0)) || 0;
-            const darkCost = (attackCosts === null || attackCosts === void 0 ? void 0 : attackCosts.reduce((sum, cost) => sum + cost.filter(t => t === card_types_1.CardType.DARK).length, 0)) || 0;
-            const fairyCost = (attackCosts === null || attackCosts === void 0 ? void 0 : attackCosts.reduce((sum, cost) => sum + cost.filter(t => t === card_types_1.CardType.FAIRY).length, 0)) || 0;
-            const existingFighting = existingEnergy.reduce((sum, e) => sum + (e instanceof energy_card_1.EnergyCard ? e.provides.filter(t => t === card_types_1.CardType.FIGHTING).length : 0), 0);
-            const existingDark = existingEnergy.reduce((sum, e) => sum + (e instanceof energy_card_1.EnergyCard ? e.provides.filter(t => t === card_types_1.CardType.DARK).length : 0), 0);
-            const existingFairy = existingEnergy.reduce((sum, e) => sum + (e instanceof energy_card_1.EnergyCard ? e.provides.filter(t => t === card_types_1.CardType.FAIRY).length : 0), 0);
-            const needsFighting = fightingCost > existingFighting;
-            const needsDark = darkCost > existingDark;
-            const needsFairy = fairyCost > existingFairy;
-            const provides = [];
-            if (needsFighting)
-                provides.push(card_types_1.CardType.FIGHTING);
-            if (needsDark)
-                provides.push(card_types_1.CardType.DARK);
-            if (needsFairy)
-                provides.push(card_types_1.CardType.FAIRY);
-            if (provides.length > 0) {
-                effect.energyMap.push({ card: this, provides });
-            }
-            else {
-                effect.energyMap.push({ card: this, provides: [card_types_1.CardType.COLORLESS] });
-            }
-            console.log('Unit Energy FDY is providing:', effect.energyMap[effect.energyMap.length - 1].provides);
+            const costs = (attackCosts === null || attackCosts === void 0 ? void 0 : attackCosts.flat().filter(t => t !== card_types_1.CardType.COLORLESS)) || [];
+            const alreadyProvided = effect.energyMap.flatMap(e => e.provides);
+            const neededType = costs.find(cost => this.blendedEnergies.includes(cost) &&
+                !alreadyProvided.includes(cost));
+            effect.energyMap.push({
+                card: this,
+                provides: neededType ? [neededType] : [card_types_1.CardType.COLORLESS]
+            });
         }
         return state;
     }

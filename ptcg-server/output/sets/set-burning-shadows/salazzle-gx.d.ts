@@ -12,12 +12,19 @@ export declare class SalazzleGX extends PokemonCard {
         type: CardType.WATER;
     }[];
     retreat: CardType.COLORLESS[];
-    attacks: {
+    attacks: ({
         name: string;
         cost: CardType.FIRE[];
         damage: number;
         text: string;
-    }[];
+        gxAttack?: undefined;
+    } | {
+        name: string;
+        cost: CardType.FIRE[];
+        damage: number;
+        gxAttack: boolean;
+        text: string;
+    })[];
     set: string;
     setNumber: string;
     cardImage: string;

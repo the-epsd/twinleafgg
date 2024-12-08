@@ -84,6 +84,7 @@ export declare class CheckProvidedEnergyEffect implements Effect {
     player: Player;
     source: PokemonCardList;
     energyMap: EnergyMap[];
+    totalProvidedTypes: EnergyMap[];
     constructor(player: Player, source?: PokemonCardList);
 }
 export declare class CheckTableStateEffect implements Effect {

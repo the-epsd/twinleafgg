@@ -1,7 +1,7 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+import { StoreLike, State, PowerType, PlayerType, StateUtils } from '../../game';
+import { AttackEffect, Effect, PowerEffect } from '../../game/store/effects/game-effects';
 
 export class TestPokemon extends PokemonCard {
 
@@ -11,11 +11,18 @@ export class TestPokemon extends PokemonCard {
 
   public cardType: CardType = CardType.COLORLESS;
 
-  public hp: number = 1000;
+  public hp: number = 100;
 
   public weakness = [{ type: CardType.COLORLESS }];
 
   public retreat = [];
+
+  public powers = [{
+    name: 'Extremely Cursed Blast',
+    useWhenInPlay: true,
+    powerType: PowerType.ABILITY,
+    text: 'Once during your turn, both players Active Pokemon are Knocked Out.'
+  }];
 
   public attacks = [
     {
@@ -38,24 +45,42 @@ export class TestPokemon extends PokemonCard {
 
   public fullName: string = 'Test TEST';
 
-  // public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-  //   if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-  //     const player = effect.player;
-  //     const opponent = StateUtils.getOpponent(state, player);
+    //   if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    //     const player = effect.player;
+    //     const opponent = StateUtils.getOpponent(state, player);
 
-  //     const deckTop = new CardList();
-  //     opponent.deck.moveTo(deckTop, 2);
+    //     const deckTop = new CardList();
+    //     opponent.deck.moveTo(deckTop, 2);
 
-  //     deckTop.moveTo(opponent.prizes);
+    //     deckTop.moveTo(opponent.prizes);
 
-  //     import { Pokemon } from '../models/pokemon';
+    //     import { Pokemon } from '../models/pokemon';
 
-  //     const newPrizeCard1 = new Pokemon();
+    //     const newPrizeCard1 = new Pokemon();
 
-  //     import { Card, PokemonCard } from '../models';
+    //     import { Card, PokemonCard } from '../models';
 
-  //     const newPrizeCard2 = new PokemonCard();
+    //     const newPrizeCard2 = new PokemonCard();
 
-  //     opponent.prizes.push(newPrizeCard1, newPrizeCard2);
+    //     opponent.prizes.push(newPrizeCard1, newPrizeCard2);
+    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      const opponentActive = opponent.active.getPokemonCard();
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+        if (cardList.getPokemonCard() === this) {
+          cardList.damage += 999;
+        }
+      });
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, cardList => {
+        if (cardList.getPokemonCard() === opponentActive) {
+          cardList.damage += 999;
+        }
+      });
+    }
+    return state;
+  }
 }

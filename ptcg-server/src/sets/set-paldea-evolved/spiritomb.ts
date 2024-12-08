@@ -3,7 +3,7 @@ import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
@@ -93,6 +93,14 @@ export class Spiritomb extends PokemonCard {
       }
 
       return state;
+    }
+
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+      const player = effect.player;
+      player.active.clearEffects();
+      player.active.moveTo(player.hand);
+      const pokemon = player.active.getPokemonCard();
+      pokemon?.cards.moveCardsTo(pokemon.cards.cards, player.hand);
     }
     return state;
   }

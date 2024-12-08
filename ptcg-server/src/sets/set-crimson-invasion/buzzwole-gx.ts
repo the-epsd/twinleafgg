@@ -18,9 +18,25 @@ export class BuzzwoleGX extends PokemonCard {
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
-    { name: 'Jet Punch', cost: [CardType.FIGHTING], damage: 30, text: 'This attack does 30 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)' },
-    { name: 'Knuckle Impact', cost: [CardType.FIGHTING, CardType.FIGHTING, CardType.FIGHTING], damage: 160, text: 'This Pokémon can\'t attack during your next turn.' },
-    { name: 'Absorption-GX', cost: [CardType.FIGHTING, CardType.FIGHTING, CardType.FIGHTING], damage: 0, text: 'This attack does 40 damage for each of your remaining Prize cards. (You can\'t use more than 1 GX attack in a game.)' }
+    {
+      name: 'Jet Punch',
+      cost: [CardType.FIGHTING],
+      damage: 30,
+      text: 'This attack does 30 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+    },
+    {
+      name: 'Knuckle Impact',
+      cost: [CardType.FIGHTING, CardType.FIGHTING, CardType.FIGHTING],
+      damage: 160,
+      text: 'This Pokémon can\'t attack during your next turn.'
+    },
+    {
+      name: 'Absorption-GX',
+      cost: [CardType.FIGHTING, CardType.FIGHTING, CardType.FIGHTING],
+      damage: 0,
+      gxAttack: true,
+      text: 'This attack does 40 damage for each of your remaining Prize cards. (You can\'t use more than 1 GX attack in a game.)'
+    }
   ];
 
   public set: string = 'CIN';

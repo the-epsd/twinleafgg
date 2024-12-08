@@ -9,6 +9,9 @@ const check_effects_1 = require("../effects/check-effects");
 const game_effects_1 = require("../effects/game-effects");
 const choose_pokemon_prompt_1 = require("../prompts/choose-pokemon-prompt");
 const choose_prize_prompt_1 = require("../prompts/choose-prize-prompt");
+const coin_flip_prompt_1 = require("../prompts/coin-flip-prompt");
+const shuffle_prompt_1 = require("../prompts/shuffle-prompt");
+const setup_reducer_1 = require("../reducers/setup-reducer");
 const pokemon_card_list_1 = require("../state/pokemon-card-list");
 const state_1 = require("../state/state");
 function findKoPokemons(store, state) {
@@ -161,17 +164,24 @@ function endGame(store, state, winner) {
 exports.endGame = endGame;
 function checkWinner(store, state, onComplete) {
     const points = [0, 0];
+    const reasons = [[], []];
     for (let i = 0; i < state.players.length; i++) {
         const player = state.players[i];
         // Check for no active Pokemon
         if (player.active.cards.length === 0) {
             store.log(state, game_message_1.GameLog.LOG_PLAYER_NO_ACTIVE_POKEMON, { name: player.name });
             points[i === 0 ? 1 : 0]++;
+            reasons[i === 0 ? 1 : 0].push('no_active');
         }
         if (player.prizes.every(p => p.cards.length === 0)) {
             store.log(state, game_message_1.GameLog.LOG_PLAYER_NO_PRIZE_CARD, { name: player.name });
             points[i]++;
+            reasons[i].push('no_prizes');
         }
+    }
+    // Check for Sudden Death condition
+    if (points[0] > 0 && points[1] > 0) {
+        return initiateSuddenDeath(store, state);
     }
     if (points[0] + points[1] === 0) {
         if (onComplete) {
@@ -191,6 +201,32 @@ function checkWinner(store, state, onComplete) {
         onComplete();
     }
     return state;
+}
+function initiateSuddenDeath(store, state) {
+    store.log(state, game_message_1.GameLog.LOG_SUDDEN_DEATH);
+    // Reset decks
+    state.players.forEach(player => {
+        // Collect all cards back to deck
+        [player.active, ...player.bench, player.discard, ...player.prizes, player.hand]
+            .forEach(cardList => cardList.moveTo(player.deck));
+        // Shuffle deck
+        return store.prompt(state, new shuffle_prompt_1.ShuffleDeckPrompt(player.id), order => {
+            player.deck.applyOrder(order);
+        });
+    });
+    // Coin flip for first player
+    return store.prompt(state, new coin_flip_prompt_1.CoinFlipPrompt(state.players[0].id, game_message_1.GameMessage.SETUP_WHO_BEGINS_FLIP), result => {
+        const firstPlayer = result ? 0 : 1;
+        setupSuddenDeathGame(store, state, firstPlayer);
+    });
+}
+function setupSuddenDeathGame(store, state, firstPlayer) {
+    state.activePlayer = firstPlayer;
+    state.turn = 0;
+    state.phase = state_1.GamePhase.SETUP;
+    state.isSuddenDeath = true;
+    const generator = setup_reducer_1.setupGame(() => generator.next(), store, state);
+    return generator.next().value;
 }
 function handlePrompts(store, state, prompts, onComplete) {
     const prompt = prompts.shift();

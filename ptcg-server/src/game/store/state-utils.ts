@@ -175,7 +175,6 @@ export class StateUtils {
     }
   }
 
-
   public static checkExactEnergy(energy: EnergyMap[], cost: CardType[]): boolean {
     let enough = StateUtils.checkEnoughEnergy(energy, cost);
     if (!enough) {

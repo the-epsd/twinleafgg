@@ -237,6 +237,7 @@ export enum GameLog {
   LOG_PLAYER_PUTS_CARD_IN_HAND = 'LOG_PLAYER_PUTS_CARD_IN_HAND', // { name, card, pokemon }
   LOG_PLAYER_PUTS_CARD_ON_BOTTOM_OF_DECK = 'LOG_PLAYER_PUTS_CARD_ON_BOTTOM_OF_DECK', // { name, card }
   LOG_HISUIAN_HEAVY_BALL = 'LOG_HISUIAN_HEAVY_BALL', // { name, card }
+  LOG_SUDDEN_DEATH = 'LOG_SUDDEN_DEATH', // { name }
 }
 
 // tslint:disable-next-line

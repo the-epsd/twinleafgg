@@ -26,7 +26,6 @@ export function attackReducer(store: StoreLike, state: State, effect: Effect): S
       throw new GameError(GameMessage.ILLEGAL_ACTION);
     }
 
-    // Check if the effect is part of an attack and the target is the opponent's active Pokemon
     const opponent = StateUtils.getOpponent(state, effect.player);
 
     if (effect.attackEffect && target === opponent.active && !effect.weaknessApplied) {
@@ -45,7 +44,6 @@ export function attackReducer(store: StoreLike, state: State, effect: Effect): S
 
     const targetOwner = StateUtils.findOwner(state, target);
     targetOwner.marker.addMarkerToState(effect.player.DAMAGE_DEALT_MARKER);
-    console.log('Damage Dealt Marker Added to target owner');
 
     if (damage > 0) {
       const afterDamageEffect = new AfterDamageEffect(effect.attackEffect, damage);
@@ -100,7 +98,6 @@ export function attackReducer(store: StoreLike, state: State, effect: Effect): S
 
     const targetOwner = StateUtils.findOwner(state, target);
     targetOwner.marker.addMarkerToState(effect.player.DAMAGE_DEALT_MARKER);
-    console.log('Damage Dealt Marker Added to target owner');
 
     if (damage > 0) {
       const afterDamageEffect = new AfterDamageEffect(effect.attackEffect, damage);
@@ -129,6 +126,11 @@ export function attackReducer(store: StoreLike, state: State, effect: Effect): S
 
     const damage = Math.max(0, effect.damage);
     target.damage += damage;
+  }
+
+  if (effect instanceof AfterDamageEffect) {
+    const targetOwner = StateUtils.findOwner(state, effect.target);
+    targetOwner.marker.addMarkerToState(effect.player.DAMAGE_DEALT_MARKER);
   }
 
   if (effect instanceof DiscardCardsEffect) {

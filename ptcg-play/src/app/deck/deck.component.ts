@@ -111,7 +111,7 @@ export class DeckComponent implements OnInit {
   private generateDeckList(deck: DeckListEntry): string {
     const cardCounts = new Map<string, number>();
     deck.deckItems.forEach(item => {
-      const cardName = item.card.name;
+      const cardName = `${item.card.name} ${item.card.set} ${item.card.setNumber}`;
       cardCounts.set(cardName, (cardCounts.get(cardName) || 0) + 1);
     });
 

@@ -34,6 +34,7 @@ class SalazzleGX extends pokemon_card_1.PokemonCard {
                 name: 'Queen\'s Haze-GX',
                 cost: [R, R],
                 damage: 0,
+                gxAttack: true,
                 text: 'Discard all Energy from your opponent\'s Active Pokémon. (You can\'t use more than 1 GX attack in a game.)'
             }
         ];

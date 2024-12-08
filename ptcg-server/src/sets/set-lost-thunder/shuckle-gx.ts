@@ -42,6 +42,7 @@ export class ShuckleGX extends PokemonCard {
       name: 'Wrap-GX',
       cost: [CardType.COLORLESS],
       damage: 40,
+      gxAttack: true,
       text: 'Your opponent\'s Active Pokémon is now Paralyzed. (You can\'t use more than 1 GX attack in a game.)'
     }
   ];

@@ -46,10 +46,14 @@ class Jolteonex extends pokemon_card_1.PokemonCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
-            return store.prompt(state, new discard_energy_prompt_1.DiscardEnergyPrompt(player.id, game_message_1.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], // Card source is target Pokemon
+            const hasBenched = player.bench.some(b => b.cards.length > 0);
+            if (!hasBenched) {
+                return state;
+            }
+            state = store.prompt(state, new discard_energy_prompt_1.DiscardEnergyPrompt(player.id, game_message_1.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], // Card source is target Pokemon
             { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC }, { min: 0, max: 2, allowCancel: false }), transfers => {
-                if (transfers === null) {
-                    return;
+                if (transfers === null || transfers.length === 0) {
+                    return state;
                 }
                 for (const transfer of transfers) {
                     let totalDiscarded = 0;

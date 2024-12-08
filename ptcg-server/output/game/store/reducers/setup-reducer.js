@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.setupPhaseReducer = void 0;
+exports.setupPhaseReducer = exports.setupGame = void 0;
 const add_player_action_1 = require("../actions/add-player-action");
 const alert_prompt_1 = require("../prompts/alert-prompt");
 const card_list_1 = require("../state/card-list");
@@ -23,7 +23,7 @@ const game_phase_effect_1 = require("../effect-reducers/game-phase-effect");
 const select_prompt_1 = require("../prompts/select-prompt");
 const game_phase_effects_1 = require("../effects/game-phase-effects");
 const pokemon_card_1 = require("../card/pokemon-card");
-function putStartingPokemonsAndPrizes(player, cards) {
+function putStartingPokemonsAndPrizes(player, cards, state) {
     if (cards.length === 0) {
         return;
     }
@@ -31,7 +31,9 @@ function putStartingPokemonsAndPrizes(player, cards) {
     for (let i = 1; i < cards.length; i++) {
         player.hand.moveCardTo(cards[i], player.bench[i - 1]);
     }
-    for (let i = 0; i < 6; i++) {
+    // Set prize count based on state's sudden death flag
+    const prizeCount = state.isSuddenDeath ? 1 : 6;
+    for (let i = 0; i < prizeCount; i++) {
         player.deck.moveTo(player.prizes[i], 1);
     }
 }
@@ -124,8 +126,8 @@ function* setupGame(next, store, state) {
         new choose_cards_prompt_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_STARTING_POKEMONS, player.hand, {}, Object.assign(Object.assign({}, chooseCardsOptions), { blocked })),
         new choose_cards_prompt_1.ChooseCardsPrompt(opponent, game_message_1.GameMessage.CHOOSE_STARTING_POKEMONS, opponent.hand, {}, Object.assign(Object.assign({}, chooseCardsOptions), { blocked: blockedOpponent }))
     ], choice => {
-        putStartingPokemonsAndPrizes(player, choice[0]);
-        putStartingPokemonsAndPrizes(opponent, choice[1]);
+        putStartingPokemonsAndPrizes(player, choice[0], state);
+        putStartingPokemonsAndPrizes(opponent, choice[1], state);
         next();
     });
     // Set initial Pokemon Played Turn, so players can't evolve during first turn
@@ -159,6 +161,7 @@ function* setupGame(next, store, state) {
     }
     return game_phase_effect_1.initNextTurn(store, state);
 }
+exports.setupGame = setupGame;
 function createPlayer(id, name) {
     const player = new player_1.Player();
     player.id = id;

@@ -38,9 +38,12 @@ class Tinkatuff extends pokemon_card_1.PokemonCard {
             store.reduceEffect(state, checkEnergy);
             let damage = 20;
             checkEnergy.energyMap.forEach(em => {
+                var _a;
                 const energyCard = em.card;
                 if (energyCard instanceof game_1.EnergyCard &&
-                    (energyCard.provides.includes(card_types_1.CardType.METAL) || energyCard.provides.includes(card_types_1.CardType.ANY))) {
+                    (energyCard.provides.includes(card_types_1.CardType.METAL) ||
+                        energyCard.provides.includes(card_types_1.CardType.ANY) ||
+                        ((_a = energyCard.blendedEnergies) === null || _a === void 0 ? void 0 : _a.includes(card_types_1.CardType.METAL)))) {
                     damage += 40;
                 }
             });

@@ -1,5 +1,12 @@
 <ptcg-sidebar-container>
-
+  <!-- <div class="news-banner" routerLink="/news">
+    <mat-toolbar color="accent">
+      <mat-icon>announcement</mat-icon>
+      <span class="latest-news">Latest News</span>
+      <span class="ptcg-u-spacer"></span>
+      <mat-icon>chevron_right</mat-icon>
+    </mat-toolbar>
+  </div> -->
   <ptcg-sidebar>
     <mat-nav-list>
       <a mat-list-item *ngFor="let client of (clients$ | async)" class="ptcg-no-padding-list-item"

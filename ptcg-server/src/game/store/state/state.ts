@@ -43,4 +43,6 @@ export class State {
   public skipOpponentTurn = false;
 
   public lastAttack: Attack | null = null;
+
+  public isSuddenDeath?: boolean;
 }

@@ -42,6 +42,7 @@ export class KartanaGX extends PokemonCard {
       name: 'Blade-GX',
       cost: [CardType.METAL],
       damage: 0,
+      gxAttack: true,
       text: 'Take a prize card. (You can\'t use more than 1 GX attack in a game.)'
     },
 

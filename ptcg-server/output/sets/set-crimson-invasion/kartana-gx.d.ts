@@ -21,12 +21,19 @@ export declare class KartanaGX extends PokemonCard {
         powerType: PowerType;
         text: string;
     }[];
-    attacks: {
+    attacks: ({
         name: string;
         cost: CardType[];
         damage: number;
         text: string;
-    }[];
+        gxAttack?: undefined;
+    } | {
+        name: string;
+        cost: CardType[];
+        damage: number;
+        gxAttack: boolean;
+        text: string;
+    })[];
     set: string;
     setNumber: string;
     cardImage: string;

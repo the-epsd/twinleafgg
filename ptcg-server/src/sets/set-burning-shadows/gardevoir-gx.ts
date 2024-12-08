@@ -53,6 +53,7 @@ export class GardevoirGX extends PokemonCard {
       name: 'Twilight-GX',
       cost: [CardType.FAIRY],
       damage: 0,
+      gxAttack: true,
       text: 'Shuffle 10 cards from your discard pile into your deck. (You can\'t use more than 1 GX attack in a game.)'
     }
   ];

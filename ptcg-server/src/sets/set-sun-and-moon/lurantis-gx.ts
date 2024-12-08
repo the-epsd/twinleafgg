@@ -39,6 +39,7 @@ export class LurantisGX extends PokemonCard {
       name: 'Chloroscythe-GX',
       cost: [CardType.GRASS],
       damage: 50,
+      gxAttack: true,
       text: 'This attack does 50 damage times the amount of [G] Energy attached to this Pokémon. (You can\'t use more than 1 GX attack in a game.)'
     }
   ];

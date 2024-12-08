@@ -147,6 +147,7 @@ export class CheckProvidedEnergyEffect implements Effect {
   public player: Player;
   public source: PokemonCardList;
   public energyMap: EnergyMap[] = [];
+  public totalProvidedTypes: EnergyMap[] = [];
 
   constructor(player: Player, source?: PokemonCardList) {
     this.player = player;
