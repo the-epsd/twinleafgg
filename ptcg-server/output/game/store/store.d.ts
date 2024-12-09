@@ -8,6 +8,7 @@ import { StoreHandler } from './store-handler';
 import { StoreLike } from './store-like';
 export declare class Store implements StoreLike {
     private handler;
+    private effectHistory;
     state: State;
     private promptItems;
     private waitItems;
