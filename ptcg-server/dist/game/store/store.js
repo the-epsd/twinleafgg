@@ -25,6 +25,7 @@ import { abortGameReducer } from './reducers/abort-game-reducer';
 export class Store {
     constructor(handler) {
         this.handler = handler;
+        this.effectHistory = [];
         this.state = new State();
         this.promptItems = [];
         this.waitItems = [];
@@ -65,6 +66,29 @@ export class Store {
     }
     reduceEffect(state, effect) {
         state = this.propagateEffect(state, effect);
+        console.log(effect.type);
+        if (this.effectHistory.length === 100) {
+            this.effectHistory.shift();
+        }
+        this.effectHistory.push(effect);
+        if (this.effectHistory.length === 100) {
+            const firstEffects = this.effectHistory.slice(0, 10);
+            this.effectHistory.slice(10, 90).forEach((effect, index) => {
+                if (effect === firstEffects[0] &&
+                    this.effectHistory[index + 1] === firstEffects[1] &&
+                    this.effectHistory[index + 2] === firstEffects[2] &&
+                    this.effectHistory[index + 3] === firstEffects[3] &&
+                    this.effectHistory[index + 4] === firstEffects[4] &&
+                    this.effectHistory[index + 5] === firstEffects[5] &&
+                    this.effectHistory[index + 6] === firstEffects[6] &&
+                    this.effectHistory[index + 7] === firstEffects[7] &&
+                    this.effectHistory[index + 8] === firstEffects[8] &&
+                    this.effectHistory[index + 9] === firstEffects[9]) {
+                    console.log('Loop detected in effect: ' + effect);
+                    throw new Error('Loop detected');
+                }
+            });
+        }
         if (effect.preventDefault === true) {
             return state;
         }

@@ -25,7 +25,6 @@ export class BuddyBuddyPoffin extends TrainerCard {
     'Search your deck for up to 2 Basic Pokémon with 70 HP or less and put them onto your Bench. Then, shuffle your deck.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    console.time('poffin-effect');
     if ((effect instanceof TrainerEffect && effect.trainerCard === this)) {
       const player = effect.player;
       const openSlots = player.bench.filter(b => b.cards.length === 0);
@@ -68,7 +67,6 @@ export class BuddyBuddyPoffin extends TrainerCard {
         });
       });
     }
-    console.timeEnd('poffin-effect');
     return state;
   }
 }

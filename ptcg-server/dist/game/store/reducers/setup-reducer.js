@@ -20,7 +20,7 @@ import { initNextTurn } from '../effect-reducers/game-phase-effect';
 import { SelectPrompt } from '../prompts/select-prompt';
 import { WhoBeginsEffect } from '../effects/game-phase-effects';
 import { PokemonCard } from '../card/pokemon-card';
-function putStartingPokemonsAndPrizes(player, cards) {
+function putStartingPokemonsAndPrizes(player, cards, state) {
     if (cards.length === 0) {
         return;
     }
@@ -28,11 +28,13 @@ function putStartingPokemonsAndPrizes(player, cards) {
     for (let i = 1; i < cards.length; i++) {
         player.hand.moveCardTo(cards[i], player.bench[i - 1]);
     }
-    for (let i = 0; i < 6; i++) {
+    // Set prize count based on state's sudden death flag
+    const prizeCount = state.isSuddenDeath ? 1 : 6;
+    for (let i = 0; i < prizeCount; i++) {
         player.deck.moveTo(player.prizes[i], 1);
     }
 }
-function* setupGame(next, store, state) {
+export function* setupGame(next, store, state) {
     const player = state.players[0];
     const opponent = state.players[1];
     const basicPokemon = { superType: SuperType.POKEMON, stage: Stage.BASIC };
@@ -121,8 +123,8 @@ function* setupGame(next, store, state) {
         new ChooseCardsPrompt(player, GameMessage.CHOOSE_STARTING_POKEMONS, player.hand, {}, Object.assign(Object.assign({}, chooseCardsOptions), { blocked })),
         new ChooseCardsPrompt(opponent, GameMessage.CHOOSE_STARTING_POKEMONS, opponent.hand, {}, Object.assign(Object.assign({}, chooseCardsOptions), { blocked: blockedOpponent }))
     ], choice => {
-        putStartingPokemonsAndPrizes(player, choice[0]);
-        putStartingPokemonsAndPrizes(opponent, choice[1]);
+        putStartingPokemonsAndPrizes(player, choice[0], state);
+        putStartingPokemonsAndPrizes(opponent, choice[1], state);
         next();
     });
     // Set initial Pokemon Played Turn, so players can't evolve during first turn

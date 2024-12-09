@@ -238,6 +238,7 @@ export var GameLog;
     GameLog["LOG_PLAYER_PUTS_CARD_IN_HAND"] = "LOG_PLAYER_PUTS_CARD_IN_HAND";
     GameLog["LOG_PLAYER_PUTS_CARD_ON_BOTTOM_OF_DECK"] = "LOG_PLAYER_PUTS_CARD_ON_BOTTOM_OF_DECK";
     GameLog["LOG_HISUIAN_HEAVY_BALL"] = "LOG_HISUIAN_HEAVY_BALL";
+    GameLog["LOG_SUDDEN_DEATH"] = "LOG_SUDDEN_DEATH";
 })(GameLog || (GameLog = {}));
 // tslint:disable-next-line
 export const GameMessage = Object.assign(Object.assign(Object.assign({}, GameCoreError), GameStoreMessage), GameCardMessage);
