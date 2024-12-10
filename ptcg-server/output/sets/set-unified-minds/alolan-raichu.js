@@ -6,6 +6,7 @@ const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
+const check_effects_1 = require("../../game/store/effects/check-effects");
 class AlolanRaichu extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -38,8 +39,25 @@ class AlolanRaichu extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
+            const blocked = [];
+            player.active.cards.forEach((cardList, card, target) => {
+                const checkProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(player, player.active);
+                store.reduceEffect(state, checkProvidedEnergy);
+                const blockedCards = [];
+                checkProvidedEnergy.energyMap.forEach(em => {
+                    if (!em.provides.includes(card_types_1.CardType.LIGHTNING) && !em.provides.includes(card_types_1.CardType.ANY)) {
+                        blockedCards.push(em.card);
+                    }
+                });
+                blockedCards.forEach(bc => {
+                    const index = target.indexOf(bc);
+                    if (index !== -1 && !blocked.includes(index)) {
+                        blocked.push(index);
+                    }
+                });
+            });
             return store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, player.active, // Card source is target Pokemon
-            { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Lightning Energy' }, { allowCancel: false }), selected => {
+            { superType: card_types_1.SuperType.ENERGY }, { allowCancel: false, blocked }), selected => {
                 const cards = selected || [];
                 if (cards.length > 0) {
                     const discardEnergy = new attack_effects_1.DiscardCardsEffect(effect, cards);

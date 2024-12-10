@@ -69,7 +69,10 @@ class Store {
     }
     reduceEffect(state, effect) {
         state = this.propagateEffect(state, effect);
-        console.log(effect.type);
+        console.log('Effect: ' + effect.type);
+        if (effect.card) {
+            console.log('Card: ' + effect.card);
+        }
         if (this.effectHistory.length === 100) {
             this.effectHistory.shift();
         }
