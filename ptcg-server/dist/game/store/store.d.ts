@@ -16,6 +16,8 @@ export declare class Store implements StoreLike {
     constructor(handler: StoreHandler);
     dispatch(action: Action): State;
     reduceEffect(state: State, effect: Effect): State;
+    checkEffectHistory(state: State, effect: Effect): void;
+    compareEffects(effect1: Effect, effect2: Effect): boolean;
     prompt(state: State, prompts: Prompt<any>[] | Prompt<any>, then: (results: any) => void): State;
     waitPrompt(state: State, callback: () => void): State;
     log(state: State, message: GameLog, params?: StateLogParam, client?: number): void;

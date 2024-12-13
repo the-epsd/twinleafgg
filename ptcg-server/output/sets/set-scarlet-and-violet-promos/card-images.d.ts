@@ -1,6 +1,7 @@
 import { Ampharosex } from './ampharos-ex';
 import { Annihilapeex } from './annihilape-ex';
 import { Charmander } from './charmander';
+import { Eevee } from './eevee';
 import { Magneton } from './magneton';
 import { Mimikyuex } from './mimikyu-ex';
 import { Pecharunt } from './pecharunt';
@@ -12,6 +13,9 @@ export declare class AnnihilapeexArt extends Annihilapeex {
     cardImage: string;
 }
 export declare class CharmanderArt extends Charmander {
+    cardImage: string;
+}
+export declare class EeveeArt extends Eevee {
     cardImage: string;
 }
 export declare class MagnetonArt extends Magneton {
