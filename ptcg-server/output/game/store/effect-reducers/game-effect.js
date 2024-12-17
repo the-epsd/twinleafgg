@@ -137,7 +137,6 @@ function* useAttack(next, store, state, effect) {
     return store.reduceEffect(state, new game_phase_effects_1.EndTurnEffect(player));
 }
 function gameReducer(store, state, effect) {
-    var _a;
     if (effect instanceof game_effects_1.KnockOutEffect) {
         // const player = effect.player;
         const card = effect.target.getPokemonCard();
@@ -154,7 +153,8 @@ function gameReducer(store, state, effect) {
                 effect.prizeCount += 2;
             }
             store.log(state, game_message_1.GameLog.LOG_POKEMON_KO, { name: card.name });
-            if (card.tags.includes(card_types_1.CardTag.PRISM_STAR) || ((_a = state_utils_1.StateUtils.getStadiumCard(state)) === null || _a === void 0 ? void 0 : _a.name) === 'Lost City') {
+            const stadiumCard = state_utils_1.StateUtils.getStadiumCard(state);
+            if (card.tags.includes(card_types_1.CardTag.PRISM_STAR) || stadiumCard && stadiumCard.name === 'Lost City') {
                 const lostZoned = new card_list_1.CardList();
                 const pokemonIndices = effect.target.cards.map((card, index) => index);
                 for (let i = pokemonIndices.length - 1; i >= 0; i--) {
@@ -165,11 +165,20 @@ function gameReducer(store, state, effect) {
                     }
                 }
                 lostZoned.moveTo(effect.player.lostzone);
+                effect.target.clearEffects();
             }
             else {
                 effect.target.moveTo(effect.player.discard);
                 effect.target.clearEffects();
             }
+            // const stadiumCard = StateUtils.getStadiumCard(state);
+            // if (card.tags.includes(CardTag.PRISM_STAR) || stadiumCard && stadiumCard.name === 'Lost City') {
+            //   effect.target.moveTo(effect.player.lostzone);
+            //   effect.target.clearEffects();
+            // } else {
+            //   effect.target.moveTo(effect.player.discard);
+            //   effect.target.clearEffects();
+            // }
         }
     }
     if (effect instanceof attack_effects_1.ApplyWeaknessEffect) {

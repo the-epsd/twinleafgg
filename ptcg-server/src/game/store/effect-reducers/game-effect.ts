@@ -217,7 +217,10 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
       }
 
       store.log(state, GameLog.LOG_POKEMON_KO, { name: card.name });
-      if (card.tags.includes(CardTag.PRISM_STAR) || StateUtils.getStadiumCard(state)?.name === 'Lost City') {
+
+      const stadiumCard = StateUtils.getStadiumCard(state);
+
+      if (card.tags.includes(CardTag.PRISM_STAR) || stadiumCard && stadiumCard.name === 'Lost City') {
         const lostZoned = new CardList();
         const pokemonIndices = effect.target.cards.map((card, index) => index);
 
@@ -231,10 +234,21 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
         }
 
         lostZoned.moveTo(effect.player.lostzone);
+        effect.target.clearEffects();
       } else {
         effect.target.moveTo(effect.player.discard);
         effect.target.clearEffects();
       }
+
+      // const stadiumCard = StateUtils.getStadiumCard(state);
+
+      // if (card.tags.includes(CardTag.PRISM_STAR) || stadiumCard && stadiumCard.name === 'Lost City') {
+      //   effect.target.moveTo(effect.player.lostzone);
+      //   effect.target.clearEffects();
+      // } else {
+      //   effect.target.moveTo(effect.player.discard);
+      //   effect.target.clearEffects();
+      // }
     }
   }
 

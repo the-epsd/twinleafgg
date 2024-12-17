@@ -1,7 +1,6 @@
 import { Ampharosex } from './ampharos-ex';
 import { Annihilapeex } from './annihilape-ex';
 import { Charmander } from './charmander';
-import { Eevee } from './eevee';
 import { Magneton } from './magneton';
 import { Mimikyuex } from './mimikyu-ex';
 import { Pecharunt } from './pecharunt';
@@ -17,10 +16,6 @@ export class AnnihilapeexArt extends Annihilapeex {
 
 export class CharmanderArt extends Charmander {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVP/SVP_047_R_EN_LG.png';
-}
-
-export class EeveeArt extends Eevee {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVP/SVP_188_R_EN_LG.png';
 }
 
 export class MagnetonArt extends Magneton {

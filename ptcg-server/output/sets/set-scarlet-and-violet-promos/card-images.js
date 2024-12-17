@@ -1,10 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TinkatonexArt = exports.PecharuntArt = exports.MimikyuexArt = exports.MagnetonArt = exports.EeveeArt = exports.CharmanderArt = exports.AnnihilapeexArt = exports.AmpharosexArt = void 0;
+exports.TinkatonexArt = exports.PecharuntArt = exports.MimikyuexArt = exports.MagnetonArt = exports.CharmanderArt = exports.AnnihilapeexArt = exports.AmpharosexArt = void 0;
 const ampharos_ex_1 = require("./ampharos-ex");
 const annihilape_ex_1 = require("./annihilape-ex");
 const charmander_1 = require("./charmander");
-const eevee_1 = require("./eevee");
 const magneton_1 = require("./magneton");
 const mimikyu_ex_1 = require("./mimikyu-ex");
 const pecharunt_1 = require("./pecharunt");
@@ -30,13 +29,6 @@ class CharmanderArt extends charmander_1.Charmander {
     }
 }
 exports.CharmanderArt = CharmanderArt;
-class EeveeArt extends eevee_1.Eevee {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SVP/SVP_188_R_EN_LG.png';
-    }
-}
-exports.EeveeArt = EeveeArt;
 class MagnetonArt extends magneton_1.Magneton {
     constructor() {
         super(...arguments);

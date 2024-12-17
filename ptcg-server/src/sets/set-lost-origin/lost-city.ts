@@ -1,10 +1,5 @@
-import { StateUtils } from '../../game';
 import { TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { Effect } from '../../game/store/effects/effect';
-import { KnockOutEffect } from '../../game/store/effects/game-effects';
-import { State } from '../../game/store/state/state';
-import { StoreLike } from '../../game/store/store-like';
 
 export class LostCity extends TrainerCard {
 
@@ -27,41 +22,33 @@ export class LostCity extends TrainerCard {
 
   public readonly LOST_CITY_MARKER = 'LOST_CITY_MARKER';
 
-  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof KnockOutEffect && StateUtils.getStadiumCard(state) === this && effect.isLostCity) {
-      // const player = effect.player;
-      // const target = effect.target;
-      // const cards = target.getPokemons();
 
-      // const attachedCards = new CardList();
-      // const lostZoned = new CardList();
+  // const player = effect.player;
+  // const target = effect.target;
+  // const cards = target.getPokemons();
 
-      // const pokemonIndices = effect.target.cards.map((card, index) => index);
+  // const attachedCards = new CardList();
+  // const lostZoned = new CardList();
 
-      // for (let i = pokemonIndices.length - 1; i >= 0; i--) {
-      //   const removedCard = target.cards.splice(pokemonIndices[i], 1)[0];
-      //   if (removedCard.superType === SuperType.POKEMON) {
-      //     lostZoned.cards.push(removedCard);
-      //   } else {
-      //     attachedCards.cards.push(removedCard);
-      //   }
-      //   target.damage = 0;
-      // }
+  // const pokemonIndices = effect.target.cards.map((card, index) => index);
 
-      // if (cards.some(card => card.tags.includes(CardTag.POKEMON_EX) || card.tags.includes(CardTag.POKEMON_V) || card.tags.includes(CardTag.POKEMON_VSTAR) || card.tags.includes(CardTag.POKEMON_ex))) {
-      //   effect.prizeCount += 1;
-      // }
-      // if (cards.some(card => card.tags.includes(CardTag.POKEMON_VMAX))) {
-      //   effect.prizeCount += 2;
-      // }
+  // for (let i = pokemonIndices.length - 1; i >= 0; i--) {
+  //   const removedCard = target.cards.splice(pokemonIndices[i], 1)[0];
+  //   if (removedCard.superType === SuperType.POKEMON) {
+  //     lostZoned.cards.push(removedCard);
+  //   } else {
+  //     attachedCards.cards.push(removedCard);
+  //   }
+  //   target.damage = 0;
+  // }
 
-      // lostZoned.moveTo(player.lostzone);
-      // attachedCards.moveTo(player.discard);
-      effect.target.clearEffects();
-    }
+  // if (cards.some(card => card.tags.includes(CardTag.POKEMON_EX) || card.tags.includes(CardTag.POKEMON_V) || card.tags.includes(CardTag.POKEMON_VSTAR) || card.tags.includes(CardTag.POKEMON_ex))) {
+  //   effect.prizeCount += 1;
+  // }
+  // if (cards.some(card => card.tags.includes(CardTag.POKEMON_VMAX))) {
+  //   effect.prizeCount += 2;
+  // }
 
-    return state;
-  }
-
-
+  // lostZoned.moveTo(player.lostzone);
+  // attachedCards.moveTo(player.discard);
 }

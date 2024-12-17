@@ -57,9 +57,10 @@ export class Dustox extends PokemonCard {
       if (pokemonCard !== this) {
         return state;
       }
-
-      effect.prizeCount += 1;
-      return state;
+      if (effect.prizeCount > 0) {
+        effect.prizeCount += 1;
+        return state;
+      }
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {

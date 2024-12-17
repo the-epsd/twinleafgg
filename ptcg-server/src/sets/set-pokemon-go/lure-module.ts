@@ -29,105 +29,72 @@ export class LureModule extends TrainerCard {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      const temp = new CardList();
+      const tempOpp = new CardList();
 
-      // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
-      player.deck.moveTo(temp, 3);
-
-      // Check if any cards drawn are basic energy
-      const pokemonDrawn = temp.cards.filter(card => {
-        return card instanceof PokemonCard;
-      });
-
-      // If no energy cards were drawn, move all cards to deck
-      if (pokemonDrawn.length == 0) {
-
-        return store.prompt(state, new ShowCardsPrompt(
-          player.id && opponent.id,
-          GameMessage.CARDS_SHOWED_BY_EFFECT,
-          temp.cards
-        ), () => {
-
-          temp.cards.forEach(card => {
-            temp.moveCardTo(card, player.deck);
-          });
-
-          player.supporter.moveCardTo(this, player.discard);
-
-          return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-            player.deck.applyOrder(order);
-            return state;
-          });
-
-        });
-
-      } else {
-
-        pokemonDrawn.forEach(pokemon => {
-          temp.moveCardTo(pokemon, player.deck);
-        });
-
-        temp.cards.forEach(card => {
-          temp.moveCardTo(card, player.deck);
-        });
-
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
-
-        return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-          player.deck.applyOrder(order);
-          return state;
-        });
-      }
-    }
-
-    const player = (effect as TrainerEffect).player;
-
-    const opponent = StateUtils.getOpponent(state, player);
-    const tempOpp = new CardList();
-
-    opponent.deck.moveTo(tempOpp, 3);
-
-    const pokemonDrawnOpp = tempOpp.cards.filter(card => {
-      return card instanceof PokemonCard;
-    });
-
-    // If no energy cards were drawn, move all cards to deck
-    if (pokemonDrawnOpp.length == 0) {
+      opponent.deck.moveTo(tempOpp, 3);
 
       return store.prompt(state, new ShowCardsPrompt(
-        player.id && opponent.id,
-        GameMessage.CARDS_SHOWED_BY_EFFECT,
+        player.id,
+        GameMessage.PLAYER_CARDS_REVEALED_BY_EFFECT,
         tempOpp.cards
       ), () => {
+        return store.prompt(state, new ShowCardsPrompt(
+          opponent.id,
+          GameMessage.PLAYER_CARDS_REVEALED_BY_EFFECT,
+          tempOpp.cards
+        ), () => {
+          const pokemonCards = tempOpp.cards.filter(card => card instanceof PokemonCard);
+          const nonPokemonCards = tempOpp.cards.filter(card => !(card instanceof PokemonCard));
 
-        tempOpp.cards.forEach(card => {
-          tempOpp.moveCardTo(card, opponent.deck);
+          pokemonCards.forEach(card => {
+            tempOpp.moveCardTo(card, opponent.hand);
+          });
+
+          nonPokemonCards.forEach(card => {
+            tempOpp.moveCardTo(card, opponent.deck);
+          });
+
+          const temp = new CardList();
+          player.deck.moveTo(temp, 3);
+
+          return store.prompt(state, new ShowCardsPrompt(
+            player.id,
+            GameMessage.PLAYER_CARDS_REVEALED_BY_EFFECT,
+            temp.cards
+          ), () => {
+            return store.prompt(state, new ShowCardsPrompt(
+              opponent.id,
+              GameMessage.PLAYER_CARDS_REVEALED_BY_EFFECT,
+              temp.cards
+            ), () => {
+              const pokemonCards = temp.cards.filter(card => card instanceof PokemonCard);
+              const nonPokemonCards = temp.cards.filter(card => !(card instanceof PokemonCard));
+
+              pokemonCards.forEach(card => {
+                temp.moveCardTo(card, player.hand);
+              });
+
+              nonPokemonCards.forEach(card => {
+                temp.moveCardTo(card, player.deck);
+              });
+
+              player.supporter.moveCardTo(this, player.discard);
+
+              state = store.prompt(state, new ShuffleDeckPrompt(player.id), playerOrder => {
+                player.deck.applyOrder(playerOrder);
+                return state;
+              });
+              return store.prompt(state, new ShuffleDeckPrompt(opponent.id), oppOrder => {
+                opponent.deck.applyOrder(oppOrder);
+                return state;
+              });
+            });
+          });
         });
-
-        return store.prompt(state, new ShuffleDeckPrompt(opponent.id), order => {
-          opponent.deck.applyOrder(order);
-          return state;
-        });
-
       });
-
-    } else {
-
-      pokemonDrawnOpp.forEach(pokemon => {
-        tempOpp.moveCardTo(pokemon, opponent.deck);
-      });
-
-      tempOpp.cards.forEach(card => {
-        tempOpp.moveCardTo(card, opponent.deck);
-      });
-
-      return store.prompt(state, new ShuffleDeckPrompt(opponent.id), order => {
-        opponent.deck.applyOrder(order);
-        return state;
-      });
-      return state;
     }
+    return state;
   }
 }

@@ -81,6 +81,11 @@ export function playerTurnReducer(store: StoreLike, state: State, action: Action
 
       state.lastAttack = attack;
 
+      if (!state.playerLastAttack) {
+        state.playerLastAttack = {};
+      }
+      state.playerLastAttack[player.id] = attack;
+
       return state;
     }
 

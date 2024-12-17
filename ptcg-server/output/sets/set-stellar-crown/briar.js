@@ -47,7 +47,9 @@ class Briar extends game_1.TrainerCard {
             if (effect.target === player.active) {
                 const attackingPokemon = opponent.active;
                 if (attackingPokemon.isTera() && this.extraPrizes) {
-                    effect.prizeCount += 1;
+                    if (effect.prizeCount > 0) {
+                        effect.prizeCount += 1;
+                    }
                 }
                 this.extraPrizes = false;
             }

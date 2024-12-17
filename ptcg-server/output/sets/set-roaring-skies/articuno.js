@@ -72,8 +72,10 @@ class Articuno extends pokemon_card_1.PokemonCard {
             if (pokemonCard !== this) {
                 return state;
             }
-            effect.prizeCount += 1;
-            return state;
+            if (effect.prizeCount > 0) {
+                effect.prizeCount += 1;
+                return state;
+            }
         }
         return state;
     }

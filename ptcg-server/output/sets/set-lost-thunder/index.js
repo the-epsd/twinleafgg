@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setLostThunder = void 0;
 const card_images_1 = require("./card-images");
-const shuckle_gx_1 = require("./shuckle-gx");
 exports.setLostThunder = [
     new card_images_1.AdventureBagArt(),
     new card_images_1.AlolanMeowthArt(),
@@ -30,7 +29,7 @@ exports.setLostThunder = [
     new card_images_1.NihilegoArt(),
     new card_images_1.PoipoleArt(),
     new card_images_1.RibombeeArt(),
-    new shuckle_gx_1.ShuckleGX(),
+    new card_images_1.ShuckleGXArt(),
     new card_images_1.SlowkingArt(),
     new card_images_1.SnubbullArt(),
     new card_images_1.SpellTagArt(),

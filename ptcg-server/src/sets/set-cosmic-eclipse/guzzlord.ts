@@ -9,7 +9,7 @@ export class Guzzlord extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = CardType.DARK;
   public hp: number = 150;
-  public tags = [ CardTag.ULTRA_BEAST ];
+  public tags = [CardTag.ULTRA_BEAST];
   public weakness = [{ type: CardType.FIGHTING }];
   public resistance = [{ type: CardType.PSYCHIC, value: -20 }];
   public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
@@ -45,7 +45,7 @@ export class Guzzlord extends PokemonCard {
       opponent.deck.moveTo(opponent.discard, 1);
     }
 
-    if(effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       this.usedRedBanquet = true;
     }
 
@@ -66,8 +66,10 @@ export class Guzzlord extends PokemonCard {
 
       // Check if the attack that caused the KnockOutEffect is "Red Banquet"
       if (this.usedRedBanquet === true) {
-        effect.prizeCount += 1;
-        this.usedRedBanquet = false;
+        if (effect.prizeCount > 0) {
+          effect.prizeCount += 1;
+          this.usedRedBanquet = false;
+        }
       }
 
       return state;

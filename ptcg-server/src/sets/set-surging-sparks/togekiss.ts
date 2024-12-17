@@ -74,7 +74,9 @@ export class Togekiss extends PokemonCard {
       ], result => {
         if (result === true) {
           //If Heads, take 1 more Prize card for that Knock Out
-          effect.prizeCount += 1;
+          if (effect.prizeCount > 0) {
+            effect.prizeCount += 1;
+          }
         }
         // Remove the marker after the coin flip
         player.marker.removeMarker('TOGEKISS_KNOCKOUT_FLIP');

@@ -32,13 +32,11 @@ function putStartingPokemonsAndPrizes(player: Player, cards: Card[], state: Stat
   for (let i = 1; i < cards.length; i++) {
     player.hand.moveCardTo(cards[i], player.bench[i - 1]);
   }
-  // Set prize count based on state's sudden death flag
-  const prizeCount = state.isSuddenDeath ? 1 : 6;
-  for (let i = 0; i < prizeCount; i++) {
+  // Always place 6 prize cards
+  for (let i = 0; i < 6; i++) {
     player.deck.moveTo(player.prizes[i], 1);
   }
 }
-
 
 export function* setupGame(next: Function, store: StoreLike, state: State): IterableIterator<State> {
   const player = state.players[0];
@@ -120,20 +118,20 @@ export function* setupGame(next: Function, store: StoreLike, state: State): Iter
       });
     }
   }
-  
+
   const blocked: number[] = [];
   player.hand.cards.forEach((c, index) => {
     if (c.tags.includes((CardTag.PLAY_DURING_SETUP)) || (c instanceof PokemonCard && c.stage === Stage.BASIC)) {
-      
+
     } else {
       blocked.push(index);
     }
   });
-  
+
   const blockedOpponent: number[] = [];
   opponent.hand.cards.forEach((c, index) => {
     if (c.tags.includes((CardTag.PLAY_DURING_SETUP)) || (c instanceof PokemonCard && c.stage === Stage.BASIC)) {
-      
+
     } else {
       blockedOpponent.push(index);
     }

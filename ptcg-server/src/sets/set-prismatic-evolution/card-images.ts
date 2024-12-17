@@ -43,13 +43,13 @@ export class LeafeonexArt extends Leafeonex {
 }
 
 export class MaxRodArt extends MaxRod {
-  public cardImage = 'https://archives.bulbagarden.net/media/upload/e/ed/FishingRodMAXTerastalFestex142.jpg';
+  public cardImage = 'https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/tpc/SV8a/SV8a_142_R_JP.png';
 }
 
 export class TreasureGadgetArt extends TreasureGadget {
-  public cardImage = 'https://archives.bulbagarden.net/media/upload/f/f0/TreasureGadgetTerastalFestex146.jpg';
+  public cardImage = 'https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/tpc/SV8a/SV8a_146_R_JP.png';
 }
 
 export class RegigigasArt extends Regigigas {
-  public cardImage = 'https://archives.bulbagarden.net/media/upload/a/a4/RegigigasTerastalFestex132.jpg';
+  public cardImage = 'https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/tpc/SV8a/SV8a_132_R_JP.png';
 }

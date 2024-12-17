@@ -1,15 +1,13 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
-import { AttackEffect } from '../../game/store/effects/game-effects';
-import { HEAL_X_DAMAGE_FROM_THIS_POKEMON } from '../../game/store/prefabs/attack-effects';
+import { AttackEffect, HealEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Bulbasaur extends PokemonCard {
 
   public regulationMark = 'G';
-  
+
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = CardType.GRASS;
   public hp: number = 70;
@@ -21,8 +19,6 @@ export class Bulbasaur extends PokemonCard {
       cost: [CardType.GRASS, CardType.COLORLESS],
       damage: 20,
       text: 'Heal 20 damage from this Pokémon.',
-      effect: (store: StoreLike, state: State, effect: AttackEffect) => {
-      }
     }
   ];
   public set: string = 'MEW';
@@ -30,10 +26,14 @@ export class Bulbasaur extends PokemonCard {
   public setNumber: string = '1';
   public name: string = 'Bulbasaur';
   public fullName: string = 'Bulbasaur MEW';
-  
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (WAS_ATTACK_USED(effect, 0, this)) {
-      HEAL_X_DAMAGE_FROM_THIS_POKEMON(20, effect, store, state);
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+      const player = effect.player;
+
+      const healEffect = new HealEffect(player, effect.player.active, 30);
+      store.reduceEffect(state, healEffect);
+      return state;
     }
     return state;
   }

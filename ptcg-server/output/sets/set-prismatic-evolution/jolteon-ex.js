@@ -61,7 +61,16 @@ class Jolteonex extends pokemon_card_1.PokemonCard {
                     const target = player.discard;
                     source.moveCardTo(transfer.card, target);
                     totalDiscarded = transfers.length;
-                    effect.damage += totalDiscarded * 90;
+                    // Base damage is 60
+                    if (totalDiscarded === 0) {
+                        effect.damage = 60;
+                    }
+                    else if (totalDiscarded === 1) {
+                        effect.damage = 150; // 60 + 90
+                    }
+                    else if (totalDiscarded === 2) {
+                        effect.damage = 240; // 60 + (90 * 2)
+                    }
                 }
                 console.log('Total Damage: ' + effect.damage);
                 return state;

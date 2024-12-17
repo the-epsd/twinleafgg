@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SmoochumArt = exports.CounterGainArt = exports.FlygonexArt = exports.VibravaArt = exports.TrapinchArt = exports.MegatonBlowerArt = exports.HelperBellArt = exports.TeraOrbArt = exports.AzumarillArt = exports.MarillArt = exports.CherishCarrierArt = exports.PerfectMixerArt = exports.HoOhArt = exports.BlackKyuremexArt = exports.PalkiaArt = exports.LisiasAppealArt = exports.CeruledgeArt = exports.NinetalesArt = exports.VulpixArt = exports.ScrambleSwitchArt = exports.MespritArt = exports.UxieArt = exports.AzelfArt = exports.VivillionArt = exports.EternatusArt = exports.HydreigonexArt = exports.ZweilousArt = exports.DeinoArt = exports.TogekissArt = exports.TogeticArt = exports.TogepiArt = exports.MiloticexArt = exports.SkeledirgeArt = exports.CrocalorArt = exports.FuecocoArt = exports.CyranoArt = exports.MiraculousIntercomArt = exports.ExcitingStadiumArt = exports.GravityMountainArt = exports.MagnetonArt = exports.CapsakidArt = exports.QuaxwellArt = exports.PansearArt = exports.LarvestaArt = exports.PhanpyArt = exports.ShroodleArt = exports.MagnemiteArt = exports.TerapagosArt = exports.TatsugiriexArt = exports.PikachuexArt = void 0;
-exports.PalossandexArt = exports.SandygastArt = exports.DurantexArt = exports.CeruledgeexArt = exports.CharcadetArt = exports.SylveonexArt = exports.EeveeArt = exports.LatiasexArt = exports.AlolanExeggutorexArt = exports.ExeggcuteArt = exports.KlefkiArt = exports.RichEnergyArt = exports.DraytonArt = exports.DuskBallArt = exports.DragonsElixirArt = exports.DialgaArt = exports.CelebrationFanfareArt = exports.ArchaludonexArt = exports.DuraludonArt = void 0;
+exports.KoraidonArt = exports.PalossandexArt = exports.SandygastArt = exports.DurantexArt = exports.CeruledgeexArt = exports.CharcadetArt = exports.SylveonexArt = exports.EeveeArt = exports.LatiasexArt = exports.AlolanExeggutorexArt = exports.ExeggcuteArt = exports.KlefkiArt = exports.RichEnergyArt = exports.DraytonArt = exports.DuskBallArt = exports.DragonsElixirArt = exports.DialgaArt = exports.CelebrationFanfareArt = exports.ArchaludonexArt = exports.DuraludonArt = void 0;
 const counter_gain_1 = require("../set-lost-thunder/counter-gain");
 const scramble_switch_1 = require("../set-plasma-storm/scramble-switch");
 const magneton_1 = require("../set-scarlet-and-violet-promos/magneton");
@@ -36,6 +36,7 @@ const helper_bell_1 = require("./helper.bell");
 const ho_oh_1 = require("./ho-oh");
 const hydreigon_ex_1 = require("./hydreigon-ex");
 const klefki_1 = require("./klefki");
+const koraidon_1 = require("./koraidon");
 const larvesta_1 = require("./larvesta");
 const latias_ex_1 = require("./latias-ex");
 const lisias_appeal_1 = require("./lisias-appeal");
@@ -566,3 +567,10 @@ class PalossandexArt extends palossand_ex_1.Palossandex {
     }
 }
 exports.PalossandexArt = PalossandexArt;
+class KoraidonArt extends koraidon_1.Koraidon {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_116_R_EN_LG.png';
+    }
+}
+exports.KoraidonArt = KoraidonArt;

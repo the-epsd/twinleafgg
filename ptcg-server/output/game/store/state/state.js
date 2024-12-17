@@ -31,6 +31,7 @@ class State {
         this.players = [];
         this.skipOpponentTurn = false;
         this.lastAttack = null;
+        this.playerLastAttack = {};
     }
 }
 exports.State = State;

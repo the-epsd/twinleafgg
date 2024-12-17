@@ -468,7 +468,9 @@
     "REVEAL_RANDOM_CARD_IN_OPPONENT_HAND": "Reveal a random card in your opponent's hand.",
     "REVEAL_AN_OPPONENT_PRIZES": "Reveal one of your opponent's prize cards.",
     "REVEAL_ONE_OF_YOUR_PRIZES": "Reveal one of your prize cards.",
-    "SEARCH_DECK_FOR_CARD": "Would you like to search your deck for a card?"
+    "SEARCH_DECK_FOR_CARD": "Would you like to search your deck for a card?",
+    "PLAYER_CARDS_REVEALED_BY_EFFECT": "{{name}} cards revealed by effect.",
+    "CHOOSE_CARDS": "Choose cards"
   },
   "GAME_LOGS": {
     "LOG_BANNED_BY_ARBITER": "{{name}} made an invalid move multiple times and was banned by the arbiter.",

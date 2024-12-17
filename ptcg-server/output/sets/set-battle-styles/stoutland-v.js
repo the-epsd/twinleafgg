@@ -54,8 +54,10 @@ class StoutlandV extends pokemon_card_1.PokemonCard {
                 }
                 const activePokemon = opponent.active.getPokemonCard();
                 if (activePokemon && activePokemon.stage === card_types_1.Stage.BASIC) {
-                    effect.prizeCount += 1;
-                    return state;
+                    if (effect.prizeCount > 0) {
+                        effect.prizeCount += 1;
+                        return state;
+                    }
                 }
                 return state;
             }

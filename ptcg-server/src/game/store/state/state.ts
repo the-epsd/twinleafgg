@@ -44,5 +44,7 @@ export class State {
 
   public lastAttack: Attack | null = null;
 
+  public playerLastAttack: { [playerId: number]: Attack } = {};
+
   public isSuddenDeath?: boolean;
 }
