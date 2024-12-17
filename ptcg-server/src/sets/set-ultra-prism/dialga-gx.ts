@@ -30,19 +30,19 @@ export class DialgaGX extends PokemonCard {
   public attacks = [
     {
       name: 'Overclock',
-      cost: [CardType.METAL],
+      cost: [M],
       damage: 0,
       text: 'Draw cards until you have 6 cards in your hand.'
     },
     {
       name: 'Shred',
-      cost: [CardType.METAL, CardType.COLORLESS, CardType.COLORLESS],
+      cost: [M, C, C],
       damage: 80,
       text: 'This attack\'s damage isn\'t affected by any effects on your opponent\'s Active Pokémon.'
     },
     {
       name: 'Timeless-GX',
-      cost: [CardType.METAL, CardType.METAL, CardType.METAL, CardType.METAL, CardType.COLORLESS],
+      cost: [M, M, M, C, C],
       damage: 150,
       gxAttack: true,
       text: 'Take another turn after this one. (Skip the between-turns step.) (You can\'t use more than 1 GX attack in a game.) '

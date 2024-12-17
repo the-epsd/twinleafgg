@@ -36,7 +36,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
   yield store.prompt(state, new ChooseCardsPrompt(
     player,
-    GameMessage.CHOOSE_CARD_TO_HAND,
+    GameMessage.CHOOSE_CARDS,
     player.deck,
     {},
     { min: 2, max: 2, allowCancel: false }

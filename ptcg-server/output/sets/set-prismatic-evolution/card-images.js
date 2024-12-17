@@ -71,21 +71,21 @@ exports.LeafeonexArt = LeafeonexArt;
 class MaxRodArt extends max_rod_1.MaxRod {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://archives.bulbagarden.net/media/upload/e/ed/FishingRodMAXTerastalFestex142.jpg';
+        this.cardImage = 'https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/tpc/SV8a/SV8a_142_R_JP.png';
     }
 }
 exports.MaxRodArt = MaxRodArt;
 class TreasureGadgetArt extends treasure_gadget_1.TreasureGadget {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://archives.bulbagarden.net/media/upload/f/f0/TreasureGadgetTerastalFestex146.jpg';
+        this.cardImage = 'https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/tpc/SV8a/SV8a_146_R_JP.png';
     }
 }
 exports.TreasureGadgetArt = TreasureGadgetArt;
 class RegigigasArt extends regigigas_1.Regigigas {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://archives.bulbagarden.net/media/upload/a/a4/RegigigasTerastalFestex132.jpg';
+        this.cardImage = 'https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/tpc/SV8a/SV8a_132_R_JP.png';
     }
 }
 exports.RegigigasArt = RegigigasArt;

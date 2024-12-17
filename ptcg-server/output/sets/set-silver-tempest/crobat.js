@@ -71,9 +71,11 @@ class Crobat extends pokemon_card_1.PokemonCard {
             }
             // Check if the attack that caused the KnockOutEffect is "Critical Bite"
             if (this.usedCriticalBite === true) {
-                effect.prizeCount += 2;
-                this.usedCriticalBite = false;
-                console.log('Reset Critical Bite after taking 2: ' + this.usedCriticalBite);
+                if (effect.prizeCount > 0) {
+                    effect.prizeCount += 2;
+                    this.usedCriticalBite = false;
+                    console.log('Reset Critical Bite after taking 2: ' + this.usedCriticalBite);
+                }
             }
             return state;
         }

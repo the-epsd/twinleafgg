@@ -1,7 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
-import { AttackEffect } from '../../game/store/effects/game-effects';
 import { DISCARD_X_ENERGY_FROM_THIS_POKEMON, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { Effect } from '../../game/store/effects/effect';
 
@@ -20,23 +19,20 @@ export class Charmeleon extends PokemonCard {
 
   public weakness = [{ type: CardType.WATER }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
-    { 
+    {
       name: 'Combustion',
       cost: [CardType.FIRE],
       damage: 20,
       text: '',
-      effect: undefined
     },
-    { 
+    {
       name: 'Fire Blast',
       cost: [CardType.FIRE, CardType.FIRE, CardType.FIRE],
       damage: 70,
       text: 'Discard an Energy from this Pokémon.',
-      effect: (store: StoreLike, state: State, effect: AttackEffect) => {
-      }
     }
   ];
 
@@ -49,8 +45,9 @@ export class Charmeleon extends PokemonCard {
   public name: string = 'Charmeleon';
 
   public fullName: string = 'Charmeleon MEW';
-  
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
     if (WAS_ATTACK_USED(effect, 1, this)) {
       DISCARD_X_ENERGY_FROM_THIS_POKEMON(state, effect, store, CardType.COLORLESS, 1);
     }

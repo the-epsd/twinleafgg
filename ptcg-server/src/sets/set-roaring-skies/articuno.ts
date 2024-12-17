@@ -22,7 +22,7 @@ export class Articuno extends PokemonCard {
 
   public resistance = [{ type: CardType.FIGHTING, value: -20 }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Delta Plus',
@@ -33,12 +33,12 @@ export class Articuno extends PokemonCard {
 
   public attacks = [{
     name: 'Chilling Sigh',
-    cost: [ CardType.WATER ],
+    cost: [CardType.WATER],
     damage: 0,
     text: 'Your opponent\'s Active Pokemon is now Asleep.'
   }, {
     name: 'Tri Edge',
-    cost: [ CardType.WATER, CardType.WATER, CardType.COLORLESS ],
+    cost: [CardType.WATER, CardType.WATER, CardType.COLORLESS],
     damage: 20,
     text: 'Flip 3 coins. This attack does 40 more damage for each heads.'
   }];
@@ -88,9 +88,10 @@ export class Articuno extends PokemonCard {
       if (pokemonCard !== this) {
         return state;
       }
-
-      effect.prizeCount += 1;
-      return state;
+      if (effect.prizeCount > 0) {
+        effect.prizeCount += 1;
+        return state;
+      }
     }
 
     return state;

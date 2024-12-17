@@ -13,7 +13,7 @@ export class LugiaEx extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
-  public tags = [ CardTag.POKEMON_EX, CardTag.TEAM_PLASMA ];
+  public tags = [CardTag.POKEMON_EX, CardTag.TEAM_PLASMA];
 
   public cardType: CardType = CardType.COLORLESS;
 
@@ -23,7 +23,7 @@ export class LugiaEx extends PokemonCard {
 
   public resistance = [{ type: CardType.FIGHTING, value: -20 }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Overflow',
@@ -34,7 +34,7 @@ export class LugiaEx extends PokemonCard {
 
   public attacks = [{
     name: 'Chilling Sigh',
-    cost: [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ],
+    cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
     damage: 120,
     text: 'Discard a Plasma Energy attached to this Pokémon. If you can\'t discard a Plasma Energy, this attack does nothing.'
   }];
@@ -56,10 +56,10 @@ export class LugiaEx extends PokemonCard {
 
       const player = effect.player;
       const pokemon = player.active;
-  
+
       const checkEnergy = new CheckProvidedEnergyEffect(player, pokemon);
       store.reduceEffect(state, checkEnergy);
-  
+
       checkEnergy.energyMap.forEach(em => {
         const energyCard = em.card;
         if (energyCard instanceof EnergyCard && energyCard.name !== 'Plasma Energy') {
@@ -74,7 +74,7 @@ export class LugiaEx extends PokemonCard {
             player,
             GameMessage.CHOOSE_CARD_TO_DISCARD,
             player.active,
-            { superType: SuperType.ENERGY, energyType: EnergyType.SPECIAL, name: 'Plasma Energy'},
+            { superType: SuperType.ENERGY, energyType: EnergyType.SPECIAL, name: 'Plasma Energy' },
             { min: 1, max: 1, allowCancel: false }
           ), selected => {
             cards = selected || [];
@@ -103,17 +103,18 @@ export class LugiaEx extends PokemonCard {
 
         try {
           const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
+            name: 'test',
+            powerType: PowerType.ABILITY,
+            text: ''
+          }, this);
+          store.reduceEffect(state, stub);
         } catch {
           return state;
         }
-
-        effect.prizeCount += 1;
-        return state;
+        if (effect.prizeCount > 0) {
+          effect.prizeCount += 1;
+          return state;
+        }
       }
       return state;
     }

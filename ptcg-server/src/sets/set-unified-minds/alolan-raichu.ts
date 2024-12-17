@@ -1,9 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SuperType, EnergyType } from '../../game/store/card/card-types';
-import { StoreLike, State, ChooseCardsPrompt, GameMessage, PlayerType, SlotType, DamageMap, StateUtils, PutDamagePrompt } from '../../game';
+import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
+import { StoreLike, State, ChooseCardsPrompt, GameMessage, PlayerType, SlotType, DamageMap, StateUtils, PutDamagePrompt, Card } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { DiscardCardsEffect, PutCountersEffect } from '../../game/store/effects/attack-effects';
+import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 
 export class AlolanRaichu extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -40,12 +41,31 @@ export class AlolanRaichu extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
+      const blocked: number[] = [];
+      player.active.cards.forEach((cardList, card, target) => {
+        const checkProvidedEnergy = new CheckProvidedEnergyEffect(player, player.active);
+        store.reduceEffect(state, checkProvidedEnergy);
+        const blockedCards: Card[] = [];
+
+        checkProvidedEnergy.energyMap.forEach(em => {
+          if (!em.provides.includes(CardType.LIGHTNING) && !em.provides.includes(CardType.ANY)) {
+            blockedCards.push(em.card);
+          }
+        });
+        blockedCards.forEach(bc => {
+          const index = target.indexOf(bc);
+          if (index !== -1 && !blocked.includes(index)) {
+            blocked.push(index);
+          }
+        });
+      });
+
       return store.prompt(state, new ChooseCardsPrompt(
         player,
         GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
         player.active, // Card source is target Pokemon
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Lightning Energy' },
-        { allowCancel: false }
+        { superType: SuperType.ENERGY },
+        { allowCancel: false, blocked }
       ), selected => {
         const cards = selected || [];
         if (cards.length > 0) {

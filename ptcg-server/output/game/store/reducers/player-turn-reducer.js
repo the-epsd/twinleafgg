@@ -60,6 +60,10 @@ function playerTurnReducer(store, state, action) {
             const useAttackEffect = new game_effects_1.UseAttackEffect(player, attack);
             state = store.reduceEffect(state, useAttackEffect);
             state.lastAttack = attack;
+            if (!state.playerLastAttack) {
+                state.playerLastAttack = {};
+            }
+            state.playerLastAttack[player.id] = attack;
             return state;
         }
         if (action instanceof game_actions_1.UseAbilityAction) {

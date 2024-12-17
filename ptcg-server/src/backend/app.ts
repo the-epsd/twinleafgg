@@ -63,11 +63,22 @@ export class App {
     }
     app.use('/avatars', express.static(config.backend.avatarsDir));
 
+    app.use((err: any, req: any, res: any, next: any) => {
+      console.error(err.stack)
+      res.status(500).send('Something broke!')
+    });
+    
     return app;
   }
 
   private configureWebSocket(): WebSocketServer {
-    return new WebSocketServer(this.core);
+    const ws = new WebSocketServer(this.core);
+    
+    ws.server?.on('error', (error) => {
+      console.error(error);
+    });
+    
+    return ws;
   }
 
   public connectToDatabase(): Promise<void> {

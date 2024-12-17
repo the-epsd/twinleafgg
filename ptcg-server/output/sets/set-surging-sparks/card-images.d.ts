@@ -32,6 +32,7 @@ import { HelperBell } from './helper.bell';
 import { HoOh } from './ho-oh';
 import { Hydreigonex } from './hydreigon-ex';
 import { Klefki } from './klefki';
+import { Koraidon } from './koraidon';
 import { Larvesta } from './larvesta';
 import { Latiasex } from './latias-ex';
 import { LisiasAppeal } from './lisias-appeal';
@@ -284,5 +285,8 @@ export declare class SandygastArt extends Sandygast {
     cardImage: string;
 }
 export declare class PalossandexArt extends Palossandex {
+    cardImage: string;
+}
+export declare class KoraidonArt extends Koraidon {
     cardImage: string;
 }

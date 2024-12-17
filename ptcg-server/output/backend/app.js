@@ -40,10 +40,19 @@ class App {
             app.use('/scans', express.static(config_1.config.sets.scansDir));
         }
         app.use('/avatars', express.static(config_1.config.backend.avatarsDir));
+        app.use((err, req, res, next) => {
+            console.error(err.stack);
+            res.status(500).send('Something broke!');
+        });
         return app;
     }
     configureWebSocket() {
-        return new websocket_server_1.WebSocketServer(this.core);
+        var _a;
+        const ws = new websocket_server_1.WebSocketServer(this.core);
+        (_a = ws.server) === null || _a === void 0 ? void 0 : _a.on('error', (error) => {
+            console.error(error);
+        });
+        return ws;
     }
     connectToDatabase() {
         return this.storage.connect();

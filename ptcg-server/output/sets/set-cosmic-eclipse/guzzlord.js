@@ -58,8 +58,10 @@ class Guzzlord extends pokemon_card_1.PokemonCard {
             }
             // Check if the attack that caused the KnockOutEffect is "Red Banquet"
             if (this.usedRedBanquet === true) {
-                effect.prizeCount += 1;
-                this.usedRedBanquet = false;
+                if (effect.prizeCount > 0) {
+                    effect.prizeCount += 1;
+                    this.usedRedBanquet = false;
+                }
             }
             return state;
         }

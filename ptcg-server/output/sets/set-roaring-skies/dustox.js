@@ -54,8 +54,10 @@ class Dustox extends pokemon_card_1.PokemonCard {
             if (pokemonCard !== this) {
                 return state;
             }
-            effect.prizeCount += 1;
-            return state;
+            if (effect.prizeCount > 0) {
+                effect.prizeCount += 1;
+                return state;
+            }
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;

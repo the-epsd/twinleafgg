@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, PokemonCardList, Card, ChooseCardsPrompt, GameMessage, ShuffleDeckPrompt, CoinFlipPrompt, PlayerType } from '../../game';
+import { StoreLike, State, PokemonCardList, Card, ChooseCardsPrompt, GameMessage, ShuffleDeckPrompt, CoinFlipPrompt } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 
@@ -11,11 +11,12 @@ function* useKeepCalling(next: Function, store: StoreLike, state: State,
   const max = Math.min(slots.length, 3);
 
   const blocked: number[] = [];
-  player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
+  for (let i = 0; i < player.deck.cards.length; i++) {
+    const card = player.deck.cards[i];
     if (!card.tags.includes(CardTag.RAPID_STRIKE)) {
-      blocked.push();
+      blocked.push(i);
     }
-  });
+  }
 
   let cards: Card[] = [];
   yield store.prompt(state, new ChooseCardsPrompt(

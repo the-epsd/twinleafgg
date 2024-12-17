@@ -11,7 +11,7 @@ export class StoutlandV extends PokemonCard {
 
   public tags = [CardTag.POKEMON_V];
 
-  public cardType: CardType = CardType.COLORLESS;  
+  public cardType: CardType = CardType.COLORLESS;
 
   public hp: number = 210;
 
@@ -68,9 +68,10 @@ export class StoutlandV extends PokemonCard {
 
         const activePokemon = opponent.active.getPokemonCard();
         if (activePokemon && activePokemon.stage === Stage.BASIC) {
-
-          effect.prizeCount += 1;
-          return state;
+          if (effect.prizeCount > 0) {
+            effect.prizeCount += 1;
+            return state;
+          }
         }
 
         return state;
@@ -78,7 +79,7 @@ export class StoutlandV extends PokemonCard {
 
       if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
         const player = effect.player;
-      
+
         const dealDamage = new DealDamageEffect(effect, 30);
         dealDamage.target = player.active;
         return store.reduceEffect(state, dealDamage);

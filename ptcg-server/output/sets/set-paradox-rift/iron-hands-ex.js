@@ -57,8 +57,10 @@ class IronHandsex extends pokemon_card_1.PokemonCard {
             }
             // Check if the attack that caused the KnockOutEffect is "Amp You Very Much"
             if (this.usedAmpYouVeryMuch === true) {
-                effect.prizeCount += 1;
-                this.usedAmpYouVeryMuch = false;
+                if (effect.prizeCount > 0) {
+                    effect.prizeCount += 1;
+                    this.usedAmpYouVeryMuch = false;
+                }
             }
             return state;
         }

@@ -1,7 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
-import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 export declare class Bulbasaur extends PokemonCard {
     regulationMark: string;
@@ -17,7 +16,6 @@ export declare class Bulbasaur extends PokemonCard {
         cost: CardType[];
         damage: number;
         text: string;
-        effect: (store: StoreLike, state: State, effect: AttackEffect) => void;
     }[];
     set: string;
     cardImage: string;

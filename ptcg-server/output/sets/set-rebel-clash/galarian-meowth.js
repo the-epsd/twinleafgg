@@ -34,7 +34,7 @@ class GalarianMeowth extends pokemon_card_1.PokemonCard {
         this.set = 'RCL';
         this.regulationMark = 'D';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '173';
+        this.setNumber = '126';
         this.name = 'Galarian Meowth';
         this.fullName = 'Galarian Meowth RCL';
         this.EVOLUTION_ROAR_MARKER = 'EVOLUTION_ROAR_MARKER';

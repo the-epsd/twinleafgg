@@ -70,6 +70,7 @@ exports.setSurgingSparks = [
     new card_images_1.PansearArt(),
     new card_images_1.LarvestaArt(),
     new card_images_1.PhanpyArt(),
+    new card_images_1.KoraidonArt(),
     //FA
     new full_arts_1.LarvestaIRArt(),
 ];

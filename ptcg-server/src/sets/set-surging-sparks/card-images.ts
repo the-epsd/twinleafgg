@@ -32,6 +32,7 @@ import { HelperBell } from './helper.bell';
 import { HoOh } from './ho-oh';
 import { Hydreigonex } from './hydreigon-ex';
 import { Klefki } from './klefki';
+import { Koraidon } from './koraidon';
 import { Larvesta } from './larvesta';
 import { Latiasex } from './latias-ex';
 import { LisiasAppeal } from './lisias-appeal';
@@ -354,4 +355,8 @@ export class SandygastArt extends Sandygast {
 
 export class PalossandexArt extends Palossandex {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_091_R_EN_LG.png';
+}
+
+export class KoraidonArt extends Koraidon {
+  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_116_R_EN_LG.png';
 }

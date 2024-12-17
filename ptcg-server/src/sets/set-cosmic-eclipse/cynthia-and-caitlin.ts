@@ -22,6 +22,13 @@ function* playCard(next: Function, store: StoreLike, state: State,
     throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
   }
 
+  const blocked: number[] = [];
+  player.discard.cards.forEach((card, index) => {
+    if (card instanceof TrainerCard && card.name === 'Cynthia & Caitlin') {
+      blocked.push(index);
+    }
+  });
+
   cards = player.hand.cards.filter(c => c !== self);
 
   if (!player.discard.cards.some(c => c instanceof TrainerCard && c.trainerType === TrainerType.SUPPORTER) &&
@@ -41,7 +48,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
       GameMessage.CHOOSE_CARD_TO_DISCARD,
       player.hand,
       {},
-      { allowCancel: false, min: 1, max: 1 }
+      { allowCancel: false, min: 1, max: 1, blocked }
     ), cards => {
       cards = cards || [];
 
@@ -56,14 +63,14 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
       return state;
     });
-    
+
   } else if (cards.length === 0) { // supporter available but can't discard
     state = store.prompt(state, new ChooseCardsPrompt(
       player,
       GameMessage.CHOOSE_CARD_TO_HAND,
       player.discard,
       { superType: SuperType.TRAINER, trainerType: TrainerType.SUPPORTER },
-      { min: 1, max: 1, allowCancel: false }
+      { min: 1, max: 1, allowCancel: false, blocked }
     ), selected => {
       recovered = selected || [];
 
@@ -73,7 +80,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
       player.discard.moveCardsTo(recovered, player.hand);
       player.supporter.moveCardTo(effect.trainerCard, player.discard);
-      
+
       return state;
     });
   } else { // supporter available, has to recover supporter, option to draw cards
@@ -101,7 +108,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
             GameMessage.CHOOSE_CARD_TO_HAND,
             player.discard,
             { superType: SuperType.TRAINER, trainerType: TrainerType.SUPPORTER },
-            { min: 1, max: 1, allowCancel: false }
+            { min: 1, max: 1, allowCancel: false, blocked }
           ), selected => {
             recovered = selected || [];
 
@@ -121,7 +128,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
           GameMessage.CHOOSE_CARD_TO_HAND,
           player.discard,
           { superType: SuperType.TRAINER, trainerType: TrainerType.SUPPORTER },
-          { min: 1, max: 1, allowCancel: false }
+          { min: 1, max: 1, allowCancel: false, blocked }
         ), selected => {
           recovered = selected || [];
 
@@ -130,8 +137,6 @@ function* playCard(next: Function, store: StoreLike, state: State,
           });
 
           player.discard.moveCardsTo(recovered, player.hand);
-          player.hand.moveCardsTo(cards, player.discard);
-          player.deck.moveTo(player.hand, 3);
           player.supporter.moveCardTo(effect.trainerCard, player.discard);
         });
       }
