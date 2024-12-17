@@ -66,6 +66,7 @@ import { Veluza } from './veluza';
 import { Xatu } from './xatu';
 import { Toedscruel } from './toedscruel';
 import { Gimmighoul2 } from './gimmighoul2';
+import { Orthworm } from './orthworm';
 export declare class AncientBoosterEnergyCapsuleArt extends AncientBoosterEnergyCapsule {
     cardImage: string;
 }
@@ -196,6 +197,9 @@ export declare class NatuArt extends Natu {
     cardImage: string;
 }
 export declare class NymbleArt extends Nymble {
+    cardImage: string;
+}
+export declare class OrthwormArt extends Orthworm {
     cardImage: string;
 }
 export declare class PorygonArt extends Porygon {

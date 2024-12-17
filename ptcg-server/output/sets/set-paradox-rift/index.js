@@ -47,6 +47,7 @@ exports.setParadoxRift = [
     new card_images_1.NaclstackArt(),
     new card_images_1.NatuArt(),
     new card_images_1.NymbleArt(),
+    new card_images_1.OrthwormArt(),
     new card_images_1.PorygonArt(),
     new card_images_1.Porygon2Art(),
     new card_images_1.ProfessorSadasVitalityArt(),

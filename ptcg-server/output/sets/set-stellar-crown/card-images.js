@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZeraoraArt = exports.TerapagosexArt = exports.ScorbunnyArt = exports.RagingBoltArt = exports.RabootArt = exports.OrthwormexArt = exports.NoctowlArt = exports.MedititeArt = exports.MedichamexArt = exports.LaprasexArt = exports.JoltikArt = exports.IronBoulderArt = exports.HydrappleexArt = exports.HoothootArt = exports.GreatTreeArt = exports.GlisteningCrystalArt = exports.GlassTrumpetArt = exports.GarganaclexArt = exports.GalvantulexaArt = exports.FanRotomArt = exports.ElectabuzzArt = exports.DrifblimArt = exports.DrednawArt = exports.DiancieArt = exports.CrispinArt = exports.CinderaceexArt = exports.ComfeyArt = exports.ChewtleArt = exports.BriarArt = exports.BouffalantArt = exports.AreaZeroUnderdepthsArt = exports.ArchaludonArt = void 0;
+exports.ZeraoraArt = exports.VeluzaArt = exports.TerapagosexArt = exports.SlowkingArt = exports.ScorbunnyArt = exports.RagingBoltArt = exports.RabootArt = exports.OrthwormexArt = exports.NoctowlArt = exports.MedititeArt = exports.MedichamexArt = exports.LaprasexArt = exports.KofuArt = exports.JoltikArt = exports.IronBoulderArt = exports.HydrappleexArt = exports.HoothootArt = exports.GreatTreeArt = exports.GlisteningCrystalArt = exports.GlassTrumpetArt = exports.GarganaclexArt = exports.GalvantulexaArt = exports.FanRotomArt = exports.ElectabuzzArt = exports.DrifblimArt = exports.DrednawArt = exports.DiancieArt = exports.CrispinArt = exports.CrabominableArt = exports.CrabrawlerArt = exports.CinderaceexArt = exports.ComfeyArt = exports.ChewtleArt = exports.BriarArt = exports.BouffalantArt = exports.AreaZeroUnderdepthsArt = exports.ArchaludonArt = void 0;
 const archaludon_1 = require("./archaludon");
 const area_zero_underdepths_1 = require("./area-zero-underdepths");
 const bouffalant_1 = require("./bouffalant");
@@ -8,6 +8,8 @@ const briar_1 = require("./briar");
 const chewtle_1 = require("./chewtle");
 const cinderace_ex_1 = require("./cinderace-ex");
 const comfey_1 = require("./comfey");
+const crabominable_1 = require("./crabominable");
+const crabrawler_1 = require("./crabrawler");
 const crispin_1 = require("./crispin");
 const diancie_1 = require("./diancie");
 const drednaw_1 = require("./drednaw");
@@ -23,6 +25,7 @@ const hoothoot_1 = require("./hoothoot");
 const hydrapple_ex_1 = require("./hydrapple-ex");
 const iron_boulder_1 = require("./iron-boulder");
 const joltik_1 = require("./joltik");
+const kofu_1 = require("./kofu");
 const lapras_ex_1 = require("./lapras-ex");
 const medicham_ex_1 = require("./medicham-ex");
 const meditite_1 = require("./meditite");
@@ -31,7 +34,9 @@ const orthworm_ex_1 = require("./orthworm-ex");
 const raboot_1 = require("./raboot");
 const raging_bolt_1 = require("./raging-bolt");
 const scorbunny_1 = require("./scorbunny");
+const slowking_1 = require("./slowking");
 const terapagos_ex_1 = require("./terapagos-ex");
+const veluza_1 = require("./veluza");
 const zeraora_1 = require("./zeraora");
 class ArchaludonArt extends archaludon_1.Archaludon {
     constructor() {
@@ -82,6 +87,20 @@ class CinderaceexArt extends cinderace_ex_1.Cinderaceex {
     }
 }
 exports.CinderaceexArt = CinderaceexArt;
+class CrabrawlerArt extends crabrawler_1.Crabrawler {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/tpci/SCR/SCR_087_R_EN_LG.png';
+    }
+}
+exports.CrabrawlerArt = CrabrawlerArt;
+class CrabominableArt extends crabominable_1.Crabominable {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/tpci/SCR/SCR_042_R_EN_LG.png';
+    }
+}
+exports.CrabominableArt = CrabominableArt;
 class CrispinArt extends crispin_1.Crispin {
     constructor() {
         super(...arguments);
@@ -187,6 +206,13 @@ class JoltikArt extends joltik_1.Joltik {
     }
 }
 exports.JoltikArt = JoltikArt;
+class KofuArt extends kofu_1.Kofu {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/tpci/SCR/SCR_138_R_EN_LG.png';
+    }
+}
+exports.KofuArt = KofuArt;
 class LaprasexArt extends lapras_ex_1.Laprasex {
     constructor() {
         super(...arguments);
@@ -243,6 +269,13 @@ class ScorbunnyArt extends scorbunny_1.Scorbunny {
     }
 }
 exports.ScorbunnyArt = ScorbunnyArt;
+class SlowkingArt extends slowking_1.Slowking {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/tpci/SCR/SCR_058_R_EN_LG.png';
+    }
+}
+exports.SlowkingArt = SlowkingArt;
 class TerapagosexArt extends terapagos_ex_1.Terapagosex {
     constructor() {
         super(...arguments);
@@ -250,6 +283,13 @@ class TerapagosexArt extends terapagos_ex_1.Terapagosex {
     }
 }
 exports.TerapagosexArt = TerapagosexArt;
+class VeluzaArt extends veluza_1.Veluza {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/tpci/SCR/SCR_045_R_EN_LG.png';
+    }
+}
+exports.VeluzaArt = VeluzaArt;
 class ZeraoraArt extends zeraora_1.Zeraora {
     constructor() {
         super(...arguments);

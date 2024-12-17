@@ -13,6 +13,7 @@ exports.setCosmicEclipse = [
     new card_images_1.DrawEnergyArt(),
     new card_images_1.DusclopsArt(),
     new card_images_1.DuskullArt(),
+    new card_images_1.ExcadrillArt(),
     new card_images_1.FloetteArt(),
     new card_images_1.GolettArt(),
     new card_images_1.GuzmaAndHalaArt(),

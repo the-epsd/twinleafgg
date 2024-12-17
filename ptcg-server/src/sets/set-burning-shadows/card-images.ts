@@ -10,6 +10,7 @@ import { NecrozmaGX } from './necrozma-gx';
 import { Bruxish } from './bruxish';
 import { SalazzleGX } from './salazzle-gx';
 import { Diancie } from './diancie';
+import { Kiawe } from './kiawe';
 
 export class AcerolaArt extends Acerola {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BUS/BUS_112_R_EN_LG.png';
@@ -37,6 +38,10 @@ export class GloomArt extends Gloom {
 
 export class GuzmaArt extends Guzma {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BUS/BUS_115_R_EN_LG.png';
+}
+
+export class KiaweArt extends Kiawe {
+  public cardImage = 'https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/tpci/BUS/BUS_116_R_EN_LG.png';
 }
 
 export class MarillArt extends Marill {

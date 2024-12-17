@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { AlolanExeggutorexArt, ArchaludonexArt, AzelfArt, AzumarillArt, CapsakidArt, CelebrationFanfareArt, CeruledgeArt, CeruledgeexArt, CharcadetArt, CherishCarrierArt, CounterGainArt, CrocalorArt, CyranoArt, DeinoArt, DragonsElixirArt, DraytonArt, DuraludonArt, EeveeArt, EternatusArt, ExcitingStadiumArt, ExeggcuteArt, FlygonexArt, FuecocoArt, GravityMountainArt, HelperBellArt, HoOhArt, HydreigonexArt, KlefkiArt, KoraidonArt, LarvestaArt, LatiasexArt, LisiasAppealArt, MagnemiteArt, MagnetonArt, MarillArt, MegatonBlowerArt, MespritArt, MiloticexArt, MiraculousIntercomArt, NinetalesArt, PalkiaArt, PalossandexArt, PansearArt, PerfectMixerArt, PhanpyArt, PikachuexArt, QuaxwellArt, RichEnergyArt, ScrambleSwitchArt, ShroodleArt, SkeledirgeArt, SmoochumArt, SylveonexArt, TatsugiriexArt, TeraOrbArt, TerapagosArt, TogekissArt, TogepiArt, TogeticArt, TrapinchArt, UxieArt, VibravaArt, VivillionArt, VulpixArt, ZweilousArt } from './card-images';
+import { AlolanExeggutorexArt, ArchaludonexArt, AzelfArt, AzumarillArt, CapsakidArt, CelebrationFanfareArt, CeruledgeArt, CeruledgeexArt, CharcadetArt, CherishCarrierArt, CounterGainArt, CrocalorArt, CyranoArt, DeinoArt, DragonsElixirArt, DraytonArt, DuraludonArt, EeveeArt, EternatusArt, ExcitingStadiumArt, ExeggcuteArt, FlygonexArt, FuecocoArt, GravityMountainArt, HelperBellArt, HoOhArt, HydreigonexArt, KlefkiArt, KoraidonArt, LarvestaArt, LatiasexArt, LisiasAppealArt, MagnemiteArt, MagnetonArt, MarillArt, MegatonBlowerArt, MespritArt, MiloticexArt, MiraculousIntercomArt, NinetalesArt, PalkiaArt, PalossandexArt, PansearArt, PerfectMixerArt, PhanpyArt, PikachuexArt, QuaxwellArt, RabscaArt, RellorArt, RichEnergyArt, ScrambleSwitchArt, ShroodleArt, SkeledirgeArt, SmoochumArt, SylveonexArt, TatsugiriexArt, TeraOrbArt, TerapagosArt, TogekissArt, TogepiArt, TogeticArt, TrapinchArt, UxieArt, VibravaArt, VivillionArt, VulpixArt, WoChienArt, ZweilousArt } from './card-images';
 import { LarvestaIRArt } from './full-arts';
 import { Sandygast } from './sandygast';
 
@@ -70,6 +70,9 @@ export const setSurgingSparks: Card[] = [
   new LarvestaArt(),
   new PhanpyArt(),
   new KoraidonArt(),
+  new RellorArt(),
+  new RabscaArt(),
+  new WoChienArt(),
   //FA
   new LarvestaIRArt(),
 ];

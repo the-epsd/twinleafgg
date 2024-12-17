@@ -27,6 +27,7 @@ import { Sunkern } from './sunkern';
 import { TagCall } from './tag-call';
 import { UltraNecrozma } from './ultra-necrozma';
 import { Floette } from './floette';
+import { Excadrill } from './excadrill';
 export declare class ArceusDialgaPalkiaGXArt extends ArceusDialgaPalkiaGX {
     cardImage: string;
 }
@@ -55,6 +56,9 @@ export declare class DusclopsArt extends Dusclops {
     cardImage: string;
 }
 export declare class DuskullArt extends Duskull {
+    cardImage: string;
+}
+export declare class ExcadrillArt extends Excadrill {
     cardImage: string;
 }
 export declare class FloetteArt extends Floette {

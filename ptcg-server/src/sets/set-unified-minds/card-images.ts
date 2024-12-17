@@ -20,6 +20,7 @@ import { AlolanRaichu } from './alolan-raichu';
 import { WeaknessGuardEnergy } from './weakness-guard-energy';
 import { Cottonee } from './cottonee';
 import { Whimsicott } from './whimsicott';
+import { MewtwoMewGX } from './mewtwo-and-mew-gx';
 
 export class AlolanGrimerArt extends AlolanGrimer {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNM/UNM_127_R_EN.png';
@@ -51,6 +52,10 @@ export class KarateBeltArt extends KarateBelt {
 
 export class LickilickyArt extends Lickilicky {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/UNM/UNM_162_R_EN_LG.png';
+}
+
+export class MewtwoAndMewGXArt extends MewtwoMewGX {
+  public cardImage = 'https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/tpci/UNM/UNM_071_R_EN_LG.png';
 }
 
 export class MunchlaxArt extends Munchlax {

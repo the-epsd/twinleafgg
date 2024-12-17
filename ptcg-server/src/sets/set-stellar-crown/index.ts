@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { ArchaludonArt, AreaZeroUnderdepthsArt, BouffalantArt, BriarArt, ChewtleArt, CinderaceexArt, CrispinArt, DiancieArt, DrednawArt, DrifblimArt, ElectabuzzArt, FanRotomArt, GalvantulexaArt, GarganaclexArt, GlassTrumpetArt, GlisteningCrystalArt, GreatTreeArt, HoothootArt, HydrappleexArt, IronBoulderArt, JoltikArt, LaprasexArt, MedichamexArt, MedititeArt, NoctowlArt, RabootArt, RagingBoltArt, ScorbunnyArt, TerapagosexArt, ZeraoraArt } from './card-images';
+import { ArchaludonArt, AreaZeroUnderdepthsArt, BouffalantArt, BriarArt, ChewtleArt, CinderaceexArt, CrabominableArt, CrabrawlerArt, CrispinArt, DiancieArt, DrednawArt, DrifblimArt, ElectabuzzArt, FanRotomArt, GalvantulexaArt, GarganaclexArt, GlassTrumpetArt, GlisteningCrystalArt, GreatTreeArt, HoothootArt, HydrappleexArt, IronBoulderArt, JoltikArt, KofuArt, LaprasexArt, MedichamexArt, MedititeArt, NoctowlArt, RabootArt, RagingBoltArt, ScorbunnyArt, SlowkingArt, TerapagosexArt, VeluzaArt, ZeraoraArt } from './card-images';
 
 export const setStellarCrown: Card[] = [
   new ArchaludonArt(),
@@ -8,6 +8,8 @@ export const setStellarCrown: Card[] = [
   new BriarArt(),
   new ChewtleArt(),
   new CinderaceexArt(),
+  new CrabrawlerArt(),
+  new CrabominableArt(),
   new CrispinArt(),
   new DiancieArt(),
   new DrednawArt(),
@@ -23,6 +25,7 @@ export const setStellarCrown: Card[] = [
   new HydrappleexArt(),
   new IronBoulderArt(),
   new JoltikArt(),
+  new KofuArt(),
   new LaprasexArt(),
   new MedichamexArt(),
   new MedititeArt(),
@@ -31,7 +34,9 @@ export const setStellarCrown: Card[] = [
   new RabootArt(),
   new RagingBoltArt(),
   new ScorbunnyArt(),
+  new SlowkingArt(),
   new TerapagosexArt(),
+  new VeluzaArt(),
   new ZeraoraArt(),
 
 ];

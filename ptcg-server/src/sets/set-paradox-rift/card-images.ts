@@ -66,6 +66,7 @@ import { Veluza } from './veluza';
 import { Xatu } from './xatu';
 import { Toedscruel } from './toedscruel';
 import { Gimmighoul2 } from './gimmighoul2';
+import { Orthworm } from './orthworm';
 
 export class AncientBoosterEnergyCapsuleArt extends AncientBoosterEnergyCapsule {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_159_R_EN_LG.png';
@@ -240,6 +241,10 @@ export class NatuArt extends Natu {
 
 export class NymbleArt extends Nymble {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAR/PAR_013_R_EN_LG.png';
+}
+
+export class OrthwormArt extends Orthworm {
+  public cardImage = 'https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/tpci/PAR/PAR_138_R_EN_LG.png';
 }
 
 export class PorygonArt extends Porygon {

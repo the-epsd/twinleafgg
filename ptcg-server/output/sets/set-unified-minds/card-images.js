@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WhimsicottArt = exports.WeaknessGuardEnergyArt = exports.UTurnBoardArt = exports.TagSwitchArt = exports.StadiumNavArt = exports.RioluArt = exports.ResetStampArt = exports.RecycleEnergyArt = exports.RaichuAlolanRaichuGXArt = exports.AlolanRaichuArt = exports.PurrloinArt = exports.NumelArt = exports.NecrozmaArt = exports.MunchlaxArt = exports.LickilickyArt = exports.KarateBeltArt = exports.HoopaArt = exports.FroslassArt = exports.FlyiniumZAirSlashArt = exports.DarkCityArt = exports.CottoneeArt = exports.AlolanGrimerArt = void 0;
+exports.WhimsicottArt = exports.WeaknessGuardEnergyArt = exports.UTurnBoardArt = exports.TagSwitchArt = exports.StadiumNavArt = exports.RioluArt = exports.ResetStampArt = exports.RecycleEnergyArt = exports.RaichuAlolanRaichuGXArt = exports.AlolanRaichuArt = exports.PurrloinArt = exports.NumelArt = exports.NecrozmaArt = exports.MunchlaxArt = exports.MewtwoAndMewGXArt = exports.LickilickyArt = exports.KarateBeltArt = exports.HoopaArt = exports.FroslassArt = exports.FlyiniumZAirSlashArt = exports.DarkCityArt = exports.CottoneeArt = exports.AlolanGrimerArt = void 0;
 const alolan_grimer_1 = require("./alolan-grimer");
 const dark_city_1 = require("./dark-city");
 const flyinium_z_air_slash_1 = require("./flyinium-z-air-slash");
@@ -23,6 +23,7 @@ const alolan_raichu_1 = require("./alolan-raichu");
 const weakness_guard_energy_1 = require("./weakness-guard-energy");
 const cottonee_1 = require("./cottonee");
 const whimsicott_1 = require("./whimsicott");
+const mewtwo_and_mew_gx_1 = require("./mewtwo-and-mew-gx");
 class AlolanGrimerArt extends alolan_grimer_1.AlolanGrimer {
     constructor() {
         super(...arguments);
@@ -79,6 +80,13 @@ class LickilickyArt extends lickilicky_1.Lickilicky {
     }
 }
 exports.LickilickyArt = LickilickyArt;
+class MewtwoAndMewGXArt extends mewtwo_and_mew_gx_1.MewtwoMewGX {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/tpci/UNM/UNM_071_R_EN_LG.png';
+    }
+}
+exports.MewtwoAndMewGXArt = MewtwoAndMewGXArt;
 class MunchlaxArt extends munchlax_1.Munchlax {
     constructor() {
         super(...arguments);

@@ -50,6 +50,8 @@ import { PerfectMixer } from './perfect-mixer';
 import { Phanpy } from './phanpy-ir';
 import { Pikachuex } from './pikachu-ex';
 import { Quaxwell } from './quaxwell';
+import { Rabsca } from './rabsca';
+import { Rellor } from './Rellor';
 import { RichEnergy } from './rich-energy';
 import { Sandygast } from './sandygast';
 import { Shroodle } from './shroodle';
@@ -67,6 +69,7 @@ import { Uxie } from './uxie';
 import { Vibrava } from './vibrava';
 import { Vivillion } from './vivillion';
 import { Vulpix } from './vulpix';
+import { Wochien } from './wo-chien';
 import { Zweilous } from './zweilous';
 
 export class PikachuexArt extends Pikachuex {
@@ -359,4 +362,16 @@ export class PalossandexArt extends Palossandex {
 
 export class KoraidonArt extends Koraidon {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SSP/SSP_116_R_EN_LG.png';
+}
+
+export class RellorArt extends Rellor {
+  public cardImage = 'https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/tpci/SSP/SSP_013_R_EN_LG.png';
+}
+
+export class RabscaArt extends Rabsca {
+  public cardImage = 'https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/tpci/SSP/SSP_014_R_EN_LG.png';
+}
+
+export class WoChienArt extends Wochien {
+  public cardImage = 'https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/tpci/SSP/SSP_015_R_EN_LG.png';
 }
