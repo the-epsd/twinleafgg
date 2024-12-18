@@ -5,6 +5,8 @@ import { Briar } from './briar';
 import { Chewtle } from './chewtle';
 import { Cinderaceex } from './cinderace-ex';
 import { Comfey } from './comfey';
+import { Crabominable } from './crabominable';
+import { Crabrawler } from './crabrawler';
 import { Crispin } from './crispin';
 import { Diancie } from './diancie';
 import { Drednaw } from './drednaw';
@@ -20,6 +22,7 @@ import { Hoothoot } from './hoothoot';
 import { Hydrappleex } from './hydrapple-ex';
 import { IronBoulder } from './iron-boulder';
 import { Joltik } from './joltik';
+import { Kofu } from './kofu';
 import { Laprasex } from './lapras-ex';
 import { Medichamex } from './medicham-ex';
 import { Meditite } from './meditite';
@@ -28,7 +31,9 @@ import { Orthwormex } from './orthworm-ex';
 import { Raboot } from './raboot';
 import { RagingBolt } from './raging-bolt';
 import { Scorbunny } from './scorbunny';
+import { Slowking } from './slowking';
 import { Terapagosex } from './terapagos-ex';
+import { Veluza } from './veluza';
 import { Zeraora } from './zeraora';
 
 export class ArchaludonArt extends Archaludon {
@@ -57,6 +62,14 @@ export class ComfeyArt extends Comfey {
 
 export class CinderaceexArt extends Cinderaceex {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SCR/SCR_028_R_EN.png';
+}
+
+export class CrabrawlerArt extends Crabrawler {
+  public cardImage = 'https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/tpci/SCR/SCR_087_R_EN_LG.png';
+}
+
+export class CrabominableArt extends Crabominable {
+  public cardImage = 'https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/tpci/SCR/SCR_042_R_EN_LG.png';
 }
 
 export class CrispinArt extends Crispin {
@@ -119,6 +132,10 @@ export class JoltikArt extends Joltik {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SCR/SCR_050_R_EN.png';
 }
 
+export class KofuArt extends Kofu {
+  public cardImage = 'https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/tpci/SCR/SCR_138_R_EN_LG.png';
+}
+
 export class LaprasexArt extends Laprasex {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SCR/SCR_032_R_EN.png';
 }
@@ -151,8 +168,16 @@ export class ScorbunnyArt extends Scorbunny {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SCR/SCR_026_R_EN.png';
 }
 
+export class SlowkingArt extends Slowking {
+  public cardImage = 'https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/tpci/SCR/SCR_058_R_EN_LG.png';
+}
+
 export class TerapagosexArt extends Terapagosex {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SCR/SCR_128_R_EN.png';
+}
+
+export class VeluzaArt extends Veluza {
+  public cardImage = 'https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/tpci/SCR/SCR_045_R_EN_LG.png';
 }
 
 export class ZeraoraArt extends Zeraora {

@@ -20,6 +20,7 @@ import { AlolanRaichu } from './alolan-raichu';
 import { WeaknessGuardEnergy } from './weakness-guard-energy';
 import { Cottonee } from './cottonee';
 import { Whimsicott } from './whimsicott';
+import { MewtwoMewGX } from './mewtwo-and-mew-gx';
 export declare class AlolanGrimerArt extends AlolanGrimer {
     cardImage: string;
 }
@@ -42,6 +43,9 @@ export declare class KarateBeltArt extends KarateBelt {
     cardImage: string;
 }
 export declare class LickilickyArt extends Lickilicky {
+    cardImage: string;
+}
+export declare class MewtwoAndMewGXArt extends MewtwoMewGX {
     cardImage: string;
 }
 export declare class MunchlaxArt extends Munchlax {

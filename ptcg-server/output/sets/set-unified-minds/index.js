@@ -12,6 +12,7 @@ exports.setUnifiedMinds = [
     new card_images_1.HoopaArt(),
     new card_images_1.KarateBeltArt(),
     new card_images_1.LickilickyArt(),
+    new card_images_1.MewtwoAndMewGXArt(),
     new card_images_1.MunchlaxArt(),
     new card_images_1.NecrozmaArt(),
     new card_images_1.NumelArt(),

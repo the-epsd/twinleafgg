@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SmoochumArt = exports.CounterGainArt = exports.FlygonexArt = exports.VibravaArt = exports.TrapinchArt = exports.MegatonBlowerArt = exports.HelperBellArt = exports.TeraOrbArt = exports.AzumarillArt = exports.MarillArt = exports.CherishCarrierArt = exports.PerfectMixerArt = exports.HoOhArt = exports.BlackKyuremexArt = exports.PalkiaArt = exports.LisiasAppealArt = exports.CeruledgeArt = exports.NinetalesArt = exports.VulpixArt = exports.ScrambleSwitchArt = exports.MespritArt = exports.UxieArt = exports.AzelfArt = exports.VivillionArt = exports.EternatusArt = exports.HydreigonexArt = exports.ZweilousArt = exports.DeinoArt = exports.TogekissArt = exports.TogeticArt = exports.TogepiArt = exports.MiloticexArt = exports.SkeledirgeArt = exports.CrocalorArt = exports.FuecocoArt = exports.CyranoArt = exports.MiraculousIntercomArt = exports.ExcitingStadiumArt = exports.GravityMountainArt = exports.MagnetonArt = exports.CapsakidArt = exports.QuaxwellArt = exports.PansearArt = exports.LarvestaArt = exports.PhanpyArt = exports.ShroodleArt = exports.MagnemiteArt = exports.TerapagosArt = exports.TatsugiriexArt = exports.PikachuexArt = void 0;
-exports.KoraidonArt = exports.PalossandexArt = exports.SandygastArt = exports.DurantexArt = exports.CeruledgeexArt = exports.CharcadetArt = exports.SylveonexArt = exports.EeveeArt = exports.LatiasexArt = exports.AlolanExeggutorexArt = exports.ExeggcuteArt = exports.KlefkiArt = exports.RichEnergyArt = exports.DraytonArt = exports.DuskBallArt = exports.DragonsElixirArt = exports.DialgaArt = exports.CelebrationFanfareArt = exports.ArchaludonexArt = exports.DuraludonArt = void 0;
+exports.WoChienArt = exports.RabscaArt = exports.RellorArt = exports.KoraidonArt = exports.PalossandexArt = exports.SandygastArt = exports.DurantexArt = exports.CeruledgeexArt = exports.CharcadetArt = exports.SylveonexArt = exports.EeveeArt = exports.LatiasexArt = exports.AlolanExeggutorexArt = exports.ExeggcuteArt = exports.KlefkiArt = exports.RichEnergyArt = exports.DraytonArt = exports.DuskBallArt = exports.DragonsElixirArt = exports.DialgaArt = exports.CelebrationFanfareArt = exports.ArchaludonexArt = exports.DuraludonArt = void 0;
 const counter_gain_1 = require("../set-lost-thunder/counter-gain");
 const scramble_switch_1 = require("../set-plasma-storm/scramble-switch");
 const magneton_1 = require("../set-scarlet-and-violet-promos/magneton");
@@ -54,6 +54,8 @@ const perfect_mixer_1 = require("./perfect-mixer");
 const phanpy_ir_1 = require("./phanpy-ir");
 const pikachu_ex_1 = require("./pikachu-ex");
 const quaxwell_1 = require("./quaxwell");
+const rabsca_1 = require("./rabsca");
+const Rellor_1 = require("./Rellor");
 const rich_energy_1 = require("./rich-energy");
 const sandygast_1 = require("./sandygast");
 const shroodle_1 = require("./shroodle");
@@ -71,6 +73,7 @@ const uxie_1 = require("./uxie");
 const vibrava_1 = require("./vibrava");
 const vivillion_1 = require("./vivillion");
 const vulpix_1 = require("./vulpix");
+const wo_chien_1 = require("./wo-chien");
 const zweilous_1 = require("./zweilous");
 class PikachuexArt extends pikachu_ex_1.Pikachuex {
     constructor() {
@@ -574,3 +577,24 @@ class KoraidonArt extends koraidon_1.Koraidon {
     }
 }
 exports.KoraidonArt = KoraidonArt;
+class RellorArt extends Rellor_1.Rellor {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/tpci/SSP/SSP_013_R_EN_LG.png';
+    }
+}
+exports.RellorArt = RellorArt;
+class RabscaArt extends rabsca_1.Rabsca {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/tpci/SSP/SSP_014_R_EN_LG.png';
+    }
+}
+exports.RabscaArt = RabscaArt;
+class WoChienArt extends wo_chien_1.Wochien {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/tpci/SSP/SSP_015_R_EN_LG.png';
+    }
+}
+exports.WoChienArt = WoChienArt;

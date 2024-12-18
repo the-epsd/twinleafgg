@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WishiwashiArt = exports.UltraNecrozmaArt = exports.TagCallArt = exports.SunkernArt = exports.StoutlandArt = exports.SlugmaArt = exports.SawsbuckArt = exports.ProfessorOaksSetupArt = exports.PikachuArt = exports.PhioneArt = exports.NatuArt = exports.LillipupArt = exports.LilliesPokeDollArt = exports.LanasFishingRodArt = exports.MallowAndLanaArt = exports.GuzzlordArt = exports.GuzmaAndHalaArt = exports.GolettArt = exports.FloetteArt = exports.DuskullArt = exports.DusclopsArt = exports.DrawEnergyArt = exports.CynthiaAndCaitlinArt = exports.ClayArt = exports.ChaoticSwellArt = exports.BuzzwoleArt = exports.BlacephalonArt = exports.BellelbaAndBrycenManArt = exports.ArceusDialgaPalkiaGXArt = void 0;
+exports.WishiwashiArt = exports.UltraNecrozmaArt = exports.TagCallArt = exports.SunkernArt = exports.StoutlandArt = exports.SlugmaArt = exports.SawsbuckArt = exports.ProfessorOaksSetupArt = exports.PikachuArt = exports.PhioneArt = exports.NatuArt = exports.LillipupArt = exports.LilliesPokeDollArt = exports.LanasFishingRodArt = exports.MallowAndLanaArt = exports.GuzzlordArt = exports.GuzmaAndHalaArt = exports.GolettArt = exports.FloetteArt = exports.ExcadrillArt = exports.DuskullArt = exports.DusclopsArt = exports.DrawEnergyArt = exports.CynthiaAndCaitlinArt = exports.ClayArt = exports.ChaoticSwellArt = exports.BuzzwoleArt = exports.BlacephalonArt = exports.BellelbaAndBrycenManArt = exports.ArceusDialgaPalkiaGXArt = void 0;
 const arceus_dialga_palkia_gx_1 = require("./arceus-dialga-palkia-gx");
 const bellelba_and_brycen_man_1 = require("./bellelba-and-brycen-man");
 const blacephalon_1 = require("./blacephalon");
@@ -30,6 +30,7 @@ const sunkern_1 = require("./sunkern");
 const tag_call_1 = require("./tag-call");
 const ultra_necrozma_1 = require("./ultra-necrozma");
 const floette_1 = require("./floette");
+const excadrill_1 = require("./excadrill");
 class ArceusDialgaPalkiaGXArt extends arceus_dialga_palkia_gx_1.ArceusDialgaPalkiaGX {
     constructor() {
         super(...arguments);
@@ -100,6 +101,13 @@ class DuskullArt extends duskull_1.Duskull {
     }
 }
 exports.DuskullArt = DuskullArt;
+class ExcadrillArt extends excadrill_1.Excadrill {
+    constructor() {
+        super(...arguments);
+        this.cardImage = 'https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/tpci/CEC/CEC_115_R_EN_LG.png';
+    }
+}
+exports.ExcadrillArt = ExcadrillArt;
 class FloetteArt extends floette_1.Floette {
     constructor() {
         super(...arguments);

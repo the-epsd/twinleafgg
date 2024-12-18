@@ -50,6 +50,8 @@ import { PerfectMixer } from './perfect-mixer';
 import { Phanpy } from './phanpy-ir';
 import { Pikachuex } from './pikachu-ex';
 import { Quaxwell } from './quaxwell';
+import { Rabsca } from './rabsca';
+import { Rellor } from './Rellor';
 import { RichEnergy } from './rich-energy';
 import { Sandygast } from './sandygast';
 import { Shroodle } from './shroodle';
@@ -67,6 +69,7 @@ import { Uxie } from './uxie';
 import { Vibrava } from './vibrava';
 import { Vivillion } from './vivillion';
 import { Vulpix } from './vulpix';
+import { Wochien } from './wo-chien';
 import { Zweilous } from './zweilous';
 export declare class PikachuexArt extends Pikachuex {
     cardImage: string;
@@ -288,5 +291,14 @@ export declare class PalossandexArt extends Palossandex {
     cardImage: string;
 }
 export declare class KoraidonArt extends Koraidon {
+    cardImage: string;
+}
+export declare class RellorArt extends Rellor {
+    cardImage: string;
+}
+export declare class RabscaArt extends Rabsca {
+    cardImage: string;
+}
+export declare class WoChienArt extends Wochien {
     cardImage: string;
 }

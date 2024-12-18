@@ -10,6 +10,7 @@ exports.setBurningShadows = [
     new card_images_1.GardevoirGXArt(),
     new card_images_1.GloomArt(),
     new card_images_1.GuzmaArt(),
+    new card_images_1.KiaweArt(),
     new card_images_1.MarillArt(),
     new card_images_1.NecrozmaGXArt(),
     new card_images_1.PlumeriaArt(),

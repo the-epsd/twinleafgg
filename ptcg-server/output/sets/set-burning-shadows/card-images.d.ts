@@ -10,6 +10,7 @@ import { NecrozmaGX } from './necrozma-gx';
 import { Bruxish } from './bruxish';
 import { SalazzleGX } from './salazzle-gx';
 import { Diancie } from './diancie';
+import { Kiawe } from './kiawe';
 export declare class AcerolaArt extends Acerola {
     cardImage: string;
 }
@@ -29,6 +30,9 @@ export declare class GloomArt extends Gloom {
     cardImage: string;
 }
 export declare class GuzmaArt extends Guzma {
+    cardImage: string;
+}
+export declare class KiaweArt extends Kiawe {
     cardImage: string;
 }
 export declare class MarillArt extends Marill {
