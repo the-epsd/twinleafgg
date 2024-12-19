@@ -23,14 +23,14 @@ class HorrorPsychicEnergy extends energy_card_1.EnergyCard {
             'If the [P] Pokémon this card is attached to is in the Active Spot and is damaged by an opponent\'s attack (even if it is Knocked Out), put 2 damage counters on the Attacking Pokémon.';
     }
     reduceEffect(store, state, effect) {
-        var _a, _b;
+        var _a;
         if (effect instanceof check_effects_1.CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
             const player = effect.player;
             try {
                 const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
                 store.reduceEffect(state, energyEffect);
             }
-            catch (_c) {
+            catch (_b) {
                 return state;
             }
             effect.energyMap.push({ card: this, provides: [card_types_1.CardType.PSYCHIC] });
@@ -43,10 +43,9 @@ class HorrorPsychicEnergy extends energy_card_1.EnergyCard {
                 const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
                 store.reduceEffect(state, energyEffect);
             }
-            catch (_d) {
+            catch (_c) {
                 return state;
             }
-            console.log('Player Active: ' + ((_b = player.active.getPokemonCard()) === null || _b === void 0 ? void 0 : _b.name));
             const checkPokemonType = new check_effects_1.CheckPokemonTypeEffect(targetPlayer.active);
             store.reduceEffect(state, checkPokemonType);
             if (checkPokemonType.cardTypes.includes(card_types_1.CardType.PSYCHIC)) {

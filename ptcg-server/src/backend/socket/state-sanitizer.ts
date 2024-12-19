@@ -91,9 +91,9 @@ export class StateSanitizer {
       return prompt.result === undefined;
     });
 
-    state.prompts = state.prompts.filter(prompt => {
-      return prompt.type === 'Coin flip' || prompt.playerId === this.client.id;
-    });
+    // state.prompts = state.prompts.filter(prompt => {
+    //   return prompt.type === 'Coin flip' || prompt.playerId === this.client.id;
+    // });
 
     // Hide opponent's prompts. They may contain sensitive data.
     state.prompts = state.prompts.map(prompt => {

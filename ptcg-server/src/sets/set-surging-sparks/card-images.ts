@@ -51,7 +51,7 @@ import { Phanpy } from './phanpy-ir';
 import { Pikachuex } from './pikachu-ex';
 import { Quaxwell } from './quaxwell';
 import { Rabsca } from './rabsca';
-import { Rellor } from './Rellor';
+import { Rellor } from './rellor';
 import { RichEnergy } from './rich-energy';
 import { Sandygast } from './sandygast';
 import { Shroodle } from './shroodle';

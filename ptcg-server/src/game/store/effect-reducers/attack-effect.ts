@@ -50,9 +50,6 @@ export function attackReducer(store: StoreLike, state: State, effect: Effect): S
       afterDamageEffect.target = effect.target;
       store.reduceEffect(state, afterDamageEffect);
     }
-
-    console.log(damage);
-
   }
 
   if (effect instanceof DealDamageEffect) {

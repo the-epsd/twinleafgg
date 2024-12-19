@@ -20,10 +20,10 @@ class TrainerCard extends card_1.Card {
         if (effect instanceof game_effects_1.AttackEffect) {
             for (let i = 0; i < this.attacks.length; i++) {
                 const attackEffect = this.attacks[i].effect;
-                console.log(this.attacks[i].name);
+                // console.log(this.attacks[i].name);
                 if (effect.attack === this.attacks[i] && attackEffect !== undefined && typeof attackEffect === 'function') {
-                    console.log(attackEffect);
-                    console.log('we made it to handling!');
+                    // console.log(attackEffect);
+                    // console.log('we made it to handling!');
                     attackEffect(store, state, effect);
                 }
             }

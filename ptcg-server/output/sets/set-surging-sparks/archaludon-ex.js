@@ -86,8 +86,7 @@ class Archaludonex extends game_1.PokemonCard {
         }
         if (effect instanceof check_effects_1.CheckPokemonStatsEffect) {
             const player = game_1.StateUtils.findOwner(state, effect.target);
-            const opponent = game_1.StateUtils.getOpponent(state, player);
-            if (opponent.active.attackMarker.hasMarker(this.METAL_DEFENDER_MARKER, this)) {
+            if (player.active.attackMarker.hasMarker(this.METAL_DEFENDER_MARKER, this)) {
                 effect.weakness = [];
                 return state;
             }

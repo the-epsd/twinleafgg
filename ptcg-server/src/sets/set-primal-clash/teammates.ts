@@ -16,36 +16,42 @@ import { StoreLike } from '../../game/store/store-like';
 function* playCard(next: Function, store: StoreLike, state: State,
   self: Teammates, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
-  
+
+  const supporterTurn = player.supporterTurn;
+
+  if (supporterTurn > 0) {
+    throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
+  }
+
   // No Pokemon KO last turn
   if (!player.marker.hasMarker(self.TEAMMATES_MARKER)) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
-  
+
   if (player.deck.cards.length === 0) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
-  
-  player.hand.moveCardTo(self, player.supporter);  
-  
+
+  player.hand.moveCardTo(self, player.supporter);
+
   // We will discard this card after prompt confirmation
   // This will prevent unblocked supporter to appear in the discard pile
   effect.preventDefault = true;
-  
+
   let cards: Card[] = [];
   return store.prompt(state, new ChooseCardsPrompt(
     player,
     GameMessage.CHOOSE_CARD_TO_HAND,
     player.deck,
     {},
-    {min: 1, max: Math.min(2, player.deck.cards.length), allowCancel: false}
+    { min: 1, max: Math.min(2, player.deck.cards.length), allowCancel: false }
   ), selected => {
     cards = selected || [];
     next();
 
     player.deck.moveCardsTo(cards, player.hand);
     player.supporter.moveCardTo(effect.trainerCard, player.discard);
-    
+
     return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
       player.deck.applyOrder(order);
     });

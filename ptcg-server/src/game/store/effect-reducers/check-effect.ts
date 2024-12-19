@@ -335,7 +335,11 @@ function handlePrompts(
         throw new GameError(GameMessage.ILLEGAL_ACTION);
       }
       const temp = player.active;
+      const playerActive = player.active.getPokemonCard();
       player.active = player.bench[benchIndex];
+      if (playerActive) {
+        playerActive.movedToActiveThisTurn = true;
+      }
       player.bench[benchIndex] = temp;
       handlePrompts(store, state, prompts, onComplete);
     }
