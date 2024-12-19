@@ -102,7 +102,6 @@ export function retreatReducer(store: StoreLike, state: State, effect: Effect): 
       retreatPokemon(store, state, effect);
       const activePokemonCard = player.active.getPokemonCard() as PokemonCard;
       activePokemonCard.movedToActiveThisTurn = true;
-      console.log('movedToActiveThisTurn = true');
     });
   }
 

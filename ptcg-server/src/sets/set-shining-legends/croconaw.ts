@@ -41,7 +41,7 @@ export class Croconaw extends PokemonCard {
       const player = effect.player;
       const source = player.active;
 
-      if (player.active.cards[0] !== this) {
+      if (player.active.cards[0] == this) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 

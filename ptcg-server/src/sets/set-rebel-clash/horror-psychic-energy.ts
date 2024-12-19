@@ -56,7 +56,6 @@ export class HorrorPsychicEnergy extends EnergyCard {
       } catch {
         return state;
       }
-      console.log('Player Active: ' + player.active.getPokemonCard()?.name);
       const checkPokemonType = new CheckPokemonTypeEffect(targetPlayer.active);
       store.reduceEffect(state, checkPokemonType);
 

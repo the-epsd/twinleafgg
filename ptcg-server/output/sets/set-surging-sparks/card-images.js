@@ -55,7 +55,7 @@ const phanpy_ir_1 = require("./phanpy-ir");
 const pikachu_ex_1 = require("./pikachu-ex");
 const quaxwell_1 = require("./quaxwell");
 const rabsca_1 = require("./rabsca");
-const Rellor_1 = require("./Rellor");
+const rellor_1 = require("./rellor");
 const rich_energy_1 = require("./rich-energy");
 const sandygast_1 = require("./sandygast");
 const shroodle_1 = require("./shroodle");
@@ -577,7 +577,7 @@ class KoraidonArt extends koraidon_1.Koraidon {
     }
 }
 exports.KoraidonArt = KoraidonArt;
-class RellorArt extends Rellor_1.Rellor {
+class RellorArt extends rellor_1.Rellor {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/tpci/SSP/SSP_013_R_EN_LG.png';

@@ -14,6 +14,10 @@ function* playCard(next, store, state, self, effect) {
     const player = effect.player;
     const opponent = state_utils_1.StateUtils.getOpponent(state, player);
     let cards = [];
+    const supporterTurn = player.supporterTurn;
+    if (supporterTurn > 0) {
+        throw new game_error_1.GameError(game_message_1.GameMessage.SUPPORTER_ALREADY_PLAYED);
+    }
     if (player.deck.cards.length === 0) {
         throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
     }

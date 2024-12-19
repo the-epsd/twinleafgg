@@ -262,7 +262,11 @@ function handlePrompts(store, state, prompts, onComplete) {
                 throw new game_error_1.GameError(game_message_1.GameMessage.ILLEGAL_ACTION);
             }
             const temp = player.active;
+            const playerActive = player.active.getPokemonCard();
             player.active = player.bench[benchIndex];
+            if (playerActive) {
+                playerActive.movedToActiveThisTurn = true;
+            }
             player.bench[benchIndex] = temp;
             handlePrompts(store, state, prompts, onComplete);
         }
