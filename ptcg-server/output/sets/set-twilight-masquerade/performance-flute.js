@@ -52,16 +52,14 @@ class PerformanceFlute extends trainer_card_1.TrainerCard {
                     });
                 }
                 cards.forEach((card, index) => {
-                    return store.prompt(state, new game_1.ShowCardsPrompt(opponent.id, game_message_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, deckTop.cards), () => {
-                        deckTop.moveCardTo(card, slots[index]);
-                        slots[index].pokemonPlayedTurn = state.turn;
-                        deckTop.moveTo(opponent.deck);
-                        player.supporter.moveCardTo(effect.trainerCard, player.discard);
-                        return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
-                            player.deck.applyOrder(order);
-                            return state;
-                        });
-                    });
+                    deckTop.moveCardTo(card, slots[index]);
+                    slots[index].pokemonPlayedTurn = state.turn;
+                });
+                deckTop.moveTo(opponent.deck);
+                player.supporter.moveCardTo(effect.trainerCard, player.discard);
+                return store.prompt(state, new game_1.ShuffleDeckPrompt(opponent.id), order => {
+                    opponent.deck.applyOrder(order);
+                    return state;
                 });
             });
         }
