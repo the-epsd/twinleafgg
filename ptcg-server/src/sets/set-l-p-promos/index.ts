@@ -1,9 +1,9 @@
 import { Card } from '../../game/store/card/card';
-import { WonderPlatinumArt } from './card-images';
+import { WonderPlatinum } from './wonder-platinum';
 
 
 export const setLPPromos: Card[] = [
 
-  new WonderPlatinumArt(),
+  new WonderPlatinum(),
 
 ];

@@ -1,22 +1,30 @@
 import { Card } from '../../game/store/card/card';
-import { BallGuyArt, BuizelArt, DartrixArt, FrosmothArt, GalarianWeezingArt, HorseaArt, KoffingArt, RillaboomArt, RookideeArt, SnomArt, ThwackeyArt } from './card-images';
-import { ApplinArt, SnomSVArt } from './full-art';
-
+import { Applin } from './applin';
+import { BallGuy } from './ball-guy';
+import { Buizel } from './buizel';
+import { Dartrix } from './dartrix';
+import { Frosmoth } from './frosmoth';
+import { GalarianWeezing } from './galarian-weezing';
+import { Horsea } from './horsea';
+import { Koffing } from './koffing';
+import { Rillaboom } from './rillaboom';
+import { Rookidee } from './rookidee';
+import { Snom } from './snom';
+import { Thwackey } from './thwackey';
 export const setShiningFates: Card[] = [
-  new BallGuyArt(),
-  new BuizelArt(),
-  new DartrixArt(),
-  new FrosmothArt(),
-  new GalarianWeezingArt(),
-  new HorseaArt(),
-  new KoffingArt(),
-  new RillaboomArt(),
-  new RookideeArt(),
-  new SnomArt(),
-  new ThwackeyArt(),
+  new BallGuy(),
+  new Buizel(),
+  new Dartrix(),
+  new Frosmoth(),
+  new GalarianWeezing(),
+  new Horsea(),
+  new Koffing(),
+  new Rillaboom(),
+  new Rookidee(),
+  new Snom(),
+  new Thwackey(),
 
   // Shiny Vault
 
-  new ApplinArt(),
-  new SnomSVArt(),
+  new Applin()
 ];

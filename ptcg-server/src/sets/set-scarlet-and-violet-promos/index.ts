@@ -1,12 +1,17 @@
 import { Card } from '../../game/store/card/card';
-import { AmpharosexArt, CharmanderArt, MagnetonArt, MimikyuexArt, PecharuntArt, TinkatonexArt } from './card-images';
+import { Ampharosex } from './ampharos-ex';
+import { Charmander } from './charmander';
+import { Magneton } from './magneton';
+import { Mimikyuex } from './mimikyu-ex';
+import { Pecharunt } from './pecharunt';
+import { Tinkatonex } from './tinkaton-ex';
 
 
 export const setScarletAndVioletPromos: Card[] = [
-  new AmpharosexArt(),
-  new CharmanderArt(),
-  new MagnetonArt(),
-  new MimikyuexArt(),
-  new PecharuntArt(),
-  new TinkatonexArt(),
+  new Ampharosex(),
+  new Charmander(),
+  new Magneton(),
+  new Mimikyuex(),
+  new Pecharunt(),
+  new Tinkatonex(),
 ];

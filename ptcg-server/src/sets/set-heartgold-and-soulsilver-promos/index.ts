@@ -1,7 +1,7 @@
 import { Card } from '../../game/store/card/card';
-import { ShuckleArt } from './card-images';
+import { Shuckle } from './shuckle';
 
 export const setHeartGoldAndSoulSilverPromos: Card[] = [
-  new ShuckleArt(),
+  new Shuckle(),
 
 ];

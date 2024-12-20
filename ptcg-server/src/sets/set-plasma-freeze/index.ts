@@ -1,14 +1,21 @@
 import { Card } from '../../game/store/card/card';
-import { ElectrodeArt, ExeggcuteArt, ExeggutorArt, FloatStoneArt, FrozenCityArt, MrMimeArt, RockGuardArt, SuperiorEnergyRetrievalArt } from './card-images';
+import { Electrode } from './electrode';
+import { Exeggcute } from './exeggcute';
+import { Exeggutor } from './exeggutor';
+import { FloatStone } from './float-stone';
+import { FrozenCity } from './frozen-city';
+import { MrMime } from './mr-mime';
+import { RockGuard } from './rock-guard';
+import { SuperiorEnergyRetrieval } from './superior-energy-retrieval';
 
 export const setPlasmaFreeze: Card[] = [
-  new ElectrodeArt(),
-  new ExeggcuteArt(),
-  new ExeggutorArt(),
-  new FloatStoneArt(),
-  new FrozenCityArt(),
-  new MrMimeArt(),
-  new RockGuardArt(),
-  new SuperiorEnergyRetrievalArt(),
+  new Electrode(),
+  new Exeggcute(),
+  new Exeggutor(),
+  new FloatStone(),
+  new FrozenCity(),
+  new MrMime(),
+  new RockGuard(),
+  new SuperiorEnergyRetrieval(),
 
 ];

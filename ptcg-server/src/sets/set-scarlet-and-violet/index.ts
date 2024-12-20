@@ -1,126 +1,153 @@
 import { Card } from '../../game/store/card/card';
-import { AnnihilapeArt, ArbolivaArt, ArcanineexArt, ArmarougeArt, BanetteexArt, CapsakidArt, CharcadetArt, DollivArt, FlittleArt, GrowlitheArt, GyaradosexArt, LucarioArt, MagikarpArt, MankeyArt, NemonaArt, NestBallArt2, PrimeapeArt, RevavroomArt, RioluArt, RioluArt2, RockyHelmetArt, ScatterbugArt, ShuppetArt, SmolivArt, SpewpaArt, SpidopsexArt, ToedscoolArt, ToedscruelArt, TorkoalArt } from './card-images';
-import { ArvenArt } from './card-images';
-import { BeachCourtArt } from './card-images';
-import { CrushingHammerArt } from './card-images';
-import { CyclizarArt } from './card-images';
-import { DefianceBandArt } from './card-images';
-import { DrifloonArt } from './card-images';
-import { ElectricGeneratorArt } from './card-images';
-import { EnergyRetrievalArt } from './card-images';
-import { EnergySearchArt } from './card-images';
-import { EnergySwitchArt } from './card-images';
-import { ExpShareArt } from './card-images';
-import { GardevoirexArt } from './card-images';
-import { HawluchaArt } from './card-images';
-import { JacqArt } from './card-images';
-import { JudgeArt } from './card-images';
-import { KatyArt } from './card-images';
-import { KlefkiArt } from './card-images';
-import { KoraidonexArt } from './card-images';
-import { MagnemiteArt } from './card-images';
-import { MagnetonArt } from './card-images';
-import { MagnezoneexArt } from './card-images';
-import { MareepArt } from './card-images';
-import { MesagozaArt } from './card-images';
-import { MiraidonexArt } from './card-images';
-import { MiriamArt } from './card-images';
-import { NestBallArt } from './card-images';
-import { PalPadArt } from './card-images';
-import { PennyArt } from './card-images';
-import { PicnicBasketArt } from './card-images';
-import { PokeballArt } from './card-images';
-import { Pokegear30Art } from './card-images';
-import { PokemonCatcherArt } from './card-images';
-import { PotionArt } from './card-images';
-import { ProfessorsResearchArt1 } from './card-images';
-import { ProfessorsResearchArt2 } from './card-images';
-import { RaltsArt } from './card-images';
-import { RareCandyArt } from './card-images';
-import { RockChestplateArt } from './card-images';
-import { ScovillainArt } from './card-images';
-import { SkwovetArt } from './card-images';
-import { SwitchArt } from './card-images';
-import { TeamStarGruntArt } from './card-images';
-import { UltraBallArt } from './card-images';
-import { VitalityBandArt } from './card-images';
-import { YoungsterArt } from './card-images';
-import { ArmarougeIR, ArvenFA, ArvenSIR, FightingEnergyHR, GardevoirexFA, GardevoirexSIR, JacqFA, JacqSIR, KatyFA, KoraidonexFA, KoraidonexHR, KoraidonexSIR, LightningEnergyHR, MagnezoneexFA, MiraidonexFA, MiraidonexHR, MiraidonexSIR, MiriamFA, MiriamSIR, NestBallHR, PennyFA, PennySIR, ProfessorsResearchFA1, ProfessorsResearchFA2, RaltsIR, RareCandyHR, SkwovetIR, TeamStarGruntFA } from './full-arts';
+import { Annihilape } from './annihilape';
+import { Arboliva } from './arboliva';
+import { Arcanineex } from './arcanine-ex';
+import { Armarouge } from './armarouge';
+import { Arven } from './arven';
+import { Banetteex } from './banette-ex';
+import { BeachCourt } from './beach-court';
+import { Capsakid } from './capsakid';
+import { Charcadet } from './charcadet';
+import { CrushingHammer } from './crushing-hammer';
+import { Cyclizar } from './cyclizar';
+import { DefianceBand } from './defiance-band';
+import { Dolliv } from './dolliv';
+import { Drifloon } from './drifloon';
+import { ElectricGenerator } from './electric-generator';
+import { EnergyRetrieval } from './energy-retrieval';
+import { EnergySearch } from './energy-search';
+import { EnergySwitch } from './energy-switch';
+import { ExpShare } from './exp-share';
+import { Flittle } from './flittle';
+import { ArmarougeIR, ArvenFA, ArvenSIR, FightingEnergyHR, LightningEnergyHR, GardevoirexFA, GardevoirexSIR, JacqFA, JacqSIR, KatyFA, KoraidonexFA, KoraidonexSIR, KoraidonexHR, MagnezoneexFA, MiraidonexFA, MiraidonexSIR, MiraidonexHR, MiriamFA, MiriamSIR, NestBallHR, PennyFA, PennySIR, ProfessorsResearchFA1, ProfessorsResearchFA2, RaltsIR, RareCandyHR, SkwovetIR, TeamStarGruntFA } from './full-arts';
+import { Gardevoirex } from './gardevoir-ex';
+import { Growlithe } from './growlithe';
+import { Gyaradosex } from './gyarados-ex';
+import { Hawlucha } from './hawlucha';
+import { Jacq } from './jacq';
+import { Judge } from './judge';
+import { Katy } from './katy';
+import { Klefki } from './klefki';
+import { Koraidonex } from './koraidon-ex';
+import { Lucario } from './lucario';
+import { Magikarp } from './magikarp';
+import { Magnemite } from './magnemite';
+import { Magneton } from './magneton';
+import { Magnezoneex } from './magnezone-ex';
+import { Mankey } from './mankey';
+import { Mareep } from './mareep';
+import { Mesagoza } from './mesagoza';
+import { Miraidonex } from './miraidon-ex';
+import { Miriam } from './miriam';
+import { Nemona } from './nemona';
+import { NestBall } from './nest-ball';
+import { PalPad } from './pal-pad';
+import { Penny } from './penny';
+import { PicnicBasket } from './picnic-basket';
+import { Pokeball } from './pokeball';
+import { Pokegear30 } from './pokegear-30';
+import { PokemonCatcher } from './pokemon-catcher';
+import { Potion } from './potion';
+import { Primeape } from './primeape';
+import { ProfessorsResearch } from './professors-research';
+import { ProfessorsResearch2 } from './professors-research2';
+import { Ralts } from './ralts';
+import { RareCandy } from './rare-candy';
+import { Revavroom } from './revavroom';
+import { Riolu } from './riolu';
+import { Riolu2 } from './riolu2';
+import { RockChestplate } from './rock-chestplate';
+import { RockyHelmet } from './rocky-helmet';
+import { Scatterbug } from './scatterbug';
+import { Scovillain } from './scovillain';
+import { Shuppet } from './shuppet';
+import { Skwovet } from './skwovet';
+import { Smoliv } from './smoliv';
+import { Spewpa } from './spewpa';
+import { Spidopsex } from './spidops-ex';
+import { Switch } from './switch';
+import { TeamStarGrunt } from './team-star-grunt';
+import { Toedscool } from './toedscool';
+import { Toedscruel } from './toedscruel';
+import { Torkoal } from './torkoal';
+import { UltraBall } from './ultra-ball';
+import { VitalityBand } from './vitality-band';
+import { Youngster } from './youngster';
 
 
 export const setScarletAndViolet: Card[] = [
-  new AnnihilapeArt(),
-  new ArbolivaArt(),
-  new ArcanineexArt(),
-  new ArmarougeArt(),
-  new ArvenArt(),
-  new BeachCourtArt(),
-  new CapsakidArt(),
-  new CharcadetArt(),
-  new CrushingHammerArt(),
-  new CyclizarArt(),
-  new DefianceBandArt(),
-  new DollivArt(),
-  new DrifloonArt(),
-  new ElectricGeneratorArt(),
-  new EnergyRetrievalArt(),
-  new EnergySearchArt(),
-  new EnergySwitchArt(),
-  new ExpShareArt(),
-  new FlittleArt(),
-  new GardevoirexArt(),
-  new GrowlitheArt(),
-  new GyaradosexArt(),
-  new HawluchaArt(),
-  new JacqArt(),
-  new JudgeArt(),
-  new KatyArt(),
-  new KlefkiArt(),
-  new KoraidonexArt(),
-  new LucarioArt(),
-  new MagikarpArt(),
-  new MagnemiteArt(),
-  new MagnetonArt(),
-  new MagnezoneexArt(),
-  new MankeyArt(),
-  new MareepArt(),
-  new MesagozaArt(),
-  new MiraidonexArt(),
-  new MiriamArt(),
-  new NemonaArt(),
-  new NestBallArt(),
-  new PalPadArt(),
-  new PennyArt(),
-  new PicnicBasketArt(),
-  new PokeballArt(),
-  new Pokegear30Art(),
-  new PokemonCatcherArt(),
-  new PotionArt(),
-  new PrimeapeArt(),
-  new ProfessorsResearchArt1(),
-  new ProfessorsResearchArt2(),
-  new RaltsArt(),
-  new RareCandyArt(),
-  new RevavroomArt(),
-  new RioluArt(),
-  new RioluArt2(),
-  new RockChestplateArt(),
-  new RockyHelmetArt(),
-  new ScatterbugArt(),
-  new ScovillainArt(),
-  new SpewpaArt(),
-  new SkwovetArt(),
-  new SwitchArt(),
-  new TeamStarGruntArt(),
-  new TorkoalArt(),
-  new UltraBallArt(),
-  new VitalityBandArt(),
-  new YoungsterArt(),
-  new BanetteexArt(),
-  new ShuppetArt(),
-  new SpidopsexArt(),
+  new Annihilape(),
+  new Arboliva(),
+  new Arcanineex(),
+  new Armarouge(),
+  new Arven(),
+  new BeachCourt(),
+  new Capsakid(),
+  new Charcadet(),
+  new CrushingHammer(),
+  new Cyclizar(),
+  new DefianceBand(),
+  new Dolliv(),
+  new Drifloon(),
+  new ElectricGenerator(),
+  new EnergyRetrieval(),
+  new EnergySearch(),
+  new EnergySwitch(),
+  new ExpShare(),
+  new Flittle(),
+  new Gardevoirex(),
+  new Growlithe(),
+  new Gyaradosex(),
+  new Hawlucha(),
+  new Jacq(),
+  new Judge(),
+  new Katy(),
+  new Klefki(),
+  new Koraidonex(),
+  new Lucario(),
+  new Magikarp(),
+  new Magnemite(),
+  new Magneton(),
+  new Magnezoneex(),
+  new Mankey(),
+  new Mareep(),
+  new Mesagoza(),
+  new Miraidonex(),
+  new Miriam(),
+  new Nemona(),
+  new NestBall(),
+  new PalPad(),
+  new Penny(),
+  new PicnicBasket(),
+  new Pokeball(),
+  new Pokegear30(),
+  new PokemonCatcher(),
+  new Potion(),
+  new Primeape(),
+  new ProfessorsResearch(),
+  new ProfessorsResearch2(),
+  new Ralts(),
+  new RareCandy(),
+  new Revavroom(),
+  new Riolu(),
+  new Riolu2(),
+  new RockChestplate(),
+  new RockyHelmet(),
+  new Scatterbug(),
+  new Scovillain(),
+  new Spewpa(),
+  new Skwovet(),
+  new Switch(),
+  new TeamStarGrunt(),
+  new Torkoal(),
+  new UltraBall(),
+  new VitalityBand(),
+  new Youngster(),
+  new Banetteex(),
+  new Shuppet(),
+  new Spidopsex(),
 
-  //Alt-Arts
+  //Alt-s
   new ArmarougeIR(),
   new ArvenFA(),
   new ArvenSIR(),
@@ -148,10 +175,10 @@ export const setScarletAndViolet: Card[] = [
   new RaltsIR(),
   new RareCandyHR(),
   new SkwovetIR(),
-  new SmolivArt(),
+  new Smoliv(),
   new TeamStarGruntFA(),
-  new ToedscoolArt(),
-  new ToedscruelArt(),
+  new Toedscool(),
+  new Toedscruel(),
 
-  new NestBallArt2(),
+  new NestBall(),
 ];

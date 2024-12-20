@@ -1,6 +1,6 @@
 import { Card } from '../../game/store/card/card';
-import { RayquazaArt } from './card-images';
+import { Rayquaza } from './rayquaza';
 
 export const setDragonVault: Card[] = [
-  new RayquazaArt(),
+  new Rayquaza(),
 ];

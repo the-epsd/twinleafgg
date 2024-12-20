@@ -1,55 +1,103 @@
 import { Card } from '../../game/store/card/card';
-import { AgathaArt, AveryArt, BanetteArt, BeedrillArt, BlazikenVArt, BlazikenVMAXArt, BlisseyVArt, CaitlinArt, CastformRainyFormArt, CastformSnowyFormArt, CastformSunnyFormArt, DrizzileArt, DynaTreeHillArt, EchoingHornArt, ExpeditionUniformArt, FlanneryArt, FogCrystalArt, FroslassArt, GalarianArticunoVArt, GalarianMoltresVArt, GalarianZapdosVArt, GalladeArt, GardevoirArt, GolettArt, GolurkArt, IceRiderCalyrexVArt, IceRiderCalyrexVMAXArt, InkayArt, InteleonArt, JustifiedGlovesArt, KarensConvictionArt, KirliaArt, KlaraArt, LuckyEnergyArt, MelonyArt, OldCemeteryArt, PathToThePeakArt, PeoniaArt, PeonyArt, Porygon2Art, RaltsArt, ShadowRiderCalyrexVArt, ShadowRiderCalyrexVMAXArt, SneaselArt, SnoruntArt, SobbleArt, SpiralEnergyArt, TaurosArt, ZarudeArt } from './card-images';
+import { Agatha } from './agatha';
+import { Avery } from './avery';
+import { Banette } from './banette';
+import { Beedrill } from './beedrill';
+import { BlazikenV } from './blaziken-v';
+import { BlazikenVMAX } from './blaziken-vmax';
+import { BlisseyV } from './blissey-v';
+import { Caitlin } from './caitlin';
+import { CastformRainyForm } from './castform-rainy-form';
+import { CastformSnowyForm } from './castform-snowy-form';
+import { CastformSunnyForm } from './castform-sunny-form';
+import { Drizzile } from './drizzile';
+import { DynaTreeHill } from './dyna-tree-hill';
+import { EchoingHorn } from './echoing-horn';
+import { ExpeditionUniform } from './expedition-uniform';
+import { Flannery } from './flannery';
+import { FogCrystal } from './fog-crystal';
+import { Froslass } from './froslass';
+import { GalarianArticunoV } from './galarian-articuno-v';
+import { GalarianMoltresV } from './galarian-moltres-v';
+import { GalarianZapdosV } from './galarian-zapdos-v';
+import { Gallade } from './gallade';
+import { Gardevoir } from './gardevoir';
+import { Golett } from './golett';
+import { Golurk } from './golurk';
+import { IceRiderCalyrexV } from './ice-rider-calyrex-v';
+import { IceRiderCalyrexVMAX } from './ice-rider-calyrex-vmax';
+import { Inkay } from './inkay';
+import { Inteleon } from './inteleon';
+import { JustifiedGloves } from './justified-gloves';
+import { KarensConviction } from './karens-conviction';
+import { Kirlia } from './kirlia';
+import { Klara } from './klara';
+import { LuckyEnergy } from './lucky-energy';
+import { Melony } from './melony';
+import { OldCemetery } from './old-cemetery';
+import { PathToThePeak } from './path-to-the-peak';
+import { Peonia } from './peonia';
+import { Peony } from './peony';
+import { Porygon2 } from './porygon2';
+import { Ralts } from './ralts';
+import { ShadowRiderCalyrexV } from './shadow-rider-calyrex-v';
+import { ShadowRiderCalyrexVMAX } from './shadow-rider-calyrex-vmax';
+import { Sneasel } from './sneasel';
+import { Snorunt } from './snorunt';
+import { Sobble } from './sobble';
+import { SpiralEnergy } from './spiral-energy';
+import { Tauros } from './tauros';
+import { Zarude } from './zarude';
 
 export const setChillingReign: Card[] = [
 
-  new AgathaArt(),
-  new AveryArt(),
-  new BanetteArt(),
-  new BeedrillArt(),
-  new BlazikenVArt(),
-  new BlazikenVMAXArt(),
-  new BlisseyVArt(),
-  new CaitlinArt(),
-  new CastformRainyFormArt(),
-  new CastformSnowyFormArt(),
-  new CastformSunnyFormArt(),
-  new DrizzileArt(),
-  new DynaTreeHillArt(),
-  new EchoingHornArt(),
-  new FlanneryArt(),
-  new FogCrystalArt(),
-  new FroslassArt(),
-  new GalarianArticunoVArt(),
-  new GalarianMoltresVArt(),
-  new GalarianZapdosVArt(),
-  new GardevoirArt(),
-  new GalladeArt(),
-  new GolettArt(),
-  new GolurkArt(),
-  new IceRiderCalyrexVArt(),
-  new IceRiderCalyrexVMAXArt(),
-  new InkayArt(),
-  new InteleonArt(),
-  new JustifiedGlovesArt(),
-  new KarensConvictionArt(),
-  new KirliaArt(),
-  new KlaraArt(),
-  new LuckyEnergyArt(),
-  new MelonyArt(),
-  new OldCemeteryArt(),
-  new PathToThePeakArt(),
-  new PeoniaArt(),
-  new PeonyArt(),
-  new Porygon2Art(),
-  new RaltsArt(),
-  new ShadowRiderCalyrexVArt(),
-  new ShadowRiderCalyrexVMAXArt(),
-  new SnoruntArt(),
-  new SobbleArt(),
-  new SpiralEnergyArt(),
-  new ExpeditionUniformArt(),
-  new SneaselArt(),
-  new TaurosArt(),
-  new ZarudeArt()
+  new Agatha(),
+  new Avery(),
+  new Banette(),
+  new Beedrill(),
+  new BlazikenV(),
+  new BlazikenVMAX(),
+  new BlisseyV(),
+  new Caitlin(),
+  new CastformRainyForm(),
+  new CastformSnowyForm(),
+  new CastformSunnyForm(),
+  new Drizzile(),
+  new DynaTreeHill(),
+  new EchoingHorn(),
+  new Flannery(),
+  new FogCrystal(),
+  new Froslass(),
+  new GalarianArticunoV(),
+  new GalarianMoltresV(),
+  new GalarianZapdosV(),
+  new Gardevoir(),
+  new Gallade(),
+  new Golett(),
+  new Golurk(),
+  new IceRiderCalyrexV(),
+  new IceRiderCalyrexVMAX(),
+  new Inkay(),
+  new Inteleon(),
+  new JustifiedGloves(),
+  new KarensConviction(),
+  new Kirlia(),
+  new Klara(),
+  new LuckyEnergy(),
+  new Melony(),
+  new OldCemetery(),
+  new PathToThePeak(),
+  new Peonia(),
+  new Peony(),
+  new Porygon2(),
+  new Ralts(),
+  new ShadowRiderCalyrexV(),
+  new ShadowRiderCalyrexVMAX(),
+  new Snorunt(),
+  new Sobble(),
+  new SpiralEnergy(),
+  new ExpeditionUniform(),
+  new Sneasel(),
+  new Tauros(),
+  new Zarude()
 ];

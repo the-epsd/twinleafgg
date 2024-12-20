@@ -1,8 +1,9 @@
 import { Card } from '../../game/store/card/card';
-import { UnownRArt, UxieArt } from './card-images';
+import { UnownR } from './unown-r';
+import { Uxie } from './uxie';
 
 export const setLegendsAwakened: Card[] = [
 
-  new UnownRArt(),
-  new UxieArt(),
+  new UnownR(),
+  new Uxie(),
 ];

@@ -1,10 +1,14 @@
 import { Card } from '../../game/store/card/card';
-import { BiancaArt, CherenArt, CrushingHammerArt, MaxPotionArt, TornadusArt } from './card-images';
+import { Bianca } from './bianca';
+import { Cheren } from './cheren';
+import { CrushingHammer } from './crushing-hammer';
+import { MaxPotion } from './max-potion';
+import { Tornadus } from './tornadus';
 
 export const setEmergingPowers: Card[] = [
-  new BiancaArt(),
-  new CherenArt(),
-  new CrushingHammerArt(),
-  new MaxPotionArt(),
-  new TornadusArt(),
+  new Bianca(),
+  new Cheren(),
+  new CrushingHammer(),
+  new MaxPotion(),
+  new Tornadus(),
 ];

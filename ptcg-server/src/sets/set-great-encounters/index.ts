@@ -1,8 +1,9 @@
 import { Card } from '../../game/store/card/card';
-import { BuizelArt, FloatzelArt } from './card-images';
+import { Buizel } from './buizel';
+import { Floatzel } from './floatzel';
 
 export const setGreatEncounters: Card[] = [
 
-  new BuizelArt(),
-  new FloatzelArt(),
+  new Buizel(),
+  new Floatzel(),
 ];

@@ -1,24 +1,42 @@
 import { Card } from '../../game/store/card/card';
-import { AccelgorArt, DarkClawArt, DarkPatchArt, DarkraiExArt, EmpoleonArt, EnhancedHammerArt, GardevoirArt, IvysaurArt, MinunArt, PiplupArt, PrinplupArt, RaikouExArt, RandomReceiverArt, SableyeArt, ShelmetArt, TornadusExArt, TwistMountainArt, TynamoArt, ZoruaArt } from './card-images';
+import { Accelgor } from './accelgor';
+import { DarkClaw } from './dark-claw';
+import { DarkPatch } from './dark-patch';
+import { DarkraiEx } from './darkrai-ex';
+import { Empoleon } from './empoleon';
+import { EnhancedHammer } from './enhanced-hammer';
+import { Gardevoir } from './gardevoir';
+import { Ivysaur } from './ivysaur';
+import { Minun } from './minun';
+import { Piplup } from './piplup';
+import { Prinplup } from './prinplup';
+import { RaikouEx } from './raikou-ex';
+import { RandomReceiver } from './random-receiver';
+import { Sableye } from './sableye';
+import { Shelmet } from './shelmet';
+import { TornadusEx } from './tornadus-ex';
+import { TwistMountain } from './twist-mountain';
+import { Tynamo } from './tynamo';
+import { Zorua } from './zorua';
 
 export const setDarkExplorers: Card[] = [
-  new AccelgorArt(),
-  new DarkClawArt(),
-  new DarkPatchArt(),
-  new DarkraiExArt(),
-  new EmpoleonArt(),
-  new EnhancedHammerArt(),
-  new GardevoirArt(),
-  new IvysaurArt(),
-  new MinunArt(),
-  new PiplupArt(),
-  new PrinplupArt(),
-  new RaikouExArt(),
-  new RandomReceiverArt(),
-  new SableyeArt(),
-  new ShelmetArt(),
-  new TornadusExArt(),
-  new TwistMountainArt(),
-  new TynamoArt(),
-  new ZoruaArt(),
+  new Accelgor(),
+  new DarkClaw(),
+  new DarkPatch(),
+  new DarkraiEx(),
+  new Empoleon(),
+  new EnhancedHammer(),
+  new Gardevoir(),
+  new Ivysaur(),
+  new Minun(),
+  new Piplup(),
+  new Prinplup(),
+  new RaikouEx(),
+  new RandomReceiver(),
+  new Sableye(),
+  new Shelmet(),
+  new TornadusEx(),
+  new TwistMountain(),
+  new Tynamo(),
+  new Zorua(),
 ];

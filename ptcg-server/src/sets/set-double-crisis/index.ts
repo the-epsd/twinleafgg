@@ -1,6 +1,6 @@
 import { Card } from '../../game/store/card/card';
-import { TeamMagmasGreatBallArt } from './card-images';
+import { TeamMagmasGreatBall } from './team-magmas-great-ball';
 
 export const setDoubleCrisis: Card[] = [
-  new TeamMagmasGreatBallArt()
+  new TeamMagmasGreatBall()
 ];

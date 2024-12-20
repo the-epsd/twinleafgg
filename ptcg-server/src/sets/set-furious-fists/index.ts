@@ -1,14 +1,22 @@
 import { Card } from '../../game/store/card/card';
-import { DedenneArt, FightingStadiumArt, FocusSashArt, HawluchaArt, KorrinaArt, LucarioExArt, SeismitoadExArt, StrongEnergyArt, TrainingCenterArt } from './card-images';
+import { Dedenne } from './dedenne';
+import { FightingStadium } from './fighting-stadium';
+import { FocusSash } from './focus-sash';
+import { Hawlucha } from './hawlucha';
+import { Korrina } from './korrina';
+import { LucarioEx } from './lucario-ex';
+import { SeismitoadEx } from './seismitoad-ex';
+import { StrongEnergy } from './strong-energy';
+import { TrainingCenter } from './training-center';
 
 export const setFuriousFists: Card[] = [
-  new DedenneArt(),
-  new FightingStadiumArt(),
-  new FocusSashArt(),
-  new HawluchaArt(),
-  new KorrinaArt(),
-  new LucarioExArt(),
-  new SeismitoadExArt(),
-  new StrongEnergyArt(),
-  new TrainingCenterArt(),
+  new Dedenne(),
+  new FightingStadium(),
+  new FocusSash(),
+  new Hawlucha(),
+  new Korrina(),
+  new LucarioEx(),
+  new SeismitoadEx(),
+  new StrongEnergy(),
+  new TrainingCenter(),
 ];

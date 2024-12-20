@@ -1,22 +1,38 @@
 import { Card } from '../../game/store/card/card';
-import { BicycleArt, ColressArt, ColressMachineArt, DonphanArt, DowsingMachineArt, EscapeRopeArt, EtherArt, GalladeArt, HypnotoxicLaserArt, KirliaArt, LugiaExArt, PhanpyArt, PlasmaEnergyArt, RaltsArt, ScrambleSwitchArt, VirbankCityGymArt, ZubatArt } from './card-images';
+import { Bicycle } from './bicycle';
+import { Colress } from './colress';
+import { ColressMachine } from './colress-machine';
+import { Donphan } from './donphan';
+import { DowsingMachine } from './dowsing-machine';
+import { EscapeRope } from './escape-rope';
+import { Ether } from './ether';
+import { Gallade } from './gallade';
+import { HypnotoxicLaser } from './hypnotoxic-laser';
+import { Kirlia } from './kirlia';
+import { LugiaEx } from './lugia-ex';
+import { Phanpy } from './phanpy';
+import { PlasmaEnergy } from './plasma-energy';
+import { Ralts } from './ralts';
+import { ScrambleSwitch } from './scramble-switch';
+import { VirbankCityGym } from './virbank-city-gym';
+import { Zubat } from './zubat';
 
 export const setPlasmaStorm: Card[] = [
-  new BicycleArt(),
-  new ColressArt(),
-  new ColressMachineArt(),
-  new DonphanArt(),
-  new DowsingMachineArt(),
-  new EscapeRopeArt(),
-  new EtherArt(),
-  new GalladeArt(),
-  new HypnotoxicLaserArt(),
-  new KirliaArt(),
-  new LugiaExArt(),
-  new PhanpyArt(),
-  new PlasmaEnergyArt(),
-  new RaltsArt(),
-  new ScrambleSwitchArt(),
-  new VirbankCityGymArt(),
-  new ZubatArt(),
+  new Bicycle(),
+  new Colress(),
+  new ColressMachine(),
+  new Donphan(),
+  new DowsingMachine(),
+  new EscapeRope(),
+  new Ether(),
+  new Gallade(),
+  new HypnotoxicLaser(),
+  new Kirlia(),
+  new LugiaEx(),
+  new Phanpy(),
+  new PlasmaEnergy(),
+  new Ralts(),
+  new ScrambleSwitch(),
+  new VirbankCityGym(),
+  new Zubat(),
 ];

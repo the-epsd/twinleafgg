@@ -1,26 +1,46 @@
 import { Card } from '../../game/store/card/card';
-import { BastiodonArt, CynthiaArt, DialgaGXArt, EscapeBoardArt, GardeniaArt, GibleArt, LillieArt, MagnemiteArt, MagnezoneArt, MorelullArt, MtCoronetArt, PokemonFanClubArt, RioluArt, RoseliaArt, ShiinoticArt, SneaselArt, TurtwigArt, UnitEnergyGRWArt, UnitEnergyLPMArt, VolknerArt, WeavileArt } from './card-images';
+import { Bastiodon } from './bastiodon';
+import { Cynthia } from './cynthia';
+import { DialgaGX } from './dialga-gx';
+import { EscapeBoard } from './escape-board';
+import { Gardenia } from './gardenia';
+import { Gible } from './gible';
+import { Lillie } from './lillie';
+import { Magnemite } from './magnemite';
+import { Magnezone } from './magnezone';
+import { Morelull } from './morelull';
+import { MtCoronet } from './mt-coronet';
+import { PokemonFanClub } from './pokemon-fan-club';
+import { Riolu } from './riolu';
+import { Roselia } from './roselia';
+import { Shiinotic } from './shiinotic';
+import { Sneasel } from './sneasel';
+import { Turtwig } from './turtwig';
+import { UnitEnergyGRW } from './unit-energy-grw';
+import { UnitEnergyLPM } from './unit-energy-lpm';
+import { Volkner } from './volkner';
+import { Weavile } from './weavile';
 
 export const setUltraPrism: Card[] = [
-  new BastiodonArt(),
-  new CynthiaArt(),
-  new DialgaGXArt(),
-  new EscapeBoardArt(),
-  new GardeniaArt(),
-  new GibleArt(),
-  new LillieArt(),
-  new MagnemiteArt(),
-  new MagnezoneArt(),
-  new MorelullArt(),
-  new MtCoronetArt(),
-  new PokemonFanClubArt(),
-  new RioluArt(),
-  new RoseliaArt(),
-  new ShiinoticArt(),
-  new SneaselArt(),
-  new TurtwigArt(),
-  new UnitEnergyGRWArt(),
-  new UnitEnergyLPMArt(),
-  new VolknerArt(),
-  new WeavileArt()
+  new Bastiodon(),
+  new Cynthia(),
+  new DialgaGX(),
+  new EscapeBoard(),
+  new Gardenia(),
+  new Gible(),
+  new Lillie(),
+  new Magnemite(),
+  new Magnezone(),
+  new Morelull(),
+  new MtCoronet(),
+  new PokemonFanClub(),
+  new Riolu(),
+  new Roselia(),
+  new Shiinotic(),
+  new Sneasel(),
+  new Turtwig(),
+  new UnitEnergyGRW(),
+  new UnitEnergyLPM(),
+  new Volkner(),
+  new Weavile()
 ];

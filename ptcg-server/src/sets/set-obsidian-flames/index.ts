@@ -1,49 +1,83 @@
 import { Card } from '../../game/store/card/card';
-
-import { AbsolexArt, ArvenArt, BarboachArt, BelliboltArt, CharizardexArt, CharmanderArt, CharmeleonArt, CleffaArt, DartrixArt, DragonairArt, DragoniteexArt, DratiniArt, EnteiArt, FinizenArt, FroakieArt, LetterOfEncouragementArt, NinetalesArt, OddishArt, PalafinArt, PalpitoadArt, PidgeotexArt, PidgeottoArt, PidgeyArt, PokemonLeagueHeadquartersArt, PoppyArt, RowletArt, RymeArt, ScizorArt, SeismitoadArt, ThundurusArt, ToedscruelexArt, TownStoreArt, TympoleArt, VaroomArt, VengefulPunchArt, WhiscashArt } from './card-images';
-import { ArtazonHR, BelliboltIR, CharizardexFA, CharizardexHR, CharizardexSIR, CleffaIR, FireEnergyHR, PidgeotexFA, PidgeotexSIR, PidgeottoIR, PidgeyIR, PoppyFA, PoppySIR, ScizorIR, VaroomIR } from './full-arts';
+import { Arven } from '../set-scarlet-and-violet/arven';
+import { Absolex } from './absol-ex';
+import { Barboach } from './barboach';
+import { Bellibolt } from './bellibolt';
+import { Charizardex } from './charizard-ex';
+import { Charmander } from './charmander';
+import { Charmeleon } from './charmeleon';
+import { Cleffa } from './cleffa';
+import { Dartrix } from './dartrix';
+import { Dragonair } from './dragonair';
+import { Dragoniteex } from './dragonite-ex';
+import { Dratini } from './dratini';
+import { Entei } from './entei';
+import { Finizen } from './finizen';
+import { Froakie } from './froakie';
+import { BelliboltIR, CleffaIR, PidgeyIR, PidgeottoIR, ScizorIR, CharizardexFA, PidgeotexFA, PoppyFA, CharizardexSIR, PidgeotexSIR, PoppySIR, CharizardexHR, FireEnergyHR, VaroomIR, ArtazonHR } from './full-arts';
+import { LetterOfEncouragement } from './letter-of-encouragement';
+import { Ninetales } from './ninetales';
+import { Oddish } from './oddish';
+import { Palafin } from './palafin';
+import { Palpitoad } from './palpitoad';
+import { Pidgeotex } from './pidgeot-ex';
+import { Pidgeotto } from './pidgeotto';
+import { Pidgey } from './pidgey';
+import { PokemonLeagueHeadquarters } from './pokemon-league-headquarters';
+import { Poppy } from './poppy';
+import { Rowlet } from './rowlet';
+import { Ryme } from './ryme';
+import { Scizor } from './scizor';
+import { Seismitoad } from './seismitoad';
+import { Thundurus } from './thundurus';
+import { Toedscruelex } from './toedscruel-ex';
+import { TownStore } from './town-store';
+import { Tympole } from './tympole';
+import { Varoom } from './varoom';
+import { VengefulPunch } from './vengeful-punch';
+import { Whiscash } from './whiscash';
 
 
 export const setObsidianFlames: Card[] = [
 
-  new AbsolexArt(),
-  new ArvenArt(),
-  new BarboachArt(),
-  new CharizardexArt(),
-  new CharmanderArt(),
-  new CharmeleonArt(),
-  new CleffaArt(),
-  new DartrixArt(),
-  new DragonairArt(),
-  new DragoniteexArt(),
-  new DratiniArt(),
-  new EnteiArt(),
-  new FinizenArt(),
-  new FroakieArt(),
-  new LetterOfEncouragementArt(),
-  new NinetalesArt(),
-  new OddishArt(),
-  new PalafinArt(),
-  new PalpitoadArt(),
-  new PidgeottoArt(),
-  new PidgeotexArt(),
-  new PidgeyArt(),
-  new PokemonLeagueHeadquartersArt(),
-  new PoppyArt(),
-  new RowletArt(),
-  new RymeArt(),
-  new ScizorArt(),
-  new SeismitoadArt(),
-  new ThundurusArt(),
-  new ToedscruelexArt(),
-  new TownStoreArt(),
-  new TympoleArt(),
-  new VengefulPunchArt(),
-  new BelliboltArt(),
-  new VaroomArt(),
-  new WhiscashArt(),
+  new Absolex(),
+  new Arven(),
+  new Barboach(),
+  new Charizardex(),
+  new Charmander(),
+  new Charmeleon(),
+  new Cleffa(),
+  new Dartrix(),
+  new Dragonair(),
+  new Dragoniteex(),
+  new Dratini(),
+  new Entei(),
+  new Finizen(),
+  new Froakie(),
+  new LetterOfEncouragement(),
+  new Ninetales(),
+  new Oddish(),
+  new Palafin(),
+  new Palpitoad(),
+  new Pidgeotto(),
+  new Pidgeotex(),
+  new Pidgey(),
+  new PokemonLeagueHeadquarters(),
+  new Poppy(),
+  new Rowlet(),
+  new Ryme(),
+  new Scizor(),
+  new Seismitoad(),
+  new Thundurus(),
+  new Toedscruelex(),
+  new TownStore(),
+  new Tympole(),
+  new VengefulPunch(),
+  new Bellibolt(),
+  new Varoom(),
+  new Whiscash(),
 
-  //Alt-Arts
+  //Alt-s
 
   new BelliboltIR(),
   new CleffaIR(),

@@ -1,10 +1,11 @@
 import { Card } from '../../game/store/card/card';
-import { MewArt, MewtwoArt } from './card-images';
+import { Mew } from './mew';
+import { Mewtwo } from './mewtwo';
 
 
 export const setWOTCPromos: Card[] = [
 
-  new MewArt(),
-  new MewtwoArt(),
+  new Mew(),
+  new Mewtwo(),
 
 ];

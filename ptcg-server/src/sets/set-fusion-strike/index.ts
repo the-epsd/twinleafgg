@@ -1,45 +1,82 @@
 import { Card } from '../../game/store/card/card';
-import { AccelgorArt, AdventurersDiscoveryArt, AzumarillArt, BasculinArt, BattleVIPPassArt, CookArt, CreamomaticArt, CroagunkArt, CrossSwitcherArt, DeoxysArt, DreepyArt, DunsparceArt, ElesasSparkleArt, FusionStrikeEnergyArt, GalarianLinooneArt, GenesectVArt, GengarVArt, GengarVMAXArt, HeatmorArt, InteleonVArt, InteleonVMAXArt, JudgeArt, MeloettaArt, MewVArt, MewVMAXArt, OricorioArt, PowerTabletArt, PyukumukuArt, SchoolboyArt, SchoolgirlArt, ShaunaArt, ShellderArt, ShelmetArt, StarmieArt, StaryuArt, SwampertArt, TotodileArt, YveltalArt } from './card-images';
+import { Accelgor } from './accelgor';
+import { AdventurersDiscovery } from './adventurers-discovery';
+import { Azumarill } from './azumarill';
+import { Basculin } from './basculin';
+import { BattleVIPPass } from './battle-vip-pass';
+import { Cook } from './cook';
+import { Creamomatic } from './cram-o-matic';
+import { Croagunk } from './croagunk';
+import { CrossSwitcher } from './cross-switcher';
+import { Deoxys } from './deoxys';
+import { Dreepy } from './dreepy';
+import { Dunsparce } from './dunsparce';
+import { ElesasSparkle } from './elesas-sparkle';
+import { FusionStrikeEnergy } from './fusion-strike-energy';
+import { GalarianLinoone } from './galarian-linoone';
+import { GenesectV } from './genesect-v';
+import { GengarV } from './gengar-v';
+import { GengarVMAX } from './gengar-vmax';
+import { Heatmor } from './heatmor';
+import { InteleonV } from './inteleon-v';
+import { InteleonVMAX } from './inteleon-vmax';
+import { Judge } from './judge';
+import { Meloetta } from './meloetta';
+import { MewV } from './mew-v';
+import { MewVMAX } from './mew-vmax';
+import { Oricorio } from './oricorio';
+import { PowerTablet } from './power-tablet';
+import { Pyukumuku } from './pyukumuku';
+import { Schoolboy } from './schoolboy';
+import { Schoolgirl } from './schoolgirl';
+import { Shauna } from './shauna';
+import { Shellder } from './shellder';
+import { Shelmet } from './shelmet';
+import { Starmie } from './starmie';
+import { Staryu } from './staryu';
+import { Swampert } from './swampert';
+import { Totodile } from './totodile';
+import { Yveltal } from './yveltal';
 
 
 export const setFusionStrike: Card[] = [
 
-  new AzumarillArt(),
-  new BasculinArt(),
-  new BattleVIPPassArt(),
-  new CreamomaticArt(),
-  new CroagunkArt(),
-  new CrossSwitcherArt(),
-  new CookArt(),
-  new DeoxysArt(),
-  new DreepyArt(),
-  new DunsparceArt(),
-  new ElesasSparkleArt(),
-  new FusionStrikeEnergyArt(),
-  new GalarianLinooneArt(),
-  new GenesectVArt(),
-  new GengarVArt(),
-  new GengarVMAXArt(),
-  new HeatmorArt(),
-  new InteleonVArt(),
-  new InteleonVMAXArt(),
-  new JudgeArt(),
-  new MeloettaArt(),
-  new MewVArt(),
-  new MewVMAXArt(),
-  new OricorioArt(),
-  new PowerTabletArt(),
-  new PyukumukuArt(),
-  new YveltalArt(),
-  new ShaunaArt(),
-  new AdventurersDiscoveryArt(),
-  new SchoolboyArt(),
-  new SchoolgirlArt(),
-  new AccelgorArt(),
-  new ShellderArt(),
-  new ShelmetArt(),
-  new StarmieArt(),
-  new StaryuArt(),
-  new SwampertArt(),
-  new TotodileArt(),
+  new Azumarill(),
+  new Basculin(),
+  new BattleVIPPass(),
+  new Creamomatic(),
+  new Croagunk(),
+  new CrossSwitcher(),
+  new Cook(),
+  new Deoxys(),
+  new Dreepy(),
+  new Dunsparce(),
+  new ElesasSparkle(),
+  new FusionStrikeEnergy(),
+  new GalarianLinoone(),
+  new GenesectV(),
+  new GengarV(),
+  new GengarVMAX(),
+  new Heatmor(),
+  new InteleonV(),
+  new InteleonVMAX(),
+  new Judge(),
+  new Meloetta(),
+  new MewV(),
+  new MewVMAX(),
+  new Oricorio(),
+  new PowerTablet(),
+  new Pyukumuku(),
+  new Yveltal(),
+  new Shauna(),
+  new AdventurersDiscovery(),
+  new Schoolboy(),
+  new Schoolgirl(),
+  new Accelgor(),
+  new Shellder(),
+  new Shelmet(),
+  new Starmie(),
+  new Staryu(),
+  new Swampert(),
+  new Totodile(),
 ];

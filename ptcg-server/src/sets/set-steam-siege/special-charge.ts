@@ -10,7 +10,7 @@ import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt'
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
-function* playCard(next: Function, store: StoreLike, state: State, self: SpeicalCharge, effect: TrainerEffect): IterableIterator<State> {
+function* playCard(next: Function, store: StoreLike, state: State, self: SpecialCharge, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
   const specialEnergyCards = player.discard.cards.filter(c => {
@@ -26,7 +26,7 @@ function* playCard(next: Function, store: StoreLike, state: State, self: Speical
   player.hand.moveCardTo(effect.trainerCard, player.supporter);
 
   const min = Math.min(2, specialEnergyCards);
-  
+
   let cards: Card[] = [];
   yield store.prompt(state, new ChooseCardsPrompt(
     player,
@@ -52,14 +52,14 @@ function* playCard(next: Function, store: StoreLike, state: State, self: Speical
     }
 
   }
-  
+
   player.supporter.moveCardTo(effect.trainerCard, player.discard);
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);
   });
 }
 
-export class SpeicalCharge extends TrainerCard {
+export class SpecialCharge extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
 

@@ -1,41 +1,74 @@
 import { Card } from '../../game/store/card/card';
+import { Arcanine } from './arcanine';
+import { Aron } from './aron';
+import { Cleffa } from './cleffa';
+import { DedenneGX } from './dedenne-gx';
+import { DuskStone } from './dusk-stone';
+import { ElectromagneticRadar } from './electromagnetic-radar';
+import { Espurr } from './espurr';
+import { FireCrystal } from './fire-crystal';
+import { Gloom } from './gloom';
+import { GreensExploration } from './greens-exploration';
+import { Hitmontop } from './hitmontop';
+import { Kartana } from './kartana';
+import { Lairon } from './lairon';
+import { Lickitung } from './lickitung';
+import { LtSurgesStrategy } from './lt-surges-strategy';
+import { Marshadow } from './marshadow';
+import { MartialArtsDojo } from './martial-arts-dojo';
+import { Meowth } from './meowth';
+import { MetalCoreBarrier } from './metal-core-barrier';
+import { Mew } from './mew';
+import { Mewtwo } from './mewtwo';
+import { Mismagius } from './mismagius';
+import { Oddish } from './oddish';
+import { Pokegear30 } from './pokegear-30';
+import { Poliwag } from './poliwag';
+import { Porygon } from './porygon';
+import { PorygonZ } from './porygon-z';
+import { Porygon2 } from './porygon2';
+import { ReshiramCharizardGX } from './reshiram-and-charizard-gx';
+import { Salazzle } from './salazzle';
+import { Spiritomb } from './spiritomb';
+import { TripleAccelerationEnergy } from './triple-acceleration-energy';
+import { Volcanion } from './volcanion';
+import { Zeraora } from './zeraora';
 
-import { ArcanineArt, AronArt, CleffaArt, DedenneGXArt, DuskStoneArt, ElectromagneticRadarArt, EspurrArt, FireCrystalArt, GloomArt, GreensExplorationArt, HitmontopArt, KartanaArt, LaironArt, LickitungArt, LtSurgesStrategyArt, MarshadowArt, MartialArtsDojoArt, MeowthArt, MetalCoreBarrierArt, MewArt, MewtwoArt, MismagiusArt, OddishArt, Pokegear30Art, PoliwagArt, Porygon2Art, PorygonArt, PorygonZArt, ReshiramCharizardGXArt, SalazzleArt, SpiritombArt, TripleAccelerationEnergyArt, VolcanionArt, ZeraoraArt } from './card-images';
 
 
 export const setUnbrokenBonds: Card[] = [
-  new ArcanineArt(),
-  new AronArt(),
-  new CleffaArt(),
-  new DedenneGXArt(),
-  new DuskStoneArt(),
-  new ElectromagneticRadarArt(),
-  new EspurrArt(),
-  new FireCrystalArt(),
-  new GloomArt(),
-  new GreensExplorationArt(),
-  new HitmontopArt(),
-  new KartanaArt(),
-  new LaironArt(),
-  new LickitungArt(),
-  new LtSurgesStrategyArt(),
-  new MarshadowArt(),
-  new MartialArtsDojoArt(),
-  new MeowthArt(),
-  new MetalCoreBarrierArt(),
-  new MewArt(),
-  new MewtwoArt(),
-  new MismagiusArt(),
-  new OddishArt(),
-  new Pokegear30Art(),
-  new PoliwagArt(),
-  new PorygonArt(),
-  new Porygon2Art(),
-  new PorygonZArt(),
-  new ReshiramCharizardGXArt(),
-  new SalazzleArt(),
-  new SpiritombArt(),
-  new TripleAccelerationEnergyArt(),
-  new VolcanionArt(),
-  new ZeraoraArt()
+  new Arcanine(),
+  new Aron(),
+  new Cleffa(),
+  new DedenneGX(),
+  new DuskStone(),
+  new ElectromagneticRadar(),
+  new Espurr(),
+  new FireCrystal(),
+  new Gloom(),
+  new GreensExploration(),
+  new Hitmontop(),
+  new Kartana(),
+  new Lairon(),
+  new Lickitung(),
+  new LtSurgesStrategy(),
+  new Marshadow(),
+  new MartialArtsDojo(),
+  new Meowth(),
+  new MetalCoreBarrier(),
+  new Mew(),
+  new Mewtwo(),
+  new Mismagius(),
+  new Oddish(),
+  new Pokegear30(),
+  new Poliwag(),
+  new Porygon(),
+  new Porygon2(),
+  new PorygonZ(),
+  new ReshiramCharizardGX(),
+  new Salazzle(),
+  new Spiritomb(),
+  new TripleAccelerationEnergy(),
+  new Volcanion(),
+  new Zeraora()
 ];
