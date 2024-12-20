@@ -1,10 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setStormfront = void 0;
-const card_images_1 = require("./card-images");
+const luxury_ball_1 = require("./luxury-ball");
+const poke_blower_1 = require("./poke-blower");
+const poke_drawer_1 = require("./poke-drawer");
+const sableye_1 = require("./sableye");
 exports.setStormfront = [
-    new card_images_1.LuxuryBallArt(),
-    new card_images_1.PokeBlowerArt(),
-    new card_images_1.PokeDrawerArt(),
-    new card_images_1.SableyeArt()
+    new luxury_ball_1.LuxuryBall(),
+    new poke_blower_1.PokeBlower(),
+    new poke_drawer_1.PokeDrawer(),
+    new sableye_1.Sableye()
 ];

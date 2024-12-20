@@ -1,19 +1,31 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setBurningShadows = void 0;
-const card_images_1 = require("./card-images");
+const acerola_1 = require("./acerola");
+const bruxish_1 = require("./bruxish");
+const darkrai_gx_1 = require("./darkrai-gx");
+const diancie_1 = require("./diancie");
+const gardevoir_gx_1 = require("./gardevoir-gx");
+const gloom_1 = require("./gloom");
+const guzma_1 = require("./guzma");
+const kiawe_1 = require("./kiawe");
+const marill_1 = require("./marill");
+const necrozma_gx_1 = require("./necrozma-gx");
+const plumeria_1 = require("./plumeria");
+const salazzle_gx_1 = require("./salazzle-gx");
+const wishful_baton_1 = require("./wishful-baton");
 exports.setBurningShadows = [
-    new card_images_1.AcerolaArt(),
-    new card_images_1.BruxishArt(),
-    new card_images_1.DarkraiGXArt(),
-    new card_images_1.DiancieArt(),
-    new card_images_1.GardevoirGXArt(),
-    new card_images_1.GloomArt(),
-    new card_images_1.GuzmaArt(),
-    new card_images_1.KiaweArt(),
-    new card_images_1.MarillArt(),
-    new card_images_1.NecrozmaGXArt(),
-    new card_images_1.PlumeriaArt(),
-    new card_images_1.SalazzleGXArt(),
-    new card_images_1.WishfulBatonArt(),
+    new acerola_1.Acerola(),
+    new bruxish_1.Bruxish(),
+    new darkrai_gx_1.DarkraiGX(),
+    new diancie_1.Diancie(),
+    new gardevoir_gx_1.GardevoirGX(),
+    new gloom_1.Gloom(),
+    new guzma_1.Guzma(),
+    new kiawe_1.Kiawe(),
+    new marill_1.Marill(),
+    new necrozma_gx_1.NecrozmaGX(),
+    new plumeria_1.Plumeria(),
+    new salazzle_gx_1.SalazzleGX(),
+    new wishful_baton_1.WishfulBaton(),
 ];

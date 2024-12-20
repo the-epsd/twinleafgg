@@ -1,15 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setCrimsonInvasion = void 0;
-const card_images_1 = require("./card-images");
+const buzzwole_gx_1 = require("./buzzwole-gx");
+const chimecho_1 = require("./chimecho");
+const counter_energy_1 = require("./counter-energy");
+const devoured_field_1 = require("./devoured-field");
+const gladion_1 = require("./gladion");
+const kartana_gx_1 = require("./kartana-gx");
+const lusamine_1 = require("./lusamine");
+const misdreavus_1 = require("./misdreavus");
+const xerneas_1 = require("./xerneas");
 exports.setCrimsonInvasion = [
-    new card_images_1.BuzzwoleGXArt(),
-    new card_images_1.ChimechoArt(),
-    new card_images_1.CounterEnergyArt(),
-    new card_images_1.DevouredFieldArt(),
-    new card_images_1.GladionArt(),
-    new card_images_1.KartanaGXArt(),
-    new card_images_1.LusamineArt(),
-    new card_images_1.MisdreavusArt(),
-    new card_images_1.XerneasArt()
+    new buzzwole_gx_1.BuzzwoleGX(),
+    new chimecho_1.Chimecho(),
+    new counter_energy_1.CounterEnergy(),
+    new devoured_field_1.DevouredField(),
+    new gladion_1.Gladion(),
+    new kartana_gx_1.KartanaGX(),
+    new lusamine_1.Lusamine(),
+    new misdreavus_1.Misdreavus(),
+    new xerneas_1.Xerneas()
 ];

@@ -1,10 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setXYPromos = void 0;
-const card_images_1 = require("./card-images");
+const azelf_1 = require("./azelf");
+const greninja_1 = require("./greninja");
+const jirachi_1 = require("./jirachi");
+const meloetta_1 = require("./meloetta");
 exports.setXYPromos = [
-    new card_images_1.AzelfArt(),
-    new card_images_1.GreninjaArt(),
-    new card_images_1.JirachiArt(),
-    new card_images_1.MeloettaArt()
+    new azelf_1.Azelf(),
+    new greninja_1.Greninja(),
+    new jirachi_1.Jirachi(),
+    new meloetta_1.Meloetta()
 ];

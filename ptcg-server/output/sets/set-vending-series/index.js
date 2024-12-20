@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setVendingSeries = void 0;
-const card_images_1 = require("./card-images");
+const moltres_1 = require("./moltres");
 exports.setVendingSeries = [
-    new card_images_1.MoltresArt(),
+    new moltres_1.Moltres(),
 ];

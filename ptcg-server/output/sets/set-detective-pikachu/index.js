@@ -1,8 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setDetectivePikachu = void 0;
-const card_images_1 = require("./card-images");
+const bulbasaur_1 = require("./bulbasaur");
+const greninja_1 = require("./greninja");
 exports.setDetectivePikachu = [
-    new card_images_1.BulbasaurArt(),
-    new card_images_1.GreninjaArt(),
+    new bulbasaur_1.Bulbasaur(),
+    new greninja_1.Greninja(),
 ];

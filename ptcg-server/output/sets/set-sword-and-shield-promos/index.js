@@ -1,21 +1,34 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setSwordAndShieldPromos = void 0;
-const card_images_1 = require("./card-images");
+const champions_festival_1 = require("./champions-festival");
+const charmander_1 = require("./charmander");
+const deoxys_v_1 = require("./deoxys-v");
+const deoxys_vstar_1 = require("./deoxys-vstar");
+const hisuian_electrode_v_1 = require("./hisuian-electrode-v");
+const leafeon_vstar_1 = require("./leafeon-vstar");
+const lucario_vstar_1 = require("./lucario-vstar");
+const manaphy_1 = require("./manaphy");
+const oricorio_1 = require("./oricorio");
+const professor_burnett_1 = require("./professor-burnett");
+const scorbunny_1 = require("./scorbunny");
+const tepig_1 = require("./tepig");
+const venusaur_v_1 = require("./venusaur-v");
+const venusaur_vmax_1 = require("./venusaur-vmax");
 exports.setSwordAndShieldPromos = [
-    new card_images_1.ChampionsFestivalArt(),
-    new card_images_1.CharmanderArt(),
-    new card_images_1.DeoxysVArt(),
-    new card_images_1.DeoxysVSTARArt(),
-    new card_images_1.HisuianElectrodeVArt(),
-    new card_images_1.LeafeonVSTARArt(),
-    new card_images_1.LucarioVSTARArt(),
-    // new LucarioVSTARArt2(),
-    new card_images_1.OricorioArt(),
-    new card_images_1.ProfessorBurnettArt(),
-    new card_images_1.ManaphyArt(),
-    new card_images_1.ScorbunnyArt(),
-    new card_images_1.TepigArt(),
-    new card_images_1.VenusaurVArt(),
-    new card_images_1.VenusaurVMAXArt(),
+    new champions_festival_1.ChampionsFestival(),
+    new charmander_1.Charmander(),
+    new deoxys_v_1.DeoxysV(),
+    new deoxys_vstar_1.DeoxysVSTAR(),
+    new hisuian_electrode_v_1.HisuianElectrodeV(),
+    new leafeon_vstar_1.LeafeonVSTAR(),
+    new lucario_vstar_1.LucarioVSTAR(),
+    // new LucarioVSTAR2(),
+    new oricorio_1.Oricorio(),
+    new professor_burnett_1.ProfessorBurnet(),
+    new manaphy_1.Manaphy(),
+    new scorbunny_1.Scorbunny(),
+    new tepig_1.Tepig(),
+    new venusaur_v_1.VenusaurV(),
+    new venusaur_vmax_1.VenusaurVMAX(),
 ];

@@ -1,46 +1,81 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setObsidianFlames = void 0;
-const card_images_1 = require("./card-images");
+const arven_1 = require("../set-scarlet-and-violet/arven");
+const absol_ex_1 = require("./absol-ex");
+const barboach_1 = require("./barboach");
+const bellibolt_1 = require("./bellibolt");
+const charizard_ex_1 = require("./charizard-ex");
+const charmander_1 = require("./charmander");
+const charmeleon_1 = require("./charmeleon");
+const cleffa_1 = require("./cleffa");
+const dartrix_1 = require("./dartrix");
+const dragonair_1 = require("./dragonair");
+const dragonite_ex_1 = require("./dragonite-ex");
+const dratini_1 = require("./dratini");
+const entei_1 = require("./entei");
+const finizen_1 = require("./finizen");
+const froakie_1 = require("./froakie");
 const full_arts_1 = require("./full-arts");
+const letter_of_encouragement_1 = require("./letter-of-encouragement");
+const ninetales_1 = require("./ninetales");
+const oddish_1 = require("./oddish");
+const palafin_1 = require("./palafin");
+const palpitoad_1 = require("./palpitoad");
+const pidgeot_ex_1 = require("./pidgeot-ex");
+const pidgeotto_1 = require("./pidgeotto");
+const pidgey_1 = require("./pidgey");
+const pokemon_league_headquarters_1 = require("./pokemon-league-headquarters");
+const poppy_1 = require("./poppy");
+const rowlet_1 = require("./rowlet");
+const ryme_1 = require("./ryme");
+const scizor_1 = require("./scizor");
+const seismitoad_1 = require("./seismitoad");
+const thundurus_1 = require("./thundurus");
+const toedscruel_ex_1 = require("./toedscruel-ex");
+const town_store_1 = require("./town-store");
+const tympole_1 = require("./tympole");
+const varoom_1 = require("./varoom");
+const vengeful_punch_1 = require("./vengeful-punch");
+const whiscash_1 = require("./whiscash");
 exports.setObsidianFlames = [
-    new card_images_1.AbsolexArt(),
-    new card_images_1.ArvenArt(),
-    new card_images_1.BarboachArt(),
-    new card_images_1.CharizardexArt(),
-    new card_images_1.CharmanderArt(),
-    new card_images_1.CharmeleonArt(),
-    new card_images_1.CleffaArt(),
-    new card_images_1.DartrixArt(),
-    new card_images_1.DragonairArt(),
-    new card_images_1.DragoniteexArt(),
-    new card_images_1.DratiniArt(),
-    new card_images_1.EnteiArt(),
-    new card_images_1.FinizenArt(),
-    new card_images_1.FroakieArt(),
-    new card_images_1.LetterOfEncouragementArt(),
-    new card_images_1.NinetalesArt(),
-    new card_images_1.OddishArt(),
-    new card_images_1.PalafinArt(),
-    new card_images_1.PalpitoadArt(),
-    new card_images_1.PidgeottoArt(),
-    new card_images_1.PidgeotexArt(),
-    new card_images_1.PidgeyArt(),
-    new card_images_1.PokemonLeagueHeadquartersArt(),
-    new card_images_1.PoppyArt(),
-    new card_images_1.RowletArt(),
-    new card_images_1.RymeArt(),
-    new card_images_1.ScizorArt(),
-    new card_images_1.SeismitoadArt(),
-    new card_images_1.ThundurusArt(),
-    new card_images_1.ToedscruelexArt(),
-    new card_images_1.TownStoreArt(),
-    new card_images_1.TympoleArt(),
-    new card_images_1.VengefulPunchArt(),
-    new card_images_1.BelliboltArt(),
-    new card_images_1.VaroomArt(),
-    new card_images_1.WhiscashArt(),
-    //Alt-Arts
+    new absol_ex_1.Absolex(),
+    new arven_1.Arven(),
+    new barboach_1.Barboach(),
+    new charizard_ex_1.Charizardex(),
+    new charmander_1.Charmander(),
+    new charmeleon_1.Charmeleon(),
+    new cleffa_1.Cleffa(),
+    new dartrix_1.Dartrix(),
+    new dragonair_1.Dragonair(),
+    new dragonite_ex_1.Dragoniteex(),
+    new dratini_1.Dratini(),
+    new entei_1.Entei(),
+    new finizen_1.Finizen(),
+    new froakie_1.Froakie(),
+    new letter_of_encouragement_1.LetterOfEncouragement(),
+    new ninetales_1.Ninetales(),
+    new oddish_1.Oddish(),
+    new palafin_1.Palafin(),
+    new palpitoad_1.Palpitoad(),
+    new pidgeotto_1.Pidgeotto(),
+    new pidgeot_ex_1.Pidgeotex(),
+    new pidgey_1.Pidgey(),
+    new pokemon_league_headquarters_1.PokemonLeagueHeadquarters(),
+    new poppy_1.Poppy(),
+    new rowlet_1.Rowlet(),
+    new ryme_1.Ryme(),
+    new scizor_1.Scizor(),
+    new seismitoad_1.Seismitoad(),
+    new thundurus_1.Thundurus(),
+    new toedscruel_ex_1.Toedscruelex(),
+    new town_store_1.TownStore(),
+    new tympole_1.Tympole(),
+    new vengeful_punch_1.VengefulPunch(),
+    new bellibolt_1.Bellibolt(),
+    new varoom_1.Varoom(),
+    new whiscash_1.Whiscash(),
+    //Alt-s
     new full_arts_1.BelliboltIR(),
     new full_arts_1.CleffaIR(),
     new full_arts_1.PidgeyIR(),

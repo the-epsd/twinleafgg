@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setLPPromos = void 0;
-const card_images_1 = require("./card-images");
+const wonder_platinum_1 = require("./wonder-platinum");
 exports.setLPPromos = [
-    new card_images_1.WonderPlatinumArt(),
+    new wonder_platinum_1.WonderPlatinum(),
 ];

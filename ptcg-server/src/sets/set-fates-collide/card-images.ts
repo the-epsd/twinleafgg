@@ -3,7 +3,7 @@ import { Deerling } from './deerling';
 import { Fennekin } from './fennekin';
 import { Lucario } from './lucario';
 import { Mew } from './mew';
-import { N } from './n';
+import { N_Supporter } from './n';
 import { Riolu } from './riolu';
 import { TeamRocketsHandiwork } from './team-rockets-handiwork';
 
@@ -27,7 +27,7 @@ export class MewArt extends Mew {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FCO/FCO_029_R_EN.png';
 }
 
-export class NArt extends N {
+export class NArt extends N_Supporter {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FCO/FCO_105_R_EN_LG.png';
 }
 

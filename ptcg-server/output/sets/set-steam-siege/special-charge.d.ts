@@ -3,7 +3,7 @@ import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
-export declare class SpeicalCharge extends TrainerCard {
+export declare class SpecialCharge extends TrainerCard {
     trainerType: TrainerType;
     set: string;
     cardImage: string;

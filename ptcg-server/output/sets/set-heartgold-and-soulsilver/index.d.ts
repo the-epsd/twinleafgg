@@ -1,2 +1,2 @@
 import { Card } from '../../game/store/card/card';
-export declare const setHeartGoldAndSoulSilver: Card[];
+export declare const setHeGoldAndSoulSilver: Card[];

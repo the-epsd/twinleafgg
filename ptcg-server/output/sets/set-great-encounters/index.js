@@ -1,8 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setGreatEncounters = void 0;
-const card_images_1 = require("./card-images");
+const buizel_1 = require("./buizel");
+const floatzel_1 = require("./floatzel");
 exports.setGreatEncounters = [
-    new card_images_1.BuizelArt(),
-    new card_images_1.FloatzelArt(),
+    new buizel_1.Buizel(),
+    new floatzel_1.Floatzel(),
 ];

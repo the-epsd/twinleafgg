@@ -1,8 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setLegendsAwakened = void 0;
-const card_images_1 = require("./card-images");
+const unown_r_1 = require("./unown-r");
+const uxie_1 = require("./uxie");
 exports.setLegendsAwakened = [
-    new card_images_1.UnownRArt(),
-    new card_images_1.UxieArt(),
+    new unown_r_1.UnownR(),
+    new uxie_1.Uxie(),
 ];

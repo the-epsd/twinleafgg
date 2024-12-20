@@ -1,21 +1,35 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setXY = void 0;
-const card_images_1 = require("./card-images");
+const braixen_1 = require("./braixen");
+const delphox_1 = require("./delphox");
+const double_colorless_energy_1 = require("./double-colorless-energy");
+const evosoda_1 = require("./evosoda");
+const fairy_energy_1 = require("./fairy-energy");
+const muscle_band_1 = require("./muscle-band");
+const pikachu_1 = require("./pikachu");
+const professors_letter_1 = require("./professors-letter");
+const raichu_1 = require("./raichu");
+const shadow_circle_1 = require("./shadow-circle");
+const shauna_1 = require("./shauna");
+const super_potion_1 = require("./super-potion");
+const trevenant_1 = require("./trevenant");
+const voltorb_1 = require("./voltorb");
+const yveltal_ex_1 = require("./yveltal-ex");
 exports.setXY = [
-    new card_images_1.BraixenArt(),
-    new card_images_1.DelphoxArt(),
-    new card_images_1.DoubleColorlessEnergyArt(),
-    new card_images_1.EvosodaArt(),
-    new card_images_1.FairyEnergyArt(),
-    new card_images_1.MuscleBandArt(),
-    new card_images_1.PikachuArt(),
-    new card_images_1.ProfessorsLetterArt(),
-    new card_images_1.RaichuArt(),
-    new card_images_1.ShadowCircleArt(),
-    new card_images_1.ShaunaArt(),
-    new card_images_1.SuperPotionArt(),
-    new card_images_1.TrevenantArt(),
-    new card_images_1.VoltorbArt(),
-    new card_images_1.YveltalExArt(),
+    new braixen_1.Braixen(),
+    new delphox_1.Delphox(),
+    new double_colorless_energy_1.DoubleColorlessEnergy(),
+    new evosoda_1.Evosoda(),
+    new fairy_energy_1.FairyEnergy(),
+    new muscle_band_1.MuscleBand(),
+    new pikachu_1.Pikachu(),
+    new professors_letter_1.ProfessorsLetter(),
+    new raichu_1.Raichu(),
+    new shadow_circle_1.ShadowCircle(),
+    new shauna_1.Shauna(),
+    new super_potion_1.SuperPotion(),
+    new trevenant_1.Trevenant(),
+    new voltorb_1.Voltorb(),
+    new yveltal_ex_1.YveltalEx(),
 ];
