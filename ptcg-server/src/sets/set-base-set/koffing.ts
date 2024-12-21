@@ -12,15 +12,17 @@ import { GameMessage } from '../../game';
 export class Koffing extends PokemonCard {
 
   public name = 'Koffing';
-  
+
+  public cardImage: string = 'assets/cardback.png';
+
   public setNumber = '51';
-  
+
   public set = 'BS';
-  
+
   public fullName = 'Koffing BS';
 
   public stage = Stage.BASIC;
-  
+
   public cardType = CardType.GRASS;
 
   public hp = 50;
@@ -41,7 +43,7 @@ export class Koffing extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       return store.prompt(state, new CoinFlipPrompt(effect.player.id, GameMessage.COIN_FLIP), (heads) => {
-        const condition = heads 
+        const condition = heads
           ? new AddSpecialConditionsEffect(effect, [SpecialCondition.POISONED])
           : new AddSpecialConditionsEffect(effect, [SpecialCondition.CONFUSED]);
         store.reduceEffect(state, condition);

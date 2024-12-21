@@ -6,6 +6,7 @@ import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 export declare class Pikachu extends PokemonCard {
     name: string;
+    cardImage: string;
     set: string;
     setNumber: string;
     cardType: CardType;

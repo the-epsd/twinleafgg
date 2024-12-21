@@ -32,6 +32,7 @@ class Mareep extends pokemon_card_1.PokemonCard {
         this.fullName = 'Mareep LOT';
         this.name = 'Mareep';
         this.setNumber = '75';
+        this.cardImage = 'assets/cardback.png';
         this.FLUFFY_PILLOW_MARKER = 'FLUFFY_PILLOW_MARKER';
     }
     reduceEffect(store, state, effect) {

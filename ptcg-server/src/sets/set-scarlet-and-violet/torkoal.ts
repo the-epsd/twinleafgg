@@ -30,6 +30,7 @@ export class Torkoal extends PokemonCard {
   public set: string = 'SVI';
   public name: string = 'Torkoal';
   public fullName: string = 'Torkoal SVI';
+  public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '35';
   public regulationMark: string = 'G';
 
@@ -47,7 +48,7 @@ export class Torkoal extends PokemonCard {
       }, 0);
 
       effect.damage = 0;
-      
+
       for (let i = 0; i < totalEnergy; i++) {
         store.prompt(state, [
           new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)

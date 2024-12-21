@@ -7,6 +7,7 @@ import { StoreLike } from '../../game/store/store-like';
 
 export class ScoopUpNet extends TrainerCard {
   public name = 'Scoop Up Net';
+  public cardImage: string = 'assets/cardback.png';
   public setNumber = '165';
   public set = 'RCL';
   public fullName = 'Scoop Up Net RCL';

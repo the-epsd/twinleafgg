@@ -5,13 +5,15 @@ import { Attack } from '../../game/store/card/pokemon-types';
 export class Ponyta extends PokemonCard {
 
   public name = 'Ponyta';
-  
+
+  public cardImage: string = 'assets/cardback.png';
+
   public set = 'BS';
-  
+
   public setNumber = '60';
-  
+
   public cardType = CardType.FIRE;
-  
+
   public fullName = 'Ponyta BS';
 
   public stage = Stage.BASIC;

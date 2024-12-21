@@ -5,13 +5,15 @@ import { Attack } from '../../game/store/card/pokemon-types';
 export class Voltorb extends PokemonCard {
 
   public name = 'Voltorb';
-  
+
+  public cardImage: string = 'assets/cardback.png';
+
   public setNumber = '67';
-  
+
   public set = 'BS';
-  
+
   public cardType = CardType.LIGHTNING;
-  
+
   public fullName = 'Voltorb BS';
 
   public stage = Stage.BASIC;

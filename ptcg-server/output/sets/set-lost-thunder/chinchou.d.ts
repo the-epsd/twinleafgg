@@ -21,5 +21,6 @@ export declare class Chinchou extends PokemonCard {
     name: string;
     fullName: string;
     setNumber: string;
+    cardImage: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

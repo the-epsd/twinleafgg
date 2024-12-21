@@ -5,6 +5,7 @@ import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 export declare class ScoopUpNet extends TrainerCard {
     name: string;
+    cardImage: string;
     setNumber: string;
     set: string;
     fullName: string;

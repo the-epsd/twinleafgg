@@ -18,8 +18,10 @@ export class JubilifeVillage extends TrainerCard {
 
   public name: string = 'Jubilife Village';
 
+  public cardImage: string = 'assets/cardback.png';
+
   public fullName: string = 'Jubilife Village ASR';
-  
+
   public setNumber: string = '148';
 
   public text: string =
@@ -34,11 +36,11 @@ export class JubilifeVillage extends TrainerCard {
       }
 
       player.hand.moveCardsTo(player.hand.cards, player.deck);
-      
+
       state = store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
         player.deck.applyOrder(order);
       });
-      
+
       player.deck.moveTo(player.hand, 5);
 
       effect.preventDefault = true;

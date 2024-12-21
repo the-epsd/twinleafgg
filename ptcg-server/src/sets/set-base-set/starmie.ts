@@ -13,13 +13,15 @@ import { GameMessage } from '../../game';
 export class Starmie extends PokemonCard {
 
   public name = 'Starmie';
-  
+
+  public cardImage: string = 'assets/cardback.png';
+
   public set = 'BS';
-  
+
   public setNumber = '64';
-  
+
   public cardType = CardType.WATER;
-  
+
   public fullName = 'Starmie';
 
   public stage = Stage.STAGE_1;

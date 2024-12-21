@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.setHeGoldAndSoulSilver = void 0;
+exports.setHeartGoldAndSoulSilver = void 0;
 const cleffa_1 = require("./cleffa");
 const cyndaquil_1 = require("./cyndaquil");
 const drowzee_1 = require("./drowzee");
@@ -20,7 +20,7 @@ const quilava_1 = require("./quilava");
 const typhlosion_1 = require("./typhlosion");
 const tyrogue_1 = require("./tyrogue");
 const unown_1 = require("./unown");
-exports.setHeGoldAndSoulSilver = [
+exports.setHeartGoldAndSoulSilver = [
     new cleffa_1.Cleffa(),
     new cyndaquil_1.Cyndaquil(),
     new HS_121_Darkness_Energy_1.DarknessEnergy(),

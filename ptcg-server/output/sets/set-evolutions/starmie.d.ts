@@ -5,6 +5,7 @@ import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 export declare class Starmie extends PokemonCard {
     name: string;
+    cardImage: string;
     set: string;
     evolvesFrom: string;
     fullName: string;

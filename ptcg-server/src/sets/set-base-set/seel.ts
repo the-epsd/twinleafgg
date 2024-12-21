@@ -6,14 +6,16 @@ export class Seel extends PokemonCard {
 
   public name = 'Seel';
 
+  public cardImage: string = 'assets/cardback.png';
+
   public set = 'BS';
-  
+
   public setNumber = '41';
-  
+
   public fullName = 'Seel BS';
-  
+
   public cardType = CardType.WATER;
-  
+
   public stage = Stage.BASIC;
 
   public hp = 60;

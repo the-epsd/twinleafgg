@@ -9,6 +9,7 @@ class ClefairyDoll extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.name = 'Clefairy Doll';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '70';
         this.set = 'BS';
         this.fullName = 'Clefairy Doll BS';

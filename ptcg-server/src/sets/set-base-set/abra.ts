@@ -12,13 +12,15 @@ import { GameMessage } from '../../game';
 export class Abra extends PokemonCard {
 
   public name = 'Abra';
-  
+
+  public cardImage: string = 'assets/cardback.png';
+
   public set = 'BS';
-  
+
   public fullName = 'Abra BS';
-  
+
   public cardType = CardType.PSYCHIC;
-  
+
   public setNumber = '43';
 
   public stage = Stage.BASIC;

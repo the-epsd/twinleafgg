@@ -19,7 +19,7 @@ import { Typhlosion } from './typhlosion';
 import { Tyrogue } from './tyrogue';
 import { Unown } from './unown';
 
-export const setHeGoldAndSoulSilver: Card[] = [
+export const setHeartGoldAndSoulSilver: Card[] = [
   new Cleffa(),
   new Cyndaquil(),
   new DarknessEnergy(),

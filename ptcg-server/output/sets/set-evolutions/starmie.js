@@ -54,6 +54,7 @@ class Starmie extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.name = 'Starmie';
+        this.cardImage = 'assets/cardback.png';
         this.set = 'EVO';
         this.evolvesFrom = 'Staryu';
         this.fullName = 'Starmie EVO';

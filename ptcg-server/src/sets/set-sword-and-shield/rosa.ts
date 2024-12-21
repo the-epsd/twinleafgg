@@ -53,7 +53,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
     player,
     GameMessage.CHOOSE_CARD_TO_HAND,
     player.deck,
-    { },
+    {},
     { min: 0, max: 3, allowCancel: true, blocked, maxPokemons, maxEnergies, maxTrainers }
   ), selected => {
     cards = selected || [];
@@ -81,6 +81,8 @@ export class Rosa extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public set: string = 'SSH';
+
+  public cardImage: string = 'assets/cardback.png';
 
   public name: string = 'Rosa';
 

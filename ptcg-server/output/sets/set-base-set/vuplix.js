@@ -11,6 +11,7 @@ class Vulpix extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.name = 'Vulpix';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '68';
         this.set = 'BS';
         this.fullName = 'Vulpix BS';

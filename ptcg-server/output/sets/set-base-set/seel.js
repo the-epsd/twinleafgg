@@ -7,6 +7,7 @@ class Seel extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.name = 'Seel';
+        this.cardImage = 'assets/cardback.png';
         this.set = 'BS';
         this.setNumber = '41';
         this.fullName = 'Seel BS';

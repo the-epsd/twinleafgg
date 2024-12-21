@@ -8,6 +8,7 @@ class DevolutionSpray extends game_1.TrainerCard {
     constructor() {
         super(...arguments);
         this.name = 'Devolution Spray';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '76';
         this.set = 'EVO';
         this.fullName = 'Devolution Spray EVO';

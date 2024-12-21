@@ -13,6 +13,8 @@ export class Onix extends PokemonCard {
 
   public name = 'Onix';
 
+  public cardImage: string = 'assets/cardback.png';
+
   public set = 'BS';
 
   public cardType = CardType.FIGHTING;

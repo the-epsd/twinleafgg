@@ -7,6 +7,7 @@ import { StoreLike } from '../../game/store/store-like';
 
 export class DevolutionSpray extends TrainerCard {
   public name = 'Devolution Spray';
+  public cardImage: string = 'assets/cardback.png';
   public setNumber = '71';
   public set = 'BS';
   public fullName = 'Devolution Spray BS';
@@ -16,6 +17,8 @@ export class DevolutionSpray extends TrainerCard {
   public hp = 0;
   public retreat = [];
   public attacks = [];
+
+  public text = 'Devolve 1 of your evolved Pokémon and put the highest Stage Evolution card on it into your hand. (That Pokémon can\'t evolve this turn.)';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

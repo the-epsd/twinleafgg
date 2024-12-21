@@ -22,5 +22,6 @@ export declare class Blitzle extends PokemonCard {
     name: string;
     fullName: string;
     setNumber: string;
+    cardImage: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

@@ -28,6 +28,7 @@ class Blitzle extends pokemon_card_1.PokemonCard {
         this.name = 'Blitzle';
         this.fullName = 'Blitzle LOT';
         this.setNumber = '81';
+        this.cardImage = 'assets/cardback.png';
     }
 }
 exports.Blitzle = Blitzle;

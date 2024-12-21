@@ -13,14 +13,16 @@ export class Drowzee extends PokemonCard {
 
   public name = 'Drowzee';
 
+  public cardImage: string = 'assets/cardback.png';
+
   public set = 'BS';
-  
+
   public fullName = 'Drowzee BS';
-  
+
   public setNumber = '49';
-  
+
   public cardType = CardType.PSYCHIC;
-  
+
   public stage = Stage.BASIC;
 
   public hp = 50;

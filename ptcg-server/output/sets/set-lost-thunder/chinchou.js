@@ -29,6 +29,7 @@ class Chinchou extends pokemon_card_1.PokemonCard {
         this.name = 'Chinchou';
         this.fullName = 'Chinchou LOT';
         this.setNumber = '73';
+        this.cardImage = 'assets/cardback.png';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

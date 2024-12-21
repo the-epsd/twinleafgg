@@ -15,7 +15,7 @@ export class Blitzle extends PokemonCard {
   public retreat = [CardType.COLORLESS];
   public evolvesInto = 'Zebstrika';
   public attacks = [{
-    name: 'AGILITY',
+    name: 'Agility',
     cost: [CardType.LIGHTNING],
     damage: 10,
     text: 'Flip a coin. If heads, prevent all effects of attacks, including damage, done to this Pokemon during your opponent\'s next turn.'
@@ -25,6 +25,7 @@ export class Blitzle extends PokemonCard {
   public name: string = 'Blitzle';
   public fullName: string = 'Blitzle NVI';
   public setNumber: string = '35';
+  public cardImage: string = 'assets/cardback.png';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

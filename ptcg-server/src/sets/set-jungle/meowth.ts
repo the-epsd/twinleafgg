@@ -12,14 +12,16 @@ export class Meowth extends PokemonCard {
 
   public name = 'Meowth';
 
+  public cardImage: string = 'assets/cardback.png';
+
   public set = 'JU';
-  
+
   public setNumber = '56';
-  
+
   public fullName = 'Meowth JU';
-  
+
   public cardType = CardType.COLORLESS;
-  
+
   public stage = Stage.BASIC;
 
   public hp = 50;

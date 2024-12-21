@@ -17,8 +17,10 @@ export declare class Treecko extends PokemonCard {
         damage: number;
         text: string;
     }[];
+    setNumber: string;
     set: string;
     fullName: string;
+    cardImage: string;
     name: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

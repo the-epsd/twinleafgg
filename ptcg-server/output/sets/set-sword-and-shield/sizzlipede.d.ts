@@ -18,5 +18,6 @@ export declare class Sizzlipede extends PokemonCard {
     set: string;
     name: string;
     fullName: string;
+    cardImage: string;
     setNumber: string;
 }

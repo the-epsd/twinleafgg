@@ -11,6 +11,7 @@ class Koffing extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.name = 'Koffing';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '51';
         this.set = 'BS';
         this.fullName = 'Koffing BS';

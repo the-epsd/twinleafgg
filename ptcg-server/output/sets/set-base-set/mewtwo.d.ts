@@ -16,5 +16,6 @@ export declare class Mewtwo extends PokemonCard {
     name: string;
     fullName: string;
     setNumber: string;
+    cardImage: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

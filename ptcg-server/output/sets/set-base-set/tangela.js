@@ -11,6 +11,7 @@ class Tangela extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.name = 'Tangela';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '66';
         this.set = 'BS';
         this.fullName = 'Tangela';

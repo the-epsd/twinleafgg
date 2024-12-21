@@ -26,5 +26,6 @@ export declare class Blastoise extends PokemonCard {
     set: string;
     name: string;
     fullName: string;
+    cardImage: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

@@ -7,6 +7,7 @@ class Voltorb extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.name = 'Voltorb';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '67';
         this.set = 'BS';
         this.cardType = card_types_1.CardType.LIGHTNING;

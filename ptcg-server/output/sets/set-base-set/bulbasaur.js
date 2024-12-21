@@ -10,6 +10,7 @@ class Bulbasaur extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.name = 'Bulbasaur';
+        this.cardImage = 'assets/cardback.png';
         this.set = 'BS';
         this.fullName = 'Bulbasaur BS';
         this.setNumber = '44';

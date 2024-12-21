@@ -8,6 +8,7 @@ class DevolutionSpray extends game_1.TrainerCard {
     constructor() {
         super(...arguments);
         this.name = 'Devolution Spray';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '71';
         this.set = 'BS';
         this.fullName = 'Devolution Spray BS';
@@ -17,6 +18,7 @@ class DevolutionSpray extends game_1.TrainerCard {
         this.hp = 0;
         this.retreat = [];
         this.attacks = [];
+        this.text = 'Devolve 1 of your evolved Pokémon and put the highest Stage Evolution card on it into your hand. (That Pokémon can\'t evolve this turn.)';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {

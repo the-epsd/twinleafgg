@@ -19,8 +19,10 @@ export class Treecko extends PokemonCard {
     text: 'Search your deck for a G Pokemon, reveal it, and put it into your hand. Then, shuffle the deck.'
   }];
 
+  public setNumber: string = '20';
   public set: string = 'LOT';
   public fullName: string = 'Treecko LOT';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Treecko';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

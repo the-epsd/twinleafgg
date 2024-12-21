@@ -7,6 +7,7 @@ class Diglett extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.name = 'Diglett';
+        this.cardImage = 'assets/cardback.png';
         this.set = 'BS';
         this.setNumber = '47';
         this.fullName = 'Diglett BS';

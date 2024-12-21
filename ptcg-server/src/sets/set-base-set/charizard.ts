@@ -51,6 +51,8 @@ export class Charizard extends PokemonCard {
 
   public fullName: string = 'Charizard BS';
 
+  public cardImage: string = 'assets/cardback.png';
+
   public readonly ENERGY_BURN_MARKER = 'ENERGY_BURN_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
