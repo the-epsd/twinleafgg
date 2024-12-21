@@ -29,7 +29,6 @@ export function attackReducer(store, state, effect) {
             afterDamageEffect.target = effect.target;
             store.reduceEffect(state, afterDamageEffect);
         }
-        console.log(damage);
     }
     if (effect instanceof DealDamageEffect) {
         const base = effect.attackEffect;

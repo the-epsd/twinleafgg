@@ -36,7 +36,7 @@ interface PromptItem {
 export class Store implements StoreLike {
 
   private effectHistory: Effect[] = [];
-  
+
   public state: State = new State();
   private promptItems: PromptItem[] = [];
   private waitItems: (() => void)[] = [];
@@ -86,11 +86,11 @@ export class Store implements StoreLike {
   }
 
   public reduceEffect(state: State, effect: Effect): State {
-    
+
     this.checkEffectHistory(state, effect);
-    
-    state = this.propagateEffect(state, effect);      
-    
+
+    state = this.propagateEffect(state, effect);
+
     if (effect.preventDefault === true) {
       return state;
     }
@@ -106,48 +106,48 @@ export class Store implements StoreLike {
 
     return state;
   }
-  
+
   checkEffectHistory(state: State, effect: Effect) {
     if (this.effectHistory.length === 300) {
       this.effectHistory.shift();
     }
-    
+
     this.effectHistory.push(effect);
     if (this.effectHistory.length === 300) {
       let isLoop = true;
-      
+
       const firstEffect = this.effectHistory[0];
-      
+
       this.effectHistory.forEach((effect, index) => {
         if (index % 5 !== 0) {
           return;
         }
-        
+
         if (!this.compareEffects(effect, firstEffect)) {
           isLoop = false;
         }
-      });      
-      
+      });
+
       if (isLoop) {
-        console.error(`Loop detected: ${firstEffect.type}, card: ${(<any>firstEffect).card?.name}`);
+        console.error(`Loop detected: ${firstEffect.type}, card: ${(<any>firstEffect).card?.fullName}`);
         throw new Error('Loop detected');
       }
     }
   }
-  
+
   compareEffects(effect1: Effect, effect2: Effect): boolean {
     if (effect1.type !== effect2.type) {
       return false;
     }
-    
+
     const effect1CardId = (<any>effect1)?.card?.id;
     const effect2CardId = (<any>effect2)?.card?.id;
-    
+
     const effect1CardPlayerId = (<any>effect1)?.player?.id;
     const effect2CardPlayerId = (<any>effect2)?.player?.id;
-    
+
     return effect1CardId === effect2CardId &&
-           effect1CardPlayerId === effect2CardPlayerId;  
+      effect1CardPlayerId === effect2CardPlayerId;
   }
 
   public prompt(state: State, prompts: Prompt<any>[] | Prompt<any>, then: (results: any) => void): State {

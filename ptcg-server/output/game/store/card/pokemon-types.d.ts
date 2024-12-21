@@ -17,6 +17,7 @@ export interface Attack {
     copycatAttack?: boolean;
     gxAttack?: boolean;
     shredAttack?: boolean;
+    useOnBench?: boolean;
     name: string;
     text: string;
     effect?: (store: StoreLike, state: State, effect: AttackEffect) => void;

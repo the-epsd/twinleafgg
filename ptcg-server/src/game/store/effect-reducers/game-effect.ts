@@ -87,16 +87,25 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
   // }
 
   const attack = effect.attack;
+  let attackingPokemon = player.active;
+
+  // If this is Alakazam ex's attack from the bench, use that instead
+  player.bench.forEach(benchSlot => {
+    const benchPokemon = benchSlot.getPokemonCard();
+    if (benchPokemon && benchPokemon.name === 'Alakazam ex' && benchPokemon.attacks.some(a => a.name === attack.name)) {
+      attackingPokemon = benchSlot;
+    }
+  });
+
   const checkAttackCost = new CheckAttackCostEffect(player, attack);
   state = store.reduceEffect(state, checkAttackCost);
 
-  const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
+  const checkProvidedEnergy = new CheckProvidedEnergyEffect(player, attackingPokemon);
   state = store.reduceEffect(state, checkProvidedEnergy);
 
   if (StateUtils.checkEnoughEnergy(checkProvidedEnergy.energyMap, checkAttackCost.cost as CardType[]) === false) {
     throw new GameError(GameMessage.NOT_ENOUGH_ENERGY);
   }
-
 
   if (sp.includes(SpecialCondition.CONFUSED)) {
     let flip = false;

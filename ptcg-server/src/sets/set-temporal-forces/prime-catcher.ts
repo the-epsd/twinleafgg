@@ -14,21 +14,17 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
 
-  // Don't allow to play both Prime Catchers when opponen has an empty bench
   const benchCount = opponent.bench.reduce((sum, b) => {
     return sum + (b.cards.length > 0 ? 1 : 0);
   }, 0);
 
-  //let playTwoCards = false;
-
   if (benchCount > 0) {
-  // playTwoCards = true;
 
     return store.prompt(state, new ChoosePokemonPrompt(
       player.id,
       GameMessage.CHOOSE_POKEMON_TO_SWITCH,
       PlayerType.TOP_PLAYER,
-      [ SlotType.BENCH ],
+      [SlotType.BENCH],
       { allowCancel: false }
     ), targets => {
       if (!targets || targets.length === 0) {
@@ -37,23 +33,20 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
       opponent.active.clearEffects();
       opponent.switchPokemon(targets[0]);
       next();
-    
-      // Do not discard the card yet
-      effect.preventDefault = true;
-    
+
       const hasBench = player.bench.some(b => b.cards.length > 0);
-      
+
       if (!hasBench) {
         player.supporter.moveCardTo(effect.trainerCard, player.discard);
         return state;
       }
-      
+
       let target: PokemonCardList[] = [];
       return store.prompt(state, new ChoosePokemonPrompt(
         player.id,
         GameMessage.CHOOSE_POKEMON_TO_SWITCH,
         PlayerType.BOTTOM_PLAYER,
-        [ SlotType.BENCH ],
+        [SlotType.BENCH],
         { allowCancel: false }
       ), results => {
         target = results || [];
@@ -62,7 +55,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
         if (target.length === 0) {
           return state;
         }
-    
+
         // Discard trainer only when user selected a Pokemon
         player.active.clearEffects();
         player.switchPokemon(target[0]);
@@ -77,7 +70,7 @@ export class PrimeCatcher extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
 
-  public tags = [ CardTag.ACE_SPEC ];
+  public tags = [CardTag.ACE_SPEC];
 
   public regulationMark = 'H';
 

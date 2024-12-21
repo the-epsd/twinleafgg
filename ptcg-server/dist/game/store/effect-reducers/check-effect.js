@@ -83,11 +83,16 @@ function chooseActivePokemons(state) {
     }
     return prompts;
 }
-function choosePrizeCards(state, prizesToTake) {
+function choosePrizeCards(store, state, prizesToTake) {
     const prompts = [];
     for (let i = 0; i < state.players.length; i++) {
         const player = state.players[i];
         const prizeLeft = player.getPrizeLeft();
+        if (prizesToTake[i] > 0 && state.isSuddenDeath) {
+            // In sudden death, taking any prize cards means winning
+            endGame(store, state, i === 0 ? GameWinner.PLAYER_1 : GameWinner.PLAYER_2);
+            return [];
+        }
         if (prizesToTake[i] > prizeLeft) {
             prizesToTake[i] = prizeLeft;
         }
@@ -202,9 +207,12 @@ function initiateSuddenDeath(store, state) {
     store.log(state, GameLog.LOG_SUDDEN_DEATH);
     // Reset decks
     state.players.forEach(player => {
-        // Collect all cards back to deck
-        [player.active, ...player.bench, player.discard, ...player.prizes, player.hand]
+        // Collect all cards back to deck including stadium, lost zone and any other zones
+        [player.active, ...player.bench, player.discard, ...player.prizes, player.hand, player.lostzone, player.stadium]
             .forEach(cardList => cardList.moveTo(player.deck));
+        // Reset VSTAR and GX markers
+        player.usedGX = false;
+        player.usedVSTAR = false;
         // Shuffle deck
         return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
             player.deck.applyOrder(order);
@@ -250,7 +258,11 @@ function handlePrompts(store, state, prompts, onComplete) {
                 throw new GameError(GameMessage.ILLEGAL_ACTION);
             }
             const temp = player.active;
+            const playerActive = player.active.getPokemonCard();
             player.active = player.bench[benchIndex];
+            if (playerActive) {
+                playerActive.movedToActiveThisTurn = true;
+            }
             player.bench[benchIndex] = temp;
             handlePrompts(store, state, prompts, onComplete);
         }
@@ -279,7 +291,7 @@ function* executeCheckState(next, store, state, onComplete) {
         }
     }
     const prompts = [
-        ...choosePrizeCards(state, prizesToTake),
+        ...choosePrizeCards(store, state, prizesToTake),
         ...chooseActivePokemons(state)
     ];
     const completed = [false, false];

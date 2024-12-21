@@ -57,13 +57,16 @@ export function playerTurnReducer(store: StoreLike, state: State, action: Action
         attacks = [...pokemonCard.attacks];
       }
 
-      // Check for Alakazam ex on the bench
-      const alakazamOnBench = player.bench.find(b => b.getPokemonCard()?.name === 'Alakazam ex');
-      if (alakazamOnBench) {
-        const alakazamAttacks = alakazamOnBench.getPokemonCard()?.attacks || [];
-        attacks = [...attacks, ...alakazamAttacks];
-      }
-
+      // Add bench attacks
+      player.bench.forEach(benchSlot => {
+        const benchPokemon = benchSlot.getPokemonCard();
+        if (benchPokemon && benchPokemon.name === 'Alakazam ex') {
+          attacks.push(...benchPokemon.attacks); // Add all attacks
+          const attackEffect = new CheckPokemonAttacksEffect(player); // Pass the bench slot
+          state = store.reduceEffect(state, attackEffect);
+          attacks = [...attacks, ...attackEffect.attacks];
+        }
+      });
 
       const attackEffect = new CheckPokemonAttacksEffect(player);
       state = store.reduceEffect(state, attackEffect);

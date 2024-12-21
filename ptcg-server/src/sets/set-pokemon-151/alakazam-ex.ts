@@ -27,8 +27,9 @@ export class Alakazamex extends PokemonCard {
     },
     {
       name: 'Dimensional Manipulation',
-      cost: [CardType.COLORLESS],
+      cost: [],
       damage: 120,
+      useOnBench: true,
       text: 'You may use this attack even if this Pokemon is on the Bench.'
     }
   ];

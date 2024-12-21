@@ -10,7 +10,6 @@ import { PokemonCard } from '../card/pokemon-card';
 import { CheckPokemonAttacksEffect, CheckPokemonPowersEffect } from '../effects/check-effects';
 import { TrainerCard } from '../card/trainer-card';
 export function playerTurnReducer(store, state, action) {
-    var _a;
     if (state.phase === GamePhase.PLAYER_TURN) {
         if (action instanceof PassTurnAction) {
             const player = state.players[state.activePlayer];
@@ -41,12 +40,16 @@ export function playerTurnReducer(store, state, action) {
             if (pokemonCard) {
                 attacks = [...pokemonCard.attacks];
             }
-            // Check for Alakazam ex on the bench
-            const alakazamOnBench = player.bench.find(b => { var _a; return ((_a = b.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.name) === 'Alakazam ex'; });
-            if (alakazamOnBench) {
-                const alakazamAttacks = ((_a = alakazamOnBench.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.attacks) || [];
-                attacks = [...attacks, ...alakazamAttacks];
-            }
+            // Add bench attacks
+            player.bench.forEach(benchSlot => {
+                const benchPokemon = benchSlot.getPokemonCard();
+                if (benchPokemon && benchPokemon.name === 'Alakazam ex') {
+                    attacks.push(...benchPokemon.attacks); // Add all attacks
+                    const attackEffect = new CheckPokemonAttacksEffect(player); // Pass the bench slot
+                    state = store.reduceEffect(state, attackEffect);
+                    attacks = [...attacks, ...attackEffect.attacks];
+                }
+            });
             const attackEffect = new CheckPokemonAttacksEffect(player);
             state = store.reduceEffect(state, attackEffect);
             attacks = [...attacks, ...attackEffect.attacks];
@@ -57,6 +60,10 @@ export function playerTurnReducer(store, state, action) {
             const useAttackEffect = new UseAttackEffect(player, attack);
             state = store.reduceEffect(state, useAttackEffect);
             state.lastAttack = attack;
+            if (!state.playerLastAttack) {
+                state.playerLastAttack = {};
+            }
+            state.playerLastAttack[player.id] = attack;
             return state;
         }
         if (action instanceof UseAbilityAction) {

@@ -22,8 +22,9 @@ class Alakazamex extends pokemon_card_1.PokemonCard {
             },
             {
                 name: 'Dimensional Manipulation',
-                cost: [card_types_1.CardType.COLORLESS],
+                cost: [],
                 damage: 120,
+                useOnBench: true,
                 text: 'You may use this attack even if this Pokemon is on the Bench.'
             }
         ];

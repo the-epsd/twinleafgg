@@ -11,15 +11,18 @@ import { SettingsService } from "./settings.service";
 })
 export class SettingsDialogComponent {
   holoEnabled = true;
+  showCardName = false;
   cardSize = 100;
 
   constructor(
     public dialogRef: MatDialogRef<SettingsDialogComponent>,
     private settingsService: SettingsService
   ) {
-    // Get the current value
     this.settingsService.holoEnabled$.subscribe(
       enabled => this.holoEnabled = enabled
+    );
+    this.settingsService.showCardName$.subscribe(
+      enabled => this.showCardName = enabled
     );
     this.settingsService.cardSize$.subscribe(size => this.cardSize = size);
   }
@@ -31,6 +34,7 @@ export class SettingsDialogComponent {
 
   save() {
     this.settingsService.setHoloEnabled(this.holoEnabled);
+    this.settingsService.setShowCardName(this.showCardName);  // Add this line
     this.settingsService.setCardSize(this.cardSize);
     this.dialogRef.close();
   }

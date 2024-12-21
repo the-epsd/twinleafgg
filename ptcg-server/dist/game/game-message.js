@@ -154,7 +154,7 @@ export var GameCardMessage;
     GameCardMessage["WANT_TO_ATTACH_ONLY_FIRE_ENERGY"] = "WANT_TO_ATTACH_ONLY_FIRE_ENERGY";
     GameCardMessage["WANT_TO_ATTACH_ONLY_WATER_ENERGY"] = "WANT_TO_ATTACH_ONLY_WATER_ENERGY";
     GameCardMessage["WANT_TO_ATTACH_ONE_OF_EACH"] = "WANT_TO_ATTACH_ONE_OF_EACH";
-    GameCardMessage["WANT_TO_DISCARD_CARDS"] = "WANT_DISCARD_CARDS";
+    GameCardMessage["WANT_TO_DISCARD_CARDS"] = "WANT_TO_DISCARD_CARDS";
     GameCardMessage["WANT_TO_ATTACK_AGAIN"] = "WANT_TO_ATTACK_AGAIN";
     GameCardMessage["MULLIGAN_CARDS"] = "MULLIGAN_CARDS";
     GameCardMessage["DRAW"] = "DRAW";
@@ -181,6 +181,8 @@ export var GameCardMessage;
     GameCardMessage["CANNOT_MOVE_DAMAGE"] = "CANNOT_MOVE_DAMAGE";
     GameCardMessage["CANNOT_EVOLVE"] = "CANNOT_EVOLVE";
     GameCardMessage["ABILITY_BLOCKED"] = "ABILITY_BLOCKED";
+    GameCardMessage["PLAYER_CARDS_REVEALED_BY_EFFECT"] = "PLAYER_CARDS_REVEALED_BY_EFFECT";
+    GameCardMessage["CHOOSE_CARDS"] = "CHOOSE_CARDS";
 })(GameCardMessage || (GameCardMessage = {}));
 export var GameLog;
 (function (GameLog) {

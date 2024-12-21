@@ -10,12 +10,19 @@ export declare class Alakazamex extends PokemonCard {
         type: CardType;
     }[];
     retreat: CardType[];
-    attacks: {
+    attacks: ({
         name: string;
         cost: CardType[];
         damage: number;
         text: string;
-    }[];
+        useOnBench?: undefined;
+    } | {
+        name: string;
+        cost: never[];
+        damage: number;
+        useOnBench: boolean;
+        text: string;
+    })[];
     set: string;
     cardImage: string;
     setNumber: string;

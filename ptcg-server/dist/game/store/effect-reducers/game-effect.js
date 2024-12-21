@@ -53,9 +53,17 @@ function* useAttack(next, store, state, effect) {
     //   });
     // }
     const attack = effect.attack;
+    let attackingPokemon = player.active;
+    // If this is Alakazam ex's attack from the bench, use that instead
+    player.bench.forEach(benchSlot => {
+        const benchPokemon = benchSlot.getPokemonCard();
+        if (benchPokemon && benchPokemon.name === 'Alakazam ex' && benchPokemon.attacks.some(a => a.name === attack.name)) {
+            attackingPokemon = benchSlot;
+        }
+    });
     const checkAttackCost = new CheckAttackCostEffect(player, attack);
     state = store.reduceEffect(state, checkAttackCost);
-    const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
+    const checkProvidedEnergy = new CheckProvidedEnergyEffect(player, attackingPokemon);
     state = store.reduceEffect(state, checkProvidedEnergy);
     if (StateUtils.checkEnoughEnergy(checkProvidedEnergy.energyMap, checkAttackCost.cost) === false) {
         throw new GameError(GameMessage.NOT_ENOUGH_ENERGY);
@@ -134,7 +142,6 @@ function* useAttack(next, store, state, effect) {
     return store.reduceEffect(state, new EndTurnEffect(player));
 }
 export function gameReducer(store, state, effect) {
-    var _a;
     if (effect instanceof KnockOutEffect) {
         // const player = effect.player;
         const card = effect.target.getPokemonCard();
@@ -151,7 +158,8 @@ export function gameReducer(store, state, effect) {
                 effect.prizeCount += 2;
             }
             store.log(state, GameLog.LOG_POKEMON_KO, { name: card.name });
-            if (card.tags.includes(CardTag.PRISM_STAR) || ((_a = StateUtils.getStadiumCard(state)) === null || _a === void 0 ? void 0 : _a.name) === 'Lost City') {
+            const stadiumCard = StateUtils.getStadiumCard(state);
+            if (card.tags.includes(CardTag.PRISM_STAR) || stadiumCard && stadiumCard.name === 'Lost City') {
                 const lostZoned = new CardList();
                 const pokemonIndices = effect.target.cards.map((card, index) => index);
                 for (let i = pokemonIndices.length - 1; i >= 0; i--) {
@@ -162,11 +170,20 @@ export function gameReducer(store, state, effect) {
                     }
                 }
                 lostZoned.moveTo(effect.player.lostzone);
+                effect.target.clearEffects();
             }
             else {
                 effect.target.moveTo(effect.player.discard);
                 effect.target.clearEffects();
             }
+            // const stadiumCard = StateUtils.getStadiumCard(state);
+            // if (card.tags.includes(CardTag.PRISM_STAR) || stadiumCard && stadiumCard.name === 'Lost City') {
+            //   effect.target.moveTo(effect.player.lostzone);
+            //   effect.target.clearEffects();
+            // } else {
+            //   effect.target.moveTo(effect.player.discard);
+            //   effect.target.clearEffects();
+            // }
         }
     }
     if (effect instanceof ApplyWeaknessEffect) {

@@ -2,6 +2,8 @@ import { Component, Input } from '@angular/core';
 import { Card, CardTag, Player, State, StoreLike } from 'ptcg-server';
 import { CardsBaseService } from '../cards-base.service';
 import { SettingsService } from 'src/app/table/table-sidebar/settings-dialog/settings.service';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'ptcg-card',
@@ -13,7 +15,9 @@ export class CardComponent {
   public scanUrl: string;
   public data: Card;
   private holoEnabled = true;
+  private destroyed$ = new Subject<void>();
 
+  @Input() showCardName: boolean = true;
   @Input() cardback = false;
   @Input() placeholder = false;
   @Input() customImageUrl: string;
@@ -23,6 +27,12 @@ export class CardComponent {
     this.scanUrl = this.customImageUrl || this.cardsBaseService.getScanUrl(this.data);
   }
 
+  shouldShowCardName(): boolean {
+    if (!this.data || this.cardback) {
+      return false; // Don't show card name if card is secret
+    }
+    return this.showCardName; // Otherwise, use the showCardName input
+  }
 
   getCardClass(): string {
     let classes = '';
@@ -116,5 +126,19 @@ export class CardComponent {
   constructor(private cardsBaseService: CardsBaseService,
     private settingsService: SettingsService) {
     settingsService.holoEnabled$.subscribe(enabled => this.holoEnabled = enabled);
+    settingsService.showCardName$.subscribe(enabled => this.showCardName = enabled);
+  }
+
+  ngOnInit(): void {
+    this.settingsService.showCardName$.pipe(
+      takeUntil(this.destroyed$)
+    ).subscribe(enabled => {
+      this.showCardName = enabled;
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.destroyed$.next();
+    this.destroyed$.complete();
   }
 }
