@@ -3,7 +3,7 @@ import { Deerling } from './deerling';
 import { Fennekin } from './fennekin';
 import { Lucario } from './lucario';
 import { Mew } from './mew';
-import { N } from './n';
+import { N_Supporter } from './n';
 import { Riolu } from './riolu';
 import { TeamRocketsHandiwork } from './team-rockets-handiwork';
 export declare class DeerlingArt extends Deerling {
@@ -21,7 +21,7 @@ export declare class LucarioArt extends Lucario {
 export declare class MewArt extends Mew {
     cardImage: string;
 }
-export declare class NArt extends N {
+export declare class NArt extends N_Supporter {
     cardImage: string;
 }
 export declare class RioluArt extends Riolu {

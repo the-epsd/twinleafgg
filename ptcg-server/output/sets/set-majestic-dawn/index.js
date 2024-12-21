@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setMajesticDawn = void 0;
-const card_images_1 = require("./card-images");
+const unown_q_1 = require("./unown-q");
 exports.setMajesticDawn = [
-    new card_images_1.UnownQArt(),
+    new unown_q_1.UnownQ(),
 ];

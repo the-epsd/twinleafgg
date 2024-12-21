@@ -1,6 +1,6 @@
 import { Card } from '../../game/store/card/card';
-import { UnownQArt } from './card-images';
+import { UnownQ } from './unown-q';
 
 export const setMajesticDawn: Card[] = [
-  new UnownQArt(),
+  new UnownQ(),
 ];

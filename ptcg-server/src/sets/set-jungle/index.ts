@@ -1,55 +1,100 @@
 import { Card } from '../../game/store/card/card';
-import { BellsproutArt, ButterfreeArt, ClefableArt, CuboneArt, DodrioArt, EeveeArt, ElectrodeArt, ExeggcuteArt, ExeggutorArt, FearowArt, FlareonArt, GloomArt, GoldeenArt, JigglypuffArt, JolteonArt, KangaskhanArt, LickitungArt, MankeyArt, MarowakArt, MeowthArt, MrMimeArt, NidoqueenArt, NidoranFemaleArt, NidorinaArt, OddishArt, ParasArt, ParasectArt, PersianArt, PidgeotArt, PikachuArt, PinsirArt, PokeBallArt, PrimeapeArt, RapidashArt, RhydonArt, RhyhornArt, ScytherArt, SnorlaxArt, SpearowArt, VaporeonArt, VenomothArt, VenonatArt, VictreebelArt, VileplumeArt, WeepinbellArt, WigglytuffArt } from './card-images';
+import { Bellsprout } from './bellsprout';
+import { Butterfree } from './butterfree';
+import { Clefable } from './clefable';
+import { Cubone } from './cubone';
+import { Dodrio } from './dodrio';
+import { Eevee } from './eevee';
+import { Electrode } from './electrode';
+import { Exeggcute } from './exeggcute';
+import { Exeggutor } from './exeggutor';
+import { Fearow } from './fearow';
+import { Flareon } from './flareon';
+import { Gloom } from './gloom';
+import { Goldeen } from './goldeen';
+import { Jigglypuff } from './jigglypuff';
+import { Jolteon } from './jolteon';
+import { Kangaskhan } from './kangaskhan';
+import { Lickitung } from './lickitung';
+import { Mankey } from './mankey';
+import { Marowak } from './marowak';
+import { Meowth } from './meowth';
+import { MrMime } from './mr-mime';
+import { Nidoqueen } from './nidoqueen';
+import { NidoranFemale } from './nidoran-female';
+import { Nidorina } from './nidorina';
+import { Oddish } from './oddish';
+import { Paras } from './paras';
+import { Parasect } from './parasect';
+import { Persian } from './persian';
+import { Pidgeot } from './pidgeot';
+import { Pikachu } from './pikachu';
+import { Pinsir } from './pinsir';
+import { PokeBall } from './pokeball';
+import { Primeape } from './primeape';
+import { Rapidash } from './rapidash';
+import { Rhydon } from './rhydon';
+import { Rhyhorn } from './rhyhorn';
+import { Scyther } from './scyther';
+import { Snorlax } from './snorlax';
+import { Spearow } from './spearow';
+import { Vaporeon } from './vaporeon';
+import { Venomoth } from './venomoth';
+import { Venonat } from './venonat';
+import { Victreebel } from './victreebel';
+import { Vileplume } from './vileplume';
+import { Weepinbell } from './weepinbell';
+import { Wigglytuff } from './wigglytuff';
 
 
 export const setJungle: Card[] = [
 
-  new BellsproutArt(),
-  new ButterfreeArt(),
-  new ClefableArt(),
-  new CuboneArt(),
-  new DodrioArt(),
-  new EeveeArt(),
-  new ElectrodeArt(),
-  new ExeggcuteArt(),
-  new ExeggutorArt(),
-  new FearowArt(),
-  new FlareonArt(),
-  new GloomArt(),
-  new GoldeenArt(),
-  new JigglypuffArt(),
-  new JolteonArt(),
-  new KangaskhanArt(),
-  new LickitungArt(),
-  new MankeyArt(),
-  new MarowakArt(),
-  new MeowthArt(),
-  new MrMimeArt(),
-  new NidoqueenArt(),
-  new NidorinaArt(),
-  new NidoranFemaleArt(),
-  new OddishArt(),
-  new ParasArt(),
-  new ParasectArt(),
-  new PersianArt(),
-  new PidgeotArt(),
-  new PikachuArt(),
-  new PinsirArt(),
-  new PokeBallArt(),
-  new PrimeapeArt(),
-  new RapidashArt(),
-  new RhydonArt(),
-  new RhyhornArt(),
-  new ScytherArt(),
-  new SnorlaxArt(),
-  new SpearowArt(),
-  new VaporeonArt(),
-  new VenomothArt(),
-  new VenonatArt(),
-  new VictreebelArt(),
-  new VileplumeArt(),
-  new WeepinbellArt(),
-  new WigglytuffArt()
+  new Bellsprout(),
+  new Butterfree(),
+  new Clefable(),
+  new Cubone(),
+  new Dodrio(),
+  new Eevee(),
+  new Electrode(),
+  new Exeggcute(),
+  new Exeggutor(),
+  new Fearow(),
+  new Flareon(),
+  new Gloom(),
+  new Goldeen(),
+  new Jigglypuff(),
+  new Jolteon(),
+  new Kangaskhan(),
+  new Lickitung(),
+  new Mankey(),
+  new Marowak(),
+  new Meowth(),
+  new MrMime(),
+  new Nidoqueen(),
+  new Nidorina(),
+  new NidoranFemale(),
+  new Oddish(),
+  new Paras(),
+  new Parasect(),
+  new Persian(),
+  new Pidgeot(),
+  new Pikachu(),
+  new Pinsir(),
+  new PokeBall(),
+  new Primeape(),
+  new Rapidash(),
+  new Rhydon(),
+  new Rhyhorn(),
+  new Scyther(),
+  new Snorlax(),
+  new Spearow(),
+  new Vaporeon(),
+  new Venomoth(),
+  new Venonat(),
+  new Victreebel(),
+  new Vileplume(),
+  new Weepinbell(),
+  new Wigglytuff()
 
 
 ];

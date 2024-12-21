@@ -1,32 +1,58 @@
 import { Card } from '../../game/store/card/card';
-import { AirBalloonArt, AuroraEnergyArt, CentiskorchArt, CinccinoArt, CinderaceArt, CopperajahArt, DrizzileArt, EvolutionIncenseArt, FerroseedArt, GalarianPerrserkerArt, GalarianZigzagoonArt, GiantHearthArt, InteleonArt, MaractusArt, MarnieArt, MetalSaucerArt, MorpekoArt, OranguruArt, OrdinaryRodArt, QuickBallArt, RabootArt, RosaArt, SizzlipedeArt, SnomArt, SobbleArt, ToxicroakArt, WelderArt } from './card-images';
+import { AirBalloon } from './air-balloon';
+import { AuroraEnergy } from './aurora-energy';
+import { Centiskorch } from './centiskorch';
+import { Cinccino } from './cinccino';
+import { Cinderace } from './cinderace';
+import { Copperajah } from './copperajah';
+import { Drizzile } from './drizzile';
+import { EvolutionIncense } from './evolution-incense';
+import { Ferroseed } from './ferroseed';
+import { GalarianZigzagoon } from './galarian-zigzagoon';
+import { GalarianPerrserker } from './galarian_perrserker';
+import { GiantHearth } from './giant-hearth';
+import { Inteleon } from './inteleon';
+import { Maractus } from './maractus';
+import { Marnie } from './marnie';
+import { MetalSaucer } from './metal-saucer';
+import { Morpeko } from './morpeko';
+import { Oranguru } from './oranguru';
+import { OrdinaryRod } from './ordinary-rod';
+import { QuickBall } from './quick-ball';
+import { Raboot } from './raboot';
+import { Rosa } from './rosa';
+import { Sizzlipede } from './sizzlipede';
+import { Snom } from './snom';
+import { Sobble } from './sobble';
+import { Toxicroak } from './toxicroak';
+import { Welder } from './welder';
 
 export const setSwordAndShield: Card[] = [
-  new AirBalloonArt(),
-  new AuroraEnergyArt(),
-  new CentiskorchArt(),
-  new CinccinoArt(),
-  new CinderaceArt(),
-  new CopperajahArt(),
-  new DrizzileArt(),
-  new EvolutionIncenseArt(),
-  new FerroseedArt(),
-  new GalarianPerrserkerArt(),
-  new GalarianZigzagoonArt(),
-  new GiantHearthArt(),
-  new InteleonArt(),
-  new MaractusArt(),
-  new MarnieArt(),
-  new MetalSaucerArt(),
-  new MorpekoArt(),
-  new SizzlipedeArt(),
-  new SnomArt(),
-  new SobbleArt(),
-  new OranguruArt(),
-  new OrdinaryRodArt(),
-  new QuickBallArt(),
-  new RabootArt(),
-  new RosaArt(),
-  new ToxicroakArt(),
-  new WelderArt()
+  new AirBalloon(),
+  new AuroraEnergy(),
+  new Centiskorch(),
+  new Cinccino(),
+  new Cinderace(),
+  new Copperajah(),
+  new Drizzile(),
+  new EvolutionIncense(),
+  new Ferroseed(),
+  new GalarianPerrserker(),
+  new GalarianZigzagoon(),
+  new GiantHearth(),
+  new Inteleon(),
+  new Maractus(),
+  new Marnie(),
+  new MetalSaucer(),
+  new Morpeko(),
+  new Sizzlipede(),
+  new Snom(),
+  new Sobble(),
+  new Oranguru(),
+  new OrdinaryRod(),
+  new QuickBall(),
+  new Raboot(),
+  new Rosa(),
+  new Toxicroak(),
+  new Welder()
 ];

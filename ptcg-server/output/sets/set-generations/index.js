@@ -1,12 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setGenerations = void 0;
-const card_images_1 = require("./card-images");
-const full_art_1 = require("./full-art");
+const charmeleon_1 = require("./charmeleon");
+const red_card_1 = require("./red-card");
+const revitalizer_1 = require("./revitalizer");
+const team_flare_grunt_1 = require("./team-flare-grunt");
 exports.setGenerations = [
-    new card_images_1.RedCardArt(),
-    new card_images_1.RevitalizerArt(),
-    new card_images_1.TeamFlareGruntArt(),
-    // Full Arts/Radiant Collection
-    new full_art_1.CharmeleonArt(),
+    new red_card_1.RedCard(),
+    new revitalizer_1.Revitalizer(),
+    new team_flare_grunt_1.TeamFlareGrunt(),
+    // Full s/Radiant Collection
+    new charmeleon_1.Charmeleon(),
 ];

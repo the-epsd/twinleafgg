@@ -1,16 +1,25 @@
 import { Card } from '../../game/store/card/card';
-import { BlazikenArt, CroconawArt, FeebasArt, FeraligatrArt, FieryFlintArt, QuagsireArt, SalanditArt, SwitchRaftArt, VictiniPrismStarArt, WooperArt } from './card-images';
+import { Blaziken } from './blaziken';
+import { Croconaw } from './croconaw';
+import { Feebas } from './feebas';
+import { Feraligatr } from './feraligatr';
+import { FieryFlint } from './fiery-flint';
+import { Quagsire } from './quagsire';
+import { Salandit } from './salandit';
+import { SwitchRaft } from './switch-raft';
+import { VictiniPrismStar } from './victini-prism-star';
+import { Wooper } from './wooper';
 
 
 export const setDragonsMajesty: Card[] = [
-  new BlazikenArt(),
-  new CroconawArt(),
-  new FeebasArt(),
-  new FeraligatrArt(),
-  new FieryFlintArt(),
-  new QuagsireArt(),
-  new SalanditArt(),
-  new SwitchRaftArt(),
-  new VictiniPrismStarArt(),
-  new WooperArt()
+  new Blaziken(),
+  new Croconaw(),
+  new Feebas(),
+  new Feraligatr(),
+  new FieryFlint(),
+  new Quagsire(),
+  new Salandit(),
+  new SwitchRaft(),
+  new VictiniPrismStar(),
+  new Wooper()
 ];

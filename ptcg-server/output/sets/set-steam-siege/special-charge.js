@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SpeicalCharge = void 0;
+exports.SpecialCharge = void 0;
 const game_1 = require("../../game");
 const game_error_1 = require("../../game/game-error");
 const game_message_1 = require("../../game/game-message");
@@ -40,7 +40,7 @@ function* playCard(next, store, state, self, effect) {
         player.deck.applyOrder(order);
     });
 }
-class SpeicalCharge extends trainer_card_1.TrainerCard {
+class SpecialCharge extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.ITEM;
@@ -59,4 +59,4 @@ class SpeicalCharge extends trainer_card_1.TrainerCard {
         return state;
     }
 }
-exports.SpeicalCharge = SpeicalCharge;
+exports.SpecialCharge = SpecialCharge;

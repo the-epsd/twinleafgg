@@ -1,8 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setDiamondAndPearl = void 0;
-const card_images_1 = require("./card-images");
+const pokedex_handy_1 = require("./pokedex-handy");
+const super_scoop_up_1 = require("./super-scoop-up");
 exports.setDiamondAndPearl = [
-    new card_images_1.PokedexHandyArt(),
-    new card_images_1.SuperScoopUpArt(),
+    new pokedex_handy_1.PokedexHandy(),
+    new super_scoop_up_1.SuperScoopUp(),
 ];

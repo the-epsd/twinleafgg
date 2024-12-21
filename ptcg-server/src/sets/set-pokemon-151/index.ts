@@ -1,61 +1,109 @@
 import { Card } from '../../game/store/card/card';
-import { AbraArt, AlakazamexArt, ArbokexArt, ArticunoArt, BlastoiseexArt, BulbasaurArt, CharizardexArt, CharmanderArt, CharmeleonArt, CyclingRoadArt, DittoArt, DodrioArt, DoduoArt, DragoniteArt, EeveeArt, EkansArt, ElectabuzzArt, EnergyStickerArt, EreikasInvitationArt, GiovannisCharismaArt, GloomArt, GrabberArt, IvysaurArt, JolteonArt, KangaskhanexArt, MachokeArt, MachopArt, MagmarArt, MewexArt, MoltresArt, NidokingArt, NidoqueenArt, NidoranFemaleArt, NidoranMaleArt, NidorinaArt, NidorinoArt, OddishArt, PidgeottoArt, PidgeyArt, RigidBandArt, SandshrewArt, ScytherArt, SquirtleArt, StaryuArt, VenomothArt, VenonatArt, VenusaurexArt, VileplumeArt, WartortleArt, ZapdosexArt } from './card-images';
-import { ArbokexFA, BasicPsychicEnergyHR, BlastoiseexFA, BlastoiseexSIR, BulbasaurIR, CharizardexFA, CharizardexSIR, CharmanderIR, CharmeleonIR, ErikasInvitationFA, ErikasInvitationSIR, GiovannisCharismaFA, GiovannisCharismaSIR, IvysaurIR, KangaskhanexFA, MewexFA, MewexHR, NidokingIR, SquirtleIR, SwitchHR, VenusaurexFA, VenusaurexSIR, WartortleIR, ZapdosexFA, ZapdosexSIR } from './full-art';
-
+import { Abra } from './abra';
+import { Alakazamex } from './alakazam-ex';
+import { Arbokex } from './arbok-ex';
+import { Articuno } from './articuno';
+import { Blastoiseex } from './blastoise-ex';
+import { Bulbasaur } from './bulbasaur';
+import { Charizardex } from './charizard-ex';
+import { Charmander } from './charmander';
+import { Charmeleon } from './charmeleon';
+import { CyclingRoad } from './cycling-road';
+import { Ditto } from './ditto';
+import { Dodrio } from './dodrio';
+import { Doduo } from './doduo';
+import { Dragonite } from './dragonite';
+import { Eevee } from './eevee';
+import { Ekans } from './ekans';
+import { Electabuzz } from './electabuzz';
+import { EnergySticker } from './energy-sticker';
+import { EreikasInvitation } from './erikas-invitation';
+import { BulbasaurIR, IvysaurIR, CharmanderIR, CharmeleonIR, SquirtleIR, NidokingIR, VenusaurexFA, CharizardexFA, BlastoiseexFA, ArbokexFA, KangaskhanexFA, ZapdosexFA, MewexFA, ErikasInvitationFA, GiovannisCharismaFA, VenusaurexSIR, CharizardexSIR, BlastoiseexSIR, ZapdosexSIR, ErikasInvitationSIR, GiovannisCharismaSIR, MewexHR, SwitchHR, BasicPsychicEnergyHR, WartortleIR } from './full-art';
+import { GiovannisCharisma } from './giovannis-charisma';
+import { Gloom } from './gloom';
+import { Grabber } from './grabber';
+import { Ivysaur } from './ivysaur';
+import { Jolteon } from './jolteon';
+import { Kangaskhanex } from './kangaskhan-ex';
+import { Machoke } from './machoke';
+import { Machop } from './machop';
+import { Magmar } from './magmar';
+import { Mewex } from './mew-ex';
+import { Moltres } from './moltres';
+import { Nidoking } from './nidoking';
+import { Nidoqueen } from './nidoqueen';
+import { NidoranFemale } from './nidoran-female';
+import { NidoranMale } from './nidoran-male';
+import { Nidorina } from './nidorina';
+import { Nidorino } from './nidorino';
+import { Oddish } from './oddish';
+import { Pidgeotto } from './pidgeotto';
+import { Pidgey } from './pidgey';
+import { RigidBand } from './rigid-band';
+import { Sandshrew } from './sandshrew';
+import { Scyther } from './scyther';
+import { Squirtle } from './squirtle';
+import { Staryu } from './staryu';
+import { Venomoth } from './venomoth';
+import { Venonat } from './venonat';
+import { Venusaurex } from './venusaur-ex';
+import { Vileplume } from './vileplume';
+import { Wartortle } from './wartortle';
+import { Zapdosex } from './zapdos-ex';
 export const setPokemon151: Card[] = [
-  new AbraArt(),
-  // new AntiqueHelixFossilArt(),
-  new AlakazamexArt(),
-  new ArbokexArt(),
-  new ArticunoArt(),
-  new BlastoiseexArt(),
-  new BulbasaurArt(),
-  new CharizardexArt(),
-  new CharmeleonArt(),
-  new CharmanderArt(),
-  new CyclingRoadArt(),
-  new DittoArt(),
-  new DodrioArt(),
-  new DoduoArt(),
-  new DragoniteArt(),
-  new EeveeArt(),
-  new EkansArt(),
-  new ElectabuzzArt(),
-  new EnergyStickerArt(),
-  new EreikasInvitationArt(),
-  new GiovannisCharismaArt(),
-  new GloomArt(),
-  new GrabberArt(),
-  new IvysaurArt(),
-  new JolteonArt(),
-  new KangaskhanexArt(),
-  new MachopArt(),
-  new MachokeArt(),
-  new MagmarArt(),
-  new MewexArt(),
-  new MoltresArt(),
-  new NidoranMaleArt(),
-  new NidorinoArt(),
-  new NidokingArt(),
-  new NidoranFemaleArt(),
-  new NidorinaArt(),
-  new NidoqueenArt(),
-  new OddishArt(),
-  new PidgeottoArt(),
-  new PidgeyArt(),
-  new RigidBandArt(),
-  new SandshrewArt(),
-  new ScytherArt(),
-  new SquirtleArt(),
-  new StaryuArt(),
-  new VenonatArt(),
-  new VenomothArt(),
-  new VenusaurexArt(),
-  new VileplumeArt(),
-  new WartortleArt(),
-  new ZapdosexArt(),
+  new Abra(),
+  // new AntiqueHelixFossil(),
+  new Alakazamex(),
+  new Arbokex(),
+  new Articuno(),
+  new Blastoiseex(),
+  new Bulbasaur(),
+  new Charizardex(),
+  new Charmeleon(),
+  new Charmander(),
+  new CyclingRoad(),
+  new Ditto(),
+  new Dodrio(),
+  new Doduo(),
+  new Dragonite(),
+  new Eevee(),
+  new Ekans(),
+  new Electabuzz(),
+  new EnergySticker(),
+  new EreikasInvitation(),
+  new GiovannisCharisma(),
+  new Gloom(),
+  new Grabber(),
+  new Ivysaur(),
+  new Jolteon(),
+  new Kangaskhanex(),
+  new Machop(),
+  new Machoke(),
+  new Magmar(),
+  new Mewex(),
+  new Moltres(),
+  new NidoranMale(),
+  new Nidorino(),
+  new Nidoking(),
+  new NidoranFemale(),
+  new Nidorina(),
+  new Nidoqueen(),
+  new Oddish(),
+  new Pidgeotto(),
+  new Pidgey(),
+  new RigidBand(),
+  new Sandshrew(),
+  new Scyther(),
+  new Squirtle(),
+  new Staryu(),
+  new Venonat(),
+  new Venomoth(),
+  new Venusaurex(),
+  new Vileplume(),
+  new Wartortle(),
+  new Zapdosex(),
 
-  //Full Art
+  //Full 
   new BulbasaurIR(),
   new IvysaurIR(),
   new CharmanderIR(),

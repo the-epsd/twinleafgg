@@ -1,15 +1,19 @@
 import { Card } from '../../game/store/card/card';
-import { CharmanderArt, ErikasHospitalityArt, PsyduckArt, QuagsireArt, WooperArt } from './card-images';
-import { AlolanVulpixArt } from './full-art';
+import { Quagsire } from '../set-dragons-majesty/quagsire';
+import { Wooper } from '../set-dragons-majesty/wooper';
+import { AlolanVulpix } from './alolan-vulpix';
+import { Charmander } from './charmander';
+import { ErikasHospitality } from './erikas-hospitality';
+import { Psyduck } from './psyduck';
 
 export const setHiddenFates: Card[] = [
 
-  new CharmanderArt(),
-  new ErikasHospitalityArt(),
-  new PsyduckArt(),
+  new Charmander(),
+  new ErikasHospitality(),
+  new Psyduck(),
 
-  // Full Arts/Shiny Vault
-  new AlolanVulpixArt(),
-  new WooperArt(),
-  new QuagsireArt()
+  // Full s/Shiny Vault
+  new AlolanVulpix(),
+  new Wooper(),
+  new Quagsire()
 ];

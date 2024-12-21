@@ -1,8 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setBattleRoadPromos = void 0;
-const card_images_1 = require("./card-images");
+const miracle_diamond_1 = require("./miracle-diamond");
+const mysterious_pearl_1 = require("./mysterious-pearl");
 exports.setBattleRoadPromos = [
-    new card_images_1.MiracleDiamondArt(),
-    new card_images_1.MysteriousPearlArt(),
+    new miracle_diamond_1.MiracleDiamond(),
+    new mysterious_pearl_1.MysteriousPearl(),
 ];

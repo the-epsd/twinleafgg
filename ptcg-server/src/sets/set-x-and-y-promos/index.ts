@@ -1,10 +1,13 @@
 import { Card } from '../../game/store/card/card';
-import { AzelfArt, GreninjaArt, JirachiArt, MeloettaArt } from './card-images';
+import { Azelf } from './azelf';
+import { Greninja } from './greninja';
+import { Jirachi } from './jirachi';
+import { Meloetta } from './meloetta';
 
 
 export const setXYPromos: Card[] = [
-  new AzelfArt(),
-  new GreninjaArt(),
-  new JirachiArt(),
-  new MeloettaArt()
+  new Azelf(),
+  new Greninja(),
+  new Jirachi(),
+  new Meloetta()
 ];

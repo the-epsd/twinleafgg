@@ -1,12 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setScarletAndVioletPromos = void 0;
-const card_images_1 = require("./card-images");
+const ampharos_ex_1 = require("./ampharos-ex");
+const charmander_1 = require("./charmander");
+const magneton_1 = require("./magneton");
+const mimikyu_ex_1 = require("./mimikyu-ex");
+const pecharunt_1 = require("./pecharunt");
+const tinkaton_ex_1 = require("./tinkaton-ex");
 exports.setScarletAndVioletPromos = [
-    new card_images_1.AmpharosexArt(),
-    new card_images_1.CharmanderArt(),
-    new card_images_1.MagnetonArt(),
-    new card_images_1.MimikyuexArt(),
-    new card_images_1.PecharuntArt(),
-    new card_images_1.TinkatonexArt(),
+    new ampharos_ex_1.Ampharosex(),
+    new charmander_1.Charmander(),
+    new magneton_1.Magneton(),
+    new mimikyu_ex_1.Mimikyuex(),
+    new pecharunt_1.Pecharunt(),
+    new tinkaton_ex_1.Tinkatonex(),
 ];

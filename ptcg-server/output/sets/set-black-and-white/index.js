@@ -1,17 +1,27 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setBlackAndWhite = void 0;
-const card_images_1 = require("./card-images");
+const lillipup_1 = require("./lillipup");
+const pignite_1 = require("./pignite");
+const plus_power_1 = require("./plus-power");
+const pokedex_1 = require("./pokedex");
+const professor_juniper_1 = require("./professor-juniper");
+const reshiram_1 = require("./reshiram");
+const revive_1 = require("./revive");
+const tepig_1 = require("./tepig");
+const zekrom_1 = require("./zekrom");
+const zoroark_1 = require("./zoroark");
+const zorua_1 = require("./zorua");
 exports.setBlackAndWhite = [
-    new card_images_1.LillipupArt(),
-    new card_images_1.PigniteArt(),
-    new card_images_1.PlusPowerArt(),
-    new card_images_1.PokedexArt(),
-    new card_images_1.ProfessorJuniperArt(),
-    new card_images_1.ReshiramArt(),
-    new card_images_1.ReviveArt(),
-    new card_images_1.TepigArt(),
-    new card_images_1.ZekromArt(),
-    new card_images_1.ZoroarkArt(),
-    new card_images_1.ZoruaArt(),
+    new lillipup_1.Lillipup(),
+    new pignite_1.Pignite(),
+    new plus_power_1.PlusPower(),
+    new pokedex_1.Pokedex(),
+    new professor_juniper_1.ProfessorJuniper(),
+    new reshiram_1.Reshiram(),
+    new revive_1.Revive(),
+    new tepig_1.Tepig(),
+    new zekrom_1.Zekrom(),
+    new zoroark_1.Zoroark(),
+    new zorua_1.Zorua(),
 ];

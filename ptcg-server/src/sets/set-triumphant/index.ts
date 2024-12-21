@@ -1,14 +1,20 @@
 import { Card } from '../../game/store/card/card';
-import { BlackBeltArt, CelebiArt, JunkArmArt, MewArt, RescueEnergyArt, SeekerArt, TwinsArt } from './card-images';
+import { BlackBelt } from './black-belt';
+import { Celebi } from './celebi';
+import { JunkArm } from './junk-arm';
+import { Mew } from './mew-prime';
+import { RescueEnergy } from './rescue-energy';
+import { Seeker } from './seeker';
+import { Twins } from './twins';
 
 export const setTriumphant: Card[] = [
-  new BlackBeltArt(),
-  new CelebiArt(),
-  new JunkArmArt(),
-  new MewArt(),
-  new RescueEnergyArt(),
-  new SeekerArt(),
-  new TwinsArt(),
+  new BlackBelt(),
+  new Celebi(),
+  new JunkArm(),
+  new Mew(),
+  new RescueEnergy(),
+  new Seeker(),
+  new Twins(),
 
   // new PalkiaDialgaLEGEND(),
 ];

@@ -7,7 +7,7 @@ import { StateUtils } from '../../game/store/state-utils';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
-export class N extends TrainerCard {
+export class N_Supporter extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;
 
@@ -23,10 +23,10 @@ export class N extends TrainerCard {
 
   public text: string =
     'Each player shuffles his or her hand into his or her deck. Then, each player draws a card for each of his or her remaining Prize cards.';
-    
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-    
+
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -35,7 +35,7 @@ export class N extends TrainerCard {
       if (supporterTurn > 0) {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
-      
+
       player.hand.moveCardTo(effect.trainerCard, player.supporter);
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
@@ -53,18 +53,18 @@ export class N extends TrainerCard {
       store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
         player.deck.applyOrder(order);
       });
-      
+
       store.prompt(state, new ShuffleDeckPrompt(opponent.id), order => {
         opponent.deck.applyOrder(order);
       });
-      
+
       player.deck.moveTo(player.hand, Math.min(player.getPrizeLeft(), player.deck.cards.length));
       opponent.deck.moveTo(opponent.hand, Math.min(opponent.getPrizeLeft(), opponent.deck.cards.length));
 
       player.supporter.moveCardTo(effect.trainerCard, player.discard);
-      
+
     }
-    
+
     return state;
   }
 }

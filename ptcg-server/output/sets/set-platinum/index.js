@@ -1,9 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setPlatinum = void 0;
-const card_images_1 = require("./card-images");
+const crobat_g_1 = require("./crobat-g");
+const poke_turn_1 = require("./poke-turn");
+const pokemon_rescue_1 = require("./pokemon-rescue");
 exports.setPlatinum = [
-    new card_images_1.CrobatGArt(),
-    new card_images_1.PokeTurnArt(),
-    new card_images_1.PokemonRescueArt(),
+    new crobat_g_1.CrobatG(),
+    new poke_turn_1.PokeTurn(),
+    new pokemon_rescue_1.PokemonRescue(),
 ];

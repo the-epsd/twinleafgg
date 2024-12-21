@@ -28,7 +28,7 @@ class PokemonRangerArt extends pokemon_ranger_1.PokemonRanger {
     }
 }
 exports.PokemonRangerArt = PokemonRangerArt;
-class SpecialChargeArt extends special_charge_1.SpeicalCharge {
+class SpecialChargeArt extends special_charge_1.SpecialCharge {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/STS/STS_105_R_EN_LG.png';

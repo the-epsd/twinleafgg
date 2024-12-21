@@ -1,21 +1,35 @@
 import { Card } from '../../game/store/card/card';
-import { BraixenArt, DelphoxArt, DoubleColorlessEnergyArt, EvosodaArt, FairyEnergyArt, MuscleBandArt, PikachuArt, ProfessorsLetterArt, RaichuArt, ShadowCircleArt, ShaunaArt, SuperPotionArt, TrevenantArt, VoltorbArt, YveltalExArt } from './card-images';
+import { Braixen } from './braixen';
+import { Delphox } from './delphox';
+import { DoubleColorlessEnergy } from './double-colorless-energy';
+import { Evosoda } from './evosoda';
+import { FairyEnergy } from './fairy-energy';
+import { MuscleBand } from './muscle-band';
+import { Pikachu } from './pikachu';
+import { ProfessorsLetter } from './professors-letter';
+import { Raichu } from './raichu';
+import { ShadowCircle } from './shadow-circle';
+import { Shauna } from './shauna';
+import { SuperPotion } from './super-potion';
+import { Trevenant } from './trevenant';
+import { Voltorb } from './voltorb';
+import { YveltalEx } from './yveltal-ex';
 
 export const setXY: Card[] = [
-  new BraixenArt(),
-  new DelphoxArt(),
-  new DoubleColorlessEnergyArt(),
-  new EvosodaArt(),
-  new FairyEnergyArt(),
-  new MuscleBandArt(),
-  new PikachuArt(),
-  new ProfessorsLetterArt(),
-  new RaichuArt(),
-  new ShadowCircleArt(),
-  new ShaunaArt(),
-  new SuperPotionArt(),
-  new TrevenantArt(),
-  new VoltorbArt(),
-  new YveltalExArt(),
+  new Braixen(),
+  new Delphox(),
+  new DoubleColorlessEnergy(),
+  new Evosoda(),
+  new FairyEnergy(),
+  new MuscleBand(),
+  new Pikachu(),
+  new ProfessorsLetter(),
+  new Raichu(),
+  new ShadowCircle(),
+  new Shauna(),
+  new SuperPotion(),
+  new Trevenant(),
+  new Voltorb(),
+  new YveltalEx(),
 
 ];

@@ -1,16 +1,26 @@
 import { Card } from '../../game/store/card/card';
-import { LillipupArt, PigniteArt, PlusPowerArt, PokedexArt, ProfessorJuniperArt, ReshiramArt, ReviveArt, TepigArt, ZekromArt, ZoroarkArt, ZoruaArt } from './card-images';
+import { Lillipup } from './lillipup';
+import { Pignite } from './pignite';
+import { PlusPower } from './plus-power';
+import { Pokedex } from './pokedex';
+import { ProfessorJuniper } from './professor-juniper';
+import { Reshiram } from './reshiram';
+import { Revive } from './revive';
+import { Tepig } from './tepig';
+import { Zekrom } from './zekrom';
+import { Zoroark } from './zoroark';
+import { Zorua } from './zorua';
 
 export const setBlackAndWhite: Card[] = [
-  new LillipupArt(),
-  new PigniteArt(),
-  new PlusPowerArt(),
-  new PokedexArt(),
-  new ProfessorJuniperArt(),
-  new ReshiramArt(),
-  new ReviveArt(),
-  new TepigArt(),
-  new ZekromArt(),
-  new ZoroarkArt(),
-  new ZoruaArt(),
+  new Lillipup(),
+  new Pignite(),
+  new PlusPower(),
+  new Pokedex(),
+  new ProfessorJuniper(),
+  new Reshiram(),
+  new Revive(),
+  new Tepig(),
+  new Zekrom(),
+  new Zoroark(),
+  new Zorua(),
 ];

@@ -44,7 +44,7 @@ class MewArt extends mew_1.Mew {
     }
 }
 exports.MewArt = MewArt;
-class NArt extends n_1.N {
+class NArt extends n_1.N_Supporter {
     constructor() {
         super(...arguments);
         this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/FCO/FCO_105_R_EN_LG.png';

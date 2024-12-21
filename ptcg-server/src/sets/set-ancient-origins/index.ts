@@ -1,9 +1,12 @@
 import { Card } from '../../game/store/card/card';
-import { EcoArmArt, HexManiacArt, UnownArt, VileplumeArt } from './card-images';
+import { EcoArm } from './eco-arm';
+import { HexManiac } from './hex-maniac';
+import { Unown } from './unown';
+import { Vileplume } from './vileplume';
 
 export const setAncientOrigins: Card[] = [
-  new EcoArmArt(),
-  new HexManiacArt(),
-  new UnownArt(),
-  new VileplumeArt()
+  new EcoArm(),
+  new HexManiac(),
+  new Unown(),
+  new Vileplume()
 ];

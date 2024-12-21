@@ -26,10 +26,12 @@ class Cheryl extends trainer_card_1.TrainerCard {
                 if ((pokemon === null || pokemon === void 0 ? void 0 : pokemon.stage) === card_types_1.Stage.BASIC) {
                     return state;
                 }
-                const healEffect = new game_effects_1.HealEffect(player, cardList, cardList.damage);
-                state = store.reduceEffect(state, healEffect);
-                const cards = cardList.cards.filter(c => c instanceof __1.EnergyCard);
-                cardList.moveCardsTo(cards, player.discard);
+                if (cardList.damage > 0) {
+                    const healEffect = new game_effects_1.HealEffect(player, cardList, cardList.damage);
+                    state = store.reduceEffect(state, healEffect);
+                    const cards = cardList.cards.filter(c => c instanceof __1.EnergyCard);
+                    cardList.moveCardsTo(cards, player.discard);
+                }
             });
             return state;
         }
