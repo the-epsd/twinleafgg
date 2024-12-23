@@ -12,6 +12,7 @@ export class Ceruledge extends PokemonCard {
   public hp: number = 140;
   public cardType: CardType = R;
   public weakness = [{ type: W }];
+  public retreat = [C, C];
 
   public attacks = [
     {
