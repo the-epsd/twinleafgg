@@ -1,29 +1,29 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
+import { PowerType, State, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-export declare class Ceruledge extends PokemonCard {
+export declare class Ditto extends PokemonCard {
     stage: Stage;
-    evolvesFrom: string;
-    hp: number;
     cardType: CardType;
+    hp: number;
+    resistance: {
+        type: CardType.PSYCHIC;
+        value: number;
+    }[];
     weakness: {
-        type: CardType.WATER;
+        type: CardType.FIGHTING;
     }[];
     retreat: CardType.COLORLESS[];
-    attacks: {
+    attacks: never[];
+    powers: {
         name: string;
-        cost: (CardType.FIRE | CardType.COLORLESS)[];
-        damage: number;
+        powerType: PowerType;
         text: string;
     }[];
-    regulationMark: string;
     set: string;
-    name: string;
-    fullName: string;
     cardImage: string;
     setNumber: string;
-    readonly ATTACK_USED_MARKER = "ATTACK_USED_MARKER";
-    readonly ATTACK_USED_2_MARKER = "ATTACK_USED_2_MARKER";
+    name: string;
+    fullName: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

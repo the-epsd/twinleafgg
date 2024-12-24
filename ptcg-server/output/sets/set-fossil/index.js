@@ -5,6 +5,7 @@ const aerodactyl_1 = require("./aerodactyl");
 const arbok_1 = require("./arbok");
 const articuno_1 = require("./articuno");
 const cloyster_1 = require("./cloyster");
+const ditto_1 = require("./ditto");
 const dragonite_1 = require("./dragonite");
 const ekans_1 = require("./ekans");
 const energy_search_1 = require("./energy-search");
@@ -44,6 +45,7 @@ exports.setFossil = [
     new arbok_1.Arbok(),
     new articuno_1.Articuno(),
     new cloyster_1.Cloyster(),
+    new ditto_1.Ditto(),
     new dragonite_1.Dragonite(),
     new ekans_1.Ekans(),
     new energy_search_1.EnergySearch(),
