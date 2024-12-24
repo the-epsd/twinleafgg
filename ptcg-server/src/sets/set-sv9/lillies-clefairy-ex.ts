@@ -7,9 +7,9 @@ import { CheckPokemonStatsEffect } from '../../game/store/effects/check-effects'
 
 export class LilliesClefairyex extends PokemonCard {
 
-  public tags = [CardTag.POKEMON_ex];
+  public tags = [CardTag.POKEMON_ex, CardTag.LILLIES];
 
-  public regulationMark = 'H';
+  public regulationMark = 'I';
 
   public stage: Stage = Stage.BASIC;
 

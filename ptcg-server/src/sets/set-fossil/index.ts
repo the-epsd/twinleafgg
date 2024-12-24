@@ -3,12 +3,14 @@ import { Aerodactyl } from './aerodactyl';
 import { Arbok } from './arbok';
 import { Articuno } from './articuno';
 import { Cloyster } from './cloyster';
+import { Ditto } from './ditto';
 //import { Ditto } from './ditto';
 import { Dragonite } from './dragonite';
 import { Ekans } from './ekans';
 import { EnergySearch } from './energy-search';
 import { Gambler } from './gambler';
 import { Gastly } from './gastly';
+import { Gengar } from './gengar';
 import { Geodude } from './geodude';
 import { Golbat } from './golbat';
 import { Golduck } from './golduck';
@@ -46,12 +48,13 @@ export const setFossil: Card[] = [
   new Arbok(),
   new Articuno(),
   new Cloyster(),
-  //new Ditto(),
+  new Ditto(),
   new Dragonite(),
   new Ekans(),
   new EnergySearch(),
   new Gambler(),
   new Gastly(),
+  new Gengar(),
   new Geodude(),
   new Golbat(),
   new Golduck(),

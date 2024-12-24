@@ -10,7 +10,6 @@ const play_card_effects_1 = require("../../game/store/effects/play-card-effects"
 class Budew extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.regulationMark = 'H';
         this.stage = card_types_1.Stage.BASIC;
         this.cardType = G;
         this.hp = 30;
@@ -24,6 +23,7 @@ class Budew extends pokemon_card_1.PokemonCard {
                 text: 'During your opponent\'s next turn, they can\'t play any Item cards from their hand.',
             }
         ];
+        this.regulationMark = 'H';
         this.set = 'SV8a';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '1';

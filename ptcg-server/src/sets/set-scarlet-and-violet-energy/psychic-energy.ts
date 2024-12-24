@@ -3,7 +3,7 @@ import { EnergyCard } from '../../game/store/card/energy-card';
 
 export class PsychicEnergy extends EnergyCard {
 
-  public provides: CardType[] = [ CardType.PSYCHIC ];
+  public provides: CardType[] = [CardType.PSYCHIC];
 
   public set: string = 'SVE';
 
@@ -11,7 +11,7 @@ export class PsychicEnergy extends EnergyCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '232';
+  public setNumber: string = '5';
 
   public name = 'Psychic Energy';
 

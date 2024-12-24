@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setRebelClash = void 0;
 const aegislash_1 = require("./aegislash");
+const applin_1 = require("./applin");
 const arrokuda_1 = require("./arrokuda");
 const barraskewda_1 = require("./barraskewda");
 const butterfree_1 = require("./butterfree");
@@ -26,6 +27,7 @@ const twin_energy_1 = require("./twin-energy");
 const vulpix_1 = require("./vulpix");
 exports.setRebelClash = [
     new aegislash_1.Aegislash(),
+    new applin_1.Applin(),
     new arrokuda_1.Arrokuda(),
     new barraskewda_1.Barraskewda(),
     new butterfree_1.Butterfree(),

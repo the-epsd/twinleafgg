@@ -8,6 +8,7 @@ const buzzwole_1 = require("./buzzwole");
 const chaotic_swell_1 = require("./chaotic-swell");
 const clay_1 = require("./clay");
 const cynthia_and_caitlin_1 = require("./cynthia-and-caitlin");
+const drampa_1 = require("./drampa");
 const draw_energy_1 = require("./draw-energy");
 const dusclops_1 = require("./dusclops");
 const duskull_1 = require("./duskull");
@@ -39,6 +40,7 @@ exports.setCosmicEclipse = [
     new chaotic_swell_1.ChaoticSwell(),
     new clay_1.Clay(),
     new cynthia_and_caitlin_1.CynthiaAndCaitlin(),
+    new drampa_1.Drampa(),
     new draw_energy_1.DrawEnergy(),
     new dusclops_1.Dusclops(),
     new duskull_1.Duskull(),

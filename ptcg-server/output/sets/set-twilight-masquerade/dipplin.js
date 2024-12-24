@@ -30,7 +30,7 @@ class Dipplin extends game_1.PokemonCard {
         ];
         this.set = 'TWM';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '';
+        this.setNumber = '18';
         this.name = 'Dipplin';
         this.fullName = 'Dipplin TWM 18';
     }

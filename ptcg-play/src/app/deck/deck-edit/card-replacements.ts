@@ -23,6 +23,9 @@ export const cardReplacements = [
   { from: 'Pokemon Breeder BS 76', to: 'Pokémon Breeder BS 76' },
   { from: 'Pokemon Trader BS 77', to: 'Pokémon Trader BS 77' },
 
+  //BLW
+  { from: 'Zoroark BLW 71', to: 'Zoroark BW 71' },
+
   //ROS
   { from: 'Double Dragon Energy ROS 97', to: 'Double Dragon Energy SUM 97' },
 
@@ -48,7 +51,7 @@ export const cardReplacements = [
   { from: 'Hisuian Qwilfish ASR 89', to: 'Hisuian Qwilfish2 ASR 89' },
 
   //CRZ
-  { from: 'Zacian VSTAR CRZ 96', to: 'Zacian VSTAR' },
+  { from: 'Zacian VSTAR CRZ 96', to: 'Zacian VSTAR 96' },
 
   //SVI
   { from: 'Pokégear 3.0 SVI 186', to: 'Pokegear SVI 186' },
@@ -220,8 +223,8 @@ export const cardReplacements = [
   { from: 'Raging Bolt ex TEF 218', to: 'RagingBoltexHR TEF 218' },
 
   //TWM
-  { from: 'Applin TWM 17', to: 'Applin TWM 17 ' },
-  { from: 'Applin TWM 126', to: 'Applin TWM 126 ' },
+  { from: 'Applin TWM 17', to: 'Applin TWM 17 17' },
+  { from: 'Applin TWM 126', to: 'Applin TWM 126 126' },
   { from: 'Scovillain ex TEF 22', to: 'Scovillain ex PAF 107' },
 
   //SFA
@@ -361,7 +364,7 @@ export const exportReplacements = [
   { from: 'Hisuian Qwilfish2 ASR 89', to: 'Hisuian Qwilfish ASR 89' },
 
   //CRZ
-  { from: 'Zacian VSTAR', to: 'Zacian VSTAR CRZ 96' },
+  { from: 'Zacian VSTAR 96', to: 'Zacian VSTAR CRZ 96' },
 
   //SVI
   { from: 'Pokegear SVI 186', to: 'Pokégear 3.0 SVI 186' },
@@ -533,8 +536,8 @@ export const exportReplacements = [
   { from: 'RagingBoltexHR TEF 218', to: 'Raging Bolt ex TEF 218' },
 
   //TWM
-  { from: 'Applin TWM 17 ', to: 'Applin TWM 17' },
-  { from: 'Applin TWM 126 ', to: 'Applin TWM 126' },
+  { from: 'Applin TWM 17 17', to: 'Applin TWM 17' },
+  { from: 'Applin TWM 126 126', to: 'Applin TWM 126' },
   { from: 'Scovillain ex PAF 107', to: 'Scovillain ex TEF 22' },
 
   //SFA

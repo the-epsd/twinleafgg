@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.checkStateReducer = exports.checkState = exports.endGame = void 0;
+exports.checkStateReducer = exports.checkState = exports.executeCheckState = exports.checkWinner = exports.endGame = void 0;
 const game_error_1 = require("../../game-error");
 const game_message_1 = require("../../game-message");
 const play_card_action_1 = require("../actions/play-card-action");
@@ -207,6 +207,7 @@ function checkWinner(store, state, onComplete) {
     }
     return state;
 }
+exports.checkWinner = checkWinner;
 function initiateSuddenDeath(store, state) {
     store.log(state, game_message_1.GameLog.LOG_SUDDEN_DEATH);
     // Reset decks
@@ -311,6 +312,7 @@ function* executeCheckState(next, store, state, onComplete) {
     }
     return state;
 }
+exports.executeCheckState = executeCheckState;
 function checkState(store, state, onComplete) {
     if ([state_1.GamePhase.PLAYER_TURN, state_1.GamePhase.ATTACK, state_1.GamePhase.BETWEEN_TURNS].includes(state.phase) === false) {
         if (onComplete !== undefined) {

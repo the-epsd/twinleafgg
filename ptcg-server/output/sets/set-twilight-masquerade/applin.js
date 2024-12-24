@@ -47,7 +47,7 @@ class Applin extends pokemon_card_1.PokemonCard {
         ];
         this.set = 'TWM';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '';
+        this.setNumber = '126';
         this.name = 'Applin';
         this.fullName = 'Applin TWM 126';
     }

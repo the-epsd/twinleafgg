@@ -22,7 +22,7 @@ class Chikorita extends pokemon_card_1.PokemonCard {
         this.set = 'LOT';
         this.fullName = 'Chikorita LOT 6';
         this.name = 'Chikorita';
-        this.setNumber = '';
+        this.setNumber = '6';
         this.cardImage = 'assets/cardback.png';
     }
     reduceEffect(store, state, effect) {

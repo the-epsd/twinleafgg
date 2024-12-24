@@ -1,11 +1,14 @@
-import { Applin } from './applin';
+import { Applin } from '../set-rebel-clash/applin';
 import { Snom } from './snom';
 
-export class ApplinArt extends Applin {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SHF/SHF_SV12_R_EN_LG.png';
+export class ApplinSV extends Applin {
+  public set = 'SHF';
+  public setNumber = 'SV12';
+  public fullName = 'Applin SHF';
 }
 
-export class SnomSVArt extends Snom {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/SHF/SHF_SV33_R_EN_LG.png';
+export class SnomSV extends Snom {
+  public set = 'SHF';
   public setNumber = 'SV33';
+  public fullName = 'Applin SHF';
 }

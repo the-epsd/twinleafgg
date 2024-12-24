@@ -220,6 +220,10 @@ export class PokemonCardList extends CardList {
     return this.cards.some(c => c.tags.includes(CardTag.POKEMON_TERA));
   }
 
+  isLillies(): boolean {
+    return this.cards.some(c => c.tags.includes(CardTag.LILLIES));
+  }
+
   getToolEffect(): Power | Attack | undefined {
     if (!this.tool) {
       return;

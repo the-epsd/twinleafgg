@@ -45,7 +45,7 @@ class LevelBall extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.set = 'BST';
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BST/BST_129_R_EN.png';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '129';
         this.regulationMark = 'E';
         this.name = 'Level Ball';

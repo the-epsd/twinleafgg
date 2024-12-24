@@ -10,7 +10,7 @@ class FightingEnergy extends energy_card_1.EnergyCard {
         this.set = 'SVE';
         this.regulationMark = 'ENERGY';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '233';
+        this.setNumber = '6';
         this.name = 'Fighting Energy';
         this.fullName = 'Fighting Energy SVE';
     }

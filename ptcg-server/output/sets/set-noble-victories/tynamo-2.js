@@ -20,7 +20,7 @@ class Tynamo2 extends pokemon_card_1.PokemonCard {
         this.name = 'Tynamo';
         this.fullName = 'Tynamo NVI 39';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '';
+        this.setNumber = '39';
     }
 }
 exports.Tynamo2 = Tynamo2;

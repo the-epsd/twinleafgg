@@ -33,17 +33,20 @@ class Ditto extends pokemon_card_1.PokemonCard {
             const opponentActiveHP = new check_effects_1.CheckHpEffect(opponent, opponent.active);
             effect.hp = opponentActiveHP.hp;
         }
-        if (effect instanceof check_effects_1.CheckPokemonAttacksEffect && effect.player.active.getPokemonCard() === this) {
-            const player = effect.player;
-            const opponent = game_1.StateUtils.getOpponent(state, player);
-            const opponentAttacks = new check_effects_1.CheckPokemonAttacksEffect(opponent);
-            let thisAttackIndex = 0;
-            opponentAttacks.attacks.forEach((attacks, index, attackArray) => {
-                this.attacks.splice(index);
-                console.log(this.attacks[thisAttackIndex]);
-                thisAttackIndex++;
-            });
-        }
+        // Royal pain in my ass; coming back to this later
+        /*if (effect instanceof CheckPokemonAttacksEffect && effect.player.active.getPokemonCard() === this) {
+          const player = effect.player;
+          const opponent = StateUtils.getOpponent(state, player);
+    
+          const opponentAttacks = new CheckPokemonAttacksEffect(opponent);
+    
+          let thisAttackIndex = 0;
+          opponentAttacks.attacks.forEach((attacks, index, attackArray) => {
+            this.attacks.includes(attackArray[index]);
+            console.log(this.attacks[thisAttackIndex]);
+            thisAttackIndex++;
+          });
+        }*/
         if (effect instanceof check_effects_1.CheckRetreatCostEffect && effect.player.active.getPokemonCard() === this) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);

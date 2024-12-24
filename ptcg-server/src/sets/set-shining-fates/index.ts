@@ -1,9 +1,9 @@
 import { Card } from '../../game/store/card/card';
-import { Applin } from './applin';
 import { BallGuy } from './ball-guy';
 import { Buizel } from './buizel';
 import { Dartrix } from './dartrix';
 import { Frosmoth } from './frosmoth';
+import { ApplinSV, SnomSV } from './full-art';
 import { GalarianWeezing } from './galarian-weezing';
 import { Horsea } from './horsea';
 import { Koffing } from './koffing';
@@ -25,6 +25,6 @@ export const setShiningFates: Card[] = [
   new Thwackey(),
 
   // Shiny Vault
-
-  new Applin()
+  new ApplinSV(),
+  new SnomSV(),
 ];

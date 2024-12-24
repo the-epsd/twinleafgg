@@ -1,5 +1,6 @@
 import { Card } from '../../game/store/card/card';
 import { Aegislash } from './aegislash';
+import { Applin } from './applin';
 import { Arrokuda } from './arrokuda';
 import { Barraskewda } from './barraskewda';
 import { Butterfree } from './butterfree';
@@ -25,6 +26,7 @@ import { Vulpix } from './vulpix';
 
 export const setRebelClash: Card[] = [
   new Aegislash(),
+  new Applin(),
   new Arrokuda(),
   new Barraskewda(),
   new Butterfree(),

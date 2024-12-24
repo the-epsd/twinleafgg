@@ -6,6 +6,7 @@ import { Buzzwole } from './buzzwole';
 import { ChaoticSwell } from './chaotic-swell';
 import { Clay } from './clay';
 import { CynthiaAndCaitlin } from './cynthia-and-caitlin';
+import { Drampa } from './drampa';
 import { DrawEnergy } from './draw-energy';
 import { Dusclops } from './dusclops';
 import { Duskull } from './duskull';
@@ -39,6 +40,7 @@ export const setCosmicEclipse: Card[] = [
   new ChaoticSwell(),
   new Clay(),
   new CynthiaAndCaitlin(),
+  new Drampa(),
   new DrawEnergy(),
   new Dusclops(),
   new Duskull(),

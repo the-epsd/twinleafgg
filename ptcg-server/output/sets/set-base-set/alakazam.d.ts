@@ -30,5 +30,6 @@ export declare class Alakazam extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
+    readonly DAMAGE_SWAP_MARKER = "DAMAGE_SWAP_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

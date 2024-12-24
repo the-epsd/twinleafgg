@@ -29,7 +29,7 @@ class Centiskorch extends pokemon_card_1.PokemonCard {
             }];
         this.set = 'SSH';
         this.regulationMark = 'D';
-        this.setNumber = '88';
+        this.setNumber = '39';
         this.cardImage = 'assets/cardback.png';
         this.name = 'Centiskorch';
         this.fullName = 'Centiskorch SSH';

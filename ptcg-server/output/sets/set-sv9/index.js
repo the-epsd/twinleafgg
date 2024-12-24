@@ -5,6 +5,10 @@ const blaziken_ex_1 = require("./blaziken-ex");
 const budew_1 = require("./budew");
 const combusken_1 = require("./combusken");
 const lillies_clefairy_ex_1 = require("./lillies-clefairy-ex");
+const lillies_pearl_1 = require("./lillies-pearl");
+const ns_pp_up_1 = require("./ns-pp-up");
+const ns_sigilyph_1 = require("./ns-sigilyph");
+const ns_zorua_1 = require("./ns-zorua");
 const torchic_1 = require("./torchic");
 exports.setSV9 = [
     new lillies_clefairy_ex_1.LilliesClefairyex(),
@@ -12,4 +16,8 @@ exports.setSV9 = [
     new combusken_1.Combusken(),
     new blaziken_ex_1.Blazikenex(),
     new budew_1.Budew(),
+    new lillies_pearl_1.LilliesPearl(),
+    new ns_pp_up_1.NsPPUp(),
+    new ns_sigilyph_1.NsSigilyph(),
+    new ns_zorua_1.NsZorua(),
 ];

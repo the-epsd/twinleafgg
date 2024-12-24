@@ -6,11 +6,13 @@ const arbok_1 = require("./arbok");
 const articuno_1 = require("./articuno");
 const cloyster_1 = require("./cloyster");
 const ditto_1 = require("./ditto");
+//import { Ditto } from './ditto';
 const dragonite_1 = require("./dragonite");
 const ekans_1 = require("./ekans");
 const energy_search_1 = require("./energy-search");
 const gambler_1 = require("./gambler");
 const gastly_1 = require("./gastly");
+const gengar_1 = require("./gengar");
 const geodude_1 = require("./geodude");
 const golbat_1 = require("./golbat");
 const golduck_1 = require("./golduck");
@@ -51,6 +53,7 @@ exports.setFossil = [
     new energy_search_1.EnergySearch(),
     new gambler_1.Gambler(),
     new gastly_1.Gastly(),
+    new gengar_1.Gengar(),
     new geodude_1.Geodude(),
     new golbat_1.Golbat(),
     new golduck_1.Golduck(),

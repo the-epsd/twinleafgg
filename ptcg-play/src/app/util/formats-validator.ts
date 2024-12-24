@@ -96,7 +96,8 @@ export class FormatValidator {
         var banList = BanLists[format];
         return card.regulationMark === 'F' ||
           card.regulationMark === 'G' ||
-          card.regulationMark === 'H';
+          card.regulationMark === 'H' ||
+          card.regulationMark === 'I';
 
       case Format.EXPANDED:
         var banList = BanLists[format];

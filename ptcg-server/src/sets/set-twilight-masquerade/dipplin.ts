@@ -40,7 +40,7 @@ export class Dipplin extends PokemonCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '';
+  public setNumber: string = '18';
 
   public name: string = 'Dipplin';
 

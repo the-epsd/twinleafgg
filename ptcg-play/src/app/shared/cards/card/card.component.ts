@@ -21,18 +21,18 @@ export class CardComponent {
   @Input() cardback = false;
   @Input() placeholder = false;
   @Input() customImageUrl: string;
-  @Input() isFaceUp: boolean = true;
   @Input() set card(value: Card) {
     this.data = value;
     this.scanUrl = this.customImageUrl || this.cardsBaseService.getScanUrl(this.data);
   }
 
   shouldShowCardName(): boolean {
-    if (!this.data || this.cardback) {
+    if (!this.data || this.cardback || !this.showCardName) {
       return false; // Don't show card name if card is secret
     }
-    return this.showCardName; // Otherwise, use the showCardName input
+    return true; // Otherwise, use the showCardName input
   }
+
 
   getCardClass(): string {
     let classes = '';

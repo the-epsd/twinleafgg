@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
+import { Stage, CardType, SpecialCondition, BoardEffect } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
@@ -16,15 +16,10 @@ import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effe
 export class Alakazam extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_2;
-
   public evolvesFrom = 'Kadabra';
-
   public cardType: CardType = CardType.PSYCHIC;
-
   public hp: number = 80;
-
   public weakness = [{ type: CardType.PSYCHIC }];
-
   public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
@@ -42,19 +37,31 @@ export class Alakazam extends PokemonCard {
   }];
 
   public set: string = 'BS';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '1';
-
   public name: string = 'Alakazam';
-
   public fullName: string = 'Alakazam BS';
+
+  public readonly DAMAGE_SWAP_MARKER = 'DAMAGE_SWAP_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      const damagedPokemon = [
+        ...opponent.bench.filter(b => b.cards.length > 0 && b.damage > 0),
+        ...(opponent.active.damage > 0 ? [opponent.active] : [])
+      ];
+
+      if (player.marker.hasMarker(this.DAMAGE_SWAP_MARKER, this)) {
+        throw new GameError(GameMessage.POWER_ALREADY_USED);
+      }
+
+      if (damagedPokemon.length === 0) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
+      }
 
       const maxAllowedDamage: DamageMap[] = [];
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
@@ -66,11 +73,14 @@ export class Alakazam extends PokemonCard {
       return store.prompt(state, new MoveDamagePrompt(
         effect.player.id,
         GameMessage.MOVE_DAMAGE,
-        PlayerType.BOTTOM_PLAYER,
+        PlayerType.TOP_PLAYER,
         [SlotType.ACTIVE, SlotType.BENCH],
         maxAllowedDamage,
-        { allowCancel: true }
+        { min: 1, max: 1, allowCancel: false, singleDestinationTarget: true }
       ), transfers => {
+
+        player.marker.addMarker(this.DAMAGE_SWAP_MARKER, this);
+
         if (transfers === null) {
           return;
         }
@@ -78,23 +88,23 @@ export class Alakazam extends PokemonCard {
         for (const transfer of transfers) {
           const source = StateUtils.getTarget(state, player, transfer.from);
           const target = StateUtils.getTarget(state, player, transfer.to);
-
-          // Get target's max HP from the Pokemon card
-          const targetPokemon = target.getPokemonCard();
-          const targetMaxHp = targetPokemon ? targetPokemon.hp : 0;
-          const targetCurrentHp = targetMaxHp - target.damage;
-
-          // Only allow damage transfer if target has more than 10 HP remaining
-          if (targetCurrentHp <= 10) {
-            throw new GameError(GameMessage.CANNOT_MOVE_DAMAGE);
+          if (source.damage == 10) {
+            source.damage -= 10;
+            target.damage += 10;
           }
-
           if (source.damage >= 10) {
             source.damage -= 10;
             target.damage += 10;
           }
-        }
 
+          player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+            if (cardList.getPokemonCard() === this) {
+              cardList.addBoardEffect(BoardEffect.ABILITY_USED);
+            }
+          });
+
+          return state;
+        }
       });
     }
 

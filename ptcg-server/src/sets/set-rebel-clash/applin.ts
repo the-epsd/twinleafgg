@@ -20,12 +20,12 @@ export class Applin extends PokemonCard {
     text: 'Flip a coin. If heads, during your opponent\'s next turn, prevent all damage done to this Pokémon by attacks.'
   }];
 
-  public set = 'SHF';
+  public set = 'RCL';
   public regulationMark = 'D';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = 'SV12';
+  public setNumber: string = '21';
   public name = 'Applin';
-  public fullName = 'Applin SHF';
+  public fullName = 'Applin RCL';
 
   public readonly CLEAR_WITHDRAW_MARKER = 'CLEAR_WITHDRAW_MARKER';
 

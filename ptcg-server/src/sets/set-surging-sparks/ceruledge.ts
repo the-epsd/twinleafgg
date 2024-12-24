@@ -79,7 +79,6 @@ export class Ceruledge extends PokemonCard {
       }
     }
 
-
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
 
       // Check marker
