@@ -98,7 +98,7 @@ export class Store {
                 }
             });
             if (isLoop) {
-                console.error(`Loop detected: ${firstEffect.type}, card: ${(_a = firstEffect.card) === null || _a === void 0 ? void 0 : _a.name}`);
+                console.error(`Loop detected: ${firstEffect.type}, card: ${(_a = firstEffect.card) === null || _a === void 0 ? void 0 : _a.fullName}`);
                 throw new Error('Loop detected');
             }
         }

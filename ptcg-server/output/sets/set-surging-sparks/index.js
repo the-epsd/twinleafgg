@@ -5,6 +5,7 @@ const alolan_exeggutor_ex_1 = require("./alolan-exeggutor-ex");
 const archaludon_ex_1 = require("./archaludon-ex");
 const azelf_1 = require("./azelf");
 const azulmarill_1 = require("./azulmarill");
+const black_kyurem_ex_1 = require("./black-kyurem-ex");
 const capsakid_1 = require("./capsakid.");
 const card_images_1 = require("./card-images");
 const celebration_fanfare_1 = require("./celebration-fanfare");
@@ -18,12 +19,15 @@ const deino_1 = require("./deino");
 const dragons_elixir_1 = require("./dragons-elixir");
 const drayton_1 = require("./drayton");
 const duraludon_1 = require("./duraludon");
+const dusk_ball_1 = require("./dusk-ball");
 const eevee_1 = require("./eevee");
+const energy_search_pro_1 = require("./energy-search-pro");
 const eternatus_1 = require("./eternatus");
 const exciting_stadium_1 = require("./exciting-stadium");
 const exeggcute_1 = require("./exeggcute");
 const flygon_ex_1 = require("./flygon-ex");
 const fuecoco_1 = require("./fuecoco");
+const gimmighoul_1 = require("./gimmighoul");
 const gravity_mountain_1 = require("./gravity-mountain");
 const helper_bell_1 = require("./helper.bell");
 const ho_oh_1 = require("./ho-oh");
@@ -72,6 +76,7 @@ const zweilous_1 = require("./zweilous");
 exports.setSurgingSparks = [
     new pikachu_ex_1.Pikachuex(),
     new terapagos_1.Terapagos(),
+    new black_kyurem_ex_1.BlackKyuremex(),
     new magnemite_1.Magnemite(),
     new magneton_1.Magneton(),
     new exciting_stadium_1.ExcitingStadium(),
@@ -137,6 +142,9 @@ exports.setSurgingSparks = [
     new rellor_1.Rellor(),
     new rabsca_1.Rabsca(),
     new wo_chien_1.Wochien(),
+    new dusk_ball_1.DuskBall(),
+    new gimmighoul_1.Gimmighoul(),
+    new energy_search_pro_1.EnergySearchPRO(),
     //Reprints
     new card_images_1.ScrambleSwitchSSP(),
     new card_images_1.CounterGainSSP(),

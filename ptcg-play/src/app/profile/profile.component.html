@@ -11,9 +11,9 @@
           {{ 'PROFILE_EDIT_PROFILE' | translate }}
         </button>
         <mat-menu #menu="matMenu">
-          <button mat-menu-item (click)="editAvatars(userId)">
+          <!-- <button mat-menu-item (click)="editAvatars(userId)">
             {{ 'PROFILE_EDIT_AVATARS' | translate }}
-          </button>
+          </button> -->
           <!-- <button mat-menu-item (click)="changeEmail(userId)">
             {{ 'PROFILE_CHANGE_EMAIL' | translate }}
           </button> -->
@@ -42,7 +42,7 @@
     </mat-card>
   </div>
 
-  <div class="ptcg-recent-matches" *ngIf="user$ | async; let user">
+  <div class="ptcg-recent-matches ptcg-u-padding" *ngIf="user$ | async; let user">
     <ptcg-match-table [userId]="user.userId"></ptcg-match-table>
   </div>
 

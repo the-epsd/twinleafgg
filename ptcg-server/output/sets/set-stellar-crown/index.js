@@ -13,12 +13,14 @@ const crispin_1 = require("./crispin");
 const diancie_1 = require("./diancie");
 const drednaw_1 = require("./drednaw");
 const drifblim_1 = require("./drifblim");
+const duraludon_1 = require("./duraludon");
 const electabuzz_1 = require("./electabuzz");
 const fan_rotom_1 = require("./fan-rotom");
 const galvantula_ex_1 = require("./galvantula-ex");
 const garganacl_ex_1 = require("./garganacl-ex");
 const glass_trumpet_1 = require("./glass-trumpet");
 const glistening_crystal_1 = require("./glistening-crystal");
+const gravity_gemstone_1 = require("./gravity-gemstone");
 const great_tree_1 = require("./great-tree");
 const hoothoot_1 = require("./hoothoot");
 const hydrapple_ex_1 = require("./hydrapple-ex");
@@ -49,12 +51,14 @@ exports.setStellarCrown = [
     new diancie_1.Diancie(),
     new drednaw_1.Drednaw(),
     new drifblim_1.Drifblim(),
+    new duraludon_1.Duraludon(),
     new electabuzz_1.Electabuzz(),
     new fan_rotom_1.FanRotom(),
     new galvantula_ex_1.Galvantulaex(),
     new garganacl_ex_1.Garganaclex(),
     new glass_trumpet_1.GlassTrumpet(),
     new glistening_crystal_1.GlisteningCrystal(),
+    new gravity_gemstone_1.GravityGemstone(),
     new great_tree_1.GreatTree(),
     new hoothoot_1.Hoothoot(),
     new hydrapple_ex_1.Hydrappleex(),

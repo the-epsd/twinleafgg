@@ -21,31 +21,37 @@ import { PsychicEnergy } from '../set-scarlet-and-violet-energy/psychic-energy';
 export class BulbasaurIR extends Bulbasaur {
   public setNumber = '166';
   public fullName: string = 'BulbasaurIR MEW';
+  public set = 'MEW';
 }
 
 export class IvysaurIR extends Ivysaur {
   public setNumber = '167';
   public fullName: string = 'IvysaurIR MEW';
+  public set = 'MEW';
 }
 
 export class CharmanderIR extends Charmander {
   public setNumber = '168';
   public fullName: string = 'CharmanderIR MEW';
+  public set = 'MEW';
 }
 
 export class CharmeleonIR extends Charmeleon {
   public setNumber = '169';
   public fullName: string = 'CharmeleonIR MEW';
+  public set = 'MEW';
 }
 
 export class SquirtleIR extends Squirtle {
   public setNumber = '170';
   public fullName: string = 'SquirtleIR MEW';
+  public set = 'MEW';
 }
 
 export class WartortleIR extends Wartortle {
   public setNumber = '171';
   public fullName: string = 'WartortleIR MEW';
+  public set = 'MEW';
 }
 
 // export class CaterpieIR extends Caterpie {
@@ -61,6 +67,7 @@ export class WartortleIR extends Wartortle {
 export class NidokingIR extends Nidoking {
   public setNumber = '174';
   public fullName: string = 'NidokingIR MEW';
+  public set = 'MEW';
 }
 
 // export class PsyduckIR extends Psyduck {
@@ -101,21 +108,25 @@ export class NidokingIR extends Nidoking {
 export class VenusaurexFA extends Venusaurex {
   public setNumber = '182';
   public fullName: string = 'Venusaur exFA MEW';
+  public set = 'MEW';
 }
 
 export class CharizardexFA extends Charizardex {
   public setNumber = '183';
   public fullName: string = 'Charizard exFA MEW';
+  public set = 'MEW';
 }
 
 export class BlastoiseexFA extends Blastoiseex {
   public setNumber = '184';
   public fullName: string = 'Blastoise exFA MEW';
+  public set = 'MEW';
 }
 
 export class ArbokexFA extends Arbokex {
   public setNumber = '185';
   public fullName: string = 'Arbok exFA MEW';
+  public set = 'MEW';
 }
 
 // export class NinetalesexFA extends Ninetalesex {
@@ -131,6 +142,7 @@ export class ArbokexFA extends Arbokex {
 export class AlakazamexFA extends Alakazamex {
   public setNumber = '188';
   public fullName: string = 'Alakazam exFA MEW';
+  public set = 'MEW';
 }
 
 // export class GolemexFA extends Golemex {
@@ -141,6 +153,7 @@ export class AlakazamexFA extends Alakazamex {
 export class KangaskhanexFA extends Kangaskhanex {
   public setNumber = '190';
   public fullName: string = 'Kangaskhan exFA MEW';
+  public set = 'MEW';
 }
 
 // export class JynxexFA extends Jynxex {
@@ -151,11 +164,13 @@ export class KangaskhanexFA extends Kangaskhanex {
 export class ZapdosexFA extends Zapdosex {
   public setNumber = '192';
   public fullName: string = 'Zapdos exFA MEW';
+  public set = 'MEW';
 }
 
 export class MewexFA extends Mewex {
   public setNumber = '193';
   public fullName: string = 'Mew exFA MEW';
+  public set = 'MEW';
 }
 
 // export class BillsTransferFA extends BillsTransfer {
@@ -171,59 +186,71 @@ export class MewexFA extends Mewex {
 export class ErikasInvitationFA extends EreikasInvitation {
   public setNumber = '196';
   public fullName: string = 'Erika\'s InvitationFA MEW';
+  public set = 'MEW';
 }
 
 export class GiovannisCharismaFA extends GiovannisCharisma {
   public setNumber = '197';
   public fullName: string = 'Giovanni\'s CharismaFA MEW';
+  public set = 'MEW';
 }
 
 export class VenusaurexSIR extends Venusaurex {
   public setNumber = '198';
   public fullName: string = 'Venusaur exSIR MEW';
+  public set = 'MEW';
 }
 
 export class CharizardexSIR extends Charizardex {
   public setNumber = '199';
   public fullName: string = 'Charizard exSIR MEW';
+  public set = 'MEW';
 }
 
 export class BlastoiseexSIR extends Blastoiseex {
   public setNumber = '200';
   public fullName: string = 'Blastoise exSIR MEW';
+  public set = 'MEW';
 }
 
 export class AlakazamexSIR extends Alakazamex {
   public setNumber = '201';
   public fullName: string = 'Alakazam exSIR MEW';
+  public set = 'MEW';
 }
 
 export class ZapdosexSIR extends Zapdosex {
   public setNumber = '202';
   public fullName: string = 'Zapdos exSIR MEW';
+  public set = 'MEW';
 }
 
 export class ErikasInvitationSIR extends EreikasInvitation {
   public setNumber = '203';
   public fullName: string = 'Erika\'s InvitationSIR MEW';
+  public set = 'MEW';
 }
 
 export class GiovannisCharismaSIR extends GiovannisCharisma {
   public setNumber = '204';
   public fullName: string = 'Giovanni\'s CharismaSIR MEW';
+  public set = 'MEW';
 }
 
 export class MewexHR extends Mewex {
   public setNumber = '205';
   public fullName: string = 'Mew exHR MEW';
+  public set = 'MEW';
 }
 
 export class SwitchHR extends Switch {
   public setNumber = '206';
   public fullName: string = 'SwitchHR MEW';
+  public set = 'MEW';
 }
 
 export class BasicPsychicEnergyHR extends PsychicEnergy {
   public setNumber = '207';
   public fullName: string = 'Psychic Energy MEW';
+  public set = 'MEW';
 }

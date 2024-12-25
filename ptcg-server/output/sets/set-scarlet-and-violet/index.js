@@ -52,7 +52,6 @@ const pokemon_catcher_1 = require("./pokemon-catcher");
 const potion_1 = require("./potion");
 const primeape_1 = require("./primeape");
 const professors_research_1 = require("./professors-research");
-const professors_research2_1 = require("./professors-research2");
 const ralts_1 = require("./ralts");
 const rare_candy_1 = require("./rare-candy");
 const revavroom_1 = require("./revavroom");
@@ -125,7 +124,6 @@ exports.setScarletAndViolet = [
     new potion_1.Potion(),
     new primeape_1.Primeape(),
     new professors_research_1.ProfessorsResearch(),
-    new professors_research2_1.ProfessorsResearch2(),
     new ralts_1.Ralts(),
     new rare_candy_1.RareCandy(),
     new revavroom_1.Revavroom(),

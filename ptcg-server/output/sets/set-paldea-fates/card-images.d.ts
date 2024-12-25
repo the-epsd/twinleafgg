@@ -14,7 +14,6 @@ import { ElectricGenerator } from '../set-scarlet-and-violet/electric-generator'
 import { Gardevoirex } from '../set-scarlet-and-violet/gardevoir-ex';
 import { NestBall } from '../set-scarlet-and-violet/nest-ball';
 import { ProfessorsResearch } from '../set-scarlet-and-violet/professors-research';
-import { ProfessorsResearch2 } from '../set-scarlet-and-violet/professors-research2';
 import { Ralts } from '../set-scarlet-and-violet/ralts';
 import { RareCandy } from '../set-scarlet-and-violet/rare-candy';
 import { UltraBall } from '../set-scarlet-and-violet/ultra-ball';
@@ -54,7 +53,7 @@ export declare class ProfessorsResearchPAF extends ProfessorsResearch {
     set: string;
     setNumber: string;
 }
-export declare class ProfessorsResearch2PAF extends ProfessorsResearch2 {
+export declare class ProfessorsResearch2PAF extends ProfessorsResearch {
     fullName: string;
     set: string;
     setNumber: string;

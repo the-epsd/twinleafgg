@@ -17,7 +17,7 @@ export class RigidBand extends TrainerCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '151';
+  public setNumber: string = '165';
 
   public name: string = 'Rigid Band';
 
@@ -32,17 +32,17 @@ export class RigidBand extends TrainerCard {
       if (sourceCard?.stage !== Stage.STAGE_1) {
         return state;
       }
-      
+
       // It's not an attack
       if (state.phase !== GamePhase.ATTACK) {
         return state;
       }
-  
+
       if (effect.damageReduced) {
         // Damage already reduced, don't reduce again
-        return state; 
+        return state;
       }
-    
+
       const player = StateUtils.findOwner(state, effect.target);
 
       try {
@@ -51,14 +51,14 @@ export class RigidBand extends TrainerCard {
       } catch {
         return state;
       }
-    
+
       // Check if damage target is owned by this card's owner 
       const targetPlayer = StateUtils.findOwner(state, effect.target);
       if (targetPlayer === player) {
         effect.damage = Math.max(0, effect.damage - 30);
         effect.damageReduced = true;
       }
-    
+
       return state;
     }
     return state;

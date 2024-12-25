@@ -13,6 +13,7 @@ import { CollapsedStadium } from './collapsed-stadium';
 import { CynthiasAmbition } from './cynthias-ambition';
 import { DoubleTurboEnergy } from './double-turbo-energy';
 import { Druddigon } from './druddigon';
+import { Duskull } from './duskull';
 import { Electabuzz } from './electabuzz';
 import { Electivire } from './electivire';
 import { Empoleon } from './empoleon';
@@ -60,6 +61,7 @@ export const setBrilliantStars: Card[] = [
   new CynthiasAmbition(),
   new Druddigon(),
   new DoubleTurboEnergy(),
+  new Duskull(),
   new Electabuzz(),
   new Electivire(),
   new Empoleon(),

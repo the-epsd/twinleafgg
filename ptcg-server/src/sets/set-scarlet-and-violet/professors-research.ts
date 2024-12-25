@@ -21,7 +21,7 @@ export class ProfessorsResearch extends TrainerCard {
 
   public name: string = 'Professor\'s Research';
 
-  public fullName: string = 'Professors Research SVI';
+  public fullName: string = 'Professor\'s Research SVI';
 
   public text: string =
     'Discard your hand and draw 7 cards.';
@@ -48,7 +48,7 @@ export class ProfessorsResearch extends TrainerCard {
       player.hand.moveCardsTo(cards, player.discard);
       player.deck.moveTo(player.hand, 7);
       player.supporter.moveCardTo(effect.trainerCard, player.discard);
-      
+
     }
 
     return state;

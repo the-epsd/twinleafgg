@@ -13,8 +13,8 @@ class XerosicsScheme extends trainer_card_1.TrainerCard {
         this.set = 'SFA';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '64';
-        this.name = 'Xerosic\'s Scheme';
-        this.fullName = 'Xerosic\'s Scheme SFA';
+        this.name = 'Xerosic\'s Machinations';
+        this.fullName = 'Xerosic\'s Machinations SFA';
         this.text = 'Your opponent discards cards from their hand until they have 3 cards in their hand.';
     }
     reduceEffect(store, state, effect) {

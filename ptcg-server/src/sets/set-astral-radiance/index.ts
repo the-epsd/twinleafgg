@@ -37,6 +37,7 @@ import { Magneton } from './magneton';
 import { Mantine } from './mantine';
 import { Mightyena } from './mightyena';
 import { Miltank } from './miltank';
+import { OranguruV } from './oranguru-v';
 import { OriginFormeDialgaV } from './origin-forme-dialga-v';
 import { OriginFormeDialgaVSTAR } from './origin-forme-dialga-vstar';
 import { OriginFormePalkiaV } from './origin-forme-palkia-v';
@@ -57,6 +58,7 @@ import { StarmieV } from './starmie-v';
 import { SupereffectiveGlasses } from './supereffective-glasses';
 import { SwitchCart } from './switch-cart';
 import { TempleofSinnoh } from './temple-of-sinnoh';
+import { Togepi } from './togepi';
 import { TrekkingShoes } from './trekking-shoes';
 import { Ursaluna } from './ursaluna';
 import { WyrdeerV } from './wyrdeer-v';
@@ -104,6 +106,7 @@ export const setAstralRadiance: Card[] = [
   new Mightyena(),
   new Mantine(),
   new Miltank(),
+  new OranguruV(),
   new OriginFormeDialgaV(),
   new OriginFormeDialgaVSTAR(),
   new OriginFormePalkiaV(),
@@ -124,6 +127,7 @@ export const setAstralRadiance: Card[] = [
   new SupereffectiveGlasses(),
   new SwitchCart(),
   new TempleofSinnoh(),
+  new Togepi(),
   new TrekkingShoes(),
   new Ursaluna(),
   new WyrdeerV(),

@@ -39,6 +39,7 @@ const magneton_1 = require("./magneton");
 const mantine_1 = require("./mantine");
 const mightyena_1 = require("./mightyena");
 const miltank_1 = require("./miltank");
+const oranguru_v_1 = require("./oranguru-v");
 const origin_forme_dialga_v_1 = require("./origin-forme-dialga-v");
 const origin_forme_dialga_vstar_1 = require("./origin-forme-dialga-vstar");
 const origin_forme_palkia_v_1 = require("./origin-forme-palkia-v");
@@ -59,6 +60,7 @@ const starmie_v_1 = require("./starmie-v");
 const supereffective_glasses_1 = require("./supereffective-glasses");
 const switch_cart_1 = require("./switch-cart");
 const temple_of_sinnoh_1 = require("./temple-of-sinnoh");
+const togepi_1 = require("./togepi");
 const trekking_shoes_1 = require("./trekking-shoes");
 const ursaluna_1 = require("./ursaluna");
 const wyrdeer_v_1 = require("./wyrdeer-v");
@@ -102,6 +104,7 @@ exports.setAstralRadiance = [
     new mightyena_1.Mightyena(),
     new mantine_1.Mantine(),
     new miltank_1.Miltank(),
+    new oranguru_v_1.OranguruV(),
     new origin_forme_dialga_v_1.OriginFormeDialgaV(),
     new origin_forme_dialga_vstar_1.OriginFormeDialgaVSTAR(),
     new origin_forme_palkia_v_1.OriginFormePalkiaV(),
@@ -122,6 +125,7 @@ exports.setAstralRadiance = [
     new supereffective_glasses_1.SupereffectiveGlasses(),
     new switch_cart_1.SwitchCart(),
     new temple_of_sinnoh_1.TempleofSinnoh(),
+    new togepi_1.Togepi(),
     new trekking_shoes_1.TrekkingShoes(),
     new ursaluna_1.Ursaluna(),
     new wyrdeer_v_1.WyrdeerV(),

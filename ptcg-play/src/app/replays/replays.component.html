@@ -5,7 +5,8 @@
 
       <span class="ptcg-u-spacer"></span>
 
-      <ptcg-search-box (search)="onSearch($event)"></ptcg-search-box>
+      <ptcg-search-box class="ptcg-deck-edit-toolbar" (search)="onSearch($event)" [showSearchButton]="false"
+        [isActivated]="true"></ptcg-search-box>
 
       <button mat-raised-button color="primary" (click)="importFromFile()">
         {{ 'BUTTON_IMPORT_FROM_FILE' | translate }}
@@ -27,10 +28,7 @@
       <ng-container matColumnDef="player1">
         <th mat-header-cell *matHeaderCellDef translate>LABEL_PLAYER_1</th>
         <td mat-cell *matCellDef="let replay">
-          <ptcg-user-bar
-            openUserPopup="true"
-            [user]="replay.player1"
-            [marked]="replay.winner === GameWinner.PLAYER_1">
+          <ptcg-user-bar openUserPopup="true" [user]="replay.player1" [marked]="replay.winner === GameWinner.PLAYER_1">
           </ptcg-user-bar>
         </td>
       </ng-container>
@@ -39,10 +37,7 @@
       <ng-container matColumnDef="player2">
         <th mat-header-cell *matHeaderCellDef translate>LABEL_PLAYER_2</th>
         <td mat-cell *matCellDef="let replay">
-          <ptcg-user-bar
-            openUserPopup="true"
-            [user]="replay.player2"
-            [marked]="replay.winner === GameWinner.PLAYER_2">
+          <ptcg-user-bar openUserPopup="true" [user]="replay.player2" [marked]="replay.winner === GameWinner.PLAYER_2">
           </ptcg-user-bar>
         </td>
       </ng-container>
@@ -83,13 +78,8 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
 
-    <mat-paginator hidePageSize="true"
-      [disabled]="loading"
-      [length]="rankingTotal"
-      [pageIndex]="pageIndex"
-      [pageSize]="pageSize"
-      [pageSizeOptions]="pageSizeOptions"
-      (page)="onPageChange($event)">
+    <mat-paginator hidePageSize="true" [disabled]="loading" [length]="rankingTotal" [pageIndex]="pageIndex"
+      [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="onPageChange($event)">
     </mat-paginator>
   </div>
 

@@ -3,6 +3,7 @@ import { AlolanExeggutorex } from './alolan-exeggutor-ex';
 import { Archaludonex } from './archaludon-ex';
 import { Azelf } from './azelf';
 import { Azumarill } from './azulmarill';
+import { BlackKyuremex } from './black-kyurem-ex';
 import { Capsakid } from './capsakid.';
 import { CounterGainSSP, ScrambleSwitchSSP } from './card-images';
 import { CelebrationFanfare } from './celebration-fanfare';
@@ -16,12 +17,15 @@ import { Deino } from './deino';
 import { DragonsElixir } from './dragons-elixir';
 import { Drayton } from './drayton';
 import { Duraludon } from './duraludon';
+import { DuskBall } from './dusk-ball';
 import { Eevee } from './eevee';
+import { EnergySearchPRO } from './energy-search-pro';
 import { Eternatus } from './eternatus';
 import { ExcitingStadium } from './exciting-stadium';
 import { Exeggcute } from './exeggcute';
 import { Flygonex } from './flygon-ex';
 import { Fuecoco } from './fuecoco';
+import { Gimmighoul } from './gimmighoul';
 import { GravityMountain } from './gravity-mountain';
 import { HelperBell } from './helper.bell';
 import { HoOh } from './ho-oh';
@@ -70,6 +74,7 @@ import { Zweilous } from './zweilous';
 export const setSurgingSparks: Card[] = [
   new Pikachuex(),
   new Terapagos(),
+  new BlackKyuremex(),
   new Magnemite(),
   new Magneton(),
   new ExcitingStadium(),
@@ -135,6 +140,9 @@ export const setSurgingSparks: Card[] = [
   new Rellor(),
   new Rabsca(),
   new Wochien(),
+  new DuskBall(),
+  new Gimmighoul(),
+  new EnergySearchPRO(),
 
   //Reprints
   new ScrambleSwitchSSP(),

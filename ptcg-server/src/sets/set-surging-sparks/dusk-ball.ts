@@ -20,7 +20,7 @@ export class DuskBall extends TrainerCard {
 
   public name: string = 'Dusk Ball';
 
-  public fullName: string = 'Dusk Ball SV7a';
+  public fullName: string = 'Dusk Ball SSP';
 
   public text: string =
     'Look at the bottom 7 cards of your deck. Choose one Pokémon from those cards, reveal it, and put it into your hand. Shuffle the other cards back into your deck.';

@@ -11,12 +11,14 @@ import { Crispin } from './crispin';
 import { Diancie } from './diancie';
 import { Drednaw } from './drednaw';
 import { Drifblim } from './drifblim';
+import { Duraludon } from './duraludon';
 import { Electabuzz } from './electabuzz';
 import { FanRotom } from './fan-rotom';
 import { Galvantulaex } from './galvantula-ex';
 import { Garganaclex } from './garganacl-ex';
 import { GlassTrumpet } from './glass-trumpet';
 import { GlisteningCrystal } from './glistening-crystal';
+import { GravityGemstone } from './gravity-gemstone';
 import { GreatTree } from './great-tree';
 import { Hoothoot } from './hoothoot';
 import { Hydrappleex } from './hydrapple-ex';
@@ -48,12 +50,14 @@ export const setStellarCrown: Card[] = [
   new Diancie(),
   new Drednaw(),
   new Drifblim(),
+  new Duraludon(),
   new Electabuzz(),
   new FanRotom(),
   new Galvantulaex(),
   new Garganaclex(),
   new GlassTrumpet(),
   new GlisteningCrystal(),
+  new GravityGemstone(),
   new GreatTree(),
   new Hoothoot(),
   new Hydrappleex(),

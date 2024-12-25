@@ -163,7 +163,7 @@ export function endGame(store, state, winner) {
     state.phase = GamePhase.FINISHED;
     return state;
 }
-function checkWinner(store, state, onComplete) {
+export function checkWinner(store, state, onComplete) {
     const points = [0, 0];
     const reasons = [[], []];
     for (let i = 0; i < state.players.length; i++) {
@@ -268,7 +268,7 @@ function handlePrompts(store, state, prompts, onComplete) {
         }
     });
 }
-function* executeCheckState(next, store, state, onComplete) {
+export function* executeCheckState(next, store, state, onComplete) {
     const prizesToTake = [0, 0];
     // This effect checks the general data from the table (bench size)
     const checkTableStateEffect = new CheckTableStateEffect([5, 5]);

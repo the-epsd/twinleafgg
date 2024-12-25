@@ -32,6 +32,7 @@ import { HandTrimmer } from './hand-trimmer';
 import { Haunter } from './haunter';
 import { HeavyBaton } from './heavy-baton';
 import { HerosCape } from './heros-cape';
+import { Hoothoot } from './hoothoot';
 import { IronCrownex } from './iron-crown-ex';
 import { IronHands } from './iron-hands';
 import { IronJugulis } from './iron-jugulis';
@@ -107,6 +108,7 @@ export const setTemporalForces: Card[] = [
   new Haunter(),
   new HeavyBaton(),
   new HerosCape(),
+  new Hoothoot(),
   new IronCrownex(),
   new IronHands(),
   new IronJugulis(),

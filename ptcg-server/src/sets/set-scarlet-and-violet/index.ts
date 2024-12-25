@@ -50,7 +50,6 @@ import { PokemonCatcher } from './pokemon-catcher';
 import { Potion } from './potion';
 import { Primeape } from './primeape';
 import { ProfessorsResearch } from './professors-research';
-import { ProfessorsResearch2 } from './professors-research2';
 import { Ralts } from './ralts';
 import { RareCandy } from './rare-candy';
 import { Revavroom } from './revavroom';
@@ -125,7 +124,6 @@ export const setScarletAndViolet: Card[] = [
   new Potion(),
   new Primeape(),
   new ProfessorsResearch(),
-  new ProfessorsResearch2(),
   new Ralts(),
   new RareCandy(),
   new Revavroom(),

@@ -17,7 +17,6 @@ const electric_generator_1 = require("../set-scarlet-and-violet/electric-generat
 const gardevoir_ex_1 = require("../set-scarlet-and-violet/gardevoir-ex");
 const nest_ball_1 = require("../set-scarlet-and-violet/nest-ball");
 const professors_research_1 = require("../set-scarlet-and-violet/professors-research");
-const professors_research2_1 = require("../set-scarlet-and-violet/professors-research2");
 const ralts_1 = require("../set-scarlet-and-violet/ralts");
 const rare_candy_1 = require("../set-scarlet-and-violet/rare-candy");
 const ultra_ball_1 = require("../set-scarlet-and-violet/ultra-ball");
@@ -85,7 +84,7 @@ class ProfessorsResearchPAF extends professors_research_1.ProfessorsResearch {
     }
 }
 exports.ProfessorsResearchPAF = ProfessorsResearchPAF;
-class ProfessorsResearch2PAF extends professors_research2_1.ProfessorsResearch2 {
+class ProfessorsResearch2PAF extends professors_research_1.ProfessorsResearch {
     constructor() {
         super(...arguments);
         this.fullName = 'Professor\'s Research PAF';

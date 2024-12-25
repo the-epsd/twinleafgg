@@ -41,6 +41,12 @@ class BlackKyuremex extends game_1.PokemonCard {
                 store.reduceEffect(state, specialConditionEffect);
             }
         }
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
+            const player = effect.player;
+            const dealDamage = new attack_effects_1.DealDamageEffect(effect, 30);
+            dealDamage.target = player.active;
+            return store.reduceEffect(state, dealDamage);
+        }
         return state;
     }
 }

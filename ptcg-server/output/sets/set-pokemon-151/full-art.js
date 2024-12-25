@@ -25,6 +25,7 @@ class BulbasaurIR extends bulbasaur_1.Bulbasaur {
         super(...arguments);
         this.setNumber = '166';
         this.fullName = 'BulbasaurIR MEW';
+        this.set = 'MEW';
     }
 }
 exports.BulbasaurIR = BulbasaurIR;
@@ -33,6 +34,7 @@ class IvysaurIR extends ivysaur_1.Ivysaur {
         super(...arguments);
         this.setNumber = '167';
         this.fullName = 'IvysaurIR MEW';
+        this.set = 'MEW';
     }
 }
 exports.IvysaurIR = IvysaurIR;
@@ -41,6 +43,7 @@ class CharmanderIR extends charmander_1.Charmander {
         super(...arguments);
         this.setNumber = '168';
         this.fullName = 'CharmanderIR MEW';
+        this.set = 'MEW';
     }
 }
 exports.CharmanderIR = CharmanderIR;
@@ -49,6 +52,7 @@ class CharmeleonIR extends charmeleon_1.Charmeleon {
         super(...arguments);
         this.setNumber = '169';
         this.fullName = 'CharmeleonIR MEW';
+        this.set = 'MEW';
     }
 }
 exports.CharmeleonIR = CharmeleonIR;
@@ -57,6 +61,7 @@ class SquirtleIR extends squirtle_1.Squirtle {
         super(...arguments);
         this.setNumber = '170';
         this.fullName = 'SquirtleIR MEW';
+        this.set = 'MEW';
     }
 }
 exports.SquirtleIR = SquirtleIR;
@@ -65,6 +70,7 @@ class WartortleIR extends wartortle_1.Wartortle {
         super(...arguments);
         this.setNumber = '171';
         this.fullName = 'WartortleIR MEW';
+        this.set = 'MEW';
     }
 }
 exports.WartortleIR = WartortleIR;
@@ -81,6 +87,7 @@ class NidokingIR extends nidoking_1.Nidoking {
         super(...arguments);
         this.setNumber = '174';
         this.fullName = 'NidokingIR MEW';
+        this.set = 'MEW';
     }
 }
 exports.NidokingIR = NidokingIR;
@@ -117,6 +124,7 @@ class VenusaurexFA extends venusaur_ex_1.Venusaurex {
         super(...arguments);
         this.setNumber = '182';
         this.fullName = 'Venusaur exFA MEW';
+        this.set = 'MEW';
     }
 }
 exports.VenusaurexFA = VenusaurexFA;
@@ -125,6 +133,7 @@ class CharizardexFA extends charizard_ex_1.Charizardex {
         super(...arguments);
         this.setNumber = '183';
         this.fullName = 'Charizard exFA MEW';
+        this.set = 'MEW';
     }
 }
 exports.CharizardexFA = CharizardexFA;
@@ -133,6 +142,7 @@ class BlastoiseexFA extends blastoise_ex_1.Blastoiseex {
         super(...arguments);
         this.setNumber = '184';
         this.fullName = 'Blastoise exFA MEW';
+        this.set = 'MEW';
     }
 }
 exports.BlastoiseexFA = BlastoiseexFA;
@@ -141,6 +151,7 @@ class ArbokexFA extends arbok_ex_1.Arbokex {
         super(...arguments);
         this.setNumber = '185';
         this.fullName = 'Arbok exFA MEW';
+        this.set = 'MEW';
     }
 }
 exports.ArbokexFA = ArbokexFA;
@@ -157,6 +168,7 @@ class AlakazamexFA extends alakazam_ex_1.Alakazamex {
         super(...arguments);
         this.setNumber = '188';
         this.fullName = 'Alakazam exFA MEW';
+        this.set = 'MEW';
     }
 }
 exports.AlakazamexFA = AlakazamexFA;
@@ -169,6 +181,7 @@ class KangaskhanexFA extends kangaskhan_ex_1.Kangaskhanex {
         super(...arguments);
         this.setNumber = '190';
         this.fullName = 'Kangaskhan exFA MEW';
+        this.set = 'MEW';
     }
 }
 exports.KangaskhanexFA = KangaskhanexFA;
@@ -181,6 +194,7 @@ class ZapdosexFA extends zapdos_ex_1.Zapdosex {
         super(...arguments);
         this.setNumber = '192';
         this.fullName = 'Zapdos exFA MEW';
+        this.set = 'MEW';
     }
 }
 exports.ZapdosexFA = ZapdosexFA;
@@ -189,6 +203,7 @@ class MewexFA extends mew_ex_1.Mewex {
         super(...arguments);
         this.setNumber = '193';
         this.fullName = 'Mew exFA MEW';
+        this.set = 'MEW';
     }
 }
 exports.MewexFA = MewexFA;
@@ -205,6 +220,7 @@ class ErikasInvitationFA extends erikas_invitation_1.EreikasInvitation {
         super(...arguments);
         this.setNumber = '196';
         this.fullName = 'Erika\'s InvitationFA MEW';
+        this.set = 'MEW';
     }
 }
 exports.ErikasInvitationFA = ErikasInvitationFA;
@@ -213,6 +229,7 @@ class GiovannisCharismaFA extends giovannis_charisma_1.GiovannisCharisma {
         super(...arguments);
         this.setNumber = '197';
         this.fullName = 'Giovanni\'s CharismaFA MEW';
+        this.set = 'MEW';
     }
 }
 exports.GiovannisCharismaFA = GiovannisCharismaFA;
@@ -221,6 +238,7 @@ class VenusaurexSIR extends venusaur_ex_1.Venusaurex {
         super(...arguments);
         this.setNumber = '198';
         this.fullName = 'Venusaur exSIR MEW';
+        this.set = 'MEW';
     }
 }
 exports.VenusaurexSIR = VenusaurexSIR;
@@ -229,6 +247,7 @@ class CharizardexSIR extends charizard_ex_1.Charizardex {
         super(...arguments);
         this.setNumber = '199';
         this.fullName = 'Charizard exSIR MEW';
+        this.set = 'MEW';
     }
 }
 exports.CharizardexSIR = CharizardexSIR;
@@ -237,6 +256,7 @@ class BlastoiseexSIR extends blastoise_ex_1.Blastoiseex {
         super(...arguments);
         this.setNumber = '200';
         this.fullName = 'Blastoise exSIR MEW';
+        this.set = 'MEW';
     }
 }
 exports.BlastoiseexSIR = BlastoiseexSIR;
@@ -245,6 +265,7 @@ class AlakazamexSIR extends alakazam_ex_1.Alakazamex {
         super(...arguments);
         this.setNumber = '201';
         this.fullName = 'Alakazam exSIR MEW';
+        this.set = 'MEW';
     }
 }
 exports.AlakazamexSIR = AlakazamexSIR;
@@ -253,6 +274,7 @@ class ZapdosexSIR extends zapdos_ex_1.Zapdosex {
         super(...arguments);
         this.setNumber = '202';
         this.fullName = 'Zapdos exSIR MEW';
+        this.set = 'MEW';
     }
 }
 exports.ZapdosexSIR = ZapdosexSIR;
@@ -261,6 +283,7 @@ class ErikasInvitationSIR extends erikas_invitation_1.EreikasInvitation {
         super(...arguments);
         this.setNumber = '203';
         this.fullName = 'Erika\'s InvitationSIR MEW';
+        this.set = 'MEW';
     }
 }
 exports.ErikasInvitationSIR = ErikasInvitationSIR;
@@ -269,6 +292,7 @@ class GiovannisCharismaSIR extends giovannis_charisma_1.GiovannisCharisma {
         super(...arguments);
         this.setNumber = '204';
         this.fullName = 'Giovanni\'s CharismaSIR MEW';
+        this.set = 'MEW';
     }
 }
 exports.GiovannisCharismaSIR = GiovannisCharismaSIR;
@@ -277,6 +301,7 @@ class MewexHR extends mew_ex_1.Mewex {
         super(...arguments);
         this.setNumber = '205';
         this.fullName = 'Mew exHR MEW';
+        this.set = 'MEW';
     }
 }
 exports.MewexHR = MewexHR;
@@ -285,6 +310,7 @@ class SwitchHR extends switch_1.Switch {
         super(...arguments);
         this.setNumber = '206';
         this.fullName = 'SwitchHR MEW';
+        this.set = 'MEW';
     }
 }
 exports.SwitchHR = SwitchHR;
@@ -293,6 +319,7 @@ class BasicPsychicEnergyHR extends psychic_energy_1.PsychicEnergy {
         super(...arguments);
         this.setNumber = '207';
         this.fullName = 'Psychic Energy MEW';
+        this.set = 'MEW';
     }
 }
 exports.BasicPsychicEnergyHR = BasicPsychicEnergyHR;

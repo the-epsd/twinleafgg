@@ -54,7 +54,7 @@ class EnhancedHammer extends trainer_card_1.TrainerCard {
         this.name = 'Enhanced Hammer';
         this.fullName = 'Enhanced Hammer TWM';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '144';
+        this.setNumber = '148';
         this.text = 'Discard a Special Energy attached to 1 of your opponent\'s Pokemon.';
     }
     reduceEffect(store, state, effect) {

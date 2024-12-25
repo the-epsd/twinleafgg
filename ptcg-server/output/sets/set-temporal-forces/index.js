@@ -34,6 +34,7 @@ const hand_trimmer_1 = require("./hand-trimmer");
 const haunter_1 = require("./haunter");
 const heavy_baton_1 = require("./heavy-baton");
 const heros_cape_1 = require("./heros-cape");
+const hoothoot_1 = require("./hoothoot");
 const iron_crown_ex_1 = require("./iron-crown-ex");
 const iron_hands_1 = require("./iron-hands");
 const iron_jugulis_1 = require("./iron-jugulis");
@@ -108,6 +109,7 @@ exports.setTemporalForces = [
     new haunter_1.Haunter(),
     new heavy_baton_1.HeavyBaton(),
     new heros_cape_1.HerosCape(),
+    new hoothoot_1.Hoothoot(),
     new iron_crown_ex_1.IronCrownex(),
     new iron_hands_1.IronHands(),
     new iron_jugulis_1.IronJugulis(),

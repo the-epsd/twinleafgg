@@ -17,6 +17,7 @@ class BelliboltIR extends bellibolt_1.Bellibolt {
         super(...arguments);
         this.setNumber = '201';
         this.fullName = 'BelliboltIR OBF';
+        this.set = 'OBF';
     }
 }
 exports.BelliboltIR = BelliboltIR;
@@ -25,6 +26,7 @@ class CleffaIR extends cleffa_1.Cleffa {
         super(...arguments);
         this.setNumber = '202';
         this.fullName = 'CleffaIR OBF';
+        this.set = 'OBF';
     }
 }
 exports.CleffaIR = CleffaIR;
@@ -33,6 +35,7 @@ class PidgeyIR extends pidgey_1.Pidgey {
         super(...arguments);
         this.setNumber = '207';
         this.fullName = 'PidgeyIR OBF';
+        this.set = 'OBF';
     }
 }
 exports.PidgeyIR = PidgeyIR;
@@ -41,6 +44,7 @@ class PidgeottoIR extends pidgeotto_1.Pidgeotto {
         super(...arguments);
         this.setNumber = '208';
         this.fullName = 'PidgeottoIR OBF';
+        this.set = 'OBF';
     }
 }
 exports.PidgeottoIR = PidgeottoIR;
@@ -49,6 +53,7 @@ class ScizorIR extends scizor_1.Scizor {
         super(...arguments);
         this.setNumber = '205';
         this.fullName = 'ScizorIR OBF';
+        this.set = 'OBF';
     }
 }
 exports.ScizorIR = ScizorIR;
@@ -57,6 +62,7 @@ class CharizardexFA extends charizard_ex_1.Charizardex {
         super(...arguments);
         this.setNumber = '215';
         this.fullName = 'Charizard exFA OBF';
+        this.set = 'OBF';
     }
 }
 exports.CharizardexFA = CharizardexFA;
@@ -65,6 +71,7 @@ class PidgeotexFA extends pidgeot_ex_1.Pidgeotex {
         super(...arguments);
         this.setNumber = '217';
         this.fullName = 'Pidgeot exFA OBF';
+        this.set = 'OBF';
     }
 }
 exports.PidgeotexFA = PidgeotexFA;
@@ -73,6 +80,7 @@ class PoppyFA extends poppy_1.Poppy {
         super(...arguments);
         this.setNumber = '220';
         this.fullName = 'PoppyFA OBF';
+        this.set = 'OBF';
     }
 }
 exports.PoppyFA = PoppyFA;
@@ -81,6 +89,7 @@ class CharizardexSIR extends charizard_ex_1.Charizardex {
         super(...arguments);
         this.setNumber = '223';
         this.fullName = 'Charizard exSIR OBF';
+        this.set = 'OBF';
     }
 }
 exports.CharizardexSIR = CharizardexSIR;
@@ -89,6 +98,7 @@ class PidgeotexSIR extends pidgeot_ex_1.Pidgeotex {
         super(...arguments);
         this.setNumber = '225';
         this.fullName = 'Pidgeot exSIR OBF';
+        this.set = 'OBF';
     }
 }
 exports.PidgeotexSIR = PidgeotexSIR;
@@ -97,6 +107,7 @@ class PoppySIR extends poppy_1.Poppy {
         super(...arguments);
         this.setNumber = '227';
         this.fullName = 'PoppySIR OBF';
+        this.set = 'OBF';
     }
 }
 exports.PoppySIR = PoppySIR;
@@ -105,6 +116,7 @@ class CharizardexHR extends charizard_ex_1.Charizardex {
         super(...arguments);
         this.setNumber = '228';
         this.fullName = 'Charizard exHR OBF';
+        this.set = 'OBF';
     }
 }
 exports.CharizardexHR = CharizardexHR;
@@ -113,6 +125,7 @@ class ArtazonHR extends artazon_1.Artazon {
         super(...arguments);
         this.setNumber = '229';
         this.fullName = 'ArtazonHR OBF';
+        this.set = 'OBF';
     }
 }
 exports.ArtazonHR = ArtazonHR;
@@ -121,6 +134,7 @@ class FireEnergyHR extends fire_energy_1.FireEnergy {
         super(...arguments);
         this.setNumber = '230';
         this.fullName = 'Fire EnergyHR OBF';
+        this.set = 'OBF';
     }
 }
 exports.FireEnergyHR = FireEnergyHR;
@@ -129,6 +143,7 @@ class VaroomIR extends varoom_1.Varoom {
         super(...arguments);
         this.setNumber = '206';
         this.fullName = 'VaroomIR OBF';
+        this.set = 'OBF';
     }
 }
 exports.VaroomIR = VaroomIR;

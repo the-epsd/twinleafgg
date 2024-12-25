@@ -15,7 +15,7 @@ export class Bill extends TrainerCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '118';
+  public setNumber: string = '91';
 
   public name: string = 'Bill';
 
