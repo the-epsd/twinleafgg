@@ -141,7 +141,7 @@ export class RaichuV extends PokemonCard {
 
           totalDiscarded = transfers.length;
 
-          effect.damage = totalDiscarded * 70;
+          effect.damage = totalDiscarded * 60;
 
         }
         console.log('Total Damage: ' + effect.damage);

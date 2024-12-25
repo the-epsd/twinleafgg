@@ -97,7 +97,7 @@ class RaichuV extends pokemon_card_1.PokemonCard {
                     const target = player.discard;
                     source.moveCardTo(transfer.card, target);
                     totalDiscarded = transfers.length;
-                    effect.damage = totalDiscarded * 70;
+                    effect.damage = totalDiscarded * 60;
                 }
                 console.log('Total Damage: ' + effect.damage);
                 return state;
