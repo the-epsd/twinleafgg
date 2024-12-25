@@ -1,42 +1,80 @@
 import { Card } from '../../game/store/card/card';
-import { ArchaludonArt, AreaZeroUnderdepthsArt, BouffalantArt, BriarArt, ChewtleArt, CinderaceexArt, CrabominableArt, CrabrawlerArt, CrispinArt, DiancieArt, DrednawArt, DrifblimArt, ElectabuzzArt, FanRotomArt, GalvantulexaArt, GarganaclexArt, GlassTrumpetArt, GlisteningCrystalArt, GreatTreeArt, HoothootArt, HydrappleexArt, IronBoulderArt, JoltikArt, KofuArt, LaprasexArt, MedichamexArt, MedititeArt, NoctowlArt, RabootArt, RagingBoltArt, ScorbunnyArt, SlowkingArt, TerapagosexArt, VeluzaArt, ZeraoraArt } from './card-images';
+import { Archaludon } from './archaludon';
+import { AreaZeroUnderdepths } from './area-zero-underdepths';
+import { Bouffalant } from './bouffalant';
+import { Briar } from './briar';
+import { Chewtle } from './chewtle';
+import { Cinderaceex } from './cinderace-ex';
+import { Crabominable } from './crabominable';
+import { Crabrawler } from './crabrawler';
+import { Crispin } from './crispin';
+import { Diancie } from './diancie';
+import { Drednaw } from './drednaw';
+import { Drifblim } from './drifblim';
+import { Duraludon } from './duraludon';
+import { Electabuzz } from './electabuzz';
+import { FanRotom } from './fan-rotom';
+import { Galvantulaex } from './galvantula-ex';
+import { Garganaclex } from './garganacl-ex';
+import { GlassTrumpet } from './glass-trumpet';
+import { GlisteningCrystal } from './glistening-crystal';
+import { GravityGemstone } from './gravity-gemstone';
+import { GreatTree } from './great-tree';
+import { Hoothoot } from './hoothoot';
+import { Hydrappleex } from './hydrapple-ex';
+import { IronBoulder } from './iron-boulder';
+import { Joltik } from './joltik';
+import { Kofu } from './kofu';
+import { Laprasex } from './lapras-ex';
+import { Medichamex } from './medicham-ex';
+import { Meditite } from './meditite';
+import { Noctowl } from './noctowl';
+import { Raboot } from './raboot';
+import { RagingBolt } from './raging-bolt';
+import { Scorbunny } from './scorbunny';
+import { Slowking } from './slowking';
+import { Terapagosex } from './terapagos-ex';
+import { Veluza } from './veluza';
+import { Zeraora } from './zeraora';
 
 export const setStellarCrown: Card[] = [
-  new ArchaludonArt(),
-  new AreaZeroUnderdepthsArt(),
-  new BouffalantArt(),
-  new BriarArt(),
-  new ChewtleArt(),
-  new CinderaceexArt(),
-  new CrabrawlerArt(),
-  new CrabominableArt(),
-  new CrispinArt(),
-  new DiancieArt(),
-  new DrednawArt(),
-  new DrifblimArt(),
-  new ElectabuzzArt(),
-  new FanRotomArt(),
-  new GalvantulexaArt(),
-  new GarganaclexArt(),
-  new GlassTrumpetArt(),
-  new GlisteningCrystalArt(),
-  new GreatTreeArt(),
-  new HoothootArt(),
-  new HydrappleexArt(),
-  new IronBoulderArt(),
-  new JoltikArt(),
-  new KofuArt(),
-  new LaprasexArt(),
-  new MedichamexArt(),
-  new MedititeArt(),
-  new NoctowlArt(),
-  // new OrthwormexArt(),
-  new RabootArt(),
-  new RagingBoltArt(),
-  new ScorbunnyArt(),
-  new SlowkingArt(),
-  new TerapagosexArt(),
-  new VeluzaArt(),
-  new ZeraoraArt(),
+  new Archaludon(),
+  new AreaZeroUnderdepths(),
+  new Bouffalant(),
+  new Briar(),
+  new Chewtle(),
+  new Cinderaceex(),
+  new Crabrawler(),
+  new Crabominable(),
+  new Crispin(),
+  new Diancie(),
+  new Drednaw(),
+  new Drifblim(),
+  new Duraludon(),
+  new Electabuzz(),
+  new FanRotom(),
+  new Galvantulaex(),
+  new Garganaclex(),
+  new GlassTrumpet(),
+  new GlisteningCrystal(),
+  new GravityGemstone(),
+  new GreatTree(),
+  new Hoothoot(),
+  new Hydrappleex(),
+  new IronBoulder(),
+  new Joltik(),
+  new Kofu(),
+  new Laprasex(),
+  new Medichamex(),
+  new Meditite(),
+  new Noctowl(),
+  // new Orthwormex(),
+  new Raboot(),
+  new RagingBolt(),
+  new Scorbunny(),
+  new Slowking(),
+  new Terapagosex(),
+  new Veluza(),
+  new Zeraora(),
 
 ];

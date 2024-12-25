@@ -35,25 +35,25 @@ export class PerformanceFlute extends TrainerCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const slots: PokemonCardList[] = opponent.bench.filter(b => b.cards.length === 0);
-      
+
       // Check if bench has open slots
       const openSlots = opponent.bench.filter(b => b.cards.length === 0);
-            
+
       if (openSlots.length === 0) {
         // No open slots, throw error
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
-      
+
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
-      
+
       if (opponent.deck.cards.length === 0) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
-    
+
       const deckTop = new CardList();
       opponent.deck.moveTo(deckTop, 5);
-      
+
       return store.prompt(state, new ChooseCardsPrompt(
         player,
         GameMessage.CHOOSE_CARD_TO_HAND,
@@ -62,7 +62,7 @@ export class PerformanceFlute extends TrainerCard {
         { min: 0, max: openSlots.length, allowCancel: false }
       ), selected => {
         const cards = selected || [];
-      
+
         // Operation canceled by the user
         if (cards.length === 0) {
 
@@ -80,29 +80,22 @@ export class PerformanceFlute extends TrainerCard {
             });
           });
         }
-      
+
         cards.forEach((card, index) => {
+          deckTop.moveCardTo(card, slots[index]);
+          slots[index].pokemonPlayedTurn = state.turn;
+        });
 
-          return store.prompt(state, new ShowCardsPrompt(
-            opponent.id,
-            GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-            deckTop.cards
-          ), () => {
+        deckTop.moveTo(opponent.deck);
 
-            deckTop.moveCardTo(card, slots[index]);
-            slots[index].pokemonPlayedTurn = state.turn;
-      
-            deckTop.moveTo(opponent.deck);
+        player.supporter.moveCardTo(effect.trainerCard, player.discard);
 
-            player.supporter.moveCardTo(effect.trainerCard, player.discard);
-
-            return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-              player.deck.applyOrder(order);
-              return state;
-            });
-          });
+        return store.prompt(state, new ShuffleDeckPrompt(opponent.id), order => {
+          opponent.deck.applyOrder(order);
+          return state;
         });
       });
+
     }
     return state;
   }

@@ -28,6 +28,7 @@ class Sizzlipede extends pokemon_card_1.PokemonCard {
         this.set = 'SSH';
         this.name = 'Sizzlipede';
         this.fullName = 'Sizzlipede SSH';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '37';
     }
 }

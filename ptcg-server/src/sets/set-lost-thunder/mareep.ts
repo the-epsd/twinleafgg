@@ -38,6 +38,7 @@ export class Mareep extends PokemonCard {
   public fullName: string = 'Mareep LOT';
   public name: string = 'Mareep';
   public setNumber: string = '75';
+  public cardImage: string = 'assets/cardback.png';
 
   public FLUFFY_PILLOW_MARKER = 'FLUFFY_PILLOW_MARKER';
 

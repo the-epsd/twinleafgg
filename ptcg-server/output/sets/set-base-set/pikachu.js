@@ -11,6 +11,7 @@ class Pikachu extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.name = 'Pikachu';
+        this.cardImage = 'assets/cardback.png';
         this.set = 'BS';
         this.setNumber = '58';
         this.cardType = card_types_1.CardType.LIGHTNING;

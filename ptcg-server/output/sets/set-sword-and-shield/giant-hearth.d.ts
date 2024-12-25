@@ -6,6 +6,7 @@ import { TrainerType } from '../../game/store/card/card-types';
 export declare class GiantHearth extends TrainerCard {
     trainerType: TrainerType;
     set: string;
+    cardImage: string;
     name: string;
     fullName: string;
     setNumber: string;

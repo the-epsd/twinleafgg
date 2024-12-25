@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Eevee = void 0;
 const game_1 = require("../../game");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
+const check_effects_1 = require("../../game/store/effects/check-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
@@ -48,25 +49,28 @@ class Eevee extends game_1.PokemonCard {
             const player = effect.player;
             player.marker.addMarker(this.EVOLUTIONARY_ADVANTAGE_MARKER, this);
         }
-        const player = state.players[state.activePlayer];
-        if (state.turn >= 1 && player.active.cards[0] == this && player.marker.hasMarker(this.EVOLUTIONARY_ADVANTAGE_MARKER, this)) {
-            try {
-                const stub = new game_effects_1.PowerEffect(player, {
-                    name: 'test',
-                    powerType: game_1.PowerType.ABILITY,
-                    text: ''
-                }, this);
-                store.reduceEffect(state, stub);
-            }
-            catch (_a) {
-                return state;
-            }
-            player.canEvolve = true;
-            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
-                if (cardList.getPokemonCard() === this) {
-                    cardList.pokemonPlayedTurn = state.turn - 1;
+        if (effect instanceof check_effects_1.CheckTableStateEffect) {
+            const player = state.players[state.activePlayer];
+            if (player.active.cards[0] == this) {
+                try {
+                    const stub = new game_effects_1.PowerEffect(player, {
+                        name: 'test',
+                        powerType: game_1.PowerType.ABILITY,
+                        text: ''
+                    }, this);
+                    store.reduceEffect(state, stub);
                 }
-            });
+                catch (_a) {
+                    return state;
+                }
+                player.canEvolve = true;
+                player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
+                    if (cardList.getPokemonCard() === this) {
+                        cardList.pokemonPlayedTurn = state.turn - 1;
+                    }
+                });
+            }
+            return state;
         }
         return state;
     }

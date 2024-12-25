@@ -10,7 +10,7 @@ class PsychicEnergy extends energy_card_1.EnergyCard {
         this.set = 'SVE';
         this.regulationMark = 'ENERGY';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '232';
+        this.setNumber = '5';
         this.name = 'Psychic Energy';
         this.fullName = 'Psychic Energy SVE';
     }

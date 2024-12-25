@@ -1,8 +1,8 @@
 import { Card } from '../../game/store/card/card';
-import { MoltresArt } from './card-images';
+import { Moltres } from './moltres';
 
 export const setVendingSeries: Card[] = [
 
-  new MoltresArt(),
-    
+  new Moltres(),
+
 ];

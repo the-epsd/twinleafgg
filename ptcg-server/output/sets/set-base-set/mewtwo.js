@@ -32,6 +32,7 @@ class Mewtwo extends pokemon_card_1.PokemonCard {
         this.name = 'Mewtwo';
         this.fullName = 'Mewtwo BS';
         this.setNumber = '10';
+        this.cardImage = 'assets/cardback.png';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

@@ -3,7 +3,7 @@ import { EnergyCard } from '../../game/store/card/energy-card';
 
 export class FightingEnergy extends EnergyCard {
 
-  public provides: CardType[] = [ CardType.FIGHTING ];
+  public provides: CardType[] = [CardType.FIGHTING];
 
   public set: string = 'SVE';
 
@@ -11,7 +11,7 @@ export class FightingEnergy extends EnergyCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '233';
+  public setNumber: string = '6';
 
   public name = 'Fighting Energy';
 

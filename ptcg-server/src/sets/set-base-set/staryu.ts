@@ -5,13 +5,15 @@ import { Attack } from '../../game/store/card/pokemon-types';
 export class Staryu extends PokemonCard {
 
   public name = 'Staryu';
-  
+
+  public cardImage: string = 'assets/cardback.png';
+
   public set = 'BS';
-  
+
   public fullName = 'Staryu BS';
-  
+
   public setNumber = '65';
-  
+
   public cardType = CardType.WATER;
 
   public stage = Stage.BASIC;

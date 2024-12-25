@@ -7,6 +7,7 @@ class Staryu extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.name = 'Staryu';
+        this.cardImage = 'assets/cardback.png';
         this.set = 'BS';
         this.fullName = 'Staryu BS';
         this.setNumber = '65';

@@ -37,6 +37,7 @@ class Charizard extends pokemon_card_1.PokemonCard {
         this.setNumber = '4';
         this.name = 'Charizard';
         this.fullName = 'Charizard BS';
+        this.cardImage = 'assets/cardback.png';
         this.ENERGY_BURN_MARKER = 'ENERGY_BURN_MARKER';
     }
     reduceEffect(store, state, effect) {

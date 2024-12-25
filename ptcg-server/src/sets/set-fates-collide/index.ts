@@ -1,13 +1,20 @@
 import { Card } from '../../game/store/card/card';
-import { DeerlingArt, EnergyPouchArt, FennekinArt, LucarioArt, MewArt, NArt, RioluArt, TeamRocketsHandiworkArt } from './card-images';
+import { Deerling } from './deerling';
+import { EnergyPouch } from './energy-pouch';
+import { Fennekin } from './fennekin';
+import { Lucario } from './lucario';
+import { Mew } from './mew';
+import { N_Supporter } from './n';
+import { Riolu } from './riolu';
+import { TeamRocketsHandiwork } from './team-rockets-handiwork';
 
 export const setFatesCollide: Card[] = [
-  new DeerlingArt(),
-  new EnergyPouchArt(),
-  new FennekinArt(),
-  new LucarioArt(),
-  new MewArt(),
-  new NArt(),
-  new RioluArt(),
-  new TeamRocketsHandiworkArt(),
+  new Deerling(),
+  new EnergyPouch(),
+  new Fennekin(),
+  new Lucario(),
+  new Mew(),
+  new N_Supporter(),
+  new Riolu(),
+  new TeamRocketsHandiwork(),
 ];

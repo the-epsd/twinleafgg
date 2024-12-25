@@ -10,7 +10,7 @@ class GrassEnergy extends energy_card_1.EnergyCard {
         this.set = 'SVE';
         this.regulationMark = 'ENERGY';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '283';
+        this.setNumber = '1';
         this.name = 'Grass Energy';
         this.fullName = 'Grass Energy SVE';
     }

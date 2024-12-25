@@ -30,6 +30,7 @@ export declare class Mareep extends PokemonCard {
     fullName: string;
     name: string;
     setNumber: string;
+    cardImage: string;
     FLUFFY_PILLOW_MARKER: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

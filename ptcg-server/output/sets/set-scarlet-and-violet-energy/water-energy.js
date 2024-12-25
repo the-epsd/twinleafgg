@@ -10,7 +10,7 @@ class WaterEnergy extends energy_card_1.EnergyCard {
         this.set = 'SVE';
         this.regulationMark = 'ENERGY';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '231';
+        this.setNumber = '3';
         this.name = 'Water Energy';
         this.fullName = 'Water Energy SVE';
     }

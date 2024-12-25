@@ -1,12 +1,17 @@
 import { Card } from '../../game/store/card/card';
-import { FightingEnergyArt, FireEnergyArt, GrassEnergyArt, LightningEnergyArt, PsychicEnergyArt, WaterEnergyArt } from './card-images';
+import { FightingEnergy } from './fighting-energy';
+import { FireEnergy } from './fire-energy';
+import { GrassEnergy } from './grass-energy';
+import { LightningEnergy } from './lightning-energy';
+import { PsychicEnergy } from './psychic-energy';
+import { WaterEnergy } from './water-energy';
 
 export const setBaseSetEnergy: Card[] = [
 
-  new FightingEnergyArt(),
-  new FireEnergyArt(),
-  new GrassEnergyArt(),
-  new LightningEnergyArt(),
-  new PsychicEnergyArt(),
-  new WaterEnergyArt(),
+  new FightingEnergy(),
+  new FireEnergy(),
+  new GrassEnergy(),
+  new LightningEnergy(),
+  new PsychicEnergy(),
+  new WaterEnergy(),
 ];

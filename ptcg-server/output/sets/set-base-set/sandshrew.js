@@ -11,6 +11,7 @@ class Sandshrew extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.name = 'Sandshrew';
+        this.cardImage = 'assets/cardback.png';
         this.set = 'BS';
         this.fullName = 'Sandshrew BS';
         this.cardType = card_types_1.CardType.FIGHTING;

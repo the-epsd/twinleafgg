@@ -7,6 +7,7 @@ export declare class JubilifeVillage extends TrainerCard {
     trainerType: TrainerType;
     set: string;
     name: string;
+    cardImage: string;
     fullName: string;
     setNumber: string;
     text: string;

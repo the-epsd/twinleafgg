@@ -8,6 +8,7 @@ class ScoopUpNet extends game_1.TrainerCard {
     constructor() {
         super(...arguments);
         this.name = 'Scoop Up Net';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '165';
         this.set = 'RCL';
         this.fullName = 'Scoop Up Net RCL';

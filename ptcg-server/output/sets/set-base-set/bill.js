@@ -12,7 +12,7 @@ class Bill extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.set = 'BS';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '118';
+        this.setNumber = '91';
         this.name = 'Bill';
         this.fullName = 'Bill BS';
         this.text = 'Draw 2 cards.';

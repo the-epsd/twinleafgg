@@ -16,7 +16,7 @@ class ShieldEnergy extends energy_card_1.EnergyCard {
         this.name = 'Shield Energy';
         this.fullName = 'Shield Energy PRC';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '163';
+        this.setNumber = '143';
         this.text = 'This card can only be attached to [M] Pokémon. This card provides [M] Energy only while this card is attached to a [M] Pokémon.' +
             '' +
             'The attacks of your opponent\'s Pokémon do 10 less damage to the [M] Pokémon this card is attached to (before applying Weakness and Resistance).' +

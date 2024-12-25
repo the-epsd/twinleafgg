@@ -9,6 +9,7 @@ const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class Celebi extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -69,6 +70,7 @@ class Celebi extends pokemon_card_1.PokemonCard {
             }
             return store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_message_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.hand, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { superType: card_types_1.SuperType.ENERGY, name: 'Grass Energy' }, { allowCancel: true, min: 1, max: 1 }), transfers => {
                 transfers = transfers || [];
+                prefabs_1.abilityUsed(player, this);
                 // cancelled by user
                 if (transfers.length === 0) {
                     return;

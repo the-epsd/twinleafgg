@@ -58,7 +58,7 @@ export class LetterOfEncouragement extends TrainerCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '152';
+  public setNumber: string = '189';
 
   public regulationMark = 'G';
 

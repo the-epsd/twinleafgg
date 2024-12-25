@@ -6,6 +6,7 @@ import { State } from '../../game/store/state/state';
 export declare class Welder extends TrainerCard {
     trainerType: TrainerType;
     set: string;
+    cardImage: string;
     name: string;
     fullName: string;
     setNumber: string;

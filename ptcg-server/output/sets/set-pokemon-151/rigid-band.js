@@ -14,7 +14,7 @@ class RigidBand extends trainer_card_1.TrainerCard {
         this.regulationMark = 'G';
         this.set = 'MEW';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '151';
+        this.setNumber = '165';
         this.name = 'Rigid Band';
         this.fullName = 'Rigid Band MEW';
         this.text = 'The Stage 1 Pokémon this card is attached to takes 30 less damage from attacks from your opponent\'s Pokémon (after applying Weakness and Resistance).';

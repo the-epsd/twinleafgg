@@ -56,9 +56,17 @@ function* useAttack(next, store, state, effect) {
     //   });
     // }
     const attack = effect.attack;
+    let attackingPokemon = player.active;
+    // If this is Alakazam ex's attack from the bench, use that instead
+    player.bench.forEach(benchSlot => {
+        const benchPokemon = benchSlot.getPokemonCard();
+        if (benchPokemon && benchPokemon.name === 'Alakazam ex' && benchPokemon.attacks.some(a => a.name === attack.name)) {
+            attackingPokemon = benchSlot;
+        }
+    });
     const checkAttackCost = new check_effects_1.CheckAttackCostEffect(player, attack);
     state = store.reduceEffect(state, checkAttackCost);
-    const checkProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(player);
+    const checkProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(player, attackingPokemon);
     state = store.reduceEffect(state, checkProvidedEnergy);
     if (state_utils_1.StateUtils.checkEnoughEnergy(checkProvidedEnergy.energyMap, checkAttackCost.cost) === false) {
         throw new game_error_1.GameError(game_message_1.GameMessage.NOT_ENOUGH_ENERGY);

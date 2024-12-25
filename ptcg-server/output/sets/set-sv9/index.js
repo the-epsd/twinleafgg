@@ -1,11 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setSV9 = void 0;
-const card_images_1 = require("./card-images");
+const blaziken_ex_1 = require("./blaziken-ex");
+const budew_1 = require("./budew");
+const combusken_1 = require("./combusken");
+const lillies_clefairy_ex_1 = require("./lillies-clefairy-ex");
+const lillies_pearl_1 = require("./lillies-pearl");
+const ns_pp_up_1 = require("./ns-pp-up");
+const ns_sigilyph_1 = require("./ns-sigilyph");
+const ns_zorua_1 = require("./ns-zorua");
+const torchic_1 = require("./torchic");
 exports.setSV9 = [
-    new card_images_1.LilliesClefairyexArt(),
-    new card_images_1.TorchicArt(),
-    new card_images_1.CombuskenArt(),
-    new card_images_1.BlazikenexArt(),
-    new card_images_1.BudewArt(),
+    new lillies_clefairy_ex_1.LilliesClefairyex(),
+    new torchic_1.Torchic(),
+    new combusken_1.Combusken(),
+    new blaziken_ex_1.Blazikenex(),
+    new budew_1.Budew(),
+    new lillies_pearl_1.LilliesPearl(),
+    new ns_pp_up_1.NsPPUp(),
+    new ns_sigilyph_1.NsSigilyph(),
+    new ns_zorua_1.NsZorua(),
 ];

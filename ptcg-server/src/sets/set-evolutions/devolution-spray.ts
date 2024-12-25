@@ -7,6 +7,7 @@ import { StoreLike } from '../../game/store/store-like';
 
 export class DevolutionSpray extends TrainerCard {
   public name = 'Devolution Spray';
+  public cardImage: string = 'assets/cardback.png';
   public setNumber = '76';
   public set = 'EVO';
   public fullName = 'Devolution Spray EVO';

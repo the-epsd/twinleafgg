@@ -31,7 +31,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
-  player.hand.moveCardTo(effect.trainerCard, player.supporter);    
+  player.hand.moveCardTo(effect.trainerCard, player.supporter);
 
   yield store.prompt(state, new ChooseCardsPrompt(
     player,
@@ -67,7 +67,7 @@ export class LevelBall extends TrainerCard {
 
   public set: string = 'BST';
 
-  public cardImage: string = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/BST/BST_129_R_EN.png';
+  public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '129';
 

@@ -28,9 +28,8 @@ function putStartingPokemonsAndPrizes(player, cards, state) {
     for (let i = 1; i < cards.length; i++) {
         player.hand.moveCardTo(cards[i], player.bench[i - 1]);
     }
-    // Set prize count based on state's sudden death flag
-    const prizeCount = state.isSuddenDeath ? 1 : 6;
-    for (let i = 0; i < prizeCount; i++) {
+    // Always place 6 prize cards
+    for (let i = 0; i < 6; i++) {
         player.deck.moveTo(player.prizes[i], 1);
     }
 }

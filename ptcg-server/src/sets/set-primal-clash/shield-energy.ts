@@ -22,7 +22,7 @@ export class ShieldEnergy extends EnergyCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '163';
+  public setNumber: string = '143';
 
   public text =
     'This card can only be attached to [M] Pokémon. This card provides [M] Energy only while this card is attached to a [M] Pokémon.' +

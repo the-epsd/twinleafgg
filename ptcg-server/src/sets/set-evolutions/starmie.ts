@@ -79,6 +79,8 @@ export class Starmie extends PokemonCard {
 
   public name = 'Starmie';
 
+  public cardImage: string = 'assets/cardback.png';
+
   public set = 'EVO';
 
   public evolvesFrom: string = 'Staryu';

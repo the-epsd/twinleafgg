@@ -3,7 +3,6 @@ import { CardType, Stage } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 export declare class Budew extends PokemonCard {
-    regulationMark: string;
     stage: Stage;
     cardType: CardType;
     hp: number;
@@ -17,6 +16,7 @@ export declare class Budew extends PokemonCard {
         damage: number;
         text: string;
     }[];
+    regulationMark: string;
     set: string;
     cardImage: string;
     setNumber: string;

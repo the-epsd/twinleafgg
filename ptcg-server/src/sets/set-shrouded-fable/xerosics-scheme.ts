@@ -19,9 +19,9 @@ export class XerosicsScheme extends TrainerCard {
 
   public setNumber: string = '64';
 
-  public name: string = 'Xerosic\'s Scheme';
+  public name: string = 'Xerosic\'s Machinations';
 
-  public fullName: string = 'Xerosic\'s Scheme SFA';
+  public fullName: string = 'Xerosic\'s Machinations SFA';
 
   public text: string =
     'Your opponent discards cards from their hand until they have 3 cards in their hand.';
@@ -54,7 +54,7 @@ export class XerosicsScheme extends TrainerCard {
 
       // Opponent discards first
       store.prompt(state, new ChooseCardsPrompt(
-          opponent,
+        opponent,
         GameMessage.CHOOSE_CARD_TO_DISCARD,
         opponent.hand,
         {},

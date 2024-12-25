@@ -1,9 +1,12 @@
-import { Applin } from './applin';
+import { Applin } from '../set-rebel-clash/applin';
 import { Snom } from './snom';
-export declare class ApplinArt extends Applin {
-    cardImage: string;
-}
-export declare class SnomSVArt extends Snom {
-    cardImage: string;
+export declare class ApplinSV extends Applin {
+    set: string;
     setNumber: string;
+    fullName: string;
+}
+export declare class SnomSV extends Snom {
+    set: string;
+    setNumber: string;
+    fullName: string;
 }

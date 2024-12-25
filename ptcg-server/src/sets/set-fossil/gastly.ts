@@ -56,7 +56,7 @@ export class Gastly extends PokemonCard {
       });
 
       if (energyCards === 0) {
-        return state
+        return state;
       }
 
       const min = Math.min(energyCards, 2);

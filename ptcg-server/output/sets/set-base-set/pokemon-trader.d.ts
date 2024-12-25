@@ -7,6 +7,7 @@ export declare class PokemonTrader extends TrainerCard {
     trainerType: TrainerType;
     set: string;
     setNumber: string;
+    cardImage: string;
     name: string;
     fullName: string;
     text: string;

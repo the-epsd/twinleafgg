@@ -1,14 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setHiddenFates = void 0;
-const card_images_1 = require("./card-images");
-const full_art_1 = require("./full-art");
+const alolan_vulpix_1 = require("./alolan-vulpix");
+const charmander_1 = require("./charmander");
+const erikas_hospitality_1 = require("./erikas-hospitality");
+const psyduck_1 = require("./psyduck");
+const shiny_vault_1 = require("./shiny-vault");
 exports.setHiddenFates = [
-    new card_images_1.CharmanderArt(),
-    new card_images_1.ErikasHospitalityArt(),
-    new card_images_1.PsyduckArt(),
-    // Full Arts/Shiny Vault
-    new full_art_1.AlolanVulpixArt(),
-    new card_images_1.WooperArt(),
-    new card_images_1.QuagsireArt()
+    new charmander_1.Charmander(),
+    new erikas_hospitality_1.ErikasHospitality(),
+    new psyduck_1.Psyduck(),
+    // FA/Shiny Vault
+    new alolan_vulpix_1.AlolanVulpix(),
+    new shiny_vault_1.WooperSV(),
+    new shiny_vault_1.QuagsireSV()
 ];

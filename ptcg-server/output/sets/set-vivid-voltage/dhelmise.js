@@ -27,6 +27,7 @@ class Dhelmise extends pokemon_card_1.PokemonCard {
             }];
         this.set = 'VIV';
         this.regulationMark = 'D';
+        this.cardImage = 'assets/cardback.png';
         this.fullName = 'Dhelmise VIV';
         this.name = 'Dhelmise';
         this.setNumber = '19';

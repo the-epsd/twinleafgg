@@ -1,6 +1,6 @@
 import { Card } from '../../game/store/card/card';
-import { ExpertBeltArt } from './card-images';
+import { ExpertBelt } from './expert-belt';
 
 export const setArceus: Card[] = [
-  new ExpertBeltArt(),
+  new ExpertBelt(),
 ];

@@ -15,6 +15,7 @@ export declare function WAS_ATTACK_USED(effect: Effect, index: number, user: Pok
  * @returns whether or not a specific ability was used.
  */
 export declare function WAS_ABILITY_USED(effect: Effect, index: number, user: PokemonCard): effect is PowerEffect;
+export declare function abilityUsed(player: Player, card: PokemonCard): void;
 /**
  *
  * A basic effect for checking whether or not a passive ability gets activated.

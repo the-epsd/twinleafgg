@@ -44,6 +44,8 @@ export class NidoranFemale extends PokemonCard {
 
   public name = 'Nidoran F';
 
+  public cardImage: string = 'assets/cardback.png';
+
   public set = 'JU';
 
   public setNumber = '57';

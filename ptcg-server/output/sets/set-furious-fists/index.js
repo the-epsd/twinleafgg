@@ -1,15 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setFuriousFists = void 0;
-const card_images_1 = require("./card-images");
+const dedenne_1 = require("./dedenne");
+const fighting_stadium_1 = require("./fighting-stadium");
+const focus_sash_1 = require("./focus-sash");
+const hawlucha_1 = require("./hawlucha");
+const korrina_1 = require("./korrina");
+const lucario_ex_1 = require("./lucario-ex");
+const seismitoad_ex_1 = require("./seismitoad-ex");
+const strong_energy_1 = require("./strong-energy");
+const training_center_1 = require("./training-center");
 exports.setFuriousFists = [
-    new card_images_1.DedenneArt(),
-    new card_images_1.FightingStadiumArt(),
-    new card_images_1.FocusSashArt(),
-    new card_images_1.HawluchaArt(),
-    new card_images_1.KorrinaArt(),
-    new card_images_1.LucarioExArt(),
-    new card_images_1.SeismitoadExArt(),
-    new card_images_1.StrongEnergyArt(),
-    new card_images_1.TrainingCenterArt(),
+    new dedenne_1.Dedenne(),
+    new fighting_stadium_1.FightingStadium(),
+    new focus_sash_1.FocusSash(),
+    new hawlucha_1.Hawlucha(),
+    new korrina_1.Korrina(),
+    new lucario_ex_1.LucarioEx(),
+    new seismitoad_ex_1.SeismitoadEx(),
+    new strong_energy_1.StrongEnergy(),
+    new training_center_1.TrainingCenter(),
 ];

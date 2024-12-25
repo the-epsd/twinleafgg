@@ -29,9 +29,10 @@ export class Rillaboom extends PokemonCard {
   }];
 
   public regulationMark: string = 'D';
-  public set: string = 'SHF';
+  public setNumber = '14';
+  public set: string = 'SSH';
   public name: string = 'Rillaboom';
-  public fullName: string = 'Rillaboom SHF';
+  public fullName: string = 'Rillaboom SSH';
   public cardImage: string = 'assets/cardback.png';
 
   public readonly VOLTAGE_BEAT_MARKER = 'VOLTAGE_BEAT_MARKER';

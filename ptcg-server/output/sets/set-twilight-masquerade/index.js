@@ -1,78 +1,150 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setTwilightMasquerade = void 0;
-const card_images_1 = require("./card-images");
+const aggron_1 = require("./aggron");
+const applin_1 = require("./applin");
+const applin_2_1 = require("./applin-2");
+const aron_1 = require("./aron");
+const blissey_ex_1 = require("./blissey-ex");
+const bloodmoon_ursaluna_ex_1 = require("./bloodmoon-ursaluna-ex");
+const bug_catching_set_1 = require("./bug-catching-set");
+const caretaker_1 = require("./caretaker");
+const carmine_1 = require("./carmine");
+const chansey_1 = require("./chansey");
+const chimchar_1 = require("./chimchar");
+const clefable_1 = require("./clefable");
+const clefairy_1 = require("./clefairy");
+const community_center_1 = require("./community-center");
+const cornerstone_mask_ogerpon_ex_1 = require("./cornerstone-mask-ogerpon-ex");
+const dipplin_1 = require("./dipplin");
+const dragapult_ex_1 = require("./dragapult-ex");
+const drakloak_1 = require("./drakloak");
+const dreepy_1 = require("./dreepy");
+const emolga_1 = require("./emolga");
+const enhanced_hammer_1 = require("./enhanced-hammer");
+const farfetchd_1 = require("./farfetchd");
+const festival_plaza_1 = require("./festival-plaza");
+const froakie_1 = require("./froakie");
+const frogadier_1 = require("./frogadier");
+const froslass_1 = require("./froslass");
+const greninja_ex_1 = require("./greninja-ex");
+const grookey_1 = require("./grookey");
+const handy_fan_1 = require("./handy-fan");
+const hassel_1 = require("./hassel");
+const hearthflame_mask_ogerpon_ex_1 = require("./hearthflame-mask-ogerpon-ex");
+const heatran_1 = require("./heatran");
+const hyper_aroma_1 = require("./hyper-aroma");
+const infernape_1 = require("./infernape");
+const iron_leaves_1 = require("./iron-leaves");
+const iron_thorns_ex_1 = require("./iron-thorns-ex");
+const jamming_tower_1 = require("./jamming-tower");
+const kieran_1 = require("./kieran");
+const lairon_1 = require("./lairon");
+const lanas_assistance_1 = require("./lanas-assistance");
+const legacy_energy_1 = require("./legacy-energy");
+const love_ball_1 = require("./love-ball");
+const lucky_helmet_1 = require("./lucky-helmet");
+const luxio_1 = require("./luxio");
+const luxray_ex_1 = require("./luxray-ex");
+const mightyena_1 = require("./mightyena");
+const monferno_1 = require("./monferno");
+const morpeko_1 = require("./morpeko");
+const munkidori_1 = require("./munkidori");
+const okidogi_1 = require("./okidogi");
+const palafin_1 = require("./palafin");
+const palafin_ex_1 = require("./palafin-ex");
+const performance_flute_1 = require("./performance-flute");
+const perrin_1 = require("./perrin");
+const phione_1 = require("./phione");
+const poochyena_1 = require("./poochyena");
+const relicanth_1 = require("./relicanth");
+const rillaboom_1 = require("./rillaboom");
+const roto_stick_1 = require("./roto-stick");
+const scoop_up_cyclone_1 = require("./scoop-up-cyclone");
+const scream_tail_ex_1 = require("./scream-tail-ex");
+const secret_box_1 = require("./secret-box");
+const sunkern_1 = require("./sunkern");
+const survival_cast_1 = require("./survival-cast");
+const tatsugiri_1 = require("./tatsugiri");
+const teal_mask_ogerpon_ex_1 = require("./teal-mask-ogerpon-ex");
+const thwackey_1 = require("./thwackey");
+const ting_lu_1 = require("./ting-lu");
+const unfair_stamp_1 = require("./unfair-stamp");
+const walking_wake_1 = require("./walking-wake");
+const wellspring_mask_ogerpon_ex_1 = require("./wellspring-mask-ogerpon-ex");
+const zapdos_1 = require("./zapdos");
 exports.setTwilightMasquerade = [
-    new card_images_1.AggronArt(),
-    new card_images_1.AronArt(),
-    new card_images_1.BlisseyexArt(),
-    // new BoomerangEnergyArt(),
-    new card_images_1.CarmineArt(),
-    new card_images_1.ChimcharArt(),
-    new card_images_1.ClefableArt(),
-    new card_images_1.CornerstoneMaskOgerponexArt(),
-    new card_images_1.DreepyArt(),
-    new card_images_1.DrakloakArt(),
-    new card_images_1.DragapultexArt(),
-    new card_images_1.EmolgaArt(),
-    new card_images_1.FarfetchdArt(),
-    new card_images_1.FroslassArt(),
-    new card_images_1.HandyFanArt(),
-    new card_images_1.HasselArt(),
-    new card_images_1.HearthflameMaskOgerponexArt(),
-    new card_images_1.HeatranArt(),
-    new card_images_1.LaironArt(),
-    new card_images_1.LanasAssistanceArt(),
-    new card_images_1.LegacyEnergyArt(),
-    new card_images_1.LuxioArt(),
-    new card_images_1.LuxrayexArt(),
-    new card_images_1.MightyenaArt(),
-    new card_images_1.MunkidoriArt(),
-    new card_images_1.MorpekoArt(),
-    new card_images_1.PerformanceFluteArt(),
-    new card_images_1.PoochyenaArt(),
-    new card_images_1.RotoStickArt(),
-    new card_images_1.ScoopUpCycloneArt(),
-    new card_images_1.TatsugiriArt(),
-    new card_images_1.WellspringMaskOgerponexArt(),
-    new card_images_1.KieranArt(),
-    new card_images_1.BloodmoonUrsalunaexArt(),
-    new card_images_1.CaretakerArt(),
-    new card_images_1.CommunityCenterArt(),
-    new card_images_1.EnhancedHammerArt(),
-    new card_images_1.HyperAromaArt(),
-    new card_images_1.IronLeavesArt(),
-    new card_images_1.IronThornsexArt(),
-    new card_images_1.LoveBallArt(),
-    new card_images_1.LuckyHelmetArt(),
-    new card_images_1.OkidogiArt(),
-    new card_images_1.PerrinArt(),
-    new card_images_1.PhioneArt(),
-    new card_images_1.ScreamTailexArt(),
-    new card_images_1.SurvivalCastArt(),
-    new card_images_1.SunkernArt(),
-    new card_images_1.UnfairStampArt(),
-    new card_images_1.TealMaskOgerponexArt(),
-    new card_images_1.FroakieArt(),
-    new card_images_1.FrogadierArt(),
-    new card_images_1.GreninjaexArt(),
-    new card_images_1.ChanseyArt(),
-    new card_images_1.BugCatchingSetArt(),
-    new card_images_1.DipplinArt(),
-    new card_images_1.GrookeyArt(),
-    new card_images_1.ThwackeyArt(),
-    new card_images_1.FestivalGroundsArt(),
-    new card_images_1.ApplinArt(),
-    new card_images_1.ApplinArt2(),
-    new card_images_1.JammingTowerArt(),
-    new card_images_1.InfernapeArt(),
-    new card_images_1.WalkingWakeArt(),
-    new card_images_1.SecretBoxArt(),
-    new card_images_1.TingLuArt(),
-    new card_images_1.MonfernoArt(),
-    new card_images_1.RillaboomArt(),
-    new card_images_1.ZapdosArt(),
-    new card_images_1.ClefairyArt(),
-    new card_images_1.PalafinArt(),
-    new card_images_1.PalafinexArt(),
+    new aggron_1.Aggron(),
+    new aron_1.Aron(),
+    new blissey_ex_1.Blisseyex(),
+    // new BoomerangEnergy(),
+    new carmine_1.Carmine(),
+    new chimchar_1.Chimchar(),
+    new clefable_1.Clefable(),
+    new cornerstone_mask_ogerpon_ex_1.CornerstoneMaskOgerponex(),
+    new dreepy_1.Dreepy(),
+    new drakloak_1.Drakloak(),
+    new dragapult_ex_1.Dragapultex(),
+    new emolga_1.Emolga(),
+    new farfetchd_1.Farfetchd(),
+    new froslass_1.Froslass(),
+    new handy_fan_1.HandyFan(),
+    new hassel_1.Hassel(),
+    new hearthflame_mask_ogerpon_ex_1.HearthflameMaskOgerponex(),
+    new heatran_1.Heatran(),
+    new lairon_1.Lairon(),
+    new lanas_assistance_1.LanasAssistance(),
+    new legacy_energy_1.LegacyEnergy(),
+    new luxio_1.Luxio(),
+    new luxray_ex_1.Luxrayex(),
+    new mightyena_1.Mightyena(),
+    new munkidori_1.Munkidori(),
+    new morpeko_1.Morpeko(),
+    new performance_flute_1.PerformanceFlute(),
+    new poochyena_1.Poochyena(),
+    new relicanth_1.Relicanth(),
+    new roto_stick_1.RotoStick(),
+    new scoop_up_cyclone_1.ScoopUpCyclone(),
+    new tatsugiri_1.Tatsugiri(),
+    new wellspring_mask_ogerpon_ex_1.WellspringMaskOgerponex(),
+    new kieran_1.Kieran(),
+    new bloodmoon_ursaluna_ex_1.BloodmoonUrsalunaex(),
+    new caretaker_1.Caretaker(),
+    new community_center_1.CommunityCenter(),
+    new enhanced_hammer_1.EnhancedHammer(),
+    new hyper_aroma_1.HyperAroma(),
+    new iron_leaves_1.IronLeaves(),
+    new iron_thorns_ex_1.IronThornsex(),
+    new love_ball_1.LoveBall(),
+    new lucky_helmet_1.LuckyHelmet(),
+    new okidogi_1.Okidogi(),
+    new perrin_1.Perrin(),
+    new phione_1.Phione(),
+    new scream_tail_ex_1.ScreamTailex(),
+    new survival_cast_1.SurvivalCast(),
+    new sunkern_1.Sunkern(),
+    new unfair_stamp_1.UnfairStamp(),
+    new teal_mask_ogerpon_ex_1.TealMaskOgerponex(),
+    new froakie_1.Froakie(),
+    new frogadier_1.Frogadier(),
+    new greninja_ex_1.Greninjaex(),
+    new chansey_1.Chansey(),
+    new bug_catching_set_1.BugCatchingSet(),
+    new dipplin_1.Dipplin(),
+    new grookey_1.Grookey(),
+    new thwackey_1.Thwackey(),
+    new festival_plaza_1.FestivalGrounds(),
+    new applin_1.Applin(),
+    new applin_2_1.Applin2(),
+    new jamming_tower_1.JammingTower(),
+    new infernape_1.Infernape(),
+    new walking_wake_1.WalkingWake(),
+    new secret_box_1.SecretBox(),
+    new ting_lu_1.TingLu(),
+    new monferno_1.Monferno(),
+    new rillaboom_1.Rillaboom(),
+    new zapdos_1.Zapdos(),
+    new clefairy_1.Clefairy(),
+    new palafin_1.Palafin(),
+    new palafin_ex_1.Palafinex(),
 ];

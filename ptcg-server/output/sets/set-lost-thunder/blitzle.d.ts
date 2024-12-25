@@ -23,4 +23,5 @@ export declare class Blitzle extends PokemonCard {
     name: string;
     fullName: string;
     setNumber: string;
+    cardImage: string;
 }

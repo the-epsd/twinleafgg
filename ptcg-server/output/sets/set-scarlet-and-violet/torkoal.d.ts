@@ -27,6 +27,7 @@ export declare class Torkoal extends PokemonCard {
     set: string;
     name: string;
     fullName: string;
+    cardImage: string;
     setNumber: string;
     regulationMark: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;

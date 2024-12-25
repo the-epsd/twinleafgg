@@ -1,15 +1,23 @@
 import { Card } from '../../game/store/card/card';
-import { DialgaArt, FlyingPikachuVArt, FlyingPikachuVMAXArt, KyogreArt, LugiaArt, MewArt, ReshiramArt, YVeltalArt, ZacianVArt } from './card-images';
+import { Dialga } from './dialga';
+import { FlyingPikachuV } from './flying-pikachu-v';
+import { FlyingPikachuVMAX } from './flying-pikachu-vmax';
+import { Kyogre } from './kyogre';
+import { Lugia } from './lugia';
+import { Mew } from './mew';
+import { Reshiram } from './reshiram';
+import { Yveltal } from './yveltal';
+import { ZacianV } from './zacian-v';
 
 export const setCelebrations: Card[] = [
 
-  new DialgaArt(),
-  new FlyingPikachuVArt(),
-  new FlyingPikachuVMAXArt(),
-  new KyogreArt(),
-  new LugiaArt(),
-  new MewArt(),
-  new ReshiramArt(),
-  new YVeltalArt(),
-  new ZacianVArt(),
+  new Dialga(),
+  new FlyingPikachuV(),
+  new FlyingPikachuVMAX(),
+  new Kyogre(),
+  new Lugia(),
+  new Mew(),
+  new Reshiram(),
+  new Yveltal(),
+  new ZacianV(),
 ];

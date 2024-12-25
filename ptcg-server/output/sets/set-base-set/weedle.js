@@ -11,6 +11,7 @@ class Weedle extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.name = 'Weedle';
+        this.cardImage = 'assets/cardback.png';
         this.set = 'BS';
         this.fullName = 'Weedle BS';
         this.setNumber = '69';

@@ -8,8 +8,6 @@ import { PlayItemEffect } from '../../game/store/effects/play-card-effects';
 
 export class Budew extends PokemonCard {
 
-  public regulationMark = 'H';
-
   public stage: Stage = Stage.BASIC;
 
   public cardType: CardType = G;
@@ -28,6 +26,9 @@ export class Budew extends PokemonCard {
       text: 'During your opponent\'s next turn, they can\'t play any Item cards from their hand.',
     }
   ];
+
+  public regulationMark = 'H';
+
   public set: string = 'SV8a';
 
   public cardImage: string = 'assets/cardback.png';

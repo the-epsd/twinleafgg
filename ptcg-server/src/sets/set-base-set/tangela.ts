@@ -12,13 +12,15 @@ import { GameMessage } from '../../game';
 export class Tangela extends PokemonCard {
 
   public name = 'Tangela';
-  
+
+  public cardImage: string = 'assets/cardback.png';
+
   public setNumber = '66';
-  
+
   public set = 'BS';
-  
+
   public fullName = 'Tangela';
-  
+
   public cardType = CardType.GRASS;
 
   public stage = Stage.BASIC;

@@ -1,21 +1,35 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setForbiddenLight = void 0;
-const card_images_1 = require("./card-images");
+const beast_ring_1 = require("./beast-ring");
+const buzzwole_1 = require("./buzzwole");
+const flabebe_1 = require("./flabebe");
+const florges_1 = require("./florges");
+const frogadier_1 = require("./frogadier");
+const greninja_gx_1 = require("./greninja-gx");
+const inkay_1 = require("./inkay");
+const klefki_1 = require("./klefki");
+const lysandre_labs_1 = require("./lysandre-labs");
+const magnezone_1 = require("./magnezone");
+const malamar_1 = require("./malamar");
+const metal_frying_pan_1 = require("./metal-frying-pan");
+const mysterious_treasure_1 = require("./mysterious-treasure");
+const ultra_necrozma_gx_1 = require("./ultra-necrozma-gx");
+const unit_energy_fdy_1 = require("./unit-energy-fdy");
 exports.setForbiddenLight = [
-    new card_images_1.BeastRingArt(),
-    new card_images_1.BuzzwoleArt(),
-    new card_images_1.FlabebeArt(),
-    new card_images_1.FlorgesArt(),
-    new card_images_1.FrogadierArt(),
-    new card_images_1.GreninjaGXArt(),
-    new card_images_1.InkayArt(),
-    new card_images_1.KlefkiArt(),
-    new card_images_1.LysandreLabsArt(),
-    new card_images_1.MagnezoneArt(),
-    new card_images_1.MalamarArt(),
-    new card_images_1.MetalFryingPanArt(),
-    new card_images_1.MysteriousTreasureArt(),
-    new card_images_1.UnitEnergyFDYArt(),
-    new card_images_1.UltraNecrozmaGXArt(),
+    new beast_ring_1.BeastRing(),
+    new buzzwole_1.Buzzwole(),
+    new flabebe_1.Flabebe(),
+    new florges_1.Florges(),
+    new frogadier_1.Frogadier(),
+    new greninja_gx_1.GreninjaGX(),
+    new inkay_1.Inkay(),
+    new klefki_1.Klefki(),
+    new lysandre_labs_1.LysandreLabs(),
+    new magnezone_1.Magnezone(),
+    new malamar_1.Malamar(),
+    new metal_frying_pan_1.MetalFryingPan(),
+    new mysterious_treasure_1.MysteriousTreasure(),
+    new unit_energy_fdy_1.UnitEnergyFDY(),
+    new ultra_necrozma_gx_1.UltraNecrozmaGX(),
 ];

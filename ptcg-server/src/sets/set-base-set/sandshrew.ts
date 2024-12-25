@@ -12,13 +12,15 @@ import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 export class Sandshrew extends PokemonCard {
 
   public name = 'Sandshrew';
-  
+
+  public cardImage: string = 'assets/cardback.png';
+
   public set = 'BS';
-  
+
   public fullName = 'Sandshrew BS';
-  
+
   public cardType = CardType.FIGHTING;
- 
+
   public setNumber = '62';
 
   public stage = Stage.BASIC;
@@ -50,14 +52,14 @@ export class Sandshrew extends PokemonCard {
       opponent.marker.addMarker(PokemonCardList.CLEAR_PREVENT_OPPONENTS_ACTIVE_FROM_ATTACKING_DURING_OPPONENTS_NEXT_TURN, this);
     }
 
-    if (effect instanceof AttackEffect && effect.target.marker.hasMarker(PokemonCardList.     PREVENT_OPPONENTS_ACTIVE_FROM_ATTACKING_DURING_OPPONENTS_NEXT_TURN, this)) {
+    if (effect instanceof AttackEffect && effect.target.marker.hasMarker(PokemonCardList.PREVENT_OPPONENTS_ACTIVE_FROM_ATTACKING_DURING_OPPONENTS_NEXT_TURN, this)) {
       return store.prompt(state, new CoinFlipPrompt(effect.player.id, GameMessage.COIN_FLIP), (heads) => {
         if (!heads) {
           effect.damage = 0;
         }
       });
     }
-    
+
     if (effect instanceof AttackEffect && effect.player.active.marker.hasMarker(PokemonCardList.PREVENT_OPPONENTS_ACTIVE_FROM_ATTACKING_DURING_OPPONENTS_NEXT_TURN, this)) {
       return store.prompt(state, new CoinFlipPrompt(effect.player.id, GameMessage.COIN_FLIP), (heads) => {
         if (!heads) {

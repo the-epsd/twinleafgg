@@ -1,5 +1,5 @@
 import { AttachEnergyPrompt, Card, ChooseCardsPrompt, ChooseEnergyPrompt, ChoosePokemonPrompt, EnergyCard, GameError, GameMessage, Player, PlayerType, ShuffleDeckPrompt, SlotType, State, StateUtils, StoreLike } from '../..';
-import { CardType, EnergyType, Stage, SuperType } from '../card/card-types';
+import { BoardEffect, CardType, EnergyType, Stage, SuperType } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
 import { DiscardCardsEffect, HealTargetEffect, PutDamageEffect } from '../effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../effects/check-effects';
@@ -22,6 +22,14 @@ export function WAS_ATTACK_USED(effect: Effect, index: number, user: PokemonCard
  */
 export function WAS_ABILITY_USED(effect: Effect, index: number, user: PokemonCard): effect is PowerEffect {
   return effect instanceof PowerEffect && effect.power === user.powers[index];
+}
+
+export function abilityUsed(player: Player, card: PokemonCard) {
+  player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+    if (cardList.getPokemonCard() === card) {
+      cardList.addBoardEffect(BoardEffect.ABILITY_USED);
+    }
+  });
 }
 
 /**

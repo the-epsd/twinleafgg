@@ -72,6 +72,8 @@ export class GiantHearth extends TrainerCard {
 
   public set: string = 'UNM';
 
+  public cardImage: string = 'assets/cardback.png';
+
   public name: string = 'Giant Hearth';
 
   public fullName: string = 'Giant Hearth UNM';

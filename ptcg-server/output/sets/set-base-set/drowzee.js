@@ -11,6 +11,7 @@ class Drowzee extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.name = 'Drowzee';
+        this.cardImage = 'assets/cardback.png';
         this.set = 'BS';
         this.fullName = 'Drowzee BS';
         this.setNumber = '49';

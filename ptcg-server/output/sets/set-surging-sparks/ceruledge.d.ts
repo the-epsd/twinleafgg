@@ -10,6 +10,7 @@ export declare class Ceruledge extends PokemonCard {
     weakness: {
         type: CardType.WATER;
     }[];
+    retreat: CardType.COLORLESS[];
     attacks: {
         name: string;
         cost: (CardType.FIRE | CardType.COLORLESS)[];

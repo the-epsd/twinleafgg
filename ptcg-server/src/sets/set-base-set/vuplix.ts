@@ -13,14 +13,16 @@ export class Vulpix extends PokemonCard {
 
   public name = 'Vulpix';
 
+  public cardImage: string = 'assets/cardback.png';
+
   public setNumber = '68';
-  
+
   public set = 'BS';
-  
+
   public fullName = 'Vulpix BS';
-  
+
   public cardType = CardType.FIRE;
-  
+
   public stage = Stage.BASIC;
 
   public evolvesInto = ['Ninetales', 'Ninetales ex', 'Light Ninetales'];

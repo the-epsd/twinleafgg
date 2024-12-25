@@ -1,9 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setBlackAndWhitePromos = void 0;
-const card_images_1 = require("./card-images");
+const kyurem_1 = require("./kyurem");
+const litwick_1 = require("./litwick");
+const tropical_beach_1 = require("./tropical-beach");
 exports.setBlackAndWhitePromos = [
-    new card_images_1.KyuremArt(),
-    new card_images_1.LitwickArt(),
-    new card_images_1.TropicalBeachArt(),
+    new kyurem_1.Kyurem(),
+    new litwick_1.Litwick(),
+    new tropical_beach_1.TropicalBeach(),
 ];

@@ -26,6 +26,7 @@ export class Sizzlipede extends PokemonCard {
   public set: string = 'SSH';
   public name: string = 'Sizzlipede';
   public fullName: string = 'Sizzlipede SSH';
+  public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '37';
 
 }

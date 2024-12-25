@@ -12,6 +12,9 @@
 </mat-dialog-content>
 
 <mat-dialog-actions>
+  <button mat-raised-button color="warn" (click)="resetCardImages()">
+    {{ 'PROMPT_RESET' | translate }}
+  </button>
   <button mat-raised-button mat-dialog-close>
     {{ 'BUTTON_CANCEL' | translate }}
   </button>

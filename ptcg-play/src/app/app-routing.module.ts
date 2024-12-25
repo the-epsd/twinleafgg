@@ -17,6 +17,7 @@ import { TableComponent } from './table/table.component';
 import { TournamentListComponent } from './tournaments/tournament-list/tournament-list.component';
 import { VsScreenComponent } from './table/vs-screen/vs-screen.component';
 import { NewsComponent } from './news/news.component';
+import { TermsComponent } from './terms/terms.component';
 
 const routes: Routes = [
   { path: 'deck', component: DeckComponent, canActivate: [CanActivateService] },
@@ -35,6 +36,7 @@ const routes: Routes = [
   { path: 'table/:gameId', component: TableComponent, canActivate: [CanActivateService] },
   { path: 'tournaments', component: TournamentListComponent },
   { path: 'news', component: NewsComponent },
+  { path: 'terms', component: TermsComponent },
   { path: '', redirectTo: '/games', pathMatch: 'full' },
 ];
 

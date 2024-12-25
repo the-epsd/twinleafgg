@@ -10,18 +10,21 @@ export const cardReplacements = [
   { from: 'Basic {D} Energy GEN 81', to: 'Darkness Energy 7' },
   { from: 'Basic {D} Energy XY 138', to: 'Darkness Energy 7' },
 
-  { from: 'Grass Energy SVE 9', to: 'Grass Energy 1' },
-  { from: 'Fire Energy SVE 10', to: 'Fire Energy 2' },
-  { from: 'Water Energy SVE 11', to: 'Water Energy 3' },
-  { from: 'Lightning Energy SVE 12', to: 'Lightning Energy 4' },
-  { from: 'Psychic Energy SVE 13', to: 'Psychic Energy 5' },
-  { from: 'Fighting Energy SVE 14', to: 'Fighting Energy 6' },
-  { from: 'Darkness Energy SVE 15', to: 'Darkness Energy 7' },
-  { from: 'Metal Energy SVE 16', to: 'Metal Energy 8' },
+  { from: 'Grass Energy SVE 1', to: 'Grass Energy 1' },
+  { from: 'Fire Energy SVE 2', to: 'Fire Energy 2' },
+  { from: 'Water Energy SVE 3', to: 'Water Energy 3' },
+  { from: 'Lightning Energy SVE 4', to: 'Lightning Energy 4' },
+  { from: 'Psychic Energy SVE 5', to: 'Psychic Energy 5' },
+  { from: 'Fighting Energy SVE 6', to: 'Fighting Energy 6' },
+  { from: 'Darkness Energy SVE 7', to: 'Darkness Energy 7' },
+  { from: 'Metal Energy SVE 8', to: 'Metal Energy 8' },
 
   //BS
   { from: 'Pokemon Breeder BS 76', to: 'Pokémon Breeder BS 76' },
   { from: 'Pokemon Trader BS 77', to: 'Pokémon Trader BS 77' },
+
+  //BLW
+  { from: 'Zoroark BLW 71', to: 'Zoroark BW 71' },
 
   //ROS
   { from: 'Double Dragon Energy ROS 97', to: 'Double Dragon Energy SUM 97' },
@@ -48,18 +51,18 @@ export const cardReplacements = [
   { from: 'Hisuian Qwilfish ASR 89', to: 'Hisuian Qwilfish2 ASR 89' },
 
   //CRZ
-  { from: 'Zacian VSTAR CRZ 96', to: 'Zacian VSTAR' },
+  { from: 'Zacian VSTAR CRZ 96', to: 'Zacian VSTAR 96' },
 
   //SVI
   { from: 'Pokégear 3.0 SVI 186', to: 'Pokegear SVI 186' },
   { from: 'Pokémon Catcher SVI 187', to: 'Pokemon Catcher SVI 187' },
-  { from: 'Professor\'s Research SVI 189', to: 'Professor\'s Research SVI 189 189' },
-  { from: 'Professor\'s Research SVI 190', to: 'Professor\'s Research SVI 190 189' },
+  { from: 'Professor\'s Research SVI 189', to: 'Professor\'s Research SVI 189' },
+  { from: 'Professor\'s Research SVI 190', to: 'Professor\'s Research SVI 190' },
   { from: 'Riolu SVI 113', to: 'Riolu2 SVI 113' },
 
   //PAL
-  { from: 'Frigibax PAL 57', to: '4 Frigibax PAL 57 ' },
-  { from: 'Frigibax PAL 58', to: 'Frigibax PAL 58 ' },
+  { from: 'Frigibax PAL 57', to: 'Frigibax PAL1 57' },
+  { from: 'Frigibax PAL 58', to: 'Frigibax PAL2 58' },
   //PAL FA
   { from: 'Frigibax PAL 208', to: 'FrigibaxIR PAL 208' },
   { from: 'Arctibax PAL 209', to: 'ArctibaxIR PAL 209' },
@@ -157,6 +160,7 @@ export const cardReplacements = [
   { from: 'Psychic Energy MEW 207', to: 'Psychic Energy MEW 207' },
 
   //PAR
+  { from: 'Toedscool PAL 57 ', to: 'Toedscool PAL2 57' },
   { from: 'Gimmighoul PAR 88', to: 'Gimmighoul2 PAR 88' },
   //PAR FA
   { from: 'Toedscruel PAR 185', to: 'ToedscruelIR PAR 185' },
@@ -220,8 +224,8 @@ export const cardReplacements = [
   { from: 'Raging Bolt ex TEF 218', to: 'RagingBoltexHR TEF 218' },
 
   //TWM
-  { from: 'Applin TWM 17', to: 'Applin TWM 17 ' },
-  { from: 'Applin TWM 126', to: 'Applin TWM 126 ' },
+  { from: 'Applin TWM 17', to: 'Applin TWM 17 17' },
+  { from: 'Applin TWM 126', to: 'Applin TWM 126 126' },
   { from: 'Scovillain ex TEF 22', to: 'Scovillain ex PAF 107' },
 
   //SFA
@@ -283,7 +287,6 @@ export const cardReplacements = [
   { from: 'Dialga SSP 135', to: 'Dialga SV7a 135' },
   { from: 'Drayton SSP 174', to: 'Drayton SV7a 174' },
   { from: 'Duraludon SSP 129', to: 'Duraludon SV7a 129' },
-  { from: 'Dusk Ball SSP 175', to: 'Dusk Ball SV7a 175' },
   { from: 'Eternatus SSP 141', to: 'Eternatus SV8 141' },
   { from: 'Exeggcute SSP 1', to: 'Exeggcute SV7a 1' },
   { from: 'Flygon ex SSP 106', to: 'Flygon ex SV7a 106' },
@@ -295,7 +298,6 @@ export const cardReplacements = [
   { from: 'Latias ex SSP 76', to: 'Latias ex SV7a 76' },
   { from: 'Lisia\'s Appeal SSP 179', to: 'Lisia\'s Appeal SV8 179' },
   { from: 'Magnemite SSP 58', to: 'Magnemite SV8 58' },
-  { from: 'Magneton SSP 59', to: 'Magneton SV8 59' },
   { from: 'Marill SSP 73', to: 'Marill svLN 73' },
   { from: 'Mesprit SSP 79', to: 'Mesprit SV8 79' },
   { from: 'Milotic ex SSP 42', to: 'Milotic ex SV8 42' },
@@ -323,14 +325,14 @@ export const cardReplacements = [
 
 export const exportReplacements = [
   //Energy
-  { from: 'Grass Energy 1', to: 'Grass Energy SVE 9' },
-  { from: 'Fire Energy 2', to: 'Fire Energy SVE 10' },
-  { from: 'Water Energy 3', to: 'Water Energy SVE 11' },
-  { from: 'Lightning Energy 4', to: 'Lightning Energy SVE 12' },
-  { from: 'Psychic Energy 5', to: 'Psychic Energy SVE 13' },
-  { from: 'Fighting Energy 6', to: 'Fighting Energy SVE 14' },
-  { from: 'Darkness Energy 7', to: 'Darkness Energy SVE 15' },
-  { from: 'Metal Energy 8', to: 'Metal Energy SVE 16' },
+  { from: 'Grass Energy 1', to: 'Grass Energy SVE 1' },
+  { from: 'Fire Energy 2', to: 'Fire Energy SVE 2' },
+  { from: 'Water Energy 3', to: 'Water Energy SVE 3' },
+  { from: 'Lightning Energy 4', to: 'Lightning Energy SVE 4' },
+  { from: 'Psychic Energy 5', to: 'Psychic Energy SVE 5' },
+  { from: 'Fighting Energy 6', to: 'Fighting Energy SVE 6' },
+  { from: 'Darkness Energy 7', to: 'Darkness Energy SVE 7' },
+  { from: 'Metal Energy 8', to: 'Metal Energy SVE 8' },
 
   //BS
   { from: 'Pokémon Breeder BS 76', to: 'Pokemon Breeder BS 76' },
@@ -361,7 +363,7 @@ export const exportReplacements = [
   { from: 'Hisuian Qwilfish2 ASR 89', to: 'Hisuian Qwilfish ASR 89' },
 
   //CRZ
-  { from: 'Zacian VSTAR', to: 'Zacian VSTAR CRZ 96' },
+  { from: 'Zacian VSTAR 96', to: 'Zacian VSTAR CRZ 96' },
 
   //SVI
   { from: 'Pokegear SVI 186', to: 'Pokégear 3.0 SVI 186' },
@@ -371,8 +373,8 @@ export const exportReplacements = [
   { from: 'Riolu2 SVI 113', to: 'Riolu SVI 113' },
 
   //PAL
-  { from: 'Frigibax PAL 57 ', to: 'Frigibax PAL 57' },
-  { from: 'Frigibax PAL 58 ', to: 'Frigibax PAL 58' },
+  { from: 'Frigibax PAL1 57 ', to: 'Frigibax PAL 57' },
+  { from: 'Frigibax PAL2 58 ', to: 'Frigibax PAL 58' },
   //PAL FA
   { from: 'FrigibaxIR PAL 208', to: 'Frigibax PAL 208' },
   { from: 'ArctibaxIR PAL 209', to: 'Arctibax PAL 209' },
@@ -437,6 +439,7 @@ export const exportReplacements = [
   { from: 'Psychic Energy MEW 207', to: 'Psychic Energy MEW 207' },
 
   //PAR
+  { from: 'Toedscool PAL2 57 ', to: 'Toedscool PAL 57' },
   { from: 'Gimmighoul2 PAR 88', to: 'Gimmighoul PAR 88' },
   //PAR FA
   { from: 'ToedscruelIR PAR 185', to: 'Toedscruel PAR 185' },
@@ -533,8 +536,8 @@ export const exportReplacements = [
   { from: 'RagingBoltexHR TEF 218', to: 'Raging Bolt ex TEF 218' },
 
   //TWM
-  { from: 'Applin TWM 17 ', to: 'Applin TWM 17' },
-  { from: 'Applin TWM 126 ', to: 'Applin TWM 126' },
+  { from: 'Applin TWM 17 17', to: 'Applin TWM 17' },
+  { from: 'Applin TWM 126 126', to: 'Applin TWM 126' },
   { from: 'Scovillain ex PAF 107', to: 'Scovillain ex TEF 22' },
 
   //SFA
@@ -596,7 +599,6 @@ export const exportReplacements = [
   { from: 'Dialga SV7a 135', to: 'Dialga SSP 135' },
   { from: 'Drayton SV7a 174', to: 'Drayton SSP 174' },
   { from: 'Duraludon SV7a 129', to: 'Duraludon SSP 129' },
-  { from: 'Dusk Ball SV7a 175', to: 'Dusk Ball SSP 175' },
   { from: 'Eternatus SV8 141', to: 'Eternatus SSP 141' },
   { from: 'Exeggcute SV7a 1', to: 'Exeggcute SSP 1' },
   { from: 'Flygon ex SV7a 106', to: 'Flygon ex SSP 106' },
@@ -608,7 +610,6 @@ export const exportReplacements = [
   { from: 'Latias ex SV7a 76', to: 'Latias ex SSP 76' },
   { from: 'Lisia\'s Appeal SV8 179', to: 'Lisia\'s Appeal SSP 179' },
   { from: 'Magnemite SV8 58', to: 'Magnemite SSP 58' },
-  { from: 'Magneton SV8 59', to: 'Magneton SSP 59' },
   { from: 'Marill svLN 73', to: 'Marill SSP 73' },
   { from: 'Mesprit SV8 79', to: 'Mesprit SSP 79' },
   { from: 'Milotic ex SV8 42', to: 'Milotic ex SSP 42' },

@@ -14,6 +14,10 @@ function* playCard(next: Function, store: StoreLike, state: State,
   const opponent = StateUtils.getOpponent(state, player);
   const cards = player.hand.cards.filter(c => c !== self);
 
+  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+  // We will discard this card after prompt confirmation
+  effect.preventDefault = true;
+
   if (cards.length > 0) {
     player.hand.moveCardsTo(cards, player.deck);
   }

@@ -32,7 +32,8 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
     { value: Format.STANDARD, label: 'LABEL_STANDARD' },
     { value: Format.GLC, label: 'LABEL_GLC' },
     { value: Format.EXPANDED, label: 'LABEL_EXPANDED' },
-    { value: Format.RETRO, label: 'LABEL_RETRO' }
+    { value: Format.RETRO, label: 'LABEL_RETRO' },
+    { value: Format.UNLIMITED, label: 'LABEL_UNLIMITED' }
   ];
 
   selectedFormat: Format = Format.STANDARD;

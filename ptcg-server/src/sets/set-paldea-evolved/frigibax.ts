@@ -28,10 +28,10 @@ export class Frigibax extends PokemonCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '';
+  public setNumber: string = '57';
 
   public name: string = 'Frigibax';
 
-  public fullName: string = 'Frigibax PAL 57';
+  public fullName: string = 'Frigibax PAL1';
 
 }

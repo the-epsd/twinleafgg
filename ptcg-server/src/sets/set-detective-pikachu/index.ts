@@ -1,7 +1,8 @@
 import { Card } from '../../game/store/card/card';
-import { BulbasaurArt, GreninjaArt } from './card-images';
+import { Bulbasaur } from './bulbasaur';
+import { Greninja } from './greninja';
 
 export const setDetectivePikachu: Card[] = [
-  new BulbasaurArt(),
-  new GreninjaArt(),
+  new Bulbasaur(),
+  new Greninja(),
 ];

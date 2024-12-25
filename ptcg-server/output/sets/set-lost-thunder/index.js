@@ -1,43 +1,79 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setLostThunder = void 0;
-const card_images_1 = require("./card-images");
+const adventure_bag_1 = require("./adventure-bag");
+const alolan_meowth_1 = require("./alolan-meowth");
+const alolan_ninetales_gx_1 = require("./alolan-ninetales-gx");
+const blitzle_1 = require("./blitzle");
+const cascoon_1 = require("./cascoon");
+const chikorita_1 = require("./chikorita");
+const chikorita_2_1 = require("./chikorita-2");
+const chinchou_1 = require("./chinchou");
+const counter_gain_1 = require("./counter-gain");
+const custom_catcher_1 = require("./custom-catcher");
+const cutiefly_1 = require("./cutiefly");
+const ditto_prism_star_1 = require("./ditto-prism-star");
+const electropower_1 = require("./electropower");
+const faba_1 = require("./faba");
+const girafarig_1 = require("./girafarig");
+const giratina_1 = require("./giratina");
+const granbull_1 = require("./granbull");
+const grovyle_1 = require("./grovyle");
+const lost_blender_1 = require("./lost-blender");
+const mareep_1 = require("./mareep");
+const meganium_1 = require("./meganium");
+const mina_1 = require("./mina");
+const naganadel_1 = require("./naganadel");
+const net_ball_1 = require("./net-ball");
+const nihilego_1 = require("./nihilego");
+const poipole_1 = require("./poipole");
+const ribombee_1 = require("./ribombee");
+const shuckle_gx_1 = require("./shuckle-gx");
+const slowking_1 = require("./slowking");
+const snubbull_1 = require("./snubbull");
+const spell_tag_1 = require("./spell-tag");
+const thunder_mountain_prism_star_1 = require("./thunder-mountain-prism-star");
+const treecko_1 = require("./treecko");
+const white_kyurem_1 = require("./white-kyurem");
+const wurmple_1 = require("./wurmple");
+const zebstrika_1 = require("./zebstrika");
+const zeraora_gx_1 = require("./zeraora-gx");
 exports.setLostThunder = [
-    new card_images_1.AdventureBagArt(),
-    new card_images_1.AlolanMeowthArt(),
-    new card_images_1.AlolanNinetalesGXArt(),
-    new card_images_1.BlitzleArt(),
-    new card_images_1.CascoonArt(),
-    new card_images_1.ChikoritaArt(),
-    new card_images_1.ChikoritaArt2(),
-    new card_images_1.ChinchouArt(),
-    new card_images_1.CounterGainArt(),
-    new card_images_1.CustomCatcherArt(),
-    new card_images_1.CutieflyArt(),
-    new card_images_1.ElectropowerArt(),
-    new card_images_1.FabaArt(),
-    new card_images_1.GirafarigArt(),
-    new card_images_1.GiratinaArt(),
-    new card_images_1.GranbullArt(),
-    new card_images_1.GrovleArt(),
-    new card_images_1.LostBlenderArt(),
-    new card_images_1.MareepArt(),
-    new card_images_1.MeganiumArt(),
-    new card_images_1.MinaArt(),
-    new card_images_1.NaganadelArt(),
-    new card_images_1.NetBallArt(),
-    new card_images_1.NihilegoArt(),
-    new card_images_1.PoipoleArt(),
-    new card_images_1.RibombeeArt(),
-    new card_images_1.ShuckleGXArt(),
-    new card_images_1.SlowkingArt(),
-    new card_images_1.SnubbullArt(),
-    new card_images_1.SpellTagArt(),
-    new card_images_1.ThunderMountainPrismStarArt(),
-    new card_images_1.TreeckoArt(),
-    new card_images_1.WhiteKyuremArt(),
-    new card_images_1.WurmpleArt(),
-    new card_images_1.ZebstrikaArt(),
-    new card_images_1.ZeraoraGXArt(),
-    new card_images_1.DittoPrismStarArt(),
+    new adventure_bag_1.AdventureBag(),
+    new alolan_meowth_1.AlolanMeowth(),
+    new alolan_ninetales_gx_1.AlolanNinetalesGX(),
+    new blitzle_1.Blitzle(),
+    new cascoon_1.Cascoon(),
+    new chikorita_1.Chikorita(),
+    new chikorita_2_1.Chikorita2(),
+    new chinchou_1.Chinchou(),
+    new counter_gain_1.CounterGain(),
+    new custom_catcher_1.CustomCatcher(),
+    new cutiefly_1.Cutiefly(),
+    new electropower_1.Electropower(),
+    new faba_1.Faba(),
+    new girafarig_1.Girafarig(),
+    new giratina_1.Giratina(),
+    new granbull_1.Granbull(),
+    new grovyle_1.Grovyle(),
+    new lost_blender_1.LostBlender(),
+    new mareep_1.Mareep(),
+    new meganium_1.Meganium(),
+    new mina_1.Mina(),
+    new naganadel_1.Naganadel(),
+    new net_ball_1.NetBall(),
+    new nihilego_1.Nihilego(),
+    new poipole_1.Poipole(),
+    new ribombee_1.Ribombee(),
+    new shuckle_gx_1.ShuckleGX(),
+    new slowking_1.Slowking(),
+    new snubbull_1.Snubbull(),
+    new spell_tag_1.SpellTag(),
+    new thunder_mountain_prism_star_1.ThunderMountainPrismStar(),
+    new treecko_1.Treecko(),
+    new white_kyurem_1.WhiteKyurem(),
+    new wurmple_1.Wurmple(),
+    new zebstrika_1.Zebstrika(),
+    new zeraora_gx_1.ZeraoraGX(),
+    new ditto_prism_star_1.DittoPrismStar(),
 ];

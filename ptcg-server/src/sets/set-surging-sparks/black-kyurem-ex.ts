@@ -1,5 +1,5 @@
 import { PokemonCard, CardTag, Stage, CardType, StoreLike, State, StateUtils, SpecialCondition } from '../../game';
-import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
+import { AddSpecialConditionsEffect, DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 
@@ -40,6 +40,14 @@ export class BlackKyuremex extends PokemonCard {
         const specialConditionEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.PARALYZED]);
         store.reduceEffect(state, specialConditionEffect);
       }
+    }
+
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+      const player = effect.player;
+
+      const dealDamage = new DealDamageEffect(effect, 30);
+      dealDamage.target = player.active;
+      return store.reduceEffect(state, dealDamage);
     }
     return state;
   }

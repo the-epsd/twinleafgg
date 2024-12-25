@@ -29,7 +29,7 @@ export class Centiskorch extends PokemonCard {
 
   public set: string = 'SSH';
   public regulationMark: string = 'D';
-  public setNumber: string = '88';
+  public setNumber: string = '39';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Centiskorch';
   public fullName: string = 'Centiskorch SSH';

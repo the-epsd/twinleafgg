@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DISCARD_X_ENERGY_FROM_YOUR_HAND = exports.SHUFFLE_DECK = exports.ATTACH_X_NUMBER_OF_BASIC_ENERGY_CARDS_FROM_YOUR_DISCARD_TO_YOUR_BENCHED_POKEMON = exports.THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_BENCHED_POKEMON = exports.TAKE_X_MORE_PRIZE_CARDS = exports.YOUR_OPPONENTS_POKEMON_IS_KNOCKED_OUT_BY_DAMAGE_FROM_THIS_ATTACK = exports.THIS_POKEMON_HAS_ANY_DAMAGE_COUNTERS_ON_IT = exports.HEAL_X_DAMAGE_FROM_THIS_POKEMON = exports.THIS_ATTACK_DOES_X_MORE_DAMAGE = exports.FLIP_IF_HEADS = exports.DISCARD_X_ENERGY_FROM_THIS_POKEMON = exports.SEARCH_YOUR_DECK_FOR_X_POKEMON_AND_PUT_THEM_ONTO_YOUR_BENCH = exports.DISCARD_A_STADIUM_CARD_IN_PLAY = exports.PASSIVE_ABILITY_ACTIVATED = exports.WAS_ABILITY_USED = exports.WAS_ATTACK_USED = void 0;
+exports.DISCARD_X_ENERGY_FROM_YOUR_HAND = exports.SHUFFLE_DECK = exports.ATTACH_X_NUMBER_OF_BASIC_ENERGY_CARDS_FROM_YOUR_DISCARD_TO_YOUR_BENCHED_POKEMON = exports.THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_BENCHED_POKEMON = exports.TAKE_X_MORE_PRIZE_CARDS = exports.YOUR_OPPONENTS_POKEMON_IS_KNOCKED_OUT_BY_DAMAGE_FROM_THIS_ATTACK = exports.THIS_POKEMON_HAS_ANY_DAMAGE_COUNTERS_ON_IT = exports.HEAL_X_DAMAGE_FROM_THIS_POKEMON = exports.THIS_ATTACK_DOES_X_MORE_DAMAGE = exports.FLIP_IF_HEADS = exports.DISCARD_X_ENERGY_FROM_THIS_POKEMON = exports.SEARCH_YOUR_DECK_FOR_X_POKEMON_AND_PUT_THEM_ONTO_YOUR_BENCH = exports.DISCARD_A_STADIUM_CARD_IN_PLAY = exports.PASSIVE_ABILITY_ACTIVATED = exports.abilityUsed = exports.WAS_ABILITY_USED = exports.WAS_ATTACK_USED = void 0;
 const __1 = require("../..");
 const card_types_1 = require("../card/card-types");
 const attack_effects_1 = require("../effects/attack-effects");
@@ -24,6 +24,14 @@ function WAS_ABILITY_USED(effect, index, user) {
     return effect instanceof game_effects_1.PowerEffect && effect.power === user.powers[index];
 }
 exports.WAS_ABILITY_USED = WAS_ABILITY_USED;
+function abilityUsed(player, card) {
+    player.forEachPokemon(__1.PlayerType.BOTTOM_PLAYER, cardList => {
+        if (cardList.getPokemonCard() === card) {
+            cardList.addBoardEffect(card_types_1.BoardEffect.ABILITY_USED);
+        }
+    });
+}
+exports.abilityUsed = abilityUsed;
 /**
  *
  * A basic effect for checking whether or not a passive ability gets activated.

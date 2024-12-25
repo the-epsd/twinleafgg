@@ -11,13 +11,15 @@ import { StoreLike } from '../../game/store/store-like';
 export class Pidgey extends PokemonCard {
 
   public name = 'Pidgey';
-  
+
+  public cardImage: string = 'assets/cardback.png';
+
   public set = 'BS';
-  
+
   public setNumber = '57';
-  
+
   public cardType = CardType.COLORLESS;
-  
+
   public fullName = 'Pidgey BS';
 
   public stage = Stage.BASIC;

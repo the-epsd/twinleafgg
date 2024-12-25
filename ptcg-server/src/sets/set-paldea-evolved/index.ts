@@ -1,73 +1,131 @@
 import { Card } from '../../game/store/card/card';
-import { ArctibaxArt, ArtazonArt, BaxcaliburArt, BossOrdersArt, BramblinArt, BraveyCharmArt, CetitanArt, CetoddleArt, ChienPaoexArt, ChiYuexArt, ChoiceBeltArt, ClavellArt, CufantArt, DeinoArt, DeliveryDroneArt, DudunsparceArt, FightingAuLaitArt, FlamigoArt, FloragatoArt, ForretressexArt, Frigibax2Art, FrigibaxArt, GiacomoArt, GreatBallArt, GrushaArt, HoppipArt, HydreigonArt, IonoArt, JetEnergyArt, LokixArt, LuminousEnergyArt, LuxrayArt, MagnemiteArt, MeowscaradaexArt, MimikyuArt, MisdreavusArt, MurkrowArt, NoibatArt, NoivernexArt, OrthwormArt, PelipperArt, PinecoArt, ReversalEnergyArt, ShinxArt, SpiritombArt, SprigatitoArt, SquawkabillyexArt, SuperiorEnergyRetrievalArt, SuperRodArt, TadbulbArt, TarountulaArt, TherapeuticEnergyArt, TingLuexArt, TinkatinkArt, TinkatonArt, TinkatuffArt, WattrelArt, WingullArt, WoChienexArt, ZweilousArt } from './card-images';
-import { ArctibaxIR, BaxcaliburIR, BossOrdersFA, BossOrdersSIR, ChiYuexFA, ChiYuexSIR, ChienPaoexFA, ChienPaoexHR, ChienPaoexSIR, ClavellFA, FlamigoIR, FrigibaxIR, GiacomoFA, GiacomoSIR, GrushaFA, GrushaSIR, IonoFA, IonoSIR, MeowscaradaexFA, MeowscaradaexHR, MeowscaradaexSIR, NoivernexFA, SquawkabillyexFA, SquawkabillyexSIR, SuperRodHR, SuperiorEnergyRetrievalHR, TingLuexFA, TingLuexHR, TingLuexSIR, WoChienexFA, WoChienexSIR } from './full-art';
-
+import { Arctibax } from './arctibax';
+import { Artazon } from './artazon';
+import { Baxcalibur } from './baxcalibur';
+import { BossOrders } from './boss-orders';
+import { Bramblin } from './bramblin';
+import { BraveyCharm } from './bravery-charm';
+import { Cetitan } from './cetitan';
+import { Cetoddle } from './cetoddle';
+import { ChiYuex } from './chi-yu-ex';
+import { ChienPaoex } from './chien-pao-ex';
+import { ChoiceBelt } from './choice-belt';
+import { Clavell } from './clavell';
+import { Cufant } from './cufant';
+import { Deino } from './deino';
+import { DeliveryDrone } from './delivery-drone';
+import { Dudunsparce } from './dudunsparce';
+import { FightingAuLait } from './fighting-au-lait';
+import { Flamigo } from './flamigo';
+import { Floragato } from './floragato';
+import { Forretressex } from './forretress-ex';
+import { Frigibax } from './frigibax';
+import { Frigibax2 } from './frigibax-2';
+import { ArctibaxIR, BaxcaliburIR, BossOrdersFA, ChiYuexFA, ChienPaoexFA, ClavellFA, FlamigoIR, FrigibaxIR, GiacomoFA, GrushaFA, IonoFA, MeowscaradaexFA, NoivernexFA, SquawkabillyexFA, SuperRodHR, SuperiorEnergyRetrievalHR, TingLuexFA, WoChienexFA, MeowscaradaexSIR, WoChienexSIR, ChiYuexSIR, ChienPaoexSIR, TingLuexSIR, SquawkabillyexSIR, BossOrdersSIR, GiacomoSIR, GrushaSIR, IonoSIR, MeowscaradaexHR, ChienPaoexHR, TingLuexHR } from './full-art';
+import { Giacomo } from './giacomo';
+import { GreatBall } from './great-ball';
+import { Grusha } from './grusha';
+import { Hoppip } from './hoppip';
+import { Hydreigon } from './hydreigon';
+import { Iono } from './iono';
+import { JetEnergy } from './jet-energy';
+import { Lokix } from './lokix';
+import { LuminousEnergy } from './luminous-energy';
+import { Luxray } from './luxray';
+import { Magnemite } from './magnemite';
+import { Meowscaradaex } from './meowscarada-ex';
+import { Mimikyu } from './mimikyu';
+import { Misdreavus } from './misdreavus';
+import { Murkrow } from './murkrow';
+import { Noibat } from './noibat';
+import { Noivernex } from './noivern-ex';
+import { Orthworm } from './orthworm';
+import { Pelipper } from './pelipper';
+import { Pineco } from './pineco';
+import { ReversalEnergy } from './reversal-energy';
+import { Shinx } from './shinx';
+import { Spiritomb } from './spiritomb';
+import { Sprigatito } from './sprigatito';
+import { Squawkabillyex } from './squawkabilly-ex';
+import { SuperRod } from './super-rod';
+import { SuperiorEnergyRetrieval } from './superior-energy-retrieval';
+import { Tadbulb } from './tadbulb';
+import { Tarountula } from './tarountula';
+import { TherapeuticEnergy } from './theraputic-energy';
+import { TingLuex } from './ting-lu-ex';
+import { Tinkatink } from './tinkatink';
+import { Tinkaton } from './tinkaton';
+import { Tinkatuff } from './tinkatuff';
+import { Wattrel } from './wattrel';
+import { Wingull } from './wingull';
+import { WoChienex } from './wo-chien-ex';
+import { Zweilous } from './zweilous';
 //import { CalamitousSnowyMountain } from './new calamitous-snowy-mountain';
 
 export const setPaldeaEvolved: Card[] = [
 
-  new ArctibaxArt(),
-  new ArtazonArt(),
-  new BaxcaliburArt(),
-  new BossOrdersArt(),
-  new BramblinArt(),
-  new BraveyCharmArt(),
-  new CetitanArt(),
-  new CetoddleArt(),
-  new ChiYuexArt(),
-  new ChienPaoexArt(),
-  new ChoiceBeltArt(),
-  new ClavellArt(),
-  new CufantArt(),
-  new DeinoArt(),
-  new DeliveryDroneArt(),
-  new DudunsparceArt(),
-  new FightingAuLaitArt(),
-  new FlamigoArt(),
-  new FloragatoArt(),
-  new ForretressexArt(),
-  new FrigibaxArt(),
-  new Frigibax2Art(),
-  new GiacomoArt(),
-  new GreatBallArt(),
-  new GrushaArt(),
-  new HoppipArt(),
-  new HydreigonArt(),
-  new IonoArt(),
-  new JetEnergyArt(),
-  new LokixArt(),
-  new LuminousEnergyArt(),
-  new LuxrayArt(),
-  new MagnemiteArt(),
-  new MeowscaradaexArt(),
-  new MimikyuArt(),
-  new MisdreavusArt(),
-  new MurkrowArt(),
-  new NoibatArt(),
-  new NoivernexArt(),
-  new OrthwormArt(),
-  new PelipperArt(),
-  new PinecoArt(),
-  new ReversalEnergyArt(),
-  new ShinxArt(),
-  new SpiritombArt(),
-  new SprigatitoArt(),
-  new SquawkabillyexArt(),
-  new SuperRodArt(),
-  new SuperiorEnergyRetrievalArt(),
-  new TadbulbArt(),
-  new TarountulaArt(),
-  new TherapeuticEnergyArt(),
-  new TingLuexArt(),
-  new TinkatinkArt(),
-  new TinkatuffArt(),
-  new TinkatonArt(),
-  new WattrelArt(),
-  new WingullArt(),
-  new WoChienexArt(),
-  new ZweilousArt(),
+  new Arctibax(),
+  new Artazon(),
+  new Baxcalibur(),
+  new BossOrders(),
+  new Bramblin(),
+  new BraveyCharm(),
+  new Cetitan(),
+  new Cetoddle(),
+  new ChiYuex(),
+  new ChienPaoex(),
+  new ChoiceBelt(),
+  new Clavell(),
+  new Cufant(),
+  new Deino(),
+  new DeliveryDrone(),
+  new Dudunsparce(),
+  new FightingAuLait(),
+  new Flamigo(),
+  new Floragato(),
+  new Forretressex(),
+  new Frigibax(),
+  new Frigibax2(),
+  new Giacomo(),
+  new GreatBall(),
+  new Grusha(),
+  new Hoppip(),
+  new Hydreigon(),
+  new Iono(),
+  new JetEnergy(),
+  new Lokix(),
+  new LuminousEnergy(),
+  new Luxray(),
+  new Magnemite(),
+  new Meowscaradaex(),
+  new Mimikyu(),
+  new Misdreavus(),
+  new Murkrow(),
+  new Noibat(),
+  new Noivernex(),
+  new Orthworm(),
+  new Pelipper(),
+  new Pineco(),
+  new ReversalEnergy(),
+  new Shinx(),
+  new Spiritomb(),
+  new Sprigatito(),
+  new Squawkabillyex(),
+  new SuperRod(),
+  new SuperiorEnergyRetrieval(),
+  new Tadbulb(),
+  new Tarountula(),
+  new TherapeuticEnergy(),
+  new TingLuex(),
+  new Tinkatink(),
+  new Tinkatuff(),
+  new Tinkaton(),
+  new Wattrel(),
+  new Wingull(),
+  new WoChienex(),
+  new Zweilous(),
 
-  // Full Art
+  // Full 
   new ArctibaxIR(),
   new BaxcaliburIR(),
   new BossOrdersFA(),

@@ -10,7 +10,7 @@ class FireEnergy extends energy_card_1.EnergyCard {
         this.set = 'SVE';
         this.regulationMark = 'ENERGY';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '284';
+        this.setNumber = '2';
         this.name = 'Fire Energy';
         this.fullName = 'Fire Energy SVE';
     }

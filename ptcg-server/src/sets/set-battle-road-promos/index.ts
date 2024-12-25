@@ -1,10 +1,11 @@
 import { Card } from '../../game/store/card/card';
-import { MiracleDiamondArt, MysteriousPearlArt } from './card-images';
+import { MiracleDiamond } from './miracle-diamond';
+import { MysteriousPearl } from './mysterious-pearl';
 
 
 export const setBattleRoadPromos: Card[] = [
 
-  new MiracleDiamondArt(),
-  new MysteriousPearlArt(),
+  new MiracleDiamond(),
+  new MysteriousPearl(),
 
 ];

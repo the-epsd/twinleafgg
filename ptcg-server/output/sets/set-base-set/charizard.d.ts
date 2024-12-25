@@ -33,6 +33,7 @@ export declare class Charizard extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
+    cardImage: string;
     readonly ENERGY_BURN_MARKER = "ENERGY_BURN_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

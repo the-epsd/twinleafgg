@@ -1,5 +1,6 @@
 import { State, PowerType, PlayerType, CardType, PokemonCard, Stage, StoreLike } from '../../game';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { CheckTableStateEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
@@ -64,26 +65,27 @@ export class Eevee extends PokemonCard {
       player.marker.addMarker(this.EVOLUTIONARY_ADVANTAGE_MARKER, this);
     }
 
-    const player = state.players[state.activePlayer];
-
-    if (state.turn >= 1 && player.active.cards[0] == this && player.marker.hasMarker(this.EVOLUTIONARY_ADVANTAGE_MARKER, this)) {
-
-      try {
-        const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
-      } catch {
-        return state;
-      }
-      player.canEvolve = true;
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-        if (cardList.getPokemonCard() === this) {
-          cardList.pokemonPlayedTurn = state.turn - 1;
+    if (effect instanceof CheckTableStateEffect) {
+      const player = state.players[state.activePlayer];
+      if (player.active.cards[0] == this) {
+        try {
+          const stub = new PowerEffect(player, {
+            name: 'test',
+            powerType: PowerType.ABILITY,
+            text: ''
+          }, this);
+          store.reduceEffect(state, stub);
+        } catch {
+          return state;
         }
-      });
+        player.canEvolve = true;
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+          if (cardList.getPokemonCard() === this) {
+            cardList.pokemonPlayedTurn = state.turn - 1;
+          }
+        });
+      }
+      return state;
     }
     return state;
   }

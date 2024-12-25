@@ -30,9 +30,10 @@ class Rillaboom extends pokemon_card_1.PokemonCard {
                 text: ''
             }];
         this.regulationMark = 'D';
-        this.set = 'SHF';
+        this.setNumber = '14';
+        this.set = 'SSH';
         this.name = 'Rillaboom';
-        this.fullName = 'Rillaboom SHF';
+        this.fullName = 'Rillaboom SSH';
         this.cardImage = 'assets/cardback.png';
         this.VOLTAGE_BEAT_MARKER = 'VOLTAGE_BEAT_MARKER';
     }

@@ -28,6 +28,7 @@ class Slugma extends pokemon_card_1.PokemonCard {
         this.set = 'VIV';
         this.name = 'Slugma';
         this.fullName = 'Slugma VIV';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '27';
     }
     reduceEffect(store, state, effect) {

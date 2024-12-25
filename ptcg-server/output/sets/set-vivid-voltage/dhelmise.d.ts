@@ -18,6 +18,7 @@ export declare class Dhelmise extends PokemonCard {
     }[];
     set: string;
     regulationMark: string;
+    cardImage: string;
     fullName: string;
     name: string;
     setNumber: string;

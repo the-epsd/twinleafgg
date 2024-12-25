@@ -1,9 +1,11 @@
 import { Card } from '../../game/store/card/card';
-import { CrobatGArt, PokemonRescueArt, PokeTurnArt } from './card-images';
+import { CrobatG } from './crobat-g';
+import { PokeTurn } from './poke-turn';
+import { PokemonRescue } from './pokemon-rescue';
 
 export const setPlatinum: Card[] = [
 
-  new CrobatGArt(),
-  new PokeTurnArt(),
-  new PokemonRescueArt(),
+  new CrobatG(),
+  new PokeTurn(),
+  new PokemonRescue(),
 ];

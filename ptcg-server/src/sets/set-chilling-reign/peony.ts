@@ -30,6 +30,13 @@ export class Peony extends TrainerCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
+      const supporterTurn = player.supporterTurn;
+      
+      if (supporterTurn > 0) {
+        throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
+      }
+
+      player.hand.moveCardTo(effect.trainerCard, player.supporter);
 
       if (player.deck.cards.length === 0) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
@@ -46,6 +53,7 @@ export class Peony extends TrainerCard {
         { min: 0, max: 2, allowCancel: false }
       ), cards => {
         cards = cards || [];
+        
         if (cards.length > 0) {
           player.deck.moveCardsTo(cards, player.hand);
 
@@ -53,6 +61,9 @@ export class Peony extends TrainerCard {
             store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
           });
         }
+
+        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
         return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
           player.deck.applyOrder(order);
         });

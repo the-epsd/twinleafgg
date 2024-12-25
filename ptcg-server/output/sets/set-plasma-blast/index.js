@@ -2,12 +2,17 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setPlasmaBlast = void 0;
 const card_images_1 = require("./card-images");
+const jirachi_ex_1 = require("./jirachi-ex");
+const silver_bangle_1 = require("./silver-bangle");
+const virizion_ex_1 = require("./virizion-ex");
+const wartortle_1 = require("./wartortle");
 exports.setPlasmaBlast = [
-    new card_images_1.JirachiExArt(),
-    new card_images_1.ScoopUpCycloneArt(),
-    new card_images_1.SilverBangleArt(),
-    new card_images_1.UltraBallArt(),
-    new card_images_1.VirizionExArt(),
-    new card_images_1.MasterBallArt(),
-    new card_images_1.WartortleArt()
+    new jirachi_ex_1.JirachiEx(),
+    new silver_bangle_1.SilverBangle(),
+    new virizion_ex_1.VirizionEx(),
+    new wartortle_1.Wartortle(),
+    //Reprints
+    new card_images_1.ScoopUpCyclonePLB(),
+    new card_images_1.UltraBallPLB(),
+    new card_images_1.MasterBallPLB(),
 ];

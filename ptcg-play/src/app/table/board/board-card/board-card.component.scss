@@ -95,6 +95,7 @@ $ptcg-energy-card-offset: 13%;
   position: absolute;
   top: -2%;
   right: -2%;
+  z-index: 2;
 
   :host-context(.upside-down) & {
     transform: rotate(180deg);

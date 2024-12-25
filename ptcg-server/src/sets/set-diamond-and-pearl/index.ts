@@ -1,7 +1,8 @@
 import { Card } from '../../game/store/card/card';
-import { PokedexHandyArt, SuperScoopUpArt } from './card-images';
+import { PokedexHandy } from './pokedex-handy';
+import { SuperScoopUp } from './super-scoop-up';
 
 export const setDiamondAndPearl: Card[] = [
-  new PokedexHandyArt(),
-  new SuperScoopUpArt(),
+  new PokedexHandy(),
+  new SuperScoopUp(),
 ];

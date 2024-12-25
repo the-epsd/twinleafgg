@@ -1,18 +1,30 @@
 import { Card } from '../../game/store/card/card';
-import { BayleefArt, DelinquentArt, FightingFuryBeltArt, FroakieArt, KricketotArt, MaxElixirArt, MrMimeArt, PhantumpArt, ReverseValleyArt, SplashEnergyArt, StaryuArt, SudowoodoArt, ZoroarkArt } from './card-images';
+import { Bayleef } from './bayleef';
+import { Delinquent } from './delinquent';
+import { FightingFuryBelt } from './fighting-fury-belt';
+import { Froakie } from './froakie';
+import { Kricketot } from './kricketot';
+import { MaxElixir } from './max-elixir';
+import { MrMime } from './mr-mime';
+import { Phantump } from './phantump';
+import { ReverseValley } from './reverse-valley';
+import { SplashEnergy } from './splash-energy';
+import { Staryu } from './staryu';
+import { Sudowoodo } from './sudowoodo';
+import { Zoroark } from './zoroark';
 
 export const setBreakpoint: Card[] = [
-  new BayleefArt(),
-  new DelinquentArt(),
-  new FightingFuryBeltArt(),
-  new FroakieArt(),
-  new KricketotArt(),
-  new MaxElixirArt(),
-  new MrMimeArt(),
-  new PhantumpArt(),
-  new ReverseValleyArt(),
-  new SplashEnergyArt(),
-  new StaryuArt(),
-  new SudowoodoArt(),
-  new ZoroarkArt()
+  new Bayleef(),
+  new Delinquent(),
+  new FightingFuryBelt(),
+  new Froakie(),
+  new Kricketot(),
+  new MaxElixir(),
+  new MrMime(),
+  new Phantump(),
+  new ReverseValley(),
+  new SplashEnergy(),
+  new Staryu(),
+  new Sudowoodo(),
+  new Zoroark()
 ];

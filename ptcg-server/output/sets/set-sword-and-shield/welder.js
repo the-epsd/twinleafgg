@@ -15,6 +15,7 @@ class Welder extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
         this.set = 'UNB';
+        this.cardImage = 'assets/cardback.png';
         this.name = 'Welder';
         this.fullName = 'Welder UNB';
         this.setNumber = '189';

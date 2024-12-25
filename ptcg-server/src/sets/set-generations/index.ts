@@ -1,12 +1,14 @@
 import { Card } from '../../game/store/card/card';
-import { RedCardArt, RevitalizerArt, TeamFlareGruntArt } from './card-images';
-import { CharmeleonArt } from './full-art';
+import { Charmeleon } from './charmeleon';
+import { RedCard } from './red-card';
+import { Revitalizer } from './revitalizer';
+import { TeamFlareGrunt } from './team-flare-grunt';
 
 export const setGenerations: Card[] = [
-  new RedCardArt(),
-  new RevitalizerArt(),
-  new TeamFlareGruntArt(),
-  
-  // Full Arts/Radiant Collection
-  new CharmeleonArt(),
+  new RedCard(),
+  new Revitalizer(),
+  new TeamFlareGrunt(),
+
+  // FA/Radiant Collection
+  new Charmeleon(),
 ];

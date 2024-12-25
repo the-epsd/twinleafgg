@@ -5,6 +5,7 @@ import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 export declare class DevolutionSpray extends TrainerCard {
     name: string;
+    cardImage: string;
     setNumber: string;
     set: string;
     fullName: string;
@@ -14,5 +15,6 @@ export declare class DevolutionSpray extends TrainerCard {
     hp: number;
     retreat: never[];
     attacks: never[];
+    text: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

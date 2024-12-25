@@ -217,7 +217,7 @@ export function endGame(store: StoreLike, state: State, winner: GameWinner): Sta
   return state;
 }
 
-function checkWinner(store: StoreLike, state: State, onComplete?: () => void): State {
+export function checkWinner(store: StoreLike, state: State, onComplete?: () => void): State {
   const points: [number, number] = [0, 0];
   const reasons: [string[], string[]] = [[], []];
 
@@ -346,7 +346,7 @@ function handlePrompts(
   });
 }
 
-function* executeCheckState(next: Function, store: StoreLike, state: State, onComplete?: () => void): IterableIterator<State> {
+export function* executeCheckState(next: Function, store: StoreLike, state: State, onComplete?: () => void): IterableIterator<State> {
   const prizesToTake: [number, number] = [0, 0];
 
   // This effect checks the general data from the table (bench size)

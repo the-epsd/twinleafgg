@@ -34,7 +34,7 @@ export class Applin2 extends PokemonCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '';
+  public setNumber: string = '17';
 
   public name: string = 'Applin';
 

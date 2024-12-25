@@ -59,6 +59,7 @@ class Rosa extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
         this.set = 'SSH';
+        this.cardImage = 'assets/cardback.png';
         this.name = 'Rosa';
         this.fullName = 'Rosa CEC';
         this.text = 'You can play this card only if 1 of your Pokemon was Knocked Out ' +

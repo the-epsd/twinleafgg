@@ -29,6 +29,7 @@ class Torkoal extends pokemon_card_1.PokemonCard {
         this.set = 'SVI';
         this.name = 'Torkoal';
         this.fullName = 'Torkoal SVI';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '35';
         this.regulationMark = 'G';
     }

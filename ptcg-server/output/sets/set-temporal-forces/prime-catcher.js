@@ -11,13 +11,10 @@ const state_utils_1 = require("../../game/store/state-utils");
 function* playCard(next, store, state, effect) {
     const player = effect.player;
     const opponent = state_utils_1.StateUtils.getOpponent(state, player);
-    // Don't allow to play both Prime Catchers when opponen has an empty bench
     const benchCount = opponent.bench.reduce((sum, b) => {
         return sum + (b.cards.length > 0 ? 1 : 0);
     }, 0);
-    //let playTwoCards = false;
     if (benchCount > 0) {
-        // playTwoCards = true;
         return store.prompt(state, new choose_pokemon_prompt_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_POKEMON_TO_SWITCH, play_card_action_1.PlayerType.TOP_PLAYER, [play_card_action_1.SlotType.BENCH], { allowCancel: false }), targets => {
             if (!targets || targets.length === 0) {
                 return;
@@ -25,8 +22,6 @@ function* playCard(next, store, state, effect) {
             opponent.active.clearEffects();
             opponent.switchPokemon(targets[0]);
             next();
-            // Do not discard the card yet
-            effect.preventDefault = true;
             const hasBench = player.bench.some(b => b.cards.length > 0);
             if (!hasBench) {
                 player.supporter.moveCardTo(effect.trainerCard, player.discard);

@@ -85,6 +85,8 @@ export class PokemonTrader extends TrainerCard {
 
   public setNumber: string = '77';
 
+  public cardImage: string = 'assets/cardback.png';
+
   public name: string = 'Pokemon Trader';
 
   public fullName: string = 'Pokémon Trader BS';

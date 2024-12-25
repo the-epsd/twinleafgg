@@ -1,80 +1,149 @@
 import { Card } from '../../game/store/card/card';
-import { AncientBoosterEnergyCapsuleArt, BombirdierexArt, BounsweetArt, BruteBonnetArt, CharcadetArt, ChiYuArt, CounterCatcherArt, CrobatArt, CyclizarArt, DefianceVestArt, DeoxysArt, DoubladeArt, EarthenVesselArt, ElekidArt, FlittleArt, FroslassexArt, FutureBoosterEnergyCapsuleArt, GabiteArt, GarchompexArt, GarganaclArt, GholdengoexArt, GibleArt, Gimmighoul2Art, GimmighoulArt, GroudonArt, HonedgeArt, HoopaexArt, IronBundleArt, IronHandsexArt, IronJugulisArt, IronValiantexArt, JirachiArt, KlawfArt, LatiosArt, LuxuriousCapeArt, MelaArt, MewtwoexArt, MiniorArt, MinunArt, MorpekoArt, NacliArt, NaclstackArt, NatuArt, NymbleArt, OrthwormArt, Porygon2Art, PorygonArt, ProfessorSadasVitalityArt, ProfessorTurosScenarioArt, RemoraidArt, RoaringMoonexArt, SandyShocksexArt, ScreamTailArt, SlitherWingArt, SnoruntArt, SteeneeArt, TapuKokoexArt, TechnicalMachineBlindsideArt, TechnicalMachineDevolutionArt, TechnicalMachineEvolutionArt, TechnicalMachineTurboEnergizeArt, TechnoRadarArt, TinkatuffArt, ToedscruelArt, TsareenaexArt, TulipArt, VeluzaArt, XatuArt, ZacianArt } from './card-images';
-import { BeachCourtHR, BruteBonnetIR, CounterCatcherHR, CyclizarIR, FroslassexFA, GarchompexFA, GarchompexHR, GarchompexSIR, GarganacIR, GholdengoexFA, GholdengoexSIR, GimmighoulIR, GroudonIR, HoopaexFA, IronHandsexFA, IronHandsexSIR, IronJugulisIR, IronValiantexFA, IronValiantexHR, IronValiantexSIR, LuxuriousCapeHR, MelaFA, MelaSIR, MiniorIR, MorpekoIR, ProfessorSadasVitalityFA, ProfessorSadasVitalitySIR, ProfessorTurosScenarioFA, ProfessorTurosScenarioSIR, ReversalEnergyHR, RoaringMoonexFA, RoaringMoonexHR, RoaringMoonexSIR, SandyShocksexFA, SandyShocksexSIR, SlitherWingIR, SnoruntIR, TapuKokoexFA, TapuKokoexSIR, ToedscruelIR, TsareenaexFA, TulipFA, TulipSIR } from './full-art';
-
+import { AncientBoosterEnergyCapsule } from './ancient-booster-energy-capsule';
+import { Bombirdierex } from './bombirdier-ex';
+import { Bounsweet } from './bounsweet';
+import { BruteBonnet } from './brute-bonnet';
+import { Charcadet } from './charcadet';
+import { ChiYu } from './chi-yu';
+import { CounterCatcher } from './counter-catcher';
+import { Crobat } from './crobat';
+import { Cyclizar } from './cyclizar';
+import { DefianceVest } from './defiance-vest';
+import { Deoxys } from './deoxys';
+import { Doublade } from './doublade';
+import { EarthenVessel } from './earthen-vessel';
+import { Elekid } from './elekid';
+import { Flittle } from './flittle';
+import { Froslassex } from './froslass-ex';
+import { ToedscruelIR, SnoruntIR, GimmighoulIR, GroudonIR, MiniorIR, GarganacIR, SlitherWingIR, MorpekoIR, BruteBonnetIR, CyclizarIR, IronJugulisIR, FroslassexFA, GarchompexFA, TsareenaexFA, TapuKokoexFA, IronHandsexFA, IronValiantexFA, HoopaexFA, SandyShocksexFA, RoaringMoonexFA, GholdengoexFA, MelaFA, ProfessorSadasVitalityFA, ProfessorTurosScenarioFA, TulipFA, GarchompexSIR, TapuKokoexSIR, IronHandsexSIR, IronValiantexSIR, SandyShocksexSIR, RoaringMoonexSIR, GholdengoexSIR, MelaSIR, ProfessorSadasVitalitySIR, ProfessorTurosScenarioSIR, TulipSIR, GarchompexHR, IronValiantexHR, RoaringMoonexHR, BeachCourtHR, CounterCatcherHR, LuxuriousCapeHR, ReversalEnergyHR } from './full-art';
+import { FutureBoosterEnergyCapsule } from './future-booster-energy-capsule';
+import { Gabite } from './gabite';
+import { Garchompex } from './garchomp-ex';
+import { Garganacl } from './garganacl';
+import { Gholdengoex } from './gholdengo-ex';
+import { Gible } from './gible';
+import { Gimmighoul } from './gimmighoul';
+import { Gimmighoul2 } from './gimmighoul2';
+import { Groudon } from './groudon';
+import { Honedge } from './honedge';
+import { Hoopaex } from './hoopa-ex';
+import { IronBundle } from './iron-bundle';
+import { IronHandsex } from './iron-hands-ex';
+import { IronJugulis } from './iron-jugulis';
+import { IronValiantex } from './iron-valiant-ex';
+import { Jirachi } from './jirachi';
+import { Klawf } from './klawf';
+import { Latios } from './latios';
+import { LuxuriousCape } from './luxurious-cape';
+import { Mela } from './mela';
+import { Mewtwoex } from './mewtwo-ex';
+import { Minior } from './minior';
+import { Minun } from './minun';
+import { Morpeko } from './morpeko';
+import { Nacli } from './nacli';
+import { Naclstack } from './naclstack';
+import { Natu } from './natu';
+import { Nymble } from './nymble';
+import { Orthworm } from './orthworm';
+import { Porygon } from './porygon';
+import { Porygon2 } from './porygon2';
+import { ProfessorSadasVitality } from './professor-sadas-vitality';
+import { ProfessorTurosScenario } from './professor-turos-scenario';
+import { Remoraid } from './remoraid';
+import { RoaringMoonex } from './roaring-moon-ex';
+import { SandyShocksex } from './sandy-shocks-ex';
+import { ScreamTail } from './scream-tail';
+import { SlitherWing } from './slither-wing';
+import { Snorunt } from './snorunt';
+import { Steenee } from './steenee';
+import { TapuKokoex } from './tapu-koko-ex';
+import { TechnicalMachineBlindside } from './technical-machine-blindside';
+import { TechnicalMachineDevolution } from './technical-machine-devolution';
+import { TechnicalMachineEvolution } from './technical-machine-evolution';
+import { TechnicalMachineTurboEnergize } from './technical-machine-turbo-energize';
+import { TechnoRadar } from './techno-radar';
+import { Tinkatuff } from './tinkatuff';
+import { Toedscool2 } from './toedscool';
+import { Toedscruel } from './toedscruel';
+import { Tsareenaex } from './tsareena-ex';
+import { Tulip } from './tulip';
+import { Veluza } from './veluza';
+import { Xatu } from './xatu';
+import { Zacian } from './zacian';
 export const setParadoxRift: Card[] = [
 
-  new AncientBoosterEnergyCapsuleArt(),
-  new BruteBonnetArt(),
-  new BounsweetArt(),
-  new CharcadetArt(),
-  new ChiYuArt(),
-  new CounterCatcherArt(),
-  new CrobatArt(),
-  new CyclizarArt(),
-  new DefianceVestArt(),
-  new DeoxysArt(),
-  new DoubladeArt(),
-  new EarthenVesselArt(),
-  new ElekidArt(),
-  new FlittleArt(),
-  new FroslassexArt(),
-  new FutureBoosterEnergyCapsuleArt(),
-  new GabiteArt(),
-  new GarchompexArt(),
-  new GarganaclArt(),
-  new GholdengoexArt(),
-  new GibleArt(),
-  new GimmighoulArt(),
-  new Gimmighoul2Art(),
-  new GroudonArt(),
-  new HonedgeArt(),
-  new HoopaexArt(),
-  new IronBundleArt(),
-  new IronHandsexArt(),
-  new IronJugulisArt(),
-  new IronValiantexArt(),
-  new JirachiArt(),
-  new KlawfArt(),
-  new LatiosArt(),
-  new LuxuriousCapeArt(),
-  new MelaArt(),
-  new MewtwoexArt(),
-  new MiniorArt(),
-  new MinunArt(),
-  new MorpekoArt(),
-  new NacliArt(),
-  new NaclstackArt(),
-  new NatuArt(),
-  new NymbleArt(),
-  new OrthwormArt(),
-  new PorygonArt(),
-  new Porygon2Art(),
-  new ProfessorSadasVitalityArt(),
-  new ProfessorTurosScenarioArt(),
-  new RemoraidArt(),
-  new RoaringMoonexArt(),
-  new SandyShocksexArt(),
-  new ScreamTailArt(),
-  new SlitherWingArt(),
-  new SnoruntArt(),
-  new SteeneeArt(),
-  new TapuKokoexArt(),
-  new TechnicalMachineBlindsideArt(),
-  new TechnicalMachineDevolutionArt(),
-  new TechnicalMachineEvolutionArt(),
-  new TechnicalMachineTurboEnergizeArt(),
-  new TinkatuffArt(),
-  new ToedscruelArt(),
-  new TechnoRadarArt(),
-  new TsareenaexArt(),
-  new TulipArt(),
-  new XatuArt(),
-  new VeluzaArt(),
-  new ZacianArt(),
-  new BombirdierexArt(),
+  new AncientBoosterEnergyCapsule(),
+  new BruteBonnet(),
+  new Bounsweet(),
+  new Charcadet(),
+  new ChiYu(),
+  new CounterCatcher(),
+  new Crobat(),
+  new Cyclizar(),
+  new DefianceVest(),
+  new Deoxys(),
+  new Doublade(),
+  new EarthenVessel(),
+  new Elekid(),
+  new Flittle(),
+  new Froslassex(),
+  new FutureBoosterEnergyCapsule(),
+  new Gabite(),
+  new Garchompex(),
+  new Garganacl(),
+  new Gholdengoex(),
+  new Gible(),
+  new Gimmighoul(),
+  new Gimmighoul2(),
+  new Groudon(),
+  new Honedge(),
+  new Hoopaex(),
+  new IronBundle(),
+  new IronHandsex(),
+  new IronJugulis(),
+  new IronValiantex(),
+  new Jirachi(),
+  new Klawf(),
+  new Latios(),
+  new LuxuriousCape(),
+  new Mela(),
+  new Mewtwoex(),
+  new Minior(),
+  new Minun(),
+  new Morpeko(),
+  new Nacli(),
+  new Naclstack(),
+  new Natu(),
+  new Nymble(),
+  new Orthworm(),
+  new Porygon(),
+  new Porygon2(),
+  new ProfessorSadasVitality(),
+  new ProfessorTurosScenario(),
+  new Remoraid(),
+  new RoaringMoonex(),
+  new SandyShocksex(),
+  new ScreamTail(),
+  new SlitherWing(),
+  new Snorunt(),
+  new Steenee(),
+  new TapuKokoex(),
+  new TechnicalMachineBlindside(),
+  new TechnicalMachineDevolution(),
+  new TechnicalMachineEvolution(),
+  new TechnicalMachineTurboEnergize(),
+  new Tinkatuff(),
+  new Toedscool2(),
+  new Toedscruel(),
+  new TechnoRadar(),
+  new Tsareenaex(),
+  new Tulip(),
+  new Xatu(),
+  new Veluza(),
+  new Zacian(),
+  new Bombirdierex(),
 
-  //Full Arts
+  //Full s
   new ToedscruelIR(),
   new SnoruntIR(),
   new GimmighoulIR(),

@@ -29,6 +29,7 @@ class Tepig extends pokemon_card_1.PokemonCard {
         this.set = 'SWSH';
         this.name = 'Tepig';
         this.fullName = 'Tepig SWSH';
+        this.cardImage = 'assets/cardback.png';
         this.setNumber = '172';
     }
 }

@@ -1,117 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TapuLeleGXArt = exports.RescueStretcherArt = exports.OricorioArt = exports.MimikyuArt = exports.MetagrossGXArt = exports.MallowArt = exports.MachokeArt = exports.LycanrocGXArt = exports.FieldBlowerArt = exports.EnhancedHammerArt = exports.BrookletHillArt = exports.AquaPatchArt = exports.AlolanVulpixArt = exports.AetherParadiseConvserationAreaArt = void 0;
+exports.EnhancedHammerGRI = exports.AlolanVulpixGRI = void 0;
 const alolan_vulpix_1 = require("../set-hidden-fates/alolan-vulpix");
 const enhanced_hammer_1 = require("../set-twilight-masquerade/enhanced-hammer");
-const aether_paradise_conservation_area_1 = require("./aether-paradise-conservation-area");
-const aqua_patch_1 = require("./aqua-patch");
-const brooklet_hill_1 = require("./brooklet-hill");
-const field_blower_1 = require("./field-blower");
-const lycanroc_gx_1 = require("./lycanroc-gx");
-const machoke_1 = require("./machoke");
-const mallow_1 = require("./mallow");
-const metagross_gx_1 = require("./metagross-gx");
-const mimikyu_1 = require("./mimikyu");
-const oricorio_1 = require("./oricorio");
-const rescue_stretcher_1 = require("./rescue-stretcher");
-const tapu_lele_gx_1 = require("./tapu-lele-gx");
-class AetherParadiseConvserationAreaArt extends aether_paradise_conservation_area_1.AetherParadiseConvserationArea {
+class AlolanVulpixGRI extends alolan_vulpix_1.AlolanVulpix {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/GRI/GRI_116_R_EN_LG.png';
-    }
-}
-exports.AetherParadiseConvserationAreaArt = AetherParadiseConvserationAreaArt;
-class AlolanVulpixArt extends alolan_vulpix_1.AlolanVulpix {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/GRI/GRI_021_R_EN_LG.png';
         this.fullName = 'Alolan Vulpix GRI';
         this.setNumber = '21';
+        this.set = 'GRI';
     }
 }
-exports.AlolanVulpixArt = AlolanVulpixArt;
-class AquaPatchArt extends aqua_patch_1.AquaPatch {
+exports.AlolanVulpixGRI = AlolanVulpixGRI;
+class EnhancedHammerGRI extends enhanced_hammer_1.EnhancedHammer {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/GRI/GRI_119_R_EN_LG.png';
+        this.fullName = 'Enhanced Hammer GRI';
+        this.setNumber = '124';
+        this.set = 'GRI';
     }
 }
-exports.AquaPatchArt = AquaPatchArt;
-class BrookletHillArt extends brooklet_hill_1.BrookletHill {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/GRI/GRI_120_R_EN_LG.png';
-    }
-}
-exports.BrookletHillArt = BrookletHillArt;
-class EnhancedHammerArt extends enhanced_hammer_1.EnhancedHammer {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/GRI/GRI_124_R_EN_LG.png';
-    }
-}
-exports.EnhancedHammerArt = EnhancedHammerArt;
-class FieldBlowerArt extends field_blower_1.FieldBlower {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/GRI/GRI_125_R_EN_LG.png';
-    }
-}
-exports.FieldBlowerArt = FieldBlowerArt;
-class LycanrocGXArt extends lycanroc_gx_1.LycanrocGX {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/GRI/GRI_074_R_EN_LG.png';
-    }
-}
-exports.LycanrocGXArt = LycanrocGXArt;
-class MachokeArt extends machoke_1.Machoke {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/GRI/GRI_064_R_EN.png';
-    }
-}
-exports.MachokeArt = MachokeArt;
-class MallowArt extends mallow_1.Mallow {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/GRI/GRI_127_R_EN_LG.png';
-    }
-}
-exports.MallowArt = MallowArt;
-class MetagrossGXArt extends metagross_gx_1.MetagrossGX {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/GRI/GRI_085_R_EN_LG.png';
-    }
-}
-exports.MetagrossGXArt = MetagrossGXArt;
-class MimikyuArt extends mimikyu_1.Mimikyu {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/GRI/GRI_058_R_EN_LG.png';
-    }
-}
-exports.MimikyuArt = MimikyuArt;
-class OricorioArt extends oricorio_1.Oricorio {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/GRI/GRI_055_R_EN_LG.png';
-    }
-}
-exports.OricorioArt = OricorioArt;
-class RescueStretcherArt extends rescue_stretcher_1.RescueStretcher {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/GRI/GRI_130_R_EN_LG.png';
-    }
-}
-exports.RescueStretcherArt = RescueStretcherArt;
-class TapuLeleGXArt extends tapu_lele_gx_1.TapuLeleGX {
-    constructor() {
-        super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/GRI/GRI_060_R_EN.png';
-    }
-}
-exports.TapuLeleGXArt = TapuLeleGXArt;
+exports.EnhancedHammerGRI = EnhancedHammerGRI;

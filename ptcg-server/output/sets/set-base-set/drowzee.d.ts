@@ -6,6 +6,7 @@ import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 export declare class Drowzee extends PokemonCard {
     name: string;
+    cardImage: string;
     set: string;
     fullName: string;
     setNumber: string;

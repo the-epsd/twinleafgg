@@ -27,7 +27,7 @@ export class Chikorita2 extends PokemonCard {
   public set: string = 'LOT';
   public fullName: string = 'Chikorita LOT 5';
   public name: string = 'Chikorita';
-  public setNumber: string = '';
+  public setNumber: string = '5';
   public cardImage: string = 'assets/cardback.png';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

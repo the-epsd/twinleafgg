@@ -38,35 +38,50 @@ class Alakazam extends pokemon_card_1.PokemonCard {
         this.setNumber = '1';
         this.name = 'Alakazam';
         this.fullName = 'Alakazam BS';
+        this.DAMAGE_SWAP_MARKER = 'DAMAGE_SWAP_MARKER';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
+            const opponent = state_utils_1.StateUtils.getOpponent(state, player);
+            const damagedPokemon = [
+                ...opponent.bench.filter(b => b.cards.length > 0 && b.damage > 0),
+                ...(opponent.active.damage > 0 ? [opponent.active] : [])
+            ];
+            if (player.marker.hasMarker(this.DAMAGE_SWAP_MARKER, this)) {
+                throw new __1.GameError(game_message_1.GameMessage.POWER_ALREADY_USED);
+            }
+            if (damagedPokemon.length === 0) {
+                throw new __1.GameError(game_message_1.GameMessage.CANNOT_USE_POWER);
+            }
             const maxAllowedDamage = [];
             player.forEachPokemon(play_card_action_1.PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
                 const checkHpEffect = new check_effects_1.CheckHpEffect(player, cardList);
                 store.reduceEffect(state, checkHpEffect);
                 maxAllowedDamage.push({ target, damage: checkHpEffect.hp });
             });
-            return store.prompt(state, new move_damage_prompt_1.MoveDamagePrompt(effect.player.id, game_message_1.GameMessage.MOVE_DAMAGE, play_card_action_1.PlayerType.BOTTOM_PLAYER, [play_card_action_1.SlotType.ACTIVE, play_card_action_1.SlotType.BENCH], maxAllowedDamage, { allowCancel: true }), transfers => {
+            return store.prompt(state, new move_damage_prompt_1.MoveDamagePrompt(effect.player.id, game_message_1.GameMessage.MOVE_DAMAGE, play_card_action_1.PlayerType.TOP_PLAYER, [play_card_action_1.SlotType.ACTIVE, play_card_action_1.SlotType.BENCH], maxAllowedDamage, { min: 1, max: 1, allowCancel: false, singleDestinationTarget: true }), transfers => {
+                player.marker.addMarker(this.DAMAGE_SWAP_MARKER, this);
                 if (transfers === null) {
                     return;
                 }
                 for (const transfer of transfers) {
                     const source = state_utils_1.StateUtils.getTarget(state, player, transfer.from);
                     const target = state_utils_1.StateUtils.getTarget(state, player, transfer.to);
-                    // Get target's max HP from the Pokemon card
-                    const targetPokemon = target.getPokemonCard();
-                    const targetMaxHp = targetPokemon ? targetPokemon.hp : 0;
-                    const targetCurrentHp = targetMaxHp - target.damage;
-                    // Only allow damage transfer if target has more than 10 HP remaining
-                    if (targetCurrentHp <= 10) {
-                        throw new __1.GameError(game_message_1.GameMessage.CANNOT_MOVE_DAMAGE);
+                    if (source.damage == 10) {
+                        source.damage -= 10;
+                        target.damage += 10;
                     }
                     if (source.damage >= 10) {
                         source.damage -= 10;
                         target.damage += 10;
                     }
+                    player.forEachPokemon(play_card_action_1.PlayerType.BOTTOM_PLAYER, cardList => {
+                        if (cardList.getPokemonCard() === this) {
+                            cardList.addBoardEffect(card_types_1.BoardEffect.ABILITY_USED);
+                        }
+                    });
+                    return state;
                 }
             });
         }

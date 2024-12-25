@@ -1,33 +1,59 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setSwordAndShield = void 0;
-const card_images_1 = require("./card-images");
+const air_balloon_1 = require("./air-balloon");
+const aurora_energy_1 = require("./aurora-energy");
+const centiskorch_1 = require("./centiskorch");
+const cinccino_1 = require("./cinccino");
+const cinderace_1 = require("./cinderace");
+const copperajah_1 = require("./copperajah");
+const drizzile_1 = require("./drizzile");
+const evolution_incense_1 = require("./evolution-incense");
+const ferroseed_1 = require("./ferroseed");
+const galarian_zigzagoon_1 = require("./galarian-zigzagoon");
+const galarian_perrserker_1 = require("./galarian_perrserker");
+const giant_hearth_1 = require("./giant-hearth");
+const inteleon_1 = require("./inteleon");
+const maractus_1 = require("./maractus");
+const marnie_1 = require("./marnie");
+const metal_saucer_1 = require("./metal-saucer");
+const morpeko_1 = require("./morpeko");
+const oranguru_1 = require("./oranguru");
+const ordinary_rod_1 = require("./ordinary-rod");
+const quick_ball_1 = require("./quick-ball");
+const raboot_1 = require("./raboot");
+const rosa_1 = require("./rosa");
+const sizzlipede_1 = require("./sizzlipede");
+const snom_1 = require("./snom");
+const sobble_1 = require("./sobble");
+const toxicroak_1 = require("./toxicroak");
+const welder_1 = require("./welder");
 exports.setSwordAndShield = [
-    new card_images_1.AirBalloonArt(),
-    new card_images_1.AuroraEnergyArt(),
-    new card_images_1.CentiskorchArt(),
-    new card_images_1.CinccinoArt(),
-    new card_images_1.CinderaceArt(),
-    new card_images_1.CopperajahArt(),
-    new card_images_1.DrizzileArt(),
-    new card_images_1.EvolutionIncenseArt(),
-    new card_images_1.FerroseedArt(),
-    new card_images_1.GalarianPerrserkerArt(),
-    new card_images_1.GalarianZigzagoonArt(),
-    new card_images_1.GiantHearthArt(),
-    new card_images_1.InteleonArt(),
-    new card_images_1.MaractusArt(),
-    new card_images_1.MarnieArt(),
-    new card_images_1.MetalSaucerArt(),
-    new card_images_1.MorpekoArt(),
-    new card_images_1.SizzlipedeArt(),
-    new card_images_1.SnomArt(),
-    new card_images_1.SobbleArt(),
-    new card_images_1.OranguruArt(),
-    new card_images_1.OrdinaryRodArt(),
-    new card_images_1.QuickBallArt(),
-    new card_images_1.RabootArt(),
-    new card_images_1.RosaArt(),
-    new card_images_1.ToxicroakArt(),
-    new card_images_1.WelderArt()
+    new air_balloon_1.AirBalloon(),
+    new aurora_energy_1.AuroraEnergy(),
+    new centiskorch_1.Centiskorch(),
+    new cinccino_1.Cinccino(),
+    new cinderace_1.Cinderace(),
+    new copperajah_1.Copperajah(),
+    new drizzile_1.Drizzile(),
+    new evolution_incense_1.EvolutionIncense(),
+    new ferroseed_1.Ferroseed(),
+    new galarian_perrserker_1.GalarianPerrserker(),
+    new galarian_zigzagoon_1.GalarianZigzagoon(),
+    new giant_hearth_1.GiantHearth(),
+    new inteleon_1.Inteleon(),
+    new maractus_1.Maractus(),
+    new marnie_1.Marnie(),
+    new metal_saucer_1.MetalSaucer(),
+    new morpeko_1.Morpeko(),
+    new sizzlipede_1.Sizzlipede(),
+    new snom_1.Snom(),
+    new sobble_1.Sobble(),
+    new oranguru_1.Oranguru(),
+    new ordinary_rod_1.OrdinaryRod(),
+    new quick_ball_1.QuickBall(),
+    new raboot_1.Raboot(),
+    new rosa_1.Rosa(),
+    new toxicroak_1.Toxicroak(),
+    new welder_1.Welder()
 ];

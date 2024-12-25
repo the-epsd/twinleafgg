@@ -20,8 +20,10 @@ class Treecko extends pokemon_card_1.PokemonCard {
                 damage: 0,
                 text: 'Search your deck for a G Pokemon, reveal it, and put it into your hand. Then, shuffle the deck.'
             }];
+        this.setNumber = '20';
         this.set = 'LOT';
         this.fullName = 'Treecko LOT';
+        this.cardImage = 'assets/cardback.png';
         this.name = 'Treecko';
     }
     reduceEffect(store, state, effect) {

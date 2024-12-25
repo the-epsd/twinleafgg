@@ -10,6 +10,7 @@ class NidoranMale extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.name = 'Nidoran M';
+        this.cardImage = 'assets/cardback.png';
         this.set = 'BS';
         this.setNumber = '55';
         this.fullName = 'Nidoran M BS';

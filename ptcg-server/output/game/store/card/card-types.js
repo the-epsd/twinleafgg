@@ -31,6 +31,8 @@ var CardTag;
     CardTag["TEAM_FLARE"] = "TEAM_FLARE";
     CardTag["MEGA"] = "MEGA";
     CardTag["PLAY_DURING_SETUP"] = "PLAY_DURING_SETUP";
+    CardTag["LILLIES"] = "LILLIES";
+    CardTag["NS"] = "NS";
 })(CardTag = exports.CardTag || (exports.CardTag = {}));
 var SuperType;
 (function (SuperType) {

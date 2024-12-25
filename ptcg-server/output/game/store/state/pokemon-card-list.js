@@ -167,6 +167,9 @@ class PokemonCardList extends card_list_1.CardList {
     isTera() {
         return this.cards.some(c => c.tags.includes(card_types_1.CardTag.POKEMON_TERA));
     }
+    isLillies() {
+        return this.cards.some(c => c.tags.includes(card_types_1.CardTag.LILLIES));
+    }
     getToolEffect() {
         if (!this.tool) {
             return;

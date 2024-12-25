@@ -11,6 +11,7 @@ class Onix extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.name = 'Onix';
+        this.cardImage = 'assets/cardback.png';
         this.set = 'BS';
         this.cardType = card_types_1.CardType.FIGHTING;
         this.setNumber = '56';

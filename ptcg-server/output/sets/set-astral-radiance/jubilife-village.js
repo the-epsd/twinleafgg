@@ -15,6 +15,7 @@ class JubilifeVillage extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.STADIUM;
         this.set = 'ASR';
         this.name = 'Jubilife Village';
+        this.cardImage = 'assets/cardback.png';
         this.fullName = 'Jubilife Village ASR';
         this.setNumber = '148';
         this.text = 'Once during each player\'s turn, that player may shuffle their hand into their deck and draw 5 cards. If they do, their turn ends.';

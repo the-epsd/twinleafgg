@@ -15,6 +15,7 @@ class Ceruledge extends pokemon_card_1.PokemonCard {
         this.hp = 140;
         this.cardType = R;
         this.weakness = [{ type: W }];
+        this.retreat = [C, C];
         this.attacks = [
             {
                 name: 'Blaze Curse',

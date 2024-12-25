@@ -10,6 +10,7 @@ class Meowth extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.name = 'Meowth';
+        this.cardImage = 'assets/cardback.png';
         this.set = 'JU';
         this.setNumber = '56';
         this.fullName = 'Meowth JU';

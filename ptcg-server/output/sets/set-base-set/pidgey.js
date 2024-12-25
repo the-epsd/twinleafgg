@@ -10,6 +10,7 @@ class Pidgey extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.name = 'Pidgey';
+        this.cardImage = 'assets/cardback.png';
         this.set = 'BS';
         this.setNumber = '57';
         this.cardType = card_types_1.CardType.COLORLESS;

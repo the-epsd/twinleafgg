@@ -1,79 +1,149 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setParadoxRift = void 0;
-const card_images_1 = require("./card-images");
+const ancient_booster_energy_capsule_1 = require("./ancient-booster-energy-capsule");
+const bombirdier_ex_1 = require("./bombirdier-ex");
+const bounsweet_1 = require("./bounsweet");
+const brute_bonnet_1 = require("./brute-bonnet");
+const charcadet_1 = require("./charcadet");
+const chi_yu_1 = require("./chi-yu");
+const counter_catcher_1 = require("./counter-catcher");
+const crobat_1 = require("./crobat");
+const cyclizar_1 = require("./cyclizar");
+const defiance_vest_1 = require("./defiance-vest");
+const deoxys_1 = require("./deoxys");
+const doublade_1 = require("./doublade");
+const earthen_vessel_1 = require("./earthen-vessel");
+const elekid_1 = require("./elekid");
+const flittle_1 = require("./flittle");
+const froslass_ex_1 = require("./froslass-ex");
 const full_art_1 = require("./full-art");
+const future_booster_energy_capsule_1 = require("./future-booster-energy-capsule");
+const gabite_1 = require("./gabite");
+const garchomp_ex_1 = require("./garchomp-ex");
+const garganacl_1 = require("./garganacl");
+const gholdengo_ex_1 = require("./gholdengo-ex");
+const gible_1 = require("./gible");
+const gimmighoul_1 = require("./gimmighoul");
+const gimmighoul2_1 = require("./gimmighoul2");
+const groudon_1 = require("./groudon");
+const honedge_1 = require("./honedge");
+const hoopa_ex_1 = require("./hoopa-ex");
+const iron_bundle_1 = require("./iron-bundle");
+const iron_hands_ex_1 = require("./iron-hands-ex");
+const iron_jugulis_1 = require("./iron-jugulis");
+const iron_valiant_ex_1 = require("./iron-valiant-ex");
+const jirachi_1 = require("./jirachi");
+const klawf_1 = require("./klawf");
+const latios_1 = require("./latios");
+const luxurious_cape_1 = require("./luxurious-cape");
+const mela_1 = require("./mela");
+const mewtwo_ex_1 = require("./mewtwo-ex");
+const minior_1 = require("./minior");
+const minun_1 = require("./minun");
+const morpeko_1 = require("./morpeko");
+const nacli_1 = require("./nacli");
+const naclstack_1 = require("./naclstack");
+const natu_1 = require("./natu");
+const nymble_1 = require("./nymble");
+const orthworm_1 = require("./orthworm");
+const porygon_1 = require("./porygon");
+const porygon2_1 = require("./porygon2");
+const professor_sadas_vitality_1 = require("./professor-sadas-vitality");
+const professor_turos_scenario_1 = require("./professor-turos-scenario");
+const remoraid_1 = require("./remoraid");
+const roaring_moon_ex_1 = require("./roaring-moon-ex");
+const sandy_shocks_ex_1 = require("./sandy-shocks-ex");
+const scream_tail_1 = require("./scream-tail");
+const slither_wing_1 = require("./slither-wing");
+const snorunt_1 = require("./snorunt");
+const steenee_1 = require("./steenee");
+const tapu_koko_ex_1 = require("./tapu-koko-ex");
+const technical_machine_blindside_1 = require("./technical-machine-blindside");
+const technical_machine_devolution_1 = require("./technical-machine-devolution");
+const technical_machine_evolution_1 = require("./technical-machine-evolution");
+const technical_machine_turbo_energize_1 = require("./technical-machine-turbo-energize");
+const techno_radar_1 = require("./techno-radar");
+const tinkatuff_1 = require("./tinkatuff");
+const toedscool_1 = require("./toedscool");
+const toedscruel_1 = require("./toedscruel");
+const tsareena_ex_1 = require("./tsareena-ex");
+const tulip_1 = require("./tulip");
+const veluza_1 = require("./veluza");
+const xatu_1 = require("./xatu");
+const zacian_1 = require("./zacian");
 exports.setParadoxRift = [
-    new card_images_1.AncientBoosterEnergyCapsuleArt(),
-    new card_images_1.BruteBonnetArt(),
-    new card_images_1.BounsweetArt(),
-    new card_images_1.CharcadetArt(),
-    new card_images_1.ChiYuArt(),
-    new card_images_1.CounterCatcherArt(),
-    new card_images_1.CrobatArt(),
-    new card_images_1.CyclizarArt(),
-    new card_images_1.DefianceVestArt(),
-    new card_images_1.DeoxysArt(),
-    new card_images_1.DoubladeArt(),
-    new card_images_1.EarthenVesselArt(),
-    new card_images_1.ElekidArt(),
-    new card_images_1.FlittleArt(),
-    new card_images_1.FroslassexArt(),
-    new card_images_1.FutureBoosterEnergyCapsuleArt(),
-    new card_images_1.GabiteArt(),
-    new card_images_1.GarchompexArt(),
-    new card_images_1.GarganaclArt(),
-    new card_images_1.GholdengoexArt(),
-    new card_images_1.GibleArt(),
-    new card_images_1.GimmighoulArt(),
-    new card_images_1.Gimmighoul2Art(),
-    new card_images_1.GroudonArt(),
-    new card_images_1.HonedgeArt(),
-    new card_images_1.HoopaexArt(),
-    new card_images_1.IronBundleArt(),
-    new card_images_1.IronHandsexArt(),
-    new card_images_1.IronJugulisArt(),
-    new card_images_1.IronValiantexArt(),
-    new card_images_1.JirachiArt(),
-    new card_images_1.KlawfArt(),
-    new card_images_1.LatiosArt(),
-    new card_images_1.LuxuriousCapeArt(),
-    new card_images_1.MelaArt(),
-    new card_images_1.MewtwoexArt(),
-    new card_images_1.MiniorArt(),
-    new card_images_1.MinunArt(),
-    new card_images_1.MorpekoArt(),
-    new card_images_1.NacliArt(),
-    new card_images_1.NaclstackArt(),
-    new card_images_1.NatuArt(),
-    new card_images_1.NymbleArt(),
-    new card_images_1.OrthwormArt(),
-    new card_images_1.PorygonArt(),
-    new card_images_1.Porygon2Art(),
-    new card_images_1.ProfessorSadasVitalityArt(),
-    new card_images_1.ProfessorTurosScenarioArt(),
-    new card_images_1.RemoraidArt(),
-    new card_images_1.RoaringMoonexArt(),
-    new card_images_1.SandyShocksexArt(),
-    new card_images_1.ScreamTailArt(),
-    new card_images_1.SlitherWingArt(),
-    new card_images_1.SnoruntArt(),
-    new card_images_1.SteeneeArt(),
-    new card_images_1.TapuKokoexArt(),
-    new card_images_1.TechnicalMachineBlindsideArt(),
-    new card_images_1.TechnicalMachineDevolutionArt(),
-    new card_images_1.TechnicalMachineEvolutionArt(),
-    new card_images_1.TechnicalMachineTurboEnergizeArt(),
-    new card_images_1.TinkatuffArt(),
-    new card_images_1.ToedscruelArt(),
-    new card_images_1.TechnoRadarArt(),
-    new card_images_1.TsareenaexArt(),
-    new card_images_1.TulipArt(),
-    new card_images_1.XatuArt(),
-    new card_images_1.VeluzaArt(),
-    new card_images_1.ZacianArt(),
-    new card_images_1.BombirdierexArt(),
-    //Full Arts
+    new ancient_booster_energy_capsule_1.AncientBoosterEnergyCapsule(),
+    new brute_bonnet_1.BruteBonnet(),
+    new bounsweet_1.Bounsweet(),
+    new charcadet_1.Charcadet(),
+    new chi_yu_1.ChiYu(),
+    new counter_catcher_1.CounterCatcher(),
+    new crobat_1.Crobat(),
+    new cyclizar_1.Cyclizar(),
+    new defiance_vest_1.DefianceVest(),
+    new deoxys_1.Deoxys(),
+    new doublade_1.Doublade(),
+    new earthen_vessel_1.EarthenVessel(),
+    new elekid_1.Elekid(),
+    new flittle_1.Flittle(),
+    new froslass_ex_1.Froslassex(),
+    new future_booster_energy_capsule_1.FutureBoosterEnergyCapsule(),
+    new gabite_1.Gabite(),
+    new garchomp_ex_1.Garchompex(),
+    new garganacl_1.Garganacl(),
+    new gholdengo_ex_1.Gholdengoex(),
+    new gible_1.Gible(),
+    new gimmighoul_1.Gimmighoul(),
+    new gimmighoul2_1.Gimmighoul2(),
+    new groudon_1.Groudon(),
+    new honedge_1.Honedge(),
+    new hoopa_ex_1.Hoopaex(),
+    new iron_bundle_1.IronBundle(),
+    new iron_hands_ex_1.IronHandsex(),
+    new iron_jugulis_1.IronJugulis(),
+    new iron_valiant_ex_1.IronValiantex(),
+    new jirachi_1.Jirachi(),
+    new klawf_1.Klawf(),
+    new latios_1.Latios(),
+    new luxurious_cape_1.LuxuriousCape(),
+    new mela_1.Mela(),
+    new mewtwo_ex_1.Mewtwoex(),
+    new minior_1.Minior(),
+    new minun_1.Minun(),
+    new morpeko_1.Morpeko(),
+    new nacli_1.Nacli(),
+    new naclstack_1.Naclstack(),
+    new natu_1.Natu(),
+    new nymble_1.Nymble(),
+    new orthworm_1.Orthworm(),
+    new porygon_1.Porygon(),
+    new porygon2_1.Porygon2(),
+    new professor_sadas_vitality_1.ProfessorSadasVitality(),
+    new professor_turos_scenario_1.ProfessorTurosScenario(),
+    new remoraid_1.Remoraid(),
+    new roaring_moon_ex_1.RoaringMoonex(),
+    new sandy_shocks_ex_1.SandyShocksex(),
+    new scream_tail_1.ScreamTail(),
+    new slither_wing_1.SlitherWing(),
+    new snorunt_1.Snorunt(),
+    new steenee_1.Steenee(),
+    new tapu_koko_ex_1.TapuKokoex(),
+    new technical_machine_blindside_1.TechnicalMachineBlindside(),
+    new technical_machine_devolution_1.TechnicalMachineDevolution(),
+    new technical_machine_evolution_1.TechnicalMachineEvolution(),
+    new technical_machine_turbo_energize_1.TechnicalMachineTurboEnergize(),
+    new tinkatuff_1.Tinkatuff(),
+    new toedscool_1.Toedscool2(),
+    new toedscruel_1.Toedscruel(),
+    new techno_radar_1.TechnoRadar(),
+    new tsareena_ex_1.Tsareenaex(),
+    new tulip_1.Tulip(),
+    new xatu_1.Xatu(),
+    new veluza_1.Veluza(),
+    new zacian_1.Zacian(),
+    new bombirdier_ex_1.Bombirdierex(),
+    //Full s
     new full_art_1.ToedscruelIR(),
     new full_art_1.SnoruntIR(),
     new full_art_1.GimmighoulIR(),

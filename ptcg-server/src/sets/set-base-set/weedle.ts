@@ -12,13 +12,15 @@ import { GameMessage } from '../../game';
 export class Weedle extends PokemonCard {
 
   public name = 'Weedle';
-  
+
+  public cardImage: string = 'assets/cardback.png';
+
   public set = 'BS';
-  
+
   public fullName = 'Weedle BS';
-  
+
   public setNumber = '69';
-  
+
   public cardType = CardType.GRASS;
 
   public stage = Stage.BASIC;

@@ -11,25 +11,26 @@
   ptcg-contact-bar {
     .ptcg-contact-bar.active {
       background-color: $active-contact-background-color;
+
       &:after {
-        background-color: mat.get-color-from-palette($primary);
+        background-color: #449058;
       }
     }
 
     .ptcg-contact-bar.marked .ptcg-contact-name {
-      color: mat.get-color-from-palette($primary);
+      background-color: #283142;
     }
   }
 
   ptcg-conversation {
     .ptcg-conversation-footer {
-      background-color: $input-message-background-color;
+      background-color: #1a202c;
     }
   }
 
   ptcg-message-entry {
     .myself mat-card {
-      background-color: mat.get-color-from-palette($background, tooltip);
+      background-color: #283142;
     }
   }
 

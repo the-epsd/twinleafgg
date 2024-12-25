@@ -10,6 +10,7 @@ import {
 import { PowerEffect, AttackEffect } from '../../game/store/effects/game-effects';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { abilityUsed } from '../../game/store/prefabs/prefabs';
 
 
 export class Celebi extends PokemonCard {
@@ -96,15 +97,21 @@ export class Celebi extends PokemonCard {
         { allowCancel: true, min: 1, max: 1 }
       ), transfers => {
         transfers = transfers || [];
+
+        abilityUsed(player, this);
+
         // cancelled by user
         if (transfers.length === 0) {
           return;
         }
+
         player.marker.addMarker(this.FOREST_BREATH_MARKER, this);
+
         for (const transfer of transfers) {
           const target = StateUtils.getTarget(state, player, transfer.to);
           player.hand.moveCardTo(transfer.card, target);
         }
+
       });
     }
 

@@ -1,15 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setCelebrations = void 0;
-const card_images_1 = require("./card-images");
+const dialga_1 = require("./dialga");
+const flying_pikachu_v_1 = require("./flying-pikachu-v");
+const flying_pikachu_vmax_1 = require("./flying-pikachu-vmax");
+const kyogre_1 = require("./kyogre");
+const lugia_1 = require("./lugia");
+const mew_1 = require("./mew");
+const reshiram_1 = require("./reshiram");
+const yveltal_1 = require("./yveltal");
+const zacian_v_1 = require("./zacian-v");
 exports.setCelebrations = [
-    new card_images_1.DialgaArt(),
-    new card_images_1.FlyingPikachuVArt(),
-    new card_images_1.FlyingPikachuVMAXArt(),
-    new card_images_1.KyogreArt(),
-    new card_images_1.LugiaArt(),
-    new card_images_1.MewArt(),
-    new card_images_1.ReshiramArt(),
-    new card_images_1.YVeltalArt(),
-    new card_images_1.ZacianVArt(),
+    new dialga_1.Dialga(),
+    new flying_pikachu_v_1.FlyingPikachuV(),
+    new flying_pikachu_vmax_1.FlyingPikachuVMAX(),
+    new kyogre_1.Kyogre(),
+    new lugia_1.Lugia(),
+    new mew_1.Mew(),
+    new reshiram_1.Reshiram(),
+    new yveltal_1.Yveltal(),
+    new zacian_v_1.ZacianV(),
 ];

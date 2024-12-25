@@ -45,6 +45,8 @@ export class Squirtle extends PokemonCard {
 
   public fullName: string = 'Squirtle BS';
 
+  public cardImage: string = 'assets/cardback.png';
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

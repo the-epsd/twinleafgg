@@ -24,11 +24,11 @@ function* useFindAFriend(next: Function, store: StoreLike, state: State,
   cards.forEach((card, index) => {
     player.deck.moveCardTo(card, player.hand);
   });
-  
+
   state = store.prompt(state, new ShowCardsPrompt(
-        opponent.id,
-        GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-        cards), () => state);
+    opponent.id,
+    GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
+    cards), () => state);
 
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);
@@ -70,7 +70,7 @@ export class Applin extends PokemonCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '';
+  public setNumber: string = '126';
 
   public name: string = 'Applin';
 

@@ -12,13 +12,15 @@ import { StoreLike } from '../../game/store/store-like';
 export class Pikachu extends PokemonCard {
 
   public name = 'Pikachu';
-  
+
+  public cardImage: string = 'assets/cardback.png';
+
   public set = 'BS';
-  
+
   public setNumber = '58';
-  
+
   public cardType = CardType.LIGHTNING;
-  
+
   public fullName = 'Pikachu BS';
 
   public stage = Stage.BASIC;

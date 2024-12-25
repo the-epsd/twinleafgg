@@ -25,6 +25,7 @@ export declare class Rillaboom extends PokemonCard {
         text: string;
     }[];
     regulationMark: string;
+    setNumber: string;
     set: string;
     name: string;
     fullName: string;

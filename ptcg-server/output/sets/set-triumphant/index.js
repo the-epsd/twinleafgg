@@ -1,14 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setTriumphant = void 0;
-const card_images_1 = require("./card-images");
+const black_belt_1 = require("./black-belt");
+const celebi_1 = require("./celebi");
+const junk_arm_1 = require("./junk-arm");
+const mew_prime_1 = require("./mew-prime");
+const rescue_energy_1 = require("./rescue-energy");
+const seeker_1 = require("./seeker");
+const twins_1 = require("./twins");
 exports.setTriumphant = [
-    new card_images_1.BlackBeltArt(),
-    new card_images_1.CelebiArt(),
-    new card_images_1.JunkArmArt(),
-    new card_images_1.MewArt(),
-    new card_images_1.RescueEnergyArt(),
-    new card_images_1.SeekerArt(),
-    new card_images_1.TwinsArt(),
+    new black_belt_1.BlackBelt(),
+    new celebi_1.Celebi(),
+    new junk_arm_1.JunkArm(),
+    new mew_prime_1.Mew(),
+    new rescue_energy_1.RescueEnergy(),
+    new seeker_1.Seeker(),
+    new twins_1.Twins(),
     // new PalkiaDialgaLEGEND(),
 ];

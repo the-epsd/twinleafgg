@@ -13,7 +13,6 @@ const pokemon_card_1 = require("../card/pokemon-card");
 const check_effects_1 = require("../effects/check-effects");
 const trainer_card_1 = require("../card/trainer-card");
 function playerTurnReducer(store, state, action) {
-    var _a;
     if (state.phase === state_1.GamePhase.PLAYER_TURN) {
         if (action instanceof game_actions_1.PassTurnAction) {
             const player = state.players[state.activePlayer];
@@ -44,12 +43,16 @@ function playerTurnReducer(store, state, action) {
             if (pokemonCard) {
                 attacks = [...pokemonCard.attacks];
             }
-            // Check for Alakazam ex on the bench
-            const alakazamOnBench = player.bench.find(b => { var _a; return ((_a = b.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.name) === 'Alakazam ex'; });
-            if (alakazamOnBench) {
-                const alakazamAttacks = ((_a = alakazamOnBench.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.attacks) || [];
-                attacks = [...attacks, ...alakazamAttacks];
-            }
+            // Add bench attacks
+            player.bench.forEach(benchSlot => {
+                const benchPokemon = benchSlot.getPokemonCard();
+                if (benchPokemon && benchPokemon.name === 'Alakazam ex') {
+                    attacks.push(...benchPokemon.attacks); // Add all attacks
+                    const attackEffect = new check_effects_1.CheckPokemonAttacksEffect(player); // Pass the bench slot
+                    state = store.reduceEffect(state, attackEffect);
+                    attacks = [...attacks, ...attackEffect.attacks];
+                }
+            });
             const attackEffect = new check_effects_1.CheckPokemonAttacksEffect(player);
             state = store.reduceEffect(state, attackEffect);
             attacks = [...attacks, ...attackEffect.attacks];

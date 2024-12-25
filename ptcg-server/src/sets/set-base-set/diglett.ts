@@ -5,13 +5,15 @@ import { Attack } from '../../game/store/card/pokemon-types';
 export class Diglett extends PokemonCard {
 
   public name = 'Diglett';
-  
+
+  public cardImage: string = 'assets/cardback.png';
+
   public set = 'BS';
-  
+
   public setNumber = '47';
-  
+
   public fullName = 'Diglett BS';
-  
+
   public cardType = CardType.FIGHTING;
 
   public stage = Stage.BASIC;

@@ -3,6 +3,7 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { Attack } from '../../game/store/card/pokemon-types';
 export declare class Voltorb extends PokemonCard {
     name: string;
+    cardImage: string;
     setNumber: string;
     set: string;
     cardType: CardType;

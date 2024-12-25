@@ -3,7 +3,7 @@ import { EnergyCard } from '../../game/store/card/energy-card';
 
 export class GrassEnergy extends EnergyCard {
 
-  public provides: CardType[] = [ CardType.GRASS ];
+  public provides: CardType[] = [CardType.GRASS];
 
   public set: string = 'SVE';
 
@@ -11,7 +11,7 @@ export class GrassEnergy extends EnergyCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '283';
+  public setNumber: string = '1';
 
   public name = 'Grass Energy';
 
