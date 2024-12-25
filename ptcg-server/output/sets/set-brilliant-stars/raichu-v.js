@@ -87,7 +87,7 @@ class RaichuV extends pokemon_card_1.PokemonCard {
             });
             console.log('Total Lightning Energy: ' + totalLightningEnergy);
             return store.prompt(state, new discard_energy_prompt_1.DiscardEnergyPrompt(player.id, game_message_1.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], // Card source is target Pokemon
-            { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Lightning Energy' }, { min: 1, allowCancel: false }), transfers => {
+            { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Lightning Energy' }, { min: 1, max: totalLightningEnergy, allowCancel: false }), transfers => {
                 if (transfers === null) {
                     return;
                 }
