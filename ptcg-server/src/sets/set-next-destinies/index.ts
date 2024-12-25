@@ -1,6 +1,6 @@
 import { Card } from '../../game/store/card/card';
+import { LevelBallNXD } from './card-images';
 import { HeavyBall } from './heavy-ball';
-import { LevelBall } from './level-ball';
 import { MewtwoEx } from './mewtwo-ex';
 import { Musharna } from './musharna';
 import { PokemonCenter } from './pokemon-center';
@@ -11,7 +11,7 @@ import { ZekromEx } from './zekrom-ex';
 
 export const setNextDestinies: Card[] = [
   new HeavyBall(),
-  new LevelBall(),
+  new LevelBallNXD(),
   new MewtwoEx(),
   new Musharna(),
   new PokemonCenter(),

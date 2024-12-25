@@ -1,12 +1,10 @@
 import { Card } from '../../game/store/card/card';
-import { Magneton } from '../set-base-set/magneton';
-import { CounterGain } from '../set-lost-thunder/counter-gain';
-import { ScrambleSwitch } from '../set-plasma-storm/scramble-switch';
 import { AlolanExeggutorex } from './alolan-exeggutor-ex';
 import { Archaludonex } from './archaludon-ex';
 import { Azelf } from './azelf';
 import { Azumarill } from './azulmarill';
 import { Capsakid } from './capsakid.';
+import { CounterGainSSP, ScrambleSwitchSSP } from './card-images';
 import { CelebrationFanfare } from './celebration-fanfare';
 import { Ceruledge } from './ceruledge';
 import { Ceruledgeex } from './ceruledge-ex';
@@ -34,6 +32,7 @@ import { Larvesta } from './larvesta';
 import { Latiasex } from './latias-ex';
 import { LisiasAppeal } from './lisias-appeal';
 import { Magnemite } from './magnemite';
+import { Magneton } from './magneton';
 import { Marill } from './marill';
 import { MegatonBlower } from './megaton-blower';
 import { Mesprit } from './mesprit';
@@ -92,7 +91,6 @@ export const setSurgingSparks: Card[] = [
   new Azelf(),
   new Uxie(),
   new Mesprit(),
-  new ScrambleSwitch(),
   new Ninetales(),
   new Ceruledge(),
   new Tatsugiriex(),
@@ -106,7 +104,6 @@ export const setSurgingSparks: Card[] = [
   new Trapinch(),
   new Vibrava(),
   new Flygonex(),
-  new CounterGain(),
   new HelperBell(),
   new Duraludon(),
   new Archaludonex(),
@@ -137,5 +134,9 @@ export const setSurgingSparks: Card[] = [
   new Koraidon(),
   new Rellor(),
   new Rabsca(),
-  new Wochien()
+  new Wochien(),
+
+  //Reprints
+  new ScrambleSwitchSSP(),
+  new CounterGainSSP(),
 ];

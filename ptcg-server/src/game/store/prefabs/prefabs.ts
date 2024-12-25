@@ -32,22 +32,6 @@ export function abilityUsed(player: Player, card: PokemonCard) {
   });
 }
 
-export function shufflePlayerDeck(state: State, store: StoreLike, player: Player): State {
-  const beforeShuffle = player.deck.cards.map(c => c.id);
-  console.log('Deck before shuffling:', beforeShuffle);
-
-  state = store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-    player.deck.applyOrder(order);
-    const afterShuffle = player.deck.cards.map(c => c.id);
-    console.log('Deck after shuffling:', afterShuffle);
-  });
-  return state;
-}
-
-export function shuffleDeck(state: State, store: StoreLike, player: Player): State {
-  return shufflePlayerDeck(state, store, player);
-}
-
 /**
  * 
  * A basic effect for checking whether or not a passive ability gets activated.

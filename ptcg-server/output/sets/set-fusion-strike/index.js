@@ -6,6 +6,7 @@ const adventurers_discovery_1 = require("./adventurers-discovery");
 const azumarill_1 = require("./azumarill");
 const basculin_1 = require("./basculin");
 const battle_vip_pass_1 = require("./battle-vip-pass");
+const card_images_1 = require("./card-images");
 const cook_1 = require("./cook");
 const cram_o_matic_1 = require("./cram-o-matic");
 const croagunk_1 = require("./croagunk");
@@ -22,7 +23,6 @@ const gengar_vmax_1 = require("./gengar-vmax");
 const heatmor_1 = require("./heatmor");
 const inteleon_v_1 = require("./inteleon-v");
 const inteleon_vmax_1 = require("./inteleon-vmax");
-const judge_1 = require("./judge");
 const meloetta_1 = require("./meloetta");
 const mew_v_1 = require("./mew-v");
 const mew_vmax_1 = require("./mew-vmax");
@@ -59,7 +59,7 @@ exports.setFusionStrike = [
     new heatmor_1.Heatmor(),
     new inteleon_v_1.InteleonV(),
     new inteleon_vmax_1.InteleonVMAX(),
-    new judge_1.Judge(),
+    new card_images_1.JudgeFST(),
     new meloetta_1.Meloetta(),
     new mew_v_1.MewV(),
     new mew_vmax_1.MewVMAX(),

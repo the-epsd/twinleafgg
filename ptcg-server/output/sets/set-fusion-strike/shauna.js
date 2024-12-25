@@ -25,7 +25,7 @@ class Shauna extends trainer_card_1.TrainerCard {
         this.regulationMark = 'E';
         this.set = 'FST';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '263';
+        this.setNumber = '240';
         this.name = 'Shauna';
         this.fullName = 'Shauna FST';
         this.text = 'Shuffle your hand into your deck. Then, draw 5 cards.';

@@ -325,6 +325,10 @@
   "VALIDATION_MAX_FILE_SIZE": "Maximum file size exceeded.",
   "VALIDATION_NAME_ALREADY_IN_USE": "This username is already in use.",
   "VALIDATION_PASSWORD_MATCH": "Passwords do not match.",
+  "BUTTON_FIND_MATCH": "Begin Matchmaking",
+  "LABEL_SELECT_FORMAT": "Select format",
+  "LABEL_PLAYERS_IN_QUEUE": "Now in Queue",
+  "BUTTON_EXPORT_DECKLIST": "Export Decklist",
   "GAME_MESSAGES": {
     "ACTION_IN_PROGRESS": "Action in progress",
     "ALL_FIRE_ENERGIES": "All fire energies",

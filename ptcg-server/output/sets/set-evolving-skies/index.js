@@ -11,7 +11,7 @@ const espeon_v_1 = require("./espeon-v");
 const espeon_vmax_1 = require("./espeon-vmax");
 const flaaffy_1 = require("./flaaffy");
 const flapple_1 = require("./flapple");
-const full_arts_1 = require("./full-arts");
+const full_art_1 = require("./full-art");
 const full_face_guard_1 = require("./full-face-guard");
 const galarian_articuno_1 = require("./galarian-articuno");
 const galarian_moltres_1 = require("./galarian-moltres");
@@ -85,6 +85,6 @@ exports.setEvolvingSkies = [
     new switching_cups_1.SwitchingCups(),
     new vigoroth_1.Vigoroth(),
     // Full  & Alternate 
-    new full_arts_1.RayquazaVAA(),
-    new full_arts_1.RayquazaVMAXAA(),
+    new full_art_1.RayquazaVAA(),
+    new full_art_1.RayquazaVMAXAA(),
 ];

@@ -9,6 +9,6 @@ exports.setGenerations = [
     new red_card_1.RedCard(),
     new revitalizer_1.Revitalizer(),
     new team_flare_grunt_1.TeamFlareGrunt(),
-    // Full s/Radiant Collection
+    // FA/Radiant Collection
     new charmeleon_1.Charmeleon(),
 ];

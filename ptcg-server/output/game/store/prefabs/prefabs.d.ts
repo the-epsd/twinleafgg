@@ -16,8 +16,6 @@ export declare function WAS_ATTACK_USED(effect: Effect, index: number, user: Pok
  */
 export declare function WAS_ABILITY_USED(effect: Effect, index: number, user: PokemonCard): effect is PowerEffect;
 export declare function abilityUsed(player: Player, card: PokemonCard): void;
-export declare function shufflePlayerDeck(state: State, store: StoreLike, player: Player): State;
-export declare function shuffleDeck(state: State, store: StoreLike, player: Player): State;
 /**
  *
  * A basic effect for checking whether or not a passive ability gets activated.

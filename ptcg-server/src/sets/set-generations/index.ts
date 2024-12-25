@@ -9,6 +9,6 @@ export const setGenerations: Card[] = [
   new Revitalizer(),
   new TeamFlareGrunt(),
 
-  // Full s/Radiant Collection
+  // FA/Radiant Collection
   new Charmeleon(),
 ];

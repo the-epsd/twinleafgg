@@ -1,12 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setTemporalForces = void 0;
-const ancient_booster_energy_capsule_1 = require("../set-paradox-rift/ancient-booster-energy-capsule");
-const future_booster_energy_capsule_1 = require("../set-paradox-rift/future-booster-energy-capsule");
 const beldum_1 = require("./beldum");
 const biancas_devotion_1 = require("./biancas-devotion");
 const brambleghast_1 = require("./brambleghast");
 const buddy_buddy_poffin_1 = require("./buddy-buddy-poffin");
+const card_images_1 = require("./card-images");
 const charjabug_1 = require("./charjabug");
 const chatot_1 = require("./chatot");
 const cincinno_1 = require("./cincinno");
@@ -76,7 +75,7 @@ const victini_1 = require("./victini");
 const vikavolt_1 = require("./vikavolt");
 const walking_wake_ex_1 = require("./walking-wake-ex");
 exports.setTemporalForces = [
-    new ancient_booster_energy_capsule_1.AncientBoosterEnergyCapsule(),
+    new card_images_1.AncientBoosterEnergyCapsuleTEF(),
     new beldum_1.Beldum(),
     new biancas_devotion_1.BiancasDevotion(),
     new brambleghast_1.Brambleghast(),
@@ -98,7 +97,7 @@ exports.setTemporalForces = [
     new feraligatr_1.Feraligatr(),
     new flutter_mane_1.FlutterMane(),
     new full_metal_lab_1.FullMetalLab(),
-    new future_booster_energy_capsule_1.FutureBoosterEnergyCapsule(),
+    new card_images_1.FutureBoosterEnergyCapsuleTEF(),
     new gastly_1.Gastly(),
     new gengar_ex_1.Gengarex(),
     new gouging_fire_ex_1.GougingFireex(),

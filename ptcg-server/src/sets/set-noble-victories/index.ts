@@ -2,6 +2,7 @@ import { Card } from '../../game/store/card/card';
 import { Archen } from './archen';
 import { Archeops } from './archeops';
 import { Blitzle } from './blitzle';
+import { SuperRodNVI } from './card-images';
 import { Chandelure } from './chandelure';
 import { Durant } from './durant';
 import { Eelektrik } from './eelektrik';
@@ -9,7 +10,6 @@ import { Eviolite } from './eviolite';
 import { Kyurem } from './kyurem';
 import { Lampent } from './lampent';
 import { PlumeFossil } from './plume-fossil';
-import { SuperRod } from './super-rod';
 import { Terrakion } from './terrakion';
 import { Trubbish } from './trubbish';
 import { Tynamo } from './tynamo';
@@ -30,7 +30,7 @@ export const setNobleVictories: Card[] = [
   new Kyurem(),
   new Lampent(),
   new PlumeFossil(),
-  new SuperRod(),
+  new SuperRodNVI(),
   new Terrakion(),
   new Trubbish(),
   new Tynamo(),

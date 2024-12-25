@@ -63,320 +63,282 @@ import { Frigibax } from './frigibax';
 import { Kilowattrel } from './kilowattrel';
 import { MimeJr } from './mime-jr';
 import { StudentsInPaldea } from './students-in-paldea';
-export declare class OddishArt extends Oddish {
-    cardImage: string;
+export declare class OddishSV extends Oddish {
     setNumber: string;
     set: string;
     fullName: string;
 }
-export declare class GloomArt extends Gloom {
-    cardImage: string;
+export declare class GloomSV extends Gloom {
     setNumber: string;
     set: string;
     fullName: string;
 }
-export declare class VileplumeArt extends Vileplume {
-    cardImage: string;
+export declare class VileplumeSV extends Vileplume {
     setNumber: string;
     set: string;
     fullName: string;
 }
-export declare class PinecoArt extends Pineco {
-    cardImage: string;
+export declare class PinecoSV extends Pineco {
     setNumber: string;
     set: string;
     fullName: string;
 }
-export declare class SmolivArt extends Smoliv {
-    cardImage: string;
+export declare class SmolivSV extends Smoliv {
     setNumber: string;
     set: string;
     fullName: string;
 }
-export declare class DollivArt extends Dolliv {
-    cardImage: string;
+export declare class DollivSV extends Dolliv {
     setNumber: string;
     set: string;
     fullName: string;
 }
-export declare class ArbolivaArt extends Arboliva {
-    cardImage: string;
+export declare class ArbolivaSV extends Arboliva {
     setNumber: string;
     set: string;
     fullName: string;
 }
-export declare class CapsakidArt extends Capsakid {
-    cardImage: string;
+export declare class CapsakidSV extends Capsakid {
     setNumber: string;
     set: string;
     fullName: string;
 }
-export declare class CharmanderArt extends Charmander {
-    cardImage: string;
+export declare class CharmanderSV extends Charmander {
     setNumber: string;
     set: string;
     fullName: string;
 }
-export declare class CharmeleonArt extends Charmeleon {
-    cardImage: string;
+export declare class CharmeleonSV extends Charmeleon {
     setNumber: string;
     set: string;
     fullName: string;
 }
-export declare class EnteiArt extends Entei {
-    cardImage: string;
+export declare class EnteiSV extends Entei {
     setNumber: string;
     set: string;
     fullName: string;
 }
-export declare class CharcadetArt extends Charcadet {
-    cardImage: string;
+export declare class CharcadetSV extends Charcadet {
     setNumber: string;
     set: string;
     fullName: string;
 }
-export declare class ArmarougeArt extends Armarouge {
-    cardImage: string;
+export declare class ArmarougeSV extends Armarouge {
     setNumber: string;
     set: string;
     fullName: string;
 }
-export declare class StaryuArt extends Staryu {
-    cardImage: string;
+export declare class StaryuSV extends Staryu {
     setNumber: string;
     set: string;
     fullName: string;
 }
-export declare class StarmieArt extends Starmie {
-    cardImage: string;
+export declare class StarmieSV extends Starmie {
     setNumber: string;
     set: string;
     fullName: string;
 }
-export declare class FinizenArt extends Finizen {
-    cardImage: string;
+export declare class FinizenSV extends Finizen {
     setNumber: string;
     set: string;
     fullName: string;
 }
-export declare class PalafinArt extends Palafin {
-    cardImage: string;
+export declare class PalafinSV extends Palafin {
     setNumber: string;
     set: string;
     fullName: string;
 }
-export declare class FrigibaxArt extends Frigibax {
-    cardImage: string;
+export declare class FrigibaxSV extends Frigibax {
     setNumber: string;
     set: string;
     fullName: string;
 }
-export declare class ArctibaxArt extends Arctibax {
-    cardImage: string;
+export declare class ArctibaxSV extends Arctibax {
     setNumber: string;
     set: string;
     fullName: string;
 }
-export declare class BaxcaliburArt extends Baxcalibur {
-    cardImage: string;
+export declare class BaxcaliburSV extends Baxcalibur {
     setNumber: string;
     set: string;
     fullName: string;
 }
-export declare class LuxrayArt extends Luxray {
-    cardImage: string;
+export declare class LuxraySV extends Luxray {
     setNumber: string;
     set: string;
     fullName: string;
 }
-export declare class ThundurusArt extends Thundurus {
-    cardImage: string;
+export declare class ThundurusSV extends Thundurus {
     setNumber: string;
     set: string;
     fullName: string;
 }
-export declare class WattrelArt extends Wattrel {
-    cardImage: string;
+export declare class WattrelSV extends Wattrel {
     setNumber: string;
     set: string;
     fullName: string;
 }
-export declare class KilowattrelArt extends Kilowattrel {
-    cardImage: string;
+export declare class KilowattrelSV extends Kilowattrel {
     setNumber: string;
     set: string;
     fullName: string;
 }
-export declare class CleffaArt extends Cleffa {
-    cardImage: string;
+export declare class CleffaSV extends Cleffa {
     setNumber: string;
     set: string;
     fullName: string;
 }
-export declare class NatuArt extends Natu {
-    cardImage: string;
+export declare class NatuSV extends Natu {
     setNumber: string;
     set: string;
     fullName: string;
 }
-export declare class XatuArt extends Xatu {
-    cardImage: string;
+export declare class XatuSV extends Xatu {
     setNumber: string;
     set: string;
     fullName: string;
 }
-export declare class RaltsArt extends Ralts {
-    cardImage: string;
+export declare class RaltsSV extends Ralts {
     setNumber: string;
     set: string;
     fullName: string;
 }
-export declare class DrifloonArt extends Drifloon {
-    cardImage: string;
+export declare class DrifloonSV extends Drifloon {
     setNumber: string;
     set: string;
     fullName: string;
 }
-export declare class MimeJrArt extends MimeJr {
-    cardImage: string;
+export declare class MimeJrSV extends MimeJr {
     setNumber: string;
     set: string;
     fullName: string;
 }
-export declare class SpiritombArt extends Spiritomb {
-    cardImage: string;
+export declare class SpiritombSV extends Spiritomb {
     setNumber: string;
     set: string;
     fullName: string;
 }
-export declare class KlefkiArt extends Klefki {
-    cardImage: string;
+export declare class KlefkiSV extends Klefki {
     setNumber: string;
     set: string;
     fullName: string;
 }
-export declare class MimikyuArt extends Mimikyu {
-    cardImage: string;
+export declare class MimikyuSV extends Mimikyu {
     setNumber: string;
     set: string;
     fullName: string;
 }
-export declare class TinkatinkArt extends Tinkatink {
-    cardImage: string;
+export declare class TinkatinkSV extends Tinkatink {
     setNumber: string;
     set: string;
     fullName: string;
 }
-export declare class TinkatonArt extends Tinkaton {
-    cardImage: string;
+export declare class TinkatonSV extends Tinkaton {
     setNumber: string;
     set: string;
     fullName: string;
 }
-export declare class RioluArt extends Riolu2 {
+export declare class RioluSV extends Riolu2 {
     cardImage: string;
 }
-export declare class LucarioArt extends Lucario {
+export declare class LucarioSV extends Lucario {
     cardImage: string;
 }
-export declare class HawluchaArt extends Hawlucha {
+export declare class HawluchaSV extends Hawlucha {
     cardImage: string;
 }
-export declare class MurkrowArt extends Murkrow {
+export declare class MurkrowSV extends Murkrow {
     cardImage: string;
 }
-export declare class ScizorArt extends Scizor {
+export declare class ScizorSV extends Scizor {
     cardImage: string;
 }
-export declare class RevavroomArt extends Revavroom {
+export declare class RevavroomSV extends Revavroom {
     cardImage: string;
 }
-export declare class NoibatArt extends Noibat {
+export declare class NoibatSV extends Noibat {
     cardImage: string;
 }
-export declare class PidgeyArt extends Pidgey {
+export declare class PidgeySV extends Pidgey {
     cardImage: string;
 }
-export declare class PidgeottoArt extends Pidgeotto {
+export declare class PidgeottoSV extends Pidgeotto {
     cardImage: string;
 }
-export declare class DoduoArt extends Doduo {
+export declare class DoduoSV extends Doduo {
     cardImage: string;
 }
-export declare class DodrioArt extends Dodrio {
+export declare class DodrioSV extends Dodrio {
     cardImage: string;
 }
-export declare class DittoArt extends Ditto {
+export declare class DittoSV extends Ditto {
     cardImage: string;
 }
-export declare class WingullArt extends Wingull {
+export declare class WingullSV extends Wingull {
     cardImage: string;
 }
-export declare class PelipperArt extends Pelipper {
+export declare class PelipperSV extends Pelipper {
     cardImage: string;
 }
-export declare class SkwovetArt extends Skwovet {
+export declare class SkwovetSV extends Skwovet {
     cardImage: string;
 }
-export declare class FlamigoArt extends Flamigo {
+export declare class FlamigoSV extends Flamigo {
     cardImage: string;
 }
-export declare class ForretressexArt extends Forretressex {
+export declare class ForretressexSV extends Forretressex {
     cardImage: string;
 }
-export declare class ToedscruelexArt extends Toedscruelex {
+export declare class ToedscruelexSV extends Toedscruelex {
     cardImage: string;
 }
-export declare class EspathraexArt2 extends Espathraex {
+export declare class EspathraexSV2 extends Espathraex {
     cardImage: string;
 }
-export declare class MewexArt extends Mewex {
+export declare class MewexSV extends Mewex {
     cardImage: string;
 }
-export declare class GardevoirexArt extends Gardevoirex {
+export declare class GardevoirexSV extends Gardevoirex {
     cardImage: string;
 }
-export declare class NoivernexArt extends Noivernex {
+export declare class NoivernexSV extends Noivernex {
     cardImage: string;
 }
-export declare class PidgeotexArt extends Pidgeotex {
+export declare class PidgeotexSV extends Pidgeotex {
     cardImage: string;
 }
-export declare class SquawkabillyexArt extends Squawkabillyex {
+export declare class SquawkabillyexSV extends Squawkabillyex {
     cardImage: string;
 }
-export declare class JudgeArt extends Judge {
+export declare class JudgeSV extends Judge {
     cardImage: string;
 }
-export declare class PaldeanStudentArt1 extends StudentsInPaldea {
+export declare class PaldeanStudentSV1 extends StudentsInPaldea {
     cardImage: string;
 }
-export declare class PaldeanStudentArt2 extends StudentsInPaldea {
+export declare class PaldeanStudentSV2 extends StudentsInPaldea {
     cardImage: string;
 }
-export declare class MewexArtSIR extends Mewex {
+export declare class MewexSVSIR extends Mewex {
     cardImage: string;
 }
-export declare class GardevoirexArtSIR extends Gardevoirex {
+export declare class GardevoirexSVSIR extends Gardevoirex {
     cardImage: string;
 }
-export declare class CharizardexArtSIR extends Charizardex {
+export declare class CharizardexSVSIR extends Charizardex {
     cardImage: string;
 }
-export declare class ArvenArt extends Arven {
-    cardImage: string;
+export declare class ArvenSV extends Arven {
     setNumber: string;
     set: string;
     fullName: string;
 }
-export declare class IonoArt extends Iono {
-    cardImage: string;
+export declare class IonoSV extends Iono {
     setNumber: string;
     set: string;
     fullName: string;
 }
-export declare class PennyArt extends Penny {
-    cardImage: string;
+export declare class PennySV extends Penny {
     setNumber: string;
     set: string;
     fullName: string;

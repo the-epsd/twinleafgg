@@ -4,6 +4,7 @@ exports.setNobleVictories = void 0;
 const archen_1 = require("./archen");
 const archeops_1 = require("./archeops");
 const blitzle_1 = require("./blitzle");
+const card_images_1 = require("./card-images");
 const chandelure_1 = require("./chandelure");
 const durant_1 = require("./durant");
 const eelektrik_1 = require("./eelektrik");
@@ -11,7 +12,6 @@ const eviolite_1 = require("./eviolite");
 const kyurem_1 = require("./kyurem");
 const lampent_1 = require("./lampent");
 const plume_fossil_1 = require("./plume-fossil");
-const super_rod_1 = require("./super-rod");
 const terrakion_1 = require("./terrakion");
 const trubbish_1 = require("./trubbish");
 const tynamo_1 = require("./tynamo");
@@ -31,7 +31,7 @@ exports.setNobleVictories = [
     new kyurem_1.Kyurem(),
     new lampent_1.Lampent(),
     new plume_fossil_1.PlumeFossil(),
-    new super_rod_1.SuperRod(),
+    new card_images_1.SuperRodNVI(),
     new terrakion_1.Terrakion(),
     new trubbish_1.Trubbish(),
     new tynamo_1.Tynamo(),

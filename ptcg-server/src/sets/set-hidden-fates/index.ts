@@ -1,10 +1,9 @@
 import { Card } from '../../game/store/card/card';
-import { Quagsire } from '../set-dragons-majesty/quagsire';
-import { Wooper } from '../set-dragons-majesty/wooper';
 import { AlolanVulpix } from './alolan-vulpix';
 import { Charmander } from './charmander';
 import { ErikasHospitality } from './erikas-hospitality';
 import { Psyduck } from './psyduck';
+import { QuagsireSV, WooperSV } from './shiny-vault';
 
 export const setHiddenFates: Card[] = [
 
@@ -12,8 +11,8 @@ export const setHiddenFates: Card[] = [
   new ErikasHospitality(),
   new Psyduck(),
 
-  // Full s/Shiny Vault
+  // FA/Shiny Vault
   new AlolanVulpix(),
-  new Wooper(),
-  new Quagsire()
+  new WooperSV(),
+  new QuagsireSV()
 ];

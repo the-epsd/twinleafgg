@@ -1,10 +1,10 @@
 import { Card } from '../../game/store/card/card';
 import { Bicycle } from './bicycle';
+import { EscapeRopePLS } from './card-images';
 import { Colress } from './colress';
 import { ColressMachine } from './colress-machine';
 import { Donphan } from './donphan';
 import { DowsingMachine } from './dowsing-machine';
-import { EscapeRope } from './escape-rope';
 import { Ether } from './ether';
 import { Gallade } from './gallade';
 import { HypnotoxicLaser } from './hypnotoxic-laser';
@@ -23,7 +23,6 @@ export const setPlasmaStorm: Card[] = [
   new ColressMachine(),
   new Donphan(),
   new DowsingMachine(),
-  new EscapeRope(),
   new Ether(),
   new Gallade(),
   new HypnotoxicLaser(),
@@ -35,4 +34,7 @@ export const setPlasmaStorm: Card[] = [
   new ScrambleSwitch(),
   new VirbankCityGym(),
   new Zubat(),
+
+  //Reprints
+  new EscapeRopePLS(),
 ];

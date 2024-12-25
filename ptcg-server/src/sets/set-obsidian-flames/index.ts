@@ -1,8 +1,8 @@
 import { Card } from '../../game/store/card/card';
-import { Arven } from '../set-scarlet-and-violet/arven';
 import { Absolex } from './absol-ex';
 import { Barboach } from './barboach';
 import { Bellibolt } from './bellibolt';
+import { ArvenOBF } from './card-images';
 import { Charizardex } from './charizard-ex';
 import { Charmander } from './charmander';
 import { Charmeleon } from './charmeleon';
@@ -14,7 +14,7 @@ import { Dratini } from './dratini';
 import { Entei } from './entei';
 import { Finizen } from './finizen';
 import { Froakie } from './froakie';
-import { BelliboltIR, CleffaIR, PidgeyIR, PidgeottoIR, ScizorIR, CharizardexFA, PidgeotexFA, PoppyFA, CharizardexSIR, PidgeotexSIR, PoppySIR, CharizardexHR, FireEnergyHR, VaroomIR, ArtazonHR } from './full-arts';
+import { BelliboltIR, CleffaIR, PidgeyIR, PidgeottoIR, ScizorIR, CharizardexFA, PidgeotexFA, PoppyFA, CharizardexSIR, PidgeotexSIR, PoppySIR, CharizardexHR, FireEnergyHR, VaroomIR, ArtazonHR } from './full-art';
 import { LetterOfEncouragement } from './letter-of-encouragement';
 import { Ninetales } from './ninetales';
 import { Oddish } from './oddish';
@@ -41,7 +41,7 @@ import { Whiscash } from './whiscash';
 export const setObsidianFlames: Card[] = [
 
   new Absolex(),
-  new Arven(),
+  new ArvenOBF(),
   new Barboach(),
   new Charizardex(),
   new Charmander(),

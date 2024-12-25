@@ -19,7 +19,7 @@ import { EnergySearch } from './energy-search';
 import { EnergySwitch } from './energy-switch';
 import { ExpShare } from './exp-share';
 import { Flittle } from './flittle';
-import { ArmarougeIR, ArvenFA, ArvenSIR, FightingEnergyHR, LightningEnergyHR, GardevoirexFA, GardevoirexSIR, JacqFA, JacqSIR, KatyFA, KoraidonexFA, KoraidonexSIR, KoraidonexHR, MagnezoneexFA, MiraidonexFA, MiraidonexSIR, MiraidonexHR, MiriamFA, MiriamSIR, NestBallHR, PennyFA, PennySIR, ProfessorsResearchFA1, ProfessorsResearchFA2, RaltsIR, RareCandyHR, SkwovetIR, TeamStarGruntFA } from './full-arts';
+import { ArmarougeIR, ArvenFA, ArvenSIR, FightingEnergyHR, LightningEnergyHR, GardevoirexFA, GardevoirexSIR, JacqFA, JacqSIR, KatyFA, KoraidonexFA, KoraidonexSIR, KoraidonexHR, MagnezoneexFA, MiraidonexFA, MiraidonexSIR, MiraidonexHR, MiriamFA, MiriamSIR, NestBallHR, PennyFA, PennySIR, ProfessorsResearchFA1, ProfessorsResearchFA2, RaltsIR, RareCandyHR, SkwovetIR, TeamStarGruntFA } from './full-art';
 import { Gardevoirex } from './gardevoir-ex';
 import { Growlithe } from './growlithe';
 import { Gyaradosex } from './gyarados-ex';
@@ -179,6 +179,4 @@ export const setScarletAndViolet: Card[] = [
   new TeamStarGruntFA(),
   new Toedscool(),
   new Toedscruel(),
-
-  new NestBall(),
 ];

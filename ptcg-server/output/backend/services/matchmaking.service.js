@@ -54,7 +54,7 @@ class MatchmakingService {
             const player1 = lobby.shift();
             const player2 = lobby.shift();
             if (player1 && player2) {
-                console.log(`Attempting to create match for ${player1} and ${player2}`);
+                console.log('Attempting to create match for Player 1 & Player 2');
                 this.createMatch(player1, player2, format);
             }
         }

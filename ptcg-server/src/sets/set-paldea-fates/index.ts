@@ -1,26 +1,6 @@
 import { Card } from '../../game/store/card/card';
-import { Charmander } from '../set-base-set/charmander';
-import { Mimikyu } from '../set-guardians-rising/mimikyu';
-import { Charizardex } from '../set-obsidian-flames/charizard-ex';
-import { Artazon } from '../set-paldea-evolved/artazon';
-import { Iono } from '../set-paldea-evolved/iono';
-import { Noibat } from '../set-paldea-evolved/noibat';
-import { Noivernex } from '../set-paldea-evolved/noivern-ex';
-import { Squawkabillyex } from '../set-paldea-evolved/squawkabilly-ex';
-import { Xatu } from '../set-paradox-rift/xatu';
-import { Ralts } from '../set-plasma-storm/ralts';
-import { Natu } from '../set-roaring-skies/natu';
-import { Armarouge } from '../set-scarlet-and-violet/armarouge';
-import { Charcadet } from '../set-scarlet-and-violet/charcadet';
-import { ElectricGenerator } from '../set-scarlet-and-violet/electric-generator';
-import { Gardevoirex } from '../set-scarlet-and-violet/gardevoir-ex';
-import { NestBall } from '../set-scarlet-and-violet/nest-ball';
-import { Penny } from '../set-scarlet-and-violet/penny';
-import { ProfessorsResearch } from '../set-scarlet-and-violet/professors-research';
-import { ProfessorsResearch2 } from '../set-scarlet-and-violet/professors-research2';
-import { RareCandy } from '../set-scarlet-and-violet/rare-candy';
-import { UltraBall } from '../set-scarlet-and-violet/ultra-ball';
 import { Atticus } from './atticus';
+import { CharmanderPAF, MimikyuPAF, RareCandyPAF, CharizardexPAF, ElectricGeneratorPAF, IonoPAF, NestBallPAF, ProfessorsResearchPAF, ProfessorsResearch2PAF, UltraBallPAF, ArmarougePAF, NatuPAF, XatuPAF, CharcadetPAF, RaltsPAF, GardevoirexPAF, NoibatPAF, NoivernexPAF, SquawkabillyexPAF, ArtazonPAF } from './card-images';
 import { Charmeleon } from './charmeleon';
 import { Clive } from './clive';
 import { Espathraex } from './espathra-ex';
@@ -40,8 +20,6 @@ export const setPaldeaFates: Card[] = [
   new Charmeleon(),
   new Atticus(),
   new Clive(),
-  new Charmander(),
-  new Mimikyu(),
   new Espathraex(),
   new MoonlightHill(),
   new Nemona(),
@@ -54,26 +32,29 @@ export const setPaldeaFates: Card[] = [
   new Gastly(),
   new Haunter(),
   new TechnicalMachineCrisisPunch(),
-  new RareCandy(),
-  new Charizardex(),
-  new ElectricGenerator(),
-  new Iono(),
-  new NestBall(),
-  new ProfessorsResearch(),
-  new ProfessorsResearch2(),
-  new UltraBall(),
-  new Armarouge(),
-  new Natu(),
-  new Xatu(),
-  new Charcadet(),
-  new Ralts(),
-  new Gardevoirex(),
-  new Noibat(),
-  new Noivernex(),
-  new Squawkabillyex(),
-  new Artazon(),
+
+  //Reprints
+  new CharmanderPAF(),
+  new MimikyuPAF(),
+  new RareCandyPAF(),
+  new CharizardexPAF(),
+  new ElectricGeneratorPAF(),
+  new IonoPAF(),
+  new NestBallPAF(),
+  new ProfessorsResearchPAF(),
+  new ProfessorsResearch2PAF(),
+  new UltraBallPAF(),
+  new ArmarougePAF(),
+  new NatuPAF(),
+  new XatuPAF(),
+  new CharcadetPAF(),
+  new RaltsPAF(),
+  new GardevoirexPAF(),
+  new NoibatPAF(),
+  new NoivernexPAF(),
+  new SquawkabillyexPAF(),
+  new ArtazonPAF(),
 
   //Shiny Vault
-  new Penny(),
 
 ];

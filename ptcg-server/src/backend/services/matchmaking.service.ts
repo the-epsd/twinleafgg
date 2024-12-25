@@ -13,14 +13,14 @@ class MatchmakingService {
   private constructor(core: Core) {
     this.core = core;
   }
-  
+
   public static getInstance(core: Core): MatchmakingService {
     if (!MatchmakingService.instance) {
       MatchmakingService.instance = new MatchmakingService(core);
     }
     return MatchmakingService.instance;
   }
-  
+
   getLobby(format: string): [number, string[]][] {
     if (!this.lobbyCache.has(format)) {
       this.lobbyCache.set(format, this.lobbies.get(format) || []);
@@ -61,7 +61,7 @@ class MatchmakingService {
       const player1 = lobby.shift();
       const player2 = lobby.shift();
       if (player1 && player2) {
-        console.log(`Attempting to create match for ${player1} and ${player2}`);
+        console.log('Attempting to create match for Player 1 & Player 2');
         this.createMatch(player1, player2, format);
       }
     } else {

@@ -1,10 +1,9 @@
 import { Card } from '../../game/store/card/card';
 import { Accelgor } from './accelgor';
+import { DarkPatchDEX, EnhancedHammerDEX } from './card-images';
 import { DarkClaw } from './dark-claw';
-import { DarkPatch } from './dark-patch';
 import { DarkraiEx } from './darkrai-ex';
 import { Empoleon } from './empoleon';
-import { EnhancedHammer } from './enhanced-hammer';
 import { Gardevoir } from './gardevoir';
 import { Ivysaur } from './ivysaur';
 import { Minun } from './minun';
@@ -22,10 +21,10 @@ import { Zorua } from './zorua';
 export const setDarkExplorers: Card[] = [
   new Accelgor(),
   new DarkClaw(),
-  new DarkPatch(),
+  new DarkPatchDEX(),
   new DarkraiEx(),
   new Empoleon(),
-  new EnhancedHammer(),
+  new EnhancedHammerDEX(),
   new Gardevoir(),
   new Ivysaur(),
   new Minun(),

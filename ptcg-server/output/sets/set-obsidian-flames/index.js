@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setObsidianFlames = void 0;
-const arven_1 = require("../set-scarlet-and-violet/arven");
 const absol_ex_1 = require("./absol-ex");
 const barboach_1 = require("./barboach");
 const bellibolt_1 = require("./bellibolt");
+const card_images_1 = require("./card-images");
 const charizard_ex_1 = require("./charizard-ex");
 const charmander_1 = require("./charmander");
 const charmeleon_1 = require("./charmeleon");
@@ -16,7 +16,7 @@ const dratini_1 = require("./dratini");
 const entei_1 = require("./entei");
 const finizen_1 = require("./finizen");
 const froakie_1 = require("./froakie");
-const full_arts_1 = require("./full-arts");
+const full_art_1 = require("./full-art");
 const letter_of_encouragement_1 = require("./letter-of-encouragement");
 const ninetales_1 = require("./ninetales");
 const oddish_1 = require("./oddish");
@@ -40,7 +40,7 @@ const vengeful_punch_1 = require("./vengeful-punch");
 const whiscash_1 = require("./whiscash");
 exports.setObsidianFlames = [
     new absol_ex_1.Absolex(),
-    new arven_1.Arven(),
+    new card_images_1.ArvenOBF(),
     new barboach_1.Barboach(),
     new charizard_ex_1.Charizardex(),
     new charmander_1.Charmander(),
@@ -76,19 +76,19 @@ exports.setObsidianFlames = [
     new varoom_1.Varoom(),
     new whiscash_1.Whiscash(),
     //Alt-s
-    new full_arts_1.BelliboltIR(),
-    new full_arts_1.CleffaIR(),
-    new full_arts_1.PidgeyIR(),
-    new full_arts_1.PidgeottoIR(),
-    new full_arts_1.ScizorIR(),
-    new full_arts_1.CharizardexFA(),
-    new full_arts_1.PidgeotexFA(),
-    new full_arts_1.PoppyFA(),
-    new full_arts_1.CharizardexSIR(),
-    new full_arts_1.PidgeotexSIR(),
-    new full_arts_1.PoppySIR(),
-    new full_arts_1.CharizardexHR(),
-    new full_arts_1.ArtazonHR(),
-    new full_arts_1.FireEnergyHR(),
-    new full_arts_1.VaroomIR()
+    new full_art_1.BelliboltIR(),
+    new full_art_1.CleffaIR(),
+    new full_art_1.PidgeyIR(),
+    new full_art_1.PidgeottoIR(),
+    new full_art_1.ScizorIR(),
+    new full_art_1.CharizardexFA(),
+    new full_art_1.PidgeotexFA(),
+    new full_art_1.PoppyFA(),
+    new full_art_1.CharizardexSIR(),
+    new full_art_1.PidgeotexSIR(),
+    new full_art_1.PoppySIR(),
+    new full_art_1.CharizardexHR(),
+    new full_art_1.ArtazonHR(),
+    new full_art_1.FireEnergyHR(),
+    new full_art_1.VaroomIR()
 ];

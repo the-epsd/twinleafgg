@@ -1,14 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setSurgingSparks = void 0;
-const magneton_1 = require("../set-base-set/magneton");
-const counter_gain_1 = require("../set-lost-thunder/counter-gain");
-const scramble_switch_1 = require("../set-plasma-storm/scramble-switch");
 const alolan_exeggutor_ex_1 = require("./alolan-exeggutor-ex");
 const archaludon_ex_1 = require("./archaludon-ex");
 const azelf_1 = require("./azelf");
 const azulmarill_1 = require("./azulmarill");
 const capsakid_1 = require("./capsakid.");
+const card_images_1 = require("./card-images");
 const celebration_fanfare_1 = require("./celebration-fanfare");
 const ceruledge_1 = require("./ceruledge");
 const ceruledge_ex_1 = require("./ceruledge-ex");
@@ -36,6 +34,7 @@ const larvesta_1 = require("./larvesta");
 const latias_ex_1 = require("./latias-ex");
 const lisias_appeal_1 = require("./lisias-appeal");
 const magnemite_1 = require("./magnemite");
+const magneton_1 = require("./magneton");
 const marill_1 = require("./marill");
 const megaton_blower_1 = require("./megaton-blower");
 const mesprit_1 = require("./mesprit");
@@ -94,7 +93,6 @@ exports.setSurgingSparks = [
     new azelf_1.Azelf(),
     new uxie_1.Uxie(),
     new mesprit_1.Mesprit(),
-    new scramble_switch_1.ScrambleSwitch(),
     new ninetales_1.Ninetales(),
     new ceruledge_1.Ceruledge(),
     new tatsugiri_ex_1.Tatsugiriex(),
@@ -108,7 +106,6 @@ exports.setSurgingSparks = [
     new trapinch_1.Trapinch(),
     new vibrava_1.Vibrava(),
     new flygon_ex_1.Flygonex(),
-    new counter_gain_1.CounterGain(),
     new helper_bell_1.HelperBell(),
     new duraludon_1.Duraludon(),
     new archaludon_ex_1.Archaludonex(),
@@ -139,5 +136,8 @@ exports.setSurgingSparks = [
     new koraidon_1.Koraidon(),
     new rellor_1.Rellor(),
     new rabsca_1.Rabsca(),
-    new wo_chien_1.Wochien()
+    new wo_chien_1.Wochien(),
+    //Reprints
+    new card_images_1.ScrambleSwitchSSP(),
+    new card_images_1.CounterGainSSP(),
 ];

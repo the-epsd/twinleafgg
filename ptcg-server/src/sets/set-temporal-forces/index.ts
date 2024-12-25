@@ -1,10 +1,9 @@
 import { Card } from '../../game/store/card/card';
-import { AncientBoosterEnergyCapsule } from '../set-paradox-rift/ancient-booster-energy-capsule';
-import { FutureBoosterEnergyCapsule } from '../set-paradox-rift/future-booster-energy-capsule';
 import { Beldum } from './beldum';
 import { BiancasDevotion } from './biancas-devotion';
 import { Brambleghast } from './brambleghast';
 import { BuddyBuddyPoffin } from './buddy-buddy-poffin';
+import { AncientBoosterEnergyCapsuleTEF, FutureBoosterEnergyCapsuleTEF } from './card-images';
 import { Charjabug } from './charjabug';
 import { Chatot } from './chatot';
 import { Cinccino } from './cincinno';
@@ -75,7 +74,7 @@ import { Vikavolt } from './vikavolt';
 import { WalkingWakeex } from './walking-wake-ex';
 export const setTemporalForces: Card[] = [
 
-  new AncientBoosterEnergyCapsule(),
+  new AncientBoosterEnergyCapsuleTEF(),
   new Beldum(),
   new BiancasDevotion(),
   new Brambleghast(),
@@ -97,7 +96,7 @@ export const setTemporalForces: Card[] = [
   new Feraligatr(),
   new FlutterMane(),
   new FullMetalLab(),
-  new FutureBoosterEnergyCapsule(),
+  new FutureBoosterEnergyCapsuleTEF(),
   new Gastly(),
   new Gengarex(),
   new GougingFireex(),

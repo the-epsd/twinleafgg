@@ -1,6 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { Pokedex } from '../set-base-set/pokedex';
-import { DarknessEnergy } from '../set-heartgold-and-soulsilver/HS_121_Darkness_Energy';
+import { DarknessEnergyEVO, PokedexEVO } from './card-images';
 import { DevolutionSpray } from './devolution-spray';
 import { DragoniteEX } from './dragonite-ex';
 import { Electabuzz } from './electabuzz';
@@ -11,10 +10,10 @@ export const setEvolutions: Card[] = [
   new DevolutionSpray(),
   new DragoniteEX(),
   new Electabuzz(),
-  new Pokedex(),
+  new PokedexEVO(),
   new Poliwhirl(),
   new Starmie(),
 
   //Energy
-  new DarknessEnergy(),
+  new DarknessEnergyEVO(),
 ];

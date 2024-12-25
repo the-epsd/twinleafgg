@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setGuardiansRising = void 0;
-const alolan_vulpix_1 = require("../set-hidden-fates/alolan-vulpix");
 const aether_paradise_conservation_area_1 = require("./aether-paradise-conservation-area");
 const aqua_patch_1 = require("./aqua-patch");
 const brooklet_hill_1 = require("./brooklet-hill");
+const card_images_1 = require("./card-images");
 const field_blower_1 = require("./field-blower");
 const lycanroc_gx_1 = require("./lycanroc-gx");
 const machoke_1 = require("./machoke");
@@ -16,9 +16,10 @@ const rescue_stretcher_1 = require("./rescue-stretcher");
 const tapu_lele_gx_1 = require("./tapu-lele-gx");
 exports.setGuardiansRising = [
     new aether_paradise_conservation_area_1.AetherParadiseConvserationArea(),
-    new alolan_vulpix_1.AlolanVulpix(),
+    new card_images_1.AlolanVulpixGRI(),
     new aqua_patch_1.AquaPatch(),
     new brooklet_hill_1.BrookletHill(),
+    new card_images_1.EnhancedHammerGRI(),
     new field_blower_1.FieldBlower(),
     new lycanroc_gx_1.LycanrocGX(),
     new machoke_1.Machoke(),

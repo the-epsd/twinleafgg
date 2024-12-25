@@ -2,11 +2,11 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setPlasmaStorm = void 0;
 const bicycle_1 = require("./bicycle");
+const card_images_1 = require("./card-images");
 const colress_1 = require("./colress");
 const colress_machine_1 = require("./colress-machine");
 const donphan_1 = require("./donphan");
 const dowsing_machine_1 = require("./dowsing-machine");
-const escape_rope_1 = require("./escape-rope");
 const ether_1 = require("./ether");
 const gallade_1 = require("./gallade");
 const hypnotoxic_laser_1 = require("./hypnotoxic-laser");
@@ -24,7 +24,6 @@ exports.setPlasmaStorm = [
     new colress_machine_1.ColressMachine(),
     new donphan_1.Donphan(),
     new dowsing_machine_1.DowsingMachine(),
-    new escape_rope_1.EscapeRope(),
     new ether_1.Ether(),
     new gallade_1.Gallade(),
     new hypnotoxic_laser_1.HypnotoxicLaser(),
@@ -36,4 +35,6 @@ exports.setPlasmaStorm = [
     new scramble_switch_1.ScrambleSwitch(),
     new virbank_city_gym_1.VirbankCityGym(),
     new zubat_1.Zubat(),
+    //Reprints
+    new card_images_1.EscapeRopePLS(),
 ];

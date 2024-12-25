@@ -1,6 +1,7 @@
 import { Card } from '../../game/store/card/card';
 import { AspertiaCityGym } from './aspertia-city-gym';
 import { Blastoise } from './blastoise';
+import { RockyHelmetBCR } from './card-images';
 import { ComputerSearch } from './computer-search';
 import { Dusclops } from './dusclops';
 import { Dusknoir } from './dusknoir';
@@ -10,7 +11,6 @@ import { LandorusEx } from './landorus-ex';
 import { Munna } from './munna';
 import { Pignite } from './pignite';
 import { Potion } from './potion';
-import { RockyHelmet } from './rocky-helmet';
 import { Skyla } from './skyla';
 import { Squirtle } from './squirtle';
 import { Stoutland } from './stoutland';
@@ -28,7 +28,7 @@ export const setBoundariesCrossed: Card[] = [
   new Munna(),
   new Pignite(),
   new Potion(),
-  new RockyHelmet(),
+  new RockyHelmetBCR(),
   new Skyla(),
   new Squirtle(),
   new Stoutland(),
