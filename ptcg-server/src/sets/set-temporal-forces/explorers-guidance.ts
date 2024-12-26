@@ -25,7 +25,7 @@ export class ExplorersGuidance extends TrainerCard {
 
   public fullName: string = 'Explorer\'s Guidance TEF';
 
-  public text: string = 'Heal all damage from 1 of your Pokémon that has 30 HP or less remaining.';
+  public text: string = 'Look at the top 6 cards of your deck and put 2 of them into your hand. Discard the other cards.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
@@ -40,26 +40,26 @@ export class ExplorersGuidance extends TrainerCard {
       player.hand.moveCardTo(effect.trainerCard, player.supporter);
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
-      
+
       if (player.deck.cards.length === 0) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
-      
+
       const deckTop = new CardList();
       player.deck.moveTo(deckTop, 6);
-      
+
       return store.prompt(state, new ChooseCardsPrompt(
         player,
         GameMessage.CHOOSE_CARD_TO_HAND,
         deckTop,
-        { },
+        {},
         { min: 2, max: 2, allowCancel: false }
       ), selected => {
         deckTop.moveCardsTo(selected, player.hand);
         deckTop.moveTo(player.discard);
         player.supporter.moveCardTo(effect.trainerCard, player.discard);
-        
-    
+
+
       });
     }
     return state;

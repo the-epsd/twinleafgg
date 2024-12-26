@@ -64,7 +64,7 @@ class Piers extends trainer_card_1.TrainerCard {
         this.regulationMark = 'D';
         this.set = 'CPA';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '058';
+        this.setNumber = '58';
         this.name = 'Piers';
         this.fullName = 'Piers CPA';
         this.text = 'Search your deck for an Energy card and a [D] Pokémon, reveal them, and put them into your hand. Then, shuffle your deck.';

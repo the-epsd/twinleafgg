@@ -27,7 +27,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   player.hand.moveCardTo(effect.trainerCard, player.supporter);
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
-  
+
   if (player.deck.cards.length === 0) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
@@ -38,7 +38,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
     player,
     GameMessage.CHOOSE_CARD_TO_HAND,
     player.deck,
-    { },
+    {},
     { min: 2, max: 2, allowCancel: false }
   ), selected => {
     cards = selected || [];
@@ -64,11 +64,11 @@ function* playCard(next: Function, store: StoreLike, state: State,
       deckTop.moveToTopOfDestination(player.deck);
 
       player.supporter.moveCardTo(effect.trainerCard, player.discard);
-      
+
     });
   });
 }
-      
+
 export class Mallow extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -77,7 +77,7 @@ export class Mallow extends TrainerCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '121';
+  public setNumber: string = '127';
 
   public name: string = 'Mallow';
 

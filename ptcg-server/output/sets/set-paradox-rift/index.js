@@ -66,6 +66,7 @@ const technical_machine_turbo_energize_1 = require("./technical-machine-turbo-en
 const techno_radar_1 = require("./techno-radar");
 const tinkatuff_1 = require("./tinkatuff");
 const toedscool_1 = require("./toedscool");
+const toedscool2_1 = require("./toedscool2");
 const toedscruel_1 = require("./toedscruel");
 const tsareena_ex_1 = require("./tsareena-ex");
 const tulip_1 = require("./tulip");
@@ -134,7 +135,8 @@ exports.setParadoxRift = [
     new technical_machine_evolution_1.TechnicalMachineEvolution(),
     new technical_machine_turbo_energize_1.TechnicalMachineTurboEnergize(),
     new tinkatuff_1.Tinkatuff(),
-    new toedscool_1.Toedscool2(),
+    new toedscool_1.Toedscool(),
+    new toedscool2_1.Toedscool2(),
     new toedscruel_1.Toedscruel(),
     new techno_radar_1.TechnoRadar(),
     new tsareena_ex_1.Tsareenaex(),

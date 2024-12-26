@@ -82,7 +82,7 @@ export class Sonia extends TrainerCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '065';
+  public setNumber: string = '65';
 
   public name: string = 'Sonia';
 

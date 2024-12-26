@@ -25,8 +25,7 @@ export class Judge extends TrainerCard {
   public fullName: string = 'Judge SVI';
 
   public text: string =
-    'Each player shuffles his or her hand into his or her deck. ' +
-    'Then, each player draws a card for each of his or her remaining Prize cards.';
+    'Each player shuffles their hand into their deck and draws 4 cards.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
@@ -39,7 +38,7 @@ export class Judge extends TrainerCard {
       if (supporterTurn > 0) {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
-      
+
       player.hand.moveCardTo(effect.trainerCard, player.supporter);
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
@@ -60,7 +59,7 @@ export class Judge extends TrainerCard {
         opponent.deck.moveTo(opponent.hand, 4);
 
         player.supporter.moveCardTo(effect.trainerCard, player.discard);
-        
+
       });
     }
 

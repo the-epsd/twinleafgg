@@ -16,8 +16,7 @@ class Judge extends trainer_card_1.TrainerCard {
         this.regulationMark = 'E';
         this.name = 'Judge';
         this.fullName = 'Judge FST';
-        this.text = 'Each player shuffles his or her hand into his or her deck. ' +
-            'Then, each player draws a card for each of his or her remaining Prize cards.';
+        this.text = 'Each player shuffles their hand into their deck and draws 4 cards.';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
