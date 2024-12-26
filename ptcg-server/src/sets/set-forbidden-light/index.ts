@@ -1,7 +1,9 @@
 import { Card } from '../../game/store/card/card';
 import { BeastRing } from './beast-ring';
 import { Buzzwole } from './buzzwole';
+import { Diantha } from './diantha';
 import { Flabebe } from './flabebe';
+import { Floette } from './floette';
 import { Florges } from './florges';
 import { Frogadier } from './frogadier';
 import { GreninjaGX } from './greninja-gx';
@@ -18,7 +20,9 @@ import { UnitEnergyFDY } from './unit-energy-fdy';
 export const setForbiddenLight: Card[] = [
   new BeastRing(),
   new Buzzwole(),
+  new Diantha(),
   new Flabebe(),
+  new Floette(),
   new Florges(),
   new Frogadier(),
   new GreninjaGX(),

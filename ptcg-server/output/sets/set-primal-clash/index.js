@@ -16,6 +16,7 @@ const slugma_1 = require("./slugma");
 const teammates_1 = require("./teammates");
 const torchic_1 = require("./torchic");
 const wailord_ex_1 = require("./wailord-ex");
+const wonder_energy_1 = require("./wonder-energy");
 exports.setPrimalClash = [
     new acro_bike_1.AcroBike(),
     new archies_ace_in_the_hole_1.ArchiesAceInTheHole(),
@@ -31,5 +32,6 @@ exports.setPrimalClash = [
     new slugma_1.Slugma(),
     new teammates_1.Teammates(),
     new torchic_1.Torchic(),
-    new wailord_ex_1.WailordEx()
+    new wailord_ex_1.WailordEx(),
+    new wonder_energy_1.WonderEnergy(),
 ];

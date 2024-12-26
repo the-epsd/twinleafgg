@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.setBurningShadows = void 0;
 const acerola_1 = require("./acerola");
 const bruxish_1 = require("./bruxish");
+const cutiefly_1 = require("./cutiefly");
 const darkrai_gx_1 = require("./darkrai-gx");
 const diancie_1 = require("./diancie");
 const gardevoir_gx_1 = require("./gardevoir-gx");
@@ -17,6 +18,7 @@ const wishful_baton_1 = require("./wishful-baton");
 exports.setBurningShadows = [
     new acerola_1.Acerola(),
     new bruxish_1.Bruxish(),
+    new cutiefly_1.Cutiefly(),
     new darkrai_gx_1.DarkraiGX(),
     new diancie_1.Diancie(),
     new gardevoir_gx_1.GardevoirGX(),

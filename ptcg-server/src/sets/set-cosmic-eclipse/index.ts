@@ -11,6 +11,8 @@ import { DrawEnergy } from './draw-energy';
 import { Dusclops } from './dusclops';
 import { Duskull } from './duskull';
 import { Excadrill } from './excadrill';
+import { Flabebe } from './flabebe';
+import { Flabebe2 } from './flabebe2';
 import { Floette } from './floette';
 import { Golett } from './golett';
 import { GuzmaAndHala } from './guzma-and-hala';
@@ -27,6 +29,7 @@ import { Sawsbuck } from './sawsbuck';
 import { Slugma } from './slugma';
 import { Stoutland } from './stoutland';
 import { Sunkern } from './sunkern';
+import { Swirlix } from './swirlix';
 import { TagCall } from './tag-call';
 import { UltraNecrozma } from './ultra-necrozma';
 import { Wishiwashi } from './wishiwashi';
@@ -45,6 +48,8 @@ export const setCosmicEclipse: Card[] = [
   new Dusclops(),
   new Duskull(),
   new Excadrill(),
+  new Flabebe(),
+  new Flabebe2(),
   new Floette(),
   new Golett(),
   new GuzmaAndHala(),
@@ -61,6 +66,7 @@ export const setCosmicEclipse: Card[] = [
   new Slugma(),
   new Stoutland(),
   new Sunkern(),
+  new Swirlix(),
   new TagCall(),
   new UltraNecrozma(),
   new Wishiwashi()

@@ -13,6 +13,8 @@ const draw_energy_1 = require("./draw-energy");
 const dusclops_1 = require("./dusclops");
 const duskull_1 = require("./duskull");
 const excadrill_1 = require("./excadrill");
+const flabebe_1 = require("./flabebe");
+const flabebe2_1 = require("./flabebe2");
 const floette_1 = require("./floette");
 const golett_1 = require("./golett");
 const guzma_and_hala_1 = require("./guzma-and-hala");
@@ -29,6 +31,7 @@ const sawsbuck_1 = require("./sawsbuck");
 const slugma_1 = require("./slugma");
 const stoutland_1 = require("./stoutland");
 const sunkern_1 = require("./sunkern");
+const swirlix_1 = require("./swirlix");
 const tag_call_1 = require("./tag-call");
 const ultra_necrozma_1 = require("./ultra-necrozma");
 const wishiwashi_1 = require("./wishiwashi");
@@ -45,6 +48,8 @@ exports.setCosmicEclipse = [
     new dusclops_1.Dusclops(),
     new duskull_1.Duskull(),
     new excadrill_1.Excadrill(),
+    new flabebe_1.Flabebe(),
+    new flabebe2_1.Flabebe2(),
     new floette_1.Floette(),
     new golett_1.Golett(),
     new guzma_and_hala_1.GuzmaAndHala(),
@@ -61,6 +66,7 @@ exports.setCosmicEclipse = [
     new slugma_1.Slugma(),
     new stoutland_1.Stoutland(),
     new sunkern_1.Sunkern(),
+    new swirlix_1.Swirlix(),
     new tag_call_1.TagCall(),
     new ultra_necrozma_1.UltraNecrozma(),
     new wishiwashi_1.Wishiwashi()

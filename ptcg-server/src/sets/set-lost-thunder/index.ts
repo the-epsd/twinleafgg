@@ -25,6 +25,7 @@ import { Naganadel } from './naganadel';
 import { NetBall } from './net-ball';
 import { Nihilego } from './nihilego';
 import { Poipole } from './poipole';
+import { Ralts } from './ralts';
 import { Ribombee } from './ribombee';
 import { ShuckleGX } from './shuckle-gx';
 import { Slowking } from './slowking';
@@ -63,6 +64,7 @@ export const setLostThunder: Card[] = [
   new NetBall(),
   new Nihilego(),
   new Poipole(),
+  new Ralts(),
   new Ribombee(),
   new ShuckleGX(),
   new Slowking(),

@@ -3,7 +3,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.setForbiddenLight = void 0;
 const beast_ring_1 = require("./beast-ring");
 const buzzwole_1 = require("./buzzwole");
+const diantha_1 = require("./diantha");
 const flabebe_1 = require("./flabebe");
+const floette_1 = require("./floette");
 const florges_1 = require("./florges");
 const frogadier_1 = require("./frogadier");
 const greninja_gx_1 = require("./greninja-gx");
@@ -19,7 +21,9 @@ const unit_energy_fdy_1 = require("./unit-energy-fdy");
 exports.setForbiddenLight = [
     new beast_ring_1.BeastRing(),
     new buzzwole_1.Buzzwole(),
+    new diantha_1.Diantha(),
     new flabebe_1.Flabebe(),
+    new floette_1.Floette(),
     new florges_1.Florges(),
     new frogadier_1.Frogadier(),
     new greninja_gx_1.GreninjaGX(),

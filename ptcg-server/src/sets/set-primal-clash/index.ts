@@ -14,6 +14,7 @@ import { Slugma } from './slugma';
 import { Teammates } from './teammates';
 import { Torchic } from './torchic';
 import { WailordEx } from './wailord-ex';
+import { WonderEnergy } from './wonder-energy';
 
 export const setPrimalClash: Card[] = [
   new AcroBike(),
@@ -30,5 +31,6 @@ export const setPrimalClash: Card[] = [
   new Slugma(),
   new Teammates(),
   new Torchic(),
-  new WailordEx()
+  new WailordEx(),
+  new WonderEnergy(),
 ];
