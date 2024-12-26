@@ -16,7 +16,7 @@ class ExplorersGuidance extends trainer_card_1.TrainerCard {
         this.regulationMark = 'H';
         this.name = 'Explorer\'s Guidance';
         this.fullName = 'Explorer\'s Guidance TEF';
-        this.text = 'Heal all damage from 1 of your Pokémon that has 30 HP or less remaining.';
+        this.text = 'Look at the top 6 cards of your deck and put 2 of them into your hand. Discard the other cards.';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {

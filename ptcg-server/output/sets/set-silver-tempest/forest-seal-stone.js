@@ -51,15 +51,15 @@ class ForestSealStone extends game_1.TrainerCard {
         }
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
-            if (player.usedVSTAR === true) {
-                throw new game_1.GameError(game_1.GameMessage.LABEL_VSTAR_USED);
-            }
             try {
                 const toolEffect = new play_card_effects_1.ToolEffect(player, this);
                 store.reduceEffect(state, toolEffect);
             }
             catch (_b) {
                 return state;
+            }
+            if (player.usedVSTAR === true) {
+                throw new game_1.GameError(game_1.GameMessage.LABEL_VSTAR_USED);
             }
             player.usedVSTAR = true;
             state = store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, {}, { min: 0, max: 1, allowCancel: false }), cards => {

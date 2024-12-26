@@ -57,7 +57,7 @@ class Sonia extends trainer_card_1.TrainerCard {
         this.regulationMark = 'D';
         this.set = 'CPA';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '065';
+        this.setNumber = '65';
         this.name = 'Sonia';
         this.fullName = 'Sonia CPA';
         this.text = 'Search your deck for up to 2 Basic Pokémon or up to 2 basic Energy cards, reveal them, and put them into your hand. Then, shuffle your deck.';

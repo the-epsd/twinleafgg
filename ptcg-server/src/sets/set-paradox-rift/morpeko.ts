@@ -93,7 +93,7 @@ export class Morpeko extends PokemonCard {
         PlayerType.BOTTOM_PLAYER,
         [SlotType.BENCH],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Darkness Energy' },
-        { allowCancel: false, min: 2, max: 2 }
+        { allowCancel: false, min: 2, max: 2, sameTarget: true }
       ), transfers => {
         transfers = transfers || [];
         for (const transfer of transfers) {

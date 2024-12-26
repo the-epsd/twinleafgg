@@ -47,7 +47,7 @@ class Mallow extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
         this.set = 'GRI';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '121';
+        this.setNumber = '127';
         this.name = 'Mallow';
         this.fullName = 'Mallow TEF';
         this.text = 'Search your deck for 2 cards, shuffle your deck, then put those cards on top of it in any order.';

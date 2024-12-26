@@ -2,18 +2,18 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-export declare class Toedscool extends PokemonCard {
+export declare class Toedscool2 extends PokemonCard {
     regulationMark: string;
     stage: Stage;
     cardType: CardType;
     hp: number;
     weakness: {
-        type: CardType;
+        type: CardType.FIRE;
     }[];
-    retreat: CardType[];
+    retreat: CardType.COLORLESS[];
     attacks: {
         name: string;
-        cost: CardType[];
+        cost: (CardType.GRASS | CardType.COLORLESS)[];
         damage: number;
         text: string;
     }[];

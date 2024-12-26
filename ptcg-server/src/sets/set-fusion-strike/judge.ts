@@ -24,8 +24,7 @@ export class Judge extends TrainerCard {
   public fullName: string = 'Judge FST';
 
   public text: string =
-    'Each player shuffles his or her hand into his or her deck. ' +
-    'Then, each player draws a card for each of his or her remaining Prize cards.';
+    'Each player shuffles their hand into their deck and draws 4 cards.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
