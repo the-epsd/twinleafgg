@@ -20,7 +20,6 @@ import { Oranguru } from './oranguru';
 import { OrdinaryRod } from './ordinary-rod';
 import { QuickBall } from './quick-ball';
 import { Raboot } from './raboot';
-import { Rosa } from './rosa';
 import { Sizzlipede } from './sizzlipede';
 import { Snom } from './snom';
 import { Sobble } from './sobble';
@@ -52,7 +51,6 @@ export const setSwordAndShield: Card[] = [
   new OrdinaryRod(),
   new QuickBall(),
   new Raboot(),
-  new Rosa(),
   new Toxicroak(),
   new Welder()
 ];

@@ -31,11 +31,12 @@ export class Thwackey extends PokemonCard {
     }
   ];
 
-  public regulationMark: string = 'D'; 
+  public regulationMark: string = 'D';
   public set: string = 'SHF';
   public name: string = 'Thwackey';
   public fullName: string = 'Thwackey SHF';
   public cardImage: string = 'assets/cardback.png';
+  public setNumber: string = '12';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

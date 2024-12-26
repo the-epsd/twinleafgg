@@ -34,6 +34,7 @@ class Thwackey extends pokemon_card_1.PokemonCard {
         this.name = 'Thwackey';
         this.fullName = 'Thwackey SHF';
         this.cardImage = 'assets/cardback.png';
+        this.setNumber = '12';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof check_effects_1.CheckRetreatCostEffect && effect.player.active.cards.includes(this)) {

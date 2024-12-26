@@ -18,6 +18,7 @@ class Beedrill extends pokemon_card_1.PokemonCard {
         this.stage = card_types_1.Stage.STAGE_2;
         this.cardType = card_types_1.CardType.GRASS;
         this.hp = 80;
+        this.evolvesFrom = 'Kakuna';
         this.weakness = [{
                 type: card_types_1.CardType.FIRE
             }];

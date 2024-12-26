@@ -80,13 +80,15 @@ export class Rosa extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;
 
-  public set: string = 'SSH';
+  public set: string = 'CEC';
 
   public cardImage: string = 'assets/cardback.png';
 
   public name: string = 'Rosa';
 
   public fullName: string = 'Rosa CEC';
+
+  public setNumber: string = '204';
 
   public text: string =
     'You can play this card only if 1 of your Pokemon was Knocked Out ' +

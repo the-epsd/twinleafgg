@@ -29,6 +29,8 @@ export class Ivysaur extends PokemonCard {
 
   public retreat = [CardType.COLORLESS];
 
+  public setNumber: string = '30';
+
   public attacks: Attack[] = [
     {
       name: 'Vine Whip',

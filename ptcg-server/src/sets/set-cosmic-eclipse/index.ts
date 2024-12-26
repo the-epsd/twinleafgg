@@ -25,6 +25,7 @@ import { Natu } from './natu';
 import { Phione } from './phione';
 import { Pikachu } from './pikachu';
 import { ProfessorOaksSetup } from './professor-oaks-setup';
+import { Rosa } from './rosa';
 import { Sawsbuck } from './sawsbuck';
 import { Slugma } from './slugma';
 import { Stoutland } from './stoutland';
@@ -62,6 +63,7 @@ export const setCosmicEclipse: Card[] = [
   new Phione(),
   new Pikachu(),
   new ProfessorOaksSetup(),
+  new Rosa(),
   new Sawsbuck(),
   new Slugma(),
   new Stoutland(),

@@ -17,6 +17,7 @@ export declare class Ivysaur extends PokemonCard {
         type: CardType;
     }[];
     retreat: CardType[];
+    setNumber: string;
     attacks: Attack[];
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }
