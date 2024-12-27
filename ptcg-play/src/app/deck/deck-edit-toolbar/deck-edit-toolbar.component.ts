@@ -74,6 +74,7 @@ export class DeckEditToolbarComponent implements OnDestroy {
 
   public formats = [
     { value: Format.STANDARD, label: 'LABEL_STANDARD' },
+    { value: Format.STANDARD_NIGHTLY, label: 'Standard Nightly' },
     { value: Format.GLC, label: 'LABEL_GLC' },
     { value: Format.EXPANDED, label: 'LABEL_EXPANDED' },
     { value: Format.RETRO, label: 'LABEL_RETRO' },

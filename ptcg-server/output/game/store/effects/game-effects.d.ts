@@ -49,6 +49,7 @@ export declare class PowerEffect implements Effect {
     player: Player;
     power: Power;
     card: PokemonCard;
+    static DISCARD_CARD_EFFECT: string;
     constructor(player: Player, power: Power, card: PokemonCard);
 }
 export declare class TrainerPowerEffect implements Effect {

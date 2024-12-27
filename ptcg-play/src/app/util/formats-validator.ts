@@ -74,6 +74,7 @@ export class FormatValidator {
       Format.GLC,
       Format.EXPANDED,
       Format.STANDARD,
+      Format.STANDARD_NIGHTLY,
       Format.RETRO
     ].forEach(format => {
       this.isValid(card, format) ? formats.push(format) : null;
@@ -96,6 +97,11 @@ export class FormatValidator {
         var banList = BanLists[format];
         return card.regulationMark === 'F' ||
           card.regulationMark === 'G' ||
+          card.regulationMark === 'H'
+
+      case Format.STANDARD_NIGHTLY:
+        var banList = BanLists[format];
+        return card.regulationMark === 'G' ||
           card.regulationMark === 'H' ||
           card.regulationMark === 'I';
 
@@ -194,7 +200,8 @@ export const BanLists: { [key: number]: string[] } = {
   ],
   [Format.RETRO]: [],
   [Format.UNLIMITED]: [],
-  [Format.STANDARD]: []
+  [Format.STANDARD]: [],
+  [Format.STANDARD_NIGHTLY]: []
 }
 
 export const SetReleaseDates: { [key: string]: Date } = {
@@ -338,4 +345,5 @@ export const SetReleaseDates: { [key: string]: Date } = {
   'SV7a': new Date('2024-09-13'),
   'SV8': new Date('2024-11-04'),
   'SSP': new Date('2024-11-04'),
+  'SV9': new Date('2024-12-25'),
 }

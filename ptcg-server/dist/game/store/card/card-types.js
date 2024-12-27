@@ -30,6 +30,8 @@ export var CardTag;
     CardTag["PLAY_DURING_SETUP"] = "PLAY_DURING_SETUP";
     CardTag["LILLIES"] = "LILLIES";
     CardTag["NS"] = "NS";
+    CardTag["IONOS"] = "IONOS";
+    CardTag["HOPS"] = "HOPS";
 })(CardTag || (CardTag = {}));
 export var SuperType;
 (function (SuperType) {
@@ -178,6 +180,7 @@ export var Format;
     Format[Format["UNLIMITED"] = 3] = "UNLIMITED";
     Format[Format["RETRO"] = 4] = "RETRO";
     Format[Format["GLC"] = 5] = "GLC";
+    Format[Format["STANDARD_NIGHTLY"] = 6] = "STANDARD_NIGHTLY";
 })(Format || (Format = {}));
 export const Energy = {
     D: CardType.DARK,
