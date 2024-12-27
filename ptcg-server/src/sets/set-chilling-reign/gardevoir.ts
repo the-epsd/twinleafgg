@@ -149,6 +149,8 @@ export class Gardevoir extends PokemonCard {
           cardList.addBoardEffect(BoardEffect.ABILITY_USED);
         }
       });
+
+      return state;
     }
     return state;
   }

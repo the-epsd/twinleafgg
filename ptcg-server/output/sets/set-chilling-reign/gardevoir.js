@@ -110,6 +110,7 @@ class Gardevoir extends pokemon_card_1.PokemonCard {
                     cardList.addBoardEffect(card_types_1.BoardEffect.ABILITY_USED);
                 }
             });
+            return state;
         }
         return state;
     }
