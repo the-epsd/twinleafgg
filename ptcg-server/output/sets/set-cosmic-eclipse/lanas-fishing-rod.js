@@ -53,8 +53,8 @@ class LanasFishingRod extends trainer_card_1.TrainerCard {
         this.set = 'CEC';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '195';
-        this.name = 'Lanas Fishing Rod';
-        this.fullName = 'Lanas Fishing Rod CEC';
+        this.name = 'Lana\'s Fishing Rod';
+        this.fullName = 'Lana\'s Fishing Rod CEC';
         this.text = 'Shuffle a Pokémon and a Pokémon Tool card from your discard pile into your deck.';
     }
     reduceEffect(store, state, effect) {
