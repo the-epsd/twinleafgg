@@ -8,6 +8,7 @@ import { Copperajah } from './copperajah';
 import { Drizzile } from './drizzile';
 import { EvolutionIncense } from './evolution-incense';
 import { Ferroseed } from './ferroseed';
+import { Frosmoth } from './frosmoth';
 import { GalarianZigzagoon } from './galarian-zigzagoon';
 import { GalarianPerrserker } from './galarian_perrserker';
 import { GiantHearth } from './giant-hearth';
@@ -36,6 +37,7 @@ export const setSwordAndShield: Card[] = [
   new Drizzile(),
   new EvolutionIncense(),
   new Ferroseed(),
+  new Frosmoth(),
   new GalarianPerrserker(),
   new GalarianZigzagoon(),
   new GiantHearth(),

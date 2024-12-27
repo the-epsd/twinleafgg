@@ -511,6 +511,7 @@ class BeachCourtHR extends beach_court_1.BeachCourt {
         super(...arguments);
         this.setNumber = '263';
         this.fullName = 'BeachCourtHR PAR';
+        this.set = 'PAR';
     }
 }
 exports.BeachCourtHR = BeachCourtHR;
@@ -535,6 +536,7 @@ class ReversalEnergyHR extends reversal_energy_1.ReversalEnergy {
         super(...arguments);
         this.setNumber = '266';
         this.fullName = 'ReversalEnergyHR PAR';
+        this.set = 'PAR';
     }
 }
 exports.ReversalEnergyHR = ReversalEnergyHR;

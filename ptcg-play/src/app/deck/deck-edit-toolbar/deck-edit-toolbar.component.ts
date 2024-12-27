@@ -234,8 +234,11 @@ export class DeckEditToolbarComponent implements OnDestroy {
   }
 
   public onSearch(value: string) {
-    this.form.patchValue({ searchValue: value });
+    // Replace curly apostrophes with straight apostrophes
+    const normalizedValue = value.replace(/’|‘/g, '\'');
+    this.form.patchValue({ searchValue: normalizedValue });
   }
+
 
   public importFromClipboard() {
 

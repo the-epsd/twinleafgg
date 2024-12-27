@@ -8,7 +8,7 @@
 
 .private-log {
   font-style: italic;
-  color: #888;
+  // color: #888;
 }
 
 .ptcg-game-logs-header {
@@ -53,6 +53,38 @@
 }
 
 .timestamp {
-  color: #8eb0dd;
-  margin-right: 4px;
+  color: #999;
+  margin-right: 5px;
+}
+
+.private-log {
+  font-style: italic;
+}
+
+.ptcg-player-1 {
+  color: #008000;
+}
+
+.ptcg-player-2 {
+  color: #800080;
+}
+
+.ptcg-player-3 {
+  color: #FFA500;
+}
+
+.ptcg-player-4 {
+  color: #0000FF;
+}
+
+.ptcg-system {
+  color: #999;
+}
+
+.ptcg-player-active {
+  color: blue;
+}
+
+.ptcg-player-opponent {
+  color: red;
 }

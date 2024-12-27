@@ -1,5 +1,5 @@
 import { Component, Input, ElementRef } from '@angular/core';
-import { CardTarget, SlotType, StateLog, StateLogParam } from 'ptcg-server';
+import { CardTarget, SlotType, StateLog, StateLogParam, Player } from 'ptcg-server';
 
 import { GameService } from '../../../api/services/game.service';
 import { LocalGameState } from '../../../shared/session/session.interface';
@@ -135,8 +135,20 @@ export class GameLogsComponent {
     const client = this.sessionService.session.clients.find(c => c.clientId === log.client);
     const user = client ? this.sessionService.session.users[client.userId] : undefined;
     const playerIndex = this.state.state.players.findIndex(p => p.id === log.client);
+    const activePlayerId = this.state.state.activePlayer;
+    const activePlayer = this.state.state.players.find(p => p.id === activePlayerId);
+
+    if (log.params?.private === 'true' && log.client !== this.sessionService.session.users[log.client]?.userId) {
+      return undefined;
+    }
 
     if (user !== undefined) {
+      name = user.name;
+      if (activePlayer && log.client === activePlayer.id) {
+        className = 'ptcg-player-active'; // Active player (you)
+      } else {
+        className = 'ptcg-player-opponent'; // Opponent
+      }
       return {
         id: log.id,
         name,

@@ -42,15 +42,15 @@ export class Frosmoth extends PokemonCard {
     }
   ];
 
-  public set: string = 'SHF';
+  public set: string = 'SSH';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '60';
+  public setNumber: string = '64';
 
   public name: string = 'Frosmoth';
 
-  public fullName: string = 'Frosmoth SHF';
+  public fullName: string = 'Frosmoth SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
