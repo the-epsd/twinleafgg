@@ -48,9 +48,13 @@ export class Mesagoza extends TrainerCard {
         ), selected => {
           const cards = selected || [];
 
-          player.deck.moveCardsTo(cards, player.hand);
+          state = store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+            player.deck.applyOrder(order);
+          });
 
           if (cards.length > 0) {
+            player.deck.moveCardsTo(cards, player.hand);
+
             return store.prompt(state, new ShowCardsPrompt(
               opponent.id,
               GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
@@ -58,14 +62,9 @@ export class Mesagoza extends TrainerCard {
             ), () => {
             });
           }
-          return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-            player.deck.applyOrder(order);
-          });
         });
-
       }
-      return state;
     });
-
+    return state;
   }
 }

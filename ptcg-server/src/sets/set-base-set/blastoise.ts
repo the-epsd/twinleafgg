@@ -48,6 +48,8 @@ export class Blastoise extends PokemonCard {
 
   public cardImage: string = 'assets/cardback.png';
 
+  public setNumber: string = '2';
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

@@ -11,6 +11,7 @@ import { Coalossal } from './coalossal';
 import { Dragapult } from './dragapult';
 import { Duraludon } from './duraludon';
 import { Electivire } from './electivire';
+import { GalarMine } from './galar-mine';
 import { GalarianMeowth } from './galarian-meowth';
 import { Honedge } from './honedge';
 import { HorrorPsychicEnergy } from './horror-psychic-energy';
@@ -37,6 +38,7 @@ export const setRebelClash: Card[] = [
   new Dragapult(),
   new Duraludon(),
   new Electivire(),
+  new GalarMine(),
   new GalarianMeowth(),
   new Honedge(),
   new HorrorPsychicEnergy(),

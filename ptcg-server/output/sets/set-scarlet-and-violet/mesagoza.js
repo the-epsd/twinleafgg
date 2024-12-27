@@ -32,18 +32,18 @@ class Mesagoza extends trainer_card_1.TrainerCard {
             if (flipResult) {
                 return store.prompt(state, new game_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.POKEMON }, { min: 0, max: 1, allowCancel: false }), selected => {
                     const cards = selected || [];
-                    player.deck.moveCardsTo(cards, player.hand);
+                    state = store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
+                        player.deck.applyOrder(order);
+                    });
                     if (cards.length > 0) {
+                        player.deck.moveCardsTo(cards, player.hand);
                         return store.prompt(state, new game_1.ShowCardsPrompt(opponent.id, game_message_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards), () => {
                         });
                     }
-                    return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
-                        player.deck.applyOrder(order);
-                    });
                 });
             }
-            return state;
         });
+        return state;
     }
 }
 exports.Mesagoza = Mesagoza;

@@ -10,6 +10,7 @@ const copperajah_1 = require("./copperajah");
 const drizzile_1 = require("./drizzile");
 const evolution_incense_1 = require("./evolution-incense");
 const ferroseed_1 = require("./ferroseed");
+const frosmoth_1 = require("./frosmoth");
 const galarian_zigzagoon_1 = require("./galarian-zigzagoon");
 const galarian_perrserker_1 = require("./galarian_perrserker");
 const giant_hearth_1 = require("./giant-hearth");
@@ -22,7 +23,6 @@ const oranguru_1 = require("./oranguru");
 const ordinary_rod_1 = require("./ordinary-rod");
 const quick_ball_1 = require("./quick-ball");
 const raboot_1 = require("./raboot");
-const rosa_1 = require("./rosa");
 const sizzlipede_1 = require("./sizzlipede");
 const snom_1 = require("./snom");
 const sobble_1 = require("./sobble");
@@ -38,6 +38,7 @@ exports.setSwordAndShield = [
     new drizzile_1.Drizzile(),
     new evolution_incense_1.EvolutionIncense(),
     new ferroseed_1.Ferroseed(),
+    new frosmoth_1.Frosmoth(),
     new galarian_perrserker_1.GalarianPerrserker(),
     new galarian_zigzagoon_1.GalarianZigzagoon(),
     new giant_hearth_1.GiantHearth(),
@@ -53,7 +54,6 @@ exports.setSwordAndShield = [
     new ordinary_rod_1.OrdinaryRod(),
     new quick_ball_1.QuickBall(),
     new raboot_1.Raboot(),
-    new rosa_1.Rosa(),
     new toxicroak_1.Toxicroak(),
     new welder_1.Welder()
 ];

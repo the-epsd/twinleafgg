@@ -18,6 +18,7 @@ class Ivysaur extends pokemon_card_1.PokemonCard {
         this.hp = 60;
         this.weakness = [{ type: card_types_1.CardType.FIRE }];
         this.retreat = [card_types_1.CardType.COLORLESS];
+        this.setNumber = '30';
         this.attacks = [
             {
                 name: 'Vine Whip',

@@ -4,11 +4,11 @@ exports.setShiningFates = void 0;
 const ball_guy_1 = require("./ball-guy");
 const buizel_1 = require("./buizel");
 const dartrix_1 = require("./dartrix");
-const frosmoth_1 = require("./frosmoth");
 const full_art_1 = require("./full-art");
 const galarian_weezing_1 = require("./galarian-weezing");
 const horsea_1 = require("./horsea");
 const koffing_1 = require("./koffing");
+const other_prints_1 = require("./other-prints");
 const rillaboom_1 = require("./rillaboom");
 const rookidee_1 = require("./rookidee");
 const snom_1 = require("./snom");
@@ -17,7 +17,7 @@ exports.setShiningFates = [
     new ball_guy_1.BallGuy(),
     new buizel_1.Buizel(),
     new dartrix_1.Dartrix(),
-    new frosmoth_1.Frosmoth(),
+    new other_prints_1.FrosmothSHF(),
     new galarian_weezing_1.GalarianWeezing(),
     new horsea_1.Horsea(),
     new koffing_1.Koffing(),

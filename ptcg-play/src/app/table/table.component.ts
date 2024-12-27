@@ -35,6 +35,7 @@ export class TableComponent implements OnInit {
 
   public formats = {
     [Format.STANDARD]: 'LABEL_STANDARD',
+    [Format.STANDARD_NIGHTLY]: 'Standard Nightly',
     [Format.GLC]: 'LABEL_GLC',
     [Format.UNLIMITED]: 'LABEL_UNLIMITED',
     [Format.EXPANDED]: 'LABEL_EXPANDED',

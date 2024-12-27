@@ -28,7 +28,9 @@ export declare enum CardTag {
     MEGA = "MEGA",
     PLAY_DURING_SETUP = "PLAY_DURING_SETUP",
     LILLIES = "LILLIES",
-    NS = "NS"
+    NS = "NS",
+    IONOS = "IONOS",
+    HOPS = "HOPS"
 }
 export declare enum SuperType {
     NONE = 0,
@@ -166,7 +168,8 @@ export declare enum Format {
     EXPANDED = 2,
     UNLIMITED = 3,
     RETRO = 4,
-    GLC = 5
+    GLC = 5,
+    STANDARD_NIGHTLY = 6
 }
 export declare const Energy: {
     readonly D: CardType.DARK;

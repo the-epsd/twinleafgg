@@ -186,6 +186,7 @@ export declare class RoaringMoonexHR extends RoaringMoonex {
 export declare class BeachCourtHR extends BeachCourt {
     setNumber: string;
     fullName: string;
+    set: string;
 }
 export declare class CounterCatcherHR extends CounterCatcher {
     setNumber: string;
@@ -198,4 +199,5 @@ export declare class LuxuriousCapeHR extends LuxuriousCape {
 export declare class ReversalEnergyHR extends ReversalEnergy {
     setNumber: string;
     fullName: string;
+    set: string;
 }

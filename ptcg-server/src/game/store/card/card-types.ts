@@ -30,6 +30,8 @@ export enum CardTag {
   PLAY_DURING_SETUP = 'PLAY_DURING_SETUP',
   LILLIES = 'LILLIES',
   NS = 'NS',
+  IONOS = 'IONOS',
+  HOPS = 'HOPS',
 }
 
 export enum SuperType {
@@ -177,7 +179,8 @@ export enum Format {
   EXPANDED,
   UNLIMITED,
   RETRO,
-  GLC
+  GLC,
+  STANDARD_NIGHTLY
 }
 
 export const Energy = {

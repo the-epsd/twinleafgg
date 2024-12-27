@@ -13,6 +13,7 @@ const coalossal_1 = require("./coalossal");
 const dragapult_1 = require("./dragapult");
 const duraludon_1 = require("./duraludon");
 const electivire_1 = require("./electivire");
+const galar_mine_1 = require("./galar-mine");
 const galarian_meowth_1 = require("./galarian-meowth");
 const honedge_1 = require("./honedge");
 const horror_psychic_energy_1 = require("./horror-psychic-energy");
@@ -38,6 +39,7 @@ exports.setRebelClash = [
     new dragapult_1.Dragapult(),
     new duraludon_1.Duraludon(),
     new electivire_1.Electivire(),
+    new galar_mine_1.GalarMine(),
     new galarian_meowth_1.GalarianMeowth(),
     new honedge_1.Honedge(),
     new horror_psychic_energy_1.HorrorPsychicEnergy(),

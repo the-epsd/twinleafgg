@@ -431,6 +431,7 @@ export class RoaringMoonexHR extends RoaringMoonex {
 export class BeachCourtHR extends BeachCourt {
   public setNumber = '263';
   public fullName: string = 'BeachCourtHR PAR';
+  public set = 'PAR';
 }
 
 export class CounterCatcherHR extends CounterCatcher {
@@ -446,4 +447,5 @@ export class LuxuriousCapeHR extends LuxuriousCape {
 export class ReversalEnergyHR extends ReversalEnergy {
   public setNumber = '266';
   public fullName: string = 'ReversalEnergyHR PAR';
+  public set = 'PAR';
 }

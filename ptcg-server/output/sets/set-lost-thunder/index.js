@@ -27,6 +27,7 @@ const naganadel_1 = require("./naganadel");
 const net_ball_1 = require("./net-ball");
 const nihilego_1 = require("./nihilego");
 const poipole_1 = require("./poipole");
+const ralts_1 = require("./ralts");
 const ribombee_1 = require("./ribombee");
 const shuckle_gx_1 = require("./shuckle-gx");
 const slowking_1 = require("./slowking");
@@ -64,6 +65,7 @@ exports.setLostThunder = [
     new net_ball_1.NetBall(),
     new nihilego_1.Nihilego(),
     new poipole_1.Poipole(),
+    new ralts_1.Ralts(),
     new ribombee_1.Ribombee(),
     new shuckle_gx_1.ShuckleGX(),
     new slowking_1.Slowking(),

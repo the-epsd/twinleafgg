@@ -12,20 +12,22 @@ import { GameMessage } from '../../game';
 export class Beedrill extends PokemonCard {
 
   public set = 'BS';
-  
+
   public name = 'Beedrill';
-  
+
   public fullName = 'Beedrill BS';
 
   public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '17';
-  
+
   public stage: Stage = Stage.STAGE_2;
-  
+
   public cardType: CardType = CardType.GRASS;
 
   public hp: number = 80;
+
+  public evolvesFrom = 'Kakuna';
 
   public weakness = [{
     type: CardType.FIRE
@@ -54,17 +56,17 @@ export class Beedrill extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      
+
       return store.prompt(state, [
         new CoinFlipPrompt(effect.player.id, GameMessage.COIN_FLIP),
-        new CoinFlipPrompt(effect.player.id, GameMessage.COIN_FLIP)  
+        new CoinFlipPrompt(effect.player.id, GameMessage.COIN_FLIP)
       ], (results) => {
         const heads = results.filter(r => !!r).length;
         effect.damage = 30 * heads;
       });
 
     }
-    
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
 
       return store.prompt(state, new CoinFlipPrompt(

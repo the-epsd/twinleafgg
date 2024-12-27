@@ -70,6 +70,7 @@ export class PowerEffect implements Effect {
   public player: Player;
   public power: Power;
   public card: PokemonCard;
+  static DISCARD_CARD_EFFECT: string;
 
   constructor(player: Player, power: Power, card: PokemonCard) {
     this.player = player;

@@ -1,6 +1,7 @@
 import { Card } from '../../game/store/card/card';
 import { Acerola } from './acerola';
 import { Bruxish } from './bruxish';
+import { Cutiefly } from './cutiefly';
 import { DarkraiGX } from './darkrai-gx';
 import { Diancie } from './diancie';
 import { GardevoirGX } from './gardevoir-gx';
@@ -16,6 +17,7 @@ import { WishfulBaton } from './wishful-baton';
 export const setBurningShadows: Card[] = [
   new Acerola(),
   new Bruxish(),
+  new Cutiefly(),
   new DarkraiGX(),
   new Diancie(),
   new GardevoirGX(),

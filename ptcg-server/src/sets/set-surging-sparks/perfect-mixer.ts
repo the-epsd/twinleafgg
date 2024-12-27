@@ -35,7 +35,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   });
 
   cards.forEach((card, index) => {
-    store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD, { name: player.name, card: card.name, effectName: 'Perfect Mixer' });
+    store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD, { name: player.name, card: card.name, effectName: 'Brilliant Blender' });
   });
 
   if (cards.length > 0) {

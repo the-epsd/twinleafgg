@@ -11,7 +11,7 @@ import { StoreLike } from '../../game/store/store-like';
 
 export class TripleAccelerationEnergy extends EnergyCard {
 
-  public provides: CardType[] = [ CardType.COLORLESS ];
+  public provides: CardType[] = [CardType.COLORLESS];
 
   public energyType = EnergyType.SPECIAL;
 
@@ -19,7 +19,7 @@ export class TripleAccelerationEnergy extends EnergyCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '209';
+  public setNumber: string = '190';
 
   public name = 'Triple Acceleration Energy';
 
@@ -28,10 +28,10 @@ export class TripleAccelerationEnergy extends EnergyCard {
   public text =
     'This card can only be attached to Evolution Pokémon. If this card is attached to 1 of your Pokémon, discard it at the end of the turn.' +
     '' +
-    'This card provides [C][C][C] Energy only while it is attached to an Evolution Pokémon.' + 
+    'This card provides [C][C][C] Energy only while it is attached to an Evolution Pokémon.' +
     '' +
     'If this card is attached to anything other than an Evolution Pokémon, discard this card.';
-    
+
   public TRIPLE_ACCELERATION_MARKER = 'TRIPLE_ACCELERATION_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -44,7 +44,7 @@ export class TripleAccelerationEnergy extends EnergyCard {
 
       effect.player.marker.addMarker(this.TRIPLE_ACCELERATION_MARKER, this);
     }
-    
+
     if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
       const player = effect.player;
 
@@ -60,7 +60,7 @@ export class TripleAccelerationEnergy extends EnergyCard {
       if (!!attachedTo && attachedTo instanceof PokemonCard && attachedTo.stage !== Stage.BASIC && attachedTo.stage !== Stage.RESTORED) {
         effect.energyMap.push({ card: this, provides: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS] });
       }
-      
+
       return state;
     }
 

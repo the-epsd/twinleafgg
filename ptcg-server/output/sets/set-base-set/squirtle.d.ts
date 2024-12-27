@@ -21,5 +21,6 @@ export declare class Squirtle extends PokemonCard {
     name: string;
     fullName: string;
     cardImage: string;
+    setNumber: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

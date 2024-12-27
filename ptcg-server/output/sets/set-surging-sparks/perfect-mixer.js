@@ -23,7 +23,7 @@ function* playCard(next, store, state, effect) {
         next();
     });
     cards.forEach((card, index) => {
-        store.log(state, game_message_1.GameLog.LOG_PLAYER_DISCARDS_CARD, { name: player.name, card: card.name, effectName: 'Perfect Mixer' });
+        store.log(state, game_message_1.GameLog.LOG_PLAYER_DISCARDS_CARD, { name: player.name, card: card.name, effectName: 'Brilliant Blender' });
     });
     if (cards.length > 0) {
         yield store.prompt(state, new game_1.ShowCardsPrompt(opponent.id, game_message_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards), () => next());

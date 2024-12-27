@@ -8,6 +8,7 @@ import { Copperajah } from './copperajah';
 import { Drizzile } from './drizzile';
 import { EvolutionIncense } from './evolution-incense';
 import { Ferroseed } from './ferroseed';
+import { Frosmoth } from './frosmoth';
 import { GalarianZigzagoon } from './galarian-zigzagoon';
 import { GalarianPerrserker } from './galarian_perrserker';
 import { GiantHearth } from './giant-hearth';
@@ -20,7 +21,6 @@ import { Oranguru } from './oranguru';
 import { OrdinaryRod } from './ordinary-rod';
 import { QuickBall } from './quick-ball';
 import { Raboot } from './raboot';
-import { Rosa } from './rosa';
 import { Sizzlipede } from './sizzlipede';
 import { Snom } from './snom';
 import { Sobble } from './sobble';
@@ -37,6 +37,7 @@ export const setSwordAndShield: Card[] = [
   new Drizzile(),
   new EvolutionIncense(),
   new Ferroseed(),
+  new Frosmoth(),
   new GalarianPerrserker(),
   new GalarianZigzagoon(),
   new GiantHearth(),
@@ -52,7 +53,6 @@ export const setSwordAndShield: Card[] = [
   new OrdinaryRod(),
   new QuickBall(),
   new Raboot(),
-  new Rosa(),
   new Toxicroak(),
   new Welder()
 ];
