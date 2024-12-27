@@ -4,6 +4,7 @@ import { PowerType, State, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 export declare class IonosKilowattrel extends PokemonCard {
     stage: Stage;
+    evolvesFrom: string;
     tags: CardTag[];
     cardType: CardType;
     hp: number;

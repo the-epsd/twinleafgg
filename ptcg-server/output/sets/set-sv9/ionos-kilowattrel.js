@@ -11,8 +11,8 @@ const check_effects_1 = require("../../game/store/effects/check-effects");
 class IonosKilowattrel extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.stage = card_types_1.Stage.BASIC;
-        // public evolvesFrom: string = 'Wattrel';
+        this.stage = card_types_1.Stage.STAGE_1;
+        this.evolvesFrom = 'Wattrel';
         this.tags = [card_types_1.CardTag.IONOS];
         this.cardType = L;
         this.hp = 120;
