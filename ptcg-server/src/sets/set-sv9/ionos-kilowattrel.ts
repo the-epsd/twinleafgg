@@ -8,8 +8,8 @@ import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 
 export class IonosKilowattrel extends PokemonCard {
-  public stage: Stage = Stage.BASIC;
-  // public evolvesFrom: string = 'Wattrel';
+  public stage: Stage = Stage.STAGE_1;
+  public evolvesFrom: string = 'Wattrel';
   public tags = [CardTag.IONOS];
   public cardType: CardType = L;
   public hp: number = 120;
