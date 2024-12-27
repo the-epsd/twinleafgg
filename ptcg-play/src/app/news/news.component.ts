@@ -68,6 +68,50 @@ Cards:
         image: 'https://pbs.twimg.com/media/F0C__sdXoAEMKtn?format=jpg&name=large',
         preview: 'Update #2024.12.26'
       },
+      {
+        id: 3,
+        title: 'Twinleaf Update - December 27th',
+        author: 'Joe',
+        date: new Date('2024-12-28'),
+        content: `Twinleaf Update - December 27th
+      
+Engine:
+- Introducing Standard Nightly!
+    - Standard Nightly is where testing for upcoming cards can be used.
+    - Regulation F is banned
+    - Regulation I is legal
+- Fixed an issue in the Game Log where it was not displaying Usernames
+- Fixed an issue in the Deck Editor where Windows users could not use apostrophe's
+
+Cards:
+- Fixed bugs in the following:
+    - Frosmoth SSH
+    - Mesagoza SVI
+    - Gardevoir CRE
+- Fixed numerous cards missing their correct Set Numbers
+- Added SV9 Cards:
+- Exchange Ticket SV9
+- Hop's Choice Band SV9
+- Hop's Dubwool SV9
+- Hop's Snorlax SV9
+- Hop's Wooloo SV9
+- Hop's Zacian ex SV9
+- Iono's Bellibolt ex SV9
+- Iono's Kilowattrel SV9
+- Iono's Tadbulb SV9
+- Iono's Voltorb SV9
+- Iono's Wattrel SV9
+- Lillie's Comfy SV9
+- Mamoswine ex SV9
+- N's Darmanitan SV9
+- N's Darumaka SV9
+- N's Reshiram SV9
+- N's Zoroark ex SV9
+- Piloswine SV9
+- Swinub SV9`,
+        image: 'https://pbs.twimg.com/media/F0C__sdXoAEMKtn?format=jpg&name=large',
+        preview: 'Update #2024.12.27'
+      },
     ];
 
     posts.sort((a, b) => b.date.getTime() - a.date.getTime());
