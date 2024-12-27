@@ -7,7 +7,6 @@ export declare class WeaknessGuardEnergy extends EnergyCard {
     provides: CardType[];
     energyType: EnergyType;
     set: string;
-    regulationMark: string;
     cardImage: string;
     setNumber: string;
     name: string;
