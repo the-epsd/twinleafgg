@@ -2,7 +2,7 @@ import { PowerType, State, StoreLike } from '../../game';
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
-export declare class Gallade extends PokemonCard {
+export declare class Mamoswineex extends PokemonCard {
     stage: Stage;
     evolvesFrom: string;
     cardType: CardType;

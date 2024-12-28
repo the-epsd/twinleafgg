@@ -17,7 +17,7 @@ import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 
-export class Gallade extends PokemonCard {
+export class Mamoswineex extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_2;
 
@@ -115,7 +115,7 @@ export class Gallade extends PokemonCard {
     if (effect instanceof EndTurnEffect) {
 
       effect.player.forEachPokemon(PlayerType.BOTTOM_PLAYER, player => {
-        if (player instanceof Gallade) {
+        if (player instanceof Mamoswineex) {
           player.marker.removeMarker(this.MAMMOTH_RIDE_MARKER);
         }
       });

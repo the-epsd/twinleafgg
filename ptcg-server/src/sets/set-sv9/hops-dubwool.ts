@@ -45,7 +45,7 @@ export class HopsDubwool extends PokemonCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '85';
+  public setNumber: string = '86';
 
   public name: string = 'Hop\'s Dubwool';
 

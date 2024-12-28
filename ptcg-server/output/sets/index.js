@@ -18,6 +18,8 @@ __exportStar(require("./set-vending-series"), exports);
 __exportStar(require("./set-wotc-promos"), exports);
 //Retro Energy
 __exportStar(require("./set-base-set-energy"), exports);
+//ex Era
+__exportStar(require("./set-dragon-frontiers"), exports);
 //DP Era
 __exportStar(require("./set-diamond-and-pearl"), exports);
 __exportStar(require("./set-great-encounters"), exports);

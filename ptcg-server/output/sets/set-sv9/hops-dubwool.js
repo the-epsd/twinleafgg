@@ -32,7 +32,7 @@ class HopsDubwool extends pokemon_card_1.PokemonCard {
         this.regulationMark = 'I';
         this.set = 'SV9';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '85';
+        this.setNumber = '86';
         this.name = 'Hop\'s Dubwool';
         this.fullName = 'Hop\'s Dubwool SV9';
     }

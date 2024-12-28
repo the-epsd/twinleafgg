@@ -14,6 +14,7 @@ class JubilifeVillage extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.STADIUM;
         this.set = 'ASR';
+        this.regulationMark = 'F';
         this.name = 'Jubilife Village';
         this.cardImage = 'assets/cardback.png';
         this.fullName = 'Jubilife Village ASR';

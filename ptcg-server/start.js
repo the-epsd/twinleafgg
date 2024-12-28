@@ -21,6 +21,9 @@ cardManager.defineSet(sets.setVendingSeries);
 
 cardManager.defineSet(sets.setBaseSetEnergy);
 
+//ex Era shit
+cardManager.defineSet(sets.setDragonFrontiers);
+
 cardManager.defineSet(sets.setDiamondAndPearl);
 // cardManager.defineSet(sets.setOP9);
 cardManager.defineSet(sets.setGreatEncounters);

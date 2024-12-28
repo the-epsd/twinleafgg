@@ -23,7 +23,12 @@ export class Charmeleon extends PokemonCard {
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
-    { name: 'Heat Tackle', cost: [CardType.FIRE, CardType.FIRE], damage: 90, text: 'This Pokémon does 20 damage to itself.' },
+    {
+      name: 'Heat Tackle',
+      cost: [CardType.FIRE, CardType.FIRE],
+      damage: 70,
+      text: 'This Pokémon does 20 damage to itself.'
+    },
   ];
 
   public set: string = 'OBF';

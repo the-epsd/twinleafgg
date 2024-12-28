@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-export declare class HopsWooLoo extends PokemonCard {
+export declare class HopsWooloo extends PokemonCard {
     stage: Stage;
     tags: CardTag[];
     cardType: CardType;

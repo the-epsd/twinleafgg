@@ -74,11 +74,13 @@ function attackReducer(store, state, effect) {
         }
     }
     if (effect instanceof attack_effects_1.KnockOutOpponentEffect) {
-        const base = effect.attackEffect;
-        const dealDamage = new attack_effects_1.DealDamageEffect(base, effect.damage);
-        dealDamage.target = effect.target;
-        state = store.reduceEffect(state, dealDamage);
-        return state;
+        const target = effect.target;
+        const pokemonCard = target.getPokemonCard();
+        if (pokemonCard === undefined) {
+            throw new game_error_1.GameError(game_message_1.GameMessage.ILLEGAL_ACTION);
+        }
+        const damage = Math.max(0, effect.damage);
+        target.damage += damage;
     }
     if (effect instanceof attack_effects_1.PutCountersEffect) {
         const target = effect.target;

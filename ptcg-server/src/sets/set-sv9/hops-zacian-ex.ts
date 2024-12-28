@@ -45,7 +45,7 @@ export class HopsZacianex extends PokemonCard {
 
   public set: string = 'SV9';
 
-  public setNumber = '74';
+  public setNumber = '69';
 
   public name: string = 'Hop\'s Zacian ex';
 

@@ -16,6 +16,8 @@ export class JubilifeVillage extends TrainerCard {
 
   public set: string = 'ASR';
 
+  public regulationMark = 'F';
+
   public name: string = 'Jubilife Village';
 
   public cardImage: string = 'assets/cardback.png';

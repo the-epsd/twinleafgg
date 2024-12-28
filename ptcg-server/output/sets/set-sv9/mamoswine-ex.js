@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Gallade = void 0;
+exports.Mamoswineex = void 0;
 const game_1 = require("../../game");
 const card_types_1 = require("../../game/store/card/card-types");
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
-class Gallade extends pokemon_card_1.PokemonCard {
+class Mamoswineex extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.STAGE_2;
@@ -72,7 +72,7 @@ class Gallade extends pokemon_card_1.PokemonCard {
         }
         if (effect instanceof game_phase_effects_1.EndTurnEffect) {
             effect.player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, player => {
-                if (player instanceof Gallade) {
+                if (player instanceof Mamoswineex) {
                     player.marker.removeMarker(this.MAMMOTH_RIDE_MARKER);
                 }
             });
@@ -92,4 +92,4 @@ class Gallade extends pokemon_card_1.PokemonCard {
         return state;
     }
 }
-exports.Gallade = Gallade;
+exports.Mamoswineex = Mamoswineex;

@@ -35,7 +35,7 @@ interface PromptItem {
 
 export class Store implements StoreLike {
 
-  private effectHistory: Effect[] = [];
+  //private effectHistory: Effect[] = [];
 
   public state: State = new State();
   private promptItems: PromptItem[] = [];
@@ -87,7 +87,7 @@ export class Store implements StoreLike {
 
   public reduceEffect(state: State, effect: Effect): State {
 
-    this.checkEffectHistory(state, effect);
+    // this.checkEffectHistory(state, effect);
 
     state = this.propagateEffect(state, effect);
 
@@ -107,33 +107,33 @@ export class Store implements StoreLike {
     return state;
   }
 
-  checkEffectHistory(state: State, effect: Effect) {
-    if (this.effectHistory.length === 300) {
-      this.effectHistory.shift();
-    }
+  // checkEffectHistory(state: State, effect: Effect) {
+  //   if (this.effectHistory.length === 300) {
+  //     this.effectHistory.shift();
+  //   }
 
-    this.effectHistory.push(effect);
-    if (this.effectHistory.length === 300) {
-      let isLoop = true;
+  //   this.effectHistory.push(effect);
+  //   if (this.effectHistory.length === 300) {
+  //     let isLoop = true;
 
-      const firstEffect = this.effectHistory[0];
+  //     const firstEffect = this.effectHistory[0];
 
-      this.effectHistory.forEach((effect, index) => {
-        if (index % 5 !== 0) {
-          return;
-        }
+  //     this.effectHistory.forEach((effect, index) => {
+  //       if (index % 5 !== 0) {
+  //         return;
+  //       }
 
-        if (!this.compareEffects(effect, firstEffect)) {
-          isLoop = false;
-        }
-      });
+  //       if (!this.compareEffects(effect, firstEffect)) {
+  //         isLoop = false;
+  //       }
+  //     });
 
-      if (isLoop) {
-        console.error(`Loop detected: ${firstEffect.type}, card: ${(<any>firstEffect).card?.fullName}`);
-        throw new Error('Loop detected');
-      }
-    }
-  }
+  //     if (isLoop) {
+  //       console.error(`Loop detected: ${firstEffect.type}, card: ${(<any>firstEffect).card?.fullName}`);
+  //       throw new Error('Loop detected');
+  //     }
+  //   }
+  // }
 
   compareEffects(effect1: Effect, effect2: Effect): boolean {
     if (effect1.type !== effect2.type) {

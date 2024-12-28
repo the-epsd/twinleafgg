@@ -11,7 +11,7 @@ export class Veluza extends PokemonCard {
 
   public cardType: CardType = CardType.WATER;
 
-  public hp: number = 130;
+  public hp: number = 120;
 
   public weakness = [{ type: CardType.LIGHTNING }];
 

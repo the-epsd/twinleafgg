@@ -5,6 +5,17 @@
   -webkit-backdrop-filter: blur(20px);
   border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.18);
+
+  .mat-dialog-actions {
+    color: white;
+    caret-color: white;
+  }
+
+  .mat-raised-button {
+    margin-top: 12px;
+    background-color: #449058;
+    border-radius: 16px;
+  }
 }
 
 h2 {
@@ -12,6 +23,10 @@ h2 {
   font-size: 20px;
   color: #fff;
   font-weight: 500;
+}
+
+.settings-dialog-container {
+  min-width: 480px;
 }
 
 .settings-content {
