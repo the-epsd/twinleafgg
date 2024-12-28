@@ -28,7 +28,7 @@ const abort_game_reducer_1 = require("./reducers/abort-game-reducer");
 class Store {
     constructor(handler) {
         this.handler = handler;
-        this.effectHistory = [];
+        //private effectHistory: Effect[] = [];
         this.state = new state_1.State();
         this.promptItems = [];
         this.waitItems = [];
@@ -68,7 +68,7 @@ class Store {
         return state;
     }
     reduceEffect(state, effect) {
-        this.checkEffectHistory(state, effect);
+        // this.checkEffectHistory(state, effect);
         state = this.propagateEffect(state, effect);
         if (effect.preventDefault === true) {
             return state;
@@ -83,29 +83,28 @@ class Store {
         state = check_effect_1.checkStateReducer(this, state, effect);
         return state;
     }
-    checkEffectHistory(state, effect) {
-        var _a;
-        if (this.effectHistory.length === 300) {
-            this.effectHistory.shift();
-        }
-        this.effectHistory.push(effect);
-        if (this.effectHistory.length === 300) {
-            let isLoop = true;
-            const firstEffect = this.effectHistory[0];
-            this.effectHistory.forEach((effect, index) => {
-                if (index % 5 !== 0) {
-                    return;
-                }
-                if (!this.compareEffects(effect, firstEffect)) {
-                    isLoop = false;
-                }
-            });
-            if (isLoop) {
-                console.error(`Loop detected: ${firstEffect.type}, card: ${(_a = firstEffect.card) === null || _a === void 0 ? void 0 : _a.fullName}`);
-                throw new Error('Loop detected');
-            }
-        }
-    }
+    // checkEffectHistory(state: State, effect: Effect) {
+    //   if (this.effectHistory.length === 300) {
+    //     this.effectHistory.shift();
+    //   }
+    //   this.effectHistory.push(effect);
+    //   if (this.effectHistory.length === 300) {
+    //     let isLoop = true;
+    //     const firstEffect = this.effectHistory[0];
+    //     this.effectHistory.forEach((effect, index) => {
+    //       if (index % 5 !== 0) {
+    //         return;
+    //       }
+    //       if (!this.compareEffects(effect, firstEffect)) {
+    //         isLoop = false;
+    //       }
+    //     });
+    //     if (isLoop) {
+    //       console.error(`Loop detected: ${firstEffect.type}, card: ${(<any>firstEffect).card?.fullName}`);
+    //       throw new Error('Loop detected');
+    //     }
+    //   }
+    // }
     compareEffects(effect1, effect2) {
         var _a, _b, _c, _d, _e, _f, _g, _h;
         if (effect1.type !== effect2.type) {

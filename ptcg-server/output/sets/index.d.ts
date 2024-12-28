@@ -4,6 +4,7 @@ export * from './set-jungle';
 export * from './set-vending-series';
 export * from './set-wotc-promos';
 export * from './set-base-set-energy';
+export * from './set-dragon-frontiers';
 export * from './set-diamond-and-pearl';
 export * from './set-great-encounters';
 export * from './set-op9';

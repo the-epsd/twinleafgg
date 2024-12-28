@@ -8,6 +8,9 @@ export * from './set-wotc-promos';
 //Retro Energy
 export * from './set-base-set-energy';
 
+//ex Era
+export * from './set-dragon-frontiers';
+
 //DP Era
 export * from './set-diamond-and-pearl';
 export * from './set-great-encounters';

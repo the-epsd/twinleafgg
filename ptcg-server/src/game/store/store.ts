@@ -35,7 +35,7 @@ interface PromptItem {
 
 export class Store implements StoreLike {
 
-  private effectHistory: Effect[] = [];
+  //private effectHistory: Effect[] = [];
 
   public state: State = new State();
   private promptItems: PromptItem[] = [];

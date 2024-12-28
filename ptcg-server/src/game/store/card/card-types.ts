@@ -32,6 +32,7 @@ export enum CardTag {
   NS = 'NS',
   IONOS = 'IONOS',
   HOPS = 'HOPS',
+  DELTA_SPECIES = 'DELTA_SPECIES'
 }
 
 export enum SuperType {
