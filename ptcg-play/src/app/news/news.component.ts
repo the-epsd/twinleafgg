@@ -112,6 +112,35 @@ Cards:
         image: 'https://pbs.twimg.com/media/F0C__sdXoAEMKtn?format=jpg&name=large',
         preview: 'Update #2024.12.27'
       },
+      {
+        id: 3,
+        title: 'Twinleaf Update - December 28th',
+        author: 'Joe',
+        date: new Date('2024-12-29'),
+        content: `Twinleaf Update - December 28th
+      
+Engine:
+- Added "Settings" to your User dropdown in the top-right
+    - Settings can now be accessed from anywhere in-app
+- Corrected the behaviour of AbstractAttackEffects that automatically cause a KO
+    - Cards like Alolan Exeggutor ex were not able to KO Tera Pokémon. This has been fixed.
+
+Cards:
+- Fixed errors with the following cards:
+    - Regidrago VSTAR SIT
+    - Jubilife Village ASR
+    - Exchange Ticket SV9
+    - Iono's Wattrel SV9
+    - Charmeleon OBF
+    - Veluza PAR
+    - Hop's Wooloo SV9
+    - Hop's Dubwool SV9
+    - Hop's Zacian ex SV9
+    - Lillie's Comfy SV9
+    - Mamoswine ex SV9`,
+        image: 'https://pbs.twimg.com/media/F0C__sdXoAEMKtn?format=jpg&name=large',
+        preview: 'Update #2024.12.28'
+      },
     ];
 
     posts.sort((a, b) => b.date.getTime() - a.date.getTime());

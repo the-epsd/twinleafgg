@@ -48,6 +48,9 @@
       <button mat-menu-item [routerLink]="['/profile', loggedUser?.userId]">
         {{ 'BUTTON_SHOW_PROFILE' | translate }}
       </button>
+      <button mat-menu-item (click)="openSettingsDialog()">
+        {{ 'BUTTON_SETTINGS' | translate }}
+      </button>
       <button mat-menu-item (click)="logout()">
         {{ 'BUTTON_LOGOUT' | translate }}
       </button>

@@ -34,7 +34,7 @@ class HopsZacianex extends pokemon_card_1.PokemonCard {
         this.regulationMark = 'I';
         this.cardImage = 'assets/cardback.png';
         this.set = 'SV9';
-        this.setNumber = '74';
+        this.setNumber = '69';
         this.name = 'Hop\'s Zacian ex';
         this.fullName = 'Hop\'s Zacian ex SV9';
         this.ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';

@@ -2,7 +2,7 @@ import { Card, GameError, GameMessage, State, StoreLike, TrainerCard, TrainerTyp
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 
-export class HisuianHeavyBall extends TrainerCard {
+export class ExchangeTicket extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
 

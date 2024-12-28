@@ -8,6 +8,7 @@ class DarkPatchDEX extends dark_patch_1.DarkPatch {
         super(...arguments);
         this.setNumber = '93';
         this.fullName = 'Dark Patch DEX';
+        this.set = 'DEX';
     }
 }
 exports.DarkPatchDEX = DarkPatchDEX;
@@ -16,6 +17,7 @@ class EnhancedHammerDEX extends enhanced_hammer_1.EnhancedHammer {
         super(...arguments);
         this.setNumber = '94';
         this.fullName = 'Enhanced Hammer DEX';
+        this.set = 'DEX';
     }
 }
 exports.EnhancedHammerDEX = EnhancedHammerDEX;

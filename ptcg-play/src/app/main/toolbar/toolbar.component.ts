@@ -10,6 +10,9 @@ import { LoginRememberService } from '../../login/login-remember.service';
 import { SessionService } from '../../shared/session/session.service';
 import { environment } from '../../../environments/environment';
 
+import { MatDialog } from '@angular/material/dialog';
+import { SettingsDialogComponent } from '../../table/table-sidebar/settings-dialog/settings-dialog.component';
+
 @UntilDestroy()
 @Component({
   selector: 'ptcg-toolbar',
@@ -31,7 +34,8 @@ export class ToolbarComponent implements OnInit {
     private loginPopupService: LoginPopupService,
     private loginRememberService: LoginRememberService,
     private router: Router,
-    private sessionService: SessionService
+    private sessionService: SessionService,
+    private dialog: MatDialog
   ) {
 
     this.gameStates$ = this.sessionService.get(session => session.gameStates).pipe(
@@ -63,6 +67,10 @@ export class ToolbarComponent implements OnInit {
     this.loggedUser$
       .pipe(untilDestroyed(this))
       .subscribe(user => this.loggedUser = user);
+  }
+
+  public openSettingsDialog() {
+    this.dialog.open(SettingsDialogComponent);
   }
 
   public login() {

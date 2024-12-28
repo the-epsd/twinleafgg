@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Wattrel = void 0;
+exports.IonosWattrel = void 0;
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
-class Wattrel extends pokemon_card_1.PokemonCard {
+class IonosWattrel extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.tags = [card_types_1.CardTag.IONOS];
@@ -45,4 +45,4 @@ class Wattrel extends pokemon_card_1.PokemonCard {
         return state;
     }
 }
-exports.Wattrel = Wattrel;
+exports.IonosWattrel = IonosWattrel;

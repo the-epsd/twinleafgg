@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.HopsWooLoo = void 0;
+exports.HopsWooloo = void 0;
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
-class HopsWooLoo extends pokemon_card_1.PokemonCard {
+class HopsWooloo extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.BASIC;
@@ -28,4 +28,4 @@ class HopsWooLoo extends pokemon_card_1.PokemonCard {
         this.fullName = 'Hop\'s Wooloo SV9';
     }
 }
-exports.HopsWooLoo = HopsWooLoo;
+exports.HopsWooloo = HopsWooloo;

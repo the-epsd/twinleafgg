@@ -14,8 +14,12 @@ function* useApexDragon(next: Function, store: StoreLike, state: State,
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
 
+  let retryCount = 0;
+  const maxRetries = 3;
+
   const discardPokemon = player.discard.cards.filter(card => card.superType === SuperType.POKEMON) as PokemonCard[];
-  const dragonTypePokemon = discardPokemon.filter(card => card.cardType === CardType.DRAGON);
+  const dragonTypePokemon = discardPokemon.filter(card => card.cardType === CardType.DRAGON && card.name !== 'Regidrago VSTAR');
+
 
   if (dragonTypePokemon.length === 0) {
     return state;
@@ -45,7 +49,6 @@ function* useApexDragon(next: Function, store: StoreLike, state: State,
         attack: attack.name
       });
 
-      // Perform attack
       const attackEffect = new AttackEffect(player, opponent, attack);
       state = store.reduceEffect(state, attackEffect);
 
@@ -60,9 +63,12 @@ function* useApexDragon(next: Function, store: StoreLike, state: State,
 
       return state; // Successfully executed attack, exit the function
     } catch (error) {
-      // Log the error or display a message to the player
-      console.log('attack failed');
-      // Continue the loop to let the player choose another attack
+      console.log('Attack failed:', error);
+      retryCount++;
+      if (retryCount >= maxRetries) {
+        console.log('Max retries reached. Exiting loop.');
+        return state;
+      }
     }
   }
 }

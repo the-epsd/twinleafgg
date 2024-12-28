@@ -6,6 +6,7 @@ import { StoreLike } from '../../game/store/store-like';
 export declare class JubilifeVillage extends TrainerCard {
     trainerType: TrainerType;
     set: string;
+    regulationMark: string;
     name: string;
     cardImage: string;
     fullName: string;

@@ -103,15 +103,15 @@ export function attackReducer(store: StoreLike, state: State, effect: Effect): S
     }
   }
 
-
   if (effect instanceof KnockOutOpponentEffect) {
-    const base = effect.attackEffect;
+    const target = effect.target;
+    const pokemonCard = target.getPokemonCard();
+    if (pokemonCard === undefined) {
+      throw new GameError(GameMessage.ILLEGAL_ACTION);
+    }
 
-    const dealDamage = new DealDamageEffect(base, effect.damage);
-    dealDamage.target = effect.target;
-    state = store.reduceEffect(state, dealDamage);
-
-    return state;
+    const damage = Math.max(0, effect.damage);
+    target.damage += damage;
   }
 
   if (effect instanceof PutCountersEffect) {

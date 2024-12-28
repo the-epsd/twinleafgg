@@ -4,7 +4,7 @@ import { StoreLike, State, CoinFlipPrompt, GameMessage } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 
-export class Wattrel extends PokemonCard {
+export class IonosWattrel extends PokemonCard {
 
   public tags = [CardTag.IONOS];
 

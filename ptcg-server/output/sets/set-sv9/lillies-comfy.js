@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Pidgey = void 0;
+exports.LilliesComfy = void 0;
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
@@ -34,7 +34,7 @@ function* useCallForFamily(next, store, state, effect) {
         player.deck.applyOrder(order);
     });
 }
-class Pidgey extends pokemon_card_1.PokemonCard {
+class LilliesComfy extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.BASIC;
@@ -72,4 +72,4 @@ class Pidgey extends pokemon_card_1.PokemonCard {
         return state;
     }
 }
-exports.Pidgey = Pidgey;
+exports.LilliesComfy = LilliesComfy;

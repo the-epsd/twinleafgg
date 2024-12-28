@@ -2,7 +2,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-export declare class Pidgey extends PokemonCard {
+export declare class LilliesComfy extends PokemonCard {
     stage: Stage;
     tags: CardTag[];
     cardType: CardType;

@@ -47,7 +47,7 @@ function* useCallForFamily(next: Function, store: StoreLike, state: State,
   });
 }
 
-export class Pidgey extends PokemonCard {
+export class LilliesComfy extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 

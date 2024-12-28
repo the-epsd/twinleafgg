@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.HisuianHeavyBall = void 0;
+exports.ExchangeTicket = void 0;
 const game_1 = require("../../game");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
-class HisuianHeavyBall extends game_1.TrainerCard {
+class ExchangeTicket extends game_1.TrainerCard {
     constructor() {
         super(...arguments);
         this.trainerType = game_1.TrainerType.ITEM;
@@ -62,4 +62,4 @@ class HisuianHeavyBall extends game_1.TrainerCard {
         }
     }
 }
-exports.HisuianHeavyBall = HisuianHeavyBall;
+exports.ExchangeTicket = ExchangeTicket;
