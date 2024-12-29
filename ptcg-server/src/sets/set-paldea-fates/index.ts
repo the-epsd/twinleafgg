@@ -11,7 +11,6 @@ import { Haunter } from './haunter';
 import { Kilowattrel } from './kilowattrel';
 import { MimeJr } from './mime-jr';
 import { MoonlightHill } from './moonlight-hill';
-import { Nemona } from './nemona';
 import { Scovillainex } from './scovillain-ex';
 import { StudentsInPaldea } from './students-in-paldea';
 import { TechnicalMachineCrisisPunch } from './technical-machine-crisis-punch';
@@ -22,7 +21,6 @@ export const setPaldeaFates: Card[] = [
   new Clive(),
   new Espathraex(),
   new MoonlightHill(),
-  new Nemona(),
   new Scovillainex(),
   new StudentsInPaldea(),
   new Gengar(),

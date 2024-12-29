@@ -64,7 +64,7 @@ export class ExchangeTicket extends TrainerCard {
 
       // Set the new prize cards to be face down
       player.prizes.forEach(p => p.isSecret = true);
-
+      player.supporter.moveCardTo(this, player.discard);
       return state;
     }
 

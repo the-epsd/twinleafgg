@@ -7,6 +7,7 @@ import { Jolteonex } from './jolteon-ex';
 import { Leafeonex } from './leafeon-ex';
 import { MaxRod } from './max-rod';
 import { Regigigas } from './regigigas';
+import { Seaking } from './seaking';
 import { TreasureGadget } from './treasure-gadget';
 import { Umbreonex } from './umbreon-ex';
 import { Vaporeonex } from './vaporeon-ex';
@@ -20,7 +21,7 @@ export const setPrismaticEvolution: Card[] = [
   new Umbreonex(),
   new Leafeonex(),
   new Glaceonex(),
-
+  new Seaking(),
   new Regigigas(),
   new MaxRod(),
   new TreasureGadget(),

@@ -141,6 +141,45 @@ Cards:
         image: 'https://pbs.twimg.com/media/F0C__sdXoAEMKtn?format=jpg&name=large',
         preview: 'Update #2024.12.28'
       },
+      {
+        id: 3,
+        title: 'Twinleaf Update - December 29th',
+        author: 'Joe',
+        date: new Date('2024-12-30'),
+        content: `Twinleaf Update - December 29th
+      
+Cards:
+- Fixed mapping on Full Arts, Illustration Rares, Secret Illustration Rares, Hyper Rares in Scarlet & Violet Base Set
+
+- Fixed bugs on the following cards
+    - Professor Sada's Vitality PAR
+    - Explorer's Guidance TEF
+    - Great Tusk TEF
+    - Fisherman CES
+    - Flapple EVS
+    - Mawile LOR
+    - Silcoon LOR
+    - Giratina LOT
+    - Electric Generator SVI
+    - Radiant Alakazam SIT
+    - Exchange Ticket SV9
+    - N's Zoroark ex SV9
+    - Boxed Order TEF
+
+- Fixed incorrect Regulation Mark/Set Numbers on the following cards
+    - Energy Switch SVI
+    - Jacq SVI
+    - Drizzile SSH
+    - Heavy Baton TEF
+    - Chi-Yu TWM
+
+- Added the following cards
+    - Goldeen TWM
+    - Seaking SV8a
+    - Skeledirge ex PAR`,
+        image: 'https://pbs.twimg.com/media/F0C__sdXoAEMKtn?format=jpg&name=large',
+        preview: 'Update #2024.12.29'
+      },
     ];
 
     posts.sort((a, b) => b.date.getTime() - a.date.getTime());

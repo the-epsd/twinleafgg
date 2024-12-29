@@ -20,6 +20,7 @@ class Player {
         this.bench = [];
         this.prizes = [];
         this.supporterTurn = 0;
+        this.ancientSupporter = false;
         this.retreatedTurn = 0;
         this.energyPlayedTurn = 0;
         this.stadiumPlayedTurn = 0;

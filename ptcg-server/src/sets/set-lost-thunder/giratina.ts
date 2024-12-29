@@ -69,10 +69,6 @@ export class Giratina extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
       const hasBench = opponent.bench.some(b => b.cards.length > 0);
 
-      if (!hasBench) {
-        return state;
-      }
-
       // Add Marker
       player.marker.addMarker(this.DISTORTION_DOOR_MARKER, this);
 
@@ -80,6 +76,10 @@ export class Giratina extends PokemonCard {
       cards.forEach(card => {
         player.discard.moveCardTo(card, slots[0]); // Move to Bench
       });
+
+      if (!hasBench) {
+        return state;
+      }
 
       return store.prompt(state, new ChoosePokemonPrompt(
         player.id,

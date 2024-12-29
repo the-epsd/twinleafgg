@@ -13,6 +13,5 @@ export declare class ProfessorSadasVitality extends TrainerCard {
     name: string;
     fullName: string;
     text: string;
-    private readonly ANCIENT_SUPPORTER_MARKER;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

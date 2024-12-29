@@ -7,9 +7,9 @@ import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects
 export class Flapple extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_1;
-  
+
   public cardType: CardType = CardType.DRAGON;
-  
+
   public hp: number = 80;
 
   public retreat = [CardType.COLORLESS];
@@ -35,12 +35,12 @@ export class Flapple extends PokemonCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '119';
+  public setNumber: string = '120';
 
   public name: string = 'Flapple';
 
   public fullName: string = 'Flapple EVS';
-  
+
   public evolvesFrom = 'Applin';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -52,7 +52,7 @@ export class Flapple extends PokemonCard {
       let benchPokemon: PokemonCard[] = [];
       const pokemonWithAbilities: PokemonCard[] = [];
       const opponentActive = opponent.active.getPokemonCard();
-    
+
       const stubPowerEffectForActive = new PowerEffect(opponent, {
         name: 'test',
         powerType: PowerType.ABILITY,
@@ -84,23 +84,23 @@ export class Flapple extends PokemonCard {
         } catch {
           // no abilities on bench
         }
-      }   
-      
+      }
+
       const abilities = pokemonWithAbilities.length;
       effect.damage += abilities * 50;
     }
-    
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      
-      if (opponent.active.getPokemonCard() && 
-          (opponent.active.getPokemonCard()!.tags.includes(CardTag.POKEMON_V) || 
+
+      if (opponent.active.getPokemonCard() &&
+        (opponent.active.getPokemonCard()!.tags.includes(CardTag.POKEMON_V) ||
           opponent.active.getPokemonCard()!.tags.includes(CardTag.POKEMON_VMAX) ||
           opponent.active.getPokemonCard()!.tags.includes(CardTag.POKEMON_VSTAR))) {
         effect.damage += 80;
       }
-      
+
       return state;
     }
 

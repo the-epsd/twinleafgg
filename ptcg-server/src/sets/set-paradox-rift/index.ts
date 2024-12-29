@@ -53,6 +53,7 @@ import { Remoraid } from './remoraid';
 import { RoaringMoonex } from './roaring-moon-ex';
 import { SandyShocksex } from './sandy-shocks-ex';
 import { ScreamTail } from './scream-tail';
+import { SkeledirgeEX } from './skeledirge-ex';
 import { SlitherWing } from './slither-wing';
 import { Snorunt } from './snorunt';
 import { Steenee } from './steenee';
@@ -125,6 +126,7 @@ export const setParadoxRift: Card[] = [
   new RoaringMoonex(),
   new SandyShocksex(),
   new ScreamTail(),
+  new SkeledirgeEX(),
   new SlitherWing(),
   new Snorunt(),
   new Steenee(),

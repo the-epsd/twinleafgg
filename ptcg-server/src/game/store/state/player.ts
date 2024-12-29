@@ -30,6 +30,8 @@ export class Player {
 
   supporterTurn: number = 0;
 
+  ancientSupporter: boolean = false;
+
   retreatedTurn: number = 0;
 
   energyPlayedTurn: number = 0;

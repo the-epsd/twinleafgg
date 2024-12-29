@@ -8,12 +8,12 @@ export declare class SkeledirgeEX extends PokemonCard {
     tags: CardTag[];
     cardType: CardType;
     hp: number;
-    retreat: CardType[];
+    retreat: CardType.COLORLESS[];
     weakness: {
-        type: CardType;
+        type: CardType.FIRE;
     }[];
     resistance: {
-        type: CardType;
+        type: CardType.GRASS;
         value: number;
     }[];
     powers: {
@@ -24,15 +24,16 @@ export declare class SkeledirgeEX extends PokemonCard {
     }[];
     attacks: {
         name: string;
-        cost: CardType[];
+        cost: CardType.FIRE[];
         damage: number;
         text: string;
     }[];
+    regulationMark: string;
     set: string;
     name: string;
     fullName: string;
     cardImage: string;
     setNumber: string;
-    readonly CONCEALED_CARDS_MARKER = "CONCEALED_CARDS_MARKER";
+    readonly INCENDIARY_SONG_MARKER = "INCENDIARY_SONG_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

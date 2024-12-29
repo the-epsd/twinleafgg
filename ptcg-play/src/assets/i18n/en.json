@@ -483,7 +483,9 @@
     "REVEAL_ONE_OF_YOUR_PRIZES": "Reveal one of your prize cards.",
     "SEARCH_DECK_FOR_CARD": "Would you like to search your deck for a card?",
     "PLAYER_CARDS_REVEALED_BY_EFFECT": "{{name}} cards revealed by effect.",
-    "CHOOSE_CARDS": "Choose cards"
+    "CHOOSE_CARDS": "Choose cards",
+    "CHOOSE_ENERGY_FROM_DECK": "Choose energies from deck",
+    "CHOOSE_ENERGY_FROM_DISCARD": "Choose energies from discard"
   },
   "GAME_LOGS": {
     "LOG_BANNED_BY_ARBITER": "{{name}} made an invalid move multiple times and was banned by the arbiter.",

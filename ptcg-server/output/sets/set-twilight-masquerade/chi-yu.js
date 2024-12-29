@@ -8,7 +8,7 @@ const game_effects_1 = require("../../game/store/effects/game-effects");
 class ChiYu extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.regulationMark = 'F';
+        this.regulationMark = 'H';
         this.stage = card_types_1.Stage.BASIC;
         this.cardType = card_types_1.CardType.FIRE;
         this.hp = 110;

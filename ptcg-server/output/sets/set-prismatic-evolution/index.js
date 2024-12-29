@@ -9,6 +9,7 @@ const jolteon_ex_1 = require("./jolteon-ex");
 const leafeon_ex_1 = require("./leafeon-ex");
 const max_rod_1 = require("./max-rod");
 const regigigas_1 = require("./regigigas");
+const seaking_1 = require("./seaking");
 const treasure_gadget_1 = require("./treasure-gadget");
 const umbreon_ex_1 = require("./umbreon-ex");
 const vaporeon_ex_1 = require("./vaporeon-ex");
@@ -21,6 +22,7 @@ exports.setPrismaticEvolution = [
     new umbreon_ex_1.Umbreonex(),
     new leafeon_ex_1.Leafeonex(),
     new glaceon_ex_1.Glaceonex(),
+    new seaking_1.Seaking(),
     new regigigas_1.Regigigas(),
     new max_rod_1.MaxRod(),
     new treasure_gadget_1.TreasureGadget(),

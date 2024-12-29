@@ -16,6 +16,7 @@ export declare class Player {
     bench: PokemonCardList[];
     prizes: CardList[];
     supporterTurn: number;
+    ancientSupporter: boolean;
     retreatedTurn: number;
     energyPlayedTurn: number;
     stadiumPlayedTurn: number;

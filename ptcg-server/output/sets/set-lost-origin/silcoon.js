@@ -33,7 +33,7 @@ class Silcoon extends pokemon_card_1.PokemonCard {
         this.regulationMark = 'F';
         this.set = 'LOR';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '24';
+        this.setNumber = '7';
         this.name = 'Silcoon';
         this.fullName = 'Silcoon LOR';
         this.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER = 'DEFENDING_POKEMON_CANNOT_ATTACK_MARKER';

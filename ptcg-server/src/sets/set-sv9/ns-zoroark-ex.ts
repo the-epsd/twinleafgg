@@ -5,13 +5,14 @@ import { PowerType, StoreLike, State, GameMessage, GameError, ChooseCardsPrompt,
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 function* useNightJoker(next: Function, store: StoreLike, state: State,
   effect: AttackEffect): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
 
-  const benched = player.bench.filter(b => b.cards.length > 0 && b.getPokemonCard()?.tags.includes(CardTag.NS) && player.active !== b);
+  const benched = player.bench.filter(b => b.cards.length > 0 && b.getPokemonCard()?.tags.includes(CardTag.NS) && b.getPokemonCard()?.name !== 'N\'s Zoroark ex' && player.active !== b);
 
   const allYourPokemon = [...benched.map(b => b.getPokemonCard())];
 
@@ -28,6 +29,10 @@ function* useNightJoker(next: Function, store: StoreLike, state: State,
 
   const attack: Attack | null = selected;
   if (attack === null) {
+    return state;
+  }
+
+  if (attack.copycatAttack) {
     return state;
   }
 
@@ -60,13 +65,13 @@ export class NsZoroarkex extends PokemonCard {
 
   public evolvesFrom = 'N\'s Zorua';
 
-  public cardType: CardType = CardType.DARK;
+  public cardType: CardType = D;
 
   public hp: number = 280;
 
-  public weakness = [{ type: CardType.GRASS }];
+  public weakness = [{ type: G }];
 
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public retreat = [C, C];
 
   public powers = [{
     name: 'Trade',
@@ -78,7 +83,8 @@ export class NsZoroarkex extends PokemonCard {
   public attacks = [
     {
       name: 'Night Joker',
-      cost: [CardType.DARK, CardType.DARK],
+      cost: [D, D],
+      copycatAttack: true,
       damage: 0,
       text: 'Choose 1 of your Benched N\'s Pokémon\'s attacks and use it as this attack.'
     }
@@ -99,7 +105,13 @@ export class NsZoroarkex extends PokemonCard {
   public readonly TRADE_MARKER = 'TRADE_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
+      const player = effect.player;
+      player.marker.removeMarker(this.TRADE_MARKER, this);
+    }
+
+    if (effect instanceof EndTurnEffect) {
       const player = effect.player;
       player.marker.removeMarker(this.TRADE_MARKER, this);
     }

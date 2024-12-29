@@ -11,12 +11,12 @@ import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 export class SkeledirgeEX extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Crocalor';
-  public tags = [CardTag.POKEMON_EX, CardTag.POKEMON_TERA];
-  public cardType: CardType = CardType.METAL;
+  public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
+  public cardType: CardType = M;
   public hp: number = 330;
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
-  public weakness = [{ type: CardType.FIRE }];
-  public resistance = [{ type: CardType.GRASS, value: -30 }];
+  public retreat = [C, C, C];
+  public weakness = [{ type: R }];
+  public resistance = [{ type: G, value: -30 }];
 
   public powers = [{
     name: 'Incendiary Song',
@@ -27,29 +27,30 @@ export class SkeledirgeEX extends PokemonCard {
 
   public attacks = [{
     name: 'Luster Burn',
-    cost: [CardType.FIRE, CardType.FIRE],
+    cost: [R, R],
     damage: 160,
     text: 'This attack\'s damage isn\'t affected by any effects on your opponent\'s Active Pokémon.'
   }];
 
-  public set: string = 'SV';
+  public regulationMark = 'H';
+  public set: string = 'PAR';
   public name: string = 'Skeledirge ex';
-  public fullName: string = 'Skeledirge ex SV';
+  public fullName: string = 'Skeledirge ex PAR';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '137';
 
-  public readonly CONCEALED_CARDS_MARKER = 'CONCEALED_CARDS_MARKER';
+  public readonly INCENDIARY_SONG_MARKER = 'INCENDIARY_SONG_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const player = effect.player;
-      player.marker.removeMarker(this.CONCEALED_CARDS_MARKER, this);
+      player.marker.removeMarker(this.INCENDIARY_SONG_MARKER, this);
     }
 
     if (effect instanceof EndTurnEffect) {
       const player = effect.player;
-      player.marker.removeMarker(this.CONCEALED_CARDS_MARKER, this);
+      player.marker.removeMarker(this.INCENDIARY_SONG_MARKER, this);
     }
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
@@ -62,7 +63,7 @@ export class SkeledirgeEX extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      if (player.marker.hasMarker(this.CONCEALED_CARDS_MARKER, this)) {
+      if (player.marker.hasMarker(this.INCENDIARY_SONG_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
 
@@ -79,14 +80,14 @@ export class SkeledirgeEX extends PokemonCard {
 
         const card = selected[0];
         player.hand.moveCardTo(card, player.discard);
-        player.marker.addMarker(this.CONCEALED_CARDS_MARKER, this);
+        player.marker.addMarker(this.INCENDIARY_SONG_MARKER, this);
       });
     }
 
     if (effect instanceof AttackEffect) {
       const player = effect.player;
 
-      if (player.marker.hasMarker(this.CONCEALED_CARDS_MARKER, this)) {
+      if (player.marker.hasMarker(this.INCENDIARY_SONG_MARKER, this)) {
         effect.damage += 60;
       }
     }

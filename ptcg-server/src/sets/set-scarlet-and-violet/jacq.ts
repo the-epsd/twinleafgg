@@ -52,7 +52,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
   player.deck.moveCardsTo(cards, player.hand);
   player.supporter.moveCardTo(effect.trainerCard, player.discard);
-  
+
 
   if (cards.length > 0) {
     yield store.prompt(state, new ShowCardsPrompt(
@@ -71,7 +71,7 @@ export class Jacq extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;
 
-  public regulationMark = 'F';
+  public regulationMark = 'G';
 
   public set: string = 'SVI';
 
@@ -84,8 +84,7 @@ export class Jacq extends TrainerCard {
   public fullName: string = 'Jacq SVI';
 
   public text: string =
-    'Search your deck for up to 2 Basic Pokemon, reveal them, ' +
-    'and put them into your hand. Then, shuffle your deck.';
+    'Search your deck for up to 2 Evolution Pokémon, reveal them, and put them into your hand. Then, shuffle your deck.';
 
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

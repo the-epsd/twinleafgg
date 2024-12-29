@@ -9,9 +9,9 @@ export declare class NsZoroarkex extends PokemonCard {
     cardType: CardType;
     hp: number;
     weakness: {
-        type: CardType;
+        type: CardType.GRASS;
     }[];
-    retreat: CardType[];
+    retreat: CardType.COLORLESS[];
     powers: {
         name: string;
         useWhenInPlay: boolean;
@@ -20,7 +20,8 @@ export declare class NsZoroarkex extends PokemonCard {
     }[];
     attacks: {
         name: string;
-        cost: CardType[];
+        cost: CardType.DARK[];
+        copycatAttack: boolean;
         damage: number;
         text: string;
     }[];

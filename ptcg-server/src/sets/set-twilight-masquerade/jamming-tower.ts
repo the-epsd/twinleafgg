@@ -40,4 +40,3 @@ export class JammingTower extends TrainerCard {
     return state;
   }
 }
-  

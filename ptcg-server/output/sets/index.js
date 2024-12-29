@@ -19,7 +19,13 @@ __exportStar(require("./set-wotc-promos"), exports);
 //Retro Energy
 __exportStar(require("./set-base-set-energy"), exports);
 //ex Era
+__exportStar(require("./set-dragon"), exports);
 __exportStar(require("./set-dragon-frontiers"), exports);
+__exportStar(require("./set-unseen-forces"), exports);
+__exportStar(require("./set-deoxys"), exports);
+__exportStar(require("./set-team-rocket-returns"), exports);
+__exportStar(require("./set-crystal-guardians"), exports);
+__exportStar(require("./set-power-keepers"), exports);
 //DP Era
 __exportStar(require("./set-diamond-and-pearl"), exports);
 __exportStar(require("./set-great-encounters"), exports);

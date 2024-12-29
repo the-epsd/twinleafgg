@@ -29,7 +29,7 @@ class Drizzile extends game_1.PokemonCard {
         this.regulationMark = 'D';
         this.set = 'SSH';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '42';
+        this.setNumber = '56';
         this.name = 'Drizzile';
         this.fullName = 'Drizzile SSH';
     }

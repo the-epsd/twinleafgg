@@ -45,7 +45,7 @@ class EnergySwitch extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.set = 'SVI';
-        this.regulationMark = 'F';
+        this.regulationMark = 'G';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '173';
         this.name = 'Energy Switch';

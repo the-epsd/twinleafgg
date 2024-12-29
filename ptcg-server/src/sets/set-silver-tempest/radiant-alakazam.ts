@@ -127,8 +127,11 @@ export class RadiantAlakazam extends PokemonCard {
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      effect.ignoreResistance = true;
-      return state;
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+      const oppHand = opponent.hand.cards.length;
+
+      effect.damage = 20 * oppHand;
     }
 
     if (effect instanceof EndTurnEffect) {

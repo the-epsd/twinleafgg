@@ -34,12 +34,13 @@ class DeliveryBox extends trainer_card_1.TrainerCard {
                     return store.prompt(state, new game_1.ShowCardsPrompt(opponent.id, game_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards), () => {
                     });
                 }
-                const endTurnEffect = new game_phase_effects_1.EndTurnEffect(player);
-                store.reduceEffect(state, endTurnEffect);
-                return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
+                store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
                     player.deck.applyOrder(order);
                 });
             });
+            const endTurnEffect = new game_phase_effects_1.EndTurnEffect(player);
+            store.reduceEffect(state, endTurnEffect);
+            return state;
         }
         return state;
     }

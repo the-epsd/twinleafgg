@@ -39,7 +39,7 @@ export class Drizzile extends PokemonCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '42';
+  public setNumber: string = '56';
 
   public name: string = 'Drizzile';
 

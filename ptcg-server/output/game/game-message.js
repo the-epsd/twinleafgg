@@ -186,6 +186,8 @@ var GameCardMessage;
     GameCardMessage["ABILITY_BLOCKED"] = "ABILITY_BLOCKED";
     GameCardMessage["PLAYER_CARDS_REVEALED_BY_EFFECT"] = "PLAYER_CARDS_REVEALED_BY_EFFECT";
     GameCardMessage["CHOOSE_CARDS"] = "CHOOSE_CARDS";
+    GameCardMessage["CHOOSE_ENERGY_FROM_DISCARD"] = "CHOOSE_ENERGY_FROM_DISCARD";
+    GameCardMessage["CHOOSE_ENERGY_FROM_DECK"] = "CHOOSE_ENERGY_FROM_DECK";
 })(GameCardMessage = exports.GameCardMessage || (exports.GameCardMessage = {}));
 var GameLog;
 (function (GameLog) {

@@ -5,8 +5,10 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { PlayerType, SlotType, CardTarget, GameError, GameMessage,
-  PokemonCardList } from '../../game';
+import {
+  PlayerType, SlotType, CardTarget, GameError, GameMessage,
+  PokemonCardList
+} from '../../game';
 import { HealEffect } from '../../game/store/effects/game-effects';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
@@ -34,7 +36,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     player.id,
     GameMessage.CHOOSE_POKEMON_TO_HEAL,
     PlayerType.BOTTOM_PLAYER,
-    [ SlotType.ACTIVE, SlotType.BENCH ],
+    [SlotType.ACTIVE, SlotType.BENCH],
     { allowCancel: false, blocked }
   ), results => {
     targets = results || [];
@@ -58,7 +60,7 @@ export class Potion extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
 
-  public regulationMark = 'F';
+  public regulationMark = 'G';
 
   public set: string = 'SVI';
 

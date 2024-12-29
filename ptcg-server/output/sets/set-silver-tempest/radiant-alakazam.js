@@ -92,8 +92,10 @@ class RadiantAlakazam extends pokemon_card_1.PokemonCard {
             });
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
-            effect.ignoreResistance = true;
-            return state;
+            const player = effect.player;
+            const opponent = state_utils_1.StateUtils.getOpponent(state, player);
+            const oppHand = opponent.hand.cards.length;
+            effect.damage = 20 * oppHand;
         }
         if (effect instanceof game_phase_effects_1.EndTurnEffect) {
             const player = effect.player;

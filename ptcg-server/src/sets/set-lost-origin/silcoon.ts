@@ -34,7 +34,7 @@ export class Silcoon extends PokemonCard {
   public regulationMark: string = 'F';
   public set: string = 'LOR';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '24';
+  public setNumber: string = '7';
   public name: string = 'Silcoon';
   public fullName: string = 'Silcoon LOR';
 

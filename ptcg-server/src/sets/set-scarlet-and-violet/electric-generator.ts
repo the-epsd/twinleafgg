@@ -22,8 +22,6 @@ export class ElectricGenerator extends TrainerCard {
 
   public fullName: string = 'Electric Generator SVI';
 
-  public hasLightningPokemonOnBench = false;
-
   public text: string =
     'Look at the top 5 cards of your deck and attach up to 2 Lightning Energy cards you find there to your Benched Lightning Pokémon in any way you like. Shuffle the other cards back into your deck.';
 
@@ -67,65 +65,51 @@ export class ElectricGenerator extends TrainerCard {
       });
 
       // If no energy cards were drawn, move all cards to deck
-      if (energyCardsDrawn.length == 0) {
-
+      if (energyCardsDrawn.length === 0) {
         return store.prompt(state, new ShowCardsPrompt(
           player.id,
           GameMessage.CARDS_SHOWED_BY_EFFECT,
           temp.cards
         ), () => {
-
           temp.cards.forEach(card => {
-            temp.moveCardTo(card, player.deck);
-            player.supporter.moveCardTo(this, player.discard);
+            player.deck.cards.unshift(card);
           });
-
           player.supporter.moveCardTo(this, player.discard);
 
           return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
             player.deck.applyOrder(order);
             return state;
           });
-
         });
-
-      } else {
-
-        // Attach energy if drawn
-        return store.prompt(state, new AttachEnergyPrompt(
-          player.id,
-          GameMessage.ATTACH_ENERGY_TO_ACTIVE,
-          temp,
-          PlayerType.BOTTOM_PLAYER,
-          [SlotType.BENCH],
-          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Lightning Energy' },
-          { allowCancel: false, min: 0, max: 2, blockedTo: blocked2 }
-        ), transfers => {
-
-          // Attach energy based on prompt selection
-          if (transfers) {
-            for (const transfer of transfers) {
-              const target = StateUtils.getTarget(state, player, transfer.to);
-              temp.moveCardTo(transfer.card, target); // Move card to target
-              player.supporter.moveCardTo(this, player.discard);
-            }
-
-            temp.cards.forEach(card => {
-              temp.moveCardTo(card, player.deck); // Move remaining cards to deck
-            });
-
-            return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-              player.deck.applyOrder(order);
-              return state;
-            });
-
-          }
-          player.supporter.moveCardTo(this, player.discard);
-          return state;
-
-        });
-
       }
+
+      // Attach energy if drawn
+      return store.prompt(state, new AttachEnergyPrompt(
+        player.id,
+        GameMessage.ATTACH_ENERGY_TO_ACTIVE,
+        temp,
+        PlayerType.BOTTOM_PLAYER,
+        [SlotType.BENCH],
+        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Lightning Energy' },
+        { allowCancel: false, min: 0, max: 2, blockedTo: blocked2 }
+      ), transfers => {
+        if (transfers) {
+          for (const transfer of transfers) {
+            const target = StateUtils.getTarget(state, player, transfer.to);
+            temp.moveCardTo(transfer.card, target);
+          }
+        }
+
+        temp.cards.forEach(card => {
+          player.deck.cards.unshift(card);
+        });
+        player.supporter.moveCardTo(this, player.discard);
+
+        return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+          player.deck.applyOrder(order);
+          return state;
+        });
+      });
     }
     return state;
   }
