@@ -5,6 +5,7 @@ const trainer_card_1 = require("../../game/store/card/trainer-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 const game_1 = require("../../game");
+const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 class ExplorersGuidance extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -19,6 +20,10 @@ class ExplorersGuidance extends trainer_card_1.TrainerCard {
         this.text = 'Look at the top 6 cards of your deck and put 2 of them into your hand. Discard the other cards.';
     }
     reduceEffect(store, state, effect) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+            const player = effect.player;
+            player.ancientSupporter = false;
+        }
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
             const player = effect.player;
             const supporterTurn = player.supporterTurn;
@@ -29,11 +34,12 @@ class ExplorersGuidance extends trainer_card_1.TrainerCard {
             // We will discard this card after prompt confirmation
             effect.preventDefault = true;
             if (player.deck.cards.length === 0) {
-                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
+                throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
             }
             const deckTop = new game_1.CardList();
             player.deck.moveTo(deckTop, 6);
             return store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_HAND, deckTop, {}, { min: 2, max: 2, allowCancel: false }), selected => {
+                player.ancientSupporter = true;
                 deckTop.moveCardsTo(selected, player.hand);
                 deckTop.moveTo(player.discard);
                 player.supporter.moveCardTo(effect.trainerCard, player.discard);

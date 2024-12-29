@@ -60,15 +60,15 @@ class Giratina extends pokemon_card_1.PokemonCard {
             }
             const opponent = game_1.StateUtils.getOpponent(state, player);
             const hasBench = opponent.bench.some(b => b.cards.length > 0);
-            if (!hasBench) {
-                return state;
-            }
             // Add Marker
             player.marker.addMarker(this.DISTORTION_DOOR_MARKER, this);
             const cards = player.discard.cards.filter(c => c === this);
             cards.forEach(card => {
                 player.discard.moveCardTo(card, slots[0]); // Move to Bench
             });
+            if (!hasBench) {
+                return state;
+            }
             return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH], { min: 1, max: 2, allowCancel: false }), selected => {
                 const targets = selected || [];
                 targets.forEach(target => {

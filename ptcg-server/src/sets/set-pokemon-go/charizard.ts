@@ -21,7 +21,7 @@ export class Charizard extends PokemonCard {
 
   public set = 'PGO';
 
-  public setNumber = '53';
+  public setNumber = '10';
 
   public stage: Stage = Stage.STAGE_2;
 

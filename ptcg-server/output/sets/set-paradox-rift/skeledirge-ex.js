@@ -14,12 +14,12 @@ class SkeledirgeEX extends pokemon_card_1.PokemonCard {
         super(...arguments);
         this.stage = card_types_1.Stage.STAGE_2;
         this.evolvesFrom = 'Crocalor';
-        this.tags = [card_types_1.CardTag.POKEMON_EX, card_types_1.CardTag.POKEMON_TERA];
-        this.cardType = card_types_1.CardType.METAL;
+        this.tags = [card_types_1.CardTag.POKEMON_ex, card_types_1.CardTag.POKEMON_TERA];
+        this.cardType = M;
         this.hp = 330;
-        this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
-        this.weakness = [{ type: card_types_1.CardType.FIRE }];
-        this.resistance = [{ type: card_types_1.CardType.GRASS, value: -30 }];
+        this.retreat = [C, C, C];
+        this.weakness = [{ type: R }];
+        this.resistance = [{ type: G, value: -30 }];
         this.powers = [{
                 name: 'Incendiary Song',
                 useWhenInPlay: true,
@@ -28,25 +28,26 @@ class SkeledirgeEX extends pokemon_card_1.PokemonCard {
             }];
         this.attacks = [{
                 name: 'Luster Burn',
-                cost: [card_types_1.CardType.FIRE, card_types_1.CardType.FIRE],
+                cost: [R, R],
                 damage: 160,
                 text: 'This attack\'s damage isn\'t affected by any effects on your opponent\'s Active Pokémon.'
             }];
-        this.set = 'SV';
+        this.regulationMark = 'H';
+        this.set = 'PAR';
         this.name = 'Skeledirge ex';
-        this.fullName = 'Skeledirge ex SV';
+        this.fullName = 'Skeledirge ex PAR';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '137';
-        this.CONCEALED_CARDS_MARKER = 'CONCEALED_CARDS_MARKER';
+        this.INCENDIARY_SONG_MARKER = 'INCENDIARY_SONG_MARKER';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {
             const player = effect.player;
-            player.marker.removeMarker(this.CONCEALED_CARDS_MARKER, this);
+            player.marker.removeMarker(this.INCENDIARY_SONG_MARKER, this);
         }
         if (effect instanceof game_phase_effects_1.EndTurnEffect) {
             const player = effect.player;
-            player.marker.removeMarker(this.CONCEALED_CARDS_MARKER, this);
+            player.marker.removeMarker(this.INCENDIARY_SONG_MARKER, this);
         }
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
@@ -56,7 +57,7 @@ class SkeledirgeEX extends pokemon_card_1.PokemonCard {
             if (!hasEnergyInHand) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
-            if (player.marker.hasMarker(this.CONCEALED_CARDS_MARKER, this)) {
+            if (player.marker.hasMarker(this.INCENDIARY_SONG_MARKER, this)) {
                 throw new game_1.GameError(game_1.GameMessage.POWER_ALREADY_USED);
             }
             return store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, player.hand, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Fire Energy' }, { min: 1, max: 1, allowCancel: false }), selected => {
@@ -65,12 +66,12 @@ class SkeledirgeEX extends pokemon_card_1.PokemonCard {
                 }
                 const card = selected[0];
                 player.hand.moveCardTo(card, player.discard);
-                player.marker.addMarker(this.CONCEALED_CARDS_MARKER, this);
+                player.marker.addMarker(this.INCENDIARY_SONG_MARKER, this);
             });
         }
         if (effect instanceof game_effects_1.AttackEffect) {
             const player = effect.player;
-            if (player.marker.hasMarker(this.CONCEALED_CARDS_MARKER, this)) {
+            if (player.marker.hasMarker(this.INCENDIARY_SONG_MARKER, this)) {
                 effect.damage += 60;
             }
         }

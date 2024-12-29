@@ -20,11 +20,11 @@ class ProfessorSadasVitality extends trainer_card_1.TrainerCard {
         this.name = 'Professor Sada\'s Vitality';
         this.fullName = 'Professor Sada\'s Vitality PAR';
         this.text = 'Choose up to 2 of your Ancient Pokémon and attach a Basic Energy card from your discard pile to each of them. If you attached any Energy in this way, draw 3 cards.';
-        this.ANCIENT_SUPPORTER_MARKER = 'ANCIENT_SUPPORTER_MARKER';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.ANCIENT_SUPPORTER_MARKER, this)) {
-            effect.player.marker.removeMarker(this.ANCIENT_SUPPORTER_MARKER, this);
+        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+            const player = effect.player;
+            player.ancientSupporter = false;
         }
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
             const player = effect.player;
@@ -67,12 +67,12 @@ class ProfessorSadasVitality extends trainer_card_1.TrainerCard {
             //   chosen.forEach(target => {
             state = store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_message_1.GameMessage.ATTACH_ENERGY_TO_ACTIVE, player.discard, play_card_action_1.PlayerType.BOTTOM_PLAYER, [play_card_action_1.SlotType.BENCH, play_card_action_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC }, { allowCancel: false, min: 1, max: 2, blockedTo: blocked2, differentTargets: true }), transfers => {
                 transfers = transfers || [];
+                player.ancientSupporter = true;
                 if (transfers.length === 0) {
                     return;
                 }
                 for (const transfer of transfers) {
                     const target = game_1.StateUtils.getTarget(state, player, transfer.to);
-                    player.marker.addMarker(this.ANCIENT_SUPPORTER_MARKER, this);
                     player.discard.moveCardTo(transfer.card, target);
                 }
                 if (transfers.length > 0) {

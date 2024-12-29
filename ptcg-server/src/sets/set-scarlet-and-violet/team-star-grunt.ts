@@ -12,7 +12,7 @@ export class TeamStarGrunt extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;
 
-  public regulationMark = 'F';
+  public regulationMark = 'G';
 
   public set: string = 'SVI';
 
@@ -64,10 +64,10 @@ export class TeamStarGrunt extends TrainerCard {
           deckTop.moveToTopOfDestination(opponent.deck);
 
           player.supporter.moveCardTo(effect.trainerCard, player.discard);
-          
+
         }
       });
-      
+
 
       return state;
     }
@@ -76,5 +76,4 @@ export class TeamStarGrunt extends TrainerCard {
 
 }
 
-    
-    
+

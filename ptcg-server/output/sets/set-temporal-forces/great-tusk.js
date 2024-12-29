@@ -34,7 +34,6 @@ class GreatTusk extends pokemon_card_1.PokemonCard {
         this.setNumber = '97';
         this.name = 'Great Tusk';
         this.fullName = 'Great Tusk TEF';
-        this.ANCIENT_SUPPORTER_MARKER = 'ANCIENT_SUPPORTER_MARKER';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
@@ -42,7 +41,7 @@ class GreatTusk extends pokemon_card_1.PokemonCard {
             const opponent = game_1.StateUtils.getOpponent(state, player);
             // Discard 1 card from opponent's deck 
             opponent.deck.moveTo(opponent.discard, 1);
-            if (player.marker.hasMarker(this.ANCIENT_SUPPORTER_MARKER, this)) {
+            if (player.ancientSupporter == true) {
                 opponent.deck.moveTo(opponent.discard, 3);
             }
             return state;

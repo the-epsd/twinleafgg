@@ -48,14 +48,13 @@ class Jacq extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
-        this.regulationMark = 'F';
+        this.regulationMark = 'G';
         this.set = 'SVI';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '175';
         this.name = 'Jacq';
         this.fullName = 'Jacq SVI';
-        this.text = 'Search your deck for up to 2 Basic Pokemon, reveal them, ' +
-            'and put them into your hand. Then, shuffle your deck.';
+        this.text = 'Search your deck for up to 2 Evolution Pokémon, reveal them, and put them into your hand. Then, shuffle your deck.';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {

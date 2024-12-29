@@ -34,7 +34,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
   player.deck.moveTo(player.hand, 5);
   player.supporter.moveCardTo(effect.trainerCard, player.discard);
-  
+
   return state;
 }
 
@@ -42,7 +42,7 @@ export class Youngster extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;
 
-  public regulationMark = 'F';
+  public regulationMark = 'G';
 
   public set: string = 'SVI';
 

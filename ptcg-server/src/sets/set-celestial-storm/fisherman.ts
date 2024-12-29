@@ -30,8 +30,16 @@ function* playCard(next: Function, store: StoreLike, state: State,
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
-  const min = Math.max(4, basicEnergies);
-  const max = Math.max(4, basicEnergies);
+  let min = 0;
+  let max = 0;
+
+  if (basicEnergies <= 4) {
+    min = basicEnergies;
+    max = basicEnergies;
+  } else {
+    min = 4;
+    max = 4;
+  }
 
   player.hand.moveCardTo(effect.trainerCard, player.supporter);
   // We will discard this card after prompt confirmation

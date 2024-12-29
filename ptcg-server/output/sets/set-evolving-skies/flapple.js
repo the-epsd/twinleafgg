@@ -29,7 +29,7 @@ class Flapple extends pokemon_card_1.PokemonCard {
         this.set = 'EVS';
         this.regulationMark = 'E';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '119';
+        this.setNumber = '120';
         this.name = 'Flapple';
         this.fullName = 'Flapple EVS';
         this.evolvesFrom = 'Applin';

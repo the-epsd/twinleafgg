@@ -25,6 +25,7 @@ import { FestivalGrounds } from './festival-plaza';
 import { Froakie } from './froakie';
 import { Frogadier } from './frogadier';
 import { Froslass } from './froslass';
+import { Goldeen } from './goldeen';
 import { Greninjaex } from './greninja-ex';
 import { Grookey } from './grookey';
 import { HandyFan } from './handy-fan';
@@ -88,6 +89,7 @@ export const setTwilightMasquerade: Card[] = [
   new Emolga(),
   new Farfetchd(),
   new Froslass(),
+  new Goldeen(),
   new HandyFan(),
   new Hassel(),
   new HearthflameMaskOgerponex(),

@@ -11,7 +11,7 @@ export class HeavyBaton extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.TOOL;
 
-  public set: string = 'PAR';
+  public set: string = 'TEF';
 
   public name: string = 'Heavy Baton';
 
@@ -31,14 +31,14 @@ export class HeavyBaton extends TrainerCard {
     if (effect instanceof KnockOutEffect && effect.target.cards.includes(this)) {
 
       const player = effect.player;
-  
+
       const target = effect.target;
       const cards = target.getPokemons();
-      
+
       const removedCards = [];
 
       const pokemonIndices = effect.target.cards.map((card, index) => index);
-      
+
       const retreatCost = effect.target.getPokemonCard()?.retreat.length;
 
       try {
@@ -88,7 +88,7 @@ export class HeavyBaton extends TrainerCard {
           GameMessage.ATTACH_ENERGY_TO_BENCH,
           energyToAttach,
           PlayerType.BOTTOM_PLAYER,
-          [ SlotType.BENCH ],
+          [SlotType.BENCH],
           { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
           { allowCancel: false, min: 0, max: 3 }
         ), transfers => {

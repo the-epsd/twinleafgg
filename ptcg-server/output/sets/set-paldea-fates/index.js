@@ -13,7 +13,6 @@ const haunter_1 = require("./haunter");
 const kilowattrel_1 = require("./kilowattrel");
 const mime_jr_1 = require("./mime-jr");
 const moonlight_hill_1 = require("./moonlight-hill");
-const nemona_1 = require("./nemona");
 const scovillain_ex_1 = require("./scovillain-ex");
 const students_in_paldea_1 = require("./students-in-paldea");
 const technical_machine_crisis_punch_1 = require("./technical-machine-crisis-punch");
@@ -23,7 +22,6 @@ exports.setPaldeaFates = [
     new clive_1.Clive(),
     new espathra_ex_1.Espathraex(),
     new moonlight_hill_1.MoonlightHill(),
-    new nemona_1.Nemona(),
     new scovillain_ex_1.Scovillainex(),
     new students_in_paldea_1.StudentsInPaldea(),
     new gengar_1.Gengar(),

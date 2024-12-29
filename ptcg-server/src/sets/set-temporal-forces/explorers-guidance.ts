@@ -5,6 +5,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { GameError, GameMessage, CardList, ChooseCardsPrompt } from '../../game';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 
 export class ExplorersGuidance extends TrainerCard {
@@ -28,6 +29,12 @@ export class ExplorersGuidance extends TrainerCard {
   public text: string = 'Look at the top 6 cards of your deck and put 2 of them into your hand. Discard the other cards.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
+    if (effect instanceof EndTurnEffect) {
+      const player = effect.player;
+      player.ancientSupporter = false;
+    }
+
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
 
@@ -42,7 +49,7 @@ export class ExplorersGuidance extends TrainerCard {
       effect.preventDefault = true;
 
       if (player.deck.cards.length === 0) {
-        throw new GameError(GameMessage.CANNOT_USE_POWER);
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
       const deckTop = new CardList();
@@ -55,10 +62,10 @@ export class ExplorersGuidance extends TrainerCard {
         {},
         { min: 2, max: 2, allowCancel: false }
       ), selected => {
+        player.ancientSupporter = true;
         deckTop.moveCardsTo(selected, player.hand);
         deckTop.moveTo(player.discard);
         player.supporter.moveCardTo(effect.trainerCard, player.discard);
-
 
       });
     }

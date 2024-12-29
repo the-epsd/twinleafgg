@@ -57,12 +57,13 @@ export class DeliveryBox extends TrainerCard {
           ), () => {
           });
         }
-        const endTurnEffect = new EndTurnEffect(player);
-        store.reduceEffect(state, endTurnEffect);
-        return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+        store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
           player.deck.applyOrder(order);
         });
       });
+      const endTurnEffect = new EndTurnEffect(player);
+      store.reduceEffect(state, endTurnEffect);
+      return state;
     }
     return state;
   }

@@ -11,7 +11,7 @@ export class Nemona extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;
 
-  public regulationMark = 'F';
+  public regulationMark = 'G';
 
   public set: string = 'SVI';
 
@@ -46,7 +46,7 @@ export class Nemona extends TrainerCard {
 
       player.deck.moveTo(player.hand, 3);
       player.supporter.moveCardTo(effect.trainerCard, player.discard);
-      
+
     }
 
     return state;

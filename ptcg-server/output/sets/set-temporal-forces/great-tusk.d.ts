@@ -23,6 +23,5 @@ export declare class GreatTusk extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
-    private readonly ANCIENT_SUPPORTER_MARKER;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

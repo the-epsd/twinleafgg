@@ -55,6 +55,7 @@ const remoraid_1 = require("./remoraid");
 const roaring_moon_ex_1 = require("./roaring-moon-ex");
 const sandy_shocks_ex_1 = require("./sandy-shocks-ex");
 const scream_tail_1 = require("./scream-tail");
+const skeledirge_ex_1 = require("./skeledirge-ex");
 const slither_wing_1 = require("./slither-wing");
 const snorunt_1 = require("./snorunt");
 const steenee_1 = require("./steenee");
@@ -126,6 +127,7 @@ exports.setParadoxRift = [
     new roaring_moon_ex_1.RoaringMoonex(),
     new sandy_shocks_ex_1.SandyShocksex(),
     new scream_tail_1.ScreamTail(),
+    new skeledirge_ex_1.SkeledirgeEX(),
     new slither_wing_1.SlitherWing(),
     new snorunt_1.Snorunt(),
     new steenee_1.Steenee(),

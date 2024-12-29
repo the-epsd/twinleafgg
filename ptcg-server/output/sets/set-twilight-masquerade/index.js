@@ -27,6 +27,7 @@ const festival_plaza_1 = require("./festival-plaza");
 const froakie_1 = require("./froakie");
 const frogadier_1 = require("./frogadier");
 const froslass_1 = require("./froslass");
+const goldeen_1 = require("./goldeen");
 const greninja_ex_1 = require("./greninja-ex");
 const grookey_1 = require("./grookey");
 const handy_fan_1 = require("./handy-fan");
@@ -88,6 +89,7 @@ exports.setTwilightMasquerade = [
     new emolga_1.Emolga(),
     new farfetchd_1.Farfetchd(),
     new froslass_1.Froslass(),
+    new goldeen_1.Goldeen(),
     new handy_fan_1.HandyFan(),
     new hassel_1.Hassel(),
     new hearthflame_mask_ogerpon_ex_1.HearthflameMaskOgerponex(),

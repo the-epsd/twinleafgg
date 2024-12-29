@@ -45,8 +45,6 @@ export class GreatTusk extends PokemonCard {
 
   public fullName: string = 'Great Tusk TEF';
 
-  private readonly ANCIENT_SUPPORTER_MARKER = 'ANCIENT_SUPPORTER_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
@@ -56,11 +54,10 @@ export class GreatTusk extends PokemonCard {
       // Discard 1 card from opponent's deck 
       opponent.deck.moveTo(opponent.discard, 1);
 
-      if (player.marker.hasMarker(this.ANCIENT_SUPPORTER_MARKER, this)) {
-
+      if (player.ancientSupporter == true) {
         opponent.deck.moveTo(opponent.discard, 3);
-
       }
+
       return state;
     }
     return state;

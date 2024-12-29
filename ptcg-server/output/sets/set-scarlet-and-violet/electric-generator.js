@@ -15,7 +15,6 @@ class ElectricGenerator extends trainer_card_1.TrainerCard {
         this.setNumber = '170';
         this.name = 'Electric Generator';
         this.fullName = 'Electric Generator SVI';
-        this.hasLightningPokemonOnBench = false;
         this.text = 'Look at the top 5 cards of your deck and attach up to 2 Lightning Energy cards you find there to your Benched Lightning Pokémon in any way you like. Shuffle the other cards back into your deck.';
     }
     reduceEffect(store, state, effect) {
@@ -49,11 +48,10 @@ class ElectricGenerator extends trainer_card_1.TrainerCard {
                 return card instanceof game_1.EnergyCard && card.energyType === card_types_1.EnergyType.BASIC && card.name === 'Lightning Energy';
             });
             // If no energy cards were drawn, move all cards to deck
-            if (energyCardsDrawn.length == 0) {
+            if (energyCardsDrawn.length === 0) {
                 return store.prompt(state, new game_1.ShowCardsPrompt(player.id, game_1.GameMessage.CARDS_SHOWED_BY_EFFECT, temp.cards), () => {
                     temp.cards.forEach(card => {
-                        temp.moveCardTo(card, player.deck);
-                        player.supporter.moveCardTo(this, player.discard);
+                        player.deck.cards.unshift(card);
                     });
                     player.supporter.moveCardTo(this, player.discard);
                     return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
@@ -62,28 +60,23 @@ class ElectricGenerator extends trainer_card_1.TrainerCard {
                     });
                 });
             }
-            else {
-                // Attach energy if drawn
-                return store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_ACTIVE, temp, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Lightning Energy' }, { allowCancel: false, min: 0, max: 2, blockedTo: blocked2 }), transfers => {
-                    // Attach energy based on prompt selection
-                    if (transfers) {
-                        for (const transfer of transfers) {
-                            const target = game_1.StateUtils.getTarget(state, player, transfer.to);
-                            temp.moveCardTo(transfer.card, target); // Move card to target
-                            player.supporter.moveCardTo(this, player.discard);
-                        }
-                        temp.cards.forEach(card => {
-                            temp.moveCardTo(card, player.deck); // Move remaining cards to deck
-                        });
-                        return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
-                            player.deck.applyOrder(order);
-                            return state;
-                        });
+            // Attach energy if drawn
+            return store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_ACTIVE, temp, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Lightning Energy' }, { allowCancel: false, min: 0, max: 2, blockedTo: blocked2 }), transfers => {
+                if (transfers) {
+                    for (const transfer of transfers) {
+                        const target = game_1.StateUtils.getTarget(state, player, transfer.to);
+                        temp.moveCardTo(transfer.card, target);
                     }
-                    player.supporter.moveCardTo(this, player.discard);
+                }
+                temp.cards.forEach(card => {
+                    player.deck.cards.unshift(card);
+                });
+                player.supporter.moveCardTo(this, player.discard);
+                return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
+                    player.deck.applyOrder(order);
                     return state;
                 });
-            }
+            });
         }
         return state;
     }

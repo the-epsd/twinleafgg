@@ -35,7 +35,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
   player.deck.moveTo(player.hand, 8);
   player.supporter.moveCardTo(effect.trainerCard, player.discard);
-  
+
   const endTurnEffect = new EndTurnEffect(player);
   store.reduceEffect(state, endTurnEffect);
   return state;
@@ -45,7 +45,7 @@ export class Katy extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;
 
-  public regulationMark = 'F';
+  public regulationMark = 'G';
 
   public set: string = 'SVI';
 

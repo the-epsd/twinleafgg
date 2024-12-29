@@ -11,7 +11,7 @@ class HeavyBaton extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.regulationMark = 'H';
         this.trainerType = card_types_1.TrainerType.TOOL;
-        this.set = 'PAR';
+        this.set = 'TEF';
         this.name = 'Heavy Baton';
         this.fullName = 'Heavy Baton PAR';
         this.cardImage = 'assets/cardback.png';

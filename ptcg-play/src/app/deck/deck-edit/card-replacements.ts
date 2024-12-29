@@ -23,6 +23,9 @@ export const cardReplacements = [
   { from: 'Pokemon Breeder BS 76', to: 'Pokémon Breeder BS 76' },
   { from: 'Pokemon Trader BS 77', to: 'Pokémon Trader BS 77' },
 
+  //BWP
+  { from: 'Tropical Beach BWP 50', to: 'Tropical Beach BWP50 BWP 50' },
+
   //BLW
   { from: 'Zoroark BLW 71', to: 'Zoroark BW 71' },
 
@@ -59,6 +62,36 @@ export const cardReplacements = [
   { from: 'Professor\'s Research SVI 189', to: 'Professor\'s Research SVI 189' },
   { from: 'Professor\'s Research SVI 190', to: 'Professor\'s Research SVI 190' },
   { from: 'Riolu SVI 113', to: 'Riolu2 SVI 113' },
+
+  //SVI FA
+  { from: 'Armarouge SVI 203', to: 'ArmarougeIR SVI 203' },
+  { from: 'Arven SVI 235', to: 'ArvenFA SVI 235' },
+  { from: 'Arven SVI 249', to: 'ArvenSIR SVI 249' },
+  { from: 'Fighting Energy SVI 258', to: 'Fighting EnergyHR SVI 258' },
+  { from: 'Lightning Energy SVI 257', to: 'Lightning EnergyHR SVI 257' },
+  { from: 'Gardevoir ex SVI 228', to: 'Gardevoir exFA SVI 228' },
+  { from: 'Gardevoir ex SVI 245', to: 'Gardevoir exSIR SVI 245' },
+  { from: 'Jacq SVI 236', to: 'JacqFA SVI 236' },
+  { from: 'Jacq SVI 250', to: 'JacqSIR SVI 250' },
+  { from: 'Katy SVI 237', to: 'KatyFA SVI 237' },
+  { from: 'Koraidon ex SVI 231', to: 'Koraidon exFA SVI 231' },
+  { from: 'Koraidon ex SVI 247', to: 'Koraidon exSIR SVI 247' },
+  { from: 'Koraidon ex SVI 254', to: 'Koraidon exHR SVI 254' },
+  { from: 'Magnezone ex SVI 226', to: 'Magnezone exFA SVI 226' },
+  { from: 'Miraidon ex SVI 227', to: 'Miraidon exFA SVI 227' },
+  { from: 'Miraidon ex SVI 244', to: 'Miraidon exSIR SVI 244' },
+  { from: 'Miraidon ex SVI 253', to: 'Miraidon exHR SVI 253' },
+  { from: 'Miriam SVI 238', to: 'MiriamFA SVI 238' },
+  { from: 'Miriam SVI 251', to: 'MiriamSIR SVI 251' },
+  { from: 'Nest Ball SVI 255', to: 'Nest BallHR SVI 255' },
+  { from: 'Penny SVI 239', to: 'PennyFA SVI 239' },
+  { from: 'Penny SVI 252', to: 'PennySIR SVI 252' },
+  { from: "Professor's Research SVI 242", to: "Professor's ResearchFA1 SVI 242" },
+  { from: "Professor's Research SVI 241", to: "Professor's ResearchFA2 SVI 241" },
+  { from: 'Ralts SVI 211', to: 'RaltsIR SVI 211' },
+  { from: 'Rare Candy SVI 256', to: 'Rare CandyHR SVI 256' },
+  { from: 'Skwovet SVI 222', to: 'SkwovetIR SVI 222' },
+  { from: 'Team Star Grunt SVI 242', to: 'Team Star GruntFA SVI 242' },
 
   //PAL
   { from: 'Frigibax PAL 57', to: 'Frigibax PAL1 57' },
@@ -338,6 +371,12 @@ export const exportReplacements = [
   { from: 'Pokémon Breeder BS 76', to: 'Pokemon Breeder BS 76' },
   { from: 'Pokémon Trader BS 77', to: 'Pokemon Trader BS 77' },
 
+  //BWP
+  { from: 'Tropical Beach BWP50 BWP 50', to: 'Tropical Beach BWP 50' },
+
+  //BLW
+  { from: 'Zoroark BL 71', to: 'Zoroark BLW 71' },
+
   //ROS
   { from: 'Double Dragon Energy SUM 97', to: 'Double Dragon Energy ROS 97' },
 
@@ -371,6 +410,36 @@ export const exportReplacements = [
   { from: 'Professor\'s Research SVI 189 189', to: 'Professor\'s Research SVI 189' },
   { from: 'Professor\'s Research SVI 190 189', to: 'Professor\'s Research SVI 190 190' },
   { from: 'Riolu2 SVI 113', to: 'Riolu SVI 113' },
+
+  //SVI FA
+  { from: 'ArmarougeIR SVI 203', to: 'Armarouge SVI 203' },
+  { from: 'ArvenFA SVI 235', to: 'Arven SVI 235' },
+  { from: 'ArvenSIR SVI 249', to: 'Arven SVI 249' },
+  { from: 'Fighting EnergyHR SVI 258', to: 'Fighting Energy SVI 258' },
+  { from: 'Lightning EnergyHR SVI 257', to: 'Lightning Energy SVI 257' },
+  { from: 'Gardevoir exFA SVI 228', to: 'Gardevoir ex SVI 228' },
+  { from: 'Gardevoir exSIR SVI 245', to: 'Gardevoir ex SVI 245' },
+  { from: 'JacqFA SVI 236', to: 'Jacq SVI 236' },
+  { from: 'JacqSIR SVI 250', to: 'Jacq SVI 250' },
+  { from: 'KatyFA SVI 237', to: 'Katy SVI 237' },
+  { from: 'Koraidon exFA SVI 231', to: 'Koraidon ex SVI 231' },
+  { from: 'Koraidon exSIR SVI 247', to: 'Koraidon ex SVI 247' },
+  { from: 'Koraidon exHR SVI 254', to: 'Koraidon ex SVI 254' },
+  { from: 'Magnezone exFA SVI 226', to: 'Magnezone ex SVI 226' },
+  { from: 'Miraidon exFA SVI 227', to: 'Miraidon ex SVI 227' },
+  { from: 'Miraidon exSIR SVI 244', to: 'Miraidon ex SVI 244' },
+  { from: 'Miraidon exHR SVI 253', to: 'Miraidon ex SVI 253' },
+  { from: 'MiriamFA SVI 238', to: 'Miriam SVI 238' },
+  { from: 'MiriamSIR SVI 251', to: 'Miriam SVI 251' },
+  { from: 'Nest BallHR SVI 255', to: 'Nest Ball SVI 255' },
+  { from: 'PennyFA SVI 239', to: 'Penny SVI 239' },
+  { from: 'PennySIR SVI 252', to: 'Penny SVI 252' },
+  { from: "Professor's ResearchFA1 SVI 242", to: "Professor's Research SVI 242" },
+  { from: "Professor's ResearchFA2 SVI 241", to: "Professor's Research SVI 241" },
+  { from: 'RaltsIR SVI 211', to: 'Ralts SVI 211' },
+  { from: 'Rare CandyHR SVI 256', to: 'Rare Candy SVI 256' },
+  { from: 'SkwovetIR SVI 222', to: 'Skwovet SVI 222' },
+  { from: 'Team Star GruntFA SVI 242', to: 'Team Star Grunt SVI 242' },
 
   //PAL
   { from: 'Frigibax PAL1 57 ', to: 'Frigibax PAL 57' },
