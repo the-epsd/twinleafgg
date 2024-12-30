@@ -11,7 +11,7 @@ import { PlayerType, SlotType } from '../../game/store/actions/play-card-action'
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class Magneton extends PokemonCard {
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Magnemite';
   public cardType: CardType = CardType.METAL;
   public regulationMark = 'F';

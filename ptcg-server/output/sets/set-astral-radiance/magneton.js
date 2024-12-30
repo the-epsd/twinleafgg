@@ -12,7 +12,7 @@ const game_phase_effects_1 = require("../../game/store/effects/game-phase-effect
 class Magneton extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.stage = card_types_1.Stage.BASIC;
+        this.stage = card_types_1.Stage.STAGE_1;
         this.evolvesFrom = 'Magnemite';
         this.cardType = card_types_1.CardType.METAL;
         this.regulationMark = 'F';
