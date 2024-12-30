@@ -78,7 +78,7 @@ class Mamoswineex extends pokemon_card_1.PokemonCard {
             });
             return state;
         }
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             let stage2Count = 0;
             player.bench.forEach(bench => {

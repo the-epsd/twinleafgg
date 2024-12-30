@@ -1,4 +1,4 @@
-import { CardType, Stage, SuperType } from '../../game/store/card/card-types';
+import { CardTag, CardType, Stage, SuperType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
@@ -9,6 +9,8 @@ import { AttackEffect } from '../../game/store/effects/game-effects';
 export class Tatsugiriex extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
+
+  public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
 
   public regulationMark = 'H';
 
