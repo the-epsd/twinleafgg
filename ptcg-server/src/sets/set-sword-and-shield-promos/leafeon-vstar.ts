@@ -36,7 +36,7 @@ export class LeafeonVSTAR extends PokemonCard {
     text: 'During your opponent\'s next turn, this Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance).'
   }];
 
-  public regulationMark = 'G';
+  public regulationMark = 'F';
 
   public set = 'SWSH';
 

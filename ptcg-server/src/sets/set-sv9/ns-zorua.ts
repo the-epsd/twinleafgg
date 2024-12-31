@@ -7,7 +7,7 @@ export class NsZorua extends PokemonCard {
 
   public tags = [CardTag.NS];
 
-  public cardType: CardType = G;
+  public cardType: CardType = D;
 
   public hp: number = 70;
 

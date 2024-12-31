@@ -28,7 +28,7 @@ export class Clefairy extends PokemonCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '77';
+  public setNumber: string = '78';
 
   public name: string = 'Clefairy';
 

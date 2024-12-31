@@ -63,7 +63,7 @@ class Clefable extends game_1.PokemonCard {
         ];
         this.set = 'TWM';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '78';
+        this.setNumber = '79';
         this.name = 'Clefable';
         this.fullName = 'Clefable TWM';
     }
