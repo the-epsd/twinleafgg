@@ -22,8 +22,8 @@ class MagmaBasin extends trainer_card_1.TrainerCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.UseStadiumEffect && state_utils_1.StateUtils.getStadiumCard(state) === this) {
             const player = effect.player;
-            const hasBench = player.bench.some(b => b.cards.length > 0);
-            if (!hasBench) {
+            const hasFirePokemonOnBench = player.bench.some(b => b.cards.some(c => c instanceof game_1.PokemonCard && c.cardType === card_types_1.CardType.FIRE));
+            if (!hasFirePokemonOnBench) {
                 throw new game_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
             }
             const blocked2 = [];

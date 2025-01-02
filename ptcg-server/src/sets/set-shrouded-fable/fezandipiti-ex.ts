@@ -89,15 +89,19 @@ export class Fezandipitiex extends PokemonCard {
       const cardList = StateUtils.findCardList(state, this);
       const owner = StateUtils.findOwner(state, cardList);
       if (owner === player) {
-        effect.player.marker.addMarkerToState(this.TABLE_TURNER_MARKER);
-        console.log('player pokemon was knocked out last turn');
+        effect.player.marker.addMarkerToState('OPPONENT_KNOCKOUT_MARKER');
       }
       return state;
     }
 
     if (effect instanceof EndTurnEffect) {
       const player = effect.player;
-      player.marker.removeMarker(this.TABLE_TURNER_MARKER);
+      const opponent = StateUtils.getOpponent(state, player);
+
+      // Only clear the marker when opponent's turn ends
+      if (state.players[state.activePlayer] === opponent) {
+        player.marker.removeMarker('OPPONENT_KNOCKOUT_MARKER');
+      }
       player.usedTableTurner = false;
     }
 
@@ -113,7 +117,7 @@ export class Fezandipitiex extends PokemonCard {
       ), selected => {
         const targets = selected || [];
         targets.forEach(target => {
-          const damageEffect = new PutDamageEffect(effect, 120);
+          const damageEffect = new PutDamageEffect(effect, 100);
           damageEffect.target = target;
           store.reduceEffect(state, damageEffect);
         });

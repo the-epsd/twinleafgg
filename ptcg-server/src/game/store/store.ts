@@ -86,11 +86,12 @@ export class Store implements StoreLike {
   }
 
   public reduceEffect(state: State, effect: Effect): State {
-
     // this.checkEffectHistory(state, effect);
 
     state = this.propagateEffect(state, effect);
 
+    console.log(`Running effect: ${effect.type} for card ${(<any>effect).card?.name}`);
+    
     if (effect.preventDefault === true) {
       return state;
     }

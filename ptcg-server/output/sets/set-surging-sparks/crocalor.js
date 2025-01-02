@@ -27,7 +27,7 @@ class Crocalor extends game_1.PokemonCard {
         this.fullName = 'Crocalor SV8';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             return store.prompt(state, [
                 new game_1.CoinFlipPrompt(player.id, game_1.GameMessage.COIN_FLIP)

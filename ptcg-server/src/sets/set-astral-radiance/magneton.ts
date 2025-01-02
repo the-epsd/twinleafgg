@@ -8,6 +8,7 @@ import { StateUtils } from '../../game/store/state-utils';
 import { GameMessage } from '../../game/game-message';
 import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
 import { PlayerType, SlotType } from '../../game/store/actions/play-card-action';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class Magneton extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -32,10 +33,21 @@ export class Magneton extends PokemonCard {
   public name: string = 'Magneton';
   public fullName: string = 'Magneton ASR';
 
+  public readonly BOUNCE_BACK_MARKER = 'BOUNCE_BACK_MARKER';
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
+
+      player.marker.addMarker(this.BOUNCE_BACK_MARKER, this);
+
+    }
+
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.BOUNCE_BACK_MARKER)) {
+      const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
+
+      player.marker.removeMarker(this.BOUNCE_BACK_MARKER);
 
       if (player.active.cards[0] == this) {
         return state; // Not active

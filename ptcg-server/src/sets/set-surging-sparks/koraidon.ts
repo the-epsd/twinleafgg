@@ -61,11 +61,13 @@ export class Koraidon extends PokemonCard {
 
   private findOriginalCard(state: State, playerLastAttack: Attack): PokemonCard | null {
     let originalCard: PokemonCard | null = null;
+    let originalCardId: number | null = null;
 
     state.players.forEach(player => {
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
         if (card.attacks.some(attack => attack === playerLastAttack)) {
           originalCard = card;
+          originalCardId = card.id;
         }
       });
 
@@ -74,10 +76,15 @@ export class Koraidon extends PokemonCard {
         cardList.cards.forEach(card => {
           if (card instanceof PokemonCard && card.attacks.some(attack => attack === playerLastAttack)) {
             originalCard = card;
+            originalCardId = card.id;
           }
         });
       });
     });
+
+    if (originalCard && originalCardId === this.id) {
+      return null;
+    }
 
     return originalCard;
   }

@@ -22,7 +22,7 @@ class Buizel extends pokemon_card_1.PokemonCard {
         this.regulationMark = 'E';
         this.set = 'SHF';
         this.name = 'Buizel';
-        this.setNumber = '022';
+        this.setNumber = '22';
         this.fullName = 'Buizel SHF';
         this.cardImage = 'assets/cardback.png';
     }

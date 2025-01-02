@@ -39,9 +39,7 @@ class CornerstoneMaskOgerponex extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            const applyWeakness = new attack_effects_1.ApplyWeaknessEffect(effect, 140);
-            store.reduceEffect(state, applyWeakness);
-            const damage = applyWeakness.damage;
+            const damage = 140; // Direct damage without weakness
             effect.damage = 0;
             if (damage > 0) {
                 opponent.active.damage += damage;

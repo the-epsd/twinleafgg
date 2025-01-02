@@ -5,7 +5,7 @@ const game_1 = require("../../game");
 class Piloswine extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.stage = game_1.Stage.BASIC;
+        this.stage = game_1.Stage.STAGE_1;
         this.evolvesFrom = 'Swinub';
         this.cardType = F;
         this.hp = 100;

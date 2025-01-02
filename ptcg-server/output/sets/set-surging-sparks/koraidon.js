@@ -50,10 +50,12 @@ class Koraidon extends pokemon_card_1.PokemonCard {
     }
     findOriginalCard(state, playerLastAttack) {
         let originalCard = null;
+        let originalCardId = null;
         state.players.forEach(player => {
             player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
                 if (card.attacks.some(attack => attack === playerLastAttack)) {
                     originalCard = card;
+                    originalCardId = card.id;
                 }
             });
             // Check deck, discard, hand, and lost zone
@@ -61,10 +63,14 @@ class Koraidon extends pokemon_card_1.PokemonCard {
                 cardList.cards.forEach(card => {
                     if (card instanceof pokemon_card_1.PokemonCard && card.attacks.some(attack => attack === playerLastAttack)) {
                         originalCard = card;
+                        originalCardId = card.id;
                     }
                 });
             });
         });
+        if (originalCard && originalCardId === this.id) {
+            return null;
+        }
         return originalCard;
     }
 }

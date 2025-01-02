@@ -8,11 +8,11 @@ import { StoreLike } from '../../game/store/store-like';
 
 export class WarpEnergy extends EnergyCard {
 
-  public provides: CardType[] = [ CardType.COLORLESS ];
+  public provides: CardType[] = [CardType.COLORLESS];
 
   public energyType = EnergyType.SPECIAL;
 
-  public set: string = 'SHL';
+  public set: string = 'SLG';
 
   public cardImage: string = 'assets/cardback.png';
 
@@ -30,7 +30,7 @@ export class WarpEnergy extends EnergyCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttachEnergyEffect && effect.target?.cards?.includes(this)) {
       const player = effect.player;
-      
+
       if (player.deck.cards.length === 0) {
         return state;
       }
@@ -56,10 +56,9 @@ export class WarpEnergy extends EnergyCard {
         const cardList = result[0];
         player.switchPokemon(cardList);
       });
-    }      
-      
+    }
+
     return state;
   }
-      
+
 }
-      

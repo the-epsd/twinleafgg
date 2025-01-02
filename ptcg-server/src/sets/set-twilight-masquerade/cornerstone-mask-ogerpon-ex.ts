@@ -3,20 +3,20 @@ import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { GamePhase, PowerType, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
-import { ApplyWeaknessEffect, AfterDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { AfterDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 
 export class CornerstoneMaskOgerponex extends PokemonCard {
-  
+
   public stage = Stage.BASIC;
 
   public cardType = CardType.FIGHTING;
 
   public hp = 210;
-  
-  public tags = [ CardTag.POKEMON_ex, CardTag.POKEMON_TERA ];
-  
+
+  public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
+
   public weakness = [{ type: CardType.GRASS }];
-  
+
   public retreat = [CardType.COLORLESS];
 
   public powers = [{
@@ -24,7 +24,7 @@ export class CornerstoneMaskOgerponex extends PokemonCard {
     powerType: PowerType.ABILITY,
     text: 'Prevent all damage from attacks done to this Pokémon by your opponent\'s Pokémon that have an Ability.'
   }];
-  
+
   public attacks = [
     {
       name: 'Demolish',
@@ -51,13 +51,10 @@ export class CornerstoneMaskOgerponex extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-          
-      const applyWeakness = new ApplyWeaknessEffect(effect, 140);
-      store.reduceEffect(state, applyWeakness);
-      const damage = applyWeakness.damage;
-          
+
+      const damage = 140; // Direct damage without weakness
       effect.damage = 0;
-          
+
       if (damage > 0) {
         opponent.active.damage += damage;
         const afterDamage = new AfterDamageEffect(effect, damage);
@@ -68,38 +65,38 @@ export class CornerstoneMaskOgerponex extends PokemonCard {
     if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {
       const pokemonCard = effect.target.getPokemonCard();
       const sourceCard = effect.source.getPokemonCard();
-  
+
       // Card is not active, or damage source is unknown
       if (pokemonCard !== this || sourceCard === undefined) {
         return state;
       }
-  
+
       // Do not ignore self-damage from Pokemon-Ex
       const player = StateUtils.findOwner(state, effect.target);
       const opponent = StateUtils.findOwner(state, effect.source);
       if (player === opponent) {
         return state;
       }
-  
+
       // It's not an attack
       if (state.phase !== GamePhase.ATTACK) {
         return state;
       }
-  
+
       if (sourceCard.powers.length > 0) {
-  
+
         // Try to reduce PowerEffect, to check if something is blocking our ability
         try {
           const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
+            name: 'test',
+            powerType: PowerType.ABILITY,
+            text: ''
+          }, this);
+          store.reduceEffect(state, stub);
         } catch {
           return state;
         }
-  
+
         effect.preventDefault = true;
       }
     }

@@ -36,7 +36,10 @@ export const cardReplacements = [
   { from: 'Delinquent BKP 98', to: 'Delinquent BKT 98' },
 
   //GRI
-  { from: 'Mallow GRI 127', to: 'Mallow TEF 121' },
+  { from: 'Mallow GRI 127', to: 'Mallow TEF 127' },
+
+  //SLG
+  { from: 'Warp Energy SLG 70', to: 'Warp Energy SHL 70' },
 
   //UPR
   { from: 'Mt. Coronet UPR 130', to: 'Mt. Coronet RCL 130' },
@@ -384,7 +387,10 @@ export const exportReplacements = [
   { from: 'Delinquent BKT 98', to: 'Delinquent BKP 98' },
 
   //GRI
-  { from: 'Mallow TEF 121', to: 'Mallow GRI 127' },
+  { from: 'Mallow TEF 127', to: 'Mallow GRI 127' },
+
+  //SLG
+  { from: 'Warp Energy SHL 70', to: 'Warp Energy SLG 70' },
 
   //UPR
   { from: 'Mt. Coronet RCL 130', to: 'Mt. Coronet UPR 130' },

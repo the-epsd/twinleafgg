@@ -15,18 +15,18 @@ export class Sobble extends PokemonCard {
 
   public weakness = [{ type: CardType.LIGHTNING }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Pound',
-      cost: [CardType.COLORLESS ],
+      cost: [CardType.COLORLESS],
       damage: 10,
       text: ''
     },
     {
       name: 'Water Gun',
-      cost: [CardType.WATER, CardType.COLORLESS ],
+      cost: [CardType.WATER, CardType.COLORLESS],
       damage: 20,
       text: ''
     }
@@ -36,7 +36,7 @@ export class Sobble extends PokemonCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '055';
+  public setNumber: string = '55';
 
   public name: string = 'Sobble';
 
@@ -45,6 +45,5 @@ export class Sobble extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     return state;
   }
-  
+
 }
-  

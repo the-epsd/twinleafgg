@@ -9,6 +9,7 @@ class Tatsugiriex extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.BASIC;
+        this.tags = [card_types_1.CardTag.POKEMON_ex, card_types_1.CardTag.POKEMON_TERA];
         this.regulationMark = 'H';
         this.cardType = N;
         this.hp = 160;

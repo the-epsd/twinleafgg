@@ -28,5 +28,6 @@ export declare class Magneton extends PokemonCard {
     cardImage: string;
     name: string;
     fullName: string;
+    readonly BOUNCE_BACK_MARKER = "BOUNCE_BACK_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

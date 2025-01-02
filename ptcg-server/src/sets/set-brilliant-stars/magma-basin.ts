@@ -5,7 +5,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { CardType, EnergyType, SuperType, TrainerType } from '../../game/store/card/card-types';
 import { StateUtils } from '../../game/store/state-utils';
-import { AttachEnergyPrompt, PlayerType, SlotType, EnergyCard, GameError, CardTarget } from '../../game';
+import { AttachEnergyPrompt, PlayerType, SlotType, EnergyCard, GameError, CardTarget, PokemonCard } from '../../game';
 import { UseStadiumEffect } from '../../game/store/effects/game-effects';
 
 export class MagmaBasin extends TrainerCard {
@@ -32,9 +32,11 @@ export class MagmaBasin extends TrainerCard {
     if (effect instanceof UseStadiumEffect && StateUtils.getStadiumCard(state) === this) {
 
       const player = effect.player;
-      const hasBench = player.bench.some(b => b.cards.length > 0);
+      const hasFirePokemonOnBench = player.bench.some(b =>
+        b.cards.some(c => c instanceof PokemonCard && c.cardType === CardType.FIRE)
+      );
 
-      if (!hasBench) {
+      if (!hasFirePokemonOnBench) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 

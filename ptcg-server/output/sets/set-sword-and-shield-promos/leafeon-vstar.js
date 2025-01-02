@@ -29,7 +29,7 @@ class LeafeonVSTAR extends pokemon_card_1.PokemonCard {
                 damage: 180,
                 text: 'During your opponent\'s next turn, this Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance).'
             }];
-        this.regulationMark = 'G';
+        this.regulationMark = 'F';
         this.set = 'SWSH';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '195';

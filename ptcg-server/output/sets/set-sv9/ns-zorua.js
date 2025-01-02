@@ -8,7 +8,7 @@ class NsZorua extends pokemon_card_1.PokemonCard {
         super(...arguments);
         this.stage = card_types_1.Stage.BASIC;
         this.tags = [card_types_1.CardTag.NS];
-        this.cardType = G;
+        this.cardType = D;
         this.hp = 70;
         this.weakness = [{ type: G }];
         this.retreat = [C];

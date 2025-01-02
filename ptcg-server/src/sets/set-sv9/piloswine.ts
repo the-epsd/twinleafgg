@@ -2,7 +2,7 @@ import { PokemonCard, Stage, CardType } from '../../game';
 
 export class Piloswine extends PokemonCard {
 
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.STAGE_1;
 
   public evolvesFrom = 'Swinub';
 

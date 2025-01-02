@@ -45,6 +45,14 @@ export class FocusSash extends TrainerCard {
       }
 
       if (effect.target.damage === 0 && effect.damage >= checkHpEffect.hp) {
+
+        try {
+          const toolEffect = new ToolEffect(player, this);
+          store.reduceEffect(state, toolEffect);
+        } catch {
+          return state;
+        }
+
         effect.preventDefault = true;
         effect.target.damage = checkHpEffect.hp - 10;
         store.log(state, GameLog.LOG_PLAYER_PLAYS_TOOL, { card: this.name });
@@ -66,8 +74,6 @@ export class FocusSash extends TrainerCard {
             cardList.tool = undefined;
           }
         });
-
-        return state;
       }
     }
     return state;

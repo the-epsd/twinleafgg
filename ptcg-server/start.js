@@ -29,6 +29,8 @@ cardManager.defineSet(sets.setUnseenForces);
 cardManager.defineSet(sets.setTeamRocketReturns);
 cardManager.defineSet(sets.setCrystalGuardians);
 cardManager.defineSet(sets.setPowerKeepers);
+cardManager.defineSet(sets.setFireRedLeafGreen);
+cardManager.defineSet(sets.setDeltaSpecies);
 
 cardManager.defineSet(sets.setDiamondAndPearl);
 // cardManager.defineSet(sets.setOP9);

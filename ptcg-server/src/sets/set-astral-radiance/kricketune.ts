@@ -1,6 +1,7 @@
-import { Attack, CardType, PlayerType, PokemonCard, Power, PowerType, Stage, State, StoreLike } from '../../game';
+import { Attack, CardType, PlayerType, PokemonCard, Power, PowerType, Stage, State, StateUtils, StoreLike } from '../../game';
 import { CheckHpEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
+import { PowerEffect } from '../../game/store/effects/game-effects';
 
 export class Kricketune extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -37,18 +38,36 @@ export class Kricketune extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof CheckHpEffect) {
-      const player = effect.player;
+      const cardList = StateUtils.findCardList(state, this);
+      const player = StateUtils.findOwner(state, cardList);
 
-      if (player.marker.hasMarker('SWELLING_TUNE_MARKER')) {
+      // Check if this Kricketune is in play
+      const isInPlay = player.active.cards.includes(this) || player.bench.some(b => b.cards.includes(this));
+      if (!isInPlay) {
         return state;
       }
 
-      player.marker.addMarkerToState('SWELLING_TUNE_MARKER');
+      // If HP boost already applied, skip
+      if (effect.hpBoosted) {
+        return state;
+      }
 
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
-        const pokemonCard = cardList.getPokemonCard();
+      try {
+        const stub = new PowerEffect(player, {
+          name: 'test',
+          powerType: PowerType.ABILITY,
+          text: ''
+        }, this);
+        store.reduceEffect(state, stub);
+      } catch {
+        return state;
+      }
+
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (pokemonList) => {
+        const pokemonCard = pokemonList.getPokemonCard();
         if (pokemonCard && pokemonCard.cardType === CardType.GRASS && pokemonCard.name !== 'Kricketune') {
           effect.hp += 40;
+          effect.hpBoosted = true;
         }
       });
     }

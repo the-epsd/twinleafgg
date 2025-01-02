@@ -28,7 +28,7 @@ class Sobble extends pokemon_card_1.PokemonCard {
         ];
         this.set = 'SSH';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '055';
+        this.setNumber = '55';
         this.name = 'Sobble';
         this.fullName = 'Sobble SSH';
     }

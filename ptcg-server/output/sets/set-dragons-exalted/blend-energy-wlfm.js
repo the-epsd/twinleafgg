@@ -19,9 +19,9 @@ class BlendEnergyWLFM extends energy_card_1.EnergyCard {
         this.blendedEnergies = [card_types_1.CardType.WATER, card_types_1.CardType.LIGHTNING, card_types_1.CardType.FIGHTING, card_types_1.CardType.METAL];
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof check_effects_1.CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
+        if (effect instanceof check_effects_1.CheckAttackCostEffect && effect.player.active.cards.includes(this)) {
             const player = effect.player;
-            const pokemon = effect.source;
+            const pokemon = effect.player.active;
             try {
                 const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
                 store.reduceEffect(state, energyEffect);
@@ -29,16 +29,38 @@ class BlendEnergyWLFM extends energy_card_1.EnergyCard {
             catch (_a) {
                 return state;
             }
-            const pokemonCard = pokemon.getPokemonCard();
-            const attackCosts = pokemonCard === null || pokemonCard === void 0 ? void 0 : pokemonCard.attacks.map(attack => attack.cost);
-            const costs = (attackCosts === null || attackCosts === void 0 ? void 0 : attackCosts.flat().filter(t => t !== card_types_1.CardType.COLORLESS)) || [];
-            const alreadyProvided = effect.energyMap.flatMap(e => e.provides);
-            const neededType = costs.find(cost => this.blendedEnergies.includes(cost) &&
-                !alreadyProvided.includes(cost));
-            effect.energyMap.push({
-                card: this,
-                provides: neededType ? [neededType] : [card_types_1.CardType.COLORLESS]
-            });
+            const attackCosts = effect instanceof check_effects_1.CheckAttackCostEffect ? effect.attack.cost : [];
+            const initialCosts = [...attackCosts];
+            console.log(`[BlendEnergy] Initial attack costs: ${initialCosts.join(', ') || 'None'}`);
+            let checkEnergy;
+            if (effect instanceof check_effects_1.CheckProvidedEnergyEffect) {
+                checkEnergy = effect;
+            }
+            else {
+                checkEnergy = new check_effects_1.CheckProvidedEnergyEffect(player, pokemon);
+                store.reduceEffect(state, checkEnergy);
+            }
+            const alreadyProvided = checkEnergy.energyMap.flatMap(e => e.provides);
+            const blendProvided = checkEnergy.energyMap
+                .filter(e => e.card instanceof BlendEnergyWLFM)
+                .flatMap(e => e.provides);
+            let neededType;
+            for (const cost of initialCosts) {
+                if (this.blendedEnergies.includes(cost) && !alreadyProvided.includes(cost) && !blendProvided.includes(cost)) {
+                    neededType = cost;
+                    break;
+                }
+            }
+            if (neededType) {
+                checkEnergy.energyMap.push({
+                    card: this,
+                    provides: [neededType]
+                });
+                console.log(`[BlendEnergy] Provided energy type: ${neededType}`);
+            }
+            const finalEnergy = checkEnergy.energyMap.flatMap(e => e.provides);
+            console.log(`[BlendEnergy] Final energy provided: ${finalEnergy.join(', ') || 'None'}`);
+            console.log(`[BlendEnergy] Final attack cost check: ${effect.attack.cost.join(', ')}`);
         }
         return state;
     }

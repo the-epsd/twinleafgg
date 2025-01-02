@@ -21,7 +21,7 @@ function* playCard(next, store, state, effect) {
     const deckBottom = new card_list_1.CardList();
     deckBottom.cards = player.deck.cards.slice(start, end);
     let cards = [];
-    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH, deckBottom, { superType: card_types_1.SuperType.POKEMON, stage: card_types_1.Stage.RESTORED, name: 'Archen' }, { min: 0, max, allowCancel: true }), selected => {
+    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH, deckBottom, { superType: card_types_1.SuperType.POKEMON, name: 'Archen' }, { min: 0, max, allowCancel: true }), selected => {
         cards = selected || [];
         next();
     });

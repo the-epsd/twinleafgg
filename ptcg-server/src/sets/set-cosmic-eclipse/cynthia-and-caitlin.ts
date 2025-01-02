@@ -178,6 +178,18 @@ export class CynthiaAndCaitlin extends TrainerCard {
       const discardEffect = new DiscardToHandEffect(player, this);
       store.reduceEffect(state, discardEffect);
 
+      // Creates array of all valid supporters aka supporters that are not Cynthia & Caitlin
+      const validSupportersInDiscard = player.discard.cards.filter(c => c instanceof TrainerCard && c.trainerType === TrainerType.SUPPORTER && c !== this);
+
+      /* 
+        Checks if array contains supporters that are not Cynthia & Caitlin. 
+        If no supporters in discard pile that are not Cynthia & Caitlin exists, then the only
+        supporters in discard are Cynthia & Caitlin, so you can't play this card.
+      */
+      if (validSupportersInDiscard.length === 0) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      }
+
       if (discardEffect.preventDefault) {
         // If prevented, just discard the card and return
         player.supporter.moveCardTo(effect.trainerCard, player.discard);

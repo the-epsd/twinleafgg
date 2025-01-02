@@ -60,9 +60,9 @@ class LilliesComfy extends pokemon_card_1.PokemonCard {
         this.regulationMark = 'I';
         this.cardImage = 'assets/cardback.png';
         this.set = 'SV9';
-        this.setNumber = '26';
-        this.name = 'Iono\'s Voltorb';
-        this.fullName = 'Iono\'s Voltorb SV9';
+        this.setNumber = '43';
+        this.name = 'Lillie\'s Comfy';
+        this.fullName = 'Lillie\'s Comfy SV9';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

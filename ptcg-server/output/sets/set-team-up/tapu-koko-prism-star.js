@@ -31,7 +31,7 @@ class TapuKokoPrismStar extends pokemon_card_1.PokemonCard {
             }];
         this.set = 'TEU';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '195';
+        this.setNumber = '51';
         this.name = 'Tapu Koko Prism Star';
         this.fullName = 'Tapu Koko Prism Star TEU';
     }

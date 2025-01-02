@@ -42,7 +42,7 @@ export class LilliesClefairyex extends PokemonCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '1';
+  public setNumber: string = '33';
 
   public name: string = 'Lillie\'s Clefairy ex';
 

@@ -22,7 +22,7 @@ class Clefairy extends game_1.PokemonCard {
         ];
         this.set = 'TWM';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '77';
+        this.setNumber = '78';
         this.name = 'Clefairy';
         this.fullName = 'Clefairy TWM';
     }

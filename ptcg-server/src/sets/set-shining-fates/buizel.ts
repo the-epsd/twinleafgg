@@ -8,7 +8,7 @@ export class Buizel extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = CardType.WATER;
   public hp: number = 70;
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
   public weakness = [{ type: CardType.LIGHTNING }];
 
   public attacks = [
@@ -20,10 +20,10 @@ export class Buizel extends PokemonCard {
     }
   ];
 
-  public regulationMark: string = 'E'; 
+  public regulationMark: string = 'E';
   public set: string = 'SHF';
   public name: string = 'Buizel';
-  public setNumber = '022';
+  public setNumber = '22';
   public fullName: string = 'Buizel SHF';
   public cardImage: string = 'assets/cardback.png';
 
