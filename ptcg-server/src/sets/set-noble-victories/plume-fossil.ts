@@ -1,6 +1,6 @@
 import { Card } from '../../game/store/card/card';
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { TrainerType, SuperType, Stage } from '../../game/store/card/card-types';
+import { TrainerType, SuperType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
@@ -33,7 +33,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     player,
     GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
     deckBottom,
-    { superType: SuperType.POKEMON, stage: Stage.RESTORED, name: 'Archen' },
+    { superType: SuperType.POKEMON, name: 'Archen' },
     { min: 0, max, allowCancel: true }
   ), selected => {
     cards = selected || [];

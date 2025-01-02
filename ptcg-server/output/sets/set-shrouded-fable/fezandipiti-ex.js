@@ -67,14 +67,17 @@ class Fezandipitiex extends pokemon_card_1.PokemonCard {
             const cardList = game_1.StateUtils.findCardList(state, this);
             const owner = game_1.StateUtils.findOwner(state, cardList);
             if (owner === player) {
-                effect.player.marker.addMarkerToState(this.TABLE_TURNER_MARKER);
-                console.log('player pokemon was knocked out last turn');
+                effect.player.marker.addMarkerToState('OPPONENT_KNOCKOUT_MARKER');
             }
             return state;
         }
         if (effect instanceof game_phase_effects_1.EndTurnEffect) {
             const player = effect.player;
-            player.marker.removeMarker(this.TABLE_TURNER_MARKER);
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            // Only clear the marker when opponent's turn ends
+            if (state.players[state.activePlayer] === opponent) {
+                player.marker.removeMarker('OPPONENT_KNOCKOUT_MARKER');
+            }
             player.usedTableTurner = false;
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
@@ -82,7 +85,7 @@ class Fezandipitiex extends pokemon_card_1.PokemonCard {
             return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { min: 1, max: 1, allowCancel: false }), selected => {
                 const targets = selected || [];
                 targets.forEach(target => {
-                    const damageEffect = new attack_effects_1.PutDamageEffect(effect, 120);
+                    const damageEffect = new attack_effects_1.PutDamageEffect(effect, 100);
                     damageEffect.target = target;
                     store.reduceEffect(state, damageEffect);
                 });

@@ -37,7 +37,8 @@ export class JubilifeVillage extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_USE_STADIUM);
       }
 
-      player.hand.moveCardsTo(player.hand.cards, player.deck);
+      const cards = player.hand.cards.filter(c => c !== this);
+      player.hand.moveCardsTo(cards, player.deck);
 
       state = store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
         player.deck.applyOrder(order);

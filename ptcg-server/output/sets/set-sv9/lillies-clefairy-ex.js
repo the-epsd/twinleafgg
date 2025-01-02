@@ -33,7 +33,7 @@ class LilliesClefairyex extends pokemon_card_1.PokemonCard {
         ];
         this.set = 'SV9';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '1';
+        this.setNumber = '33';
         this.name = 'Lillie\'s Clefairy ex';
         this.fullName = 'Lillie\'s Clefairy ex SV9';
         this.DRAGON_VULNERABILITY_MARKER = 'DRAGON_VULNERABILITY_MARKER';

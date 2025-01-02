@@ -38,6 +38,7 @@ export declare class CheckHpEffect implements Effect {
     player: Player;
     target: PokemonCardList;
     hp: number;
+    hpBoosted?: boolean;
     constructor(player: Player, target: PokemonCardList);
 }
 export declare class CheckPokemonPlayedTurnEffect implements Effect {

@@ -42,6 +42,13 @@ export class FormatValidator {
       );
     }
 
+    if ((set.has('Metal Energy')) ||
+      (set.has('Darkness Energy'))) {
+      return formatList.filter(f =>
+        f !== Format.RETRO
+      );
+    }
+
     if (formatList.includes(Format.GLC)) {
 
       // check for singleton violation

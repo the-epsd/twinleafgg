@@ -100,9 +100,9 @@ export class ScoopUpNet extends TrainerCard {
         const cardList = result.length > 0 ? result[0] : null;
         if (cardList !== null) {
           const pokemons = cardList.getPokemons();
+          cardList.clearEffects();
           cardList.moveCardsTo(pokemons, player.hand);
           cardList.moveTo(player.discard);
-          cardList.clearEffects();
           player.supporter.moveCardTo(effect.trainerCard, player.discard);
         }
       });

@@ -129,6 +129,7 @@ export class PokemonCardList extends CardList {
     // if (this.specialConditions.includes(SpecialCondition.ABILITY_USED)) {
     //   return;
     // }
+    this.removeBoardEffect(BoardEffect.ABILITY_USED);
     this.removeSpecialCondition(SpecialCondition.POISONED);
     this.removeSpecialCondition(SpecialCondition.ASLEEP);
     this.removeSpecialCondition(SpecialCondition.BURNED);

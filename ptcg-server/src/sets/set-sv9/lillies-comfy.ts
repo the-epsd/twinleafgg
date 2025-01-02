@@ -82,11 +82,11 @@ export class LilliesComfy extends PokemonCard {
 
   public set: string = 'SV9';
 
-  public setNumber = '26';
+  public setNumber = '43';
 
-  public name: string = 'Iono\'s Voltorb';
+  public name: string = 'Lillie\'s Comfy';
 
-  public fullName: string = 'Iono\'s Voltorb SV9';
+  public fullName: string = 'Lillie\'s Comfy SV9';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

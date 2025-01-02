@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Kricketune = void 0;
 const game_1 = require("../../game");
 const check_effects_1 = require("../../game/store/effects/check-effects");
+const game_effects_1 = require("../../game/store/effects/game-effects");
 class Kricketune extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -36,15 +37,33 @@ class Kricketune extends game_1.PokemonCard {
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof check_effects_1.CheckHpEffect) {
-            const player = effect.player;
-            if (player.marker.hasMarker('SWELLING_TUNE_MARKER')) {
+            const cardList = game_1.StateUtils.findCardList(state, this);
+            const player = game_1.StateUtils.findOwner(state, cardList);
+            // Check if this Kricketune is in play
+            const isInPlay = player.active.cards.includes(this) || player.bench.some(b => b.cards.includes(this));
+            if (!isInPlay) {
                 return state;
             }
-            player.marker.addMarkerToState('SWELLING_TUNE_MARKER');
-            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList) => {
-                const pokemonCard = cardList.getPokemonCard();
+            // If HP boost already applied, skip
+            if (effect.hpBoosted) {
+                return state;
+            }
+            try {
+                const stub = new game_effects_1.PowerEffect(player, {
+                    name: 'test',
+                    powerType: game_1.PowerType.ABILITY,
+                    text: ''
+                }, this);
+                store.reduceEffect(state, stub);
+            }
+            catch (_a) {
+                return state;
+            }
+            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (pokemonList) => {
+                const pokemonCard = pokemonList.getPokemonCard();
                 if (pokemonCard && pokemonCard.cardType === game_1.CardType.GRASS && pokemonCard.name !== 'Kricketune') {
                     effect.hp += 40;
+                    effect.hpBoosted = true;
                 }
             });
         }

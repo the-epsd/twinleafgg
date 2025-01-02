@@ -79,7 +79,7 @@ export class IonosBelliboltex extends PokemonCard {
         PlayerType.BOTTOM_PLAYER,
         [SlotType.BENCH, SlotType.ACTIVE],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Lightning Energy' },
-        { allowCancel: true, blockedTo }
+        { allowCancel: false, blockedTo }
       ), transfers => {
         transfers = transfers || [];
         for (const transfer of transfers) {

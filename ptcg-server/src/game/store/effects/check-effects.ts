@@ -59,6 +59,7 @@ export class CheckHpEffect implements Effect {
   public player: Player;
   public target: PokemonCardList;
   public hp: number;
+  public hpBoosted?: boolean;
 
   constructor(player: Player, target: PokemonCardList) {
     this.player = player;
