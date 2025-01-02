@@ -29,7 +29,7 @@ class Fuecoco extends game_1.PokemonCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const specialConditionEffect = new attack_effects_1.AddSpecialConditionsEffect(effect, [game_1.SpecialCondition.BURNED]);
-            state = store.reduceEffect(state, specialConditionEffect);
+            store.reduceEffect(state, specialConditionEffect);
         }
         return state;
     }

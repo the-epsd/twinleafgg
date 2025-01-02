@@ -29,7 +29,7 @@ export class Fuecoco extends PokemonCard {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const specialConditionEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.BURNED]);
-      state = store.reduceEffect(state, specialConditionEffect);
+      store.reduceEffect(state, specialConditionEffect);
     }
 
     return state;

@@ -12,7 +12,7 @@ class IonosKilowattrel extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.STAGE_1;
-        this.evolvesFrom = 'Wattrel';
+        this.evolvesFrom = 'Iono\'s Wattrel';
         this.tags = [card_types_1.CardTag.IONOS];
         this.cardType = L;
         this.hp = 120;
