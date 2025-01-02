@@ -3,6 +3,7 @@ import { BirdKeeper } from './bird-keeper';
 import { CapeOfToughness } from './cape-of-toughness';
 import { Combusken } from './combusken';
 import { CrobatV } from './crobat-v';
+import { HeatFireEnergy } from './heat-fire-energy';
 import { HidingDarknessEnergy } from './hiding-darkness-energy';
 import { Kangaskhan } from './kangaskhan';
 import { Klang } from './klang';
@@ -22,6 +23,7 @@ export const setDarknessAblaze: Card[] = [
   new CapeOfToughness(),
   new CrobatV(),
   new Combusken(),
+  new HeatFireEnergy(),
   new HidingDarknessEnergy(),
   new Kangaskhan(),
   new Klang(),

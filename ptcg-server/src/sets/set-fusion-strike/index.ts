@@ -24,6 +24,7 @@ import { InteleonVMAX } from './inteleon-vmax';
 import { Meloetta } from './meloetta';
 import { MewV } from './mew-v';
 import { MewVMAX } from './mew-vmax';
+import { Mudkip } from './mudkip';
 import { Oricorio } from './oricorio';
 import { PowerTablet } from './power-tablet';
 import { Pyukumuku } from './pyukumuku';
@@ -64,6 +65,7 @@ export const setFusionStrike: Card[] = [
   new Meloetta(),
   new MewV(),
   new MewVMAX(),
+  new Mudkip(),
   new Oricorio(),
   new PowerTablet(),
   new Pyukumuku(),

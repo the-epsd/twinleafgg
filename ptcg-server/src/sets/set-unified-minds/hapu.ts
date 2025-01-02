@@ -1,39 +1,30 @@
-import { Effect } from '../../game/store/effects/effect';
-import { TrainerCard } from '../../game/store/card/trainer-card';
+import { CardList, ChooseCardsPrompt, GameError, GameMessage } from '../../game';
 import { CardTag, TrainerType } from '../../game/store/card/card-types';
-import { StoreLike } from '../../game/store/store-like';
-import { State } from '../../game/store/state/state';
+import { TrainerCard } from '../../game/store/card/trainer-card';
+import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { GameError, GameMessage, CardList, ChooseCardsPrompt } from '../../game';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { State } from '../../game/store/state/state';
+import { StoreLike } from '../../game/store/store-like';
 
-
-export class ExplorersGuidance extends TrainerCard {
+export class Hapu extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;
 
-  public set: string = 'TEF';
+  public set: string = 'UNM';
 
   public tags = [CardTag.ANCIENT];
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '147';
+  public setNumber: string = '200';
 
-  public regulationMark = 'H';
+  public name: string = 'Hapu';
 
-  public name: string = 'Explorer\'s Guidance';
-
-  public fullName: string = 'Explorer\'s Guidance TEF';
+  public fullName: string = 'Hapu UNM';
 
   public text: string = 'Look at the top 6 cards of your deck and put 2 of them into your hand. Discard the other cards.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    if (effect instanceof EndTurnEffect) {
-      const player = effect.player;
-      player.ancientSupporter = false;
-    }
 
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
@@ -64,7 +55,6 @@ export class ExplorersGuidance extends TrainerCard {
         {},
         { min, max: 2, allowCancel: false }
       ), selected => {
-        player.ancientSupporter = true;
         deckTop.moveCardsTo(selected, player.hand);
         deckTop.moveTo(player.discard);
         player.supporter.moveCardTo(effect.trainerCard, player.discard);

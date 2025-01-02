@@ -10,6 +10,7 @@ import { Magnemite } from './magnemite';
 import { Magnezone } from './magnezone';
 import { Morelull } from './morelull';
 import { MtCoronet } from './mt-coronet';
+import { OrderPad } from './order-pad';
 import { PokemonFanClub } from './pokemon-fan-club';
 import { Riolu } from './riolu';
 import { Roselia } from './roselia';
@@ -33,6 +34,7 @@ export const setUltraPrism: Card[] = [
   new Magnezone(),
   new Morelull(),
   new MtCoronet(),
+  new OrderPad(),
   new PokemonFanClub(),
   new Riolu(),
   new Roselia(),

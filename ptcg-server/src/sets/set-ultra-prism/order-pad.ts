@@ -33,7 +33,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
       player,
       GameMessage.CHOOSE_CARD_TO_HAND,
       player.deck,
-      { superType: SuperType.TRAINER, trainerType: TrainerType.SUPPORTER },
+      { superType: SuperType.TRAINER, trainerType: TrainerType.ITEM },
       { min: 0, max: 1, allowCancel: false }), (selected: any[]) => {
         cards = selected || [];
         next();
@@ -43,9 +43,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   } else {
     return state;
   }
-
-  player.supporter.moveCardTo(effect.trainerCard, player.discard);
-
+  
   const opponent = StateUtils.getOpponent(state, player);
   
   yield store.prompt(state, new ShowCardsPrompt(
@@ -53,6 +51,8 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
     cards
   ), () => state);
+  
+  player.supporter.moveCardTo(effect.trainerCard, player.discard);
 
   return store.prompt(state, new ShuffleDeckPrompt(player.id), (order: any[]) => {
     player.deck.applyOrder(order);
@@ -60,23 +60,21 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
 }
 
-export class Xtransceiver extends TrainerCard {
+export class OrderPad extends TrainerCard {
 
   public trainerType = TrainerType.ITEM;
 
-  public set: string = 'NVI';
+  public set: string = 'UPR';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '96';
+  public setNumber: string = '131';
 
-  public regulationMark = 'E';
+  public name: string = 'Order Pad';
 
-  public name: string = 'Xtransceiver';
+  public fullName: string = 'Order Pad UPR';
 
-  public fullName: string = 'Xtransceiver NVI';
-
-  public text: string = 'Flip a coin. If heads, search your deck for a Supporter card, reveal it, and put it into your hand. Shuffle your deck afterward.';
+  public text: string = 'Flip a coin. If heads, search your deck for an Item card, reveal it, and put it into your hand. Shuffle your deck afterward.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
