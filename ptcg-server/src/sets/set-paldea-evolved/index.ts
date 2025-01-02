@@ -21,6 +21,7 @@ import { Floragato } from './floragato';
 import { Forretressex } from './forretress-ex';
 import { Frigibax } from './frigibax';
 import { Frigibax2 } from './frigibax-2';
+import { Fuecoco } from './fuecoco';
 import { ArctibaxIR, BaxcaliburIR, BossOrdersFA, ChiYuexFA, ChienPaoexFA, ClavellFA, FlamigoIR, FrigibaxIR, GiacomoFA, GrushaFA, IonoFA, MeowscaradaexFA, NoivernexFA, SquawkabillyexFA, SuperRodHR, SuperiorEnergyRetrievalHR, TingLuexFA, WoChienexFA, MeowscaradaexSIR, WoChienexSIR, ChiYuexSIR, ChienPaoexSIR, TingLuexSIR, SquawkabillyexSIR, BossOrdersSIR, GiacomoSIR, GrushaSIR, IonoSIR, MeowscaradaexHR, ChienPaoexHR, TingLuexHR } from './full-art';
 import { Giacomo } from './giacomo';
 import { GreatBall } from './great-ball';
@@ -86,6 +87,7 @@ export const setPaldeaEvolved: Card[] = [
   new Forretressex(),
   new Frigibax(),
   new Frigibax2(),
+  new Fuecoco(),
   new Giacomo(),
   new GreatBall(),
   new Grusha(),

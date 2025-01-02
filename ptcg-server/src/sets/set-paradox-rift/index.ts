@@ -7,6 +7,7 @@ import { Charcadet } from './charcadet';
 import { ChiYu } from './chi-yu';
 import { CounterCatcher } from './counter-catcher';
 import { Crobat } from './crobat';
+import { Crocalor } from './crocalor';
 import { Cyclizar } from './cyclizar';
 import { DefianceVest } from './defiance-vest';
 import { Deoxys } from './deoxys';
@@ -81,6 +82,7 @@ export const setParadoxRift: Card[] = [
   new ChiYu(),
   new CounterCatcher(),
   new Crobat(),
+  new Crocalor(),
   new Cyclizar(),
   new DefianceVest(),
   new Deoxys(),
