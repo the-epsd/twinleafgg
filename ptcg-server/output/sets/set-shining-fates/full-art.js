@@ -17,7 +17,7 @@ class SnomSV extends snom_1.Snom {
         super(...arguments);
         this.set = 'SHF';
         this.setNumber = 'SV33';
-        this.fullName = 'Snom SHF SV33';
+        this.fullName = 'Applin SHF';
     }
 }
 exports.SnomSV = SnomSV;

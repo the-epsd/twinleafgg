@@ -23,6 +23,9 @@ export const cardReplacements = [
   { from: 'Pokemon Breeder BS 76', to: 'Pokémon Breeder BS 76' },
   { from: 'Pokemon Trader BS 77', to: 'Pokémon Trader BS 77' },
 
+  //FO
+  { from: 'Recycle FO 61', to: 'Gambler FO 61' },
+
   //BWP
   { from: 'Tropical Beach BWP 50', to: 'Tropical Beach BWP50 BWP 50' },
 
@@ -37,6 +40,9 @@ export const cardReplacements = [
 
   //GRI
   { from: 'Mallow GRI 127', to: 'Mallow TEF 127' },
+
+  //SHF
+  { from: 'SnomSV SHF SV33', to: 'Applin SHF SV33' },
 
   //DRM
   { from: 'Feebas DRM 28', to: 'Feebas BCR 28' },
@@ -377,6 +383,9 @@ export const exportReplacements = [
   { from: 'Pokémon Breeder BS 76', to: 'Pokemon Breeder BS 76' },
   { from: 'Pokémon Trader BS 77', to: 'Pokemon Trader BS 77' },
 
+  //FO
+  { from: 'Gambler FO 61', to: 'Recycle FO 61' },
+
   //BWP
   { from: 'Tropical Beach BWP50 BWP 50', to: 'Tropical Beach BWP 50' },
 
@@ -391,6 +400,9 @@ export const exportReplacements = [
 
   //GRI
   { from: 'Mallow TEF 127', to: 'Mallow GRI 127' },
+
+  //SHF
+  { from: 'Applin SHF SV33', to: 'SnomSV SHF SV33' },
 
   //DRM
   { from: 'Feebas BCR 28', to: 'Feebas DRM 28' },

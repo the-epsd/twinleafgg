@@ -29,7 +29,7 @@ class Feebas extends pokemon_card_1.PokemonCard {
             }];
         this.set = 'DRM';
         this.name = 'Feebas';
-        this.fullName = 'Feebas DRM';
+        this.fullName = 'Feebas BCR';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '28';
     }

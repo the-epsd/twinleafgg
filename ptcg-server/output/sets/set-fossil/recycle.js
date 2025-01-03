@@ -11,7 +11,7 @@ class Recycle extends game_1.TrainerCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '61';
         this.name = 'Recycle';
-        this.fullName = 'Recycle FO';
+        this.fullName = 'Gambler FO';
         this.text = 'Flip a coin. If heads, put a card in your discard pile on top of your deck.';
     }
     reduceEffect(store, state, effect) {
