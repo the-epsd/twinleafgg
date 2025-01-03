@@ -8,6 +8,7 @@ import { Gible } from './gible';
 import { Lillie } from './lillie';
 import { Magnemite } from './magnemite';
 import { Magnezone } from './magnezone';
+import { Mars } from './mars';
 import { Morelull } from './morelull';
 import { MtCoronet } from './mt-coronet';
 import { OrderPad } from './order-pad';
@@ -32,6 +33,7 @@ export const setUltraPrism: Card[] = [
   new Lillie(),
   new Magnemite(),
   new Magnezone(),
+  new Mars(),
   new Morelull(),
   new MtCoronet(),
   new OrderPad(),

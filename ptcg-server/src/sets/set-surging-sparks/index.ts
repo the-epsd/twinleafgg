@@ -57,6 +57,7 @@ import { Sandygast } from './sandygast';
 import { Shroodle } from './shroodle';
 import { Skeledirge } from './skeledirge';
 import { Smoochum } from './smoochum';
+import { Surfer } from './surfer';
 import { Sylveonex } from './sylveon-ex';
 import { Tatsugiriex } from './tatsugiri-ex';
 import { TeraOrb } from './tera-orb';
@@ -71,6 +72,7 @@ import { Vivillion } from './vivillion';
 import { Vulpix } from './vulpix';
 import { Wochien } from './wo-chien';
 import { Zweilous } from './zweilous';
+
 export const setSurgingSparks: Card[] = [
   new Pikachuex(),
   new Terapagos(),
@@ -143,6 +145,7 @@ export const setSurgingSparks: Card[] = [
   new DuskBall(),
   new Gimmighoul(),
   new EnergySearchPRO(),
+  new Surfer(),
 
   //Reprints
   new ScrambleSwitchSSP(),
