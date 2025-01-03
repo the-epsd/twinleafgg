@@ -32,7 +32,7 @@ class Lucario extends pokemon_card_1.PokemonCard {
         this.set = 'SVI';
         this.regulationMark = 'G';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '113';
+        this.setNumber = '114';
         this.evolvesFrom = 'Riolu';
         this.name = 'Lucario';
         this.fullName = 'Lucario SVI';

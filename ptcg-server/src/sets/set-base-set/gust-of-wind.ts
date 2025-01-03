@@ -43,7 +43,7 @@ export class GustOfWind extends TrainerCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '78';
+  public setNumber: string = '93';
 
   public name: string = 'Gust of Wind';
 

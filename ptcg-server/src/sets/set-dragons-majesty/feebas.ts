@@ -18,7 +18,7 @@ export class Feebas extends PokemonCard {
 
   public weakness = [{ type: CardType.GRASS }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public powers = [{
     name: 'Submerge',
@@ -29,16 +29,16 @@ export class Feebas extends PokemonCard {
 
   public attacks = [{
     name: 'Rain Splash',
-    cost: [ CardType.WATER ],
+    cost: [CardType.WATER],
     damage: 10,
     text: ''
   }];
 
-  public set: string = 'BCR';
+  public set: string = 'DRM';
 
   public name: string = 'Feebas';
 
-  public fullName: string = 'Feebas BCR';
+  public fullName: string = 'Feebas DRM';
 
   public cardImage: string = 'assets/cardback.png';
 

@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, TrainerCard, ChooseCardsPrompt, GameMessage, Card, ChooseEnergyPrompt, ChoosePokemonPrompt, PlayerType, SlotType, StateUtils } from '../../game';
+import { StoreLike, State, TrainerCard, ChooseCardsPrompt, GameMessage, Card, ChooseEnergyPrompt, ChoosePokemonPrompt, PlayerType, SlotType, StateUtils, GameLog } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { DiscardCardsEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
@@ -62,6 +62,9 @@ export class Regieleki extends PokemonCard {
         { min: 1, max: 1, allowCancel: false },
       ), selected => {
         player.discard.moveCardTo(selected[0], player.hand);
+
+        store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: selected[0].name });
+
         return state;
       });
     }

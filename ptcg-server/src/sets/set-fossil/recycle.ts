@@ -9,11 +9,11 @@ export class Recycle extends TrainerCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '60';
+  public setNumber: string = '61';
 
-  public name: string = 'Gambler';
+  public name: string = 'Recycle';
 
-  public fullName: string = 'Gambler FO';
+  public fullName: string = 'Recycle FO';
 
   public text: string = 'Flip a coin. If heads, put a card in your discard pile on top of your deck.';
 

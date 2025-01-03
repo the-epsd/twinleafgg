@@ -9,7 +9,7 @@ class DevolutionSpray extends game_1.TrainerCard {
         super(...arguments);
         this.name = 'Devolution Spray';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '71';
+        this.setNumber = '72';
         this.set = 'BS';
         this.fullName = 'Devolution Spray BS';
         this.superType = card_types_1.SuperType.TRAINER;
