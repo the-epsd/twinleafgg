@@ -95,3 +95,4 @@ ptcg-server/.nyc_output/processinfo/index.json
 card-images.json
 card-images.py
 card_urls.json
+.vscode/cody.json

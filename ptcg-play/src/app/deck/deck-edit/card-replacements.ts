@@ -38,6 +38,9 @@ export const cardReplacements = [
   //GRI
   { from: 'Mallow GRI 127', to: 'Mallow TEF 127' },
 
+  //DRM
+  { from: 'Feebas DRM 28', to: 'Feebas BCR 28' },
+
   //SLG
   { from: 'Warp Energy SLG 70', to: 'Warp Energy SHL 70' },
 
@@ -388,6 +391,9 @@ export const exportReplacements = [
 
   //GRI
   { from: 'Mallow TEF 127', to: 'Mallow GRI 127' },
+
+  //DRM
+  { from: 'Feebas BCR 28', to: 'Feebas DRM 28' },
 
   //SLG
   { from: 'Warp Energy SHL 70', to: 'Warp Energy SLG 70' },

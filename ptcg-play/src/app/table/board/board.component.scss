@@ -320,14 +320,20 @@ ptcg-board-prizes {
 
 .card-count {
   position: absolute;
-  bottom: 0;
-  right: 0;
-  justify-content: center;
-  background: rgba(0, 0, 0, 0.7);
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.6) 100%);
   color: white;
-  padding: 2px 6px;
-  border-radius: 4px;
-  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 8px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  backdrop-filter: blur(2px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  white-space: nowrap;
 }
 
 .ptcg-board-bench {

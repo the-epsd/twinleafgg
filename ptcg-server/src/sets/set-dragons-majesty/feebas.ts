@@ -38,7 +38,7 @@ export class Feebas extends PokemonCard {
 
   public name: string = 'Feebas';
 
-  public fullName: string = 'Feebas DRM';
+  public fullName: string = 'Feebas BCR';
 
   public cardImage: string = 'assets/cardback.png';
 
