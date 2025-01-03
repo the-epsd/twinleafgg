@@ -9,6 +9,7 @@ const charcadet_1 = require("./charcadet");
 const chi_yu_1 = require("./chi-yu");
 const counter_catcher_1 = require("./counter-catcher");
 const crobat_1 = require("./crobat");
+const crocalor_1 = require("./crocalor");
 const cyclizar_1 = require("./cyclizar");
 const defiance_vest_1 = require("./defiance-vest");
 const deoxys_1 = require("./deoxys");
@@ -82,6 +83,7 @@ exports.setParadoxRift = [
     new chi_yu_1.ChiYu(),
     new counter_catcher_1.CounterCatcher(),
     new crobat_1.Crobat(),
+    new crocalor_1.Crocalor(),
     new cyclizar_1.Cyclizar(),
     new defiance_vest_1.DefianceVest(),
     new deoxys_1.Deoxys(),

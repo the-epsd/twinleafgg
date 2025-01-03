@@ -37,7 +37,7 @@ function* useMixedCall(next, store, state, self, effect) {
         store.log(state, game_1.GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
     });
     if (cards.length > 0) {
-        return store.prompt(state, new game_1.ShowCardsPrompt(opponent.id, game_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards), () => next());
+        yield store.prompt(state, new game_1.ShowCardsPrompt(opponent.id, game_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards), () => next());
     }
     return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
         player.deck.applyOrder(order);

@@ -48,7 +48,7 @@ function* useMixedCall(next: Function, store: StoreLike, state: State,
   });
 
   if (cards.length > 0) {
-    return store.prompt(state, new ShowCardsPrompt(
+    yield store.prompt(state, new ShowCardsPrompt(
       opponent.id,
       GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
       cards

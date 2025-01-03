@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Xtransceiver = void 0;
+exports.OrderPad = void 0;
 const game_1 = require("../../game");
 const game_message_1 = require("../../game/game-message");
 const card_types_1 = require("../../game/store/card/card-types");
@@ -24,7 +24,7 @@ function* playCard(next, store, state, effect) {
     });
     let cards = [];
     if (coin1Result) {
-        yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.TRAINER, trainerType: card_types_1.TrainerType.SUPPORTER }, { min: 0, max: 1, allowCancel: false }), (selected) => {
+        yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.TRAINER, trainerType: card_types_1.TrainerType.ITEM }, { min: 0, max: 1, allowCancel: false }), (selected) => {
             cards = selected || [];
             next();
         });
@@ -33,24 +33,23 @@ function* playCard(next, store, state, effect) {
     else {
         return state;
     }
-    player.supporter.moveCardTo(effect.trainerCard, player.discard);
     const opponent = game_1.StateUtils.getOpponent(state, player);
     yield store.prompt(state, new game_1.ShowCardsPrompt(opponent.id, game_message_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards), () => state);
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
     return store.prompt(state, new shuffle_prompt_1.ShuffleDeckPrompt(player.id), (order) => {
         player.deck.applyOrder(order);
     });
 }
-class Xtransceiver extends trainer_card_1.TrainerCard {
+class OrderPad extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.ITEM;
-        this.set = 'NVI';
+        this.set = 'UPR';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '96';
-        this.regulationMark = 'E';
-        this.name = 'Xtransceiver';
-        this.fullName = 'Xtransceiver NVI';
-        this.text = 'Flip a coin. If heads, search your deck for a Supporter card, reveal it, and put it into your hand. Shuffle your deck afterward.';
+        this.setNumber = '131';
+        this.name = 'Order Pad';
+        this.fullName = 'Order Pad UPR';
+        this.text = 'Flip a coin. If heads, search your deck for an Item card, reveal it, and put it into your hand. Shuffle your deck afterward.';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
@@ -60,4 +59,4 @@ class Xtransceiver extends trainer_card_1.TrainerCard {
         return state;
     }
 }
-exports.Xtransceiver = Xtransceiver;
+exports.OrderPad = OrderPad;
