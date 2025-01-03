@@ -30,7 +30,7 @@ export class Entei extends PokemonCard {
       cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
       damage: 60,
       damageCalculation: 'x',
-      text: 'This attack does 30 more damage for each [R] Energy ' +
+      text: 'This attack does 20 more damage for each [R] Energy ' +
         'attached to this Pokémon.'
     }
   ];
