@@ -90,7 +90,19 @@ export class Store implements StoreLike {
 
     state = this.propagateEffect(state, effect);
 
-    console.log(`Running effect: ${effect.type} for card ${(<any>effect).card?.name}`);
+    const cardEffect = <any>effect;
+    
+    if (cardEffect.card)
+      console.log(`Running effect: ${effect.type} for card ${cardEffect.card?.name}`);
+    
+    if (cardEffect.energyCard)
+      console.log(`Running effect: ${effect.type} for card ${cardEffect.energyCard?.name}`);
+    
+    if (cardEffect.trainerCard)
+      console.log(`Running effect: ${effect.type} for card ${cardEffect.trainerCard?.name}`);
+    
+    if (cardEffect.pokemonCard)
+      console.log(`Running effect: ${effect.type} for card ${cardEffect.pokemonCard?.name}`);
     
     if (effect.preventDefault === true) {
       return state;
