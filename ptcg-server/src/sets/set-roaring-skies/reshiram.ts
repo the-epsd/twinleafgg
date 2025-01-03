@@ -46,6 +46,8 @@ export class Reshiram extends PokemonCard {
   public name: string = 'Reshiram';
 
   public fullName: string = 'Reshiram ROS';
+  
+  private readonly TURBOBLAZE_MARKER = 'TURBOBLAZE_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     
@@ -57,6 +59,10 @@ export class Reshiram extends PokemonCard {
           && c.energyType === EnergyType.BASIC
           && c.provides.includes(CardType.FIRE);
       });
+      
+      if (player.marker.hasMarker(this.TURBOBLAZE_MARKER, this)) {
+        throw new GameError(GameMessage.POWER_ALREADY_USED);
+      }
       
       if (!hasEnergyInHand) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
@@ -84,6 +90,8 @@ export class Reshiram extends PokemonCard {
             cardList.addBoardEffect(BoardEffect.ABILITY_USED);
           }
         });
+        
+        player.marker.addMarker(this.TURBOBLAZE_MARKER, this);
         
         return state;
       });
