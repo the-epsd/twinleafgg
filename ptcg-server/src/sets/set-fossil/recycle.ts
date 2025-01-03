@@ -9,9 +9,9 @@ export class Recycle extends TrainerCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '60';
+  public setNumber: string = '61';
 
-  public name: string = 'Gambler';
+  public name: string = 'Recycle';
 
   public fullName: string = 'Gambler FO';
 

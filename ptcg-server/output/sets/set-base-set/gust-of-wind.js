@@ -28,7 +28,7 @@ class GustOfWind extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.set = 'BS';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '78';
+        this.setNumber = '93';
         this.name = 'Gust of Wind';
         this.fullName = 'Gust of Wind BS';
         this.text = 'Switch 1 of your opponent\'s Benched Pokemon with his or her ' +

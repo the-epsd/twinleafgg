@@ -23,6 +23,7 @@ const floragato_1 = require("./floragato");
 const forretress_ex_1 = require("./forretress-ex");
 const frigibax_1 = require("./frigibax");
 const frigibax_2_1 = require("./frigibax-2");
+const fuecoco_1 = require("./fuecoco");
 const full_art_1 = require("./full-art");
 const giacomo_1 = require("./giacomo");
 const great_ball_1 = require("./great-ball");
@@ -86,6 +87,7 @@ exports.setPaldeaEvolved = [
     new forretress_ex_1.Forretressex(),
     new frigibax_1.Frigibax(),
     new frigibax_2_1.Frigibax2(),
+    new fuecoco_1.Fuecoco(),
     new giacomo_1.Giacomo(),
     new great_ball_1.GreatBall(),
     new grusha_1.Grusha(),

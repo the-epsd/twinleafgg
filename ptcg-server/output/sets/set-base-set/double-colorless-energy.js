@@ -12,7 +12,7 @@ class DoubleColorlessEnergy extends energy_card_1.EnergyCard {
         this.energyType = card_types_1.EnergyType.SPECIAL;
         this.set = 'BS';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '48';
+        this.setNumber = '96';
         this.name = 'Double Colorless Energy';
         this.fullName = 'Double Colorless Energy BS';
     }

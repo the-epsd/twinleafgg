@@ -48,7 +48,7 @@ class EnergyRemoval extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.set = 'BS';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '79';
+        this.setNumber = '92';
         this.name = 'Energy Removal';
         this.fullName = 'Energy Removal BS';
         this.text = 'Choose 1 Energy card attached to 1 of your opponent\'s Pokémon and discard it.';

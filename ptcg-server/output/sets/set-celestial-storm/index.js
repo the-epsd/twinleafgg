@@ -15,6 +15,7 @@ const nuzleaf_1 = require("./nuzleaf");
 const oricorio_1 = require("./oricorio");
 const rayquaza_gx_1 = require("./rayquaza-gx");
 const sableye_1 = require("./sableye");
+const sky_pillar_1 = require("./sky-pillar");
 const slaking_1 = require("./slaking");
 const slakoth_1 = require("./slakoth");
 const swampert_1 = require("./swampert");
@@ -35,6 +36,7 @@ exports.setCelestialStorm = [
     new oricorio_1.Oricorio(),
     new rayquaza_gx_1.RayquazaGX(),
     new sableye_1.Sableye(),
+    new sky_pillar_1.SkyPillar(),
     new slaking_1.Slaking(),
     new slakoth_1.Slakoth(),
     new swampert_1.Swampert(),

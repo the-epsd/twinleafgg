@@ -10,5 +10,5 @@ export class ApplinSV extends Applin {
 export class SnomSV extends Snom {
   public set = 'SHF';
   public setNumber = 'SV33';
-  public fullName = 'Snom SHF SV33';
+  public fullName = 'Applin SHF';
 }

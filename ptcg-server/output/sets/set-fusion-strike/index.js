@@ -26,6 +26,7 @@ const inteleon_vmax_1 = require("./inteleon-vmax");
 const meloetta_1 = require("./meloetta");
 const mew_v_1 = require("./mew-v");
 const mew_vmax_1 = require("./mew-vmax");
+const mudkip_1 = require("./mudkip");
 const oricorio_1 = require("./oricorio");
 const power_tablet_1 = require("./power-tablet");
 const pyukumuku_1 = require("./pyukumuku");
@@ -63,6 +64,7 @@ exports.setFusionStrike = [
     new meloetta_1.Meloetta(),
     new mew_v_1.MewV(),
     new mew_vmax_1.MewVMAX(),
+    new mudkip_1.Mudkip(),
     new oricorio_1.Oricorio(),
     new power_tablet_1.PowerTablet(),
     new pyukumuku_1.Pyukumuku(),

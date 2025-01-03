@@ -3,7 +3,7 @@ import { TrainerType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { GameError, GameMessage, StateUtils } from '../..';
+import { StateUtils } from '../..';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
@@ -42,6 +42,9 @@ export class CancelingCologne extends TrainerCard {
 
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      opponent.marker.addMarker(this.CANCELING_COLOGNE_MARKER, this);
 
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
@@ -52,16 +55,14 @@ export class CancelingCologne extends TrainerCard {
 
     if (effect instanceof PowerEffect && !effect.power.exemptFromAbilityLock) {
       const player = effect.player;
-
       const opponent = StateUtils.getOpponent(state, player);
-
-      opponent.marker.addMarker(this.CANCELING_COLOGNE_MARKER, this);
 
       const pokemonCard = effect.card;
       const activePokemon = opponent.active.cards[0]; // Assuming activePokemon is the first card in the array
       if (opponent.marker.hasMarker(this.CANCELING_COLOGNE_MARKER)) {
         if (pokemonCard === activePokemon) {
-          throw new GameError(GameMessage.CANNOT_USE_POWER);
+          effect.preventDefault = true;
+          return state;
         }
       }
     }

@@ -27,7 +27,7 @@ class Feebas extends pokemon_card_1.PokemonCard {
                 damage: 10,
                 text: ''
             }];
-        this.set = 'BCR';
+        this.set = 'DRM';
         this.name = 'Feebas';
         this.fullName = 'Feebas BCR';
         this.cardImage = 'assets/cardback.png';

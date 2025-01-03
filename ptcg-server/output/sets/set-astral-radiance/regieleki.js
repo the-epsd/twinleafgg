@@ -45,6 +45,7 @@ class Regieleki extends pokemon_card_1.PokemonCard {
             }
             return store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.discard, { superType: card_types_1.SuperType.TRAINER }, { min: 1, max: 1, allowCancel: false }), selected => {
                 player.discard.moveCardTo(selected[0], player.hand);
+                store.log(state, game_1.GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: selected[0].name });
                 return state;
             });
         }

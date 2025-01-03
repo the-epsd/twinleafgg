@@ -74,7 +74,7 @@ export class EnergyRemoval extends TrainerCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '79';
+  public setNumber: string = '92';
 
   public name: string = 'Energy Removal';
 

@@ -9,8 +9,8 @@ class Recycle extends game_1.TrainerCard {
         this.trainerType = game_1.TrainerType.ITEM;
         this.set = 'FO';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '60';
-        this.name = 'Gambler';
+        this.setNumber = '61';
+        this.name = 'Recycle';
         this.fullName = 'Gambler FO';
         this.text = 'Flip a coin. If heads, put a card in your discard pile on top of your deck.';
     }

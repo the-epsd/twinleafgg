@@ -1,4 +1,4 @@
-import { GameError } from '../../game';
+import { GameError, ShowCardsPrompt, StateUtils } from '../../game';
 import { GameMessage } from '../../game/game-message';
 import { SuperType, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
@@ -27,8 +27,8 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     next();
   });
 
+  let cards: any[] = [];
   if (coin1Result) {
-    let cards: any[] = [];
     yield store.prompt(state, new ChooseCardsPrompt(
       player,
       GameMessage.CHOOSE_CARD_TO_HAND,
@@ -40,11 +40,19 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
       });
 
     player.deck.moveCardsTo(cards, player.hand);
-
+  } else {
+    return state;
   }
 
   player.supporter.moveCardTo(effect.trainerCard, player.discard);
 
+  const opponent = StateUtils.getOpponent(state, player);
+  
+  yield store.prompt(state, new ShowCardsPrompt(
+    opponent.id,
+    GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
+    cards
+  ), () => state);
 
   return store.prompt(state, new ShuffleDeckPrompt(player.id), (order: any[]) => {
     player.deck.applyOrder(order);

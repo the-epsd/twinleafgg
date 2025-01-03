@@ -69,7 +69,9 @@ class Store {
     }
     reduceEffect(state, effect) {
         // this.checkEffectHistory(state, effect);
+        var _a;
         state = this.propagateEffect(state, effect);
+        console.log(`Running effect: ${effect.type} for card ${(_a = effect.card) === null || _a === void 0 ? void 0 : _a.name}`);
         if (effect.preventDefault === true) {
             return state;
         }

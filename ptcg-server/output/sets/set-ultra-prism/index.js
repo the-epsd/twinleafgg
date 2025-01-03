@@ -12,6 +12,7 @@ const magnemite_1 = require("./magnemite");
 const magnezone_1 = require("./magnezone");
 const morelull_1 = require("./morelull");
 const mt_coronet_1 = require("./mt-coronet");
+const order_pad_1 = require("./order-pad");
 const pokemon_fan_club_1 = require("./pokemon-fan-club");
 const riolu_1 = require("./riolu");
 const roselia_1 = require("./roselia");
@@ -34,6 +35,7 @@ exports.setUltraPrism = [
     new magnezone_1.Magnezone(),
     new morelull_1.Morelull(),
     new mt_coronet_1.MtCoronet(),
+    new order_pad_1.OrderPad(),
     new pokemon_fan_club_1.PokemonFanClub(),
     new riolu_1.Riolu(),
     new roselia_1.Roselia(),

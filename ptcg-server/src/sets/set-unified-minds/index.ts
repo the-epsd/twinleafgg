@@ -5,6 +5,7 @@ import { Cottonee } from './cottonee';
 import { DarkCity } from './dark-city';
 import { FlyiniumZAirSlash } from './flyinium-z-air-slash';
 import { Froslass } from './froslass';
+import { Hapu } from './hapu';
 import { Hoopa } from './hoopa';
 import { KarateBelt } from './karate-belt';
 import { Lickilicky } from './lickilicky';
@@ -31,6 +32,7 @@ export const setUnifiedMinds: Card[] = [
   new DarkCity(),
   new FlyiniumZAirSlash(),
   new Froslass(),
+  new Hapu(),
   new Hoopa(),
   new KarateBelt(),
   new Lickilicky(),

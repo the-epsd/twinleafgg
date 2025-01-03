@@ -4,16 +4,12 @@ exports.SimpleBot = void 0;
 const bot_client_1 = require("../game/bots/bot-client");
 const simple_game_handler_1 = require("./simple-game-handler");
 const simple_bot_definitions_1 = require("./simple-bot-definitions");
-const lugia_vstar_logic_1 = require("./simple-tactics/bot-specific-logics/lugia-vstar-logic");
 class SimpleBot extends bot_client_1.BotClient {
     constructor(name, options = {}) {
         super(name);
         this.gameHandlers = [];
-        const tactics = name === 'Lugia'
-            ? [lugia_vstar_logic_1.LugiaVStarTactic, ...simple_bot_definitions_1.allSimpleTactics]
-            : simple_bot_definitions_1.allSimpleTactics;
         this.options = Object.assign({
-            tactics,
+            tactics: simple_bot_definitions_1.allSimpleTactics,
             promptResolvers: simple_bot_definitions_1.allPromptResolvers,
             scores: simple_bot_definitions_1.defaultStateScores,
             arbiter: simple_bot_definitions_1.defaultArbiterOptions

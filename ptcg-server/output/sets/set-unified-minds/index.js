@@ -7,6 +7,7 @@ const cottonee_1 = require("./cottonee");
 const dark_city_1 = require("./dark-city");
 const flyinium_z_air_slash_1 = require("./flyinium-z-air-slash");
 const froslass_1 = require("./froslass");
+const hapu_1 = require("./hapu");
 const hoopa_1 = require("./hoopa");
 const karate_belt_1 = require("./karate-belt");
 const lickilicky_1 = require("./lickilicky");
@@ -31,6 +32,7 @@ exports.setUnifiedMinds = [
     new dark_city_1.DarkCity(),
     new flyinium_z_air_slash_1.FlyiniumZAirSlash(),
     new froslass_1.Froslass(),
+    new hapu_1.Hapu(),
     new hoopa_1.Hoopa(),
     new karate_belt_1.KarateBelt(),
     new lickilicky_1.Lickilicky(),

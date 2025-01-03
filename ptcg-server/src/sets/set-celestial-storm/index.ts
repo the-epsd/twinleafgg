@@ -13,6 +13,7 @@ import { Nuzleaf } from './nuzleaf';
 import { Oricorio } from './oricorio';
 import { RayquazaGX } from './rayquaza-gx';
 import { Sableye } from './sableye';
+import { SkyPillar } from './sky-pillar';
 import { Slaking } from './slaking';
 import { Slakoth } from './slakoth';
 import { Swampert } from './swampert';
@@ -34,6 +35,7 @@ export const setCelestialStorm: Card[] = [
   new Oricorio(),
   new RayquazaGX(),
   new Sableye(),
+  new SkyPillar(),
   new Slaking(),
   new Slakoth(),
   new Swampert(),

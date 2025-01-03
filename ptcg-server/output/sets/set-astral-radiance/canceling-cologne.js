@@ -30,6 +30,8 @@ class CancelingCologne extends trainer_card_1.TrainerCard {
         }
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
             const player = effect.player;
+            const opponent = __1.StateUtils.getOpponent(state, player);
+            opponent.marker.addMarker(this.CANCELING_COLOGNE_MARKER, this);
             // We will discard this card after prompt confirmation
             effect.preventDefault = true;
             player.hand.moveCardTo(effect.trainerCard, player.supporter);
@@ -38,12 +40,12 @@ class CancelingCologne extends trainer_card_1.TrainerCard {
         if (effect instanceof game_effects_1.PowerEffect && !effect.power.exemptFromAbilityLock) {
             const player = effect.player;
             const opponent = __1.StateUtils.getOpponent(state, player);
-            opponent.marker.addMarker(this.CANCELING_COLOGNE_MARKER, this);
             const pokemonCard = effect.card;
             const activePokemon = opponent.active.cards[0]; // Assuming activePokemon is the first card in the array
             if (opponent.marker.hasMarker(this.CANCELING_COLOGNE_MARKER)) {
                 if (pokemonCard === activePokemon) {
-                    throw new __1.GameError(__1.GameMessage.CANNOT_USE_POWER);
+                    effect.preventDefault = true;
+                    return state;
                 }
             }
         }

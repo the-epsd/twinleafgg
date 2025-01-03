@@ -67,6 +67,7 @@
               [style.transform]="'translate(' + (idx * 0.25) + 'px, ' + (idx * 0.25) + 'px)'">
             </ptcg-board-card>
           </ng-container>
+          <div class="card-count">{{topPlayer?.deck?.cards?.length || 0}}</div>
         </div>
       </div>
 
@@ -79,6 +80,7 @@
               [style.transform]="'translate(' + (idx * 0.25) + 'px, ' + (idx * 0.25) + 'px)'">
             </ptcg-board-card>
           </ng-container>
+          <div class="card-count">{{topPlayer?.discard?.cards?.length || 0}}</div>
         </div>
       </div>
 
@@ -165,7 +167,7 @@
               [style.transform]="'translate(' + (idx * 0.25) + 'px, ' + (-idx * 0.25) + 'px)'">
             </ptcg-board-card>
           </ng-container>
-          <!-- <div class="card-count">{{bottomPlayer?.deck?.cards?.length || 0}}</div> -->
+          <div class="card-count">{{bottomPlayer?.deck?.cards?.length || 0}}</div>
         </div>
       </div>
 
@@ -178,7 +180,7 @@
               [style.transform]="'translate(' + (idx * 0.25) + 'px, ' + (-idx * 0.25) + 'px)'">
             </ptcg-board-card>
           </ng-container>
-          <!-- <div class="card-count">{{bottomPlayer?.discard?.cards?.length || 0}}</div> -->
+          <div class="card-count">{{bottomPlayer?.discard?.cards?.length || 0}}</div>
         </div>
       </div>
 

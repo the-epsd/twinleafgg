@@ -9,7 +9,6 @@ import {
   allSimpleTactics, allPromptResolvers, defaultStateScores,
   defaultArbiterOptions
 } from './simple-bot-definitions';
-import { LugiaVStarTactic } from './simple-tactics/bot-specific-logics/lugia-vstar-logic';
 
 
 export class SimpleBot extends BotClient {
@@ -19,13 +18,8 @@ export class SimpleBot extends BotClient {
 
   constructor(name: string, options: Partial<SimpleBotOptions> = {}) {
     super(name);
-
-    const tactics = name === 'Lugia'
-      ? [LugiaVStarTactic, ...allSimpleTactics]
-      : allSimpleTactics;
-
     this.options = Object.assign({
-      tactics,
+      tactics: allSimpleTactics,
       promptResolvers: allPromptResolvers,
       scores: defaultStateScores,
       arbiter: defaultArbiterOptions
