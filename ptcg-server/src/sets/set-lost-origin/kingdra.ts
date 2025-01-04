@@ -91,7 +91,7 @@ export class Kingdra extends PokemonCard {
             // Shuffle the player's hand
             this.shufflePlayerHand(player);
 
-            player.hand.moveTo(opponentDeckBottom);
+            player.hand.moveTo(deckBottom);
 
             deckBottom.moveTo(player.deck);
 

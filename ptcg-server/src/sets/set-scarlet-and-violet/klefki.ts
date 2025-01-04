@@ -101,7 +101,7 @@ export class Klefki extends PokemonCard {
       }
 
       // Then deal damage
-      effect.damage = 30;
+      effect.damage = 10;
 
       return state;
 
