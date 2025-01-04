@@ -185,7 +185,7 @@ export class Faba extends TrainerCard {
 
       return store.prompt(state, new SelectPrompt(
         player.id,
-        GameMessage.DISCARD_STADIUM_OR_TOOL,
+        GameMessage.DISCARD_STADIUM_OR_TOOL_OR_SPECIAL_ENERGY,
         options.map(c => c.message),
         { allowCancel: false }
       ), choice => {

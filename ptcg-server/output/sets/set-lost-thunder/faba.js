@@ -134,7 +134,7 @@ class Faba extends trainer_card_1.TrainerCard {
             if (stadiumCard !== undefined) {
                 options.push(stadiumOption);
             }
-            return store.prompt(state, new game_1.SelectPrompt(player.id, game_1.GameMessage.DISCARD_STADIUM_OR_TOOL, options.map(c => c.message), { allowCancel: false }), choice => {
+            return store.prompt(state, new game_1.SelectPrompt(player.id, game_1.GameMessage.DISCARD_STADIUM_OR_TOOL_OR_SPECIAL_ENERGY, options.map(c => c.message), { allowCancel: false }), choice => {
                 const option = options[choice];
                 if (option.action) {
                     option.action();
