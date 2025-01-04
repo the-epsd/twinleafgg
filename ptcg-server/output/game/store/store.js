@@ -69,9 +69,17 @@ class Store {
     }
     reduceEffect(state, effect) {
         // this.checkEffectHistory(state, effect);
-        var _a;
+        var _a, _b, _c, _d;
         state = this.propagateEffect(state, effect);
-        console.log(`Running effect: ${effect.type} for card ${(_a = effect.card) === null || _a === void 0 ? void 0 : _a.name}`);
+        const cardEffect = effect;
+        if (cardEffect.card)
+            console.log(`Running effect: ${effect.type} for card ${(_a = cardEffect.card) === null || _a === void 0 ? void 0 : _a.name}`);
+        if (cardEffect.energyCard)
+            console.log(`Running effect: ${effect.type} for card ${(_b = cardEffect.energyCard) === null || _b === void 0 ? void 0 : _b.name}`);
+        if (cardEffect.trainerCard)
+            console.log(`Running effect: ${effect.type} for card ${(_c = cardEffect.trainerCard) === null || _c === void 0 ? void 0 : _c.name}`);
+        if (cardEffect.pokemonCard)
+            console.log(`Running effect: ${effect.type} for card ${(_d = cardEffect.pokemonCard) === null || _d === void 0 ? void 0 : _d.name}`);
         if (effect.preventDefault === true) {
             return state;
         }

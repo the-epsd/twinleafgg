@@ -20,5 +20,6 @@ export declare class Reshiram extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
+    private readonly TURBOBLAZE_MARKER;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

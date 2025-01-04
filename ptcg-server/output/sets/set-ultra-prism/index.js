@@ -10,6 +10,7 @@ const gible_1 = require("./gible");
 const lillie_1 = require("./lillie");
 const magnemite_1 = require("./magnemite");
 const magnezone_1 = require("./magnezone");
+const mars_1 = require("./mars");
 const morelull_1 = require("./morelull");
 const mt_coronet_1 = require("./mt-coronet");
 const order_pad_1 = require("./order-pad");
@@ -33,6 +34,7 @@ exports.setUltraPrism = [
     new lillie_1.Lillie(),
     new magnemite_1.Magnemite(),
     new magnezone_1.Magnezone(),
+    new mars_1.Mars(),
     new morelull_1.Morelull(),
     new mt_coronet_1.MtCoronet(),
     new order_pad_1.OrderPad(),

@@ -27,6 +27,7 @@ const hydrapple_ex_1 = require("./hydrapple-ex");
 const iron_boulder_1 = require("./iron-boulder");
 const joltik_1 = require("./joltik");
 const kofu_1 = require("./kofu");
+const lacey_1 = require("./lacey");
 const lapras_ex_1 = require("./lapras-ex");
 const medicham_ex_1 = require("./medicham-ex");
 const meditite_1 = require("./meditite");
@@ -65,6 +66,7 @@ exports.setStellarCrown = [
     new iron_boulder_1.IronBoulder(),
     new joltik_1.Joltik(),
     new kofu_1.Kofu(),
+    new lacey_1.Lacey(),
     new lapras_ex_1.Laprasex(),
     new medicham_ex_1.Medichamex(),
     new meditite_1.Meditite(),

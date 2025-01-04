@@ -180,6 +180,55 @@ Cards:
         image: 'https://pbs.twimg.com/media/F0C__sdXoAEMKtn?format=jpg&name=large',
         preview: 'Update #2024.12.29'
       },
+      {
+        id: 3,
+        title: 'Twinleaf Update - January 2nd',
+        author: 'Joe',
+        date: new Date('2025-01-03'),
+        content: `Twinleaf Update - January 2nd
+      
+Engine:
+- Fixed an issue where Ability Used markers were not proper clearing when removing a card from the board, and re-playing it that same turn
+- Fixed an issue where Basic Darkness Energy and Basic Metal Energy were legal in Retro format
+    - Note: These formats will eventually be changed to their respective formats, i.e. Base-Fossil
+
+Cards:
+- Fixed bugs on the following cards
+    - Tatsugiri ex SSP
+    - Piloswine SV9
+    - Mamoswine ex SV9
+    - Magneton ASR
+    - N's Zorua SV9
+    - Fuecoco SSP
+    - Iono's Kilowatrel SV9
+    - Cornerstone Mask Ogerpon ex TWM
+    - Iono's Bellibolt SV9
+    - Koraidon SSP
+    - Crocalor SSP
+    - Fezandipiti ex SFA
+    - Scoop-Up Net RCL
+    - Plume Fossil NVI
+    - Focus Sash FFI
+    - Magma Basin BRS
+    - Kricketune ASR
+    - Jubilife Village ASR
+    - Cynthia & Caitlin CEC
+
+- Fixed incorrect Regulation Mark/Set Numbers on the following cards
+    - Tapu Koko Prism Star TEU
+    - Sobble SSH
+    - Buizel SHF
+    - Floatzel BRS
+    - Clefairy TWM
+    - Clefable TWM
+    - Leafeon VSTAR SWSH
+    - Snom SHF
+    - Lillie's Comfy SV9
+    - Lillie's Clefairy ex SV9
+    - Warp Energy SLG`,
+        image: 'https://pbs.twimg.com/media/F0C__sdXoAEMKtn?format=jpg&name=large',
+        preview: 'Update #2025.01.02'
+      },
     ];
 
     posts.sort((a, b) => b.date.getTime() - a.date.getTime());

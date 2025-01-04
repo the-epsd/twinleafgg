@@ -26,7 +26,7 @@ class Entei extends pokemon_card_1.PokemonCard {
                 cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
                 damage: 60,
                 damageCalculation: 'x',
-                text: 'This attack does 30 more damage for each [R] Energy ' +
+                text: 'This attack does 20 more damage for each [R] Energy ' +
                     'attached to this Pokémon.'
             }
         ];

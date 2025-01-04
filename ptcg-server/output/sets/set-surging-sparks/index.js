@@ -59,6 +59,7 @@ const sandygast_1 = require("./sandygast");
 const shroodle_1 = require("./shroodle");
 const skeledirge_1 = require("./skeledirge");
 const smoochum_1 = require("./smoochum");
+const surfer_1 = require("./surfer");
 const sylveon_ex_1 = require("./sylveon-ex");
 const tatsugiri_ex_1 = require("./tatsugiri-ex");
 const tera_orb_1 = require("./tera-orb");
@@ -145,6 +146,7 @@ exports.setSurgingSparks = [
     new dusk_ball_1.DuskBall(),
     new gimmighoul_1.Gimmighoul(),
     new energy_search_pro_1.EnergySearchPRO(),
+    new surfer_1.Surfer(),
     //Reprints
     new card_images_1.ScrambleSwitchSSP(),
     new card_images_1.CounterGainSSP(),
