@@ -4,6 +4,7 @@ import { CardTag, CardType, SpecialCondition, Stage, SuperType } from '../card/c
 import { Resistance, Weakness } from '../card/pokemon-types';
 import { ApplyWeaknessEffect, DealDamageEffect } from '../effects/attack-effects';
 import {
+  AddSpecialConditionsPowerEffect,
   CheckAttackCostEffect,
   CheckPokemonStatsEffect,
   CheckPokemonTypeEffect,
@@ -297,6 +298,17 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
 
     store.log(state, GameLog.LOG_PLAYER_USES_ABILITY, { name: player.name, ability: power.name });
     state = store.reduceEffect(state, new TrainerPowerEffect(player, power, card));
+    return state;
+  }
+
+  if (effect instanceof AddSpecialConditionsPowerEffect) {
+    const target = effect.target;
+    effect.specialConditions.forEach(sp => {
+      target.addSpecialCondition(sp);
+    });
+    if (effect.poisonDamage !== undefined) {
+      target.poisonDamage = effect.poisonDamage;
+    }
     return state;
   }
 

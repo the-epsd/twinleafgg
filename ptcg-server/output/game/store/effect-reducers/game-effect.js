@@ -221,6 +221,16 @@ function gameReducer(store, state, effect) {
         state = store.reduceEffect(state, new game_effects_1.TrainerPowerEffect(player, power, card));
         return state;
     }
+    if (effect instanceof check_effects_1.AddSpecialConditionsPowerEffect) {
+        const target = effect.target;
+        effect.specialConditions.forEach(sp => {
+            target.addSpecialCondition(sp);
+        });
+        if (effect.poisonDamage !== undefined) {
+            target.poisonDamage = effect.poisonDamage;
+        }
+        return state;
+    }
     if (effect instanceof game_effects_1.UseStadiumEffect) {
         const player = effect.player;
         store.log(state, game_message_1.GameLog.LOG_PLAYER_USES_STADIUM, { name: player.name, stadium: effect.stadium.name });
