@@ -3,9 +3,10 @@ import { EnergyCard } from '../../game/store/card/energy-card';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { CheckProvidedEnergyEffect, CheckTableStateEffect } from '../../game/store/effects/check-effects';
+import { AddSpecialConditionsPowerEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { PlayerType } from '../../game';
-import { EnergyEffect } from '../../game/store/effects/play-card-effects';
+import { AttachEnergyEffect, EnergyEffect } from '../../game/store/effects/play-card-effects';
+import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 
 export class SpiralEnergy extends EnergyCard {
 
@@ -52,7 +53,7 @@ export class SpiralEnergy extends EnergyCard {
     }
 
     // Discard card when not attached to Single Strike Pokemon
-    if (effect instanceof CheckTableStateEffect) {
+    if (effect instanceof AttachEnergyEffect) {
       state.players.forEach(player => {
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
           if (!cardList.cards.includes(this)) {
@@ -75,26 +76,28 @@ export class SpiralEnergy extends EnergyCard {
       return state;
     }
 
-    state.players.forEach(player => {
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-        if (!cardList.cards.includes(this)) {
-          return;
-        }
+    if (effect instanceof AddSpecialConditionsEffect || effect instanceof AddSpecialConditionsPowerEffect) {
+      state.players.forEach(player => {
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+          if (!cardList.cards.includes(this)) {
+            return;
+          }
 
-        try {
-          const energyEffect = new EnergyEffect(player, this);
-          store.reduceEffect(state, energyEffect);
-        } catch {
+          try {
+            const energyEffect = new EnergyEffect(player, this);
+            store.reduceEffect(state, energyEffect);
+          } catch {
+            return state;
+          }
+
+          if (cardList.specialConditions.includes(SpecialCondition.PARALYZED)) {
+            cardList.removeSpecialCondition(SpecialCondition.PARALYZED);
+          }
           return state;
-        }
-
-        if (cardList.specialConditions.includes(SpecialCondition.PARALYZED)) {
-          cardList.removeSpecialCondition(SpecialCondition.PARALYZED);
-        }
+        });
         return state;
       });
-      return state;
-    });
+    }
     return state;
   }
 

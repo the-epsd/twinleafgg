@@ -49,7 +49,7 @@ class SingleStrikeEnergy extends energy_card_1.EnergyCard {
             return state;
         }
         // Discard card when not attached to Single Strike Pokemon
-        if (effect instanceof check_effects_1.CheckTableStateEffect) {
+        if (effect instanceof play_card_effects_1.AttachEnergyEffect) {
             state.players.forEach(player => {
                 player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
                     var _a;

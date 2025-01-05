@@ -59,7 +59,7 @@ class HerbalEnergy extends energy_card_1.EnergyCard {
             return state;
         }
         // Discard card when not attached to GRASS Pokemon
-        if (effect instanceof check_effects_1.CheckTableStateEffect) {
+        if (effect instanceof play_card_effects_1.AttachEnergyEffect) {
             state.players.forEach(player => {
                 player.forEachPokemon(play_card_action_1.PlayerType.BOTTOM_PLAYER, cardList => {
                     if (!cardList.cards.includes(this)) {
