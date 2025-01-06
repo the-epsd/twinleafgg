@@ -30,7 +30,7 @@ class Salazzle extends pokemon_card_1.PokemonCard {
             }];
         this.set = 'UNB';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '27';
+        this.setNumber = '31';
         this.name = 'Salazzle';
         this.fullName = 'Salazzle UNB';
         this.ROAST_REVEAL_MARKER = 'ROAST_REVEAL_MARKER';

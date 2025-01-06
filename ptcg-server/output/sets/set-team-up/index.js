@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.setTeamUp = void 0;
 const alolan_muk_1 = require("./alolan-muk");
 const articuno_1 = require("./articuno");
+const bills_analysis_1 = require("./bills-analysis");
 const bisharp_1 = require("./bisharp");
 const bronzor_1 = require("./bronzor");
 const dragonite_1 = require("./dragonite");
@@ -27,6 +28,7 @@ exports.setTeamUp = [
     // new Absol(), something weird is going on with checking retreat cost and adding retreat cost; attack works though
     new alolan_muk_1.AlolanMuk(),
     new articuno_1.Articuno(),
+    new bills_analysis_1.BillsAnalysis(),
     new bisharp_1.Bisharp(),
     new bronzor_1.Bronzor(),
     new dragonite_1.Dragonite(),

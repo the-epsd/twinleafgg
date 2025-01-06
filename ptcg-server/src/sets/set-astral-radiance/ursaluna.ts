@@ -32,7 +32,7 @@ export class Ursaluna extends PokemonCard {
 
   public resistance = [];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
     {
@@ -43,7 +43,7 @@ export class Ursaluna extends PokemonCard {
     },
     {
       name: 'Bulky Bump',
-      cost: [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
       damage: 200,
       text: 'Discard 2 Energy from this Pokémon.'
     }
@@ -58,30 +58,30 @@ export class Ursaluna extends PokemonCard {
   public name: string = 'Ursaluna';
 
   public fullName: string = 'Ursaluna ASR';
-  
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player); 
-      
+      const opponent = StateUtils.getOpponent(state, player);
+
       const cardsInDiscardPile = player.discard.cards.length;
-      
+
       if (cardsInDiscardPile === 0) {
         return state;
       }
-      
+
       const max = Math.min(cardsInDiscardPile, 2);
-      
+
       state = store.prompt(state, new ChooseCardsPrompt(
         player,
         GameMessage.CHOOSE_CARD_TO_HAND,
         player.discard,
-        {  },
+        {},
         { min: max, max: max, allowCancel: false }
       ), selected => {
         const cards = selected || [];
-        
+
         store.prompt(state, [new ShowCardsPrompt(
           opponent.id,
           GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
@@ -89,18 +89,18 @@ export class Ursaluna extends PokemonCard {
         )], () => {
           player.discard.moveCardsTo(cards, player.hand);
         });
-        
+
         cards.forEach(card => {
           store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
         });
-        
+
         return state;
       });
     }
-    
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
-      
+
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
       state = store.reduceEffect(state, checkProvidedEnergy);
 
@@ -108,7 +108,7 @@ export class Ursaluna extends PokemonCard {
         player.id,
         GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
         checkProvidedEnergy.energyMap,
-        [ CardType.COLORLESS, CardType.COLORLESS ],
+        [CardType.COLORLESS, CardType.COLORLESS],
         { allowCancel: false }
       ), energy => {
         const cards: Card[] = (energy || []).map(e => e.card);
@@ -117,7 +117,7 @@ export class Ursaluna extends PokemonCard {
         store.reduceEffect(state, discardEnergy);
       });
     }
-    
+
     return state;
   }
 }

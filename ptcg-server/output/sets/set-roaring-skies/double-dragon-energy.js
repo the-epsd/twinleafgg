@@ -34,28 +34,20 @@ class DoubleDragonEnergy extends energy_card_1.EnergyCard {
             }
             effect.energyMap.push({ card: this, provides: [card_types_1.CardType.ANY, card_types_1.CardType.ANY] });
         }
-        // Discard card when not attached to Dragon Pokemon
-        if (effect instanceof check_effects_1.CheckTableStateEffect) {
-            state.players.forEach(player => {
-                player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
-                    if (!cardList.cards.includes(this)) {
-                        return;
-                    }
-                    try {
-                        const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
-                        store.reduceEffect(state, energyEffect);
-                    }
-                    catch (_a) {
-                        return state;
-                    }
-                    const checkPokemonType = new check_effects_1.CheckPokemonTypeEffect(cardList);
-                    store.reduceEffect(state, checkPokemonType);
-                    if (!checkPokemonType.cardTypes.includes(card_types_1.CardType.DRAGON)) {
-                        cardList.moveCardTo(this, player.discard);
-                    }
-                });
-            });
-            return state;
+        if (effect instanceof play_card_effects_1.AttachEnergyEffect && effect.energyCard === this) {
+            const player = effect.player;
+            const checkPokemonType = new check_effects_1.CheckPokemonTypeEffect(effect.target);
+            store.reduceEffect(state, checkPokemonType);
+            try {
+                const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
+                store.reduceEffect(state, energyEffect);
+            }
+            catch (_b) {
+                return state;
+            }
+            if (!checkPokemonType.cardTypes.includes(card_types_1.CardType.DRAGON)) {
+                throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
+            }
         }
         return state;
     }

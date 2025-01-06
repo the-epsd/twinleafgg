@@ -1,10 +1,11 @@
-import { Card, ChooseEnergyPrompt, GameMessage, Power, PowerType, State, StoreLike, Weakness } from '../../game';
-import { CardType, Stage } from '../../game/store/card/card-types';
+import { AttachEnergyPrompt, Card, ChooseEnergyPrompt, EnergyCard, GameError, GameMessage, PlayerType, Power, PowerType, SlotType, State, StateUtils, StoreLike, Weakness } from '../../game';
+import { BoardEffect, CardType, EnergyType, Stage, SuperType } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
 
 export class Reshiram extends PokemonCard {
 
@@ -45,8 +46,57 @@ export class Reshiram extends PokemonCard {
   public name: string = 'Reshiram';
 
   public fullName: string = 'Reshiram ROS';
+  
+  private readonly TURBOBLAZE_MARKER = 'TURBOBLAZE_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    
+    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+      const player = effect.player;
+
+      const hasEnergyInHand = player.hand.cards.some(c => {
+        return c instanceof EnergyCard
+          && c.energyType === EnergyType.BASIC
+          && c.provides.includes(CardType.FIRE);
+      });
+      
+      if (player.marker.hasMarker(this.TURBOBLAZE_MARKER, this)) {
+        throw new GameError(GameMessage.POWER_ALREADY_USED);
+      }
+      
+      if (!hasEnergyInHand) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
+      }
+
+      return store.prompt(state, new AttachEnergyPrompt(
+        player.id,
+        GameMessage.ATTACH_ENERGY_CARDS,
+        player.hand,
+        PlayerType.BOTTOM_PLAYER,
+        [SlotType.BENCH, SlotType.ACTIVE],
+        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fire Energy' },
+        { allowCancel: false, max: 1, min: 1 }
+      ), transfers => {
+        transfers = transfers || [];
+        for (const transfer of transfers) {
+          const target = StateUtils.getTarget(state, player, transfer.to);
+          const energyCard = transfer.card as EnergyCard;
+          const attachEnergyEffect = new AttachEnergyEffect(player, energyCard, target);
+          store.reduceEffect(state, attachEnergyEffect);
+        }
+        
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+          if (cardList.getPokemonCard() === this) {
+            cardList.addBoardEffect(BoardEffect.ABILITY_USED);
+          }
+        });
+        
+        player.marker.addMarker(this.TURBOBLAZE_MARKER, this);
+        
+        return state;
+      });
+    }
+    
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       

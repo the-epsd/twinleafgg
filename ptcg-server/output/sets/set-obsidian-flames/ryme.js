@@ -12,7 +12,7 @@ class Ryme extends trainer_card_1.TrainerCard {
         this.set = 'OBF';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '194';
-        this.regulationMark = 'E';
+        this.regulationMark = 'G';
         this.name = 'Ryme';
         this.fullName = 'Ryme OBF';
         this.text = 'Draw 3 cards. Switch out your opponent\'s Active Pokémon to the Bench. (Your opponent chooses the new Active Pokémon.)';

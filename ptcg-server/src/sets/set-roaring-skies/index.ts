@@ -5,6 +5,7 @@ import { DoubleDragonEnergy } from './double-dragon-energy';
 import { Dustox } from './dustox';
 import { MRayquazaEX } from './m-rayquaza-ex';
 import { Natu } from './natu';
+import { Reshiram } from './reshiram';
 import { ShayminEx } from './shaymin-ex';
 import { Shuppet } from './shuppet';
 import { Silcoon } from './silcoon';
@@ -24,6 +25,7 @@ export const setRoaringSkies: Card[] = [
   new Dustox(),
   new MRayquazaEX(),
   new Natu(),
+  new Reshiram(),
   new ShayminEx(),
   new Shuppet(),
   new Silcoon(),

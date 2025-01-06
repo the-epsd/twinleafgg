@@ -4,7 +4,7 @@ import { StoreLike, State, StateUtils } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 
-export class GougingFireex extends PokemonCard {
+export class GougingFire extends PokemonCard {
 
   public tags = [CardTag.ANCIENT];
 

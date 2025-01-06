@@ -1,8 +1,8 @@
-import { GameError, GameMessage, PlayerType } from '../../game';
+import { GameError, GameMessage } from '../../game';
 import { CardType, EnergyType } from '../../game/store/card/card-types';
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
-import { CheckPokemonTypeEffect, CheckProvidedEnergyEffect, CheckTableStateEffect } from '../../game/store/effects/check-effects';
+import { CheckPokemonTypeEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttachEnergyEffect, EnergyEffect } from '../../game/store/effects/play-card-effects';
 import { State } from '../../game/store/state/state';
@@ -82,29 +82,22 @@ export class ShieldEnergy extends EnergyCard {
       }
     }
 
-    if (effect instanceof CheckTableStateEffect) {
-      state.players.forEach(player => {
-        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-          if (!cardList.cards.includes(this)) {
-            return;
-          }
+    if (effect instanceof AttachEnergyEffect && effect.energyCard === this) {
+      const checkPokemonType = new CheckPokemonTypeEffect(effect.target);
+      store.reduceEffect(state, checkPokemonType);
 
-          try {
-            const energyEffect = new EnergyEffect(player, this);
-            store.reduceEffect(state, energyEffect);
-          } catch {
-            return state;
-          }
+      const player = effect.player;
 
-          const checkPokemonType = new CheckPokemonTypeEffect(cardList);
-          store.reduceEffect(state, checkPokemonType);
+      try {
+        const energyEffect = new EnergyEffect(player, this);
+        store.reduceEffect(state, energyEffect);
+      } catch {
+        return state;
+      }
 
-          if (!checkPokemonType.cardTypes.includes(CardType.METAL)) {
-            cardList.moveCardTo(this, player.discard);
-          }
-        });
-      });
-      return state;
+      if (!checkPokemonType.cardTypes.includes(CardType.METAL)) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      }
     }
 
     return state;

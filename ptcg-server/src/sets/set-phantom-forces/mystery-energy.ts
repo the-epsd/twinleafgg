@@ -3,16 +3,17 @@ import { EnergyCard } from '../../game/store/card/energy-card';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { CheckProvidedEnergyEffect, CheckPokemonTypeEffect, CheckTableStateEffect,
-  CheckRetreatCostEffect } from '../../game/store/effects/check-effects';
-import { PlayerType } from '../../game/store/actions/play-card-action';
+import {
+  CheckProvidedEnergyEffect, CheckPokemonTypeEffect,
+  CheckRetreatCostEffect
+} from '../../game/store/effects/check-effects';
 import { AttachEnergyEffect, EnergyEffect } from '../../game/store/effects/play-card-effects';
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
 
 export class MysteryEnergy extends EnergyCard {
 
-  public provides: CardType[] = [ ];
+  public provides: CardType[] = [];
 
   public energyType = EnergyType.SPECIAL;
 
@@ -70,33 +71,8 @@ export class MysteryEnergy extends EnergyCard {
       }
 
       if (checkPokemonType.cardTypes.includes(CardType.PSYCHIC)) {
-        effect.energyMap.push({ card: this, provides: [ CardType.PSYCHIC ] });
+        effect.energyMap.push({ card: this, provides: [CardType.PSYCHIC] });
       }
-      return state;
-    }
-
-    // Discard card when not attached to Psychic Pokemon
-    if (effect instanceof CheckTableStateEffect) {
-      state.players.forEach(player => {
-        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-          if (!cardList.cards.includes(this)) {
-            return;
-          }
-
-          try {
-            const energyEffect = new EnergyEffect(player, this);
-            store.reduceEffect(state, energyEffect);
-          } catch {
-            return state;
-          }
-
-          const checkPokemonType = new CheckPokemonTypeEffect(cardList);
-          store.reduceEffect(state, checkPokemonType);
-          if (!checkPokemonType.cardTypes.includes(CardType.PSYCHIC)) {
-            cardList.moveCardTo(this, player.discard);
-          }
-        });
-      });
       return state;
     }
 

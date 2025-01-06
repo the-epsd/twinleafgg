@@ -55,7 +55,7 @@ export class Fezandipitiex extends PokemonCard {
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
 
-      if (!player.marker.hasMarker(this.TABLE_TURNER_MARKER)) {
+      if (!player.marker.hasMarker('OPPONENT_KNOCKOUT_MARKER')) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
@@ -96,11 +96,11 @@ export class Fezandipitiex extends PokemonCard {
 
     if (effect instanceof EndTurnEffect) {
       const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
+      const cardList = StateUtils.findCardList(state, this);
+      const owner = StateUtils.findOwner(state, cardList);
 
-      // Only clear the marker when opponent's turn ends
-      if (state.players[state.activePlayer] === opponent) {
-        player.marker.removeMarker('OPPONENT_KNOCKOUT_MARKER');
+      if (owner === player) {
+        effect.player.marker.removeMarker('OPPONENT_KNOCKOUT_MARKER');
       }
       player.usedTableTurner = false;
     }

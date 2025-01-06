@@ -19,6 +19,7 @@ const slowbro_1 = require("./slowbro");
 const slowpoke_1 = require("./slowpoke");
 const snorlax_1 = require("./snorlax");
 const solrock_1 = require("./solrock");
+const wartortle_1 = require("./wartortle");
 const zapdos_1 = require("./zapdos");
 exports.setPokemonGO = [
     new alolan_raticate_1.AlolanRaticate(),
@@ -40,4 +41,5 @@ exports.setPokemonGO = [
     new slowbro_1.Slowbro(),
     new slowpoke_1.Slowpoke(),
     new lure_module_1.LureModule(),
+    new wartortle_1.Wartortle()
 ];

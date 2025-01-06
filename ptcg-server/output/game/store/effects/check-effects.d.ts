@@ -1,9 +1,10 @@
-import { CardType } from '../card/card-types';
+import { CardType, SpecialCondition } from '../card/card-types';
 import { Effect } from './effect';
 import { Player } from '../state/player';
 import { PokemonCardList } from '../state/pokemon-card-list';
 import { Resistance, Weakness, Attack, Power } from '../card/pokemon-types';
 import { EnergyMap } from '../prompts/choose-energy-prompt';
+import { PokemonCard } from '../card/pokemon-card';
 export declare enum CheckEffects {
     CHECK_HP_EFFECT = "CHECK_HP_EFFECT",
     CHECK_PRIZES_COUNT_EFFECT = "CHECK_PRIZE_COUNT_EFFECT",
@@ -15,7 +16,8 @@ export declare enum CheckEffects {
     CHECK_ATTACK_COST_EFFECT = "CHECK_ATTACK_COST_EFFECT",
     CHECK_ENOUGH_ENERGY_EFFECT = "CHECK_ENOUGH_ENERGY_EFFECT",
     CHECK_POKEMON_PLAYED_TURN_EFFECT = "CHECK_POKEMON_PLAYED_TURN_EFFECT",
-    CHECK_TABLE_STATE_EFFECT = "CHECK_TABLE_STATE_EFFECT"
+    CHECK_TABLE_STATE_EFFECT = "CHECK_TABLE_STATE_EFFECT",
+    ADD_SPECIAL_CONDITIONS_EFFECT = "ADD_SPECIAL_CONDITIONS_EFFECT"
 }
 export declare class CheckPokemonPowersEffect implements Effect {
     readonly type: string;
@@ -93,4 +95,15 @@ export declare class CheckTableStateEffect implements Effect {
     preventDefault: boolean;
     benchSizes: number[];
     constructor(benchSizes: number[]);
+}
+export declare class AddSpecialConditionsPowerEffect implements Effect {
+    readonly type: string;
+    preventDefault: boolean;
+    poisonDamage?: number;
+    specialConditions: SpecialCondition[];
+    player: Player;
+    power: Power;
+    card: PokemonCard;
+    target: PokemonCardList;
+    constructor(player: Player, power: Power, card: PokemonCard, target: PokemonCardList, specialConditions: SpecialCondition[]);
 }

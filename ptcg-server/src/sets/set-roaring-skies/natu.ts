@@ -35,7 +35,7 @@ export class Natu extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     // Delta Plus
-    if (effect instanceof KnockOutEffect && effect.target === effect.player.active) {
+    if (effect instanceof KnockOutEffect) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

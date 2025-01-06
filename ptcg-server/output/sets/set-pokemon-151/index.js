@@ -44,6 +44,7 @@ const pidgey_1 = require("./pidgey");
 const rigid_band_1 = require("./rigid-band");
 const sandshrew_1 = require("./sandshrew");
 const scyther_1 = require("./scyther");
+const seaking_1 = require("./seaking");
 const squirtle_1 = require("./squirtle");
 const staryu_1 = require("./staryu");
 const venomoth_1 = require("./venomoth");
@@ -96,6 +97,7 @@ exports.setPokemon151 = [
     new rigid_band_1.RigidBand(),
     new sandshrew_1.Sandshrew(),
     new scyther_1.Scyther(),
+    new seaking_1.Seaking(),
     new squirtle_1.Squirtle(),
     new staryu_1.Staryu(),
     new venonat_1.Venonat(),

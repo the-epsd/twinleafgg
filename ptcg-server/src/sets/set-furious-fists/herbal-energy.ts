@@ -6,7 +6,6 @@ import { EnergyCard } from '../../game/store/card/energy-card';
 import {
   CheckPokemonTypeEffect,
   CheckProvidedEnergyEffect,
-  CheckTableStateEffect
 } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { HealEffect } from '../../game/store/effects/game-effects';
@@ -16,7 +15,7 @@ import { StoreLike } from '../../game/store/store-like';
 
 export class HerbalEnergy extends EnergyCard {
 
-  public provides: CardType[] = [ ];
+  public provides: CardType[] = [];
 
   public energyType = EnergyType.SPECIAL;
 
@@ -51,10 +50,10 @@ export class HerbalEnergy extends EnergyCard {
       if (!checkPokemonType.cardTypes.includes(CardType.GRASS)) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
-      
+
       const healEffect = new HealEffect(player, effect.target, 30);
       store.reduceEffect(state, healEffect);
-      
+
       return state;
     }
 
@@ -72,13 +71,13 @@ export class HerbalEnergy extends EnergyCard {
       }
 
       if (checkPokemonType.cardTypes.includes(CardType.GRASS)) {
-        effect.energyMap.push({ card: this, provides: [ CardType.GRASS ] });
+        effect.energyMap.push({ card: this, provides: [CardType.GRASS] });
       }
       return state;
     }
 
     // Discard card when not attached to GRASS Pokemon
-    if (effect instanceof CheckTableStateEffect) {
+    if (effect instanceof AttachEnergyEffect) {
       state.players.forEach(player => {
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
           if (!cardList.cards.includes(this)) {

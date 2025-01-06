@@ -46,6 +46,7 @@ import { RadiantHisuianSneasler } from './radiant-hisuian-sneasler';
 import { Roselia } from './roselia';
 import { RotomV } from './rotom-v';
 import { Sableye } from './sableye';
+import { Seadra } from './seadra';
 import { Silcoon } from './silcoon';
 import { Snorlax } from './snorlax';
 import { Thorton } from './thorton';
@@ -95,6 +96,7 @@ export const setLostOrigin: Card[] = [
   new Roselia(),
   new RotomV(),
   new Sableye(),
+  new Seadra(),
   new Silcoon(),
   new Snorlax(),
   new Volo(),

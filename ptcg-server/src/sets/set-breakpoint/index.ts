@@ -5,7 +5,7 @@ import { FightingFuryBelt } from './fighting-fury-belt';
 import { Froakie } from './froakie';
 import { Kricketot } from './kricketot';
 import { MaxElixir } from './max-elixir';
-import { MrMime } from './mr-mime';
+import { MrMime } from '../set-breakthrough/mr-mime';
 import { Phantump } from './phantump';
 import { ReverseValley } from './reverse-valley';
 import { SplashEnergy } from './splash-energy';
@@ -20,7 +20,6 @@ export const setBreakpoint: Card[] = [
   new Froakie(),
   new Kricketot(),
   new MaxElixir(),
-  new MrMime(),
   new Phantump(),
   new ReverseValley(),
   new SplashEnergy(),

@@ -53,6 +53,9 @@ export const cardReplacements = [
   //UPR
   { from: 'Mt. Coronet UPR 130', to: 'Mt. Coronet RCL 130' },
 
+  //UNB
+  { from: 'Porygon-Z UNB 157', to: 'Porygon-Z PAL 157' },
+
   //RCL
   { from: 'Horror Psychic Energy RCL 172', to: 'Horror Psychic Energy DAA 172' },
 
@@ -412,6 +415,10 @@ export const exportReplacements = [
 
   //UPR
   { from: 'Mt. Coronet RCL 130', to: 'Mt. Coronet UPR 130' },
+
+  //UNB
+  { from: 'Porygon-Z PAL 157', to: 'Porygon-Z UNB 157' },
+
 
   //RCL
   { from: 'Horror Psychic Energy DAA 172', to: 'Horror Psychic Energy RCL 172' },

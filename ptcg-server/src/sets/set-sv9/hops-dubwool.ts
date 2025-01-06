@@ -26,7 +26,6 @@ export class HopsDubwool extends PokemonCard {
 
   public powers = [{
     name: 'Challenge Horn',
-    useWhenInPlay: true,
     powerType: PowerType.ABILITY,
     text: 'When you play this Pokémon from your hand to evolve 1 of your Pokémon during your turn, you may switch in 1 of your opponent\'s Benched Pokémon to the Active Spot.'
   }];

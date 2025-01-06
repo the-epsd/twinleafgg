@@ -14,7 +14,6 @@ export declare class HopsDubwool extends PokemonCard {
     retreat: CardType.COLORLESS[];
     powers: {
         name: string;
-        useWhenInPlay: boolean;
         powerType: PowerType;
         text: string;
     }[];

@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Sandshrew = void 0;
-const pokemon_card_1 = require("../../game/store/card/pokemon-card");
-const card_types_1 = require("../../game/store/card/card-types");
-const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_1 = require("../../game");
-const coin_flip_prompt_1 = require("../../game/store/prompts/coin-flip-prompt");
+const card_types_1 = require("../../game/store/card/card-types");
+const pokemon_card_1 = require("../../game/store/card/pokemon-card");
+const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
+const coin_flip_prompt_1 = require("../../game/store/prompts/coin-flip-prompt");
 class Sandshrew extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -49,7 +49,6 @@ class Sandshrew extends pokemon_card_1.PokemonCard {
             return store.prompt(state, new coin_flip_prompt_1.CoinFlipPrompt(effect.player.id, game_1.GameMessage.COIN_FLIP), (heads) => {
                 if (!heads) {
                     effect.preventDefault = true;
-                    store.reduceEffect(state, effect);
                 }
             });
         }

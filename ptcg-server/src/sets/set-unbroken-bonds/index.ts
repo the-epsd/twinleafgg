@@ -8,6 +8,7 @@ import { ElectromagneticRadar } from './electromagnetic-radar';
 import { Espurr } from './espurr';
 import { FireCrystal } from './fire-crystal';
 import { Gloom } from './gloom';
+import { Goldeen } from './goldeen';
 import { GreensExploration } from './greens-exploration';
 import { Hitmontop } from './hitmontop';
 import { Kartana } from './kartana';
@@ -46,6 +47,7 @@ export const setUnbrokenBonds: Card[] = [
   new Espurr(),
   new FireCrystal(),
   new Gloom(),
+  new Goldeen(),
   new GreensExploration(),
   new Hitmontop(),
   new Kartana(),

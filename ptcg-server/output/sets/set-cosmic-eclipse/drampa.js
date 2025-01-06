@@ -41,7 +41,7 @@ class Drampa extends pokemon_card_1.PokemonCard {
             player.active.cards.forEach(card => {
                 if (card instanceof game_1.EnergyCard && card.provides) {
                     card.provides.forEach(energyType => {
-                        if (energyType !== card_types_1.CardType.COLORLESS) {
+                        if (energyType !== card_types_1.CardType.COLORLESS && energyType !== card_types_1.CardType.ANY) {
                             attachedEnergyTypes.add(energyType);
                         }
                     });

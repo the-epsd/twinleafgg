@@ -8,7 +8,7 @@ class Cutiefly extends game_1.PokemonCard {
         super(...arguments);
         this.stage = game_1.Stage.BASIC;
         this.cardType = Y;
-        this.hp = 60;
+        this.hp = 30;
         this.weakness = [{ type: M }];
         this.resistance = [{ type: D, value: -20 }];
         this.attacks = [{

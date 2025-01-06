@@ -1,18 +1,18 @@
-import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SuperType, EnergyType } from '../../game/store/card/card-types';
-import { StoreLike } from '../../game/store/store-like';
-import { State } from '../../game/store/state/state';
-import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
-import { PowerType } from '../../game/store/card/pokemon-types';
-import { StateUtils } from '../../game/store/state-utils';
-import { PlayerType, SlotType } from '../../game/store/actions/play-card-action';
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
-import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { PlayerType, SlotType } from '../../game/store/actions/play-card-action';
+import { BoardEffect, CardType, EnergyType, Stage, SuperType } from '../../game/store/card/card-types';
 import { EnergyCard } from '../../game/store/card/energy-card';
-import { AttachEnergyPrompt } from '../../game/store/prompts/attach-energy-prompt';
+import { PokemonCard } from '../../game/store/card/pokemon-card';
+import { PowerType } from '../../game/store/card/pokemon-types';
+import { Effect } from '../../game/store/effects/effect';
+import { PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { AttachEnergyPrompt } from '../../game/store/prompts/attach-energy-prompt';
+import { StateUtils } from '../../game/store/state-utils';
+import { State } from '../../game/store/state/state';
+import { StoreLike } from '../../game/store/store-like';
 
 export class Bronzong extends PokemonCard {
 
@@ -55,33 +55,34 @@ export class Bronzong extends PokemonCard {
 
   public setNumber: string = '61';
 
-  public readonly METAL_LINKS_MAREKER = 'METAL_LINKS_MAREKER';
+  public readonly METAL_LINKS_MARKER = 'METAL_LINKS_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const player = effect.player;
-      player.marker.removeMarker(this.METAL_LINKS_MAREKER, this);
+      player.marker.removeMarker(this.METAL_LINKS_MARKER, this);
     }
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
 
       const hasBench = player.bench.some(b => b.cards.length > 0);
+      
       if (!hasBench) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
       const hasEnergyInDiscard = player.discard.cards.some(c => {
         return c instanceof EnergyCard && c.provides.includes(CardType.METAL);
       });
+      
       if (!hasEnergyInDiscard) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
-      if (player.marker.hasMarker(this.METAL_LINKS_MAREKER, this)) {
+      
+      if (player.marker.hasMarker(this.METAL_LINKS_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
-
-      player.marker.addMarker(this.METAL_LINKS_MAREKER, this);
 
       const blocked: number[] = [];
       player.discard.cards.forEach((card, index) => {
@@ -104,13 +105,21 @@ export class Bronzong extends PokemonCard {
           const target = StateUtils.getTarget(state, player, transfer.to);
           player.discard.moveCardTo(transfer.card, target);
         }
+        
+        player.marker.addMarker(this.METAL_LINKS_MARKER, this);
+        
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+          if (cardList.getPokemonCard() === this) {
+            cardList.addBoardEffect(BoardEffect.ABILITY_USED);
+          }
+        });
       });
 
       return state;
     }
 
     if (effect instanceof EndTurnEffect) {
-      effect.player.marker.removeMarker(this.METAL_LINKS_MAREKER, this);
+      effect.player.marker.removeMarker(this.METAL_LINKS_MARKER, this);
     }
 
     return state;

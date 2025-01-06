@@ -4,10 +4,10 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
-import { CheckProvidedEnergyEffect, CheckTableStateEffect } from '../../game/store/effects/check-effects';
+import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { StateUtils } from '../../game/store/state-utils';
 import { PlayerType } from '../../game';
-import { EnergyEffect } from '../../game/store/effects/play-card-effects';
+import { AttachEnergyEffect, EnergyEffect } from '../../game/store/effects/play-card-effects';
 
 export class SingleStrikeEnergy extends EnergyCard {
 
@@ -60,7 +60,7 @@ export class SingleStrikeEnergy extends EnergyCard {
     }
 
     // Discard card when not attached to Single Strike Pokemon
-    if (effect instanceof CheckTableStateEffect) {
+    if (effect instanceof AttachEnergyEffect) {
       state.players.forEach(player => {
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
           if (!cardList.cards.includes(this)) {

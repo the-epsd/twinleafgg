@@ -2,7 +2,7 @@ import { Card, GameError, GameMessage, PlayerType, StateUtils } from '../../game
 import { CardType, EnergyType } from '../../game/store/card/card-types';
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
-import { CheckPokemonTypeEffect, CheckProvidedEnergyEffect, CheckTableStateEffect } from '../../game/store/effects/check-effects';
+import { CheckPokemonTypeEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, KnockOutEffect } from '../../game/store/effects/game-effects';
 import { BetweenTurnsEffect, EndTurnEffect } from '../../game/store/effects/game-phase-effects';
@@ -67,7 +67,7 @@ export class SplashEnergy extends EnergyCard {
     }
 
     // Discard card when not attached to Water Pokemon
-    if (effect instanceof CheckTableStateEffect) {
+    if (effect instanceof AttachEnergyEffect) {
       state.players.forEach(player => {
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
           if (!cardList.cards.includes(this)) {

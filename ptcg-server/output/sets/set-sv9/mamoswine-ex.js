@@ -87,7 +87,7 @@ class Mamoswineex extends pokemon_card_1.PokemonCard {
                     stage2Count++;
                 }
             });
-            effect.damage = 120 + (stage2Count * 40);
+            effect.damage = 180 + (stage2Count * 40);
         }
         return state;
     }

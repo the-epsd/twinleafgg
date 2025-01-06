@@ -1,6 +1,7 @@
 import { Card } from '../../game/store/card/card';
 import { AlolanMuk } from './alolan-muk';
 import { Articuno } from './articuno';
+import { BillsAnalysis } from './bills-analysis';
 import { Bisharp } from './bisharp';
 import { Bronzor } from './bronzor';
 import { Dragonite } from './dragonite';
@@ -28,6 +29,7 @@ export const setTeamUp: Card[] = [
   // new Absol(), something weird is going on with checking retreat cost and adding retreat cost; attack works though
   new AlolanMuk(),
   new Articuno(),
+  new BillsAnalysis(),
   new Bisharp(),
   new Bronzor(),
   new Dragonite(),

@@ -188,6 +188,7 @@ var GameCardMessage;
     GameCardMessage["CHOOSE_CARDS"] = "CHOOSE_CARDS";
     GameCardMessage["CHOOSE_ENERGY_FROM_DISCARD"] = "CHOOSE_ENERGY_FROM_DISCARD";
     GameCardMessage["CHOOSE_ENERGY_FROM_DECK"] = "CHOOSE_ENERGY_FROM_DECK";
+    GameCardMessage["DISCARD_STADIUM_OR_TOOL_OR_SPECIAL_ENERGY"] = "DISCARD_STADIUM_OR_TOOL_OR_SPECIAL_ENERGY";
 })(GameCardMessage = exports.GameCardMessage || (exports.GameCardMessage = {}));
 var GameLog;
 (function (GameLog) {

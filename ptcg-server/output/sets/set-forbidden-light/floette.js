@@ -41,7 +41,7 @@ function* useSwirlingPetals(next, store, state, effect) {
 class Floette extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.stage = card_types_1.Stage.BASIC;
+        this.stage = card_types_1.Stage.STAGE_1;
         this.cardType = Y;
         this.hp = 70;
         this.weakness = [{ type: M }];

@@ -62,7 +62,7 @@ export class Swanna extends PokemonCard {
   public attacks = [
     {
       name: 'Feather Slice',
-      cost: [CardType.COLORLESS],
+      cost: [C, C, C],
       damage: 70,
       text: 'You may discard a card from your hand. If you do, this attack does 70 more damage.',
     }

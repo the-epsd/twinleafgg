@@ -52,8 +52,6 @@ export class Lapras extends PokemonCard {
       opponent.active.specialConditions.push(SpecialCondition.CONFUSED);
     }
 
-
-
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
 

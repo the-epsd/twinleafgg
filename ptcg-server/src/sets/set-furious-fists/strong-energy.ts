@@ -6,8 +6,7 @@ import { EnergyCard } from '../../game/store/card/energy-card';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import {
   CheckPokemonTypeEffect,
-  CheckProvidedEnergyEffect,
-  CheckTableStateEffect
+  CheckProvidedEnergyEffect
 } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttachEnergyEffect, EnergyEffect } from '../../game/store/effects/play-card-effects';
@@ -17,7 +16,7 @@ import { StoreLike } from '../../game/store/store-like';
 
 export class StrongEnergy extends EnergyCard {
 
-  public provides: CardType[] = [ ];
+  public provides: CardType[] = [];
 
   public energyType = EnergyType.SPECIAL;
 
@@ -76,13 +75,13 @@ export class StrongEnergy extends EnergyCard {
       }
 
       if (checkPokemonType.cardTypes.includes(CardType.FIGHTING)) {
-        effect.energyMap.push({ card: this, provides: [ CardType.FIGHTING ] });
+        effect.energyMap.push({ card: this, provides: [CardType.FIGHTING] });
       }
       return state;
     }
 
     // Discard card when not attached to Fighting Pokemon
-    if (effect instanceof CheckTableStateEffect) {
+    if (effect instanceof AttachEnergyEffect) {
       state.players.forEach(player => {
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
           if (!cardList.cards.includes(this)) {
@@ -109,7 +108,7 @@ export class StrongEnergy extends EnergyCard {
     if (effect instanceof DealDamageEffect && effect.source.cards.includes(this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      
+
       if (effect.target !== opponent.active) {
         return state;
       }

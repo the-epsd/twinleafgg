@@ -78,7 +78,7 @@ class Kingdra extends pokemon_card_1.PokemonCard {
                     action: () => {
                         // Shuffle the player's hand
                         this.shufflePlayerHand(player);
-                        player.hand.moveTo(opponentDeckBottom);
+                        player.hand.moveTo(deckBottom);
                         deckBottom.moveTo(player.deck);
                         player.deck.moveTo(player.hand, 4);
                     }

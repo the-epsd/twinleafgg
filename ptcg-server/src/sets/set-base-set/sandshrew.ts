@@ -1,13 +1,13 @@
+import { GameMessage, PlayerType, PokemonCardList, StateUtils } from '../../game';
+import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
 import { Attack } from '../../game/store/card/pokemon-types';
-import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
+import { AttackEffect } from '../../game/store/effects/game-effects';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { CoinFlipPrompt } from '../../game/store/prompts/coin-flip-prompt';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
-import { GameMessage, PlayerType, PokemonCardList, StateUtils } from '../../game';
-import { CoinFlipPrompt } from '../../game/store/prompts/coin-flip-prompt';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class Sandshrew extends PokemonCard {
 
@@ -64,7 +64,6 @@ export class Sandshrew extends PokemonCard {
       return store.prompt(state, new CoinFlipPrompt(effect.player.id, GameMessage.COIN_FLIP), (heads) => {
         if (!heads) {
           effect.preventDefault = true;
-          store.reduceEffect(state, effect);
         }
       });
     }

@@ -17,7 +17,9 @@ import { Slowbro } from './slowbro';
 import { Slowpoke } from './slowpoke';
 import { Snorlax } from './snorlax';
 import { Solrock } from './solrock';
+import { Wartortle } from './wartortle';
 import { Zapdos } from './zapdos';
+
 export const setPokemonGO: Card[] = [
   new AlolanRaticate(),
   new Blastoise(),
@@ -38,4 +40,5 @@ export const setPokemonGO: Card[] = [
   new Slowbro(),
   new Slowpoke(),
   new LureModule(),
+  new Wartortle()
 ];

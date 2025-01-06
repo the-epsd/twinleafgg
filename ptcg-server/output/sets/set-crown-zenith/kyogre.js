@@ -50,8 +50,11 @@ class Kyogre extends pokemon_card_1.PokemonCard {
                 for (const transfer of transfers) {
                     player.active.moveCardTo(transfer.card, player.hand);
                 }
-                const max = Math.min(1);
-                return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { min: max, max, allowCancel: false }), selected => {
+                const opponent = game_1.StateUtils.getOpponent(state, player);
+                const benched = opponent.bench.reduce((left, b) => left + (b.cards.length ? 1 : 0), 0);
+                const min = Math.min(1, benched);
+                const max = Math.min(1, benched);
+                return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { min, max, allowCancel: false }), selected => {
                     const targets = selected || [];
                     targets.forEach(target => {
                         const damageEffect = new attack_effects_1.PutDamageEffect(effect, 180);

@@ -80,7 +80,7 @@ class Klefki extends pokemon_card_1.PokemonCard {
                 activePokemon.tool = undefined;
             }
             // Then deal damage
-            effect.damage = 30;
+            effect.damage = 10;
             return state;
         }
         return state;

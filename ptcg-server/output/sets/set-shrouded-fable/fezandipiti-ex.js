@@ -40,7 +40,7 @@ class Fezandipitiex extends pokemon_card_1.PokemonCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
-            if (!player.marker.hasMarker(this.TABLE_TURNER_MARKER)) {
+            if (!player.marker.hasMarker('OPPONENT_KNOCKOUT_MARKER')) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
             if (player.usedTableTurner == true) {
@@ -73,10 +73,10 @@ class Fezandipitiex extends pokemon_card_1.PokemonCard {
         }
         if (effect instanceof game_phase_effects_1.EndTurnEffect) {
             const player = effect.player;
-            const opponent = game_1.StateUtils.getOpponent(state, player);
-            // Only clear the marker when opponent's turn ends
-            if (state.players[state.activePlayer] === opponent) {
-                player.marker.removeMarker('OPPONENT_KNOCKOUT_MARKER');
+            const cardList = game_1.StateUtils.findCardList(state, this);
+            const owner = game_1.StateUtils.findOwner(state, cardList);
+            if (owner === player) {
+                effect.player.marker.removeMarker('OPPONENT_KNOCKOUT_MARKER');
             }
             player.usedTableTurner = false;
         }
