@@ -17,7 +17,7 @@ export class Ryme extends TrainerCard {
 
   public setNumber: string = '194';
 
-  public regulationMark = 'E';
+  public regulationMark = 'G';
 
   public name: string = 'Ryme';
 
