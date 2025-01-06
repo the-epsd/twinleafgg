@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
+import { Stage, CardType, CardTag, EnergyType } from '../../game/store/card/card-types';
+import { StoreLike, State, PlayerType, EnergyCard } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
@@ -52,11 +52,16 @@ export class Meloetta extends PokemonCard {
       store.reduceEffect(state, checkProvidedEnergyEffect);
 
       let energyCount = 0;
-      checkProvidedEnergyEffect.energyMap.forEach(em => {
-        energyCount += em.provides.filter(cardType => {
-          return em.card.tags.includes(CardTag.FUSION_STRIKE);
-        }).length;
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
+        if (cardList.cards.some(c => c instanceof EnergyCard && c.energyType === EnergyType.SPECIAL)) {
+          checkProvidedEnergyEffect.energyMap.forEach(em => {
+            energyCount += em.provides.filter(cardType => {
+              return em.card.tags.includes(CardTag.FUSION_STRIKE);
+            }).length;
+          });
+        }
       });
+
       effect.damage = energyCount * 70;
       return state;
     }

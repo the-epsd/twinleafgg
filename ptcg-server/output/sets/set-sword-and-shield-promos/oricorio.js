@@ -52,6 +52,7 @@ class Oricorio extends pokemon_card_1.PokemonCard {
         this.weakness = [{ type: card_types_1.CardType.DARK }];
         this.resistance = [{ type: card_types_1.CardType.FIGHTING, value: -30 }];
         this.retreat = [card_types_1.CardType.COLORLESS];
+        this.tags = [card_types_1.CardTag.FUSION_STRIKE];
         this.attacks = [{
                 name: 'Mixed Call',
                 cost: [card_types_1.CardType.COLORLESS],

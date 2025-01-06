@@ -60,17 +60,26 @@ class Oricorio extends pokemon_card_1.PokemonCard {
                 }
             });
         }
-        if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
+        if (effect instanceof attack_effects_1.PutDamageEffect) {
             const player = effect.player;
             const activePokemon = player.active.getPokemonCard();
             const activeFusion = activePokemon && activePokemon.tags.includes(card_types_1.CardTag.FUSION_STRIKE);
             const benchPokemon = player.bench.map(b => b.getPokemonCard()).filter(card => card !== undefined);
             const benchFusion = benchPokemon.filter(card => card.tags.includes(card_types_1.CardTag.FUSION_STRIKE));
-            if (effect instanceof attack_effects_1.PutDamageEffect) {
-                if (activeFusion || benchFusion) {
-                    effect.damage -= 20;
-                }
+            // Try to reduce PowerEffect, to check if something is blocking our ability
+            try {
+                const stub = new game_effects_1.PowerEffect(player, {
+                    name: 'test',
+                    powerType: pokemon_types_1.PowerType.ABILITY,
+                    text: ''
+                }, this);
+                store.reduceEffect(state, stub);
+            }
+            catch (_a) {
                 return state;
+            }
+            if (activeFusion || benchFusion) {
+                effect.damage -= 20;
             }
             return state;
         }

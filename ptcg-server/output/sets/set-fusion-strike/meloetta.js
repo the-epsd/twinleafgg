@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Meloetta = void 0;
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
+const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const check_effects_1 = require("../../game/store/effects/check-effects");
 class Meloetta extends pokemon_card_1.PokemonCard {
@@ -37,10 +38,14 @@ class Meloetta extends pokemon_card_1.PokemonCard {
             const checkProvidedEnergyEffect = new check_effects_1.CheckProvidedEnergyEffect(player);
             store.reduceEffect(state, checkProvidedEnergyEffect);
             let energyCount = 0;
-            checkProvidedEnergyEffect.energyMap.forEach(em => {
-                energyCount += em.provides.filter(cardType => {
-                    return em.card.tags.includes(card_types_1.CardTag.FUSION_STRIKE);
-                }).length;
+            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList) => {
+                if (cardList.cards.some(c => c instanceof game_1.EnergyCard && c.energyType === card_types_1.EnergyType.SPECIAL)) {
+                    checkProvidedEnergyEffect.energyMap.forEach(em => {
+                        energyCount += em.provides.filter(cardType => {
+                            return em.card.tags.includes(card_types_1.CardTag.FUSION_STRIKE);
+                        }).length;
+                    });
+                }
             });
             effect.damage = energyCount * 70;
             return state;
