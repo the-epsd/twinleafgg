@@ -5,6 +5,7 @@ import { Cottonee } from './cottonee';
 import { DarkCity } from './dark-city';
 import { FlyiniumZAirSlash } from './flyinium-z-air-slash';
 import { Froslass } from './froslass';
+import { Golisopod } from './golisopod';
 import { Hapu } from './hapu';
 import { Hoopa } from './hoopa';
 import { KarateBelt } from './karate-belt';
@@ -23,6 +24,7 @@ import { TagSwitch } from './tag_switch';
 import { UTurnBoard } from './u-turn-board';
 import { WeaknessGuardEnergy } from './weakness-guard-energy';
 import { Whimsicott } from './whimsicott';
+import { Wimpod } from './wimpod';
 
 
 export const setUnifiedMinds: Card[] = [
@@ -32,6 +34,7 @@ export const setUnifiedMinds: Card[] = [
   new DarkCity(),
   new FlyiniumZAirSlash(),
   new Froslass(),
+  new Golisopod(),
   new Hapu(),
   new Hoopa(),
   new KarateBelt(),
@@ -49,5 +52,6 @@ export const setUnifiedMinds: Card[] = [
   new TagSwitch(),
   new UTurnBoard(),
   new WeaknessGuardEnergy(),
-  new Whimsicott()
+  new Whimsicott(),
+  new Wimpod()
 ];

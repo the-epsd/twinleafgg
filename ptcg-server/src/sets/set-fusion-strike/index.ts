@@ -5,6 +5,7 @@ import { Azumarill } from './azumarill';
 import { Basculin } from './basculin';
 import { BattleVIPPass } from './battle-vip-pass';
 import { JudgeFST } from './card-images';
+import { Cloyster } from './cloyster';
 import { Cook } from './cook';
 import { Creamomatic } from './cram-o-matic';
 import { Croagunk } from './croagunk';
@@ -21,6 +22,7 @@ import { GengarVMAX } from './gengar-vmax';
 import { Heatmor } from './heatmor';
 import { InteleonV } from './inteleon-v';
 import { InteleonVMAX } from './inteleon-vmax';
+import { Lapras } from './lapras';
 import { Meloetta } from './meloetta';
 import { MewV } from './mew-v';
 import { MewVMAX } from './mew-vmax';
@@ -45,6 +47,7 @@ export const setFusionStrike: Card[] = [
   new Azumarill(),
   new Basculin(),
   new BattleVIPPass(),
+  new Cloyster(),
   new Creamomatic(),
   new Croagunk(),
   new CrossSwitcher(),
@@ -62,6 +65,7 @@ export const setFusionStrike: Card[] = [
   new InteleonV(),
   new InteleonVMAX(),
   new JudgeFST(),
+  new Lapras(),
   new Meloetta(),
   new MewV(),
   new MewVMAX(),

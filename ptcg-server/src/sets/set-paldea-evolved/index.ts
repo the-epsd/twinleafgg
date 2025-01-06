@@ -43,6 +43,7 @@ import { Noivernex } from './noivern-ex';
 import { Orthworm } from './orthworm';
 import { Pelipper } from './pelipper';
 import { Pineco } from './pineco';
+import { PracticeStudio } from './practice-studio';
 import { ReversalEnergy } from './reversal-energy';
 import { Shinx } from './shinx';
 import { Spiritomb } from './spiritomb';
@@ -108,6 +109,7 @@ export const setPaldeaEvolved: Card[] = [
   new Orthworm(),
   new Pelipper(),
   new Pineco(),
+  new PracticeStudio(),
   new ReversalEnergy(),
   new Shinx(),
   new Spiritomb(),

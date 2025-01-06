@@ -1,50 +1,40 @@
-import { GameMessage, PlayerType, PokemonCardList, StateUtils } from '../../game';
+import { CoinFlipPrompt, GameMessage, PlayerType, PokemonCardList, State, StateUtils, StoreLike } from '../../game';
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Attack } from '../../game/store/card/pokemon-types';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { CoinFlipPrompt } from '../../game/store/prompts/coin-flip-prompt';
-import { State } from '../../game/store/state/state';
-import { StoreLike } from '../../game/store/store-like';
 
-export class Sandshrew extends PokemonCard {
+export class Wimpod extends PokemonCard {
+  public stage: Stage = Stage.BASIC;
 
-  public name = 'Sandshrew';
+  public cardType: CardType = CardType.WATER;
+
+  public hp: number = 70;
+
+  public weakness = [{ type: CardType.GRASS }];
+  
+  public retreat = [CardType.COLORLESS];
+
+  public attacks = [{
+    name: 'Sand Attack',
+    cost: [CardType.WATER],
+    damage: 10,
+    text: 'If the Defending Pokémon tries to attack during your opponent\'s next turn, your opponent flips a coin. If tails, that attack doesn\'t happen.'
+  }];
+
+  public set: string = 'UNM';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public set = 'BS';
+  public setNumber: string = '50';
 
-  public fullName = 'Sandshrew BS';
+  public name: string = 'Wimpod';
 
-  public cardType = CardType.FIGHTING;
-
-  public setNumber = '62';
-
-  public stage = Stage.BASIC;
-
-  public evolvesInto = ['Sandslash', 'Dark Sandslash'];
-
-  public hp = 40;
-
-  public weakness = [{ type: CardType.GRASS }];
-
-  public resistance = [{ type: CardType.LIGHTNING, value: -30 }];
-
-  public retreat = [CardType.COLORLESS];
-
-  public attacks: Attack[] = [
-    {
-      name: 'Sand-attack',
-      cost: [CardType.FIGHTING],
-      damage: 10,
-      text: 'If the Defending Pokémon tries to attack during your opponent\'s next turn, your opponent flips a coin. If tails, that attack does nothing.'
-    }
-  ];
+  public fullName: string = 'Wimpod UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -80,5 +70,4 @@ export class Sandshrew extends PokemonCard {
 
     return state;
   }
-
 }

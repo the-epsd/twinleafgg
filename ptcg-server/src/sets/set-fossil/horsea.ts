@@ -47,7 +47,6 @@ export class Horsea extends PokemonCard {
       return store.prompt(state, new CoinFlipPrompt(effect.player.id, GameMessage.COIN_FLIP), (heads) => {
         if (!heads) {
           effect.preventDefault = true;
-          store.reduceEffect(state, effect);
         }
       });
     }

@@ -42,6 +42,7 @@ import { Pidgey } from './pidgey';
 import { RigidBand } from './rigid-band';
 import { Sandshrew } from './sandshrew';
 import { Scyther } from './scyther';
+import { Seaking } from './seaking';
 import { Squirtle } from './squirtle';
 import { Staryu } from './staryu';
 import { Venomoth } from './venomoth';
@@ -94,6 +95,7 @@ export const setPokemon151: Card[] = [
   new RigidBand(),
   new Sandshrew(),
   new Scyther(),
+  new Seaking(),
   new Squirtle(),
   new Staryu(),
   new Venonat(),
