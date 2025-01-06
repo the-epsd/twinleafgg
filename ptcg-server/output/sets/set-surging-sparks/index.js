@@ -28,6 +28,7 @@ const exeggcute_1 = require("./exeggcute");
 const flygon_ex_1 = require("./flygon-ex");
 const fuecoco_1 = require("./fuecoco");
 const gimmighoul_1 = require("./gimmighoul");
+const gouging_fire_1 = require("./gouging-fire");
 const gravity_mountain_1 = require("./gravity-mountain");
 const helper_bell_1 = require("./helper.bell");
 const ho_oh_1 = require("./ho-oh");
@@ -147,6 +148,7 @@ exports.setSurgingSparks = [
     new gimmighoul_1.Gimmighoul(),
     new energy_search_pro_1.EnergySearchPRO(),
     new surfer_1.Surfer(),
+    new gouging_fire_1.GougingFire(),
     //Reprints
     new card_images_1.ScrambleSwitchSSP(),
     new card_images_1.CounterGainSSP(),

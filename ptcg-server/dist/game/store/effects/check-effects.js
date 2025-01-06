@@ -11,6 +11,7 @@ export var CheckEffects;
     CheckEffects["CHECK_ENOUGH_ENERGY_EFFECT"] = "CHECK_ENOUGH_ENERGY_EFFECT";
     CheckEffects["CHECK_POKEMON_PLAYED_TURN_EFFECT"] = "CHECK_POKEMON_PLAYED_TURN_EFFECT";
     CheckEffects["CHECK_TABLE_STATE_EFFECT"] = "CHECK_TABLE_STATE_EFFECT";
+    CheckEffects["ADD_SPECIAL_CONDITIONS_EFFECT"] = "ADD_SPECIAL_CONDITIONS_EFFECT";
 })(CheckEffects || (CheckEffects = {}));
 export class CheckPokemonPowersEffect {
     constructor(player, target) {
@@ -110,5 +111,16 @@ export class CheckTableStateEffect {
         this.type = CheckEffects.CHECK_TABLE_STATE_EFFECT;
         this.preventDefault = false;
         this.benchSizes = benchSizes;
+    }
+}
+export class AddSpecialConditionsPowerEffect {
+    constructor(player, power, card, target, specialConditions) {
+        this.type = CheckEffects.ADD_SPECIAL_CONDITIONS_EFFECT;
+        this.preventDefault = false;
+        this.player = player;
+        this.power = power;
+        this.card = card;
+        this.target = target;
+        this.specialConditions = specialConditions;
     }
 }

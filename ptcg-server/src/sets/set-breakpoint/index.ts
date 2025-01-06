@@ -5,7 +5,6 @@ import { FightingFuryBelt } from './fighting-fury-belt';
 import { Froakie } from './froakie';
 import { Kricketot } from './kricketot';
 import { MaxElixir } from './max-elixir';
-import { MrMime } from '../set-breakthrough/mr-mime';
 import { Phantump } from './phantump';
 import { ReverseValley } from './reverse-valley';
 import { SplashEnergy } from './splash-energy';

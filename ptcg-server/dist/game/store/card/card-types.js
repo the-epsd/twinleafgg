@@ -32,6 +32,7 @@ export var CardTag;
     CardTag["NS"] = "NS";
     CardTag["IONOS"] = "IONOS";
     CardTag["HOPS"] = "HOPS";
+    CardTag["DELTA_SPECIES"] = "DELTA_SPECIES";
 })(CardTag || (CardTag = {}));
 export var SuperType;
 (function (SuperType) {

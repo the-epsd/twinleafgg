@@ -7,7 +7,6 @@ const fighting_fury_belt_1 = require("./fighting-fury-belt");
 const froakie_1 = require("./froakie");
 const kricketot_1 = require("./kricketot");
 const max_elixir_1 = require("./max-elixir");
-const mr_mime_1 = require("./mr-mime");
 const phantump_1 = require("./phantump");
 const reverse_valley_1 = require("./reverse-valley");
 const splash_energy_1 = require("./splash-energy");
@@ -21,7 +20,6 @@ exports.setBreakpoint = [
     new froakie_1.Froakie(),
     new kricketot_1.Kricketot(),
     new max_elixir_1.MaxElixir(),
-    new mr_mime_1.MrMime(),
     new phantump_1.Phantump(),
     new reverse_valley_1.ReverseValley(),
     new splash_energy_1.SplashEnergy(),
