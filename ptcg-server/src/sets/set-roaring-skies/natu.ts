@@ -1,7 +1,7 @@
-import { EnergyCard, GamePhase, State, StateUtils, StoreLike } from '../../game';
-import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
+import { Stage, CardType } from '../../game/store/card/card-types';
 import { PowerType } from '../../game/store/card/pokemon-types';
+import { StoreLike, State, StateUtils, GamePhase, EnergyCard } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, KnockOutEffect } from '../../game/store/effects/game-effects';
 
@@ -35,7 +35,7 @@ export class Natu extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     // Delta Plus
-    if (effect instanceof KnockOutEffect && StateUtils.getOpponent(state, effect.player).active.getPokemonCard() === this) {
+    if (effect instanceof KnockOutEffect) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -44,6 +44,11 @@ export class Natu extends PokemonCard {
         return state;
       }
 
+      // Natu wasn't attacking
+      const pokemonCard = opponent.active.getPokemonCard();
+      if (pokemonCard !== this) {
+        return state;
+      }
       if (effect.prizeCount > 0) {
         effect.prizeCount += 1;
         return state;
