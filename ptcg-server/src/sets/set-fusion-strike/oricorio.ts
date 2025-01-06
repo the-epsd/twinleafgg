@@ -12,7 +12,7 @@ import { CheckHpEffect } from '../../game/store/effects/check-effects';
 
 export class Oricorio extends PokemonCard {
 
-  public tags = [ CardTag.FUSION_STRIKE ];
+  public tags = [CardTag.FUSION_STRIKE];
 
   public regulationMark = 'E';
 
@@ -24,7 +24,7 @@ export class Oricorio extends PokemonCard {
 
   public weakness = [{ type: CardType.WATER }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public powers = [{
     name: 'Lesson in Zeal',
@@ -34,7 +34,7 @@ export class Oricorio extends PokemonCard {
 
   public attacks = [{
     name: 'Glistening Droplets',
-    cost: [ CardType.FIRE, CardType.COLORLESS ],
+    cost: [CardType.FIRE, CardType.COLORLESS],
     damage: 0,
     text: 'Put 5 damage counters on your opponent\'s Pokémon in ' +
       'any way you like.'
@@ -55,7 +55,7 @@ export class Oricorio extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      
+
       const maxAllowedDamage: DamageMap[] = [];
       let damageLeft = 0;
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
@@ -64,14 +64,14 @@ export class Oricorio extends PokemonCard {
         damageLeft += checkHpEffect.hp - cardList.damage;
         maxAllowedDamage.push({ target, damage: checkHpEffect.hp });
       });
-      
+
       const damage = Math.min(50, damageLeft);
-    
+
       return store.prompt(state, new PutDamagePrompt(
         effect.player.id,
         GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
         PlayerType.TOP_PLAYER,
-        [ SlotType.ACTIVE, SlotType.BENCH ],
+        [SlotType.ACTIVE, SlotType.BENCH],
         damage,
         maxAllowedDamage,
         { allowCancel: false }
@@ -85,20 +85,29 @@ export class Oricorio extends PokemonCard {
         }
       });
     }
-    
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+
+    if (effect instanceof PutDamageEffect) {
       const player = effect.player;
-      
+
       const activePokemon = player.active.getPokemonCard();
       const activeFusion = activePokemon && activePokemon.tags.includes(CardTag.FUSION_STRIKE);
       const benchPokemon = player.bench.map(b => b.getPokemonCard()).filter(card => card !== undefined) as PokemonCard[];
       const benchFusion = benchPokemon.filter(card => card.tags.includes(CardTag.FUSION_STRIKE));
 
-      if (effect instanceof PutDamageEffect) {
-        if (activeFusion || benchFusion) {
-          effect.damage -= 20;
-        }
+      // Try to reduce PowerEffect, to check if something is blocking our ability
+      try {
+        const stub = new PowerEffect(player, {
+          name: 'test',
+          powerType: PowerType.ABILITY,
+          text: ''
+        }, this);
+        store.reduceEffect(state, stub);
+      } catch {
         return state;
+      }
+
+      if (activeFusion || benchFusion) {
+        effect.damage -= 20;
       }
       return state;
     }
