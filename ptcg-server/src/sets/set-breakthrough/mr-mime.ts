@@ -1,8 +1,8 @@
+import { CoinFlipPrompt, GameMessage, PlayerType, PowerType, State, StateUtils, StoreLike } from '../../game';
+import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, PlayerType, PowerType, StateUtils, CoinFlipPrompt, GameMessage } from '../../game';
-import { Effect } from '../../game/store/effects/effect';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 
 export class MrMime extends PokemonCard {
@@ -27,9 +27,9 @@ export class MrMime extends PokemonCard {
     text: 'Flip 4 coins. This attack does 10 damage times the number of heads.'
   }];
 
-  public set: string = 'BKP';
+  public set: string = 'BKT';
   public name: string = 'Mr. Mime';
-  public fullName: string = 'Mr. Mime BKP';
+  public fullName: string = 'Mr. Mime BKT';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '97';
 
