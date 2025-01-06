@@ -74,32 +74,7 @@ export class MysteryEnergy extends EnergyCard {
       }
       return state;
     }
-
-    // Discard card when not attached to Psychic Pokemon
-    if (effect instanceof CheckTableStateEffect) {
-      state.players.forEach(player => {
-        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-          if (!cardList.cards.includes(this)) {
-            return;
-          }
-
-          try {
-            const energyEffect = new EnergyEffect(player, this);
-            store.reduceEffect(state, energyEffect);
-          } catch {
-            return state;
-          }
-
-          const checkPokemonType = new CheckPokemonTypeEffect(cardList);
-          store.reduceEffect(state, checkPokemonType);
-          if (!checkPokemonType.cardTypes.includes(CardType.PSYCHIC)) {
-            cardList.moveCardTo(this, player.discard);
-          }
-        });
-      });
-      return state;
-    }
-
+    
     if (effect instanceof CheckRetreatCostEffect) {
       const player = effect.player;
 

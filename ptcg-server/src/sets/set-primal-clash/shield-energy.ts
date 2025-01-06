@@ -81,30 +81,23 @@ export class ShieldEnergy extends EnergyCard {
         return state;
       }
     }
+    
+    if (effect instanceof AttachEnergyEffect && effect.energyCard === this) {
+      const checkPokemonType = new CheckPokemonTypeEffect(effect.target);
+      store.reduceEffect(state, checkPokemonType);
 
-    if (effect instanceof CheckTableStateEffect) {
-      state.players.forEach(player => {
-        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-          if (!cardList.cards.includes(this)) {
-            return;
-          }
-
-          try {
-            const energyEffect = new EnergyEffect(player, this);
-            store.reduceEffect(state, energyEffect);
-          } catch {
-            return state;
-          }
-
-          const checkPokemonType = new CheckPokemonTypeEffect(cardList);
-          store.reduceEffect(state, checkPokemonType);
-
-          if (!checkPokemonType.cardTypes.includes(CardType.METAL)) {
-            cardList.moveCardTo(this, player.discard);
-          }
-        });
-      });
-      return state;
+      const player = effect.player;
+      
+      try {
+        const energyEffect = new EnergyEffect(player, this);
+        store.reduceEffect(state, energyEffect);
+      } catch {
+        return state;
+      }
+      
+      if (!checkPokemonType.cardTypes.includes(CardType.METAL)) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      }
     }
 
     return state;
