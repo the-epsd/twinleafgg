@@ -40,13 +40,13 @@ class IonosVoltorb extends pokemon_card_1.PokemonCard {
                     const checkProvidedEnergyEffect = new check_effects_1.CheckProvidedEnergyEffect(player, cardList);
                     store.reduceEffect(state, checkProvidedEnergyEffect);
                     checkProvidedEnergyEffect.energyMap.forEach(energy => {
-                        if (energy.provides.includes(card_types_1.CardType.LIGHTNING)) {
+                        if (energy.provides.includes(card_types_1.CardType.LIGHTNING) || energy.provides.includes(card_types_1.CardType.ANY)) {
                             energies += 1;
                         }
                     });
                 }
             });
-            effect.damage = 20 + energies * 30;
+            effect.damage = 20 + energies * 20;
         }
         return state;
     }

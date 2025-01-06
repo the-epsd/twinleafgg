@@ -31,7 +31,7 @@ class PorygonZ extends pokemon_card_1.PokemonCard {
                 text: 'This Pokémon is now Confused.'
             }
         ];
-        this.set = 'PAL';
+        this.set = 'UNB';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '157';
         this.name = 'Porygon-Z';

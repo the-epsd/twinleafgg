@@ -10,6 +10,7 @@ const electromagnetic_radar_1 = require("./electromagnetic-radar");
 const espurr_1 = require("./espurr");
 const fire_crystal_1 = require("./fire-crystal");
 const gloom_1 = require("./gloom");
+const goldeen_1 = require("./goldeen");
 const greens_exploration_1 = require("./greens-exploration");
 const hitmontop_1 = require("./hitmontop");
 const kartana_1 = require("./kartana");
@@ -45,6 +46,7 @@ exports.setUnbrokenBonds = [
     new espurr_1.Espurr(),
     new fire_crystal_1.FireCrystal(),
     new gloom_1.Gloom(),
+    new goldeen_1.Goldeen(),
     new greens_exploration_1.GreensExploration(),
     new hitmontop_1.Hitmontop(),
     new kartana_1.Kartana(),

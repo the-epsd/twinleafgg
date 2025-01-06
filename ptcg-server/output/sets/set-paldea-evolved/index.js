@@ -45,6 +45,7 @@ const noivern_ex_1 = require("./noivern-ex");
 const orthworm_1 = require("./orthworm");
 const pelipper_1 = require("./pelipper");
 const pineco_1 = require("./pineco");
+const practice_studio_1 = require("./practice-studio");
 const reversal_energy_1 = require("./reversal-energy");
 const shinx_1 = require("./shinx");
 const spiritomb_1 = require("./spiritomb");
@@ -108,6 +109,7 @@ exports.setPaldeaEvolved = [
     new orthworm_1.Orthworm(),
     new pelipper_1.Pelipper(),
     new pineco_1.Pineco(),
+    new practice_studio_1.PracticeStudio(),
     new reversal_energy_1.ReversalEnergy(),
     new shinx_1.Shinx(),
     new spiritomb_1.Spiritomb(),

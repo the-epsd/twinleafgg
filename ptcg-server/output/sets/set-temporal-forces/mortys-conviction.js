@@ -20,7 +20,7 @@ function* playCard(next, store, state, self, effect) {
     // We will discard this card after prompt confirmation
     effect.preventDefault = true;
     cards = player.hand.cards.filter(c => c !== self);
-    if (cards.length < 2) {
+    if (cards.length < 1) {
         throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
     }
     if (player.deck.cards.length === 0) {

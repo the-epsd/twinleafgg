@@ -7,6 +7,7 @@ const cottonee_1 = require("./cottonee");
 const dark_city_1 = require("./dark-city");
 const flyinium_z_air_slash_1 = require("./flyinium-z-air-slash");
 const froslass_1 = require("./froslass");
+const golisopod_1 = require("./golisopod");
 const hapu_1 = require("./hapu");
 const hoopa_1 = require("./hoopa");
 const karate_belt_1 = require("./karate-belt");
@@ -25,6 +26,7 @@ const tag_switch_1 = require("./tag_switch");
 const u_turn_board_1 = require("./u-turn-board");
 const weakness_guard_energy_1 = require("./weakness-guard-energy");
 const whimsicott_1 = require("./whimsicott");
+const wimpod_1 = require("./wimpod");
 exports.setUnifiedMinds = [
     new alolan_grimer_1.AlolanGrimer(),
     new alolan_raichu_1.AlolanRaichu(),
@@ -32,6 +34,7 @@ exports.setUnifiedMinds = [
     new dark_city_1.DarkCity(),
     new flyinium_z_air_slash_1.FlyiniumZAirSlash(),
     new froslass_1.Froslass(),
+    new golisopod_1.Golisopod(),
     new hapu_1.Hapu(),
     new hoopa_1.Hoopa(),
     new karate_belt_1.KarateBelt(),
@@ -49,5 +52,6 @@ exports.setUnifiedMinds = [
     new tag_switch_1.TagSwitch(),
     new u_turn_board_1.UTurnBoard(),
     new weakness_guard_energy_1.WeaknessGuardEnergy(),
-    new whimsicott_1.Whimsicott()
+    new whimsicott_1.Whimsicott(),
+    new wimpod_1.Wimpod()
 ];

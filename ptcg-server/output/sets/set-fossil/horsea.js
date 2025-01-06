@@ -45,7 +45,6 @@ class Horsea extends pokemon_card_1.PokemonCard {
             return store.prompt(state, new game_1.CoinFlipPrompt(effect.player.id, game_1.GameMessage.COIN_FLIP), (heads) => {
                 if (!heads) {
                     effect.preventDefault = true;
-                    store.reduceEffect(state, effect);
                 }
             });
         }

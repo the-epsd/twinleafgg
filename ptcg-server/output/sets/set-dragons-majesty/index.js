@@ -6,6 +6,7 @@ const croconaw_1 = require("./croconaw");
 const feebas_1 = require("./feebas");
 const feraligatr_1 = require("./feraligatr");
 const fiery_flint_1 = require("./fiery-flint");
+const horsea_1 = require("./horsea");
 const quagsire_1 = require("./quagsire");
 const salandit_1 = require("./salandit");
 const switch_raft_1 = require("./switch-raft");
@@ -17,6 +18,7 @@ exports.setDragonsMajesty = [
     new feebas_1.Feebas(),
     new feraligatr_1.Feraligatr(),
     new fiery_flint_1.FieryFlint(),
+    new horsea_1.Horsea(),
     new quagsire_1.Quagsire(),
     new salandit_1.Salandit(),
     new switch_raft_1.SwitchRaft(),

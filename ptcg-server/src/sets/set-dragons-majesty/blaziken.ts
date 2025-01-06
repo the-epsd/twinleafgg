@@ -10,7 +10,7 @@ import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effect
 import { DealDamageEffect, DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 
 export class Blaziken extends PokemonCard {
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.STAGE_2;
   public cardType: CardType = CardType.FIRE;
   public hp: number = 150;
   public weakness = [{ type: CardType.WATER }];

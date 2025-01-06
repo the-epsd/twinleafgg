@@ -4,7 +4,6 @@ exports.MysteryEnergy = void 0;
 const card_types_1 = require("../../game/store/card/card-types");
 const energy_card_1 = require("../../game/store/card/energy-card");
 const check_effects_1 = require("../../game/store/effects/check-effects");
-const play_card_action_1 = require("../../game/store/actions/play-card-action");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 const game_error_1 = require("../../game/game-error");
 const game_message_1 = require("../../game/game-message");
@@ -58,29 +57,6 @@ class MysteryEnergy extends energy_card_1.EnergyCard {
             if (checkPokemonType.cardTypes.includes(card_types_1.CardType.PSYCHIC)) {
                 effect.energyMap.push({ card: this, provides: [card_types_1.CardType.PSYCHIC] });
             }
-            return state;
-        }
-        // Discard card when not attached to Psychic Pokemon
-        if (effect instanceof check_effects_1.CheckTableStateEffect) {
-            state.players.forEach(player => {
-                player.forEachPokemon(play_card_action_1.PlayerType.BOTTOM_PLAYER, cardList => {
-                    if (!cardList.cards.includes(this)) {
-                        return;
-                    }
-                    try {
-                        const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
-                        store.reduceEffect(state, energyEffect);
-                    }
-                    catch (_a) {
-                        return state;
-                    }
-                    const checkPokemonType = new check_effects_1.CheckPokemonTypeEffect(cardList);
-                    store.reduceEffect(state, checkPokemonType);
-                    if (!checkPokemonType.cardTypes.includes(card_types_1.CardType.PSYCHIC)) {
-                        cardList.moveCardTo(this, player.discard);
-                    }
-                });
-            });
             return state;
         }
         if (effect instanceof check_effects_1.CheckRetreatCostEffect) {

@@ -1,10 +1,9 @@
+import { State, StoreLike } from '../../game';
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { PowerType } from '../../game/store/card/pokemon-types';
 import { Effect } from '../../game/store/effects/effect';
-import { State } from '../../game/store/state/state';
-import { StoreLike } from '../../game/store/store-like';
-export declare class Bronzong extends PokemonCard {
+export declare class Seadra extends PokemonCard {
+    regulationMark: string;
     stage: Stage;
     evolvesFrom: string;
     cardType: CardType;
@@ -12,17 +11,7 @@ export declare class Bronzong extends PokemonCard {
     weakness: {
         type: CardType;
     }[];
-    resistance: {
-        type: CardType;
-        value: number;
-    }[];
     retreat: CardType[];
-    powers: {
-        name: string;
-        useWhenInPlay: boolean;
-        powerType: PowerType;
-        text: string;
-    }[];
     attacks: {
         name: string;
         cost: CardType[];
@@ -30,10 +19,11 @@ export declare class Bronzong extends PokemonCard {
         text: string;
     }[];
     set: string;
-    name: string;
-    fullName: string;
     cardImage: string;
     setNumber: string;
-    readonly METAL_LINKS_MARKER = "METAL_LINKS_MARKER";
+    name: string;
+    fullName: string;
+    readonly PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER = "PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER";
+    readonly CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER = "CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

@@ -49,7 +49,7 @@ class Swanna extends pokemon_card_1.PokemonCard {
         this.attacks = [
             {
                 name: 'Feather Slice',
-                cost: [card_types_1.CardType.COLORLESS],
+                cost: [C, C, C],
                 damage: 70,
                 text: 'You may discard a card from your hand. If you do, this attack does 70 more damage.',
             }

@@ -40,7 +40,7 @@ export class PorygonZ extends PokemonCard {
     }
   ];
 
-  public set: string = 'PAL';
+  public set: string = 'UNB';
 
   public cardImage: string = 'assets/cardback.png';
 
@@ -69,7 +69,7 @@ export class PorygonZ extends PokemonCard {
       if (!hasEnergyInHand) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
-      
+
       try {
         const stub = new PowerEffect(player, {
           name: 'test',

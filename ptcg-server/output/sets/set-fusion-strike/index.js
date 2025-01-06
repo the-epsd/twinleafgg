@@ -7,6 +7,7 @@ const azumarill_1 = require("./azumarill");
 const basculin_1 = require("./basculin");
 const battle_vip_pass_1 = require("./battle-vip-pass");
 const card_images_1 = require("./card-images");
+const cloyster_1 = require("./cloyster");
 const cook_1 = require("./cook");
 const cram_o_matic_1 = require("./cram-o-matic");
 const croagunk_1 = require("./croagunk");
@@ -23,6 +24,7 @@ const gengar_vmax_1 = require("./gengar-vmax");
 const heatmor_1 = require("./heatmor");
 const inteleon_v_1 = require("./inteleon-v");
 const inteleon_vmax_1 = require("./inteleon-vmax");
+const lapras_1 = require("./lapras");
 const meloetta_1 = require("./meloetta");
 const mew_v_1 = require("./mew-v");
 const mew_vmax_1 = require("./mew-vmax");
@@ -44,6 +46,7 @@ exports.setFusionStrike = [
     new azumarill_1.Azumarill(),
     new basculin_1.Basculin(),
     new battle_vip_pass_1.BattleVIPPass(),
+    new cloyster_1.Cloyster(),
     new cram_o_matic_1.Creamomatic(),
     new croagunk_1.Croagunk(),
     new cross_switcher_1.CrossSwitcher(),
@@ -61,6 +64,7 @@ exports.setFusionStrike = [
     new inteleon_v_1.InteleonV(),
     new inteleon_vmax_1.InteleonVMAX(),
     new card_images_1.JudgeFST(),
+    new lapras_1.Lapras(),
     new meloetta_1.Meloetta(),
     new mew_v_1.MewV(),
     new mew_vmax_1.MewVMAX(),

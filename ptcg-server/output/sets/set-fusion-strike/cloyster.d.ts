@@ -1,8 +1,11 @@
+import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, PowerType } from '../../game';
+import { PowerType } from '../../game/store/card/pokemon-types';
 import { Effect } from '../../game/store/effects/effect';
-export declare class Swanna extends PokemonCard {
+import { State } from '../../game/store/state/state';
+import { StoreLike } from '../../game/store/store-like';
+export declare class Cloyster extends PokemonCard {
+    regulationMark: string;
     stage: Stage;
     evolvesFrom: string;
     cardType: CardType;
@@ -10,11 +13,7 @@ export declare class Swanna extends PokemonCard {
     weakness: {
         type: CardType;
     }[];
-    resistance: {
-        type: CardType;
-        value: number;
-    }[];
-    retreat: never[];
+    retreat: CardType[];
     powers: {
         name: string;
         powerType: PowerType;
@@ -22,16 +21,15 @@ export declare class Swanna extends PokemonCard {
     }[];
     attacks: {
         name: string;
-        cost: CardType.COLORLESS[];
+        cost: CardType[];
         damage: number;
+        damageCalculation: string;
         text: string;
     }[];
-    regulationMark: string;
     set: string;
-    setNumber: string;
     cardImage: string;
+    setNumber: string;
     name: string;
     fullName: string;
-    private readonly SWANNA_SKY_CIRCUS_MARKER;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

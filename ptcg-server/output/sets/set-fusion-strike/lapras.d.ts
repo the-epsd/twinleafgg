@@ -1,30 +1,23 @@
+import { State, StoreLike } from '../../game';
+import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, PowerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-export declare class HopsDubwool extends PokemonCard {
-    tags: CardTag[];
+export declare class Lapras extends PokemonCard {
     stage: Stage;
-    evolvesFrom: string;
     cardType: CardType;
     hp: number;
     weakness: {
-        type: CardType.FIGHTING;
+        type: CardType;
     }[];
-    retreat: CardType.COLORLESS[];
-    powers: {
-        name: string;
-        powerType: PowerType;
-        text: string;
-    }[];
+    retreat: CardType[];
     attacks: {
         name: string;
-        cost: CardType.COLORLESS[];
+        cost: CardType[];
         damage: number;
         text: string;
     }[];
-    regulationMark: string;
     set: string;
+    regulationMark: string;
     cardImage: string;
     setNumber: string;
     name: string;
