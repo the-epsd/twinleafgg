@@ -26,6 +26,7 @@ import { Exeggcute } from './exeggcute';
 import { Flygonex } from './flygon-ex';
 import { Fuecoco } from './fuecoco';
 import { Gimmighoul } from './gimmighoul';
+import { GougingFire, GougingFireex } from './gouging-fire';
 import { GravityMountain } from './gravity-mountain';
 import { HelperBell } from './helper.bell';
 import { HoOh } from './ho-oh';
@@ -146,7 +147,8 @@ export const setSurgingSparks: Card[] = [
   new Gimmighoul(),
   new EnergySearchPRO(),
   new Surfer(),
-
+  new GougingFire()
+  
   //Reprints
   new ScrambleSwitchSSP(),
   new CounterGainSSP(),
