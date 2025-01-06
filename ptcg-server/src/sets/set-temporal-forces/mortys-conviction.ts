@@ -27,7 +27,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   effect.preventDefault = true;
   
   cards = player.hand.cards.filter(c => c !== self);
-  if (cards.length < 2) {
+  if (cards.length < 1) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
