@@ -147,7 +147,7 @@ export const setSurgingSparks: Card[] = [
   new Gimmighoul(),
   new EnergySearchPRO(),
   new Surfer(),
-  new GougingFire()
+  new GougingFire(),
   
   //Reprints
   new ScrambleSwitchSSP(),
