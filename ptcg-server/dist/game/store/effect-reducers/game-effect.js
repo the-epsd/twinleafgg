@@ -2,7 +2,7 @@ import { GameError } from '../../game-error';
 import { GameLog, GameMessage } from '../../game-message';
 import { CardTag, SpecialCondition, Stage, SuperType } from '../card/card-types';
 import { ApplyWeaknessEffect, DealDamageEffect } from '../effects/attack-effects';
-import { CheckAttackCostEffect, CheckPokemonStatsEffect, CheckPokemonTypeEffect, CheckProvidedEnergyEffect } from '../effects/check-effects';
+import { AddSpecialConditionsPowerEffect, CheckAttackCostEffect, CheckPokemonStatsEffect, CheckPokemonTypeEffect, CheckProvidedEnergyEffect } from '../effects/check-effects';
 import { AttackEffect, EvolveEffect, HealEffect, KnockOutEffect, PowerEffect, TrainerPowerEffect, UseAttackEffect, UsePowerEffect, UseStadiumEffect, UseTrainerPowerEffect } from '../effects/game-effects';
 import { EndTurnEffect } from '../effects/game-phase-effects';
 import { ChooseAttackPrompt } from '../prompts/choose-attack-prompt';
@@ -216,6 +216,16 @@ export function gameReducer(store, state, effect) {
         const card = effect.card;
         store.log(state, GameLog.LOG_PLAYER_USES_ABILITY, { name: player.name, ability: power.name });
         state = store.reduceEffect(state, new TrainerPowerEffect(player, power, card));
+        return state;
+    }
+    if (effect instanceof AddSpecialConditionsPowerEffect) {
+        const target = effect.target;
+        effect.specialConditions.forEach(sp => {
+            target.addSpecialCondition(sp);
+        });
+        if (effect.poisonDamage !== undefined) {
+            target.poisonDamage = effect.poisonDamage;
+        }
         return state;
     }
     if (effect instanceof UseStadiumEffect) {

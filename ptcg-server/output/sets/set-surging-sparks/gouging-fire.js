@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.GougingFireex = void 0;
+exports.GougingFire = void 0;
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
-class GougingFireex extends pokemon_card_1.PokemonCard {
+class GougingFire extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.tags = [card_types_1.CardTag.ANCIENT];
@@ -48,4 +48,4 @@ class GougingFireex extends pokemon_card_1.PokemonCard {
         return state;
     }
 }
-exports.GougingFireex = GougingFireex;
+exports.GougingFire = GougingFire;

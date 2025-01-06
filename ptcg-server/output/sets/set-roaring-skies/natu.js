@@ -34,7 +34,7 @@ class Natu extends pokemon_card_1.PokemonCard {
     }
     reduceEffect(store, state, effect) {
         // Delta Plus
-        if (effect instanceof game_effects_1.KnockOutEffect && effect.target === effect.player.active) {
+        if (effect instanceof game_effects_1.KnockOutEffect) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             // Do not activate between turns, or when it's not opponents turn.

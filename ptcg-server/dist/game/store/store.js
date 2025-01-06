@@ -25,7 +25,7 @@ import { abortGameReducer } from './reducers/abort-game-reducer';
 export class Store {
     constructor(handler) {
         this.handler = handler;
-        this.effectHistory = [];
+        //private effectHistory: Effect[] = [];
         this.state = new State();
         this.promptItems = [];
         this.waitItems = [];
@@ -65,8 +65,18 @@ export class Store {
         return state;
     }
     reduceEffect(state, effect) {
-        this.checkEffectHistory(state, effect);
+        // this.checkEffectHistory(state, effect);
+        var _a, _b, _c, _d;
         state = this.propagateEffect(state, effect);
+        const cardEffect = effect;
+        if (cardEffect.card)
+            console.log(`Running effect: ${effect.type} for card ${(_a = cardEffect.card) === null || _a === void 0 ? void 0 : _a.name}`);
+        if (cardEffect.energyCard)
+            console.log(`Running effect: ${effect.type} for card ${(_b = cardEffect.energyCard) === null || _b === void 0 ? void 0 : _b.name}`);
+        if (cardEffect.trainerCard)
+            console.log(`Running effect: ${effect.type} for card ${(_c = cardEffect.trainerCard) === null || _c === void 0 ? void 0 : _c.name}`);
+        if (cardEffect.pokemonCard)
+            console.log(`Running effect: ${effect.type} for card ${(_d = cardEffect.pokemonCard) === null || _d === void 0 ? void 0 : _d.name}`);
         if (effect.preventDefault === true) {
             return state;
         }
@@ -80,29 +90,28 @@ export class Store {
         state = checkStateReducer(this, state, effect);
         return state;
     }
-    checkEffectHistory(state, effect) {
-        var _a;
-        if (this.effectHistory.length === 300) {
-            this.effectHistory.shift();
-        }
-        this.effectHistory.push(effect);
-        if (this.effectHistory.length === 300) {
-            let isLoop = true;
-            const firstEffect = this.effectHistory[0];
-            this.effectHistory.forEach((effect, index) => {
-                if (index % 5 !== 0) {
-                    return;
-                }
-                if (!this.compareEffects(effect, firstEffect)) {
-                    isLoop = false;
-                }
-            });
-            if (isLoop) {
-                console.error(`Loop detected: ${firstEffect.type}, card: ${(_a = firstEffect.card) === null || _a === void 0 ? void 0 : _a.fullName}`);
-                throw new Error('Loop detected');
-            }
-        }
-    }
+    // checkEffectHistory(state: State, effect: Effect) {
+    //   if (this.effectHistory.length === 300) {
+    //     this.effectHistory.shift();
+    //   }
+    //   this.effectHistory.push(effect);
+    //   if (this.effectHistory.length === 300) {
+    //     let isLoop = true;
+    //     const firstEffect = this.effectHistory[0];
+    //     this.effectHistory.forEach((effect, index) => {
+    //       if (index % 5 !== 0) {
+    //         return;
+    //       }
+    //       if (!this.compareEffects(effect, firstEffect)) {
+    //         isLoop = false;
+    //       }
+    //     });
+    //     if (isLoop) {
+    //       console.error(`Loop detected: ${firstEffect.type}, card: ${(<any>firstEffect).card?.fullName}`);
+    //       throw new Error('Loop detected');
+    //     }
+    //   }
+    // }
     compareEffects(effect1, effect2) {
         var _a, _b, _c, _d, _e, _f, _g, _h;
         if (effect1.type !== effect2.type) {
