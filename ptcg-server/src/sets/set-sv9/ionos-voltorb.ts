@@ -52,14 +52,14 @@ export class IonosVoltorb extends PokemonCard {
           const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player, cardList);
           store.reduceEffect(state, checkProvidedEnergyEffect);
           checkProvidedEnergyEffect.energyMap.forEach(energy => {
-            if (energy.provides.includes(CardType.LIGHTNING)) {
+            if (energy.provides.includes(CardType.LIGHTNING) || energy.provides.includes(CardType.ANY)) {
               energies += 1;
             }
           });
         }
       });
 
-      effect.damage = 20 + energies * 30;
+      effect.damage = 20 + energies * 20;
     }
 
     return state;
