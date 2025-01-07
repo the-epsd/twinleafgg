@@ -52,7 +52,7 @@ export class GyaradosV extends PokemonCard {
       // Get Drifloon's damage
       const gyaradosDamage = effect.player.active.damage;
       
-      // Calculate 30 damage per counter
+      // Calculate 20 damage per counter
       const damagePerCounter = 20;
       effect.damage = gyaradosDamage * damagePerCounter;
       

@@ -13,6 +13,7 @@ class IronMoth extends game_1.PokemonCard {
         this.hp = 120;
         this.weakness = [{ type: game_1.CardType.WATER }];
         this.retreat = [game_1.CardType.COLORLESS, game_1.CardType.COLORLESS];
+        this.tags = [game_1.CardTag.FUTURE];
         this.attacks = [
             {
                 name: 'Suction',

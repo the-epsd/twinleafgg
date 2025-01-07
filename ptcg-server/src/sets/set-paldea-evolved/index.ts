@@ -41,6 +41,7 @@ import { Murkrow } from './murkrow';
 import { Noibat } from './noibat';
 import { Noivernex } from './noivern-ex';
 import { Orthworm } from './orthworm';
+import { PaldeanTauros } from './paldean-tauros';
 import { Pelipper } from './pelipper';
 import { Pineco } from './pineco';
 import { PracticeStudio } from './practice-studio';
@@ -107,6 +108,7 @@ export const setPaldeaEvolved: Card[] = [
   new Noibat(),
   new Noivernex(),
   new Orthworm(),
+  new PaldeanTauros(),
   new Pelipper(),
   new Pineco(),
   new PracticeStudio(),

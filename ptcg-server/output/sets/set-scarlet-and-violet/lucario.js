@@ -48,38 +48,17 @@ class Lucario extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
             effect.player.attackMarker.removeMarker(this.ATTACK_USED_MARKER, this);
             effect.player.attackMarker.removeMarker(this.ATTACK_USED_2_MARKER, this);
-            console.log('marker cleared');
         }
         if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
             effect.player.attackMarker.addMarker(this.ATTACK_USED_2_MARKER, this);
-            console.log('second marker added');
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             // Check marker
             if (effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-                console.log('attack blocked');
                 throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);
             }
             effect.player.attackMarker.addMarker(this.ATTACK_USED_MARKER, this);
-            console.log('marker added');
         }
-        // if (effect instanceof DealDamageEffect || effect instanceof PutDamageEffect) {
-        //   const player = StateUtils.getOpponent(state, effect.player);
-        //   const cardList = StateUtils.findCardList(state, this);
-        //   const owner = StateUtils.findOwner(state, cardList);
-        //   if (player !== owner) {
-        //     this.damageDealt = true;
-        //   } else {
-        //     effect.player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
-        //   }
-        // }
-        // if (effect instanceof EndTurnEffect && effect.player === StateUtils.getOpponent(state, effect.player)) {
-        //   const cardList = StateUtils.findCardList(state, this);
-        //   const owner = StateUtils.findOwner(state, cardList);
-        //   if (owner === effect.player) {
-        //     this.damageDealt = false;
-        //   }
-        // }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             if (player.marker.hasMarker(this.RETALIATE_MARKER)) {

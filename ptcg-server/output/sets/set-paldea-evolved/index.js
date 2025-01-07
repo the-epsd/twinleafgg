@@ -43,6 +43,7 @@ const murkrow_1 = require("./murkrow");
 const noibat_1 = require("./noibat");
 const noivern_ex_1 = require("./noivern-ex");
 const orthworm_1 = require("./orthworm");
+const paldean_tauros_1 = require("./paldean-tauros");
 const pelipper_1 = require("./pelipper");
 const pineco_1 = require("./pineco");
 const practice_studio_1 = require("./practice-studio");
@@ -107,6 +108,7 @@ exports.setPaldeaEvolved = [
     new noibat_1.Noibat(),
     new noivern_ex_1.Noivernex(),
     new orthworm_1.Orthworm(),
+    new paldean_tauros_1.PaldeanTauros(),
     new pelipper_1.Pelipper(),
     new pineco_1.Pineco(),
     new practice_studio_1.PracticeStudio(),

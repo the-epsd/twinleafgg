@@ -64,8 +64,6 @@ export class HisuianBasculegion extends PokemonCard {
       return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
         player.deck.applyOrder(order);
       });
-
-
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {

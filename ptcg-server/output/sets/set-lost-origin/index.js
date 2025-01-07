@@ -50,6 +50,7 @@ const rotom_v_1 = require("./rotom-v");
 const sableye_1 = require("./sableye");
 const seadra_1 = require("./seadra");
 const silcoon_1 = require("./silcoon");
+const slugma_1 = require("./slugma");
 const snorlax_1 = require("./snorlax");
 const thorton_1 = require("./thorton");
 const tynamo_1 = require("./tynamo");
@@ -97,6 +98,7 @@ exports.setLostOrigin = [
     new sableye_1.Sableye(),
     new seadra_1.Seadra(),
     new silcoon_1.Silcoon(),
+    new slugma_1.Slugma(),
     new snorlax_1.Snorlax(),
     new volo_1.Volo(),
     new miss_fortune_sisters_1.MissFortuneSisters(),

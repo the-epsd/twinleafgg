@@ -1,6 +1,9 @@
-import { PokemonCard, Stage, CardType, StoreLike, State, CardTag } from '../../game';
+import { CardType, Stage } from '../../game/store/card/card-types';
+import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
-export declare class IronMoth extends PokemonCard {
+import { State } from '../../game/store/state/state';
+import { StoreLike } from '../../game/store/store-like';
+export declare class Slugma extends PokemonCard {
     stage: Stage;
     cardType: CardType;
     hp: number;
@@ -8,20 +11,17 @@ export declare class IronMoth extends PokemonCard {
         type: CardType;
     }[];
     retreat: CardType[];
-    tags: CardTag[];
     attacks: {
         name: string;
         cost: CardType[];
         damage: number;
         text: string;
     }[];
-    regulationMark: string;
     set: string;
     name: string;
     fullName: string;
     cardImage: string;
+    regulationMark: string;
     setNumber: string;
-    readonly WILD_REJECTOR_MARKER: string;
-    readonly CLEAR_WILD_REJECTOR_MARKER: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }
