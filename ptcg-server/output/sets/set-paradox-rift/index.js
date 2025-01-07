@@ -33,6 +33,7 @@ const hoopa_ex_1 = require("./hoopa-ex");
 const iron_bundle_1 = require("./iron-bundle");
 const iron_hands_ex_1 = require("./iron-hands-ex");
 const iron_jugulis_1 = require("./iron-jugulis");
+const iron_moth_1 = require("./iron-moth");
 const iron_valiant_ex_1 = require("./iron-valiant-ex");
 const jirachi_1 = require("./jirachi");
 const klawf_1 = require("./klawf");
@@ -106,6 +107,7 @@ exports.setParadoxRift = [
     new iron_bundle_1.IronBundle(),
     new iron_hands_ex_1.IronHandsex(),
     new iron_jugulis_1.IronJugulis(),
+    new iron_moth_1.IronMoth(),
     new iron_valiant_ex_1.IronValiantex(),
     new jirachi_1.Jirachi(),
     new klawf_1.Klawf(),

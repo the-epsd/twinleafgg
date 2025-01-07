@@ -1,4 +1,4 @@
-import { PokemonCard, Stage, CardType, StoreLike, State } from '../../game';
+import { PokemonCard, Stage, CardType, StoreLike, State, CardTag } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 export declare class IronMoth extends PokemonCard {
     stage: Stage;
@@ -8,6 +8,7 @@ export declare class IronMoth extends PokemonCard {
         type: CardType;
     }[];
     retreat: CardType[];
+    tags: CardTag[];
     attacks: {
         name: string;
         cost: CardType[];

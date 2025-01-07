@@ -14,13 +14,13 @@ export class SkyPillar extends TrainerCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '160';
+  public setNumber: string = '144';
 
-  public name: string = 'Galar Mine';
+  public name: string = 'Sky Pillar';
 
-  public fullName: string = 'Galar Mine CES';
+  public fullName: string = 'Sky Pillar CES';
 
-  public text: string = 'The Retreat Cost of both Active Pokémon is [C][C] more.';
+  public text: string = 'Prevent all effects of the opponent\'s attacks, including damage, done to Benched Pokémon (both yours and your opponent\'s).';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

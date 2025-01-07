@@ -48,6 +48,7 @@ import { RotomV } from './rotom-v';
 import { Sableye } from './sableye';
 import { Seadra } from './seadra';
 import { Silcoon } from './silcoon';
+import { Slugma } from './slugma';
 import { Snorlax } from './snorlax';
 import { Thorton } from './thorton';
 import { Tynamo } from './tynamo';
@@ -98,6 +99,7 @@ export const setLostOrigin: Card[] = [
   new Sableye(),
   new Seadra(),
   new Silcoon(),
+  new Slugma(),
   new Snorlax(),
   new Volo(),
   new MissFortuneSisters(),

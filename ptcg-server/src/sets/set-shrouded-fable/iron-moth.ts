@@ -10,6 +10,7 @@ export class IronMoth extends PokemonCard {
   public hp: number = 120;
   public weakness = [{ type: CardType.WATER }];
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public tags = [CardTag.FUTURE];
 
   public attacks = [
     {

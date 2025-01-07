@@ -12,6 +12,7 @@ import { Litwick } from './litwick';
 import { LysandresTrumpCard } from './lysandres-trump-card';
 import { MysteryEnergy } from './mystery-energy';
 import { Pumpkaboo } from './pumpkaboo';
+import { Pyroar } from './pyroar';
 import { Regigigas } from './regigigas';
 import { RoboSubstitute } from './robo-substitutue';
 import { Slurpuff } from './slurpuff';
@@ -35,6 +36,7 @@ export const setPhantomForces: Card[] = [
   new LysandresTrumpCard(),
   new MysteryEnergy(),
   new Pumpkaboo(),
+  new Pyroar(),
   new Regigigas(),
   new RoboSubstitute(),
   new Slurpuff(),

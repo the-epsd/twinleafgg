@@ -41,7 +41,7 @@ class HearthflameMaskOgerponex extends pokemon_card_1.PokemonCard {
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
-            effect.damage = effect.player.active.damage * 20;
+            effect.damage = effect.player.active.damage * 2;
             return state;
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {

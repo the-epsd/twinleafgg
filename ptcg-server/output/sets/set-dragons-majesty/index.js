@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setDragonsMajesty = void 0;
 const blaziken_1 = require("./blaziken");
+const combusken_1 = require("./combusken");
 const croconaw_1 = require("./croconaw");
 const feebas_1 = require("./feebas");
 const feraligatr_1 = require("./feraligatr");
@@ -14,6 +15,7 @@ const victini_prism_star_1 = require("./victini-prism-star");
 const wooper_1 = require("./wooper");
 exports.setDragonsMajesty = [
     new blaziken_1.Blaziken(),
+    new combusken_1.Combusken(),
     new croconaw_1.Croconaw(),
     new feebas_1.Feebas(),
     new feraligatr_1.Feraligatr(),

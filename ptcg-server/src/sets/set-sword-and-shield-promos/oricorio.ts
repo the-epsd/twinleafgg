@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, TrainerType } from '../../game/store/card/card-types';
+import { Stage, CardType, TrainerType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, Card, TrainerCard, ChooseCardsPrompt, GameMessage, GameLog, ShowCardsPrompt, ShuffleDeckPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
@@ -68,6 +68,7 @@ export class Oricorio extends PokemonCard {
   public weakness = [{ type: CardType.DARK }];
   public resistance = [{ type: CardType.FIGHTING, value: -30 }];
   public retreat = [CardType.COLORLESS];
+  public tags = [CardTag.FUSION_STRIKE];
 
   public attacks = [{
     name: 'Mixed Call',

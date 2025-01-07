@@ -42,21 +42,6 @@ class ChiYu extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_phase_effects_1.EndTurnEffect) {
             effect.player.marker.removeMarker(this.RETALIATE_MARKER);
         }
-        // if (effect instanceof DealDamageEffect || effect instanceof PutDamageEffect) {
-        //   const player = StateUtils.getOpponent(state, effect.player);
-        //   const cardList = StateUtils.findCardList(state, this);
-        //   const owner = StateUtils.findOwner(state, cardList);
-        //   if (player !== owner) {
-        //     this.damageDealt = true;
-        //   }
-        // }
-        // if (effect instanceof EndTurnEffect && effect.player === StateUtils.getOpponent(state, effect.player)) {
-        //   const cardList = StateUtils.findCardList(state, this);
-        //   const owner = StateUtils.findOwner(state, cardList);
-        //   if (owner === effect.player) {
-        //     this.damageDealt = false;
-        //   }
-        // }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             // this.damageDealt = false;

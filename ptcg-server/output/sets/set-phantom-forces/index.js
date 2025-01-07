@@ -14,6 +14,7 @@ const litwick_1 = require("./litwick");
 const lysandres_trump_card_1 = require("./lysandres-trump-card");
 const mystery_energy_1 = require("./mystery-energy");
 const pumpkaboo_1 = require("./pumpkaboo");
+const pyroar_1 = require("./pyroar");
 const regigigas_1 = require("./regigigas");
 const robo_substitutue_1 = require("./robo-substitutue");
 const slurpuff_1 = require("./slurpuff");
@@ -36,6 +37,7 @@ exports.setPhantomForces = [
     new lysandres_trump_card_1.LysandresTrumpCard(),
     new mystery_energy_1.MysteryEnergy(),
     new pumpkaboo_1.Pumpkaboo(),
+    new pyroar_1.Pyroar(),
     new regigigas_1.Regigigas(),
     new robo_substitutue_1.RoboSubstitute(),
     new slurpuff_1.Slurpuff(),

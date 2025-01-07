@@ -52,7 +52,7 @@ export class HearthflameMaskOgerponex extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      effect.damage = effect.player.active.damage * 20;
+      effect.damage = effect.player.active.damage * 2;
       return state;
     }
 

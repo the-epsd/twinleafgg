@@ -28,6 +28,7 @@ import { Klang } from './klang';
 import { Klink } from './klink';
 import { Klinklang } from './klinklang';
 import { Lance } from './lance';
+import { Litten } from './litten';
 import { LugiaV } from './lugia-v';
 import { LugiaVSTAR } from './lugia-vstar';
 import { Meowstic } from './meowstic';
@@ -40,6 +41,7 @@ import { RadiantJirachi } from './radiant-jirachi';
 import { RadiantTsareena } from './radiant-tsareena';
 import { Raichu } from './raichu';
 import { Ralts } from './ralts';
+import { Rapidash } from './rapidash';
 import { RegenerativeEnergy } from './regenerative-energy';
 import { RegidragoV } from './regidrago-v';
 import { RegidragoVSTAR } from './regidrago-vstar';
@@ -91,6 +93,7 @@ export const setSilverTempest: Card[] = [
   new Klink(),
   new Klinklang(),
   new Lance(),
+  new Litten(),
   new LugiaV(),
   new LugiaVSTAR(),
   new Meowstic(),
@@ -103,6 +106,7 @@ export const setSilverTempest: Card[] = [
   new RadiantTsareena(),
   new Raichu(),
   new Ralts(),
+  new Rapidash(),
   new RegenerativeEnergy(),
   new RegidragoV(),
   new RegidragoVSTAR(),

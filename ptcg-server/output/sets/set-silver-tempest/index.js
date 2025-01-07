@@ -30,6 +30,7 @@ const klang_1 = require("./klang");
 const klink_1 = require("./klink");
 const klinklang_1 = require("./klinklang");
 const lance_1 = require("./lance");
+const litten_1 = require("./litten");
 const lugia_v_1 = require("./lugia-v");
 const lugia_vstar_1 = require("./lugia-vstar");
 const meowstic_1 = require("./meowstic");
@@ -42,6 +43,7 @@ const radiant_jirachi_1 = require("./radiant-jirachi");
 const radiant_tsareena_1 = require("./radiant-tsareena");
 const raichu_1 = require("./raichu");
 const ralts_1 = require("./ralts");
+const rapidash_1 = require("./rapidash");
 const regenerative_energy_1 = require("./regenerative-energy");
 const regidrago_v_1 = require("./regidrago-v");
 const regidrago_vstar_1 = require("./regidrago-vstar");
@@ -91,6 +93,7 @@ exports.setSilverTempest = [
     new klink_1.Klink(),
     new klinklang_1.Klinklang(),
     new lance_1.Lance(),
+    new litten_1.Litten(),
     new lugia_v_1.LugiaV(),
     new lugia_vstar_1.LugiaVSTAR(),
     new meowstic_1.Meowstic(),
@@ -103,6 +106,7 @@ exports.setSilverTempest = [
     new radiant_tsareena_1.RadiantTsareena(),
     new raichu_1.Raichu(),
     new ralts_1.Ralts(),
+    new rapidash_1.Rapidash(),
     new regenerative_energy_1.RegenerativeEnergy(),
     new regidrago_v_1.RegidragoV(),
     new regidrago_vstar_1.RegidragoVSTAR(),

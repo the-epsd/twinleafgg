@@ -1,5 +1,6 @@
 import { Card } from '../../game/store/card/card';
 import { Blaziken } from './blaziken';
+import { Combusken } from './combusken';
 import { Croconaw } from './croconaw';
 import { Feebas } from './feebas';
 import { Feraligatr } from './feraligatr';
@@ -14,6 +15,7 @@ import { Wooper } from './wooper';
 
 export const setDragonsMajesty: Card[] = [
   new Blaziken(),
+  new Combusken(),
   new Croconaw(),
   new Feebas(),
   new Feraligatr(),

@@ -26,6 +26,7 @@ const mallow_and_lana_1 = require("./mallow-and-lana");
 const natu_1 = require("./natu");
 const phione_1 = require("./phione");
 const pikachu_1 = require("./pikachu");
+const ponyta_1 = require("./ponyta");
 const professor_oaks_setup_1 = require("./professor-oaks-setup");
 const rosa_1 = require("./rosa");
 const sawsbuck_1 = require("./sawsbuck");
@@ -62,6 +63,7 @@ exports.setCosmicEclipse = [
     new natu_1.Natu(),
     new phione_1.Phione(),
     new pikachu_1.Pikachu(),
+    new ponyta_1.Ponyta(),
     new professor_oaks_setup_1.ProfessorOaksSetup(),
     new rosa_1.Rosa(),
     new sawsbuck_1.Sawsbuck(),

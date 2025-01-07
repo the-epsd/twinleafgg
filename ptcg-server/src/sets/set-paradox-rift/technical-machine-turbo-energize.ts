@@ -1,4 +1,4 @@
-import { AttachEnergyPrompt, Attack, GameMessage, PlayerType, SlotType, StateUtils } from '../../game';
+import { AttachEnergyPrompt, Attack, GameMessage, PlayerType, ShuffleDeckPrompt, SlotType, StateUtils } from '../../game';
 import { CardType, EnergyType, SuperType, TrainerType } from '../../game/store/card/card-types';
 import { ColorlessCostReducer } from '../../game/store/card/pokemon-interface';
 import { TrainerCard } from '../../game/store/card/trainer-card';
@@ -112,6 +112,11 @@ export class TechnicalMachineTurboEnergize extends TrainerCard {
           const target = StateUtils.getTarget(state, player, transfer.to);
           player.deck.moveCardTo(transfer.card, target);
         }
+
+        state = store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+          player.deck.applyOrder(order);
+        });
+
 
         return state;
       });

@@ -31,6 +31,7 @@ import { Hoopaex } from './hoopa-ex';
 import { IronBundle } from './iron-bundle';
 import { IronHandsex } from './iron-hands-ex';
 import { IronJugulis } from './iron-jugulis';
+import { IronMoth } from './iron-moth';
 import { IronValiantex } from './iron-valiant-ex';
 import { Jirachi } from './jirachi';
 import { Klawf } from './klawf';
@@ -105,6 +106,7 @@ export const setParadoxRift: Card[] = [
   new IronBundle(),
   new IronHandsex(),
   new IronJugulis(),
+  new IronMoth(),
   new IronValiantex(),
   new Jirachi(),
   new Klawf(),
