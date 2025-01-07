@@ -3,6 +3,7 @@ import { AromaticEnergy } from './aromatic-energy';
 import { Charizard } from './charizard';
 import { Charmander } from './charmander';
 import { Charmeleon } from './charmeleon';
+import { Chimecho } from './chimecho';
 import { CoatingMetalEnergy } from './coating-metal-energy';
 import { Dhelmise } from './dhelmise';
 import { Jirachi } from './jirachi';
@@ -24,6 +25,7 @@ export const setVividVoltage: Card[] = [
   new Charmander(),
   new Charmeleon(),
   new Charizard(),
+  new Chimecho(),
   new CoatingMetalEnergy(),
   new Dhelmise(),
   new Jirachi(),
