@@ -42,7 +42,7 @@ class GalarianWeezing extends pokemon_card_1.PokemonCard {
             specialCondition.poisonDamage = 40;
             store.reduceEffect(state, specialCondition);
         }
-        if (effect instanceof game_effects_1.PowerEffect && effect.power.powerType === pokemon_types_1.PowerType.ABILITY) {
+        if (effect instanceof game_effects_1.PowerEffect && effect.power.powerType === pokemon_types_1.PowerType.ABILITY && effect.power.name !== 'Neutralizing Gas') {
             const player = effect.player;
             const opponent = state_utils_1.StateUtils.getOpponent(state, player);
             const cardList = state_utils_1.StateUtils.findCardList(state, this);
@@ -56,19 +56,15 @@ class GalarianWeezing extends pokemon_card_1.PokemonCard {
             }
             // Try reducing ability for opponent
             try {
-                const stub = new game_effects_1.PowerEffect(player, {
-                    name: 'test',
-                    powerType: pokemon_types_1.PowerType.ABILITY,
-                    text: ''
-                }, this);
-                store.reduceEffect(state, stub);
+                const powerEffect = new game_effects_1.PowerEffect(player, this.powers[0], this);
+                store.reduceEffect(state, powerEffect);
             }
             catch (_a) {
-                if (!effect.power.exemptFromAbilityLock) {
-                    throw new game_error_1.GameError(game_message_1.GameMessage.BLOCKED_BY_ABILITY);
-                }
+                return state;
             }
-            return state;
+            if (!effect.power.exemptFromAbilityLock) {
+                throw new game_error_1.GameError(game_message_1.GameMessage.BLOCKED_BY_ABILITY);
+            }
         }
         return state;
     }

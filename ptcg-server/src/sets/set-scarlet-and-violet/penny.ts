@@ -40,7 +40,7 @@ export class Penny extends TrainerCard {
       player.hand.moveCardTo(effect.trainerCard, player.supporter);
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
-    
+
       let hasBasicPokemon: boolean = false;
       const blocked: CardTarget[] = [];
 
@@ -60,23 +60,22 @@ export class Penny extends TrainerCard {
         player.id,
         GameMessage.CHOOSE_POKEMON_TO_PICK_UP,
         PlayerType.BOTTOM_PLAYER,
-        [ SlotType.ACTIVE, SlotType.BENCH ],
+        [SlotType.ACTIVE, SlotType.BENCH],
         { allowCancel: false, blocked }
       ), result => {
         const cardList = result.length > 0 ? result[0] : null;
         if (cardList !== null) {
           const pokemons = cardList.getPokemons();
+          cardList.clearEffects();
           cardList.moveCardsTo(pokemons, player.hand);
           cardList.moveTo(player.hand);
-          cardList.clearEffects();
           player.supporter.moveCardTo(effect.trainerCard, player.discard);
-          
+
         }
       });
     }
-    
+
     return state;
   }
-    
+
 }
-    

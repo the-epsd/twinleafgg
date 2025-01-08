@@ -43,7 +43,7 @@ class Wobbuffet extends pokemon_card_1.PokemonCard {
             effect.damage += effect.opponent.active.damage;
             return state;
         }
-        if (effect instanceof game_effects_1.PowerEffect && effect.power.powerType === pokemon_types_1.PowerType.ABILITY) {
+        if (effect instanceof game_effects_1.PowerEffect && effect.power.powerType === pokemon_types_1.PowerType.ABILITY && effect.power.name !== 'Mischievous Lock') {
             const player = effect.player;
             const opponent = state_utils_1.StateUtils.getOpponent(state, player);
             // Wobbuffet is not active Pokemon
@@ -64,12 +64,8 @@ class Wobbuffet extends pokemon_card_1.PokemonCard {
             }
             // Try to reduce PowerEffect, to check if something is blocking our ability
             try {
-                const stub = new game_effects_1.PowerEffect(player, {
-                    name: 'test',
-                    powerType: pokemon_types_1.PowerType.ABILITY,
-                    text: ''
-                }, this);
-                store.reduceEffect(state, stub);
+                const powerEffect = new game_effects_1.PowerEffect(player, this.powers[0], this);
+                store.reduceEffect(state, powerEffect);
             }
             catch (_a) {
                 return state;
@@ -77,7 +73,6 @@ class Wobbuffet extends pokemon_card_1.PokemonCard {
             if (!effect.power.exemptFromAbilityLock) {
                 throw new game_error_1.GameError(game_message_1.GameMessage.BLOCKED_BY_ABILITY);
             }
-            return state;
         }
         return state;
     }

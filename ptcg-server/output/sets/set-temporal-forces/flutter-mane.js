@@ -58,7 +58,7 @@ class FlutterMane extends pokemon_card_1.PokemonCard {
     }
     reduceEffect(store, state, effect) {
         var _a;
-        if (effect instanceof game_effects_1.PowerEffect && effect.power.powerType === pokemon_types_1.PowerType.ABILITY) {
+        if (effect instanceof game_effects_1.PowerEffect && effect.power.powerType === pokemon_types_1.PowerType.ABILITY && effect.power.name !== 'Midnight Fluttering') {
             const player = effect.player;
             const cardList = game_1.StateUtils.findCardList(state, this);
             const owner = game_1.StateUtils.findOwner(state, cardList);
@@ -76,19 +76,15 @@ class FlutterMane extends pokemon_card_1.PokemonCard {
             }
             // Try reducing ability
             try {
-                const stub = new game_effects_1.PowerEffect(player, {
-                    name: 'test',
-                    powerType: pokemon_types_1.PowerType.ABILITY,
-                    text: ''
-                }, this);
-                store.reduceEffect(state, stub);
+                const powerEffect = new game_effects_1.PowerEffect(player, this.powers[0], this);
+                store.reduceEffect(state, powerEffect);
             }
             catch (_b) {
-                if (!effect.power.exemptFromAbilityLock) {
-                    return state;
-                }
+                return state;
             }
-            throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_ABILITY);
+            if (!effect.power.exemptFromAbilityLock) {
+                throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_ABILITY);
+            }
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const generator = useHexHurl(() => generator.next(), store, state, effect);

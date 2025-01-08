@@ -22,7 +22,7 @@ export class Garbodor extends PokemonCard {
 
   public weakness = [{ type: CardType.PSYCHIC }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Garbotoxin',
@@ -34,7 +34,7 @@ export class Garbodor extends PokemonCard {
 
   public attacks = [{
     name: 'Sludge Toss',
-    cost: [ CardType.PSYCHIC, CardType.PSYCHIC, CardType.COLORLESS ],
+    cost: [CardType.PSYCHIC, CardType.PSYCHIC, CardType.COLORLESS],
     damage: 60,
     text: ''
   }];
@@ -84,8 +84,9 @@ export class Garbodor extends PokemonCard {
       } catch {
         return state;
       }
-
-      throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
+      if (!effect.power.exemptFromAbilityLock) {
+        throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
+      }
     }
 
     return state;
