@@ -63,7 +63,7 @@ class Rayquazaex extends pokemon_card_1.PokemonCard {
             if (playerPrizes > opponent.getPrizeLeft()) {
                 const costToRemove = 1;
                 for (let i = 0; i < costToRemove; i++) {
-                    let index = effect.cost.indexOf(card_types_1.CardType.COLORLESS);
+                    const index = effect.cost.indexOf(card_types_1.CardType.COLORLESS);
                     if (index !== -1) {
                         effect.cost.splice(index, 1);
                     }
@@ -91,7 +91,7 @@ class Rayquazaex extends pokemon_card_1.PokemonCard {
             if (playerPrizes > opponent.getPrizeLeft()) {
                 const costToRemove = 2;
                 for (let i = 0; i < costToRemove; i++) {
-                    let index = effect.cost.indexOf(card_types_1.CardType.COLORLESS);
+                    const index = effect.cost.indexOf(card_types_1.CardType.COLORLESS);
                     if (index !== -1) {
                         effect.cost.splice(index, 1);
                     }

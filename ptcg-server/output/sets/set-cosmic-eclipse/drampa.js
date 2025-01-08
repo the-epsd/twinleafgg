@@ -30,7 +30,7 @@ class Drampa extends pokemon_card_1.PokemonCard {
         ];
         this.set = 'CEC';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '21';
+        this.setNumber = '159';
         this.name = 'Drampa';
         this.fullName = 'Drampa CEC';
     }

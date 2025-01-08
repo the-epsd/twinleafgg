@@ -10,7 +10,7 @@ export class Flabebe extends PokemonCard {
   public cardType: CardType = Y;
   public hp: number = 30;
   public weakness = [{ type: M }];
-  public resistance = [{ type: D, value: -20 }]
+  public resistance = [{ type: D, value: -20 }];
   public retreat = [C];
 
   public powers = [{

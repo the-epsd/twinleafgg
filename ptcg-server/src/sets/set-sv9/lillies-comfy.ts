@@ -84,7 +84,7 @@ export class LilliesComfy extends PokemonCard {
 
   public setNumber = '43';
 
-  public name: string = 'Lillie\'s Comfy';
+  public name: string = 'Lillie\'s Comfey';
 
   public fullName: string = 'Lillie\'s Comfy SV9';
 

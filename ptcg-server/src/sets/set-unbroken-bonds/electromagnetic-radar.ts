@@ -102,7 +102,7 @@ export class ElectromagneticRadar extends TrainerCard {
 
   public text: string = 'You can play this card only if you discard 2 other cards from your hand.' +
     'Search your deck for up to 2 in any combination of[L] Pokémon - GX and[L] Pokémon - EX, '
-    + 'reveal them, and put them into your hand. Then, shuffle your deck.'
+    + 'reveal them, and put them into your hand. Then, shuffle your deck.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

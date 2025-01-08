@@ -9,7 +9,7 @@ export class EspeonV extends PokemonCard {
 
   public regulationMark = 'E';
 
-  public tags = [ CardTag.POKEMON_V ];
+  public tags = [CardTag.POKEMON_V];
 
   public cardType: CardType = CardType.PSYCHIC;
 
@@ -19,18 +19,18 @@ export class EspeonV extends PokemonCard {
 
   public resistance = [{ type: CardType.FIGHTING, value: -30 }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Zen Shot',
-      cost: [ CardType.PSYCHIC ],
+      cost: [CardType.PSYCHIC],
       damage: 0,
       text: 'This attack does 60 damage to 1 of your opponent\'s Pokémon V. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
     },
     {
       name: 'Super Psy Bolt',
-      cost: [ CardType.PSYCHIC, CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.PSYCHIC, CardType.COLORLESS, CardType.COLORLESS],
       damage: 120,
       text: ''
     }
@@ -40,7 +40,7 @@ export class EspeonV extends PokemonCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '158';
+  public setNumber: string = '64';
 
   public name: string = 'Espeon V';
 

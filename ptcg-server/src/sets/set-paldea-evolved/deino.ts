@@ -16,7 +16,7 @@ export class Deino extends PokemonCard {
     cost: [CardType.DARK, CardType.COLORLESS],
     damage: 20,
     text: 'Flip a coin. If heads, this attack does 20 more damage.'
-  }]
+  }];
 
   public set = 'PAL';
   public regulationMark = 'G';

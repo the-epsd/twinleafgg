@@ -1,7 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, StateUtils, GameError, GameMessage,
-  PokemonCardList } from '../../game';
+import {
+  PowerType, StoreLike, State, StateUtils, GameError, GameMessage,
+  PokemonCardList
+} from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 
@@ -16,7 +18,7 @@ export class Unown extends PokemonCard {
 
   public weakness = [{ type: CardType.PSYCHIC }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public powers = [{
     name: 'Farewell Letter',
@@ -30,7 +32,7 @@ export class Unown extends PokemonCard {
   public attacks = [
     {
       name: 'Hidden Power',
-      cost: [ CardType.COLORLESS ],
+      cost: [CardType.COLORLESS],
       damage: 10,
       text: ''
     }
@@ -40,7 +42,7 @@ export class Unown extends PokemonCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '030';
+  public setNumber: string = '30';
 
   public name: string = 'Unown';
 

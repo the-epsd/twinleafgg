@@ -145,6 +145,14 @@ export class PokemonCardList extends CardList {
     }
   }
 
+  clearAllSpecialConditions(): void {
+    this.removeSpecialCondition(SpecialCondition.POISONED);
+    this.removeSpecialCondition(SpecialCondition.ASLEEP);
+    this.removeSpecialCondition(SpecialCondition.BURNED);
+    this.removeSpecialCondition(SpecialCondition.CONFUSED);
+    this.removeSpecialCondition(SpecialCondition.PARALYZED);
+  }
+
   removeSpecialCondition(sp: SpecialCondition): void {
     if (!this.specialConditions.includes(sp)) {
       return;

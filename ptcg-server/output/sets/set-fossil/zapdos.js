@@ -25,7 +25,7 @@ class Zapdos extends pokemon_card_1.PokemonCard {
         ];
         this.set = 'FO';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '54';
+        this.setNumber = '15';
         this.name = 'Zapdos';
         this.fullName = 'Zapdos FO';
     }

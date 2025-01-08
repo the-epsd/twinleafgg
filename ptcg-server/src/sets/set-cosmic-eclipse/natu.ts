@@ -9,7 +9,7 @@ export class Natu extends PokemonCard {
   public cardType: CardType = CardType.PSYCHIC;
   public hp: number = 60;
   public weakness = [{ type: CardType.LIGHTNING }];
-  public resistance = [{ type: CardType.FIGHTING, value: -20 }]
+  public resistance = [{ type: CardType.FIGHTING, value: -20 }];
   public retreat = [CardType.COLORLESS];
 
   public attacks = [{

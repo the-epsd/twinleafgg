@@ -20,7 +20,7 @@ export class Seedot extends PokemonCard {
 
   public set = 'FLF';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '1';
+  public setNumber: string = '5';
   public name = 'Seedot';
   public fullName = 'Seedot FLF';
 

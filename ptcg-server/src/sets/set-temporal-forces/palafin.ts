@@ -38,7 +38,7 @@ export class Palafin extends PokemonCard {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
-      let selfDamage = player.active.damage;
+      const selfDamage = player.active.damage;
 
       const dealDamage = new DealDamageEffect(effect, selfDamage);
       dealDamage.target = player.active;

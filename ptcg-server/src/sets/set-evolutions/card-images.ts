@@ -3,7 +3,7 @@ import { DarknessEnergy } from '../set-scarlet-and-violet-energy/darkness-energy
 
 export class PokedexEVO extends Pokedex {
   public set = 'EVO';
-  public setNumber = '98';
+  public setNumber = '82';
   public fullName = 'Pokedex EVO';
 }
 

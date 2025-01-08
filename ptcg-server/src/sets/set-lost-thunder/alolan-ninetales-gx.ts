@@ -88,20 +88,20 @@ export class AlolanNinetalesGX extends PokemonCard {
               { superType: SuperType.TRAINER, trainerType: TrainerType.ITEM },
               { min: 0, max: 2, allowCancel: false }
             )], selected => {
-              const cards = selected || [];
+            const cards = selected || [];
 
-              player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-                if (cardList.getPokemonCard() === this) {
-                  cardList.addBoardEffect(BoardEffect.ABILITY_USED);
-                }
-              });
-
-              player.deck.moveCardsTo(cards, player.hand);
-
-              return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-                player.deck.applyOrder(order);
-              });
+            player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+              if (cardList.getPokemonCard() === this) {
+                cardList.addBoardEffect(BoardEffect.ABILITY_USED);
+              }
             });
+
+            player.deck.moveCardsTo(cards, player.hand);
+
+            return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+              player.deck.applyOrder(order);
+            });
+          });
         }
       });
     }

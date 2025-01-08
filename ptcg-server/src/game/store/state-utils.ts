@@ -26,7 +26,7 @@ export class StateUtils {
     let colorless = 0;
     let rainbow = 0;
 
-    let needsProviding: CardType[] = [];
+    const needsProviding: CardType[] = [];
 
     // First remove from array cards with specific energy types
     cost.forEach(costType => {
@@ -76,7 +76,7 @@ export class StateUtils {
     });
 
     const possibleBlendPermutations = this.getCombinations(blendProvides, blendProvides.length);
-    let needsProvidingPermutations: CardType[][] = [];
+    const needsProvidingPermutations: CardType[][] = [];
 
     if (needsProviding.length === 1) {
       needsProvidingPermutations.push(needsProviding);
@@ -132,17 +132,17 @@ export class StateUtils {
     // permutations calculation helper function
     function permutations(array: CardType[], currentSize: number) {
       if (currentSize == 1) { // recursion base-case (end)
-        needsProvidingPermutations.push(array.join("").split("").map(x => parseInt(x)));
+        needsProvidingPermutations.push(array.join('').split('').map(x => parseInt(x)));
       }
 
       for (let i = 0; i < currentSize; i++) {
         permutations(array, currentSize - 1);
         if (currentSize % 2 == 1) {
-          let temp = array[0];
+          const temp = array[0];
           array[0] = array[currentSize - 1];
           array[currentSize - 1] = temp;
         } else {
-          let temp = array[i];
+          const temp = array[i];
           array[i] = array[currentSize - 1];
           array[currentSize - 1] = temp;
         }
@@ -151,8 +151,8 @@ export class StateUtils {
   }
 
   static getCombinations(arr: CardType[][], n: number): CardType[][] {
-    var i, j, k, l = arr.length, childperm, ret = [];
-    var elem: CardType[] = [];
+    let i, j, k, l = arr.length, childperm, ret = [];
+    let elem: CardType[] = [];
     if (n == 1) {
       for (i = 0; i < arr.length; i++) {
         for (j = 0; j < arr[i].length; j++) {

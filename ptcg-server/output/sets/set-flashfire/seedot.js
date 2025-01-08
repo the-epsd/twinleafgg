@@ -21,7 +21,7 @@ class Seedot extends pokemon_card_1.PokemonCard {
             }];
         this.set = 'FLF';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '1';
+        this.setNumber = '5';
         this.name = 'Seedot';
         this.fullName = 'Seedot FLF';
     }

@@ -1,4 +1,4 @@
-import { TropicalBeach } from "./tropical-beach";
+import { TropicalBeach } from './tropical-beach';
 
 export class TropicalBeachBWP50 extends TropicalBeach {
   public fullName = 'Tropical Beach BWP50';

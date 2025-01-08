@@ -9,27 +9,27 @@ class Jolteon extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.STAGE_1;
-        this.cardType = card_types_1.CardType.LIGHTNING;
+        this.cardType = L;
         this.hp = 70;
-        this.weakness = [{ type: card_types_1.CardType.FIGHTING }];
-        this.retreat = [card_types_1.CardType.COLORLESS];
+        this.weakness = [{ type: F }];
+        this.retreat = [C];
         this.evolvesFrom = 'Eevee';
         this.attacks = [{
                 name: 'Quick Attack',
-                cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
+                cost: [C, C],
                 damage: 10,
                 text: 'Flip a coin. If heads, this attack does 10 damage plus 20 more damage; if tails, this attack does 10 damage.'
             },
             {
                 name: 'Pin Missile',
-                cost: [card_types_1.CardType.COLORLESS],
+                cost: [L, L, C],
                 damage: 20,
                 damageCalculation: 'x',
                 text: 'Flip 4 coins. This attack does 20 damage times the number of heads.'
             }];
         this.set = 'JU';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '3';
+        this.setNumber = '4';
         this.name = 'Jolteon';
         this.fullName = 'Jolteon JU';
     }

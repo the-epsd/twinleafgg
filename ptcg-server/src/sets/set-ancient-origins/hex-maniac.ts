@@ -49,7 +49,7 @@ export class HexManiac extends TrainerCard {
     }
 
     if (effect instanceof PowerEffect && (
-        effect.player.marker.hasMarker(this.HEX_MANIAC_MARKER, this) || 
+      effect.player.marker.hasMarker(this.HEX_MANIAC_MARKER, this) || 
         StateUtils.getOpponent(state, effect.player).marker.hasMarker(this.HEX_MANIAC_MARKER, this))) {
       throw new GameError(GameMessage.ABILITY_BLOCKED);
     }

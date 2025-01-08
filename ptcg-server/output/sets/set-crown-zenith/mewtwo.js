@@ -26,6 +26,7 @@ class Mewtwo extends pokemon_card_1.PokemonCard {
                 damage: 90,
                 text: 'If your opponent has 3 or fewer Prize cards remaining, this attack does 90 more damage.'
             }];
+        this.regulationMark = 'F';
         this.set = 'CRZ';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '59';

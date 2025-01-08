@@ -82,7 +82,6 @@ class Torchic extends pokemon_card_1.PokemonCard {
                         return state;
                     });
                 }
-                ;
             });
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
@@ -146,7 +145,6 @@ class Torchic extends pokemon_card_1.PokemonCard {
                         return state;
                     });
                 }
-                ;
             });
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
@@ -194,7 +192,6 @@ class Torchic extends pokemon_card_1.PokemonCard {
                         return state;
                     });
                 }
-                ;
             });
         }
         return state;

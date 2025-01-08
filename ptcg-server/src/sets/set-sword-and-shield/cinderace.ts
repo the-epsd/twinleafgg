@@ -27,7 +27,7 @@ export class Cinderace extends PokemonCard {
     cost: [CardType.FIRE, CardType.FIRE, CardType.COLORLESS],
     damage: 190,
     text: 'Discard 2 Energy from this Pokémon.'
-  }]
+  }];
 
   public set: string = 'SSH';
   public regulationMark = 'D';

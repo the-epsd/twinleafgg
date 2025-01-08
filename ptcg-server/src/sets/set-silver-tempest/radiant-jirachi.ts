@@ -73,16 +73,16 @@ export class RadiantJirachi extends PokemonCard {
         player.deck,
         {},
         { min: 0, max: 3, allowCancel: false }),
-        (selected: any[]) => {
-          cards = selected || [];
-          if (cards.length > 0) {
-            player.deck.moveCardsTo(cards, player.hand);
-          }
-          return store.prompt(state, new ShuffleDeckPrompt(player.id), (order: any[]) => {
-            player.deck.applyOrder(order);
-            return state;
-          });
+      (selected: any[]) => {
+        cards = selected || [];
+        if (cards.length > 0) {
+          player.deck.moveCardsTo(cards, player.hand);
+        }
+        return store.prompt(state, new ShuffleDeckPrompt(player.id), (order: any[]) => {
+          player.deck.applyOrder(order);
+          return state;
         });
+      });
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

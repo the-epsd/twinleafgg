@@ -29,7 +29,7 @@ export class Drampa extends PokemonCard {
 
   public set = 'CEC';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '21';
+  public setNumber: string = '159';
   public name = 'Drampa';
   public fullName = 'Drampa CEC';
 

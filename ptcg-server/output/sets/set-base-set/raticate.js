@@ -11,7 +11,7 @@ class Raticate extends pokemon_card_1.PokemonCard {
         this.set = 'BS';
         this.cardType = card_types_1.CardType.COLORLESS;
         this.fullName = 'Raticate BS';
-        this.setNumber = '61';
+        this.setNumber = '40';
         this.cardImage = 'assets/cardback.png';
         this.stage = card_types_1.Stage.STAGE_1;
         this.evolvesFrom = 'Rattata';

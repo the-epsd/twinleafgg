@@ -30,7 +30,7 @@ class Camerupt extends pokemon_card_1.PokemonCard {
         this.set = 'PGO';
         this.regulationMark = 'F';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '23';
+        this.setNumber = '14';
         this.name = 'Camerupt';
         this.fullName = 'Camerupt PGO';
     }

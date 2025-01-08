@@ -19,7 +19,7 @@ export class Riolu extends PokemonCard {
   
   public cardType = CardType.FIGHTING;
 
-  public weakness = [{ type: CardType.PSYCHIC }]
+  public weakness = [{ type: CardType.PSYCHIC }];
 
   public retreat = [CardType.COLORLESS];
 

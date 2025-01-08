@@ -61,7 +61,7 @@ class LilliesComfy extends pokemon_card_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.set = 'SV9';
         this.setNumber = '43';
-        this.name = 'Lillie\'s Comfy';
+        this.name = 'Lillie\'s Comfey';
         this.fullName = 'Lillie\'s Comfy SV9';
     }
     reduceEffect(store, state, effect) {

@@ -9,7 +9,7 @@ export class Floette extends PokemonCard {
   public cardType: CardType = Y;
   public hp: number = 70;
   public weakness = [{ type: M }];
-  public resistance = [{ type: D, value: -20 }]
+  public resistance = [{ type: D, value: -20 }];
   public retreat = [C];
   public evolvesFrom = 'Flabébé';
 

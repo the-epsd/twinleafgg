@@ -1,7 +1,7 @@
-import { Card, CardType, ChooseCardsPrompt, ConfirmPrompt, EnergyType, GameLog, GameMessage, PokemonCard, PowerType, ShowCardsPrompt, ShuffleDeckPrompt, Stage, State, StateUtils, StoreLike, SuperType } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
-import { PowerEffect } from "../../game/store/effects/game-effects";
-import { PlayPokemonEffect } from "../../game/store/effects/play-card-effects";
+import { Card, CardType, ChooseCardsPrompt, ConfirmPrompt, EnergyType, GameLog, GameMessage, PokemonCard, PowerType, ShowCardsPrompt, ShuffleDeckPrompt, Stage, State, StateUtils, StoreLike, SuperType } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { PowerEffect } from '../../game/store/effects/game-effects';
+import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 
 
 export class Oricorio extends PokemonCard {

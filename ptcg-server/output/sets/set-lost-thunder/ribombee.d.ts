@@ -1,6 +1,6 @@
-import { Stage, CardType, PowerType, State, StoreLike } from "../../game";
-import { PokemonCard } from "../../game/store/card/pokemon-card";
-import { Effect } from "../../game/store/effects/effect";
+import { Stage, CardType, PowerType, State, StoreLike } from '../../game';
+import { PokemonCard } from '../../game/store/card/pokemon-card';
+import { Effect } from '../../game/store/effects/effect';
 export declare class Ribombee extends PokemonCard {
     stage: Stage;
     evolvesFrom: string;

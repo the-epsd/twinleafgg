@@ -29,7 +29,7 @@ class Plusle extends pokemon_card_1.PokemonCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
-            let minunIsOnBench = player.bench.some(c => c.cards.some(card => card.name === 'Minun'));
+            const minunIsOnBench = player.bench.some(c => c.cards.some(card => card.name === 'Minun'));
             if (minunIsOnBench) {
                 effect.damage += 50;
             }

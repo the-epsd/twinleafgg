@@ -17,7 +17,7 @@ export class Froakie extends PokemonCard {
     cost: [CardType.WATER],
     damage: 0,
     text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-  }]
+  }];
 
   public set: string = 'BKP';
   public name: string = 'Froakie';

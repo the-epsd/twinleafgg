@@ -24,7 +24,7 @@ class MysteriousFossil extends game_1.TrainerCard {
         this.attacks = [];
         this.set = 'FO';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '197';
+        this.setNumber = '62';
         this.name = 'Mysterious Fossil';
         this.fullName = 'Mysterious Fossil FO';
         this.powers = [

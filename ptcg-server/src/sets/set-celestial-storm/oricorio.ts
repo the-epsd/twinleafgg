@@ -30,11 +30,11 @@ export class Oricorio extends PokemonCard {
     }
   ];
 
-  public set: string = 'SHF';
+  public set: string = 'CES';
   public name: string = 'Oricorio';
   public fullName: string = 'Oricorio SHF';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '41';
+  public setNumber: string = '30';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -50,6 +50,7 @@ export declare class PokemonCardList extends CardList {
     isBasic(): boolean;
     clearAttackEffects(): void;
     clearEffects(): void;
+    clearAllSpecialConditions(): void;
     removeSpecialCondition(sp: SpecialCondition): void;
     addSpecialCondition(sp: SpecialCondition): void;
     removeBoardEffect(sp: BoardEffect): void;

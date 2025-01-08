@@ -57,7 +57,7 @@ class Minun extends pokemon_card_1.PokemonCard {
             catch (_a) {
                 return state;
             }
-            let plusleIsOnBench = player.bench.some(c => c.cards.some(card => card.name === 'Plusle'));
+            const plusleIsOnBench = player.bench.some(c => c.cards.some(card => card.name === 'Plusle'));
             if (!plusleIsOnBench) {
                 return state;
             }

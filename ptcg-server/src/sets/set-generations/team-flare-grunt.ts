@@ -16,7 +16,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
 
-  let activeHasEnergy = opponent.active.cards.some(c => c.superType === SuperType.ENERGY);
+  const activeHasEnergy = opponent.active.cards.some(c => c.superType === SuperType.ENERGY);
 
   if (!activeHasEnergy) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
@@ -30,7 +30,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
 
-  let target: PokemonCardList = opponent.active as PokemonCardList;
+  const target: PokemonCardList = opponent.active as PokemonCardList;
 
   let cards: Card[] = [];
 

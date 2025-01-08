@@ -28,7 +28,7 @@ class Golett extends pokemon_card_1.PokemonCard {
         ];
         this.set = 'CRE';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '065';
+        this.setNumber = '65';
         this.name = 'Golett';
         this.fullName = 'Golett CRE';
     }

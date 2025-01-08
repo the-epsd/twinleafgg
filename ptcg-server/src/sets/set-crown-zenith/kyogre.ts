@@ -70,13 +70,10 @@ export class Kyogre extends PokemonCard {
         for (const transfer of transfers) {
           player.active.moveCardTo(transfer.card, player.hand);
         }
-        
-        const opponent = StateUtils.getOpponent(state, player);
-        const benched = opponent.bench.reduce((left, b) => left + (b.cards.length ? 1 : 0), 0);
 
-        const min = Math.min(1, benched);
-        const max = Math.min(1, benched);
-        
+        const min = Math.min(1);
+        const max = Math.min(1);
+
         return store.prompt(state, new ChoosePokemonPrompt(
           player.id,
           GameMessage.CHOOSE_POKEMON_TO_DAMAGE,

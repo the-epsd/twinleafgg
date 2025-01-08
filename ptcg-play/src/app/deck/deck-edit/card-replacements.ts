@@ -23,6 +23,9 @@ export const cardReplacements = [
   { from: 'Pokemon Breeder BS 76', to: 'Pokémon Breeder BS 76' },
   { from: 'Pokemon Trader BS 77', to: 'Pokémon Trader BS 77' },
 
+  //JU
+  { from: 'Electrode JU 2', to: 'Electrode FO 2' },
+
   //FO
   { from: 'Recycle FO 61', to: 'Gambler FO 61' },
 
@@ -31,6 +34,9 @@ export const cardReplacements = [
 
   //BLW
   { from: 'Zoroark BLW 71', to: 'Zoroark BW 71' },
+
+  //PLF
+  { from: 'Mr. Mime PLF 47', to: 'Mr Mime PLF 47' },
 
   //ROS
   { from: 'Double Dragon Energy ROS 97', to: 'Double Dragon Energy SUM 97' },
@@ -50,11 +56,17 @@ export const cardReplacements = [
   //SLG
   { from: 'Warp Energy SLG 70', to: 'Warp Energy SHL 70' },
 
+  //CES
+  { from: 'Oricorio CES 30', to: 'Oricorio SHF 30' },
+
   //UPR
   { from: 'Mt. Coronet UPR 130', to: 'Mt. Coronet RCL 130' },
 
   //UNB
   { from: 'Porygon-Z UNB 157', to: 'Porygon-Z PAL 157' },
+
+  //LOT
+  { from: 'Lost Blender LOT 181', to: 'Lost Blender LOR 181' },
 
   //RCL
   { from: 'Horror Psychic Energy RCL 172', to: 'Horror Psychic Energy DAA 172' },
@@ -369,6 +381,9 @@ export const cardReplacements = [
   { from: 'Zweilous SSP 118', to: 'Zweilous SV8 118' },
   //SSP FA
   { from: 'Larvesta SSP 196', to: 'LarvestaIR SSP 196' },
+
+  //SV9
+  { from: 'Lillie\'s Comfey SV9 43', to: 'Lillie\'s Comfy SV9 43' },
 ];
 
 export const exportReplacements = [
@@ -386,6 +401,9 @@ export const exportReplacements = [
   { from: 'Pokémon Breeder BS 76', to: 'Pokemon Breeder BS 76' },
   { from: 'Pokémon Trader BS 77', to: 'Pokemon Trader BS 77' },
 
+  //JU
+  { from: 'Electrode FO 2', to: 'Electrode JU 2' },
+
   //FO
   { from: 'Gambler FO 61', to: 'Recycle FO 61' },
 
@@ -394,6 +412,9 @@ export const exportReplacements = [
 
   //BLW
   { from: 'Zoroark BL 71', to: 'Zoroark BLW 71' },
+
+  //PLF
+  { from: 'Mr Mime PLF 47', to: 'Mr. Mime PLF 47' },
 
   //ROS
   { from: 'Double Dragon Energy SUM 97', to: 'Double Dragon Energy ROS 97' },
@@ -413,12 +434,17 @@ export const exportReplacements = [
   //SLG
   { from: 'Warp Energy SHL 70', to: 'Warp Energy SLG 70' },
 
+  //CES
+  { from: 'Oricorio SHF 30', to: 'Oricorio CES 30' },
+
   //UPR
   { from: 'Mt. Coronet RCL 130', to: 'Mt. Coronet UPR 130' },
 
   //UNB
   { from: 'Porygon-Z PAL 157', to: 'Porygon-Z UNB 157' },
 
+  //LOT
+  { from: 'Lost Blender LOR 181', to: 'Lost Blender LOT 181' },
 
   //RCL
   { from: 'Horror Psychic Energy DAA 172', to: 'Horror Psychic Energy RCL 172' },
@@ -733,4 +759,7 @@ export const exportReplacements = [
   { from: 'Zweilous SV8 118', to: 'Zweilous SSP 118' },
   //SSP FA
   { from: 'LarvestaIR SSP 196', to: 'Larvesta SSP 196' },
+
+  //SV9
+  { from: 'Lillie\'s Comfy SV9 43', to: 'Lillie\'s Comfey SV9 43' },
 ];

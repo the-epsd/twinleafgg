@@ -66,6 +66,6 @@ export class Pokestop extends TrainerCard {
       opponent.id,
       GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
       itemCards
-    ), () => { });;
+    ), () => { });
   }
 }

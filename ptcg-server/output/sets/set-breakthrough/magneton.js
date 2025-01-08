@@ -29,7 +29,7 @@ class Magneton extends pokemon_card_1.PokemonCard {
                 text: 'Discard an Energy attached to this Pokémon. '
             }];
         this.set = 'BKT';
-        this.setNumber = '80';
+        this.setNumber = '53';
         this.cardImage = 'assets/cardback.png';
         this.name = 'Magneton';
         this.fullName = 'Magneton BKT';

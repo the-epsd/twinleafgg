@@ -33,7 +33,7 @@ export class Graveler extends PokemonCard {
   public name: string = 'Graveler';
   public fullName: string = 'Graveler FO';
 
-  public readonly HARDEN_MARKER = 'HARDEN_MARKER'
+  public readonly HARDEN_MARKER = 'HARDEN_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

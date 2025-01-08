@@ -11,7 +11,7 @@ export class MarysRequest extends TrainerCard {
   public setNumber: string = '86';
   public name: string = 'Mary\'s Request';
   public fullName: string = 'Mary\'s Request UF';
-  public text = 'Draw a card. If you don\'t have any Stage 2 Evolved Pokémon in play, draw 2 more cards.'
+  public text = 'Draw a card. If you don\'t have any Stage 2 Evolved Pokémon in play, draw 2 more cards.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

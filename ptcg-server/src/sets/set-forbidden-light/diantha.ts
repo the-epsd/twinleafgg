@@ -22,14 +22,14 @@ export class Diantha extends TrainerCard {
 
   public text: string =
     'You can play this card only if 1 of your [Y] Pokémon was Knocked Out during your opponent\'s last turn.' +
-    'Put 2 cards from your discard pile into your hand.'
+    'Put 2 cards from your discard pile into your hand.';
 
   public readonly DIANTHA_MARKER = 'DIANTHA_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-      const player = effect.player
+      const player = effect.player;
       const supporterTurn = player.supporterTurn;
 
       // No Pokemon KO last turn

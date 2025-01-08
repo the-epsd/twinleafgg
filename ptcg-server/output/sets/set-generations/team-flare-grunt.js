@@ -8,7 +8,7 @@ const play_card_effects_1 = require("../../game/store/effects/play-card-effects"
 function* playCard(next, store, state, effect) {
     const player = effect.player;
     const opponent = game_1.StateUtils.getOpponent(state, player);
-    let activeHasEnergy = opponent.active.cards.some(c => c.superType === card_types_1.SuperType.ENERGY);
+    const activeHasEnergy = opponent.active.cards.some(c => c.superType === card_types_1.SuperType.ENERGY);
     if (!activeHasEnergy) {
         throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
     }
@@ -18,7 +18,7 @@ function* playCard(next, store, state, effect) {
     player.hand.moveCardTo(effect.trainerCard, player.supporter);
     // We will discard this card after prompt confirmation
     effect.preventDefault = true;
-    let target = opponent.active;
+    const target = opponent.active;
     let cards = [];
     yield store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, target, { superType: card_types_1.SuperType.ENERGY }, { min: 1, max: 1, allowCancel: false }), selected => {
         cards = selected;

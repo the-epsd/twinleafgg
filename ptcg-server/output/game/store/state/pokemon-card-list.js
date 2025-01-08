@@ -102,6 +102,13 @@ class PokemonCardList extends card_list_1.CardList {
             this.tool = undefined;
         }
     }
+    clearAllSpecialConditions() {
+        this.removeSpecialCondition(card_types_1.SpecialCondition.POISONED);
+        this.removeSpecialCondition(card_types_1.SpecialCondition.ASLEEP);
+        this.removeSpecialCondition(card_types_1.SpecialCondition.BURNED);
+        this.removeSpecialCondition(card_types_1.SpecialCondition.CONFUSED);
+        this.removeSpecialCondition(card_types_1.SpecialCondition.PARALYZED);
+    }
     removeSpecialCondition(sp) {
         if (!this.specialConditions.includes(sp)) {
             return;

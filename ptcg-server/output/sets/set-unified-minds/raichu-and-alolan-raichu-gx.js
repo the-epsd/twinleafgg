@@ -33,7 +33,7 @@ class RaichuAlolanRaichuGX extends pokemon_card_1.PokemonCard {
             }];
         this.set = 'UNM';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '195';
+        this.setNumber = '54';
         this.name = 'Raichu & Alolan RaichuGX GX';
         this.fullName = 'Raichu & Alolan Raichu GX UNM';
     }

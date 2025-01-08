@@ -24,11 +24,11 @@ export class Porygon2 extends PokemonCard {
     damage: 0,
     text: 'Draw 2 cards.'
   }, {
-      name: 'Spinning Attack',
-      cost: [CardType.COLORLESS, CardType.COLORLESS],
-      damage: 30,
-      text: ''
-    }
+    name: 'Spinning Attack',
+    cost: [CardType.COLORLESS, CardType.COLORLESS],
+    damage: 30,
+    text: ''
+  }
   ];
 
   public set: string = 'UNB';

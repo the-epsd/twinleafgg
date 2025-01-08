@@ -104,7 +104,7 @@ export class Torchic extends PokemonCard {
 
             return state;
           });
-        };
+        }
       });
     }
 
@@ -197,7 +197,7 @@ export class Torchic extends PokemonCard {
 
             return state;
           });
-        };
+        }
       });
     }
 
@@ -267,7 +267,7 @@ export class Torchic extends PokemonCard {
 
             return state;
           });
-        };
+        }
       });
 
     }

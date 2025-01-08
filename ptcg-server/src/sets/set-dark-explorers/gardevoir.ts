@@ -25,7 +25,7 @@ export class Gardevoir extends PokemonCard {
     cost: [CardType.PSYCHIC, CardType.PSYCHIC, CardType.COLORLESS, CardType.COLORLESS],
     damage: 60,
     text: 'This attack\'s damage isn\'t affected by Weakness or Resistance. '
-  }]
+  }];
 
   public set: string = 'DEX';
   public cardImage: string = 'assets/cardback.png';

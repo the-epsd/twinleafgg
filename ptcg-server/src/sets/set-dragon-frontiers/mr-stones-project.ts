@@ -11,7 +11,7 @@ export class MrStonesProject extends TrainerCard {
   public setNumber: string = '77';
   public name: string = 'Mr. Stone\'s Project';
   public fullName: string = 'Mr. Stone\'s Project DF';
-  public text = 'Search your deck for up to 2 Basic cards, show them to your opponent, and put them into your hand. Shuffle your deck afterward. Or, search your discard pile for up to 2 Basic cards, show them to your opponent, and put them into your hand.'
+  public text = 'Search your deck for up to 2 Basic cards, show them to your opponent, and put them into your hand. Shuffle your deck afterward. Or, search your discard pile for up to 2 Basic cards, show them to your opponent, and put them into your hand.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

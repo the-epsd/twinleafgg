@@ -12,12 +12,12 @@ export class Florges extends PokemonCard {
   public cardType: CardType = Y;
   public hp: number = 120;
   public weakness = [{ type: M }];
-  public resistance = [{ type: D, value: -20 }]
+  public resistance = [{ type: D, value: -20 }];
   public retreat = [C, C];
   public evolvesFrom = 'Floette';
 
   public powers = [{
-    name: "Wondrous Gift",
+    name: 'Wondrous Gift',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
     text: 'Once during your turn (before your attack), you may flip a coin. If heads, put an Item card from your discard pile on top of your deck.'

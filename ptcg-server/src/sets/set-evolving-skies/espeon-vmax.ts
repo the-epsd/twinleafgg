@@ -1,15 +1,18 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, PowerType, 
-  PlayerType } from '../../game';
+import {
+  StoreLike, State, StateUtils, PowerType,
+  PlayerType,
+  EnergyCard
+} from '../../game';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { CheckProvidedEnergyEffect, CheckTableStateEffect } from '../../game/store/effects/check-effects';
-import { AbstractAttackEffect, DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { AbstractAttackEffect, ApplyWeaknessEffect, DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 
 export class EspeonVMAX extends PokemonCard {
 
-  public tags = [ CardTag.POKEMON_VMAX ];
+  public tags = [CardTag.POKEMON_VMAX];
 
   public stage: Stage = Stage.VMAX;
 
@@ -23,7 +26,7 @@ export class EspeonVMAX extends PokemonCard {
 
   public resistance = [{ type: CardType.FIGHTING, value: -30 }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Solar Revelation',
@@ -34,7 +37,7 @@ export class EspeonVMAX extends PokemonCard {
   public attacks = [
     {
       name: 'Max Mindstorm',
-      cost: [ CardType.PSYCHIC, CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.PSYCHIC, CardType.COLORLESS, CardType.COLORLESS],
       damage: 60,
       text: 'This attack does 60 damage for each Energy attached to all of your opponent\'s Pokémon.'
     }
@@ -69,72 +72,57 @@ export class EspeonVMAX extends PokemonCard {
       effect.damage = energies * 60;
     }
 
-    if (effect instanceof CheckTableStateEffect) {
-      state.players.forEach(player => {
-        if (player.active.specialConditions.length === 0) {
-          return;
+    if (effect instanceof AbstractAttackEffect) {
+      const sourceCard = effect.source.getPokemonCard();
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      let isToedscruelInPlay = false;
+
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+        if (card === this) {
+          isToedscruelInPlay = true;
         }
+      });
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
+        if (card === this) {
+          isToedscruelInPlay = true;
+        }
+      });
 
-        let hasEspeonVMAXInPlay = false;
-        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-          if (card === this) {
-            hasEspeonVMAXInPlay = true;
-          }
-        });
+      if (!isToedscruelInPlay) {
+        return state;
+      }
 
-        if (!hasEspeonVMAXInPlay) {
+      if (sourceCard && effect.target.cards.some(c => c instanceof EnergyCard)) {
+
+        // Try to reduce PowerEffect, to check if something is blocking our ability
+        try {
+          const player = StateUtils.findOwner(state, effect.target);
+          const stub = new PowerEffect(player, {
+            name: 'test',
+            powerType: PowerType.ABILITY,
+            text: ''
+          }, this);
+          store.reduceEffect(state, stub);
+        } catch {
+          return state;
+        }
+        // Allow Weakness & Resistance
+        if (effect instanceof ApplyWeaknessEffect) {
+          return state;
+        }
+        // Allow damage
+        if (effect instanceof PutDamageEffect) {
+          return state;
+        }
+        // Allow damage
+        if (effect instanceof DealDamageEffect) {
           return state;
         }
 
-        const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player);
-        store.reduceEffect(state, checkProvidedEnergyEffect);
-
-        const energyMap = checkProvidedEnergyEffect.energyMap;
-        const hasEnergy = StateUtils.checkEnoughEnergy(energyMap, [ CardType.COLORLESS || CardType.DARK || CardType.DRAGON || CardType.FAIRY || CardType.GRASS || CardType.METAL || CardType.PSYCHIC || CardType.WATER || CardType.LIGHTNING || CardType.FIRE ]);
-
-        if (hasEnergy) {
-          // Try to reduce PowerEffect, to check if something is blocking our ability
-          try {
-            const stub = new PowerEffect(player, {
-              name: 'test',
-              powerType: PowerType.ABILITY,
-              text: ''
-            }, this);
-            store.reduceEffect(state, stub);
-          } catch {
-            return state;
-          }
-
-          if (effect instanceof AbstractAttackEffect && effect.target.cards.includes(this)) {
-
-            // Allow damage
-            if (effect instanceof PutDamageEffect) {
-              return state; 
-            }
-            // Allow damage
-            if (effect instanceof DealDamageEffect) {
-              return state; 
-            }
-        
-            // Try to reduce PowerEffect, to check if something is blocking our ability
-            try {
-              const player = StateUtils.findOwner(state, effect.target);
-              const stub = new PowerEffect(player, {
-                name: 'test',
-                powerType: PowerType.ABILITY,
-                text: ''
-              }, this);
-              store.reduceEffect(state, stub);
-            } catch {
-              return state;
-            }
-        
-            effect.preventDefault = true;
-          }
-        }
-        return state;
-      });
-      return state;
+        effect.preventDefault = true;
+      }
     }
     return state;
   }
