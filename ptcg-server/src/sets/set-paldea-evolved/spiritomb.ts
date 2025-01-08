@@ -57,6 +57,12 @@ export class Spiritomb extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
+      const ruleBoxTags = [
+        CardTag.POKEMON_V,
+        CardTag.POKEMON_VSTAR,
+        CardTag.POKEMON_VMAX
+      ];
+
       let isSpiritombInPlay = false;
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
         if (card === this) {
@@ -73,26 +79,18 @@ export class Spiritomb extends PokemonCard {
         return state;
       }
 
-      // Try to reduce PowerEffect, to check if something is blocking our ability
+      // Try reducing ability for each player  
       try {
-        const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
+        const powerEffect = new PowerEffect(player, this.powers[0], this);
+        store.reduceEffect(state, powerEffect);
       } catch {
         return state;
       }
-
-      const pokemonCard = effect.card;
-
-      if (pokemonCard.tags.includes(CardTag.POKEMON_V)) {
-
-        throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
+      if (ruleBoxTags.some(tag => effect.card.tags.includes(tag)) && !effect.power.exemptFromInitialize) {
+        if (!effect.power.exemptFromAbilityLock) {
+          throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
+        }
       }
-
-      return state;
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

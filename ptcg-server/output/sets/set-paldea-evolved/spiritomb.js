@@ -42,6 +42,11 @@ class Spiritomb extends pokemon_card_1.PokemonCard {
             && effect.power.name !== 'Fettered in Misfortune') {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
+            const ruleBoxTags = [
+                card_types_1.CardTag.POKEMON_V,
+                card_types_1.CardTag.POKEMON_VSTAR,
+                card_types_1.CardTag.POKEMON_VMAX
+            ];
             let isSpiritombInPlay = false;
             player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
                 if (card === this) {
@@ -56,23 +61,19 @@ class Spiritomb extends pokemon_card_1.PokemonCard {
             if (!isSpiritombInPlay) {
                 return state;
             }
-            // Try to reduce PowerEffect, to check if something is blocking our ability
+            // Try reducing ability for each player  
             try {
-                const stub = new game_effects_1.PowerEffect(player, {
-                    name: 'test',
-                    powerType: pokemon_types_1.PowerType.ABILITY,
-                    text: ''
-                }, this);
-                store.reduceEffect(state, stub);
+                const powerEffect = new game_effects_1.PowerEffect(player, this.powers[0], this);
+                store.reduceEffect(state, powerEffect);
             }
             catch (_a) {
                 return state;
             }
-            const pokemonCard = effect.card;
-            if (pokemonCard.tags.includes(card_types_1.CardTag.POKEMON_V)) {
-                throw new game_error_1.GameError(game_message_1.GameMessage.BLOCKED_BY_ABILITY);
+            if (ruleBoxTags.some(tag => effect.card.tags.includes(tag)) && !effect.power.exemptFromInitialize) {
+                if (!effect.power.exemptFromAbilityLock) {
+                    throw new game_error_1.GameError(game_message_1.GameMessage.BLOCKED_BY_ABILITY);
+                }
             }
-            return state;
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
