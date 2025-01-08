@@ -229,6 +229,115 @@ Cards:
         image: 'https://pbs.twimg.com/media/F0C__sdXoAEMKtn?format=jpg&name=large',
         preview: 'Update #2025.01.02'
       },
+      {
+        id: 4,
+        title: 'Twinleaf Update - January 8th',
+        author: 'Joe',
+        date: new Date('2025-01-09'),
+        content: `Twinleaf Update - January 8th
+      
+Engine:
+- Re-Worked how Ability Lock Pokémon function. We believe these were causing infinite loops. The following cards were updated as a result:
+    - Iron Thorns ex TWM
+    - Klefki SVI
+    - Flutter Mane TEF
+    - Ting-Lu ex PAL
+    - Spiritomb PAL
+    - Alolan Muk SUM
+    - Garbodor DEX
+    - Wobbuffet PHF
+    - Galarian Weezing SHF
+- Re-Worked how Special Abilities are added.
+    - This is an engine-wide change, so please report any strange behaviour in #bug-reports
+
+Cards:
+- Re-Worked how Special Energy check that they are attached to a valid target. We believe these were causing high resource usage on the server. The following cards were updated as a result:
+    - Rapid Strike Energy
+    - Single Strike Energy
+    - Splash Energy
+    - Impact Energy
+    - Spiral Energy
+    - Herbal Energy
+    - Strong Energy
+    - Fusion Strike Energy
+    - Double Dragon Energy
+    - Shield Energy
+    - Mystery Energy
+
+- The following cards had bug fixes:
+    - Fezandipiti ex
+    - Mamoswine ex
+    - Faba
+    - Cutiefly
+    - Floette
+    - Morty's Conviction
+    - Bronzong
+    - Ryme
+    - Iono's Voltorb
+    - Natu
+    - Hop's Dubwool
+    - Blaziken
+    - Swanna
+    - Oricorio
+    - Technical Machine: Turbo Energize
+    - Meloetta
+    - Hearthflame Mask Ogerpon ex
+    - Iron Moth
+    - Sky Pillar
+    - Braixen
+    - Toedscruel ex
+    - Espeon VMAX
+    - Mewtwo
+    - Kyogre
+    - U-Turn-Board
+    - Winona
+
+- The following cards had set number/name fixes:
+    - Mr. Mime
+    - Salazzle
+    - Porygon-Z
+    - Seedot
+    - Drampa
+    - Raichu & Alolan Raichu-GX
+    - Lillie's Comfey
+    - Camerupt
+    - Abra
+    - Jolteon
+    - Electrode
+    - Zapdos
+    - Mysterious Fossil
+    - Espeon V
+    - Golett
+    - Galarian Zapdos V
+    - Oricorio
+    - Magneton
+    - Raticate
+    - Unown
+    
+- The following cards were added:
+    - Wimpod UNM
+    - Golisopod UNM
+    - Goldeen UNB
+    - Seaking MEW
+    - Practice Studio PAL
+    - Seadra LOR
+    - Lapras FST
+    - Cloyster FST
+    - Horsea DRM
+    - Gouging Fire SSP
+    - Victini SSP
+    - Volcanion STS
+    - Rapidash SIT
+    - Litten SIT
+    - Pyroar PHF
+    - Iron Moth PAR
+    - Paldean Tauros PAL
+    - Slugma LOR
+    - Combusken DRM
+    - Ponyta CEC`,
+        image: 'https://pbs.twimg.com/media/F0C__sdXoAEMKtn?format=jpg&name=large',
+        preview: 'Update #2025.01.08'
+      },
     ];
 
     posts.sort((a, b) => b.date.getTime() - a.date.getTime());

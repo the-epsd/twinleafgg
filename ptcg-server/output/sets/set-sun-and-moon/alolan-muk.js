@@ -58,7 +58,7 @@ class AlolanMuk extends pokemon_card_1.PokemonCard {
                 }
             });
         }
-        if (effect instanceof game_effects_1.PowerEffect && effect.power.powerType === pokemon_types_1.PowerType.ABILITY) {
+        if (effect instanceof game_effects_1.PowerEffect && effect.power.powerType === pokemon_types_1.PowerType.ABILITY && effect.power.name !== 'Power of Alchemy') {
             const player = effect.player;
             const opponent = state_utils_1.StateUtils.getOpponent(state, player);
             let isAlolanMukInPlay = false;
@@ -84,14 +84,10 @@ class AlolanMuk extends pokemon_card_1.PokemonCard {
             if (effect.card.stage !== card_types_1.Stage.BASIC) {
                 return state;
             }
-            // Try to reduce PowerEffect, to check if something is blocking our ability
+            // Try reducing ability for each player  
             try {
-                const stub = new game_effects_1.PowerEffect(player, {
-                    name: 'test',
-                    powerType: pokemon_types_1.PowerType.ABILITY,
-                    text: ''
-                }, this);
-                store.reduceEffect(state, stub);
+                const powerEffect = new game_effects_1.PowerEffect(player, this.powers[0], this);
+                store.reduceEffect(state, powerEffect);
             }
             catch (_a) {
                 return state;
@@ -99,7 +95,6 @@ class AlolanMuk extends pokemon_card_1.PokemonCard {
             if (!effect.power.exemptFromAbilityLock) {
                 throw new game_error_1.GameError(game_message_1.GameMessage.BLOCKED_BY_ABILITY);
             }
-            return state;
         }
         return state;
     }

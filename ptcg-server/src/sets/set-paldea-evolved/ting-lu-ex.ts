@@ -5,8 +5,7 @@ import { State } from '../../game/store/state/state';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { ChoosePokemonPrompt, GameError, GameMessage, PlayerType, PokemonCardList, SlotType, StateUtils } from '../../game';
-import { CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
+import { ChoosePokemonPrompt, GameError, GameMessage, PlayerType, SlotType, StateUtils } from '../../game';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 
 export class TingLuex extends PokemonCard {
@@ -50,43 +49,32 @@ export class TingLuex extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PowerEffect && effect.power.powerType === PowerType.ABILITY) {
+    if (effect instanceof PowerEffect && effect.power.powerType === PowerType.ABILITY && effect.power.name !== 'Cursed Land') {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      // Ting-Lu ex is not active Pokemon
+      // Klefki is not active Pokemon
       if (player.active.getPokemonCard() !== this
         && opponent.active.getPokemonCard() !== this) {
         return state;
       }
 
-      const cardList = StateUtils.findCardList(state, effect.card);
-      if (cardList instanceof PokemonCardList) {
-        const checkPokemonType = new CheckPokemonTypeEffect(cardList);
-        store.reduceEffect(state, checkPokemonType);
+      // We are not blocking the Abilities from Pokémon ex
+      if (effect.card.tags.includes(CardTag.POKEMON_ex)) {
+        return state;
+      }
 
-        // Block abilities for non-Pokémon-ex that have damage
-        if (!effect.card.tags.includes(CardTag.POKEMON_ex) && cardList.damage > 0) {
-          // Try reducing ability
-          try {
-            const stub = new PowerEffect(player, {
-              name: 'test',
-              powerType: PowerType.ABILITY,
-              text: ''
-            }, this);
-            store.reduceEffect(state, stub);
-          } catch {
-            if (!effect.power.exemptFromAbilityLock) {
-              throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
-            }
-            return state;
-          }
-          return state;
-        }
+      // Try reducing ability for each player  
+      try {
+        const powerEffect = new PowerEffect(player, this.powers[0], this);
+        store.reduceEffect(state, powerEffect);
+      } catch {
+        return state;
+      }
+      if (!effect.power.exemptFromAbilityLock) {
+        throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
       }
     }
-
-
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;

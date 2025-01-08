@@ -5,8 +5,7 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { PowerType } from '../../game/store/card/pokemon-types';
-import { GameError, GameMessage, PokemonCardList, StateUtils } from '../../game';
-import { CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
+import { GameError, GameMessage, StateUtils } from '../../game';
 
 export class Klefki extends PokemonCard {
 
@@ -49,7 +48,7 @@ export class Klefki extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PowerEffect && effect.power.powerType === PowerType.ABILITY) {
+    if (effect instanceof PowerEffect && effect.power.powerType === PowerType.ABILITY && effect.power.name !== 'Mischievous Lock') {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -59,32 +58,20 @@ export class Klefki extends PokemonCard {
         return state;
       }
 
-      const cardList = StateUtils.findCardList(state, effect.card);
-      if (cardList instanceof PokemonCardList) {
-        const checkPokemonType = new CheckPokemonTypeEffect(cardList);
-        store.reduceEffect(state, checkPokemonType);
-      }
-
       // We are not blocking the Abilities from Non-Basic Pokemon
       if (effect.card.stage !== Stage.BASIC) {
         return state;
       }
 
-      // const pokemonCard = effect.card;
-
       // Try reducing ability for each player  
       try {
-        const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
+        const powerEffect = new PowerEffect(player, this.powers[0], this);
+        store.reduceEffect(state, powerEffect);
       } catch {
-        if (!effect.power.exemptFromAbilityLock) {
-          throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
-        }
         return state;
+      }
+      if (!effect.power.exemptFromAbilityLock) {
+        throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
       }
     }
 

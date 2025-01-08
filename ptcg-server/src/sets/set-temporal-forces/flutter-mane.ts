@@ -84,7 +84,7 @@ export class FlutterMane extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PowerEffect && effect.power.powerType === PowerType.ABILITY) {
+    if (effect instanceof PowerEffect && effect.power.powerType === PowerType.ABILITY && effect.power.name !== 'Midnight Fluttering') {
       const player = effect.player;
 
       const cardList = StateUtils.findCardList(state, this);
@@ -97,11 +97,11 @@ export class FlutterMane extends PokemonCard {
 
       const effectCardList = StateUtils.findCardList(state, effect.card);
       const effectOwner = StateUtils.findOwner(state, effectCardList);
-      
+
       // handles evolution abilities in opponent's active
-      const effectEvolvesFromOpponentsActive = 
+      const effectEvolvesFromOpponentsActive =
         effectOwner !== owner && effect.card.evolvesFrom === player.active.getPokemonCard()?.name;
-      
+
       // Only check opponent's Active Pokemon
       if (player === owner || (player.active.getPokemonCard() !== effect.card && !effectEvolvesFromOpponentsActive)) {
         return state;
@@ -109,19 +109,14 @@ export class FlutterMane extends PokemonCard {
 
       // Try reducing ability
       try {
-        const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
+        const powerEffect = new PowerEffect(player, this.powers[0], this);
+        store.reduceEffect(state, powerEffect);
       } catch {
-        if (!effect.power.exemptFromAbilityLock) {
-          return state;
-        }
+        return state;
       }
-
-      throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
+      if (!effect.power.exemptFromAbilityLock) {
+        throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
+      }
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

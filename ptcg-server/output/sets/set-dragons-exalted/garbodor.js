@@ -69,7 +69,9 @@ class Garbodor extends pokemon_card_1.PokemonCard {
             catch (_a) {
                 return state;
             }
-            throw new game_error_1.GameError(game_message_1.GameMessage.BLOCKED_BY_ABILITY);
+            if (!effect.power.exemptFromAbilityLock) {
+                throw new game_error_1.GameError(game_message_1.GameMessage.BLOCKED_BY_ABILITY);
+            }
         }
         return state;
     }
