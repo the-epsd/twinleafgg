@@ -28,7 +28,7 @@ export class Magneton extends PokemonCard {
   }];
 
   public set: string = 'BKT';
-  public setNumber: string = '80';
+  public setNumber: string = '53';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Magneton';
   public fullName: string = 'Magneton BKT';

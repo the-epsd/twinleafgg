@@ -9,21 +9,21 @@ import { StoreLike } from '../../game/store/store-like';
 export class Raticate extends PokemonCard {
 
   public name = 'Raticate';
-  
+
   public set = 'BS';
-  
+
   public cardType = CardType.COLORLESS;
-  
+
   public fullName = 'Raticate BS';
-  
-  public setNumber = '61';
-  
+
+  public setNumber = '40';
+
   public cardImage: string = 'assets/cardback.png';
 
   public stage = Stage.STAGE_1;
-  
+
   public evolvesFrom = 'Rattata';
-  
+
   public hp = 60;
 
   public weakness = [{ type: CardType.FIGHTING }];
@@ -48,13 +48,13 @@ export class Raticate extends PokemonCard {
   ];
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const target = effect.target;
       const remainingHP = target.hp - target.damage;
       effect.damage = Math.ceil(remainingHP / 2 / 10) * 10;
     }
-    
+
     return state;
   }
 

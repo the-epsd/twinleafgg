@@ -29,7 +29,7 @@ class Electrode extends pokemon_card_1.PokemonCard {
                 text: 'If the Defending Pokémon isn\'t Colorless, this attack does 10 damage to each Benched Pokémon of the same type as the Defending Pokémon (including your own).'
             },
         ];
-        this.set = 'FO';
+        this.set = 'JU';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '2';
         this.name = 'Electrode';

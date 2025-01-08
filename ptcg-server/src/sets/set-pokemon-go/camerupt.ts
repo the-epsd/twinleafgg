@@ -29,7 +29,7 @@ export class Camerupt extends PokemonCard {
   public set: string = 'PGO';
   public regulationMark = 'F';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '23';
+  public setNumber: string = '14';
   public name: string = 'Camerupt';
   public fullName: string = 'Camerupt PGO';
 

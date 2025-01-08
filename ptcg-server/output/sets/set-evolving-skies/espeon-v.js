@@ -31,7 +31,7 @@ class EspeonV extends game_1.PokemonCard {
         ];
         this.set = 'EVS';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '158';
+        this.setNumber = '64';
         this.name = 'Espeon V';
         this.fullName = 'Espeon V EVS';
     }

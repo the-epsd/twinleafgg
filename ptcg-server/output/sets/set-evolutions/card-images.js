@@ -7,7 +7,7 @@ class PokedexEVO extends pokedex_1.Pokedex {
     constructor() {
         super(...arguments);
         this.set = 'EVO';
-        this.setNumber = '98';
+        this.setNumber = '82';
         this.fullName = 'Pokedex EVO';
     }
 }

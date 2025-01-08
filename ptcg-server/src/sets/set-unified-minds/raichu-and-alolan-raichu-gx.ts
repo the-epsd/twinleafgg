@@ -32,7 +32,7 @@ export class RaichuAlolanRaichuGX extends PokemonCard {
 
   public set = 'UNM';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '195';
+  public setNumber: string = '54';
   public name = 'Raichu & Alolan RaichuGX GX';
   public fullName = 'Raichu & Alolan Raichu GX UNM';
 

@@ -7,25 +7,25 @@ import { AttackEffect } from '../../game/store/effects/game-effects';
 export class Jolteon extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
 
-  public cardType: CardType = CardType.LIGHTNING;
+  public cardType: CardType = L;
 
   public hp: number = 70;
 
-  public weakness = [{ type: CardType.FIGHTING }];
+  public weakness = [{ type: F }];
 
-  public retreat = [CardType.COLORLESS];
+  public retreat = [C];
 
   public evolvesFrom = 'Eevee';
 
   public attacks = [{
     name: 'Quick Attack',
-    cost: [CardType.COLORLESS, CardType.COLORLESS],
+    cost: [C, C],
     damage: 10,
     text: 'Flip a coin. If heads, this attack does 10 damage plus 20 more damage; if tails, this attack does 10 damage.'
   },
   {
     name: 'Pin Missile',
-    cost: [CardType.COLORLESS],
+    cost: [L, L, C],
     damage: 20,
     damageCalculation: 'x',
     text: 'Flip 4 coins. This attack does 20 damage times the number of heads.'
@@ -35,7 +35,7 @@ export class Jolteon extends PokemonCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '3';
+  public setNumber: string = '4';
 
   public name: string = 'Jolteon';
 

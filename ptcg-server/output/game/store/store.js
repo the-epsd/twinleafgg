@@ -69,17 +69,16 @@ class Store {
     }
     reduceEffect(state, effect) {
         // this.checkEffectHistory(state, effect);
-        var _a, _b, _c, _d;
         state = this.propagateEffect(state, effect);
-        const cardEffect = effect;
-        if (cardEffect.card)
-            console.log(`Running effect: ${effect.type} for card ${(_a = cardEffect.card) === null || _a === void 0 ? void 0 : _a.fullName}`);
-        if (cardEffect.energyCard)
-            console.log(`Running effect: ${effect.type} for card ${(_b = cardEffect.energyCard) === null || _b === void 0 ? void 0 : _b.fullName}`);
-        if (cardEffect.trainerCard)
-            console.log(`Running effect: ${effect.type} for card ${(_c = cardEffect.trainerCard) === null || _c === void 0 ? void 0 : _c.fullName}`);
-        if (cardEffect.pokemonCard)
-            console.log(`Running effect: ${effect.type} for card ${(_d = cardEffect.pokemonCard) === null || _d === void 0 ? void 0 : _d.fullName}`);
+        // const cardEffect = <any>effect;
+        // if (cardEffect.card)
+        //   console.log(`Running effect: ${effect.type} for card ${cardEffect.card?.fullName}`);
+        // if (cardEffect.energyCard)
+        //   console.log(`Running effect: ${effect.type} for card ${cardEffect.energyCard?.fullName}`);
+        // if (cardEffect.trainerCard)
+        //   console.log(`Running effect: ${effect.type} for card ${cardEffect.trainerCard?.fullName}`);
+        // if (cardEffect.pokemonCard)
+        //   console.log(`Running effect: ${effect.type} for card ${cardEffect.pokemonCard?.fullName}`);
         if (effect.preventDefault === true) {
             return state;
         }

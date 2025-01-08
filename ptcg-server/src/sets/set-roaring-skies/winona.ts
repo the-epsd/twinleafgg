@@ -18,6 +18,12 @@ function* playCard(next: Function, store: StoreLike, state: State,
   const opponent = StateUtils.getOpponent(state, player);
   let cards: Card[] = [];
 
+  const supporterTurn = player.supporterTurn;
+
+  if (supporterTurn > 0) {
+    throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
+  }
+
   if (player.deck.cards.length === 0) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
@@ -51,7 +57,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
   player.deck.moveCardsTo(cards, player.hand);
   player.supporter.moveCardTo(self, player.discard);
-  
+
 
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);
@@ -81,8 +87,8 @@ export class Winona extends TrainerCard {
       const generator = playCard(() => generator.next(), store, state, this, effect);
       return generator.next().value;
     }
-      
+
     return state;
   }
-      
+
 }

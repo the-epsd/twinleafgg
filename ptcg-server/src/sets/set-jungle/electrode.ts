@@ -38,7 +38,7 @@ export class Electrode extends PokemonCard {
     },
   ];
 
-  public set: string = 'FO';
+  public set: string = 'JU';
 
   public cardImage: string = 'assets/cardback.png';
 

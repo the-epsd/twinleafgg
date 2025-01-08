@@ -31,7 +31,7 @@ class Unown extends pokemon_card_1.PokemonCard {
         ];
         this.set = 'AOR';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '030';
+        this.setNumber = '30';
         this.name = 'Unown';
         this.fullName = 'Unown AOR';
     }

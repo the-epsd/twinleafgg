@@ -35,7 +35,7 @@ export class MysteriousFossil extends TrainerCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '197';
+  public setNumber: string = '62';
 
   public name: string = 'Mysterious Fossil';
 

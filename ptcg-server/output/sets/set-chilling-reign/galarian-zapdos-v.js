@@ -34,7 +34,7 @@ class GalarianZapdosV extends pokemon_card_1.PokemonCard {
         ];
         this.set = 'CRE';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '080';
+        this.setNumber = '80';
         this.name = 'Galarian Zapdos V';
         this.fullName = 'Galarian Zapdos V CRE';
     }

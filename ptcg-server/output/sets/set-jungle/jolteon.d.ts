@@ -7,19 +7,19 @@ export declare class Jolteon extends PokemonCard {
     cardType: CardType;
     hp: number;
     weakness: {
-        type: CardType;
+        type: CardType.FIGHTING;
     }[];
-    retreat: CardType[];
+    retreat: CardType.COLORLESS[];
     evolvesFrom: string;
     attacks: ({
         name: string;
-        cost: CardType[];
+        cost: CardType.COLORLESS[];
         damage: number;
         text: string;
         damageCalculation?: undefined;
     } | {
         name: string;
-        cost: CardType[];
+        cost: (CardType.LIGHTNING | CardType.COLORLESS)[];
         damage: number;
         damageCalculation: string;
         text: string;

@@ -43,7 +43,7 @@ export class GalarianZapdosV extends PokemonCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '080';
+  public setNumber: string = '80';
 
   public name: string = 'Galarian Zapdos V';
 

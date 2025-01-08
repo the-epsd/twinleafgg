@@ -29,11 +29,11 @@ class Oricorio extends pokemon_card_1.PokemonCard {
                 text: ''
             }
         ];
-        this.set = 'SHF';
+        this.set = 'CES';
         this.name = 'Oricorio';
         this.fullName = 'Oricorio SHF';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '41';
+        this.setNumber = '30';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
