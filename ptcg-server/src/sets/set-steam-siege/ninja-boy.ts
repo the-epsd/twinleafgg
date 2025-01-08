@@ -58,7 +58,7 @@ export class NinjaBoy extends TrainerCard {
           return state;
         }
   
-       let cards: Card[] = [];
+        let cards: Card[] = [];
         return store.prompt(state, new ChooseCardsPrompt(
           player,
           GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,

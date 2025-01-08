@@ -81,7 +81,7 @@ export class Sigilyph extends PokemonCard {
             powerType: PowerType.ABILITY,
             text: ''
           }, this);
-        store.reduceEffect(state, stub);
+          store.reduceEffect(state, stub);
         } catch {
           return state;
         }

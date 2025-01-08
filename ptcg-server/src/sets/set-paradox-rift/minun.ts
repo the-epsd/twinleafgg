@@ -24,7 +24,7 @@ export class Minun extends PokemonCard {
     cost: [CardType.LIGHTNING],
     damage: 20,
     text: '',
-  }]
+  }];
 
   public set: string = 'PAR';
   public cardImage: string = 'assets/cardback.png';
@@ -62,7 +62,7 @@ export class Minun extends PokemonCard {
         return state;
       }
     
-      let plusleIsOnBench = player.bench.some(c => c.cards.some(card => card.name === 'Plusle'));
+      const plusleIsOnBench = player.bench.some(c => c.cards.some(card => card.name === 'Plusle'));
       if (!plusleIsOnBench) {
         return state;
       }      

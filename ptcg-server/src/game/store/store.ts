@@ -90,20 +90,20 @@ export class Store implements StoreLike {
 
     state = this.propagateEffect(state, effect);
 
-    const cardEffect = <any>effect;
-    
-    if (cardEffect.card)
-      console.log(`Running effect: ${effect.type} for card ${cardEffect.card?.name}`);
-    
-    if (cardEffect.energyCard)
-      console.log(`Running effect: ${effect.type} for card ${cardEffect.energyCard?.name}`);
-    
-    if (cardEffect.trainerCard)
-      console.log(`Running effect: ${effect.type} for card ${cardEffect.trainerCard?.name}`);
-    
-    if (cardEffect.pokemonCard)
-      console.log(`Running effect: ${effect.type} for card ${cardEffect.pokemonCard?.name}`);
-    
+    // const cardEffect = <any>effect;
+
+    // if (cardEffect.card)
+    //   console.log(`Running effect: ${effect.type} for card ${cardEffect.card?.fullName}`);
+
+    // if (cardEffect.energyCard)
+    //   console.log(`Running effect: ${effect.type} for card ${cardEffect.energyCard?.fullName}`);
+
+    // if (cardEffect.trainerCard)
+    //   console.log(`Running effect: ${effect.type} for card ${cardEffect.trainerCard?.fullName}`);
+
+    // if (cardEffect.pokemonCard)
+    //   console.log(`Running effect: ${effect.type} for card ${cardEffect.pokemonCard?.fullName}`);
+
     if (effect.preventDefault === true) {
       return state;
     }
@@ -281,23 +281,36 @@ export class Store implements StoreLike {
   }
 
   private propagateEffect(state: State, effect: Effect): State {
+    const cardEffect = <any>effect;
+    const cardName = cardEffect.card?.fullName || cardEffect.energyCard?.fullName ||
+      cardEffect.trainerCard?.fullName || cardEffect.pokemonCard?.fullName || 'No card';
+
+    console.time(`propagateEffect-${effect.type}-${cardName}`);
     const cards: Card[] = [];
-    for (const player of state.players) {
-      player.stadium.cards.forEach(c => cards.push(c));
-      player.supporter.cards.forEach(c => cards.push(c));
-      player.active.cards.forEach(c => cards.push(c));
-      for (const bench of player.bench) {
-        bench.cards.forEach(c => cards.push(c));
+
+    try {
+      for (const player of state.players) {
+        player.stadium.cards.forEach(c => cards.push(c));
+        player.supporter.cards.forEach(c => cards.push(c));
+        player.active.cards.forEach(c => cards.push(c));
+        for (const bench of player.bench) {
+          bench.cards.forEach(c => cards.push(c));
+        }
+        for (const prize of player.prizes) {
+          prize.cards.forEach(c => cards.push(c));
+        }
+        player.hand.cards.forEach(c => cards.push(c));
+        player.deck.cards.forEach(c => cards.push(c));
+        player.discard.cards.forEach(c => cards.push(c));
       }
-      for (const prize of player.prizes) {
-        prize.cards.forEach(c => cards.push(c));
-      }
-      player.hand.cards.forEach(c => cards.push(c));
-      player.deck.cards.forEach(c => cards.push(c));
-      player.discard.cards.forEach(c => cards.push(c));
+      cards.sort(c => c.superType);
+      cards.forEach(c => { state = c.reduceEffect(this, state, effect); });
+      return state;
+    } finally {
+      console.timeEnd(`propagateEffect-${effect.type}-${cardName}`);
+      const used = process.memoryUsage();
+      console.log(`Memory after ${effect.type} from ${cardName}: ${Math.round(used.heapUsed / 1024 / 1024)}MB`);
+      console.log('Effect resolution complete:', effect.type, 'from', cardName);
     }
-    cards.sort(c => c.superType);
-    cards.forEach(c => { state = c.reduceEffect(this, state, effect); });
-    return state;
   }
 }

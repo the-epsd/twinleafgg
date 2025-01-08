@@ -57,7 +57,6 @@ class Braixen extends pokemon_card_1.PokemonCard {
             state = store.prompt(state, new game_1.ChooseEnergyPrompt(player.id, game_1.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, checkProvidedEnergy.energyMap, [card_types_1.CardType.FIRE], { allowCancel: true }), energy => {
                 const cards = (energy || []).map(e => e.card);
                 if (cards.length > 0) {
-                    effect.damage += 30;
                     const discardEnergy = new attack_effects_1.DiscardCardsEffect(effect, cards);
                     discardEnergy.target = player.active;
                     return store.reduceEffect(state, discardEnergy);

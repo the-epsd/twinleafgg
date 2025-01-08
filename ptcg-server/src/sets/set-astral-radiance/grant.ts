@@ -95,7 +95,7 @@ export class Grant extends TrainerCard {
         if (card.name === 'Grant') {
           blocked.push(index);
         }
-      })
+      });
 
       const handTemp = new CardList();
       handTemp.cards = player.hand.cards.filter(c => c !== this);

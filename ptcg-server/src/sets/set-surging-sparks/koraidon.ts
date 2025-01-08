@@ -4,6 +4,7 @@ import { CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, Attack, PlayerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class Koraidon extends PokemonCard {
 
@@ -28,7 +29,7 @@ export class Koraidon extends PokemonCard {
       text: 'If 1 of your other Ancient Pokémon used an attack during your last turn, this attack does 150 more damage.'
     },
     {
-      name: 'Shred',
+      name: 'Hammer In',
       cost: [F, F, C],
       damage: 110,
       text: ''
@@ -45,16 +46,39 @@ export class Koraidon extends PokemonCard {
 
   public fullName: string = 'Koraidon SSP';
 
+  public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
+  public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
+    if (effect instanceof EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
+      effect.player.attackMarker.removeMarker(this.ATTACK_USED_MARKER, this);
+      effect.player.attackMarker.removeMarker(this.ATTACK_USED_2_MARKER, this);
+      console.log('marker cleared');
+    }
+
+    if (effect instanceof EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+      effect.player.attackMarker.addMarker(this.ATTACK_USED_2_MARKER, this);
+      console.log('second marker added');
+    }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const playerLastAttack = state.playerLastAttack?.[player.id];
       const originalCard = playerLastAttack ? this.findOriginalCard(state, playerLastAttack) : null;
 
-      if (originalCard && originalCard !== this && originalCard.tags.includes(CardTag.ANCIENT)) {
+      if (originalCard && originalCard !== this &&
+        originalCard.tags.includes(CardTag.ANCIENT) &&
+        !effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
         effect.damage += 150;
+        effect.player.attackMarker.addMarker(this.ATTACK_USED_MARKER, this);
+        console.log('marker added');
       }
+    }
+
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+      effect.player.attackMarker.addMarker(this.ATTACK_USED_MARKER, this);
+      console.log('marker added');
     }
     return state;
   }

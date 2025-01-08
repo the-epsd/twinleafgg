@@ -52,8 +52,8 @@ export class GalarianPerrserker extends PokemonCard {
         return state;
       }
 
-      let hasPerrserkerInPlay = player.bench.some(b => b.cards.includes(this)) || player.active.cards.includes(this);
-      let numberOfPerrserkersInPlay = 0
+      const hasPerrserkerInPlay = player.bench.some(b => b.cards.includes(this)) || player.active.cards.includes(this);
+      let numberOfPerrserkersInPlay = 0;
 
       if (hasPerrserkerInPlay) {
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {

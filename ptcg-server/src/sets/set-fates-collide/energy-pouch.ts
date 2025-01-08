@@ -55,7 +55,7 @@ export class EnergyPouch extends TrainerCard {
         store.log(state, GameLog.LOG_PLAYER_RETURNS_CARD_TO_HAND, {
           name: player.name,
           card: c.name
-        })
+        });
       });      
       
       basicEnergy.moveTo(player.hand);      

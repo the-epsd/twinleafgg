@@ -18,7 +18,7 @@ class PracticeStudio extends trainer_card_1.TrainerCard {
         this.setNumber = '186';
         this.name = 'Practice Studio';
         this.fullName = 'Practice Studio PAL';
-        this.text = 'The attacks of Stage 1 Pokémon (both yours and your opponent\'s) do 10 more damage to the opponent\’s Active Pokémon (before applying Weakness and Resistance).';
+        this.text = 'The attacks of Stage 1 Pokémon (both yours and your opponent\'s) do 10 more damage to the opponent\'s Active Pokémon (before applying Weakness and Resistance).';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof attack_effects_1.PutDamageEffect && effect.source.cards.includes(this)) {

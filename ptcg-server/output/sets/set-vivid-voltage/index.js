@@ -5,6 +5,7 @@ const aromatic_energy_1 = require("./aromatic-energy");
 const charizard_1 = require("./charizard");
 const charmander_1 = require("./charmander");
 const charmeleon_1 = require("./charmeleon");
+const chimecho_1 = require("./chimecho");
 const coating_metal_energy_1 = require("./coating-metal-energy");
 const dhelmise_1 = require("./dhelmise");
 const jirachi_1 = require("./jirachi");
@@ -25,6 +26,7 @@ exports.setVividVoltage = [
     new charmander_1.Charmander(),
     new charmeleon_1.Charmeleon(),
     new charizard_1.Charizard(),
+    new chimecho_1.Chimecho(),
     new coating_metal_energy_1.CoatingMetalEnergy(),
     new dhelmise_1.Dhelmise(),
     new jirachi_1.Jirachi(),

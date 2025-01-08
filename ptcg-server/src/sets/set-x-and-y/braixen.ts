@@ -61,7 +61,7 @@ export class Braixen extends PokemonCard {
       });
     }
 
-    if(effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
       state = store.reduceEffect(state, checkProvidedEnergy);
@@ -70,12 +70,11 @@ export class Braixen extends PokemonCard {
         player.id,
         GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
         checkProvidedEnergy.energyMap,
-        [ CardType.FIRE ],
+        [CardType.FIRE],
         { allowCancel: true }
       ), energy => {
         const cards: Card[] = (energy || []).map(e => e.card);
         if (cards.length > 0) {
-          effect.damage += 30;
           const discardEnergy = new DiscardCardsEffect(effect, cards);
           discardEnergy.target = player.active;
           return store.reduceEffect(state, discardEnergy);

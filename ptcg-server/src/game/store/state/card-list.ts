@@ -151,7 +151,7 @@ export class CardList {
     if (input === SuperType.TRAINER) return 2;
     if (input === SuperType.ENERGY) return 3;
     return Infinity;
-  };
+  }
   
   private compareTrainerType(input: TrainerType) {
     if (input === TrainerType.SUPPORTER) return 1;
@@ -159,7 +159,7 @@ export class CardList {
     if (input === TrainerType.TOOL) return 3;
     if (input === TrainerType.STADIUM) return 4;
     return Infinity;
-  };
+  }
   
   private compareEnergyType (input: EnergyType) {
     if (input === EnergyType.BASIC) return 1;

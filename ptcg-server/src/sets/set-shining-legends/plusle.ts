@@ -18,7 +18,7 @@ export class Plusle extends PokemonCard {
     damage: 10,
     damageCalculation: '+',
     text: 'If Minun is on your Bench, this attack does 50 more damage.',
-  }]
+  }];
 
   public set: string = 'SLG';
   public cardImage: string = 'assets/cardback.png';
@@ -31,7 +31,7 @@ export class Plusle extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       
-      let minunIsOnBench = player.bench.some(c => c.cards.some(card => card.name === 'Minun'));
+      const minunIsOnBench = player.bench.some(c => c.cards.some(card => card.name === 'Minun'));
       if (minunIsOnBench) {
         effect.damage += 50;
       }

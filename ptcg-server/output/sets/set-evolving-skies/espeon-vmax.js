@@ -51,65 +51,52 @@ class EspeonVMAX extends pokemon_card_1.PokemonCard {
             });
             effect.damage = energies * 60;
         }
-        if (effect instanceof check_effects_1.CheckTableStateEffect) {
-            state.players.forEach(player => {
-                if (player.active.specialConditions.length === 0) {
-                    return;
+        if (effect instanceof attack_effects_1.AbstractAttackEffect) {
+            const sourceCard = effect.source.getPokemonCard();
+            const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            let isToedscruelInPlay = false;
+            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+                if (card === this) {
+                    isToedscruelInPlay = true;
                 }
-                let hasEspeonVMAXInPlay = false;
-                player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-                    if (card === this) {
-                        hasEspeonVMAXInPlay = true;
-                    }
-                });
-                if (!hasEspeonVMAXInPlay) {
+            });
+            opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList, card) => {
+                if (card === this) {
+                    isToedscruelInPlay = true;
+                }
+            });
+            if (!isToedscruelInPlay) {
+                return state;
+            }
+            if (sourceCard && effect.target.cards.some(c => c instanceof game_1.EnergyCard)) {
+                // Try to reduce PowerEffect, to check if something is blocking our ability
+                try {
+                    const player = game_1.StateUtils.findOwner(state, effect.target);
+                    const stub = new game_effects_1.PowerEffect(player, {
+                        name: 'test',
+                        powerType: game_1.PowerType.ABILITY,
+                        text: ''
+                    }, this);
+                    store.reduceEffect(state, stub);
+                }
+                catch (_a) {
                     return state;
                 }
-                const checkProvidedEnergyEffect = new check_effects_1.CheckProvidedEnergyEffect(player);
-                store.reduceEffect(state, checkProvidedEnergyEffect);
-                const energyMap = checkProvidedEnergyEffect.energyMap;
-                const hasEnergy = game_1.StateUtils.checkEnoughEnergy(energyMap, [card_types_1.CardType.COLORLESS || card_types_1.CardType.DARK || card_types_1.CardType.DRAGON || card_types_1.CardType.FAIRY || card_types_1.CardType.GRASS || card_types_1.CardType.METAL || card_types_1.CardType.PSYCHIC || card_types_1.CardType.WATER || card_types_1.CardType.LIGHTNING || card_types_1.CardType.FIRE]);
-                if (hasEnergy) {
-                    // Try to reduce PowerEffect, to check if something is blocking our ability
-                    try {
-                        const stub = new game_effects_1.PowerEffect(player, {
-                            name: 'test',
-                            powerType: game_1.PowerType.ABILITY,
-                            text: ''
-                        }, this);
-                        store.reduceEffect(state, stub);
-                    }
-                    catch (_a) {
-                        return state;
-                    }
-                    if (effect instanceof attack_effects_1.AbstractAttackEffect && effect.target.cards.includes(this)) {
-                        // Allow damage
-                        if (effect instanceof attack_effects_1.PutDamageEffect) {
-                            return state;
-                        }
-                        // Allow damage
-                        if (effect instanceof attack_effects_1.DealDamageEffect) {
-                            return state;
-                        }
-                        // Try to reduce PowerEffect, to check if something is blocking our ability
-                        try {
-                            const player = game_1.StateUtils.findOwner(state, effect.target);
-                            const stub = new game_effects_1.PowerEffect(player, {
-                                name: 'test',
-                                powerType: game_1.PowerType.ABILITY,
-                                text: ''
-                            }, this);
-                            store.reduceEffect(state, stub);
-                        }
-                        catch (_b) {
-                            return state;
-                        }
-                        effect.preventDefault = true;
-                    }
+                // Allow Weakness & Resistance
+                if (effect instanceof attack_effects_1.ApplyWeaknessEffect) {
+                    return state;
                 }
-                return state;
-            });
-            return state;
+                // Allow damage
+                if (effect instanceof attack_effects_1.PutDamageEffect) {
+                    return state;
+                }
+                // Allow damage
+                if (effect instanceof attack_effects_1.DealDamageEffect) {
+                    return state;
+                }
+                effect.preventDefault = true;
+            }
         }
         return state;
     }

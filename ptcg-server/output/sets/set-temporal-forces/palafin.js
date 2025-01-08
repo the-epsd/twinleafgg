@@ -38,7 +38,7 @@ class Palafin extends pokemon_card_1.PokemonCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
-            let selfDamage = player.active.damage;
+            const selfDamage = player.active.damage;
             const dealDamage = new attack_effects_1.DealDamageEffect(effect, selfDamage);
             dealDamage.target = player.active;
             return store.reduceEffect(state, dealDamage);

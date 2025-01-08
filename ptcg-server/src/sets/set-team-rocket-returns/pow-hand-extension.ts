@@ -11,7 +11,7 @@ export class PowHandExtension extends TrainerCard {
   public fullName: string = 'Pow! Hand Extension TRR';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '85';
-  public text = 'You may use this card only if you have more Prize cards left than your opponent. Move 1 Energy card attached to the Defending Pokémon to another of your opponent\'s Pokémon. Or, switch 1 of your opponent\'s Benched Pokémon with 1 of the Defending Pokémon.Your opponent chooses the Defending Pokémon to switch.'
+  public text = 'You may use this card only if you have more Prize cards left than your opponent. Move 1 Energy card attached to the Defending Pokémon to another of your opponent\'s Pokémon. Or, switch 1 of your opponent\'s Benched Pokémon with 1 of the Defending Pokémon.Your opponent chooses the Defending Pokémon to switch.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

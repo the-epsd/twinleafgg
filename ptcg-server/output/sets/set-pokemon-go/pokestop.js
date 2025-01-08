@@ -45,7 +45,6 @@ class Pokestop extends trainer_card_1.TrainerCard {
         player.discard.moveCardsTo(itemCards, player.hand);
         const opponent = state_utils_1.StateUtils.getOpponent(state, player);
         return store.prompt(state, new game_1.ShowCardsPrompt(opponent.id, game_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, itemCards), () => { });
-        ;
     }
 }
 exports.Pokestop = Pokestop;

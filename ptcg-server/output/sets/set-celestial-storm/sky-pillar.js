@@ -13,10 +13,10 @@ class SkyPillar extends trainer_card_1.TrainerCard {
         this.regulationMark = 'D';
         this.set = 'CES';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '160';
-        this.name = 'Galar Mine';
-        this.fullName = 'Galar Mine CES';
-        this.text = 'The Retreat Cost of both Active Pokémon is [C][C] more.';
+        this.setNumber = '144';
+        this.name = 'Sky Pillar';
+        this.fullName = 'Sky Pillar CES';
+        this.text = 'Prevent all effects of the opponent\'s attacks, including damage, done to Benched Pokémon (both yours and your opponent\'s).';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.UseStadiumEffect && game_1.StateUtils.getStadiumCard(state) === this) {

@@ -137,9 +137,9 @@ export class DecidueyeGX extends PokemonCard {
             {},
             { min, max, allowCancel: false }
           )], selected => {
-            const cards = selected || [];
-            player.discard.moveCardsTo(cards, player.hand);
-          });
+          const cards = selected || [];
+          player.discard.moveCardsTo(cards, player.hand);
+        });
       }
 
       return state;

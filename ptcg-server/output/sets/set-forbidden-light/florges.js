@@ -19,7 +19,7 @@ class Florges extends pokemon_card_1.PokemonCard {
         this.retreat = [C, C];
         this.evolvesFrom = 'Floette';
         this.powers = [{
-                name: "Wondrous Gift",
+                name: 'Wondrous Gift',
                 useWhenInPlay: true,
                 powerType: game_1.PowerType.ABILITY,
                 text: 'Once during your turn (before your attack), you may flip a coin. If heads, put an Item card from your discard pile on top of your deck.'

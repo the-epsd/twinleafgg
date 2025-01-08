@@ -1,8 +1,8 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { EnergyCard, PowerType, State, StateUtils, StoreLike } from '../../game';
+import { EnergyCard, PlayerType, PowerType, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AbstractAttackEffect, DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { AbstractAttackEffect, ApplyWeaknessEffect, DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 
@@ -41,38 +41,55 @@ export class Toedscruelex extends PokemonCard {
 
     if (effect instanceof AbstractAttackEffect) {
       const sourceCard = effect.source.getPokemonCard();
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
 
-      if (sourceCard) {
+      let isToedscruelInPlay = false;
 
-        // eslint-disable-next-line indent
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+        if (card === this) {
+          isToedscruelInPlay = true;
+        }
+      });
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
+        if (card === this) {
+          isToedscruelInPlay = true;
+        }
+      });
+
+      if (!isToedscruelInPlay) {
+        return state;
+      }
+
+      if (sourceCard && effect.target.cards.some(c => c instanceof EnergyCard)) {
+
+        // Try to reduce PowerEffect, to check if something is blocking our ability
+        try {
+          const player = StateUtils.findOwner(state, effect.target);
+          const stub = new PowerEffect(player, {
+            name: 'test',
+            powerType: PowerType.ABILITY,
+            text: ''
+          }, this);
+          store.reduceEffect(state, stub);
+        } catch {
+          return state;
+        }
+        // Allow Weakness & Resistance
+        if (effect instanceof ApplyWeaknessEffect) {
+          return state;
+        }
         // Allow damage
         if (effect instanceof PutDamageEffect) {
           return state;
         }
+        // Allow damage
         if (effect instanceof DealDamageEffect) {
           return state;
         }
 
-        if (effect.target.cards.some(c => c instanceof EnergyCard)) {
-
-          // Try to reduce PowerEffect, to check if something is blocking our ability
-          try {
-            const player = StateUtils.findOwner(state, effect.target);
-            const stub = new PowerEffect(player, {
-              name: 'test',
-              powerType: PowerType.ABILITY,
-              text: ''
-            }, this);
-            store.reduceEffect(state, stub);
-          } catch {
-            return state;
-          }
-
-          effect.preventDefault = true;
-        }
-
+        effect.preventDefault = true;
       }
-      return state;
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

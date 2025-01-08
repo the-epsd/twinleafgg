@@ -68,7 +68,7 @@ export class Rayquazaex extends PokemonCard {
         const costToRemove = 1;
 
         for (let i = 0; i < costToRemove; i++) {
-          let index = effect.cost.indexOf(CardType.COLORLESS);
+          const index = effect.cost.indexOf(CardType.COLORLESS);
           if (index !== -1) {
             effect.cost.splice(index, 1);
           }
@@ -102,7 +102,7 @@ export class Rayquazaex extends PokemonCard {
         const costToRemove = 2;
 
         for (let i = 0; i < costToRemove; i++) {
-          let index = effect.cost.indexOf(CardType.COLORLESS);
+          const index = effect.cost.indexOf(CardType.COLORLESS);
           if (index !== -1) {
             effect.cost.splice(index, 1);
           }

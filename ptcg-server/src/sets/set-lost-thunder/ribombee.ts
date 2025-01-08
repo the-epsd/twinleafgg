@@ -1,9 +1,9 @@
-import { Stage, CardType, PowerType, State, StoreLike, PokemonCardList, StateUtils } from "../../game";
-import { PokemonCard } from "../../game/store/card/pokemon-card";
-import { CheckPokemonTypeEffect } from "../../game/store/effects/check-effects";
-import { Effect } from "../../game/store/effects/effect";
-import { PowerEffect } from "../../game/store/effects/game-effects";
-import { SupporterEffect } from "../../game/store/effects/play-card-effects";
+import { Stage, CardType, PowerType, State, StoreLike, PokemonCardList, StateUtils } from '../../game';
+import { PokemonCard } from '../../game/store/card/pokemon-card';
+import { CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
+import { Effect } from '../../game/store/effects/effect';
+import { PowerEffect } from '../../game/store/effects/game-effects';
+import { SupporterEffect } from '../../game/store/effects/play-card-effects';
 
 export class Ribombee extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;

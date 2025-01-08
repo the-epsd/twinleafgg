@@ -6,6 +6,7 @@ const card_types_1 = require("../../game/store/card/card-types");
 const card_types_2 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
+const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 class Koraidon extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -24,7 +25,7 @@ class Koraidon extends pokemon_card_1.PokemonCard {
                 text: 'If 1 of your other Ancient Pokémon used an attack during your last turn, this attack does 150 more damage.'
             },
             {
-                name: 'Shred',
+                name: 'Hammer In',
                 cost: [F, F, C],
                 damage: 110,
                 text: ''
@@ -35,16 +36,35 @@ class Koraidon extends pokemon_card_1.PokemonCard {
         this.setNumber = '116';
         this.name = 'Koraidon';
         this.fullName = 'Koraidon SSP';
+        this.ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
+        this.ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
     }
     reduceEffect(store, state, effect) {
         var _a;
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
+            effect.player.attackMarker.removeMarker(this.ATTACK_USED_MARKER, this);
+            effect.player.attackMarker.removeMarker(this.ATTACK_USED_2_MARKER, this);
+            console.log('marker cleared');
+        }
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+            effect.player.attackMarker.addMarker(this.ATTACK_USED_2_MARKER, this);
+            console.log('second marker added');
+        }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const playerLastAttack = (_a = state.playerLastAttack) === null || _a === void 0 ? void 0 : _a[player.id];
             const originalCard = playerLastAttack ? this.findOriginalCard(state, playerLastAttack) : null;
-            if (originalCard && originalCard !== this && originalCard.tags.includes(card_types_2.CardTag.ANCIENT)) {
+            if (originalCard && originalCard !== this &&
+                originalCard.tags.includes(card_types_2.CardTag.ANCIENT) &&
+                !effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
                 effect.damage += 150;
+                effect.player.attackMarker.addMarker(this.ATTACK_USED_MARKER, this);
+                console.log('marker added');
             }
+        }
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
+            effect.player.attackMarker.addMarker(this.ATTACK_USED_MARKER, this);
+            console.log('marker added');
         }
         return state;
     }

@@ -26,7 +26,7 @@ export class PracticeStudio extends TrainerCard {
   public fullName: string = 'Practice Studio PAL';
 
   public text: string =
-    'The attacks of Stage 1 Pokémon (both yours and your opponent\'s) do 10 more damage to the opponent\’s Active Pokémon (before applying Weakness and Resistance).';
+    'The attacks of Stage 1 Pokémon (both yours and your opponent\'s) do 10 more damage to the opponent\'s Active Pokémon (before applying Weakness and Resistance).';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PutDamageEffect && effect.source.cards.includes(this)) {
@@ -41,7 +41,7 @@ export class PracticeStudio extends TrainerCard {
     if (effect instanceof UseStadiumEffect && StateUtils.getStadiumCard(state) === this) {
       throw new GameError(GameMessage.CANNOT_USE_STADIUM);
     }
-    
+
     return state;
   }
 }

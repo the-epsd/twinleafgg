@@ -136,7 +136,6 @@ class CardList {
             return 3;
         return Infinity;
     }
-    ;
     compareTrainerType(input) {
         if (input === card_types_1.TrainerType.SUPPORTER)
             return 1;
@@ -148,7 +147,6 @@ class CardList {
             return 4;
         return Infinity;
     }
-    ;
     compareEnergyType(input) {
         if (input === card_types_1.EnergyType.BASIC)
             return 1;

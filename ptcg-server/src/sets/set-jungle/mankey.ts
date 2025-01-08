@@ -135,7 +135,7 @@ export class Mankey extends PokemonCard {
             if (prizes.length === 0) {
               throw new GameError(GameMessage.CANNOT_USE_POWER);
             }
-            let list = []
+            let list = [];
             const cards: Card[] = [];
             prizes.forEach(p => { p.cards.forEach(c => cards.push(c)); });
 
@@ -173,7 +173,7 @@ export class Mankey extends PokemonCard {
             if (prizes.length === 0) {
               throw new GameError(GameMessage.CANNOT_USE_POWER);
             }
-            let list = []
+            let list = [];
             const cards: Card[] = [];
             prizes.forEach(p => { p.cards.forEach(c => cards.push(c)); });
 

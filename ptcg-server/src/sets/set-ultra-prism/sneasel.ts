@@ -74,31 +74,31 @@ export class Sneasel extends PokemonCard {
       });
       
       let targets: PokemonCardList[] = [];
-        return store.prompt(state, new ChoosePokemonPrompt(
-          player.id,
-          GameMessage.CHOOSE_POKEMON_TO_DISCARD_CARDS,
-          PlayerType.ANY,
-          [SlotType.ACTIVE, SlotType.BENCH],
-          { min: 1, max: 1, allowCancel: false, blocked }
-        ), results => {
-          targets = results || [];
+      return store.prompt(state, new ChoosePokemonPrompt(
+        player.id,
+        GameMessage.CHOOSE_POKEMON_TO_DISCARD_CARDS,
+        PlayerType.ANY,
+        [SlotType.ACTIVE, SlotType.BENCH],
+        { min: 1, max: 1, allowCancel: false, blocked }
+      ), results => {
+        targets = results || [];
 
-          if (targets.length === 0) {
-            return state;
-          }
+        if (targets.length === 0) {
+          return state;
+        }
 
-          return store.prompt(state, new ChooseCardsPrompt(
-            opponent,
-            GameMessage.CHOOSE_CARD_TO_DISCARD,
-            targets[0],
-            { superType: SuperType.ENERGY },
-            { min: 1, max: 1, allowCancel: false }
-          ), selected => {
-            targets[0].moveCardTo(selected[0], opponent.discard);
-            return state;
-          });
+        return store.prompt(state, new ChooseCardsPrompt(
+          opponent,
+          GameMessage.CHOOSE_CARD_TO_DISCARD,
+          targets[0],
+          { superType: SuperType.ENERGY },
+          { min: 1, max: 1, allowCancel: false }
+        ), selected => {
+          targets[0].moveCardTo(selected[0], opponent.discard);
+          return state;
         });
-      }
+      });
+    }
     
     return state;
   }

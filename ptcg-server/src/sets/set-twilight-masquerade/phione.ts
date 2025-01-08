@@ -70,9 +70,9 @@ export class Phione extends PokemonCard {
           { superType: SuperType.TRAINER, trainerType: TrainerType.SUPPORTER },
           { min, max, allowCancel: false }
         )], selected => {
-          const cards = selected || [];
-          player.discard.moveCardsTo(cards, player.hand);
-        });
+        const cards = selected || [];
+        player.discard.moveCardsTo(cards, player.hand);
+      });
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {

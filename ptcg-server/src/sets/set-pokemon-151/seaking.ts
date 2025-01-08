@@ -49,59 +49,59 @@ export class Seaking extends PokemonCard {
   public fullName: string = 'Seaking MEW';
 
   public readonly PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER = 'PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER';
-    public readonly CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER = 'CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER';
+  public readonly CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER = 'CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER';
   
-    public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
   
-      if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-        const player = effect.player;
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+      const player = effect.player;
         
-        const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player, player.active);
-        store.reduceEffect(state, checkProvidedEnergyEffect);
+      const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player, player.active);
+      store.reduceEffect(state, checkProvidedEnergyEffect);
 
-        let energyCount = 0;
-        checkProvidedEnergyEffect.energyMap.forEach(em => {
-          energyCount += em.provides.filter(cardType =>
-            cardType === CardType.WATER || cardType === CardType.ANY
-          ).length;
-        });
+      let energyCount = 0;
+      checkProvidedEnergyEffect.energyMap.forEach(em => {
+        energyCount += em.provides.filter(cardType =>
+          cardType === CardType.WATER || cardType === CardType.ANY
+        ).length;
+      });
 
-        effect.damage += energyCount * 30;
+      effect.damage += energyCount * 30;
         
-        return state;
-      }
+      return state;
+    }
       
-      if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-        const player = effect.player;
-        const opponent = StateUtils.getOpponent(state, player);
-        state = store.prompt(state, new CoinFlipPrompt(
-          player.id, GameMessage.COIN_FLIP
-        ), flipResult => {
-          if (flipResult) {
-            player.active.attackMarker.addMarker(this.PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER, this);
-            opponent.attackMarker.addMarker(this.CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER, this);
-          }
-        });
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+      state = store.prompt(state, new CoinFlipPrompt(
+        player.id, GameMessage.COIN_FLIP
+      ), flipResult => {
+        if (flipResult) {
+          player.active.attackMarker.addMarker(this.PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER, this);
+          opponent.attackMarker.addMarker(this.CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER, this);
+        }
+      });
 
-        return state;
-      }
+      return state;
+    }
 
-      if (effect instanceof AbstractAttackEffect
+    if (effect instanceof AbstractAttackEffect
         && effect.target.attackMarker.hasMarker(this.PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER)) {
-        effect.preventDefault = true;
-        return state;
-      }
+      effect.preventDefault = true;
+      return state;
+    }
 
-      if (effect instanceof EndTurnEffect
+    if (effect instanceof EndTurnEffect
         && effect.player.attackMarker.hasMarker(this.CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER, this)) {
 
-        effect.player.attackMarker.removeMarker(this.CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER, this);
+      effect.player.attackMarker.removeMarker(this.CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER, this);
 
-        const opponent = StateUtils.getOpponent(state, effect.player);
-        opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-          cardList.attackMarker.removeMarker(this.PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER, this);
-        });
-      }
+      const opponent = StateUtils.getOpponent(state, effect.player);
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
+        cardList.attackMarker.removeMarker(this.PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER, this);
+      });
+    }
 
     return state;
   }
