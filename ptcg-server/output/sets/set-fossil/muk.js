@@ -18,7 +18,6 @@ class Muk extends pokemon_card_1.PokemonCard {
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.powers = [{
                 name: 'Toxic Gas',
-                useWhenInPlay: true,
                 powerType: game_1.PowerType.POKEPOWER,
                 text: 'Ignore all Pokémon Powers other than Toxic Gases. This power stops working while Muk is Asleep, Confused, or Paralyzed.'
             }];
@@ -37,27 +36,33 @@ class Muk extends pokemon_card_1.PokemonCard {
         this.fullName = 'Muk FO';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
+        if (effect instanceof game_effects_1.PowerEffect && effect.power.powerType
+            === game_1.PowerType.POKEPOWER && effect.power.name !== "Toxic Gas") {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            const cardList = game_1.StateUtils.findCardList(state, this);
-            const owner = game_1.StateUtils.findOwner(state, cardList);
             const thisMuk = game_1.StateUtils.findCardList(state, this);
             if (thisMuk.specialConditions.length > 0) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
-            if (!player.active.cards.includes(this) &&
-                !opponent.active.cards.includes(this)) {
-                return state;
-            }
-            if (owner === player) {
+            let isMukInPlay = false;
+            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+                if (card === this) {
+                    isMukInPlay = true;
+                }
+            });
+            opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList, card) => {
+                if (card === this) {
+                    isMukInPlay = true;
+                }
+            });
+            if (!isMukInPlay) {
                 return state;
             }
             // Try reducing ability for opponent
             try {
                 const stub = new game_effects_1.PowerEffect(player, {
                     name: 'test',
-                    powerType: game_1.PowerType.ABILITY,
+                    powerType: game_1.PowerType.POKEPOWER,
                     text: ''
                 }, this);
                 store.reduceEffect(state, stub);
