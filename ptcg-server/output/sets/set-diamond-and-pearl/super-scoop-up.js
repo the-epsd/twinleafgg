@@ -19,8 +19,10 @@ function* playCard(next, store, state, effect) {
     }
     return store.prompt(state, new choose_pokemon_prompt_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_POKEMON_TO_PICK_UP, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { allowCancel: false }), result => {
         const cardList = result[0];
-        cardList.moveTo(player.hand);
         cardList.clearEffects();
+        cardList.damage = 0;
+        cardList.moveTo(player.hand);
+        cardList.removeBoardEffect(card_types_1.BoardEffect.ABILITY_USED);
         player.supporter.moveCardTo(effect.trainerCard, player.discard);
     });
 }

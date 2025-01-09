@@ -25,19 +25,17 @@ class ScoopUpCyclone extends trainer_card_1.TrainerCard {
             const player = effect.player;
             // We will discard this card after prompt confirmation
             effect.preventDefault = true;
-            return store.prompt(state, new choose_pokemon_prompt_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_POKEMON_TO_PICK_UP, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { allowCancel: true }), result => {
-                const targets = result || [];
-                // Operation cancelled by user
-                if (targets.length === 0) {
-                    return;
+            return store.prompt(state, new choose_pokemon_prompt_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_POKEMON_TO_PICK_UP, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { allowCancel: false }), result => {
+                const cardList = result.length > 0 ? result[0] : null;
+                if (cardList !== null) {
+                    const pokemons = cardList.getPokemons();
+                    cardList.clearEffects();
+                    cardList.damage = 0;
+                    cardList.moveCardsTo(pokemons, player.hand);
+                    cardList.moveTo(player.hand);
+                    cardList.removeBoardEffect(card_types_1.BoardEffect.ABILITY_USED);
+                    player.supporter.moveCardTo(effect.trainerCard, player.discard);
                 }
-                // Discard trainer card
-                player.supporter.moveCardTo(effect.trainerCard, player.discard);
-                targets.forEach(target => {
-                    target.moveTo(player.hand);
-                    target.clearEffects();
-                    target.damage = 0;
-                });
             });
         }
         return state;
