@@ -8,7 +8,7 @@
     "lint": "eslint -c .eslintrc.js --ext .ts src --fix",
     "compile": "tsc && tsc -p tsconfig.dist.json",
     "build": "npm run lint && npm run test && npm run compile",
-    "build:prod": "set NODE_OPTIONS=--max-old-space-size=4096 npm run compile",
+    "build:prod": "npm run compile",
     "build:joe": "tsc && tsc -p tsconfig.json",
     "outputs": ".vercel/**",
     "start": "node start.js",
