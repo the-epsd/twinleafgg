@@ -10,11 +10,11 @@ import { GameError, GameMessage } from '../../game';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 
 export class Farfetchd extends PokemonCard {
-  
+
   public name = 'Farfetch\'d';
-  
+
   public set = 'BS';
-  
+
   public fullName = 'Farfetch\'d BS';
 
   public stage = Stage.BASIC;
@@ -26,13 +26,13 @@ export class Farfetchd extends PokemonCard {
   public setNumber: string = '27';
 
   public cardType = CardType.COLORLESS;
-  
+
   public weakness = [{ type: CardType.LIGHTNING }];
 
   public resistance = [{ type: CardType.FIGHTING, value: -30 }];
 
   public retreat = [CardType.COLORLESS];
-  
+
   public readonly LEEK_SLAP_MARKER = 'LEEK_SLAP_MARKER';
 
   public attacks: Attack[] = [
@@ -54,28 +54,28 @@ export class Farfetchd extends PokemonCard {
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const player = effect.player;
       player.marker.removeMarker(this.LEEK_SLAP_MARKER, this);
-    }      
+    }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
-      
-      if (effect.player.attackMarker.hasMarker(this.LEEK_SLAP_MARKER, this)) {
+
+      if (effect.player.marker.hasMarker(this.LEEK_SLAP_MARKER, this)) {
         throw new GameError(GameMessage.LEEK_SLAP_CANNOT_BE_USED_AGAIN);
       }
-      
+
       return store.prompt(state, [
         new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
       ], (heads) => {
         if (!heads) {
           effect.damage = 0;
         }
-        
-        effect.player.attackMarker.addMarker(this.LEEK_SLAP_MARKER, this);
-        
+
+        effect.player.marker.addMarker(this.LEEK_SLAP_MARKER, this);
+
         return state;
       });
     }
-    
+
     return state;
   }
 }

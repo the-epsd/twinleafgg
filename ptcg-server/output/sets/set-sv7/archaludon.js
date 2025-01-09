@@ -18,10 +18,10 @@ class Archaludon extends pokemon_card_1.PokemonCard {
         this.resistance = [{ type: card_types_1.CardType.GRASS, value: -30 }];
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.powers = [{
-                name: 'Metal Bridge',
-                powerType: game_1.PowerType.ABILITY,
-                text: 'All of your Pokémon that have [M] Energy attached have no Retreat Cost.'
-            }];
+            name: 'Metal Bridge',
+            powerType: game_1.PowerType.ABILITY,
+            text: 'All of your Pokémon that have [M] Energy attached have no Retreat Cost.'
+        }];
         this.attacks = [
             {
                 name: 'Iron Blaster',
@@ -77,19 +77,19 @@ class Archaludon extends pokemon_card_1.PokemonCard {
                 effect.cost = [];
             }
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
-            effect.player.attackMarker.removeMarker(this.ATTACK_USED_MARKER, this);
-            effect.player.attackMarker.removeMarker(this.ATTACK_USED_2_MARKER, this);
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
+            effect.player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
+            effect.player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
             console.log('marker cleared');
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-            effect.player.attackMarker.addMarker(this.ATTACK_USED_2_MARKER, this);
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+            effect.player.marker.addMarker(this.ATTACK_USED_2_MARKER, this);
             console.log('second marker added');
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             // Check marker
-            if (player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+            if (player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
                 throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);
             }
         }

@@ -42,13 +42,13 @@ export class Nidoqueen extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      player.active.attackMarker.addMarker(this.PREVENT_ALL_DAMAGE_DONE_BY_OPPONENTS_BASIC_POKEMON_MARKER, this);
-      opponent.attackMarker.addMarker(this.CLEAR_PREVENT_ALL_DAMAGE_DONE_BY_OPPONENTS_BASIC_POKEMON_MARKER, this);
+      player.active.marker.addMarker(this.PREVENT_ALL_DAMAGE_DONE_BY_OPPONENTS_BASIC_POKEMON_MARKER, this);
+      opponent.marker.addMarker(this.CLEAR_PREVENT_ALL_DAMAGE_DONE_BY_OPPONENTS_BASIC_POKEMON_MARKER, this);
       return state;
     }
 
     if (effect instanceof PutDamageEffect
-      && effect.target.attackMarker.hasMarker(this.PREVENT_ALL_DAMAGE_DONE_BY_OPPONENTS_BASIC_POKEMON_MARKER)) {
+      && effect.target.marker.hasMarker(this.PREVENT_ALL_DAMAGE_DONE_BY_OPPONENTS_BASIC_POKEMON_MARKER)) {
       const card = effect.source.getPokemonCard();
 
       if (card?.stage === Stage.BASIC) {
@@ -60,11 +60,11 @@ export class Nidoqueen extends PokemonCard {
 
     if (effect instanceof EndTurnEffect) {
 
-      if (effect.player.attackMarker.hasMarker(this.CLEAR_PREVENT_ALL_DAMAGE_DONE_BY_OPPONENTS_BASIC_POKEMON_MARKER, this)) {
-        effect.player.attackMarker.removeMarker(this.CLEAR_PREVENT_ALL_DAMAGE_DONE_BY_OPPONENTS_BASIC_POKEMON_MARKER, this);
+      if (effect.player.marker.hasMarker(this.CLEAR_PREVENT_ALL_DAMAGE_DONE_BY_OPPONENTS_BASIC_POKEMON_MARKER, this)) {
+        effect.player.marker.removeMarker(this.CLEAR_PREVENT_ALL_DAMAGE_DONE_BY_OPPONENTS_BASIC_POKEMON_MARKER, this);
         const opponent = StateUtils.getOpponent(state, effect.player);
         opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-          cardList.attackMarker.removeMarker(this.PREVENT_ALL_DAMAGE_DONE_BY_OPPONENTS_BASIC_POKEMON_MARKER, this);
+          cardList.marker.removeMarker(this.PREVENT_ALL_DAMAGE_DONE_BY_OPPONENTS_BASIC_POKEMON_MARKER, this);
         });
       }
     }

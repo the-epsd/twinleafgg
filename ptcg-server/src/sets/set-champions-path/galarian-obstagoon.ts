@@ -61,28 +61,28 @@ export class GalarianObstagoon extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof EndTurnEffect && effect.player.active.attackMarker.hasMarker(PokemonCardList.ATTACK_USED_2_MARKER, this)) {
-      effect.player.active.attackMarker.removeMarker(PokemonCardList.ATTACK_USED_MARKER, this);
-      effect.player.active.attackMarker.removeMarker(PokemonCardList.ATTACK_USED_2_MARKER, this);
+    if (effect instanceof EndTurnEffect && effect.player.active.marker.hasMarker(PokemonCardList.ATTACK_USED_2_MARKER, this)) {
+      effect.player.active.marker.removeMarker(PokemonCardList.ATTACK_USED_MARKER, this);
+      effect.player.active.marker.removeMarker(PokemonCardList.ATTACK_USED_2_MARKER, this);
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.active.attackMarker.hasMarker(PokemonCardList.ATTACK_USED_MARKER, this)) {
-      effect.player.active.attackMarker.addMarker(PokemonCardList.ATTACK_USED_2_MARKER, this);
+    if (effect instanceof EndTurnEffect && effect.player.active.marker.hasMarker(PokemonCardList.ATTACK_USED_MARKER, this)) {
+      effect.player.active.marker.addMarker(PokemonCardList.ATTACK_USED_2_MARKER, this);
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
 
       // Check marker
-      if (effect.player.active.attackMarker.hasMarker(PokemonCardList.ATTACK_USED_MARKER, this)) {
+      if (effect.player.active.marker.hasMarker(PokemonCardList.ATTACK_USED_MARKER, this)) {
         throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
       }
 
-      effect.player.active.attackMarker.addMarker(PokemonCardList.ATTACK_USED_MARKER, this);
+      effect.player.active.marker.addMarker(PokemonCardList.ATTACK_USED_MARKER, this);
     }
 
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const player = effect.player;
-      player.attackMarker.removeMarker(this.WICKED_RULER_MARKER, this);
+      player.marker.removeMarker(this.WICKED_RULER_MARKER, this);
     }
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
@@ -95,7 +95,7 @@ export class GalarianObstagoon extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      if (player.attackMarker.hasMarker(this.WICKED_RULER_MARKER, this)) {
+      if (player.marker.hasMarker(this.WICKED_RULER_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
 
@@ -130,7 +130,7 @@ export class GalarianObstagoon extends PokemonCard {
           selected
         ), () => { });
 
-        player.attackMarker.addMarker(this.WICKED_RULER_MARKER, this);
+        player.marker.addMarker(this.WICKED_RULER_MARKER, this);
 
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
           if (cardList.getPokemonCard() === this) {
@@ -147,7 +147,7 @@ export class GalarianObstagoon extends PokemonCard {
 
       effect.player.forEachPokemon(PlayerType.BOTTOM_PLAYER, player => {
         if (player.cards.includes(this)) {
-          player.attackMarker.removeMarker(this.WICKED_RULER_MARKER, this);
+          player.marker.removeMarker(this.WICKED_RULER_MARKER, this);
         }
       });
     }

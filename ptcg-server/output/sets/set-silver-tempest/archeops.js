@@ -44,7 +44,7 @@ class Archeops extends pokemon_card_1.PokemonCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {
             const player = effect.player;
-            player.abilityMarker.removeMarker(this.PRIMAL_TURBO_MARKER, this);
+            player.marker.removeMarker(this.PRIMAL_TURBO_MARKER, this);
         }
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
@@ -57,7 +57,7 @@ class Archeops extends pokemon_card_1.PokemonCard {
                 if (transfers.length === 0) {
                     return;
                 }
-                player.abilityMarker.addMarker(this.PRIMAL_TURBO_MARKER, this);
+                player.marker.addMarker(this.PRIMAL_TURBO_MARKER, this);
                 player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
                     if (cardList.getPokemonCard() === this) {
                         cardList.addBoardEffect(card_types_1.BoardEffect.ABILITY_USED);
@@ -71,7 +71,7 @@ class Archeops extends pokemon_card_1.PokemonCard {
             return state;
         }
         if (effect instanceof game_phase_effects_1.EndTurnEffect) {
-            effect.player.abilityMarker.removeMarker(this.PRIMAL_TURBO_MARKER, this);
+            effect.player.marker.removeMarker(this.PRIMAL_TURBO_MARKER, this);
         }
         return state;
     }

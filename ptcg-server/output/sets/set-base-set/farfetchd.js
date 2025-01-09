@@ -44,7 +44,7 @@ class Farfetchd extends pokemon_card_1.PokemonCard {
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
-            if (effect.player.attackMarker.hasMarker(this.LEEK_SLAP_MARKER, this)) {
+            if (effect.player.marker.hasMarker(this.LEEK_SLAP_MARKER, this)) {
                 throw new game_1.GameError(game_1.GameMessage.LEEK_SLAP_CANNOT_BE_USED_AGAIN);
             }
             return store.prompt(state, [
@@ -53,7 +53,7 @@ class Farfetchd extends pokemon_card_1.PokemonCard {
                 if (!heads) {
                     effect.damage = 0;
                 }
-                effect.player.attackMarker.addMarker(this.LEEK_SLAP_MARKER, this);
+                effect.player.marker.addMarker(this.LEEK_SLAP_MARKER, this);
                 return state;
             });
         }

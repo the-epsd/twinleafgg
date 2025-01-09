@@ -22,8 +22,6 @@ export declare class Player {
     stadiumPlayedTurn: number;
     stadiumUsedTurn: number;
     marker: Marker;
-    attackMarker: Marker;
-    abilityMarker: Marker;
     avatarName: string;
     usedVSTAR: boolean;
     usedGX: boolean;
@@ -47,6 +45,8 @@ export declare class Player {
     readonly PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES = "PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES";
     readonly PREVENT_ALL_DAMAGE_DONE_BY_OPPONENTS_BASIC_POKEMON_MARKER = "PREVENT_ALL_DAMAGE_DONE_BY_OPPONENTS_BASIC_POKEMON_MARKER";
     readonly CLEAR_PREVENT_ALL_DAMAGE_DONE_BY_OPPONENTS_BASIC_POKEMON_MARKER = "CLEAR_PREVENT_ALL_DAMAGE_DONE_BY_OPPONENTS_BASIC_POKEMON_MARKER";
+    readonly UNRELENTING_ONSLAUGHT_MARKER = "UNRELENTING_ONSLAUGHT_MARKER";
+    readonly UNRELENTING_ONSLAUGHT_2_MARKER = "UNRELENTING_ONSLAUGHT_2_MARKER";
     usedRapidStrikeSearchThisTurn: any;
     usedExcitingStageThisTurn: any;
     usedSquawkAndSeizeThisTurn: any;

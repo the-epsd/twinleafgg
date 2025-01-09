@@ -38,10 +38,10 @@ class Palafinex extends game_1.PokemonCard {
             throw new game_1.GameError(game_1.GameMessage.CANNOT_EVOLVE);
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
-            effect.player.attackMarker.addMarker(this.ATTACK_USED_MARKER, this);
+            effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-            effect.player.attackMarker.removeMarker(this.ATTACK_USED_MARKER, this);
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+            effect.player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
         }
         return state;
     }

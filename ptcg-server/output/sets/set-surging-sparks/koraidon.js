@@ -6,6 +6,7 @@ const card_types_1 = require("../../game/store/card/card-types");
 const card_types_2 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
+const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 class Koraidon extends pokemon_card_1.PokemonCard {
     constructor() {
@@ -36,46 +37,44 @@ class Koraidon extends pokemon_card_1.PokemonCard {
         this.setNumber = '116';
         this.name = 'Koraidon';
         this.fullName = 'Koraidon SSP';
-        this.ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
-        this.ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
+        this.UNRELENTING_ONSLAUGHT_MARKER = 'UNRELENTING_ONSLAUGHT_MARKER';
+        this.UNRELENTING_ONSLAUGHT_2_MARKER = 'UNRELENTING_ONSLAUGHT_2_MARKER';
     }
     reduceEffect(store, state, effect) {
         var _a;
-        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
-            effect.player.attackMarker.removeMarker(this.ATTACK_USED_MARKER, this);
-            effect.player.attackMarker.removeMarker(this.ATTACK_USED_2_MARKER, this);
+        if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {
+            effect.player.marker.removeMarker(this.UNRELENTING_ONSLAUGHT_MARKER, this);
+            console.log('marker removed');
+            effect.player.marker.removeMarker(this.UNRELENTING_ONSLAUGHT_2_MARKER, this);
+            console.log('marker 2 removed');
+        }
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.UNRELENTING_ONSLAUGHT_2_MARKER, this)) {
+            effect.player.marker.removeMarker(this.UNRELENTING_ONSLAUGHT_MARKER, this);
+            effect.player.marker.removeMarker(this.UNRELENTING_ONSLAUGHT_2_MARKER, this);
             console.log('marker cleared');
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-            effect.player.attackMarker.addMarker(this.ATTACK_USED_2_MARKER, this);
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.UNRELENTING_ONSLAUGHT_MARKER, this)) {
+            effect.player.marker.addMarker(this.UNRELENTING_ONSLAUGHT_2_MARKER, this);
             console.log('second marker added');
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const playerLastAttack = (_a = state.playerLastAttack) === null || _a === void 0 ? void 0 : _a[player.id];
             const originalCard = playerLastAttack ? this.findOriginalCard(state, playerLastAttack) : null;
-            if (originalCard && originalCard !== this &&
-                originalCard.tags.includes(card_types_2.CardTag.ANCIENT) &&
-                !effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+            if (originalCard && originalCard.tags.includes(card_types_2.CardTag.ANCIENT) && !player.marker.hasMarker(this.UNRELENTING_ONSLAUGHT_MARKER)) {
                 effect.damage += 150;
-                effect.player.attackMarker.addMarker(this.ATTACK_USED_MARKER, this);
                 console.log('marker added');
             }
-        }
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
-            effect.player.attackMarker.addMarker(this.ATTACK_USED_MARKER, this);
-            console.log('marker added');
+            player.marker.addMarker(this.UNRELENTING_ONSLAUGHT_MARKER, this);
         }
         return state;
     }
     findOriginalCard(state, playerLastAttack) {
         let originalCard = null;
-        let originalCardId = null;
         state.players.forEach(player => {
             player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
                 if (card.attacks.some(attack => attack === playerLastAttack)) {
                     originalCard = card;
-                    originalCardId = card.id;
                 }
             });
             // Check deck, discard, hand, and lost zone
@@ -83,14 +82,10 @@ class Koraidon extends pokemon_card_1.PokemonCard {
                 cardList.cards.forEach(card => {
                     if (card instanceof pokemon_card_1.PokemonCard && card.attacks.some(attack => attack === playerLastAttack)) {
                         originalCard = card;
-                        originalCardId = card.id;
                     }
                 });
             });
         });
-        if (originalCard && originalCardId === this.id) {
-            return null;
-        }
         return originalCard;
     }
 }

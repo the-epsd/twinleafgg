@@ -23,17 +23,17 @@ class Orthwormex extends pokemon_card_1.PokemonCard {
         this.resistance = [{ type: card_types_1.CardType.GRASS, value: -30 }];
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.powers = [{
-                name: 'Pummeling Payback',
-                powerType: pokemon_types_1.PowerType.ABILITY,
-                text: 'If this Pokémon is damaged by an attack from your opponent\'s Pokémon(even if this Pokémon is Knocked Out), put 2 damage counters on the Attacking Pokémon for each [M] Energy attached to this Pokémon.'
-            }];
+            name: 'Pummeling Payback',
+            powerType: pokemon_types_1.PowerType.ABILITY,
+            text: 'If this Pokémon is damaged by an attack from your opponent\'s Pokémon(even if this Pokémon is Knocked Out), put 2 damage counters on the Attacking Pokémon for each [M] Energy attached to this Pokémon.'
+        }];
         this.attacks = [{
-                name: 'Rock Tomb',
-                cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
-                damage: 150,
-                text: 'During your opponent\'s next turn, the Defending Pokémon ' +
-                    'can\'t retreat.'
-            }];
+            name: 'Rock Tomb',
+            cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
+            damage: 150,
+            text: 'During your opponent\'s next turn, the Defending Pokémon ' +
+                'can\'t retreat.'
+        }];
         this.set = 'SCR';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '110';
@@ -45,13 +45,13 @@ class Orthwormex extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const opponent = state_utils_1.StateUtils.getOpponent(state, player);
-            opponent.active.attackMarker.addMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
+            opponent.active.marker.addMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
         }
-        if (effect instanceof game_effects_1.RetreatEffect && effect.player.active.attackMarker.hasMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this)) {
+        if (effect instanceof game_effects_1.RetreatEffect && effect.player.active.marker.hasMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this)) {
             throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);
         }
         if (effect instanceof game_phase_effects_1.EndTurnEffect) {
-            effect.player.active.attackMarker.removeMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
+            effect.player.active.marker.removeMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
         }
         if (effect instanceof attack_effects_1.PutDamageEffect || effect instanceof attack_effects_1.DealDamageEffect) {
             const player = effect.player;

@@ -4,6 +4,7 @@ import { CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, Attack, PlayerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
+import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class Koraidon extends PokemonCard {
@@ -46,19 +47,26 @@ export class Koraidon extends PokemonCard {
 
   public fullName: string = 'Koraidon SSP';
 
-  public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
-  public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
+  public readonly UNRELENTING_ONSLAUGHT_MARKER = 'UNRELENTING_ONSLAUGHT_MARKER';
+  public readonly UNRELENTING_ONSLAUGHT_2_MARKER = 'UNRELENTING_ONSLAUGHT_2_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
-      effect.player.attackMarker.removeMarker(this.ATTACK_USED_MARKER, this);
-      effect.player.attackMarker.removeMarker(this.ATTACK_USED_2_MARKER, this);
+    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
+      effect.player.marker.removeMarker(this.UNRELENTING_ONSLAUGHT_MARKER, this);
+      console.log('marker removed');
+      effect.player.marker.removeMarker(this.UNRELENTING_ONSLAUGHT_2_MARKER, this);
+      console.log('marker 2 removed');
+    }
+
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.UNRELENTING_ONSLAUGHT_2_MARKER, this)) {
+      effect.player.marker.removeMarker(this.UNRELENTING_ONSLAUGHT_MARKER, this);
+      effect.player.marker.removeMarker(this.UNRELENTING_ONSLAUGHT_2_MARKER, this);
       console.log('marker cleared');
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-      effect.player.attackMarker.addMarker(this.ATTACK_USED_2_MARKER, this);
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.UNRELENTING_ONSLAUGHT_MARKER, this)) {
+      effect.player.marker.addMarker(this.UNRELENTING_ONSLAUGHT_2_MARKER, this);
       console.log('second marker added');
     }
 
@@ -67,31 +75,22 @@ export class Koraidon extends PokemonCard {
       const playerLastAttack = state.playerLastAttack?.[player.id];
       const originalCard = playerLastAttack ? this.findOriginalCard(state, playerLastAttack) : null;
 
-      if (originalCard && originalCard !== this &&
-        originalCard.tags.includes(CardTag.ANCIENT) &&
-        !effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+      if (originalCard && originalCard.tags.includes(CardTag.ANCIENT) && !player.marker.hasMarker(this.UNRELENTING_ONSLAUGHT_MARKER)) {
         effect.damage += 150;
-        effect.player.attackMarker.addMarker(this.ATTACK_USED_MARKER, this);
         console.log('marker added');
       }
-    }
-
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-      effect.player.attackMarker.addMarker(this.ATTACK_USED_MARKER, this);
-      console.log('marker added');
+      player.marker.addMarker(this.UNRELENTING_ONSLAUGHT_MARKER, this);
     }
     return state;
   }
 
   private findOriginalCard(state: State, playerLastAttack: Attack): PokemonCard | null {
     let originalCard: PokemonCard | null = null;
-    let originalCardId: number | null = null;
 
     state.players.forEach(player => {
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
         if (card.attacks.some(attack => attack === playerLastAttack)) {
           originalCard = card;
-          originalCardId = card.id;
         }
       });
 
@@ -100,15 +99,10 @@ export class Koraidon extends PokemonCard {
         cardList.cards.forEach(card => {
           if (card instanceof PokemonCard && card.attacks.some(attack => attack === playerLastAttack)) {
             originalCard = card;
-            originalCardId = card.id;
           }
         });
       });
     });
-
-    if (originalCard && originalCardId === this.id) {
-      return null;
-    }
 
     return originalCard;
   }

@@ -38,7 +38,7 @@ export class Miloticex extends PokemonCard {
     // if (effect instanceof BetweenTurnsEffect) {
     //   const player = effect.player;
     //   player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-    //     if (cardList.getPokemonCard() === this && cardList.attackMarker.markers.length > 0) {
+    //     if (cardList.getPokemonCard() === this && cardList.marker.markers.length > 0) {
     //       cardList.clearAttackEffects();
     //       cardList.clearEffects();
     //     }

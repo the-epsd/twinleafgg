@@ -50,15 +50,15 @@ export class Yveltal extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof RetreatEffect && effect.player.active.attackMarker.hasMarker(PokemonCardList.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this)) {
+    if (effect instanceof RetreatEffect && effect.player.active.marker.hasMarker(PokemonCardList.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this)) {
       throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
     }
 
     if (effect instanceof EndTurnEffect &&
-      effect.player.active.attackMarker.hasMarker(PokemonCardList.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this)) {
+      effect.player.active.marker.hasMarker(PokemonCardList.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this)) {
 
       const player = effect.player;
-      player.active.attackMarker.removeMarker(PokemonCardList.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
+      player.active.marker.removeMarker(PokemonCardList.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
       return state;
     }
 
@@ -66,7 +66,7 @@ export class Yveltal extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      opponent.active.attackMarker.addMarker(PokemonCardList.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
+      opponent.active.marker.addMarker(PokemonCardList.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

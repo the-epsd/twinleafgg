@@ -61,7 +61,7 @@ export class Metagross extends PokemonCard {
       if (slots.length === 0) {
         return state;
       }
-      
+
       // Try to reduce PowerEffect, to check if something is blocking our ability
       try {
         const stub = new PowerEffect(player, {
@@ -91,25 +91,25 @@ export class Metagross extends PokemonCard {
     }
 
 
-    if (effect instanceof EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
-      effect.player.attackMarker.removeMarker(this.ATTACK_USED_MARKER, this);
-      effect.player.attackMarker.removeMarker(this.ATTACK_USED_2_MARKER, this);
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
+      effect.player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
+      effect.player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
       console.log('marker cleared');
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-      effect.player.attackMarker.addMarker(this.ATTACK_USED_2_MARKER, this);
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+      effect.player.marker.addMarker(this.ATTACK_USED_2_MARKER, this);
       console.log('second marker added');
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
 
       // Check marker
-      if (effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+      if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
         console.log('attack added damage');
         effect.damage += 100;
       }
-      effect.player.attackMarker.addMarker(this.ATTACK_USED_MARKER, this);
+      effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
       console.log('marker added');
     }
     return state;

@@ -66,17 +66,16 @@ export class Store {
     }
     reduceEffect(state, effect) {
         // this.checkEffectHistory(state, effect);
-        var _a, _b, _c, _d;
         state = this.propagateEffect(state, effect);
-        const cardEffect = effect;
-        if (cardEffect.card)
-            console.log(`Running effect: ${effect.type} for card ${(_a = cardEffect.card) === null || _a === void 0 ? void 0 : _a.name}`);
-        if (cardEffect.energyCard)
-            console.log(`Running effect: ${effect.type} for card ${(_b = cardEffect.energyCard) === null || _b === void 0 ? void 0 : _b.name}`);
-        if (cardEffect.trainerCard)
-            console.log(`Running effect: ${effect.type} for card ${(_c = cardEffect.trainerCard) === null || _c === void 0 ? void 0 : _c.name}`);
-        if (cardEffect.pokemonCard)
-            console.log(`Running effect: ${effect.type} for card ${(_d = cardEffect.pokemonCard) === null || _d === void 0 ? void 0 : _d.name}`);
+        // const cardEffect = <any>effect;
+        // if (cardEffect.card)
+        //   console.log(`Running effect: ${effect.type} for card ${cardEffect.card?.fullName}`);
+        // if (cardEffect.energyCard)
+        //   console.log(`Running effect: ${effect.type} for card ${cardEffect.energyCard?.fullName}`);
+        // if (cardEffect.trainerCard)
+        //   console.log(`Running effect: ${effect.type} for card ${cardEffect.trainerCard?.fullName}`);
+        // if (cardEffect.pokemonCard)
+        //   console.log(`Running effect: ${effect.type} for card ${cardEffect.pokemonCard?.fullName}`);
         if (effect.preventDefault === true) {
             return state;
         }
@@ -222,23 +221,36 @@ export class Store {
         return state;
     }
     propagateEffect(state, effect) {
+        var _a, _b, _c, _d;
+        const cardEffect = effect;
+        const cardName = ((_a = cardEffect.card) === null || _a === void 0 ? void 0 : _a.fullName) || ((_b = cardEffect.energyCard) === null || _b === void 0 ? void 0 : _b.fullName) ||
+            ((_c = cardEffect.trainerCard) === null || _c === void 0 ? void 0 : _c.fullName) || ((_d = cardEffect.pokemonCard) === null || _d === void 0 ? void 0 : _d.fullName) || 'No card';
+        console.time(`propagateEffect-${effect.type}-${cardName}`);
         const cards = [];
-        for (const player of state.players) {
-            player.stadium.cards.forEach(c => cards.push(c));
-            player.supporter.cards.forEach(c => cards.push(c));
-            player.active.cards.forEach(c => cards.push(c));
-            for (const bench of player.bench) {
-                bench.cards.forEach(c => cards.push(c));
+        try {
+            for (const player of state.players) {
+                player.stadium.cards.forEach(c => cards.push(c));
+                player.supporter.cards.forEach(c => cards.push(c));
+                player.active.cards.forEach(c => cards.push(c));
+                for (const bench of player.bench) {
+                    bench.cards.forEach(c => cards.push(c));
+                }
+                for (const prize of player.prizes) {
+                    prize.cards.forEach(c => cards.push(c));
+                }
+                player.hand.cards.forEach(c => cards.push(c));
+                player.deck.cards.forEach(c => cards.push(c));
+                player.discard.cards.forEach(c => cards.push(c));
             }
-            for (const prize of player.prizes) {
-                prize.cards.forEach(c => cards.push(c));
-            }
-            player.hand.cards.forEach(c => cards.push(c));
-            player.deck.cards.forEach(c => cards.push(c));
-            player.discard.cards.forEach(c => cards.push(c));
+            cards.sort(c => c.superType);
+            cards.forEach(c => { state = c.reduceEffect(this, state, effect); });
+            return state;
         }
-        cards.sort(c => c.superType);
-        cards.forEach(c => { state = c.reduceEffect(this, state, effect); });
-        return state;
+        finally {
+            console.timeEnd(`propagateEffect-${effect.type}-${cardName}`);
+            const used = process.memoryUsage();
+            console.log(`Memory after ${effect.type} from ${cardName}: ${Math.round(used.heapUsed / 1024 / 1024)}MB`);
+            console.log('Effect resolution complete:', effect.type, 'from', cardName);
+        }
     }
 }

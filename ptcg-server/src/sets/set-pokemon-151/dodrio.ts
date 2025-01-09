@@ -57,13 +57,13 @@ export class Dodrio extends PokemonCard {
 
     if (effect instanceof EndTurnEffect) {
       const player = effect.player;
-      player.abilityMarker.removeMarker(this.ZOOMING_DRAW_MARKER, this);
+      player.marker.removeMarker(this.ZOOMING_DRAW_MARKER, this);
     }
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
 
       const player = effect.player;
-      if (player.abilityMarker.hasMarker(this.ZOOMING_DRAW_MARKER, this)) {
+      if (player.marker.hasMarker(this.ZOOMING_DRAW_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
 
@@ -74,7 +74,7 @@ export class Dodrio extends PokemonCard {
       });
 
       player.deck.moveTo(player.hand, 1);
-      player.abilityMarker.addMarker(this.ZOOMING_DRAW_MARKER, this);
+      player.marker.addMarker(this.ZOOMING_DRAW_MARKER, this);
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
         if (cardList.getPokemonCard() === this) {

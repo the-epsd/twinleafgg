@@ -46,12 +46,12 @@ export class Slurpuff extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      player.active.attackMarker.addMarker(this.LIGHT_PULSE_MARKER, this);
-      opponent.attackMarker.addMarker(this.CLEAR_LIGHT_PULSE_MARKER, this);
+      player.active.marker.addMarker(this.LIGHT_PULSE_MARKER, this);
+      opponent.marker.addMarker(this.CLEAR_LIGHT_PULSE_MARKER, this);
     }
 
     // Prevent effects of attacks
-    if (effect instanceof AbstractAttackEffect && effect.target.attackMarker.hasMarker(this.LIGHT_PULSE_MARKER)) {
+    if (effect instanceof AbstractAttackEffect && effect.target.marker.hasMarker(this.LIGHT_PULSE_MARKER)) {
 
       const pokemonCard = effect.target.getPokemonCard();
       const sourceCard = effect.source.getPokemonCard();
@@ -93,13 +93,13 @@ export class Slurpuff extends PokemonCard {
     }
 
     if (effect instanceof EndTurnEffect
-      && effect.player.attackMarker.hasMarker(this.CLEAR_LIGHT_PULSE_MARKER, this)) {
+      && effect.player.marker.hasMarker(this.CLEAR_LIGHT_PULSE_MARKER, this)) {
 
-      effect.player.attackMarker.removeMarker(this.CLEAR_LIGHT_PULSE_MARKER, this);
+      effect.player.marker.removeMarker(this.CLEAR_LIGHT_PULSE_MARKER, this);
 
       const opponent = StateUtils.getOpponent(state, effect.player);
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-        cardList.attackMarker.removeMarker(this.LIGHT_PULSE_MARKER, this);
+        cardList.marker.removeMarker(this.LIGHT_PULSE_MARKER, this);
       });
     }
 

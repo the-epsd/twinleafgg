@@ -83,11 +83,11 @@ class MetagrossGX extends pokemon_card_1.PokemonCard {
         // Giga Hammer
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             // Check marker
-            if (effect.player.attackMarker.hasMarker(this.HAMMER_MARKER_1, this)) {
+            if (effect.player.marker.hasMarker(this.HAMMER_MARKER_1, this)) {
                 console.log('attack blocked');
                 throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);
             }
-            effect.player.attackMarker.addMarker(this.HAMMER_MARKER_1, this);
+            effect.player.marker.addMarker(this.HAMMER_MARKER_1, this);
             console.log('marker added');
         }
         // Algorithm-GX
@@ -114,13 +114,13 @@ class MetagrossGX extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_phase_effects_1.EndTurnEffect) {
             effect.player.marker.removeMarker(this.GEOTECH_MARKER, this);
             // removing the markers for preventing the pokemon from attacking
-            if (effect.player.attackMarker.hasMarker(this.HAMMER_MARKER_2, this)) {
-                effect.player.attackMarker.removeMarker(this.HAMMER_MARKER_1, this);
-                effect.player.attackMarker.removeMarker(this.HAMMER_MARKER_2, this);
+            if (effect.player.marker.hasMarker(this.HAMMER_MARKER_2, this)) {
+                effect.player.marker.removeMarker(this.HAMMER_MARKER_1, this);
+                effect.player.marker.removeMarker(this.HAMMER_MARKER_2, this);
                 console.log('marker cleared');
             }
-            if (effect.player.attackMarker.hasMarker(this.HAMMER_MARKER_1, this)) {
-                effect.player.attackMarker.addMarker(this.HAMMER_MARKER_2, this);
+            if (effect.player.marker.hasMarker(this.HAMMER_MARKER_1, this)) {
+                effect.player.marker.addMarker(this.HAMMER_MARKER_2, this);
                 console.log('second marker added');
             }
         }

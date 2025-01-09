@@ -35,19 +35,19 @@ class Doublade extends pokemon_card_1.PokemonCard {
         this.fullName = 'Doublade PAR';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.active.attackMarker.hasMarker(game_1.PokemonCardList.ATTACK_USED_2_MARKER, this)) {
-            effect.player.active.attackMarker.removeMarker(game_1.PokemonCardList.ATTACK_USED_MARKER, this);
-            effect.player.active.attackMarker.removeMarker(game_1.PokemonCardList.ATTACK_USED_2_MARKER, this);
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.active.marker.hasMarker(game_1.PokemonCardList.ATTACK_USED_2_MARKER, this)) {
+            effect.player.active.marker.removeMarker(game_1.PokemonCardList.ATTACK_USED_MARKER, this);
+            effect.player.active.marker.removeMarker(game_1.PokemonCardList.ATTACK_USED_2_MARKER, this);
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.active.attackMarker.hasMarker(game_1.PokemonCardList.ATTACK_USED_MARKER, this)) {
-            effect.player.active.attackMarker.addMarker(game_1.PokemonCardList.ATTACK_USED_2_MARKER, this);
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.active.marker.hasMarker(game_1.PokemonCardList.ATTACK_USED_MARKER, this)) {
+            effect.player.active.marker.addMarker(game_1.PokemonCardList.ATTACK_USED_2_MARKER, this);
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             // Check marker
-            if (effect.player.active.attackMarker.hasMarker(game_1.PokemonCardList.ATTACK_USED_MARKER, this)) {
+            if (effect.player.active.marker.hasMarker(game_1.PokemonCardList.ATTACK_USED_MARKER, this)) {
                 throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);
             }
-            effect.player.active.attackMarker.addMarker(game_1.PokemonCardList.ATTACK_USED_MARKER, this);
+            effect.player.active.marker.addMarker(game_1.PokemonCardList.ATTACK_USED_MARKER, this);
         }
         return state;
     }

@@ -19,10 +19,10 @@ class IronLeavesex extends pokemon_card_1.PokemonCard {
         this.weakness = [{ type: card_types_1.CardType.FIRE }];
         this.retreat = [card_types_1.CardType.COLORLESS];
         this.powers = [{
-                name: 'Rapid Vernier',
-                powerType: game_1.PowerType.ABILITY,
-                text: 'Once during your turn, when you play this Pokémon from your hand onto your Bench, you may switch this Pokémon with your Active Pokémon. If you do, you may move any number of Energy from your Benched Pokémon to this Pokémon.'
-            }];
+            name: 'Rapid Vernier',
+            powerType: game_1.PowerType.ABILITY,
+            text: 'Once during your turn, when you play this Pokémon from your hand onto your Bench, you may switch this Pokémon with your Active Pokémon. If you do, you may move any number of Energy from your Benched Pokémon to this Pokémon.'
+        }];
         this.attacks = [
             {
                 name: 'Prismatic Edge',
@@ -40,22 +40,22 @@ class IronLeavesex extends pokemon_card_1.PokemonCard {
         this.ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
-            effect.player.attackMarker.removeMarker(this.ATTACK_USED_MARKER, this);
-            effect.player.attackMarker.removeMarker(this.ATTACK_USED_2_MARKER, this);
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
+            effect.player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
+            effect.player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
             console.log('marker cleared');
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-            effect.player.attackMarker.addMarker(this.ATTACK_USED_2_MARKER, this);
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+            effect.player.marker.addMarker(this.ATTACK_USED_2_MARKER, this);
             console.log('second marker added');
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             // Check marker
-            if (effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+            if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
                 console.log('attack blocked');
                 throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);
             }
-            effect.player.attackMarker.addMarker(this.ATTACK_USED_MARKER, this);
+            effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
             console.log('marker added');
         }
         if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard == this) {
@@ -95,19 +95,19 @@ class IronLeavesex extends pokemon_card_1.PokemonCard {
                         }
                     });
                     return store.prompt(state, new game_1.MoveEnergyPrompt(player.id, game_1.GameMessage.MOVE_ENERGY_CARDS, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], // Only allow moving to active
-                    { superType: card_types_1.SuperType.ENERGY }, { allowCancel: true, blockedMap }), transfers => {
-                        if (!transfers) {
-                            return;
-                        }
-                        for (const transfer of transfers) {
-                            // Can only move energy to the active Pokemon
-                            const target = player.active;
-                            const source = game_1.StateUtils.getTarget(state, player, transfer.from);
-                            source.moveCardTo(transfer.card, target);
+                        { superType: card_types_1.SuperType.ENERGY }, { allowCancel: true, blockedMap }), transfers => {
+                            if (!transfers) {
+                                return;
+                            }
+                            for (const transfer of transfers) {
+                                // Can only move energy to the active Pokemon
+                                const target = player.active;
+                                const source = game_1.StateUtils.getTarget(state, player, transfer.from);
+                                source.moveCardTo(transfer.card, target);
+                                return state;
+                            }
                             return state;
-                        }
-                        return state;
-                    });
+                        });
                 }
                 return state;
             });

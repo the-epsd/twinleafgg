@@ -39,11 +39,11 @@ class Spiritomb extends pokemon_card_1.PokemonCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof game_phase_effects_1.EndTurnEffect) {
             const player = effect.player;
-            player.abilityMarker.removeMarker(this.BUILDING_SPITE_MARKER, this);
+            player.marker.removeMarker(this.BUILDING_SPITE_MARKER, this);
         }
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
-            if (player.abilityMarker.hasMarker(this.BUILDING_SPITE_MARKER, this)) {
+            if (player.marker.hasMarker(this.BUILDING_SPITE_MARKER, this)) {
                 throw new game_1.GameError(game_1.GameMessage.POWER_ALREADY_USED);
             }
             player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
@@ -51,7 +51,7 @@ class Spiritomb extends pokemon_card_1.PokemonCard {
                     cardList.damage += 10;
                 }
             });
-            player.abilityMarker.addMarker(this.BUILDING_SPITE_MARKER, this);
+            player.marker.addMarker(this.BUILDING_SPITE_MARKER, this);
             player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
                 if (cardList.getPokemonCard() === this) {
                     cardList.addBoardEffect(card_types_1.BoardEffect.ABILITY_USED);

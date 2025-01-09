@@ -16,11 +16,11 @@ class Terrakion extends pokemon_card_1.PokemonCard {
         this.weakness = [{ type: card_types_1.CardType.GRASS }];
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.attacks = [{
-                name: 'Cavern Tackle',
-                cost: [card_types_1.CardType.FIGHTING, card_types_1.CardType.FIGHTING, card_types_1.CardType.COLORLESS],
-                damage: 120,
-                text: 'During your opponent\'s next turn, prevent all damage from attacks done to this Pokémon. If 1 of your Pokémon used Cavern Tackle during your last turn, this attack can\'t be used. '
-            }];
+            name: 'Cavern Tackle',
+            cost: [card_types_1.CardType.FIGHTING, card_types_1.CardType.FIGHTING, card_types_1.CardType.COLORLESS],
+            damage: 120,
+            text: 'During your opponent\'s next turn, prevent all damage from attacks done to this Pokémon. If 1 of your Pokémon used Cavern Tackle during your last turn, this attack can\'t be used. '
+        }];
         this.set = 'SIT';
         this.setNumber = '97';
         this.regulationMark = 'F';
@@ -33,24 +33,24 @@ class Terrakion extends pokemon_card_1.PokemonCard {
         this.CLEAR_CAVERN_TACKLE_MARKER = 'CLEAR_CAVERN_TACKLE_MARKER';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
-            effect.player.attackMarker.removeMarker(this.ATTACK_USED_MARKER, this);
-            effect.player.attackMarker.removeMarker(this.ATTACK_USED_2_MARKER, this);
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
+            effect.player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
+            effect.player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
             console.log('marker cleared');
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-            effect.player.attackMarker.addMarker(this.ATTACK_USED_2_MARKER, this);
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+            effect.player.marker.addMarker(this.ATTACK_USED_2_MARKER, this);
             console.log('second marker added');
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             // Check marker
-            if (player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+            if (player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
                 console.log('attack blocked');
                 throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);
             }
-            player.attackMarker.addMarker(this.ATTACK_USED_MARKER, this);
+            player.marker.addMarker(this.ATTACK_USED_MARKER, this);
             player.active.marker.addMarker(this.CAVERN_TACKLE_MARKER, this);
             opponent.marker.addMarker(this.CLEAR_CAVERN_TACKLE_MARKER, this);
         }

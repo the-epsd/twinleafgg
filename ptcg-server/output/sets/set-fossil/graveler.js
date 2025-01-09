@@ -39,9 +39,9 @@ class Graveler extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            opponent.attackMarker.addMarker(this.HARDEN_MARKER, this);
+            opponent.marker.addMarker(this.HARDEN_MARKER, this);
         }
-        if (effect instanceof game_effects_1.AttackEffect && effect.player.active.attackMarker.hasMarker(this.HARDEN_MARKER, this)) {
+        if (effect instanceof game_effects_1.AttackEffect && effect.player.active.marker.hasMarker(this.HARDEN_MARKER, this)) {
             const damageBeingDealt = effect.damage;
             if (damageBeingDealt <= 30) {
                 const damageEffect = new attack_effects_1.DealDamageEffect(effect, 0);
@@ -51,7 +51,7 @@ class Graveler extends pokemon_card_1.PokemonCard {
             return state;
         }
         if (effect instanceof game_phase_effects_1.EndTurnEffect) {
-            effect.player.active.attackMarker.removeMarker(this.HARDEN_MARKER, this);
+            effect.player.active.marker.removeMarker(this.HARDEN_MARKER, this);
         }
         return state;
     }

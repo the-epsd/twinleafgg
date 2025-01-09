@@ -11,8 +11,6 @@ export declare class PokemonCardList extends CardList {
     poisonDamage: number;
     burnDamage: number;
     marker: Marker;
-    attackMarker: Marker;
-    abilityMarker: Marker;
     pokemonPlayedTurn: number;
     sleepFlips: number;
     boardEffect: BoardEffect[];
@@ -40,6 +38,8 @@ export declare class PokemonCardList extends CardList {
     static readonly OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER = "OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER";
     static readonly PREVENT_ALL_DAMAGE_DONE_BY_OPPONENTS_BASIC_POKEMON_MARKER = "PREVENT_ALL_DAMAGE_DONE_BY_OPPONENTS_BASIC_POKEMON_MARKER";
     static readonly CLEAR_PREVENT_ALL_DAMAGE_DONE_BY_OPPONENTS_BASIC_POKEMON_MARKER = "CLEAR_PREVENT_ALL_DAMAGE_DONE_BY_OPPONENTS_BASIC_POKEMON_MARKER";
+    static readonly UNRELENTING_ONSLAUGHT_MARKER = "UNRELENTING_ONSLAUGHT_MARKER";
+    static readonly UNRELENTING_ONSLAUGHT_2_MARKER = "UNRELENTING_ONSLAUGHT_2_MARKER";
     tool: Card | undefined;
     stadium: Card | undefined;
     stage: Stage;

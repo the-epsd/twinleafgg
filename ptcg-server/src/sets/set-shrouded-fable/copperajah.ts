@@ -58,14 +58,14 @@ export class Copperajah extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
 
-    if (effect instanceof EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
-      effect.player.attackMarker.removeMarker(this.ATTACK_USED_MARKER, this);
-      effect.player.attackMarker.removeMarker(this.ATTACK_USED_2_MARKER, this);
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
+      effect.player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
+      effect.player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
       console.log('marker cleared');
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-      effect.player.attackMarker.addMarker(this.ATTACK_USED_2_MARKER, this);
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+      effect.player.marker.addMarker(this.ATTACK_USED_2_MARKER, this);
       console.log('second marker added');
     }
 
@@ -102,7 +102,7 @@ export class Copperajah extends PokemonCard {
       const player = effect.player;
 
       // Check marker
-      if (player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+      if (player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
         console.log('attack blocked');
         throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
       }
@@ -114,7 +114,7 @@ export class Copperajah extends PokemonCard {
         if (wantToUse) {
 
           effect.damage += 100;
-          effect.player.attackMarker.addMarker(this.ATTACK_USED_MARKER, this);
+          effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
           console.log('marker added');
         }
       });

@@ -22,8 +22,6 @@ export declare class Player {
     stadiumPlayedTurn: number;
     stadiumUsedTurn: number;
     marker: Marker;
-    attackMarker: Marker;
-    abilityMarker: Marker;
     avatarName: string;
     usedVSTAR: boolean;
     usedGX: boolean;

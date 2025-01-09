@@ -37,19 +37,19 @@ class Yveltal extends pokemon_card_1.PokemonCard {
         this.fullName = 'Yveltal TEU';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_effects_1.RetreatEffect && effect.player.active.attackMarker.hasMarker(game_1.PokemonCardList.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this)) {
+        if (effect instanceof game_effects_1.RetreatEffect && effect.player.active.marker.hasMarker(game_1.PokemonCardList.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this)) {
             throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);
         }
         if (effect instanceof game_phase_effects_1.EndTurnEffect &&
-            effect.player.active.attackMarker.hasMarker(game_1.PokemonCardList.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this)) {
+            effect.player.active.marker.hasMarker(game_1.PokemonCardList.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this)) {
             const player = effect.player;
-            player.active.attackMarker.removeMarker(game_1.PokemonCardList.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
+            player.active.marker.removeMarker(game_1.PokemonCardList.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
             return state;
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
             const opponent = state_utils_1.StateUtils.getOpponent(state, player);
-            opponent.active.attackMarker.addMarker(game_1.PokemonCardList.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
+            opponent.active.marker.addMarker(game_1.PokemonCardList.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
