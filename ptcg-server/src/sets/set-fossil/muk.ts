@@ -4,7 +4,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { PowerEffect, AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { CoinFlipPrompt, GameError, GameMessage, PokemonCardList, PowerType, StateUtils } from '../../game';
+import { CoinFlipPrompt, GameError, GameMessage, PlayerType, PowerType, StateUtils } from '../../game';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 
 export class Muk extends PokemonCard {
@@ -18,7 +18,6 @@ export class Muk extends PokemonCard {
 
   public powers = [{
     name: 'Toxic Gas',
-    useWhenInPlay: true,
     powerType: PowerType.POKEPOWER,
     text: 'Ignore all Pokémon Powers other than Toxic Gases. This power stops working while Muk is Asleep, Confused, or Paralyzed.'
   }];
@@ -44,43 +43,42 @@ export class Muk extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (effect instanceof PowerEffect && effect.power.powerType === PowerType.POKEPOWER && effect.power.name !== 'Toxic Gas') {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      const cardList = StateUtils.findCardList(state, this);
-      const owner = StateUtils.findOwner(state, cardList);
-
-      const thisMuk = StateUtils.findCardList(state, this) as PokemonCardList;
-
-      if (thisMuk.specialConditions.length > 0) {
-        throw new GameError(GameMessage.CANNOT_USE_POWER);
-      }
-
-      if (!player.active.cards.includes(this) &&
-        !opponent.active.cards.includes(this)) {
-        return state;
-      }
-
-      if (owner === player) {
-        return state;
-      }
-
-      // Try reducing ability for opponent
-      try {
-        const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
-      } catch {
-
-        if (!effect.power.exemptFromAbilityLock) {
-          throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+        if (cardList.getPokemonCard() === this && cardList.specialConditions.length > 0) {
+          return state;
         }
+      });
+
+      let isMukInPlay = false;
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+        if (card === this) {
+          isMukInPlay = true;
+        }
+      });
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
+        if (card === this) {
+          isMukInPlay = true;
+        }
+      });
+
+      if (!isMukInPlay) {
+        return state;
       }
-      return state;
+
+      // Try reducing ability for each player  
+      try {
+        const powerEffect = new PowerEffect(player, this.powers[0], this);
+        store.reduceEffect(state, powerEffect);
+      } catch {
+        return state;
+      }
+      if (!effect.power.exemptFromAbilityLock) {
+        throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
+      }
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

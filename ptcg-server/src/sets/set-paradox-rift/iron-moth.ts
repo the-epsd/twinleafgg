@@ -18,14 +18,14 @@ export class IronMoth extends PokemonCard {
     powerType: PowerType.ABILITY,
     text: 'Once during your turn, when this Pokémon moves from your Bench to the Active Spot, you may move any amount of [R] Energy from your other Pokémon to it.'
   }];
-  
+
   public attacks = [{
     name: 'Heat Ray',
     cost: [CardType.FIRE, CardType.FIRE, CardType.COLORLESS],
     damage: 120,
     text: 'During your next turn, this Pokémon can\'t use Heat Ray.'
   }];
-  
+
   public regulationMark = 'G';
   public set: string = 'PAR';
   public name: string = 'Iron Moth';
@@ -35,9 +35,9 @@ export class IronMoth extends PokemonCard {
 
   public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
   public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
-  
+
   public ABILITY_USED_MARKER = 'ABILITY_USED_MARKER';
-  
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
@@ -57,7 +57,7 @@ export class IronMoth extends PokemonCard {
     }
 
     if (player === owner && !player.marker.hasMarker(this.ABILITY_USED_MARKER, this)) {
-      if (this.movedToActiveThisTurn == true) {        
+      if (this.movedToActiveThisTurn == true) {
         try {
           const stub = new PowerEffect(player, {
             name: 'test',
@@ -111,9 +111,9 @@ export class IronMoth extends PokemonCard {
               return state;
             });
           }
-          
-          player.marker.addMarker(this.ABILITY_USED_MARKER, this);          
-          
+
+          player.marker.addMarker(this.ABILITY_USED_MARKER, this);
+
           player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
             if (cardList.getPokemonCard() === this) {
               cardList.addBoardEffect(BoardEffect.ABILITY_USED);
@@ -122,21 +122,21 @@ export class IronMoth extends PokemonCard {
         });
       }
     }
-    
-    if (effect instanceof EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
-      effect.player.attackMarker.removeMarker(this.ATTACK_USED_MARKER, this);
-      effect.player.attackMarker.removeMarker(this.ATTACK_USED_2_MARKER, this);
+
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
+      effect.player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
+      effect.player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-      effect.player.attackMarker.addMarker(this.ATTACK_USED_2_MARKER, this);
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+      effect.player.marker.addMarker(this.ATTACK_USED_2_MARKER, this);
     }
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      if (effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+      if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
         throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
       }
-      
-      effect.player.attackMarker.addMarker(this.ATTACK_USED_MARKER, this);
+
+      effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
     }
 
     return state;

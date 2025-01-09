@@ -84,11 +84,11 @@ export class IronThornsex extends PokemonCard {
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      effect.player.attackMarker.addMarker(this.BOLT_CYCLONE_MARKER, this);
+      effect.player.marker.addMarker(this.BOLT_CYCLONE_MARKER, this);
       return state;
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.attackMarker.hasMarker(this.BOLT_CYCLONE_MARKER, this)) {
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.BOLT_CYCLONE_MARKER, this)) {
       const player = effect.player;
       const hasBench = player.bench.some(b => b.cards.length > 0);
 
@@ -111,7 +111,7 @@ export class IronThornsex extends PokemonCard {
           const target = StateUtils.getTarget(state, player, transfer.to);
           player.active.moveCardTo(transfer.card, target);
         }
-        effect.player.attackMarker.removeMarker(this.BOLT_CYCLONE_MARKER, this);
+        effect.player.marker.removeMarker(this.BOLT_CYCLONE_MARKER, this);
       });
     }
 

@@ -258,8 +258,8 @@ export function gameReducer(store, state, effect) {
         // effect.player.removePokemonEffects(effect.target);
         effect.target.specialConditions = [];
         effect.target.marker.markers = [];
-        effect.target.attackMarker.markers = [];
-        effect.target.abilityMarker.markers = [];
+        effect.target.marker.markers = [];
+        effect.target.marker.markers = [];
     }
     return state;
 }

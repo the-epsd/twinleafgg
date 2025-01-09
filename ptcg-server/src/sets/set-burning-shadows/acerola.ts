@@ -1,7 +1,7 @@
 import { GameError } from '../../game';
 import { GameMessage } from '../../game/game-message';
 import { CardTarget, PlayerType, SlotType } from '../../game/store/actions/play-card-action';
-import { TrainerType } from '../../game/store/card/card-types';
+import { BoardEffect, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
@@ -38,10 +38,10 @@ export class Acerola extends TrainerCard {
       player.hand.moveCardTo(effect.trainerCard, player.supporter);
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
-    
+
       const blocked: CardTarget[] = [];
       let pokemonWithDamage = 0;
-      
+
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
         if (list.damage === 0) {
           blocked.push(target);
@@ -58,23 +58,24 @@ export class Acerola extends TrainerCard {
         player.id,
         GameMessage.CHOOSE_POKEMON_TO_PICK_UP,
         PlayerType.BOTTOM_PLAYER,
-        [ SlotType.ACTIVE, SlotType.BENCH ],
+        [SlotType.ACTIVE, SlotType.BENCH],
         { allowCancel: false, blocked }
       ), result => {
         const cardList = result.length > 0 ? result[0] : null;
         if (cardList !== null) {
           const pokemons = cardList.getPokemons();
+          cardList.clearEffects();
+          cardList.damage = 0;
           cardList.moveCardsTo(pokemons, player.hand);
           cardList.moveTo(player.hand);
-          cardList.clearEffects();
+          cardList.removeBoardEffect(BoardEffect.ABILITY_USED);
           player.supporter.moveCardTo(effect.trainerCard, player.discard);
-          
+
         }
       });
     }
-    
+
     return state;
   }
-    
+
 }
-    

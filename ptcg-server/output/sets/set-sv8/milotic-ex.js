@@ -16,16 +16,16 @@ class Miloticex extends game_1.PokemonCard {
         this.retreat = [game_1.CardType.COLORLESS, game_1.CardType.COLORLESS];
         this.tags = [game_1.CardTag.POKEMON_ex];
         this.powers = [{
-                name: 'Sparkling Scales',
-                powerType: game_1.PowerType.ABILITY,
-                text: 'Prevent all damage and effects done to this Pokémon by your opponent\'s Tera Pokémon\'s attacks.'
-            }];
+            name: 'Sparkling Scales',
+            powerType: game_1.PowerType.ABILITY,
+            text: 'Prevent all damage and effects done to this Pokémon by your opponent\'s Tera Pokémon\'s attacks.'
+        }];
         this.attacks = [{
-                name: 'Hypno Splash',
-                cost: [game_1.CardType.WATER, game_1.CardType.COLORLESS, game_1.CardType.COLORLESS],
-                damage: 160,
-                text: 'Your opponent\'s Active Pokémon is now Asleep.'
-            }];
+            name: 'Hypno Splash',
+            cost: [game_1.CardType.WATER, game_1.CardType.COLORLESS, game_1.CardType.COLORLESS],
+            damage: 160,
+            text: 'Your opponent\'s Active Pokémon is now Asleep.'
+        }];
         this.regulationMark = 'H';
         this.set = 'SV8';
         this.setNumber = '26';
@@ -37,7 +37,7 @@ class Miloticex extends game_1.PokemonCard {
         // if (effect instanceof BetweenTurnsEffect) {
         //   const player = effect.player;
         //   player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-        //     if (cardList.getPokemonCard() === this && cardList.attackMarker.markers.length > 0) {
+        //     if (cardList.getPokemonCard() === this && cardList.marker.markers.length > 0) {
         //       cardList.clearAttackEffects();
         //       cardList.clearEffects();
         //     }

@@ -4,7 +4,7 @@ import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { TrainerType } from '../../game/store/card/card-types';
+import { BoardEffect, TrainerType } from '../../game/store/card/card-types';
 import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
 import { PlayerType, SlotType } from '../../game/store/actions/play-card-action';
 
@@ -34,15 +34,18 @@ export class AZ extends TrainerCard {
         player.id,
         GameMessage.CHOOSE_POKEMON_TO_PICK_UP,
         PlayerType.BOTTOM_PLAYER,
-        [ SlotType.ACTIVE, SlotType.BENCH ],
+        [SlotType.ACTIVE, SlotType.BENCH],
         { allowCancel: false }
       ), result => {
         const cardList = result.length > 0 ? result[0] : null;
         if (cardList !== null) {
           const pokemons = cardList.getPokemons();
+          cardList.clearEffects();
+          cardList.damage = 0;
           cardList.moveCardsTo(pokemons, player.hand);
           cardList.moveTo(player.discard);
-          cardList.clearEffects();
+          cardList.removeBoardEffect(BoardEffect.ABILITY_USED);
+          player.supporter.moveCardTo(effect.trainerCard, player.discard);
         }
       });
     }

@@ -16,7 +16,7 @@ export class StateUtils {
         });
         let colorless = 0;
         let rainbow = 0;
-        let needsProviding = [];
+        const needsProviding = [];
         // First remove from array cards with specific energy types
         cost.forEach(costType => {
             switch (costType) {
@@ -63,7 +63,7 @@ export class StateUtils {
             }
         });
         const possibleBlendPermutations = this.getCombinations(blendProvides, blendProvides.length);
-        let needsProvidingPermutations = [];
+        const needsProvidingPermutations = [];
         if (needsProviding.length === 1) {
             needsProvidingPermutations.push(needsProviding);
         }
@@ -111,17 +111,17 @@ export class StateUtils {
         // permutations calculation helper function
         function permutations(array, currentSize) {
             if (currentSize == 1) { // recursion base-case (end)
-                needsProvidingPermutations.push(array.join("").split("").map(x => parseInt(x)));
+                needsProvidingPermutations.push(array.join('').split('').map(x => parseInt(x)));
             }
             for (let i = 0; i < currentSize; i++) {
                 permutations(array, currentSize - 1);
                 if (currentSize % 2 == 1) {
-                    let temp = array[0];
+                    const temp = array[0];
                     array[0] = array[currentSize - 1];
                     array[currentSize - 1] = temp;
                 }
                 else {
-                    let temp = array[i];
+                    const temp = array[i];
                     array[i] = array[currentSize - 1];
                     array[currentSize - 1] = temp;
                 }
@@ -129,8 +129,8 @@ export class StateUtils {
         }
     }
     static getCombinations(arr, n) {
-        var i, j, k, l = arr.length, childperm, ret = [];
-        var elem = [];
+        let i, j, k, l = arr.length, childperm, ret = [];
+        let elem = [];
         if (n == 1) {
             for (i = 0; i < arr.length; i++) {
                 for (j = 0; j < arr[i].length; j++) {

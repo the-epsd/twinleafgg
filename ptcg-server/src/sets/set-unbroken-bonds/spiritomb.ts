@@ -49,13 +49,13 @@ export class Spiritomb extends PokemonCard {
 
     if (effect instanceof EndTurnEffect) {
       const player = effect.player;
-      player.abilityMarker.removeMarker(this.BUILDING_SPITE_MARKER, this);
+      player.marker.removeMarker(this.BUILDING_SPITE_MARKER, this);
     }
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
 
       const player = effect.player;
-      if (player.abilityMarker.hasMarker(this.BUILDING_SPITE_MARKER, this)) {
+      if (player.marker.hasMarker(this.BUILDING_SPITE_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
 
@@ -65,7 +65,7 @@ export class Spiritomb extends PokemonCard {
         }
       });
 
-      player.abilityMarker.addMarker(this.BUILDING_SPITE_MARKER, this);
+      player.marker.addMarker(this.BUILDING_SPITE_MARKER, this);
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
         if (cardList.getPokemonCard() === this) {

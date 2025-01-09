@@ -68,7 +68,7 @@ class Clefable extends game_1.PokemonCard {
         this.fullName = 'Clefable TWM';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const generator = useMetronome(() => generator.next(), store, state, effect);
             return generator.next().value;
         }

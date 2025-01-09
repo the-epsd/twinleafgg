@@ -42,11 +42,11 @@ class Slurpuff extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            player.active.attackMarker.addMarker(this.LIGHT_PULSE_MARKER, this);
-            opponent.attackMarker.addMarker(this.CLEAR_LIGHT_PULSE_MARKER, this);
+            player.active.marker.addMarker(this.LIGHT_PULSE_MARKER, this);
+            opponent.marker.addMarker(this.CLEAR_LIGHT_PULSE_MARKER, this);
         }
         // Prevent effects of attacks
-        if (effect instanceof attack_effects_1.AbstractAttackEffect && effect.target.attackMarker.hasMarker(this.LIGHT_PULSE_MARKER)) {
+        if (effect instanceof attack_effects_1.AbstractAttackEffect && effect.target.marker.hasMarker(this.LIGHT_PULSE_MARKER)) {
             const pokemonCard = effect.target.getPokemonCard();
             const sourceCard = effect.source.getPokemonCard();
             if (pokemonCard !== this) {
@@ -83,11 +83,11 @@ class Slurpuff extends pokemon_card_1.PokemonCard {
             }
         }
         if (effect instanceof game_phase_effects_1.EndTurnEffect
-            && effect.player.attackMarker.hasMarker(this.CLEAR_LIGHT_PULSE_MARKER, this)) {
-            effect.player.attackMarker.removeMarker(this.CLEAR_LIGHT_PULSE_MARKER, this);
+            && effect.player.marker.hasMarker(this.CLEAR_LIGHT_PULSE_MARKER, this)) {
+            effect.player.marker.removeMarker(this.CLEAR_LIGHT_PULSE_MARKER, this);
             const opponent = game_1.StateUtils.getOpponent(state, effect.player);
             opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList) => {
-                cardList.attackMarker.removeMarker(this.LIGHT_PULSE_MARKER, this);
+                cardList.marker.removeMarker(this.LIGHT_PULSE_MARKER, this);
             });
         }
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {

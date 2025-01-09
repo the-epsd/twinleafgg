@@ -62,7 +62,7 @@ export class Archeops extends PokemonCard {
 
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const player = effect.player;
-      player.abilityMarker.removeMarker(this.PRIMAL_TURBO_MARKER, this);
+      player.marker.removeMarker(this.PRIMAL_TURBO_MARKER, this);
     }
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
@@ -86,7 +86,7 @@ export class Archeops extends PokemonCard {
         if (transfers.length === 0) {
           return;
         }
-        player.abilityMarker.addMarker(this.PRIMAL_TURBO_MARKER, this);
+        player.marker.addMarker(this.PRIMAL_TURBO_MARKER, this);
 
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
           if (cardList.getPokemonCard() === this) {
@@ -104,7 +104,7 @@ export class Archeops extends PokemonCard {
     }
 
     if (effect instanceof EndTurnEffect) {
-      effect.player.abilityMarker.removeMarker(this.PRIMAL_TURBO_MARKER, this);
+      effect.player.marker.removeMarker(this.PRIMAL_TURBO_MARKER, this);
     }
 
     return state;

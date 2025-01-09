@@ -50,6 +50,9 @@ class AttachEnergyPrompt extends prompt_1.Prompt {
         if (result.length < this.options.min || result.length > this.options.max) {
             return false;
         }
+        if (result.some(r => this.options.blocked.includes(this.cardList.cards.indexOf(r.card)))) {
+            return false;
+        }
         if (this.options.maxPerType) {
             const typeCounts = new Map();
             for (const assign of result) {

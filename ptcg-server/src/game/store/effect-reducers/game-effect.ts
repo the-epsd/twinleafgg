@@ -115,10 +115,10 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
     yield store.prompt(state, new CoinFlipPrompt(
       player.id,
       GameMessage.FLIP_CONFUSION),
-    result => {
-      flip = result;
-      next();
-    });
+      result => {
+        flip = result;
+        next();
+      });
 
     if (flip === false) {
       store.log(state, GameLog.LOG_HURTS_ITSELF);
@@ -346,8 +346,8 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
     // effect.player.removePokemonEffects(effect.target);
     effect.target.specialConditions = [];
     effect.target.marker.markers = [];
-    effect.target.attackMarker.markers = [];
-    effect.target.abilityMarker.markers = [];
+    effect.target.marker.markers = [];
+    effect.target.marker.markers = [];
   }
 
   return state;

@@ -1,6 +1,6 @@
 import { GameMessage } from '../../game/game-message';
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { TrainerType, CardTag } from '../../game/store/card/card-types';
+import { TrainerType, CardTag, BoardEffect } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
@@ -42,26 +42,22 @@ export class ScoopUpCyclone extends TrainerCard {
         GameMessage.CHOOSE_POKEMON_TO_PICK_UP,
         PlayerType.BOTTOM_PLAYER,
         [SlotType.ACTIVE, SlotType.BENCH],
-        { allowCancel: true }
+        { allowCancel: false }
       ), result => {
-        const targets = result || [];
-
-        // Operation cancelled by user
-        if (targets.length === 0) {
-          return;
+        const cardList = result.length > 0 ? result[0] : null;
+        if (cardList !== null) {
+          const pokemons = cardList.getPokemons();
+          cardList.clearEffects();
+          cardList.damage = 0;
+          cardList.moveCardsTo(pokemons, player.hand);
+          cardList.moveTo(player.hand);
+          cardList.removeBoardEffect(BoardEffect.ABILITY_USED);
+          player.supporter.moveCardTo(effect.trainerCard, player.discard);
         }
-
-        // Discard trainer card
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
-
-        targets.forEach(target => {
-          target.moveTo(player.hand);
-          target.clearEffects();
-        });
       });
     }
-
     return state;
   }
 
 }
+

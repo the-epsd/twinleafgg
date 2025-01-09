@@ -61,34 +61,34 @@ export class Miraidonex extends PokemonCard {
 
     if (effect instanceof EndTurnEffect) {
       const player = effect.player;
-      player.abilityMarker.removeMarker(this.TANDEM_UNIT_MARKER, this);
+      player.marker.removeMarker(this.TANDEM_UNIT_MARKER, this);
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
-      effect.player.attackMarker.removeMarker(this.ATTACK_USED_MARKER, this);
-      effect.player.attackMarker.removeMarker(this.ATTACK_USED_2_MARKER, this);
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
+      effect.player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
+      effect.player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
       console.log('marker cleared');
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-      effect.player.attackMarker.addMarker(this.ATTACK_USED_2_MARKER, this);
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+      effect.player.marker.addMarker(this.ATTACK_USED_2_MARKER, this);
       console.log('second marker added');
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
 
       // Check marker
-      if (effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+      if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
         console.log('attack blocked');
         throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
       }
-      effect.player.attackMarker.addMarker(this.ATTACK_USED_MARKER, this);
+      effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
       console.log('marker added');
     }
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
-      if (player.abilityMarker.hasMarker(this.TANDEM_UNIT_MARKER, this)) {
+      if (player.marker.hasMarker(this.TANDEM_UNIT_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
 
@@ -105,7 +105,7 @@ export class Miraidonex extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      player.abilityMarker.addMarker(this.TANDEM_UNIT_MARKER, this);
+      player.marker.addMarker(this.TANDEM_UNIT_MARKER, this);
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
         if (cardList.getPokemonCard() === this) {

@@ -46,9 +46,12 @@ class Penny extends trainer_card_1.TrainerCard {
                 const cardList = result.length > 0 ? result[0] : null;
                 if (cardList !== null) {
                     const pokemons = cardList.getPokemons();
+                    player.removePokemonEffects(cardList);
                     cardList.clearEffects();
+                    cardList.damage = 0;
                     cardList.moveCardsTo(pokemons, player.hand);
                     cardList.moveTo(player.hand);
+                    cardList.removeBoardEffect(card_types_1.BoardEffect.ABILITY_USED);
                     player.supporter.moveCardTo(effect.trainerCard, player.discard);
                 }
             });

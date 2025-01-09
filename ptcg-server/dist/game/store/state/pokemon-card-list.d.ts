@@ -11,8 +11,6 @@ export declare class PokemonCardList extends CardList {
     poisonDamage: number;
     burnDamage: number;
     marker: Marker;
-    attackMarker: Marker;
-    abilityMarker: Marker;
     pokemonPlayedTurn: number;
     sleepFlips: number;
     boardEffect: BoardEffect[];
@@ -50,6 +48,7 @@ export declare class PokemonCardList extends CardList {
     isBasic(): boolean;
     clearAttackEffects(): void;
     clearEffects(): void;
+    clearAllSpecialConditions(): void;
     removeSpecialCondition(sp: SpecialCondition): void;
     addSpecialCondition(sp: SpecialCondition): void;
     removeBoardEffect(sp: BoardEffect): void;

@@ -70,20 +70,20 @@ export class IronValiantex extends PokemonCard {
       console.log('movedToActiveThisTurn = false');
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
-      effect.player.attackMarker.removeMarker(this.ATTACK_USED_MARKER, this);
-      effect.player.attackMarker.removeMarker(this.ATTACK_USED_2_MARKER, this);
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
+      effect.player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
+      effect.player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
       console.log('marker cleared');
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-      effect.player.attackMarker.addMarker(this.ATTACK_USED_2_MARKER, this);
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+      effect.player.marker.addMarker(this.ATTACK_USED_2_MARKER, this);
       console.log('second marker added');
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.abilityMarker.hasMarker(this.TACHYON_BITS_MARKER, this)) {
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.TACHYON_BITS_MARKER, this)) {
       this.tachyonBits = 0;
-      effect.player.abilityMarker.removeMarker(this.TACHYON_BITS_MARKER, this);
+      effect.player.marker.removeMarker(this.TACHYON_BITS_MARKER, this);
       console.log('marker cleared');
     }
 
@@ -93,7 +93,7 @@ export class IronValiantex extends PokemonCard {
       this.tachyonBits++;
 
       if (this.tachyonBits === 1) {
-        if (player.abilityMarker.hasMarker(this.TACHYON_BITS_MARKER, this)) {
+        if (player.marker.hasMarker(this.TACHYON_BITS_MARKER, this)) {
           throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
         }
 
@@ -132,7 +132,7 @@ export class IronValiantex extends PokemonCard {
               });
               targets.forEach(target => {
                 target.damage += 20;
-                player.abilityMarker.addMarker(this.TACHYON_BITS_MARKER, this);
+                player.marker.addMarker(this.TACHYON_BITS_MARKER, this);
               });
               this.tachyonBits++;
             });
@@ -144,11 +144,11 @@ export class IronValiantex extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
 
       // Check marker
-      if (effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+      if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
         console.log('attack blocked');
         throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
       }
-      effect.player.attackMarker.addMarker(this.ATTACK_USED_MARKER, this);
+      effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
       console.log('marker added');
     }
     return state;

@@ -1,7 +1,7 @@
 import { CardTarget, PlayerType, SlotType } from '../../game/store/actions/play-card-action';
 import { GameMessage } from '../../game/game-message';
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { Stage, TrainerType } from '../../game/store/card/card-types';
+import { BoardEffect, Stage, TrainerType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
@@ -66,9 +66,13 @@ export class Penny extends TrainerCard {
         const cardList = result.length > 0 ? result[0] : null;
         if (cardList !== null) {
           const pokemons = cardList.getPokemons();
+
+          player.removePokemonEffects(cardList);
           cardList.clearEffects();
+          cardList.damage = 0;
           cardList.moveCardsTo(pokemons, player.hand);
           cardList.moveTo(player.hand);
+          cardList.removeBoardEffect(BoardEffect.ABILITY_USED);
           player.supporter.moveCardTo(effect.trainerCard, player.discard);
 
         }

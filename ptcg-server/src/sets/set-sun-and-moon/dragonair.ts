@@ -48,22 +48,22 @@ export class Dragonair extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof EndTurnEffect && effect.player.attackMarker.hasMarker(this.DRAGONS_WISH_2_MARKER, this)) {
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.DRAGONS_WISH_2_MARKER, this)) {
       const player = effect.player;
-      effect.player.attackMarker.removeMarker(this.DRAGONS_WISH_MARKER, this);
-      effect.player.attackMarker.removeMarker(this.DRAGONS_WISH_2_MARKER, this);
+      effect.player.marker.removeMarker(this.DRAGONS_WISH_MARKER, this);
+      effect.player.marker.removeMarker(this.DRAGONS_WISH_2_MARKER, this);
       player.usedDragonsWish = false;
       console.log('marker cleared');
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.attackMarker.hasMarker(this.DRAGONS_WISH_MARKER, this)) {
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.DRAGONS_WISH_MARKER, this)) {
       const player = effect.player;
-      effect.player.attackMarker.addMarker(this.DRAGONS_WISH_2_MARKER, this);
+      effect.player.marker.addMarker(this.DRAGONS_WISH_2_MARKER, this);
       player.usedDragonsWish = true;
       console.log('second marker added');
     }
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      effect.player.attackMarker.addMarker(this.DRAGONS_WISH_MARKER, this);
+      effect.player.marker.addMarker(this.DRAGONS_WISH_MARKER, this);
       console.log('marker added');
     }
     return state;

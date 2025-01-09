@@ -41,10 +41,10 @@ export class Graveler extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      opponent.attackMarker.addMarker(this.HARDEN_MARKER, this);
+      opponent.marker.addMarker(this.HARDEN_MARKER, this);
     }
 
-    if (effect instanceof AttackEffect && effect.player.active.attackMarker.hasMarker(this.HARDEN_MARKER, this)) {
+    if (effect instanceof AttackEffect && effect.player.active.marker.hasMarker(this.HARDEN_MARKER, this)) {
       const damageBeingDealt = effect.damage;
 
       if (damageBeingDealt <= 30) {
@@ -58,7 +58,7 @@ export class Graveler extends PokemonCard {
     }
 
     if (effect instanceof EndTurnEffect) {
-      effect.player.active.attackMarker.removeMarker(this.HARDEN_MARKER, this);
+      effect.player.active.marker.removeMarker(this.HARDEN_MARKER, this);
     }
 
 

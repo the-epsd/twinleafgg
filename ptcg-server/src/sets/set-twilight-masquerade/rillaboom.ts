@@ -42,10 +42,10 @@ export class Rillaboom extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      opponent.active.attackMarker.addMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
+      opponent.active.marker.addMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
     }
 
-    if (effect instanceof CheckRetreatCostEffect && effect.player.active.attackMarker.hasMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this)) {
+    if (effect instanceof CheckRetreatCostEffect && effect.player.active.marker.hasMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this)) {
       const player = effect.player;
       const pokemonCard = player.active.getPokemonCard();
 
@@ -59,7 +59,7 @@ export class Rillaboom extends PokemonCard {
       }
     }
 
-    if (effect instanceof CheckAttackCostEffect && effect.player.active.attackMarker.hasMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this)) {
+    if (effect instanceof CheckAttackCostEffect && effect.player.active.marker.hasMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this)) {
       const player = effect.player;
       const pokemonCard = player.active.getPokemonCard();
 
@@ -76,7 +76,7 @@ export class Rillaboom extends PokemonCard {
     }
 
     if (effect instanceof EndTurnEffect) {
-      effect.player.active.attackMarker.removeMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
+      effect.player.active.marker.removeMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {

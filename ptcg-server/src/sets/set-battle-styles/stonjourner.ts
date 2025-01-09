@@ -13,7 +13,7 @@ export class Stonjourner extends PokemonCard {
 
   public regulationMark = 'E';
 
-  public tags = [ CardTag.SINGLE_STRIKE ];
+  public tags = [CardTag.SINGLE_STRIKE];
 
   public cardType: CardType = CardType.FIGHTING;
 
@@ -21,15 +21,15 @@ export class Stonjourner extends PokemonCard {
 
   public weakness = [{ type: CardType.GRASS }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Land\'s Pulse',
-      cost: [ CardType.FIGHTING, CardType.COLORLESS ],
+      cost: [CardType.FIGHTING, CardType.COLORLESS],
       damage: 60,
       text: 'If a Stadium is in play, this attack does 30 more damage.',
-      effect: (store: StoreLike, state: State, effect: AttackEffect) =>{
+      effect: (store: StoreLike, state: State, effect: AttackEffect) => {
         const stadiumCard = StateUtils.getStadiumCard(state);
         if (stadiumCard !== undefined) {
           effect.damage += 30;
@@ -43,22 +43,22 @@ export class Stonjourner extends PokemonCard {
     },
     {
       name: 'Giga Hammer',
-      cost: [ CardType.FIGHTING, CardType.FIGHTING, CardType.COLORLESS ],
+      cost: [CardType.FIGHTING, CardType.FIGHTING, CardType.COLORLESS],
       damage: 120,
       text: 'During your next turn, this Pokémon can\'t use Giga Hammer.',
       effect: (store: StoreLike, state: State, effect: AttackEffect) => {
         const player = effect.player;
         if (player.active.cards[0] !== this) {
-          player.attackMarker.removeMarker(this.ATTACK_USED_MARKER, this);
-          player.attackMarker.removeMarker(this.ATTACK_USED_2_MARKER, this);
+          player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
+          player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
           console.log('removed markers because not active');
         }
         // Check marker
-        if (effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+        if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
           console.log('attack blocked');
           throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
         }
-        effect.player.attackMarker.addMarker(this.ATTACK_USED_MARKER, this);
+        effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
         console.log('marker added');
         return state;
       }
@@ -82,18 +82,18 @@ export class Stonjourner extends PokemonCard {
 
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const player = effect.player;
-      player.attackMarker.removeMarker(this.ATTACK_USED_MARKER, this);
-      player.attackMarker.removeMarker(this.ATTACK_USED_2_MARKER, this);
+      player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
+      player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
-      effect.player.attackMarker.removeMarker(this.ATTACK_USED_MARKER, this);
-      effect.player.attackMarker.removeMarker(this.ATTACK_USED_2_MARKER, this);
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
+      effect.player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
+      effect.player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
       console.log('marker cleared');
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.attackMarker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-      effect.player.attackMarker.addMarker(this.ATTACK_USED_2_MARKER, this);
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+      effect.player.marker.addMarker(this.ATTACK_USED_2_MARKER, this);
       console.log('second marker added');
     }
 

@@ -62,13 +62,13 @@ export class Noivernex extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      player.active.attackMarker.addMarker(this.PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER, this);
-      opponent.attackMarker.addMarker(this.CLEAR_PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER, this);
+      player.active.marker.addMarker(this.PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER, this);
+      opponent.marker.addMarker(this.CLEAR_PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER, this);
       return state;
     }
 
     if (effect instanceof PutDamageEffect
-      && effect.target.attackMarker.hasMarker(this.PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER)) {
+      && effect.target.marker.hasMarker(this.PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER)) {
       const card = effect.source.getPokemonCard();
       const stage = card !== undefined ? card.stage : undefined;
 
@@ -82,41 +82,41 @@ export class Noivernex extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      opponent.attackMarker.addMarker(this.DOMINATING_ECHO_MARKER, this);
+      opponent.marker.addMarker(this.DOMINATING_ECHO_MARKER, this);
     }
 
     if (effect instanceof PlayStadiumEffect) {
       const player = effect.player;
-      if (player.attackMarker.hasMarker(this.DOMINATING_ECHO_MARKER, this)) {
+      if (player.marker.hasMarker(this.DOMINATING_ECHO_MARKER, this)) {
         throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
       }
     }
 
     if (effect instanceof AttachEnergyEffect && EnergyType.SPECIAL) {
       const player = effect.player;
-      if (player.attackMarker.hasMarker(this.DOMINATING_ECHO_MARKER, this)) {
+      if (player.marker.hasMarker(this.DOMINATING_ECHO_MARKER, this)) {
         throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
       }
     }
 
     if (effect instanceof EndTurnEffect) {
 
-      if (effect.player.attackMarker.hasMarker(this.CLEAR_PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER, this)) {
-        effect.player.attackMarker.removeMarker(this.CLEAR_PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER, this);
+      if (effect.player.marker.hasMarker(this.CLEAR_PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER, this)) {
+        effect.player.marker.removeMarker(this.CLEAR_PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER, this);
         const opponent = StateUtils.getOpponent(state, effect.player);
         opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-          cardList.attackMarker.removeMarker(this.PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER, this);
+          cardList.marker.removeMarker(this.PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER, this);
         });
       }
     }
 
     if (effect instanceof EndTurnEffect) {
 
-      if (effect.player.attackMarker.hasMarker(this.DOMINATING_ECHO_MARKER, this)) {
-        effect.player.attackMarker.removeMarker(this.DOMINATING_ECHO_MARKER, this);
+      if (effect.player.marker.hasMarker(this.DOMINATING_ECHO_MARKER, this)) {
+        effect.player.marker.removeMarker(this.DOMINATING_ECHO_MARKER, this);
         const opponent = StateUtils.getOpponent(state, effect.player);
         opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-          cardList.attackMarker.removeMarker(this.DOMINATING_ECHO_MARKER, this);
+          cardList.marker.removeMarker(this.DOMINATING_ECHO_MARKER, this);
         });
       }
     }
