@@ -57,6 +57,7 @@ export class ScoopUpCyclone extends TrainerCard {
         targets.forEach(target => {
           target.moveTo(player.hand);
           target.clearEffects();
+          target.damage = 0;
         });
       });
     }

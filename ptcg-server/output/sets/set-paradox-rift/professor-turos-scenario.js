@@ -35,6 +35,7 @@ class ProfessorTurosScenario extends trainer_card_1.TrainerCard {
                 if (cardList !== null) {
                     const pokemons = cardList.getPokemons();
                     cardList.clearEffects();
+                    cardList.damage = 0;
                     cardList.moveCardsTo(pokemons, player.hand);
                     cardList.moveTo(player.discard);
                     cardList.removeBoardEffect(card_types_1.BoardEffect.ABILITY_USED);
