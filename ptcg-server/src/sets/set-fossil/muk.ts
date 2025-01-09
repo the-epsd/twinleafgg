@@ -4,7 +4,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { PowerEffect, AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { CoinFlipPrompt, GameError, GameMessage, PlayerType, PokemonCardList, PowerType, StateUtils } from '../../game';
+import { CoinFlipPrompt, GameError, GameMessage, PlayerType, PowerType, StateUtils } from '../../game';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 
 export class Muk extends PokemonCard {
@@ -43,17 +43,15 @@ export class Muk extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PowerEffect && effect.power.powerType
-      === PowerType.POKEPOWER && effect.power.name !== "Toxic Gas"
-    ) {
+    if (effect instanceof PowerEffect && effect.power.powerType === PowerType.POKEPOWER && effect.power.name !== 'Toxic Gas') {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      const thisMuk = StateUtils.findCardList(state, this) as PokemonCardList;
-
-      if (thisMuk.specialConditions.length > 0) {
-        throw new GameError(GameMessage.CANNOT_USE_POWER);
-      }
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+        if (cardList.getPokemonCard() === this && cardList.specialConditions.length > 0) {
+          return state;
+        }
+      });
 
       let isMukInPlay = false;
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
@@ -71,22 +69,16 @@ export class Muk extends PokemonCard {
         return state;
       }
 
-
-      // Try reducing ability for opponent
+      // Try reducing ability for each player  
       try {
-        const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.POKEPOWER,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
+        const powerEffect = new PowerEffect(player, this.powers[0], this);
+        store.reduceEffect(state, powerEffect);
       } catch {
-
-        if (!effect.power.exemptFromAbilityLock) {
-          throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
-        }
+        return state;
       }
-      return state;
+      if (!effect.power.exemptFromAbilityLock) {
+        throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
+      }
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
