@@ -5,7 +5,7 @@ import {
 } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 function* useMetronome(next: Function, store: StoreLike, state: State,
@@ -14,10 +14,12 @@ function* useMetronome(next: Function, store: StoreLike, state: State,
   const opponent = StateUtils.getOpponent(state, player);
   const pokemonCard = opponent.active.getPokemonCard();
 
+  let retryCount = 0;
+  const maxRetries = 3;
+
   if (pokemonCard === undefined || pokemonCard.attacks.length === 0) {
     return state;
   }
-
 
   let selected: any;
   yield store.prompt(state, new ChooseAttackPrompt(
@@ -33,24 +35,36 @@ function* useMetronome(next: Function, store: StoreLike, state: State,
   const attack: Attack | null = selected;
 
   if (attack === null) {
-    return state;
+    return state; // Player chose to cancel
   }
 
-  store.log(state, GameLog.LOG_PLAYER_COPIES_ATTACK, {
-    name: player.name,
-    attack: attack.name
-  });
+  try {
+    store.log(state, GameLog.LOG_PLAYER_COPIES_ATTACK, {
+      name: player.name,
+      attack: attack.name
+    });
 
-  const attackEffect = new AttackEffect(player, opponent, attack);
-  store.reduceEffect(state, attackEffect);
+    const attackEffect = new AttackEffect(player, opponent, attack);
+    state = store.reduceEffect(state, attackEffect);
 
-  if (store.hasPrompts()) {
-    yield store.waitPrompt(state, () => next());
+    if (store.hasPrompts()) {
+      yield store.waitPrompt(state, () => next());
+    }
+
+    if (attackEffect.damage > 0) {
+      const dealDamage = new DealDamageEffect(attackEffect, attackEffect.damage);
+      state = store.reduceEffect(state, dealDamage);
+    }
+
+    return state; // Successfully executed attack, exit the function
+  } catch (error) {
+    console.log('Attack failed:', error);
+    retryCount++;
+    if (retryCount >= maxRetries) {
+      console.log('Max retries reached. Exiting loop.');
+      return state;
+    }
   }
-
-  opponent.active.damage += attack.damage;
-
-  return state;
 }
 
 export class Clefable extends PokemonCard {

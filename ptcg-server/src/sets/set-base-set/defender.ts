@@ -10,7 +10,7 @@ import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
 export class Defender extends TrainerCard {
-  
+
   public trainerType: TrainerType = TrainerType.TOOL;
 
   public set: string = 'BS'; // Replace with the appropriate set abbreviation
