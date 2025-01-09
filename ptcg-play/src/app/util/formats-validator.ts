@@ -132,7 +132,8 @@ export class FormatValidator {
             CardTag.POKEMON_VMAX.toString(),
             CardTag.POKEMON_VSTAR.toString(),
             CardTag.RADIANT.toString(),
-            CardTag.POKEMON_GX.toString()
+            CardTag.POKEMON_GX.toString(),
+            CardTag.PRISM_STAR.toString()
           ].includes(t));
 
       case Format.RETRO:

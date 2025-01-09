@@ -18,7 +18,7 @@ class Bidoof extends pokemon_card_1.PokemonCard {
                 damage: 30,
                 text: ''
             }];
-        this.set = 'CRZ';
+        this.set = 'BRS';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '120';
         this.name = 'Bidoof';

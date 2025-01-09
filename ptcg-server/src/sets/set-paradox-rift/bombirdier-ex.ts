@@ -1,4 +1,4 @@
-import { PokemonCard, Stage, CardType, StoreLike, State, ShuffleDeckPrompt, PokemonCardList, Card, ChooseCardsPrompt, GameMessage, SuperType, ConfirmPrompt } from '../../game';
+import { PokemonCard, Stage, CardType, StoreLike, State, ShuffleDeckPrompt, PokemonCardList, Card, ChooseCardsPrompt, GameMessage, SuperType, ConfirmPrompt, CardTag } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 
@@ -40,6 +40,8 @@ function* useCallForFamily(next: Function, store: StoreLike, state: State,
 export class Bombirdierex extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
+
+  public tags = [CardTag.POKEMON_ex];
 
   public cardType: CardType = CardType.COLORLESS;
 
