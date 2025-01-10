@@ -39,7 +39,7 @@ export class StateSerializer {
     const refs: { node: Object, path: string }[] = [];
     const pathBuilder = new PathBuilder();
 
-    const replacer: any = function(this: any, key: string, value: any) {
+    const replacer: any = function (this: any, key: string, value: any) {
       pathBuilder.goTo(this, key);
       const path = pathBuilder.getPath();
 
@@ -125,7 +125,7 @@ export class StateSerializer {
 
     const jsonPatch = new JsonPatch();
     const diff = jsonPatch.diff([players1, state1], [players2, state2]);
-    return JSON.stringify([ diff ]);
+    return JSON.stringify([diff]);
   }
 
   public deserializeDiff(base: SerializedState | undefined, data: SerializedState): State {
@@ -143,13 +143,13 @@ export class StateSerializer {
       return data;
     }
 
-    let [ players, state ] = JSON.parse(base);
+    let [players, state] = JSON.parse(base);
     const diff: JsonDiff[] = parsed[0];
 
     const jsonPatch = new JsonPatch();
-    [ players, state ] = jsonPatch.apply([ players, state ], diff);
+    [players, state] = jsonPatch.apply([players, state], diff);
 
-    return JSON.stringify([ players, state ]);
+    return JSON.stringify([players, state]);
   }
 
   public static setKnownCards(cards: Card[]) {

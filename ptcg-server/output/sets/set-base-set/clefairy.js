@@ -5,10 +5,13 @@ const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
+const attack_effects_1 = require("../../game/store/effects/attack-effects");
 function* useMetronome(next, store, state, effect) {
     const player = effect.player;
     const opponent = game_1.StateUtils.getOpponent(state, player);
     const pokemonCard = opponent.active.getPokemonCard();
+    let retryCount = 0;
+    const maxRetries = 3;
     if (pokemonCard === undefined || pokemonCard.attacks.length === 0) {
         return state;
     }
@@ -19,19 +22,32 @@ function* useMetronome(next, store, state, effect) {
     });
     const attack = selected;
     if (attack === null) {
-        return state;
+        return state; // Player chose to cancel
     }
-    store.log(state, game_1.GameLog.LOG_PLAYER_COPIES_ATTACK, {
-        name: player.name,
-        attack: attack.name
-    });
-    const attackEffect = new game_effects_1.AttackEffect(player, opponent, attack);
-    store.reduceEffect(state, attackEffect);
-    if (store.hasPrompts()) {
-        yield store.waitPrompt(state, () => next());
+    try {
+        store.log(state, game_1.GameLog.LOG_PLAYER_COPIES_ATTACK, {
+            name: player.name,
+            attack: attack.name
+        });
+        const attackEffect = new game_effects_1.AttackEffect(player, opponent, attack);
+        state = store.reduceEffect(state, attackEffect);
+        if (store.hasPrompts()) {
+            yield store.waitPrompt(state, () => next());
+        }
+        if (attackEffect.damage > 0) {
+            const dealDamage = new attack_effects_1.DealDamageEffect(attackEffect, attackEffect.damage);
+            state = store.reduceEffect(state, dealDamage);
+        }
+        return state; // Successfully executed attack, exit the function
     }
-    opponent.active.damage += attack.damage;
-    return state;
+    catch (error) {
+        console.log('Attack failed:', error);
+        retryCount++;
+        if (retryCount >= maxRetries) {
+            console.log('Max retries reached. Exiting loop.');
+            return state;
+        }
+    }
 }
 class Clefairy extends pokemon_card_1.PokemonCard {
     constructor() {

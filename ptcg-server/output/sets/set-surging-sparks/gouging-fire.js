@@ -40,7 +40,7 @@ class GougingFire extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            const opponentPrizes = opponent.prizes.length;
+            const opponentPrizes = opponent.getPrizeLeft();
             if (opponentPrizes <= 4) {
                 effect.damage += 70;
             }

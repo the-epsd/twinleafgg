@@ -52,7 +52,7 @@ export class GougingFire extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      const opponentPrizes = opponent.prizes.length;
+      const opponentPrizes = opponent.getPrizeLeft();
 
       if (opponentPrizes <= 4) {
         effect.damage += 70;

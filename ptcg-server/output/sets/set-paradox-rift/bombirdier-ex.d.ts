@@ -1,7 +1,8 @@
-import { PokemonCard, Stage, CardType, StoreLike, State } from '../../game';
+import { PokemonCard, Stage, CardType, StoreLike, State, CardTag } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 export declare class Bombirdierex extends PokemonCard {
     stage: Stage;
+    tags: CardTag[];
     cardType: CardType;
     hp: number;
     weakness: {

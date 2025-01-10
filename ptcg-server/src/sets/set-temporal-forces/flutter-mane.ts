@@ -95,15 +95,8 @@ export class FlutterMane extends PokemonCard {
         return state;
       }
 
-      const effectCardList = StateUtils.findCardList(state, effect.card);
-      const effectOwner = StateUtils.findOwner(state, effectCardList);
-
-      // handles evolution abilities in opponent's active
-      const effectEvolvesFromOpponentsActive =
-        effectOwner !== owner && effect.card.evolvesFrom === player.active.getPokemonCard()?.name;
-
       // Only check opponent's Active Pokemon
-      if (player === owner || (player.active.getPokemonCard() !== effect.card && !effectEvolvesFromOpponentsActive)) {
+      if (player === owner || player.active.getPokemonCard() !== effect.card) {
         return state;
       }
 

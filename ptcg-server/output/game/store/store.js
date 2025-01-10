@@ -224,12 +224,13 @@ class Store {
         return state;
     }
     propagateEffect(state, effect) {
-        var _a, _b, _c, _d;
+        var _a, _b, _c, _d, _e;
         const cardEffect = effect;
         const cardName = ((_a = cardEffect.card) === null || _a === void 0 ? void 0 : _a.fullName) || ((_b = cardEffect.energyCard) === null || _b === void 0 ? void 0 : _b.fullName) ||
             ((_c = cardEffect.trainerCard) === null || _c === void 0 ? void 0 : _c.fullName) || ((_d = cardEffect.pokemonCard) === null || _d === void 0 ? void 0 : _d.fullName) || 'No card';
-        console.time(`propagateEffect-${effect.type}-${cardName}`);
+        const playerName = ((_e = cardEffect.player) === null || _e === void 0 ? void 0 : _e.name) || 'No player';
         const cards = [];
+        const startUsage = process.cpuUsage();
         try {
             for (const player of state.players) {
                 player.stadium.cards.forEach(c => cards.push(c));
@@ -250,10 +251,9 @@ class Store {
             return state;
         }
         finally {
-            console.timeEnd(`propagateEffect-${effect.type}-${cardName}`);
-            const used = process.memoryUsage();
-            console.log(`Memory after ${effect.type} from ${cardName}: ${Math.round(used.heapUsed / 1024 / 1024)}MB`);
-            console.log('Effect resolution complete:', effect.type, 'from', cardName);
+            const endUsage = process.cpuUsage(startUsage);
+            const cpuPercent = ((endUsage.user + endUsage.system) / 1000) * 10;
+            console.log(`${cardName} | ${effect.type} | CPU: ${cpuPercent.toFixed(4)}% | Player: ${playerName}`);
         }
     }
 }

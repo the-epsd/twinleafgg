@@ -18,24 +18,21 @@ function* playCard(next: Function, store: StoreLike, state: State,
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
 
-  let pokemonsOrEnergyInDiscard: number = 0;
   const blocked: number[] = [];
-  player.discard.cards.forEach((c, index) => {
-    const isPokemon = c instanceof PokemonCard;
-    const isBasicEnergy = c instanceof EnergyCard && c.energyType === EnergyType.BASIC;
-    if (isPokemon || isBasicEnergy) {
-      pokemonsOrEnergyInDiscard += 1;
-    } else {
-      blocked.push(index);
-    }
+  // Use Set for O(1) lookup
+  const blockedSet = new Set(blocked);
+
+  // Single filter pass for valid cards
+  const validCards = player.discard.cards.filter((c, index) => {
+    if (blockedSet.has(index)) return false;
+    return c instanceof PokemonCard ||
+      (c instanceof EnergyCard && c.energyType === EnergyType.BASIC);
   });
 
-  // Player does not have correct cards in discard
-  if (pokemonsOrEnergyInDiscard === 0) {
+  if (validCards.length === 0) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
-  // We will discard this card after prompt confirmation
   effect.preventDefault = true;
 
   let cards: Card[] = [];

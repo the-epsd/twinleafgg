@@ -29,7 +29,7 @@ class AttachEnergyPrompt extends prompt_1.Prompt {
     }
     decode(result, state) {
         if (result === null) {
-            return result; // operation cancelled
+            return result;
         }
         const player = state.players.find(p => p.id === this.playerId);
         if (player === undefined) {
@@ -39,6 +39,14 @@ class AttachEnergyPrompt extends prompt_1.Prompt {
         result.forEach(t => {
             const cardList = this.cardList;
             const card = cardList.cards[t.index];
+            // Verify card is an energy card
+            if (card.superType !== card_types_1.SuperType.ENERGY) {
+                throw new game_error_1.GameError(game_message_1.GameMessage.INVALID_PROMPT_RESULT);
+            }
+            // Verify card is not blocked
+            if (this.options.blocked.includes(t.index)) {
+                throw new game_error_1.GameError(game_message_1.GameMessage.INVALID_PROMPT_RESULT);
+            }
             transfers.push({ to: t.to, card });
         });
         return transfers;

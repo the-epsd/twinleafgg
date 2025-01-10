@@ -59,7 +59,7 @@ class MysteryEnergy extends energy_card_1.EnergyCard {
             }
             return state;
         }
-        if (effect instanceof check_effects_1.CheckRetreatCostEffect) {
+        if (effect instanceof check_effects_1.CheckRetreatCostEffect && effect.player.active.cards.includes(this)) {
             const player = effect.player;
             try {
                 const energyEffect = new play_card_effects_1.EnergyEffect(player, this);

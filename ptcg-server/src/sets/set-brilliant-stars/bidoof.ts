@@ -13,16 +13,16 @@ export class Bidoof extends PokemonCard {
 
   public weakness = [{ type: CardType.FIGHTING }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [{
     name: 'Rollout',
-    cost: [ CardType.COLORLESS, CardType.COLORLESS ],
+    cost: [CardType.COLORLESS, CardType.COLORLESS],
     damage: 30,
     text: ''
   }];
 
-  public set: string = 'CRZ';
+  public set: string = 'BRS';
 
   public cardImage: string = 'assets/cardback.png';
 

@@ -64,7 +64,7 @@ export class AttachEnergyPrompt extends Prompt<CardAssign[]> {
 
   public decode(result: AttachEnergyResultType | null, state: State): CardAssign[] | null {
     if (result === null) {
-      return result;  // operation cancelled
+      return result;
     }
     const player = state.players.find(p => p.id === this.playerId);
     if (player === undefined) {
@@ -74,6 +74,14 @@ export class AttachEnergyPrompt extends Prompt<CardAssign[]> {
     result.forEach(t => {
       const cardList = this.cardList;
       const card = cardList.cards[t.index];
+      // Verify card is an energy card
+      if (card.superType !== SuperType.ENERGY) {
+        throw new GameError(GameMessage.INVALID_PROMPT_RESULT);
+      }
+      // Verify card is not blocked
+      if (this.options.blocked.includes(t.index)) {
+        throw new GameError(GameMessage.INVALID_PROMPT_RESULT);
+      }
       transfers.push({ to: t.to, card });
     });
     return transfers;

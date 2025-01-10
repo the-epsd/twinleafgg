@@ -76,7 +76,7 @@ export class MysteryEnergy extends EnergyCard {
       return state;
     }
 
-    if (effect instanceof CheckRetreatCostEffect) {
+    if (effect instanceof CheckRetreatCostEffect && effect.player.active.cards.includes(this)) {
       const player = effect.player;
 
       try {
