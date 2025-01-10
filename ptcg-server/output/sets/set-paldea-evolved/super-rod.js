@@ -14,23 +14,19 @@ const game_1 = require("../../game");
 function* playCard(next, store, state, self, effect) {
     const player = effect.player;
     const opponent = game_1.StateUtils.getOpponent(state, player);
-    let pokemonsOrEnergyInDiscard = 0;
     const blocked = [];
-    player.discard.cards.forEach((c, index) => {
-        const isPokemon = c instanceof pokemon_card_1.PokemonCard;
-        const isBasicEnergy = c instanceof energy_card_1.EnergyCard && c.energyType === card_types_1.EnergyType.BASIC;
-        if (isPokemon || isBasicEnergy) {
-            pokemonsOrEnergyInDiscard += 1;
-        }
-        else {
-            blocked.push(index);
-        }
+    // Use Set for O(1) lookup
+    const blockedSet = new Set(blocked);
+    // Single filter pass for valid cards
+    const validCards = player.discard.cards.filter((c, index) => {
+        if (blockedSet.has(index))
+            return false;
+        return c instanceof pokemon_card_1.PokemonCard ||
+            (c instanceof energy_card_1.EnergyCard && c.energyType === card_types_1.EnergyType.BASIC);
     });
-    // Player does not have correct cards in discard
-    if (pokemonsOrEnergyInDiscard === 0) {
+    if (validCards.length === 0) {
         throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
     }
-    // We will discard this card after prompt confirmation
     effect.preventDefault = true;
     let cards = [];
     yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_DECK, player.discard, {}, { min: 1, max: 3, allowCancel: false, blocked }), selected => {

@@ -284,9 +284,10 @@ export class Store implements StoreLike {
     const cardEffect = <any>effect;
     const cardName = cardEffect.card?.fullName || cardEffect.energyCard?.fullName ||
       cardEffect.trainerCard?.fullName || cardEffect.pokemonCard?.fullName || 'No card';
-
-    console.time(`propagateEffect-${effect.type}-${cardName}`);
+    const playerName = cardEffect.player?.name || 'No player';
     const cards: Card[] = [];
+
+    const startUsage = process.cpuUsage();
 
     try {
       for (const player of state.players) {
@@ -307,10 +308,9 @@ export class Store implements StoreLike {
       cards.forEach(c => { state = c.reduceEffect(this, state, effect); });
       return state;
     } finally {
-      console.timeEnd(`propagateEffect-${effect.type}-${cardName}`);
-      const used = process.memoryUsage();
-      console.log(`Memory after ${effect.type} from ${cardName}: ${Math.round(used.heapUsed / 1024 / 1024)}MB`);
-      console.log('Effect resolution complete:', effect.type, 'from', cardName);
+      const endUsage = process.cpuUsage(startUsage);
+      const cpuPercent = ((endUsage.user + endUsage.system) / 1000) * 10;
+      console.log(`${cardName} | ${effect.type} | CPU: ${cpuPercent.toFixed(4)}% | Player: ${playerName}`);
     }
   }
 }

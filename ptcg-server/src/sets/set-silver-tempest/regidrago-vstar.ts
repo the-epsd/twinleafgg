@@ -14,7 +14,6 @@ function* useApexDragon(next: Function, store: StoreLike, state: State,
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
 
-  let retryCount = 0;
   const maxRetries = 3;
 
   const discardPokemon = player.discard.cards.filter(card => card.superType === SuperType.POKEMON) as PokemonCard[];
@@ -25,7 +24,7 @@ function* useApexDragon(next: Function, store: StoreLike, state: State,
     return state;
   }
 
-  while (true) {
+  for (let retryCount = 0; retryCount < maxRetries; retryCount++) {
     let selected: any;
     yield store.prompt(state, new ChooseAttackPrompt(
       player.id,
