@@ -21,6 +21,8 @@ export class Koraidon extends PokemonCard {
 
   public retreat = [C, C];
 
+  public weakness = [{ type: P }];
+
   public attacks = [
     {
       name: 'Unrelenting Onslaught',

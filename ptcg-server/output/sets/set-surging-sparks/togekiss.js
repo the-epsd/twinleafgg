@@ -42,7 +42,7 @@ class Togekiss extends game_1.PokemonCard {
                 return state;
             }
             // Do not activate between turns, or when it's not opponents turn.
-            if (state.phase !== game_1.GamePhase.ATTACK || state.players[state.activePlayer] !== opponent) {
+            if (state.players[state.activePlayer] !== opponent) {
                 return state;
             }
             // Try to reduce PowerEffect, to check if something is blocking our ability

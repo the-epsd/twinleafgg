@@ -1,4 +1,4 @@
-import { PokemonCard, Stage, CardType, StoreLike, State, StateUtils, PowerType, CoinFlipPrompt, GameMessage, GamePhase } from '../../game';
+import { PokemonCard, Stage, CardType, StoreLike, State, StateUtils, PowerType, CoinFlipPrompt, GameMessage } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { KnockOutEffect, PowerEffect } from '../../game/store/effects/game-effects';
 
@@ -45,7 +45,7 @@ export class Togekiss extends PokemonCard {
       }
 
       // Do not activate between turns, or when it's not opponents turn.
-      if (state.phase !== GamePhase.ATTACK || state.players[state.activePlayer] !== opponent) {
+      if (state.players[state.activePlayer] !== opponent) {
         return state;
       }
 

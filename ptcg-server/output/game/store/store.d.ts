@@ -12,6 +12,7 @@ export declare class Store implements StoreLike {
     private promptItems;
     private waitItems;
     private logId;
+    private stateChangeCounter;
     constructor(handler: StoreHandler);
     dispatch(action: Action): State;
     reduceEffect(state: State, effect: Effect): State;
