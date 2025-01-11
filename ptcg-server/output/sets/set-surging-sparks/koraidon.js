@@ -17,6 +17,7 @@ class Koraidon extends pokemon_card_1.PokemonCard {
         this.cardType = F;
         this.hp = 130;
         this.retreat = [C, C];
+        this.weakness = [{ type: P }];
         this.attacks = [
             {
                 name: 'Unrelenting Onslaught',

@@ -2,12 +2,13 @@ import { StoreLike, State } from '../../game';
 import { CardType, EnergyType } from '../../game/store/card/card-types';
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { EnergyEffect } from '../../game/store/effects/play-card-effects';
 
 export class DoubleTurboEnergy extends EnergyCard {
 
-  public provides: CardType[] = [CardType.COLORLESS, CardType.COLORLESS];
+  public provides: CardType[] = [CardType.COLORLESS];
 
   public energyType = EnergyType.SPECIAL;
 
@@ -31,6 +32,17 @@ export class DoubleTurboEnergy extends EnergyCard {
 
     if ((effect instanceof PutDamageEffect) && effect.source.cards.includes(this) && !effect.target.cards.includes(this)) {
       const player = effect.player;
+      try {
+        const energyEffect = new EnergyEffect(player, this);
+        store.reduceEffect(state, energyEffect);
+      } catch {
+        return state;
+      }
+      effect.damage -= 20;
+    }
+
+    if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
+      const player = effect.player;
 
       try {
         const energyEffect = new EnergyEffect(player, this);
@@ -38,8 +50,8 @@ export class DoubleTurboEnergy extends EnergyCard {
       } catch {
         return state;
       }
-      // Apply damage reduction and increase the energy provided only if EnergyEffect is successful
-      effect.damage -= 20;
+
+      this.provides = [CardType.COLORLESS, CardType.COLORLESS];
     }
     return state;
   }

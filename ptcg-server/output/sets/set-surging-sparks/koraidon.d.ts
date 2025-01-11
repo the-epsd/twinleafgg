@@ -10,6 +10,9 @@ export declare class Koraidon extends PokemonCard {
     cardType: CardType;
     hp: number;
     retreat: CardType.COLORLESS[];
+    weakness: {
+        type: CardType.PSYCHIC;
+    }[];
     attacks: ({
         name: string;
         cost: CardType.COLORLESS[];
