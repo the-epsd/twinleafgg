@@ -1,5 +1,6 @@
 import { Card } from '../../game/store/card/card';
 import { LevelBallNXD } from './card-images';
+import { Gardevoir } from './gardevoir';
 import { HeavyBall } from './heavy-ball';
 import { MewtwoEx } from './mewtwo-ex';
 import { Musharna } from './musharna';
@@ -10,6 +11,7 @@ import { SkyarrowBridge } from './skyarrow-bridge';
 import { ZekromEx } from './zekrom-ex';
 
 export const setNextDestinies: Card[] = [
+  new Gardevoir(),
   new HeavyBall(),
   new LevelBallNXD(),
   new MewtwoEx(),

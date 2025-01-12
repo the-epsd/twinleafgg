@@ -151,9 +151,9 @@ const botManager = BotManager.getInstance();
 // botManager.registerBot(new SimpleBot('LostBox'));
 // botManager.registerBot(new SimpleBot('Lugia'));
 // botManager.registerBot(new SimpleBot('Dragapult'));
-botManager.registerBot(new SimpleBot('Standard'));
-botManager.registerBot(new SimpleBot('GLC'));
-botManager.registerBot(new SimpleBot('Retro'));
+// botManager.registerBot(new SimpleBot('Standard'));
+// botManager.registerBot(new SimpleBot('GLC'));
+// botManager.registerBot(new SimpleBot('Retro'));
 
 const app = new App();
 
