@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, TrainerType, SuperType } from '../../game/store/card/card-types';
+import { Stage, CardType, TrainerType, SuperType, BoardEffect } from '../../game/store/card/card-types';
 import { Card, CardList, ChooseCardsPrompt, CoinFlipPrompt, GameError, GameMessage, PlayerType, PowerType, ShowCardsPrompt, State, StateUtils, StoreLike, TrainerCard } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
@@ -55,6 +55,14 @@ export class Florges extends PokemonCard {
       store.prompt(state, [
         new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
       ], results => {
+
+        player.marker.addMarker(this.MIST_GUARD_MARKER, this);
+
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+          if (cardList.getPokemonCard() === this) {
+            cardList.addBoardEffect(BoardEffect.ABILITY_USED);
+          }
+        });
 
         if (results === false) {
           return state;
