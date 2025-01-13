@@ -14,17 +14,34 @@ const game_1 = require("../../game");
 function* playCard(next, store, state, self, effect) {
     const player = effect.player;
     const opponent = game_1.StateUtils.getOpponent(state, player);
-    const blocked = [];
+    /*const blocked: number[] = [];
     // Use Set for O(1) lookup
     const blockedSet = new Set(blocked);
+  
     // Single filter pass for valid cards
     const validCards = player.discard.cards.filter((c, index) => {
-        if (blockedSet.has(index))
-            return false;
-        return c instanceof pokemon_card_1.PokemonCard ||
-            (c instanceof energy_card_1.EnergyCard && c.energyType === card_types_1.EnergyType.BASIC);
+      if (blockedSet.has(index)) return false;
+      return c instanceof PokemonCard ||
+        (c instanceof EnergyCard && c.energyType === EnergyType.BASIC);
     });
+  
     if (validCards.length === 0) {
+      throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+    }*/
+    let pokemonsOrEnergyInDiscard = 0;
+    const blocked = [];
+    player.discard.cards.forEach((c, index) => {
+        const isPokemon = c instanceof pokemon_card_1.PokemonCard;
+        const isBasicEnergy = c instanceof energy_card_1.EnergyCard && c.energyType === card_types_1.EnergyType.BASIC;
+        if (isPokemon || isBasicEnergy) {
+            pokemonsOrEnergyInDiscard += 1;
+        }
+        else {
+            blocked.push(index);
+        }
+    });
+    // Player does not have correct cards in discard
+    if (pokemonsOrEnergyInDiscard === 0) {
         throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
     }
     effect.preventDefault = true;
