@@ -16,7 +16,9 @@ class StateSanitizer {
      * Clear sensitive data, resolved prompts and old logs.
      */
     sanitize(state, gameId) {
+        console.time('sanitize-performance');
         state = utils_1.deepClone(state, [card_1.Card]);
+        console.timeEnd('sanitize-performance');
         state = this.filterPrompts(state);
         state = this.removeLogs(state, gameId);
         state = this.hideSecretCards(state);

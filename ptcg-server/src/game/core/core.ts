@@ -12,15 +12,19 @@ import { Scheduler, generateId } from '../../utils';
 import { config } from '../../config';
 import { Format } from '../store/card/card-types';
 
+
 export class Core {
   public clients: Client[] = [];
   public games: Game[] = [];
   public messager: Messager;
+  private cleanerTask: CleanerTask;
+  private rankingScheduler: Scheduler;
 
   constructor() {
     this.messager = new Messager(this);
-    const cleanerTask = new CleanerTask(this);
-    cleanerTask.startTasks();
+    this.cleanerTask = new CleanerTask(this);
+    this.cleanerTask.startTasks();
+    this.rankingScheduler = Scheduler.getInstance();
     this.startRankingDecrease();
   }
 
@@ -142,12 +146,11 @@ export class Core {
       this.emit(c => c.onGameLeave(game, client));
       game.handleClientLeave(client);
     }
-    // Delete game, if there are no more clients left in the game
-    if (game.clients.length === 1) {
-      console.log('Deleting bot game');
-      this.deleteGame(game);
-    }
-    if (game.clients.length === 0) {
+    // Delete game if only bot remains or no clients left
+    if (game.clients.length <= 1) {
+      if (game.clients.length === 1) {
+        console.log('closing game', game.id);
+      }
       this.deleteGame(game);
     }
   }
@@ -157,17 +160,28 @@ export class Core {
   }
 
   private startRankingDecrease() {
-    const scheduler = Scheduler.getInstance();
     const rankingCalculator = new RankingCalculator();
-    scheduler.run(async () => {
+    this.rankingScheduler.run(async () => {
       let users = await rankingCalculator.decreaseRanking();
-
-      // Notify only about users which are currently connected
       const connectedUserIds = this.clients.map(c => c.user.id);
       users = users.filter(u => connectedUserIds.includes(u.id));
-
       this.emit(c => c.onUsersUpdate(users));
     }, config.core.rankingDecreaseIntervalCount);
   }
 
+  public cleanup(): void {
+    // Cleanup all clients
+    [...this.clients].forEach(client => {
+      this.disconnect(client);
+    });
+
+    // Stop scheduler
+    if (this.rankingScheduler) {
+      this.rankingScheduler.run(() => { });
+    }
+
+    // Clear arrays
+    this.clients = [];
+    this.games = [];
+  }
 }
