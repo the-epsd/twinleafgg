@@ -39,9 +39,11 @@ class Ribombee extends pokemon_card_1.PokemonCard {
             const target = effect.target;
             let isRibombeeInPlay = false;
             let targetIsFairyPokemon = false;
-            if (opponent.bench.includes(this.cards)) {
-                isRibombeeInPlay = true;
-            }
+            opponent.bench.forEach(benchPokemon => {
+                if (benchPokemon.getPokemonCard() === this) {
+                    isRibombeeInPlay = true;
+                }
+            });
             if (!!target && target instanceof game_1.PokemonCardList) {
                 const checkPokemonTypeEffect = new check_effects_1.CheckPokemonTypeEffect(target);
                 store.reduceEffect(state, checkPokemonTypeEffect);

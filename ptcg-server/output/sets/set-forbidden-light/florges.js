@@ -49,6 +49,12 @@ class Florges extends pokemon_card_1.PokemonCard {
             store.prompt(state, [
                 new game_1.CoinFlipPrompt(player.id, game_1.GameMessage.COIN_FLIP)
             ], results => {
+                player.marker.addMarker(this.MIST_GUARD_MARKER, this);
+                player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
+                    if (cardList.getPokemonCard() === this) {
+                        cardList.addBoardEffect(card_types_1.BoardEffect.ABILITY_USED);
+                    }
+                });
                 if (results === false) {
                     return state;
                 }

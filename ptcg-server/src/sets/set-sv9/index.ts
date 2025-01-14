@@ -3,6 +3,7 @@ import { Blazikenex } from './blaziken-ex';
 import { BrocksRecruitment } from './brocks-recruitment';
 import { Budew } from './budew';
 import { Combusken } from './combusken';
+import { Dudunsparceex } from './dudunsparce-ex';
 import { ExchangeTicket } from './exchange-ticket';
 import { HopsChoiceBand } from './hops-choice-band';
 import { HopsDubwool } from './hops-dubwool';
@@ -40,6 +41,7 @@ export const setSV9: Card[] = [
   new Budew(),
   new BrocksRecruitment(),
   new ExchangeTicket(),
+  new Dudunsparceex(),
 
   new LilliesClefairyex(),
   new LilliesComfy(),
