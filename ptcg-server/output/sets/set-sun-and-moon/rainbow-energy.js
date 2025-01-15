@@ -22,25 +22,9 @@ class RainbowEnergy extends energy_card_1.EnergyCard {
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof check_effects_1.CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
-            const player = effect.player;
-            try {
-                const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
-                store.reduceEffect(state, energyEffect);
-            }
-            catch (_a) {
-                return state;
-            }
             effect.energyMap.push({ card: this, provides: [card_types_1.CardType.ANY] });
         }
         if (effect instanceof play_card_effects_1.AttachEnergyEffect && effect.energyCard === this) {
-            const player = effect.player;
-            try {
-                const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
-                store.reduceEffect(state, energyEffect);
-            }
-            catch (_b) {
-                return state;
-            }
             effect.target.damage += 10;
         }
         return state;

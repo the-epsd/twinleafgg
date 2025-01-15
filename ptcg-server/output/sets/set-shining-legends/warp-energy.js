@@ -26,13 +26,6 @@ class WarpEnergy extends energy_card_1.EnergyCard {
             if (player.deck.cards.length === 0) {
                 return state;
             }
-            try {
-                const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
-                store.reduceEffect(state, energyEffect);
-            }
-            catch (_c) {
-                return state;
-            }
             if (effect.player.active !== effect.target) {
                 return state;
             }

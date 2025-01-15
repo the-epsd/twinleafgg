@@ -5,7 +5,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { CheckProvidedEnergyEffect, CheckTableStateEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { BetweenTurnsEffect } from '../../game/store/effects/game-phase-effects';
-import { AttachEnergyEffect, EnergyEffect } from '../../game/store/effects/play-card-effects';
+import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
@@ -46,17 +46,7 @@ export class TripleAccelerationEnergy extends EnergyCard {
     }
 
     if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
-      const player = effect.player;
-
       const attachedTo = effect.source.getPokemonCard();
-
-      try {
-        const energyEffect = new EnergyEffect(player, this);
-        store.reduceEffect(state, energyEffect);
-      } catch {
-        return state;
-      }
-
       if (!!attachedTo && attachedTo instanceof PokemonCard && attachedTo.stage !== Stage.BASIC && attachedTo.stage !== Stage.RESTORED) {
         effect.energyMap.push({ card: this, provides: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS] });
       }
@@ -80,13 +70,6 @@ export class TripleAccelerationEnergy extends EnergyCard {
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
           if (!cardList.cards.includes(this)) {
             return;
-          }
-
-          try {
-            const energyEffect = new EnergyEffect(player, this);
-            store.reduceEffect(state, energyEffect);
-          } catch {
-            return state;
           }
 
           const attachedTo = cardList.getPokemonCard();

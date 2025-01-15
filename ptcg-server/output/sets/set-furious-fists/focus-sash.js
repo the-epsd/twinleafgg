@@ -6,7 +6,6 @@ const card_types_1 = require("../../game/store/card/card-types");
 const trainer_card_1 = require("../../game/store/card/trainer-card");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const check_effects_1 = require("../../game/store/effects/check-effects");
-const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class FocusSash extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -31,13 +30,6 @@ class FocusSash extends trainer_card_1.TrainerCard {
                 return state;
             }
             if (effect.target.damage === 0 && effect.damage >= checkHpEffect.hp) {
-                try {
-                    const toolEffect = new play_card_effects_1.ToolEffect(player, this);
-                    store.reduceEffect(state, toolEffect);
-                }
-                catch (_a) {
-                    return state;
-                }
                 effect.preventDefault = true;
                 effect.target.damage = checkHpEffect.hp - 10;
                 store.log(state, game_1.GameLog.LOG_PLAYER_PLAYS_TOOL, { card: this.name });
@@ -46,13 +38,6 @@ class FocusSash extends trainer_card_1.TrainerCard {
             if (this.canDiscard) {
                 player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card, index) => {
                     if (cardList.cards.includes(this)) {
-                        try {
-                            const toolEffect = new play_card_effects_1.ToolEffect(player, this);
-                            store.reduceEffect(state, toolEffect);
-                        }
-                        catch (_a) {
-                            return state;
-                        }
                         cardList.moveCardTo(this, player.discard);
                         cardList.tool = undefined;
                     }

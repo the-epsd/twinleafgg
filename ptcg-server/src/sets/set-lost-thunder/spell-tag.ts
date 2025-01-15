@@ -7,7 +7,7 @@ import { DealDamageEffect, PutDamageEffect } from '../../game/store/effects/atta
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, KnockOutEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { ToolEffect } from '../../game/store/effects/play-card-effects';
+
 import { StateUtils } from '../../game/store/state-utils';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
@@ -61,12 +61,7 @@ export class SpellTag extends TrainerCard {
 
       // const target = effect.target;
 
-      try {
-        const toolEffect = new ToolEffect(player, this);
-        store.reduceEffect(state, toolEffect);
-      } catch {
-        return state;
-      }
+
 
       if (this.damageDealt) {
 

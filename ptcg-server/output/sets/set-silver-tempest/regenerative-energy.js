@@ -5,7 +5,6 @@ const card_types_1 = require("../../game/store/card/card-types");
 const energy_card_1 = require("../../game/store/card/energy-card");
 const check_effects_1 = require("../../game/store/effects/check-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
-const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class RegenerativeEnergy extends energy_card_1.EnergyCard {
     constructor() {
         super(...arguments);
@@ -27,13 +26,6 @@ class RegenerativeEnergy extends energy_card_1.EnergyCard {
         if (effect instanceof check_effects_1.CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
             const player = effect.player;
             const pokemon = effect.source;
-            try {
-                const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
-                store.reduceEffect(state, energyEffect);
-            }
-            catch (_b) {
-                return state;
-            }
             if ((_a = pokemon.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.tags.includes(card_types_1.CardTag.POKEMON_V)) {
                 const healEffect = new game_effects_1.HealEffect(player, pokemon, 100);
                 store.reduceEffect(state, healEffect);

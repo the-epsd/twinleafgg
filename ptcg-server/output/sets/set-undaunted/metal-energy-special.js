@@ -5,7 +5,6 @@ const card_types_1 = require("../../game/store/card/card-types");
 const energy_card_1 = require("../../game/store/card/energy-card");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const check_effects_1 = require("../../game/store/effects/check-effects");
-const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class MetalEnergySpecial extends energy_card_1.EnergyCard {
     constructor() {
         super(...arguments);
@@ -24,14 +23,6 @@ class MetalEnergySpecial extends energy_card_1.EnergyCard {
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof attack_effects_1.PutDamageEffect) {
-            const player = effect.player;
-            try {
-                const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
-                store.reduceEffect(state, energyEffect);
-            }
-            catch (_a) {
-                return state;
-            }
             if (effect.target.cards.includes(this)) {
                 const checkPokemonType = new check_effects_1.CheckPokemonTypeEffect(effect.target);
                 store.reduceEffect(state, checkPokemonType);

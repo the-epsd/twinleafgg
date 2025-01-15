@@ -5,7 +5,6 @@ const game_1 = require("../../game");
 const card_types_1 = require("../../game/store/card/card-types");
 const energy_card_1 = require("../../game/store/card/energy-card");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
-const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class PowerfulColorlessEnergy extends energy_card_1.EnergyCard {
     constructor() {
         super(...arguments);
@@ -23,15 +22,7 @@ class PowerfulColorlessEnergy extends energy_card_1.EnergyCard {
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof attack_effects_1.DealDamageEffect && effect.source.cards.includes(this)) {
-            const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, effect.player);
-            try {
-                const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
-                store.reduceEffect(state, energyEffect);
-            }
-            catch (_a) {
-                return state;
-            }
             if (effect.damage > 0 && effect.target === opponent.active) {
                 effect.damage += 20;
             }

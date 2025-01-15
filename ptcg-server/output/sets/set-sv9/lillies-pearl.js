@@ -4,7 +4,6 @@ exports.LilliesPearl = void 0;
 const trainer_card_1 = require("../../game/store/card/trainer-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const game_effects_1 = require("../../game/store/effects/game-effects");
-const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class LilliesPearl extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -20,14 +19,6 @@ class LilliesPearl extends trainer_card_1.TrainerCard {
     // public damageDealt = false;
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.KnockOutEffect && effect.target.cards.includes(this) && effect.player.marker.hasMarker(effect.player.DAMAGE_DEALT_MARKER)) {
-            const player = effect.player;
-            try {
-                const toolEffect = new play_card_effects_1.ToolEffect(player, this);
-                store.reduceEffect(state, toolEffect);
-            }
-            catch (_a) {
-                return state;
-            }
             if (!effect.target.isLillies()) {
                 effect.prizeCount -= 1;
             }

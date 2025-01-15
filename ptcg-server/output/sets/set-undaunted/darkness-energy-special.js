@@ -6,7 +6,6 @@ const energy_card_1 = require("../../game/store/card/energy-card");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const check_effects_1 = require("../../game/store/effects/check-effects");
 const state_utils_1 = require("../../game/store/state-utils");
-const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class DarknessEnergySpecial extends energy_card_1.EnergyCard {
     constructor() {
         super(...arguments);
@@ -29,13 +28,6 @@ class DarknessEnergySpecial extends energy_card_1.EnergyCard {
                 const player = effect.player;
                 const opponent = state_utils_1.StateUtils.getOpponent(state, player);
                 if (effect.target !== opponent.active) {
-                    return state;
-                }
-                try {
-                    const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
-                    store.reduceEffect(state, energyEffect);
-                }
-                catch (_a) {
                     return state;
                 }
                 const checkPokemonType = new check_effects_1.CheckPokemonTypeEffect(effect.source);

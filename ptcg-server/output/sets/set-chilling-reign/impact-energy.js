@@ -26,15 +26,7 @@ class ImpactEnergy extends energy_card_1.EnergyCard {
         var _a;
         // Provide energy when attached to Single Strike Pokemon
         if (effect instanceof check_effects_1.CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
-            const player = effect.player;
             const pokemon = effect.source;
-            try {
-                const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
-                store.reduceEffect(state, energyEffect);
-            }
-            catch (_b) {
-                return state;
-            }
             if ((_a = pokemon.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.tags.includes(card_types_1.CardTag.SINGLE_STRIKE)) {
                 effect.energyMap.push({ card: this, provides: [card_types_1.CardType.ANY] });
             }
@@ -48,13 +40,6 @@ class ImpactEnergy extends energy_card_1.EnergyCard {
                     if (!cardList.cards.includes(this)) {
                         return;
                     }
-                    try {
-                        const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
-                        store.reduceEffect(state, energyEffect);
-                    }
-                    catch (_b) {
-                        return state;
-                    }
                     const pokemon = cardList;
                     if (!((_a = pokemon.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.tags.includes(card_types_1.CardTag.SINGLE_STRIKE))) {
                         cardList.moveCardTo(this, player.discard);
@@ -67,13 +52,6 @@ class ImpactEnergy extends energy_card_1.EnergyCard {
             player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
                 if (!cardList.cards.includes(this)) {
                     return;
-                }
-                try {
-                    const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
-                    store.reduceEffect(state, energyEffect);
-                }
-                catch (_a) {
-                    return state;
                 }
                 if (cardList.specialConditions.includes(card_types_1.SpecialCondition.POISONED)) {
                     cardList.removeSpecialCondition(card_types_1.SpecialCondition.POISONED);

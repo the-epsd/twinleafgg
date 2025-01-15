@@ -4,7 +4,6 @@ exports.BlendEnergyWLFM = void 0;
 const card_types_1 = require("../../game/store/card/card-types");
 const energy_card_1 = require("../../game/store/card/energy-card");
 const check_effects_1 = require("../../game/store/effects/check-effects");
-const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class BlendEnergyWLFM extends energy_card_1.EnergyCard {
     constructor() {
         super(...arguments);
@@ -22,13 +21,6 @@ class BlendEnergyWLFM extends energy_card_1.EnergyCard {
         if (effect instanceof check_effects_1.CheckAttackCostEffect && effect.player.active.cards.includes(this)) {
             const player = effect.player;
             const pokemon = effect.player.active;
-            try {
-                const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
-                store.reduceEffect(state, energyEffect);
-            }
-            catch (_a) {
-                return state;
-            }
             const attackCosts = effect instanceof check_effects_1.CheckAttackCostEffect ? effect.attack.cost : [];
             const initialCosts = [...attackCosts];
             console.log(`[BlendEnergy] Initial attack costs: ${initialCosts.join(', ') || 'None'}`);

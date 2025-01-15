@@ -21,6 +21,7 @@ class Tatsugiriex extends game_1.PokemonCard {
                 name: 'Surprise Pump',
                 cost: [R, W],
                 damage: 100,
+                shredAttack: true,
                 text: 'This attack\'s damage isn\'t affected by any effects on your opponent\'s Active Pokémon.'
             },
             {
@@ -40,7 +41,9 @@ class Tatsugiriex extends game_1.PokemonCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            const applyWeakness = new attack_effects_1.ApplyWeaknessEffect(effect, 100);
+            const dealDamage = new attack_effects_1.DealDamageEffect(effect, 100);
+            store.reduceEffect(state, dealDamage);
+            const applyWeakness = new attack_effects_1.ApplyWeaknessEffect(effect, dealDamage.damage);
             store.reduceEffect(state, applyWeakness);
             const damage = applyWeakness.damage;
             effect.damage = 0;

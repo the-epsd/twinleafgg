@@ -5,7 +5,6 @@ const card_types_1 = require("../../game/store/card/card-types");
 const state_1 = require("../../game/store/state/state");
 const game_1 = require("../../game");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
-const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class RockChestplate extends game_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -27,13 +26,6 @@ class RockChestplate extends game_1.TrainerCard {
             }
             const player = game_1.StateUtils.findOwner(state, effect.target);
             const sourceCard = player.active.getPokemonCard();
-            try {
-                const toolEffect = new play_card_effects_1.ToolEffect(player, this);
-                store.reduceEffect(state, toolEffect);
-            }
-            catch (_a) {
-                return state;
-            }
             if ((sourceCard === null || sourceCard === void 0 ? void 0 : sourceCard.cardType) == card_types_1.CardType.FIGHTING) {
                 // Check if damage target is owned by this card's owner 
                 const targetPlayer = game_1.StateUtils.findOwner(state, effect.target);

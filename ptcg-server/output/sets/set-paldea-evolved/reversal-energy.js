@@ -6,7 +6,6 @@ const card_types_1 = require("../../game/store/card/card-types");
 const energy_card_1 = require("../../game/store/card/energy-card");
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const check_effects_1 = require("../../game/store/effects/check-effects");
-const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class ReversalEnergy extends energy_card_1.EnergyCard {
     constructor() {
         super(...arguments);
@@ -27,13 +26,6 @@ class ReversalEnergy extends energy_card_1.EnergyCard {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             const attachedTo = effect.source.getPokemonCard();
-            try {
-                const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
-                store.reduceEffect(state, energyEffect);
-            }
-            catch (_a) {
-                return state;
-            }
             if (!!attachedTo && attachedTo instanceof pokemon_card_1.PokemonCard && player.getPrizeLeft() > opponent.getPrizeLeft() &&
                 attachedTo.stage !== card_types_1.Stage.BASIC && attachedTo.stage !== card_types_1.Stage.RESTORED &&
                 !attachedTo.cardTag.includes(card_types_1.CardTag.POKEMON_V || card_types_1.CardTag.POKEMON_ex || card_types_1.CardTag.POKEMON_VSTAR || card_types_1.CardTag.POKEMON_VMAX || card_types_1.CardTag.RADIANT)) {

@@ -2,7 +2,7 @@ import { CardType, EnergyType } from '../../game/store/card/card-types';
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { CheckAttackCostEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { EnergyEffect } from '../../game/store/effects/play-card-effects';
+
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
@@ -31,12 +31,7 @@ export class BlendEnergyWLFM extends EnergyCard {
       const player = effect.player;
       const pokemon = effect.player.active;
 
-      try {
-        const energyEffect = new EnergyEffect(player, this);
-        store.reduceEffect(state, energyEffect);
-      } catch {
-        return state;
-      }
+
 
       const attackCosts = effect instanceof CheckAttackCostEffect ? effect.attack.cost : [];
       const initialCosts = [...attackCosts];

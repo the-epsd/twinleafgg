@@ -10,7 +10,6 @@ const attach_energy_prompt_1 = require("../../game/store/prompts/attach-energy-p
 const play_card_action_1 = require("../../game/store/actions/play-card-action");
 const state_utils_1 = require("../../game/store/state-utils");
 const pokemon_card_list_1 = require("../../game/store/state/pokemon-card-list");
-const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class ExpShare extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -33,13 +32,6 @@ class ExpShare extends trainer_card_1.TrainerCard {
             const active = effect.target;
             // Do not activate between turns, or when it's not opponents turn.
             if (state.phase !== state_1.GamePhase.ATTACK || state.players[state.activePlayer] !== opponent) {
-                return state;
-            }
-            try {
-                const toolEffect = new play_card_effects_1.ToolEffect(player, this);
-                store.reduceEffect(state, toolEffect);
-            }
-            catch (_a) {
                 return state;
             }
             if (active.marker.hasMarker(this.EXP_SHARE_MARKER)) {

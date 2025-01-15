@@ -8,7 +8,6 @@ import { Card, ChooseCardsPrompt, ShowCardsPrompt, ShuffleDeckPrompt } from '../
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { ToolEffect } from '../../game/store/effects/play-card-effects';
 
 function* useStadium(next: Function, store: StoreLike, state: State, effect: UseStadiumEffect): IterableIterator<State> {
   const player = effect.player;
@@ -28,7 +27,6 @@ function* useStadium(next: Function, store: StoreLike, state: State, effect: Use
       { min: 0, max: 1, allowCancel: true }
     ), selectedCards => {
       cards = selectedCards || [];
-
 
       // Operation canceled by the user
       if (cards.length === 0) {
@@ -78,17 +76,9 @@ export class TownStore extends TrainerCard {
   public text = 'Once during each player\'s turn, that player may search their deck for a Pokémon Tool card, reveal it, and put it into their hand. Then, that player shuffles their deck.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
     if (effect instanceof UseStadiumEffect && StateUtils.getStadiumCard(state) === this) {
       const generator = useStadium(() => generator.next(), store, state, effect);
-      const player = effect.player;
-
-      try {
-        const toolEffect = new ToolEffect(player, this);
-        store.reduceEffect(state, toolEffect);
-      } catch {
-        return state;
-      }
-
       return generator.next().value;
     }
 

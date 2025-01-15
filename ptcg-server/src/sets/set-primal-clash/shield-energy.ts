@@ -4,7 +4,7 @@ import { EnergyCard } from '../../game/store/card/energy-card';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { CheckPokemonTypeEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttachEnergyEffect, EnergyEffect } from '../../game/store/effects/play-card-effects';
+import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
@@ -43,35 +43,16 @@ export class ShieldEnergy extends EnergyCard {
     }
 
     if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
-      const player = effect.player;
-
-      try {
-        const energyEffect = new EnergyEffect(player, this);
-        store.reduceEffect(state, energyEffect);
-      } catch {
-        return state;
-      }
-
       const checkPokemonType = new CheckPokemonTypeEffect(effect.source);
       store.reduceEffect(state, checkPokemonType);
 
       if (checkPokemonType.cardTypes.includes(CardType.METAL)) {
         effect.energyMap.push({ card: this, provides: [CardType.METAL] });
       }
-
       return state;
     }
 
     if (effect instanceof PutDamageEffect && effect.target?.cards?.includes(this)) {
-      const player = effect.player;
-
-      try {
-        const energyEffect = new EnergyEffect(player, this);
-        store.reduceEffect(state, energyEffect);
-      } catch {
-        return state;
-      }
-
       const checkPokemonType = new CheckPokemonTypeEffect(effect.target);
       store.reduceEffect(state, checkPokemonType);
 
@@ -81,25 +62,6 @@ export class ShieldEnergy extends EnergyCard {
         return state;
       }
     }
-
-    if (effect instanceof AttachEnergyEffect && effect.energyCard === this) {
-      const checkPokemonType = new CheckPokemonTypeEffect(effect.target);
-      store.reduceEffect(state, checkPokemonType);
-
-      const player = effect.player;
-
-      try {
-        const energyEffect = new EnergyEffect(player, this);
-        store.reduceEffect(state, energyEffect);
-      } catch {
-        return state;
-      }
-
-      if (!checkPokemonType.cardTypes.includes(CardType.METAL)) {
-        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-      }
-    }
-
     return state;
   }
 

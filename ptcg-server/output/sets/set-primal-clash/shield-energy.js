@@ -33,14 +33,6 @@ class ShieldEnergy extends energy_card_1.EnergyCard {
             }
         }
         if (effect instanceof check_effects_1.CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
-            const player = effect.player;
-            try {
-                const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
-                store.reduceEffect(state, energyEffect);
-            }
-            catch (_c) {
-                return state;
-            }
             const checkPokemonType = new check_effects_1.CheckPokemonTypeEffect(effect.source);
             store.reduceEffect(state, checkPokemonType);
             if (checkPokemonType.cardTypes.includes(card_types_1.CardType.METAL)) {
@@ -49,35 +41,12 @@ class ShieldEnergy extends energy_card_1.EnergyCard {
             return state;
         }
         if (effect instanceof attack_effects_1.PutDamageEffect && ((_b = (_a = effect.target) === null || _a === void 0 ? void 0 : _a.cards) === null || _b === void 0 ? void 0 : _b.includes(this))) {
-            const player = effect.player;
-            try {
-                const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
-                store.reduceEffect(state, energyEffect);
-            }
-            catch (_d) {
-                return state;
-            }
             const checkPokemonType = new check_effects_1.CheckPokemonTypeEffect(effect.target);
             store.reduceEffect(state, checkPokemonType);
             if (checkPokemonType.cardTypes.includes(card_types_1.CardType.METAL)) {
                 effect.damage = Math.max(0, effect.damage - 10);
                 effect.damageReduced = true;
                 return state;
-            }
-        }
-        if (effect instanceof play_card_effects_1.AttachEnergyEffect && effect.energyCard === this) {
-            const checkPokemonType = new check_effects_1.CheckPokemonTypeEffect(effect.target);
-            store.reduceEffect(state, checkPokemonType);
-            const player = effect.player;
-            try {
-                const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
-                store.reduceEffect(state, energyEffect);
-            }
-            catch (_e) {
-                return state;
-            }
-            if (!checkPokemonType.cardTypes.includes(card_types_1.CardType.METAL)) {
-                throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
             }
         }
         return state;

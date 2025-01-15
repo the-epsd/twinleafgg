@@ -23,26 +23,10 @@ class AromaticEnergy extends energy_card_1.EnergyCard {
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof check_effects_1.CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
-            const player = effect.player;
-            try {
-                const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
-                store.reduceEffect(state, energyEffect);
-            }
-            catch (_a) {
-                return state;
-            }
             effect.energyMap.push({ card: this, provides: [G] });
         }
         if (effect instanceof play_card_effects_1.AttachEnergyEffect && effect.target.cards.includes(this)) {
-            const player = effect.player;
             const pokemon = effect.target;
-            try {
-                const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
-                store.reduceEffect(state, energyEffect);
-            }
-            catch (_b) {
-                return state;
-            }
             pokemon.removeSpecialCondition(card_types_1.SpecialCondition.ASLEEP);
             pokemon.removeSpecialCondition(card_types_1.SpecialCondition.PARALYZED);
             pokemon.removeSpecialCondition(card_types_1.SpecialCondition.CONFUSED);
@@ -50,15 +34,7 @@ class AromaticEnergy extends energy_card_1.EnergyCard {
             pokemon.removeSpecialCondition(card_types_1.SpecialCondition.POISONED);
         }
         if (effect instanceof check_effects_1.CheckTableStateEffect) {
-            const player = state.players[state.activePlayer];
             const cardList = game_1.StateUtils.findCardList(state, this);
-            try {
-                const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
-                store.reduceEffect(state, energyEffect);
-            }
-            catch (_c) {
-                return state;
-            }
             if (cardList instanceof game_1.PokemonCardList && cardList.cards.includes(this)) {
                 const conditionsToKeep = [card_types_1.SpecialCondition.ABILITY_USED];
                 const hasSpecialCondition = cardList.specialConditions.some(condition => !conditionsToKeep.includes(condition));

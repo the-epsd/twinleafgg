@@ -5,7 +5,7 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { StateUtils } from '../../game/store/state-utils';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
-import { ToolEffect } from '../../game/store/effects/play-card-effects';
+
 
 export class BindingMochi extends TrainerCard {
 
@@ -35,12 +35,7 @@ export class BindingMochi extends TrainerCard {
         return state;
       }
 
-      try {
-        const toolEffect = new ToolEffect(player, this);
-        store.reduceEffect(state, toolEffect);
-      } catch {
-        return state;
-      }
+
 
       if (player.active.specialConditions.includes(SpecialCondition.POISONED)) {
         const opponentActive = opponent.active.getPokemonCard();

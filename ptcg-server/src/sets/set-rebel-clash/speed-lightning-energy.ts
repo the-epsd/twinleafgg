@@ -4,18 +4,18 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
-import { AttachEnergyEffect, EnergyEffect } from '../../game/store/effects/play-card-effects';
+import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
 
 export class SpeedLightningEnergy extends EnergyCard {
 
-  public provides: CardType[] = [ CardType.COLORLESS ];
+  public provides: CardType[] = [CardType.COLORLESS];
 
   public energyType = EnergyType.SPECIAL;
 
   public set: string = 'RCL';
 
   public regulationMark = 'D';
-  
+
   public name = 'Speed Lightning Energy';
 
   public fullName = 'Speed Lightning Energy RCL';
@@ -29,29 +29,14 @@ export class SpeedLightningEnergy extends EnergyCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
-      const player = effect.player;
-      try {
-        const energyEffect = new EnergyEffect(player, this);
-        store.reduceEffect(state, energyEffect);
-      } catch {
-        return state;
-      }
-
-      effect.energyMap.push({ card: this, provides: [ CardType.LIGHTNING ] });
+      effect.energyMap.push({ card: this, provides: [CardType.LIGHTNING] });
     }
-    
+
     if (effect instanceof AttachEnergyEffect && effect.energyCard === this) {
       const player = effect.player;
-      
-      try {
-        const energyEffect = new EnergyEffect(player, this);
-        store.reduceEffect(state, energyEffect);
-      } catch {
-        return state;
-      }
 
       if (effect.target.getPokemonCard()?.cardType === CardType.LIGHTNING) {
-        player.deck.moveTo(player.hand, 2);        
+        player.deck.moveTo(player.hand, 2);
       }
     }
     return state;

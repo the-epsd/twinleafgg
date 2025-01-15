@@ -12,12 +12,19 @@ export declare class Tatsugiriex extends PokemonCard {
     weakness: never[];
     resistance: never[];
     retreat: CardType.COLORLESS[];
-    attacks: {
+    attacks: ({
+        name: string;
+        cost: (CardType.FIRE | CardType.WATER)[];
+        damage: number;
+        shredAttack: boolean;
+        text: string;
+    } | {
         name: string;
         cost: (CardType.FIRE | CardType.WATER | CardType.DARK)[];
         damage: number;
         text: string;
-    }[];
+        shredAttack?: undefined;
+    })[];
     set: string;
     cardImage: string;
     setNumber: string;

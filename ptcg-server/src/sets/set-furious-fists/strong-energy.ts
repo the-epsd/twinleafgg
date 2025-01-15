@@ -9,7 +9,7 @@ import {
   CheckProvidedEnergyEffect
 } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttachEnergyEffect, EnergyEffect } from '../../game/store/effects/play-card-effects';
+import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
 import { StateUtils } from '../../game/store/state-utils';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
@@ -44,16 +44,8 @@ export class StrongEnergy extends EnergyCard {
 
     // Cannot attach to other than Fighting Pokemon
     if (effect instanceof AttachEnergyEffect && effect.energyCard === this) {
-      const player = effect.player;
       const checkPokemonType = new CheckPokemonTypeEffect(effect.target);
       store.reduceEffect(state, checkPokemonType);
-
-      try {
-        const energyEffect = new EnergyEffect(player, this);
-        store.reduceEffect(state, energyEffect);
-      } catch {
-        return state;
-      }
 
       if (!checkPokemonType.cardTypes.includes(CardType.FIGHTING)) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
@@ -63,16 +55,8 @@ export class StrongEnergy extends EnergyCard {
 
     // Provide energy when attached to Fighting Pokemon
     if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
-      const player = effect.player;
       const checkPokemonType = new CheckPokemonTypeEffect(effect.source);
       store.reduceEffect(state, checkPokemonType);
-
-      try {
-        const energyEffect = new EnergyEffect(player, this);
-        store.reduceEffect(state, energyEffect);
-      } catch {
-        return state;
-      }
 
       if (checkPokemonType.cardTypes.includes(CardType.FIGHTING)) {
         effect.energyMap.push({ card: this, provides: [CardType.FIGHTING] });
@@ -86,13 +70,6 @@ export class StrongEnergy extends EnergyCard {
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
           if (!cardList.cards.includes(this)) {
             return;
-          }
-
-          try {
-            const energyEffect = new EnergyEffect(player, this);
-            store.reduceEffect(state, energyEffect);
-          } catch {
-            return state;
           }
 
           const checkPokemonType = new CheckPokemonTypeEffect(cardList);
@@ -113,12 +90,7 @@ export class StrongEnergy extends EnergyCard {
         return state;
       }
 
-      try {
-        const energyEffect = new EnergyEffect(player, this);
-        store.reduceEffect(state, energyEffect);
-      } catch {
-        return state;
-      }
+
 
       effect.damage += 20;
     }

@@ -3,7 +3,7 @@ import { CardTag, CardType, EnergyType } from '../../game/store/card/card-types'
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { EnergyEffect } from '../../game/store/effects/play-card-effects';
+
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
@@ -36,12 +36,7 @@ export class CounterEnergy extends EnergyCard {
         return card instanceof PokemonCard && (card.tags.includes(CardTag.POKEMON_EX) || card.tags.includes(CardTag.POKEMON_GX));
       });
 
-      try {
-        const energyEffect = new EnergyEffect(player, this);
-        store.reduceEffect(state, energyEffect);
-      } catch {
-        return state;
-      }
+
 
       if (!!attachedTo.getPokemonCard() && player.getPrizeLeft() > opponent.getPrizeLeft() && !attachedToExOrGx) {
         effect.energyMap.push({ card: this, provides: [CardType.ANY, CardType.ANY] });

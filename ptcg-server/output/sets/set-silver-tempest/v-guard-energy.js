@@ -6,7 +6,6 @@ const energy_card_1 = require("../../game/store/card/energy-card");
 const state_1 = require("../../game/store/state/state");
 const game_1 = require("../../game");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
-const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class VGuardEnergy extends energy_card_1.EnergyCard {
     constructor() {
         super(...arguments);
@@ -35,13 +34,6 @@ class VGuardEnergy extends energy_card_1.EnergyCard {
                 return state;
             }
             const player = game_1.StateUtils.findOwner(state, effect.target);
-            try {
-                const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
-                store.reduceEffect(state, energyEffect);
-            }
-            catch (_a) {
-                return state;
-            }
             if (sourceCard === null || sourceCard === void 0 ? void 0 : sourceCard.tags.includes(card_types_1.CardTag.POKEMON_V || card_types_1.CardTag.POKEMON_VMAX || card_types_1.CardTag.POKEMON_VSTAR)) {
                 // Check if damage target is owned by this card's owner 
                 const targetPlayer = game_1.StateUtils.findOwner(state, effect.target);

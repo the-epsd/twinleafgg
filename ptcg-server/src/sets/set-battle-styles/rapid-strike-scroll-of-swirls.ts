@@ -5,14 +5,14 @@ import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { CheckPokemonAttacksEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { ToolEffect } from '../../game/store/effects/play-card-effects';
+
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
 export class RapidStrikeScrollOfSwirls extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.TOOL;
-  
+
   public tags = [CardTag.RAPID_STRIKE];
 
   public regulationMark = 'E';
@@ -40,37 +40,21 @@ export class RapidStrikeScrollOfSwirls extends TrainerCard {
 
     if (effect instanceof CheckPokemonAttacksEffect && effect.player.active.getPokemonCard()?.tools.includes(this) &&
       !effect.attacks.includes(this.attacks[0])) {
-      const player = effect.player;
-
-      try {
-        const toolEffect = new ToolEffect(player, this);
-        store.reduceEffect(state, toolEffect);
-      } catch {
-        return state;
-      }
-
       effect.attacks.push(this.attacks[0]);
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      
-      const player = effect.player;      
+
+      const player = effect.player;
       if (!player.active.cards.some(c => c instanceof PokemonCard && c.tags.includes(CardTag.RAPID_STRIKE))) {
         return state;
       }
-      
-      try {
-        const toolEffect = new ToolEffect(player, this);
-        store.reduceEffect(state, toolEffect);
-      } catch {
-        return state;
-      }
-      
+
       const opponent = effect.opponent;
       const benched = opponent.bench.filter(b => b.cards.length > 0);
 
       effect.damage = 30;
-      
+
       benched.forEach(target => {
         const damageEffect = new PutDamageEffect(effect, 30);
         damageEffect.target = target;

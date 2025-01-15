@@ -7,7 +7,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { CardTag } from '../../game/store/card/card-types';
 import { StateUtils } from '../../game';
-import { ApplyWeaknessEffect, AfterDamageEffect } from '../../game/store/effects/attack-effects';
+import { ApplyWeaknessEffect, AfterDamageEffect, DealDamageEffect } from '../../game/store/effects/attack-effects';
 
 export class Koraidon extends PokemonCard {
 
@@ -35,7 +35,7 @@ export class Koraidon extends PokemonCard {
       name: 'Shred',
       cost: [CardType.FIRE, CardType.FIGHTING, CardType.COLORLESS],
       damage: 130,
-      shred: true,
+      shredAttack: true,
       text: 'This attack\'s damage isn\'t affected by any effects on your opponent\'s Active Pokémon.'
     }
   ];
@@ -76,7 +76,10 @@ export class Koraidon extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      const applyWeakness = new ApplyWeaknessEffect(effect, 130);
+      const dealDamage = new DealDamageEffect(effect, 130);
+      store.reduceEffect(state, dealDamage);
+
+      const applyWeakness = new ApplyWeaknessEffect(effect, dealDamage.damage);
       store.reduceEffect(state, applyWeakness);
       const damage = applyWeakness.damage;
 

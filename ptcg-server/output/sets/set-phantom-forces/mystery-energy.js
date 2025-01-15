@@ -29,14 +29,6 @@ class MysteryEnergy extends energy_card_1.EnergyCard {
         if (effect instanceof play_card_effects_1.AttachEnergyEffect && effect.energyCard === this) {
             const checkPokemonType = new check_effects_1.CheckPokemonTypeEffect(effect.target);
             store.reduceEffect(state, checkPokemonType);
-            const player = effect.player;
-            try {
-                const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
-                store.reduceEffect(state, energyEffect);
-            }
-            catch (_a) {
-                return state;
-            }
             if (!checkPokemonType.cardTypes.includes(card_types_1.CardType.PSYCHIC)) {
                 throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
             }
@@ -46,14 +38,6 @@ class MysteryEnergy extends energy_card_1.EnergyCard {
         if (effect instanceof check_effects_1.CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
             const checkPokemonType = new check_effects_1.CheckPokemonTypeEffect(effect.source);
             store.reduceEffect(state, checkPokemonType);
-            const player = effect.player;
-            try {
-                const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
-                store.reduceEffect(state, energyEffect);
-            }
-            catch (_b) {
-                return state;
-            }
             if (checkPokemonType.cardTypes.includes(card_types_1.CardType.PSYCHIC)) {
                 effect.energyMap.push({ card: this, provides: [card_types_1.CardType.PSYCHIC] });
             }
@@ -61,13 +45,6 @@ class MysteryEnergy extends energy_card_1.EnergyCard {
         }
         if (effect instanceof check_effects_1.CheckRetreatCostEffect && effect.player.active.cards.includes(this)) {
             const player = effect.player;
-            try {
-                const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
-                store.reduceEffect(state, energyEffect);
-            }
-            catch (_c) {
-                return state;
-            }
             if (player.active.cards.includes(this)) {
                 for (let i = 0; i < 2; i++) {
                     const index = effect.cost.indexOf(card_types_1.CardType.COLORLESS);

@@ -5,7 +5,7 @@ import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { CheckHpEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
-import { EnergyEffect } from '../../game/store/effects/play-card-effects';
+
 
 export class Okidogi extends PokemonCard {
 
@@ -81,16 +81,9 @@ export class Okidogi extends PokemonCard {
           darkProvided = true;
         }
 
-        try {
-          const energyEffect = new EnergyEffect(player, em.card as EnergyCard);
-          store.reduceEffect(state, energyEffect);
-
-          if ((em.card instanceof EnergyCard && em.card.blendedEnergies.includes(CardType.DARK)) ||
-            (em.provides.includes(CardType.DARK) || em.provides.includes(CardType.ANY))) {
-            darkProvided = true;
-          }
-        } catch {
-          // specials blocked
+        if ((em.card instanceof EnergyCard && em.card.blendedEnergies.includes(CardType.DARK)) ||
+          (em.provides.includes(CardType.DARK) || em.provides.includes(CardType.ANY))) {
+          darkProvided = true;
         }
       });
 
@@ -125,17 +118,9 @@ export class Okidogi extends PokemonCard {
         if (em.provides.includes(CardType.DARK)) {
           darkProvided = true;
         }
-
-        try {
-          const energyEffect = new EnergyEffect(player, em.card as EnergyCard);
-          store.reduceEffect(state, energyEffect);
-
           if ((em.card instanceof EnergyCard && em.card.blendedEnergies.includes(CardType.DARK)) ||
             (em.provides.includes(CardType.DARK) || em.provides.includes(CardType.ANY))) {
             darkProvided = true;
-          }
-        } catch {
-          // specials blocked
         }
       });
 

@@ -5,7 +5,7 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { StateUtils } from '../../game/store/state-utils';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
-import { ToolEffect } from '../../game/store/effects/play-card-effects';
+
 
 export class MaximumBelt extends TrainerCard {
 
@@ -37,12 +37,7 @@ export class MaximumBelt extends TrainerCard {
         return state;
       }
 
-      try {
-        const toolEffect = new ToolEffect(player, this);
-        store.reduceEffect(state, toolEffect);
-      } catch {
-        return state;
-      }
+
 
       const targetCard = effect.target.getPokemonCard();
       if (targetCard && targetCard.tags.includes(CardTag.POKEMON_ex) && effect.damage > 0) {

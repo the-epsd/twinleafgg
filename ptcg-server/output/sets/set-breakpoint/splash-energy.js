@@ -59,13 +59,6 @@ class SplashEnergy extends energy_card_1.EnergyCard {
                     if (!cardList.cards.includes(this)) {
                         return;
                     }
-                    try {
-                        const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
-                        store.reduceEffect(state, energyEffect);
-                    }
-                    catch (_b) {
-                        return state;
-                    }
                     const pokemon = cardList;
                     if (((_a = pokemon.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.cardType) !== card_types_1.CardType.WATER) {
                         cardList.moveCardTo(this, player.discard);
@@ -75,14 +68,6 @@ class SplashEnergy extends energy_card_1.EnergyCard {
             return state;
         }
         if (effect instanceof check_effects_1.CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
-            const player = effect.player;
-            try {
-                const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
-                store.reduceEffect(state, energyEffect);
-            }
-            catch (_c) {
-                return state;
-            }
             effect.energyMap.push({ card: this, provides: [card_types_1.CardType.WATER] });
             return state;
         }
@@ -90,13 +75,6 @@ class SplashEnergy extends energy_card_1.EnergyCard {
             const player = effect.player;
             // Do not activate between turns, or when it's not opponents turn.
             if (state.phase !== state_1.GamePhase.ATTACK) {
-                return state;
-            }
-            try {
-                const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
-                store.reduceEffect(state, energyEffect);
-            }
-            catch (_d) {
                 return state;
             }
             const target = effect.target;
@@ -109,13 +87,6 @@ class SplashEnergy extends energy_card_1.EnergyCard {
             state.players.forEach(player => {
                 if (!player.marker.hasMarker(this.SPLASH_ENERGY_MARKER)) {
                     return;
-                }
-                try {
-                    const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
-                    store.reduceEffect(state, energyEffect);
-                }
-                catch (_a) {
-                    return state;
                 }
                 const rescued = player.marker.markers
                     .filter(m => m.name === this.SPLASH_ENERGY_MARKER)

@@ -26,6 +26,7 @@ class Bellibolt extends pokemon_card_1.PokemonCard {
                 name: 'Thunderous Edge',
                 cost: [card_types_1.CardType.LIGHTNING, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
                 damage: 100,
+                shredAttack: true,
                 text: 'This attack\'s damage isn\'t affected by any effects on your opponent\'s Active Pokémon.'
             }];
         this.set = 'OBF';
@@ -39,7 +40,9 @@ class Bellibolt extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const opponent = state_utils_1.StateUtils.getOpponent(state, player);
-            const applyWeakness = new attack_effects_1.ApplyWeaknessEffect(effect, 100);
+            const dealDamage = new attack_effects_1.DealDamageEffect(effect, 100);
+            store.reduceEffect(state, dealDamage);
+            const applyWeakness = new attack_effects_1.ApplyWeaknessEffect(effect, dealDamage.damage);
             store.reduceEffect(state, applyWeakness);
             const damage = applyWeakness.damage;
             effect.damage = 0;

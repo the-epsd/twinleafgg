@@ -5,7 +5,6 @@ const card_types_1 = require("../../game/store/card/card-types");
 const trainer_card_1 = require("../../game/store/card/trainer-card");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const check_effects_1 = require("../../game/store/effects/check-effects");
-const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 const state_utils_1 = require("../../game/store/state-utils");
 class FightingFuryBelt extends trainer_card_1.TrainerCard {
     constructor() {
@@ -20,29 +19,13 @@ class FightingFuryBelt extends trainer_card_1.TrainerCard {
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof attack_effects_1.PutDamageEffect && effect.source.cards.includes(this)) {
-            const player = effect.player;
             const opponent = state_utils_1.StateUtils.getOpponent(state, effect.player);
-            try {
-                const toolEffect = new play_card_effects_1.ToolEffect(player, this);
-                store.reduceEffect(state, toolEffect);
-            }
-            catch (_a) {
-                return state;
-            }
             if (effect.damage > 0 && effect.target === opponent.active) {
                 effect.damage += 10;
             }
         }
         if (effect instanceof check_effects_1.CheckHpEffect && effect.target.cards.includes(this)) {
-            const player = effect.player;
             const card = effect.target.getPokemonCard();
-            try {
-                const toolEffect = new play_card_effects_1.ToolEffect(player, this);
-                store.reduceEffect(state, toolEffect);
-            }
-            catch (_b) {
-                return state;
-            }
             if (card === undefined) {
                 return state;
             }

@@ -7,7 +7,6 @@ const trainer_card_1 = require("../../game/store/card/trainer-card");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const check_effects_1 = require("../../game/store/effects/check-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
-const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class RapidStrikeScrollOfSwirls extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -31,26 +30,11 @@ class RapidStrikeScrollOfSwirls extends trainer_card_1.TrainerCard {
         var _a;
         if (effect instanceof check_effects_1.CheckPokemonAttacksEffect && ((_a = effect.player.active.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.tools.includes(this)) &&
             !effect.attacks.includes(this.attacks[0])) {
-            const player = effect.player;
-            try {
-                const toolEffect = new play_card_effects_1.ToolEffect(player, this);
-                store.reduceEffect(state, toolEffect);
-            }
-            catch (_b) {
-                return state;
-            }
             effect.attacks.push(this.attacks[0]);
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             if (!player.active.cards.some(c => c instanceof game_1.PokemonCard && c.tags.includes(card_types_1.CardTag.RAPID_STRIKE))) {
-                return state;
-            }
-            try {
-                const toolEffect = new play_card_effects_1.ToolEffect(player, this);
-                store.reduceEffect(state, toolEffect);
-            }
-            catch (_c) {
                 return state;
             }
             const opponent = effect.opponent;

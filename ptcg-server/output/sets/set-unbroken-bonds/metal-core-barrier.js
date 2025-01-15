@@ -7,7 +7,6 @@ const trainer_card_1 = require("../../game/store/card/trainer-card");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const check_effects_1 = require("../../game/store/effects/check-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
-const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 const state_utils_1 = require("../../game/store/state-utils");
 const state_1 = require("../../game/store/state/state");
 class MetalCoreBarrier extends trainer_card_1.TrainerCard {
@@ -30,13 +29,6 @@ class MetalCoreBarrier extends trainer_card_1.TrainerCard {
             }
             player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card, index) => {
                 if (cardList.cards.includes(this)) {
-                    try {
-                        const toolEffect = new play_card_effects_1.ToolEffect(player, this);
-                        store.reduceEffect(state, toolEffect);
-                    }
-                    catch (_a) {
-                        return state;
-                    }
                     cardList.moveCardTo(this, player.discard);
                     cardList.tool = undefined;
                 }
@@ -58,13 +50,6 @@ class MetalCoreBarrier extends trainer_card_1.TrainerCard {
                 return state;
             }
             const player = state_utils_1.StateUtils.findOwner(state, effect.target);
-            try {
-                const toolEffect = new play_card_effects_1.ToolEffect(player, this);
-                store.reduceEffect(state, toolEffect);
-            }
-            catch (_a) {
-                return state;
-            }
             // Check if damage target is owned by this card's owner 
             const targetPlayer = state_utils_1.StateUtils.findOwner(state, effect.target);
             if (targetPlayer === player) {

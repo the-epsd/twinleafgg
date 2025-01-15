@@ -5,11 +5,11 @@ import { State, GamePhase } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { StateUtils } from '../../game';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
-import { EnergyEffect } from '../../game/store/effects/play-card-effects';
+
 
 export class VGuardEnergy extends EnergyCard {
 
-  public provides: CardType[] = [ CardType.COLORLESS ];
+  public provides: CardType[] = [CardType.COLORLESS];
 
   public energyType = EnergyType.SPECIAL;
 
@@ -34,7 +34,7 @@ export class VGuardEnergy extends EnergyCard {
     // Reduce damage by 30
     if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {
       const sourceCard = effect.source.getPokemonCard();
-  
+
       // It's not an attack
       if (state.phase !== GamePhase.ATTACK) {
         return state;
@@ -42,27 +42,22 @@ export class VGuardEnergy extends EnergyCard {
 
       if (effect.damageReduced) {
         // Damage already reduced, don't reduce again
-        return state; 
-      }
-  
-      const player = StateUtils.findOwner(state, effect.target);
-
-      try {
-        const energyEffect = new EnergyEffect(player, this);
-        store.reduceEffect(state, energyEffect);
-      } catch {
         return state;
       }
 
+      const player = StateUtils.findOwner(state, effect.target);
+
+
+
       if (sourceCard?.tags.includes(CardTag.POKEMON_V || CardTag.POKEMON_VMAX || CardTag.POKEMON_VSTAR)) {
-  
+
         // Check if damage target is owned by this card's owner 
         const targetPlayer = StateUtils.findOwner(state, effect.target);
         if (targetPlayer === player) {
           effect.damage = Math.max(0, effect.damage - 30);
           effect.damageReduced = true;
         }
-  
+
         return state;
       }
       return state;
@@ -70,5 +65,4 @@ export class VGuardEnergy extends EnergyCard {
     return state;
   }
 }
-  
-    
+

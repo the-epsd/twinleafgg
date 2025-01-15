@@ -4,7 +4,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State, GamePhase } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
-import { AfterDamageEffect, ApplyWeaknessEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { AfterDamageEffect, ApplyWeaknessEffect, DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { StateUtils } from '../../game/store/state-utils';
 
@@ -20,7 +20,7 @@ export class Bellibolt extends PokemonCard {
 
   public weakness = [{ type: CardType.FIGHTING }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Insulator',
@@ -30,8 +30,9 @@ export class Bellibolt extends PokemonCard {
 
   public attacks = [{
     name: 'Thunderous Edge',
-    cost: [ CardType.LIGHTNING, CardType.COLORLESS, CardType.COLORLESS ],
+    cost: [CardType.LIGHTNING, CardType.COLORLESS, CardType.COLORLESS],
     damage: 100,
+    shredAttack: true,
     text: 'This attack\'s damage isn\'t affected by any effects on your opponent\'s Active Pokémon.'
   }];
 
@@ -52,13 +53,16 @@ export class Bellibolt extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-          
-      const applyWeakness = new ApplyWeaknessEffect(effect, 100);
+
+      const dealDamage = new DealDamageEffect(effect, 100);
+      store.reduceEffect(state, dealDamage);
+
+      const applyWeakness = new ApplyWeaknessEffect(effect, dealDamage.damage);
       store.reduceEffect(state, applyWeakness);
       const damage = applyWeakness.damage;
-          
+
       effect.damage = 0;
-          
+
       if (damage > 0) {
         opponent.active.damage += damage;
         const afterDamage = new AfterDamageEffect(effect, damage);

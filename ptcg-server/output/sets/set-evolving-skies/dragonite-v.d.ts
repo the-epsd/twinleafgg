@@ -10,12 +10,19 @@ export declare class DragoniteV extends PokemonCard {
     hp: number;
     weakness: never[];
     retreat: CardType[];
-    attacks: {
+    attacks: ({
+        name: string;
+        cost: CardType[];
+        damage: number;
+        shredAttack: boolean;
+        text: string;
+    } | {
         name: string;
         cost: CardType[];
         damage: number;
         text: string;
-    }[];
+        shredAttack?: undefined;
+    })[];
     set: string;
     cardImage: string;
     setNumber: string;

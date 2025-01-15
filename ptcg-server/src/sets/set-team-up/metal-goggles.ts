@@ -4,7 +4,7 @@ import { TrainerCard } from '../../game/store/card/trainer-card';
 import { PutCountersEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { ToolEffect } from '../../game/store/effects/play-card-effects';
+
 import { StateUtils } from '../../game/store/state-utils';
 import { GamePhase, State } from '../../game/store/state/state';
 
@@ -33,20 +33,15 @@ export class MetalGoggles extends TrainerCard {
       if (state.phase !== GamePhase.ATTACK) {
         return state;
       }
-    
+
       const player = StateUtils.findOwner(state, effect.target);
 
-      try {
-        const toolEffect = new ToolEffect(player, this);
-        store.reduceEffect(state, toolEffect);
-      } catch {
-        return state;
-      }
+
 
       if (sourceCard) {
         const checkPokemonTypeEffect = new CheckPokemonTypeEffect(effect.target);
         store.reduceEffect(state, checkPokemonTypeEffect);
-  
+
         if (checkPokemonTypeEffect.cardTypes.includes(CardType.METAL)) {
           // Check if damage target is owned by this card's owner 
           const targetPlayer = StateUtils.findOwner(state, effect.target);
@@ -54,36 +49,31 @@ export class MetalGoggles extends TrainerCard {
             effect.damage = Math.max(0, effect.damage - 30);
             effect.damageReduced = true;
           }
-          
-          return state;   
+
+          return state;
         }
       }
     }
-  
+
     if (effect instanceof PutCountersEffect && effect.target.cards.includes(this)) {
       const sourceCard = effect.target.getPokemonCard();
 
       const player = StateUtils.findOwner(state, effect.target);
 
-      try {
-        const toolEffect = new ToolEffect(player, this);
-        store.reduceEffect(state, toolEffect);
-      } catch {
-        return state;
-      }
+
 
       if (sourceCard) {
         const checkPokemonTypeEffect = new CheckPokemonTypeEffect(effect.target);
         store.reduceEffect(state, checkPokemonTypeEffect);
-  
+
         if (checkPokemonTypeEffect.cardTypes.includes(CardType.METAL)) {
           // Check if damage target is owned by this card's owner 
           const targetPlayer = StateUtils.findOwner(state, effect.target);
           if (targetPlayer === player) {
             effect.preventDefault = true;
           }
-          
-          return state;   
+
+          return state;
         }
       }
     }

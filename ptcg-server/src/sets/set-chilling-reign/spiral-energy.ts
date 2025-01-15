@@ -5,7 +5,7 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { AddSpecialConditionsPowerEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { PlayerType } from '../../game';
-import { AttachEnergyEffect, EnergyEffect } from '../../game/store/effects/play-card-effects';
+import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 
 export class SpiralEnergy extends EnergyCard {
@@ -36,15 +36,7 @@ export class SpiralEnergy extends EnergyCard {
 
     // Provide energy when attached to Single Strike Pokemon
     if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
-      const player = effect.player;
       const pokemon = effect.source;
-
-      try {
-        const energyEffect = new EnergyEffect(player, this);
-        store.reduceEffect(state, energyEffect);
-      } catch {
-        return state;
-      }
 
       if (pokemon.getPokemonCard()?.tags.includes(CardTag.RAPID_STRIKE)) {
         effect.energyMap.push({ card: this, provides: [CardType.ANY] });
@@ -59,14 +51,6 @@ export class SpiralEnergy extends EnergyCard {
           if (!cardList.cards.includes(this)) {
             return;
           }
-
-          try {
-            const energyEffect = new EnergyEffect(player, this);
-            store.reduceEffect(state, energyEffect);
-          } catch {
-            return state;
-          }
-
           const pokemon = cardList;
           if (!pokemon.getPokemonCard()?.tags.includes(CardTag.RAPID_STRIKE)) {
             cardList.moveCardTo(this, player.discard);
@@ -82,14 +66,6 @@ export class SpiralEnergy extends EnergyCard {
           if (!cardList.cards.includes(this)) {
             return;
           }
-
-          try {
-            const energyEffect = new EnergyEffect(player, this);
-            store.reduceEffect(state, energyEffect);
-          } catch {
-            return state;
-          }
-
           if (cardList.specialConditions.includes(SpecialCondition.PARALYZED)) {
             cardList.removeSpecialCondition(SpecialCondition.PARALYZED);
           }

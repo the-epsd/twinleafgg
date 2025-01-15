@@ -3,7 +3,7 @@ import { TrainerCard } from '../../game/store/card/trainer-card';
 import { CheckRetreatCostEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { RetreatEffect } from '../../game/store/effects/game-effects';
-import { ToolEffect } from '../../game/store/effects/play-card-effects';
+
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
@@ -25,15 +25,8 @@ export class EscapeBoard extends TrainerCard {
     'The Retreat Cost of the Pokémon this card is attached to is [C] less, and it can retreat even if it\'s Asleep or Paralyzed.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof CheckRetreatCostEffect && effect.player.active.tool === this) {
-      const player = effect.player;
 
-      try {
-        const toolEffect = new ToolEffect(player, this);
-        store.reduceEffect(state, toolEffect);
-      } catch {
-        return state;
-      }
+    if (effect instanceof CheckRetreatCostEffect && effect.player.active.tool === this) {
 
       if (effect.cost.length === 0) {
         effect.cost = [];

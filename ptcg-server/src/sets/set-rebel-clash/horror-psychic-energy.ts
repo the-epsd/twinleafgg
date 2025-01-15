@@ -4,7 +4,7 @@ import { EnergyCard } from '../../game/store/card/energy-card';
 import { AfterDamageEffect } from '../../game/store/effects/attack-effects';
 import { CheckPokemonTypeEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { EnergyEffect } from '../../game/store/effects/play-card-effects';
+
 import { GamePhase, State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
@@ -32,17 +32,7 @@ export class HorrorPsychicEnergy extends EnergyCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
-      const player = effect.player;
-
-      try {
-        const energyEffect = new EnergyEffect(player, this);
-        store.reduceEffect(state, energyEffect);
-      } catch {
-        return state;
-      }
-
       effect.energyMap.push({ card: this, provides: [CardType.PSYCHIC] });
-
       return state;
     }
 
@@ -50,12 +40,6 @@ export class HorrorPsychicEnergy extends EnergyCard {
       const player = effect.player;
       const targetPlayer = StateUtils.findOwner(state, effect.target);
 
-      try {
-        const energyEffect = new EnergyEffect(player, this);
-        store.reduceEffect(state, energyEffect);
-      } catch {
-        return state;
-      }
       const checkPokemonType = new CheckPokemonTypeEffect(targetPlayer.active);
       store.reduceEffect(state, checkPokemonType);
 

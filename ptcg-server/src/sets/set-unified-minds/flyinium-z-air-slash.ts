@@ -6,14 +6,14 @@ import { CheckPokemonAttacksEffect } from '../../game/store/effects/check-effect
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { ToolEffect } from '../../game/store/effects/play-card-effects';
+
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
 export class FlyiniumZAirSlash extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.TOOL;
-  
+
   public set: string = 'UNM';
 
   public cardImage: string = 'assets/cardback.png';
@@ -34,20 +34,11 @@ export class FlyiniumZAirSlash extends TrainerCard {
   public text: string = 'If the Pokémon this card is attached to has the Air Slash attack, it can use the GX attack on this card. (You still need the necessary Energy to use this attack.)';
 
   public FLYINIUM_Z_MARKER = 'FLYINIUM_Z_MARKER';
-  
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof CheckPokemonAttacksEffect && effect.player.active.getPokemonCard()?.tools.includes(this) &&
       !effect.attacks.includes(this.attacks[0])) {
-      const player = effect.player;
-
-      try {
-        const toolEffect = new ToolEffect(player, this);
-        store.reduceEffect(state, toolEffect);
-      } catch {
-        return state;
-      }
-      
       if (!effect.player.active.getPokemonCard()?.attacks.some(attack => attack.name === 'Air Slash')) {
         return state;
       }
@@ -61,19 +52,12 @@ export class FlyiniumZAirSlash extends TrainerCard {
       if (player.usedGX === true) {
         throw new GameError(GameMessage.LABEL_GX_USED);
       }
-      
-      try {
-        const toolEffect = new ToolEffect(player, this);
-        store.reduceEffect(state, toolEffect);
-      } catch {
-        return state;
-      }
-      
-      const cardList = StateUtils.findCardList(state, this) as PokemonCardList;          
+
+      const cardList = StateUtils.findCardList(state, this) as PokemonCardList;
       cardList.marker.addMarker(this.FLYINIUM_Z_MARKER, this);
-      
-      player.usedGX = true;      
-      
+
+      player.usedGX = true;
+
       return state;
     }
 
@@ -81,13 +65,13 @@ export class FlyiniumZAirSlash extends TrainerCard {
       effect.preventDefault = true;
       return state;
     }
-    
+
     if (effect instanceof EndTurnEffect) {
       const player = effect.player;
-      
+
       const cardList = StateUtils.findCardList(state, this) as PokemonCardList;
       const owner = StateUtils.findOwner(state, cardList);
-      
+
       if (owner !== player) {
         cardList.marker?.removeMarker(this.FLYINIUM_Z_MARKER, this);
       }

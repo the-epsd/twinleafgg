@@ -12,12 +12,19 @@ export declare class Tinkatonex extends PokemonCard {
         type: CardType;
     }[];
     retreat: CardType[];
-    attacks: {
+    attacks: ({
         name: string;
         cost: CardType[];
         damage: number;
         text: string;
-    }[];
+        shredAttack?: undefined;
+    } | {
+        name: string;
+        cost: CardType[];
+        damage: number;
+        shredAttack: boolean;
+        text: string;
+    })[];
     set: string;
     name: string;
     fullName: string;

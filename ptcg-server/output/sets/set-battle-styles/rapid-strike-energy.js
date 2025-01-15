@@ -25,15 +25,7 @@ class RapidStrikeEnergy extends energy_card_1.EnergyCard {
     reduceEffect(store, state, effect) {
         // Provide energy when attached to Rapid Strike Pokemon
         if (effect instanceof check_effects_1.CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
-            const player = effect.player;
             const pokemon = effect.source;
-            try {
-                const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
-                store.reduceEffect(state, energyEffect);
-            }
-            catch (_a) {
-                return state;
-            }
             const pokemonCard = pokemon.getPokemonCard();
             if (pokemonCard === null || pokemonCard === void 0 ? void 0 : pokemonCard.tags.includes(card_types_1.CardTag.RAPID_STRIKE)) {
                 const attackCosts = pokemonCard.attacks.map(attack => attack.cost);
@@ -62,13 +54,6 @@ class RapidStrikeEnergy extends energy_card_1.EnergyCard {
             state.players.forEach(player => {
                 player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
                     if (!cardList.cards.includes(this)) {
-                        return;
-                    }
-                    try {
-                        const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
-                        store.reduceEffect(state, energyEffect);
-                    }
-                    catch (_a) {
                         return;
                     }
                     const pokemon = cardList;

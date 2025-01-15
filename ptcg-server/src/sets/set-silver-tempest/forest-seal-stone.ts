@@ -5,7 +5,7 @@ import { CardTag, TrainerType } from '../../game/store/card/card-types';
 import { CheckPokemonPowersEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
-import { ToolEffect } from '../../game/store/effects/play-card-effects';
+
 
 export class ForestSealStone extends TrainerCard {
 
@@ -43,7 +43,6 @@ export class ForestSealStone extends TrainerCard {
 
     if (effect instanceof CheckPokemonPowersEffect && effect.target.cards.includes(this) &&
       !effect.powers.find(p => p.name === this.powers[0].name)) {
-      const player = effect.player;
       const hasValidCard = effect.target.cards.some(card =>
         card.tags.some(tag =>
           tag === CardTag.POKEMON_V ||
@@ -56,25 +55,11 @@ export class ForestSealStone extends TrainerCard {
         return state;
       }
 
-      try {
-        const toolEffect = new ToolEffect(player, this);
-        store.reduceEffect(state, toolEffect);
-      } catch {
-        return state;
-      }
-
       effect.powers.push(this.powers[0]);
     }
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
-
-      try {
-        const toolEffect = new ToolEffect(player, this);
-        store.reduceEffect(state, toolEffect);
-      } catch {
-        return state;
-      }
 
       if (player.usedVSTAR === true) {
         throw new GameError(GameMessage.LABEL_VSTAR_USED);
@@ -94,13 +79,9 @@ export class ForestSealStone extends TrainerCard {
         return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
           player.deck.applyOrder(order);
         });
-
-        return state;
       });
-
       return state;
     }
-
     return state;
   }
 }

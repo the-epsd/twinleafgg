@@ -16,10 +16,12 @@ export declare class Dudunsparceex extends PokemonCard {
         damage: number;
         damageCalculation: string;
         text: string;
+        shredAttack?: undefined;
     } | {
         name: string;
         cost: CardType.COLORLESS[];
         damage: number;
+        shredAttack: boolean;
         text: string;
         damageCalculation?: undefined;
     })[];

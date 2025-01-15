@@ -2,7 +2,7 @@ import { Stage, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { ToolEffect } from '../../game/store/effects/play-card-effects';
+
 import { StateUtils } from '../../game/store/state-utils';
 import { GamePhase, State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
@@ -45,12 +45,7 @@ export class RigidBand extends TrainerCard {
 
       const player = StateUtils.findOwner(state, effect.target);
 
-      try {
-        const toolEffect = new ToolEffect(player, this);
-        store.reduceEffect(state, toolEffect);
-      } catch {
-        return state;
-      }
+
 
       // Check if damage target is owned by this card's owner 
       const targetPlayer = StateUtils.findOwner(state, effect.target);

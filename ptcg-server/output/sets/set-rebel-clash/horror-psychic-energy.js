@@ -6,7 +6,6 @@ const card_types_1 = require("../../game/store/card/card-types");
 const energy_card_1 = require("../../game/store/card/energy-card");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const check_effects_1 = require("../../game/store/effects/check-effects");
-const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 const state_1 = require("../../game/store/state/state");
 class HorrorPsychicEnergy extends energy_card_1.EnergyCard {
     constructor() {
@@ -25,27 +24,12 @@ class HorrorPsychicEnergy extends energy_card_1.EnergyCard {
     reduceEffect(store, state, effect) {
         var _a;
         if (effect instanceof check_effects_1.CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
-            const player = effect.player;
-            try {
-                const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
-                store.reduceEffect(state, energyEffect);
-            }
-            catch (_b) {
-                return state;
-            }
             effect.energyMap.push({ card: this, provides: [card_types_1.CardType.PSYCHIC] });
             return state;
         }
         if (effect instanceof attack_effects_1.AfterDamageEffect && ((_a = effect.target.cards) === null || _a === void 0 ? void 0 : _a.includes(this))) {
             const player = effect.player;
             const targetPlayer = game_1.StateUtils.findOwner(state, effect.target);
-            try {
-                const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
-                store.reduceEffect(state, energyEffect);
-            }
-            catch (_c) {
-                return state;
-            }
             const checkPokemonType = new check_effects_1.CheckPokemonTypeEffect(targetPlayer.active);
             store.reduceEffect(state, checkPokemonType);
             if (checkPokemonType.cardTypes.includes(card_types_1.CardType.PSYCHIC)) {

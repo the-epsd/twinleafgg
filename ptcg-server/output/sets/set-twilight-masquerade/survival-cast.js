@@ -5,7 +5,6 @@ const trainer_card_1 = require("../../game/store/card/trainer-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const check_effects_1 = require("../../game/store/effects/check-effects");
-const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 // interface PokemonItem {
 //   playerNum: number;
@@ -31,13 +30,6 @@ class SurvivalCast extends trainer_card_1.TrainerCard {
             const checkHpEffect = new check_effects_1.CheckHpEffect(player, effect.target);
             store.reduceEffect(state, checkHpEffect);
             if (effect.target.damage === 0 && effect.damage >= checkHpEffect.hp) {
-                try {
-                    const toolEffect = new play_card_effects_1.ToolEffect(player, this);
-                    store.reduceEffect(state, toolEffect);
-                }
-                catch (_a) {
-                    return state;
-                }
                 effect.preventDefault = true;
                 effect.target.damage = checkHpEffect.hp - 10;
                 store.log(state, game_1.GameLog.LOG_PLAYER_PLAYS_TOOL, { card: this.name });
@@ -46,13 +38,6 @@ class SurvivalCast extends trainer_card_1.TrainerCard {
             if (this.canDiscard) {
                 player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card, index) => {
                     if (cardList.cards.includes(this)) {
-                        try {
-                            const toolEffect = new play_card_effects_1.ToolEffect(player, this);
-                            store.reduceEffect(state, toolEffect);
-                        }
-                        catch (_a) {
-                            return state;
-                        }
                         cardList.moveCardTo(this, player.discard);
                         cardList.tool = undefined;
                     }

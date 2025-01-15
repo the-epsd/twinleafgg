@@ -7,7 +7,6 @@ const play_card_action_1 = require("../../game/store/actions/play-card-action");
 const card_types_1 = require("../../game/store/card/card-types");
 const trainer_card_1 = require("../../game/store/card/trainer-card");
 const game_effects_1 = require("../../game/store/effects/game-effects");
-const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 const attach_energy_prompt_1 = require("../../game/store/prompts/attach-energy-prompt");
 const state_utils_1 = require("../../game/store/state-utils");
 class WishfulBaton extends trainer_card_1.TrainerCard {
@@ -28,13 +27,6 @@ class WishfulBaton extends trainer_card_1.TrainerCard {
             const cards = target.getPokemons();
             const removedCards = [];
             const pokemonIndices = effect.target.cards.map((card, index) => index);
-            try {
-                const toolEffect = new play_card_effects_1.ToolEffect(player, this);
-                store.reduceEffect(state, toolEffect);
-            }
-            catch (_a) {
-                return state;
-            }
             for (let i = pokemonIndices.length - 1; i >= 0; i--) {
                 const removedCard = target.cards.splice(pokemonIndices[i], 1)[0];
                 removedCards.push(removedCard);

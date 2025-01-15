@@ -3,7 +3,7 @@ import { EnergyCard } from '../../game/store/card/energy-card';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { AttachEnergyEffect, EnergyEffect } from '../../game/store/effects/play-card-effects';
+import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
 
 export class RichEnergy extends EnergyCard {
 
@@ -34,14 +34,6 @@ export class RichEnergy extends EnergyCard {
 
     if (effect instanceof AttachEnergyEffect && effect.energyCard === this) {
       const player = effect.player;
-
-      try {
-        const energyEffect = new EnergyEffect(player, this);
-        store.reduceEffect(state, energyEffect);
-      } catch {
-        return state;
-      }
-
       player.deck.moveTo(player.hand, 4);
     }
     return state;

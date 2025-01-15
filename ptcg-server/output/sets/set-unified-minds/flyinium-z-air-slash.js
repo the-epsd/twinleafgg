@@ -8,7 +8,6 @@ const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const check_effects_1 = require("../../game/store/effects/check-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
-const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class FlyiniumZAirSlash extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -31,14 +30,6 @@ class FlyiniumZAirSlash extends trainer_card_1.TrainerCard {
         var _a, _b, _c;
         if (effect instanceof check_effects_1.CheckPokemonAttacksEffect && ((_a = effect.player.active.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.tools.includes(this)) &&
             !effect.attacks.includes(this.attacks[0])) {
-            const player = effect.player;
-            try {
-                const toolEffect = new play_card_effects_1.ToolEffect(player, this);
-                store.reduceEffect(state, toolEffect);
-            }
-            catch (_d) {
-                return state;
-            }
             if (!((_b = effect.player.active.getPokemonCard()) === null || _b === void 0 ? void 0 : _b.attacks.some(attack => attack.name === 'Air Slash'))) {
                 return state;
             }
@@ -48,13 +39,6 @@ class FlyiniumZAirSlash extends trainer_card_1.TrainerCard {
             const player = effect.player;
             if (player.usedGX === true) {
                 throw new game_1.GameError(game_1.GameMessage.LABEL_GX_USED);
-            }
-            try {
-                const toolEffect = new play_card_effects_1.ToolEffect(player, this);
-                store.reduceEffect(state, toolEffect);
-            }
-            catch (_e) {
-                return state;
             }
             const cardList = game_1.StateUtils.findCardList(state, this);
             cardList.marker.addMarker(this.FLYINIUM_Z_MARKER, this);

@@ -4,7 +4,7 @@ import { EnergyCard } from '../../game/store/card/energy-card';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { EnergyEffect } from '../../game/store/effects/play-card-effects';
+
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
@@ -39,12 +39,7 @@ export class ReversalEnergy extends EnergyCard {
 
       const attachedTo = effect.source.getPokemonCard();
 
-      try {
-        const energyEffect = new EnergyEffect(player, this);
-        store.reduceEffect(state, energyEffect);
-      } catch {
-        return state;
-      }
+
 
       if (!!attachedTo && attachedTo instanceof PokemonCard && player.getPrizeLeft() > opponent.getPrizeLeft() &&
         attachedTo.stage !== Stage.BASIC && attachedTo.stage !== Stage.RESTORED &&

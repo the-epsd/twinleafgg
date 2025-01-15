@@ -4,7 +4,7 @@ import { TrainerCard } from '../../game/store/card/trainer-card';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { CheckHpEffect, CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { ToolEffect } from '../../game/store/effects/play-card-effects';
+
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
@@ -46,13 +46,6 @@ export class FocusSash extends TrainerCard {
 
       if (effect.target.damage === 0 && effect.damage >= checkHpEffect.hp) {
 
-        try {
-          const toolEffect = new ToolEffect(player, this);
-          store.reduceEffect(state, toolEffect);
-        } catch {
-          return state;
-        }
-
         effect.preventDefault = true;
         effect.target.damage = checkHpEffect.hp - 10;
         store.log(state, GameLog.LOG_PLAYER_PLAYS_TOOL, { card: this.name });
@@ -63,13 +56,6 @@ export class FocusSash extends TrainerCard {
 
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, index) => {
           if (cardList.cards.includes(this)) {
-            try {
-              const toolEffect = new ToolEffect(player, this);
-              store.reduceEffect(state, toolEffect);
-            } catch {
-              return state;
-            }
-
             cardList.moveCardTo(this, player.discard);
             cardList.tool = undefined;
           }

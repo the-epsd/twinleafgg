@@ -2,7 +2,7 @@ import { ChoosePokemonPrompt, GameMessage, PlayerType, SlotType } from '../../ga
 import { CardType, EnergyType } from '../../game/store/card/card-types';
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { Effect } from '../../game/store/effects/effect';
-import { AttachEnergyEffect, EnergyEffect } from '../../game/store/effects/play-card-effects';
+import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
@@ -35,12 +35,7 @@ export class WarpEnergy extends EnergyCard {
         return state;
       }
 
-      try {
-        const energyEffect = new EnergyEffect(player, this);
-        store.reduceEffect(state, energyEffect);
-      } catch {
-        return state;
-      }
+
 
       if (effect.player.active !== effect.target) {
         return state;

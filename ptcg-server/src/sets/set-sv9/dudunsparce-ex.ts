@@ -1,5 +1,5 @@
 import { PokemonCard, CardTag, Stage, CardType, State, StoreLike, StateUtils, PlayerType } from '../../game';
-import { AfterDamageEffect, ApplyWeaknessEffect } from '../../game/store/effects/attack-effects';
+import { AfterDamageEffect, ApplyWeaknessEffect, DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 
@@ -23,6 +23,7 @@ export class Dudunsparceex extends PokemonCard {
     name: 'Breaking Drill',
     cost: [C, C, C],
     damage: 150,
+    shredAttack: true,
     text: 'This attack\'s damage isn\'t affected by any effects on your opponent\'s Active Pokemon.'
   }];
 
@@ -53,7 +54,10 @@ export class Dudunsparceex extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      const applyWeakness = new ApplyWeaknessEffect(effect, 150);
+      const dealDamage = new DealDamageEffect(effect, 150);
+      store.reduceEffect(state, dealDamage);
+
+      const applyWeakness = new ApplyWeaknessEffect(effect, dealDamage.damage);
       store.reduceEffect(state, applyWeakness);
       const damage = applyWeakness.damage;
 

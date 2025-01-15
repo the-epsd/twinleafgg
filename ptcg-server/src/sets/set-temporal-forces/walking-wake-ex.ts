@@ -67,6 +67,8 @@ export class WalkingWakeex extends PokemonCard {
           return state;
         }
 
+        effect.attack.shredAttack = true;
+
         const opponent = StateUtils.getOpponent(state, player);
 
         const applyWeakness = new ApplyWeaknessEffect(effect, effect.damage);
@@ -88,8 +90,7 @@ export class WalkingWakeex extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       if (opponent.active.specialConditions.length > 0) {
-        const attackEffect = effect as AttackEffect;
-        attackEffect.damage += 120;
+        effect.damage += 120;
       }
       return state;
     }

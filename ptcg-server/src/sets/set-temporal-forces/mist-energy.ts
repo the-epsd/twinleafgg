@@ -4,7 +4,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { AbstractAttackEffect, ApplyWeaknessEffect, DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
-import { EnergyEffect } from '../../game/store/effects/play-card-effects';
+
 
 export class MistEnergy extends EnergyCard {
 
@@ -34,14 +34,6 @@ export class MistEnergy extends EnergyCard {
     // Prevent effects of attacks
     if (effect instanceof AbstractAttackEffect && effect.target.cards.includes(this)) {
       const sourceCard = effect.source.getPokemonCard();
-      const player = effect.player;
-
-      try {
-        const energyEffect = new EnergyEffect(player, this);
-        store.reduceEffect(state, energyEffect);
-      } catch {
-        return state;
-      }
 
       if (sourceCard) {
         // Allow Weakness & Resistance
