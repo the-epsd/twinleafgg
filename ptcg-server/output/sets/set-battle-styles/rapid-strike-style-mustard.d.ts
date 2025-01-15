@@ -1,8 +1,8 @@
+import { CardTag, TrainerType } from '../../game/store/card/card-types';
+import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
-import { TrainerCard } from '../../game/store/card/trainer-card';
-import { TrainerType, CardTag } from '../../game/store/card/card-types';
 export declare class RapidStrikeStyleMustard extends TrainerCard {
     regulationMark: string;
     tags: CardTag[];

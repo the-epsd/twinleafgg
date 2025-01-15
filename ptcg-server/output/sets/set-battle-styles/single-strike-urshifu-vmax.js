@@ -29,6 +29,7 @@ class SingleStrikeUrshifuVMAX extends pokemon_card_1.PokemonCard {
                 name: 'G-Max One Blow',
                 cost: [card_types_1.CardType.FIGHTING, card_types_1.CardType.FIGHTING, card_types_1.CardType.FIGHTING, card_types_1.CardType.COLORLESS],
                 damage: 270,
+                shredAttack: true,
                 text: 'Discard all Energy from this Pokémon. This attack\'s damage isn\'t affected by any effects on your opponent\'s Active Pokémon.'
             }
         ];
@@ -44,7 +45,9 @@ class SingleStrikeUrshifuVMAX extends pokemon_card_1.PokemonCard {
             const opponent = game_1.StateUtils.getOpponent(state, player);
             const checkProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(player);
             state = store.reduceEffect(state, checkProvidedEnergy);
-            const applyWeakness = new attack_effects_1.ApplyWeaknessEffect(effect, this.attacks[1].damage);
+            const dealDamage = new attack_effects_1.DealDamageEffect(effect, 270);
+            store.reduceEffect(state, dealDamage);
+            const applyWeakness = new attack_effects_1.ApplyWeaknessEffect(effect, dealDamage.damage);
             store.reduceEffect(state, applyWeakness);
             const damage = applyWeakness.damage;
             effect.damage = 0;

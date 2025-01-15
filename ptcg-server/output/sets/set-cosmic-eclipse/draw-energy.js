@@ -24,13 +24,6 @@ class DrawEnergy extends energy_card_1.EnergyCard {
             if (player.deck.cards.length === 0) {
                 return state;
             }
-            try {
-                const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
-                store.reduceEffect(state, energyEffect);
-            }
-            catch (_a) {
-                return state;
-            }
             player.deck.moveTo(player.hand, 1);
         }
         return state;

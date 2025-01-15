@@ -5,7 +5,7 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { AfterDamageEffect } from '../../game/store/effects/attack-effects';
 import { StateUtils } from '../../game/store/state-utils';
-import { ToolEffect } from '../../game/store/effects/play-card-effects';
+
 
 export class LuckyHelmet extends TrainerCard {
 
@@ -37,12 +37,7 @@ export class LuckyHelmet extends TrainerCard {
         return state;
       }
 
-      try {
-        const toolEffect = new ToolEffect(player, this);
-        store.reduceEffect(state, toolEffect);
-      } catch {
-        return state;
-      }
+
       opponent.deck.moveTo(opponent.hand, 2);
     }
     return state;

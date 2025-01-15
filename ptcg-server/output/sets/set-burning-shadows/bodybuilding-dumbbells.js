@@ -4,8 +4,6 @@ exports.BodybuildingDumbbells = void 0;
 const card_types_1 = require("../../game/store/card/card-types");
 const trainer_card_1 = require("../../game/store/card/trainer-card");
 const check_effects_1 = require("../../game/store/effects/check-effects");
-const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
-const state_utils_1 = require("../../game/store/state-utils");
 class BodybuildingDumbbells extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -23,16 +21,7 @@ class BodybuildingDumbbells extends trainer_card_1.TrainerCard {
             if ((sourceCard === null || sourceCard === void 0 ? void 0 : sourceCard.stage) !== card_types_1.Stage.STAGE_1) {
                 return state;
             }
-            const player = state_utils_1.StateUtils.findOwner(state, effect.target);
-            try {
-                const toolEffect = new play_card_effects_1.ToolEffect(player, this);
-                store.reduceEffect(state, toolEffect);
-            }
-            catch (_a) {
-                return state;
-            }
             effect.hp += 40;
-            return state;
         }
         return state;
     }

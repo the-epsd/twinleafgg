@@ -13,8 +13,16 @@ export declare class DialgaGX extends PokemonCard {
     retreat: CardType[];
     attacks: ({
         name: string;
+        cost: CardType.METAL[];
+        damage: number;
+        text: string;
+        shredAttack?: undefined;
+        gxAttack?: undefined;
+    } | {
+        name: string;
         cost: (CardType.METAL | CardType.COLORLESS)[];
         damage: number;
+        shredAttack: boolean;
         text: string;
         gxAttack?: undefined;
     } | {
@@ -23,6 +31,7 @@ export declare class DialgaGX extends PokemonCard {
         damage: number;
         gxAttack: boolean;
         text: string;
+        shredAttack?: undefined;
     })[];
     set: string;
     cardImage: string;

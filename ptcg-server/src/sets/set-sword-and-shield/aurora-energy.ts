@@ -3,20 +3,20 @@ import { CardType, EnergyType } from '../../game/store/card/card-types';
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttachEnergyEffect, EnergyEffect } from '../../game/store/effects/play-card-effects';
+import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
 export class AuroraEnergy extends EnergyCard {
 
-  public provides: CardType[] = [ CardType.COLORLESS ];
+  public provides: CardType[] = [CardType.COLORLESS];
 
   public energyType = EnergyType.SPECIAL;
 
   public set: string = 'SSH';
 
   public regulationMark = 'D';
-  
+
   public name = 'Aurora Energy';
 
   public fullName = 'Aurora Energy SSH';
@@ -30,58 +30,41 @@ export class AuroraEnergy extends EnergyCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
-      const player = effect.player;
-      try {
-        const energyEffect = new EnergyEffect(player, this);
-        store.reduceEffect(state, energyEffect);
-      } catch {
-        return state;
-      }
-
-      effect.energyMap.push({ card: this, provides: [ CardType.ANY ] });
+      effect.energyMap.push({ card: this, provides: [CardType.ANY] });
     }
-    
-    if (effect instanceof AttachEnergyEffect && effect.energyCard === this) {
-      const player = effect.player;
-      try {
-        const energyEffect = new EnergyEffect(player, this);
-        store.reduceEffect(state, energyEffect);
-      } catch {
-        return state;
-      }
 
+    if (effect instanceof AttachEnergyEffect && effect.energyCard === this) {
       const generator = playCard(() => generator.next(), store, state, this, effect);
       return generator.next().value;
     }
     return state;
   }
-
 }
 
 function* playCard(next: Function, store: StoreLike, state: State, self: AuroraEnergy, effect: AttachEnergyEffect): IterableIterator<State> {
-  
+
   const player = effect.player;
   let cards: Card[] = [];
-  
+
   cards = player.hand.cards.filter(c => c !== self);
   if (cards.length < 1) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
-  
+
   const handTemp = new CardList();
   handTemp.cards = player.hand.cards.filter(c => c !== self);
-  
+
   yield store.prompt(state, new ChooseCardsPrompt(
     player,
     GameMessage.CHOOSE_CARD_TO_DISCARD,
     handTemp,
-    { },
+    {},
     { min: 1, max: 1, allowCancel: false }
   ), selected => {
     cards = selected || [];
     next();
   });
-  
+
   // Operation canceled by the user
   if (cards.length === 0) {
     return state;
@@ -89,6 +72,6 @@ function* playCard(next: Function, store: StoreLike, state: State, self: AuroraE
 
   player.hand.moveCardsTo(cards, player.discard);
   player.supporter.moveCardTo(self, player.discard);
-  
+
   return state;
 }

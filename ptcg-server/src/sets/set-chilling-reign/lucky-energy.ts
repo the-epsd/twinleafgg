@@ -5,11 +5,11 @@ import { State, GamePhase } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { StateUtils } from '../../game';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
-import { EnergyEffect } from '../../game/store/effects/play-card-effects';
+
 
 export class LuckyEnergy extends EnergyCard {
 
-  public provides: CardType[] = [ CardType.COLORLESS ];
+  public provides: CardType[] = [CardType.COLORLESS];
 
   public energyType = EnergyType.SPECIAL;
 
@@ -33,7 +33,7 @@ export class LuckyEnergy extends EnergyCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {
-  
+
       // It's not an attack
       if (state.phase !== GamePhase.ATTACK) {
         return state;
@@ -41,19 +41,14 @@ export class LuckyEnergy extends EnergyCard {
 
       const player = StateUtils.findOwner(state, effect.target);
 
-      try {
-        const energyEffect = new EnergyEffect(player, this);
-        store.reduceEffect(state, energyEffect);
-      } catch {
-        return state;
-      }
+
 
       // Check if damage target is owned by this card's owner 
       const targetPlayer = StateUtils.findOwner(state, effect.target);
       if (targetPlayer === player) {
         player.deck.moveTo(player.hand, 1);
       }
-  
+
       return state;
     }
     return state;

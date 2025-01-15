@@ -25,6 +25,7 @@ export class Reshiram extends PokemonCard {
       name: 'Outrage',
       cost: [ CardType.COLORLESS, CardType.COLORLESS ],
       damage: 20,
+      damageCalculation: '+',
       text: 'Does 10 more damage for each damage counter on this Pokemon.'
     },
     {

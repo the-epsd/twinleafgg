@@ -27,28 +27,12 @@ class WonderEnergy extends energy_card_1.EnergyCard {
             }
         }
         if (effect instanceof check_effects_1.CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
-            const player = effect.player;
-            try {
-                const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
-                store.reduceEffect(state, energyEffect);
-            }
-            catch (_a) {
-                return state;
-            }
             effect.energyMap.push({ card: this, provides: [Y] });
             return state;
         }
         // Prevent effects of attacks
         if (effect instanceof attack_effects_1.AbstractAttackEffect && effect.target.cards.includes(this)) {
             const sourceCard = effect.source.getPokemonCard();
-            const player = effect.player;
-            try {
-                const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
-                store.reduceEffect(state, energyEffect);
-            }
-            catch (_b) {
-                return state;
-            }
             if (sourceCard) {
                 // Allow Weakness & Resistance
                 if (effect instanceof attack_effects_1.ApplyWeaknessEffect) {

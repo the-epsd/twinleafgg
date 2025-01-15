@@ -9,7 +9,7 @@ import { AttachEnergyPrompt } from '../../game/store/prompts/attach-energy-promp
 import { PlayerType, SlotType, CardTarget } from '../../game/store/actions/play-card-action';
 import { StateUtils } from '../../game/store/state-utils';
 import { PokemonCardList } from '../../game/store/state/pokemon-card-list';
-import { ToolEffect } from '../../game/store/effects/play-card-effects';
+
 
 export class ExpShare extends TrainerCard {
 
@@ -50,12 +50,7 @@ export class ExpShare extends TrainerCard {
         return state;
       }
 
-      try {
-        const toolEffect = new ToolEffect(player, this);
-        store.reduceEffect(state, toolEffect);
-      } catch {
-        return state;
-      }
+
 
       let expShareCount = 0;
       const blockedTo: CardTarget[] = [];
@@ -87,7 +82,7 @@ export class ExpShare extends TrainerCard {
         GameMessage.ATTACH_ENERGY_TO_BENCH,
         activeCopy,
         PlayerType.BOTTOM_PLAYER,
-        [ SlotType.BENCH ],
+        [SlotType.BENCH],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
         { allowCancel: true, min: 1, max: expShareCount, differentTargets: true, blockedTo }
       ), transfers => {

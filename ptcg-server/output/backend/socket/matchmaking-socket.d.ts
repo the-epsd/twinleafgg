@@ -7,10 +7,14 @@ export declare class MatchmakingSocket {
     private core;
     private client;
     private matchmakingService;
+    private boundJoinQueue;
+    private boundLeaveQueue;
     constructor(client: Client, socket: SocketWrapper, core: Core);
+    private bindListeners;
     onJoinQueue(from: Client, message: Message): void;
-    onLeaveQueue(): void;
+    onLeaveQueue(from: Client): void;
     private joinQueue;
     private leaveQueue;
+    destroy(): void;
     private buildMessageInfo;
 }

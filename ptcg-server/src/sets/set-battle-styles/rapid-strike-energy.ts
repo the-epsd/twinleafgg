@@ -5,7 +5,7 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { PlayerType } from '../../game';
-import { AttachEnergyEffect, EnergyEffect } from '../../game/store/effects/play-card-effects';
+import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
 
 export class RapidStrikeEnergy extends EnergyCard {
 
@@ -35,15 +35,7 @@ export class RapidStrikeEnergy extends EnergyCard {
 
     // Provide energy when attached to Rapid Strike Pokemon
     if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
-      const player = effect.player;
       const pokemon = effect.source;
-
-      try {
-        const energyEffect = new EnergyEffect(player, this);
-        store.reduceEffect(state, energyEffect);
-      } catch {
-        return state;
-      }
 
       const pokemonCard = pokemon.getPokemonCard();
       if (pokemonCard?.tags.includes(CardTag.RAPID_STRIKE)) {
@@ -75,14 +67,6 @@ export class RapidStrikeEnergy extends EnergyCard {
           if (!cardList.cards.includes(this)) {
             return;
           }
-
-          try {
-            const energyEffect = new EnergyEffect(player, this);
-            store.reduceEffect(state, energyEffect);
-          } catch {
-            return;
-          }
-
           const pokemon = cardList;
           const pokemonCard = pokemon.getPokemonCard();
           if (pokemonCard && !pokemonCard.tags.includes(CardTag.RAPID_STRIKE)) {

@@ -6,7 +6,6 @@ const energy_card_1 = require("../../game/store/card/energy-card");
 const state_1 = require("../../game/store/state/state");
 const game_1 = require("../../game");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
-const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class LuckyEnergy extends energy_card_1.EnergyCard {
     constructor() {
         super(...arguments);
@@ -29,13 +28,6 @@ class LuckyEnergy extends energy_card_1.EnergyCard {
                 return state;
             }
             const player = game_1.StateUtils.findOwner(state, effect.target);
-            try {
-                const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
-                store.reduceEffect(state, energyEffect);
-            }
-            catch (_a) {
-                return state;
-            }
             // Check if damage target is owned by this card's owner 
             const targetPlayer = game_1.StateUtils.findOwner(state, effect.target);
             if (targetPlayer === player) {

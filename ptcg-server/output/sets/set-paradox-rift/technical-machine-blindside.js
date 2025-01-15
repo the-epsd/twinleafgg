@@ -8,7 +8,6 @@ const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const check_effects_1 = require("../../game/store/effects/check-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
-const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class TechnicalMachineBlindside extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -44,27 +43,12 @@ class TechnicalMachineBlindside extends trainer_card_1.TrainerCard {
         }
         if (effect instanceof check_effects_1.CheckPokemonAttacksEffect && ((_a = effect.player.active.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.tools.includes(this)) &&
             !effect.attacks.includes(this.attacks[0])) {
-            const player = effect.player;
-            try {
-                const toolEffect = new play_card_effects_1.ToolEffect(player, this);
-                store.reduceEffect(state, toolEffect);
-            }
-            catch (_b) {
-                return state;
-            }
             effect.attacks.push(this.attacks[0]);
         }
         if (effect instanceof game_phase_effects_1.EndTurnEffect) {
             const player = effect.player;
             player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card, index) => {
                 if (cardList.cards.includes(this)) {
-                    try {
-                        const toolEffect = new play_card_effects_1.ToolEffect(player, this);
-                        store.reduceEffect(state, toolEffect);
-                    }
-                    catch (_a) {
-                        return state;
-                    }
                     cardList.moveCardTo(this, player.discard);
                     cardList.tool = undefined;
                 }
@@ -74,13 +58,6 @@ class TechnicalMachineBlindside extends trainer_card_1.TrainerCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            try {
-                const toolEffect = new play_card_effects_1.ToolEffect(player, this);
-                store.reduceEffect(state, toolEffect);
-            }
-            catch (_c) {
-                return state;
-            }
             const blocked = [];
             let hasDamagedPokemon = false;
             opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList, card, target) => {

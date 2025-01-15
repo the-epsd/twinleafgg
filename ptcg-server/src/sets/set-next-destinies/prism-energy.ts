@@ -4,11 +4,11 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
-import { EnergyEffect } from '../../game/store/effects/play-card-effects';
+
 
 export class PrismEnergy extends EnergyCard {
 
-  public provides: CardType[] = [ CardType.COLORLESS ];
+  public provides: CardType[] = [CardType.COLORLESS];
 
   public energyType = EnergyType.SPECIAL;
 
@@ -30,17 +30,8 @@ export class PrismEnergy extends EnergyCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof CheckProvidedEnergyEffect
       && effect.source.cards.includes(this)
-      && effect.source.isBasic())  {
-      const player = effect.player;
-      
-      try {
-        const energyEffect = new EnergyEffect(player, this);
-        store.reduceEffect(state, energyEffect);
-      } catch {
-        return state;
-      }
-
-      effect.energyMap.push({ card: this, provides: [ CardType.ANY ] });
+      && effect.source.isBasic()) {
+      effect.energyMap.push({ card: this, provides: [CardType.ANY] });
     }
     return state;
   }

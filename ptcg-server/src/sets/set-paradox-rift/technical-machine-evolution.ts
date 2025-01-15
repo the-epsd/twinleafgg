@@ -6,7 +6,7 @@ import { CheckAttackCostEffect, CheckPokemonAttacksEffect } from '../../game/sto
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { ToolEffect } from '../../game/store/effects/play-card-effects';
+
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
@@ -139,13 +139,6 @@ export class TechnicalMachineEvolution extends TrainerCard {
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, index) => {
         if (cardList.cards.includes(this)) {
-          try {
-            const toolEffect = new ToolEffect(player, this);
-            store.reduceEffect(state, toolEffect);
-          } catch {
-            return state;
-          }
-
           cardList.moveCardTo(this, player.discard);
           cardList.tool = undefined;
         }
@@ -186,29 +179,11 @@ export class TechnicalMachineEvolution extends TrainerCard {
     }
     if (effect instanceof CheckPokemonAttacksEffect && effect.player.active.getPokemonCard()?.tools.includes(this) &&
       !effect.attacks.includes(this.attacks[0])) {
-      const player = effect.player;
-
-      try {
-        const toolEffect = new ToolEffect(player, this);
-        store.reduceEffect(state, toolEffect);
-      } catch {
-        return state;
-      }
-
       effect.attacks.push(this.attacks[0]);
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const generator = playCard(() => generator.next(), store, state, effect);
-      const player = effect.player;
-
-      try {
-        const toolEffect = new ToolEffect(player, this);
-        store.reduceEffect(state, toolEffect);
-      } catch {
-        return state;
-      }
-
       return generator.next().value;
     }
 

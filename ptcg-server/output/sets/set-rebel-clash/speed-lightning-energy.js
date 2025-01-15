@@ -21,25 +21,10 @@ class SpeedLightningEnergy extends energy_card_1.EnergyCard {
     reduceEffect(store, state, effect) {
         var _a;
         if (effect instanceof check_effects_1.CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
-            const player = effect.player;
-            try {
-                const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
-                store.reduceEffect(state, energyEffect);
-            }
-            catch (_b) {
-                return state;
-            }
             effect.energyMap.push({ card: this, provides: [card_types_1.CardType.LIGHTNING] });
         }
         if (effect instanceof play_card_effects_1.AttachEnergyEffect && effect.energyCard === this) {
             const player = effect.player;
-            try {
-                const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
-                store.reduceEffect(state, energyEffect);
-            }
-            catch (_c) {
-                return state;
-            }
             if (((_a = effect.target.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.cardType) === card_types_1.CardType.LIGHTNING) {
                 player.deck.moveTo(player.hand, 2);
             }

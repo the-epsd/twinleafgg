@@ -2,7 +2,7 @@ import { Card, ChooseCardsPrompt, GameMessage, ShuffleDeckPrompt } from '../../g
 import { CardType, EnergyType, Stage, SuperType } from '../../game/store/card/card-types';
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { Effect } from '../../game/store/effects/effect';
-import { AttachEnergyEffect, EnergyEffect } from '../../game/store/effects/play-card-effects';
+import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
@@ -32,17 +32,9 @@ export class CaptureEnergy extends EnergyCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttachEnergyEffect && effect.energyCard === this) {
       const player = effect.player;
-
       const slots = player.bench.filter(b => b.cards.length === 0).length;
 
       if (slots === 0) {
-        return state;
-      }
-
-      try {
-        const energyEffect = new EnergyEffect(player, this);
-        store.reduceEffect(state, energyEffect);
-      } catch {
         return state;
       }
 

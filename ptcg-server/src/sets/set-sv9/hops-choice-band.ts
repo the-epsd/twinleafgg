@@ -5,7 +5,7 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { StateUtils } from '../../game/store/state-utils';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
-import { ToolEffect } from '../../game/store/effects/play-card-effects';
+
 import { CheckAttackCostEffect } from '../../game/store/effects/check-effects';
 
 export class HopsChoiceBand extends TrainerCard {
@@ -52,12 +52,7 @@ export class HopsChoiceBand extends TrainerCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, effect.player);
 
-      try {
-        const toolEffect = new ToolEffect(player, this);
-        store.reduceEffect(state, toolEffect);
-      } catch {
-        return state;
-      }
+
 
       if (effect.target !== player.active && effect.target !== opponent.active) {
         return state;

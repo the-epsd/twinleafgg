@@ -3,7 +3,7 @@ import { TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { AfterDamageEffect, ApplyWeaknessEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { ToolEffect } from '../../game/store/effects/play-card-effects';
+
 
 export class WideLens extends TrainerCard {
   public trainerType: TrainerType = TrainerType.TOOL;
@@ -20,14 +20,7 @@ export class WideLens extends TrainerCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof PutDamageEffect && effect.player.active.cards.includes(this)) {
-      const player = effect.player;
       const opponent = StateUtils.getOpponent(state, effect.player);
-      try {
-        const toolEffect = new ToolEffect(player, this);
-        store.reduceEffect(state, toolEffect);
-      } catch {
-        return state;
-      }
 
       opponent.bench.forEach(card => {
         if (effect.damage > 0 && effect.target === card) {

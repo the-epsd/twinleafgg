@@ -5,7 +5,6 @@ const game_1 = require("../../game");
 const card_types_1 = require("../../game/store/card/card-types");
 const check_effects_1 = require("../../game/store/effects/check-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
-const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class ForestSealStone extends game_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -33,31 +32,16 @@ class ForestSealStone extends game_1.TrainerCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof check_effects_1.CheckPokemonPowersEffect && effect.target.cards.includes(this) &&
             !effect.powers.find(p => p.name === this.powers[0].name)) {
-            const player = effect.player;
             const hasValidCard = effect.target.cards.some(card => card.tags.some(tag => tag === card_types_1.CardTag.POKEMON_V ||
                 tag === card_types_1.CardTag.POKEMON_VSTAR ||
                 tag === card_types_1.CardTag.POKEMON_VMAX));
             if (!hasValidCard) {
                 return state;
             }
-            try {
-                const toolEffect = new play_card_effects_1.ToolEffect(player, this);
-                store.reduceEffect(state, toolEffect);
-            }
-            catch (_a) {
-                return state;
-            }
             effect.powers.push(this.powers[0]);
         }
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
-            try {
-                const toolEffect = new play_card_effects_1.ToolEffect(player, this);
-                store.reduceEffect(state, toolEffect);
-            }
-            catch (_b) {
-                return state;
-            }
             if (player.usedVSTAR === true) {
                 throw new game_1.GameError(game_1.GameMessage.LABEL_VSTAR_USED);
             }
@@ -67,7 +51,6 @@ class ForestSealStone extends game_1.TrainerCard {
                 return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
                     player.deck.applyOrder(order);
                 });
-                return state;
             });
             return state;
         }

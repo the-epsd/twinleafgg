@@ -4,7 +4,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State, GamePhase } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { StateUtils } from '../../game/store/state-utils';
-import { ToolEffect } from '../../game/store/effects/play-card-effects';
+
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { CheckHpEffect } from '../../game/store/effects/check-effects';
 
@@ -44,14 +44,6 @@ export class BoxOfDisaster extends TrainerCard {
       this.damageDealt = true;
 
       if (this.damageDealt === true) {
-
-        try {
-          const toolEffect = new ToolEffect(player, this);
-          store.reduceEffect(state, toolEffect);
-        } catch {
-          return state;
-        }
-
         const checkHpEffect = new CheckHpEffect(player, effect.target);
         store.reduceEffect(state, checkHpEffect);
 

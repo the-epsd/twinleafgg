@@ -5,6 +5,7 @@ const blaziken_ex_1 = require("./blaziken-ex");
 const brocks_recruitment_1 = require("./brocks-recruitment");
 const budew_1 = require("./budew");
 const combusken_1 = require("./combusken");
+const dudunsparce_ex_1 = require("./dudunsparce-ex");
 const exchange_ticket_1 = require("./exchange-ticket");
 const hops_choice_band_1 = require("./hops-choice-band");
 const hops_dubwool_1 = require("./hops-dubwool");
@@ -40,6 +41,7 @@ exports.setSV9 = [
     new budew_1.Budew(),
     new brocks_recruitment_1.BrocksRecruitment(),
     new exchange_ticket_1.ExchangeTicket(),
+    new dudunsparce_ex_1.Dudunsparceex(),
     new lillies_clefairy_ex_1.LilliesClefairyex(),
     new lillies_comfy_1.LilliesComfy(),
     new lillies_pearl_1.LilliesPearl(),

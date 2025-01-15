@@ -10,28 +10,67 @@ const resolve_prompt_action_1 = require("../../game/store/actions/resolve-prompt
 const state_sanitizer_1 = require("./state-sanitizer");
 class GameSocket {
     constructor(client, socket, core, cache) {
+        this.boundListeners = {
+            joinGame: this.joinGame.bind(this),
+            leaveGame: this.leaveGame.bind(this),
+            getGameStatus: this.getGameStatus.bind(this),
+            ability: this.ability.bind(this),
+            trainerability: this.trainerability.bind(this),
+            attack: this.attack.bind(this),
+            stadium: this.stadium.bind(this),
+            playGame: this.playGame.bind(this),
+            playCard: this.playCard.bind(this),
+            resolvePrompt: this.resolvePrompt.bind(this),
+            retreat: this.retreat.bind(this),
+            reorderBench: this.reorderBench.bind(this),
+            reorderHand: this.reorderHand.bind(this),
+            passTurn: this.passTurn.bind(this),
+            appendLog: this.appendLog.bind(this),
+            changeAvatar: this.changeAvatar.bind(this)
+        };
         this.cache = cache;
         this.client = client;
         this.socket = socket;
         this.core = core;
         this.stateSanitizer = new state_sanitizer_1.StateSanitizer(client, cache);
         // game listeners
-        this.socket.addListener('game:join', this.joinGame.bind(this));
-        this.socket.addListener('game:leave', this.leaveGame.bind(this));
-        this.socket.addListener('game:getStatus', this.getGameStatus.bind(this));
-        this.socket.addListener('game:action:ability', this.ability.bind(this));
-        this.socket.addListener('game:action:ability', this.trainerability.bind(this));
-        this.socket.addListener('game:action:attack', this.attack.bind(this));
-        this.socket.addListener('game:action:stadium', this.stadium.bind(this));
-        this.socket.addListener('game:action:play', this.playGame.bind(this));
-        this.socket.addListener('game:action:playCard', this.playCard.bind(this));
-        this.socket.addListener('game:action:resolvePrompt', this.resolvePrompt.bind(this));
-        this.socket.addListener('game:action:retreat', this.retreat.bind(this));
-        this.socket.addListener('game:action:reorderBench', this.reorderBench.bind(this));
-        this.socket.addListener('game:action:reorderHand', this.reorderHand.bind(this));
-        this.socket.addListener('game:action:passTurn', this.passTurn.bind(this));
-        this.socket.addListener('game:action:appendLog', this.appendLog.bind(this));
-        this.socket.addListener('game:action:changeAvatar', this.changeAvatar.bind(this));
+        this.socket.addListener('game:join', this.boundListeners.joinGame);
+        this.socket.addListener('game:leave', this.boundListeners.leaveGame);
+        this.socket.addListener('game:getStatus', this.boundListeners.getGameStatus);
+        this.socket.addListener('game:action:ability', this.boundListeners.ability);
+        this.socket.addListener('game:action:ability', this.boundListeners.trainerability);
+        this.socket.addListener('game:action:attack', this.boundListeners.attack);
+        this.socket.addListener('game:action:stadium', this.boundListeners.stadium);
+        this.socket.addListener('game:action:play', this.boundListeners.playGame);
+        this.socket.addListener('game:action:playCard', this.boundListeners.playCard);
+        this.socket.addListener('game:action:resolvePrompt', this.boundListeners.resolvePrompt);
+        this.socket.addListener('game:action:retreat', this.boundListeners.retreat);
+        this.socket.addListener('game:action:reorderBench', this.boundListeners.reorderBench);
+        this.socket.addListener('game:action:reorderHand', this.boundListeners.reorderHand);
+        this.socket.addListener('game:action:passTurn', this.boundListeners.passTurn);
+        this.socket.addListener('game:action:appendLog', this.boundListeners.appendLog);
+        this.socket.addListener('game:action:changeAvatar', this.boundListeners.changeAvatar);
+    }
+    destroy() {
+        this.socket.socket.removeListener('game:join', this.boundListeners.joinGame);
+        this.socket.socket.removeListener('game:leave', this.boundListeners.leaveGame);
+        this.socket.socket.removeListener('game:getStatus', this.boundListeners.getGameStatus);
+        this.socket.socket.removeListener('game:action:ability', this.boundListeners.ability);
+        this.socket.socket.removeListener('game:action:ability', this.boundListeners.trainerability);
+        this.socket.socket.removeListener('game:action:attack', this.boundListeners.attack);
+        this.socket.socket.removeListener('game:action:stadium', this.boundListeners.stadium);
+        this.socket.socket.removeListener('game:action:play', this.boundListeners.playGame);
+        this.socket.socket.removeListener('game:action:playCard', this.boundListeners.playCard);
+        this.socket.socket.removeListener('game:action:resolvePrompt', this.boundListeners.resolvePrompt);
+        this.socket.socket.removeListener('game:action:retreat', this.boundListeners.retreat);
+        this.socket.socket.removeListener('game:action:reorderBench', this.boundListeners.reorderBench);
+        this.socket.socket.removeListener('game:action:reorderHand', this.boundListeners.reorderHand);
+        this.socket.socket.removeListener('game:action:passTurn', this.boundListeners.passTurn);
+        this.socket.socket.removeListener('game:action:appendLog', this.boundListeners.appendLog);
+        this.socket.socket.removeListener('game:action:changeAvatar', this.boundListeners.changeAvatar);
+        if (this.cache) {
+            delete this.cache.lastLogIdCache[this.client.id];
+        }
     }
     onGameJoin(game, client) {
         this.socket.emit(`game[${game.id}]:join`, { clientId: client.id });
@@ -87,8 +126,14 @@ class GameSocket {
         try {
             game.dispatch(this.client, action);
         }
-        catch (error) {
-            response('error', error.message);
+        catch (err) {
+            if (err instanceof Error) {
+                response('error', err.message);
+            }
+            else {
+                response('error', errors_1.ApiErrorEnum.UNKNOWN_ERROR);
+            }
+            return;
         }
         response('ok');
     }
@@ -134,8 +179,8 @@ class GameSocket {
                 return;
             }
         }
-        catch (error) {
-            response('error', error);
+        catch (err) {
+            response('error', errors_1.ApiErrorEnum.PROMPT_INVALID_RESULT);
             return;
         }
         const action = new resolve_prompt_action_1.ResolvePromptAction(params.id, params.result);

@@ -25,6 +25,19 @@ function findKoPokemons(store, state) {
     }
     return pokemons;
 }
+//New, Optimized Code ^^ Test Old Code CPU Usage First
+// function findKoPokemons(store: StoreLike, state: State): PokemonItem[] {
+//   return state.players.reduce((koPokemons: PokemonItem[], player, playerNum) => {
+//     player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
+//       const checkHpEffect = new CheckHpEffect(player, cardList);
+//       store.reduceEffect(state, checkHpEffect);
+//       if (cardList.damage >= checkHpEffect.hp) {
+//         koPokemons.push({ playerNum, cardList });
+//       }
+//     });
+//     return koPokemons;
+//   }, []);
+// }
 function handleBenchSizeChange(store, state, benchSizes) {
     state.players.forEach((player, index) => {
         const benchSize = benchSizes[index];

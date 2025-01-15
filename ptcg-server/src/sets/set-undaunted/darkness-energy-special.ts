@@ -6,11 +6,11 @@ import { Effect } from '../../game/store/effects/effect';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
 import { StateUtils } from '../../game/store/state-utils';
-import { EnergyEffect } from '../../game/store/effects/play-card-effects';
+
 
 export class DarknessEnergySpecial extends EnergyCard {
 
-  public provides: CardType[] = [ CardType.DARK ];
+  public provides: CardType[] = [CardType.DARK];
 
   public energyType = EnergyType.SPECIAL;
 
@@ -36,13 +36,6 @@ export class DarknessEnergySpecial extends EnergyCard {
         const player = effect.player;
         const opponent = StateUtils.getOpponent(state, player);
         if (effect.target !== opponent.active) {
-          return state;
-        }
-
-        try {
-          const energyEffect = new EnergyEffect(player, this);
-          store.reduceEffect(state, energyEffect);
-        } catch {
           return state;
         }
 

@@ -3,7 +3,7 @@ import { CardTag, TrainerType } from '../../game/store/card/card-types';
 import { State, StateUtils, GameLog, PlayerType } from '../../game';
 import { CheckHpEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { ToolEffect } from '../../game/store/effects/play-card-effects';
+
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 
 // interface PokemonItem {
@@ -43,14 +43,6 @@ export class SurvivalCast extends TrainerCard {
       store.reduceEffect(state, checkHpEffect);
 
       if (effect.target.damage === 0 && effect.damage >= checkHpEffect.hp) {
-
-        try {
-          const toolEffect = new ToolEffect(player, this);
-          store.reduceEffect(state, toolEffect);
-        } catch {
-          return state;
-        }
-
         effect.preventDefault = true;
         effect.target.damage = checkHpEffect.hp - 10;
         store.log(state, GameLog.LOG_PLAYER_PLAYS_TOOL, { card: this.name });
@@ -61,13 +53,6 @@ export class SurvivalCast extends TrainerCard {
 
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, index) => {
           if (cardList.cards.includes(this)) {
-            try {
-              const toolEffect = new ToolEffect(player, this);
-              store.reduceEffect(state, toolEffect);
-            } catch {
-              return state;
-            }
-
             cardList.moveCardTo(this, player.discard);
             cardList.tool = undefined;
           }

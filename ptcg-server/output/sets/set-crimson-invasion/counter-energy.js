@@ -5,7 +5,6 @@ const game_1 = require("../../game");
 const card_types_1 = require("../../game/store/card/card-types");
 const energy_card_1 = require("../../game/store/card/energy-card");
 const check_effects_1 = require("../../game/store/effects/check-effects");
-const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class CounterEnergy extends energy_card_1.EnergyCard {
     constructor() {
         super(...arguments);
@@ -26,13 +25,6 @@ class CounterEnergy extends energy_card_1.EnergyCard {
             const attachedToExOrGx = attachedTo.cards.some(card => {
                 return card instanceof game_1.PokemonCard && (card.tags.includes(card_types_1.CardTag.POKEMON_EX) || card.tags.includes(card_types_1.CardTag.POKEMON_GX));
             });
-            try {
-                const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
-                store.reduceEffect(state, energyEffect);
-            }
-            catch (_a) {
-                return state;
-            }
             if (!!attachedTo.getPokemonCard() && player.getPrizeLeft() > opponent.getPrizeLeft() && !attachedToExOrGx) {
                 effect.energyMap.push({ card: this, provides: [card_types_1.CardType.ANY, card_types_1.CardType.ANY] });
             }

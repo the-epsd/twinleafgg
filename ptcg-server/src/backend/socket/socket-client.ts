@@ -55,7 +55,7 @@ export class SocketClient implements Client {
   public onUsersUpdate(users: User[]): void {
     this.coreSocket.onUsersUpdate(users);
   }
-  
+
   public onStateChange(game: Game, state: State): void {
     this.coreSocket.onStateChange(game, state);
     this.gameSocket.onStateChange(game, state);
@@ -68,13 +68,13 @@ export class SocketClient implements Client {
   public onGameLeave(game: Game, client: Client): void {
     this.gameSocket.onGameLeave(game, client);
   }
-  
+
   public onJoinQueue(from: Client, message: Message): void {
     this.matchmakingSocket.onJoinQueue(from, message);
   }
-  
+
   public onLeaveQueue(client: Client): void {
-    this.matchmakingSocket.onLeaveQueue();
+    this.matchmakingSocket.onLeaveQueue(client);
   }
 
   public onMessage(from: Client, message: Message): void {

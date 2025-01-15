@@ -52,6 +52,7 @@ class WalkingWakeex extends pokemon_card_1.PokemonCard {
                 catch (_a) {
                     return state;
                 }
+                effect.attack.shredAttack = true;
                 const opponent = game_1.StateUtils.getOpponent(state, player);
                 const applyWeakness = new attack_effects_1.ApplyWeaknessEffect(effect, effect.damage);
                 store.reduceEffect(state, applyWeakness);
@@ -68,8 +69,7 @@ class WalkingWakeex extends pokemon_card_1.PokemonCard {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             if (opponent.active.specialConditions.length > 0) {
-                const attackEffect = effect;
-                attackEffect.damage += 120;
+                effect.damage += 120;
             }
             return state;
         }

@@ -13,12 +13,19 @@ export declare class MewVMAX extends PokemonCard {
         type: CardType;
     }[];
     retreat: never[];
-    attacks: {
+    attacks: ({
         name: string;
         cost: CardType[];
         damage: number;
         text: string;
-    }[];
+        shredAttack?: undefined;
+    } | {
+        name: string;
+        cost: CardType[];
+        damage: number;
+        shredAttack: boolean;
+        text: string;
+    })[];
     set: string;
     cardImage: string;
     setNumber: string;

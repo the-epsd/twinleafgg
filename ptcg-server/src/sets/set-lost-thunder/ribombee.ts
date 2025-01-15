@@ -42,9 +42,11 @@ export class Ribombee extends PokemonCard {
       let isRibombeeInPlay = false;
       let targetIsFairyPokemon = false;
 
-      if (opponent.bench.includes(this.cards as PokemonCardList)) {
-        isRibombeeInPlay = true;
-      }
+      opponent.bench.forEach(benchPokemon => {
+        if (benchPokemon.getPokemonCard() === this) {
+          isRibombeeInPlay = true;
+        }
+      });
 
       if (!!target && target instanceof PokemonCardList) {
         const checkPokemonTypeEffect = new CheckPokemonTypeEffect(target as PokemonCardList);

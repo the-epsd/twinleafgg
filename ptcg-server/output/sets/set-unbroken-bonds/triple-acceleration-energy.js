@@ -34,15 +34,7 @@ class TripleAccelerationEnergy extends energy_card_1.EnergyCard {
             effect.player.marker.addMarker(this.TRIPLE_ACCELERATION_MARKER, this);
         }
         if (effect instanceof check_effects_1.CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
-            const player = effect.player;
             const attachedTo = effect.source.getPokemonCard();
-            try {
-                const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
-                store.reduceEffect(state, energyEffect);
-            }
-            catch (_a) {
-                return state;
-            }
             if (!!attachedTo && attachedTo instanceof pokemon_card_1.PokemonCard && attachedTo.stage !== card_types_1.Stage.BASIC && attachedTo.stage !== card_types_1.Stage.RESTORED) {
                 effect.energyMap.push({ card: this, provides: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS] });
             }
@@ -62,13 +54,6 @@ class TripleAccelerationEnergy extends energy_card_1.EnergyCard {
                 player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
                     if (!cardList.cards.includes(this)) {
                         return;
-                    }
-                    try {
-                        const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
-                        store.reduceEffect(state, energyEffect);
-                    }
-                    catch (_a) {
-                        return state;
                     }
                     const attachedTo = cardList.getPokemonCard();
                     if (!!attachedTo && (attachedTo.stage === card_types_1.Stage.BASIC || attachedTo.stage === card_types_1.Stage.RESTORED)) {

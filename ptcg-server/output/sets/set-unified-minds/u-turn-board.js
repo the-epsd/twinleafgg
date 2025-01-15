@@ -34,14 +34,6 @@ class UTurnBoard extends trainer_card_1.TrainerCard {
             console.log('U-Turn Board is on a card.');
         }
         if (effect instanceof check_effects_1.CheckRetreatCostEffect && effect.player.active.tool === this) {
-            const player = effect.player;
-            try {
-                const toolEffect = new play_card_effects_1.ToolEffect(player, this);
-                store.reduceEffect(state, toolEffect);
-            }
-            catch (_a) {
-                return state;
-            }
             if (effect.cost.length === 0) {
                 effect.cost = [];
             }
@@ -88,8 +80,8 @@ exports.UTurnBoard = UTurnBoard;
 //           return;
 //         }
 //         try {
-//           const energyEffect = new ToolEffect(player, this);
-//           store.reduceEffect(state, energyEffect);
+//           const toolEffect = new ToolEffect(player, this);
+//           store.reduceEffect(state, toolEffect);
 //         } catch {
 //           return state;
 //         }

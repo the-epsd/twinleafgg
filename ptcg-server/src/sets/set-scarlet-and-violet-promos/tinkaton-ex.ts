@@ -5,7 +5,7 @@ import {
 } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { AfterDamageEffect, ApplyWeaknessEffect } from '../../game/store/effects/attack-effects';
+import { AfterDamageEffect, ApplyWeaknessEffect, DealDamageEffect } from '../../game/store/effects/attack-effects';
 
 // PAL Tinkaton ex 262 (https://limitlesstcg.com/cards/PAL/262)
 export class Tinkatonex extends PokemonCard {
@@ -36,6 +36,7 @@ export class Tinkatonex extends PokemonCard {
       name: 'Pulverizing Press',
       cost: [CardType.PSYCHIC, CardType.COLORLESS, CardType.COLORLESS],
       damage: 140,
+      shredAttack: true,
       text: 'This attack\'s damage isn\'t affected by any effects on your opponent\'s Active Pokémon.'
     }
   ];
@@ -56,7 +57,6 @@ export class Tinkatonex extends PokemonCard {
     // Big Hammer
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
-
       effect.damage = player.hand.cards.length * 30;
     }
 
@@ -65,7 +65,10 @@ export class Tinkatonex extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      const applyWeakness = new ApplyWeaknessEffect(effect, 140);
+      const dealDamage = new DealDamageEffect(effect, 140);
+      store.reduceEffect(state, dealDamage);
+
+      const applyWeakness = new ApplyWeaknessEffect(effect, dealDamage.damage);
       store.reduceEffect(state, applyWeakness);
       const damage = applyWeakness.damage;
 

@@ -26,6 +26,7 @@ export declare class SkeledirgeEX extends PokemonCard {
         name: string;
         cost: CardType.FIRE[];
         damage: number;
+        shredAttack: boolean;
         text: string;
     }[];
     regulationMark: string;

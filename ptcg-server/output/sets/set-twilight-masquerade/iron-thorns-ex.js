@@ -53,6 +53,10 @@ class IronThornsex extends pokemon_card_1.PokemonCard {
                 && opponent.active.getPokemonCard() !== this) {
                 return state;
             }
+            // Pokemon isn't a rule box - don't bother checking to block ability
+            if (!ruleBoxTags.some(tag => effect.card.tags.includes(tag))) {
+                return state;
+            }
             // Try reducing ability for each player  
             try {
                 const powerEffect = new game_effects_1.PowerEffect(player, this.powers[0], this);
@@ -61,10 +65,8 @@ class IronThornsex extends pokemon_card_1.PokemonCard {
             catch (_a) {
                 return state;
             }
-            if (ruleBoxTags.some(tag => effect.card.tags.includes(tag)) && !effect.power.exemptFromInitialize) {
-                if (!effect.power.exemptFromAbilityLock) {
-                    throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_ABILITY);
-                }
+            if (!effect.power.exemptFromAbilityLock) {
+                throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_ABILITY);
             }
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

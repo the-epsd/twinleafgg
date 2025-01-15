@@ -2,7 +2,7 @@ import { CardList, ChooseCardsPrompt, ConfirmPrompt, GameLog, GameMessage, ShowC
 import { CardType, Stage, SuperType, TrainerType } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { PowerType } from '../../game/store/card/pokemon-types';
-import { AfterDamageEffect, ApplyWeaknessEffect } from '../../game/store/effects/attack-effects';
+import { AfterDamageEffect, ApplyWeaknessEffect, DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
@@ -32,6 +32,7 @@ export class Mewtwo extends PokemonCard {
     name: 'Psyshock',
     cost: [CardType.PSYCHIC, CardType.COLORLESS, CardType.COLORLESS],
     damage: 70,
+    shredAttack: true,
     text: 'This attack\'s damage isn\'t affected by any effects on your opponent\'s Active Pokémon.'
   }];
 
@@ -51,7 +52,10 @@ export class Mewtwo extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      const applyWeakness = new ApplyWeaknessEffect(effect, 70);
+      const dealDamage = new DealDamageEffect(effect, 70);
+      store.reduceEffect(state, dealDamage);
+
+      const applyWeakness = new ApplyWeaknessEffect(effect, dealDamage.damage);
       store.reduceEffect(state, applyWeakness);
       const damage = applyWeakness.damage;
 

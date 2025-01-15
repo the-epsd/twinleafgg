@@ -3,7 +3,7 @@ import { TrainerType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { KnockOutEffect } from '../../game/store/effects/game-effects';
-import { ToolEffect } from '../../game/store/effects/play-card-effects';
+
 
 export class LilliesPearl extends TrainerCard {
 
@@ -29,14 +29,6 @@ export class LilliesPearl extends TrainerCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof KnockOutEffect && effect.target.cards.includes(this) && effect.player.marker.hasMarker(effect.player.DAMAGE_DEALT_MARKER)) {
-      const player = effect.player;
-
-      try {
-        const toolEffect = new ToolEffect(player, this);
-        store.reduceEffect(state, toolEffect);
-      } catch {
-        return state;
-      }
 
       if (!effect.target.isLillies()) {
         effect.prizeCount -= 1;

@@ -20,6 +20,7 @@ export declare class Veluza extends PokemonCard {
         name: string;
         cost: CardType[];
         damage: number;
+        shredAttack: boolean;
         text: string;
     }[];
     set: string;

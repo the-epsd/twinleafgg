@@ -17,12 +17,12 @@ export declare class Koraidon extends PokemonCard {
         damage: number;
         damageCalculator: string;
         text: string;
-        shred?: undefined;
+        shredAttack?: undefined;
     } | {
         name: string;
         cost: CardType[];
         damage: number;
-        shred: boolean;
+        shredAttack: boolean;
         text: string;
         damageCalculator?: undefined;
     })[];

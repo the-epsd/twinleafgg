@@ -6,7 +6,7 @@ import { CheckPokemonTypeEffect, CheckProvidedEnergyEffect } from '../../game/st
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, KnockOutEffect } from '../../game/store/effects/game-effects';
 import { BetweenTurnsEffect, EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { AttachEnergyEffect, EnergyEffect } from '../../game/store/effects/play-card-effects';
+import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
 import { GamePhase, State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
@@ -73,14 +73,6 @@ export class SplashEnergy extends EnergyCard {
           if (!cardList.cards.includes(this)) {
             return;
           }
-
-          try {
-            const energyEffect = new EnergyEffect(player, this);
-            store.reduceEffect(state, energyEffect);
-          } catch {
-            return state;
-          }
-
           const pokemon = cardList;
           if (pokemon.getPokemonCard()?.cardType !== CardType.WATER) {
             cardList.moveCardTo(this, player.discard);
@@ -91,17 +83,7 @@ export class SplashEnergy extends EnergyCard {
     }
 
     if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
-      const player = effect.player;
-
-      try {
-        const energyEffect = new EnergyEffect(player, this);
-        store.reduceEffect(state, energyEffect);
-      } catch {
-        return state;
-      }
-
       effect.energyMap.push({ card: this, provides: [CardType.WATER] });
-
       return state;
     }
 
@@ -113,12 +95,7 @@ export class SplashEnergy extends EnergyCard {
         return state;
       }
 
-      try {
-        const energyEffect = new EnergyEffect(player, this);
-        store.reduceEffect(state, energyEffect);
-      } catch {
-        return state;
-      }
+
 
       const target = effect.target;
       const cards = target.getPokemons();
@@ -133,14 +110,6 @@ export class SplashEnergy extends EnergyCard {
         if (!player.marker.hasMarker(this.SPLASH_ENERGY_MARKER)) {
           return;
         }
-
-        try {
-          const energyEffect = new EnergyEffect(player, this);
-          store.reduceEffect(state, energyEffect);
-        } catch {
-          return state;
-        }
-
         const rescued: Card[] = player.marker.markers
           .filter(m => m.name === this.SPLASH_ENERGY_MARKER)
           .map(m => m.source)

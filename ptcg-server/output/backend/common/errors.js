@@ -26,4 +26,5 @@ var ApiErrorEnum;
     ApiErrorEnum["SOCKET_ERROR"] = "SOCKET_ERROR";
     ApiErrorEnum["INVALID_FORMAT"] = "INVALID_FORMAT";
     ApiErrorEnum["INVALID_USER"] = "INVALID_USER";
+    ApiErrorEnum["UNKNOWN_ERROR"] = "UNKNOWN_ERROR";
 })(ApiErrorEnum = exports.ApiErrorEnum || (exports.ApiErrorEnum = {}));

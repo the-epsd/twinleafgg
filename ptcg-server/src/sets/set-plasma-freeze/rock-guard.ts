@@ -5,11 +5,11 @@ import { State, GamePhase } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { AfterDamageEffect } from '../../game/store/effects/attack-effects';
 import { StateUtils } from '../../game/store/state-utils';
-import { ToolEffect } from '../../game/store/effects/play-card-effects';
+
 
 export class RockGuard extends TrainerCard {
 
-  public tags = [ CardTag.ACE_SPEC ];
+  public tags = [CardTag.ACE_SPEC];
 
   public trainerType: TrainerType = TrainerType.TOOL;
 
@@ -37,12 +37,7 @@ export class RockGuard extends TrainerCard {
         return state;
       }
 
-      try {
-        const toolEffect = new ToolEffect(player, this);
-        store.reduceEffect(state, toolEffect);
-      } catch {
-        return state;
-      }
+
 
       if (state.phase === GamePhase.ATTACK) {
         effect.source.damage += 60;

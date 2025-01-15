@@ -4,7 +4,6 @@ exports.WeaknessGuardEnergy = void 0;
 const card_types_1 = require("../../game/store/card/card-types");
 const energy_card_1 = require("../../game/store/card/energy-card");
 const game_effects_1 = require("../../game/store/effects/game-effects");
-const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class WeaknessGuardEnergy extends energy_card_1.EnergyCard {
     constructor() {
         super(...arguments);
@@ -21,14 +20,6 @@ class WeaknessGuardEnergy extends energy_card_1.EnergyCard {
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.target && effect.target.cards.includes(this)) {
-            const player = effect.player;
-            try {
-                const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
-                store.reduceEffect(state, energyEffect);
-            }
-            catch (_a) {
-                return state;
-            }
             effect.ignoreWeakness = true;
         }
         return state;

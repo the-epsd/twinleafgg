@@ -32,10 +32,9 @@ import { ReshiramCharizardGX } from './reshiram-and-charizard-gx';
 import { Salazzle } from './salazzle';
 import { Spiritomb } from './spiritomb';
 import { TripleAccelerationEnergy } from './triple-acceleration-energy';
+import { Tyrogue } from './tyrogue';
 import { Volcanion } from './volcanion';
 import { Zeraora } from './zeraora';
-
-
 
 export const setUnbrokenBonds: Card[] = [
   new Arcanine(),
@@ -71,6 +70,7 @@ export const setUnbrokenBonds: Card[] = [
   new Salazzle(),
   new Spiritomb(),
   new TripleAccelerationEnergy(),
+  new Tyrogue(),
   new Volcanion(),
   new Zeraora()
 ];

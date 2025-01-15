@@ -5,7 +5,7 @@ import { GamePhase, State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { GameError, GameMessage, StateUtils } from '../../game';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
-import { ToolEffect } from '../../game/store/effects/play-card-effects';
+
 
 export class DefianceVest extends TrainerCard {
 
@@ -32,35 +32,30 @@ export class DefianceVest extends TrainerCard {
     if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-    
-      try {
-        const toolEffect = new ToolEffect(player, this);
-        store.reduceEffect(state, toolEffect);
-      } catch {
-        return state;
-      }
+
+
 
       // It's not an attack
       if (state.phase !== GamePhase.ATTACK) {
         return state;
       }
-  
+
       if (effect.damageReduced) {
         // Damage already reduced, don't reduce again
-        return state; 
+        return state;
       }
-    
+
       if (player.getPrizeLeft() <= opponent.getPrizeLeft()) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
-    
+
       // Check if damage target is owned by this card's owner 
       const targetPlayer = StateUtils.findOwner(state, effect.target);
       if (targetPlayer === player) {
         effect.damage = Math.max(0, effect.damage - 40);
         effect.damageReduced = true;
       }
-    
+
       return state;
     }
     return state;

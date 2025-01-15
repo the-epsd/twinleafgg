@@ -4,7 +4,7 @@ import { GameError, GameMessage, PlayerType, State, StateUtils, StoreLike } from
 import { Effect } from '../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { ApplyWeaknessEffect, AfterDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { ApplyWeaknessEffect, AfterDamageEffect, PutDamageEffect, DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class AlolanVulpixVSTAR extends PokemonCard {
@@ -28,6 +28,7 @@ export class AlolanVulpixVSTAR extends PokemonCard {
       name: 'Snow Mirage',
       cost: [CardType.WATER, CardType.COLORLESS, CardType.COLORLESS],
       damage: 160,
+      shredAttack: true,
       text: 'This attack\'s damage isn\'t affected by any effects on your opponent\'s Active Pokémon. During your opponent\'s next turn, prevent all damage done to this Pokémon by attacks from Pokémon that have an Ability.'
     },
     {
@@ -63,7 +64,10 @@ export class AlolanVulpixVSTAR extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      const applyWeakness = new ApplyWeaknessEffect(effect, 160);
+      const dealDamage = new DealDamageEffect(effect, 160);
+      store.reduceEffect(state, dealDamage);
+
+      const applyWeakness = new ApplyWeaknessEffect(effect, dealDamage.damage);
       store.reduceEffect(state, applyWeakness);
       const damage = applyWeakness.damage;
 

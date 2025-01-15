@@ -1,13 +1,13 @@
-import { Effect } from '../../game/store/effects/effect';
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
+import { CardTag, SuperType, TrainerType } from '../../game/store/card/card-types';
+import { PokemonCard } from '../../game/store/card/pokemon-card';
+import { TrainerCard } from '../../game/store/card/trainer-card';
+import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
-import { TrainerCard } from '../../game/store/card/trainer-card';
-import { TrainerType, SuperType, CardTag } from '../../game/store/card/card-types';
-import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 
 export class RapidStrikeStyleMustard extends TrainerCard {
 
@@ -55,13 +55,6 @@ export class RapidStrikeStyleMustard extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      // It is not possible to recover Water Pokemon,
-      // but we can still draw 5 cards
-      if (!hasPokemon || slot === undefined) {
-        player.deck.moveTo(player.hand, 5);
-        return state;
-      }
-
       return store.prompt(state, new ChooseCardsPrompt(
         player,
         GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
@@ -70,8 +63,8 @@ export class RapidStrikeStyleMustard extends TrainerCard {
         { min: 1, max: 1, allowCancel: false, blocked: blocked }
       ), selected => {
         const cards = selected || [];
-        player.discard.moveCardsTo(cards, slot);
-        slot.pokemonPlayedTurn = state.turn;
+        player.discard.moveCardsTo(cards, slot!);
+        slot!.pokemonPlayedTurn = state.turn;
         player.deck.moveTo(player.hand, 5);
       });
     }

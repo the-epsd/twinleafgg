@@ -5,7 +5,6 @@ const state_1 = require("../../game/store/state/state");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const check_effects_1 = require("../../game/store/effects/check-effects");
-const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class LegacyEnergy extends game_1.EnergyCard {
     constructor() {
         super(...arguments);
@@ -25,26 +24,10 @@ class LegacyEnergy extends game_1.EnergyCard {
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof check_effects_1.CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
-            const player = effect.player;
-            try {
-                const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
-                store.reduceEffect(state, energyEffect);
-            }
-            catch (_a) {
-                return state;
-            }
             effect.energyMap.push({ card: this, provides: [game_1.CardType.ANY] });
         }
         if (effect instanceof game_effects_1.KnockOutEffect && effect.target.cards.includes(this)) {
             if (state.phase === state_1.GamePhase.ATTACK) {
-                const player = effect.player;
-                try {
-                    const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
-                    store.reduceEffect(state, energyEffect);
-                }
-                catch (_b) {
-                    return state;
-                }
                 if (this.legacyEnergyUsed == false) {
                     effect.prizeCount -= 1;
                     this.legacyEnergyUsed = true;

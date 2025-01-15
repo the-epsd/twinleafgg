@@ -9,7 +9,7 @@ import {
 } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { HealEffect } from '../../game/store/effects/game-effects';
-import { AttachEnergyEffect, EnergyEffect } from '../../game/store/effects/play-card-effects';
+import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
@@ -40,12 +40,7 @@ export class HerbalEnergy extends EnergyCard {
       const checkPokemonType = new CheckPokemonTypeEffect(effect.target);
       store.reduceEffect(state, checkPokemonType);
 
-      try {
-        const energyEffect = new EnergyEffect(player, this);
-        store.reduceEffect(state, energyEffect);
-      } catch {
-        return state;
-      }
+
 
       if (!checkPokemonType.cardTypes.includes(CardType.GRASS)) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
@@ -59,16 +54,8 @@ export class HerbalEnergy extends EnergyCard {
 
     // Provide energy when attached to GRASS Pokemon
     if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
-      const player = effect.player;
       const checkPokemonType = new CheckPokemonTypeEffect(effect.source);
       store.reduceEffect(state, checkPokemonType);
-
-      try {
-        const energyEffect = new EnergyEffect(player, this);
-        store.reduceEffect(state, energyEffect);
-      } catch {
-        return state;
-      }
 
       if (checkPokemonType.cardTypes.includes(CardType.GRASS)) {
         effect.energyMap.push({ card: this, provides: [CardType.GRASS] });
@@ -83,14 +70,6 @@ export class HerbalEnergy extends EnergyCard {
           if (!cardList.cards.includes(this)) {
             return;
           }
-
-          try {
-            const energyEffect = new EnergyEffect(player, this);
-            store.reduceEffect(state, energyEffect);
-          } catch {
-            return state;
-          }
-
           const checkPokemonType = new CheckPokemonTypeEffect(cardList);
           store.reduceEffect(state, checkPokemonType);
           if (!checkPokemonType.cardTypes.includes(CardType.GRASS)) {

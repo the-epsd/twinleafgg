@@ -5,7 +5,6 @@ const card_types_1 = require("../../game/store/card/card-types");
 const energy_card_1 = require("../../game/store/card/energy-card");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const check_effects_1 = require("../../game/store/effects/check-effects");
-const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class WashWaterEnergy extends energy_card_1.EnergyCard {
     constructor() {
         super(...arguments);
@@ -24,27 +23,11 @@ class WashWaterEnergy extends energy_card_1.EnergyCard {
     reduceEffect(store, state, effect) {
         var _a, _b;
         if (effect instanceof check_effects_1.CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
-            const player = effect.player;
-            try {
-                const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
-                store.reduceEffect(state, energyEffect);
-            }
-            catch (_c) {
-                return state;
-            }
             effect.energyMap.push({ card: this, provides: [card_types_1.CardType.WATER] });
             return state;
         }
         // Prevent effects of attacks
         if (effect instanceof attack_effects_1.AbstractAttackEffect && ((_b = (_a = effect.target) === null || _a === void 0 ? void 0 : _a.cards) === null || _b === void 0 ? void 0 : _b.includes(this))) {
-            const player = effect.player;
-            try {
-                const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
-                store.reduceEffect(state, energyEffect);
-            }
-            catch (_d) {
-                return state;
-            }
             const checkPokemonType = new check_effects_1.CheckPokemonTypeEffect(effect.target);
             store.reduceEffect(state, checkPokemonType);
             if (checkPokemonType.cardTypes.includes(card_types_1.CardType.WATER)) {

@@ -5,7 +5,7 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { StateUtils } from '../../game/store/state-utils';
-import { ToolEffect } from '../../game/store/effects/play-card-effects';
+
 
 export class PanicMask extends TrainerCard {
 
@@ -32,12 +32,7 @@ export class PanicMask extends TrainerCard {
       const player = effect.player;
       const targetPlayer = StateUtils.findOwner(state, effect.target);
 
-      try {
-        const toolEffect = new ToolEffect(player, this);
-        store.reduceEffect(state, toolEffect);
-      } catch {
-        return state;
-      }
+
 
       if (effect.damage <= 0 || player === targetPlayer || targetPlayer.active !== effect.target) {
         return state;

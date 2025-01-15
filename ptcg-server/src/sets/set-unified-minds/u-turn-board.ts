@@ -3,7 +3,7 @@ import { TrainerCard } from '../../game/store/card/trainer-card';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 import { CheckRetreatCostEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttachPokemonToolEffect, ToolEffect } from '../../game/store/effects/play-card-effects';
+import { AttachPokemonToolEffect } from '../../game/store/effects/play-card-effects';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
@@ -46,14 +46,6 @@ export class UTurnBoard extends TrainerCard {
     }
 
     if (effect instanceof CheckRetreatCostEffect && effect.player.active.tool === this) {
-      const player = effect.player;
-
-      try {
-        const toolEffect = new ToolEffect(player, this);
-        store.reduceEffect(state, toolEffect);
-      } catch {
-        return state;
-      }
 
       if (effect.cost.length === 0) {
         effect.cost = [];
@@ -107,8 +99,8 @@ export class UTurnBoard extends TrainerCard {
 //         }
 
 //         try {
-//           const energyEffect = new ToolEffect(player, this);
-//           store.reduceEffect(state, energyEffect);
+//           const toolEffect = new ToolEffect(player, this);
+//           store.reduceEffect(state, toolEffect);
 //         } catch {
 //           return state;
 //         }

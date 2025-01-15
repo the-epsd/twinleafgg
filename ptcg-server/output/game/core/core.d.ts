@@ -6,6 +6,8 @@ export declare class Core {
     clients: Client[];
     games: Game[];
     messager: Messager;
+    private cleanerTask;
+    private rankingScheduler;
     constructor();
     connect(client: Client): Client;
     disconnect(client: Client): void;
@@ -16,4 +18,5 @@ export declare class Core {
     leaveGame(client: Client, game: Game): void;
     emit(fn: (client: Client) => void): void;
     private startRankingDecrease;
+    cleanup(): void;
 }

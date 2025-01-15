@@ -7,22 +7,22 @@ import { AfterDamageEffect, HealTargetEffect } from '../../game/store/effects/at
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { PokemonCard, PokemonCardList } from '../../game';
-import { ToolEffect } from '../../game/store/effects/play-card-effects';
+
 
 export class EmergencyJelly extends TrainerCard {
 
   public regulationMark = 'F';
 
   public trainerType: TrainerType = TrainerType.TOOL;
-  
+
   public set: string = 'SIT';
-  
+
   public cardImage: string = 'assets/cardback.png';
-  
+
   public setNumber: string = '155';
-  
+
   public name = 'Emergency Jelly';
-  
+
   public fullName = 'Emergency Jelly SIT';
 
   public text: string =
@@ -30,14 +30,6 @@ export class EmergencyJelly extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AfterDamageEffect && effect.target.tool === this) {
-      const player = effect.player;
-
-      try {
-        const toolEffect = new ToolEffect(player, this);
-        store.reduceEffect(state, toolEffect);
-      } catch {
-        return state;
-      }
 
       if (effect instanceof EndTurnEffect && effect.target.tool === this) {
         const targetPokemon = effect.target.getPokemonCard();

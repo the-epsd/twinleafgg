@@ -8,7 +8,7 @@ import { PowerType } from '../../game/store/card/pokemon-types';
 import { StateUtils } from '../../game/store/state-utils';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { EnergyCard } from '../../game';
-import { AfterDamageEffect, ApplyWeaknessEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { AfterDamageEffect, ApplyWeaknessEffect, DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 
 
 export class DuraludonVMAX extends PokemonCard {
@@ -17,7 +17,7 @@ export class DuraludonVMAX extends PokemonCard {
 
   public regulationMark = 'E';
 
-  public tags = [ CardTag.POKEMON_VMAX, CardTag.SINGLE_STRIKE ];
+  public tags = [CardTag.POKEMON_VMAX, CardTag.SINGLE_STRIKE];
 
   public evolvesFrom = 'Duraludon V';
 
@@ -27,7 +27,7 @@ export class DuraludonVMAX extends PokemonCard {
 
   public weakness = [];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Skyscraper',
@@ -39,8 +39,9 @@ export class DuraludonVMAX extends PokemonCard {
 
   public attacks = [{
     name: 'G-Max Pulverization',
-    cost: [ CardType.FIGHTING, CardType.METAL, CardType.METAL ],
+    cost: [CardType.FIGHTING, CardType.METAL, CardType.METAL],
     damage: 220,
+    shredAttack: true,
     text: 'This attack\'s damage isn\'t affected by any effects on your ' +
       'opponent\'s Active Pokémon.'
   }];
@@ -61,7 +62,10 @@ export class DuraludonVMAX extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      const applyWeakness = new ApplyWeaknessEffect(effect, 220);
+      const dealDamage = new DealDamageEffect(effect, 220);
+      store.reduceEffect(state, dealDamage);
+
+      const applyWeakness = new ApplyWeaknessEffect(effect, dealDamage.damage);
       store.reduceEffect(state, applyWeakness);
       const damage = applyWeakness.damage;
 

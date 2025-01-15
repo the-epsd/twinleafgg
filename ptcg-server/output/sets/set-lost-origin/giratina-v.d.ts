@@ -10,12 +10,19 @@ export declare class GiratinaV extends PokemonCard {
     cardType: CardType;
     hp: number;
     retreat: CardType[];
-    attacks: {
+    attacks: ({
         name: string;
         cost: CardType[];
         damage: number;
         text: string;
-    }[];
+        shredAttack?: undefined;
+    } | {
+        name: string;
+        cost: CardType[];
+        damage: number;
+        shredAttack: boolean;
+        text: string;
+    })[];
     set: string;
     cardImage: string;
     setNumber: string;

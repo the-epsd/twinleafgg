@@ -4,7 +4,7 @@ import { StoreLike, State, GameError, GameMessage, PowerType, EnergyCard, StateU
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
-import { AfterDamageEffect, ApplyWeaknessEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { AfterDamageEffect, ApplyWeaknessEffect, DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 
@@ -29,6 +29,7 @@ export class SkeledirgeEX extends PokemonCard {
     name: 'Luster Burn',
     cost: [R, R],
     damage: 160,
+    shredAttack: true,
     text: 'This attack\'s damage isn\'t affected by any effects on your opponent\'s Active Pokémon.'
   }];
 
@@ -96,7 +97,10 @@ export class SkeledirgeEX extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      const applyWeakness = new ApplyWeaknessEffect(effect, 160);
+      const dealDamage = new DealDamageEffect(effect, 160);
+      store.reduceEffect(state, dealDamage);
+
+      const applyWeakness = new ApplyWeaknessEffect(effect, dealDamage.damage);
       store.reduceEffect(state, applyWeakness);
       const damage = applyWeakness.damage;
 

@@ -4,11 +4,11 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
-import { EnergyEffect } from '../../game/store/effects/play-card-effects';
+
 
 export class LuminousEnergy extends EnergyCard {
 
-  public provides: CardType[] = [ CardType.COLORLESS ];
+  public provides: CardType[] = [CardType.COLORLESS];
 
   public energyType = EnergyType.SPECIAL;
 
@@ -31,25 +31,17 @@ export class LuminousEnergy extends EnergyCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
-      const player = effect.player;
       const attachedTo = effect.source;
       const otherSpecialEnergy = attachedTo.cards.some(card => {
-        return card instanceof EnergyCard 
+        return card instanceof EnergyCard
           && card.energyType === EnergyType.SPECIAL
-          && card !== this; 
+          && card !== this;
       });
 
-      try {
-        const energyEffect = new EnergyEffect(player, this);
-        store.reduceEffect(state, energyEffect);
-      } catch {
-        return state;
-      }
-
       if (otherSpecialEnergy) {
-        effect.energyMap.push({ card: this, provides: [ CardType.COLORLESS ] });
+        effect.energyMap.push({ card: this, provides: [CardType.COLORLESS] });
       } else {
-        effect.energyMap.push({ card: this, provides: [ CardType.ANY ] });
+        effect.energyMap.push({ card: this, provides: [CardType.ANY] });
       }
       return state;
     }

@@ -59,6 +59,7 @@ class MewVMAX extends pokemon_card_1.PokemonCard {
                 name: 'Max Miracle',
                 cost: [card_types_1.CardType.PSYCHIC, card_types_1.CardType.PSYCHIC],
                 damage: 130,
+                shredAttack: true,
                 text: 'This attack\'s damage isn\'t affected by any effects on your ' +
                     'Opponent\'s Active Pokémon.'
             }
@@ -73,7 +74,9 @@ class MewVMAX extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            const applyWeakness = new attack_effects_1.ApplyWeaknessEffect(effect, 130);
+            const dealDamage = new attack_effects_1.DealDamageEffect(effect, 130);
+            store.reduceEffect(state, dealDamage);
+            const applyWeakness = new attack_effects_1.ApplyWeaknessEffect(effect, dealDamage.damage);
             store.reduceEffect(state, applyWeakness);
             const damage = applyWeakness.damage;
             effect.damage = 0;

@@ -5,7 +5,6 @@ const trainer_card_1 = require("../../game/store/card/trainer-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const state_1 = require("../../game/store/state/state");
 const state_utils_1 = require("../../game/store/state-utils");
-const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const check_effects_1 = require("../../game/store/effects/check-effects");
 class BoxOfDisaster extends trainer_card_1.TrainerCard {
@@ -31,13 +30,6 @@ class BoxOfDisaster extends trainer_card_1.TrainerCard {
             }
             this.damageDealt = true;
             if (this.damageDealt === true) {
-                try {
-                    const toolEffect = new play_card_effects_1.ToolEffect(player, this);
-                    store.reduceEffect(state, toolEffect);
-                }
-                catch (_a) {
-                    return state;
-                }
                 const checkHpEffect = new check_effects_1.CheckHpEffect(player, effect.target);
                 store.reduceEffect(state, checkHpEffect);
                 if (state.phase === state_1.GamePhase.ATTACK) {

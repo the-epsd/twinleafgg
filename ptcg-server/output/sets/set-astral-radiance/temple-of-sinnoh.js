@@ -4,7 +4,6 @@ exports.TempleofSinnoh = void 0;
 const trainer_card_1 = require("../../game/store/card/trainer-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
-const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 class TempleofSinnoh extends trainer_card_1.TrainerCard {
     constructor() {
@@ -19,9 +18,6 @@ class TempleofSinnoh extends trainer_card_1.TrainerCard {
         this.text = 'All Special Energy attached to Pokémon (both yours and your opponent\'s) provide C Energy and have no other effect.';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof play_card_effects_1.EnergyEffect && game_1.StateUtils.getStadiumCard(state) === this) {
-            effect.preventDefault = true;
-        }
         if (effect instanceof game_effects_1.UseStadiumEffect && game_1.StateUtils.getStadiumCard(state) === this) {
             throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_STADIUM);
         }

@@ -6,7 +6,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { StateUtils } from '../../game';
 import { DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { KnockOutEffect } from '../../game/store/effects/game-effects';
-import { ToolEffect } from '../../game/store/effects/play-card-effects';
+
 export class VengefulPunch extends TrainerCard {
 
   public regulationMark = 'G';
@@ -33,12 +33,7 @@ export class VengefulPunch extends TrainerCard {
       const player = effect.player;
       const targetPlayer = StateUtils.findOwner(state, effect.target);
   
-      try {
-        const toolEffect = new ToolEffect(player, this);
-        store.reduceEffect(state, toolEffect);
-      } catch {
-        return state;
-      }
+
 
       if (effect.damage <= 0 || player === targetPlayer || targetPlayer.active !== effect.target) {
         return state;
@@ -67,12 +62,7 @@ export class VengefulPunch extends TrainerCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      try {
-        const toolEffect = new ToolEffect(player, this);
-        store.reduceEffect(state, toolEffect);
-      } catch {
-        return state;
-      }
+
 
       if (this.damageDealt) {
         opponent.active.damage += 40;

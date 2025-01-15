@@ -4,7 +4,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { StateUtils } from '../..';
-import { ToolEffect, TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 
 export class ToolJammer extends TrainerCard {
 
@@ -31,12 +31,7 @@ export class ToolJammer extends TrainerCard {
       const opponent = StateUtils.getOpponent(state, player);
       const opponentActivePokemon = opponent.active;
 
-      try {
-        const toolEffect = new ToolEffect(player, this);
-        store.reduceEffect(state, toolEffect);
-      } catch {
-        return state;
-      }
+
 
       if (opponentActivePokemon && opponentActivePokemon.tool) {
         opponentActivePokemon.tool.reduceEffect = () => state;

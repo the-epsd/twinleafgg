@@ -4,7 +4,7 @@ import { EnergyCard } from '../../game/store/card/energy-card';
 import { AbstractAttackEffect, ApplyWeaknessEffect, PutDamageEffect, DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { CheckPokemonTypeEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttachEnergyEffect, EnergyEffect } from '../../game/store/effects/play-card-effects';
+import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
 
 export class WonderEnergy extends EnergyCard {
   public provides: CardType[] = [C];
@@ -33,31 +33,13 @@ export class WonderEnergy extends EnergyCard {
     }
 
     if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
-      const player = effect.player;
-
-      try {
-        const energyEffect = new EnergyEffect(player, this);
-        store.reduceEffect(state, energyEffect);
-      } catch {
-        return state;
-      }
-
       effect.energyMap.push({ card: this, provides: [Y] });
-
       return state;
     }
 
     // Prevent effects of attacks
     if (effect instanceof AbstractAttackEffect && effect.target.cards.includes(this)) {
       const sourceCard = effect.source.getPokemonCard();
-      const player = effect.player;
-
-      try {
-        const energyEffect = new EnergyEffect(player, this);
-        store.reduceEffect(state, energyEffect);
-      } catch {
-        return state;
-      }
 
       if (sourceCard) {
         // Allow Weakness & Resistance

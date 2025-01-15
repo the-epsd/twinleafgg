@@ -26,15 +26,7 @@ class FusionStrikeEnergy extends energy_card_1.EnergyCard {
         var _a;
         // Provide energy when attached to Fusion Strike Pokemon
         if (effect instanceof check_effects_1.CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
-            const player = effect.player;
             const pokemon = effect.source;
-            try {
-                const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
-                store.reduceEffect(state, energyEffect);
-            }
-            catch (_b) {
-                return state;
-            }
             if ((_a = pokemon.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.tags.includes(card_types_1.CardTag.FUSION_STRIKE)) {
                 effect.energyMap.push({ card: this, provides: [card_types_1.CardType.ANY] });
             }
@@ -47,13 +39,6 @@ class FusionStrikeEnergy extends energy_card_1.EnergyCard {
                     var _a;
                     if (!cardList.cards.includes(this)) {
                         return;
-                    }
-                    try {
-                        const energyEffect = new play_card_effects_1.EnergyEffect(player, this);
-                        store.reduceEffect(state, energyEffect);
-                    }
-                    catch (_b) {
-                        return state;
                     }
                     const pokemon = cardList;
                     if (!((_a = pokemon.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.tags.includes(card_types_1.CardTag.FUSION_STRIKE))) {
