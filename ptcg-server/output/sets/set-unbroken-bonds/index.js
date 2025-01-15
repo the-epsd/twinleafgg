@@ -34,6 +34,7 @@ const reshiram_and_charizard_gx_1 = require("./reshiram-and-charizard-gx");
 const salazzle_1 = require("./salazzle");
 const spiritomb_1 = require("./spiritomb");
 const triple_acceleration_energy_1 = require("./triple-acceleration-energy");
+const tyrogue_1 = require("./tyrogue");
 const volcanion_1 = require("./volcanion");
 const zeraora_1 = require("./zeraora");
 exports.setUnbrokenBonds = [
@@ -70,6 +71,7 @@ exports.setUnbrokenBonds = [
     new salazzle_1.Salazzle(),
     new spiritomb_1.Spiritomb(),
     new triple_acceleration_energy_1.TripleAccelerationEnergy(),
+    new tyrogue_1.Tyrogue(),
     new volcanion_1.Volcanion(),
     new zeraora_1.Zeraora()
 ];

@@ -2,12 +2,14 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setVividVoltage = void 0;
 const aromatic_energy_1 = require("./aromatic-energy");
+const beldum_1 = require("./beldum");
 const charizard_1 = require("./charizard");
 const charmander_1 = require("./charmander");
 const charmeleon_1 = require("./charmeleon");
 const chimecho_1 = require("./chimecho");
 const coating_metal_energy_1 = require("./coating-metal-energy");
 const dhelmise_1 = require("./dhelmise");
+const duraludon_1 = require("./duraludon");
 const jirachi_1 = require("./jirachi");
 const leon_1 = require("./leon");
 const magearna_1 = require("./magearna");
@@ -23,12 +25,14 @@ const wash_water_energy_1 = require("./wash-water-energy");
 const zekrom_1 = require("./zekrom");
 exports.setVividVoltage = [
     new aromatic_energy_1.AromaticEnergy(),
+    new beldum_1.Beldum(),
     new charmander_1.Charmander(),
     new charmeleon_1.Charmeleon(),
     new charizard_1.Charizard(),
     new chimecho_1.Chimecho(),
     new coating_metal_energy_1.CoatingMetalEnergy(),
     new dhelmise_1.Dhelmise(),
+    new duraludon_1.Duraludon(),
     new jirachi_1.Jirachi(),
     new leon_1.Leon(),
     new magearna_1.Magearna(),

@@ -32,6 +32,7 @@ import { RapidStrikeUrshifuVMAX } from './rapid-strike-urshifu-vmax';
 import { Remoraid } from './remoraid';
 import { Rolycoly } from './rolycoly';
 import { SingleStrikeEnergy } from './single-strike-energy';
+import { SingleStrikeStyleMustard } from './single-strike-style-mustard';
 import { SingleStrikeUrshifuV } from './single-strike-urshifu-v';
 import { SingleStrikeUrshifuVMAX } from './single-strike-urshifu-vmax';
 import { Stonjourner } from './stonjourner';
@@ -81,6 +82,7 @@ export const setBattleStyles: Card[] = [
   new Remoraid(),
   new Rolycoly(),
   new SingleStrikeEnergy(),
+  new SingleStrikeStyleMustard(),
   new SingleStrikeUrshifuV(),
   new SingleStrikeUrshifuVMAX(),
   new Stonjourner(),

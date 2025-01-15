@@ -30,6 +30,7 @@ export class Store {
         this.promptItems = [];
         this.waitItems = [];
         this.logId = 0;
+        this.stateChangeCounter = 0;
     }
     dispatch(action) {
         let state = this.state;
@@ -87,6 +88,8 @@ export class Store {
         state = gameReducer(this, state, effect);
         state = attackReducer(this, state, effect);
         state = checkStateReducer(this, state, effect);
+        this.stateChangeCounter++;
+        console.log(`Turn ${state.turn} | Total state changes: ${this.stateChangeCounter}`);
         return state;
     }
     // checkEffectHistory(state: State, effect: Effect) {
@@ -221,12 +224,15 @@ export class Store {
         return state;
     }
     propagateEffect(state, effect) {
-        var _a, _b, _c, _d;
+        var _a, _b, _c, _d, _e;
         const cardEffect = effect;
         const cardName = ((_a = cardEffect.card) === null || _a === void 0 ? void 0 : _a.fullName) || ((_b = cardEffect.energyCard) === null || _b === void 0 ? void 0 : _b.fullName) ||
             ((_c = cardEffect.trainerCard) === null || _c === void 0 ? void 0 : _c.fullName) || ((_d = cardEffect.pokemonCard) === null || _d === void 0 ? void 0 : _d.fullName) || 'No card';
-        console.time(`propagateEffect-${effect.type}-${cardName}`);
+        const playerName = ((_e = cardEffect.player) === null || _e === void 0 ? void 0 : _e.name) || 'No player';
         const cards = [];
+        const startUsage = process.cpuUsage();
+        const startTime = performance.now();
+        const stateSize = JSON.stringify(state).length;
         try {
             for (const player of state.players) {
                 player.stadium.cards.forEach(c => cards.push(c));
@@ -247,10 +253,125 @@ export class Store {
             return state;
         }
         finally {
-            console.timeEnd(`propagateEffect-${effect.type}-${cardName}`);
-            const used = process.memoryUsage();
-            console.log(`Memory after ${effect.type} from ${cardName}: ${Math.round(used.heapUsed / 1024 / 1024)}MB`);
-            console.log('Effect resolution complete:', effect.type, 'from', cardName);
+            const endTime = performance.now();
+            const endUsage = process.cpuUsage(startUsage);
+            const cpuPercent = ((endUsage.user + endUsage.system) / 1000) * 100;
+            console.log(`${cardName} | ${effect.type} | CPU: ${cpuPercent.toFixed(4)}% | Execution time: ${(endTime - startTime).toFixed(2)}ms | Player: ${playerName}`);
+            console.log(`Game state size: ${Math.round(stateSize / 1024)}KB | Turn: ${state.turn}`);
         }
     }
 }
+//   private propagateEffect(state: State, effect: Effect): State {
+//   const cardEffect = <any>effect;
+//   const cardName = cardEffect.card?.fullName || cardEffect.energyCard?.fullName ||
+//     cardEffect.trainerCard?.fullName || cardEffect.pokemonCard?.fullName || 'No card';
+//   const playerName = cardEffect.player?.name || 'No player';
+//   const cards: Card[] = [];
+//   const startUsage = process.cpuUsage();
+//   try {
+//     const relevantZones = this.getRelevantZones(state, effect);
+//     if (relevantZones) {
+//       for (const player of state.players) {
+//         for (const zone of relevantZones) {
+//           switch (zone) {
+//             case 'stadium':
+//               player.stadium.cards.forEach(c => cards.push(c));
+//               break;
+//             case 'supporter':
+//               player.supporter.cards.forEach(c => cards.push(c));
+//               break;
+//             case 'active':
+//               player.active.cards.forEach(c => cards.push(c));
+//               break;
+//             case 'bench':
+//               if (effect.type === 'CHECK_POKEMON_POWERS_EFFECT' || effect.type === 'POWER_EFFECT') {
+//                 // Optimize bench scanning for power effects
+//                 player.bench.filter(b => b.cards.length > 0)
+//                   .forEach(b => b.cards.forEach(c => cards.push(c)));
+//               } else {
+//                 player.bench.forEach(b => b.cards.forEach(c => cards.push(c)));
+//               }
+//               break;
+//             case 'hand':
+//               if (effect.type === 'DREW_TOPDECK_EFFECT') {
+//                 // Only check most recent card for draw effects
+//                 const lastCard = player.hand.cards[player.hand.cards.length - 1];
+//                 if (lastCard) cards.push(lastCard);
+//               } else {
+//                 player.hand.cards.forEach(c => cards.push(c));
+//               }
+//               break;
+//             case 'prizes':
+//               if (effect.type === 'CHECK_PRIZE_CARDS_EFFECT') {
+//                 player.prizes.filter(p => !p.isSecret)
+//                   .forEach(p => p.cards.forEach(c => cards.push(c)));
+//               } else {
+//                 player.prizes.forEach(p => p.cards.forEach(c => cards.push(c)));
+//               }
+//               break;
+//           }
+//         }
+//       }
+//     } else {
+//       // Use original comprehensive card collection for undefined effects
+//       for (const player of state.players) {
+//         player.stadium.cards.forEach(c => cards.push(c));
+//         player.supporter.cards.forEach(c => cards.push(c));
+//         player.active.cards.forEach(c => cards.push(c));
+//         for (const bench of player.bench) {
+//           bench.cards.forEach(c => cards.push(c));
+//         }
+//         for (const prize of player.prizes) {
+//           prize.cards.forEach(c => cards.push(c));
+//         }
+//         player.hand.cards.forEach(c => cards.push(c));
+//         player.deck.cards.forEach(c => cards.push(c));
+//         player.discard.cards.forEach(c => cards.push(c));
+//       }
+//     }
+//     // Optimize card sorting based on effect type
+//     if (effect.type !== 'CHECK_HP_EFFECT' && effect.type !== 'CHECK_TABLE_STATE_EFFECT') {
+//       cards.sort(c => c.superType);
+//     }
+//     cards.forEach(c => { state = c.reduceEffect(this, state, effect); });
+//     return state;
+//   } finally {
+//     const endUsage = process.cpuUsage(startUsage);
+//     const cpuPercent = ((endUsage.user + endUsage.system) / 1000) * 10;
+//     console.log(`${cardName} | ${effect.type} | CPU: ${cpuPercent.toFixed(4)}% | Player: ${playerName}`);
+//   }
+// }
+//   private getRelevantZones(state: State, effect: Effect): string[] {
+//   switch (effect.type) {
+//     // case 'PLAY_SUPPORTER_EFFECT':
+//     // case 'SUPPORTER_EFFECT':
+//     //   return ['supporter'];
+//     case 'CHECK_POKEMON_POWERS_EFFECT':
+//     case 'POWER_EFFECT':
+//     case 'USE_POWER_EFFECT':
+//       return ['active', 'bench', 'discard', 'hand'];
+//     case 'CHECK_RETREAT_COST_EFFECT':
+//     case 'RETREAT_EFFECT':
+//       return ['active'];
+//     // case 'ATTACK_EFFECT':
+//     // case 'DEAL_DAMAGE_EFFECT':
+//     // case 'PUT_DAMAGE_EFFECT':
+//     //   return ['active', 'bench', 'stadium'];
+//     case 'CHECK_ENOUGH_ENERGY_EFFECT':
+//     case 'ENERGY_EFFECT':
+//       return ['active', 'bench'];
+//     // case 'TRAINER_EFFECT':
+//     //   if (effect instanceof UseStadiumEffect) {
+//     //     return ['stadium'];
+//     //   }
+//     //   return ['active', 'bench', 'stadium', 'supporter'];
+//     case 'CHECK_TABLE_STATE_EFFECT':
+//     case 'CHECK_HP_EFFECT':
+//       return ['active', 'bench'];
+//     case 'DREW_TOPDECK_EFFECT':
+//       return ['hand'];
+//     default:
+//       return ['stadium', 'supporter', 'active', 'bench', 'hand', 'prizes', 'deck', 'discard', 'lostzone'];
+//   }
+// }
+// }

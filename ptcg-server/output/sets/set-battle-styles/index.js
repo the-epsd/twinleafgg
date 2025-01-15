@@ -34,6 +34,7 @@ const rapid_strike_urshifu_vmax_1 = require("./rapid-strike-urshifu-vmax");
 const remoraid_1 = require("./remoraid");
 const rolycoly_1 = require("./rolycoly");
 const single_strike_energy_1 = require("./single-strike-energy");
+const single_strike_style_mustard_1 = require("./single-strike-style-mustard");
 const single_strike_urshifu_v_1 = require("./single-strike-urshifu-v");
 const single_strike_urshifu_vmax_1 = require("./single-strike-urshifu-vmax");
 const stonjourner_1 = require("./stonjourner");
@@ -82,6 +83,7 @@ exports.setBattleStyles = [
     new remoraid_1.Remoraid(),
     new rolycoly_1.Rolycoly(),
     new single_strike_energy_1.SingleStrikeEnergy(),
+    new single_strike_style_mustard_1.SingleStrikeStyleMustard(),
     new single_strike_urshifu_v_1.SingleStrikeUrshifuV(),
     new single_strike_urshifu_vmax_1.SingleStrikeUrshifuVMAX(),
     new stonjourner_1.Stonjourner(),

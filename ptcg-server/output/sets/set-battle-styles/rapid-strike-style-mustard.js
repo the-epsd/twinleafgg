@@ -3,10 +3,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.RapidStrikeStyleMustard = void 0;
 const game_error_1 = require("../../game/game-error");
 const game_message_1 = require("../../game/game-message");
-const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
-const trainer_card_1 = require("../../game/store/card/trainer-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
+const trainer_card_1 = require("../../game/store/card/trainer-card");
+const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 const choose_cards_prompt_1 = require("../../game/store/prompts/choose-cards-prompt");
 class RapidStrikeStyleMustard extends trainer_card_1.TrainerCard {
     constructor() {
@@ -40,12 +40,6 @@ class RapidStrikeStyleMustard extends trainer_card_1.TrainerCard {
             const hasEffect = (hasPokemon && slot) || player.deck.cards.length > 0;
             if (cards.length !== 0 || !hasEffect) {
                 throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
-            }
-            // It is not possible to recover Water Pokemon,
-            // but we can still draw 5 cards
-            if (!hasPokemon || slot === undefined) {
-                player.deck.moveTo(player.hand, 5);
-                return state;
             }
             return store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH, player.discard, { superType: card_types_1.SuperType.POKEMON }, { min: 1, max: 1, allowCancel: false, blocked: blocked }), selected => {
                 const cards = selected || [];

@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SingleStrikeStyleMustard = void 0;
+const game_1 = require("../../game");
 const game_error_1 = require("../../game/game-error");
 const game_message_1 = require("../../game/game-message");
-const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
-const trainer_card_1 = require("../../game/store/card/trainer-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
+const trainer_card_1 = require("../../game/store/card/trainer-card");
+const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 const choose_cards_prompt_1 = require("../../game/store/prompts/choose-cards-prompt");
-const game_1 = require("../../game");
 class SingleStrikeStyleMustard extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -27,10 +27,14 @@ class SingleStrikeStyleMustard extends trainer_card_1.TrainerCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
             const player = effect.player;
+            const supporterTurn = player.supporterTurn;
+            if (supporterTurn > 0) {
+                throw new game_error_1.GameError(game_message_1.GameMessage.SUPPORTER_ALREADY_PLAYED);
+            }
+            player.hand.moveCardTo(effect.trainerCard, player.supporter);
+            // We will discard this card after prompt confirmation
+            effect.preventDefault = true;
             const cards = player.hand.cards.filter(c => c !== this);
-            const hasPokemon = player.deck.cards.some(c => {
-                return c instanceof pokemon_card_1.PokemonCard && c.tags.includes(card_types_1.CardTag.SINGLE_STRIKE);
-            });
             const blocked = [];
             player.deck.cards.forEach((card, index) => {
                 if (card instanceof pokemon_card_1.PokemonCard && !card.tags.includes(card_types_1.CardTag.SINGLE_STRIKE)) {
@@ -38,23 +42,18 @@ class SingleStrikeStyleMustard extends trainer_card_1.TrainerCard {
                 }
             });
             const slot = player.bench.find(b => b.cards.length === 0);
-            const hasEffect = (hasPokemon && slot) || player.deck.cards.length > 0;
+            const hasEffect = slot || player.deck.cards.length > 0;
             if (cards.length !== 0 || !hasEffect) {
                 throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
-            }
-            // It is not possible to recover Water Pokemon,
-            // but we can still draw 5 cards
-            if (!hasPokemon || slot === undefined) {
-                player.deck.moveTo(player.hand, 5);
-                return state;
             }
             return store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH, player.deck, { superType: card_types_1.SuperType.POKEMON }, { min: 1, max: 1, allowCancel: false, blocked: blocked }), selected => {
                 const cards = selected || [];
                 player.deck.moveCardsTo(cards, slot);
                 slot.pokemonPlayedTurn = state.turn;
-                player.deck.moveTo(player.hand, 5);
                 return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
                     player.deck.applyOrder(order);
+                    player.deck.moveTo(player.hand, 5);
+                    player.supporter.moveCardTo(effect.trainerCard, player.discard);
                 });
             });
         }

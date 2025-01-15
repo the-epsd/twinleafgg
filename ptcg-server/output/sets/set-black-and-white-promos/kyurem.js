@@ -18,6 +18,7 @@ class Kyurem extends pokemon_card_1.PokemonCard {
                 name: 'Outrage',
                 cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
                 damage: 20,
+                damageCalculation: '+',
                 text: 'Does 10 more damage for each damage counter on this Pokémon.'
             },
             {

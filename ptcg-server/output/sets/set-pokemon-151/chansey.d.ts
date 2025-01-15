@@ -1,29 +1,29 @@
-import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
+import { PokemonCard, PowerType } from '../../game';
+import { CardType, Stage } from '../../game/store/card/card-types';
 import { Effect } from '../../game/store/effects/effect';
-export declare class Kyurem extends PokemonCard {
+import { State } from '../../game/store/state/state';
+import { StoreLike } from '../../game/store/store-like';
+export declare class Chansey extends PokemonCard {
     stage: Stage;
+    regulationMark: string;
     cardType: CardType;
-    hp: number;
     weakness: {
         type: CardType;
-        value: number;
     }[];
+    hp: number;
     retreat: CardType[];
-    attacks: ({
+    powers: {
+        name: string;
+        powerType: PowerType;
+        text: string;
+        useWhenInPlay: boolean;
+    }[];
+    attacks: {
         name: string;
         cost: CardType[];
         damage: number;
-        damageCalculation: string;
         text: string;
-    } | {
-        name: string;
-        cost: CardType[];
-        damage: number;
-        text: string;
-        damageCalculation?: undefined;
-    })[];
+    }[];
     set: string;
     cardImage: string;
     setNumber: string;
