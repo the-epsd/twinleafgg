@@ -42,7 +42,7 @@ export class Wishiwashi extends PokemonCard {
       opponent.marker.addMarker(this.SCATTER_MARKER, this);
     }
 
-    if (effect instanceof EndTurnEffect) {
+    if (effect instanceof EndTurnEffect && StateUtils.getOpponent(state, effect.player).marker.hasMarker(this.SCATTER_MARKER, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -57,27 +57,26 @@ export class Wishiwashi extends PokemonCard {
         return state;
       }
 
-      if (opponent.marker.hasMarker(this.SCATTER_MARKER, this)) {
-        opponent.forEachPokemon(PlayerType.TOP_PLAYER, cardList => {
-          if (cardList.getPokemonCard() === this) {
-            if (cardList.damage > 0) {
-              return store.prompt(state, [
-                new CoinFlipPrompt(opponent.id, GameMessage.COIN_FLIP)
-              ], result => {
-                if (result === false) {
-                  cardList.moveTo(opponent.deck);
-                  cardList.clearEffects();
-                }
-              });
-            }
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, cardList => {
+        if (cardList.getPokemonCard() === this) {
+          if (cardList.damage > 0) {
+            return store.prompt(state, [
+              new CoinFlipPrompt(opponent.id, GameMessage.COIN_FLIP)
+            ], result => {
+              if (result === false) {
+                cardList.moveTo(opponent.deck);
+                cardList.clearEffects();
+              }
+            });
           }
-        });
-        return store.prompt(state, new ShuffleDeckPrompt(opponent.id), order => {
-          opponent.deck.applyOrder(order);
-          opponent.marker.removeMarker(this.SCATTER_MARKER, this);
-          return state;
-        });
-      }
+        }
+      });
+      return store.prompt(state, new ShuffleDeckPrompt(opponent.id), order => {
+        opponent.deck.applyOrder(order);
+        opponent.marker.removeMarker(this.SCATTER_MARKER, this);
+        return state;
+      });
+
     }
 
     return state;

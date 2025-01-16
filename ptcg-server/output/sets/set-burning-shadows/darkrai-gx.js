@@ -133,7 +133,7 @@ class DarkraiGX extends game_1.PokemonCard {
                 }
             }
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.NETHERWORLD_GATE_MARKER, this)) {
             effect.player.marker.removeMarker(this.NETHERWORLD_GATE_MARKER, this);
         }
         return state;

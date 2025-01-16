@@ -104,7 +104,7 @@ export class OranguruV extends PokemonCard {
     }
 
     // marker gaming
-    if (effect instanceof EndTurnEffect) {
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.BACK_ORDER_MARKER, this)) {
       const player = effect.player;
 
       player.marker.removeMarker(this.BACK_ORDER_MARKER, this);

@@ -108,7 +108,7 @@ class HoOhEx extends pokemon_card_1.PokemonCard {
             const generator = useRebirth(() => generator.next(), store, state, this, effect);
             return generator.next().value;
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.REBIRTH_MAREKER, this)) {
             effect.player.marker.removeMarker(this.REBIRTH_MAREKER, this);
         }
         return state;

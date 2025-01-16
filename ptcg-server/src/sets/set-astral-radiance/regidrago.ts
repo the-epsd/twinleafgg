@@ -58,7 +58,7 @@ export class Regidrago extends PokemonCard {
       player.marker.removeMarker(this.DRAGONS_HOARD_MARKER, this);
     }
 
-    if (effect instanceof EndTurnEffect) {
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.DRAGONS_HOARD_MARKER, this)) {
       const player = effect.player;
       player.marker.removeMarker(this.DRAGONS_HOARD_MARKER, this);
     }

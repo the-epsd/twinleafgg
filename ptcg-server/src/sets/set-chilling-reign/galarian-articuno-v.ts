@@ -15,7 +15,7 @@ export class GalarianArticunoV extends PokemonCard {
 
   public cardType: CardType = CardType.PSYCHIC;
 
-  public tags = [ CardTag.POKEMON_V ];
+  public tags = [CardTag.POKEMON_V];
 
   public hp: number = 210;
 
@@ -23,7 +23,7 @@ export class GalarianArticunoV extends PokemonCard {
 
   public resistance = [{ type: CardType.FIGHTING, value: -30 }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [
     {
@@ -37,7 +37,7 @@ export class GalarianArticunoV extends PokemonCard {
   public attacks = [
     {
       name: 'Psyray',
-      cost: [ CardType.PSYCHIC, CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.PSYCHIC, CardType.COLORLESS, CardType.COLORLESS],
       damage: 110,
       text: 'Your opponent\'s Active Pokémon is now Confused.'
     }
@@ -53,22 +53,22 @@ export class GalarianArticunoV extends PokemonCard {
 
   public fullName: string = 'Galarian Articuno V CRE';
 
-  public readonly CONCEALED_CARDS_MARKER = 'CONCEALED_CARDS_MARKER';
+  public readonly RECONSTITUTE_MARKER = 'RECONSTITUTE_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const player = effect.player;
-      player.marker.removeMarker(this.CONCEALED_CARDS_MARKER, this);
+      player.marker.removeMarker(this.RECONSTITUTE_MARKER, this);
     }
-    
-    if (effect instanceof EndTurnEffect) {
+
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.RECONSTITUTE_MARKER, this)) {
       const player = effect.player;
-      player.marker.removeMarker(this.CONCEALED_CARDS_MARKER, this);
+      player.marker.removeMarker(this.RECONSTITUTE_MARKER, this);
     }
 
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-        
+
       const specialConditionEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.CONFUSED]);
       store.reduceEffect(state, specialConditionEffect);
     }
@@ -81,27 +81,27 @@ export class GalarianArticunoV extends PokemonCard {
       if (!hasCardInHand) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
-      if (player.marker.hasMarker(this.CONCEALED_CARDS_MARKER, this)) {
+      if (player.marker.hasMarker(this.RECONSTITUTE_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
       state = store.prompt(state, new ChooseCardsPrompt(
         player,
         GameMessage.CHOOSE_CARD_TO_DISCARD,
         player.hand,
-        { },
+        {},
         { allowCancel: true, min: 2, max: 2 }
       ), cards => {
         cards = cards || [];
         if (cards.length === 0) {
           return;
         }
-        player.marker.addMarker(this.CONCEALED_CARDS_MARKER, this);
+        player.marker.addMarker(this.RECONSTITUTE_MARKER, this);
         player.hand.moveCardsTo(cards, player.discard);
         player.deck.moveTo(player.hand, 1);
-          
-  
+
+
       });
-  
+
       return state;
     }
     return state;

@@ -49,7 +49,7 @@ class Mareep extends game_1.PokemonCard {
             effect.damage -= 20;
             return state;
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.GROWL_MARKER, this)) {
             effect.player.active.marker.removeMarker(this.GROWL_MARKER, this);
         }
         return state;

@@ -71,7 +71,7 @@ class Empoleon extends pokemon_card_1.PokemonCard {
             opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, () => { pokemonInPlay += 1; });
             effect.damage = 10 * pokemonInPlay;
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.DIVING_DRAW_MAREKER, this)) {
             effect.player.marker.removeMarker(this.DIVING_DRAW_MAREKER, this);
         }
         return state;

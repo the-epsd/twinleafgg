@@ -47,7 +47,7 @@ export class Blaziken extends PokemonCard {
       player.marker.removeMarker(this.FIRESTARTER_MARKER, this);
     }
 
-    if (effect instanceof EndTurnEffect) {
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.FIRESTARTER_MARKER, this)) {
       effect.player.marker.removeMarker(this.FIRESTARTER_MARKER, this);
     }
 

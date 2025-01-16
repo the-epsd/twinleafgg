@@ -61,7 +61,7 @@ export class InteleonVMAX extends PokemonCard {
       player.marker.removeMarker(this.DOUBLE_GUNNER_MARKER, this);
     }
 
-    if (effect instanceof EndTurnEffect) {
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.DOUBLE_GUNNER_MARKER, this)) {
       const player = effect.player;
       player.marker.removeMarker(this.DOUBLE_GUNNER_MARKER, this);
     }

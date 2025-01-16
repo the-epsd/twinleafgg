@@ -82,7 +82,7 @@ class Starly extends pokemon_card_1.PokemonCard {
             effect.cost = [];
             return state;
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.STARLY_SKY_CIRCUS_MARKER, this)) {
             // Remove marker at the end of turn.
             effect.player.marker.removeMarker(this.STARLY_SKY_CIRCUS_MARKER);
         }

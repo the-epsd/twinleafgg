@@ -81,7 +81,7 @@ class Starmie extends pokemon_card_1.PokemonCard {
         this.SPACE_BEACON_MARKER = 'SPACE_BEACON_MARKER';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.SPACE_BEACON_MARKER, this)) {
             const player = effect.player;
             player.marker.removeMarker(this.SPACE_BEACON_MARKER, this);
         }

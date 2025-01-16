@@ -83,7 +83,7 @@ class ShadowRiderCalyrexVMAX extends pokemon_card_1.PokemonCard {
                 player.deck.moveTo(player.hand, 2);
             });
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.UNDERWORLD_DOOR_MARKER, this)) {
             effect.player.marker.removeMarker(this.UNDERWORLD_DOOR_MARKER, this);
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

@@ -68,7 +68,7 @@ export class Whismur extends PokemonCard {
         }
       }
 
-      if (effect instanceof EndTurnEffect) {
+      if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.SUDDEN_SHRIEK_MARKER, this)) {
         effect.player.marker.removeMarker(this.SUDDEN_SHRIEK_MARKER, this);
       }
     }

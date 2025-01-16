@@ -42,7 +42,7 @@ class Bibarel extends pokemon_card_1.PokemonCard {
             const player = effect.player;
             player.marker.removeMarker(this.INDUSTRIOUS_INCISORS_MARKER, this);
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.INDUSTRIOUS_INCISORS_MARKER, this)) {
             const player = effect.player;
             player.marker.removeMarker(this.INDUSTRIOUS_INCISORS_MARKER, this);
         }

@@ -64,7 +64,7 @@ export class Dragonite extends PokemonCard {
 
     }
 
-    if (effect instanceof EndTurnEffect) {
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.STEP_IN_MARKER, this)) {
       const player = effect.player;
       player.marker.removeMarker(this.STEP_IN_MARKER, this);
     }

@@ -65,7 +65,7 @@ class Empoleon extends pokemon_card_1.PokemonCard {
                 player.discard.moveCardTo(card, slots[0]); // Move to Bench
                 player.deck.moveTo(player.hand, 3); // Move 3 Cards to Hand
             });
-            if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+            if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.EMERGENCY_SURFACING_MARKER, this)) {
                 effect.player.marker.removeMarker(this.EMERGENCY_SURFACING_MARKER, this);
             }
             return state;

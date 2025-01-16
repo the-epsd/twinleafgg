@@ -60,7 +60,7 @@ class Diantha extends trainer_card_1.TrainerCard {
             }
             return state;
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.DIANTHA_MARKER, this)) {
             const player = effect.player;
             const cardList = game_1.StateUtils.findCardList(state, this);
             const owner = game_1.StateUtils.findOwner(state, cardList);

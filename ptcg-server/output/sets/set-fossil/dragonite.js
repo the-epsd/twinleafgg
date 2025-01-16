@@ -54,7 +54,7 @@ class Dragonite extends pokemon_card_1.PokemonCard {
             });
             return state;
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.STEP_IN_MARKER, this)) {
             const player = effect.player;
             player.marker.removeMarker(this.STEP_IN_MARKER, this);
         }

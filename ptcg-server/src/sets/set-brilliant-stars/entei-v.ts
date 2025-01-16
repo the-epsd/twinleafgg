@@ -61,7 +61,7 @@ export class EnteiV extends PokemonCard {
       player.marker.removeMarker(this.FLEET_FOOTED_MARKER, this);
     }
 
-    if (effect instanceof EndTurnEffect) {
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.FLEET_FOOTED_MARKER, this)) {
       const player = effect.player;
       player.marker.removeMarker(this.FLEET_FOOTED_MARKER, this);
     }
@@ -87,15 +87,6 @@ export class EnteiV extends PokemonCard {
         }
       });
 
-    }
-    if (effect instanceof EndTurnEffect) {
-
-      effect.player.forEachPokemon(PlayerType.BOTTOM_PLAYER, player => {
-        if (player instanceof EnteiV) {
-          player.marker.removeMarker(this.FLEET_FOOTED_MARKER);
-        }
-        return state;
-      });
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

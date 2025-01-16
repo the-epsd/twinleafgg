@@ -64,7 +64,7 @@ export class Gabite extends PokemonCard {
       player.marker.removeMarker(this.DRAGON_CALL_MARKER, this);
     }
 
-    if (effect instanceof EndTurnEffect) {
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.DRAGON_CALL_MARKER, this)) {
       const player = effect.player;
       player.marker.removeMarker(this.DRAGON_CALL_MARKER, this);
     }
@@ -108,15 +108,7 @@ export class Gabite extends PokemonCard {
         });
       });
     }
-    if (effect instanceof EndTurnEffect) {
 
-      effect.player.forEachPokemon(PlayerType.BOTTOM_PLAYER, player => {
-        if (player instanceof Gabite) {
-          player.marker.removeMarker(this.DRAGON_CALL_MARKER);
-        }
-      });
-      return state;
-    }
     return state;
   }
 }

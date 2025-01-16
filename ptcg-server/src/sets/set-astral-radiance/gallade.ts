@@ -110,7 +110,7 @@ export class Gallade extends PokemonCard {
       player.marker.removeMarker(this.BUDDY_CATCH_MARKER, this);
     }
 
-    if (effect instanceof EndTurnEffect) {
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.BUDDY_CATCH_MARKER, this)) {
       const player = effect.player;
       player.marker.removeMarker(this.BUDDY_CATCH_MARKER, this);
     }
@@ -153,15 +153,6 @@ export class Gallade extends PokemonCard {
       });
     }
 
-    if (effect instanceof EndTurnEffect) {
-
-      effect.player.forEachPokemon(PlayerType.BOTTOM_PLAYER, player => {
-        if (player instanceof Gallade) {
-          player.marker.removeMarker(this.BUDDY_CATCH_MARKER);
-        }
-      });
-      return state;
-    }
     return state;
   }
 }

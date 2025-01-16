@@ -74,7 +74,7 @@ class KeldeoEx extends pokemon_card_1.PokemonCard {
             });
             effect.damage += energyCount * 20;
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.RUSH_IN_MARKER, this)) {
             effect.player.marker.removeMarker(this.RUSH_IN_MARKER, this);
         }
         return state;

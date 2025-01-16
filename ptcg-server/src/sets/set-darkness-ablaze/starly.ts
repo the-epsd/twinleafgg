@@ -104,7 +104,7 @@ export class Starly extends PokemonCard {
       return state;
     }
 
-    if (effect instanceof EndTurnEffect) {
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.STARLY_SKY_CIRCUS_MARKER, this)) {
       // Remove marker at the end of turn.
       effect.player.marker.removeMarker(this.STARLY_SKY_CIRCUS_MARKER);
     }

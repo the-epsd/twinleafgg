@@ -67,13 +67,9 @@ class Swampert extends pokemon_card_1.PokemonCard {
             });
             return state;
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
-            state.players.forEach(player => {
-                if (!player.marker.hasMarker(this.POWER_DRAW_MARKER)) {
-                    return;
-                }
-                player.marker.removeMarker(this.POWER_DRAW_MARKER, this);
-            });
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.POWER_DRAW_MARKER, this)) {
+            const player = effect.player;
+            player.marker.removeMarker(this.POWER_DRAW_MARKER, this);
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack == this.attacks[0]) {
             const player = effect.player;

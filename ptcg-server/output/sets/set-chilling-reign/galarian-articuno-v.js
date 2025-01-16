@@ -40,16 +40,16 @@ class GalarianArticunoV extends pokemon_card_1.PokemonCard {
         this.setNumber = '58';
         this.name = 'Galarian Articuno V';
         this.fullName = 'Galarian Articuno V CRE';
-        this.CONCEALED_CARDS_MARKER = 'CONCEALED_CARDS_MARKER';
+        this.RECONSTITUTE_MARKER = 'RECONSTITUTE_MARKER';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {
             const player = effect.player;
-            player.marker.removeMarker(this.CONCEALED_CARDS_MARKER, this);
+            player.marker.removeMarker(this.RECONSTITUTE_MARKER, this);
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.RECONSTITUTE_MARKER, this)) {
             const player = effect.player;
-            player.marker.removeMarker(this.CONCEALED_CARDS_MARKER, this);
+            player.marker.removeMarker(this.RECONSTITUTE_MARKER, this);
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const specialConditionEffect = new attack_effects_1.AddSpecialConditionsEffect(effect, [card_types_1.SpecialCondition.CONFUSED]);
@@ -63,7 +63,7 @@ class GalarianArticunoV extends pokemon_card_1.PokemonCard {
             if (!hasCardInHand) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
-            if (player.marker.hasMarker(this.CONCEALED_CARDS_MARKER, this)) {
+            if (player.marker.hasMarker(this.RECONSTITUTE_MARKER, this)) {
                 throw new game_1.GameError(game_1.GameMessage.POWER_ALREADY_USED);
             }
             state = store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, player.hand, {}, { allowCancel: true, min: 2, max: 2 }), cards => {
@@ -71,7 +71,7 @@ class GalarianArticunoV extends pokemon_card_1.PokemonCard {
                 if (cards.length === 0) {
                     return;
                 }
-                player.marker.addMarker(this.CONCEALED_CARDS_MARKER, this);
+                player.marker.addMarker(this.RECONSTITUTE_MARKER, this);
                 player.hand.moveCardsTo(cards, player.discard);
                 player.deck.moveTo(player.hand, 1);
             });

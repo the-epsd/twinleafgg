@@ -1,7 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, CardTag, EnergyType } from '../../game/store/card/card-types';
-import { PowerType, 
-  GameMessage, PlayerType, SlotType, AttachEnergyPrompt, StateUtils, State, StoreLike } from '../../game';
+import {
+  PowerType,
+  GameMessage, PlayerType, SlotType, AttachEnergyPrompt, StateUtils, State, StoreLike
+} from '../../game';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { Effect } from '../../game/store/effects/effect';
@@ -17,7 +19,7 @@ export class Houndoom extends PokemonCard {
 
   public evolvesFrom = 'Houndour';
 
-  public tags = [ CardTag.SINGLE_STRIKE ];
+  public tags = [CardTag.SINGLE_STRIKE];
 
   public cardType: CardType = CardType.DARK;
 
@@ -72,7 +74,7 @@ export class Houndoom extends PokemonCard {
         GameMessage.ATTACH_ENERGY_TO_BENCH,
         player.deck,
         PlayerType.BOTTOM_PLAYER,
-        [ SlotType.BENCH, SlotType.ACTIVE ],
+        [SlotType.BENCH, SlotType.ACTIVE],
         { superType: SuperType.ENERGY, energyType: EnergyType.SPECIAL, name: 'Single Strike Energy' },
         { allowCancel: true, min: 0, max: 1 }
       ), transfers => {
@@ -92,7 +94,7 @@ export class Houndoom extends PokemonCard {
       return state;
     }
 
-    if (effect instanceof EndTurnEffect) {
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.SINGLE_STRIKE_ROAR_MARKER, this)) {
       effect.player.marker.removeMarker(this.SINGLE_STRIKE_ROAR_MARKER, this);
     }
 

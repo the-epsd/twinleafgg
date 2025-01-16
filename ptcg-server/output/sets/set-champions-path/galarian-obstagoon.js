@@ -94,12 +94,9 @@ class GalarianObstagoon extends pokemon_card_1.PokemonCard {
                 return state;
             });
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
-            effect.player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, player => {
-                if (player.cards.includes(this)) {
-                    player.marker.removeMarker(this.WICKED_RULER_MARKER, this);
-                }
-            });
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.WICKED_RULER_MARKER, this)) {
+            const player = effect.player;
+            player.marker.removeMarker(this.WICKED_RULER_MARKER, this);
         }
         return state;
     }

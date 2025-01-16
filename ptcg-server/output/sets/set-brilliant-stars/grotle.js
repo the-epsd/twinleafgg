@@ -43,7 +43,7 @@ class Grotle extends pokemon_card_1.PokemonCard {
             const player = effect.player;
             player.marker.removeMarker(this.SUN_DRENCHED_SHELL_MARKER, this);
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.SUN_DRENCHED_SHELL_MARKER, this)) {
             const player = effect.player;
             player.marker.removeMarker(this.SUN_DRENCHED_SHELL_MARKER, this);
         }
@@ -73,14 +73,6 @@ class Grotle extends pokemon_card_1.PokemonCard {
                 });
                 return store.prompt(state, new game_1.ShowCardsPrompt(opponent.id, game_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards), () => state);
             });
-        }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
-            effect.player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, player => {
-                if (player instanceof Grotle) {
-                    player.marker.removeMarker(this.SUN_DRENCHED_SHELL_MARKER);
-                }
-            });
-            return state;
         }
         return state;
     }

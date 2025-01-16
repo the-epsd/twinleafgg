@@ -168,7 +168,7 @@ export class DarkraiGX extends PokemonCard {
       }
     }
 
-    if (effect instanceof EndTurnEffect) {
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.NETHERWORLD_GATE_MARKER, this)) {
       effect.player.marker.removeMarker(this.NETHERWORLD_GATE_MARKER, this);
     }
     return state;

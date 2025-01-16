@@ -38,7 +38,7 @@ class HisuianBasculegion extends pokemon_card_1.PokemonCard {
         this.RETALIATE_MARKER = 'RETALIATE_MARKER';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.RETALIATE_MARKER, this)) {
             effect.player.marker.removeMarker(this.RETALIATE_MARKER);
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

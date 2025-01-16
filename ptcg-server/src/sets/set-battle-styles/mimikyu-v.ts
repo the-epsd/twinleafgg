@@ -90,7 +90,7 @@ export class MimikyuV extends PokemonCard {
       return state;
     }
 
-    if (effect instanceof EndTurnEffect) {
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.DUMMY_DOLL_MARKER, this)) {
       const player = effect.player;
 
       const cardList = StateUtils.findCardList(state, this) as PokemonCardList;

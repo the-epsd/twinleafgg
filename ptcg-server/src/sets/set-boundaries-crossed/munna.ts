@@ -22,7 +22,7 @@ export class Munna extends PokemonCard {
 
   public weakness = [{ type: CardType.PSYCHIC }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Long-Distance Hypnosis',
@@ -35,7 +35,7 @@ export class Munna extends PokemonCard {
 
   public attacks = [{
     name: 'Psyshot',
-    cost: [ CardType.PSYCHIC, CardType.COLORLESS ],
+    cost: [CardType.PSYCHIC, CardType.COLORLESS],
     damage: 20,
     text: ''
   }];
@@ -80,7 +80,7 @@ export class Munna extends PokemonCard {
       });
     }
 
-    if (effect instanceof EndTurnEffect) {
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.LONG_DISTANCE_HYPNOSIS_MARKER, this)) {
       effect.player.marker.removeMarker(this.LONG_DISTANCE_HYPNOSIS_MARKER, this);
     }
 

@@ -143,13 +143,9 @@ export class GalarianObstagoon extends PokemonCard {
 
     }
 
-    if (effect instanceof EndTurnEffect) {
-
-      effect.player.forEachPokemon(PlayerType.BOTTOM_PLAYER, player => {
-        if (player.cards.includes(this)) {
-          player.marker.removeMarker(this.WICKED_RULER_MARKER, this);
-        }
-      });
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.WICKED_RULER_MARKER, this)) {
+      const player = effect.player;
+      player.marker.removeMarker(this.WICKED_RULER_MARKER, this);
     }
 
     return state;

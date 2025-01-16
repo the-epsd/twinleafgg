@@ -34,5 +34,6 @@ export declare class Florges extends PokemonCard {
     setNumber: string;
     readonly MIST_GUARD_MARKER = "MIST_GUARD_MARKER";
     readonly CLEAR_MIST_GUARD_MARKER = "CLEAR_MIST_GUARD_MARKER";
+    readonly WONDROUS_GIFT_MARKER = "WONDROUS_GIFT_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

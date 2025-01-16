@@ -104,7 +104,7 @@ export class Mew extends PokemonCard {
         });
       });
     }
-    if (effect instanceof EndTurnEffect) {
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.MYSTERIOUS_TAIL_MARKER, this)) {
       const player = effect.player;
       player.marker.removeMarker(this.MYSTERIOUS_TAIL_MARKER, this);
     }

@@ -24,7 +24,6 @@ class WishfulBaton extends trainer_card_1.TrainerCard {
         if (effect instanceof game_effects_1.KnockOutEffect && effect.target.cards.includes(this) && effect.player.marker.hasMarker(effect.player.DAMAGE_DEALT_MARKER)) {
             const player = effect.player;
             const target = effect.target;
-            const cards = target.getPokemons();
             const removedCards = [];
             const pokemonIndices = effect.target.cards.map((card, index) => index);
             for (let i = pokemonIndices.length - 1; i >= 0; i--) {
@@ -33,17 +32,8 @@ class WishfulBaton extends trainer_card_1.TrainerCard {
                 target.damage = 0;
             }
             const energyToAttach = new game_1.CardList();
-            const toolCard = new game_1.CardList();
-            toolCard.cards = removedCards.filter(c => c instanceof trainer_card_1.TrainerCard && c.trainerType === card_types_1.TrainerType.TOOL);
-            const lostZoned = new game_1.CardList();
-            lostZoned.cards = cards;
-            const specialEnergy = new game_1.CardList();
-            specialEnergy.cards = removedCards.filter(c => c instanceof game_1.EnergyCard && c.energyType === card_types_1.EnergyType.SPECIAL);
             const basicEnergy = new game_1.CardList();
             basicEnergy.cards = removedCards.filter(c => c instanceof game_1.EnergyCard && c.energyType === card_types_1.EnergyType.BASIC);
-            lostZoned.moveTo(player.discard);
-            toolCard.moveTo(player.discard);
-            specialEnergy.moveTo(player.discard);
             basicEnergy.moveTo(energyToAttach);
             return store.prompt(state, new attach_energy_prompt_1.AttachEnergyPrompt(player.id, game_message_1.GameMessage.ATTACH_ENERGY_TO_BENCH, energyToAttach, play_card_action_1.PlayerType.BOTTOM_PLAYER, [play_card_action_1.SlotType.BENCH], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC }, { allowCancel: false, min: 0, max: 3, sameTarget: true }), transfers => {
                 transfers = transfers || [];

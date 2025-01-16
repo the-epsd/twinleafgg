@@ -42,7 +42,7 @@ class CrobatV extends pokemon_card_1.PokemonCard {
         this.DARK_ASSET_MARKER = 'DARK_ASSET_MARKER';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.DARK_ASSET_MARKER, this)) {
             const player = effect.player;
             player.marker.removeMarker(this.DARK_ASSET_MARKER, this);
         }
