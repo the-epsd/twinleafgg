@@ -34,7 +34,6 @@ export class WishfulBaton extends TrainerCard {
       const player = effect.player;
 
       const target = effect.target;
-      const cards = target.getPokemons();
 
       const removedCards = [];
 
@@ -50,21 +49,8 @@ export class WishfulBaton extends TrainerCard {
 
       const energyToAttach = new CardList();
 
-      const toolCard = new CardList();
-      toolCard.cards = removedCards.filter(c => c instanceof TrainerCard && c.trainerType === TrainerType.TOOL);
-
-      const lostZoned = new CardList();
-      lostZoned.cards = cards;
-
-      const specialEnergy = new CardList();
-      specialEnergy.cards = removedCards.filter(c => c instanceof EnergyCard && c.energyType === EnergyType.SPECIAL);
-
       const basicEnergy = new CardList();
       basicEnergy.cards = removedCards.filter(c => c instanceof EnergyCard && c.energyType === EnergyType.BASIC);
-
-      lostZoned.moveTo(player.discard);
-      toolCard.moveTo(player.discard);
-      specialEnergy.moveTo(player.discard);
 
       basicEnergy.moveTo(energyToAttach);
 
