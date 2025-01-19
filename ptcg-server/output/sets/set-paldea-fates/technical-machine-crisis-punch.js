@@ -44,13 +44,14 @@ class TechnicalMachineCrisisPunch extends trainer_card_1.TrainerCard {
             !effect.attacks.includes(this.attacks[0])) {
             effect.attacks.includes(this.attacks[0]);
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.active.tool) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
             const player = effect.player;
-            const tool = effect.player.active.tool;
-            if (tool.name === this.name) {
-                player.active.moveCardTo(tool, player.discard);
-                player.active.tool = undefined;
-            }
+            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card, index) => {
+                if (cardList.cards.includes(this)) {
+                    cardList.moveCardTo(this, player.discard);
+                    cardList.tool = undefined;
+                }
+            });
             return state;
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
