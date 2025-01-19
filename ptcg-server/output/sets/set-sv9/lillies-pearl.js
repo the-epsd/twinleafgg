@@ -19,7 +19,7 @@ class LilliesPearl extends trainer_card_1.TrainerCard {
     // public damageDealt = false;
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.KnockOutEffect && effect.target.cards.includes(this) && effect.player.marker.hasMarker(effect.player.DAMAGE_DEALT_MARKER)) {
-            if (!effect.target.isLillies()) {
+            if (effect.target.isLillies()) {
                 effect.prizeCount -= 1;
             }
             return state;

@@ -32,7 +32,6 @@ class Cetoddle extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const opponent = effect.opponent;
             const benched = opponent.bench.filter(b => b.cards.length > 0);
-            effect.damage = 20;
             benched.forEach(target => {
                 const damageEffect = new attack_effects_1.PutDamageEffect(effect, 10);
                 damageEffect.target = target;
