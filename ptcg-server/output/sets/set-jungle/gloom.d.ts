@@ -7,7 +7,7 @@ export declare class Gloom extends PokemonCard {
     cardType: CardType;
     hp: number;
     weakness: {
-        type: CardType;
+        type: CardType.FIRE;
     }[];
     retreat: CardType[];
     evolvesFrom: string;

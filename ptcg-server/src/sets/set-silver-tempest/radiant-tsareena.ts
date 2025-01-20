@@ -6,7 +6,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, HealEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { PlayerType } from '../../game/store/actions/play-card-action';
-import { PokemonCardList } from '../../game';
+import { GameError, GameMessage, PokemonCardList } from '../../game';
 import { RemoveSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 
 
@@ -50,11 +50,19 @@ export class RadiantTsareena extends PokemonCard {
 
   public fullName: string = 'Radiant Tsareena SIT';
 
+  public readonly ELEGANT_HEAL_MARKER = 'ELEGANT_HEAL_MARKER';
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
+
+      if (player.marker.hasMarker(this.ELEGANT_HEAL_MARKER, this)) {
+        throw new GameError(GameMessage.POWER_ALREADY_USED);
+      }
+
+      player.marker.addMarker(this.ELEGANT_HEAL_MARKER, this);
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList: PokemonCardList) => {
         const healEffect = new HealEffect(player, cardList, 20);

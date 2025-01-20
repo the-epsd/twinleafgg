@@ -9,7 +9,7 @@ class Goldeen extends pokemon_card_1.PokemonCard {
         this.stage = card_types_1.Stage.BASIC;
         this.cardType = card_types_1.CardType.WATER;
         this.hp = 40;
-        this.weakness = [{ type: card_types_1.CardType.FIRE }];
+        this.weakness = [{ type: L }];
         this.attacks = [{
                 name: 'Horn Attack',
                 cost: [card_types_1.CardType.WATER],

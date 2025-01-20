@@ -17,7 +17,7 @@ export class Electrode extends PokemonCard {
 
   public cardType: CardType = L;
 
-  public hp: number = 80;
+  public hp: number = 90;
 
   public weakness = [{ type: F }];
 

@@ -22,7 +22,7 @@ class Charmander extends pokemon_card_1.PokemonCard {
             {
                 name: 'Ember',
                 cost: [card_types_1.CardType.FIRE, card_types_1.CardType.COLORLESS],
-                damage: 40,
+                damage: 30,
                 text: 'Discard 1 R Energy card attached to Charmander in order to use this attack.',
                 effect: (store, state, effect) => {
                     prefabs_1.DISCARD_X_ENERGY_FROM_THIS_POKEMON(state, effect, store, card_types_1.CardType.FIRE, 1);

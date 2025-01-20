@@ -12,7 +12,7 @@ class Hitmonlee extends pokemon_card_1.PokemonCard {
         this.stage = card_types_1.Stage.BASIC;
         this.cardType = card_types_1.CardType.FIGHTING;
         this.hp = 60;
-        this.weakness = [{ type: card_types_1.CardType.PSYCHIC, value: 2 }];
+        this.weakness = [{ type: P }];
         this.resistance = [];
         this.retreat = [card_types_1.CardType.COLORLESS];
         this.attacks = [

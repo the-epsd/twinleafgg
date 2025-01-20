@@ -11,9 +11,8 @@ class Exeggutor extends pokemon_card_1.PokemonCard {
         super(...arguments);
         this.stage = card_types_1.Stage.STAGE_1;
         this.cardType = card_types_1.CardType.GRASS;
-        this.hp = 70;
+        this.hp = 80;
         this.weakness = [{ type: card_types_1.CardType.FIRE }];
-        this.resistance = [{ type: card_types_1.CardType.FIGHTING, value: -30 }];
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.evolvesFrom = 'Exeggcute';
         this.attacks = [{

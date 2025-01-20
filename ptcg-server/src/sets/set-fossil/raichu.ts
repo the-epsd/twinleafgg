@@ -13,7 +13,7 @@ export class Raichu extends PokemonCard {
   public evolvesTo = ['Raichu BREAK', 'Raichu LV.X'];
   public cardType: CardType = CardType.LIGHTNING;
   public hp: number = 90;
-  public weakness = [{ type: CardType.FIGHTING, value: 2 }];
+  public weakness = [{ type: F }];
   public resistance = [];
   public retreat = [CardType.COLORLESS];
   public attacks = [

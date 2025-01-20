@@ -49,7 +49,7 @@ class SwitchCart extends trainer_card_1.TrainerCard {
         this.setNumber = '154';
         this.name = 'Switch Cart';
         this.fullName = 'Switch Cart ASR';
-        this.text = 'Switch your Active Pokemon with 1 of your Benched Pokemon.';
+        this.text = 'Switch your Active Basic Pokémon with 1 of your Benched Pokémon. If you do, heal 30 damage from the Pokémon you moved to your Bench.';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {

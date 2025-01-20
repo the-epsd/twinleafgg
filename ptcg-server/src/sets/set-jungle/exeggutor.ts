@@ -10,11 +10,9 @@ export class Exeggutor extends PokemonCard {
 
   public cardType: CardType = CardType.GRASS;
 
-  public hp: number = 70;
+  public hp: number = 80;
 
   public weakness = [{ type: CardType.FIRE }];
-
-  public resistance = [{ type: CardType.FIGHTING, value: -30 }];
 
   public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 

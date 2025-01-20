@@ -12,7 +12,7 @@ export class Gloom extends PokemonCard {
 
   public hp: number = 60;
 
-  public weakness = [{ type: CardType.WATER }];
+  public weakness = [{ type: R }];
 
   public retreat = [CardType.COLORLESS];
 

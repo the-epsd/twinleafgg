@@ -13,7 +13,7 @@ class Victreebel extends pokemon_card_1.PokemonCard {
         this.cardType = card_types_1.CardType.GRASS;
         this.hp = 80;
         this.weakness = [{ type: card_types_1.CardType.FIRE }];
-        this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
+        this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.evolvesFrom = 'Weepinbell';
         this.attacks = [{
                 name: 'Lure',

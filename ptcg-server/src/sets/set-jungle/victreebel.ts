@@ -14,7 +14,7 @@ export class Victreebel extends PokemonCard {
 
   public weakness = [{ type: CardType.FIRE }];
 
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public evolvesFrom = 'Weepinbell';
 

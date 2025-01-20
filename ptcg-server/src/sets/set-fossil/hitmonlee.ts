@@ -11,7 +11,7 @@ export class Hitmonlee extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = CardType.FIGHTING;
   public hp: number = 60;
-  public weakness = [{ type: CardType.PSYCHIC, value: 2 }];
+  public weakness = [{ type: P }];
   public resistance = [];
   public retreat = [CardType.COLORLESS];
 
