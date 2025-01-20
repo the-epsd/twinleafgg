@@ -95,7 +95,7 @@ class Sableye extends pokemon_card_1.PokemonCard {
             effect.player.marker.removeMarker(game_1.PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER, this);
             this.DISABLED_ATTACK = undefined;
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.EXCAVATE_MARKER, this)) {
             const player = effect.player;
             player.marker.removeMarker(this.EXCAVATE_MARKER, this);
         }

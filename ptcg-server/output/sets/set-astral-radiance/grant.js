@@ -51,7 +51,7 @@ class Grant extends trainer_card_1.TrainerCard {
                 effect.damage += 30;
             }
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.GRANT_MARKER, this)) {
             const player = effect.player;
             player.marker.removeMarker(this.GRANT_MARKER, this);
             return state;

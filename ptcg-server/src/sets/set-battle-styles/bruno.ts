@@ -43,7 +43,7 @@ export class Bruno extends TrainerCard {
         if (!duringTurn || state.players[state.activePlayer] !== opponent) {
           return state;
         }
-                
+
 
         // No Pokemon KO last turn
         if (!player.marker.hasMarker(this.BRUNO_MARKER)) {
@@ -57,7 +57,7 @@ export class Bruno extends TrainerCard {
           }
           player.deck.moveTo(player.hand, 5);
         }
-            
+
 
 
         if (cards.length > 0) {
@@ -74,7 +74,7 @@ export class Bruno extends TrainerCard {
     }
 
 
-    if (effect instanceof EndTurnEffect) {
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.BRUNO_MARKER, this)) {
       effect.player.marker.removeMarker(this.BRUNO_MARKER);
     }
     return state;

@@ -58,7 +58,7 @@ export class Octillery extends PokemonCard {
       player.marker.removeMarker(this.ABYSSAL_HAND_MARKER, this);
     }
 
-    if (effect instanceof EndTurnEffect) {
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ABYSSAL_HAND_MARKER, this)) {
       const player = effect.player;
       player.marker.removeMarker(this.ABYSSAL_HAND_MARKER, this);
     }
@@ -89,16 +89,6 @@ export class Octillery extends PokemonCard {
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
         if (cardList.getPokemonCard() === this) {
           cardList.addBoardEffect(BoardEffect.ABILITY_USED);
-        }
-      });
-
-    }
-
-    if (effect instanceof EndTurnEffect) {
-
-      effect.player.forEachPokemon(PlayerType.BOTTOM_PLAYER, player => {
-        if (player instanceof Octillery) {
-          player.marker.removeMarker(this.ABYSSAL_HAND_MARKER);
         }
       });
 

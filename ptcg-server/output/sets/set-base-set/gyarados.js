@@ -19,19 +19,19 @@ class Gyarados extends pokemon_card_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '6';
         this.hp = 100;
-        this.weakness = [{ type: card_types_1.CardType.LIGHTNING }];
-        this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
+        this.weakness = [{ type: G }];
+        this.retreat = [C, C, C];
         this.attacks = [
             {
                 name: 'Dragon Rage',
                 cost: [card_types_1.CardType.WATER, card_types_1.CardType.WATER, card_types_1.CardType.WATER],
-                damage: 40,
+                damage: 50,
                 text: ''
             },
             {
                 name: 'Bubble Beam',
                 cost: [card_types_1.CardType.WATER, card_types_1.CardType.WATER, card_types_1.CardType.WATER, card_types_1.CardType.WATER],
-                damage: 50,
+                damage: 40,
                 text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
             }
         ];

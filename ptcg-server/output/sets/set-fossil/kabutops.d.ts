@@ -9,8 +9,7 @@ export declare class Kabutops extends PokemonCard {
     cardType: CardType;
     hp: number;
     weakness: {
-        type: CardType;
-        value: number;
+        type: CardType.GRASS;
     }[];
     resistance: never[];
     retreat: CardType[];

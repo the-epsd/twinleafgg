@@ -31,5 +31,6 @@ export declare class RadiantTsareena extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
+    readonly ELEGANT_HEAL_MARKER = "ELEGANT_HEAL_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

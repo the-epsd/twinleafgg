@@ -33,6 +33,6 @@ export declare class GalarianArticunoV extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
-    readonly CONCEALED_CARDS_MARKER = "CONCEALED_CARDS_MARKER";
+    readonly RECONSTITUTE_MARKER = "RECONSTITUTE_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

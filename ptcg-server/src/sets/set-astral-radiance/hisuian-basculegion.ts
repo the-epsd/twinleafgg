@@ -39,7 +39,7 @@ export class HisuianBasculegion extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof EndTurnEffect) {
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.RETALIATE_MARKER, this)) {
       effect.player.marker.removeMarker(this.RETALIATE_MARKER);
     }
 

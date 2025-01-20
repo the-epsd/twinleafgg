@@ -55,7 +55,7 @@ export class CrobatV extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof EndTurnEffect) {
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.DARK_ASSET_MARKER, this)) {
       const player = effect.player;
       player.marker.removeMarker(this.DARK_ASSET_MARKER, this);
     }

@@ -12,7 +12,7 @@ class Electrode extends pokemon_card_1.PokemonCard {
         this.stage = card_types_1.Stage.STAGE_1;
         this.evolevesFrom = 'Voltorb';
         this.cardType = L;
-        this.hp = 80;
+        this.hp = 90;
         this.weakness = [{ type: F }];
         this.retreat = [C];
         this.attacks = [

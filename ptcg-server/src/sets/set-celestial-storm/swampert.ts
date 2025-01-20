@@ -84,13 +84,9 @@ export class Swampert extends PokemonCard {
       return state;
     }
 
-    if (effect instanceof EndTurnEffect) {
-      state.players.forEach(player => {
-        if (!player.marker.hasMarker(this.POWER_DRAW_MARKER)) {
-          return;
-        }
-        player.marker.removeMarker(this.POWER_DRAW_MARKER, this);
-      });
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.POWER_DRAW_MARKER, this)) {
+      const player = effect.player;
+      player.marker.removeMarker(this.POWER_DRAW_MARKER, this);
     }
 
     if (effect instanceof AttackEffect && effect.attack == this.attacks[0]) {

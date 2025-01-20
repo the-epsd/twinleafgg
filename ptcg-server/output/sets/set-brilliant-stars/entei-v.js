@@ -46,7 +46,7 @@ class EnteiV extends pokemon_card_1.PokemonCard {
             const player = effect.player;
             player.marker.removeMarker(this.FLEET_FOOTED_MARKER, this);
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.FLEET_FOOTED_MARKER, this)) {
             const player = effect.player;
             player.marker.removeMarker(this.FLEET_FOOTED_MARKER, this);
         }
@@ -65,14 +65,6 @@ class EnteiV extends pokemon_card_1.PokemonCard {
                 if (cardList.getPokemonCard() === this) {
                     cardList.addBoardEffect(card_types_1.BoardEffect.ABILITY_USED);
                 }
-            });
-        }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
-            effect.player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, player => {
-                if (player instanceof EnteiV) {
-                    player.marker.removeMarker(this.FLEET_FOOTED_MARKER);
-                }
-                return state;
             });
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

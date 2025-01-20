@@ -13,9 +13,9 @@ class Machop extends pokemon_card_1.PokemonCard {
         this.fullName = 'Machop BS';
         this.cardType = card_types_1.CardType.FIGHTING;
         this.stage = card_types_1.Stage.BASIC;
+        this.retreat = [card_types_1.CardType.COLORLESS];
         this.hp = 50;
         this.weakness = [{ type: card_types_1.CardType.PSYCHIC }];
-        this.retreatCost = [{ type: card_types_1.CardType.COLORLESS }];
         this.attacks = [
             {
                 name: 'Low Kick',

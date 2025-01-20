@@ -66,7 +66,7 @@ class Charizard extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.player.marker.hasMarker(this.ENERGY_BURN_MARKER, this)) {
             effect.attack.cost = effect.attack.cost.map(() => card_types_1.CardType.FIRE);
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.ENERGY_BURN_MARKER, this)) {
             effect.player.marker.removeMarker(this.ENERGY_BURN_MARKER, this);
         }
         return state;

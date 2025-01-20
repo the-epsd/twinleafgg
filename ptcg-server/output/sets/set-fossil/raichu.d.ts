@@ -10,8 +10,7 @@ export declare class Raichu extends PokemonCard {
     cardType: CardType;
     hp: number;
     weakness: {
-        type: CardType;
-        value: number;
+        type: CardType.FIGHTING;
     }[];
     resistance: never[];
     retreat: CardType[];

@@ -25,7 +25,7 @@ export class Duskull extends PokemonCard {
     {
       name: 'Perplex',
       cost: [P],
-      damage: 30,
+      damage: 10,
       text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Confused.'
     },
   ];

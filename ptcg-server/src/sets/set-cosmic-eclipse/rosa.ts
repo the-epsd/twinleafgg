@@ -123,7 +123,7 @@ export class Rosa extends TrainerCard {
       return state;
     }
 
-    if (effect instanceof EndTurnEffect) {
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ROSA_MARKER, this)) {
       effect.player.marker.removeMarker(this.ROSA_MARKER);
     }
 

@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, PowerType, StateUtils, GameError, GameMessage, PlayerType } from '../../game';
+import { StoreLike, State, PowerType, StateUtils, GameError, GameMessage } from '../../game';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
@@ -61,7 +61,7 @@ export class SuicuneV extends PokemonCard {
       player.marker.removeMarker(this.FLEET_FOOTED_MARKER, this);
     }
 
-    if (effect instanceof EndTurnEffect) {
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.FLEET_FOOTED_MARKER, this)) {
       const player = effect.player;
       player.marker.removeMarker(this.FLEET_FOOTED_MARKER, this);
     }
@@ -80,15 +80,6 @@ export class SuicuneV extends PokemonCard {
       // Draw a card
       player.deck.moveTo(player.hand, 1);
       player.marker.addMarker(this.FLEET_FOOTED_MARKER, this);
-    }
-    if (effect instanceof EndTurnEffect) {
-
-      effect.player.forEachPokemon(PlayerType.BOTTOM_PLAYER, player => {
-        if (player instanceof SuicuneV) {
-          player.marker.removeMarker(this.FLEET_FOOTED_MARKER);
-        }
-        return state;
-      });
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

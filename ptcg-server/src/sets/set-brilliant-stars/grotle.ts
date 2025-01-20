@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
-import { ChooseCardsPrompt, GameError, GameMessage, PlayerType, PowerType, ShowCardsPrompt, ShuffleDeckPrompt, State, StateUtils, StoreLike } from '../../game';
+import { ChooseCardsPrompt, GameError, GameMessage, PowerType, ShowCardsPrompt, ShuffleDeckPrompt, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
@@ -43,7 +43,7 @@ export class Grotle extends PokemonCard {
       player.marker.removeMarker(this.SUN_DRENCHED_SHELL_MARKER, this);
     }
 
-    if (effect instanceof EndTurnEffect) {
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.SUN_DRENCHED_SHELL_MARKER, this)) {
       const player = effect.player;
       player.marker.removeMarker(this.SUN_DRENCHED_SHELL_MARKER, this);
     }
@@ -90,14 +90,7 @@ export class Grotle extends PokemonCard {
         );
       });
     }
-    if (effect instanceof EndTurnEffect) {
-      effect.player.forEachPokemon(PlayerType.BOTTOM_PLAYER, player => {
-        if (player instanceof Grotle) {
-          player.marker.removeMarker(this.SUN_DRENCHED_SHELL_MARKER);
-        }
-      });
-      return state;
-    }
+
     return state;
   }
 }

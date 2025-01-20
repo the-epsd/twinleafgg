@@ -2,7 +2,7 @@ import { PowerType, State, StateUtils, StoreLike } from '../../game';
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { SupporterEffect } from '../../game/store/effects/play-card-effects';
 
 export class Diancie extends PokemonCard {
@@ -25,9 +25,9 @@ export class Diancie extends PokemonCard {
     damage: 20,
     text: 'Draw 2 cards.'
   }];
-  
+
   public weakness = [{ type: CardType.METAL }];
-  
+
   public retreat = [CardType.COLORLESS];
 
   public set: string = 'ASR';
@@ -69,10 +69,20 @@ export class Diancie extends PokemonCard {
       } catch {
         return state;
       }
-      
+
       effect.preventDefault = true;
     }
-    
+
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+      const player = effect.player;
+
+      if (player.deck.cards.length === 0) {
+        return state;
+      }
+
+      player.deck.moveTo(player.hand, Math.min(2, player.deck.cards.length));
+    }
+
     return state;
   }
 }

@@ -72,7 +72,7 @@ class GalarianMoltresV extends pokemon_card_1.PokemonCard {
                 }
             });
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.DIREFLAME_WINGS_MARKER, this)) {
             effect.player.marker.removeMarker(this.DIREFLAME_WINGS_MARKER, this);
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

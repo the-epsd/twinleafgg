@@ -120,7 +120,7 @@ export class Starmie extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof EndTurnEffect) {
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.SPACE_BEACON_MARKER, this)) {
       const player = effect.player;
       player.marker.removeMarker(this.SPACE_BEACON_MARKER, this);
     }

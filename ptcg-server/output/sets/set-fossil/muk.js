@@ -13,7 +13,7 @@ class Muk extends pokemon_card_1.PokemonCard {
         this.evolvesFrom = 'Grimer';
         this.cardType = card_types_1.CardType.GRASS;
         this.hp = 70;
-        this.weakness = [{ type: card_types_1.CardType.PSYCHIC, value: 2 }];
+        this.weakness = [{ type: P }];
         this.resistance = [];
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.powers = [{

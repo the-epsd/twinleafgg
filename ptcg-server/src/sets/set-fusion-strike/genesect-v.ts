@@ -91,7 +91,7 @@ export class GenesectV extends PokemonCard {
       player.marker.removeMarker(this.FUSION_STRIKE_SYSTEM_MARKER, this);
     }
 
-    if (effect instanceof EndTurnEffect) {
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.FUSION_STRIKE_SYSTEM_MARKER, this)) {
       const player = effect.player;
       player.marker.removeMarker(this.FUSION_STRIKE_SYSTEM_MARKER, this);
     }
@@ -129,15 +129,6 @@ export class GenesectV extends PokemonCard {
         });
       }
       player.marker.addMarker(this.FUSION_STRIKE_SYSTEM_MARKER, this);
-    }
-
-    if (effect instanceof EndTurnEffect) {
-
-      effect.player.forEachPokemon(PlayerType.BOTTOM_PLAYER, player => {
-        if (player instanceof GenesectV) {
-          player.marker.removeMarker(this.FUSION_STRIKE_SYSTEM_MARKER);
-        }
-      });
     }
 
     return state;

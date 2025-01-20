@@ -1,4 +1,4 @@
-import { Attack, GameError, GameMessage, StateUtils } from '../../game';
+import { Attack, GameError, GameMessage, PlayerType, StateUtils } from '../../game';
 import { CardType, TrainerType } from '../../game/store/card/card-types';
 import { ColorlessCostReducer } from '../../game/store/card/pokemon-interface';
 import { TrainerCard } from '../../game/store/card/trainer-card';
@@ -58,16 +58,15 @@ export class TechnicalMachineCrisisPunch extends TrainerCard {
       effect.attacks.includes(this.attacks[0]);
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.active.tool) {
+    if (effect instanceof EndTurnEffect) {
       const player = effect.player;
-      const tool = effect.player.active.tool;
 
-
-
-      if (tool.name === this.name) {
-        player.active.moveCardTo(tool, player.discard);
-        player.active.tool = undefined;
-      }
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, index) => {
+        if (cardList.cards.includes(this)) {
+          cardList.moveCardTo(this, player.discard);
+          cardList.tool = undefined;
+        }
+      });
 
       return state;
     }

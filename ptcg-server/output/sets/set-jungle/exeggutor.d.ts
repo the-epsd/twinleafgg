@@ -9,10 +9,6 @@ export declare class Exeggutor extends PokemonCard {
     weakness: {
         type: CardType;
     }[];
-    resistance: {
-        type: CardType;
-        value: number;
-    }[];
     retreat: CardType[];
     evolvesFrom: string;
     attacks: ({

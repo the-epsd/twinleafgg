@@ -7,13 +7,13 @@ import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 export class Mareep extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
-  
+
   public cardType: CardType = CardType.LIGHTNING;
-  
+
   public hp: number = 70;
 
   public weakness = [{ type: CardType.FIGHTING }];
-  
+
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
@@ -49,26 +49,25 @@ export class Mareep extends PokemonCard {
       const addMarkerEffect = new AddMarkerEffect(effect, this.GROWL_MARKER, this);
       return store.reduceEffect(state, addMarkerEffect);
     }
-  
+
     // Reduce damage by 30
     if (effect instanceof PutDamageEffect
-        && effect.source.marker.hasMarker(this.GROWL_MARKER, this)) {
-  
+      && effect.source.marker.hasMarker(this.GROWL_MARKER, this)) {
+
       // It's not an attack
       if (state.phase !== GamePhase.ATTACK) {
         return state;
       }
-  
+
       effect.damage -= 20;
       return state;
     }
-  
-    if (effect instanceof EndTurnEffect) {
+
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.GROWL_MARKER, this)) {
       effect.player.active.marker.removeMarker(this.GROWL_MARKER, this);
     }
-  
+
     return state;
   }
-  
+
 }
-  

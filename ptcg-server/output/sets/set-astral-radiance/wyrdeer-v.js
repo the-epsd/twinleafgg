@@ -44,7 +44,7 @@ class WyrdeerV extends game_1.PokemonCard {
         const cardList = game_1.StateUtils.findCardList(state, this);
         const owner = game_1.StateUtils.findOwner(state, cardList);
         const player = state.players[state.activePlayer];
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.ABILITY_USED_MARKER, this)) {
             this.movedToActiveThisTurn = false;
             player.marker.removeMarker(this.ABILITY_USED_MARKER, this);
         }

@@ -12,7 +12,7 @@ class Psyduck extends pokemon_card_1.PokemonCard {
         super(...arguments);
         this.stage = card_types_1.Stage.BASIC;
         this.cardType = W;
-        this.hp = 70;
+        this.hp = 50;
         this.weakness = [{ type: L }];
         this.resistance = [];
         this.retreat = [C];

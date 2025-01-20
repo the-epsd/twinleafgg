@@ -41,12 +41,10 @@ export class Cetoddle extends PokemonCard {
 
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const opponent = effect.opponent;
       const benched = opponent.bench.filter(b => b.cards.length > 0);
-
-      effect.damage = 20;
 
       benched.forEach(target => {
         const damageEffect = new PutDamageEffect(effect, 10);

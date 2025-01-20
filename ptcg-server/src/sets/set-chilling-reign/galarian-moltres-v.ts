@@ -16,13 +16,13 @@ export class GalarianMoltresV extends PokemonCard {
 
   public cardType: CardType = CardType.DARK;
 
-  public tags = [ CardTag.POKEMON_V ];
+  public tags = [CardTag.POKEMON_V];
 
   public hp: number = 220;
 
   public weakness = [{ type: CardType.GRASS }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [
     {
@@ -36,7 +36,7 @@ export class GalarianMoltresV extends PokemonCard {
   public attacks = [
     {
       name: 'Aura Burn',
-      cost: [ CardType.DARK, CardType.DARK, CardType.COLORLESS ],
+      cost: [CardType.DARK, CardType.DARK, CardType.COLORLESS],
       damage: 190,
       text: 'This Pokémon also does 30 damage to itself.'
     }
@@ -81,7 +81,7 @@ export class GalarianMoltresV extends PokemonCard {
       if (cardList === undefined) {
         return state;
       }
-      
+
 
       return store.prompt(state, new ChooseCardsPrompt(
         player,
@@ -98,19 +98,19 @@ export class GalarianMoltresV extends PokemonCard {
       });
     }
 
-    if (effect instanceof EndTurnEffect) {
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.DIREFLAME_WINGS_MARKER, this)) {
       effect.player.marker.removeMarker(this.DIREFLAME_WINGS_MARKER, this);
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
-    
+
       const dealDamage = new DealDamageEffect(effect, 30);
       dealDamage.target = player.active;
       return store.reduceEffect(state, dealDamage);
     }
-    
+
     return state;
   }
-    
+
 }

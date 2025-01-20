@@ -46,7 +46,7 @@ class SuicuneV extends pokemon_card_1.PokemonCard {
             const player = effect.player;
             player.marker.removeMarker(this.FLEET_FOOTED_MARKER, this);
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.FLEET_FOOTED_MARKER, this)) {
             const player = effect.player;
             player.marker.removeMarker(this.FLEET_FOOTED_MARKER, this);
         }
@@ -61,14 +61,6 @@ class SuicuneV extends pokemon_card_1.PokemonCard {
             // Draw a card
             player.deck.moveTo(player.hand, 1);
             player.marker.addMarker(this.FLEET_FOOTED_MARKER, this);
-        }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
-            effect.player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, player => {
-                if (player instanceof SuicuneV) {
-                    player.marker.removeMarker(this.FLEET_FOOTED_MARKER);
-                }
-                return state;
-            });
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;

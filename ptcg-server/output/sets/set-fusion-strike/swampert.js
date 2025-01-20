@@ -122,7 +122,7 @@ class Swampert extends pokemon_card_1.PokemonCard {
                 option.action();
             });
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.MUDDY_MAKER_MARKER, this)) {
             const player = effect.player;
             player.marker.removeMarker(this.MUDDY_MAKER_MARKER, this);
         }

@@ -68,7 +68,7 @@ export class Grant extends TrainerCard {
       }
     }
 
-    if (effect instanceof EndTurnEffect) {
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.GRANT_MARKER, this)) {
       const player = effect.player;
       player.marker.removeMarker(this.GRANT_MARKER, this);
       return state;

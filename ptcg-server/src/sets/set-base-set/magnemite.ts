@@ -22,7 +22,7 @@ export class Magnemite extends PokemonCard {
 
   public setNumber: string = '53';
 
-  public hp: number = 60;
+  public hp: number = 40;
 
   public weakness = [{ type: CardType.FIGHTING }];
 

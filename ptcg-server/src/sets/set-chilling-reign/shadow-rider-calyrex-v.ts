@@ -50,14 +50,14 @@ export class ShadowRiderCalyrexV extends PokemonCard {
 
   public fullName: string = 'Shadow Rider Calyrex V CRE';
 
-  public readonly ASTRAL_BARRAGE_MARKER = 'ASTRAL_BARRAGE_MARKER';
+  public readonly SHADOW_MIST_MARKER = 'SHADOW_MIST_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      opponent.marker.addMarker(this.ASTRAL_BARRAGE_MARKER, this);
+      opponent.marker.addMarker(this.SHADOW_MIST_MARKER, this);
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
@@ -90,7 +90,7 @@ export class ShadowRiderCalyrexV extends PokemonCard {
     if (effect instanceof AttachEnergyEffect && effect.energyCard.energyType === EnergyType.SPECIAL) {
       const player = effect.player;
 
-      if (player.marker.hasMarker(this.ASTRAL_BARRAGE_MARKER, this)) {
+      if (player.marker.hasMarker(this.SHADOW_MIST_MARKER, this)) {
         throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
       }
     }
@@ -98,13 +98,13 @@ export class ShadowRiderCalyrexV extends PokemonCard {
     if (effect instanceof PlayStadiumEffect) {
       const player = effect.player;
 
-      if (player.marker.hasMarker(this.ASTRAL_BARRAGE_MARKER, this)) {
+      if (player.marker.hasMarker(this.SHADOW_MIST_MARKER, this)) {
         throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
       }
     }
 
-    if (effect instanceof EndTurnEffect) {
-      effect.player.marker.removeMarker(this.ASTRAL_BARRAGE_MARKER, this);
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.SHADOW_MIST_MARKER, this)) {
+      effect.player.marker.removeMarker(this.SHADOW_MIST_MARKER, this);
     }
 
     return state;

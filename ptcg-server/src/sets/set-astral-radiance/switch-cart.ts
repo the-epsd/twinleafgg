@@ -18,7 +18,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
   // Do not discard the card yet
   effect.preventDefault = true;
-  player.hand.moveCardTo(effect.trainerCard, player.supporter);  
+  player.hand.moveCardTo(effect.trainerCard, player.supporter);
 
   const pokemonCard = player.active.getPokemonCard();
 
@@ -71,7 +71,7 @@ export class SwitchCart extends TrainerCard {
   public fullName: string = 'Switch Cart ASR';
 
   public text: string =
-    'Switch your Active Pokemon with 1 of your Benched Pokemon.';
+    'Switch your Active Basic Pokémon with 1 of your Benched Pokémon. If you do, heal 30 damage from the Pokémon you moved to your Bench.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

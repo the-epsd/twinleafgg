@@ -15,19 +15,19 @@ export class Charmander extends PokemonCard {
 
   public weakness = [{ type: CardType.WATER }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Scratch',
-      cost: [ CardType.COLORLESS ],
+      cost: [CardType.COLORLESS],
       damage: 10,
       text: '',
     },
     {
       name: 'Ember',
-      cost: [ CardType.FIRE, CardType.COLORLESS ],
-      damage: 40,
+      cost: [CardType.FIRE, CardType.COLORLESS],
+      damage: 30,
       text: 'Discard 1 R Energy card attached to Charmander in order to use this attack.',
       effect: (store: StoreLike, state: State, effect: AttackEffect) => {
         DISCARD_X_ENERGY_FROM_THIS_POKEMON(state, effect, store, CardType.FIRE, 1);

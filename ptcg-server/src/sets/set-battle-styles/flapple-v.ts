@@ -15,7 +15,7 @@ export class FlappleV extends PokemonCard {
 
   public regulationMark = 'E';
 
-  public tags = [ CardTag.POKEMON_V ];
+  public tags = [CardTag.POKEMON_V];
 
   public cardType: CardType = CardType.GRASS;
 
@@ -23,19 +23,19 @@ export class FlappleV extends PokemonCard {
 
   public weakness = [{ type: CardType.FIRE }];
 
-  public resistance = [ ];
+  public resistance = [];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [{
     name: 'Sour Spit',
-    cost: [ CardType.GRASS ],
+    cost: [CardType.GRASS],
     damage: 20,
     text: 'During your opponent\'s next turn, the Defending Pokémon\'s ' +
-    'attacks cost {C}{C} more.'
+      'attacks cost {C}{C} more.'
   }, {
     name: 'Wing Attack',
-    cost: [ CardType.GRASS, CardType.COLORLESS, CardType.COLORLESS ],
+    cost: [CardType.GRASS, CardType.COLORLESS, CardType.COLORLESS],
     damage: 120,
     text: ''
   }];
@@ -63,14 +63,14 @@ export class FlappleV extends PokemonCard {
     }
 
     if (effect instanceof CheckAttackCostEffect && effect.player.active.marker.hasMarker(this.FLAPPLE_V_MARKER, this)) {
-      effect.cost.push(CardType.COLORLESS, CardType.COLORLESS); 
-    }  
+      effect.cost.push(CardType.COLORLESS, CardType.COLORLESS);
+    }
 
-    if (effect instanceof EndTurnEffect) {
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.FLAPPLE_V_MARKER, this)) {
       effect.player.active.marker.removeMarker(this.FLAPPLE_V_MARKER, this);
     }
 
-    return state; 
+    return state;
   }
 }
 

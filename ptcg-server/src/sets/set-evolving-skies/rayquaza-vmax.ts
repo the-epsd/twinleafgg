@@ -11,7 +11,7 @@ import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 
 export class RayquazaVMAX extends PokemonCard {
 
-  public tags = [ CardTag.POKEMON_VMAX, CardTag.RAPID_STRIKE ];
+  public tags = [CardTag.POKEMON_VMAX, CardTag.RAPID_STRIKE];
 
   public stage: Stage = Stage.VMAX;
 
@@ -21,7 +21,7 @@ export class RayquazaVMAX extends PokemonCard {
 
   public hp: number = 320;
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Azure Pulse',
@@ -33,7 +33,7 @@ export class RayquazaVMAX extends PokemonCard {
   public attacks = [
     {
       name: 'Max Burst',
-      cost: [CardType.FIRE, CardType.LIGHTNING ],
+      cost: [CardType.FIRE, CardType.LIGHTNING],
       damage: 20,
       text: 'You may discard any amount of basic [R] Energy or any amount of basic [L] Energy from this Pokémon. This attack does 80 more damage for each card you discarded in this way.'
     }
@@ -61,7 +61,7 @@ export class RayquazaVMAX extends PokemonCard {
     }
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
-        
+
       const player = effect.player;
 
       if (player.marker.hasMarker(this.AZURE_PULSE_MARKER, this)) {
@@ -78,14 +78,14 @@ export class RayquazaVMAX extends PokemonCard {
       player.marker.addMarker(this.AZURE_PULSE_MARKER, this);
     }
 
-    if (effect instanceof EndTurnEffect) {
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.AZURE_PULSE_MARKER, this)) {
       const player = effect.player;
       player.marker.removeMarker(this.AZURE_PULSE_MARKER, this);
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
-  
+
       const options: { message: GameMessage, action: () => void }[] = [
         {
           message: GameMessage.ALL_FIRE_ENERGIES,
@@ -100,12 +100,12 @@ export class RayquazaVMAX extends PokemonCard {
             ), selected => {
               const cards = selected || [];
               if (cards.length > 0) {
-    
-                let totalDiscarded = 0; 
-    
+
+                let totalDiscarded = 0;
+
                 const discardEnergy = new DiscardCardsEffect(effect, cards);
                 discardEnergy.target = player.active;
-    
+
                 totalDiscarded += discardEnergy.cards.length;
                 effect.damage = (totalDiscarded * 80) + 20;
                 store.reduceEffect(state, discardEnergy);
@@ -114,7 +114,7 @@ export class RayquazaVMAX extends PokemonCard {
           }
         },
 
-        { 
+        {
           message: GameMessage.ALL_LIGHTNING_ENERGIES,
           action: () => {
 
@@ -127,12 +127,12 @@ export class RayquazaVMAX extends PokemonCard {
             ), selected => {
               const cards = selected || [];
               if (cards.length > 0) {
-    
-                let totalDiscarded = 0; 
-    
+
+                let totalDiscarded = 0;
+
                 const discardEnergy = new DiscardCardsEffect(effect, cards);
                 discardEnergy.target = player.active;
-    
+
                 totalDiscarded += discardEnergy.cards.length;
                 effect.damage = (totalDiscarded * 80) + 20;
                 store.reduceEffect(state, discardEnergy);

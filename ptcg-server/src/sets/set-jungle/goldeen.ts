@@ -8,7 +8,7 @@ export class Goldeen extends PokemonCard {
 
   public hp: number = 40;
 
-  public weakness = [{ type: CardType.FIRE }];
+  public weakness = [{ type: L }];
 
   public attacks = [{
     name: 'Horn Attack',

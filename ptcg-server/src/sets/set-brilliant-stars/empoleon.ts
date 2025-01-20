@@ -87,7 +87,7 @@ export class Empoleon extends PokemonCard {
         player.deck.moveTo(player.hand, 3); // Move 3 Cards to Hand
       });
 
-      if (effect instanceof EndTurnEffect) {
+      if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.EMERGENCY_SURFACING_MARKER, this)) {
         effect.player.marker.removeMarker(this.EMERGENCY_SURFACING_MARKER, this);
       }
 

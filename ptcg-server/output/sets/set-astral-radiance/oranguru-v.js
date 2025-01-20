@@ -76,7 +76,7 @@ class OranguruV extends pokemon_card_1.PokemonCard {
             effect.damage += opponentEnergyCount * 50;
         }
         // marker gaming
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.BACK_ORDER_MARKER, this)) {
             const player = effect.player;
             player.marker.removeMarker(this.BACK_ORDER_MARKER, this);
         }

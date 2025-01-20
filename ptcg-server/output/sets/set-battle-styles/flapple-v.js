@@ -48,7 +48,7 @@ class FlappleV extends pokemon_card_1.PokemonCard {
         if (effect instanceof check_effects_1.CheckAttackCostEffect && effect.player.active.marker.hasMarker(this.FLAPPLE_V_MARKER, this)) {
             effect.cost.push(card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS);
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.FLAPPLE_V_MARKER, this)) {
             effect.player.active.marker.removeMarker(this.FLAPPLE_V_MARKER, this);
         }
         return state;

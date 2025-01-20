@@ -30,7 +30,7 @@ export class LilliesPearl extends TrainerCard {
 
     if (effect instanceof KnockOutEffect && effect.target.cards.includes(this) && effect.player.marker.hasMarker(effect.player.DAMAGE_DEALT_MARKER)) {
 
-      if (!effect.target.isLillies()) {
+      if (effect.target.isLillies()) {
         effect.prizeCount -= 1;
       }
 

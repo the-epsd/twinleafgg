@@ -100,7 +100,7 @@ export class Malamar extends PokemonCard {
       return state;
     }
 
-    if (effect instanceof EndTurnEffect) {
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.PSYCHIC_RECHARGE_MARKER, this)) {
       effect.player.marker.removeMarker(this.PSYCHIC_RECHARGE_MARKER, this);
     }
     return state;

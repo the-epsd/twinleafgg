@@ -8,8 +8,7 @@ export declare class Hitmonlee extends PokemonCard {
     cardType: CardType;
     hp: number;
     weakness: {
-        type: CardType;
-        value: number;
+        type: CardType.PSYCHIC;
     }[];
     resistance: never[];
     retreat: CardType[];

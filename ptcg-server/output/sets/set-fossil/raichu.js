@@ -14,7 +14,7 @@ class Raichu extends pokemon_card_1.PokemonCard {
         this.evolvesTo = ['Raichu BREAK', 'Raichu LV.X'];
         this.cardType = card_types_1.CardType.LIGHTNING;
         this.hp = 90;
-        this.weakness = [{ type: card_types_1.CardType.FIGHTING, value: 2 }];
+        this.weakness = [{ type: F }];
         this.resistance = [];
         this.retreat = [card_types_1.CardType.COLORLESS];
         this.attacks = [

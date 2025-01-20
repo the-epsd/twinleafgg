@@ -72,7 +72,7 @@ class GenesectV extends pokemon_card_1.PokemonCard {
             const player = effect.player;
             player.marker.removeMarker(this.FUSION_STRIKE_SYSTEM_MARKER, this);
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.FUSION_STRIKE_SYSTEM_MARKER, this)) {
             const player = effect.player;
             player.marker.removeMarker(this.FUSION_STRIKE_SYSTEM_MARKER, this);
         }
@@ -103,13 +103,6 @@ class GenesectV extends pokemon_card_1.PokemonCard {
                 });
             }
             player.marker.addMarker(this.FUSION_STRIKE_SYSTEM_MARKER, this);
-        }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
-            effect.player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, player => {
-                if (player instanceof GenesectV) {
-                    player.marker.removeMarker(this.FUSION_STRIKE_SYSTEM_MARKER);
-                }
-            });
         }
         return state;
     }

@@ -27,6 +27,6 @@ export declare class ShadowRiderCalyrexV extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
-    readonly ASTRAL_BARRAGE_MARKER = "ASTRAL_BARRAGE_MARKER";
+    readonly SHADOW_MIST_MARKER = "SHADOW_MIST_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

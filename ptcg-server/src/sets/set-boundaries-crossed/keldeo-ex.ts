@@ -4,13 +4,13 @@ import { StoreLike, State, PowerType, PlayerType, SlotType, PokemonCardList, Gam
 import { PowerEffect, AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
-import {PlayPokemonEffect} from '../../game/store/effects/play-card-effects';
-import {EndTurnEffect} from '../../game/store/effects/game-phase-effects';
+import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 
 export class KeldeoEx extends PokemonCard {
 
-  public tags = [ CardTag.POKEMON_EX ];
+  public tags = [CardTag.POKEMON_EX];
 
   public stage: Stage = Stage.BASIC;
 
@@ -20,7 +20,7 @@ export class KeldeoEx extends PokemonCard {
 
   public weakness = [{ type: CardType.GRASS }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Rush In',
@@ -33,7 +33,7 @@ export class KeldeoEx extends PokemonCard {
   public attacks = [
     {
       name: 'Secret Sword',
-      cost: [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
       damage: 50,
       text: 'Does 20 more damage for each W Energy attached to this Pokemon.'
     }
@@ -96,7 +96,7 @@ export class KeldeoEx extends PokemonCard {
       effect.damage += energyCount * 20;
     }
 
-    if (effect instanceof EndTurnEffect) {
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.RUSH_IN_MARKER, this)) {
       effect.player.marker.removeMarker(this.RUSH_IN_MARKER, this);
     }
 

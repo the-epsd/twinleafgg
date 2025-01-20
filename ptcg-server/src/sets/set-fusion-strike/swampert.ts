@@ -165,7 +165,7 @@ export class Swampert extends PokemonCard {
       });
     }
 
-    if (effect instanceof EndTurnEffect) {
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.MUDDY_MAKER_MARKER, this)) {
       const player = (effect as EndTurnEffect).player;
       player.marker.removeMarker(this.MUDDY_MAKER_MARKER, this);
     }

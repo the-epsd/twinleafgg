@@ -12,7 +12,7 @@ export class Muk extends PokemonCard {
   public evolvesFrom = 'Grimer';
   public cardType: CardType = CardType.GRASS;
   public hp: number = 70;
-  public weakness = [{ type: CardType.PSYCHIC, value: 2 }];
+  public weakness = [{ type: P }];
   public resistance = [];
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 

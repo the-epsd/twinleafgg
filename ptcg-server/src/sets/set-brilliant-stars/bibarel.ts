@@ -58,7 +58,7 @@ export class Bibarel extends PokemonCard {
       player.marker.removeMarker(this.INDUSTRIOUS_INCISORS_MARKER, this);
     }
 
-    if (effect instanceof EndTurnEffect) {
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.INDUSTRIOUS_INCISORS_MARKER, this)) {
       const player = effect.player;
       player.marker.removeMarker(this.INDUSTRIOUS_INCISORS_MARKER, this);
     }

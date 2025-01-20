@@ -1,7 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, StateUtils, ChoosePokemonPrompt, PlayerType,
-  SlotType, PokemonCardList, GameError, CoinFlipPrompt } from '../../game';
+import {
+  PowerType, StoreLike, State, StateUtils, ChoosePokemonPrompt, PlayerType,
+  SlotType, PokemonCardList, GameError, CoinFlipPrompt
+} from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect, AttackEffect } from '../../game/store/effects/game-effects';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
@@ -21,7 +23,7 @@ export class Hypno extends PokemonCard {
 
   public weakness = [{ type: CardType.PSYCHIC }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Sleep Pendulum',
@@ -35,7 +37,7 @@ export class Hypno extends PokemonCard {
   public attacks = [
     {
       name: 'Psychic Shot',
-      cost: [ CardType.PSYCHIC, CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.PSYCHIC, CardType.COLORLESS, CardType.COLORLESS],
       damage: 30,
       text: 'Does 10 damage to 1 of your opponent\'s Benched Pokemon. ' +
         '(Don\'t apply Weakness and Resistance for Benched Pokemon.)'
@@ -102,7 +104,7 @@ export class Hypno extends PokemonCard {
         player.id,
         GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
         PlayerType.TOP_PLAYER,
-        [ SlotType.BENCH ],
+        [SlotType.BENCH],
         { allowCancel: false }
       ), targets => {
         if (!targets || targets.length === 0) {
@@ -116,7 +118,7 @@ export class Hypno extends PokemonCard {
       return state;
     }
 
-    if (effect instanceof EndTurnEffect) {
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.SLEEP_PENDULUM_MAREKER, this)) {
       effect.player.marker.removeMarker(this.SLEEP_PENDULUM_MAREKER, this);
     }
 

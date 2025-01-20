@@ -109,7 +109,7 @@ export class ShadowRiderCalyrexVMAX extends PokemonCard {
         player.deck.moveTo(player.hand, 2);
       });
     }
-    if (effect instanceof EndTurnEffect) {
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.UNDERWORLD_DOOR_MARKER, this)) {
       effect.player.marker.removeMarker(this.UNDERWORLD_DOOR_MARKER, this);
     }
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

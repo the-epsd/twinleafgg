@@ -37,6 +37,7 @@ class Florges extends pokemon_card_1.PokemonCard {
         this.setNumber = '86';
         this.MIST_GUARD_MARKER = 'MIST_GUARD_MARKER';
         this.CLEAR_MIST_GUARD_MARKER = 'CLEAR_MIST_GUARD_MARKER';
+        this.WONDROUS_GIFT_MARKER = 'WONDROUS_GIFT_MARKER';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
@@ -46,10 +47,13 @@ class Florges extends pokemon_card_1.PokemonCard {
             if (player.deck.cards.length === 0) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
             }
+            if (player.marker.hasMarker(this.WONDROUS_GIFT_MARKER, this)) {
+                throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
+            }
             store.prompt(state, [
                 new game_1.CoinFlipPrompt(player.id, game_1.GameMessage.COIN_FLIP)
             ], results => {
-                player.marker.addMarker(this.MIST_GUARD_MARKER, this);
+                player.marker.addMarker(this.WONDROUS_GIFT_MARKER, this);
                 player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
                     if (cardList.getPokemonCard() === this) {
                         cardList.addBoardEffect(card_types_1.BoardEffect.ABILITY_USED);
@@ -107,6 +111,9 @@ class Florges extends pokemon_card_1.PokemonCard {
                     cardList.marker.removeMarker(this.MIST_GUARD_MARKER, this);
                 });
             }
+        }
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.WONDROUS_GIFT_MARKER, this)) {
+            effect.player.marker.removeMarker(this.WONDROUS_GIFT_MARKER, this);
         }
         return state;
     }

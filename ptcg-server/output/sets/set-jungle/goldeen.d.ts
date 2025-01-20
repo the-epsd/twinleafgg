@@ -5,7 +5,7 @@ export declare class Goldeen extends PokemonCard {
     cardType: CardType;
     hp: number;
     weakness: {
-        type: CardType;
+        type: CardType.LIGHTNING;
     }[];
     attacks: {
         name: string;

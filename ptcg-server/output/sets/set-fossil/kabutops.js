@@ -12,7 +12,7 @@ class Kabutops extends pokemon_card_1.PokemonCard {
         this.evolvesFrom = 'Kabuto';
         this.cardType = card_types_1.CardType.FIGHTING;
         this.hp = 60;
-        this.weakness = [{ type: card_types_1.CardType.GRASS, value: 2 }];
+        this.weakness = [{ type: G }];
         this.resistance = [];
         this.retreat = [card_types_1.CardType.COLORLESS];
         this.attacks = [

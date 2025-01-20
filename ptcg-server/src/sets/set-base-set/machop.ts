@@ -18,11 +18,11 @@ export class Machop extends PokemonCard {
 
   public stage = Stage.BASIC;
 
+  public retreat = [CardType.COLORLESS];
+
   public hp = 50;
 
   public weakness = [{ type: CardType.PSYCHIC }];
-
-  public retreatCost = [{ type: CardType.COLORLESS }];
 
   public attacks: Attack[] = [
     {

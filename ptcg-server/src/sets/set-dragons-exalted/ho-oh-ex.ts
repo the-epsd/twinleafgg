@@ -1,7 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, EnergyType, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, PowerType, EnergyCard, GameError, GameMessage,
-  CoinFlipPrompt, PokemonCardList, ChooseCardsPrompt } from '../../game';
+import {
+  StoreLike, State, PowerType, EnergyCard, GameError, GameMessage,
+  CoinFlipPrompt, PokemonCardList, ChooseCardsPrompt
+} from '../../game';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
@@ -43,7 +45,7 @@ function* useRebirth(next: Function, store: StoreLike, state: State,
   player.discard.moveCardTo(self, slots[0]);
 
   let basicEnergies = 0;
-  const typeMap: {[key: number]: boolean} = {};
+  const typeMap: { [key: number]: boolean } = {};
   player.discard.cards.forEach(c => {
     if (c instanceof EnergyCard && c.energyType === EnergyType.BASIC) {
       const cardType = c.provides[0];
@@ -53,7 +55,7 @@ function* useRebirth(next: Function, store: StoreLike, state: State,
       }
     }
   });
-  
+
   if (basicEnergies === 0) {
     return state;
   }
@@ -73,7 +75,7 @@ function* useRebirth(next: Function, store: StoreLike, state: State,
 
 export class HoOhEx extends PokemonCard {
 
-  public tags = [ CardTag.POKEMON_EX ];
+  public tags = [CardTag.POKEMON_EX];
 
   public stage: Stage = Stage.BASIC;
 
@@ -85,7 +87,7 @@ export class HoOhEx extends PokemonCard {
 
   public resistance = [{ type: CardType.FIGHTING, value: -20 }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Rebirth',
@@ -100,7 +102,7 @@ export class HoOhEx extends PokemonCard {
   public attacks = [
     {
       name: 'Rainbow Burn',
-      cost: [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
       damage: 20,
       text: 'Does 20 more damage for each different type of basic Energy ' +
         'attached to this Pokemon.'
@@ -125,7 +127,7 @@ export class HoOhEx extends PokemonCard {
       const player = effect.player;
 
       let basicEnergies = 0;
-      const typeMap: {[key: number]: boolean} = {};
+      const typeMap: { [key: number]: boolean } = {};
       player.active.cards.forEach(c => {
         if (c instanceof EnergyCard && c.energyType === EnergyType.BASIC) {
           const cardType = c.provides[0];
@@ -145,7 +147,7 @@ export class HoOhEx extends PokemonCard {
       return generator.next().value;
     }
 
-    if (effect instanceof EndTurnEffect) {
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.REBIRTH_MAREKER, this)) {
       effect.player.marker.removeMarker(this.REBIRTH_MAREKER, this);
     }
 

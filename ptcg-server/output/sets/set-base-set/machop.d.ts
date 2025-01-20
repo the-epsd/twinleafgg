@@ -9,11 +9,9 @@ export declare class Machop extends PokemonCard {
     fullName: string;
     cardType: CardType;
     stage: Stage;
+    retreat: CardType[];
     hp: number;
     weakness: {
-        type: CardType;
-    }[];
-    retreatCost: {
         type: CardType;
     }[];
     attacks: Attack[];

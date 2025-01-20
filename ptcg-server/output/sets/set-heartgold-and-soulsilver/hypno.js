@@ -85,7 +85,7 @@ class Hypno extends pokemon_card_1.PokemonCard {
             });
             return state;
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.SLEEP_PENDULUM_MAREKER, this)) {
             effect.player.marker.removeMarker(this.SLEEP_PENDULUM_MAREKER, this);
         }
         return state;

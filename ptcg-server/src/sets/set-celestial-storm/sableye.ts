@@ -131,7 +131,7 @@ export class Sableye extends PokemonCard {
       this.DISABLED_ATTACK = undefined;
     }
 
-    if (effect instanceof EndTurnEffect) {
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.EXCAVATE_MARKER, this)) {
       const player = (effect as EndTurnEffect).player;
       player.marker.removeMarker(this.EXCAVATE_MARKER, this);
     }

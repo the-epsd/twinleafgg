@@ -11,7 +11,7 @@ export class Kabutops extends PokemonCard {
   public evolvesFrom = 'Kabuto';
   public cardType: CardType = CardType.FIGHTING;
   public hp: number = 60;
-  public weakness = [{ type: CardType.GRASS, value: 2 }];
+  public weakness = [{ type: G }];
   public resistance = [];
   public retreat = [CardType.COLORLESS];
   public attacks = [

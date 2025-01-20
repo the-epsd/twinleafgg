@@ -61,7 +61,7 @@ export class WyrdeerV extends PokemonCard {
 
     const player = state.players[state.activePlayer];
 
-    if (effect instanceof EndTurnEffect) {
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ABILITY_USED_MARKER, this)) {
       this.movedToActiveThisTurn = false;
       player.marker.removeMarker(this.ABILITY_USED_MARKER, this);
     }

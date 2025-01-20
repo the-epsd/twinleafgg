@@ -42,7 +42,7 @@ class Gabite extends pokemon_card_1.PokemonCard {
             const player = effect.player;
             player.marker.removeMarker(this.DRAGON_CALL_MARKER, this);
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.DRAGON_CALL_MARKER, this)) {
             const player = effect.player;
             player.marker.removeMarker(this.DRAGON_CALL_MARKER, this);
         }
@@ -68,14 +68,6 @@ class Gabite extends pokemon_card_1.PokemonCard {
                     player.marker.addMarker(this.DRAGON_CALL_MARKER, this);
                 });
             });
-        }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
-            effect.player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, player => {
-                if (player instanceof Gabite) {
-                    player.marker.removeMarker(this.DRAGON_CALL_MARKER);
-                }
-            });
-            return state;
         }
         return state;
     }

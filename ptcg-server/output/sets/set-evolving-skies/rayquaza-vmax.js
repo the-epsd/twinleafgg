@@ -58,7 +58,7 @@ class RayquazaVMAX extends pokemon_card_1.PokemonCard {
             player.deck.moveTo(player.hand, 3);
             player.marker.addMarker(this.AZURE_PULSE_MARKER, this);
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.AZURE_PULSE_MARKER, this)) {
             const player = effect.player;
             player.marker.removeMarker(this.AZURE_PULSE_MARKER, this);
         }

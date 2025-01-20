@@ -91,7 +91,7 @@ export class Charizard extends PokemonCard {
     }
 
 
-    if (effect instanceof EndTurnEffect) {
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ENERGY_BURN_MARKER, this)) {
       effect.player.marker.removeMarker(this.ENERGY_BURN_MARKER, this);
     }
     return state;

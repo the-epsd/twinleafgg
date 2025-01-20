@@ -42,7 +42,7 @@ class Octillery extends pokemon_card_1.PokemonCard {
             const player = effect.player;
             player.marker.removeMarker(this.ABYSSAL_HAND_MARKER, this);
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.ABYSSAL_HAND_MARKER, this)) {
             const player = effect.player;
             player.marker.removeMarker(this.ABYSSAL_HAND_MARKER, this);
         }
@@ -67,13 +67,6 @@ class Octillery extends pokemon_card_1.PokemonCard {
             player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
                 if (cardList.getPokemonCard() === this) {
                     cardList.addBoardEffect(card_types_1.BoardEffect.ABILITY_USED);
-                }
-            });
-        }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
-            effect.player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, player => {
-                if (player instanceof Octillery) {
-                    player.marker.removeMarker(this.ABYSSAL_HAND_MARKER);
                 }
             });
         }

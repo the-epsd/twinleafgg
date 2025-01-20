@@ -38,13 +38,13 @@ class ShadowRiderCalyrexV extends pokemon_card_1.PokemonCard {
         this.setNumber = '75';
         this.name = 'Shadow Rider Calyrex V';
         this.fullName = 'Shadow Rider Calyrex V CRE';
-        this.ASTRAL_BARRAGE_MARKER = 'ASTRAL_BARRAGE_MARKER';
+        this.SHADOW_MIST_MARKER = 'SHADOW_MIST_MARKER';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            opponent.marker.addMarker(this.ASTRAL_BARRAGE_MARKER, this);
+            opponent.marker.addMarker(this.SHADOW_MIST_MARKER, this);
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
@@ -65,18 +65,18 @@ class ShadowRiderCalyrexV extends pokemon_card_1.PokemonCard {
         }
         if (effect instanceof play_card_effects_1.AttachEnergyEffect && effect.energyCard.energyType === card_types_1.EnergyType.SPECIAL) {
             const player = effect.player;
-            if (player.marker.hasMarker(this.ASTRAL_BARRAGE_MARKER, this)) {
+            if (player.marker.hasMarker(this.SHADOW_MIST_MARKER, this)) {
                 throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);
             }
         }
         if (effect instanceof play_card_effects_1.PlayStadiumEffect) {
             const player = effect.player;
-            if (player.marker.hasMarker(this.ASTRAL_BARRAGE_MARKER, this)) {
+            if (player.marker.hasMarker(this.SHADOW_MIST_MARKER, this)) {
                 throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);
             }
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
-            effect.player.marker.removeMarker(this.ASTRAL_BARRAGE_MARKER, this);
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.SHADOW_MIST_MARKER, this)) {
+            effect.player.marker.removeMarker(this.SHADOW_MIST_MARKER, this);
         }
         return state;
     }

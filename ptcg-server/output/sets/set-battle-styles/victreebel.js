@@ -48,14 +48,12 @@ class Victreebel extends pokemon_card_1.PokemonCard {
             opponent.active.specialConditions.push(card_types_1.SpecialCondition.CONFUSED);
             return state;
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
-            if (effect.player.marker.hasMarker(this.CLEAR_TIME_CIRCLE_MARKER, this)) {
-                effect.player.marker.removeMarker(this.CLEAR_TIME_CIRCLE_MARKER, this);
-                const opponent = game_1.StateUtils.getOpponent(state, effect.player);
-                opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList) => {
-                    cardList.marker.removeMarker(this.TIME_CIRCLE_MARKER, this);
-                });
-            }
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.CLEAR_TIME_CIRCLE_MARKER, this)) {
+            effect.player.marker.removeMarker(this.CLEAR_TIME_CIRCLE_MARKER, this);
+            const opponent = game_1.StateUtils.getOpponent(state, effect.player);
+            opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList) => {
+                cardList.marker.removeMarker(this.TIME_CIRCLE_MARKER, this);
+            });
         }
         return state;
     }

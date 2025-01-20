@@ -1,7 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, StateUtils, GameError, GameMessage,
-  PlayerType, ChooseCardsPrompt } from '../../game';
+import {
+  PowerType, StoreLike, State, StateUtils, GameError, GameMessage,
+  PlayerType, ChooseCardsPrompt
+} from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect, AttackEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
@@ -19,7 +21,7 @@ export class Empoleon extends PokemonCard {
 
   public weakness = [{ type: CardType.LIGHTNING }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Diving Draw',
@@ -32,7 +34,7 @@ export class Empoleon extends PokemonCard {
   public attacks = [
     {
       name: 'Attack Command',
-      cost: [ CardType.WATER ],
+      cost: [CardType.WATER],
       damage: 10,
       text: 'Does 10 damage times the number of Pokemon in play (both yours ' +
         'and your opponent\'s).'
@@ -69,7 +71,7 @@ export class Empoleon extends PokemonCard {
         player,
         GameMessage.CHOOSE_CARD_TO_DISCARD,
         player.hand,
-        { },
+        {},
         { allowCancel: true, min: 1, max: 1 }
       ), cards => {
         cards = cards || [];
@@ -93,7 +95,7 @@ export class Empoleon extends PokemonCard {
       effect.damage = 10 * pokemonInPlay;
     }
 
-    if (effect instanceof EndTurnEffect) {
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.DIVING_DRAW_MAREKER, this)) {
       effect.player.marker.removeMarker(this.DIVING_DRAW_MAREKER, this);
     }
 

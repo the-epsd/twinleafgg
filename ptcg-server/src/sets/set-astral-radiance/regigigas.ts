@@ -49,7 +49,7 @@ export class Regigigas extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof EndTurnEffect) {
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ANCIENT_WISDOM_MARKER, this)) {
       effect.player.marker.removeMarker(this.ANCIENT_WISDOM_MARKER, this);
     }
 

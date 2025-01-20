@@ -52,7 +52,7 @@ class KricketuneV extends pokemon_card_1.PokemonCard {
             const player = effect.player;
             player.marker.removeMarker(this.EXCITING_STAGE_MARKER, this);
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.EXCITING_STAGE_MARKER, this)) {
             const player = effect.player;
             player.marker.removeMarker(this.EXCITING_STAGE_MARKER, this);
         }

@@ -39,7 +39,7 @@ class Wishiwashi extends pokemon_card_1.PokemonCard {
             const opponent = game_1.StateUtils.getOpponent(state, player);
             opponent.marker.addMarker(this.SCATTER_MARKER, this);
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && game_1.StateUtils.getOpponent(state, effect.player).marker.hasMarker(this.SCATTER_MARKER, this)) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             try {
@@ -53,27 +53,25 @@ class Wishiwashi extends pokemon_card_1.PokemonCard {
             catch (_a) {
                 return state;
             }
-            if (opponent.marker.hasMarker(this.SCATTER_MARKER, this)) {
-                opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, cardList => {
-                    if (cardList.getPokemonCard() === this) {
-                        if (cardList.damage > 0) {
-                            return store.prompt(state, [
-                                new game_1.CoinFlipPrompt(opponent.id, game_1.GameMessage.COIN_FLIP)
-                            ], result => {
-                                if (result === false) {
-                                    cardList.moveTo(opponent.deck);
-                                    cardList.clearEffects();
-                                }
-                            });
-                        }
+            opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, cardList => {
+                if (cardList.getPokemonCard() === this) {
+                    if (cardList.damage > 0) {
+                        return store.prompt(state, [
+                            new game_1.CoinFlipPrompt(opponent.id, game_1.GameMessage.COIN_FLIP)
+                        ], result => {
+                            if (result === false) {
+                                cardList.moveTo(opponent.deck);
+                                cardList.clearEffects();
+                            }
+                        });
                     }
-                });
-                return store.prompt(state, new game_1.ShuffleDeckPrompt(opponent.id), order => {
-                    opponent.deck.applyOrder(order);
-                    opponent.marker.removeMarker(this.SCATTER_MARKER, this);
-                    return state;
-                });
-            }
+                }
+            });
+            return store.prompt(state, new game_1.ShuffleDeckPrompt(opponent.id), order => {
+                opponent.deck.applyOrder(order);
+                opponent.marker.removeMarker(this.SCATTER_MARKER, this);
+                return state;
+            });
         }
         return state;
     }

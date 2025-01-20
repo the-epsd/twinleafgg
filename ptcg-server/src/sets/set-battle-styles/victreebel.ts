@@ -21,22 +21,22 @@ export class Victreebel extends PokemonCard {
 
   public weakness = [{ type: CardType.FIRE }];
 
-  public resistance = [ ];
+  public resistance = [];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
-  
+
   public attacks = [
     {
       name: 'Panic Vine',
-      cost: [ CardType.GRASS ],
+      cost: [CardType.GRASS],
       damage: 40,
       text: 'Your opponent\'s Active Pokémon is now Confused. During' +
-      'your opponent\'s next turn, that Pokémon can\'t retreat.'
+        'your opponent\'s next turn, that Pokémon can\'t retreat.'
     },
     {
       name: 'Solar Beam',
-      cost: [ CardType.GRASS, CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.GRASS, CardType.COLORLESS, CardType.COLORLESS],
       damage: 120,
       text: ''
     }
@@ -62,15 +62,12 @@ export class Victreebel extends PokemonCard {
       return state;
     }
 
-    if (effect instanceof EndTurnEffect) {
-
-      if (effect.player.marker.hasMarker(this.CLEAR_TIME_CIRCLE_MARKER, this)) {
-        effect.player.marker.removeMarker(this.CLEAR_TIME_CIRCLE_MARKER, this);
-        const opponent = StateUtils.getOpponent(state, effect.player);
-        opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-          cardList.marker.removeMarker(this.TIME_CIRCLE_MARKER, this);
-        });
-      }
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.CLEAR_TIME_CIRCLE_MARKER, this)) {
+      effect.player.marker.removeMarker(this.CLEAR_TIME_CIRCLE_MARKER, this);
+      const opponent = StateUtils.getOpponent(state, effect.player);
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
+        cardList.marker.removeMarker(this.TIME_CIRCLE_MARKER, this);
+      });
     }
 
     return state;

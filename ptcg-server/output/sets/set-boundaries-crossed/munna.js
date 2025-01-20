@@ -61,7 +61,7 @@ class Munna extends pokemon_card_1.PokemonCard {
                 }
             });
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.LONG_DISTANCE_HYPNOSIS_MARKER, this)) {
             effect.player.marker.removeMarker(this.LONG_DISTANCE_HYPNOSIS_MARKER, this);
         }
         return state;

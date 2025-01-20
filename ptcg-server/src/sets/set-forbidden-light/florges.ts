@@ -38,6 +38,7 @@ export class Florges extends PokemonCard {
 
   public readonly MIST_GUARD_MARKER = 'MIST_GUARD_MARKER';
   public readonly CLEAR_MIST_GUARD_MARKER = 'CLEAR_MIST_GUARD_MARKER';
+  public readonly WONDROUS_GIFT_MARKER = 'WONDROUS_GIFT_MARKER';
 
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -52,11 +53,15 @@ export class Florges extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
+      if (player.marker.hasMarker(this.WONDROUS_GIFT_MARKER, this)) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      }
+
       store.prompt(state, [
         new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
       ], results => {
 
-        player.marker.addMarker(this.MIST_GUARD_MARKER, this);
+        player.marker.addMarker(this.WONDROUS_GIFT_MARKER, this);
 
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
           if (cardList.getPokemonCard() === this) {
@@ -140,6 +145,10 @@ export class Florges extends PokemonCard {
           cardList.marker.removeMarker(this.MIST_GUARD_MARKER, this);
         });
       }
+    }
+
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.WONDROUS_GIFT_MARKER, this)) {
+      effect.player.marker.removeMarker(this.WONDROUS_GIFT_MARKER, this);
     }
 
     return state;

@@ -94,7 +94,7 @@ export class Altaria extends PokemonCard {
       });
     }
 
-    if (effect instanceof EndTurnEffect) {
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.FOREWARN_MARKER, this)) {
       effect.player.marker.removeMarker(this.FOREWARN_MARKER, this);
     }
 

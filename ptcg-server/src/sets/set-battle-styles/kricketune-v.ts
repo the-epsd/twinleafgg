@@ -67,7 +67,7 @@ export class KricketuneV extends PokemonCard {
       player.marker.removeMarker(this.EXCITING_STAGE_MARKER, this);
     }
 
-    if (effect instanceof EndTurnEffect) {
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.EXCITING_STAGE_MARKER, this)) {
       const player = effect.player;
       player.marker.removeMarker(this.EXCITING_STAGE_MARKER, this);
     }
