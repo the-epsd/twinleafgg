@@ -39,7 +39,7 @@ export class Blacksmith extends TrainerCard {
         && c.provides.includes(CardType.FIRE)
       ).length;
 
-      if (fireEnergyCount < 2) {
+      if (fireEnergyCount === 0) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
@@ -87,7 +87,7 @@ export class Blacksmith extends TrainerCard {
         PlayerType.BOTTOM_PLAYER,
         [SlotType.BENCH, SlotType.ACTIVE],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fire Energy' },
-        { allowCancel: false, min: 2, max: 2, blockedTo, sameTarget: true }
+        { allowCancel: false, min: 1, max: 2, blockedTo, sameTarget: true }
       ), transfers => {
         transfers = transfers || [];
 

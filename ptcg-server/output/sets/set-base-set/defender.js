@@ -11,12 +11,12 @@ const choose_pokemon_prompt_1 = require("../../game/store/prompts/choose-pokemon
 class Defender extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
-        this.trainerType = card_types_1.TrainerType.TOOL;
-        this.set = 'BS'; // Replace with the appropriate set abbreviation
+        this.trainerType = card_types_1.TrainerType.ITEM;
+        this.set = 'BS';
         this.name = 'Defender';
-        this.fullName = 'Defender BS'; // Replace with the appropriate set abbreviation
-        this.cardImage = 'assets/cardback.png'; // Replace with the appropriate card image path
-        this.setNumber = '80'; // Replace with the appropriate set number
+        this.fullName = 'Defender BS';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '80';
         this.text = 'Attach Defender to 1 of your Pokémon. At the end of your opponent\'s next turn, discard Defender. Damage done to that Pokémon by attacks is reduced by 20 (after applying Weakness and Resistance).';
         this.DEFENDER_MARKER = 'DEFENDER_MARKER';
         this.CLEAR_DEFENDER_MARKER = 'CLEAR_DEFENDER_MARKER';
