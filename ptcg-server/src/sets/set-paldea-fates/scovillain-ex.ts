@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
+import { Stage, CardType, SpecialCondition, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, GameError, GameMessage, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
@@ -8,6 +8,8 @@ import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 
 export class Scovillainex extends PokemonCard {
+
+  public tags = [CardTag.POKEMON_ex];
 
   public stage: Stage = Stage.STAGE_1;
 
@@ -40,7 +42,7 @@ export class Scovillainex extends PokemonCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '107';
+  public setNumber: string = '37';
 
   public set = 'PAF';
 

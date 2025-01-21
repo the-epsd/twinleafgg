@@ -33,7 +33,9 @@ class AromaticEnergy extends energy_card_1.EnergyCard {
             pokemon.removeSpecialCondition(card_types_1.SpecialCondition.BURNED);
             pokemon.removeSpecialCondition(card_types_1.SpecialCondition.POISONED);
         }
-        if (effect instanceof check_effects_1.CheckTableStateEffect) {
+        if (effect instanceof check_effects_1.CheckTableStateEffect &&
+            (game_1.StateUtils.findCardList(state, this) instanceof game_1.PokemonCardList) &&
+            game_1.StateUtils.findCardList(state, this).cards.includes(this)) {
             const cardList = game_1.StateUtils.findCardList(state, this);
             if (cardList instanceof game_1.PokemonCardList && cardList.cards.includes(this)) {
                 const conditionsToKeep = [card_types_1.SpecialCondition.ABILITY_USED];

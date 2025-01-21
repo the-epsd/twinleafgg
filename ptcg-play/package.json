@@ -6,7 +6,7 @@
   "version": "0.0.3",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --configuration=development",
+    "start": "ng serve --configuration=development --watch=false",
     "start:eric": "set NODE_OPTIONS=--openssl-legacy-provider && ng serve",
     "build": "ng build",
     "build:development": "ng build --configuration=development",

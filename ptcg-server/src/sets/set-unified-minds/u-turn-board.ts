@@ -1,7 +1,8 @@
+import { Card } from '../../game';
 import { TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
-import { CheckRetreatCostEffect } from '../../game/store/effects/check-effects';
+import { CheckRetreatCostEffect, CheckTableStateEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttachPokemonToolEffect } from '../../game/store/effects/play-card-effects';
 import { State } from '../../game/store/state/state';
@@ -42,7 +43,6 @@ export class UTurnBoard extends TrainerCard {
     if (effect instanceof AttachPokemonToolEffect && effect.trainerCard === this) {
       const player = effect.player;
       player.marker.addMarker(this.U_TURN_BOARD_MARKER, this);
-      console.log('U-Turn Board is on a card.');
     }
 
     if (effect instanceof CheckRetreatCostEffect && effect.player.active.tool === this) {
@@ -54,19 +54,20 @@ export class UTurnBoard extends TrainerCard {
       }
     }
 
-    const player = state.players[state.activePlayer];
-
-    if (player.marker.hasMarker(this.U_TURN_BOARD_MARKER, this)) {
+    if (effect instanceof CheckTableStateEffect && state.players.some(p => p.discard.cards.includes(this))) {
       state.players.forEach(player => {
-        // Check if the card is in the player's discard pile
-        const uTurnBoardInDiscard = player.discard.cards.some(card => card === this);
-        if (uTurnBoardInDiscard && player.marker.hasMarker(this.U_TURN_BOARD_MARKER, this)) {
-          // Move the card from the discard pile to the player's hand
-          player.discard.moveCardTo(this, player.hand);
-          player.marker.removeMarker(this.U_TURN_BOARD_MARKER, this);
+
+        if (!player.marker.hasMarker(this.U_TURN_BOARD_MARKER, this)) {
+          return;
         }
+
+        const rescued: Card[] = player.marker.markers
+          .filter(m => m.name === this.U_TURN_BOARD_MARKER && m.source !== undefined)
+          .map(m => m.source!);
+
+        player.discard.moveCardsTo(rescued, player.hand);
+        player.marker.removeMarker(this.U_TURN_BOARD_MARKER, this);
       });
-      return state;
     }
     return state;
   }

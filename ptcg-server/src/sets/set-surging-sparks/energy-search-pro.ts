@@ -9,6 +9,7 @@ import { State } from '../../game/store/state/state';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
+import { EnergyCard } from '../../game';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -17,15 +18,28 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
+  const uniqueBasicEnergies = player.deck.cards
+    .filter(c => c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC)
+    .map(e => (e as EnergyCard).provides[0])
+    .filter((value, index, self) => self.indexOf(value) === index)
+    .length;
+
   let cards: Card[] = [];
   yield store.prompt(state, new ChooseCardsPrompt(
     player,
     GameMessage.CHOOSE_CARD_TO_HAND,
     player.deck,
     { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-    { min: 0, allowCancel: false, differentTypes: true }
+    { min: 0, max: uniqueBasicEnergies, allowCancel: false, differentTypes: true }
   ), selected => {
     cards = selected || [];
+
+    if (selected.length > 1) {
+      if (selected[0].name === selected[1].name) {
+        throw new GameError(GameMessage.CAN_ONLY_SELECT_TWO_DIFFERENT_ENERGY_TYPES);
+      }
+    }
+
     player.deck.moveCardsTo(cards, player.hand);
   });
 

@@ -48,7 +48,7 @@ export class RescueEnergy extends EnergyCard {
       });
     }
 
-    if (effect instanceof BetweenTurnsEffect) {
+    if (effect instanceof BetweenTurnsEffect && effect.player.discard.cards.includes(this)) {
       state.players.forEach(player => {
 
         if (!player.marker.hasMarker(this.RESCUE_ENERGY_MAREKER)) {
@@ -57,7 +57,6 @@ export class RescueEnergy extends EnergyCard {
 
         const rescued: Card[] = player.marker.markers
           .filter(m => m.name === this.RESCUE_ENERGY_MAREKER && m.source !== undefined)
-          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           .map(m => m.source!);
 
         player.discard.moveCardsTo(rescued, player.hand);

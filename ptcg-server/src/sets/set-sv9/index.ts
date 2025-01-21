@@ -1,10 +1,10 @@
 import { Card } from '../../game/store/card/card';
 import { Blazikenex } from './blaziken-ex';
 import { BrocksRecruitment } from './brocks-recruitment';
-import { Budew } from './budew';
 import { Combusken } from './combusken';
 import { Dudunsparceex } from './dudunsparce-ex';
 import { ExchangeTicket } from './exchange-ticket';
+import { HopsBag } from './hops-bag';
 import { HopsChoiceBand } from './hops-choice-band';
 import { HopsDubwool } from './hops-dubwool';
 import { HopsSnorlax } from './hops-snorlax';
@@ -15,6 +15,7 @@ import { IonosKilowattrel } from './ionos-kilowattrel';
 import { IonosTadbulb } from './ionos-tadbulb';
 import { IonosVoltorb } from './ionos-voltorb';
 import { IonosWattrel } from './ionos-wattrel';
+import { Levincia } from './levincia';
 import { LilliesClefairyex } from './lillies-clefairy-ex';
 import { LilliesComfy } from './lillies-comfy';
 import { LilliesPearl } from './lillies-pearl';
@@ -27,6 +28,7 @@ import { NsSigilyph } from './ns-sigilyph';
 import { NsZoroarkex } from './ns-zoroark-ex';
 import { NsZorua } from './ns-zorua';
 import { Piloswine } from './piloswine';
+import { Postwick } from './postwick';
 import { Swinub } from './swinub';
 import { Torchic } from './torchic';
 
@@ -38,10 +40,11 @@ export const setSV9: Card[] = [
   new Swinub(),
   new Piloswine(),
   new Mamoswineex(),
-  new Budew(),
   new BrocksRecruitment(),
   new ExchangeTicket(),
   new Dudunsparceex(),
+  new Postwick(),
+  new Levincia(),
 
   new LilliesClefairyex(),
   new LilliesComfy(),
@@ -53,6 +56,7 @@ export const setSV9: Card[] = [
   new IonosKilowattrel(),
   new IonosVoltorb(),
 
+  new HopsBag(),
   new HopsWooloo(),
   new HopsDubwool(),
   new HopsSnorlax(),

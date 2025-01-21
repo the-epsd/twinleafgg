@@ -33,9 +33,9 @@ class Leafeonex extends pokemon_card_1.PokemonCard {
             }
         ];
         this.regulationMark = 'H';
-        this.set = 'SV8a';
+        this.set = 'PRE';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '3';
+        this.setNumber = '6';
         this.name = 'Leafeon ex';
         this.fullName = 'Leafeon ex SV8a';
     }

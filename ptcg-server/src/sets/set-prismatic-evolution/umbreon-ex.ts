@@ -28,9 +28,9 @@ export class Umbreonex extends PokemonCard {
   ];
 
   public regulationMark: string = 'H';
-  public set: string = 'SV8a';
+  public set: string = 'PRE';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '93';
+  public setNumber: string = '60';
   public name: string = 'Umbreon ex';
   public fullName: string = 'Umbreon ex SV8a';
 

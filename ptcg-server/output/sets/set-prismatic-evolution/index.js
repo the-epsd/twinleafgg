@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setPrismaticEvolution = void 0;
+const budew_1 = require("./budew");
 const eevee_ex_1 = require("./eevee-ex");
 const espeon_ex_1 = require("./espeon-ex");
 const flareon_ex_1 = require("./flareon-ex");
@@ -10,10 +11,11 @@ const leafeon_ex_1 = require("./leafeon-ex");
 const max_rod_1 = require("./max-rod");
 const regigigas_1 = require("./regigigas");
 const seaking_1 = require("./seaking");
-const treasure_gadget_1 = require("./treasure-gadget");
+const treasure_tracker_1 = require("./treasure-tracker");
 const umbreon_ex_1 = require("./umbreon-ex");
 const vaporeon_ex_1 = require("./vaporeon-ex");
 exports.setPrismaticEvolution = [
+    new budew_1.Budew(),
     new eevee_ex_1.Eeveeex(),
     new jolteon_ex_1.Jolteonex(),
     new flareon_ex_1.Flareonex(),
@@ -25,5 +27,5 @@ exports.setPrismaticEvolution = [
     new seaking_1.Seaking(),
     new regigigas_1.Regigigas(),
     new max_rod_1.MaxRod(),
-    new treasure_gadget_1.TreasureGadget(),
+    new treasure_tracker_1.TreasureTracker(),
 ];

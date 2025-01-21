@@ -10,7 +10,6 @@
     "build": "npm run lint && npm run test && npm run compile",
     "build:prod": "npm run compile",
     "build:joe": "tsc && tsc -p tsconfig.json",
-    "outputs": ".vercel/**",
     "start": "node start.js",
     "start:dev": "nodemon -e ts --inspect --exec \"npx tsc && npx kill-port 8080 && npm run start\"",
     "test": "nyc -e \".ts\" -x \"src/**/*.spec.ts\" jasmine-ts \"src/**/*.spec.ts\"",

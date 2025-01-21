@@ -16,20 +16,20 @@ class RapidStrikeUrshifuVMAX extends pokemon_card_1.PokemonCard {
         this.regulationMark = 'E';
         this.stage = card_types_1.Stage.VMAX;
         this.evolvesFrom = 'Rapid Strike Urshifu V';
-        this.cardType = card_types_1.CardType.FIGHTING;
+        this.cardType = F;
         this.hp = 330;
-        this.weakness = [{ type: card_types_1.CardType.PSYCHIC }];
-        this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
+        this.weakness = [{ type: P }];
+        this.retreat = [C, C];
         this.attacks = [
             {
                 name: 'Gale Thrust',
-                cost: [card_types_1.CardType.COLORLESS],
+                cost: [F],
                 damage: 30,
                 text: 'If this Pokémon moved from your Bench to the Active Spot this turn, this attack does 120 more damage.'
             },
             {
                 name: 'G-Max Rapid Flow',
-                cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
+                cost: [F, F, C],
                 damage: 0,
                 text: 'Discard all Energy from this Pokémon. This attack does 120 damage to 2 of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
             }

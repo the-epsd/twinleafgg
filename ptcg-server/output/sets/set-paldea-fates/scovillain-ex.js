@@ -10,6 +10,7 @@ const game_phase_effects_1 = require("../../game/store/effects/game-phase-effect
 class Scovillainex extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
+        this.tags = [card_types_1.CardTag.POKEMON_ex];
         this.stage = card_types_1.Stage.STAGE_1;
         this.evolvesFrom = 'Capsakid';
         this.cardType = card_types_1.CardType.GRASS;
@@ -32,7 +33,7 @@ class Scovillainex extends pokemon_card_1.PokemonCard {
         ];
         this.regulationMark = 'G';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '107';
+        this.setNumber = '37';
         this.set = 'PAF';
         this.name = 'Scovillain ex';
         this.fullName = 'Scovillain ex PAF';

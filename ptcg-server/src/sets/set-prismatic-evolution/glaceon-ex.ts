@@ -39,9 +39,9 @@ export class Glaceonex extends PokemonCard {
   ];
 
   public regulationMark: string = 'H';
-  public set: string = 'SV8a';
+  public set: string = 'PRE';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '41';
+  public setNumber: string = '26';
   public name: string = 'Glaceon ex';
   public fullName: string = 'Glaceon ex SV8a';
 

@@ -10,32 +10,32 @@ import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class RapidStrikeUrshifuVMAX extends PokemonCard {
 
-  public tags = [ CardTag.POKEMON_VMAX, CardTag.RAPID_STRIKE ];
+  public tags = [CardTag.POKEMON_VMAX, CardTag.RAPID_STRIKE];
 
   public regulationMark = 'E';
-  
+
   public stage: Stage = Stage.VMAX;
 
   public evolvesFrom = 'Rapid Strike Urshifu V';
 
-  public cardType: CardType = CardType.FIGHTING;
+  public cardType: CardType = F;
 
   public hp: number = 330;
 
-  public weakness = [{ type: CardType.PSYCHIC }];
+  public weakness = [{ type: P }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [C, C];
 
   public attacks = [
     {
       name: 'Gale Thrust',
-      cost: [CardType.COLORLESS],
+      cost: [F],
       damage: 30,
       text: 'If this Pokémon moved from your Bench to the Active Spot this turn, this attack does 120 more damage.'
     },
     {
       name: 'G-Max Rapid Flow',
-      cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
+      cost: [F, F, C],
       damage: 0,
       text: 'Discard all Energy from this Pokémon. This attack does 120 damage to 2 of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
     }
@@ -50,8 +50,6 @@ export class RapidStrikeUrshifuVMAX extends PokemonCard {
   public name: string = 'Rapid Strike Urshifu VMAX';
 
   public fullName: string = 'Rapid Strike Urshifu VMAX BST';
-
-
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -77,13 +75,13 @@ export class RapidStrikeUrshifuVMAX extends PokemonCard {
       const discardEnergy = new DiscardCardsEffect(effect, cards);
       discardEnergy.target = player.active;
       store.reduceEffect(state, discardEnergy);
-    
+
       const max = Math.min(2);
       return store.prompt(state, new ChoosePokemonPrompt(
         player.id,
         GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
         PlayerType.TOP_PLAYER,
-        [ SlotType.ACTIVE, SlotType.BENCH ],
+        [SlotType.ACTIVE, SlotType.BENCH],
         { min: max, max, allowCancel: false }
       ), selected => {
         const targets = selected || [];
@@ -93,7 +91,8 @@ export class RapidStrikeUrshifuVMAX extends PokemonCard {
             damageEffect.target = target;
             store.reduceEffect(state, damageEffect);
           });
-        }});
+        }
+      });
     }
     return state;
   }

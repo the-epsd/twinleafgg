@@ -13,7 +13,7 @@ import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
 function* playCard(next: Function, store: StoreLike, state: State,
-  self: TreasureGadget, effect: TrainerEffect): IterableIterator<State> {
+  self: TreasureTracker, effect: TrainerEffect): IterableIterator<State> {
 
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
@@ -53,7 +53,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   });
 }
 
-export class TreasureGadget extends TrainerCard {
+export class TreasureTracker extends TrainerCard {
 
   public regulationMark = 'H';
 
@@ -67,9 +67,9 @@ export class TreasureGadget extends TrainerCard {
 
   public setNumber: string = '146';
 
-  public name: string = 'Treasure Gadget';
+  public name: string = 'Treasure Tracker';
 
-  public fullName: string = 'Treasure Gadget SV8a';
+  public fullName: string = 'Treasure Tracker SV8a';
 
   public text: string = 'Search your deck for up to 5 Pokémon Tool cards, reveal them, and then put them into your hand. Then, shuffle your deck.';
 

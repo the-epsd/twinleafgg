@@ -36,11 +36,11 @@ export class Seaking extends PokemonCard {
 
   public regulationMark = 'H';
 
-  public set: string = 'SV8a';
+  public set: string = 'PRE';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '29';
+  public setNumber: string = '21';
 
   public name: string = 'Seaking';
 

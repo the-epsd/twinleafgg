@@ -37,9 +37,9 @@ export class Eeveeex extends PokemonCard {
   ];
 
   public regulationMark: string = 'H';
-  public set: string = 'SV8a';
+  public set: string = 'PRE';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '126';
+  public setNumber: string = '75';
   public name: string = 'Eevee ex';
   public fullName: string = 'Eevee ex SV8a';
 

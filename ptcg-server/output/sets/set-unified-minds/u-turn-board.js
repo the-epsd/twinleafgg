@@ -31,7 +31,6 @@ class UTurnBoard extends trainer_card_1.TrainerCard {
         if (effect instanceof play_card_effects_1.AttachPokemonToolEffect && effect.trainerCard === this) {
             const player = effect.player;
             player.marker.addMarker(this.U_TURN_BOARD_MARKER, this);
-            console.log('U-Turn Board is on a card.');
         }
         if (effect instanceof check_effects_1.CheckRetreatCostEffect && effect.player.active.tool === this) {
             if (effect.cost.length === 0) {
@@ -41,18 +40,17 @@ class UTurnBoard extends trainer_card_1.TrainerCard {
                 effect.cost.splice(0, 1);
             }
         }
-        const player = state.players[state.activePlayer];
-        if (player.marker.hasMarker(this.U_TURN_BOARD_MARKER, this)) {
+        if (effect instanceof check_effects_1.CheckTableStateEffect && state.players.some(p => p.discard.cards.includes(this))) {
             state.players.forEach(player => {
-                // Check if the card is in the player's discard pile
-                const uTurnBoardInDiscard = player.discard.cards.some(card => card === this);
-                if (uTurnBoardInDiscard && player.marker.hasMarker(this.U_TURN_BOARD_MARKER, this)) {
-                    // Move the card from the discard pile to the player's hand
-                    player.discard.moveCardTo(this, player.hand);
-                    player.marker.removeMarker(this.U_TURN_BOARD_MARKER, this);
+                if (!player.marker.hasMarker(this.U_TURN_BOARD_MARKER, this)) {
+                    return;
                 }
+                const rescued = player.marker.markers
+                    .filter(m => m.name === this.U_TURN_BOARD_MARKER && m.source !== undefined)
+                    .map(m => m.source);
+                player.discard.moveCardsTo(rescued, player.hand);
+                player.marker.removeMarker(this.U_TURN_BOARD_MARKER, this);
             });
-            return state;
         }
         return state;
     }

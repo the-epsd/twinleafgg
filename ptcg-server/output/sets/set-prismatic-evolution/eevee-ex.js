@@ -31,9 +31,9 @@ class Eeveeex extends pokemon_card_1.PokemonCard {
             }
         ];
         this.regulationMark = 'H';
-        this.set = 'SV8a';
+        this.set = 'PRE';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '126';
+        this.setNumber = '75';
         this.name = 'Eevee ex';
         this.fullName = 'Eevee ex SV8a';
     }

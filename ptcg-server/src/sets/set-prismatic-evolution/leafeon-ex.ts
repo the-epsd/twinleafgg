@@ -40,9 +40,9 @@ export class Leafeonex extends PokemonCard {
   ];
 
   public regulationMark: string = 'H';
-  public set: string = 'SV8a';
+  public set: string = 'PRE';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '3';
+  public setNumber: string = '6';
   public name: string = 'Leafeon ex';
   public fullName: string = 'Leafeon ex SV8a';
 

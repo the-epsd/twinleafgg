@@ -1,9 +1,10 @@
 import { PowerType, State, StoreLike } from '../../game';
-import { CardType, Stage } from '../../game/store/card/card-types';
+import { CardTag, CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
 export declare class Mamoswineex extends PokemonCard {
     stage: Stage;
+    tags: CardTag[];
     evolvesFrom: string;
     cardType: CardType;
     hp: number;

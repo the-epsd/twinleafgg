@@ -11,17 +11,17 @@ import { StoreLike } from '../../game/store/store-like';
 
 export class Defender extends TrainerCard {
 
-  public trainerType: TrainerType = TrainerType.TOOL;
+  public trainerType: TrainerType = TrainerType.ITEM;
 
-  public set: string = 'BS'; // Replace with the appropriate set abbreviation
+  public set: string = 'BS';
 
   public name: string = 'Defender';
 
-  public fullName: string = 'Defender BS'; // Replace with the appropriate set abbreviation
+  public fullName: string = 'Defender BS';
 
-  public cardImage: string = 'assets/cardback.png'; // Replace with the appropriate card image path
+  public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '80'; // Replace with the appropriate set number
+  public setNumber: string = '80';
 
   public text: string = 'Attach Defender to 1 of your Pokémon. At the end of your opponent\'s next turn, discard Defender. Damage done to that Pokémon by attacks is reduced by 20 (after applying Weakness and Resistance).';
 
@@ -31,8 +31,6 @@ export class Defender extends TrainerCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
-
-
 
       return store.prompt(state, new ChoosePokemonPrompt(
         player.id,
@@ -44,6 +42,7 @@ export class Defender extends TrainerCard {
         if (results && results.length > 0) {
           const targetPokemon = results[0];
           targetPokemon.marker.addMarker(this.DEFENDER_MARKER, this);
+          targetPokemon.tool?.cards.cards.length === 0;
           const opponent = StateUtils.getOpponent(state, player);
           opponent.marker.addMarker(this.CLEAR_DEFENDER_MARKER, this);
         }
@@ -56,9 +55,8 @@ export class Defender extends TrainerCard {
 
     if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.CLEAR_DEFENDER_MARKER)) {
       const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
 
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
         if (cardList.marker.hasMarker(this.DEFENDER_MARKER, this)) {
           cardList.marker.removeMarker(this.DEFENDER_MARKER, this);
           cardList.moveCardTo(this, player.discard);

@@ -16,11 +16,11 @@ export class Skeledirge extends PokemonCard {
   public powers = [{
     name: 'Unaware',
     powerType: PowerType.ABILITY,
-    text: 'Prevent all effects of attacks from your opponent\'s Pokémon done to this Pokémon. (Damage is not an effect.)'
+    text: 'Prevent all effects of attacks used by your opponent\'s Pokémon done to this Pokémon. (Damage is not an effect.) '
   }];
 
   public attacks = [{
-    name: 'Flare Recital',
+    name: 'Torcherto',
     cost: [CardType.FIRE, CardType.COLORLESS],
     damage: 60,
     text: 'This attack does 20 more damage for each Benched Pokémon (both yours and your opponent\'s).'
