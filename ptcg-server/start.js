@@ -159,13 +159,13 @@ const botManager = BotManager.getInstance();
 const app = new App();
 
 function logCPUUsage() {
-  const cpuUsage = os.loadavg()[0] * 100;
+  const cpuUsage = os.loadavg()[0] * 1000;
   console.log(`Current CPU Usage: ${cpuUsage.toFixed(2)}%`);
 }
 
 // Add CPU monitoring
 function monitorCPU() {
-  const cpuUsage = os.loadavg()[0] * 100;
+  const cpuUsage = os.loadavg()[0] * 1000;
   const threshold = 50;
 
   if (cpuUsage > threshold) {
