@@ -158,24 +158,24 @@ const botManager = BotManager.getInstance();
 
 const app = new App();
 
-function logCPUUsage() {
-  const cpuUsage = os.loadavg()[0] * 1000;
-  console.log(`Current CPU Usage: ${cpuUsage.toFixed(2)}%`);
-}
+// function logCPUUsage() {
+//   const cpuUsage = os.loadavg()[0] * 1000;
+//   console.log(`Current CPU Usage: ${cpuUsage.toFixed(2)}%`);
+// }
 
-// Add CPU monitoring
-function monitorCPU() {
-  const cpuUsage = os.loadavg()[0] * 1000;
-  const threshold = 50;
+// // Add CPU monitoring
+// function monitorCPU() {
+//   const cpuUsage = os.loadavg()[0] * 1000;
+//   const threshold = 50;
 
-  if (cpuUsage > threshold) {
-    console.log('CPU usage exceeded 50%, restarting server...');
-    process.exit(1);
-  }
-}
+//   if (cpuUsage > threshold) {
+//     console.log('CPU usage exceeded 50%, restarting server...');
+//     process.exit(1);
+//   }
+// }
 
-setInterval(logCPUUsage, 60000); // Log every 1 minute
-setInterval(monitorCPU, 300000); // Monitor every 5 minutes
+// setInterval(logCPUUsage, 60000); // Log every 1 minute
+// setInterval(monitorCPU, 300000); // Monitor every 5 minutes
 
 app.connectToDatabase()
   .catch(error => {
