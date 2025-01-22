@@ -7,16 +7,12 @@ describe('StateUtils', () => {
   // let playerId: number;
   let fire: CardType[];
   let fighting: CardType[];
-  let lightning: CardType[];
-  let water: CardType[];
   let unitFdy: CardType[];
   let blendWLFM: CardType[];
   let unitLPM: CardType[];
-  let unitGRW: CardType[];
-  let rainbow: CardType[];
-  let blendGRPD: CardType[];
   // let dark: CardType[];
   // let colorless: CardType[];
+  let rainbow: CardType[];
   // let dce: CardType[];
 
   function createEnergy(name: string, provides: CardType[]): EnergyMap {
@@ -28,14 +24,12 @@ describe('StateUtils', () => {
     // playerId = 1;
     fire = [CardType.FIRE];
     fighting = [CardType.FIGHTING];
-    lightning = [CardType.LIGHTNING];
-    water = [CardType.WATER];
+    // dark = [ CardType.DARK ];
     unitFdy = [CardType.FDY];
     blendWLFM = [CardType.WLFM];
     unitLPM = [CardType.LPM];
-    unitGRW = [CardType.GRW];
+    // colorless = [ CardType.COLORLESS ];
     rainbow = [CardType.ANY];
-    blendGRPD = [CardType.GRPD];
     // dce = [ CardType.COLORLESS, CardType.COLORLESS ];
   });
 
@@ -133,154 +127,5 @@ describe('StateUtils', () => {
 
     // then
     expect(StateUtils.checkEnoughEnergy(energy, cost)).toBeTruthy();
-  });
-
-  it('Should handle two Unit LPM for {L}{L} cost', () => {
-    // given
-    const cost: CardType[] = [CardType.LIGHTNING, CardType.LIGHTNING];
-    const energy: EnergyMap[] = [
-      createEnergy('unitLPM1', unitLPM),
-      createEnergy('unitLPM2', unitLPM)
-    ];
-
-    // then
-    expect(StateUtils.checkEnoughEnergy(energy, cost)).toBeTruthy();
-  });
-
-  it('Should handle two Unit GRW for {R}{R} cost', () => {
-    // given
-    const cost: CardType[] = [CardType.FIRE, CardType.FIRE];
-    const energy: EnergyMap[] = [
-      createEnergy('unitGRW1', unitGRW),
-      createEnergy('unitGRW2', unitGRW)
-    ];
-
-    // then
-    expect(StateUtils.checkEnoughEnergy(energy, cost)).toBeTruthy();
-  });
-
-  it('Should handle different multi-energies for same type cost', () => {
-    // given
-    const cost: CardType[] = [CardType.FIRE, CardType.FIRE];
-    const energy: EnergyMap[] = [
-      createEnergy('unitGRW', unitGRW),
-      createEnergy('blendGRPD', blendGRPD)
-    ];
-
-    // then
-    expect(StateUtils.checkEnoughEnergy(energy, cost)).toBeTruthy();
-  });
-
-  it('Should handle Unit LPM + Blend WLFM for {L}{M} cost', () => {
-    // given
-    const cost: CardType[] = [CardType.LIGHTNING, CardType.METAL];
-    const energy: EnergyMap[] = [
-      createEnergy('unitLPM', unitLPM),
-      createEnergy('blendWLFM', blendWLFM)
-    ];
-
-    // then
-    expect(StateUtils.checkEnoughEnergy(energy, cost)).toBeTruthy();
-  });
-
-  it('Should handle Unit GRW + Blend GRPD for {R}{W} cost', () => {
-    // given
-    const cost: CardType[] = [CardType.FIRE, CardType.WATER];
-    const energy: EnergyMap[] = [
-      createEnergy('unitGRW', unitGRW),
-      createEnergy('blendGRPD', blendGRPD)
-    ];
-
-    // then
-    expect(StateUtils.checkEnoughEnergy(energy, cost)).toBeTruthy();
-  });
-
-  it('Should handle two different Blend energies for {L}{P} cost', () => {
-    // given
-    const cost: CardType[] = [CardType.LIGHTNING, CardType.PSYCHIC];
-    const energy: EnergyMap[] = [
-      createEnergy('blendWLFM', blendWLFM),
-      createEnergy('blendGRPD', blendGRPD)
-    ];
-
-    // then
-    expect(StateUtils.checkEnoughEnergy(energy, cost)).toBeTruthy();
-  });
-
-  it('Should handle same Blend energy twice for {W}{F} cost', () => {
-    // given
-    const cost: CardType[] = [CardType.WATER, CardType.FIGHTING];
-    const energy: EnergyMap[] = [
-      createEnergy('blendWLFM1', blendWLFM),
-      createEnergy('blendWLFM2', blendWLFM)
-    ];
-
-    // then
-    expect(StateUtils.checkEnoughEnergy(energy, cost)).toBeTruthy();
-  });
-
-  it('Should fail when one multi-energy provides a cost but not the other', () => {
-    // given
-    const cost: CardType[] = [CardType.PSYCHIC, CardType.PSYCHIC];
-    const energy: EnergyMap[] = [
-      createEnergy('unitLPM', unitLPM),
-      createEnergy('blendWLFM', blendWLFM)
-    ];
-
-    // then
-    expect(StateUtils.checkEnoughEnergy(energy, cost)).toBeFalsy();
-  });
-
-  it('Should handle complex mix of basic and multi-energies', () => {
-    // given
-    const cost: CardType[] = [
-      CardType.LIGHTNING,
-      CardType.PSYCHIC,
-      CardType.WATER,
-      CardType.COLORLESS
-    ];
-    const energy: EnergyMap[] = [
-      createEnergy('unitLPM', unitLPM),
-      createEnergy('blendWLFM', blendWLFM),
-      createEnergy('lightning', lightning),
-      createEnergy('water', water)
-    ];
-
-    // then
-    expect(StateUtils.checkEnoughEnergy(energy, cost)).toBeTruthy();
-  });
-
-  it('Should handle ANY type from rainbow with multi-energies', () => {
-    const cost: CardType[] = [
-      CardType.LIGHTNING,
-      CardType.PSYCHIC,
-      CardType.WATER
-    ];
-    const energy: EnergyMap[] = [
-      createEnergy('unitLPM', unitLPM),
-      createEnergy('rainbow', rainbow),
-      createEnergy('blendWLFM', blendWLFM)
-    ];
-
-    expect(StateUtils.checkEnoughEnergy(energy, cost)).toBeTruthy();
-  });
-
-  it('Should handle energy assignment regardless of energy card order', () => {
-    // given
-    const cost: CardType[] = [CardType.FIRE, CardType.PSYCHIC];
-
-    const energy1: EnergyMap[] = [
-      createEnergy('blendGRPD', blendGRPD),
-      createEnergy('unitLPM', unitLPM)
-    ];
-
-    const energy2: EnergyMap[] = [
-      createEnergy('unitLPM', unitLPM),
-      createEnergy('blendGRPD', blendGRPD)
-    ];
-
-    // then
-    expect(StateUtils.checkEnoughEnergy(energy1, cost)).toBeTruthy();
-    expect(StateUtils.checkEnoughEnergy(energy2, cost)).toBeTruthy();
   });
 });

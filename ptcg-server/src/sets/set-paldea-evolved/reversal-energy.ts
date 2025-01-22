@@ -33,21 +33,24 @@ export class ReversalEnergy extends EnergyCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
-
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-
       const attachedTo = effect.source.getPokemonCard();
 
+      const isValidPokemon = attachedTo instanceof PokemonCard
+        && attachedTo.stage !== Stage.BASIC
+        && attachedTo.stage !== Stage.RESTORED
+        && !attachedTo.cardTag.includes(CardTag.POKEMON_V
+          || CardTag.POKEMON_ex
+          || CardTag.POKEMON_VSTAR
+          || CardTag.POKEMON_VMAX
+          || CardTag.RADIANT);
 
+      const provides = player.getPrizeLeft() > opponent.getPrizeLeft() && isValidPokemon
+        ? [CardType.ANY, CardType.ANY, CardType.ANY]
+        : [CardType.COLORLESS];
 
-      if (!!attachedTo && attachedTo instanceof PokemonCard && player.getPrizeLeft() > opponent.getPrizeLeft() &&
-        attachedTo.stage !== Stage.BASIC && attachedTo.stage !== Stage.RESTORED &&
-        !attachedTo.cardTag.includes(CardTag.POKEMON_V || CardTag.POKEMON_ex || CardTag.POKEMON_VSTAR || CardTag.POKEMON_VMAX || CardTag.RADIANT)) {
-        effect.energyMap.push({ card: this, provides: [CardType.ANY, CardType.ANY, CardType.ANY] });
-      } else {
-        effect.energyMap.push({ card: this, provides: [CardType.COLORLESS] });
-      }
+      effect.energyMap.push({ card: this, provides });
       return state;
     }
     return state;

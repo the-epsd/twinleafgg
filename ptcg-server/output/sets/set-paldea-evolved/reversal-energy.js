@@ -26,14 +26,18 @@ class ReversalEnergy extends energy_card_1.EnergyCard {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             const attachedTo = effect.source.getPokemonCard();
-            if (!!attachedTo && attachedTo instanceof pokemon_card_1.PokemonCard && player.getPrizeLeft() > opponent.getPrizeLeft() &&
-                attachedTo.stage !== card_types_1.Stage.BASIC && attachedTo.stage !== card_types_1.Stage.RESTORED &&
-                !attachedTo.cardTag.includes(card_types_1.CardTag.POKEMON_V || card_types_1.CardTag.POKEMON_ex || card_types_1.CardTag.POKEMON_VSTAR || card_types_1.CardTag.POKEMON_VMAX || card_types_1.CardTag.RADIANT)) {
-                effect.energyMap.push({ card: this, provides: [card_types_1.CardType.ANY, card_types_1.CardType.ANY, card_types_1.CardType.ANY] });
-            }
-            else {
-                effect.energyMap.push({ card: this, provides: [card_types_1.CardType.COLORLESS] });
-            }
+            const isValidPokemon = attachedTo instanceof pokemon_card_1.PokemonCard
+                && attachedTo.stage !== card_types_1.Stage.BASIC
+                && attachedTo.stage !== card_types_1.Stage.RESTORED
+                && !attachedTo.cardTag.includes(card_types_1.CardTag.POKEMON_V
+                    || card_types_1.CardTag.POKEMON_ex
+                    || card_types_1.CardTag.POKEMON_VSTAR
+                    || card_types_1.CardTag.POKEMON_VMAX
+                    || card_types_1.CardTag.RADIANT);
+            const provides = player.getPrizeLeft() > opponent.getPrizeLeft() && isValidPokemon
+                ? [card_types_1.CardType.ANY, card_types_1.CardType.ANY, card_types_1.CardType.ANY]
+                : [card_types_1.CardType.COLORLESS];
+            effect.energyMap.push({ card: this, provides });
             return state;
         }
         return state;
