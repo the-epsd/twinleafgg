@@ -8,14 +8,8 @@ import { PokemonCardList } from './state/pokemon-card-list';
 import { State } from './state/state';
 export declare class StateUtils {
     static getStadium(state: State): void;
-    static checkEnoughEnergy(energyMap: EnergyMap[], cost: CardType[]): boolean;
-    /**
-     * Uses backtracking and recursion to find a valid assignment of Energy cards to hued costs
-     * @param provided Array of what each Energy card can provide (e.g. [[L,P,M], [W,L,F,M]])
-     * @param needed Array of required hued Energy (e.g. [L,P])
-     * @returns boolean indicating whether a valid assignment was found
-     */
-    private static canFulfillCosts;
+    static checkEnoughEnergy(energy: EnergyMap[], cost: CardType[]): boolean;
+    static getCombinations(arr: CardType[][], n: number): CardType[][];
     static checkExactEnergy(energy: EnergyMap[], cost: CardType[]): boolean;
     static getPlayerById(state: State, playerId: number): Player;
     static getOpponent(state: State, player: Player): Player;
