@@ -1,8 +1,8 @@
 import { CardType, EnergyType } from '../../game/store/card/card-types';
 import { EnergyCard } from '../../game/store/card/energy-card';
-import { CheckAttackCostEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-
+import { EnergyEffect } from '../../game/store/effects/play-card-effects';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
@@ -22,56 +22,29 @@ export class BlendEnergyWLFM extends EnergyCard {
 
   public fullName = 'Blend Energy WLFM DRX';
 
-  public text = 'This card provides C Energy. When this card is attached to a Pokémon, this card provides W, L, F, or M Energy but provides only 1 Energy at a time.';
+  public text = 'This card provides [C] Energy. When attached to a Pokémon, this card provides [W], [L], [F], or [M] but only 1 Energy at a time.';
 
-  blendedEnergies = [CardType.WATER, CardType.LIGHTNING, CardType.FIGHTING, CardType.METAL];
-
+  // We won't do the "needed cost logic" here anymore
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof CheckAttackCostEffect && effect.player.active.cards.includes(this)) {
-      const player = effect.player;
-      const pokemon = effect.player.active;
 
-
-
-      const attackCosts = effect instanceof CheckAttackCostEffect ? effect.attack.cost : [];
-      const initialCosts = [...attackCosts];
-      console.log(`[BlendEnergy] Initial attack costs: ${initialCosts.join(', ') || 'None'}`);
-
-      let checkEnergy: CheckProvidedEnergyEffect;
-      if (effect instanceof CheckProvidedEnergyEffect) {
-        checkEnergy = effect;
-      } else {
-        checkEnergy = new CheckProvidedEnergyEffect(player, pokemon);
-        store.reduceEffect(state, checkEnergy);
+    if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
+      try {
+        // Always add the base "EnergyEffect"
+        const energyEffect = new EnergyEffect(effect.player, this);
+        store.reduceEffect(state, energyEffect);
+      } catch {
+        return state;
       }
 
-      const alreadyProvided = checkEnergy.energyMap.flatMap(e => e.provides);
-      const blendProvided = checkEnergy.energyMap
-        .filter(e => e.card instanceof BlendEnergyWLFM)
-        .flatMap(e => e.provides);
-
-      let neededType: CardType | undefined;
-      for (const cost of initialCosts) {
-        if (this.blendedEnergies.includes(cost) && !alreadyProvided.includes(cost) && !blendProvided.includes(cost)) {
-          neededType = cost;
-          break;
-        }
-      }
-
-      if (neededType) {
-        checkEnergy.energyMap.push({
-          card: this,
-          provides: [neededType]
-        });
-        console.log(`[BlendEnergy] Provided energy type: ${neededType}`);
-      }
-
-      const finalEnergy = checkEnergy.energyMap.flatMap(e => e.provides);
-      console.log(`[BlendEnergy] Final energy provided: ${finalEnergy.join(', ') || 'None'}`);
-      console.log(`[BlendEnergy] Final attack cost check: ${effect.attack.cost.join(', ')}`);
+      // Instead of guessing whether we provide [W] or [L] or [F] or [M],
+      // just push a placeholder so 'checkEnoughEnergy' can decide the best match.
+      effect.energyMap.push({
+        card: this,
+        // Put a single "WLFM" token to indicate this card can fulfill one of [W,L,F,M].
+        provides: [CardType.WLFM]
+      });
     }
+
     return state;
-
-
   }
 }
