@@ -159,7 +159,7 @@ const botManager = BotManager.getInstance();
 const app = new App();
 
 function logCPUUsage() {
-  const cpuUsage = os.loadavg()[0] * 1;
+  const cpuUsage = os.loadavg()[0] * 100;
   console.log(`Current CPU Usage: ${cpuUsage.toFixed(2)}%`);
 }
 
