@@ -2,7 +2,7 @@ import { CardType, EnergyType } from '../../game/store/card/card-types';
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-
+import { EnergyEffect } from '../../game/store/effects/play-card-effects';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
@@ -30,20 +30,17 @@ export class UnitEnergyGRW extends EnergyCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
-      const pokemon = effect.source;
-      const pokemonCard = pokemon.getPokemonCard();
-      const attackCosts = pokemonCard?.attacks.map(attack => attack.cost);
+      try {
+        const energyEffect = new EnergyEffect(effect.player, this);
+        store.reduceEffect(state, energyEffect);
+      } catch {
+        return state;
+      }
 
-      const costs = attackCosts?.flat().filter(t => t !== CardType.COLORLESS) || [];
-      const alreadyProvided = effect.energyMap.flatMap(e => e.provides);
-      const neededType = costs.find(cost =>
-        this.blendedEnergies.includes(cost) &&
-        !alreadyProvided.includes(cost)
-      );
-
+      // Just tell the system we can provide G, R, or W (one at a time).
       effect.energyMap.push({
         card: this,
-        provides: neededType ? [neededType] : [CardType.COLORLESS]
+        provides: [CardType.GRW]
       });
     }
     return state;

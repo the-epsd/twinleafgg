@@ -29,9 +29,9 @@ class Umbreonex extends game_1.PokemonCard {
             }
         ];
         this.regulationMark = 'H';
-        this.set = 'SV8a';
+        this.set = 'PRE';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '93';
+        this.setNumber = '60';
         this.name = 'Umbreon ex';
         this.fullName = 'Umbreon ex SV8a';
     }

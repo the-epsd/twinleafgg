@@ -22,7 +22,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   }
 
   const blocked: CardTarget[] = [];
-  player.deck.cards.forEach((card, index) => {
+  player.bench.forEach((card, index) => {
     if (card instanceof PokemonCard && card.stage !== Stage.BASIC) {
       blocked.push();
     }

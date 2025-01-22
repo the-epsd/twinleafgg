@@ -73,11 +73,11 @@ export class MaxRod extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
 
-  public set: string = 'SV8a';
+  public set: string = 'PRE';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '142';
+  public setNumber: string = '116';
 
   public name: string = 'Max Rod';
 

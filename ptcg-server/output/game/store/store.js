@@ -33,7 +33,6 @@ class Store {
         this.promptItems = [];
         this.waitItems = [];
         this.logId = 0;
-        this.stateChangeCounter = 0;
     }
     dispatch(action) {
         let state = this.state;
@@ -91,8 +90,6 @@ class Store {
         state = game_effect_1.gameReducer(this, state, effect);
         state = attack_effect_1.attackReducer(this, state, effect);
         state = check_effect_1.checkStateReducer(this, state, effect);
-        this.stateChangeCounter++;
-        console.log(`Turn ${state.turn} | Total state changes: ${this.stateChangeCounter}`);
         return state;
     }
     // checkEffectHistory(state: State, effect: Effect) {
@@ -227,41 +224,24 @@ class Store {
         return state;
     }
     propagateEffect(state, effect) {
-        var _a, _b, _c, _d, _e;
-        const cardEffect = effect;
-        const cardName = ((_a = cardEffect.card) === null || _a === void 0 ? void 0 : _a.fullName) || ((_b = cardEffect.energyCard) === null || _b === void 0 ? void 0 : _b.fullName) ||
-            ((_c = cardEffect.trainerCard) === null || _c === void 0 ? void 0 : _c.fullName) || ((_d = cardEffect.pokemonCard) === null || _d === void 0 ? void 0 : _d.fullName) || 'No card';
-        const playerName = ((_e = cardEffect.player) === null || _e === void 0 ? void 0 : _e.name) || 'No player';
         const cards = [];
-        const startUsage = process.cpuUsage();
-        const startTime = performance.now();
-        const stateSize = JSON.stringify(state).length;
-        try {
-            for (const player of state.players) {
-                player.stadium.cards.forEach(c => cards.push(c));
-                player.supporter.cards.forEach(c => cards.push(c));
-                player.active.cards.forEach(c => cards.push(c));
-                for (const bench of player.bench) {
-                    bench.cards.forEach(c => cards.push(c));
-                }
-                for (const prize of player.prizes) {
-                    prize.cards.forEach(c => cards.push(c));
-                }
-                player.hand.cards.forEach(c => cards.push(c));
-                player.deck.cards.forEach(c => cards.push(c));
-                player.discard.cards.forEach(c => cards.push(c));
+        for (const player of state.players) {
+            player.stadium.cards.forEach(c => cards.push(c));
+            player.supporter.cards.forEach(c => cards.push(c));
+            player.active.cards.forEach(c => cards.push(c));
+            for (const bench of player.bench) {
+                bench.cards.forEach(c => cards.push(c));
             }
-            cards.sort(c => c.superType);
-            cards.forEach(c => { state = c.reduceEffect(this, state, effect); });
-            return state;
+            for (const prize of player.prizes) {
+                prize.cards.forEach(c => cards.push(c));
+            }
+            player.hand.cards.forEach(c => cards.push(c));
+            player.deck.cards.forEach(c => cards.push(c));
+            player.discard.cards.forEach(c => cards.push(c));
         }
-        finally {
-            const endTime = performance.now();
-            const endUsage = process.cpuUsage(startUsage);
-            const cpuPercent = ((endUsage.user + endUsage.system) / 1000) * 100;
-            console.log(`${cardName} | ${effect.type} | CPU: ${cpuPercent.toFixed(4)}% | Execution time: ${(endTime - startTime).toFixed(2)}ms | Player: ${playerName}`);
-            console.log(`Game state size: ${Math.round(stateSize / 1024)}KB | Turn: ${state.turn}`);
-        }
+        cards.sort(c => c.superType);
+        cards.forEach(c => { state = c.reduceEffect(this, state, effect); });
+        return state;
     }
 }
 exports.Store = Store;

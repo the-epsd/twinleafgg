@@ -35,9 +35,9 @@ class Jolteonex extends pokemon_card_1.PokemonCard {
             },
         ];
         this.regulationMark = 'H';
-        this.set = 'SV8a';
+        this.set = 'PRE';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '52';
+        this.setNumber = '30';
         this.name = 'Jolteon ex';
         this.fullName = 'Jolteon ex SV8a';
         this.ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';

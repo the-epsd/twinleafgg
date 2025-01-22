@@ -1,4 +1,4 @@
-import { Card, CardType, ChooseCardsPrompt, GameLog, GameMessage, PokemonCard, ShowCardsPrompt, ShuffleDeckPrompt, SpecialCondition, Stage, State, StateUtils, StoreLike, SuperType, TrainerCard, TrainerType } from '../../game';
+import { Card, CardType, ChooseCardsPrompt, GameLog, GameMessage, PokemonCard, ShowCardsPrompt, ShuffleDeckPrompt, SpecialCondition, Stage, State, StateUtils, StoreLike, TrainerCard, TrainerType } from '../../game';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
@@ -44,34 +44,34 @@ export class Chimecho extends PokemonCard {
       const specialConditionEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.ASLEEP]);
       store.reduceEffect(state, specialConditionEffect);
     }
-    
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      let supporters = 0; 
+      let supporters = 0;
       let pokemon = 0;
       const blocked: number[] = [];
       player.deck.cards.forEach((c, index) => {
         if (c instanceof TrainerCard && c.trainerType === TrainerType.SUPPORTER) {
-          supporters += 1; 
+          supporters += 1;
         } else if (c instanceof PokemonCard) {
           pokemon += 1;
         } else {
           blocked.push(index);
         }
       });
-    
+
       const maxSupporters = Math.min(supporters, 1);
       const maxPokemons = Math.min(pokemon, 1);
-      
+
       let cards: Card[] = [];
 
       return store.prompt(state, new ChooseCardsPrompt(
         player,
         GameMessage.CHOOSE_CARD_TO_HAND,
         player.deck,
-        { superType: SuperType.POKEMON },
+        {},
         { min: 0, max: maxSupporters + maxPokemons, allowCancel: false, maxSupporters, maxPokemons },
       ), selected => {
         cards = selected || [];

@@ -43,11 +43,11 @@ export class Jolteonex extends PokemonCard {
 
   public regulationMark = 'H';
 
-  public set: string = 'SV8a';
+  public set: string = 'PRE';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '52';
+  public setNumber: string = '30';
 
   public name: string = 'Jolteon ex';
 

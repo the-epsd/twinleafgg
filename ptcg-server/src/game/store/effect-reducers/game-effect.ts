@@ -237,12 +237,17 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
         for (let i = pokemonIndices.length - 1; i >= 0; i--) {
           const removedCard = effect.target.cards.splice(pokemonIndices[i], 1)[0];
 
-          // the basic check handles lillie's poke doll and the like
+          if (removedCard.cards) {
+            const attachedCards = removedCard.cards.cards.splice(0, removedCard.cards.cards.length);
+            effect.player.discard.cards.push(...attachedCards);
+          }
+
           if (removedCard.superType === SuperType.POKEMON || (<any>removedCard).stage === Stage.BASIC) {
             lostZoned.cards.push(removedCard);
+          } else {
+            effect.player.discard.cards.push(removedCard);
           }
         }
-
         lostZoned.moveTo(effect.player.lostzone);
         effect.target.clearEffects();
       } else {

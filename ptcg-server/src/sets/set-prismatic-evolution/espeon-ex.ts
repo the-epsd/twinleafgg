@@ -39,9 +39,9 @@ export class Espeonex extends PokemonCard {
   ];
 
   public regulationMark: string = 'H';
-  public set: string = 'SV8a';
+  public set: string = 'PRE';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '63';
+  public setNumber: string = '34';
   public name: string = 'Espeon ex';
   public fullName: string = 'Espeon ex SV8a';
 

@@ -32,9 +32,9 @@ class Glaceonex extends pokemon_card_1.PokemonCard {
             }
         ];
         this.regulationMark = 'H';
-        this.set = 'SV8a';
+        this.set = 'PRE';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '41';
+        this.setNumber = '26';
         this.name = 'Glaceon ex';
         this.fullName = 'Glaceon ex SV8a';
     }

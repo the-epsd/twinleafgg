@@ -55,7 +55,7 @@ class Chimecho extends game_1.PokemonCard {
             const maxSupporters = Math.min(supporters, 1);
             const maxPokemons = Math.min(pokemon, 1);
             let cards = [];
-            return store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: game_1.SuperType.POKEMON }, { min: 0, max: maxSupporters + maxPokemons, allowCancel: false, maxSupporters, maxPokemons }), selected => {
+            return store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, {}, { min: 0, max: maxSupporters + maxPokemons, allowCancel: false, maxSupporters, maxPokemons }), selected => {
                 cards = selected || [];
                 cards.forEach((card, index) => {
                     player.deck.moveCardTo(card, player.hand);

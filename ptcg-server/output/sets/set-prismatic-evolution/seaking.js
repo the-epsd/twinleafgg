@@ -28,9 +28,9 @@ class Seaking extends game_1.PokemonCard {
             }
         ];
         this.regulationMark = 'H';
-        this.set = 'SV8a';
+        this.set = 'PRE';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '29';
+        this.setNumber = '21';
         this.name = 'Seaking';
         this.fullName = 'Seaking SV8a';
     }

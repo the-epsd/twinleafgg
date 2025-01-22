@@ -10,7 +10,7 @@ import {
   StateUtils,
   StoreLike
 } from '../../game';
-import { BoardEffect, CardType, Stage, SuperType } from '../../game/store/card/card-types';
+import { BoardEffect, CardTag, CardType, Stage, SuperType } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
@@ -20,6 +20,8 @@ import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 export class Mamoswineex extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_2;
+
+  public tags = [CardTag.POKEMON_ex];
 
   public evolvesFrom = 'Piloswine';
 

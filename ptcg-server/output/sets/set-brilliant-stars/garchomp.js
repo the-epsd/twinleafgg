@@ -18,7 +18,6 @@ class Garchomp extends pokemon_card_1.PokemonCard {
         this.retreat = [card_types_1.CardType.COLORLESS];
         this.powers = [{
                 name: 'Sonic Slip',
-                useWhenInPlay: true,
                 powerType: game_1.PowerType.ABILITY,
                 text: 'When you play this Pokémon from your hand to evolve 1 of your Pokémon during your turn, you may prevent all damage from and effects of attacks done to this Pokémon until the end of your opponent\'s next turn.'
             }];

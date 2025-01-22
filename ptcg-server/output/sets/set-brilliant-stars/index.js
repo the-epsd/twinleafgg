@@ -22,6 +22,7 @@ const empoleon_1 = require("./empoleon");
 const entei_v_1 = require("./entei-v");
 const floatzel_1 = require("./floatzel");
 const garchomp_1 = require("./garchomp");
+const gible_1 = require("./gible");
 const gloria_1 = require("./gloria");
 const grotle_1 = require("./grotle");
 const haxorus_1 = require("./haxorus");
@@ -67,6 +68,7 @@ exports.setBrilliantStars = [
     new entei_v_1.EnteiV(),
     new floatzel_1.Floatzel(),
     new garchomp_1.Garchomp(),
+    new gible_1.Gible(),
     new gloria_1.Gloria(),
     new grotle_1.Grotle(),
     new haxorus_1.Haxorus(),

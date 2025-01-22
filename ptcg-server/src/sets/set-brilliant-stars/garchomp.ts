@@ -23,7 +23,6 @@ export class Garchomp extends PokemonCard {
 
   public powers = [{
     name: 'Sonic Slip',
-    useWhenInPlay: true,
     powerType: PowerType.ABILITY,
     text: 'When you play this Pokémon from your hand to evolve 1 of your Pokémon during your turn, you may prevent all damage from and effects of attacks done to this Pokémon until the end of your opponent\'s next turn.'
   }];
@@ -81,25 +80,25 @@ export class Garchomp extends PokemonCard {
         GameMessage.WANT_TO_USE_ABILITY,
       ), wantToUse => {
         if (wantToUse) {
-          const cardList = StateUtils.findCardList(state, this) as PokemonCardList;          
+          const cardList = StateUtils.findCardList(state, this) as PokemonCardList;
           cardList.marker.addMarker(this.SONIC_SLIP_MARKER, this);
         }
-      });      
-      
+      });
+
       return state;
     }
-    
+
     if (effect instanceof AbstractAttackEffect && effect.target.cards.includes(this) && effect.target.marker.hasMarker(this.SONIC_SLIP_MARKER, this)) {
       effect.preventDefault = true;
       return state;
     }
-    
+
     if (effect instanceof EndTurnEffect) {
       const player = effect.player;
-      
+
       const cardList = StateUtils.findCardList(state, this) as PokemonCardList;
       const owner = StateUtils.findOwner(state, cardList);
-      
+
       if (owner !== player) {
         cardList.marker?.removeMarker(this.SONIC_SLIP_MARKER, this);
       }

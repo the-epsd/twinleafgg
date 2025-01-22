@@ -1,4 +1,5 @@
 import { Card } from '../../game/store/card/card';
+import { Budew } from './budew';
 import { Eeveeex } from './eevee-ex';
 import { Espeonex } from './espeon-ex';
 import { Flareonex } from './flareon-ex';
@@ -8,11 +9,12 @@ import { Leafeonex } from './leafeon-ex';
 import { MaxRod } from './max-rod';
 import { Regigigas } from './regigigas';
 import { Seaking } from './seaking';
-import { TreasureGadget } from './treasure-gadget';
+import { TreasureTracker } from './treasure-tracker';
 import { Umbreonex } from './umbreon-ex';
 import { Vaporeonex } from './vaporeon-ex';
 
 export const setPrismaticEvolution: Card[] = [
+  new Budew(),
   new Eeveeex(),
   new Jolteonex(),
   new Flareonex(),
@@ -24,5 +26,5 @@ export const setPrismaticEvolution: Card[] = [
   new Seaking(),
   new Regigigas(),
   new MaxRod(),
-  new TreasureGadget(),
+  new TreasureTracker(),
 ];

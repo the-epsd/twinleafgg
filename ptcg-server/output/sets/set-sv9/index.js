@@ -3,10 +3,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.setSV9 = void 0;
 const blaziken_ex_1 = require("./blaziken-ex");
 const brocks_recruitment_1 = require("./brocks-recruitment");
-const budew_1 = require("./budew");
 const combusken_1 = require("./combusken");
 const dudunsparce_ex_1 = require("./dudunsparce-ex");
 const exchange_ticket_1 = require("./exchange-ticket");
+const hops_bag_1 = require("./hops-bag");
 const hops_choice_band_1 = require("./hops-choice-band");
 const hops_dubwool_1 = require("./hops-dubwool");
 const hops_snorlax_1 = require("./hops-snorlax");
@@ -17,6 +17,7 @@ const ionos_kilowattrel_1 = require("./ionos-kilowattrel");
 const ionos_tadbulb_1 = require("./ionos-tadbulb");
 const ionos_voltorb_1 = require("./ionos-voltorb");
 const ionos_wattrel_1 = require("./ionos-wattrel");
+const levincia_1 = require("./levincia");
 const lillies_clefairy_ex_1 = require("./lillies-clefairy-ex");
 const lillies_comfy_1 = require("./lillies-comfy");
 const lillies_pearl_1 = require("./lillies-pearl");
@@ -29,6 +30,7 @@ const ns_sigilyph_1 = require("./ns-sigilyph");
 const ns_zoroark_ex_1 = require("./ns-zoroark-ex");
 const ns_zorua_1 = require("./ns-zorua");
 const piloswine_1 = require("./piloswine");
+const postwick_1 = require("./postwick");
 const swinub_1 = require("./swinub");
 const torchic_1 = require("./torchic");
 exports.setSV9 = [
@@ -38,10 +40,11 @@ exports.setSV9 = [
     new swinub_1.Swinub(),
     new piloswine_1.Piloswine(),
     new mamoswine_ex_1.Mamoswineex(),
-    new budew_1.Budew(),
     new brocks_recruitment_1.BrocksRecruitment(),
     new exchange_ticket_1.ExchangeTicket(),
     new dudunsparce_ex_1.Dudunsparceex(),
+    new postwick_1.Postwick(),
+    new levincia_1.Levincia(),
     new lillies_clefairy_ex_1.LilliesClefairyex(),
     new lillies_comfy_1.LilliesComfy(),
     new lillies_pearl_1.LilliesPearl(),
@@ -50,6 +53,7 @@ exports.setSV9 = [
     new ionos_wattrel_1.IonosWattrel(),
     new ionos_kilowattrel_1.IonosKilowattrel(),
     new ionos_voltorb_1.IonosVoltorb(),
+    new hops_bag_1.HopsBag(),
     new hops_wooloo_1.HopsWooloo(),
     new hops_dubwool_1.HopsDubwool(),
     new hops_snorlax_1.HopsSnorlax(),

@@ -43,7 +43,9 @@ export class AromaticEnergy extends EnergyCard {
       pokemon.removeSpecialCondition(SpecialCondition.POISONED);
     }
 
-    if (effect instanceof CheckTableStateEffect) {
+    if (effect instanceof CheckTableStateEffect &&
+      (StateUtils.findCardList(state, this) instanceof PokemonCardList) &&
+      StateUtils.findCardList(state, this).cards.includes(this)) {
       const cardList = StateUtils.findCardList(state, this);
 
       if (cardList instanceof PokemonCardList && cardList.cards.includes(this)) {

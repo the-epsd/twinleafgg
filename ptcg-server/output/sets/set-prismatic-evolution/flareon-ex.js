@@ -62,9 +62,9 @@ class Flareonex extends pokemon_card_1.PokemonCard {
             }
         ];
         this.regulationMark = 'H';
-        this.set = 'SV8a';
+        this.set = 'PRE';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '22';
+        this.setNumber = '14';
         this.name = 'Flareon ex';
         this.fullName = 'Flareon ex SV8a';
         // for preventing the pokemon from attacking on the next turn

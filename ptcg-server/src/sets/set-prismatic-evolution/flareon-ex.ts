@@ -88,9 +88,9 @@ export class Flareonex extends PokemonCard {
   ];
 
   public regulationMark: string = 'H';
-  public set: string = 'SV8a';
+  public set: string = 'PRE';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '22';
+  public setNumber: string = '14';
   public name: string = 'Flareon ex';
   public fullName: string = 'Flareon ex SV8a';
 

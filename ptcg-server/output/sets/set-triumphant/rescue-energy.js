@@ -34,14 +34,13 @@ class RescueEnergy extends energy_card_1.EnergyCard {
                 player.marker.addMarker(this.RESCUE_ENERGY_MAREKER, card);
             });
         }
-        if (effect instanceof game_phase_effects_1.BetweenTurnsEffect) {
+        if (effect instanceof game_phase_effects_1.BetweenTurnsEffect && effect.player.discard.cards.includes(this)) {
             state.players.forEach(player => {
                 if (!player.marker.hasMarker(this.RESCUE_ENERGY_MAREKER)) {
                     return;
                 }
                 const rescued = player.marker.markers
                     .filter(m => m.name === this.RESCUE_ENERGY_MAREKER && m.source !== undefined)
-                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                     .map(m => m.source);
                 player.discard.moveCardsTo(rescued, player.hand);
                 player.marker.removeMarker(this.RESCUE_ENERGY_MAREKER);

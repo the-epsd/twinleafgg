@@ -32,9 +32,9 @@ class Espeonex extends pokemon_card_1.PokemonCard {
             }
         ];
         this.regulationMark = 'H';
-        this.set = 'SV8a';
+        this.set = 'PRE';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '63';
+        this.setNumber = '34';
         this.name = 'Espeon ex';
         this.fullName = 'Espeon ex SV8a';
     }

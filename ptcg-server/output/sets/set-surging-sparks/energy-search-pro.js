@@ -13,9 +13,19 @@ function* playCard(next, store, state, effect) {
     if (player.deck.cards.length === 0) {
         throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
     }
+    const uniqueBasicEnergies = player.deck.cards
+        .filter(c => c.superType === card_types_1.SuperType.ENERGY && c.energyType === card_types_1.EnergyType.BASIC)
+        .map(e => e.provides[0])
+        .filter((value, index, self) => self.indexOf(value) === index)
+        .length;
     let cards = [];
-    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC }, { min: 0, allowCancel: false, differentTypes: true }), selected => {
+    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC }, { min: 0, max: uniqueBasicEnergies, allowCancel: false, differentTypes: true }), selected => {
         cards = selected || [];
+        if (selected.length > 1) {
+            if (selected[0].name === selected[1].name) {
+                throw new game_error_1.GameError(game_message_1.GameMessage.CAN_ONLY_SELECT_TWO_DIFFERENT_ENERGY_TYPES);
+            }
+        }
         player.deck.moveCardsTo(cards, player.hand);
     });
     return store.prompt(state, new shuffle_prompt_1.ShuffleDeckPrompt(player.id), order => {

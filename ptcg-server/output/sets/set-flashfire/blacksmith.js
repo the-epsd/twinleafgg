@@ -28,7 +28,7 @@ class Blacksmith extends trainer_card_1.TrainerCard {
             const fireEnergyCount = player.discard.cards.filter(c => c instanceof energy_card_1.EnergyCard
                 && c.energyType === card_types_1.EnergyType.BASIC
                 && c.provides.includes(card_types_1.CardType.FIRE)).length;
-            if (fireEnergyCount < 2) {
+            if (fireEnergyCount === 0) {
                 throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
             }
             let hasFirePokemon = false;
@@ -61,7 +61,7 @@ class Blacksmith extends trainer_card_1.TrainerCard {
             player.hand.moveCardTo(effect.trainerCard, player.supporter);
             // Do not discard the card yet
             effect.preventDefault = true;
-            state = store.prompt(state, new attach_energy_prompt_1.AttachEnergyPrompt(player.id, game_message_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.discard, play_card_action_1.PlayerType.BOTTOM_PLAYER, [play_card_action_1.SlotType.BENCH, play_card_action_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Fire Energy' }, { allowCancel: false, min: 2, max: 2, blockedTo, sameTarget: true }), transfers => {
+            state = store.prompt(state, new attach_energy_prompt_1.AttachEnergyPrompt(player.id, game_message_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.discard, play_card_action_1.PlayerType.BOTTOM_PLAYER, [play_card_action_1.SlotType.BENCH, play_card_action_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Fire Energy' }, { allowCancel: false, min: 1, max: 2, blockedTo, sameTarget: true }), transfers => {
                 transfers = transfers || [];
                 if (transfers.length === 0) {
                     return;

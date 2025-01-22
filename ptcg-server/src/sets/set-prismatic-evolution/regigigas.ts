@@ -28,13 +28,13 @@ export class Regigigas extends PokemonCard {
     }
   ];
 
-  public set: string = 'SV8a';
+  public set: string = 'PRE';
 
   public regulationMark = 'H';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '132';
+  public setNumber: string = '86';
 
   public name: string = 'Regigigas';
 

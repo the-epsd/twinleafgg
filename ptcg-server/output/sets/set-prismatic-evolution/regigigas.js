@@ -23,10 +23,10 @@ class Regigigas extends pokemon_card_1.PokemonCard {
                 text: 'If your opponent\'s Active Pokémon is a Tera Pokémon, this attack does 230 more damage.',
             }
         ];
-        this.set = 'SV8a';
+        this.set = 'PRE';
         this.regulationMark = 'H';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '132';
+        this.setNumber = '86';
         this.name = 'Regigigas';
         this.fullName = 'Regigigas SV8a';
     }

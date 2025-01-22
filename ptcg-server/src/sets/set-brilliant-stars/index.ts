@@ -20,6 +20,7 @@ import { Empoleon } from './empoleon';
 import { EnteiV } from './entei-v';
 import { Floatzel } from './floatzel';
 import { Garchomp } from './garchomp';
+import { Gible } from './gible';
 import { Gloria } from './gloria';
 import { Grotle } from './grotle';
 import { Haxorus } from './haxorus';
@@ -68,6 +69,7 @@ export const setBrilliantStars: Card[] = [
   new EnteiV(),
   new Floatzel(),
   new Garchomp(),
+  new Gible(),
   new Gloria(),
   new Grotle(),
   new Haxorus(),

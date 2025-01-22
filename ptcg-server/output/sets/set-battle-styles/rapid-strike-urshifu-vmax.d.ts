@@ -10,12 +10,12 @@ export declare class RapidStrikeUrshifuVMAX extends PokemonCard {
     cardType: CardType;
     hp: number;
     weakness: {
-        type: CardType;
+        type: CardType.PSYCHIC;
     }[];
-    retreat: CardType[];
+    retreat: CardType.COLORLESS[];
     attacks: {
         name: string;
-        cost: CardType[];
+        cost: (CardType.FIGHTING | CardType.COLORLESS)[];
         damage: number;
         text: string;
     }[];
