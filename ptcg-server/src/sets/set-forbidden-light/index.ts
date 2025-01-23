@@ -1,10 +1,15 @@
 import { Card } from '../../game/store/card/card';
+import { AlolanExeggutor } from './alolan-exeggutor';
+import { BeastEnergy } from './beast-energy-prism-star';
 import { BeastRing } from './beast-ring';
 import { Buzzwole } from './buzzwole';
+import { DianciePS } from './diancie-prism-star';
 import { Diantha } from './diantha';
 import { Flabebe } from './flabebe';
 import { Floette } from './floette';
 import { Florges } from './florges';
+import { Froakie } from './froakie';
+import { FroakieFrubbles } from './froakie-2';
 import { Frogadier } from './frogadier';
 import { GreninjaGX } from './greninja-gx';
 import { Inkay } from './inkay';
@@ -14,16 +19,25 @@ import { Magnezone } from './magnezone';
 import { Malamar } from './malamar';
 import { MetalFryingPan } from './metal-frying-pan';
 import { MysteriousTreasure } from './mysterious-treasure';
+import { Rockruff } from './rockruff';
 import { UltraNecrozmaGX } from './ultra-necrozma-gx';
+import { UltraSpace } from './ultra-space';
 import { UnitEnergyFDY } from './unit-energy-fdy';
+import { VolcanionPS } from './volcanion-prism-star';
+import { YveltalGX } from './Yveltal-GX';
 
 export const setForbiddenLight: Card[] = [
+  new AlolanExeggutor(),
+  new BeastEnergy(),
   new BeastRing(),
   new Buzzwole(),
+  new DianciePS(),
   new Diantha(),
   new Flabebe(),
   new Floette(),
   new Florges(),
+  new Froakie(),
+  new FroakieFrubbles(),
   new Frogadier(),
   new GreninjaGX(),
   new Inkay(),
@@ -33,6 +47,10 @@ export const setForbiddenLight: Card[] = [
   new Malamar(),
   new MetalFryingPan(),
   new MysteriousTreasure(),
-  new UnitEnergyFDY(),
+  new Rockruff(),
   new UltraNecrozmaGX(),
+  new UltraSpace(),
+  new UnitEnergyFDY(),
+  new VolcanionPS(),
+  new YveltalGX(),
 ];

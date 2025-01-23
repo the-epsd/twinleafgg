@@ -71,7 +71,7 @@ export class IronThornsex extends PokemonCard {
 
       // Pokemon isn't a rule box - don't bother checking to block ability
       if (!ruleBoxTags.some(tag => effect.card.tags.includes(tag))) {
-        return state
+        return state;
       }
 
       // Try reducing ability for each player  
