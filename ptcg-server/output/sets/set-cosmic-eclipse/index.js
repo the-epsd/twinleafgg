@@ -17,6 +17,7 @@ const flabebe_1 = require("./flabebe");
 const flabebe2_1 = require("./flabebe2");
 const floette_1 = require("./floette");
 const golett_1 = require("./golett");
+const great_catcher_1 = require("./great-catcher");
 const guzma_and_hala_1 = require("./guzma-and-hala");
 const guzzlord_1 = require("./guzzlord");
 const lanas_fishing_rod_1 = require("./lanas-fishing-rod");
@@ -54,6 +55,7 @@ exports.setCosmicEclipse = [
     new flabebe2_1.Flabebe2(),
     new floette_1.Floette(),
     new golett_1.Golett(),
+    new great_catcher_1.GreatCatcher(),
     new guzma_and_hala_1.GuzmaAndHala(),
     new guzzlord_1.Guzzlord(),
     new lanas_fishing_rod_1.LanasFishingRod(),

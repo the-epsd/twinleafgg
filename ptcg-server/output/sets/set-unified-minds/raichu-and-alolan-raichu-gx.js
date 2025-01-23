@@ -34,7 +34,7 @@ class RaichuAlolanRaichuGX extends pokemon_card_1.PokemonCard {
         this.set = 'UNM';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '54';
-        this.name = 'Raichu & Alolan RaichuGX GX';
+        this.name = 'Raichu & Alolan Raichu GX';
         this.fullName = 'Raichu & Alolan Raichu GX UNM';
     }
     reduceEffect(store, state, effect) {

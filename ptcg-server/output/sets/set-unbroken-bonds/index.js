@@ -3,12 +3,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.setUnbrokenBonds = void 0;
 const arcanine_1 = require("./arcanine");
 const aron_1 = require("./aron");
+const blacephalon_1 = require("./blacephalon");
 const cleffa_1 = require("./cleffa");
 const dedenne_gx_1 = require("./dedenne-gx");
 const dusk_stone_1 = require("./dusk-stone");
 const electromagnetic_radar_1 = require("./electromagnetic-radar");
 const espurr_1 = require("./espurr");
 const fire_crystal_1 = require("./fire-crystal");
+const gardevoir_and_sylveon_gx_1 = require("./gardevoir-and-sylveon-gx");
 const gloom_1 = require("./gloom");
 const goldeen_1 = require("./goldeen");
 const greens_exploration_1 = require("./greens-exploration");
@@ -41,12 +43,14 @@ const zeraora_1 = require("./zeraora");
 exports.setUnbrokenBonds = [
     new arcanine_1.Arcanine(),
     new aron_1.Aron(),
+    new blacephalon_1.BlacephalonUNB(),
     new cleffa_1.Cleffa(),
     new dedenne_gx_1.DedenneGX(),
     new dusk_stone_1.DuskStone(),
     new electromagnetic_radar_1.ElectromagneticRadar(),
     new espurr_1.Espurr(),
     new fire_crystal_1.FireCrystal(),
+    new gardevoir_and_sylveon_gx_1.GardevoirSylveonGX(),
     new gloom_1.Gloom(),
     new goldeen_1.Goldeen(),
     new greens_exploration_1.GreensExploration(),

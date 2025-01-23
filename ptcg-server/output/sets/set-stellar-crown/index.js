@@ -15,6 +15,7 @@ const diancie_1 = require("./diancie");
 const drednaw_1 = require("./drednaw");
 const drifblim_1 = require("./drifblim");
 const duraludon_1 = require("./duraludon");
+const eevee_1 = require("./eevee");
 const electabuzz_1 = require("./electabuzz");
 const fan_rotom_1 = require("./fan-rotom");
 const galvantula_ex_1 = require("./galvantula-ex");
@@ -55,6 +56,7 @@ exports.setStellarCrown = [
     new drednaw_1.Drednaw(),
     new drifblim_1.Drifblim(),
     new duraludon_1.Duraludon(),
+    new eevee_1.EeveeSCR(),
     new electabuzz_1.Electabuzz(),
     new fan_rotom_1.FanRotom(),
     new galvantula_ex_1.Galvantulaex(),
