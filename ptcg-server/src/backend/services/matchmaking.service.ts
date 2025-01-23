@@ -82,6 +82,10 @@ class MatchmakingService {
     if (player1Client && player2Client) {
       const gameSettings = new GameSettings();
       gameSettings.format = format as unknown as Format;
+
+      if (gameSettings.format.toString() === 'GLC') {
+        gameSettings.timeLimit = 1800;
+      }
       const game = this.core.createGameWithDecks(player1Client, player1[1], gameSettings, player2Client, player2[1]);
 
       // // Use InvitePlayerAction to add the second player
