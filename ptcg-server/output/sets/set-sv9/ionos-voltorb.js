@@ -46,7 +46,7 @@ class IonosVoltorb extends pokemon_card_1.PokemonCard {
                     });
                 }
             });
-            effect.damage = 20 + energies * 20;
+            effect.damage += energies * 20;
         }
         return state;
     }

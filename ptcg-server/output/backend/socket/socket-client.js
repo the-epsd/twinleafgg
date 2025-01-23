@@ -50,7 +50,7 @@ class SocketClient {
         this.matchmakingSocket.onJoinQueue(from, message);
     }
     onLeaveQueue(client) {
-        this.matchmakingSocket.onLeaveQueue(client);
+        this.matchmakingSocket.onLeaveQueue();
     }
     onMessage(from, message) {
         this.messageSocket.onMessage(from, message);

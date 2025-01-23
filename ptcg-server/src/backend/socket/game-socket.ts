@@ -27,26 +27,6 @@ export class GameSocket {
   private core: Core;
   private stateSanitizer: StateSanitizer;
 
-  private boundListeners = {
-    joinGame: this.joinGame.bind(this),
-    leaveGame: this.leaveGame.bind(this),
-    getGameStatus: this.getGameStatus.bind(this),
-    ability: this.ability.bind(this),
-    trainerability: this.trainerability.bind(this),
-    attack: this.attack.bind(this),
-    stadium: this.stadium.bind(this),
-    playGame: this.playGame.bind(this),
-    playCard: this.playCard.bind(this),
-    resolvePrompt: this.resolvePrompt.bind(this),
-    retreat: this.retreat.bind(this),
-    reorderBench: this.reorderBench.bind(this),
-    reorderHand: this.reorderHand.bind(this),
-    passTurn: this.passTurn.bind(this),
-    appendLog: this.appendLog.bind(this),
-    changeAvatar: this.changeAvatar.bind(this)
-  };
-
-
   constructor(client: Client, socket: SocketWrapper, core: Core, cache: SocketCache) {
     this.cache = cache;
     this.client = client;
@@ -55,45 +35,22 @@ export class GameSocket {
     this.stateSanitizer = new StateSanitizer(client, cache);
 
     // game listeners
-    this.socket.addListener('game:join', this.boundListeners.joinGame);
-    this.socket.addListener('game:leave', this.boundListeners.leaveGame);
-    this.socket.addListener('game:getStatus', this.boundListeners.getGameStatus);
-    this.socket.addListener('game:action:ability', this.boundListeners.ability);
-    this.socket.addListener('game:action:ability', this.boundListeners.trainerability);
-    this.socket.addListener('game:action:attack', this.boundListeners.attack);
-    this.socket.addListener('game:action:stadium', this.boundListeners.stadium);
-    this.socket.addListener('game:action:play', this.boundListeners.playGame);
-    this.socket.addListener('game:action:playCard', this.boundListeners.playCard);
-    this.socket.addListener('game:action:resolvePrompt', this.boundListeners.resolvePrompt);
-    this.socket.addListener('game:action:retreat', this.boundListeners.retreat);
-    this.socket.addListener('game:action:reorderBench', this.boundListeners.reorderBench);
-    this.socket.addListener('game:action:reorderHand', this.boundListeners.reorderHand);
-    this.socket.addListener('game:action:passTurn', this.boundListeners.passTurn);
-    this.socket.addListener('game:action:appendLog', this.boundListeners.appendLog);
-    this.socket.addListener('game:action:changeAvatar', this.boundListeners.changeAvatar);
-  }
-
-  public destroy(): void {
-    this.socket.socket.removeListener('game:join', this.boundListeners.joinGame);
-    this.socket.socket.removeListener('game:leave', this.boundListeners.leaveGame);
-    this.socket.socket.removeListener('game:getStatus', this.boundListeners.getGameStatus);
-    this.socket.socket.removeListener('game:action:ability', this.boundListeners.ability);
-    this.socket.socket.removeListener('game:action:ability', this.boundListeners.trainerability);
-    this.socket.socket.removeListener('game:action:attack', this.boundListeners.attack);
-    this.socket.socket.removeListener('game:action:stadium', this.boundListeners.stadium);
-    this.socket.socket.removeListener('game:action:play', this.boundListeners.playGame);
-    this.socket.socket.removeListener('game:action:playCard', this.boundListeners.playCard);
-    this.socket.socket.removeListener('game:action:resolvePrompt', this.boundListeners.resolvePrompt);
-    this.socket.socket.removeListener('game:action:retreat', this.boundListeners.retreat);
-    this.socket.socket.removeListener('game:action:reorderBench', this.boundListeners.reorderBench);
-    this.socket.socket.removeListener('game:action:reorderHand', this.boundListeners.reorderHand);
-    this.socket.socket.removeListener('game:action:passTurn', this.boundListeners.passTurn);
-    this.socket.socket.removeListener('game:action:appendLog', this.boundListeners.appendLog);
-    this.socket.socket.removeListener('game:action:changeAvatar', this.boundListeners.changeAvatar);
-
-    if (this.cache) {
-      delete this.cache.lastLogIdCache[this.client.id];
-    }
+    this.socket.addListener('game:join', this.joinGame.bind(this));
+    this.socket.addListener('game:leave', this.leaveGame.bind(this));
+    this.socket.addListener('game:getStatus', this.getGameStatus.bind(this));
+    this.socket.addListener('game:action:ability', this.ability.bind(this));
+    this.socket.addListener('game:action:ability', this.trainerability.bind(this));
+    this.socket.addListener('game:action:attack', this.attack.bind(this));
+    this.socket.addListener('game:action:stadium', this.stadium.bind(this));
+    this.socket.addListener('game:action:play', this.playGame.bind(this));
+    this.socket.addListener('game:action:playCard', this.playCard.bind(this));
+    this.socket.addListener('game:action:resolvePrompt', this.resolvePrompt.bind(this));
+    this.socket.addListener('game:action:retreat', this.retreat.bind(this));
+    this.socket.addListener('game:action:reorderBench', this.reorderBench.bind(this));
+    this.socket.addListener('game:action:reorderHand', this.reorderHand.bind(this));
+    this.socket.addListener('game:action:passTurn', this.passTurn.bind(this));
+    this.socket.addListener('game:action:appendLog', this.appendLog.bind(this));
+    this.socket.addListener('game:action:changeAvatar', this.changeAvatar.bind(this));
   }
 
   public onGameJoin(game: Game, client: Client): void {
@@ -150,25 +107,17 @@ export class GameSocket {
 
   private dispatch(gameId: number, action: Action, response: Response<void>) {
     const game = this.core.games.find(g => g.id === gameId);
-
     if (game === undefined) {
       response('error', ApiErrorEnum.GAME_INVALID_ID);
       return;
     }
-
     try {
       game.dispatch(this.client, action);
-    } catch (err) {
-      if (err instanceof Error) {
-        response('error', err.message as ApiErrorEnum);
-      } else {
-        response('error', ApiErrorEnum.UNKNOWN_ERROR);
-      }
-      return;
+    } catch (error) {
+      response('error', error.message);
     }
     response('ok');
   }
-
 
   private ability(params: { gameId: number, ability: string, target: CardTarget }, response: Response<void>) {
     const action = new UseAbilityAction(this.client.id, params.ability, params.target);
@@ -206,7 +155,6 @@ export class GameSocket {
       response('error', ApiErrorEnum.GAME_INVALID_ID);
       return;
     }
-
     const prompt = game.state.prompts.find(p => p.id === params.id);
     if (prompt === undefined) {
       response('error', ApiErrorEnum.PROMPT_INVALID_ID);
@@ -219,8 +167,8 @@ export class GameSocket {
         response('error', ApiErrorEnum.PROMPT_INVALID_RESULT);
         return;
       }
-    } catch (err) {
-      response('error', ApiErrorEnum.PROMPT_INVALID_RESULT);
+    } catch (error) {
+      response('error', error);
       return;
     }
 
