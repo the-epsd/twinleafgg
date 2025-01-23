@@ -66,7 +66,7 @@ export class Magmar extends PokemonCard {
 
       if (!coinFlipResult) {
         effect.damage = 0;
-        store.log(state, GameLog.LOG_ABILITY_BLOCKS_DAMGE, { name: opponent.name, pokemon: this.name });
+        store.log(state, GameLog.LOG_ABILITY_BLOCKS_DAMAGE, { name: opponent.name, pokemon: this.name });
       }
     }
 

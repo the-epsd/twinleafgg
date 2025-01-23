@@ -3,6 +3,7 @@ import { Bayleef } from './bayleef';
 import { Delinquent } from './delinquent';
 import { FightingFuryBelt } from './fighting-fury-belt';
 import { Froakie } from './froakie';
+import { GreninjaBKP } from './greninja';
 import { Kricketot } from './kricketot';
 import { MaxElixir } from './max-elixir';
 import { Phantump } from './phantump';
@@ -17,6 +18,7 @@ export const setBreakpoint: Card[] = [
   new Delinquent(),
   new FightingFuryBelt(),
   new Froakie(),
+  new GreninjaBKP(),
   new Kricketot(),
   new MaxElixir(),
   new Phantump(),

@@ -8,6 +8,7 @@ const armarouge_1 = require("./armarouge");
 const arven_1 = require("./arven");
 const banette_ex_1 = require("./banette-ex");
 const beach_court_1 = require("./beach-court");
+const bisharp_1 = require("./bisharp");
 const capsakid_1 = require("./capsakid");
 const charcadet_1 = require("./charcadet");
 const crushing_hammer_1 = require("./crushing-hammer");
@@ -29,6 +30,7 @@ const hawlucha_1 = require("./hawlucha");
 const jacq_1 = require("./jacq");
 const judge_1 = require("./judge");
 const katy_1 = require("./katy");
+const kingambit_1 = require("./kingambit");
 const klefki_1 = require("./klefki");
 const koraidon_ex_1 = require("./koraidon-ex");
 const lucario_1 = require("./lucario");
@@ -44,6 +46,7 @@ const miriam_1 = require("./miriam");
 const nemona_1 = require("./nemona");
 const nest_ball_1 = require("./nest-ball");
 const pal_pad_1 = require("./pal-pad");
+const pawniard_1 = require("./pawniard");
 const penny_1 = require("./penny");
 const picnic_basket_1 = require("./picnic-basket");
 const pokeball_1 = require("./pokeball");
@@ -81,6 +84,7 @@ exports.setScarletAndViolet = [
     new armarouge_1.Armarouge(),
     new arven_1.Arven(),
     new beach_court_1.BeachCourt(),
+    new bisharp_1.Bisharp(),
     new capsakid_1.Capsakid(),
     new charcadet_1.Charcadet(),
     new crushing_hammer_1.CrushingHammer(),
@@ -101,6 +105,7 @@ exports.setScarletAndViolet = [
     new jacq_1.Jacq(),
     new judge_1.Judge(),
     new katy_1.Katy(),
+    new kingambit_1.Kingambit(),
     new klefki_1.Klefki(),
     new koraidon_ex_1.Koraidonex(),
     new lucario_1.Lucario(),
@@ -116,6 +121,7 @@ exports.setScarletAndViolet = [
     new nemona_1.Nemona(),
     new nest_ball_1.NestBall(),
     new pal_pad_1.PalPad(),
+    new pawniard_1.Pawniard(),
     new penny_1.Penny(),
     new picnic_basket_1.PicnicBasket(),
     new pokeball_1.Pokeball(),

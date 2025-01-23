@@ -1,9 +1,57 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, GameMessage, ChooseAttackPrompt, Card, Resistance, GameLog, CardList } from '../../game';
+import { StoreLike, State, GameMessage, ChooseAttackPrompt, Card, Resistance, GameLog, CardList, StateUtils, Attack } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
+
+function* useSeekInspiration(next: Function, store: StoreLike, state: State, effect: AttackEffect, topdeck: Card): IterableIterator<State> {
+  const player = effect.player;
+  const opponent = StateUtils.getOpponent(state, player);
+
+  if (!(topdeck instanceof PokemonCard) || (topdeck.tags.includes(
+    CardTag.POKEMON_EX || CardTag.POKEMON_GX || CardTag.POKEMON_LV_X || CardTag.POKEMON_V ||
+    CardTag.POKEMON_ex || CardTag.PRISM_STAR || CardTag.RADIANT || CardTag.POKEMON_VMAX || CardTag.POKEMON_VSTAR
+  ))) {
+    return state;
+  }
+
+  let selected: any;
+  yield store.prompt(state, new ChooseAttackPrompt(
+    player.id,
+    GameMessage.CHOOSE_ATTACK_TO_COPY,
+    [topdeck],
+    { allowCancel: false }
+  ), result => {
+    selected = result;
+    next();
+  });
+  const attack: Attack | null = selected;
+
+  if (attack === null) {
+    return state;
+  }
+
+  store.log(state, GameLog.LOG_PLAYER_COPIES_ATTACK, {
+    name: player.name,
+    attack: attack.name
+  });
+
+  // Perform attack
+  const attackEffect = new AttackEffect(player, opponent, attack);
+  store.reduceEffect(state, attackEffect);
+
+  if (store.hasPrompts()) {
+    yield store.waitPrompt(state, () => next());
+  }
+
+  if (attackEffect.damage > 0) {
+    const dealDamage = new DealDamageEffect(attackEffect, attackEffect.damage);
+    state = store.reduceEffect(state, dealDamage);
+  }
+
+  return state;
+}
 
 export class Slowking extends PokemonCard {
 
@@ -47,7 +95,6 @@ export class Slowking extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
-      const opponent = effect.opponent;
       if (player.deck.cards.length <= 0) { return state; }  // Attack does nothing if deck is empty.
       const deckTop = new CardList();
       player.deck.moveTo(deckTop, 1);
@@ -55,35 +102,16 @@ export class Slowking extends PokemonCard {
       player.deck.moveCardTo(topdeck, player.discard);
 
       if (!(topdeck instanceof PokemonCard) || (
-        topdeck.tags.includes(CardTag.POKEMON_EX) || topdeck.tags.includes(CardTag.POKEMON_GX) ||
-        topdeck.tags.includes(CardTag.POKEMON_LV_X) || topdeck.tags.includes(CardTag.POKEMON_V) ||
-        topdeck.tags.includes(CardTag.POKEMON_ex) || topdeck.tags.includes(CardTag.PRISM_STAR) ||
-        topdeck.tags.includes(CardTag.RADIANT) || topdeck.tags.includes(CardTag.POKEMON_VMAX) || topdeck.tags.includes(CardTag.POKEMON_VSTAR)
+        topdeck.tags.includes(
+          CardTag.POKEMON_EX || CardTag.POKEMON_GX || CardTag.POKEMON_LV_X || CardTag.POKEMON_V ||
+          CardTag.POKEMON_ex || CardTag.PRISM_STAR || CardTag.RADIANT || CardTag.POKEMON_VMAX || CardTag.POKEMON_VSTAR
+        )
       )) {
         return state;
       }
 
-      return store.prompt(state, new ChooseAttackPrompt(
-        player.id,
-        GameMessage.CHOOSE_ATTACK_TO_COPY,
-        [topdeck],
-        { allowCancel: false }
-      ), attack => {
-        if (attack !== null) {
-          store.log(state, GameLog.LOG_PLAYER_COPIES_ATTACK, {
-            name: player.name,
-            attack: attack.name
-          });
-
-          // Perform attack
-          const attackEffect = new AttackEffect(player, opponent, attack);
-          store.reduceEffect(state, attackEffect);
-          if (attackEffect.damage > 0) {
-            const dealDamage = new DealDamageEffect(attackEffect, attackEffect.damage);
-            state = store.reduceEffect(state, dealDamage);
-          }
-        }
-      });
+      const generator = useSeekInspiration(() => generator.next(), store, state, effect, topdeck);
+      return generator.next().value;
     }
 
     return state;

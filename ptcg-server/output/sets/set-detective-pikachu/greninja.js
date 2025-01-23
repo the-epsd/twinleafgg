@@ -75,7 +75,7 @@ class Greninja extends pokemon_card_1.PokemonCard {
             const coinFlipResult = simulateCoinFlip(store, state, player);
             if (coinFlipResult) {
                 effect.damage = 0;
-                store.log(state, game_message_1.GameLog.LOG_ABILITY_BLOCKS_DAMGE, { name: opponent.name, pokemon: this.name });
+                store.log(state, game_message_1.GameLog.LOG_ABILITY_BLOCKS_DAMAGE, { name: opponent.name, pokemon: this.name });
             }
             return state;
         }
