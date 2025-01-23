@@ -22,6 +22,7 @@ const hisuian_arcanine_1 = require("./hisuian-arcanine");
 const hisuian_basculegion_1 = require("./hisuian-basculegion");
 const hisuian_goodra_v_1 = require("./hisuian-goodra-v");
 const hisuian_goodra_vstar_1 = require("./hisuian-goodra-vstar");
+const hisuian_growlithe_1 = require("./hisuian-growlithe");
 const hisuian_zoroark_1 = require("./hisuian-zoroark");
 const hisuian_zoroark_v_1 = require("./hisuian-zoroark-v");
 const hisuian_zoroark_vstar_1 = require("./hisuian-zoroark-vstar");
@@ -74,6 +75,7 @@ exports.setLostOrigin = [
     new hisuian_basculegion_1.HisuianBasculegion(),
     new hisuian_goodra_v_1.HisuianGoodraV(),
     new hisuian_goodra_vstar_1.HisuianGoodraVSTAR(),
+    new hisuian_growlithe_1.HisuianGrowlithe(),
     new hisuian_zoroark_v_1.HisuianZoroarkV(),
     new hisuian_zoroark_vstar_1.HisuianZoroarkVSTAR(),
     new hisuian_zorua_1.HisuianZorua(),

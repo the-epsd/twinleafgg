@@ -26,7 +26,7 @@ const ultra_necrozma_gx_1 = require("./ultra-necrozma-gx");
 const ultra_space_1 = require("./ultra-space");
 const unit_energy_fdy_1 = require("./unit-energy-fdy");
 const volcanion_prism_star_1 = require("./volcanion-prism-star");
-const Yveltal_GX_1 = require("./Yveltal-GX");
+const yveltal_gx_1 = require("./yveltal-gx");
 exports.setForbiddenLight = [
     new alolan_exeggutor_1.AlolanExeggutor(),
     new beast_energy_prism_star_1.BeastEnergy(),
@@ -53,5 +53,5 @@ exports.setForbiddenLight = [
     new ultra_space_1.UltraSpace(),
     new unit_energy_fdy_1.UnitEnergyFDY(),
     new volcanion_prism_star_1.VolcanionPS(),
-    new Yveltal_GX_1.YveltalGX(),
+    new yveltal_gx_1.YveltalGX(),
 ];

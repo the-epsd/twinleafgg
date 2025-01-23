@@ -24,7 +24,7 @@ import { UltraNecrozmaGX } from './ultra-necrozma-gx';
 import { UltraSpace } from './ultra-space';
 import { UnitEnergyFDY } from './unit-energy-fdy';
 import { VolcanionPS } from './volcanion-prism-star';
-import { YveltalGX } from './Yveltal-GX';
+import { YveltalGX } from './yveltal-gx';
 
 export const setForbiddenLight: Card[] = [
   new AlolanExeggutor(),

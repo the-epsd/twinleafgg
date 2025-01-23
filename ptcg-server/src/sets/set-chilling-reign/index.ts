@@ -47,6 +47,7 @@ import { Snorunt } from './snorunt';
 import { Sobble } from './sobble';
 import { SpiralEnergy } from './spiral-energy';
 import { Tauros } from './tauros';
+import { WeedleCRE } from './weedle';
 import { Zarude } from './zarude';
 
 export const setChillingReign: Card[] = [
@@ -99,5 +100,6 @@ export const setChillingReign: Card[] = [
   new ExpeditionUniform(),
   new Sneasel(),
   new Tauros(),
+  new WeedleCRE(),
   new Zarude()
 ];

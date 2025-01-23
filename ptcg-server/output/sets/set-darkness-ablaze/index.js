@@ -5,6 +5,7 @@ const bird_keeper_1 = require("./bird-keeper");
 const cape_of_toughness_1 = require("./cape-of-toughness");
 const combusken_1 = require("./combusken");
 const crobat_v_1 = require("./crobat-v");
+const ducklett_1 = require("./ducklett");
 const heat_fire_energy_1 = require("./heat-fire-energy");
 const hiding_darkness_energy_1 = require("./hiding-darkness-energy");
 const kangaskhan_1 = require("./kangaskhan");
@@ -24,6 +25,7 @@ exports.setDarknessAblaze = [
     new cape_of_toughness_1.CapeOfToughness(),
     new crobat_v_1.CrobatV(),
     new combusken_1.Combusken(),
+    new ducklett_1.DucklettDAA(),
     new heat_fire_energy_1.HeatFireEnergy(),
     new hiding_darkness_energy_1.HidingDarknessEnergy(),
     new kangaskhan_1.Kangaskhan(),

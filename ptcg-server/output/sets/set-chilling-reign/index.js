@@ -49,6 +49,7 @@ const snorunt_1 = require("./snorunt");
 const sobble_1 = require("./sobble");
 const spiral_energy_1 = require("./spiral-energy");
 const tauros_1 = require("./tauros");
+const weedle_1 = require("./weedle");
 const zarude_1 = require("./zarude");
 exports.setChillingReign = [
     new agatha_1.Agatha(),
@@ -99,5 +100,6 @@ exports.setChillingReign = [
     new expedition_uniform_1.ExpeditionUniform(),
     new sneasel_1.Sneasel(),
     new tauros_1.Tauros(),
+    new weedle_1.WeedleCRE(),
     new zarude_1.Zarude()
 ];
