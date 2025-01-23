@@ -32,6 +32,7 @@ const porygon_z_1 = require("./porygon-z");
 const porygon2_1 = require("./porygon2");
 const reshiram_and_charizard_gx_1 = require("./reshiram-and-charizard-gx");
 const salazzle_1 = require("./salazzle");
+const slowbro_1 = require("./slowbro");
 const spiritomb_1 = require("./spiritomb");
 const triple_acceleration_energy_1 = require("./triple-acceleration-energy");
 const tyrogue_1 = require("./tyrogue");
@@ -69,6 +70,7 @@ exports.setUnbrokenBonds = [
     new porygon_z_1.PorygonZ(),
     new reshiram_and_charizard_gx_1.ReshiramCharizardGX(),
     new salazzle_1.Salazzle(),
+    new slowbro_1.Slowbro(),
     new spiritomb_1.Spiritomb(),
     new triple_acceleration_energy_1.TripleAccelerationEnergy(),
     new tyrogue_1.Tyrogue(),

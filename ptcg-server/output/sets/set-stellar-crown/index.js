@@ -7,6 +7,7 @@ const bouffalant_1 = require("./bouffalant");
 const briar_1 = require("./briar");
 const chewtle_1 = require("./chewtle");
 const cinderace_ex_1 = require("./cinderace-ex");
+const comfey_1 = require("./comfey");
 const crabominable_1 = require("./crabominable");
 const crabrawler_1 = require("./crabrawler");
 const crispin_1 = require("./crispin");
@@ -46,6 +47,7 @@ exports.setStellarCrown = [
     new briar_1.Briar(),
     new chewtle_1.Chewtle(),
     new cinderace_ex_1.Cinderaceex(),
+    new comfey_1.Comfey(),
     new crabrawler_1.Crabrawler(),
     new crabominable_1.Crabominable(),
     new crispin_1.Crispin(),

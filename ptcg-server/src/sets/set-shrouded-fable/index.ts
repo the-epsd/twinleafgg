@@ -39,6 +39,7 @@ import { Seadra } from './seadra';
 import { SlitherWing } from './slither-wing';
 import { Sneasel } from './sneasel';
 import { TapuBulu } from './tapu-bulu';
+import { Varoom } from './varoom';
 import { Weavile } from './weavile';
 import { XerosicsScheme } from './xerosics-scheme';
 import { Yveltal } from './yveltal';
@@ -86,6 +87,7 @@ export const setShroudedFable: Card[] = [
   new SlitherWing(),
   new Sneasel(),
   new TapuBulu(),
+  new Varoom(),
   new Weavile(),
   new XerosicsScheme(),
   new Yveltal(),

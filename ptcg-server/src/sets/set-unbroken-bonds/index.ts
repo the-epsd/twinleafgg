@@ -30,6 +30,7 @@ import { PorygonZ } from './porygon-z';
 import { Porygon2 } from './porygon2';
 import { ReshiramCharizardGX } from './reshiram-and-charizard-gx';
 import { Salazzle } from './salazzle';
+import { Slowbro } from './slowbro';
 import { Spiritomb } from './spiritomb';
 import { TripleAccelerationEnergy } from './triple-acceleration-energy';
 import { Tyrogue } from './tyrogue';
@@ -68,6 +69,7 @@ export const setUnbrokenBonds: Card[] = [
   new PorygonZ(),
   new ReshiramCharizardGX(),
   new Salazzle(),
+  new Slowbro(),
   new Spiritomb(),
   new TripleAccelerationEnergy(),
   new Tyrogue(),
