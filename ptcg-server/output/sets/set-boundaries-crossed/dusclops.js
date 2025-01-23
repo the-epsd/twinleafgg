@@ -26,7 +26,7 @@ function* useAstonish(next, store, state, effect) {
     }
     opponent.hand.moveCardsTo(cards, opponent.deck);
     return store.prompt(state, new shuffle_prompt_1.ShuffleDeckPrompt(opponent.id), order => {
-        player.deck.applyOrder(order);
+        opponent.deck.applyOrder(order);
     });
 }
 class Dusclops extends pokemon_card_1.PokemonCard {

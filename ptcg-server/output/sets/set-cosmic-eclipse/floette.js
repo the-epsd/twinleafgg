@@ -36,16 +36,21 @@ class Floette extends pokemon_card_1.PokemonCard {
         if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            if (opponent.hand.cards.length > 0) {
-                const randomIndex = Math.floor(Math.random() * opponent.hand.cards.length);
-                const randomCard = opponent.hand.cards[randomIndex];
-                opponent.hand.moveCardTo(randomCard, opponent.deck);
-                store.prompt(state, [
-                    new game_1.ShuffleDeckPrompt(opponent.id)
-                ], deckOrder => {
-                    opponent.deck.applyOrder(deckOrder);
-                });
+            // Opponent has no cards in the hand
+            if (opponent.hand.cards.length === 0) {
+                return state;
             }
+            let cards = [];
+            return store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_DECK, opponent.hand, {}, { min: 1, max: 1, allowCancel: false, isSecret: true }), selected => {
+                cards = selected || [];
+                if (cards.length > 0) {
+                    state = store.prompt(state, new game_1.ShowCardsPrompt(opponent.id, game_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards), () => state);
+                }
+                opponent.hand.moveCardsTo(cards, opponent.deck);
+                return store.prompt(state, new game_1.ShuffleDeckPrompt(opponent.id), order => {
+                    opponent.deck.applyOrder(order);
+                });
+            });
         }
         return state;
     }
