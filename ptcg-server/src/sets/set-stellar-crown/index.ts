@@ -5,6 +5,7 @@ import { Bouffalant } from './bouffalant';
 import { Briar } from './briar';
 import { Chewtle } from './chewtle';
 import { Cinderaceex } from './cinderace-ex';
+import { Comfey } from './comfey';
 import { Crabominable } from './crabominable';
 import { Crabrawler } from './crabrawler';
 import { Crispin } from './crispin';
@@ -45,6 +46,7 @@ export const setStellarCrown: Card[] = [
   new Briar(),
   new Chewtle(),
   new Cinderaceex(),
+  new Comfey(),
   new Crabrawler(),
   new Crabominable(),
   new Crispin(),

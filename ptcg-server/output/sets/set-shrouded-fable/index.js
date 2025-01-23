@@ -41,6 +41,7 @@ const seadra_1 = require("./seadra");
 const slither_wing_1 = require("./slither-wing");
 const sneasel_1 = require("./sneasel");
 const tapu_bulu_1 = require("./tapu-bulu");
+const varoom_1 = require("./varoom");
 const weavile_1 = require("./weavile");
 const xerosics_scheme_1 = require("./xerosics-scheme");
 const yveltal_1 = require("./yveltal");
@@ -87,6 +88,7 @@ exports.setShroudedFable = [
     new slither_wing_1.SlitherWing(),
     new sneasel_1.Sneasel(),
     new tapu_bulu_1.TapuBulu(),
+    new varoom_1.Varoom(),
     new weavile_1.Weavile(),
     new xerosics_scheme_1.XerosicsScheme(),
     new yveltal_1.Yveltal(),
