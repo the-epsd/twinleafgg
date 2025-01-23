@@ -10,9 +10,7 @@ export declare class GameSocket {
     private socket;
     private core;
     private stateSanitizer;
-    private boundListeners;
     constructor(client: Client, socket: SocketWrapper, core: Core, cache: SocketCache);
-    destroy(): void;
     onGameJoin(game: Game, client: Client): void;
     onGameLeave(game: Game, client: Client): void;
     onStateChange(game: Game, state: State): void;

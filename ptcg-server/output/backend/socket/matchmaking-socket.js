@@ -8,23 +8,19 @@ class MatchmakingSocket {
     constructor(client, socket, core) {
         this.socket = socket;
         this.core = core;
-        this.boundJoinQueue = this.joinQueue.bind(this);
-        this.boundLeaveQueue = this.leaveQueue.bind(this);
         this.client = client;
         this.matchmakingService = matchmaking_service_1.default.getInstance(this.core);
-        this.bindListeners();
-    }
-    bindListeners() {
-        this.socket.addListener('matchmaking:joinQueue', this.boundJoinQueue);
-        this.socket.addListener('matchmaking:leaveQueue', this.boundLeaveQueue);
+        // message socket listeners
+        this.socket.addListener('matchmaking:joinQueue', this.joinQueue.bind(this));
+        this.socket.addListener('matchmaking:leaveQueue', this.leaveQueue.bind(this));
     }
     onJoinQueue(from, message) {
         const messageInfo = this.buildMessageInfo(message);
         const user = core_socket_1.CoreSocket.buildUserInfo(from.user);
         this.socket.emit('message:received', { message: messageInfo, user });
     }
-    onLeaveQueue(from) {
-        this.socket.emit('matchmaking:left', { user: core_socket_1.CoreSocket.buildUserInfo(from.user) });
+    onLeaveQueue() {
+        // this.socket.emit('message:read', { user: CoreSocket.buildUserInfo(user) });
     }
     joinQueue(params, response) {
         if (!params.format) {
@@ -37,11 +33,6 @@ class MatchmakingSocket {
     leaveQueue(params, response) {
         this.matchmakingService.removeFromQueue(this.client.id);
         response('ok');
-    }
-    destroy() {
-        this.socket.socket.removeListener('matchmaking:joinQueue', this.boundJoinQueue);
-        this.socket.socket.removeListener('matchmaking:leaveQueue', this.boundLeaveQueue);
-        this.matchmakingService.removeFromQueue(this.client.id);
     }
     buildMessageInfo(message) {
         const messageInfo = {

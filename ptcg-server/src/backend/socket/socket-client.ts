@@ -74,7 +74,7 @@ export class SocketClient implements Client {
   }
 
   public onLeaveQueue(client: Client): void {
-    this.matchmakingSocket.onLeaveQueue(client);
+    this.matchmakingSocket.onLeaveQueue();
   }
 
   public onMessage(from: Client, message: Message): void {

@@ -18,9 +18,8 @@ class Core {
         this.clients = [];
         this.games = [];
         this.messager = new messager_1.Messager(this);
-        this.cleanerTask = new cleaner_task_1.CleanerTask(this);
-        this.cleanerTask.startTasks();
-        this.rankingScheduler = utils_1.Scheduler.getInstance();
+        const cleanerTask = new cleaner_task_1.CleanerTask(this);
+        cleanerTask.startTasks();
         this.startRankingDecrease();
     }
     connect(client) {
@@ -122,11 +121,12 @@ class Core {
             this.emit(c => c.onGameLeave(game, client));
             game.handleClientLeave(client);
         }
-        // Delete game if only bot remains or no clients left
-        if (game.clients.length <= 1) {
-            if (game.clients.length === 1) {
-                console.log('closing game', game.id);
-            }
+        // Delete game, if there are no more clients left in the game
+        if (game.clients.length === 1) {
+            console.log('Deleting bot game');
+            this.deleteGame(game);
+        }
+        if (game.clients.length === 0) {
             this.deleteGame(game);
         }
     }
@@ -134,26 +134,15 @@ class Core {
         this.clients.forEach(fn);
     }
     startRankingDecrease() {
+        const scheduler = utils_1.Scheduler.getInstance();
         const rankingCalculator = new ranking_calculator_1.RankingCalculator();
-        this.rankingScheduler.run(async () => {
+        scheduler.run(async () => {
             let users = await rankingCalculator.decreaseRanking();
+            // Notify only about users which are currently connected
             const connectedUserIds = this.clients.map(c => c.user.id);
             users = users.filter(u => connectedUserIds.includes(u.id));
             this.emit(c => c.onUsersUpdate(users));
         }, config_1.config.core.rankingDecreaseIntervalCount);
-    }
-    cleanup() {
-        // Cleanup all clients
-        [...this.clients].forEach(client => {
-            this.disconnect(client);
-        });
-        // Stop scheduler
-        if (this.rankingScheduler) {
-            this.rankingScheduler.run(() => { });
-        }
-        // Clear arrays
-        this.clients = [];
-        this.games = [];
     }
 }
 exports.Core = Core;
