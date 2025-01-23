@@ -28,7 +28,7 @@ function* useAstonish(next: Function, store: StoreLike, state: State,
     player,
     GameMessage.CHOOSE_CARD_TO_DECK,
     opponent.hand,
-    { },
+    {},
     { min: 1, max: 1, allowCancel: false, isSecret: true }
   ), selected => {
     cards = selected || [];
@@ -46,7 +46,7 @@ function* useAstonish(next: Function, store: StoreLike, state: State,
   opponent.hand.moveCardsTo(cards, opponent.deck);
 
   return store.prompt(state, new ShuffleDeckPrompt(opponent.id), order => {
-    player.deck.applyOrder(order);
+    opponent.deck.applyOrder(order);
   });
 }
 
@@ -62,17 +62,17 @@ export class Dusclops extends PokemonCard {
 
   public weakness = [{ type: CardType.DARK }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [{
     name: 'Astonish',
-    cost: [ CardType.PSYCHIC ],
+    cost: [CardType.PSYCHIC],
     damage: 0,
     text: 'Choose a random card from your opponent\'s hand. Your opponent ' +
       'reveals that card and shuffles it into his or her deck.'
   }, {
     name: 'Psyshot',
-    cost: [ CardType.PSYCHIC, CardType.COLORLESS, CardType.COLORLESS ],
+    cost: [CardType.PSYCHIC, CardType.COLORLESS, CardType.COLORLESS],
     damage: 40,
     text: ''
   }];

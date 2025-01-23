@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { PowerType, ShuffleDeckPrompt, State, StateUtils, StoreLike } from '../../game';
+import { Card, ChooseCardsPrompt, GameMessage, PowerType, ShowCardsPrompt, ShuffleDeckPrompt, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 
@@ -38,16 +38,36 @@ export class Floette extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      if (opponent.hand.cards.length > 0) {
-        const randomIndex = Math.floor(Math.random() * opponent.hand.cards.length);
-        const randomCard = opponent.hand.cards[randomIndex];
-        opponent.hand.moveCardTo(randomCard, opponent.deck);
-        store.prompt(state, [
-          new ShuffleDeckPrompt(opponent.id)
-        ], deckOrder => {
-          opponent.deck.applyOrder(deckOrder);
-        });
+      // Opponent has no cards in the hand
+      if (opponent.hand.cards.length === 0) {
+        return state;
       }
+
+      let cards: Card[] = [];
+      return store.prompt(state, new ChooseCardsPrompt(
+        player,
+        GameMessage.CHOOSE_CARD_TO_DECK,
+        opponent.hand,
+        {},
+        { min: 1, max: 1, allowCancel: false, isSecret: true }
+      ), selected => {
+        cards = selected || [];
+
+        if (cards.length > 0) {
+          state = store.prompt(state, new ShowCardsPrompt(
+            opponent.id,
+            GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
+            cards), () => state
+          );
+        }
+
+        opponent.hand.moveCardsTo(cards, opponent.deck);
+
+        return store.prompt(state, new ShuffleDeckPrompt(opponent.id), order => {
+          opponent.deck.applyOrder(order);
+        });
+      });
+
     }
 
     return state;

@@ -36,12 +36,12 @@ class IonosVoltorb extends pokemon_card_1.PokemonCard {
             const player = effect.player;
             let energies = 0;
             player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-                if (card.cardTag.includes(card_types_1.CardTag.IONOS)) {
+                if (card.tags.includes(card_types_1.CardTag.IONOS)) {
                     const checkProvidedEnergyEffect = new check_effects_1.CheckProvidedEnergyEffect(player, cardList);
                     store.reduceEffect(state, checkProvidedEnergyEffect);
                     checkProvidedEnergyEffect.energyMap.forEach(energy => {
                         if (energy.provides.includes(card_types_1.CardType.LIGHTNING) || energy.provides.includes(card_types_1.CardType.ANY)) {
-                            energies += 1;
+                            energies++;
                         }
                     });
                 }
