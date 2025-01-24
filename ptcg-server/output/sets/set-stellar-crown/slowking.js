@@ -6,38 +6,6 @@ const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
-function* useSeekInspiration(next, store, state, effect, topdeck) {
-    const player = effect.player;
-    const opponent = game_1.StateUtils.getOpponent(state, player);
-    if (!(topdeck instanceof pokemon_card_1.PokemonCard) || (topdeck.tags.includes(card_types_1.CardTag.POKEMON_EX || card_types_1.CardTag.POKEMON_GX || card_types_1.CardTag.POKEMON_LV_X || card_types_1.CardTag.POKEMON_V ||
-        card_types_1.CardTag.POKEMON_ex || card_types_1.CardTag.PRISM_STAR || card_types_1.CardTag.RADIANT || card_types_1.CardTag.POKEMON_VMAX || card_types_1.CardTag.POKEMON_VSTAR))) {
-        return state;
-    }
-    let selected;
-    yield store.prompt(state, new game_1.ChooseAttackPrompt(player.id, game_1.GameMessage.CHOOSE_ATTACK_TO_COPY, [topdeck], { allowCancel: false }), result => {
-        selected = result;
-        next();
-    });
-    const attack = selected;
-    if (attack === null) {
-        return state;
-    }
-    store.log(state, game_1.GameLog.LOG_PLAYER_COPIES_ATTACK, {
-        name: player.name,
-        attack: attack.name
-    });
-    // Perform attack
-    const attackEffect = new game_effects_1.AttackEffect(player, opponent, attack);
-    store.reduceEffect(state, attackEffect);
-    if (store.hasPrompts()) {
-        yield store.waitPrompt(state, () => next());
-    }
-    if (attackEffect.damage > 0) {
-        const dealDamage = new attack_effects_1.DealDamageEffect(attackEffect, attackEffect.damage);
-        state = store.reduceEffect(state, dealDamage);
-    }
-    return state;
-}
 class Slowking extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -68,6 +36,7 @@ class Slowking extends pokemon_card_1.PokemonCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
+            const opponent = effect.opponent;
             if (player.deck.cards.length <= 0) {
                 return state;
             } // Attack does nothing if deck is empty.
@@ -75,12 +44,27 @@ class Slowking extends pokemon_card_1.PokemonCard {
             player.deck.moveTo(deckTop, 1);
             const topdeck = deckTop.cards[0]; // This is the card we're looking at.
             player.deck.moveCardTo(topdeck, player.discard);
-            if (!(topdeck instanceof pokemon_card_1.PokemonCard) || (topdeck.tags.includes(card_types_1.CardTag.POKEMON_EX || card_types_1.CardTag.POKEMON_GX || card_types_1.CardTag.POKEMON_LV_X || card_types_1.CardTag.POKEMON_V ||
-                card_types_1.CardTag.POKEMON_ex || card_types_1.CardTag.PRISM_STAR || card_types_1.CardTag.RADIANT || card_types_1.CardTag.POKEMON_VMAX || card_types_1.CardTag.POKEMON_VSTAR))) {
+            if (!(topdeck instanceof pokemon_card_1.PokemonCard) || (topdeck.tags.includes(card_types_1.CardTag.POKEMON_EX) || topdeck.tags.includes(card_types_1.CardTag.POKEMON_GX) ||
+                topdeck.tags.includes(card_types_1.CardTag.POKEMON_LV_X) || topdeck.tags.includes(card_types_1.CardTag.POKEMON_V) ||
+                topdeck.tags.includes(card_types_1.CardTag.POKEMON_ex) || topdeck.tags.includes(card_types_1.CardTag.PRISM_STAR) ||
+                topdeck.tags.includes(card_types_1.CardTag.RADIANT) || topdeck.tags.includes(card_types_1.CardTag.POKEMON_VMAX) || topdeck.tags.includes(card_types_1.CardTag.POKEMON_VSTAR))) {
                 return state;
             }
-            const generator = useSeekInspiration(() => generator.next(), store, state, effect, topdeck);
-            return generator.next().value;
+            return store.prompt(state, new game_1.ChooseAttackPrompt(player.id, game_1.GameMessage.CHOOSE_ATTACK_TO_COPY, [topdeck], { allowCancel: false }), attack => {
+                if (attack !== null) {
+                    store.log(state, game_1.GameLog.LOG_PLAYER_COPIES_ATTACK, {
+                        name: player.name,
+                        attack: attack.name
+                    });
+                    // Perform attack
+                    const attackEffect = new game_effects_1.AttackEffect(player, opponent, attack);
+                    store.reduceEffect(state, attackEffect);
+                    if (attackEffect.damage > 0) {
+                        const dealDamage = new attack_effects_1.DealDamageEffect(attackEffect, attackEffect.damage);
+                        state = store.reduceEffect(state, dealDamage);
+                    }
+                }
+            });
         }
         return state;
     }

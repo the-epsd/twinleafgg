@@ -15,7 +15,6 @@ const chimchar_1 = require("./chimchar");
 const clefable_1 = require("./clefable");
 const clefairy_1 = require("./clefairy");
 const community_center_1 = require("./community-center");
-const conkeldurr_1 = require("./conkeldurr");
 const cornerstone_mask_ogerpon_ex_1 = require("./cornerstone-mask-ogerpon-ex");
 const dipplin_1 = require("./dipplin");
 const dragapult_ex_1 = require("./dragapult-ex");
@@ -25,19 +24,16 @@ const emolga_1 = require("./emolga");
 const enhanced_hammer_1 = require("./enhanced-hammer");
 const farfetchd_1 = require("./farfetchd");
 const festival_plaza_1 = require("./festival-plaza");
-const fezandipiti_1 = require("./fezandipiti");
 const froakie_1 = require("./froakie");
 const frogadier_1 = require("./frogadier");
 const froslass_1 = require("./froslass");
 const goldeen_1 = require("./goldeen");
 const greninja_ex_1 = require("./greninja-ex");
 const grookey_1 = require("./grookey");
-const gurdurr_1 = require("./gurdurr");
 const handy_fan_1 = require("./handy-fan");
 const hassel_1 = require("./hassel");
 const hearthflame_mask_ogerpon_ex_1 = require("./hearthflame-mask-ogerpon-ex");
 const heatran_1 = require("./heatran");
-const hisuian_arcanine_1 = require("./hisuian-arcanine");
 const hyper_aroma_1 = require("./hyper-aroma");
 const infernape_1 = require("./infernape");
 const iron_leaves_1 = require("./iron-leaves");
@@ -73,7 +69,6 @@ const survival_cast_1 = require("./survival-cast");
 const tatsugiri_1 = require("./tatsugiri");
 const teal_mask_ogerpon_ex_1 = require("./teal-mask-ogerpon-ex");
 const thwackey_1 = require("./thwackey");
-const timburr_1 = require("./timburr");
 const ting_lu_1 = require("./ting-lu");
 const unfair_stamp_1 = require("./unfair-stamp");
 const walking_wake_1 = require("./walking-wake");
@@ -87,22 +82,18 @@ exports.setTwilightMasquerade = [
     new carmine_1.Carmine(),
     new chimchar_1.Chimchar(),
     new clefable_1.Clefable(),
-    new conkeldurr_1.Conkeldurr(),
     new cornerstone_mask_ogerpon_ex_1.CornerstoneMaskOgerponex(),
     new dreepy_1.Dreepy(),
     new drakloak_1.Drakloak(),
     new dragapult_ex_1.Dragapultex(),
     new emolga_1.Emolga(),
     new farfetchd_1.Farfetchd(),
-    new fezandipiti_1.FezandipitiTWM(),
     new froslass_1.Froslass(),
     new goldeen_1.Goldeen(),
-    new gurdurr_1.Gurdurr(),
     new handy_fan_1.HandyFan(),
     new hassel_1.Hassel(),
     new hearthflame_mask_ogerpon_ex_1.HearthflameMaskOgerponex(),
     new heatran_1.Heatran(),
-    new hisuian_arcanine_1.HisuianArcanine(),
     new lairon_1.Lairon(),
     new lanas_assistance_1.LanasAssistance(),
     new legacy_energy_1.LegacyEnergy(),
@@ -117,7 +108,6 @@ exports.setTwilightMasquerade = [
     new roto_stick_1.RotoStick(),
     new scoop_up_cyclone_1.ScoopUpCyclone(),
     new tatsugiri_1.Tatsugiri(),
-    new timburr_1.Timburr(),
     new wellspring_mask_ogerpon_ex_1.WellspringMaskOgerponex(),
     new kieran_1.Kieran(),
     new bloodmoon_ursaluna_ex_1.BloodmoonUrsalunaex(),

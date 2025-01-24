@@ -1,10 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setParadoxRift = void 0;
-const aegislash_1 = require("./aegislash");
-const aegislash_ex_1 = require("./aegislash-ex");
 const ancient_booster_energy_capsule_1 = require("./ancient-booster-energy-capsule");
-const armarouge_ex_1 = require("./armarouge-ex");
 const bombirdier_ex_1 = require("./bombirdier-ex");
 const bounsweet_1 = require("./bounsweet");
 const brute_bonnet_1 = require("./brute-bonnet");
@@ -80,10 +77,7 @@ const veluza_1 = require("./veluza");
 const xatu_1 = require("./xatu");
 const zacian_1 = require("./zacian");
 exports.setParadoxRift = [
-    new aegislash_1.Aegislash(),
-    new aegislash_ex_1.Aegislashex(),
     new ancient_booster_energy_capsule_1.AncientBoosterEnergyCapsule(),
-    new armarouge_ex_1.ArmarougeEX(),
     new brute_bonnet_1.BruteBonnet(),
     new bounsweet_1.Bounsweet(),
     new charcadet_1.Charcadet(),

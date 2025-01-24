@@ -1,10 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setSurgingSparks = void 0;
-const alolan_diglett_1 = require("./alolan-diglett");
-const alolan_dugtrio_1 = require("./alolan-dugtrio");
 const alolan_exeggutor_ex_1 = require("./alolan-exeggutor-ex");
-const amulet_of_hope_1 = require("./amulet-of-hope");
 const archaludon_ex_1 = require("./archaludon-ex");
 const azelf_1 = require("./azelf");
 const azulmarill_1 = require("./azulmarill");
@@ -16,20 +13,15 @@ const ceruledge_1 = require("./ceruledge");
 const ceruledge_ex_1 = require("./ceruledge-ex");
 const charcadet_1 = require("./charcadet");
 const cherish_carrier_1 = require("./cherish-carrier");
-const chill_teaser_toy_1 = require("./chill-teaser-toy");
-const clemonts_quick_wit_1 = require("./clemonts-quick-wit");
-const cofagrigus_1 = require("./cofagrigus");
 const crocalor_1 = require("./crocalor");
 const cyrano_1 = require("./cyrano");
 const deino_1 = require("./deino");
 const dragons_elixir_1 = require("./dragons-elixir");
-const drasna_1 = require("./drasna");
 const drayton_1 = require("./drayton");
 const duraludon_1 = require("./duraludon");
 const dusk_ball_1 = require("./dusk-ball");
 const eevee_1 = require("./eevee");
 const energy_search_pro_1 = require("./energy-search-pro");
-const espurr_1 = require("./espurr");
 const eternatus_1 = require("./eternatus");
 const exciting_stadium_1 = require("./exciting-stadium");
 const exeggcute_1 = require("./exeggcute");
@@ -41,8 +33,6 @@ const gravity_mountain_1 = require("./gravity-mountain");
 const helper_bell_1 = require("./helper.bell");
 const ho_oh_1 = require("./ho-oh");
 const hydreigon_ex_1 = require("./hydreigon-ex");
-const iron_crown_1 = require("./iron-crown");
-const jasmines_gaze_1 = require("./jasmines-gaze");
 const klefki_1 = require("./klefki");
 const koraidon_1 = require("./koraidon");
 const larvesta_1 = require("./larvesta");
@@ -52,7 +42,6 @@ const magnemite_1 = require("./magnemite");
 const magneton_1 = require("./magneton");
 const marill_1 = require("./marill");
 const megaton_blower_1 = require("./megaton-blower");
-const meowstic_1 = require("./meowstic");
 const mesprit_1 = require("./mesprit");
 const milotic_ex_1 = require("./milotic-ex");
 const miraculous_intercom_1 = require("./miraculous-intercom");
@@ -68,11 +57,8 @@ const rabsca_1 = require("./rabsca");
 const rellor_1 = require("./rellor");
 const rich_energy_1 = require("./rich-energy");
 const sandygast_1 = require("./sandygast");
-const scovillain_ex_1 = require("./scovillain-ex");
 const shroodle_1 = require("./shroodle");
 const skeledirge_1 = require("./skeledirge");
-const slaking_ex_1 = require("./slaking-ex");
-const slakoth_1 = require("./slakoth");
 const smoochum_1 = require("./smoochum");
 const surfer_1 = require("./surfer");
 const sylveon_ex_1 = require("./sylveon-ex");
@@ -85,11 +71,9 @@ const togetic_1 = require("./togetic");
 const trapinch_1 = require("./trapinch");
 const uxie_1 = require("./uxie");
 const vibrava_1 = require("./vibrava");
-const vigoroth_1 = require("./vigoroth");
 const vivillion_1 = require("./vivillion");
 const vulpix_1 = require("./vulpix");
 const wo_chien_1 = require("./wo-chien");
-const zarude_1 = require("./zarude");
 const zweilous_1 = require("./zweilous");
 exports.setSurgingSparks = [
     new pikachu_ex_1.Pikachuex(),
@@ -165,22 +149,6 @@ exports.setSurgingSparks = [
     new energy_search_pro_1.EnergySearchPRO(),
     new surfer_1.Surfer(),
     new gouging_fire_1.GougingFire(),
-    new alolan_diglett_1.AlolanDiglett(),
-    new alolan_dugtrio_1.AlolanDugtrio(),
-    new amulet_of_hope_1.AmuletofHope(),
-    new chill_teaser_toy_1.ChillTeaserToy(),
-    new clemonts_quick_wit_1.ClemontsQuickWit(),
-    new cofagrigus_1.Cofagrigus(),
-    new drasna_1.Drasna(),
-    new espurr_1.Espurr(),
-    new iron_crown_1.IronCrown(),
-    new jasmines_gaze_1.JasminesGaze(),
-    new meowstic_1.Meowstic(),
-    new scovillain_ex_1.ScovillainEXSSP(),
-    new slaking_ex_1.Slakingex(),
-    new slakoth_1.SlakothSSP(),
-    new vigoroth_1.VigorothSSP(),
-    new zarude_1.Zarude(),
     //Reprints
     new card_images_1.ScrambleSwitchSSP(),
     new card_images_1.CounterGainSSP(),
