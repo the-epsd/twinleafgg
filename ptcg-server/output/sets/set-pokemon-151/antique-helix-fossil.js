@@ -20,7 +20,7 @@ class AntiqueHelixFossil extends pokemon_card_1.PokemonCard {
                 powerType: game_1.PowerType.ABILITY,
                 text: 'As long as this Pokémon is in the Active Spot, your opponent can\'t play any Stadium cards from their hand.'
             }];
-        this.set = 'FST';
+        this.set = 'MEW';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '153';
         this.name = 'Antique Helix Fossil';

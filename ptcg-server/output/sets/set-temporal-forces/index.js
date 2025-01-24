@@ -35,6 +35,7 @@ const haunter_1 = require("./haunter");
 const heavy_baton_1 = require("./heavy-baton");
 const heros_cape_1 = require("./heros-cape");
 const hoothoot_1 = require("./hoothoot");
+const incineroar_ex_1 = require("./incineroar-ex");
 const iron_crown_ex_1 = require("./iron-crown-ex");
 const iron_hands_1 = require("./iron-hands");
 const iron_jugulis_1 = require("./iron-jugulis");
@@ -42,6 +43,7 @@ const iron_leaves_ex_1 = require("./iron-leaves-ex");
 const iron_thorns_1 = require("./iron-thorns");
 const koraidon_1 = require("./koraidon");
 const koraidon_ex_1 = require("./koraidon-ex");
+const litten_1 = require("./litten");
 const master_ball_1 = require("./master-ball");
 const maximum_belt_1 = require("./maximum-belt");
 const metagross_1 = require("./metagross");
@@ -55,12 +57,14 @@ const mr_mime_1 = require("./mr-mime");
 const neo_upper_energy_1 = require("./neo-upper-energy");
 const palafin_1 = require("./palafin");
 const perilous_jungle_1 = require("./perilous-jungle");
+const pidove_1 = require("./pidove");
 const pikachu_1 = require("./pikachu");
 const prime_catcher_1 = require("./prime-catcher");
 const rabsca_1 = require("./rabsca");
 const raging_bolt_ex_1 = require("./raging-bolt-ex");
 const raichu_1 = require("./raichu");
 const reboot_pod_1 = require("./reboot-pod");
+const relicanth_1 = require("./relicanth");
 const rellor_1 = require("./rellor");
 const reuniclus_1 = require("./reuniclus");
 const roaring_moon_1 = require("./roaring-moon");
@@ -69,9 +73,12 @@ const salvatore_1 = require("./salvatore");
 const sandy_shocks_1 = require("./sandy-shocks");
 const skitty_1 = require("./skitty");
 const solosis_1 = require("./solosis");
+const torracat_1 = require("./torracat");
 const torterra_ex_1 = require("./torterra-ex");
 const totodile_1 = require("./totodile");
+const tranquill_1 = require("./tranquill");
 const turtwig_1 = require("./turtwig");
+const unfezant_1 = require("./unfezant");
 const victini_1 = require("./victini");
 const vikavolt_1 = require("./vikavolt");
 const walking_wake_ex_1 = require("./walking-wake-ex");
@@ -110,6 +117,7 @@ exports.setTemporalForces = [
     new heavy_baton_1.HeavyBaton(),
     new heros_cape_1.HerosCape(),
     new hoothoot_1.Hoothoot(),
+    new incineroar_ex_1.Incineroarex(),
     new iron_crown_ex_1.IronCrownex(),
     new iron_hands_1.IronHands(),
     new iron_jugulis_1.IronJugulis(),
@@ -117,6 +125,7 @@ exports.setTemporalForces = [
     new iron_thorns_1.IronThorns(),
     new koraidon_ex_1.Koraidonex(),
     new koraidon_1.Koraidon(),
+    new litten_1.Litten(),
     new master_ball_1.MasterBall(),
     new maximum_belt_1.MaximumBelt(),
     new metagross_1.Metagross(),
@@ -130,12 +139,14 @@ exports.setTemporalForces = [
     new neo_upper_energy_1.NeoUpperEnergy(),
     new palafin_1.Palafin(),
     new perilous_jungle_1.PerilousJungle(),
+    new pidove_1.Pidove(),
     new pikachu_1.Pikachu(),
     new prime_catcher_1.PrimeCatcher(),
     new rabsca_1.Rabsca(),
     new raging_bolt_ex_1.RagingBoltex(),
     new raichu_1.Raichu(),
     new reboot_pod_1.RebootPod(),
+    new relicanth_1.Relicanth(),
     new rellor_1.Rellor(),
     new reuniclus_1.Reuniclus(),
     new roaring_moon_1.RoaringMoon(),
@@ -144,9 +155,12 @@ exports.setTemporalForces = [
     new sandy_shocks_1.SandyShocks(),
     new skitty_1.Skitty(),
     new solosis_1.Solosis(),
+    new torracat_1.Torracat(),
     new torterra_ex_1.Torterraex(),
     new totodile_1.Totodile(),
+    new tranquill_1.Tranquill(),
     new turtwig_1.Turtwig(),
+    new unfezant_1.Unfezant(),
     new victini_1.Victini(),
     new vikavolt_1.Vikavolt(),
     new walking_wake_ex_1.WalkingWakeex(),

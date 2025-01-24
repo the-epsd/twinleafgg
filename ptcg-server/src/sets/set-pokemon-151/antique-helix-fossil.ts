@@ -26,7 +26,7 @@ export class AntiqueHelixFossil extends PokemonCard {
     text: 'As long as this Pokémon is in the Active Spot, your opponent can\'t play any Stadium cards from their hand.'
   }];
 
-  public set: string = 'FST';
+  public set: string = 'MEW';
 
   public cardImage: string = 'assets/cardback.png';
 

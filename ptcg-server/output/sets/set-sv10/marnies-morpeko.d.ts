@@ -1,12 +1,12 @@
-import { CardType, PokemonCard, Stage, State, StoreLike } from '../../game';
-import { Effect } from '../../game/store/effects/effect';
-export declare class Floragato extends PokemonCard {
+import { CardTag, CardType, PokemonCard, Stage, State, StoreLike } from "../../game";
+import { Effect } from "../../game/store/effects/effect";
+export declare class MarniesMorpeko extends PokemonCard {
     stage: Stage;
-    evolvesFrom: string;
+    cardTag: CardTag[];
     cardType: CardType;
     hp: number;
     weakness: {
-        type: CardType.FIRE;
+        type: CardType.GRASS;
     }[];
     retreat: CardType.COLORLESS[];
     attacks: {

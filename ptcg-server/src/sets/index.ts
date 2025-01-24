@@ -126,6 +126,7 @@ export * from './set-stellar-crown';
 export * from './set-surging-sparks';
 export * from './set-prismatic-evolution';
 export * from './set-sv9';
+export * from './set-sv10';
 
 //TEST
 export * from './set-test';

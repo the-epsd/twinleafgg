@@ -102,6 +102,7 @@ export * from './set-stellar-crown';
 export * from './set-surging-sparks';
 export * from './set-prismatic-evolution';
 export * from './set-sv9';
+export * from './set-sv10';
 export * from './set-test';
 export * from './set-legends-awakened';
 export * from './set-stormfront';

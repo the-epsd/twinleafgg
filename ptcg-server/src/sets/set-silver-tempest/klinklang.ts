@@ -61,7 +61,7 @@ export class Klinklang extends PokemonCard {
         if (wantToUse) {
           return store.prompt(state, new AttachEnergyPrompt(
             player.id,
-            GameMessage.ATTACH_ENERGY_TO_BENCH,
+            GameMessage.ATTACH_ENERGY_CARDS,
             player.deck,
             PlayerType.BOTTOM_PLAYER,
             [SlotType.BENCH, SlotType.ACTIVE],

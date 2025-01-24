@@ -24,6 +24,7 @@ const full_art_1 = require("./full-art");
 const giovannis_charisma_1 = require("./giovannis-charisma");
 const gloom_1 = require("./gloom");
 const grabber_1 = require("./grabber");
+const hitmonlee_1 = require("./hitmonlee");
 const ivysaur_1 = require("./ivysaur");
 const jolteon_1 = require("./jolteon");
 const kangaskhan_ex_1 = require("./kangaskhan-ex");
@@ -77,6 +78,7 @@ exports.setPokemon151 = [
     new giovannis_charisma_1.GiovannisCharisma(),
     new gloom_1.Gloom(),
     new grabber_1.Grabber(),
+    new hitmonlee_1.HitmonleeMEW(),
     new ivysaur_1.Ivysaur(),
     new jolteon_1.Jolteon(),
     new kangaskhan_ex_1.Kangaskhanex(),
