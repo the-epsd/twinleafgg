@@ -6,6 +6,7 @@ import { BrocksRecruitment } from './brocks-recruitment';
 import { Combusken } from './combusken';
 import { Dudunsparceex } from './dudunsparce-ex';
 import { ExchangeTicket } from './exchange-ticket';
+import { Floragato } from './floragato';
 import { HopsBag } from './hops-bag';
 import { HopsChoiceBand } from './hops-choice-band';
 import { HopsDubwool } from './hops-dubwool';
@@ -28,6 +29,7 @@ import { LilliesRibombee } from './lillies-ribombee';
 import { Magmar } from './magmar';
 import { Magmortar } from './magmortar';
 import { Mamoswineex } from './mamoswine-ex';
+import { Meowscarada } from './meowscarada';
 import { NsCastle } from './ns-castle';
 import { NsDarmanitan } from './ns-darmanItan';
 import { NsDarumaka } from './ns-darumaka';
@@ -44,6 +46,7 @@ import { Pupitar } from './pupitar';
 import { Salamenceex } from './salamence-ex';
 import { Shelgon } from './shelgon';
 import { Shuppet } from './shuppet';
+import { Sprigatito } from './sprigatito';
 import { Swinub } from './swinub';
 import { Torchic } from './torchic';
 import { Tyranitar } from './tyranitar';
@@ -71,6 +74,9 @@ export const setSV9: Card[] = [
   new Shuppet(),
   new Banette(),
   new Volcanionex(),
+  new Sprigatito(),
+  new Floragato(),
+  new Meowscarada(),
 
   new LilliesClefairyex(),
   new LilliesComfy(),

@@ -1,9 +1,43 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, ChooseCardsPrompt, GameMessage, ShuffleDeckPrompt } from '../../game';
+import { StoreLike, State, ChooseCardsPrompt, GameMessage, ShuffleDeckPrompt, Card, StateUtils, ShowCardsPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+
+
+function* usePackCall(next: Function, store: StoreLike, state: State, effect: AttackEffect): IterableIterator<State> {
+  const turn = state.turn;
+  let max = 1;
+  if (turn == 2)
+    max = 3;
+  const player = effect.player;
+  const opponent = StateUtils.getOpponent(state, player);
+  let cards: Card[] = [];
+  yield store.prompt(state, new ChooseCardsPrompt(
+    player,
+    GameMessage.CHOOSE_CARD_TO_HAND,
+    player.deck,
+    { superType: SuperType.POKEMON, cardType: CardType.GRASS },
+    { min: 0, max: max, allowCancel: true }
+  ), selected => {
+    cards = selected || [];
+    next();
+  });
+
+  player.deck.moveCardsTo(cards, player.hand);
+
+  if (cards.length > 0) {
+    yield store.prompt(state, new ShowCardsPrompt(
+      opponent.id,
+      GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
+      cards
+    ), () => next());
+  }
+  return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+    player.deck.applyOrder(order);
+  });
+}
 
 export class Zarude extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -36,41 +70,8 @@ export class Zarude extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const turn = state.turn;
-
-      if (turn == 2) {
-        const player = effect.player;
-        return store.prompt(state, new ChooseCardsPrompt(
-          player,
-          GameMessage.CHOOSE_CARD_TO_HAND,
-          player.deck,
-          { superType: SuperType.POKEMON, cardType: CardType.GRASS },
-          { min: 0, max: 3, allowCancel: true }
-        ), cards => {
-          player.deck.moveCardsTo(cards, player.hand);
-
-          return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-            player.deck.applyOrder(order);
-          });
-        });
-      }
-
-      if (turn > 2) {
-        const player = effect.player;
-        return store.prompt(state, new ChooseCardsPrompt(
-          player,
-          GameMessage.CHOOSE_CARD_TO_HAND,
-          player.deck,
-          { superType: SuperType.POKEMON, cardType: CardType.GRASS },
-          { min: 0, max: 1, allowCancel: true }
-        ), cards => {
-          player.deck.moveCardsTo(cards, player.hand);
-
-          return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-            player.deck.applyOrder(order);
-          });
-        });
-      }
+      const generator = usePackCall(() => generator.next(), store, state, effect);
+      return generator.next().value;
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {

@@ -8,6 +8,7 @@ const brocks_recruitment_1 = require("./brocks-recruitment");
 const combusken_1 = require("./combusken");
 const dudunsparce_ex_1 = require("./dudunsparce-ex");
 const exchange_ticket_1 = require("./exchange-ticket");
+const floragato_1 = require("./floragato");
 const hops_bag_1 = require("./hops-bag");
 const hops_choice_band_1 = require("./hops-choice-band");
 const hops_dubwool_1 = require("./hops-dubwool");
@@ -30,6 +31,7 @@ const lillies_ribombee_1 = require("./lillies-ribombee");
 const magmar_1 = require("./magmar");
 const magmortar_1 = require("./magmortar");
 const mamoswine_ex_1 = require("./mamoswine-ex");
+const meowscarada_1 = require("./meowscarada");
 const ns_castle_1 = require("./ns-castle");
 const ns_darmanItan_1 = require("./ns-darmanItan");
 const ns_darumaka_1 = require("./ns-darumaka");
@@ -46,6 +48,7 @@ const pupitar_1 = require("./pupitar");
 const salamence_ex_1 = require("./salamence-ex");
 const shelgon_1 = require("./shelgon");
 const shuppet_1 = require("./shuppet");
+const sprigatito_1 = require("./sprigatito");
 const swinub_1 = require("./swinub");
 const torchic_1 = require("./torchic");
 const tyranitar_1 = require("./tyranitar");
@@ -71,6 +74,9 @@ exports.setSV9 = [
     new shuppet_1.Shuppet(),
     new banette_1.Banette(),
     new volcanion_ex_1.Volcanionex(),
+    new sprigatito_1.Sprigatito(),
+    new floragato_1.Floragato(),
+    new meowscarada_1.Meowscarada(),
     new lillies_clefairy_ex_1.LilliesClefairyex(),
     new lillies_comfy_1.LilliesComfy(),
     new lillies_pearl_1.LilliesPearl(),
