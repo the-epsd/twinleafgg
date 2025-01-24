@@ -1,7 +1,7 @@
-import { CardTag, CardType, GameError, GameMessage, PlayerType, PokemonCard, PokemonCardList, Power, PowerType, SlotType, Stage, State, StateUtils, StoreLike } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
-import { AttackEffect, PowerEffect } from "../../game/store/effects/game-effects";
-import { EndTurnEffect } from "../../game/store/effects/game-phase-effects";
+import { CardTag, CardType, GameError, GameMessage, PlayerType, PokemonCard, PokemonCardList, Power, PowerType, SlotType, Stage, State, StateUtils, StoreLike } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class Meowscarada extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;

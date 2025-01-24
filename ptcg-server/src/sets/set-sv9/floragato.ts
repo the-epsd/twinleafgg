@@ -1,6 +1,6 @@
-import { CardType, CoinFlipPrompt, GameMessage, PokemonCard, Stage, State, StoreLike } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
-import { AttackEffect, HealEffect } from "../../game/store/effects/game-effects";
+import { CardType, CoinFlipPrompt, GameMessage, PokemonCard, Stage, State, StoreLike } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { AttackEffect, HealEffect } from '../../game/store/effects/game-effects';
 
 export class Floragato extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;

@@ -23,7 +23,7 @@ const crocalor_1 = require("./crocalor");
 const cyrano_1 = require("./cyrano");
 const deino_1 = require("./deino");
 const dragons_elixir_1 = require("./dragons-elixir");
-const Drasna_1 = require("./Drasna");
+const drasna_1 = require("./drasna");
 const drayton_1 = require("./drayton");
 const duraludon_1 = require("./duraludon");
 const dusk_ball_1 = require("./dusk-ball");
@@ -171,7 +171,7 @@ exports.setSurgingSparks = [
     new chill_teaser_toy_1.ChillTeaserToy(),
     new clemonts_quick_wit_1.ClemontsQuickWit(),
     new cofagrigus_1.Cofagrigus(),
-    new Drasna_1.Drasna(),
+    new drasna_1.Drasna(),
     new espurr_1.Espurr(),
     new iron_crown_1.IronCrown(),
     new jasmines_gaze_1.JasminesGaze(),

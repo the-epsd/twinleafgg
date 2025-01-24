@@ -21,7 +21,7 @@ import { Crocalor } from './crocalor';
 import { Cyrano } from './cyrano';
 import { Deino } from './deino';
 import { DragonsElixir } from './dragons-elixir';
-import { Drasna } from './Drasna';
+import { Drasna } from './drasna';
 import { Drayton } from './drayton';
 import { Duraludon } from './duraludon';
 import { DuskBall } from './dusk-ball';
@@ -180,7 +180,7 @@ export const setSurgingSparks: Card[] = [
   new SlakothSSP(),
   new VigorothSSP(),
   new Zarude(),
-  
+
   //Reprints
   new ScrambleSwitchSSP(),
   new CounterGainSSP(),
