@@ -22,6 +22,7 @@ import { BulbasaurIR, IvysaurIR, CharmanderIR, CharmeleonIR, SquirtleIR, Nidokin
 import { GiovannisCharisma } from './giovannis-charisma';
 import { Gloom } from './gloom';
 import { Grabber } from './grabber';
+import { HitmonleeMEW } from './hitmonlee';
 import { Ivysaur } from './ivysaur';
 import { Jolteon } from './jolteon';
 import { Kangaskhanex } from './kangaskhan-ex';
@@ -75,6 +76,7 @@ export const setPokemon151: Card[] = [
   new GiovannisCharisma(),
   new Gloom(),
   new Grabber(),
+  new HitmonleeMEW(),
   new Ivysaur(),
   new Jolteon(),
   new Kangaskhanex(),

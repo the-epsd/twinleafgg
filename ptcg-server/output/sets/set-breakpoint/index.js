@@ -5,6 +5,7 @@ const bayleef_1 = require("./bayleef");
 const delinquent_1 = require("./delinquent");
 const fighting_fury_belt_1 = require("./fighting-fury-belt");
 const froakie_1 = require("./froakie");
+const greninja_1 = require("./greninja");
 const kricketot_1 = require("./kricketot");
 const max_elixir_1 = require("./max-elixir");
 const phantump_1 = require("./phantump");
@@ -18,6 +19,7 @@ exports.setBreakpoint = [
     new delinquent_1.Delinquent(),
     new fighting_fury_belt_1.FightingFuryBelt(),
     new froakie_1.Froakie(),
+    new greninja_1.GreninjaBKP(),
     new kricketot_1.Kricketot(),
     new max_elixir_1.MaxElixir(),
     new phantump_1.Phantump(),

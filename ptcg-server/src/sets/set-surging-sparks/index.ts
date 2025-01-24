@@ -1,5 +1,8 @@
 import { Card } from '../../game/store/card/card';
+import { AlolanDiglett } from './alolan-diglett';
+import { AlolanDugtrio } from './alolan-dugtrio';
 import { AlolanExeggutorex } from './alolan-exeggutor-ex';
+import { AmuletofHope } from './amulet-of-hope';
 import { Archaludonex } from './archaludon-ex';
 import { Azelf } from './azelf';
 import { Azumarill } from './azulmarill';
@@ -11,15 +14,20 @@ import { Ceruledge } from './ceruledge';
 import { Ceruledgeex } from './ceruledge-ex';
 import { Charcadet } from './charcadet';
 import { CherishCarrier } from './cherish-carrier';
+import { ChillTeaserToy } from './chill-teaser-toy';
+import { ClemontsQuickWit } from './clemonts-quick-wit';
+import { Cofagrigus } from './cofagrigus';
 import { Crocalor } from './crocalor';
 import { Cyrano } from './cyrano';
 import { Deino } from './deino';
 import { DragonsElixir } from './dragons-elixir';
+import { Drasna } from './Drasna';
 import { Drayton } from './drayton';
 import { Duraludon } from './duraludon';
 import { DuskBall } from './dusk-ball';
 import { Eevee } from './eevee';
 import { EnergySearchPRO } from './energy-search-pro';
+import { Espurr } from './espurr';
 import { Eternatus } from './eternatus';
 import { ExcitingStadium } from './exciting-stadium';
 import { Exeggcute } from './exeggcute';
@@ -31,6 +39,8 @@ import { GravityMountain } from './gravity-mountain';
 import { HelperBell } from './helper.bell';
 import { HoOh } from './ho-oh';
 import { Hydreigonex } from './hydreigon-ex';
+import { IronCrown } from './iron-crown';
+import { JasminesGaze } from './jasmines-gaze';
 import { Klefki } from './klefki';
 import { Koraidon } from './koraidon';
 import { Larvesta } from './larvesta';
@@ -40,6 +50,7 @@ import { Magnemite } from './magnemite';
 import { Magneton } from './magneton';
 import { Marill } from './marill';
 import { MegatonBlower } from './megaton-blower';
+import { Meowstic } from './meowstic';
 import { Mesprit } from './mesprit';
 import { Miloticex } from './milotic-ex';
 import { MiraculousIntercom } from './miraculous-intercom';
@@ -55,8 +66,11 @@ import { Rabsca } from './rabsca';
 import { Rellor } from './rellor';
 import { RichEnergy } from './rich-energy';
 import { Sandygast } from './sandygast';
+import { ScovillainEXSSP } from './scovillain-ex';
 import { Shroodle } from './shroodle';
 import { Skeledirge } from './skeledirge';
+import { Slakingex } from './slaking-ex';
+import { SlakothSSP } from './slakoth';
 import { Smoochum } from './smoochum';
 import { Surfer } from './surfer';
 import { Sylveonex } from './sylveon-ex';
@@ -69,9 +83,11 @@ import { Togetic } from './togetic';
 import { Trapinch } from './trapinch';
 import { Uxie } from './uxie';
 import { Vibrava } from './vibrava';
+import { VigorothSSP } from './vigoroth';
 import { Vivillion } from './vivillion';
 import { Vulpix } from './vulpix';
 import { Wochien } from './wo-chien';
+import { Zarude } from './zarude';
 import { Zweilous } from './zweilous';
 
 export const setSurgingSparks: Card[] = [
@@ -148,6 +164,22 @@ export const setSurgingSparks: Card[] = [
   new EnergySearchPRO(),
   new Surfer(),
   new GougingFire(),
+  new AlolanDiglett(),
+  new AlolanDugtrio(),
+  new AmuletofHope(),
+  new ChillTeaserToy(),
+  new ClemontsQuickWit(),
+  new Cofagrigus(),
+  new Drasna(),
+  new Espurr(),
+  new IronCrown(),
+  new JasminesGaze(),
+  new Meowstic(),
+  new ScovillainEXSSP(),
+  new Slakingex(),
+  new SlakothSSP(),
+  new VigorothSSP(),
+  new Zarude(),
   
   //Reprints
   new ScrambleSwitchSSP(),

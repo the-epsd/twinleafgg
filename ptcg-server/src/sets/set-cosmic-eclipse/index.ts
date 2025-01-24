@@ -15,6 +15,7 @@ import { Flabebe } from './flabebe';
 import { Flabebe2 } from './flabebe2';
 import { Floette } from './floette';
 import { Golett } from './golett';
+import { GreatCatcher } from './great-catcher';
 import { GuzmaAndHala } from './guzma-and-hala';
 import { Guzzlord } from './guzzlord';
 import { LanasFishingRod } from './lanas-fishing-rod';
@@ -54,6 +55,7 @@ export const setCosmicEclipse: Card[] = [
   new Flabebe2(),
   new Floette(),
   new Golett(),
+  new GreatCatcher(),
   new GuzmaAndHala(),
   new Guzzlord(),
   new LanasFishingRod(),

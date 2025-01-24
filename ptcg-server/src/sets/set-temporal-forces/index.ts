@@ -33,6 +33,7 @@ import { Haunter } from './haunter';
 import { HeavyBaton } from './heavy-baton';
 import { HerosCape } from './heros-cape';
 import { Hoothoot } from './hoothoot';
+import { Incineroarex } from './incineroar-ex';
 import { IronCrownex } from './iron-crown-ex';
 import { IronHands } from './iron-hands';
 import { IronJugulis } from './iron-jugulis';
@@ -40,6 +41,7 @@ import { IronLeavesex } from './iron-leaves-ex';
 import { IronThorns } from './iron-thorns';
 import { Koraidon } from './koraidon';
 import { Koraidonex } from './koraidon-ex';
+import { Litten } from './litten';
 import { MasterBall } from './master-ball';
 import { MaximumBelt } from './maximum-belt';
 import { Metagross } from './metagross';
@@ -53,12 +55,14 @@ import { MrMime } from './mr-mime';
 import { NeoUpperEnergy } from './neo-upper-energy';
 import { Palafin } from './palafin';
 import { PerilousJungle } from './perilous-jungle';
+import { Pidove } from './pidove';
 import { Pikachu } from './pikachu';
 import { PrimeCatcher } from './prime-catcher';
 import { Rabsca } from './rabsca';
 import { RagingBoltex } from './raging-bolt-ex';
 import { Raichu } from './raichu';
 import { RebootPod } from './reboot-pod';
+import { Relicanth } from './relicanth';
 import { Rellor } from './rellor';
 import { Reuniclus } from './reuniclus';
 import { RoaringMoon } from './roaring-moon';
@@ -67,9 +71,12 @@ import { Salvatore } from './salvatore';
 import { SandyShocks } from './sandy-shocks';
 import { Skitty } from './skitty';
 import { Solosis } from './solosis';
+import { Torracat } from './torracat';
 import { Torterraex } from './torterra-ex';
 import { Totodile } from './totodile';
+import { Tranquill } from './tranquill';
 import { Turtwig } from './turtwig';
+import { Unfezant } from './unfezant';
 import { Victini } from './victini';
 import { Vikavolt } from './vikavolt';
 import { WalkingWakeex } from './walking-wake-ex';
@@ -109,6 +116,7 @@ export const setTemporalForces: Card[] = [
   new HeavyBaton(),
   new HerosCape(),
   new Hoothoot(),
+  new Incineroarex(),
   new IronCrownex(),
   new IronHands(),
   new IronJugulis(),
@@ -116,6 +124,7 @@ export const setTemporalForces: Card[] = [
   new IronThorns(),
   new Koraidonex(),
   new Koraidon(),
+  new Litten(),
   new MasterBall(),
   new MaximumBelt(),
   new Metagross(),
@@ -129,12 +138,14 @@ export const setTemporalForces: Card[] = [
   new NeoUpperEnergy(),
   new Palafin(),
   new PerilousJungle(),
+  new Pidove(),
   new Pikachu(),
   new PrimeCatcher(),
   new Rabsca(),
   new RagingBoltex(),
   new Raichu(),
   new RebootPod(),
+  new Relicanth(),
   new Rellor(),
   new Reuniclus(),
   new RoaringMoon(),
@@ -143,9 +154,12 @@ export const setTemporalForces: Card[] = [
   new SandyShocks(),
   new Skitty(),
   new Solosis(),
+  new Torracat(),
   new Torterraex(),
   new Totodile(),
+  new Tranquill(),
   new Turtwig(),
+  new Unfezant(),
   new Victini(),
   new Vikavolt(),
   new WalkingWakeex(),

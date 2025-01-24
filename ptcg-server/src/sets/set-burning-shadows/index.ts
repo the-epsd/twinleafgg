@@ -10,9 +10,13 @@ import { Gloom } from './gloom';
 import { Guzma } from './guzma';
 import { Kiawe } from './kiawe';
 import { Marill } from './marill';
+import { MarshadowGX } from './marshadow-gx';
 import { NecrozmaGX } from './necrozma-gx';
 import { Plumeria } from './plumeria';
+import { Ralts } from './ralts';
 import { SalazzleGX } from './salazzle-gx';
+import { Sophocles } from './sophocles';
+import { TapuBuluGX } from './tapu-bulu-gx';
 import { WishfulBaton } from './wishful-baton';
 
 export const setBurningShadows: Card[] = [
@@ -27,8 +31,12 @@ export const setBurningShadows: Card[] = [
   new Guzma(),
   new Kiawe(),
   new Marill(),
+  new MarshadowGX(),
   new NecrozmaGX(),
   new Plumeria(),
+  new Ralts(),
   new SalazzleGX(),
+  new Sophocles(),
+  new TapuBuluGX(),
   new WishfulBaton(),
 ];

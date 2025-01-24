@@ -13,6 +13,7 @@ import { Chimchar } from './chimchar';
 import { Clefable } from './clefable';
 import { Clefairy } from './clefairy';
 import { CommunityCenter } from './community-center';
+import { Conkeldurr } from './conkeldurr';
 import { CornerstoneMaskOgerponex } from './cornerstone-mask-ogerpon-ex';
 import { Dipplin } from './dipplin';
 import { Dragapultex } from './dragapult-ex';
@@ -22,16 +23,19 @@ import { Emolga } from './emolga';
 import { EnhancedHammer } from './enhanced-hammer';
 import { Farfetchd } from './farfetchd';
 import { FestivalGrounds } from './festival-plaza';
+import { FezandipitiTWM } from './fezandipiti';
 import { Froakie } from './froakie';
 import { Frogadier } from './frogadier';
 import { Froslass } from './froslass';
 import { Goldeen } from './goldeen';
 import { Greninjaex } from './greninja-ex';
 import { Grookey } from './grookey';
+import { Gurdurr } from './gurdurr';
 import { HandyFan } from './handy-fan';
 import { Hassel } from './hassel';
 import { HearthflameMaskOgerponex } from './hearthflame-mask-ogerpon-ex';
 import { Heatran } from './heatran';
+import { HisuianArcanine } from './hisuian-arcanine';
 import { HyperAroma } from './hyper-aroma';
 import { Infernape } from './infernape';
 import { IronLeaves } from './iron-leaves';
@@ -67,6 +71,7 @@ import { SurvivalCast } from './survival-cast';
 import { Tatsugiri } from './tatsugiri';
 import { TealMaskOgerponex } from './teal-mask-ogerpon-ex';
 import { Thwackey } from './thwackey';
+import { Timburr } from './timburr';
 import { TingLu } from './ting-lu';
 import { UnfairStamp } from './unfair-stamp';
 import { WalkingWake } from './walking-wake';
@@ -82,18 +87,22 @@ export const setTwilightMasquerade: Card[] = [
   new Carmine(),
   new Chimchar(),
   new Clefable(),
+  new Conkeldurr(),
   new CornerstoneMaskOgerponex(),
   new Dreepy(),
   new Drakloak(),
   new Dragapultex(),
   new Emolga(),
   new Farfetchd(),
+  new FezandipitiTWM(),
   new Froslass(),
   new Goldeen(),
+  new Gurdurr(),
   new HandyFan(),
   new Hassel(),
   new HearthflameMaskOgerponex(),
   new Heatran(),
+  new HisuianArcanine(),
   new Lairon(),
   new LanasAssistance(),
   new LegacyEnergy(),
@@ -108,6 +117,7 @@ export const setTwilightMasquerade: Card[] = [
   new RotoStick(),
   new ScoopUpCyclone(),
   new Tatsugiri(),
+  new Timburr(),
   new WellspringMaskOgerponex(),
   new Kieran(),
   new BloodmoonUrsalunaex(),

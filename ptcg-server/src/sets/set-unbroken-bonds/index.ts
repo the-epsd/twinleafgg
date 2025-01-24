@@ -1,12 +1,14 @@
 import { Card } from '../../game/store/card/card';
 import { Arcanine } from './arcanine';
 import { Aron } from './aron';
+import { BlacephalonUNB } from './blacephalon';
 import { Cleffa } from './cleffa';
 import { DedenneGX } from './dedenne-gx';
 import { DuskStone } from './dusk-stone';
 import { ElectromagneticRadar } from './electromagnetic-radar';
 import { Espurr } from './espurr';
 import { FireCrystal } from './fire-crystal';
+import { GardevoirSylveonGX } from './gardevoir-and-sylveon-gx';
 import { Gloom } from './gloom';
 import { Goldeen } from './goldeen';
 import { GreensExploration } from './greens-exploration';
@@ -40,12 +42,14 @@ import { Zeraora } from './zeraora';
 export const setUnbrokenBonds: Card[] = [
   new Arcanine(),
   new Aron(),
+  new BlacephalonUNB(),
   new Cleffa(),
   new DedenneGX(),
   new DuskStone(),
   new ElectromagneticRadar(),
   new Espurr(),
   new FireCrystal(),
+  new GardevoirSylveonGX(),
   new Gloom(),
   new Goldeen(),
   new GreensExploration(),

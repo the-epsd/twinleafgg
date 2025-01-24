@@ -118,9 +118,9 @@ export class Okidogi extends PokemonCard {
         if (em.provides.includes(CardType.DARK)) {
           darkProvided = true;
         }
-          if ((em.card instanceof EnergyCard && em.card.blendedEnergies.includes(CardType.DARK)) ||
+        if ((em.card instanceof EnergyCard && em.card.blendedEnergies.includes(CardType.DARK)) ||
             (em.provides.includes(CardType.DARK) || em.provides.includes(CardType.ANY))) {
-            darkProvided = true;
+          darkProvided = true;
         }
       });
 

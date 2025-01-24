@@ -1,4 +1,5 @@
 import { Card } from '../../game/store/card/card';
+import { Slowpoke } from '../set-fossil/slowpoke';
 import { AdventureBag } from './adventure-bag';
 import { AlolanMeowth } from './alolan-meowth';
 import { AlolanNinetalesGX } from './alolan-ninetales-gx';
@@ -17,22 +18,36 @@ import { Girafarig } from './girafarig';
 import { Giratina } from './giratina';
 import { Granbull } from './granbull';
 import { Grovyle } from './grovyle';
+import { Hoppip } from './hoppip';
+import { Jumpluff } from './jumpluff';
+import { Kirlia } from './kirlia';
+import { Lanturn } from './lanturn';
 import { LostBlender } from './lost-blender';
+import { LugiaGX } from './lugia-gx';
+import { MagcargoGX } from './magcargo-gx';
 import { Mareep } from './mareep';
 import { Meganium } from './meganium';
+import { MimikyuGX } from './mimikyu-gx';
 import { Mina } from './mina';
 import { Naganadel } from './naganadel';
+import { Natu } from './natu';
 import { NetBall } from './net-ball';
 import { Nihilego } from './nihilego';
+import { Nincada } from './nincada';
+import { Onix } from './onix';
 import { Poipole } from './poipole';
+import { ProfessorElmLecture } from './professor-elms-lecture';
 import { Ralts } from './ralts';
 import { Ribombee } from './ribombee';
+import { Shedinja } from './shedinja';
 import { ShuckleGX } from './shuckle-gx';
 import { Slowking } from './slowking';
 import { Snubbull } from './snubbull';
 import { SpellTag } from './spell-tag';
 import { ThunderMountainPrismStar } from './thunder-mountain-prism-star';
 import { Treecko } from './treecko';
+import { Trumbeak } from './trumbeak';
+import { UnownHAND } from './unown-hand';
 import { WhiteKyurem } from './white-kyurem';
 import { Wurmple } from './wurmple';
 import { Zebstrika } from './zebstrika';
@@ -50,31 +65,46 @@ export const setLostThunder: Card[] = [
   new CounterGain(),
   new CustomCatcher(),
   new Cutiefly(),
+  new DittoPrismStar(),
   new Electropower(),
   new Faba(),
   new Girafarig(),
   new Giratina(),
   new Granbull(),
   new Grovyle(),
+  new Hoppip(),
+  new Jumpluff(),
+  new Kirlia(),
+  new Lanturn(),
   new LostBlender(),
+  new LugiaGX(),
+  new MagcargoGX(),
   new Mareep(),
   new Meganium(),
+  new MimikyuGX(),
   new Mina(),
   new Naganadel(),
+  new Natu(),
   new NetBall(),
   new Nihilego(),
+  new Nincada(),
+  new Onix(),
   new Poipole(),
+  new ProfessorElmLecture(),
   new Ralts(),
   new Ribombee(),
+  new Shedinja(),
   new ShuckleGX(),
   new Slowking(),
+  new Slowpoke(),
   new Snubbull(),
   new SpellTag(),
   new ThunderMountainPrismStar(),
   new Treecko(),
+  new Trumbeak(),
+  new UnownHAND(),
   new WhiteKyurem(),
   new Wurmple(),
   new Zebstrika(),
   new ZeraoraGX(),
-  new DittoPrismStar(),
 ];

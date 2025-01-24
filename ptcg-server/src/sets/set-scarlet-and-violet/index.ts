@@ -6,6 +6,7 @@ import { Armarouge } from './armarouge';
 import { Arven } from './arven';
 import { Banetteex } from './banette-ex';
 import { BeachCourt } from './beach-court';
+import { Bisharp } from './bisharp';
 import { Capsakid } from './capsakid';
 import { Charcadet } from './charcadet';
 import { CrushingHammer } from './crushing-hammer';
@@ -27,6 +28,7 @@ import { Hawlucha } from './hawlucha';
 import { Jacq } from './jacq';
 import { Judge } from './judge';
 import { Katy } from './katy';
+import { Kingambit } from './kingambit';
 import { Klefki } from './klefki';
 import { Koraidonex } from './koraidon-ex';
 import { Lucario } from './lucario';
@@ -42,6 +44,7 @@ import { Miriam } from './miriam';
 import { Nemona } from './nemona';
 import { NestBall } from './nest-ball';
 import { PalPad } from './pal-pad';
+import { Pawniard } from './pawniard';
 import { Penny } from './penny';
 import { PicnicBasket } from './picnic-basket';
 import { Pokeball } from './pokeball';
@@ -81,6 +84,7 @@ export const setScarletAndViolet: Card[] = [
   new Armarouge(),
   new Arven(),
   new BeachCourt(),
+  new Bisharp(),
   new Capsakid(),
   new Charcadet(),
   new CrushingHammer(),
@@ -101,6 +105,7 @@ export const setScarletAndViolet: Card[] = [
   new Jacq(),
   new Judge(),
   new Katy(),
+  new Kingambit(),
   new Klefki(),
   new Koraidonex(),
   new Lucario(),
@@ -116,6 +121,7 @@ export const setScarletAndViolet: Card[] = [
   new Nemona(),
   new NestBall(),
   new PalPad(),
+  new Pawniard(),
   new Penny(),
   new PicnicBasket(),
   new Pokeball(),

@@ -20,6 +20,7 @@ import { HisuianArcanine } from './hisuian-arcanine';
 import { HisuianBasculegion } from './hisuian-basculegion';
 import { HisuianGoodraV } from './hisuian-goodra-v';
 import { HisuianGoodraVSTAR } from './hisuian-goodra-vstar';
+import { HisuianGrowlithe } from './hisuian-growlithe';
 import { HisuianZoroark } from './hisuian-zoroark';
 import { HisuianZoroarkV } from './hisuian-zoroark-v';
 import { HisuianZoroarkVSTAR } from './hisuian-zoroark-vstar';
@@ -75,6 +76,7 @@ export const setLostOrigin: Card[] = [
   new HisuianBasculegion(),
   new HisuianGoodraV(),
   new HisuianGoodraVSTAR(),
+  new HisuianGrowlithe(),
   new HisuianZoroarkV(),
   new HisuianZoroarkVSTAR(),
   new HisuianZorua(),

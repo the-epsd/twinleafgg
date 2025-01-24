@@ -1,5 +1,8 @@
 import { Card } from '../../game/store/card/card';
+import { Aegislash } from './aegislash';
+import { Aegislashex } from './aegislash-ex';
 import { AncientBoosterEnergyCapsule } from './ancient-booster-energy-capsule';
+import { ArmarougeEX } from './armarouge-ex';
 import { Bombirdierex } from './bombirdier-ex';
 import { Bounsweet } from './bounsweet';
 import { BruteBonnet } from './brute-bonnet';
@@ -75,8 +78,10 @@ import { Veluza } from './veluza';
 import { Xatu } from './xatu';
 import { Zacian } from './zacian';
 export const setParadoxRift: Card[] = [
-
+  new Aegislash(),
+  new Aegislashex(),
   new AncientBoosterEnergyCapsule(),
+  new ArmarougeEX(),
   new BruteBonnet(),
   new Bounsweet(),
   new Charcadet(),

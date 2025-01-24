@@ -12,9 +12,13 @@ const gloom_1 = require("./gloom");
 const guzma_1 = require("./guzma");
 const kiawe_1 = require("./kiawe");
 const marill_1 = require("./marill");
+const marshadow_gx_1 = require("./marshadow-gx");
 const necrozma_gx_1 = require("./necrozma-gx");
 const plumeria_1 = require("./plumeria");
+const ralts_1 = require("./ralts");
 const salazzle_gx_1 = require("./salazzle-gx");
+const sophocles_1 = require("./sophocles");
+const tapu_bulu_gx_1 = require("./tapu-bulu-gx");
 const wishful_baton_1 = require("./wishful-baton");
 exports.setBurningShadows = [
     new acerola_1.Acerola(),
@@ -28,8 +32,12 @@ exports.setBurningShadows = [
     new guzma_1.Guzma(),
     new kiawe_1.Kiawe(),
     new marill_1.Marill(),
+    new marshadow_gx_1.MarshadowGX(),
     new necrozma_gx_1.NecrozmaGX(),
     new plumeria_1.Plumeria(),
+    new ralts_1.Ralts(),
     new salazzle_gx_1.SalazzleGX(),
+    new sophocles_1.Sophocles(),
+    new tapu_bulu_gx_1.TapuBuluGX(),
     new wishful_baton_1.WishfulBaton(),
 ];

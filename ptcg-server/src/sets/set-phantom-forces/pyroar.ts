@@ -112,16 +112,16 @@ export class Pyroar extends PokemonCard {
         }
         
         return store.prompt(state, new ChoosePokemonPrompt(
-            player.id,
-            GameMessage.CHOOSE_POKEMON_TO_SWITCH,
-            PlayerType.TOP_PLAYER,
-            [SlotType.BENCH],
-            { allowCancel: false }
-          ), result => {
-            const cardList = result[0];
+          player.id,
+          GameMessage.CHOOSE_POKEMON_TO_SWITCH,
+          PlayerType.TOP_PLAYER,
+          [SlotType.BENCH],
+          { allowCancel: false }
+        ), result => {
+          const cardList = result[0];
         
-            opponent.switchPokemon(cardList);
-            return state;
+          opponent.switchPokemon(cardList);
+          return state;
         });
       });
     }

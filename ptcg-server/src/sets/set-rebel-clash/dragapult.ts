@@ -72,7 +72,7 @@ export class Dragapult extends PokemonCard {
       ], result => {
         if (result === true) {
           effect.preventDefault = true;
-          store.log(state, GameLog.LOG_ABILITY_BLOCKS_DAMGE, { name: opponent.name, pokemon: this.name });
+          store.log(state, GameLog.LOG_ABILITY_BLOCKS_DAMAGE, { name: opponent.name, pokemon: this.name });
           return state;
         }
       });
