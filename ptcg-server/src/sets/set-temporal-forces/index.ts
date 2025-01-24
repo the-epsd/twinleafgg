@@ -69,6 +69,8 @@ import { RoaringMoon } from './roaring-moon';
 import { Sableye } from './sableye';
 import { Salvatore } from './salvatore';
 import { SandyShocks } from './sandy-shocks';
+import { Scizorex } from './scizor-ex';
+import { Scyther } from './scyther';
 import { Skitty } from './skitty';
 import { Solosis } from './solosis';
 import { Torracat } from './torracat';
@@ -200,5 +202,6 @@ export const setTemporalForces: Card[] = [
   new WalkingWakeexHR(),
   new IronCrownexHR(),
   new RagingBoltexHR(),
-
+  new Scyther(),
+  new Scizorex(),
 ];

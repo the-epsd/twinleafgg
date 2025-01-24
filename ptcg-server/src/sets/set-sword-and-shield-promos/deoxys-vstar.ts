@@ -42,7 +42,7 @@ export class DeoxysVSTAR extends PokemonCard {
 
   public regulationMark = 'F';
 
-  public set = 'SSP';
+  public set = 'SP';
 
   public cardImage: string = 'assets/cardback.png';
 
@@ -50,7 +50,7 @@ export class DeoxysVSTAR extends PokemonCard {
 
   public name = 'Deoxys VSTAR';
 
-  public fullName = 'Deoxys VSTAR SSP';
+  public fullName = 'Deoxys VSTAR SP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

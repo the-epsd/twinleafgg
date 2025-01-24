@@ -43,7 +43,7 @@ export class Peonia extends TrainerCard {
       return store.prompt(state, new ChoosePrizePrompt(
         player.id,
         GameMessage.CHOOSE_PRIZE_CARD,
-        { count: 3, allowCancel: false }
+        { count: Math.min(3, player.getPrizeLeft()), allowCancel: false }
       ), chosenPrizes => {
         chosenPrizes = chosenPrizes || [];
         const hand = player.hand;
