@@ -1,13 +1,18 @@
 import { User, Match } from '../../storage';
 import { MoreThan, LessThan } from 'typeorm';
-import { GameWinner } from '../store/state/state';
+import { GameWinner, State } from '../store/state/state';
 import { Rank, rankLevels } from '../../backend';
 import { config } from '../../config';
 
 export class RankingCalculator {
   constructor() { }
 
-  public calculateMatch(match: Match): User[] {
+  public calculateMatch(match: Match, state: State): User[] {
+    // Add state parameter and check turns
+    if (state.turn < 2) {
+      return [];
+    }
+
     const player1 = match.player1;
     const player2 = match.player2;
 

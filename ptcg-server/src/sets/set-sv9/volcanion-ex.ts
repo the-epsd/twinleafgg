@@ -43,7 +43,7 @@ export class Volcanionex extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this){
-        effect.player.marker.removeMarker(this.SCORCHING_STEAM, this);
+      effect.player.marker.removeMarker(this.SCORCHING_STEAM, this);
     }
 
     // Scorching Steam
@@ -52,11 +52,11 @@ export class Volcanionex extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       if (player.active.getPokemonCard() !== this){
-          throw new GameError(GameMessage.CANNOT_USE_POWER);
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
       if (player.marker.hasMarker(this.SCORCHING_STEAM, this)){
-          throw new GameError(GameMessage.CANNOT_USE_POWER);
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
       const specialCondition = new AddSpecialConditionsPowerEffect(
@@ -74,32 +74,32 @@ export class Volcanionex extends PokemonCard {
 
     // Heat Cyclone
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-        const player = effect.player;
-        const hasBench = player.bench.some(b => b.cards.length > 0);
+      const player = effect.player;
+      const hasBench = player.bench.some(b => b.cards.length > 0);
   
-        if (hasBench === false) {
-          return state;
+      if (hasBench === false) {
+        return state;
+      }
+  
+      return store.prompt(state, new AttachEnergyPrompt(
+        player.id,
+        GameMessage.ATTACH_ENERGY_TO_BENCH,
+        player.active,
+        PlayerType.TOP_PLAYER,
+        [ SlotType.BENCH ],
+        { superType: SuperType.ENERGY },
+        { allowCancel: false, min: 1, max: 1 }
+      ), transfers => {
+        transfers = transfers || [];
+        for (const transfer of transfers) {
+          const target = StateUtils.getTarget(state, player, transfer.to);
+          player.active.moveCardTo(transfer.card, target);
         }
-  
-        return store.prompt(state, new AttachEnergyPrompt(
-          player.id,
-          GameMessage.ATTACH_ENERGY_TO_BENCH,
-          player.active,
-          PlayerType.TOP_PLAYER,
-          [ SlotType.BENCH ],
-          { superType: SuperType.ENERGY },
-          { allowCancel: false, min: 1, max: 1 }
-        ), transfers => {
-          transfers = transfers || [];
-          for (const transfer of transfers) {
-            const target = StateUtils.getTarget(state, player, transfer.to);
-            player.active.moveCardTo(transfer.card, target);
-          }
-        });
+      });
     }
 
     if (effect instanceof EndTurnEffect){
-        effect.player.marker.removeMarker(this.SCORCHING_STEAM, this);
+      effect.player.marker.removeMarker(this.SCORCHING_STEAM, this);
     }
 
     return state;

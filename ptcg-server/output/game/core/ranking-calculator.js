@@ -8,7 +8,11 @@ const backend_1 = require("../../backend");
 const config_1 = require("../../config");
 class RankingCalculator {
     constructor() { }
-    calculateMatch(match) {
+    calculateMatch(match, state) {
+        // Add state parameter and check turns
+        if (state.turn < 2) {
+            return [];
+        }
         const player1 = match.player1;
         const player2 = match.player2;
         if (player1.id === player2.id) {
