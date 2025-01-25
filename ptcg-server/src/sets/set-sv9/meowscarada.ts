@@ -29,7 +29,7 @@ export class Meowscarada extends PokemonCard {
   public regulationMark: string = 'I';
   public set: string = 'SV9';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '10';
+  public setNumber: string = '12';
   public name: string = 'Meowscarada';
   public fullName: string = 'Meowscarada SV9';
 

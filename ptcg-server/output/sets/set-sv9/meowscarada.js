@@ -29,7 +29,7 @@ class Meowscarada extends game_1.PokemonCard {
         this.regulationMark = 'I';
         this.set = 'SV9';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '10';
+        this.setNumber = '12';
         this.name = 'Meowscarada';
         this.fullName = 'Meowscarada SV9';
         this.SHOWTIME_MARKER = 'SHOWTIME_MARKER';

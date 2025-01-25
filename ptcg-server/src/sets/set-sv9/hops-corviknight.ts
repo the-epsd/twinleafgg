@@ -33,7 +33,7 @@ export class HopsCorviknight extends PokemonCard {
         '(Don\'t apply Weakness and Resistance for Benched Pokémon.)'
     },
     {
-      name: 'Razor Wing',
+      name: 'Steel Wing',
       cost: [M, M, C],
       damage: 150,
       text: 'During your opponent\'s next turn, this Pokémon takes 60 less damage from attacks ' +
@@ -47,7 +47,7 @@ export class HopsCorviknight extends PokemonCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '84';
+  public setNumber: string = '68';
 
   public name: string = 'Hop\'s Corviknight';
 

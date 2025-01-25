@@ -22,7 +22,7 @@ class Floragato extends game_1.PokemonCard {
         this.regulationMark = 'I';
         this.set = 'SV9';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '10';
+        this.setNumber = '11';
         this.name = 'Floragato';
         this.fullName = 'Floragato SV9';
     }

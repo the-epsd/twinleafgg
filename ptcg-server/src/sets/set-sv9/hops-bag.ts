@@ -12,7 +12,7 @@ export class HopsBag extends TrainerCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '225';
+  public setNumber: string = '91';
 
   public regulationMark = 'I';
 

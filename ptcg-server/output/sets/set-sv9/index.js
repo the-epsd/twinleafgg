@@ -42,6 +42,9 @@ const ns_castle_1 = require("./ns-castle");
 const ns_darmanItan_1 = require("./ns-darmanItan");
 const ns_darumaka_1 = require("./ns-darumaka");
 const ns_joltik_1 = require("./ns-joltik");
+const ns_klang_1 = require("./ns-klang");
+const ns_klink_1 = require("./ns-klink");
+const ns_klinklang_1 = require("./ns-klinklang");
 const ns_pp_up_1 = require("./ns-pp-up");
 const ns_purrloin_1 = require("./ns-purrloin");
 const ns_reshiram_1 = require("./ns-reshiram");
@@ -118,4 +121,7 @@ exports.setSV9 = [
     new ns_castle_1.NsCastle(),
     new ns_joltik_1.NsJoltik(),
     new ns_purrloin_1.NsPurrloin(),
+    new ns_klink_1.NsKlink(),
+    new ns_klang_1.NsKlang(),
+    new ns_klinklang_1.NsKlinklang(),
 ];

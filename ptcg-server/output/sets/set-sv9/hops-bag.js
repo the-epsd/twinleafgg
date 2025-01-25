@@ -11,7 +11,7 @@ class HopsBag extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.set = 'SV9';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '225';
+        this.setNumber = '91';
         this.regulationMark = 'I';
         this.name = 'Hop\'s Bag';
         this.fullName = 'Hop\'s Bag SV9';

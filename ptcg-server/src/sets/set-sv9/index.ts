@@ -40,6 +40,9 @@ import { NsCastle } from './ns-castle';
 import { NsDarmanitan } from './ns-darmanItan';
 import { NsDarumaka } from './ns-darumaka';
 import { NsJoltik } from './ns-joltik';
+import { NsKlang } from './ns-klang';
+import { NsKlink } from './ns-klink';
+import { NsKlinklang } from './ns-klinklang';
 import { NsPPUp } from './ns-pp-up';
 import { NsPurrloin } from './ns-purrloin';
 import { NsReshiram } from './ns-reshiram';
@@ -122,4 +125,7 @@ export const setSV9: Card[] = [
   new NsCastle(),
   new NsJoltik(),
   new NsPurrloin(),
+  new NsKlink(),
+  new NsKlang(),
+  new NsKlinklang(),
 ];
