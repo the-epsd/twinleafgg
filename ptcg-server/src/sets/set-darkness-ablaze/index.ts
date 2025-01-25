@@ -4,6 +4,8 @@ import { CapeOfToughness } from './cape-of-toughness';
 import { Combusken } from './combusken';
 import { CrobatV } from './crobat-v';
 import { DucklettDAA } from './ducklett';
+import { EternatusV } from './eternatus-v';
+import { EternatusVMAX } from './eternatus-vmax';
 import { HeatFireEnergy } from './heat-fire-energy';
 import { HidingDarknessEnergy } from './hiding-darkness-energy';
 import { Kangaskhan } from './kangaskhan';
@@ -38,5 +40,7 @@ export const setDarknessAblaze: Card[] = [
   new Swanna(),
   new TapuKoko(),
   new Teddiursa(),
-  new Ursaring()
+  new Ursaring(),
+  new EternatusV(),
+  new EternatusVMAX(),
 ];
