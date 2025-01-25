@@ -44,6 +44,9 @@ export const cardReplacements = [
   //BKP
   { from: 'Delinquent BKP 98', to: 'Delinquent BKT 98' },
 
+  //SUM
+  { from: 'Alolan Grimer SUM 57', to: 'Alolan Grimer XY 57' },
+
   //GRI
   { from: 'Mallow GRI 127', to: 'Mallow TEF 127' },
 
@@ -86,6 +89,9 @@ export const cardReplacements = [
   // PR-SH
   { from: 'Deoxys V SSP 266', to: 'Deoxys V SP 266' },
   { from: 'Deoxys VSTAR SSP 268', to: 'Deoxys VSTAR SP 268' },
+
+  //SVP Alt-arts
+  { from: 'Snorlax SVP 51', to: 'SnorlaxIR SVP 51' },
 
   //SVI
   { from: 'Pokégear 3.0 SVI 186', to: 'Pokegear SVI 186' },
@@ -426,6 +432,9 @@ export const exportReplacements = [
   //BKP
   { from: 'Delinquent BKT 98', to: 'Delinquent BKP 98' },
 
+  //SUM
+  { from: 'Alolan Grimer XY 57', to: 'Alolan Grimer SUM 57' },
+
   //GRI
   { from: 'Mallow TEF 127', to: 'Mallow GRI 127' },
 
@@ -464,6 +473,9 @@ export const exportReplacements = [
 
   //CRZ
   { from: 'Zacian VSTAR 96', to: 'Zacian VSTAR CRZ 96' },
+
+  //SVP Alt-arts
+  { from: 'SnorlaxIR SVP 51', to: 'Snorlax SVP 51' },
 
   //SVI
   { from: 'Pokegear SVI 186', to: 'Pokégear 3.0 SVI 186' },

@@ -76,6 +76,8 @@ const toedscruel_1 = require("./toedscruel");
 const torkoal_1 = require("./torkoal");
 const ultra_ball_1 = require("./ultra-ball");
 const vitality_band_1 = require("./vitality-band");
+const wiglett_1 = require("./wiglett");
+const wugtrio_1 = require("./wugtrio");
 const youngster_1 = require("./youngster");
 exports.setScarletAndViolet = [
     new annihilape_1.Annihilape(),
@@ -182,4 +184,6 @@ exports.setScarletAndViolet = [
     new full_art_1.TeamStarGruntFA(),
     new toedscool_1.Toedscool(),
     new toedscruel_1.Toedscruel(),
+    new wiglett_1.Wiglett(),
+    new wugtrio_1.Wugtrio(),
 ];

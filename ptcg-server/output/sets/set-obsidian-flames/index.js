@@ -10,6 +10,7 @@ const charmander_1 = require("./charmander");
 const charmeleon_1 = require("./charmeleon");
 const cleffa_1 = require("./cleffa");
 const dartrix_1 = require("./dartrix");
+const decidueye_ex_1 = require("./decidueye-ex");
 const dragonair_1 = require("./dragonair");
 const dragonite_ex_1 = require("./dragonite-ex");
 const dratini_1 = require("./dratini");
@@ -75,6 +76,7 @@ exports.setObsidianFlames = [
     new bellibolt_1.Bellibolt(),
     new varoom_1.Varoom(),
     new whiscash_1.Whiscash(),
+    new decidueye_ex_1.Decidueyeex(),
     //Alt-s
     new full_art_1.BelliboltIR(),
     new full_art_1.CleffaIR(),

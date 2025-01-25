@@ -26,6 +26,7 @@ import { HitmonleeMEW } from './hitmonlee';
 import { Ivysaur } from './ivysaur';
 import { Jolteon } from './jolteon';
 import { Kangaskhanex } from './kangaskhan-ex';
+import { Leftovers } from './leftovers';
 import { Machoke } from './machoke';
 import { Machop } from './machop';
 import { Magmar } from './magmar';
@@ -44,6 +45,7 @@ import { RigidBand } from './rigid-band';
 import { Sandshrew } from './sandshrew';
 import { Scyther } from './scyther';
 import { Seaking } from './seaking';
+import { Snorlax } from './snorlax';
 import { Squirtle } from './squirtle';
 import { Starmie } from './starmie';
 import { Staryu } from './staryu';
@@ -81,6 +83,7 @@ export const setPokemon151: Card[] = [
   new Ivysaur(),
   new Jolteon(),
   new Kangaskhanex(),
+  new Leftovers(),
   new Machop(),
   new Machoke(),
   new Magmar(),
@@ -99,6 +102,7 @@ export const setPokemon151: Card[] = [
   new Sandshrew(),
   new Scyther(),
   new Seaking(),
+  new Snorlax(),
   new Squirtle(),
   new Staryu(),
   new Starmie(),

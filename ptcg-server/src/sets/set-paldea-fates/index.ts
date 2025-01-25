@@ -12,6 +12,7 @@ import { Kilowattrel } from './kilowattrel';
 import { MimeJr } from './mime-jr';
 import { MoonlightHill } from './moonlight-hill';
 import { Scovillainex } from './scovillain-ex';
+import { ArbolivaSV, ArctibaxSV, ArmarougeSV, BaxcaliburSV, CapsakidSV, CharcadetSV, CharmanderSV, CharmeleonSV, CleffaSV, DollivSV, DrifloonSV, EnteiSV, FinizenSV, FrigibaxSV, GloomSV, KilowattrelSV, KlefkiSV, LuxraySV, MimeJrSV, MimikyuSV, NatuSV, OddishSV, PalafinSV, PinecoSV, RaltsSV, SmolivSV, SnorlaxSV, SpiritombSV, StarmieSV, StaryuSV, ThundurusSV, TinkatinkSV, TinkatonSV, TinkatuffSV, VileplumeSV, WattrelSV, XatuSV } from './shiny-vault';
 import { StudentsInPaldea } from './students-in-paldea';
 import { TechnicalMachineCrisisPunch } from './technical-machine-crisis-punch';
 
@@ -54,5 +55,42 @@ export const setPaldeaFates: Card[] = [
   new ArtazonPAF(),
 
   //Shiny Vault
+  new OddishSV(),
+  new GloomSV(),
+  new VileplumeSV(),
+  new PinecoSV(),
+  new SmolivSV(),
+  new DollivSV(),
+  new ArbolivaSV(),
+  new CapsakidSV(),
+  new CharmanderSV(),
+  new CharmeleonSV(),
+  new EnteiSV(),
+  new CharcadetSV(),
+  new ArmarougeSV(),
+  new StaryuSV(),
+  new StarmieSV(),
+  new FinizenSV(),
+  new PalafinSV(),
+  new FrigibaxSV(),
+  new ArctibaxSV(),
+  new BaxcaliburSV(),
+  new LuxraySV(),
+  new ThundurusSV(),
+  new WattrelSV(),
+  new KilowattrelSV(),
+  new CleffaSV(),
+  new NatuSV(),
+  new XatuSV(),
+  new RaltsSV(),
+  new DrifloonSV(),
+  new SpiritombSV(),
+  new MimeJrSV(),
+  new KlefkiSV(),
+  new MimikyuSV(),
+  new TinkatinkSV(),
+  new TinkatuffSV(),
+  new TinkatonSV(),
+  new SnorlaxSV(),
 
 ];

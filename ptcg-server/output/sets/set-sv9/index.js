@@ -27,6 +27,7 @@ const ionos_kilowattrel_1 = require("./ionos-kilowattrel");
 const ionos_tadbulb_1 = require("./ionos-tadbulb");
 const ionos_voltorb_1 = require("./ionos-voltorb");
 const ionos_wattrel_1 = require("./ionos-wattrel");
+const iris_fighting_spirit_1 = require("./iris-fighting-spirit");
 const larvitar_1 = require("./larvitar");
 const levincia_1 = require("./levincia");
 const lillies_clefairy_ex_1 = require("./lillies-clefairy-ex");
@@ -86,6 +87,7 @@ exports.setSV9 = [
     new sprigatito_1.Sprigatito(),
     new floragato_1.Floragato(),
     new meowscarada_1.Meowscarada(),
+    new iris_fighting_spirit_1.IrisFightingSpirit(),
     new lillies_clefairy_ex_1.LilliesClefairyex(),
     new lillies_comfy_1.LilliesComfy(),
     new lillies_pearl_1.LilliesPearl(),

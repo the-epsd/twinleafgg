@@ -12,7 +12,7 @@ export declare class AlolanGrimer extends PokemonCard {
     retreat: CardType[];
     attacks: {
         name: string;
-        cost: CardType[];
+        cost: (CardType.PSYCHIC | CardType.COLORLESS)[];
         damage: number;
         text: string;
     }[];

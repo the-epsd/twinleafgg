@@ -4,6 +4,7 @@ import { BruteBonnet } from './brute-bonnet';
 import { CounterCatcher } from './counter-catcher';
 import { Cyclizar } from './cyclizar';
 import { Froslassex } from './froslass-ex';
+import { Garbodor } from './garbodor';
 import { Garchompex } from './garchomp-ex';
 import { Garganacl } from './garganacl';
 import { Gholdengoex } from './gholdengo-ex';
@@ -52,6 +53,10 @@ export declare class GarganacIR extends Garganacl {
     fullName: string;
 }
 export declare class SlitherWingIR extends SlitherWing {
+    setNumber: string;
+    fullName: string;
+}
+export declare class GarbodorIR extends Garbodor {
     setNumber: string;
     fullName: string;
 }

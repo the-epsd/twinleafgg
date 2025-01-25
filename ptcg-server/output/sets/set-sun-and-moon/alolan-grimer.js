@@ -22,14 +22,9 @@ class AlolanGrimer extends pokemon_card_1.PokemonCard {
                 damage: 0,
                 text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Poisoned.'
             },
-            {
-                name: 'Pound',
-                cost: [card_types_1.CardType.PSYCHIC, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
-                damage: 40,
-                text: 'Flip a coin. If heads, this attack does 10 more damage.'
-            }
+            { name: 'Pound', cost: [P, C, C], damage: 40, text: '' }
         ];
-        this.set = 'XY';
+        this.set = 'SUM';
         this.name = 'Alolan Grimer';
         this.fullName = 'Alolan Grimer XY';
         this.cardImage = 'assets/cardback.png';

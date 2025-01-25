@@ -26,6 +26,7 @@ const dragons_elixir_1 = require("./dragons-elixir");
 const drasna_1 = require("./drasna");
 const drayton_1 = require("./drayton");
 const duraludon_1 = require("./duraludon");
+const durant_ex_1 = require("./durant-ex");
 const dusk_ball_1 = require("./dusk-ball");
 const eevee_1 = require("./eevee");
 const energy_search_pro_1 = require("./energy-search-pro");
@@ -181,6 +182,7 @@ exports.setSurgingSparks = [
     new slakoth_1.SlakothSSP(),
     new vigoroth_1.VigorothSSP(),
     new zarude_1.Zarude(),
+    new durant_ex_1.Durantex(),
     //Reprints
     new card_images_1.ScrambleSwitchSSP(),
     new card_images_1.CounterGainSSP(),

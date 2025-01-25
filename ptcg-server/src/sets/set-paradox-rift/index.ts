@@ -20,9 +20,10 @@ import { EarthenVessel } from './earthen-vessel';
 import { Elekid } from './elekid';
 import { Flittle } from './flittle';
 import { Froslassex } from './froslass-ex';
-import { ToedscruelIR, SnoruntIR, GimmighoulIR, GroudonIR, MiniorIR, GarganacIR, SlitherWingIR, MorpekoIR, BruteBonnetIR, CyclizarIR, IronJugulisIR, FroslassexFA, GarchompexFA, TsareenaexFA, TapuKokoexFA, IronHandsexFA, IronValiantexFA, HoopaexFA, SandyShocksexFA, RoaringMoonexFA, GholdengoexFA, MelaFA, ProfessorSadasVitalityFA, ProfessorTurosScenarioFA, TulipFA, GarchompexSIR, TapuKokoexSIR, IronHandsexSIR, IronValiantexSIR, SandyShocksexSIR, RoaringMoonexSIR, GholdengoexSIR, MelaSIR, ProfessorSadasVitalitySIR, ProfessorTurosScenarioSIR, TulipSIR, GarchompexHR, IronValiantexHR, RoaringMoonexHR, BeachCourtHR, CounterCatcherHR, LuxuriousCapeHR, ReversalEnergyHR } from './full-art';
+import { ToedscruelIR, SnoruntIR, GimmighoulIR, GroudonIR, MiniorIR, GarganacIR, SlitherWingIR, MorpekoIR, BruteBonnetIR, CyclizarIR, IronJugulisIR, FroslassexFA, GarchompexFA, TsareenaexFA, TapuKokoexFA, IronHandsexFA, IronValiantexFA, HoopaexFA, SandyShocksexFA, RoaringMoonexFA, GholdengoexFA, MelaFA, ProfessorSadasVitalityFA, ProfessorTurosScenarioFA, TulipFA, GarchompexSIR, TapuKokoexSIR, IronHandsexSIR, IronValiantexSIR, SandyShocksexSIR, RoaringMoonexSIR, GholdengoexSIR, MelaSIR, ProfessorSadasVitalitySIR, ProfessorTurosScenarioSIR, TulipSIR, GarchompexHR, IronValiantexHR, RoaringMoonexHR, BeachCourtHR, CounterCatcherHR, LuxuriousCapeHR, ReversalEnergyHR, GarbodorIR } from './full-art';
 import { FutureBoosterEnergyCapsule } from './future-booster-energy-capsule';
 import { Gabite } from './gabite';
+import { Garbodor } from './garbodor';
 import { Garchompex } from './garchomp-ex';
 import { Garganacl } from './garganacl';
 import { Gholdengoex } from './gholdengo-ex';
@@ -73,6 +74,7 @@ import { Tinkatuff } from './tinkatuff';
 import { Toedscool } from './toedscool';
 import { Toedscool2 } from './toedscool2';
 import { Toedscruel } from './toedscruel';
+import { Trubbish } from './trubbish';
 import { Tsareenaex } from './tsareena-ex';
 import { Tulip } from './tulip';
 import { Veluza } from './veluza';
@@ -101,6 +103,7 @@ export const setParadoxRift: Card[] = [
   new Froslassex(),
   new FutureBoosterEnergyCapsule(),
   new Gabite(),
+  new Garbodor(),
   new Garchompex(),
   new Garganacl(),
   new Gholdengoex(),
@@ -151,6 +154,7 @@ export const setParadoxRift: Card[] = [
   new Toedscool2(),
   new Toedscruel(),
   new TechnoRadar(),
+  new Trubbish(),
   new Tsareenaex(),
   new Tulip(),
   new Xatu(),
@@ -168,6 +172,7 @@ export const setParadoxRift: Card[] = [
   new MiniorIR(),
   new GarganacIR(),
   new SlitherWingIR(),
+  new GarbodorIR(),
   new MorpekoIR(),
   new BruteBonnetIR(),
   new CyclizarIR(),

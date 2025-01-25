@@ -10,6 +10,7 @@ const bounsweet_1 = require("./bounsweet");
 const brute_bonnet_1 = require("./brute-bonnet");
 const charcadet_1 = require("./charcadet");
 const chi_yu_1 = require("./chi-yu");
+const cofagrigus_ex_1 = require("./cofagrigus-ex");
 const counter_catcher_1 = require("./counter-catcher");
 const crobat_1 = require("./crobat");
 const crocalor_1 = require("./crocalor");
@@ -24,6 +25,7 @@ const froslass_ex_1 = require("./froslass-ex");
 const full_art_1 = require("./full-art");
 const future_booster_energy_capsule_1 = require("./future-booster-energy-capsule");
 const gabite_1 = require("./gabite");
+const garbodor_1 = require("./garbodor");
 const garchomp_ex_1 = require("./garchomp-ex");
 const garganacl_1 = require("./garganacl");
 const gholdengo_ex_1 = require("./gholdengo-ex");
@@ -74,10 +76,12 @@ const tinkatuff_1 = require("./tinkatuff");
 const toedscool_1 = require("./toedscool");
 const toedscool2_1 = require("./toedscool2");
 const toedscruel_1 = require("./toedscruel");
+const trubbish_1 = require("./trubbish");
 const tsareena_ex_1 = require("./tsareena-ex");
 const tulip_1 = require("./tulip");
 const veluza_1 = require("./veluza");
 const xatu_1 = require("./xatu");
+const yamask_1 = require("./yamask");
 const zacian_1 = require("./zacian");
 exports.setParadoxRift = [
     new aegislash_1.Aegislash(),
@@ -101,6 +105,7 @@ exports.setParadoxRift = [
     new froslass_ex_1.Froslassex(),
     new future_booster_energy_capsule_1.FutureBoosterEnergyCapsule(),
     new gabite_1.Gabite(),
+    new garbodor_1.Garbodor(),
     new garchomp_ex_1.Garchompex(),
     new garganacl_1.Garganacl(),
     new gholdengo_ex_1.Gholdengoex(),
@@ -151,12 +156,15 @@ exports.setParadoxRift = [
     new toedscool2_1.Toedscool2(),
     new toedscruel_1.Toedscruel(),
     new techno_radar_1.TechnoRadar(),
+    new trubbish_1.Trubbish(),
     new tsareena_ex_1.Tsareenaex(),
     new tulip_1.Tulip(),
     new xatu_1.Xatu(),
     new veluza_1.Veluza(),
     new zacian_1.Zacian(),
     new bombirdier_ex_1.Bombirdierex(),
+    new yamask_1.Yamask(),
+    new cofagrigus_ex_1.Cofagrigusex(),
     //Full s
     new full_art_1.ToedscruelIR(),
     new full_art_1.SnoruntIR(),
@@ -165,6 +173,7 @@ exports.setParadoxRift = [
     new full_art_1.MiniorIR(),
     new full_art_1.GarganacIR(),
     new full_art_1.SlitherWingIR(),
+    new full_art_1.GarbodorIR(),
     new full_art_1.MorpekoIR(),
     new full_art_1.BruteBonnetIR(),
     new full_art_1.CyclizarIR(),

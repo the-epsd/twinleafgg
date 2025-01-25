@@ -63,6 +63,8 @@ import { Frigibax } from './frigibax';
 import { Kilowattrel } from './kilowattrel';
 import { MimeJr } from './mime-jr';
 import { StudentsInPaldea } from './students-in-paldea';
+import { Snorlax } from '../set-pokemon-151/snorlax';
+import { Tinkatuff } from '../set-paldea-evolved/tinkatuff';
 
 export class OddishSV extends Oddish {
   public setNumber = '92';
@@ -268,6 +270,12 @@ export class TinkatinkSV extends Tinkatink {
   public fullName: string = 'Tinkatink PAF';
 }
 
+export class TinkatuffSV extends Tinkatuff {
+  public setNumber = '166';
+  public set = 'PAF';
+  public fullName: string = 'Tinkatuff PAF';
+}
+
 export class TinkatonSV extends Tinkaton {
   public setNumber = '167';
   public set = 'PAF';
@@ -321,6 +329,11 @@ export class DodrioSV extends Dodrio {
 
 export class DittoSV extends Ditto {
   public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_201_R_EN_LG.png';
+}
+export class SnorlaxSV extends Snorlax {
+  public fullName = 'Snorlax PAF';
+  public set = 'PAF';
+  public setNumber = '202';
 }
 
 export class WingullSV extends Wingull {

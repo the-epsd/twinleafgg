@@ -25,6 +25,7 @@ import { IonosKilowattrel } from './ionos-kilowattrel';
 import { IonosTadbulb } from './ionos-tadbulb';
 import { IonosVoltorb } from './ionos-voltorb';
 import { IonosWattrel } from './ionos-wattrel';
+import { IrisFightingSpirit } from './iris-fighting-spirit';
 import { Larvitar } from './larvitar';
 import { Levincia } from './levincia';
 import { LilliesClefairyex } from './lillies-clefairy-ex';
@@ -86,6 +87,7 @@ export const setSV9: Card[] = [
   new Sprigatito(),
   new Floragato(),
   new Meowscarada(),
+  new IrisFightingSpirit(),
 
   new LilliesClefairyex(),
   new LilliesComfy(),

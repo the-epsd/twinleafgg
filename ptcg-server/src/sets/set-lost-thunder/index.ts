@@ -1,5 +1,4 @@
 import { Card } from '../../game/store/card/card';
-import { Slowpoke } from '../set-fossil/slowpoke';
 import { AdventureBag } from './adventure-bag';
 import { AlolanMeowth } from './alolan-meowth';
 import { AlolanNinetalesGX } from './alolan-ninetales-gx';
@@ -42,7 +41,9 @@ import { Ralts } from './ralts';
 import { Ribombee } from './ribombee';
 import { Shedinja } from './shedinja';
 import { ShuckleGX } from './shuckle-gx';
+import { Skiploom } from './skiploom';
 import { Slowking } from './slowking';
+import { Slowpoke } from './slowpoke';
 import { Snubbull } from './snubbull';
 import { SpellTag } from './spell-tag';
 import { ThunderMountainPrismStar } from './thunder-mountain-prism-star';
@@ -98,6 +99,7 @@ export const setLostThunder: Card[] = [
   new ShuckleGX(),
   new Slowking(),
   new Slowpoke(),
+  new Skiploom(),
   new Snubbull(),
   new SpellTag(),
   new ThunderMountainPrismStar(),

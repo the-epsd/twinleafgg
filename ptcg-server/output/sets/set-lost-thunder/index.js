@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setLostThunder = void 0;
-const slowpoke_1 = require("../set-fossil/slowpoke");
 const adventure_bag_1 = require("./adventure-bag");
 const alolan_meowth_1 = require("./alolan-meowth");
 const alolan_ninetales_gx_1 = require("./alolan-ninetales-gx");
@@ -44,7 +43,9 @@ const ralts_1 = require("./ralts");
 const ribombee_1 = require("./ribombee");
 const shedinja_1 = require("./shedinja");
 const shuckle_gx_1 = require("./shuckle-gx");
+const skiploom_1 = require("./skiploom");
 const slowking_1 = require("./slowking");
+const slowpoke_1 = require("./slowpoke");
 const snubbull_1 = require("./snubbull");
 const spell_tag_1 = require("./spell-tag");
 const thunder_mountain_prism_star_1 = require("./thunder-mountain-prism-star");
@@ -99,6 +100,7 @@ exports.setLostThunder = [
     new shuckle_gx_1.ShuckleGX(),
     new slowking_1.Slowking(),
     new slowpoke_1.Slowpoke(),
+    new skiploom_1.Skiploom(),
     new snubbull_1.Snubbull(),
     new spell_tag_1.SpellTag(),
     new thunder_mountain_prism_star_1.ThunderMountainPrismStar(),

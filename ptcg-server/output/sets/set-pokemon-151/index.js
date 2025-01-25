@@ -28,6 +28,7 @@ const hitmonlee_1 = require("./hitmonlee");
 const ivysaur_1 = require("./ivysaur");
 const jolteon_1 = require("./jolteon");
 const kangaskhan_ex_1 = require("./kangaskhan-ex");
+const leftovers_1 = require("./leftovers");
 const machoke_1 = require("./machoke");
 const machop_1 = require("./machop");
 const magmar_1 = require("./magmar");
@@ -46,7 +47,9 @@ const rigid_band_1 = require("./rigid-band");
 const sandshrew_1 = require("./sandshrew");
 const scyther_1 = require("./scyther");
 const seaking_1 = require("./seaking");
+const snorlax_1 = require("./snorlax");
 const squirtle_1 = require("./squirtle");
+const starmie_1 = require("./starmie");
 const staryu_1 = require("./staryu");
 const venomoth_1 = require("./venomoth");
 const venonat_1 = require("./venonat");
@@ -82,6 +85,7 @@ exports.setPokemon151 = [
     new ivysaur_1.Ivysaur(),
     new jolteon_1.Jolteon(),
     new kangaskhan_ex_1.Kangaskhanex(),
+    new leftovers_1.Leftovers(),
     new machop_1.Machop(),
     new machoke_1.Machoke(),
     new magmar_1.Magmar(),
@@ -100,8 +104,10 @@ exports.setPokemon151 = [
     new sandshrew_1.Sandshrew(),
     new scyther_1.Scyther(),
     new seaking_1.Seaking(),
+    new snorlax_1.Snorlax(),
     new squirtle_1.Squirtle(),
     new staryu_1.Staryu(),
+    new starmie_1.Starmie(),
     new venonat_1.Venonat(),
     new venomoth_1.Venomoth(),
     new venusaur_ex_1.Venusaurex(),
