@@ -24,6 +24,7 @@ import { DragonsElixir } from './dragons-elixir';
 import { Drasna } from './drasna';
 import { Drayton } from './drayton';
 import { Duraludon } from './duraludon';
+import { Durantex } from './durant-ex';
 import { DuskBall } from './dusk-ball';
 import { Eevee } from './eevee';
 import { EnergySearchPro } from './energy-search-pro';
@@ -180,6 +181,7 @@ export const setSurgingSparks: Card[] = [
   new SlakothSSP(),
   new VigorothSSP(),
   new Zarude(),
+  new Durantex(),
 
   //Reprints
   new ScrambleSwitchSSP(),

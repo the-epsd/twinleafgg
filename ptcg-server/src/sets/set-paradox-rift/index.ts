@@ -8,6 +8,7 @@ import { Bounsweet } from './bounsweet';
 import { BruteBonnet } from './brute-bonnet';
 import { Charcadet } from './charcadet';
 import { ChiYu } from './chi-yu';
+import { Cofagrigusex } from './cofagrigus-ex';
 import { CounterCatcher } from './counter-catcher';
 import { Crobat } from './crobat';
 import { Crocalor } from './crocalor';
@@ -76,6 +77,7 @@ import { Tsareenaex } from './tsareena-ex';
 import { Tulip } from './tulip';
 import { Veluza } from './veluza';
 import { Xatu } from './xatu';
+import { Yamask } from './yamask';
 import { Zacian } from './zacian';
 export const setParadoxRift: Card[] = [
   new Aegislash(),
@@ -155,6 +157,8 @@ export const setParadoxRift: Card[] = [
   new Veluza(),
   new Zacian(),
   new Bombirdierex(),
+  new Yamask(),
+  new Cofagrigusex(),
 
   //Full s
   new ToedscruelIR(),

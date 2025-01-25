@@ -18,12 +18,14 @@ import { Duosion } from './duosion';
 import { EmergencyBoard } from './emergency-board';
 import { Eri } from './eri';
 import { ExplorersGuidance } from './explorers-guidance';
+import { Farigirafex } from './farigiraf-ex';
 import { Feraligatr } from './feraligatr';
 import { FlutterMane } from './flutter-mane';
 import { GrotleIR, CharjabugIR, ReuniclusIR, GastlyIR, MetagrossIR, ChatotIR, MinccinoIR, CinccinoIR, TorterraexFA, IronLeavesexFA, GougingFireexFA, WalkingWakeexFA, IronCrownexFA, GengarexFA, RagingBoltexFA, BiancasDevotionFA, CryptomaniacsDecipheringFA, EriFA, ExplorersGuidanceFA, MortysConvictionFA, SalvatoreFA, IronLeavesexSIR, GougingFireexSIR, WalkingWakeexSIR, IronCrownexSIR, RagingBoltexSIR, BiancasDevotionSIR, EriSIR, MortysConvictionSIR, SalvatoreSIR, IronLeavesexHR, GougingFireexHR, WalkingWakeexHR, IronCrownexHR, RagingBoltexHR } from './full-art';
 import { FullMetalLab } from './full-metal-lab';
 import { Gastly } from './gastly';
 import { Gengarex } from './gengar-ex';
+import { Girafarig } from './girafarig';
 import { GougingFireex } from './gouging-fire-ex';
 import { GreatTusk } from './great-tusk';
 import { Grotle } from './grotle';
@@ -82,6 +84,7 @@ import { Unfezant } from './unfezant';
 import { Victini } from './victini';
 import { Vikavolt } from './vikavolt';
 import { WalkingWakeex } from './walking-wake-ex';
+import { Wugtrioex } from './wugtrio-ex';
 export const setTemporalForces: Card[] = [
 
   new AncientBoosterEnergyCapsuleTEF(),
@@ -204,4 +207,7 @@ export const setTemporalForces: Card[] = [
   new RagingBoltexHR(),
   new Scyther(),
   new Scizorex(),
+  new Wugtrioex(),
+  new Girafarig(),
+  new Farigirafex(),
 ];

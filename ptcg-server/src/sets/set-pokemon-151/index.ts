@@ -45,6 +45,7 @@ import { Sandshrew } from './sandshrew';
 import { Scyther } from './scyther';
 import { Seaking } from './seaking';
 import { Squirtle } from './squirtle';
+import { Starmie } from './starmie';
 import { Staryu } from './staryu';
 import { Venomoth } from './venomoth';
 import { Venonat } from './venonat';
@@ -100,6 +101,7 @@ export const setPokemon151: Card[] = [
   new Seaking(),
   new Squirtle(),
   new Staryu(),
+  new Starmie(),
   new Venonat(),
   new Venomoth(),
   new Venusaurex(),
