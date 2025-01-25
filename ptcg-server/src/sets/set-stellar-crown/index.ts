@@ -26,6 +26,7 @@ import { Hoothoot } from './hoothoot';
 import { Hydrappleex } from './hydrapple-ex';
 import { IronBoulder } from './iron-boulder';
 import { Joltik } from './joltik';
+import { Klinklang } from './klinklang';
 import { Kofu } from './kofu';
 import { Lacey } from './lacey';
 import { Laprasex } from './lapras-ex';
@@ -69,6 +70,7 @@ export const setStellarCrown: Card[] = [
   new IronBoulder(),
   new Joltik(),
   new Kofu(),
+  new Klinklang(),
   new Lacey(),
   new Laprasex(),
   new Medichamex(),
