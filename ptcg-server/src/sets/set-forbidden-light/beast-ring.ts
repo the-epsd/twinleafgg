@@ -31,11 +31,11 @@ export class BeastRing extends TrainerCard {
 
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
-      // const opponent = StateUtils.getOpponent(state, player);
+      const opponent = StateUtils.getOpponent(state, player);
 
-      // if (opponent.getPrizeLeft() !== 3 && opponent.getPrizeLeft() !== 4) {
-      //   throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-      // }
+      if (opponent.getPrizeLeft() !== 3 && opponent.getPrizeLeft() !== 4) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      }
 
       effect.preventDefault = true;
 

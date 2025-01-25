@@ -9,7 +9,13 @@ import { ExchangeTicket } from './exchange-ticket';
 import { Floragato } from './floragato';
 import { HopsBag } from './hops-bag';
 import { HopsChoiceBand } from './hops-choice-band';
+import { HopsCorviknight } from './hops-corviknight';
+import { HopsCorvisquire } from './hops-corvisquire';
+import { HopsCramorant } from './hops-cramorant';
 import { HopsDubwool } from './hops-dubwool';
+import { HopsRookidee } from './hops-rookidee';
+import { HopsSandaconda } from './hops-sandaconda';
+import { HopsSilicobra } from './hops-silicobra';
 import { HopsSnorlax } from './hops-snorlax';
 import { HopsWooloo } from './hops-wooloo';
 import { HopsZacianex } from './hops-zacian-ex';
@@ -96,6 +102,12 @@ export const setSV9: Card[] = [
   new HopsWooloo(),
   new HopsDubwool(),
   new HopsSnorlax(),
+  new HopsCramorant(),
+  new HopsRookidee(),
+  new HopsCorvisquire(),
+  new HopsCorviknight(),
+  new HopsSilicobra(),
+  new HopsSandaconda(),
   new HopsZacianex(),
   new HopsChoiceBand(),
   new Postwick(),

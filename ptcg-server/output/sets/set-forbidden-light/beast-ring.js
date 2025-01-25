@@ -22,10 +22,10 @@ class BeastRing extends trainer_card_1.TrainerCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
             const player = effect.player;
-            // const opponent = StateUtils.getOpponent(state, player);
-            // if (opponent.getPrizeLeft() !== 3 && opponent.getPrizeLeft() !== 4) {
-            //   throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-            // }
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            if (opponent.getPrizeLeft() !== 3 && opponent.getPrizeLeft() !== 4) {
+                throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
+            }
             effect.preventDefault = true;
             let ultraBeastInPlay = false;
             player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (list, card) => {

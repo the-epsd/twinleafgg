@@ -11,7 +11,13 @@ const exchange_ticket_1 = require("./exchange-ticket");
 const floragato_1 = require("./floragato");
 const hops_bag_1 = require("./hops-bag");
 const hops_choice_band_1 = require("./hops-choice-band");
+const hops_corviknight_1 = require("./hops-corviknight");
+const hops_corvisquire_1 = require("./hops-corvisquire");
+const hops_cramorant_1 = require("./hops-cramorant");
 const hops_dubwool_1 = require("./hops-dubwool");
+const hops_rookidee_1 = require("./hops-rookidee");
+const hops_sandaconda_1 = require("./hops-sandaconda");
+const hops_silicobra_1 = require("./hops-silicobra");
 const hops_snorlax_1 = require("./hops-snorlax");
 const hops_wooloo_1 = require("./hops-wooloo");
 const hops_zacian_ex_1 = require("./hops-zacian-ex");
@@ -93,6 +99,12 @@ exports.setSV9 = [
     new hops_wooloo_1.HopsWooloo(),
     new hops_dubwool_1.HopsDubwool(),
     new hops_snorlax_1.HopsSnorlax(),
+    new hops_cramorant_1.HopsCramorant(),
+    new hops_rookidee_1.HopsRookidee(),
+    new hops_corvisquire_1.HopsCorvisquire(),
+    new hops_corviknight_1.HopsCorviknight(),
+    new hops_silicobra_1.HopsSilicobra(),
+    new hops_sandaconda_1.HopsSandaconda(),
     new hops_zacian_ex_1.HopsZacianex(),
     new hops_choice_band_1.HopsChoiceBand(),
     new postwick_1.Postwick(),

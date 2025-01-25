@@ -60,7 +60,7 @@ class GalarianMrRime extends game_1.PokemonCard {
                     chosenPrizeList.moveCardTo(prizeCard, deck);
                 }
                 // At the end, when resetting prize cards:
-                player.prizes.forEach((p, index) => {
+                opponent.prizes.forEach((p, index) => {
                     if (originallyFaceDown[index]) {
                         p.isSecret = true;
                     }
