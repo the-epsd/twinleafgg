@@ -3,6 +3,7 @@ import { Slowpoke } from '../set-fossil/slowpoke';
 import { AdventureBag } from './adventure-bag';
 import { AlolanMeowth } from './alolan-meowth';
 import { AlolanNinetalesGX } from './alolan-ninetales-gx';
+import { BlacephalonGX } from './blacephalon-gx';
 import { Blitzle } from './blitzle';
 import { Cascoon } from './cascoon';
 import { Chikorita } from './chikorita';
@@ -107,4 +108,5 @@ export const setLostThunder: Card[] = [
   new Wurmple(),
   new Zebstrika(),
   new ZeraoraGX(),
+  new BlacephalonGX(),
 ];

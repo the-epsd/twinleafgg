@@ -4,7 +4,6 @@ import { StoreLike, State, ChooseCardsPrompt, EnergyCard, GameError, GameMessage
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 
 // LOT Naganadel 108 (https://limitlesstcg.com/cards/LOT/108)
 export class Naganadel extends PokemonCard {
@@ -53,9 +52,8 @@ export class Naganadel extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
+    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
-      player.marker.removeMarker(this.CHARGE_MARKER, this);
 
       // Try to reduce PowerEffect, to check if something is blocking our ability
       try {

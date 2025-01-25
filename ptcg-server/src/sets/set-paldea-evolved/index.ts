@@ -38,6 +38,7 @@ import { Meowscaradaex } from './meowscarada-ex';
 import { Mimikyu } from './mimikyu';
 import { Misdreavus } from './misdreavus';
 import { Murkrow } from './murkrow';
+import { Nacli } from './nacli';
 import { Noibat } from './noibat';
 import { Noivernex } from './noivern-ex';
 import { Orthworm } from './orthworm';
@@ -63,6 +64,8 @@ import { Wattrel } from './wattrel';
 import { Wingull } from './wingull';
 import { WoChienex } from './wo-chien-ex';
 import { Zweilous } from './zweilous';
+import { Naclstack } from './naclstack';
+import { Garganacl } from './garganacl';
 //import { CalamitousSnowyMountain } from './new calamitous-snowy-mountain';
 
 export const setPaldeaEvolved: Card[] = [
@@ -130,6 +133,9 @@ export const setPaldeaEvolved: Card[] = [
   new Wingull(),
   new WoChienex(),
   new Zweilous(),
+  new Nacli(),
+  new Naclstack(),
+  new Garganacl(),
 
   // Full 
   new ArctibaxIR(),
