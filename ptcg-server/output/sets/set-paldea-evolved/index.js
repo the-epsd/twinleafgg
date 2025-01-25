@@ -40,6 +40,7 @@ const meowscarada_ex_1 = require("./meowscarada-ex");
 const mimikyu_1 = require("./mimikyu");
 const misdreavus_1 = require("./misdreavus");
 const murkrow_1 = require("./murkrow");
+const nacli_1 = require("./nacli");
 const noibat_1 = require("./noibat");
 const noivern_ex_1 = require("./noivern-ex");
 const orthworm_1 = require("./orthworm");
@@ -65,6 +66,8 @@ const wattrel_1 = require("./wattrel");
 const wingull_1 = require("./wingull");
 const wo_chien_ex_1 = require("./wo-chien-ex");
 const zweilous_1 = require("./zweilous");
+const naclstack_1 = require("./naclstack");
+const garganacl_1 = require("./garganacl");
 //import { CalamitousSnowyMountain } from './new calamitous-snowy-mountain';
 exports.setPaldeaEvolved = [
     new arctibax_1.Arctibax(),
@@ -130,6 +133,9 @@ exports.setPaldeaEvolved = [
     new wingull_1.Wingull(),
     new wo_chien_ex_1.WoChienex(),
     new zweilous_1.Zweilous(),
+    new nacli_1.Nacli(),
+    new naclstack_1.Naclstack(),
+    new garganacl_1.Garganacl(),
     // Full 
     new full_art_1.ArctibaxIR(),
     new full_art_1.BaxcaliburIR(),

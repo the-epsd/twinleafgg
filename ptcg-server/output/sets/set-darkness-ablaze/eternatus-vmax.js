@@ -43,7 +43,6 @@ class EternatusVMAX extends pokemon_card_1.PokemonCard {
         // Eternal Zone
         if (effect instanceof check_effects_1.CheckTableStateEffect) {
             effect.benchSizes = state.players.map((player, index) => {
-                var _a, _b;
                 try {
                     const stub = new game_effects_1.PowerEffect(player, {
                         name: 'test',
@@ -52,7 +51,7 @@ class EternatusVMAX extends pokemon_card_1.PokemonCard {
                     }, this);
                     store.reduceEffect(state, stub);
                 }
-                catch (_c) {
+                catch (_a) {
                     if (!player.marker.hasMarker(this.ETERNATUS_EXPANDED_BENCH, this)) {
                         player.marker.removeMarker(this.ETERNATUS_EXPANDED_BENCH, this);
                     }
@@ -73,17 +72,20 @@ class EternatusVMAX extends pokemon_card_1.PokemonCard {
                     }
                     return 5;
                 }
-                // checking each pokemon for dark typing
+                // checking each pokemon for dark typing (must use CheckPokemonTypeEffect for pokemon with an added typing)
                 let darkPokemon = 0;
                 let pokemonInPlay = 1;
-                if (((_b = (_a = player.active) === null || _a === void 0 ? void 0 : _a.getPokemonCard()) === null || _b === void 0 ? void 0 : _b.cardType) === D) {
+                const activeType = new check_effects_1.CheckPokemonTypeEffect(player.active);
+                store.reduceEffect(state, activeType);
+                if (activeType.cardTypes.includes(card_types_1.CardType.DARK)) {
                     darkPokemon++;
                 }
                 player.bench.forEach(benchSpot => {
-                    var _a;
                     if (benchSpot.cards.length > 0) {
                         pokemonInPlay++;
-                        if (((_a = benchSpot.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.cardType) === D) {
+                        const benchedType = new check_effects_1.CheckPokemonTypeEffect(benchSpot);
+                        store.reduceEffect(state, benchedType);
+                        if (benchedType.cardTypes.includes(card_types_1.CardType.DARK)) {
                             darkPokemon++;
                         }
                     }
@@ -115,10 +117,18 @@ class EternatusVMAX extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             let darksInPlay = 0;
-            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-                var _a;
-                if (((_a = cardList.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.cardType) === D) {
-                    darksInPlay++;
+            const activeType = new check_effects_1.CheckPokemonTypeEffect(player.active);
+            store.reduceEffect(state, activeType);
+            if (activeType.cardTypes.includes(card_types_1.CardType.DARK)) {
+                darksInPlay++;
+            }
+            player.bench.forEach(benchSpot => {
+                if (benchSpot.cards.length > 0) {
+                    const benchedType = new check_effects_1.CheckPokemonTypeEffect(benchSpot);
+                    store.reduceEffect(state, benchedType);
+                    if (benchedType.cardTypes.includes(card_types_1.CardType.DARK)) {
+                        darksInPlay++;
+                    }
                 }
             });
             effect.damage = 30 * darksInPlay;

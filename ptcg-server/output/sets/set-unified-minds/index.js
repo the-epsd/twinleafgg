@@ -33,6 +33,8 @@ const u_turn_board_1 = require("./u-turn-board");
 const weakness_guard_energy_1 = require("./weakness-guard-energy");
 const whimsicott_1 = require("./whimsicott");
 const wimpod_1 = require("./wimpod");
+const sneasel_1 = require("./sneasel");
+const weavile_gx_1 = require("./weavile-gx");
 exports.setUnifiedMinds = [
     new alolan_grimer_1.AlolanGrimer(),
     new alolan_raichu_1.AlolanRaichu(),
@@ -65,5 +67,7 @@ exports.setUnifiedMinds = [
     new u_turn_board_1.UTurnBoard(),
     new weakness_guard_energy_1.WeaknessGuardEnergy(),
     new whimsicott_1.Whimsicott(),
-    new wimpod_1.Wimpod()
+    new wimpod_1.Wimpod(),
+    new sneasel_1.Sneasel(),
+    new weavile_gx_1.WeavileGX(),
 ];

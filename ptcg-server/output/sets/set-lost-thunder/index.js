@@ -5,6 +5,7 @@ const slowpoke_1 = require("../set-fossil/slowpoke");
 const adventure_bag_1 = require("./adventure-bag");
 const alolan_meowth_1 = require("./alolan-meowth");
 const alolan_ninetales_gx_1 = require("./alolan-ninetales-gx");
+const blacephalon_gx_1 = require("./blacephalon-gx");
 const blitzle_1 = require("./blitzle");
 const cascoon_1 = require("./cascoon");
 const chikorita_1 = require("./chikorita");
@@ -108,4 +109,5 @@ exports.setLostThunder = [
     new wurmple_1.Wurmple(),
     new zebstrika_1.Zebstrika(),
     new zeraora_gx_1.ZeraoraGX(),
+    new blacephalon_gx_1.BlacephalonGX(),
 ];

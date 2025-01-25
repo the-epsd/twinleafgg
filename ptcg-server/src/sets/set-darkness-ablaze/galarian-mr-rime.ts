@@ -50,38 +50,50 @@ export class GalarianMrRime extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
+      const prizes = opponent.prizes.filter(p => p.isSecret);
 
-      const originallyFaceDown = player.prizes.map(p => p.isSecret);
+      if (prizes.length === 0) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      }
+      // Keep track of which prizes were originally face down
+      const originallyFaceDown = opponent.prizes.map(p => p.isSecret);
 
-      const validPrizeCards = new CardList();
-      validPrizeCards.isPublic = false;
-      validPrizeCards.isSecret = true;
-      opponent.prizes.forEach(prizeList => {
-        if (prizeList.isSecret)
-          validPrizeCards.cards.push(...prizeList.cards);
+      // Make prizes no more secret, before displaying prompt
+      prizes.forEach(p => { p.isSecret = true; });
+
+      const allPrizeCards = new CardList();
+      allPrizeCards.isSecret = true;
+      allPrizeCards.isPublic = false;
+      allPrizeCards.faceUpPrize = false;
+      prizes.forEach(prizeList => {
+        allPrizeCards.cards.push(...prizeList.cards);
       });
-
-      if (validPrizeCards.cards.length == 0)
-        throw new GameError(GameMessage.CANNOT_USE_POWER);
 
       store.prompt(state, new ChooseCardsPrompt(
         player,
-        GameMessage.CHOOSE_CARDS_TO_PUT_ON_TOP_OF_THE_DECK,
-        validPrizeCards,
+        GameMessage.CHOOSE_CARD_TO_HAND,
+        allPrizeCards,
         {},
-        { min: 1, max: 1, isSecret: true, allowCancel: false }
+        { min: 1, max: 1, allowCancel: false, isSecret: true }
       ), chosenPrize => {
-        if (chosenPrize.length == 0)
-          return state;
+
         const prizeCard = chosenPrize[0];
         const deck = opponent.deck;
+
+        const temp = new CardList();
+        deck.moveTo(temp, 1);
+
+        // Find the prize list containing the chosen card
         const chosenPrizeList = opponent.prizes.find(prizeList => prizeList.cards.includes(prizeCard));
 
         if (chosenPrizeList) {
-          deck.moveTo(chosenPrizeList, 1);
-          chosenPrizeList.moveCardTo(prizeCard, deck);
+          const temp2 = new CardList();
+          chosenPrizeList.moveCardTo(prizeCard, temp2)
+          temp2.moveToTopOfDestination(deck);
+          temp.moveTo(chosenPrizeList, 1);
         }
 
         // At the end, when resetting prize cards:
@@ -91,7 +103,8 @@ export class GalarianMrRime extends PokemonCard {
           }
         });
 
-      })
+        return state;
+      });
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

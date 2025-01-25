@@ -91,7 +91,7 @@ export class Umbreonex extends PokemonCard {
         GameMessage.CHOOSE_CARD_TO_HAND,
         allPrizeCards,
         {},
-        { min: 1, max: 1, allowCancel: false }
+        { min: 1, max: 1, allowCancel: false, isSecret: true }
       ), chosenPrize => {
         // if (chosenPrize === null || chosenPrize.length === 0) {
         //   player.prizes.forEach((p, index) => {
