@@ -95,8 +95,4 @@ export class Mimikyu extends PokemonCard {
     return state;
   }
 
-
-
-
-
 }

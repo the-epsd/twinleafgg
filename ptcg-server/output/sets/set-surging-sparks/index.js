@@ -162,7 +162,7 @@ exports.setSurgingSparks = [
     new wo_chien_1.Wochien(),
     new dusk_ball_1.DuskBall(),
     new gimmighoul_1.Gimmighoul(),
-    new energy_search_pro_1.EnergySearchPRO(),
+    new energy_search_pro_1.EnergySearchPro(),
     new surfer_1.Surfer(),
     new gouging_fire_1.GougingFire(),
     new alolan_diglett_1.AlolanDiglett(),

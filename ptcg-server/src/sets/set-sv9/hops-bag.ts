@@ -14,7 +14,7 @@ export class HopsBag extends TrainerCard {
 
   public setNumber: string = '225';
 
-  public regulationMark = 'E';
+  public regulationMark = 'I';
 
   public name: string = 'Hop\'s Bag';
 

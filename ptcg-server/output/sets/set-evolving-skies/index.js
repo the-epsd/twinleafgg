@@ -38,6 +38,7 @@ const tropius_1 = require("./tropius");
 const umbreon_v_1 = require("./umbreon-v");
 const umbreon_vmax_1 = require("./umbreon-vmax");
 const vigoroth_1 = require("./vigoroth");
+const volcarona_v_1 = require("./volcarona-v");
 const wishiwashi_1 = require("./wishiwashi");
 const zinnias_resolve_1 = require("./zinnias-resolve");
 const zoroark_1 = require("./zoroark");
@@ -84,6 +85,7 @@ exports.setEvolvingSkies = [
     new wishiwashi_1.Wishiwashi(),
     new switching_cups_1.SwitchingCups(),
     new vigoroth_1.Vigoroth(),
+    new volcarona_v_1.VolcaronaV(),
     // Full  & Alternate 
     new full_art_1.RayquazaVAA(),
     new full_art_1.RayquazaVMAXAA(),

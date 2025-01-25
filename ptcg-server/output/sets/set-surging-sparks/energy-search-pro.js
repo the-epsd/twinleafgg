@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.EnergySearchPRO = void 0;
+exports.EnergySearchPro = void 0;
 const game_error_1 = require("../../game/game-error");
 const game_message_1 = require("../../game/game-message");
 const trainer_card_1 = require("../../game/store/card/trainer-card");
@@ -27,12 +27,13 @@ function* playCard(next, store, state, effect) {
             }
         }
         player.deck.moveCardsTo(cards, player.hand);
+        player.supporter.moveCardTo(effect.trainerCard, player.discard);
     });
     return store.prompt(state, new shuffle_prompt_1.ShuffleDeckPrompt(player.id), order => {
         player.deck.applyOrder(order);
     });
 }
-class EnergySearchPRO extends trainer_card_1.TrainerCard {
+class EnergySearchPro extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
         this.tags = [card_types_1.CardTag.ACE_SPEC];
@@ -40,8 +41,8 @@ class EnergySearchPRO extends trainer_card_1.TrainerCard {
         this.regulationMark = 'H';
         this.setNumber = '176';
         this.set = 'SSP';
-        this.name = 'Energy Search PRO';
-        this.fullName = 'Energy Search PRO SSP';
+        this.name = 'Energy Search Pro';
+        this.fullName = 'Energy Search Pro SSP';
         this.cardImage = 'assets/cardback.png';
         this.text = 'Search your deck for any number of Basic Energy cards of different types, reveal them, and put them into your hand. Then, shuffle your deck.';
     }
@@ -53,4 +54,4 @@ class EnergySearchPRO extends trainer_card_1.TrainerCard {
         return state;
     }
 }
-exports.EnergySearchPRO = EnergySearchPRO;
+exports.EnergySearchPro = EnergySearchPro;

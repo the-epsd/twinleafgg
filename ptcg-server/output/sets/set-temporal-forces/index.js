@@ -71,6 +71,8 @@ const roaring_moon_1 = require("./roaring-moon");
 const sableye_1 = require("./sableye");
 const salvatore_1 = require("./salvatore");
 const sandy_shocks_1 = require("./sandy-shocks");
+const scizor_ex_1 = require("./scizor-ex");
+const scyther_1 = require("./scyther");
 const skitty_1 = require("./skitty");
 const solosis_1 = require("./solosis");
 const torracat_1 = require("./torracat");
@@ -200,4 +202,6 @@ exports.setTemporalForces = [
     new full_art_1.WalkingWakeexHR(),
     new full_art_1.IronCrownexHR(),
     new full_art_1.RagingBoltexHR(),
+    new scyther_1.Scyther(),
+    new scizor_ex_1.Scizorex(),
 ];

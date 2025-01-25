@@ -26,7 +26,7 @@ import { Drayton } from './drayton';
 import { Duraludon } from './duraludon';
 import { DuskBall } from './dusk-ball';
 import { Eevee } from './eevee';
-import { EnergySearchPRO } from './energy-search-pro';
+import { EnergySearchPro } from './energy-search-pro';
 import { Espurr } from './espurr';
 import { Eternatus } from './eternatus';
 import { ExcitingStadium } from './exciting-stadium';
@@ -161,7 +161,7 @@ export const setSurgingSparks: Card[] = [
   new Wochien(),
   new DuskBall(),
   new Gimmighoul(),
-  new EnergySearchPRO(),
+  new EnergySearchPro(),
   new Surfer(),
   new GougingFire(),
   new AlolanDiglett(),

@@ -13,7 +13,7 @@ class MarniesGrimmsnarlex extends game_1.PokemonCard {
         this.cardType = D;
         this.hp = 320;
         this.weakness = [{ type: G }];
-        this.retreat = [C];
+        this.retreat = [C, C];
         this.powers = [{
                 name: 'Punk Up',
                 powerType: game_1.PowerType.ABILITY,
