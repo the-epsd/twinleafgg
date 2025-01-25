@@ -28,6 +28,7 @@ import { Heatran } from './heatran';
 import { Kindler } from './kindler';
 import { Lapras } from './lapras';
 import { Liepard } from './liepard';
+import { Lucario } from './lucario';
 import { LumineonV } from './lumineon-v';
 import { MagmaBasin } from './magma-basin';
 import { Magmortar } from './magmortar';
@@ -39,6 +40,7 @@ import { PotHelmet } from './pot-helmet';
 import { Purrloin } from './purrloin';
 import { RaichuV } from './raichu-v';
 import { RaikouV } from './raikou-v';
+import { Riolu } from './riolu';
 import { RoseannesBackup } from './roseannes-backup';
 import { ShayminV } from './shaymin-v';
 import { ShayminVSTAR } from './shaymin-vstar';
@@ -92,6 +94,8 @@ export const setBrilliantStars: Card[] = [
   new ShayminVSTAR(),
   new PotHelmet(),
   new TeamYellsCheer(),
-  new Torterra()
+  new Torterra(),
+  new Riolu(),
+  new Lucario(),
 
 ];

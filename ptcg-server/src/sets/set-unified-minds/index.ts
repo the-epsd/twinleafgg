@@ -33,6 +33,7 @@ import { Whimsicott } from './whimsicott';
 import { Wimpod } from './wimpod';
 import { Sneasel } from './sneasel';
 import { WeavileGX } from './weavile-gx';
+import { MegaSableyeTyranitarGX } from './mega-sableye-tyranitar-gx';
 
 
 export const setUnifiedMinds: Card[] = [
@@ -70,4 +71,5 @@ export const setUnifiedMinds: Card[] = [
   new Wimpod(),
   new Sneasel(),
   new WeavileGX(),
+  new MegaSableyeTyranitarGX(),
 ];

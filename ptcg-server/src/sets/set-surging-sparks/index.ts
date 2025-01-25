@@ -10,6 +10,7 @@ import { BlackKyuremex } from './black-kyurem-ex';
 import { Capsakid } from './capsakid.';
 import { CounterGainSSP, ScrambleSwitchSSP } from './card-images';
 import { CelebrationFanfare } from './celebration-fanfare';
+import { Centiskorch } from './centiskorch';
 import { Ceruledge } from './ceruledge';
 import { Ceruledgeex } from './ceruledge-ex';
 import { Charcadet } from './charcadet';
@@ -69,6 +70,7 @@ import { RichEnergy } from './rich-energy';
 import { Sandygast } from './sandygast';
 import { ScovillainEXSSP } from './scovillain-ex';
 import { Shroodle } from './shroodle';
+import { Sizzlipede } from './sizzlipede';
 import { Skeledirge } from './skeledirge';
 import { Slakingex } from './slaking-ex';
 import { SlakothSSP } from './slakoth';
@@ -182,6 +184,8 @@ export const setSurgingSparks: Card[] = [
   new VigorothSSP(),
   new Zarude(),
   new Durantex(),
+  new Sizzlipede(),
+  new Centiskorch(),
 
   //Reprints
   new ScrambleSwitchSSP(),

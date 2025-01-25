@@ -3,6 +3,7 @@ import { Abra } from './abra';
 import { Alakazamex } from './alakazam-ex';
 import { Arbokex } from './arbok-ex';
 import { Articuno } from './articuno';
+import { BigAirBalloon } from './big-air-balloon';
 import { Blastoiseex } from './blastoise-ex';
 import { Bulbasaur } from './bulbasaur';
 import { Charizardex } from './charizard-ex';
@@ -112,6 +113,7 @@ export const setPokemon151: Card[] = [
   new Vileplume(),
   new Wartortle(),
   new Zapdosex(),
+  new BigAirBalloon(),
 
   //Full 
   new BulbasaurIR(),
