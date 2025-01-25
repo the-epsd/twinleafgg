@@ -30,6 +30,7 @@ import { Inkay } from './inkay';
 import { Inteleon } from './inteleon';
 import { JustifiedGloves } from './justified-gloves';
 import { KarensConviction } from './karens-conviction';
+import { Kecleon } from './kecleon';
 import { Kirlia } from './kirlia';
 import { Klara } from './klara';
 import { LuckyEnergy } from './lucky-energy';
@@ -101,5 +102,6 @@ export const setChillingReign: Card[] = [
   new Sneasel(),
   new Tauros(),
   new WeedleCRE(),
-  new Zarude()
+  new Zarude(),
+  new Kecleon(),
 ];
