@@ -1,19 +1,22 @@
-import { CardTag, CardType, PokemonCard, Stage, State, StoreLike } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
-export declare class MarniesMorpeko extends PokemonCard {
+import { PokemonCard } from '../../game';
+import { CardTag, CardType, Stage } from '../../game/store/card/card-types';
+export declare class StevensBeldum extends PokemonCard {
     stage: Stage;
     tags: CardTag[];
     cardType: CardType;
     hp: number;
     weakness: {
+        type: CardType.FIRE;
+    }[];
+    resistance: {
         type: CardType.GRASS;
+        value: number;
     }[];
     retreat: CardType.COLORLESS[];
     attacks: {
         name: string;
-        cost: CardType.COLORLESS[];
+        cost: (CardType.METAL | CardType.COLORLESS)[];
         damage: number;
-        damageMultiplier: string;
         text: string;
     }[];
     regulationMark: string;
@@ -22,5 +25,4 @@ export declare class MarniesMorpeko extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
-    reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

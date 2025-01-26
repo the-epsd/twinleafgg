@@ -7,7 +7,7 @@ const game_effects_1 = require("../../game/store/effects/game-effects");
 class Umbreonex extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.cardTag = [game_1.CardTag.POKEMON_ex, game_1.CardTag.POKEMON_TERA];
+        this.tags = [game_1.CardTag.POKEMON_ex, game_1.CardTag.POKEMON_TERA];
         this.stage = game_1.Stage.STAGE_1;
         this.evolvesFrom = 'Eevee';
         this.cardType = D;

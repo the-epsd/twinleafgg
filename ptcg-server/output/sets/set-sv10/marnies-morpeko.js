@@ -8,7 +8,7 @@ class MarniesMorpeko extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = game_1.Stage.BASIC;
-        this.cardTag = [game_1.CardTag.MARNIES];
+        this.tags = [game_1.CardTag.MARNIES];
         this.cardType = D;
         this.hp = 70;
         this.weakness = [{ type: G }];

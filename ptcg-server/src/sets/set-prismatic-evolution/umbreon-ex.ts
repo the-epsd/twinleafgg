@@ -4,7 +4,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 
 export class Umbreonex extends PokemonCard {
-  public cardTag = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
+  public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Eevee';
   public cardType: CardType = D;

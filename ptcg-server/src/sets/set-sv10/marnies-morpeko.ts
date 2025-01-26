@@ -5,7 +5,7 @@ import { AttackEffect } from "../../game/store/effects/game-effects";
 
 export class MarniesMorpeko extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardTag: CardTag[] = [CardTag.MARNIES];
+  public tags: CardTag[] = [CardTag.MARNIES];
   public cardType: CardType = D;
   public hp: number = 70;
   public weakness = [{ type: G }];

@@ -1,13 +1,15 @@
-import { CardTag, CardType, PokemonCard, PowerType, Stage, State, StoreLike } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
-export declare class MarniesGrimmsnarlex extends PokemonCard {
+import { PokemonCard, PowerType } from '../../game';
+import { CardTag, CardType, Stage } from '../../game/store/card/card-types';
+import { Effect } from '../../game/store/effects/effect';
+import { State } from '../../game/store/state/state';
+import { StoreLike } from '../../game/store/store-like';
+export declare class StevensCarbink extends PokemonCard {
     stage: Stage;
-    evolvesFrom: string;
     tags: CardTag[];
     cardType: CardType;
     hp: number;
     weakness: {
-        type: CardType.GRASS;
+        type: CardType.METAL;
     }[];
     retreat: CardType.COLORLESS[];
     powers: {
@@ -17,7 +19,7 @@ export declare class MarniesGrimmsnarlex extends PokemonCard {
     }[];
     attacks: {
         name: string;
-        cost: CardType.DARK[];
+        cost: (CardType.PSYCHIC | CardType.COLORLESS)[];
         damage: number;
         text: string;
     }[];
