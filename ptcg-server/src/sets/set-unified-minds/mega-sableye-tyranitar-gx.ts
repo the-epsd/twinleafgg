@@ -3,7 +3,7 @@ import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { GameError, GameMessage, GamePhase, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, KnockOutEffect } from '../../game/store/effects/game-effects';
-import {CheckProvidedEnergyEffect} from '../../game/store/effects/check-effects';
+import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 
 export class MegaSableyeTyranitarGX extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -49,7 +49,7 @@ export class MegaSableyeTyranitarGX extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
       this.usedGreedyCrush = false;
 
-      if (player.usedGX){
+      if (player.usedGX) {
         throw new GameError(GameMessage.LABEL_GX_USED);
       }
       player.usedGX = true;
@@ -70,6 +70,10 @@ export class MegaSableyeTyranitarGX extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
+      if (!this.usedGreedyCrush) {
+        return state;
+      }
+
       // Do not activate between turns, or when it's not opponents turn.
       if (state.phase !== GamePhase.ATTACK || state.players[state.activePlayer] !== opponent) {
         return state;
@@ -82,8 +86,8 @@ export class MegaSableyeTyranitarGX extends PokemonCard {
       }
 
       // Check if the attack that caused the KnockOutEffect is "Greedy Crush"
-      if (this.usedGreedyCrush === true 
-        && (effect.target.getPokemonCard()?.tags.includes(CardTag.POKEMON_GX) || effect.target.getPokemonCard()?.tags.includes(CardTag.POKEMON_EX))) {
+      if (this.usedGreedyCrush === true
+        && (effect.player.active.getPokemonCard()?.tags.includes(CardTag.POKEMON_GX) || effect.player.active.getPokemonCard()?.tags.includes(CardTag.POKEMON_EX))) {
         if (effect.prizeCount > 0) {
           effect.prizeCount += 1;
           this.usedGreedyCrush = false;

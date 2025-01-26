@@ -61,6 +61,8 @@ import { Swinub } from './swinub';
 import { Torchic } from './torchic';
 import { Tyranitar } from './tyranitar';
 import { Volcanionex } from './volcanion-ex';
+import { Wailmer } from './wailmer';
+import { Wailord } from './wailord';
 
 export const setSV9: Card[] = [
 
@@ -88,6 +90,8 @@ export const setSV9: Card[] = [
   new Floragato(),
   new Meowscarada(),
   new IrisFightingSpirit(),
+  new Wailmer(),
+  new Wailord(),
 
   new LilliesClefairyex(),
   new LilliesComfy(),

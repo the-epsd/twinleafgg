@@ -43,6 +43,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     ), () => next());
   }
 
+  player.supporter.moveCardTo(effect.trainerCard, player.discard);
   // And shuffle our deck
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => { player.deck.applyOrder(order); });
 }

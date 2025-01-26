@@ -12,6 +12,7 @@ import { GardevoirSylveonGX } from './gardevoir-and-sylveon-gx';
 import { Gloom } from './gloom';
 import { Goldeen } from './goldeen';
 import { GreensExploration } from './greens-exploration';
+import { GreninjaZoroarkGX } from './greninja-zoroark-gx';
 import { Hitmontop } from './hitmontop';
 import { Kartana } from './kartana';
 import { Lairon } from './lairon';
@@ -78,5 +79,6 @@ export const setUnbrokenBonds: Card[] = [
   new TripleAccelerationEnergy(),
   new Tyrogue(),
   new Volcanion(),
-  new Zeraora()
+  new Zeraora(),
+  new GreninjaZoroarkGX(),
 ];
