@@ -23,6 +23,7 @@ const cofagrigus_1 = require("./cofagrigus");
 const crocalor_1 = require("./crocalor");
 const cyrano_1 = require("./cyrano");
 const deino_1 = require("./deino");
+const dialga_1 = require("./dialga");
 const dragons_elixir_1 = require("./dragons-elixir");
 const drasna_1 = require("./drasna");
 const drayton_1 = require("./drayton");
@@ -95,6 +96,7 @@ const wo_chien_1 = require("./wo-chien");
 const zarude_1 = require("./zarude");
 const zweilous_1 = require("./zweilous");
 exports.setSurgingSparks = [
+    new dialga_1.Dialga(),
     new pikachu_ex_1.Pikachuex(),
     new terapagos_1.Terapagos(),
     new black_kyurem_ex_1.BlackKyuremex(),

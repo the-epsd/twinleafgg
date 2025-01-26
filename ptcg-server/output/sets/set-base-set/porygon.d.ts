@@ -13,7 +13,7 @@ export declare class Porygon extends PokemonCard {
         type: CardType;
         value: number;
     }[];
-    retreat: never[];
+    retreat: CardType.COLORLESS[];
     attacks: {
         name: string;
         cost: CardType[];

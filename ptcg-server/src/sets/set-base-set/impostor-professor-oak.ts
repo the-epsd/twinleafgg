@@ -9,15 +9,15 @@ import { ShuffleDeckPrompt, StateUtils } from '../../game';
 export class ImpostorProfessorOak extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
 
-  public set: string = 'BS'; // Replace with the appropriate set abbreviation
+  public set: string = 'BS';
 
   public name: string = 'Impostor Professor Oak';
 
-  public fullName: string = 'Impostor Professor Oak BS'; // Replace with the appropriate set abbreviation
+  public fullName: string = 'Impostor Professor Oak BS';
 
-  public cardImage: string = 'assets/cardback.png'; // Replace with the appropriate card image path
+  public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '73'; // Replace with the appropriate set number
+  public setNumber: string = '73';
 
   public text: string = 'Your opponent shuffles his or her hand into his or her deck, then draws 7 cards.';
 

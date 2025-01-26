@@ -21,6 +21,7 @@ import { Cofagrigus } from './cofagrigus';
 import { Crocalor } from './crocalor';
 import { Cyrano } from './cyrano';
 import { Deino } from './deino';
+import { Dialga } from './dialga';
 import { DragonsElixir } from './dragons-elixir';
 import { Drasna } from './drasna';
 import { Drayton } from './drayton';
@@ -94,6 +95,7 @@ import { Zarude } from './zarude';
 import { Zweilous } from './zweilous';
 
 export const setSurgingSparks: Card[] = [
+  new Dialga(),
   new Pikachuex(),
   new Terapagos(),
   new BlackKyuremex(),

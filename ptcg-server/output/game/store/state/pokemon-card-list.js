@@ -29,6 +29,9 @@ class PokemonCardList extends card_list_1.CardList {
             else if (card.name === 'Lillie\'s Poké Doll') {
                 result.push(card);
             }
+            else if (card.name === 'Clefairy Doll') {
+                result.push(card);
+            }
             else if (card.name === 'Rare Fossil') {
                 result.push(card);
             }

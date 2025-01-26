@@ -39,7 +39,7 @@ class MysteriousFossil extends game_1.TrainerCard {
         this.text = 'Play Mysterious Fossil as if it were a Basic Pokémon. While in play, Mysterious Fossil counts as a Pokémon (instead of a Trainer card). Mysterious Fossil has no attacks, can\'t retreat, and can\'t be Asleep, Confused, Paralyzed, or Poisoned. If Mysterious Fossil is Knocked Out, it doesn\'t count as a Knocked Out Pokémon. (Discard it anyway.)';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0] && effect.player.active.cards.includes(this)) {
+        if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const cardList = effect.player.active;
             const player = effect.player;
             store.log(state, game_1.GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: effect.player.name, card: this.name });

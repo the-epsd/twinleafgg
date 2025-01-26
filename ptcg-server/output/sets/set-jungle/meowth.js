@@ -14,16 +14,16 @@ class Meowth extends pokemon_card_1.PokemonCard {
         this.set = 'JU';
         this.setNumber = '56';
         this.fullName = 'Meowth JU';
-        this.cardType = card_types_1.CardType.COLORLESS;
+        this.cardType = C;
         this.stage = card_types_1.Stage.BASIC;
         this.hp = 50;
-        this.weakness = [{ type: card_types_1.CardType.FIGHTING }];
-        this.resistance = [{ type: card_types_1.CardType.PSYCHIC, value: -30 }];
-        this.retreat = [card_types_1.CardType.COLORLESS];
+        this.weakness = [{ type: F }];
+        this.resistance = [{ type: P, value: -30 }];
+        this.retreat = [C];
         this.attacks = [
             {
                 name: 'Pay Day',
-                cost: [card_types_1.CardType.GRASS],
+                cost: [C, C],
                 damage: 10,
                 damageCalculation: 'x',
                 text: 'Flip a coin. If heads, draw a card.'

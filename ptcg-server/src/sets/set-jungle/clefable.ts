@@ -93,7 +93,7 @@ export class Clefable extends PokemonCard {
     {
       name: 'Minimize',
       cost: [CardType.COLORLESS, CardType.COLORLESS],
-      damage: 20,
+      damage: 0,
       text: 'All damage done by attacks to Clefable during your opponent\'s next turn is reduced by 20 (after applying Weakness and Resistance).'
     },
   ];

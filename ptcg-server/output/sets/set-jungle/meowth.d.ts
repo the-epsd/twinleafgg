@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
+import { Stage } from '../../game/store/card/card-types';
 import { Attack } from '../../game/store/card/pokemon-types';
 import { Effect } from '../../game/store/effects/effect';
 import { State } from '../../game/store/state/state';
@@ -10,17 +10,17 @@ export declare class Meowth extends PokemonCard {
     set: string;
     setNumber: string;
     fullName: string;
-    cardType: CardType;
+    cardType: import("../../game").CardType.COLORLESS;
     stage: Stage;
     hp: number;
     weakness: {
-        type: CardType;
+        type: import("../../game").CardType.FIGHTING;
     }[];
     resistance: {
-        type: CardType;
+        type: import("../../game").CardType.PSYCHIC;
         value: number;
     }[];
-    retreat: CardType[];
+    retreat: import("../../game").CardType.COLORLESS[];
     attacks: Attack[];
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

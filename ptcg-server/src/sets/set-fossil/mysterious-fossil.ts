@@ -56,7 +56,7 @@ export class MysteriousFossil extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0] && effect.player.active.cards.includes(this)) {
+    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const cardList = effect.player.active;
       const player = effect.player;
 
