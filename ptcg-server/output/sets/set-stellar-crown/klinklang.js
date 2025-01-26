@@ -44,18 +44,6 @@ class Klinklang extends pokemon_card_1.PokemonCard {
             if (slots.length === 0) {
                 return state;
             }
-            // Try to reduce PowerEffect, to check if something is blocking our ability
-            try {
-                const stub = new game_effects_1.PowerEffect(player, {
-                    name: 'test',
-                    powerType: game_1.PowerType.ABILITY,
-                    text: ''
-                }, this);
-                store.reduceEffect(state, stub);
-            }
-            catch (_a) {
-                return state;
-            }
             let opponentHasStage2 = false;
             opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (list, card, target) => {
                 if (card.stage == card_types_1.Stage.STAGE_2) {

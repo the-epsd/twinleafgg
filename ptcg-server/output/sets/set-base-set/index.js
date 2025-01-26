@@ -36,6 +36,7 @@ const gust_of_wind_1 = require("./gust-of-wind");
 const gyarados_1 = require("./gyarados");
 const haunter_1 = require("./haunter");
 const hitmonchan_1 = require("./hitmonchan");
+const impostor_professor_oak_1 = require("./impostor-professor-oak");
 const item_finder_1 = require("./item-finder");
 const ivysaur_1 = require("./ivysaur");
 const jynx_1 = require("./jynx");
@@ -129,6 +130,7 @@ exports.setBaseSet = [
     new gyarados_1.Gyarados(),
     new haunter_1.Haunter(),
     new hitmonchan_1.Hitmonchan(),
+    new impostor_professor_oak_1.ImpostorProfessorOak(),
     new item_finder_1.ItemFinder(),
     new ivysaur_1.Ivysaur(),
     new jynx_1.Jynx(),
