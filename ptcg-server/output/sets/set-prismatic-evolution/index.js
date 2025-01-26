@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setPrismaticEvolution = void 0;
+const black_belts_training_1 = require("./black-belts-training");
 const budew_1 = require("./budew");
 const eevee_ex_1 = require("./eevee-ex");
 const espeon_ex_1 = require("./espeon-ex");
@@ -15,6 +16,7 @@ const treasure_tracker_1 = require("./treasure-tracker");
 const umbreon_ex_1 = require("./umbreon-ex");
 const vaporeon_ex_1 = require("./vaporeon-ex");
 exports.setPrismaticEvolution = [
+    new black_belts_training_1.BlackBeltsTraining(),
     new budew_1.Budew(),
     new eevee_ex_1.Eeveeex(),
     new jolteon_ex_1.Jolteonex(),

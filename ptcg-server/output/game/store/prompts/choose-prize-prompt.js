@@ -17,6 +17,7 @@ class ChoosePrizePrompt extends prompt_1.Prompt {
             blocked: [],
             allowCancel: false,
             isSecret: false,
+            useOpponentPrizes: false
         }, options);
         this.options.max = this.options.count;
     }
@@ -28,7 +29,13 @@ class ChoosePrizePrompt extends prompt_1.Prompt {
         if (player === undefined) {
             throw new game_error_1.GameError(game_message_1.GameMessage.INVALID_PROMPT_RESULT);
         }
-        const prizes = player.prizes.filter(p => p.cards.length > 0);
+        const targetPlayer = this.options.useOpponentPrizes
+            ? state.players.find(p => p.id !== this.playerId)
+            : player;
+        if (targetPlayer === undefined) {
+            throw new game_error_1.GameError(game_message_1.GameMessage.INVALID_PROMPT_RESULT);
+        }
+        const prizes = targetPlayer.prizes.filter(p => p.cards.length > 0);
         return result.map(index => prizes[index]);
     }
     validate(result) {

@@ -9,9 +9,9 @@ export class Plusle extends PokemonCard {
   public cardType: CardType = CardType.LIGHTNING;
   public hp: number = 70;
   public weakness = [{ type: CardType.FIGHTING }];
-  public resistance = [{ type: CardType.METAL, value: 20 }];
+  public resistance = [{ type: CardType.METAL, value: -20 }];
   public retreat = [CardType.COLORLESS];
-  
+
   public attacks = [{
     name: 'Tag Team Boost',
     cost: [CardType.LIGHTNING],
@@ -30,12 +30,12 @@ export class Plusle extends PokemonCard {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
-      
+
       const minunIsOnBench = player.bench.some(c => c.cards.some(card => card.name === 'Minun'));
       if (minunIsOnBench) {
         effect.damage += 50;
       }
-      
+
       return state;
     }
 

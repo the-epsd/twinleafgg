@@ -213,7 +213,7 @@ export class PokemonCardList extends CardList {
   }
 
   exPokemon(): boolean {
-    return this.cards.some(c => c.tags.includes(CardTag.POKEMON_V));
+    return this.cards.some(c => c.tags.includes(CardTag.POKEMON_ex));
   }
 
   futurePokemon(): boolean {

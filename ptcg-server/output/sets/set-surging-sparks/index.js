@@ -12,6 +12,7 @@ const black_kyurem_ex_1 = require("./black-kyurem-ex");
 const capsakid_1 = require("./capsakid.");
 const card_images_1 = require("./card-images");
 const celebration_fanfare_1 = require("./celebration-fanfare");
+const centiskorch_1 = require("./centiskorch");
 const ceruledge_1 = require("./ceruledge");
 const ceruledge_ex_1 = require("./ceruledge-ex");
 const charcadet_1 = require("./charcadet");
@@ -71,6 +72,7 @@ const rich_energy_1 = require("./rich-energy");
 const sandygast_1 = require("./sandygast");
 const scovillain_ex_1 = require("./scovillain-ex");
 const shroodle_1 = require("./shroodle");
+const sizzlipede_1 = require("./sizzlipede");
 const skeledirge_1 = require("./skeledirge");
 const slaking_ex_1 = require("./slaking-ex");
 const slakoth_1 = require("./slakoth");
@@ -183,6 +185,8 @@ exports.setSurgingSparks = [
     new vigoroth_1.VigorothSSP(),
     new zarude_1.Zarude(),
     new durant_ex_1.Durantex(),
+    new sizzlipede_1.Sizzlipede(),
+    new centiskorch_1.Centiskorch(),
     //Reprints
     new card_images_1.ScrambleSwitchSSP(),
     new card_images_1.CounterGainSSP(),

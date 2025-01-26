@@ -1,4 +1,5 @@
 import { Card } from '../../game/store/card/card';
+import { BlackBeltsTraining } from './black-belts-training';
 import { Budew } from './budew';
 import { Eeveeex } from './eevee-ex';
 import { Espeonex } from './espeon-ex';
@@ -14,6 +15,7 @@ import { Umbreonex } from './umbreon-ex';
 import { Vaporeonex } from './vaporeon-ex';
 
 export const setPrismaticEvolution: Card[] = [
+  new BlackBeltsTraining(),
   new Budew(),
   new Eeveeex(),
   new Jolteonex(),

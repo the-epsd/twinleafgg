@@ -31,7 +31,7 @@ class Golisopod extends pokemon_card_1.PokemonCard {
             }];
         this.set = 'UNM';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '50';
+        this.setNumber = '51';
         this.name = 'Golisopod';
         this.fullName = 'Golisopod UNM';
     }

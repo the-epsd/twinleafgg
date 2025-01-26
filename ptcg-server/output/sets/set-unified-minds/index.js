@@ -35,6 +35,7 @@ const whimsicott_1 = require("./whimsicott");
 const wimpod_1 = require("./wimpod");
 const sneasel_1 = require("./sneasel");
 const weavile_gx_1 = require("./weavile-gx");
+const mega_sableye_tyranitar_gx_1 = require("./mega-sableye-tyranitar-gx");
 exports.setUnifiedMinds = [
     new alolan_grimer_1.AlolanGrimer(),
     new alolan_raichu_1.AlolanRaichu(),
@@ -70,4 +71,5 @@ exports.setUnifiedMinds = [
     new wimpod_1.Wimpod(),
     new sneasel_1.Sneasel(),
     new weavile_gx_1.WeavileGX(),
+    new mega_sableye_tyranitar_gx_1.MegaSableyeTyranitarGX(),
 ];

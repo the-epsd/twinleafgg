@@ -13,7 +13,7 @@ class Minun extends pokemon_card_1.PokemonCard {
         this.cardType = card_types_1.CardType.LIGHTNING;
         this.hp = 70;
         this.weakness = [{ type: card_types_1.CardType.FIGHTING }];
-        this.resistance = [{ type: card_types_1.CardType.METAL, value: 20 }];
+        this.resistance = [{ type: card_types_1.CardType.METAL, value: -20 }];
         this.retreat = [card_types_1.CardType.COLORLESS];
         this.powers = [{
                 name: 'Buddy Pulse',

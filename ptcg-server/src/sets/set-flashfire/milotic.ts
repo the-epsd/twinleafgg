@@ -20,6 +20,7 @@ export class Milotic extends PokemonCard {
 
   public powers = [{
     name: 'Energy Grace',
+    useWhenInPlay: true,
     powerType: PowerType.ABILITY,
     text: 'Once during your turn (before your attack), you may Knock Out this Pokémon. If you do, attach 3 basic Energy cards from your discard pile to 1 of your Pokémon (excluding Pokémon-EX).'
   }];
@@ -51,7 +52,7 @@ export class Milotic extends PokemonCard {
       const energyInDiscard = player.discard.cards.filter(c => {
         return c instanceof EnergyCard && c.energyType === EnergyType.BASIC;
       }).length;
-      
+
       if (energyInDiscard === 0) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
@@ -59,14 +60,14 @@ export class Milotic extends PokemonCard {
       const blocked: number[] = [];
       player.discard.cards.forEach((card, index) => {
         if (card instanceof EnergyCard && card.energyType === EnergyType.BASIC) {
-          
+
         } else {
           blocked.push(index);
         }
       });
 
       const attachAmount = Math.min(energyInDiscard, 3);
-      
+
       state = store.prompt(state, new AttachEnergyPrompt(
         player.id,
         GameMessage.ATTACH_ENERGY_CARDS,
@@ -81,7 +82,7 @@ export class Milotic extends PokemonCard {
           const target = StateUtils.getTarget(state, player, transfer.to);
           player.discard.moveCardTo(transfer.card, target);
         }
-        
+
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
           if (cardList.getPokemonCard() === this) {
             cardList.damage += 999;
@@ -91,7 +92,7 @@ export class Milotic extends PokemonCard {
 
       return state;
     }
-    
+
     return state;
   }
 }

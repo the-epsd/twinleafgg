@@ -1,16 +1,16 @@
-import { PowerType, State, StoreLike } from '../../game';
-import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
+import { Stage, CardType } from '../../game/store/card/card-types';
+import { StoreLike, State, PowerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-export declare class Milotic extends PokemonCard {
+export declare class Lucario extends PokemonCard {
     stage: Stage;
     evolvesFrom: string;
     cardType: CardType;
     hp: number;
     weakness: {
-        type: CardType;
+        type: CardType.PSYCHIC;
     }[];
-    retreat: CardType[];
+    retreat: CardType.COLORLESS[];
     powers: {
         name: string;
         useWhenInPlay: boolean;
@@ -19,14 +19,17 @@ export declare class Milotic extends PokemonCard {
     }[];
     attacks: {
         name: string;
-        cost: CardType[];
+        cost: CardType.FIGHTING[];
         damage: number;
+        damageCalculation: string;
         text: string;
     }[];
     set: string;
-    name: string;
-    fullName: string;
+    regulationMark: string;
     cardImage: string;
     setNumber: string;
+    name: string;
+    fullName: string;
+    readonly ROARING_RESOLVE_MARKER = "ROARING_RESOLVE_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

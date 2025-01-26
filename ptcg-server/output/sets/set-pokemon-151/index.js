@@ -5,6 +5,7 @@ const abra_1 = require("./abra");
 const alakazam_ex_1 = require("./alakazam-ex");
 const arbok_ex_1 = require("./arbok-ex");
 const articuno_1 = require("./articuno");
+const big_air_balloon_1 = require("./big-air-balloon");
 const blastoise_ex_1 = require("./blastoise-ex");
 const bulbasaur_1 = require("./bulbasaur");
 const charizard_ex_1 = require("./charizard-ex");
@@ -114,6 +115,7 @@ exports.setPokemon151 = [
     new vileplume_1.Vileplume(),
     new wartortle_1.Wartortle(),
     new zapdos_ex_1.Zapdosex(),
+    new big_air_balloon_1.BigAirBalloon(),
     //Full 
     new full_art_1.BulbasaurIR(),
     new full_art_1.IvysaurIR(),
