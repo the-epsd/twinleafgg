@@ -6,6 +6,7 @@ import { LucarioGX } from './lucario-gx';
 import { Lurantis } from './lurantis';
 import { PalaceBook } from './palace-book';
 import { PikachuZekromGX } from './pikachu-and-zekrom-gx';
+import { ShiningCelebi } from './shining-celebi';
 import { ShiningLugia } from './shining-lugia';
 import { TapuKoko } from './tapu-koko';
 
@@ -17,6 +18,7 @@ export const setSunAndMoonPromos: Card[] = [
   new Lurantis(),
   new PalaceBook(),
   new PikachuZekromGX(),
+  new ShiningCelebi(),
   new ShiningLugia(),
   new TapuKoko(),
 ];

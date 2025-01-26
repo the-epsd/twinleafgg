@@ -13,6 +13,7 @@ export declare class Milotic extends PokemonCard {
     retreat: CardType[];
     powers: {
         name: string;
+        useWhenInPlay: boolean;
         powerType: PowerType;
         text: string;
     }[];

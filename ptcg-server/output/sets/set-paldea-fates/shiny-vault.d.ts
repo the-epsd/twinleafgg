@@ -63,6 +63,8 @@ import { Frigibax } from './frigibax';
 import { Kilowattrel } from './kilowattrel';
 import { MimeJr } from './mime-jr';
 import { StudentsInPaldea } from './students-in-paldea';
+import { Snorlax } from '../set-pokemon-151/snorlax';
+import { Tinkatuff } from '../set-paldea-evolved/tinkatuff';
 export declare class OddishSV extends Oddish {
     setNumber: string;
     set: string;
@@ -233,6 +235,11 @@ export declare class TinkatinkSV extends Tinkatink {
     set: string;
     fullName: string;
 }
+export declare class TinkatuffSV extends Tinkatuff {
+    setNumber: string;
+    set: string;
+    fullName: string;
+}
 export declare class TinkatonSV extends Tinkaton {
     setNumber: string;
     set: string;
@@ -273,6 +280,11 @@ export declare class DodrioSV extends Dodrio {
 }
 export declare class DittoSV extends Ditto {
     cardImage: string;
+}
+export declare class SnorlaxSV extends Snorlax {
+    fullName: string;
+    set: string;
+    setNumber: string;
 }
 export declare class WingullSV extends Wingull {
     cardImage: string;

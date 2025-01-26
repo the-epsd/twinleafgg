@@ -59,6 +59,7 @@ import { Palafinex } from './palafin-ex';
 import { PerformanceFlute } from './performance-flute';
 import { Perrin } from './perrin';
 import { Phione } from './phione';
+import { Poltchageist } from './poltchageist';
 import { Poochyena } from './poochyena';
 import { Relicanth } from './relicanth';
 import { Rillaboom } from './rillaboom';
@@ -66,6 +67,8 @@ import { RotoStick } from './roto-stick';
 import { ScoopUpCyclone } from './scoop-up-cyclone';
 import { ScreamTailex } from './scream-tail-ex';
 import { SecretBox } from './secret-box';
+import { Sinistcha } from './sinistcha';
+import { Sinistchaex } from './sinistcha-ex';
 import { Sunkern } from './sunkern';
 import { SurvivalCast } from './survival-cast';
 import { Tatsugiri } from './tatsugiri';
@@ -159,4 +162,7 @@ export const setTwilightMasquerade: Card[] = [
   new Clefairy(),
   new Palafin(),
   new Palafinex(),
+  new Poltchageist(),
+  new Sinistcha(),
+  new Sinistchaex(),
 ];

@@ -9,7 +9,13 @@ import { ExchangeTicket } from './exchange-ticket';
 import { Floragato } from './floragato';
 import { HopsBag } from './hops-bag';
 import { HopsChoiceBand } from './hops-choice-band';
+import { HopsCorviknight } from './hops-corviknight';
+import { HopsCorvisquire } from './hops-corvisquire';
+import { HopsCramorant } from './hops-cramorant';
 import { HopsDubwool } from './hops-dubwool';
+import { HopsRookidee } from './hops-rookidee';
+import { HopsSandaconda } from './hops-sandaconda';
+import { HopsSilicobra } from './hops-silicobra';
 import { HopsSnorlax } from './hops-snorlax';
 import { HopsWooloo } from './hops-wooloo';
 import { HopsZacianex } from './hops-zacian-ex';
@@ -19,6 +25,7 @@ import { IonosKilowattrel } from './ionos-kilowattrel';
 import { IonosTadbulb } from './ionos-tadbulb';
 import { IonosVoltorb } from './ionos-voltorb';
 import { IonosWattrel } from './ionos-wattrel';
+import { IrisFightingSpirit } from './iris-fighting-spirit';
 import { Larvitar } from './larvitar';
 import { Levincia } from './levincia';
 import { LilliesClefairyex } from './lillies-clefairy-ex';
@@ -34,6 +41,9 @@ import { NsCastle } from './ns-castle';
 import { NsDarmanitan } from './ns-darmanItan';
 import { NsDarumaka } from './ns-darumaka';
 import { NsJoltik } from './ns-joltik';
+import { NsKlang } from './ns-klang';
+import { NsKlink } from './ns-klink';
+import { NsKlinklang } from './ns-klinklang';
 import { NsPPUp } from './ns-pp-up';
 import { NsPurrloin } from './ns-purrloin';
 import { NsReshiram } from './ns-reshiram';
@@ -77,6 +87,7 @@ export const setSV9: Card[] = [
   new Sprigatito(),
   new Floragato(),
   new Meowscarada(),
+  new IrisFightingSpirit(),
 
   new LilliesClefairyex(),
   new LilliesComfy(),
@@ -96,6 +107,12 @@ export const setSV9: Card[] = [
   new HopsWooloo(),
   new HopsDubwool(),
   new HopsSnorlax(),
+  new HopsCramorant(),
+  new HopsRookidee(),
+  new HopsCorvisquire(),
+  new HopsCorviknight(),
+  new HopsSilicobra(),
+  new HopsSandaconda(),
   new HopsZacianex(),
   new HopsChoiceBand(),
   new Postwick(),
@@ -110,4 +127,7 @@ export const setSV9: Card[] = [
   new NsCastle(),
   new NsJoltik(),
   new NsPurrloin(),
+  new NsKlink(),
+  new NsKlang(),
+  new NsKlinklang(),
 ];

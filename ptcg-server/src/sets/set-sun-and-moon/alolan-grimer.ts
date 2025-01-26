@@ -27,13 +27,13 @@ export class AlolanGrimer extends PokemonCard {
     },
     {
       name: 'Pound',
-      cost: [CardType.PSYCHIC, CardType.COLORLESS, CardType.COLORLESS],
+      cost: [P, C, C],
       damage: 40,
-      text: 'Flip a coin. If heads, this attack does 10 more damage.'
+      text: ''
     }
   ];
 
-  public set: string = 'XY';
+  public set: string = 'SUM';
 
   public name: string = 'Alolan Grimer';
 

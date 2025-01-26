@@ -1,12 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ReversalEnergyHR = exports.LuxuriousCapeHR = exports.CounterCatcherHR = exports.BeachCourtHR = exports.RoaringMoonexHR = exports.IronValiantexHR = exports.GarchompexHR = exports.TulipSIR = exports.ProfessorTurosScenarioSIR = exports.ProfessorSadasVitalitySIR = exports.MelaSIR = exports.GholdengoexSIR = exports.RoaringMoonexSIR = exports.SandyShocksexSIR = exports.IronValiantexSIR = exports.IronHandsexSIR = exports.TapuKokoexSIR = exports.GarchompexSIR = exports.TulipFA = exports.ProfessorTurosScenarioFA = exports.ProfessorSadasVitalityFA = exports.MelaFA = exports.GholdengoexFA = exports.RoaringMoonexFA = exports.SandyShocksexFA = exports.HoopaexFA = exports.IronValiantexFA = exports.IronHandsexFA = exports.TapuKokoexFA = exports.TsareenaexFA = exports.GarchompexFA = exports.FroslassexFA = exports.IronJugulisIR = exports.CyclizarIR = exports.BruteBonnetIR = exports.MorpekoIR = exports.SlitherWingIR = exports.GarganacIR = exports.MiniorIR = exports.GroudonIR = exports.GimmighoulIR = exports.SnoruntIR = exports.ToedscruelIR = void 0;
+exports.ReversalEnergyHR = exports.LuxuriousCapeHR = exports.CounterCatcherHR = exports.BeachCourtHR = exports.RoaringMoonexHR = exports.IronValiantexHR = exports.GarchompexHR = exports.TulipSIR = exports.ProfessorTurosScenarioSIR = exports.ProfessorSadasVitalitySIR = exports.MelaSIR = exports.GholdengoexSIR = exports.RoaringMoonexSIR = exports.SandyShocksexSIR = exports.IronValiantexSIR = exports.IronHandsexSIR = exports.TapuKokoexSIR = exports.GarchompexSIR = exports.TulipFA = exports.ProfessorTurosScenarioFA = exports.ProfessorSadasVitalityFA = exports.MelaFA = exports.GholdengoexFA = exports.RoaringMoonexFA = exports.SandyShocksexFA = exports.HoopaexFA = exports.IronValiantexFA = exports.IronHandsexFA = exports.TapuKokoexFA = exports.TsareenaexFA = exports.GarchompexFA = exports.FroslassexFA = exports.IronJugulisIR = exports.CyclizarIR = exports.BruteBonnetIR = exports.MorpekoIR = exports.GarbodorIR = exports.SlitherWingIR = exports.GarganacIR = exports.MiniorIR = exports.GroudonIR = exports.GimmighoulIR = exports.SnoruntIR = exports.ToedscruelIR = void 0;
 const reversal_energy_1 = require("../set-paldea-evolved/reversal-energy");
 const beach_court_1 = require("../set-scarlet-and-violet/beach-court");
 const brute_bonnet_1 = require("./brute-bonnet");
 const counter_catcher_1 = require("./counter-catcher");
 const cyclizar_1 = require("./cyclizar");
 const froslass_ex_1 = require("./froslass-ex");
+const garbodor_1 = require("./garbodor");
 const garchomp_ex_1 = require("./garchomp-ex");
 const garganacl_1 = require("./garganacl");
 const gholdengo_ex_1 = require("./gholdengo-ex");
@@ -142,10 +143,14 @@ class SlitherWingIR extends slither_wing_1.SlitherWing {
     }
 }
 exports.SlitherWingIR = SlitherWingIR;
-// export class GarbodorIR extends Garbodor {
-//   public setNumber = '204';
-//   public fullName: string = 'GarbodorIR PAR';
-// }
+class GarbodorIR extends garbodor_1.Garbodor {
+    constructor() {
+        super(...arguments);
+        this.setNumber = '204';
+        this.fullName = 'GarbodorIR PAR';
+    }
+}
+exports.GarbodorIR = GarbodorIR;
 // export class YveltalIR extends Yveltal {
 //   public setNumber = '205';
 //   public fullName: string = 'YveltalIR PAR';

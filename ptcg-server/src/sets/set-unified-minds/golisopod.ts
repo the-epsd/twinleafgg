@@ -14,9 +14,9 @@ export class Golisopod extends PokemonCard {
   public hp: number = 140;
 
   public weakness = [{ type: CardType.GRASS }];
-  
+
   public evolvesFrom: string = 'Wimpod';
-  
+
   public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
@@ -25,7 +25,7 @@ export class Golisopod extends PokemonCard {
     text: 'If this Pokémon has 2 or fewer Energy attached to it, it has no Retreat Cost.',
     useWhenInPlay: false
   }];
-  
+
   public attacks = [{
     name: 'First Impression',
     cost: [CardType.WATER, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
@@ -38,21 +38,21 @@ export class Golisopod extends PokemonCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '50';
+  public setNumber: string = '51';
 
   public name: string = 'Golisopod';
 
   public fullName: string = 'Golisopod UNM';
-  
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    
+
     if (effect instanceof EndTurnEffect) {
-      this.movedToActiveThisTurn = false; 
+      this.movedToActiveThisTurn = false;
     }
-    
+
     if (effect instanceof CheckRetreatCostEffect && effect.player.active.getPokemonCard() === this) {
       const player = effect.player;
-      
+
       try {
         const stub = new PowerEffect(player, {
           name: 'test',
@@ -63,7 +63,7 @@ export class Golisopod extends PokemonCard {
       } catch {
         return state;
       }
-      
+
       const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player, player.active);
       store.reduceEffect(state, checkProvidedEnergyEffect);
 
@@ -75,20 +75,20 @@ export class Golisopod extends PokemonCard {
       if (energyCount <= 2) {
         effect.cost = [];
       }
-      
+
       return state;
     }
-    
+
     if (effect instanceof RetreatEffect && effect.player.active.getPokemonCard() !== this) {
       this.movedToActiveThisTurn = true;
     }
-    
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       if (this.movedToActiveThisTurn) {
         effect.damage += 60;
       }
     }
-    
+
     return state;
   }
 

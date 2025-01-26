@@ -8,6 +8,7 @@ const lucario_gx_1 = require("./lucario-gx");
 const lurantis_1 = require("./lurantis");
 const palace_book_1 = require("./palace-book");
 const pikachu_and_zekrom_gx_1 = require("./pikachu-and-zekrom-gx");
+const shining_celebi_1 = require("./shining-celebi");
 const shining_lugia_1 = require("./shining-lugia");
 const tapu_koko_1 = require("./tapu-koko");
 exports.setSunAndMoonPromos = [
@@ -18,6 +19,7 @@ exports.setSunAndMoonPromos = [
     new lurantis_1.Lurantis(),
     new palace_book_1.PalaceBook(),
     new pikachu_and_zekrom_gx_1.PikachuZekromGX(),
+    new shining_celebi_1.ShiningCelebi(),
     new shining_lugia_1.ShiningLugia(),
     new tapu_koko_1.TapuKoko(),
 ];

@@ -4,6 +4,7 @@ import { BruteBonnet } from './brute-bonnet';
 import { CounterCatcher } from './counter-catcher';
 import { Cyclizar } from './cyclizar';
 import { Froslassex } from './froslass-ex';
+import { Garbodor } from './garbodor';
 import { Garchompex } from './garchomp-ex';
 import { Garganacl } from './garganacl';
 import { Gholdengoex } from './gholdengo-ex';
@@ -133,10 +134,10 @@ export class SlitherWingIR extends SlitherWing {
   public fullName: string = 'SlitherWingIR PAR';
 }
 
-// export class GarbodorIR extends Garbodor {
-//   public setNumber = '204';
-//   public fullName: string = 'GarbodorIR PAR';
-// }
+export class GarbodorIR extends Garbodor {
+  public setNumber = '204';
+  public fullName: string = 'GarbodorIR PAR';
+}
 
 // export class YveltalIR extends Yveltal {
 //   public setNumber = '205';

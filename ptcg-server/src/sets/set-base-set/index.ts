@@ -34,6 +34,7 @@ import { GustOfWind } from './gust-of-wind';
 import { Gyarados } from './gyarados';
 import { Haunter } from './haunter';
 import { Hitmonchan } from './hitmonchan';
+import { ImpostorProfessorOak } from './impostor-professor-oak';
 import { ItemFinder } from './item-finder';
 import { Ivysaur } from './ivysaur';
 import { Jynx } from './jynx';
@@ -128,6 +129,7 @@ export const setBaseSet: Card[] = [
   new Gyarados(),
   new Haunter(),
   new Hitmonchan(),
+  new ImpostorProfessorOak(),
   new ItemFinder(),
   new Ivysaur(),
   new Jynx(),

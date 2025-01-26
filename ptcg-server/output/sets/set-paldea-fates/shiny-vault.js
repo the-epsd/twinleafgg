@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SkwovetSV = exports.PelipperSV = exports.WingullSV = exports.DittoSV = exports.DodrioSV = exports.DoduoSV = exports.PidgeottoSV = exports.PidgeySV = exports.NoibatSV = exports.RevavroomSV = exports.ScizorSV = exports.MurkrowSV = exports.HawluchaSV = exports.LucarioSV = exports.RioluSV = exports.TinkatonSV = exports.TinkatinkSV = exports.MimikyuSV = exports.KlefkiSV = exports.SpiritombSV = exports.MimeJrSV = exports.DrifloonSV = exports.RaltsSV = exports.XatuSV = exports.NatuSV = exports.CleffaSV = exports.KilowattrelSV = exports.WattrelSV = exports.ThundurusSV = exports.LuxraySV = exports.BaxcaliburSV = exports.ArctibaxSV = exports.FrigibaxSV = exports.PalafinSV = exports.FinizenSV = exports.StarmieSV = exports.StaryuSV = exports.ArmarougeSV = exports.CharcadetSV = exports.EnteiSV = exports.CharmeleonSV = exports.CharmanderSV = exports.CapsakidSV = exports.ArbolivaSV = exports.DollivSV = exports.SmolivSV = exports.PinecoSV = exports.VileplumeSV = exports.GloomSV = exports.OddishSV = void 0;
-exports.PennySV = exports.IonoSV = exports.ArvenSV = exports.CharizardexSVSIR = exports.GardevoirexSVSIR = exports.MewexSVSIR = exports.PaldeanStudentSV2 = exports.PaldeanStudentSV1 = exports.JudgeSV = exports.SquawkabillyexSV = exports.PidgeotexSV = exports.NoivernexSV = exports.GardevoirexSV = exports.MewexSV = exports.EspathraexSV2 = exports.ToedscruelexSV = exports.ForretressexSV = exports.FlamigoSV = void 0;
+exports.WingullSV = exports.SnorlaxSV = exports.DittoSV = exports.DodrioSV = exports.DoduoSV = exports.PidgeottoSV = exports.PidgeySV = exports.NoibatSV = exports.RevavroomSV = exports.ScizorSV = exports.MurkrowSV = exports.HawluchaSV = exports.LucarioSV = exports.RioluSV = exports.TinkatonSV = exports.TinkatuffSV = exports.TinkatinkSV = exports.MimikyuSV = exports.KlefkiSV = exports.SpiritombSV = exports.MimeJrSV = exports.DrifloonSV = exports.RaltsSV = exports.XatuSV = exports.NatuSV = exports.CleffaSV = exports.KilowattrelSV = exports.WattrelSV = exports.ThundurusSV = exports.LuxraySV = exports.BaxcaliburSV = exports.ArctibaxSV = exports.FrigibaxSV = exports.PalafinSV = exports.FinizenSV = exports.StarmieSV = exports.StaryuSV = exports.ArmarougeSV = exports.CharcadetSV = exports.EnteiSV = exports.CharmeleonSV = exports.CharmanderSV = exports.CapsakidSV = exports.ArbolivaSV = exports.DollivSV = exports.SmolivSV = exports.PinecoSV = exports.VileplumeSV = exports.GloomSV = exports.OddishSV = void 0;
+exports.PennySV = exports.IonoSV = exports.ArvenSV = exports.CharizardexSVSIR = exports.GardevoirexSVSIR = exports.MewexSVSIR = exports.PaldeanStudentSV2 = exports.PaldeanStudentSV1 = exports.JudgeSV = exports.SquawkabillyexSV = exports.PidgeotexSV = exports.NoivernexSV = exports.GardevoirexSV = exports.MewexSV = exports.EspathraexSV2 = exports.ToedscruelexSV = exports.ForretressexSV = exports.FlamigoSV = exports.SkwovetSV = exports.PelipperSV = void 0;
 const charizard_ex_1 = require("../set-obsidian-flames/charizard-ex");
 const cleffa_1 = require("../set-obsidian-flames/cleffa");
 const entei_1 = require("../set-obsidian-flames/entei");
@@ -67,6 +67,8 @@ const frigibax_1 = require("./frigibax");
 const kilowattrel_1 = require("./kilowattrel");
 const mime_jr_1 = require("./mime-jr");
 const students_in_paldea_1 = require("./students-in-paldea");
+const snorlax_1 = require("../set-pokemon-151/snorlax");
+const tinkatuff_1 = require("../set-paldea-evolved/tinkatuff");
 class OddishSV extends oddish_1.Oddish {
     constructor() {
         super(...arguments);
@@ -373,6 +375,15 @@ class TinkatinkSV extends tinkatink_1.Tinkatink {
     }
 }
 exports.TinkatinkSV = TinkatinkSV;
+class TinkatuffSV extends tinkatuff_1.Tinkatuff {
+    constructor() {
+        super(...arguments);
+        this.setNumber = '166';
+        this.set = 'PAF';
+        this.fullName = 'Tinkatuff PAF';
+    }
+}
+exports.TinkatuffSV = TinkatuffSV;
 class TinkatonSV extends tinkaton_1.Tinkaton {
     constructor() {
         super(...arguments);
@@ -466,6 +477,15 @@ class DittoSV extends ditto_1.Ditto {
     }
 }
 exports.DittoSV = DittoSV;
+class SnorlaxSV extends snorlax_1.Snorlax {
+    constructor() {
+        super(...arguments);
+        this.fullName = 'Snorlax PAF';
+        this.set = 'PAF';
+        this.setNumber = '202';
+    }
+}
+exports.SnorlaxSV = SnorlaxSV;
 class WingullSV extends wingull_1.Wingull {
     constructor() {
         super(...arguments);

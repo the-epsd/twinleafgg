@@ -34,7 +34,7 @@ export class SettingsDialogComponent {
 
   save() {
     this.settingsService.setHoloEnabled(this.holoEnabled);
-    this.settingsService.setShowCardName(this.showCardName);  // Add this line
+    this.settingsService.setShowCardName(this.showCardName);
     this.settingsService.setCardSize(this.cardSize);
     this.dialogRef.close();
   }

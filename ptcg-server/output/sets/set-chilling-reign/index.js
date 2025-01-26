@@ -32,6 +32,7 @@ const inkay_1 = require("./inkay");
 const inteleon_1 = require("./inteleon");
 const justified_gloves_1 = require("./justified-gloves");
 const karens_conviction_1 = require("./karens-conviction");
+const kecleon_1 = require("./kecleon");
 const kirlia_1 = require("./kirlia");
 const klara_1 = require("./klara");
 const lucky_energy_1 = require("./lucky-energy");
@@ -101,5 +102,6 @@ exports.setChillingReign = [
     new sneasel_1.Sneasel(),
     new tauros_1.Tauros(),
     new weedle_1.WeedleCRE(),
-    new zarude_1.Zarude()
+    new zarude_1.Zarude(),
+    new kecleon_1.Kecleon(),
 ];

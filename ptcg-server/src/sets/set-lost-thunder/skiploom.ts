@@ -37,7 +37,7 @@ export class Skiploom extends PokemonCard {
     }
   ];
 
-  public set: string = 'SUM';
+  public set: string = 'LOT';
 
   public setNumber = '13';
 

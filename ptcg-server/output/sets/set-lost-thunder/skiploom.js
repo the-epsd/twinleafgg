@@ -30,7 +30,7 @@ class Skiploom extends pokemon_card_1.PokemonCard {
                 text: ''
             }
         ];
-        this.set = 'SUM';
+        this.set = 'LOT';
         this.setNumber = '13';
         this.cardImage = 'assets/cardback.png';
         this.name = 'Skiploom';

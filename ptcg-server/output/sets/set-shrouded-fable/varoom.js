@@ -21,7 +21,7 @@ class Varoom extends pokemon_card_1.PokemonCard {
             {
                 name: 'Rigidify',
                 cost: [M],
-                damage: 10,
+                damage: 0,
                 text: 'During your opponent\'s next turn, this Pokémon takes 30 less damage from attacks(after applying Weakness and Resistance).'
             },
             {
@@ -33,9 +33,9 @@ class Varoom extends pokemon_card_1.PokemonCard {
         ];
         this.set = 'OBF';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '154';
+        this.setNumber = '43';
         this.name = 'Varoom';
-        this.fullName = 'Varoom OBF';
+        this.fullName = 'Varoom SFA';
         this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';
         this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';
     }

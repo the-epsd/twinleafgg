@@ -88,7 +88,7 @@ export class Aerodactyl extends PokemonCard {
         try {
           const stub = new PowerEffect(player, {
             name: 'test',
-            powerType: PowerType.ABILITY,
+            powerType: PowerType.POKEPOWER,
             text: ''
           }, this);
           store.reduceEffect(state, stub);

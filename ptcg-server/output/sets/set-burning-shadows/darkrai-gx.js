@@ -60,8 +60,9 @@ class DarkraiGX extends game_1.PokemonCard {
             if (slots.length === 0) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
             }
-            // Add Marker
-            player.marker.addMarker(this.NETHERWORLD_GATE_MARKER, this);
+            // Add Marker (similar to propagation exeggcute, you can use this as much as you want)
+            // source: https://compendium.pokegym.net/category/4-abilities/restoration/
+            //player.marker.addMarker(this.NETHERWORLD_GATE_MARKER, this);
             const cards = player.discard.cards.filter(c => c === this);
             cards.forEach((card, index) => {
                 player.discard.moveCardTo(card, slots[index]);

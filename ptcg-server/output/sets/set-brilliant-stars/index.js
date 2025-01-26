@@ -30,6 +30,7 @@ const heatran_1 = require("./heatran");
 const kindler_1 = require("./kindler");
 const lapras_1 = require("./lapras");
 const liepard_1 = require("./liepard");
+const lucario_1 = require("./lucario");
 const lumineon_v_1 = require("./lumineon-v");
 const magma_basin_1 = require("./magma-basin");
 const magmortar_1 = require("./magmortar");
@@ -41,6 +42,7 @@ const pot_helmet_1 = require("./pot-helmet");
 const purrloin_1 = require("./purrloin");
 const raichu_v_1 = require("./raichu-v");
 const raikou_v_1 = require("./raikou-v");
+const riolu_1 = require("./riolu");
 const roseannes_backup_1 = require("./roseannes-backup");
 const shaymin_v_1 = require("./shaymin-v");
 const shaymin_vstar_1 = require("./shaymin-vstar");
@@ -91,5 +93,7 @@ exports.setBrilliantStars = [
     new shaymin_vstar_1.ShayminVSTAR(),
     new pot_helmet_1.PotHelmet(),
     new team_yells_cheer_1.TeamYellsCheer(),
-    new torterra_1.Torterra()
+    new torterra_1.Torterra(),
+    new riolu_1.Riolu(),
+    new lucario_1.Lucario(),
 ];

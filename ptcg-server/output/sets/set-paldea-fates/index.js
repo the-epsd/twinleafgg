@@ -14,6 +14,7 @@ const kilowattrel_1 = require("./kilowattrel");
 const mime_jr_1 = require("./mime-jr");
 const moonlight_hill_1 = require("./moonlight-hill");
 const scovillain_ex_1 = require("./scovillain-ex");
+const shiny_vault_1 = require("./shiny-vault");
 const students_in_paldea_1 = require("./students-in-paldea");
 const technical_machine_crisis_punch_1 = require("./technical-machine-crisis-punch");
 exports.setPaldeaFates = [
@@ -53,4 +54,41 @@ exports.setPaldeaFates = [
     new card_images_1.SquawkabillyexPAF(),
     new card_images_1.ArtazonPAF(),
     //Shiny Vault
+    new shiny_vault_1.OddishSV(),
+    new shiny_vault_1.GloomSV(),
+    new shiny_vault_1.VileplumeSV(),
+    new shiny_vault_1.PinecoSV(),
+    new shiny_vault_1.SmolivSV(),
+    new shiny_vault_1.DollivSV(),
+    new shiny_vault_1.ArbolivaSV(),
+    new shiny_vault_1.CapsakidSV(),
+    new shiny_vault_1.CharmanderSV(),
+    new shiny_vault_1.CharmeleonSV(),
+    new shiny_vault_1.EnteiSV(),
+    new shiny_vault_1.CharcadetSV(),
+    new shiny_vault_1.ArmarougeSV(),
+    new shiny_vault_1.StaryuSV(),
+    new shiny_vault_1.StarmieSV(),
+    new shiny_vault_1.FinizenSV(),
+    new shiny_vault_1.PalafinSV(),
+    new shiny_vault_1.FrigibaxSV(),
+    new shiny_vault_1.ArctibaxSV(),
+    new shiny_vault_1.BaxcaliburSV(),
+    new shiny_vault_1.LuxraySV(),
+    new shiny_vault_1.ThundurusSV(),
+    new shiny_vault_1.WattrelSV(),
+    new shiny_vault_1.KilowattrelSV(),
+    new shiny_vault_1.CleffaSV(),
+    new shiny_vault_1.NatuSV(),
+    new shiny_vault_1.XatuSV(),
+    new shiny_vault_1.RaltsSV(),
+    new shiny_vault_1.DrifloonSV(),
+    new shiny_vault_1.SpiritombSV(),
+    new shiny_vault_1.MimeJrSV(),
+    new shiny_vault_1.KlefkiSV(),
+    new shiny_vault_1.MimikyuSV(),
+    new shiny_vault_1.TinkatinkSV(),
+    new shiny_vault_1.TinkatuffSV(),
+    new shiny_vault_1.TinkatonSV(),
+    new shiny_vault_1.SnorlaxSV(),
 ];

@@ -8,6 +8,7 @@ import { Charmander } from './charmander';
 import { Charmeleon } from './charmeleon';
 import { Cleffa } from './cleffa';
 import { Dartrix } from './dartrix';
+import { Decidueyeex } from './decidueye-ex';
 import { Dragonair } from './dragonair';
 import { Dragoniteex } from './dragonite-ex';
 import { Dratini } from './dratini';
@@ -76,6 +77,7 @@ export const setObsidianFlames: Card[] = [
   new Bellibolt(),
   new Varoom(),
   new Whiscash(),
+  new Decidueyeex(),
 
   //Alt-s
 

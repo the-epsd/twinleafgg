@@ -10,6 +10,7 @@ import { BlackKyuremex } from './black-kyurem-ex';
 import { Capsakid } from './capsakid.';
 import { CounterGainSSP, ScrambleSwitchSSP } from './card-images';
 import { CelebrationFanfare } from './celebration-fanfare';
+import { Centiskorch } from './centiskorch';
 import { Ceruledge } from './ceruledge';
 import { Ceruledgeex } from './ceruledge-ex';
 import { Charcadet } from './charcadet';
@@ -20,13 +21,15 @@ import { Cofagrigus } from './cofagrigus';
 import { Crocalor } from './crocalor';
 import { Cyrano } from './cyrano';
 import { Deino } from './deino';
+import { Dialga } from './dialga';
 import { DragonsElixir } from './dragons-elixir';
 import { Drasna } from './drasna';
 import { Drayton } from './drayton';
 import { Duraludon } from './duraludon';
+import { Durantex } from './durant-ex';
 import { DuskBall } from './dusk-ball';
 import { Eevee } from './eevee';
-import { EnergySearchPRO } from './energy-search-pro';
+import { EnergySearchPro } from './energy-search-pro';
 import { Espurr } from './espurr';
 import { Eternatus } from './eternatus';
 import { ExcitingStadium } from './exciting-stadium';
@@ -68,6 +71,7 @@ import { RichEnergy } from './rich-energy';
 import { Sandygast } from './sandygast';
 import { ScovillainEXSSP } from './scovillain-ex';
 import { Shroodle } from './shroodle';
+import { Sizzlipede } from './sizzlipede';
 import { Skeledirge } from './skeledirge';
 import { Slakingex } from './slaking-ex';
 import { SlakothSSP } from './slakoth';
@@ -91,6 +95,7 @@ import { Zarude } from './zarude';
 import { Zweilous } from './zweilous';
 
 export const setSurgingSparks: Card[] = [
+  new Dialga(),
   new Pikachuex(),
   new Terapagos(),
   new BlackKyuremex(),
@@ -161,7 +166,7 @@ export const setSurgingSparks: Card[] = [
   new Wochien(),
   new DuskBall(),
   new Gimmighoul(),
-  new EnergySearchPRO(),
+  new EnergySearchPro(),
   new Surfer(),
   new GougingFire(),
   new AlolanDiglett(),
@@ -180,6 +185,9 @@ export const setSurgingSparks: Card[] = [
   new SlakothSSP(),
   new VigorothSSP(),
   new Zarude(),
+  new Durantex(),
+  new Sizzlipede(),
+  new Centiskorch(),
 
   //Reprints
   new ScrambleSwitchSSP(),

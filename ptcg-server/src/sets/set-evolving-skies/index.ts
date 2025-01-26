@@ -36,6 +36,7 @@ import { Tropius } from './tropius';
 import { UmbreonV } from './umbreon-v';
 import { UmbreonVMAX } from './umbreon-vmax';
 import { Vigoroth } from './vigoroth';
+import { VolcaronaV } from './volcarona-v';
 import { Wishiwashi } from './wishiwashi';
 import { ZinniasResolve } from './zinnias-resolve';
 import { Zoroark } from './zoroark';
@@ -85,6 +86,7 @@ export const setEvolvingSkies: Card[] = [
   new Wishiwashi(),
   new SwitchingCups(),
   new Vigoroth(),
+  new VolcaronaV(),
 
   // Full  & Alternate 
   new RayquazaVAA(),

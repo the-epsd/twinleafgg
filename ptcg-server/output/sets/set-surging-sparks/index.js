@@ -12,6 +12,7 @@ const black_kyurem_ex_1 = require("./black-kyurem-ex");
 const capsakid_1 = require("./capsakid.");
 const card_images_1 = require("./card-images");
 const celebration_fanfare_1 = require("./celebration-fanfare");
+const centiskorch_1 = require("./centiskorch");
 const ceruledge_1 = require("./ceruledge");
 const ceruledge_ex_1 = require("./ceruledge-ex");
 const charcadet_1 = require("./charcadet");
@@ -22,10 +23,12 @@ const cofagrigus_1 = require("./cofagrigus");
 const crocalor_1 = require("./crocalor");
 const cyrano_1 = require("./cyrano");
 const deino_1 = require("./deino");
+const dialga_1 = require("./dialga");
 const dragons_elixir_1 = require("./dragons-elixir");
 const drasna_1 = require("./drasna");
 const drayton_1 = require("./drayton");
 const duraludon_1 = require("./duraludon");
+const durant_ex_1 = require("./durant-ex");
 const dusk_ball_1 = require("./dusk-ball");
 const eevee_1 = require("./eevee");
 const energy_search_pro_1 = require("./energy-search-pro");
@@ -70,6 +73,7 @@ const rich_energy_1 = require("./rich-energy");
 const sandygast_1 = require("./sandygast");
 const scovillain_ex_1 = require("./scovillain-ex");
 const shroodle_1 = require("./shroodle");
+const sizzlipede_1 = require("./sizzlipede");
 const skeledirge_1 = require("./skeledirge");
 const slaking_ex_1 = require("./slaking-ex");
 const slakoth_1 = require("./slakoth");
@@ -92,6 +96,7 @@ const wo_chien_1 = require("./wo-chien");
 const zarude_1 = require("./zarude");
 const zweilous_1 = require("./zweilous");
 exports.setSurgingSparks = [
+    new dialga_1.Dialga(),
     new pikachu_ex_1.Pikachuex(),
     new terapagos_1.Terapagos(),
     new black_kyurem_ex_1.BlackKyuremex(),
@@ -162,7 +167,7 @@ exports.setSurgingSparks = [
     new wo_chien_1.Wochien(),
     new dusk_ball_1.DuskBall(),
     new gimmighoul_1.Gimmighoul(),
-    new energy_search_pro_1.EnergySearchPRO(),
+    new energy_search_pro_1.EnergySearchPro(),
     new surfer_1.Surfer(),
     new gouging_fire_1.GougingFire(),
     new alolan_diglett_1.AlolanDiglett(),
@@ -181,6 +186,9 @@ exports.setSurgingSparks = [
     new slakoth_1.SlakothSSP(),
     new vigoroth_1.VigorothSSP(),
     new zarude_1.Zarude(),
+    new durant_ex_1.Durantex(),
+    new sizzlipede_1.Sizzlipede(),
+    new centiskorch_1.Centiskorch(),
     //Reprints
     new card_images_1.ScrambleSwitchSSP(),
     new card_images_1.CounterGainSSP(),

@@ -31,6 +31,9 @@ import { UTurnBoard } from './u-turn-board';
 import { WeaknessGuardEnergy } from './weakness-guard-energy';
 import { Whimsicott } from './whimsicott';
 import { Wimpod } from './wimpod';
+import { Sneasel } from './sneasel';
+import { WeavileGX } from './weavile-gx';
+import { MegaSableyeTyranitarGX } from './mega-sableye-tyranitar-gx';
 
 
 export const setUnifiedMinds: Card[] = [
@@ -65,5 +68,8 @@ export const setUnifiedMinds: Card[] = [
   new UTurnBoard(),
   new WeaknessGuardEnergy(),
   new Whimsicott(),
-  new Wimpod()
+  new Wimpod(),
+  new Sneasel(),
+  new WeavileGX(),
+  new MegaSableyeTyranitarGX(),
 ];

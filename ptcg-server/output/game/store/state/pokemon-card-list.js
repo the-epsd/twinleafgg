@@ -29,6 +29,9 @@ class PokemonCardList extends card_list_1.CardList {
             else if (card.name === 'Lillie\'s Poké Doll') {
                 result.push(card);
             }
+            else if (card.name === 'Clefairy Doll') {
+                result.push(card);
+            }
             else if (card.name === 'Rare Fossil') {
                 result.push(card);
             }
@@ -161,7 +164,7 @@ class PokemonCardList extends card_list_1.CardList {
         return this.cards.some(c => c.tags.includes(card_types_1.CardTag.POKEMON_V) || c.tags.includes(card_types_1.CardTag.POKEMON_VMAX) || c.tags.includes(card_types_1.CardTag.POKEMON_VSTAR));
     }
     exPokemon() {
-        return this.cards.some(c => c.tags.includes(card_types_1.CardTag.POKEMON_V));
+        return this.cards.some(c => c.tags.includes(card_types_1.CardTag.POKEMON_ex));
     }
     futurePokemon() {
         return this.cards.some(c => c.tags.includes(card_types_1.CardTag.FUTURE));

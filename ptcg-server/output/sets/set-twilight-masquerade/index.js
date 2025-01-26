@@ -61,6 +61,7 @@ const palafin_ex_1 = require("./palafin-ex");
 const performance_flute_1 = require("./performance-flute");
 const perrin_1 = require("./perrin");
 const phione_1 = require("./phione");
+const poltchageist_1 = require("./poltchageist");
 const poochyena_1 = require("./poochyena");
 const relicanth_1 = require("./relicanth");
 const rillaboom_1 = require("./rillaboom");
@@ -68,6 +69,8 @@ const roto_stick_1 = require("./roto-stick");
 const scoop_up_cyclone_1 = require("./scoop-up-cyclone");
 const scream_tail_ex_1 = require("./scream-tail-ex");
 const secret_box_1 = require("./secret-box");
+const sinistcha_1 = require("./sinistcha");
+const sinistcha_ex_1 = require("./sinistcha-ex");
 const sunkern_1 = require("./sunkern");
 const survival_cast_1 = require("./survival-cast");
 const tatsugiri_1 = require("./tatsugiri");
@@ -159,4 +162,7 @@ exports.setTwilightMasquerade = [
     new clefairy_1.Clefairy(),
     new palafin_1.Palafin(),
     new palafin_ex_1.Palafinex(),
+    new poltchageist_1.Poltchageist(),
+    new sinistcha_1.Sinistcha(),
+    new sinistcha_ex_1.Sinistchaex(),
 ];

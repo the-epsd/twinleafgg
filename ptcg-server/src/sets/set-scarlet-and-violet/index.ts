@@ -74,6 +74,8 @@ import { Toedscruel } from './toedscruel';
 import { Torkoal } from './torkoal';
 import { UltraBall } from './ultra-ball';
 import { VitalityBand } from './vitality-band';
+import { Wiglett } from './wiglett';
+import { Wugtrio } from './wugtrio';
 import { Youngster } from './youngster';
 
 
@@ -183,4 +185,6 @@ export const setScarletAndViolet: Card[] = [
   new TeamStarGruntFA(),
   new Toedscool(),
   new Toedscruel(),
+  new Wiglett(),
+  new Wugtrio(),
 ];

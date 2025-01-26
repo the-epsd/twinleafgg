@@ -11,7 +11,13 @@ const exchange_ticket_1 = require("./exchange-ticket");
 const floragato_1 = require("./floragato");
 const hops_bag_1 = require("./hops-bag");
 const hops_choice_band_1 = require("./hops-choice-band");
+const hops_corviknight_1 = require("./hops-corviknight");
+const hops_corvisquire_1 = require("./hops-corvisquire");
+const hops_cramorant_1 = require("./hops-cramorant");
 const hops_dubwool_1 = require("./hops-dubwool");
+const hops_rookidee_1 = require("./hops-rookidee");
+const hops_sandaconda_1 = require("./hops-sandaconda");
+const hops_silicobra_1 = require("./hops-silicobra");
 const hops_snorlax_1 = require("./hops-snorlax");
 const hops_wooloo_1 = require("./hops-wooloo");
 const hops_zacian_ex_1 = require("./hops-zacian-ex");
@@ -21,6 +27,7 @@ const ionos_kilowattrel_1 = require("./ionos-kilowattrel");
 const ionos_tadbulb_1 = require("./ionos-tadbulb");
 const ionos_voltorb_1 = require("./ionos-voltorb");
 const ionos_wattrel_1 = require("./ionos-wattrel");
+const iris_fighting_spirit_1 = require("./iris-fighting-spirit");
 const larvitar_1 = require("./larvitar");
 const levincia_1 = require("./levincia");
 const lillies_clefairy_ex_1 = require("./lillies-clefairy-ex");
@@ -36,6 +43,9 @@ const ns_castle_1 = require("./ns-castle");
 const ns_darmanItan_1 = require("./ns-darmanItan");
 const ns_darumaka_1 = require("./ns-darumaka");
 const ns_joltik_1 = require("./ns-joltik");
+const ns_klang_1 = require("./ns-klang");
+const ns_klink_1 = require("./ns-klink");
+const ns_klinklang_1 = require("./ns-klinklang");
 const ns_pp_up_1 = require("./ns-pp-up");
 const ns_purrloin_1 = require("./ns-purrloin");
 const ns_reshiram_1 = require("./ns-reshiram");
@@ -77,6 +87,7 @@ exports.setSV9 = [
     new sprigatito_1.Sprigatito(),
     new floragato_1.Floragato(),
     new meowscarada_1.Meowscarada(),
+    new iris_fighting_spirit_1.IrisFightingSpirit(),
     new lillies_clefairy_ex_1.LilliesClefairyex(),
     new lillies_comfy_1.LilliesComfy(),
     new lillies_pearl_1.LilliesPearl(),
@@ -93,6 +104,12 @@ exports.setSV9 = [
     new hops_wooloo_1.HopsWooloo(),
     new hops_dubwool_1.HopsDubwool(),
     new hops_snorlax_1.HopsSnorlax(),
+    new hops_cramorant_1.HopsCramorant(),
+    new hops_rookidee_1.HopsRookidee(),
+    new hops_corvisquire_1.HopsCorvisquire(),
+    new hops_corviknight_1.HopsCorviknight(),
+    new hops_silicobra_1.HopsSilicobra(),
+    new hops_sandaconda_1.HopsSandaconda(),
     new hops_zacian_ex_1.HopsZacianex(),
     new hops_choice_band_1.HopsChoiceBand(),
     new postwick_1.Postwick(),
@@ -106,4 +123,7 @@ exports.setSV9 = [
     new ns_castle_1.NsCastle(),
     new ns_joltik_1.NsJoltik(),
     new ns_purrloin_1.NsPurrloin(),
+    new ns_klink_1.NsKlink(),
+    new ns_klang_1.NsKlang(),
+    new ns_klinklang_1.NsKlinklang(),
 ];

@@ -20,12 +20,14 @@ const duosion_1 = require("./duosion");
 const emergency_board_1 = require("./emergency-board");
 const eri_1 = require("./eri");
 const explorers_guidance_1 = require("./explorers-guidance");
+const farigiraf_ex_1 = require("./farigiraf-ex");
 const feraligatr_1 = require("./feraligatr");
 const flutter_mane_1 = require("./flutter-mane");
 const full_art_1 = require("./full-art");
 const full_metal_lab_1 = require("./full-metal-lab");
 const gastly_1 = require("./gastly");
 const gengar_ex_1 = require("./gengar-ex");
+const girafarig_1 = require("./girafarig");
 const gouging_fire_ex_1 = require("./gouging-fire-ex");
 const great_tusk_1 = require("./great-tusk");
 const grotle_1 = require("./grotle");
@@ -71,6 +73,8 @@ const roaring_moon_1 = require("./roaring-moon");
 const sableye_1 = require("./sableye");
 const salvatore_1 = require("./salvatore");
 const sandy_shocks_1 = require("./sandy-shocks");
+const scizor_ex_1 = require("./scizor-ex");
+const scyther_1 = require("./scyther");
 const skitty_1 = require("./skitty");
 const solosis_1 = require("./solosis");
 const torracat_1 = require("./torracat");
@@ -82,6 +86,7 @@ const unfezant_1 = require("./unfezant");
 const victini_1 = require("./victini");
 const vikavolt_1 = require("./vikavolt");
 const walking_wake_ex_1 = require("./walking-wake-ex");
+const wugtrio_ex_1 = require("./wugtrio-ex");
 exports.setTemporalForces = [
     new card_images_1.AncientBoosterEnergyCapsuleTEF(),
     new beldum_1.Beldum(),
@@ -200,4 +205,9 @@ exports.setTemporalForces = [
     new full_art_1.WalkingWakeexHR(),
     new full_art_1.IronCrownexHR(),
     new full_art_1.RagingBoltexHR(),
+    new scyther_1.Scyther(),
+    new scizor_ex_1.Scizorex(),
+    new wugtrio_ex_1.Wugtrioex(),
+    new girafarig_1.Girafarig(),
+    new farigiraf_ex_1.Farigirafex(),
 ];

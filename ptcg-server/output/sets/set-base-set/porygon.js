@@ -13,7 +13,7 @@ class Porygon extends pokemon_card_1.PokemonCard {
         this.hp = 30;
         this.weakness = [{ type: card_types_1.CardType.FIGHTING }];
         this.resistance = [{ type: card_types_1.CardType.PSYCHIC, value: -30 }];
-        this.retreat = [];
+        this.retreat = [C];
         this.attacks = [{
                 name: 'Conversion 1',
                 cost: [card_types_1.CardType.COLORLESS],

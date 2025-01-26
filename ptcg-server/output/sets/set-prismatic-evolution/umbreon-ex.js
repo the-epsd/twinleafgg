@@ -25,7 +25,7 @@ class Umbreonex extends game_1.PokemonCard {
                 name: 'Onyx',
                 cost: [L, P, D],
                 damage: 0,
-                text: 'Discard all Energy from this Pokémon. Draw 1 Prize card.',
+                text: 'Discard all Energy from this Pokémon, and take a Prize card.',
             }
         ];
         this.regulationMark = 'H';
@@ -74,7 +74,7 @@ class Umbreonex extends game_1.PokemonCard {
             player.prizes.forEach(prizeList => {
                 allPrizeCards.cards.push(...prizeList.cards);
             });
-            store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_HAND, allPrizeCards, {}, { min: 1, max: 1, allowCancel: false }), chosenPrize => {
+            store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_HAND, allPrizeCards, {}, { min: 1, max: 1, allowCancel: false, isSecret: true }), chosenPrize => {
                 // if (chosenPrize === null || chosenPrize.length === 0) {
                 //   player.prizes.forEach((p, index) => {
                 //     if (originallyFaceDown[index]) {

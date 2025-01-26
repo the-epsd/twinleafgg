@@ -17,7 +17,7 @@ export class Porygon extends PokemonCard {
 
   public resistance = [{ type: CardType.PSYCHIC, value: -30 }];
 
-  public retreat = [];
+  public retreat = [C];
 
   public attacks = [{
     name: 'Conversion 1',

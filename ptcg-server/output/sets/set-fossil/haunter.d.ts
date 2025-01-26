@@ -7,24 +7,22 @@ import { PowerType } from '../../game';
 export declare class Haunter extends PokemonCard {
     stage: Stage;
     evolvesFrom: string;
-    evolvesTo: string[];
     cardType: CardType;
     hp: number;
     weakness: never[];
     resistance: {
-        type: CardType;
+        type: CardType.FIGHTING;
         value: number;
     }[];
     retreat: never[];
     powers: {
         name: string;
-        useWhenInPlay: boolean;
         powerType: PowerType;
         text: string;
     }[];
     attacks: {
         name: string;
-        cost: CardType[];
+        cost: (CardType.PSYCHIC | CardType.COLORLESS)[];
         damage: number;
         text: string;
     }[];

@@ -20,7 +20,7 @@ class HisuianOverqwil extends pokemon_card_1.PokemonCard {
                 name: 'Tormenting Poison',
                 cost: [],
                 damage: 0,
-                text: 'Your opponent\'s Active Pokémon is now Poisoned.During Pokémon Checkup, put 5 damage counters on that Pokémon instead of 1. '
+                text: 'Your opponent\'s Active Pokémon is now Poisoned. During Pokémon Checkup, put 5 damage counters on that Pokémon instead of 1. '
             },
             {
                 name: 'Pinning',

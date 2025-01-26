@@ -10,15 +10,15 @@ export class Minun extends PokemonCard {
   public cardType: CardType = CardType.LIGHTNING;
   public hp: number = 70;
   public weakness = [{ type: CardType.FIGHTING }];
-  public resistance = [{ type: CardType.METAL, value: 20 }];
+  public resistance = [{ type: CardType.METAL, value: -20 }];
   public retreat = [CardType.COLORLESS];
-  
+
   public powers = [{
     name: 'Buddy Pulse',
     powerType: PowerType.ABILITY,
     text: 'If you have Plusle in play, whenever your opponent attaches an Energy card from their hand to 1 of their Pokémon, put 2 damage counters on that Pokémon. The effect of Buddy Pulse doesn\'t stack.'
   }];
-  
+
   public attacks = [{
     name: 'Speed Ball',
     cost: [CardType.LIGHTNING],
@@ -38,9 +38,9 @@ export class Minun extends PokemonCard {
     if (effect instanceof AttachEnergyEffect) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      
+
       let hasMinunInPlay = false;
-      
+
       opponent.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
         if (card === this) {
           hasMinunInPlay = true;
@@ -61,16 +61,16 @@ export class Minun extends PokemonCard {
       } catch {
         return state;
       }
-    
+
       const plusleIsOnBench = player.bench.some(c => c.cards.some(card => card.name === 'Plusle'));
       if (!plusleIsOnBench) {
         return state;
-      }      
-      
+      }
+
       store.log(state, GameLog.LOG_PLAYER_PLACES_DAMAGE_COUNTERS, { name: opponent.name, damage: 20, target: effect.target.getPokemonCard()!.name, effect: this.name });
 
       effect.target.damage += 20;
-      
+
       return state;
     }
 
