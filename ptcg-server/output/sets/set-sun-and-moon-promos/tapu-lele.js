@@ -37,30 +37,29 @@ class TapuLele extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.BASIC;
-        this.cardType = Y;
+        this.cardType = P;
         this.hp = 110;
-        this.weakness = [{ type: M }];
-        this.resistance = [{ type: D, value: -20 }];
+        this.weakness = [{ type: P }];
         this.retreat = [C];
         this.attacks = [
             {
                 name: 'Psywave',
-                cost: [Y],
+                cost: [P],
                 damage: 20,
                 text: 'This attack does 20 damage times the amount of Energy attached to your opponent\'s Active Pokémon.'
             },
             {
                 name: 'Magical Swap',
-                cost: [Y, C],
+                cost: [P, C],
                 damage: 0,
                 text: 'Move any number of damage counters on your opponent\'s Pokémon to their other Pokémon in any way you like.'
             },
         ];
-        this.set = 'UPR';
-        this.setNumber = '94';
+        this.set = 'SMP';
+        this.setNumber = 'SM45';
         this.cardImage = 'assets/cardback.png';
         this.name = 'Tapu Lele';
-        this.fullName = 'Tapu Lele UPR';
+        this.fullName = 'Tapu Lele SMP';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

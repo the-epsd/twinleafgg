@@ -11,6 +11,7 @@ const pikachu_and_zekrom_gx_1 = require("./pikachu-and-zekrom-gx");
 const shining_celebi_1 = require("./shining-celebi");
 const shining_lugia_1 = require("./shining-lugia");
 const tapu_koko_1 = require("./tapu-koko");
+const tapu_lele_1 = require("./tapu-lele");
 exports.setSunAndMoonPromos = [
     new firefighter_pikachu_1.FirefighterPikachu(),
     new greninja_gx_1.GreninjaGXSMP(),
@@ -22,4 +23,5 @@ exports.setSunAndMoonPromos = [
     new shining_celebi_1.ShiningCelebi(),
     new shining_lugia_1.ShiningLugia(),
     new tapu_koko_1.TapuKoko(),
+    new tapu_lele_1.TapuLele(),
 ];

@@ -1,29 +1,25 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike } from '../../game/store/store-like';
-import { State } from '../../game/store/state/state';
+import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
+import { State, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-export declare class TapuLele extends PokemonCard {
+export declare class CharizardBraixenGX extends PokemonCard {
     stage: Stage;
+    tags: CardTag[];
     cardType: CardType;
     hp: number;
     weakness: {
-        type: CardType.METAL;
-    }[];
-    resistance: {
-        type: CardType.DARK;
-        value: number;
+        type: CardType.WATER;
     }[];
     retreat: CardType.COLORLESS[];
     attacks: {
         name: string;
-        cost: (CardType.COLORLESS | CardType.FAIRY)[];
+        cost: (CardType.FIRE | CardType.COLORLESS)[];
         damage: number;
         text: string;
     }[];
     set: string;
-    setNumber: string;
     cardImage: string;
+    setNumber: string;
     name: string;
     fullName: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;

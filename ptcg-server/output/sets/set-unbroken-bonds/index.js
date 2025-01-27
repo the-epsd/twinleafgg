@@ -14,6 +14,7 @@ const gardevoir_and_sylveon_gx_1 = require("./gardevoir-and-sylveon-gx");
 const gloom_1 = require("./gloom");
 const goldeen_1 = require("./goldeen");
 const greens_exploration_1 = require("./greens-exploration");
+const greninja_zoroark_gx_1 = require("./greninja-zoroark-gx");
 const hitmontop_1 = require("./hitmontop");
 const kartana_1 = require("./kartana");
 const lairon_1 = require("./lairon");
@@ -79,5 +80,6 @@ exports.setUnbrokenBonds = [
     new triple_acceleration_energy_1.TripleAccelerationEnergy(),
     new tyrogue_1.Tyrogue(),
     new volcanion_1.Volcanion(),
-    new zeraora_1.Zeraora()
+    new zeraora_1.Zeraora(),
+    new greninja_zoroark_gx_1.GreninjaZoroarkGX(),
 ];

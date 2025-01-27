@@ -63,6 +63,8 @@ const swinub_1 = require("./swinub");
 const torchic_1 = require("./torchic");
 const tyranitar_1 = require("./tyranitar");
 const volcanion_ex_1 = require("./volcanion-ex");
+const wailmer_1 = require("./wailmer");
+const wailord_1 = require("./wailord");
 exports.setSV9 = [
     new torchic_1.Torchic(),
     new combusken_1.Combusken(),
@@ -88,6 +90,8 @@ exports.setSV9 = [
     new floragato_1.Floragato(),
     new meowscarada_1.Meowscarada(),
     new iris_fighting_spirit_1.IrisFightingSpirit(),
+    new wailmer_1.Wailmer(),
+    new wailord_1.Wailord(),
     new lillies_clefairy_ex_1.LilliesClefairyex(),
     new lillies_comfy_1.LilliesComfy(),
     new lillies_pearl_1.LilliesPearl(),

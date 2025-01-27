@@ -8,16 +8,12 @@ export declare class TapuLele extends PokemonCard {
     cardType: CardType;
     hp: number;
     weakness: {
-        type: CardType.METAL;
-    }[];
-    resistance: {
-        type: CardType.DARK;
-        value: number;
+        type: CardType.PSYCHIC;
     }[];
     retreat: CardType.COLORLESS[];
     attacks: {
         name: string;
-        cost: (CardType.COLORLESS | CardType.FAIRY)[];
+        cost: (CardType.PSYCHIC | CardType.COLORLESS)[];
         damage: number;
         text: string;
     }[];

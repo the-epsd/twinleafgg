@@ -67,6 +67,9 @@ class MegaSableyeTyranitarGX extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.KnockOutEffect && effect.target === effect.player.active) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
+            if (!this.usedGreedyCrush) {
+                return state;
+            }
             // Do not activate between turns, or when it's not opponents turn.
             if (state.phase !== game_1.GamePhase.ATTACK || state.players[state.activePlayer] !== opponent) {
                 return state;
@@ -78,7 +81,7 @@ class MegaSableyeTyranitarGX extends pokemon_card_1.PokemonCard {
             }
             // Check if the attack that caused the KnockOutEffect is "Greedy Crush"
             if (this.usedGreedyCrush === true
-                && (((_a = effect.target.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.tags.includes(card_types_1.CardTag.POKEMON_GX)) || ((_b = effect.target.getPokemonCard()) === null || _b === void 0 ? void 0 : _b.tags.includes(card_types_1.CardTag.POKEMON_EX)))) {
+                && (((_a = effect.player.active.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.tags.includes(card_types_1.CardTag.POKEMON_GX)) || ((_b = effect.player.active.getPokemonCard()) === null || _b === void 0 ? void 0 : _b.tags.includes(card_types_1.CardTag.POKEMON_EX)))) {
                 if (effect.prizeCount > 0) {
                     effect.prizeCount += 1;
                     this.usedGreedyCrush = false;

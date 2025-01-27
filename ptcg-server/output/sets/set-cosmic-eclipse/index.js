@@ -38,6 +38,9 @@ const swirlix_1 = require("./swirlix");
 const tag_call_1 = require("./tag-call");
 const ultra_necrozma_1 = require("./ultra-necrozma");
 const wishiwashi_1 = require("./wishiwashi");
+const blastoise_piplup_gx_1 = require("./blastoise-piplup-gx");
+const charizard_braixen_gx_1 = require("./charizard-braixen-gx");
+const togepi_cleffa_igglybuff_gx_1 = require("./togepi-cleffa-igglybuff-gx");
 exports.setCosmicEclipse = [
     new arceus_dialga_palkia_gx_1.ArceusDialgaPalkiaGX(),
     new bellelba_and_brycen_man_1.BellelbaAndBrycenMan(),
@@ -75,5 +78,8 @@ exports.setCosmicEclipse = [
     new swirlix_1.Swirlix(),
     new tag_call_1.TagCall(),
     new ultra_necrozma_1.UltraNecrozma(),
-    new wishiwashi_1.Wishiwashi()
+    new wishiwashi_1.Wishiwashi(),
+    new blastoise_piplup_gx_1.BlastoisePiplupGX(),
+    new charizard_braixen_gx_1.CharizardBraixenGX(),
+    new togepi_cleffa_igglybuff_gx_1.TogepiCleffaIgglybuffGX(),
 ];
