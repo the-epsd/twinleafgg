@@ -7,7 +7,7 @@ import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import {CheckProvidedEnergyEffect} from '../../game/store/effects/check-effects';
 
 export class TogepiCleffaIgglybuffGX extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX, CardTag.TAG_TEAM];
+  public tags = [CardTag.TAG_TEAM];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = Y;
   public hp: number = 240;

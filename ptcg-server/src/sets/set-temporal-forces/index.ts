@@ -28,6 +28,7 @@ import { Gengarex } from './gengar-ex';
 import { Girafarig } from './girafarig';
 import { GougingFireex } from './gouging-fire-ex';
 import { GreatTusk } from './great-tusk';
+import { GreatTusk2 } from './great-tusk-2';
 import { Grotle } from './grotle';
 import { Grubbin } from './grubbin';
 import { HandTrimmer } from './hand-trimmer';
@@ -210,4 +211,5 @@ export const setTemporalForces: Card[] = [
   new Wugtrioex(),
   new Girafarig(),
   new Farigirafex(),
+  new GreatTusk2(),
 ];

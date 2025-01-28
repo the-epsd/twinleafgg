@@ -1,10 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, BoardEffect, CardTag } from '../../game/store/card/card-types';
-import { Card, ChooseEnergyPrompt, CoinFlipPrompt, GameError, GameMessage, PlayerType, PokemonCardList, PowerType, State, StateUtils, StoreLike } from '../../game';
+import { Card, ChooseEnergyPrompt, GameError, GameMessage, PlayerType, PokemonCardList, PowerType, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { PowerEffect } from '../../game/store/effects/game-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 
 export class IonosKilowattrel extends PokemonCard {
@@ -103,18 +103,6 @@ export class IonosKilowattrel extends PokemonCard {
             cardList.addBoardEffect(BoardEffect.ABILITY_USED);
           }
         });
-      });
-    }
-
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const player = effect.player;
-
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], result => {
-        if (result === true) {
-          effect.damage += 90;
-        }
       });
     }
 

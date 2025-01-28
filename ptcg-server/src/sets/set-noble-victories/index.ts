@@ -18,6 +18,7 @@ import { Vanillish } from './vanillish';
 import { Vanillite } from './vanillite';
 import { Vanilluxe } from './vanilluxe';
 import { Xtransceiver } from './xtransceiver';
+import { Zweilous } from './zweilous';
 
 export const setNobleVictories: Card[] = [
   new Archen(),
@@ -38,5 +39,6 @@ export const setNobleVictories: Card[] = [
   new Vanillish(),
   new Vanillite(),
   new Vanilluxe(),
-  new Xtransceiver()
+  new Xtransceiver(),
+  new Zweilous(),
 ];

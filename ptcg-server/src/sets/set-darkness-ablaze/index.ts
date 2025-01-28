@@ -12,6 +12,7 @@ import { GalarianMrMime } from './galarian-mr-mime';
 import { GalarianMrRime } from './galarian-mr-rime';
 import { HeatFireEnergy } from './heat-fire-energy';
 import { HidingDarknessEnergy } from './hiding-darkness-energy';
+import { Hydreigon } from './hydreigon';
 import { Kangaskhan } from './kangaskhan';
 import { Klang } from './klang';
 import { Lugia } from './lugia';
@@ -57,4 +58,5 @@ export const setDarknessAblaze: Card[] = [
   new Teddiursa(),
   new Ursaring(),
   new YellHorn(),
+  new Hydreigon(),
 ];

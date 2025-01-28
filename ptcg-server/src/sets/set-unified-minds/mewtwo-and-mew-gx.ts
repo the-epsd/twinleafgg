@@ -7,7 +7,7 @@ import { CheckProvidedEnergyEffect, CheckAttackCostEffect } from '../../game/sto
 
 export class MewtwoMewGX extends PokemonCard {
 
-  public tags = [CardTag.POKEMON_GX, CardTag.TAG_TEAM];
+  public tags = [CardTag.TAG_TEAM];
 
   public stage: Stage = Stage.BASIC;
 

@@ -7,7 +7,7 @@ import { AfterDamageEffect, ApplyWeaknessEffect } from '../../game/store/effects
 
 
 export class ReshiramCharizardGX extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX, CardTag.TAG_TEAM];
+  public tags = [CardTag.TAG_TEAM];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = CardType.FIRE;
   public hp: number = 270;
