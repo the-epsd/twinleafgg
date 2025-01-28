@@ -5,7 +5,7 @@ import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effect
 
 
 export class GardevoirSylveonGX extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX, CardTag.TAG_TEAM];
+  public tags = [CardTag.TAG_TEAM];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = CardType.FAIRY;
   public hp: number = 260;

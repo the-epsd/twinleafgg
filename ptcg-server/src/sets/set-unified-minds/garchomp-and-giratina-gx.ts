@@ -7,7 +7,7 @@ import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 
 export class GarchompGiratinaGX extends PokemonCard {
 
-  public tags = [CardTag.POKEMON_GX, CardTag.TAG_TEAM];
+  public tags = [CardTag.TAG_TEAM];
 
   public stage: Stage = Stage.BASIC;
 

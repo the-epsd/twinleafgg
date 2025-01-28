@@ -7,7 +7,7 @@ import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effect
 
 export class MegaSableyeTyranitarGX extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.POKEMON_GX, CardTag.TAG_TEAM];
+  public tags = [CardTag.TAG_TEAM];
   public cardType: CardType = D;
   public hp: number = 280;
   public weakness = [{ type: F }];

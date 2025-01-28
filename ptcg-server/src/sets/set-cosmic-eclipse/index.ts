@@ -39,6 +39,7 @@ import { Wishiwashi } from './wishiwashi';
 import { BlastoisePiplupGX } from './blastoise-piplup-gx';
 import { CharizardBraixenGX } from './charizard-braixen-gx';
 import { TogepiCleffaIgglybuffGX } from './togepi-cleffa-igglybuff-gx';
+import { Carvanha } from './carvanha';
 
 
 export const setCosmicEclipse: Card[] = [
@@ -82,4 +83,5 @@ export const setCosmicEclipse: Card[] = [
   new BlastoisePiplupGX(),
   new CharizardBraixenGX(),
   new TogepiCleffaIgglybuffGX(),
+  new Carvanha(),
 ];

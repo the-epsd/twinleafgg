@@ -7,7 +7,7 @@ import {CheckProvidedEnergyEffect} from '../../game/store/effects/check-effects'
 
 export class CharizardBraixenGX extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.POKEMON_GX, CardTag.TAG_TEAM];
+  public tags = [CardTag.TAG_TEAM];
   public cardType: CardType = R;
   public hp: number = 270;
   public weakness = [{ type: W }];
