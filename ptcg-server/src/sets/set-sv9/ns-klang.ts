@@ -18,7 +18,7 @@ export class NsKlang extends PokemonCard {
       name: 'Twirling Gear',
       cost: [C],
       damage: 20,
-      damageMultiplier: 'x',
+      damageCalculation: 'x',
       text: 'Your opponent\'s Active Pokémon is now Confused.'
     },
     { name: 'Confront', cost: [M, C], damage: 40, text: '' },

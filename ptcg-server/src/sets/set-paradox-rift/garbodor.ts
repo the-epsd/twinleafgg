@@ -24,7 +24,7 @@ export class Garbodor extends PokemonCard {
       name: 'Suffocating Gas',
       cost: [D],
       damage: 50,
-      damageMultiplier: 'x',
+      damageCalculation: 'x',
       text: 'Discard any number of Pokémon Tool cards from your hand. ' +
         'This attack does 50 damage for each card you discarded in this way. '
     },

@@ -31,7 +31,7 @@ class Polteageist extends pokemon_card_1.PokemonCard {
                 name: 'Mad Party',
                 cost: [C, C],
                 damage: 20,
-                damageMultiplier: 'x',
+                damageCalculation: 'x',
                 text: 'This attack does 20 damage for each Pokémon in your discard pile that has the Mad Party attack.'
             }
         ];

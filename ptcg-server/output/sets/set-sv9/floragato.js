@@ -16,7 +16,7 @@ class Floragato extends game_1.PokemonCard {
                 name: 'Magical Leaf',
                 cost: [C, C],
                 damage: 30,
-                damageMultiplier: '+',
+                damageCalculation: '+',
                 text: 'Flip a coin. If heads, this attack does 30 more damage, and heal 30 damage from this Pokémon.'
             }];
         this.regulationMark = 'I';

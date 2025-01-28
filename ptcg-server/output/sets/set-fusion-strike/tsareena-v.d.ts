@@ -1,27 +1,22 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
-import { Effect } from '../../game/store/effects/effect';
-export declare class Bunnelby extends PokemonCard {
+import { Attack, State, StoreLike } from '../../game';
+import { Effect } from '../../game/store/effects/game-effects';
+export declare class TsareenaV extends PokemonCard {
     stage: Stage;
     cardType: CardType;
+    tags: string[];
     hp: number;
     weakness: {
-        type: CardType.FIGHTING;
+        type: CardType.FIRE;
     }[];
     retreat: CardType.COLORLESS[];
-    attacks: {
-        name: string;
-        cost: CardType.COLORLESS[];
-        damage: number;
-        damageCalculation: string;
-        text: string;
-    }[];
+    attacks: Attack[];
+    regulationMark: string;
     set: string;
     name: string;
     fullName: string;
     cardImage: string;
     setNumber: string;
-    regulationMark: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

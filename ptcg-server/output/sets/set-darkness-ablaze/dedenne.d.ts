@@ -14,7 +14,7 @@ export declare class Dedenne extends PokemonCard {
         name: string;
         cost: (CardType.PSYCHIC | CardType.COLORLESS)[];
         damage: number;
-        damageMultiplier: string;
+        damageCalculation: string;
         text: string;
     }[];
     set: string;

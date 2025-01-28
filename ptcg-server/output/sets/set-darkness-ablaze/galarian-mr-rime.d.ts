@@ -14,7 +14,7 @@ export declare class GalarianMrRime extends PokemonCard {
         name: string;
         cost: (CardType.WATER | CardType.COLORLESS)[];
         damage: number;
-        damageMultiplier: string;
+        damageCalculation: string;
         text: string;
     }[];
     regulationMark: string;

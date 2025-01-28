@@ -13,7 +13,7 @@ export declare class Floragato extends PokemonCard {
         name: string;
         cost: CardType.COLORLESS[];
         damage: number;
-        damageMultiplier: string;
+        damageCalculation: string;
         text: string;
     }[];
     regulationMark: string;

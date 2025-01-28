@@ -15,7 +15,7 @@ export class MarniesMorpeko extends PokemonCard {
     name: 'Spike Wheel',
     cost: [C, C, C],
     damage: 20,
-    damageMultiplier: '+',
+    damageCalculation: '+',
     text: 'This attack does 40 more damage for each [D] Energy attached to this Pokémon.'
   }];
 

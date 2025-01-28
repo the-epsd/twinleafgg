@@ -15,7 +15,7 @@ export declare class NsKlink extends PokemonCard {
         name: string;
         cost: CardType.COLORLESS[];
         damage: number;
-        damageMultiplier: string;
+        damageCalculation: string;
         text: string;
     }[];
     set: string;

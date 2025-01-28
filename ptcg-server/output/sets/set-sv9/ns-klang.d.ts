@@ -16,14 +16,14 @@ export declare class NsKlang extends PokemonCard {
         name: string;
         cost: CardType.COLORLESS[];
         damage: number;
-        damageMultiplier: string;
+        damageCalculation: string;
         text: string;
     } | {
         name: string;
         cost: (CardType.METAL | CardType.COLORLESS)[];
         damage: number;
         text: string;
-        damageMultiplier?: undefined;
+        damageCalculation?: undefined;
     })[];
     set: string;
     regulationMark: string;

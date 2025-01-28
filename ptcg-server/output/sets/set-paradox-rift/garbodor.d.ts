@@ -15,14 +15,14 @@ export declare class Garbodor extends PokemonCard {
         name: string;
         cost: CardType.DARK[];
         damage: number;
-        damageMultiplier: string;
+        damageCalculation: string;
         text: string;
     } | {
         name: string;
         cost: (CardType.DARK | CardType.COLORLESS)[];
         damage: number;
         text: string;
-        damageMultiplier?: undefined;
+        damageCalculation?: undefined;
     })[];
     set: string;
     name: string;

@@ -22,7 +22,7 @@ export class Meowscarada extends PokemonCard {
     name: 'Rising Bloom',
     cost: [C, C],
     damage: 90,
-    damageMultiplier: '+',
+    damageCalculation: '+',
     text: 'If your opponent\'s Active Pokémon is a Pokémon ex, this attack does 90 more damage.'
   }];
 

@@ -1,28 +1,26 @@
-import { CardType, PokemonCard, Power, Stage, State, StoreLike } from '../../game';
-import { Effect } from '../../game/store/effects/effect';
-export declare class Meowscarada extends PokemonCard {
+import { PokemonCard } from '../../game/store/card/pokemon-card';
+import { Stage, CardType } from '../../game/store/card/card-types';
+import { State, StoreLike } from '../../game';
+import { Effect } from '../../game/store/effects/game-effects';
+export declare class Eevee extends PokemonCard {
     stage: Stage;
-    evolvesFrom: string;
     cardType: CardType;
     hp: number;
     weakness: {
-        type: CardType.FIRE;
+        type: CardType.FIGHTING;
     }[];
     retreat: CardType.COLORLESS[];
-    powers: Power[];
     attacks: {
         name: string;
         cost: CardType.COLORLESS[];
         damage: number;
-        damageCalculation: string;
         text: string;
     }[];
     regulationMark: string;
     set: string;
-    cardImage: string;
-    setNumber: string;
     name: string;
     fullName: string;
-    SHOWTIME_MARKER: string;
+    cardImage: string;
+    setNumber: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }
