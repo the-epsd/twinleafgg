@@ -29,7 +29,7 @@ export class FezandipitiTWM extends PokemonCard {
   public powers = [{
     name: 'Adrena-Pheromone',
     powerType: PowerType.ABILITY,
-    text: 'If this Pokemon has any D Energy attached and is damaged by an attack, flip a coin. If heads, prevent that damage.',
+    text: 'If this Pokemon has any [D] Energy attached and is damaged by an attack, flip a coin. If heads, prevent that damage.',
   }];
 
   public attacks = [

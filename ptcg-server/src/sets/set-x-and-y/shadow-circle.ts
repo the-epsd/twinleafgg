@@ -24,7 +24,7 @@ export class ShadowCircle extends TrainerCard {
   public setNumber: string = '126';
 
   public text: string =
-    'Each Pokemon that has any D Energy attached to it (both yours ' +
+    'Each Pokemon that has any [D] Energy attached to it (both yours ' +
     'and your opponent\'s) has no Weakness.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

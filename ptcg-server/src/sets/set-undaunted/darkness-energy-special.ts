@@ -28,7 +28,7 @@ export class DarknessEnergySpecial extends EnergyCard {
     'the attack does 10 more damage to the Active Pokemon (before applying ' +
     'Weakness and Resistance). Ignore this effect if the Pokemon that ' +
     'Darkness Energy is attached to isn\'t D. Darkness Energy provides ' +
-    'D Energy. (Doesn\'t count as a basic Energy card.)';
+    '[D] Energy. (Doesn\'t count as a basic Energy card.)';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof DealDamageEffect) {

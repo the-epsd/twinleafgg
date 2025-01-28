@@ -7,7 +7,7 @@ const check_effects_1 = require("../../game/store/effects/check-effects");
 class GardevoirSylveonGX extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.tags = [game_1.CardTag.POKEMON_GX, game_1.CardTag.TAG_TEAM];
+        this.tags = [game_1.CardTag.TAG_TEAM];
         this.stage = game_1.Stage.BASIC;
         this.cardType = game_1.CardType.FAIRY;
         this.hp = 260;
@@ -24,7 +24,7 @@ class GardevoirSylveonGX extends game_1.PokemonCard {
                 name: 'Fairy Song',
                 cost: [game_1.CardType.COLORLESS],
                 damage: 0,
-                text: 'Search your deck for up to 2 Y Energy cards and attach them to your Benched Pokemon in any ' +
+                text: 'Search your deck for up to 2 [Y] Energy cards and attach them to your Benched Pokemon in any ' +
                     'way you like. Then, shuffle your deck.'
             },
             {
@@ -37,7 +37,7 @@ class GardevoirSylveonGX extends game_1.PokemonCard {
                 name: 'Magical Miracle-GX',
                 cost: [game_1.CardType.FAIRY, game_1.CardType.FAIRY, game_1.CardType.FAIRY],
                 damage: 200,
-                text: 'If this Pokemon has at least 3 extra Y Energy attached to it (in addition to this attack\'s cost), ' +
+                text: 'If this Pokemon has at least 3 extra [Y] Energy attached to it (in addition to this attack\'s cost), ' +
                     'your opponent shuffles their hand into their deck. (You can\'t use more than 1 GX attack in a game.)'
             },
         ];

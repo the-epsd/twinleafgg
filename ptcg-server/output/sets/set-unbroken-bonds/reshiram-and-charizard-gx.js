@@ -9,7 +9,7 @@ const attack_effects_1 = require("../../game/store/effects/attack-effects");
 class ReshiramCharizardGX extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.tags = [game_1.CardTag.POKEMON_GX, game_1.CardTag.TAG_TEAM];
+        this.tags = [game_1.CardTag.TAG_TEAM];
         this.stage = game_1.Stage.BASIC;
         this.cardType = game_1.CardType.FIRE;
         this.hp = 270;

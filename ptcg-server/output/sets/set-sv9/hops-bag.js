@@ -15,10 +15,7 @@ class HopsBag extends trainer_card_1.TrainerCard {
         this.regulationMark = 'I';
         this.name = 'Hop\'s Bag';
         this.fullName = 'Hop\'s Bag SV9';
-        this.text = 'You can use this card only during your first turn. ' +
-            '' +
-            'Search your deck for up to 2 Basic Pokémon and put ' +
-            'them onto your Bench. Then, shuffle your deck.';
+        this.text = 'Search your deck for up to 2 Basic Hop\'s Pokémon and put them onto your Bench. Then, shuffle your deck.';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {

@@ -20,7 +20,7 @@ class DarkraiEx extends pokemon_card_1.PokemonCard {
         this.powers = [{
                 name: 'Dark Cloak',
                 powerType: game_1.PowerType.ABILITY,
-                text: 'Each of your Pokemon that has any D Energy attached to it ' +
+                text: 'Each of your Pokemon that has any [D] Energy attached to it ' +
                     'has no Retreat Cost.'
             }];
         this.attacks = [

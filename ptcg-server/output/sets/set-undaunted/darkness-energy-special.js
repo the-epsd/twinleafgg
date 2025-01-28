@@ -20,7 +20,7 @@ class DarknessEnergySpecial extends energy_card_1.EnergyCard {
             'the attack does 10 more damage to the Active Pokemon (before applying ' +
             'Weakness and Resistance). Ignore this effect if the Pokemon that ' +
             'Darkness Energy is attached to isn\'t D. Darkness Energy provides ' +
-            'D Energy. (Doesn\'t count as a basic Energy card.)';
+            '[D] Energy. (Doesn\'t count as a basic Energy card.)';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof attack_effects_1.DealDamageEffect) {

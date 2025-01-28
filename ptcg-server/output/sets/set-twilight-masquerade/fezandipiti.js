@@ -25,7 +25,7 @@ class FezandipitiTWM extends pokemon_card_1.PokemonCard {
         this.powers = [{
                 name: 'Adrena-Pheromone',
                 powerType: game_1.PowerType.ABILITY,
-                text: 'If this Pokemon has any D Energy attached and is damaged by an attack, flip a coin. If heads, prevent that damage.',
+                text: 'If this Pokemon has any [D] Energy attached and is damaged by an attack, flip a coin. If heads, prevent that damage.',
             }];
         this.attacks = [
             {

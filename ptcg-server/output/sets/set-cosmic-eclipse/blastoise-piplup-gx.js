@@ -11,7 +11,7 @@ class BlastoisePiplupGX extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.BASIC;
-        this.tags = [card_types_1.CardTag.POKEMON_GX, card_types_1.CardTag.TAG_TEAM];
+        this.tags = [card_types_1.CardTag.TAG_TEAM];
         this.cardType = W;
         this.hp = 270;
         this.weakness = [{ type: G }];

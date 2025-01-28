@@ -30,6 +30,7 @@ const gengar_ex_1 = require("./gengar-ex");
 const girafarig_1 = require("./girafarig");
 const gouging_fire_ex_1 = require("./gouging-fire-ex");
 const great_tusk_1 = require("./great-tusk");
+const great_tusk_2_1 = require("./great-tusk-2");
 const grotle_1 = require("./grotle");
 const grubbin_1 = require("./grubbin");
 const hand_trimmer_1 = require("./hand-trimmer");
@@ -210,4 +211,5 @@ exports.setTemporalForces = [
     new wugtrio_ex_1.Wugtrioex(),
     new girafarig_1.Girafarig(),
     new farigiraf_ex_1.Farigirafex(),
+    new great_tusk_2_1.GreatTusk2(),
 ];
