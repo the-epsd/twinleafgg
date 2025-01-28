@@ -8,11 +8,14 @@ const espeon_ex_1 = require("./espeon-ex");
 const flareon_ex_1 = require("./flareon-ex");
 const glaceon_ex_1 = require("./glaceon-ex");
 const jolteon_ex_1 = require("./jolteon-ex");
+const larvitar_1 = require("./larvitar");
 const leafeon_ex_1 = require("./leafeon-ex");
 const max_rod_1 = require("./max-rod");
+const pupitar_1 = require("./pupitar");
 const regigigas_1 = require("./regigigas");
 const seaking_1 = require("./seaking");
 const treasure_tracker_1 = require("./treasure-tracker");
+const tyranitar_ex_1 = require("./tyranitar-ex");
 const umbreon_ex_1 = require("./umbreon-ex");
 const vaporeon_ex_1 = require("./vaporeon-ex");
 exports.setPrismaticEvolution = [
@@ -30,4 +33,7 @@ exports.setPrismaticEvolution = [
     new regigigas_1.Regigigas(),
     new max_rod_1.MaxRod(),
     new treasure_tracker_1.TreasureTracker(),
+    new larvitar_1.Larvitar(),
+    new pupitar_1.Pupitar(),
+    new tyranitar_ex_1.Tyranitarex(),
 ];

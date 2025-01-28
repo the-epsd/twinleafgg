@@ -51,6 +51,7 @@ const love_ball_1 = require("./love-ball");
 const lucky_helmet_1 = require("./lucky-helmet");
 const luxio_1 = require("./luxio");
 const luxray_ex_1 = require("./luxray-ex");
+const magcargo_ex_1 = require("./magcargo-ex");
 const mightyena_1 = require("./mightyena");
 const monferno_1 = require("./monferno");
 const morpeko_1 = require("./morpeko");
@@ -70,6 +71,7 @@ const scream_tail_ex_1 = require("./scream-tail-ex");
 const secret_box_1 = require("./secret-box");
 const sinistcha_1 = require("./sinistcha");
 const sinistcha_ex_1 = require("./sinistcha-ex");
+const slugma_1 = require("./slugma");
 const sunkern_1 = require("./sunkern");
 const survival_cast_1 = require("./survival-cast");
 const tatsugiri_1 = require("./tatsugiri");
@@ -163,4 +165,6 @@ exports.setTwilightMasquerade = [
     new poltchageist_1.Poltchageist(),
     new sinistcha_1.Sinistcha(),
     new sinistcha_ex_1.Sinistchaex(),
+    new slugma_1.Slugma(),
+    new magcargo_ex_1.Magcargoex(),
 ];
