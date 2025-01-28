@@ -49,6 +49,7 @@ import { LoveBall } from './love-ball';
 import { LuckyHelmet } from './lucky-helmet';
 import { Luxio } from './luxio';
 import { Luxrayex } from './luxray-ex';
+import { Magcargoex } from './magcargo-ex';
 import { Mightyena } from './mightyena';
 import { Monferno } from './monferno';
 import { Morpeko } from './morpeko';
@@ -68,6 +69,7 @@ import { ScreamTailex } from './scream-tail-ex';
 import { SecretBox } from './secret-box';
 import { Sinistcha } from './sinistcha';
 import { Sinistchaex } from './sinistcha-ex';
+import { Slugma } from './slugma';
 import { Sunkern } from './sunkern';
 import { SurvivalCast } from './survival-cast';
 import { Tatsugiri } from './tatsugiri';
@@ -163,4 +165,6 @@ export const setTwilightMasquerade: Card[] = [
   new Poltchageist(),
   new Sinistcha(),
   new Sinistchaex(),
+  new Slugma(),
+  new Magcargoex(),
 ];
