@@ -31,7 +31,7 @@ class Varoom extends pokemon_card_1.PokemonCard {
                 text: ''
             }
         ];
-        this.set = 'OBF';
+        this.set = 'SFA';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '43';
         this.name = 'Varoom';

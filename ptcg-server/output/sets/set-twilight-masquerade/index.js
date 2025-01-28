@@ -63,7 +63,6 @@ const perrin_1 = require("./perrin");
 const phione_1 = require("./phione");
 const poltchageist_1 = require("./poltchageist");
 const poochyena_1 = require("./poochyena");
-const relicanth_1 = require("./relicanth");
 const rillaboom_1 = require("./rillaboom");
 const roto_stick_1 = require("./roto-stick");
 const scoop_up_cyclone_1 = require("./scoop-up-cyclone");
@@ -116,7 +115,6 @@ exports.setTwilightMasquerade = [
     new morpeko_1.Morpeko(),
     new performance_flute_1.PerformanceFlute(),
     new poochyena_1.Poochyena(),
-    new relicanth_1.Relicanth(),
     new roto_stick_1.RotoStick(),
     new scoop_up_cyclone_1.ScoopUpCyclone(),
     new tatsugiri_1.Tatsugiri(),

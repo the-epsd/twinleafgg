@@ -50,7 +50,6 @@ class Slowbro extends game_1.PokemonCard {
                 state = store.prompt(state, new game_1.ChoosePrizePrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON, { count: 2, allowCancel: true }), chosenPrize => {
                     if (chosenPrize === null || chosenPrize.length === 0) {
                         prizes.forEach(p => { p.isSecret = true; });
-                        player.prizes = this.shuffleFaceDownPrizeCards(player.prizes);
                         return state;
                     }
                     const prizePokemon = chosenPrize[0];
@@ -58,29 +57,10 @@ class Slowbro extends game_1.PokemonCard {
                     const hand = player.hand;
                     prizePokemon.moveTo(hand);
                     prizePokemon2.moveTo(hand);
-                    player.prizes = this.shuffleFaceDownPrizeCards(player.prizes);
                 });
             }
         }
         return state;
-    }
-    shuffleFaceDownPrizeCards(array) {
-        const faceDownPrizeCards = array.filter(p => p.isSecret && p.cards.length > 0);
-        for (let i = faceDownPrizeCards.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            const temp = faceDownPrizeCards[i];
-            faceDownPrizeCards[i] = faceDownPrizeCards[j];
-            faceDownPrizeCards[j] = temp;
-        }
-        const prizePositions = [];
-        for (let i = 0; i < array.length; i++) {
-            if (array[i].cards.length === 0 || !array[i].isSecret) {
-                prizePositions.push(array[i]);
-                continue;
-            }
-            prizePositions.push(faceDownPrizeCards.splice(0, 1)[0]);
-        }
-        return prizePositions;
     }
 }
 exports.Slowbro = Slowbro;

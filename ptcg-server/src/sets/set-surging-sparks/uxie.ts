@@ -1,4 +1,4 @@
-import { PokemonCard, Stage, CardType, StoreLike, State, StateUtils, PlayerType } from '../../game';
+import { PokemonCard, Stage, CardType, StoreLike, State } from '../../game';
 import { PutCountersEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
@@ -29,13 +29,18 @@ export class Uxie extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
+      const opponent = effect.opponent;
 
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
-        const putCountersEffect = new PutCountersEffect(effect, 20);
-        putCountersEffect.target = cardList;
-        store.reduceEffect(state, putCountersEffect);
+      const activeDamageEffect = new PutCountersEffect(effect, 20);
+      activeDamageEffect.target = opponent.active;
+      store.reduceEffect(state, activeDamageEffect);
+
+      opponent.bench.forEach((bench, index) => {
+        if (bench.cards.length > 0) {
+          const damageEffect = new PutCountersEffect(effect, 20);
+          damageEffect.target = bench;
+          store.reduceEffect(state, damageEffect);
+        }
       });
     }
     return state;

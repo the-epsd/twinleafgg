@@ -1,4 +1,4 @@
-import { PokemonCard, Stage, CardType, StoreLike, State, CardList } from '../../game';
+import { PokemonCard, Stage, CardType, StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 export declare class Slowbro extends PokemonCard {
     stage: Stage;
@@ -22,5 +22,4 @@ export declare class Slowbro extends PokemonCard {
     name: string;
     fullName: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
-    shuffleFaceDownPrizeCards(array: CardList[]): CardList[];
 }

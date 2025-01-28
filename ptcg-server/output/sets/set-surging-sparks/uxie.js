@@ -30,12 +30,16 @@ class Uxie extends game_1.PokemonCard {
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
-            const player = effect.player;
-            const opponent = game_1.StateUtils.getOpponent(state, player);
-            opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList, card) => {
-                const putCountersEffect = new attack_effects_1.PutCountersEffect(effect, 20);
-                putCountersEffect.target = cardList;
-                store.reduceEffect(state, putCountersEffect);
+            const opponent = effect.opponent;
+            const activeDamageEffect = new attack_effects_1.PutCountersEffect(effect, 20);
+            activeDamageEffect.target = opponent.active;
+            store.reduceEffect(state, activeDamageEffect);
+            opponent.bench.forEach((bench, index) => {
+                if (bench.cards.length > 0) {
+                    const damageEffect = new attack_effects_1.PutCountersEffect(effect, 20);
+                    damageEffect.target = bench;
+                    store.reduceEffect(state, damageEffect);
+                }
             });
         }
         return state;

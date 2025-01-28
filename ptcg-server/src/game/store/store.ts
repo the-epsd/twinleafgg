@@ -281,11 +281,6 @@ export class Store implements StoreLike {
   }
 
   private propagateEffect(state: State, effect: Effect): State {
-    const cardEffect = <any>effect;
-    const cardName = cardEffect.card?.fullName || cardEffect.energyCard?.fullName ||
-      cardEffect.trainerCard?.fullName || cardEffect.pokemonCard?.fullName || 'No card';
-
-    console.time(`propagateEffect-${effect.type}-${cardName}`);
     const cards: Card[] = [];
 
     try {
@@ -307,7 +302,6 @@ export class Store implements StoreLike {
       cards.forEach(c => { state = c.reduceEffect(this, state, effect); });
       return state;
     } finally {
-      console.timeEnd(`propagateEffect-${effect.type}-${cardName}`);
     }
   }
 }

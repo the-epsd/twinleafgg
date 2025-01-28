@@ -188,8 +188,10 @@ export function ATTACH_X_NUMBER_OF_BASIC_ENERGY_CARDS_FROM_YOUR_DISCARD_TO_YOUR_
 }
 
 export function SHUFFLE_DECK(effect: Effect, store: StoreLike, state: State, player: Player) {
+  console.log('Deck order before shuffle:', player.deck.cards.map(c => c.name));
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);
+    console.log('Deck order after shuffle:', player.deck.cards.map(c => c.name));
   });
 }
 
@@ -208,7 +210,7 @@ export function DISCARD_X_ENERGY_FROM_YOUR_HAND(effect: PowerEffect, store: Stor
     GameMessage.CHOOSE_CARD_TO_DISCARD,
     player.hand,
     { superType: SuperType.ENERGY },
-    { allowCancel: true, min: minAmount, max: maxAmount }
+    { allowCancel: false, min: minAmount, max: maxAmount }
   ), cards => {
     cards = cards || [];
     if (cards.length === 0) {

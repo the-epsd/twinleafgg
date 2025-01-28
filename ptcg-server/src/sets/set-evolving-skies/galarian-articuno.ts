@@ -55,9 +55,22 @@ export class GalarianArticuno extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if ((effect instanceof PlayPokemonEffect) && effect.pokemonCard === this) {
-
-
       const player = effect.player;
+
+      const hasEnergyInHand = player.hand.cards.some(c => {
+        return c instanceof EnergyCard
+          && c.energyType === EnergyType.BASIC
+          && c.provides.includes(CardType.PSYCHIC);
+      });
+
+      if (!hasEnergyInHand) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
+      }
+
+      const cardList = StateUtils.findCardList(state, this);
+      if (cardList === undefined) {
+        return state;
+      }
 
       // Try to reduce PowerEffect, to check if something is blocking our ability
       try {
@@ -76,27 +89,12 @@ export class GalarianArticuno extends PokemonCard {
       ), wantToUse => {
         if (wantToUse) {
 
-          const hasEnergyInHand = player.hand.cards.some(c => {
-            return c instanceof EnergyCard
-              && c.energyType === EnergyType.BASIC
-              && c.provides.includes(CardType.PSYCHIC);
-          });
-          if (!hasEnergyInHand) {
-            throw new GameError(GameMessage.CANNOT_USE_POWER);
-          }
-
-          const cardList = StateUtils.findCardList(state, this);
-          if (cardList === undefined) {
-            return state;
-          }
-
-
           return store.prompt(state, new ChooseCardsPrompt(
             player,
             GameMessage.CHOOSE_CARD_TO_ATTACH,
             player.hand,
             { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Psychic Energy' },
-            { min: 0, max: 2, allowCancel: true }
+            { min: 0, max: 2, allowCancel: false }
           ), cards => {
             cards = cards || [];
             if (cards.length > 0) {
@@ -105,33 +103,31 @@ export class GalarianArticuno extends PokemonCard {
           });
         }
       });
+    }
 
-      if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-        const player = effect.player;
-        const cards = player.active.cards.filter(c => c instanceof EnergyCard);
-        const discardEnergy = new DiscardCardsEffect(effect, cards);
-        discardEnergy.target = player.active;
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+      const player = effect.player;
+      const cards = player.active.cards.filter(c =>
+        c instanceof EnergyCard &&
+        (c.provides.includes(CardType.PSYCHIC) || c.provides.includes(CardType.ANY))
+      );
+      const discardEnergy = new DiscardCardsEffect(effect, cards);
+      discardEnergy.target = player.active;
 
-        state = store.prompt(state, new ChoosePokemonPrompt(
-          player.id,
-          GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-          PlayerType.TOP_PLAYER,
-          [SlotType.ACTIVE, SlotType.BENCH],
-          { max: 1, allowCancel: false }
-        ), targets => {
-          if (!targets || targets.length === 0) {
-            return;
-          }
-          let damage = 0;
-          targets[0].cards.forEach(c => {
-            damage = 120;
-
-          });
-          const damageEffect = new PutDamageEffect(effect, damage);
-          damageEffect.target = targets[0];
-          store.reduceEffect(state, damageEffect);
-        });
-      }
+      state = store.prompt(state, new ChoosePokemonPrompt(
+        player.id,
+        GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+        PlayerType.TOP_PLAYER,
+        [SlotType.ACTIVE, SlotType.BENCH],
+        { max: 1, allowCancel: false }
+      ), targets => {
+        if (!targets || targets.length === 0) {
+          return;
+        }
+        const damageEffect = new PutDamageEffect(effect, 120);
+        damageEffect.target = targets[0];
+        store.reduceEffect(state, damageEffect);
+      });
     }
     return state;
   }

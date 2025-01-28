@@ -8,7 +8,7 @@ import { CoreInfo, GameInfo, PlayerInfo, GameState, UserInfo } from '../interfac
 import { SocketCache } from './socket-cache';
 import { SocketWrapper, Response } from './socket-wrapper';
 import { deepCompare } from '../../utils/utils';
-import {Base64} from '../../utils';
+import { Base64 } from '../../utils';
 
 export class CoreSocket {
 

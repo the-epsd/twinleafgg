@@ -31,10 +31,6 @@ class StoneFightingEnergy extends energy_card_1.EnergyCard {
             const checkPokemonType = new check_effects_1.CheckPokemonTypeEffect(effect.target);
             store.reduceEffect(state, checkPokemonType);
             if (checkPokemonType.cardTypes.includes(card_types_1.CardType.FIGHTING)) {
-                if (effect instanceof attack_effects_1.PutDamageEffect) {
-                    effect.damage = Math.max(0, effect.damage - 20);
-                    return state;
-                }
                 if (effect instanceof attack_effects_1.DealDamageEffect) {
                     effect.damage = Math.max(0, effect.damage - 20);
                     return state;

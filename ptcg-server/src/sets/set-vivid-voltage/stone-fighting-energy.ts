@@ -1,6 +1,6 @@
 import { CardType, EnergyType } from '../../game/store/card/card-types';
 import { EnergyCard } from '../../game/store/card/energy-card';
-import { AbstractAttackEffect, DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { AbstractAttackEffect, DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { CheckPokemonTypeEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 
@@ -43,10 +43,6 @@ export class StoneFightingEnergy extends EnergyCard {
       store.reduceEffect(state, checkPokemonType);
 
       if (checkPokemonType.cardTypes.includes(CardType.FIGHTING)) {
-        if (effect instanceof PutDamageEffect) {
-          effect.damage = Math.max(0, effect.damage - 20);
-          return state;
-        }
         if (effect instanceof DealDamageEffect) {
           effect.damage = Math.max(0, effect.damage - 20);
           return state;

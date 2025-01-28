@@ -45,7 +45,7 @@ export class KyuremVMAX extends PokemonCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '48';
+  public setNumber: string = '49';
 
   public name: string = 'Kyurem VMAX';
 

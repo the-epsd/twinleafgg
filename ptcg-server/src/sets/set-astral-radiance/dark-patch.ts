@@ -23,14 +23,14 @@ export class DarkPatch extends TrainerCard {
   public name: string = 'Dark Patch';
 
   public cardImage: string = 'assets/cardback.png';
-  
+
   public setNumber: string = '139';
 
   public fullName: string = 'Dark Patch ASR';
 
   public text: string =
-    'Attach a basic D Energy card from your discard pile to 1 of your ' +
-    'Benched D Pokemon.';
+    'Attach a basic [D] Energy card from your discard pile to 1 of your ' +
+    'Benched [D] Pokemon.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
@@ -78,7 +78,7 @@ export class DarkPatch extends TrainerCard {
         GameMessage.ATTACH_ENERGY_TO_BENCH,
         player.discard,
         PlayerType.BOTTOM_PLAYER,
-        [ SlotType.BENCH ],
+        [SlotType.BENCH],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Darkness Energy' },
         { allowCancel: false, min: 1, max: 1, blockedTo }
       ), transfers => {

@@ -61,7 +61,6 @@ import { Perrin } from './perrin';
 import { Phione } from './phione';
 import { Poltchageist } from './poltchageist';
 import { Poochyena } from './poochyena';
-import { Relicanth } from './relicanth';
 import { Rillaboom } from './rillaboom';
 import { RotoStick } from './roto-stick';
 import { ScoopUpCyclone } from './scoop-up-cyclone';
@@ -116,7 +115,6 @@ export const setTwilightMasquerade: Card[] = [
   new Morpeko(),
   new PerformanceFlute(),
   new Poochyena(),
-  new Relicanth(),
   new RotoStick(),
   new ScoopUpCyclone(),
   new Tatsugiri(),

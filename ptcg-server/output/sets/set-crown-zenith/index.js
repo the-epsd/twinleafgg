@@ -1,8 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setCrownZenith = void 0;
-const lost_vacuum_1 = require("../set-lost-origin/lost-vacuum");
-const rotom_v_1 = require("../set-lost-origin/rotom-v");
 const absol_1 = require("./absol");
 const bidoof_1 = require("./bidoof");
 const hoopa_1 = require("./hoopa");
@@ -32,13 +30,11 @@ exports.setCrownZenith = [
     new radiant_charizard_1.RadiantCharizard(),
     new zamazenta_1.Zamazenta(),
     new luxray_1.Luxray(),
-    new lost_vacuum_1.LostVacuum(),
     new mewtwo_1.Mewtwo(),
     new zamazenta_v_1.ZamazentaV(),
     new radiant_eternatus_1.RadiantEternatus(),
     new regigigas_v_1.RegigigasV(),
     new regigigas_vstar_1.RegigigasVSTAR(),
-    new rotom_v_1.RotomV(),
     new salandit_1.Salandit(),
     new wailmer_1.Wailmer(),
     new yanmega_1.Yanmega(),

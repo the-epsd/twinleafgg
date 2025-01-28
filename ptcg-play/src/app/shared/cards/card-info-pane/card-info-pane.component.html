@@ -12,7 +12,7 @@
         <span class="subtitle-hp-value">{{card.hp}}</span>
       </div>
       <div class="subtitle-card-type">
-        <ptcg-energy [type]="card.cardType"></ptcg-energy>
+        <ptcg-energy [type]="card.cardType" style="transform: translateY(12px);"></ptcg-energy>
         <ng-container *ngIf="card.additionalCardTypes">
           <ptcg-energy *ngFor="let type of card.additionalCardTypes" [type]="type"></ptcg-energy>
         </ng-container>
@@ -46,7 +46,7 @@
             {{ power.name }}
           </div>
         </div>
-        <div class="card-text">{{ power.text }}</div>
+        <div class="card-text" [innerHTML]="transformEnergyText(power.text)"></div>
       </div>
     </ptcg-hover-highlight>
 
@@ -55,8 +55,9 @@
       <div class="attack">
         <div class="attack-header">
           <div class="attack-cost">
-            <ptcg-energy *ngIf="attack.cost.length === 0"></ptcg-energy>
-            <ptcg-energy *ngFor="let cost of attack.cost" [type]="cost"></ptcg-energy>
+            <ptcg-energy *ngIf="attack.cost.length === 0" style="transform: translateY(3px);"></ptcg-energy>
+            <ptcg-energy *ngFor="let cost of attack.cost" [type]="cost"
+              style="transform: translateY(3px);"></ptcg-energy>
           </div>
           <div class="attack-name">
             {{ attack.name }}
@@ -66,7 +67,7 @@
             {{ attack.damage }}{{attack.damageCalculation ? ' ' + attack.damageCalculation : ''}}
           </div>
         </div>
-        <div class="card-text" *ngIf="attack.text">{{ attack.text }}</div>
+        <div class="card-text" [innerHTML]="transformEnergyText(attack.text)"></div>
       </div>
     </ptcg-hover-highlight>
 
@@ -75,7 +76,7 @@
         <div class="stats-item-header" translate>CARDS_WEAKNESS</div>
         <div class="stats-item-value" *ngFor="let weakness of card.weakness">
           <div class="stats-item-value-type">
-            <ptcg-energy [type]="weakness.type"></ptcg-energy>
+            <ptcg-energy [type]="weakness.type" style="transform: translateY(5px);"></ptcg-energy>
           </div>
           <div class="stats-item-value-modifier">
             {{ weakness.value ? '+' + weakness.value : 'x2' }}
@@ -87,7 +88,7 @@
         <div class="stats-item-header" translate>CARDS_RESISTANCE</div>
         <div class="stats-item-value" *ngFor="let resistance of card.resistance">
           <div class="stats-item-value-type">
-            <ptcg-energy [type]="resistance.type"></ptcg-energy>
+            <ptcg-energy [type]="resistance.type" style="transform: translateY(5px);"></ptcg-energy>
           </div>
           <div class="stats-item-value-modifier">
             {{ resistance.value }}
@@ -100,7 +101,8 @@
           <div class="stats-item-header" translate>CARDS_RETREAT_COST</div>
           <div class="stats-item-value">
             <div class="stats-item-value-type">
-              <ptcg-energy *ngFor="let cost of card.retreat" [type]="cost"></ptcg-energy>
+              <ptcg-energy *ngFor="let cost of card.retreat" [type]="cost"
+                style="transform: translateY(5px);"></ptcg-energy>
             </div>
           </div>
         </div>
@@ -114,7 +116,7 @@
           {{ card.name }}
         </div>
       </div>
-      <div class="card-text">{{ card.text }}</div>
+      <div class="card-text" [innerHTML]="transformEnergyText(card.text)"></div>
     </div>
 
   </div>
@@ -140,7 +142,7 @@
           {{ card.name }}
         </div>
       </div>
-      <div class="card-text">{{ card.text }}</div>
+      <div class="card-text" [innerHTML]="transformEnergyText(card.text)"></div>
     </div>
 
   </div>
@@ -174,7 +176,7 @@
             {{ power.name }}
           </div>
         </div>
-        <div class="card-text">{{ power.text }}</div>
+        <div class="card-text" [innerHTML]="transformEnergyText(power.text)"></div>
       </div>
     </ptcg-hover-highlight>
 
@@ -194,7 +196,7 @@
             {{ attack.damage }}
           </div>
         </div>
-        <div class="card-text" *ngIf="attack.text">{{ attack.text }}</div>
+        <div class="card-text" [innerHTML]="transformEnergyText(attack.text)"></div>
       </div>
     </ptcg-hover-highlight>
 
@@ -206,7 +208,7 @@
             {{ card.name }}
           </div>
         </div>
-        <div class="card-text">{{ card.text }}</div>
+        <div class="card-text" [innerHTML]="transformEnergyText(card.text)"></div>
       </div>
     </ptcg-hover-highlight>
 
