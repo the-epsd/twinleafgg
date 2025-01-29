@@ -52,24 +52,26 @@ class ZacianV extends pokemon_card_1.PokemonCard {
             if (!metals) {
                 topdecks.moveTo(player.hand);
             }
-            const blocked = [];
-            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (list, card, target) => {
-                if (card !== this) {
-                    blocked.push(target);
-                }
-            });
-            state = store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_BENCH, topdecks, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Metal Energy' }, { allowCancel: false, min: 0, max: metals, blockedTo: blocked }), transfers => {
-                transfers = transfers || [];
-                // cancelled by user
-                if (transfers.length === 0) {
-                    return;
-                }
-                for (const transfer of transfers) {
-                    const target = game_1.StateUtils.getTarget(state, player, transfer.to);
-                    topdecks.moveCardTo(transfer.card, target);
-                }
-                topdecks.moveTo(player.hand);
-            });
+            if (metals > 0) {
+                const blocked = [];
+                player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (list, card, target) => {
+                    if (card !== this) {
+                        blocked.push(target);
+                    }
+                });
+                state = store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_BENCH, topdecks, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Metal Energy' }, { allowCancel: false, min: 0, max: metals, blockedTo: blocked }), transfers => {
+                    transfers = transfers || [];
+                    // cancelled by user
+                    if (transfers.length === 0) {
+                        return;
+                    }
+                    for (const transfer of transfers) {
+                        const target = game_1.StateUtils.getTarget(state, player, transfer.to);
+                        topdecks.moveCardTo(transfer.card, target);
+                    }
+                    topdecks.moveTo(player.hand);
+                });
+            }
             // end the turn
             const endTurnEffect = new game_phase_effects_1.EndTurnEffect(player);
             return store.reduceEffect(state, endTurnEffect);

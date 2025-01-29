@@ -58,6 +58,7 @@ class Togekiss extends pokemon_card_1.PokemonCard {
             }
             state = store.prompt(state, new game_1.ConfirmPrompt(effect.player.id, game_1.GameMessage.WANT_TO_USE_ABILITY), wantToUse => {
                 if (wantToUse) {
+                    store.log(state, game_1.GameLog.LOG_PLAYER_USES_ABILITY, { name: player.name, card: 'Togekiss' });
                     while (player.hand.cards.length < 8 && player.deck.cards.length > 0) {
                         player.deck.moveTo(player.hand, 1);
                     }
