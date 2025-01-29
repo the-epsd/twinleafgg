@@ -18,7 +18,7 @@ class Venomoth extends pokemon_card_1.PokemonCard {
         this.powers = [{
                 name: 'Shift',
                 useWhenInPlay: true,
-                powerType: game_1.PowerType.POKEPOWER,
+                powerType: game_1.PowerType.POKEMON_POWER,
                 text: 'Once during your turn (before your attack), you may change the type of Venomoth to the type of any other Pokémon in play other than Colorless. This power can\'t be used if Venomoth is Asleep, Confused, or Paralyzed.'
             }];
         this.attacks = [{
@@ -39,6 +39,11 @@ class Venomoth extends pokemon_card_1.PokemonCard {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             const cardList = game_1.StateUtils.findCardList(state, this);
+            if (cardList.specialConditions.includes(card_types_1.SpecialCondition.ASLEEP) ||
+                cardList.specialConditions.includes(card_types_1.SpecialCondition.CONFUSED) ||
+                cardList.specialConditions.includes(card_types_1.SpecialCondition.PARALYZED)) {
+                return state;
+            }
             const blocked = [];
             player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card, index) => {
                 if (card.cardType === card_types_1.CardType.COLORLESS) {
@@ -50,9 +55,6 @@ class Venomoth extends pokemon_card_1.PokemonCard {
                     blocked.push(index);
                 }
             });
-            if (cardList.specialConditions.length > 0) {
-                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
-            }
             if (player.marker.hasMarker(this.SHIFT_MARKER)) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
@@ -63,7 +65,7 @@ class Venomoth extends pokemon_card_1.PokemonCard {
                 player.marker.addMarker(this.SHIFT_MARKER, this);
             });
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.SHIFT_MARKER, this)) {
             effect.player.marker.removeMarker(this.SHIFT_MARKER, this);
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

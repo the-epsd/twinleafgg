@@ -51,11 +51,6 @@ class Copperajah extends pokemon_card_1.PokemonCard {
             effect.player.marker.addMarker(this.ATTACK_USED_2_MARKER, this);
             console.log('second marker added');
         }
-        if (effect instanceof play_card_effects_1.PlayPokemonEffect) {
-            const player = effect.player;
-            const opponent = game_1.StateUtils.getOpponent(state, player);
-            opponent.marker.addMarker(this.OPPONENT_CANNOT_PLAY_STADIUMS_MARKER, this);
-        }
         if (effect instanceof play_card_effects_1.PlayStadiumEffect) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
@@ -71,9 +66,8 @@ class Copperajah extends pokemon_card_1.PokemonCard {
             catch (_a) {
                 return state;
             }
-            if (player.active.cards[0] == this) {
-                if (opponent.marker.hasMarker(this.OPPONENT_CANNOT_PLAY_STADIUMS_MARKER, this))
-                    throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);
+            if (opponent.active.getPokemonCard() == this) {
+                throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);
             }
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

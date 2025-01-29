@@ -29,6 +29,7 @@ export class Defender extends TrainerCard {
   public readonly CLEAR_DEFENDER_MARKER = 'CLEAR_DEFENDER_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
 

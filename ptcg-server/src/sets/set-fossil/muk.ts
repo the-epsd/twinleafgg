@@ -4,7 +4,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { PowerEffect, AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { CoinFlipPrompt, GameError, GameMessage, PlayerType, PowerType, StateUtils } from '../../game';
+import { CoinFlipPrompt, GameError, GameMessage, PlayerType, PokemonCardList, PowerType, StateUtils } from '../../game';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 
 export class Muk extends PokemonCard {
@@ -18,7 +18,7 @@ export class Muk extends PokemonCard {
 
   public powers = [{
     name: 'Toxic Gas',
-    powerType: PowerType.POKEPOWER,
+    powerType: PowerType.POKEMON_POWER,
     text: 'Ignore all Pokémon Powers other than Toxic Gases. This power stops working while Muk is Asleep, Confused, or Paralyzed.'
   }];
 
@@ -43,9 +43,16 @@ export class Muk extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PowerEffect && effect.power.powerType === PowerType.POKEPOWER && effect.power.name !== 'Toxic Gas') {
+    if (effect instanceof PowerEffect && effect.power.powerType === PowerType.POKEMON_POWER && effect.power.name !== 'Toxic Gas') {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
+      const cardList = StateUtils.findCardList(state, this) as PokemonCardList;
+
+      if (cardList.specialConditions.includes(SpecialCondition.ASLEEP) ||
+        cardList.specialConditions.includes(SpecialCondition.CONFUSED) ||
+        cardList.specialConditions.includes(SpecialCondition.PARALYZED)) {
+        return state;
+      }
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
         if (cardList.getPokemonCard() === this && cardList.specialConditions.length > 0) {

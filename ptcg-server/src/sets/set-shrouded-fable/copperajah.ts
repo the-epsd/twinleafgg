@@ -3,7 +3,7 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { ConfirmPrompt, GameError, GameMessage, PowerType, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
-import { PlayPokemonEffect, PlayStadiumEffect } from '../../game/store/effects/play-card-effects';
+import { PlayStadiumEffect } from '../../game/store/effects/play-card-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class Copperajah extends PokemonCard {
@@ -69,13 +69,6 @@ export class Copperajah extends PokemonCard {
       console.log('second marker added');
     }
 
-    if (effect instanceof PlayPokemonEffect) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      opponent.marker.addMarker(this.OPPONENT_CANNOT_PLAY_STADIUMS_MARKER, this);
-    }
-
     if (effect instanceof PlayStadiumEffect) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -92,9 +85,8 @@ export class Copperajah extends PokemonCard {
         return state;
       }
 
-      if (player.active.cards[0] == this) {
-        if (opponent.marker.hasMarker(this.OPPONENT_CANNOT_PLAY_STADIUMS_MARKER, this))
-          throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+      if (opponent.active.getPokemonCard() == this) {
+        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
       }
     }
 

@@ -1,5 +1,5 @@
-import { AttachEnergyPrompt, CardList, GameError, GameMessage, PlayerType, PokemonCardList, SelectPrompt, SlotType, StateUtils } from '../../game';
-import { CardType, EnergyType, Stage, SuperType } from '../../game/store/card/card-types';
+import { AttachEnergyPrompt, CardList, GameMessage, PlayerType, PokemonCardList, SelectPrompt, SlotType, StateUtils } from '../../game';
+import { CardType, EnergyType, SpecialCondition, Stage, SuperType } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Attack, Power, PowerType } from '../../game/store/card/pokemon-types';
 import { checkState } from '../../game/store/effect-reducers/check-effect';
@@ -37,11 +37,10 @@ export class Electrode extends PokemonCard {
 
   public powers: Power[] = [
     {
-      powerType: PowerType.POKEPOWER,
+      powerType: PowerType.POKEMON_POWER,
       useWhenInPlay: true,
       name: 'Buzzap',
       text: 'At any time during your turn (before your attack), you may Knock Out Electrode and attach it to 1 of your other Pokémon. If you do, choose a type of Energy. Electrode is now an Energy card (instead of a Pokémon) that provides 2 energy of that type. You can’t use this power if Electrode is Asleep, Confused, or Paralyzed.',
-
     }
   ];
 
@@ -64,8 +63,10 @@ export class Electrode extends PokemonCard {
       const player = effect.player;
       const cardList = StateUtils.findCardList(state, this) as PokemonCardList;
 
-      if (cardList.specialConditions.length > 0) {
-        throw new GameError(GameMessage.CANNOT_USE_POWER);
+      if (cardList.specialConditions.includes(SpecialCondition.ASLEEP) ||
+        cardList.specialConditions.includes(SpecialCondition.CONFUSED) ||
+        cardList.specialConditions.includes(SpecialCondition.PARALYZED)) {
+        return state;
       }
 
       cardList.damage = 999;
@@ -128,7 +129,6 @@ export class Electrode extends PokemonCard {
             player.discard.moveCardTo(this, target);
             target.cards.unshift(target.cards.splice(target.cards.length - 1, 1)[0]);
           }
-
           return state;
         });
       });
@@ -150,7 +150,6 @@ export class Electrode extends PokemonCard {
         }
       });
     }
-
     return state;
   }
 }

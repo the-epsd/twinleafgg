@@ -66,7 +66,7 @@ class Psyduck extends pokemon_card_1.PokemonCard {
                 throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);
             }
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.OPPONENT_CANNOT_PLAY_TRAINERS_CARDS_MARKER, this)) {
             effect.player.marker.removeMarker(this.OPPONENT_CANNOT_PLAY_TRAINERS_CARDS_MARKER, this);
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {

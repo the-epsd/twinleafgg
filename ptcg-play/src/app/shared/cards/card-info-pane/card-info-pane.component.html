@@ -39,6 +39,7 @@
           <div class="power-type" [ngSwitch]="power.powerType">
             <div class="ability" *ngSwitchCase="PowerType.ABILITY" translate>CARDS_ABILITY</div>
             <div class="ability" *ngSwitchCase="PowerType.POKEPOWER" translate>CARDS_POKE_POWER</div>
+            <div class="ability" *ngSwitchCase="PowerType.POKEMON_POWER" translate>CARDS_POKEMON_POWER</div>
             <div class="poke-body" *ngSwitchCase="PowerType.POKEBODY" translate>CARDS_POKE_BODY</div>
             <div class="ability" *ngSwitchCase="PowerType.ANCIENT_TRAIT" translate>CARDS_ANCIENT_TRAIT</div>
           </div>

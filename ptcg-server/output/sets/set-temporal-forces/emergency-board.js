@@ -20,15 +20,17 @@ class EmergencyBoard extends trainer_card_1.TrainerCard {
         if (effect instanceof check_effects_1.CheckRetreatCostEffect && effect.player.active.tool === this) {
             const player = effect.player;
             const pokemonCard = player.active.getPokemonCard();
-            if (pokemonCard && pokemonCard.hp <= 30) {
-                effect.cost = [];
-            }
-            else {
-                const index = effect.cost.indexOf(card_types_1.CardType.COLORLESS);
-                if (index !== -1) {
-                    effect.cost.splice(index, 1);
+            if (pokemonCard) {
+                const remainingHp = pokemonCard.hp - player.active.damage;
+                if (remainingHp <= 30) {
+                    effect.cost = [];
                 }
-                return state;
+                else {
+                    const index = effect.cost.indexOf(card_types_1.CardType.COLORLESS);
+                    if (index !== -1) {
+                        effect.cost.splice(index, 1);
+                    }
+                }
             }
             return state;
         }

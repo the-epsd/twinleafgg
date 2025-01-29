@@ -19,6 +19,7 @@ const golduck_1 = require("./golduck");
 const golem_1 = require("./golem");
 const graveler_1 = require("./graveler");
 const grimer_1 = require("./grimer");
+const haunter_1 = require("./haunter");
 const hitmonlee_1 = require("./hitmonlee");
 const horsea_1 = require("./horsea");
 const hypno_1 = require("./hypno");
@@ -60,6 +61,7 @@ exports.setFossil = [
     new golem_1.Golem(),
     new graveler_1.Graveler(),
     new grimer_1.Grimer(),
+    new haunter_1.Haunter(),
     new hitmonlee_1.Hitmonlee(),
     new horsea_1.Horsea(),
     new hypno_1.Hypno(),

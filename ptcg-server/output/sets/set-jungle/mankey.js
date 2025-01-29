@@ -16,7 +16,7 @@ class Mankey extends pokemon_card_1.PokemonCard {
         this.powers = [{
                 name: 'Peek',
                 useWhenInPlay: true,
-                powerType: game_1.PowerType.POKEPOWER,
+                powerType: game_1.PowerType.POKEMON_POWER,
                 text: 'Once during your turn (before your attack), you may look at one of the following: the top card of either player\'s deck, a random card from your opponent\'s hand, or one of either player\'s Prizes. This power can\'t be used if Mankey is Asleep, Confused, or Paralyzed.'
             }];
         this.attacks = [{
@@ -37,8 +37,10 @@ class Mankey extends pokemon_card_1.PokemonCard {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             const cardList = game_1.StateUtils.findCardList(state, this);
-            if (cardList.specialConditions.length > 0) {
-                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
+            if (cardList.specialConditions.includes(card_types_1.SpecialCondition.ASLEEP) ||
+                cardList.specialConditions.includes(card_types_1.SpecialCondition.CONFUSED) ||
+                cardList.specialConditions.includes(card_types_1.SpecialCondition.PARALYZED)) {
+                return state;
             }
             if (player.marker.hasMarker(this.PEEK_MARKER)) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
@@ -137,7 +139,7 @@ class Mankey extends pokemon_card_1.PokemonCard {
                 option.action();
             });
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.PEEK_MARKER, this)) {
             effect.player.marker.removeMarker(this.PEEK_MARKER, this);
         }
         return state;

@@ -13,7 +13,7 @@ class Omanyte extends game_1.PokemonCard {
         this.retreat = [C];
         this.powers = [{
                 name: 'Clairvoyance',
-                powerType: game_1.PowerType.ABILITY,
+                powerType: game_1.PowerType.POKEMON_POWER,
                 text: 'Your opponent plays with his or her hand face up. This power stops working while Omanyte is Asleep, Confused, or Paralyzed.',
             }];
         this.attacks = [{

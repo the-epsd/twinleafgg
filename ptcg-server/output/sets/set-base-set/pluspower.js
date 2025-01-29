@@ -30,7 +30,7 @@ class PlusPower extends trainer_card_1.TrainerCard {
                 effect.damage += 10;
             }
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.PLUS_POWER_MARKER, this)) {
             effect.player.marker.removeMarker(this.PLUS_POWER_MARKER, this);
         }
         return state;

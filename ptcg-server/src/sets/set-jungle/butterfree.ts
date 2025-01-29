@@ -50,7 +50,7 @@ export class Butterfree extends PokemonCard {
       this.USED_WHIRLWIND = true;
     }
 
-    if (effect instanceof AfterDamageEffect && this.USED_WHIRLWIND) {
+    if (effect instanceof AfterDamageEffect && this.USED_WHIRLWIND == true) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const hasBench = opponent.bench.some(b => b.cards.length > 0);
@@ -74,7 +74,7 @@ export class Butterfree extends PokemonCard {
       });
     }
 
-    if (effect instanceof EndTurnEffect) {
+    if (effect instanceof EndTurnEffect && this.USED_WHIRLWIND == true) {
       this.USED_WHIRLWIND = false;
     }
 

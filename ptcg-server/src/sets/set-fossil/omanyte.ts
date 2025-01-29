@@ -10,7 +10,7 @@ export class Omanyte extends PokemonCard {
 
   public powers = [{
     name: 'Clairvoyance',
-    powerType: PowerType.ABILITY,
+    powerType: PowerType.POKEMON_POWER,
     text: 'Your opponent plays with his or her hand face up. This power stops working while Omanyte is Asleep, Confused, or Paralyzed.',
   }];
 

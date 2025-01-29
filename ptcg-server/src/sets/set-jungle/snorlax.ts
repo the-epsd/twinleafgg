@@ -1,8 +1,8 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
-import { CoinFlipPrompt, GameError, GameMessage, PokemonCardList, PowerType, State, StateUtils, StoreLike } from '../../game';
+import { CoinFlipPrompt, GameMessage, PokemonCardList, PowerType, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 import { CheckTableStateEffect } from '../../game/store/effects/check-effects';
 
@@ -21,7 +21,7 @@ export class Snorlax extends PokemonCard {
 
   public powers = [{
     name: 'Thick Skinned',
-    powerType: PowerType.POKEPOWER,
+    powerType: PowerType.POKEMON_POWER,
     text: 'Snorlax can\'t become Asleep, Confused, Paralyzed, or Poisoned. This power can\'t be used if Snorlax is already Asleep, Confused, or Paralyzed.'
   }];
 
@@ -45,17 +45,27 @@ export class Snorlax extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof CheckTableStateEffect) {
+      const player = state.players[state.activePlayer];
       const cardList = StateUtils.findCardList(state, this);
+
+      // Try reducing ability
+      try {
+        const stub = new PowerEffect(player, {
+          name: 'test',
+          powerType: PowerType.POKEMON_POWER,
+          text: ''
+        }, this);
+        store.reduceEffect(state, stub);
+      } catch {
+        return state;
+      }
+
       if (cardList instanceof PokemonCardList && cardList.getPokemonCard() === this) {
-        const hasSpecialCondition = cardList.specialConditions.some(condition => condition !== SpecialCondition.ABILITY_USED);
-
-        if (cardList.specialConditions.length > 0) {
-          throw new GameError(GameMessage.CANNOT_USE_POWER);
-        }
-
-        if (!hasSpecialCondition) {
-          cardList.specialConditions = cardList.specialConditions.filter(condition => condition === SpecialCondition.ABILITY_USED);
-        }
+        cardList.specialConditions = cardList.specialConditions.filter(condition =>
+          condition !== SpecialCondition.ASLEEP &&
+          condition !== SpecialCondition.CONFUSED &&
+          condition !== SpecialCondition.PARALYZED
+        );
       }
     }
 

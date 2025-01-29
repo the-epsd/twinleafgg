@@ -26,7 +26,7 @@ class Electrode extends pokemon_card_1.PokemonCard {
         this.retreat = [card_types_1.CardType.COLORLESS];
         this.powers = [
             {
-                powerType: pokemon_types_1.PowerType.POKEPOWER,
+                powerType: pokemon_types_1.PowerType.POKEMON_POWER,
                 useWhenInPlay: true,
                 name: 'Buzzap',
                 text: 'At any time during your turn (before your attack), you may Knock Out Electrode and attach it to 1 of your other Pokémon. If you do, choose a type of Energy. Electrode is now an Energy card (instead of a Pokémon) that provides 2 energy of that type. You can’t use this power if Electrode is Asleep, Confused, or Paralyzed.',
@@ -47,8 +47,10 @@ class Electrode extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
             const cardList = game_1.StateUtils.findCardList(state, this);
-            if (cardList.specialConditions.length > 0) {
-                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
+            if (cardList.specialConditions.includes(card_types_1.SpecialCondition.ASLEEP) ||
+                cardList.specialConditions.includes(card_types_1.SpecialCondition.CONFUSED) ||
+                cardList.specialConditions.includes(card_types_1.SpecialCondition.PARALYZED)) {
+                return state;
             }
             cardList.damage = 999;
             state = check_effect_1.checkState(store, state);

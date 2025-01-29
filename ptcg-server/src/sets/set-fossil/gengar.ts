@@ -22,10 +22,11 @@ export class Gengar extends PokemonCard {
   public hp: number = 80;
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C];
+
   public powers = [{
     name: 'Curse',
     useWhenInPlay: true,
-    powerType: PowerType.POKEPOWER,
+    powerType: PowerType.POKEMON_POWER,
     text: 'Once during your turn (before your attack), you may move 1 damage counter from 1 of your opponent\'s Pokémon to another(even if it would Knock Out the other Pokémon).This power can\'t be used if Gengar is Asleep, Confused, or Paralyzed.'
   }];
 

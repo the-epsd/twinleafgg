@@ -14,7 +14,7 @@ export class Kabuto extends PokemonCard {
 
   public powers = [{
     name: 'Kabuto Armor',
-    powerType: PowerType.POKEPOWER,
+    powerType: PowerType.POKEMON_POWER,
     text: 'Whenever an attack (even your own) does damage to Kabuto (after applying Weakness and Resistance), that attack does half the damage to Kabuto (rounded down to the nearest 10). (Any other effects of attacks still happen.) This power stops working while Kabuto is Asleep, Confused, or Paralyzed.'
   }];
 
@@ -50,7 +50,7 @@ export class Kabuto extends PokemonCard {
       try {
         const stub = new PowerEffect(effect.player, {
           name: 'test',
-          powerType: PowerType.POKEPOWER,
+          powerType: PowerType.POKEMON_POWER,
           text: ''
         }, this);
         store.reduceEffect(state, stub);

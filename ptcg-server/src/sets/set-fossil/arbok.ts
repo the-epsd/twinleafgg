@@ -65,7 +65,7 @@ export class Arbok extends PokemonCard {
       });
     }
 
-    if (effect instanceof EndTurnEffect) {
+    if (effect instanceof EndTurnEffect && this.USED_TERROR_STRIKE == true) {
       this.USED_TERROR_STRIKE = false;
     }
 

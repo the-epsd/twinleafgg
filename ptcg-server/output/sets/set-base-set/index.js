@@ -8,6 +8,7 @@ const beedrill_1 = require("./beedrill");
 const bill_1 = require("./bill");
 const blastoise_1 = require("./blastoise");
 const bulbasaur_1 = require("./bulbasaur");
+const caterpie_1 = require("./caterpie");
 const chansey_1 = require("./chansey");
 const charizard_1 = require("./charizard");
 const charmander_1 = require("./charmander");
@@ -52,6 +53,7 @@ const magmar_1 = require("./magmar");
 const magnemite_1 = require("./magnemite");
 const magneton_1 = require("./magneton");
 const maintenance_1 = require("./maintenance");
+const metapod_1 = require("./metapod");
 const mewtwo_1 = require("./mewtwo");
 const nidoking_1 = require("./nidoking");
 const nidoran_male_1 = require("./nidoran-male");
@@ -102,6 +104,7 @@ exports.setBaseSet = [
     new bill_1.Bill(),
     new blastoise_1.Blastoise(),
     new bulbasaur_1.Bulbasaur(),
+    new caterpie_1.Caterpie(),
     new chansey_1.Chansey(),
     new charizard_1.Charizard(),
     new charmander_1.Charmander(),
@@ -146,6 +149,7 @@ exports.setBaseSet = [
     new magnemite_1.Magnemite(),
     new magneton_1.Magneton(),
     new maintenance_1.Maintenance(),
+    new metapod_1.Metapod(),
     new mewtwo_1.Mewtwo(),
     new nidoking_1.Nidoking(),
     new nidorino_1.Nidorino(),

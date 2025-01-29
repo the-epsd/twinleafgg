@@ -18,7 +18,7 @@ class Dodrio extends pokemon_card_1.PokemonCard {
         this.retreat = [];
         this.powers = [{
                 name: 'Retreat Aid',
-                powerType: game_1.PowerType.POKEPOWER,
+                powerType: game_1.PowerType.POKEMON_POWER,
                 text: 'As long as Dodrio is Benched, pay C less to retreat your Active Pokémon.'
             }];
         this.attacks = [
@@ -51,7 +51,7 @@ class Dodrio extends pokemon_card_1.PokemonCard {
             try {
                 const stub = new game_effects_1.PowerEffect(player, {
                     name: 'test',
-                    powerType: game_1.PowerType.ABILITY,
+                    powerType: game_1.PowerType.POKEMON_POWER,
                     text: ''
                 }, this);
                 store.reduceEffect(state, stub);
@@ -65,12 +65,10 @@ class Dodrio extends pokemon_card_1.PokemonCard {
                 if (index !== -1) {
                     effect.cost.splice(index, 1);
                 }
-                if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
-                    effect.damage += effect.player.active.damage;
-                    return state;
-                }
-                return state;
             }
+        }
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+            effect.damage += effect.player.active.damage;
             return state;
         }
         return state;

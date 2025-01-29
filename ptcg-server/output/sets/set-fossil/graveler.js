@@ -50,7 +50,7 @@ class Graveler extends pokemon_card_1.PokemonCard {
             }
             return state;
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.active.marker.hasMarker(this.HARDEN_MARKER, this)) {
             effect.player.active.marker.removeMarker(this.HARDEN_MARKER, this);
         }
         return state;

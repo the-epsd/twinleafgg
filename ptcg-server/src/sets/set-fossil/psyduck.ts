@@ -73,7 +73,7 @@ export class Psyduck extends PokemonCard {
       }
     }
 
-    if (effect instanceof EndTurnEffect) {
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.OPPONENT_CANNOT_PLAY_TRAINERS_CARDS_MARKER, this)) {
       effect.player.marker.removeMarker(this.OPPONENT_CANNOT_PLAY_TRAINERS_CARDS_MARKER, this);
     }
 

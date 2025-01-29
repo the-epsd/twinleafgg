@@ -40,7 +40,7 @@ export class PlusPower extends TrainerCard {
       }
     }
 
-    if (effect instanceof EndTurnEffect) {
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.PLUS_POWER_MARKER, this)) {
       effect.player.marker.removeMarker(this.PLUS_POWER_MARKER, this);
     }
 

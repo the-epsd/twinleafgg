@@ -24,7 +24,7 @@ class Alakazam extends pokemon_card_1.PokemonCard {
         this.powers = [{
                 name: 'Damage Swap',
                 useWhenInPlay: true,
-                powerType: pokemon_types_1.PowerType.POKEPOWER,
+                powerType: pokemon_types_1.PowerType.POKEMON_POWER,
                 text: 'As often as you like during your turn (before your attack), you may move 1 damage counter from 1 of your Pokémon to another as long as you don\'t Knock Out that Pokémon. This power can\'t be used if Alakazam is Asleep, Confused, or Paralyzed.'
             }];
         this.attacks = [{
@@ -44,6 +44,12 @@ class Alakazam extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
             const opponent = state_utils_1.StateUtils.getOpponent(state, player);
+            const cardList = state_utils_1.StateUtils.findCardList(state, this);
+            if (cardList.specialConditions.includes(card_types_1.SpecialCondition.ASLEEP) ||
+                cardList.specialConditions.includes(card_types_1.SpecialCondition.CONFUSED) ||
+                cardList.specialConditions.includes(card_types_1.SpecialCondition.PARALYZED)) {
+                return state;
+            }
             const damagedPokemon = [
                 ...opponent.bench.filter(b => b.cards.length > 0 && b.damage > 0),
                 ...(opponent.active.damage > 0 ? [opponent.active] : [])

@@ -221,11 +221,6 @@ export class Store {
         return state;
     }
     propagateEffect(state, effect) {
-        var _a, _b, _c, _d;
-        const cardEffect = effect;
-        const cardName = ((_a = cardEffect.card) === null || _a === void 0 ? void 0 : _a.fullName) || ((_b = cardEffect.energyCard) === null || _b === void 0 ? void 0 : _b.fullName) ||
-            ((_c = cardEffect.trainerCard) === null || _c === void 0 ? void 0 : _c.fullName) || ((_d = cardEffect.pokemonCard) === null || _d === void 0 ? void 0 : _d.fullName) || 'No card';
-        console.time(`propagateEffect-${effect.type}-${cardName}`);
         const cards = [];
         try {
             for (const player of state.players) {
@@ -247,7 +242,6 @@ export class Store {
             return state;
         }
         finally {
-            console.timeEnd(`propagateEffect-${effect.type}-${cardName}`);
         }
     }
 }
