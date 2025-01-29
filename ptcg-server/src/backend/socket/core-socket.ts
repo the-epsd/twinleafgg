@@ -16,6 +16,7 @@ export class CoreSocket {
   private socket: SocketWrapper;
   private core: Core;
   private cache: SocketCache;
+  private socketCheckInterval: NodeJS.Timer;
 
   constructor(client: Client, socket: SocketWrapper, core: Core, cache: SocketCache) {
     this.cache = cache;
@@ -23,12 +24,19 @@ export class CoreSocket {
     this.socket = socket;
     this.core = core;
 
+    // Set up 30 second interval for socket logging
+    this.socketCheckInterval = setInterval(() => {
+      // Simply log active sockets since we're tracking them
+      console.log(`Active socket: ${this.client.id} - User: ${this.client.user.name}`);
+    }, 30000);
+
     // core listeners
     this.socket.addListener('core:getInfo', this.getCoreInfo.bind(this));
     this.socket.addListener('core:createGame', this.createGame.bind(this));
   }
 
   public onConnect(client: Client): void {
+    console.log(`Socket connected - Client: ${client.id}, User: ${client.user.name}`);
     this.socket.emit('core:join', {
       clientId: client.id,
       user: CoreSocket.buildUserInfo(client.user)
@@ -36,6 +44,10 @@ export class CoreSocket {
   }
 
   public onDisconnect(client: Client): void {
+    console.log(`Socket disconnected - Client: ${client.id}, User: ${client.user.name}`);
+    if (this.socketCheckInterval) {
+      clearInterval(this.socketCheckInterval);
+    }
     this.socket.emit('core:leave', client.id);
   }
 

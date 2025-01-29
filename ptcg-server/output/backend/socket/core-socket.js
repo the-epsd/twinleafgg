@@ -10,17 +10,27 @@ class CoreSocket {
         this.client = client;
         this.socket = socket;
         this.core = core;
+        // Set up 30 second interval for socket logging
+        this.socketCheckInterval = setInterval(() => {
+            // Simply log active sockets since we're tracking them
+            console.log(`Active socket: ${this.client.id} - User: ${this.client.user.name}`);
+        }, 30000);
         // core listeners
         this.socket.addListener('core:getInfo', this.getCoreInfo.bind(this));
         this.socket.addListener('core:createGame', this.createGame.bind(this));
     }
     onConnect(client) {
+        console.log(`Socket connected - Client: ${client.id}, User: ${client.user.name}`);
         this.socket.emit('core:join', {
             clientId: client.id,
             user: CoreSocket.buildUserInfo(client.user)
         });
     }
     onDisconnect(client) {
+        console.log(`Socket disconnected - Client: ${client.id}, User: ${client.user.name}`);
+        if (this.socketCheckInterval) {
+            clearInterval(this.socketCheckInterval);
+        }
         this.socket.emit('core:leave', client.id);
     }
     onGameAdd(game) {
