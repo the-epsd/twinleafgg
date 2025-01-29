@@ -16,6 +16,7 @@ import { Entei } from './entei';
 import { Finizen } from './finizen';
 import { Froakie } from './froakie';
 import { BelliboltIR, CleffaIR, PidgeyIR, PidgeottoIR, ScizorIR, CharizardexFA, PidgeotexFA, PoppyFA, CharizardexSIR, PidgeotexSIR, PoppySIR, CharizardexHR, FireEnergyHR, VaroomIR, ArtazonHR } from './full-art';
+import {Larvitar} from './larvitar';
 import { LetterOfEncouragement } from './letter-of-encouragement';
 import { Ninetales } from './ninetales';
 import { Oddish } from './oddish';
@@ -26,14 +27,19 @@ import { Pidgeotto } from './pidgeotto';
 import { Pidgey } from './pidgey';
 import { PokemonLeagueHeadquarters } from './pokemon-league-headquarters';
 import { Poppy } from './poppy';
+import {Pupitar} from './pupitar';
 import { Rowlet } from './rowlet';
 import { Ryme } from './ryme';
 import { Scizor } from './scizor';
 import { Seismitoad } from './seismitoad';
 import { Thundurus } from './thundurus';
 import { Toedscruelex } from './toedscruel-ex';
+import {Togekiss} from './togekiss';
+import {Togepi} from './togepi';
+import {Togetic} from './togetic';
 import { TownStore } from './town-store';
 import { Tympole } from './tympole';
+import {Tyranitarex} from './tyranitar-ex';
 import { Varoom } from './varoom';
 import { VengefulPunch } from './vengeful-punch';
 import { Whiscash } from './whiscash';
@@ -78,6 +84,12 @@ export const setObsidianFlames: Card[] = [
   new Varoom(),
   new Whiscash(),
   new Decidueyeex(),
+  new Larvitar(),
+  new Pupitar(),
+  new Tyranitarex(),
+  new Togepi(),
+  new Togetic(),
+  new Togekiss(),
 
   //Alt-s
 

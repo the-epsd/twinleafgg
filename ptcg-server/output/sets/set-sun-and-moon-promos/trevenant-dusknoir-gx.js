@@ -53,8 +53,8 @@ class TrevenantDusknoirGX extends pokemon_card_1.PokemonCard {
                 cards = cards || [];
                 store.prompt(state, new game_1.ShowCardsPrompt(player.id, game_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards), () => []);
                 opponent.hand.moveCardsTo(cards, opponent.deck);
-                return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
-                    player.deck.applyOrder(order);
+                return store.prompt(state, new game_1.ShuffleDeckPrompt(opponent.id), order => {
+                    opponent.deck.applyOrder(order);
                 });
             });
         }

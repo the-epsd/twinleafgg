@@ -1,5 +1,6 @@
 import { Card } from '../../game/store/card/card';
 import { BlackBeltsTraining } from './black-belts-training';
+import {Bronzor} from './bronzor';
 import { Budew } from './budew';
 import { Eeveeex } from './eevee-ex';
 import { Espeonex } from './espeon-ex';
@@ -35,4 +36,5 @@ export const setPrismaticEvolution: Card[] = [
   new Larvitar(),
   new Pupitar(),
   new Tyranitarex(),
+  new Bronzor(),
 ];

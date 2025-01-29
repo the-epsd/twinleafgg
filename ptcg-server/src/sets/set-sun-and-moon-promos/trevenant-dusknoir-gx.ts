@@ -68,8 +68,8 @@ export class TrevenantDusknoirGX extends PokemonCard {
 
         opponent.hand.moveCardsTo(cards, opponent.deck);
 
-        return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-          player.deck.applyOrder(order);
+        return store.prompt(state, new ShuffleDeckPrompt(opponent.id), order => {
+          opponent.deck.applyOrder(order);
         });
       });
     }

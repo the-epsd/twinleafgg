@@ -1,38 +1,39 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
+import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
+import { StoreLike, State, PowerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-export declare class Alakazam extends PokemonCard {
+export declare class ZacianV extends PokemonCard {
     stage: Stage;
-    evolvesFrom: string;
+    tags: CardTag[];
     cardType: CardType;
     hp: number;
     weakness: {
-        type: CardType.DARK;
-    }[];
-    resistance: {
-        type: CardType.FIGHTING;
-        value: number;
+        type: CardType.FIRE;
     }[];
     retreat: CardType.COLORLESS[];
-    attacks: ({
+    resistance: {
+        type: CardType.GRASS;
+        value: number;
+    }[];
+    powers: {
         name: string;
-        cost: CardType.PSYCHIC[];
+        useWhenInPlay: boolean;
+        powerType: PowerType;
+        text: string;
+    }[];
+    attacks: {
+        name: string;
+        cost: CardType.METAL[];
         damage: number;
         text: string;
-        damageCalculation?: undefined;
-    } | {
-        name: string;
-        cost: CardType.PSYCHIC[];
-        damage: number;
-        damageCalculation: string;
-        text: string;
-    })[];
+    }[];
     set: string;
     regulationMark: string;
     cardImage: string;
     setNumber: string;
     name: string;
     fullName: string;
+    readonly BRAVE_BLADE_MARKER = "BRAVE_BLADE_MARKER";
+    readonly BRAVE_BLADE_MARKER_2 = "BRAVE_BLADE_MARKER_2";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

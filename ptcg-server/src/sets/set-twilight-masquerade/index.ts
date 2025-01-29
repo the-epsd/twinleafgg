@@ -1,5 +1,7 @@
 import { Card } from '../../game/store/card/card';
+import {Abra} from './abra';
 import { Aggron } from './aggron';
+import {Alakazam} from './alakazam';
 import { Applin } from './applin';
 import { Applin2 } from './applin-2';
 import { Aron } from './aron';
@@ -41,6 +43,7 @@ import { Infernape } from './infernape';
 import { IronLeaves } from './iron-leaves';
 import { IronThornsex } from './iron-thorns-ex';
 import { JammingTower } from './jamming-tower';
+import {Kadabra} from './kadabra';
 import { Kieran } from './kieran';
 import { Lairon } from './lairon';
 import { LanasAssistance } from './lanas-assistance';
@@ -167,4 +170,7 @@ export const setTwilightMasquerade: Card[] = [
   new Sinistchaex(),
   new Slugma(),
   new Magcargoex(),
+  new Abra(),
+  new Kadabra(),
+  new Alakazam(),
 ];

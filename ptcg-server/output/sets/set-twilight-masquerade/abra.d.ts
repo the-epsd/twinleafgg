@@ -1,10 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
+import { CardType, Stage } from '../../game/store/card/card-types';
+import { PowerType, State, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-export declare class Alakazam extends PokemonCard {
+export declare class Abra extends PokemonCard {
     stage: Stage;
-    evolvesFrom: string;
     cardType: CardType;
     hp: number;
     weakness: {
@@ -15,21 +14,20 @@ export declare class Alakazam extends PokemonCard {
         value: number;
     }[];
     retreat: CardType.COLORLESS[];
-    attacks: ({
+    powers: {
+        name: string;
+        useWhenInPlay: boolean;
+        powerType: PowerType;
+        text: string;
+    }[];
+    attacks: {
         name: string;
         cost: CardType.PSYCHIC[];
         damage: number;
         text: string;
-        damageCalculation?: undefined;
-    } | {
-        name: string;
-        cost: CardType.PSYCHIC[];
-        damage: number;
-        damageCalculation: string;
-        text: string;
-    })[];
-    set: string;
+    }[];
     regulationMark: string;
+    set: string;
     cardImage: string;
     setNumber: string;
     name: string;

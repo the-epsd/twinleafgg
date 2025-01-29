@@ -96,3 +96,4 @@ card-images.json
 card-images.py
 card_urls.json
 .vscode/cody.json
+ptcg-play/src/environments/environment.development.ts

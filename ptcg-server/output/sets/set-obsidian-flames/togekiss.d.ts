@@ -1,33 +1,27 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
+import { StoreLike, State, PowerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-export declare class Alakazam extends PokemonCard {
+export declare class Togekiss extends PokemonCard {
     stage: Stage;
     evolvesFrom: string;
     cardType: CardType;
     hp: number;
     weakness: {
-        type: CardType.DARK;
+        type: CardType.METAL;
     }[];
-    resistance: {
-        type: CardType.FIGHTING;
-        value: number;
-    }[];
-    retreat: CardType.COLORLESS[];
-    attacks: ({
+    retreat: never[];
+    powers: {
         name: string;
-        cost: CardType.PSYCHIC[];
+        powerType: PowerType;
+        text: string;
+    }[];
+    attacks: {
+        name: string;
+        cost: CardType.COLORLESS[];
         damage: number;
         text: string;
-        damageCalculation?: undefined;
-    } | {
-        name: string;
-        cost: CardType.PSYCHIC[];
-        damage: number;
-        damageCalculation: string;
-        text: string;
-    })[];
+    }[];
     set: string;
     regulationMark: string;
     cardImage: string;

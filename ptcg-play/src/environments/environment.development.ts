@@ -1,7 +1,7 @@
 export const environment = {
-  apiUrl: 'https://play-server-dev.twinleaf.gg',
+  apiUrl: 'http://localhost:8080',
   timeout: 30 * 1000,
-  production: true,
+  production: false,
   apiVersion: 2,
   defaultPageSize: 50,
   allowServerChange: true,

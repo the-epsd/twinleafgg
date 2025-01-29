@@ -1,7 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setTwilightMasquerade = void 0;
+const abra_1 = require("./abra");
 const aggron_1 = require("./aggron");
+const alakazam_1 = require("./alakazam");
 const applin_1 = require("./applin");
 const applin_2_1 = require("./applin-2");
 const aron_1 = require("./aron");
@@ -43,6 +45,7 @@ const infernape_1 = require("./infernape");
 const iron_leaves_1 = require("./iron-leaves");
 const iron_thorns_ex_1 = require("./iron-thorns-ex");
 const jamming_tower_1 = require("./jamming-tower");
+const kadabra_1 = require("./kadabra");
 const kieran_1 = require("./kieran");
 const lairon_1 = require("./lairon");
 const lanas_assistance_1 = require("./lanas-assistance");
@@ -167,4 +170,7 @@ exports.setTwilightMasquerade = [
     new sinistcha_ex_1.Sinistchaex(),
     new slugma_1.Slugma(),
     new magcargo_ex_1.Magcargoex(),
+    new abra_1.Abra(),
+    new kadabra_1.Kadabra(),
+    new alakazam_1.Alakazam(),
 ];

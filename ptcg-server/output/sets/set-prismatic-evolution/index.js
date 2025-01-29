@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setPrismaticEvolution = void 0;
 const black_belts_training_1 = require("./black-belts-training");
+const bronzor_1 = require("./bronzor");
 const budew_1 = require("./budew");
 const eevee_ex_1 = require("./eevee-ex");
 const espeon_ex_1 = require("./espeon-ex");
@@ -36,4 +37,5 @@ exports.setPrismaticEvolution = [
     new larvitar_1.Larvitar(),
     new pupitar_1.Pupitar(),
     new tyranitar_ex_1.Tyranitarex(),
+    new bronzor_1.Bronzor(),
 ];

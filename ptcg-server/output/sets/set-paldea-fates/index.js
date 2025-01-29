@@ -9,6 +9,7 @@ const espathra_ex_1 = require("./espathra-ex");
 const frigibax_1 = require("./frigibax");
 const gastly_1 = require("./gastly");
 const gengar_1 = require("./gengar");
+const great_tusk_ex_1 = require("./great-tusk-ex");
 const haunter_1 = require("./haunter");
 const kilowattrel_1 = require("./kilowattrel");
 const mime_jr_1 = require("./mime-jr");
@@ -32,6 +33,7 @@ exports.setPaldeaFates = [
     new gastly_1.Gastly(),
     new haunter_1.Haunter(),
     new technical_machine_crisis_punch_1.TechnicalMachineCrisisPunch(),
+    new great_tusk_ex_1.GreatTuskex(),
     //Reprints
     new card_images_1.CharmanderPAF(),
     new card_images_1.MimikyuPAF(),
