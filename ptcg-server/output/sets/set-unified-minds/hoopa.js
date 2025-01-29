@@ -37,11 +37,10 @@ class Hoopa extends pokemon_card_1.PokemonCard {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             const benchPokemon = opponent.bench.map(b => b.getPokemonCard()).filter(card => card !== undefined);
-            const vPokemons = benchPokemon.filter(card => card.powers.length);
+            const vPokemons = benchPokemon.filter(card => card.powers.length && !game_1.StateUtils.checkAbilityBlocked(store, state, opponent, card));
             const opponentActive = opponent.active.getPokemonCard();
-            if (opponentActive && opponentActive.powers.length) {
+            if (opponentActive && opponentActive.powers.length && !game_1.StateUtils.checkAbilityBlocked(store, state, opponent, opponentActive))
                 vPokemons.push(opponentActive);
-            }
             const vPokes = vPokemons.length;
             effect.damage += vPokes * 20;
         }

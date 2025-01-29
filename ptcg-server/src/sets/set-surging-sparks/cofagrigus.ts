@@ -19,18 +19,18 @@ export class Cofagrigus extends PokemonCard {
 
   public resistance = [{ type: CardType.FIGHTING, value: -30 }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Law of the Underworld',
-      cost: [ CardType.PSYCHIC ],
+      cost: [CardType.PSYCHIC],
       damage: 0,
       text: 'Put 6 damage counters on each Pokémon that has an Ability (both yours and your opponent\'s).'
     },
     {
       name: 'Spooky Shot',
-      cost: [ CardType.PSYCHIC, CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.PSYCHIC, CardType.COLORLESS, CardType.COLORLESS],
       damage: 100,
       text: ''
     },
@@ -50,26 +50,29 @@ export class Cofagrigus extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Law of the Underworld
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]){
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-    
+
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-        if (card.powers.length > 0){
-          const damageEffect = new PutCountersEffect(effect, 60);
-          damageEffect.target = cardList;
-          store.reduceEffect(state, damageEffect);
+        if (card.powers.length > 0) {
+          if (!StateUtils.checkAbilityBlocked(store, state, player, card)) {
+            const damageEffect = new PutCountersEffect(effect, 60);
+            damageEffect.target = cardList;
+            store.reduceEffect(state, damageEffect);
+          }
         }
       });
 
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
-        if (card.powers.length > 0){
-          const damageEffect = new PutCountersEffect(effect, 60);
-          damageEffect.target = cardList;
-          store.reduceEffect(state, damageEffect);
+        if (card.powers.length > 0) {
+          if (!StateUtils.checkAbilityBlocked(store, state, opponent, card)) {
+            const damageEffect = new PutCountersEffect(effect, 60);
+            damageEffect.target = cardList;
+            store.reduceEffect(state, damageEffect);
+          }
         }
       });
-      
     }
 
     return state;

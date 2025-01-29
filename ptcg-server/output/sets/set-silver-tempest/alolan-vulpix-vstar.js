@@ -91,15 +91,18 @@ class AlolanVulpixVSTAR extends pokemon_card_1.PokemonCard {
         }
         if (effect instanceof attack_effects_1.PutDamageEffect && effect.target.cards.includes(this)) {
             if (effect.target.marker.hasMarker(this.PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER, this)) {
-                effect.preventDefault = true;
-                return state;
+                const source = effect.source.getPokemonCard();
+                if (!game_1.StateUtils.checkAbilityBlocked(store, state, effect.player, source)) {
+                    effect.preventDefault = true;
+                    return state;
+                }
             }
         }
         if (effect instanceof game_phase_effects_1.EndTurnEffect
             && effect.player.active.marker.hasMarker(this.CLEAR_PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER, this)) {
             effect.player.active.marker.removeMarker(this.CLEAR_PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER, this);
             const opponent = game_1.StateUtils.getOpponent(state, effect.player);
-            opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList) => {
+            opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList, card) => {
                 cardList.marker.removeMarker(this.PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER, this);
             });
             console.log('marker removed');

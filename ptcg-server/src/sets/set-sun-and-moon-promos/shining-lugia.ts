@@ -54,9 +54,9 @@ export class ShiningLugia extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
       const target = opponent.active.getPokemonCard();
 
-      if (target !== undefined && target.powers.length > 0) {
-        effect.damage += 60;
-      }
+      if (target !== undefined && target.powers.length > 0)
+        if (!StateUtils.checkAbilityBlocked(store, state, player, target))
+          effect.damage += 60;
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
