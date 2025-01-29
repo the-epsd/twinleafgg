@@ -5,6 +5,7 @@ const alolan_exeggutor_1 = require("./alolan-exeggutor");
 const beast_energy_prism_star_1 = require("./beast-energy-prism-star");
 const beast_ring_1 = require("./beast-ring");
 const buzzwole_1 = require("./buzzwole");
+const dialga_gx_1 = require("./dialga-gx");
 const diancie_prism_star_1 = require("./diancie-prism-star");
 const diantha_1 = require("./diantha");
 const flabebe_1 = require("./flabebe");
@@ -54,4 +55,5 @@ exports.setForbiddenLight = [
     new unit_energy_fdy_1.UnitEnergyFDY(),
     new volcanion_prism_star_1.VolcanionPS(),
     new yveltal_gx_1.YveltalGX(),
+    new dialga_gx_1.DialgaGX(),
 ];

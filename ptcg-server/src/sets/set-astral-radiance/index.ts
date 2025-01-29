@@ -34,6 +34,7 @@ import { Kricketune } from './kricketune';
 import { LucarioV } from './lucario-v';
 import { LuxrayV } from './luxray-v';
 import { Magneton } from './magneton';
+import {Magnezone} from './magnezone';
 import { Mantine } from './mantine';
 import { Mightyena } from './mightyena';
 import { Miltank } from './miltank';
@@ -103,6 +104,7 @@ export const setAstralRadiance: Card[] = [
   new LucarioV(),
   new LuxrayV(),
   new Magneton(),
+  new Magnezone(),
   new Mightyena(),
   new Mantine(),
   new Miltank(),

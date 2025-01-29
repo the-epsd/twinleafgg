@@ -3,6 +3,7 @@ import { AlolanExeggutor } from './alolan-exeggutor';
 import { BeastEnergy } from './beast-energy-prism-star';
 import { BeastRing } from './beast-ring';
 import { Buzzwole } from './buzzwole';
+import {DialgaGX} from './dialga-gx';
 import { DianciePS } from './diancie-prism-star';
 import { Diantha } from './diantha';
 import { Flabebe } from './flabebe';
@@ -53,4 +54,5 @@ export const setForbiddenLight: Card[] = [
   new UnitEnergyFDY(),
   new VolcanionPS(),
   new YveltalGX(),
+  new DialgaGX(),
 ];
