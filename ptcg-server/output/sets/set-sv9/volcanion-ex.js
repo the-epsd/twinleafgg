@@ -53,7 +53,7 @@ class Volcanionex extends pokemon_card_1.PokemonCard {
             if (player.marker.hasMarker(this.SCORCHING_STEAM, this)) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
-            const specialCondition = new check_effects_1.AddSpecialConditionsPowerEffect(opponent, this.powers[0], this, opponent.active, [card_types_1.SpecialCondition.BURNED]);
+            const specialCondition = new check_effects_1.AddSpecialConditionsPowerEffect(opponent, this, opponent.active, [card_types_1.SpecialCondition.BURNED]);
             store.reduceEffect(state, specialCondition);
             player.marker.addMarker(this.SCORCHING_STEAM, this);
             return store.reduceEffect(state, specialCondition);

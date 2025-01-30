@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SHOW_CARDS_TO_PLAYER = exports.MOVE_CARD_TO = exports.IS_ABILITY_BLOCKED = exports.DRAW_CARDS_AS_FACE_DOWN_PRIZES = exports.DRAW_CARDS_UNTIL_CARDS_IN_HAND = exports.DRAW_CARDS = exports.SHUFFLE_PRIZES_INTO_DECK = exports.SHUFFLE_CARDS_INTO_DECK = exports.GET_PRIZES_AS_CARD_ARRAY = exports.GET_PLAYER_PRIZES = exports.DISCARD_X_ENERGY_FROM_YOUR_HAND = exports.SHUFFLE_DECK = exports.ATTACH_X_NUMBER_OF_BASIC_ENERGY_CARDS_FROM_YOUR_DISCARD_TO_YOUR_BENCHED_POKEMON = exports.THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_BENCHED_POKEMON = exports.TAKE_X_MORE_PRIZE_CARDS = exports.YOUR_OPPONENTS_POKEMON_IS_KNOCKED_OUT_BY_DAMAGE_FROM_THIS_ATTACK = exports.THIS_POKEMON_HAS_ANY_DAMAGE_COUNTERS_ON_IT = exports.HEAL_X_DAMAGE_FROM_THIS_POKEMON = exports.THIS_ATTACK_DOES_X_MORE_DAMAGE = exports.FLIP_IF_HEADS = exports.DISCARD_X_ENERGY_FROM_THIS_POKEMON = exports.SEARCH_YOUR_DECK_FOR_TYPE_OF_POKEMON_AND_PUT_INTO_HAND = exports.SEARCH_YOUR_DECK_FOR_STAGE_OF_POKEMON_AND_PUT_THEM_ONTO_YOUR_BENCH = exports.DISCARD_A_STADIUM_CARD_IN_PLAY = exports.PASSIVE_ABILITY_ACTIVATED = exports.ABILITY_USED = exports.WAS_POWER_USED = exports.WAS_ATTACK_USED = void 0;
+exports.THIS_POKEMON_DOES_DAMAGE_TO_ITSELF = exports.ADD_CONFUSED_TO_PLAYER_ACTIVE = exports.ADD_PARALYZED_TO_PLAYER_ACTIVE = exports.ADD_BURN_TO_PLAYER_ACTIVE = exports.ADD_POISON_TO_PLAYER_ACTIVE = exports.ADD_SLEEP_TO_PLAYER_ACTIVE = exports.ADD_SPECIAL_CONDITIONS_TO_PLAYER_ACTIVE = exports.CONFIRMATION_PROMPT = exports.SHOW_CARDS_TO_PLAYER = exports.MOVE_CARD_TO = exports.IS_ABILITY_BLOCKED = exports.DRAW_CARDS_AS_FACE_DOWN_PRIZES = exports.DRAW_CARDS_UNTIL_CARDS_IN_HAND = exports.DRAW_CARDS = exports.SHUFFLE_PRIZES_INTO_DECK = exports.SHUFFLE_CARDS_INTO_DECK = exports.GET_PRIZES_AS_CARD_ARRAY = exports.GET_PLAYER_PRIZES = exports.DISCARD_X_ENERGY_FROM_YOUR_HAND = exports.SHUFFLE_DECK = exports.ATTACH_X_NUMBER_OF_BASIC_ENERGY_CARDS_FROM_YOUR_DISCARD_TO_YOUR_BENCHED_POKEMON = exports.THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_BENCHED_POKEMON = exports.TAKE_X_MORE_PRIZE_CARDS = exports.YOUR_OPPONENTS_POKEMON_IS_KNOCKED_OUT_BY_DAMAGE_FROM_THIS_ATTACK = exports.THIS_POKEMON_HAS_ANY_DAMAGE_COUNTERS_ON_IT = exports.HEAL_X_DAMAGE_FROM_THIS_POKEMON = exports.THIS_ATTACK_DOES_X_MORE_DAMAGE = exports.FLIP_IF_HEADS = exports.DISCARD_X_ENERGY_FROM_THIS_POKEMON = exports.SEARCH_YOUR_DECK_FOR_TYPE_OF_POKEMON_AND_PUT_INTO_HAND = exports.SEARCH_YOUR_DECK_FOR_STAGE_OF_POKEMON_AND_PUT_THEM_ONTO_YOUR_BENCH = exports.DISCARD_A_STADIUM_CARD_IN_PLAY = exports.PASSIVE_ABILITY_ACTIVATED = exports.ABILITY_USED = exports.JUST_EVOLVED = exports.WAS_POWER_USED = exports.WAS_ATTACK_USED = void 0;
 const __1 = require("../..");
 const card_types_1 = require("../card/card-types");
 const attack_effects_1 = require("../effects/attack-effects");
@@ -24,6 +24,15 @@ function WAS_POWER_USED(effect, index, user) {
     return effect instanceof game_effects_1.PowerEffect && effect.power === user.powers[index];
 }
 exports.WAS_POWER_USED = WAS_POWER_USED;
+/**
+ *
+ * Checks whether or not the Pokemon just evolved.
+ * @returns whether or not `effect` is an evolve effect from this card.
+ */
+function JUST_EVOLVED(effect, card) {
+    return effect instanceof game_effects_1.EvolveEffect && effect.pokemonCard === card;
+}
+exports.JUST_EVOLVED = JUST_EVOLVED;
 /**
  * Adds the "ability used" board effect to the given Pokemon.
  */
@@ -180,7 +189,7 @@ function DISCARD_X_ENERGY_FROM_YOUR_HAND(effect, store, state, minAmount, maxAmo
     if (!hasEnergyInHand) {
         throw new __1.GameError(__1.GameMessage.CANNOT_USE_POWER);
     }
-    state = store.prompt(state, new __1.ChooseCardsPrompt(player, __1.GameMessage.CHOOSE_CARD_TO_DISCARD, player.hand, { superType: card_types_1.SuperType.ENERGY }, { allowCancel: false, min: minAmount, max: maxAmount }), cards => {
+    return store.prompt(state, new __1.ChooseCardsPrompt(player, __1.GameMessage.CHOOSE_CARD_TO_DISCARD, player.hand, { superType: card_types_1.SuperType.ENERGY }, { allowCancel: false, min: minAmount, max: maxAmount }), cards => {
         cards = cards || [];
         if (cards.length === 0) {
             return;
@@ -289,7 +298,43 @@ function MOVE_CARD_TO(state, card, destination) {
 exports.MOVE_CARD_TO = MOVE_CARD_TO;
 function SHOW_CARDS_TO_PLAYER(store, state, player, cards) {
     if (cards.length === 0)
-        return false;
-    store.prompt(state, new __1.ShowCardsPrompt(player.id, __1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards), result => { return result; });
+        return state;
+    return store.prompt(state, new __1.ShowCardsPrompt(player.id, __1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards), () => { });
 }
 exports.SHOW_CARDS_TO_PLAYER = SHOW_CARDS_TO_PLAYER;
+function CONFIRMATION_PROMPT(store, state, player, callback) {
+    return store.prompt(state, new __1.ConfirmPrompt(player.id, __1.GameMessage.WANT_TO_USE_ABILITY), callback);
+}
+exports.CONFIRMATION_PROMPT = CONFIRMATION_PROMPT;
+//#region Special Conditions
+function ADD_SPECIAL_CONDITIONS_TO_PLAYER_ACTIVE(store, state, player, source, specialConditions, poisonDamage = 10, burnDamage = 20, sleepFlips = 1) {
+    store.reduceEffect(state, new check_effects_1.AddSpecialConditionsPowerEffect(player, source, player.active, specialConditions, poisonDamage, burnDamage, sleepFlips));
+}
+exports.ADD_SPECIAL_CONDITIONS_TO_PLAYER_ACTIVE = ADD_SPECIAL_CONDITIONS_TO_PLAYER_ACTIVE;
+function ADD_SLEEP_TO_PLAYER_ACTIVE(store, state, player, source, sleepFlips = 1) {
+    ADD_SPECIAL_CONDITIONS_TO_PLAYER_ACTIVE(store, state, player, source, [card_types_1.SpecialCondition.ASLEEP], 10, 20, sleepFlips);
+}
+exports.ADD_SLEEP_TO_PLAYER_ACTIVE = ADD_SLEEP_TO_PLAYER_ACTIVE;
+function ADD_POISON_TO_PLAYER_ACTIVE(store, state, player, source, poisonDamage = 10) {
+    ADD_SPECIAL_CONDITIONS_TO_PLAYER_ACTIVE(store, state, player, source, [card_types_1.SpecialCondition.POISONED], poisonDamage);
+}
+exports.ADD_POISON_TO_PLAYER_ACTIVE = ADD_POISON_TO_PLAYER_ACTIVE;
+function ADD_BURN_TO_PLAYER_ACTIVE(store, state, player, source, burnDamage = 20) {
+    ADD_SPECIAL_CONDITIONS_TO_PLAYER_ACTIVE(store, state, player, source, [card_types_1.SpecialCondition.BURNED], 10, burnDamage);
+}
+exports.ADD_BURN_TO_PLAYER_ACTIVE = ADD_BURN_TO_PLAYER_ACTIVE;
+function ADD_PARALYZED_TO_PLAYER_ACTIVE(store, state, player, source) {
+    ADD_SPECIAL_CONDITIONS_TO_PLAYER_ACTIVE(store, state, player, source, [card_types_1.SpecialCondition.PARALYZED]);
+}
+exports.ADD_PARALYZED_TO_PLAYER_ACTIVE = ADD_PARALYZED_TO_PLAYER_ACTIVE;
+function ADD_CONFUSED_TO_PLAYER_ACTIVE(store, state, player, source) {
+    ADD_SPECIAL_CONDITIONS_TO_PLAYER_ACTIVE(store, state, player, source, [card_types_1.SpecialCondition.CONFUSED]);
+}
+exports.ADD_CONFUSED_TO_PLAYER_ACTIVE = ADD_CONFUSED_TO_PLAYER_ACTIVE;
+//#endregion
+function THIS_POKEMON_DOES_DAMAGE_TO_ITSELF(store, state, effect) {
+    const dealDamage = new attack_effects_1.DealDamageEffect(effect, 30);
+    dealDamage.target = effect.source;
+    return store.reduceEffect(state, dealDamage);
+}
+exports.THIS_POKEMON_DOES_DAMAGE_TO_ITSELF = THIS_POKEMON_DOES_DAMAGE_TO_ITSELF;

@@ -5,7 +5,7 @@ import { PokemonCardList } from '../state/pokemon-card-list';
 import { Resistance, Weakness, Attack, Power } from '../card/pokemon-types';
 import { EnergyMap } from '../prompts/choose-energy-prompt';
 import { TrainerCard } from '../card/trainer-card';
-import { PokemonCard } from '../card/pokemon-card';
+import { Card } from '../card/card';
 
 export enum CheckEffects {
   CHECK_HP_EFFECT = 'CHECK_HP_EFFECT',
@@ -172,17 +172,20 @@ export class AddSpecialConditionsPowerEffect implements Effect {
   readonly type: string = CheckEffects.ADD_SPECIAL_CONDITIONS_EFFECT;
   public preventDefault = false;
   public poisonDamage?: number;
+  public burnDamage?: number;
+  public sleepFlips?: number;
   public specialConditions: SpecialCondition[];
   public player: Player;
-  public power: Power;
-  public card: PokemonCard;
+  public source: Card;
   public target: PokemonCardList;
 
-  constructor(player: Player, power: Power, card: PokemonCard, target: PokemonCardList, specialConditions: SpecialCondition[]) {
+  constructor(player: Player, source: Card, target: PokemonCardList, specialConditions: SpecialCondition[], poisonDamage: number = 10, burnDamage: number = 20, sleepFlips: number = 1) {
     this.player = player;
-    this.power = power;
-    this.card = card;
+    this.source = source;
     this.target = target;
     this.specialConditions = specialConditions;
+    this.poisonDamage = poisonDamage;
+    this.burnDamage = burnDamage;
+    this.sleepFlips = sleepFlips;
   }
 }

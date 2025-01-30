@@ -61,7 +61,6 @@ export class Volcanionex extends PokemonCard {
 
       const specialCondition = new AddSpecialConditionsPowerEffect(
         opponent,
-        this.powers[0],
         this,
         opponent.active,
         [SpecialCondition.BURNED]

@@ -314,6 +314,12 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
     if (effect.poisonDamage !== undefined) {
       target.poisonDamage = effect.poisonDamage;
     }
+    if (effect.burnDamage !== undefined) {
+      target.burnDamage = effect.burnDamage;
+    }
+    if (effect.sleepFlips !== undefined) {
+      target.sleepFlips = effect.sleepFlips;
+    }
     return state;
   }
 

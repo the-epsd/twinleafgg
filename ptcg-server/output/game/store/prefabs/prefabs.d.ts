@@ -1,8 +1,8 @@
 import { Card, CardList, Player, State, StoreLike } from '../..';
-import { CardType, Stage } from '../card/card-types';
+import { CardType, SpecialCondition, Stage } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
 import { Effect } from '../effects/effect';
-import { AttackEffect, KnockOutEffect, PowerEffect } from '../effects/game-effects';
+import { AttackEffect, EvolveEffect, KnockOutEffect, PowerEffect } from '../effects/game-effects';
 /**
  *
  * A basic effect for checking the use of attacks.
@@ -15,6 +15,12 @@ export declare function WAS_ATTACK_USED(effect: Effect, index: number, user: Pok
  * @returns whether or not a specific ability was used.
  */
 export declare function WAS_POWER_USED(effect: Effect, index: number, user: PokemonCard): effect is PowerEffect;
+/**
+ *
+ * Checks whether or not the Pokemon just evolved.
+ * @returns whether or not `effect` is an evolve effect from this card.
+ */
+export declare function JUST_EVOLVED(effect: Effect, card: PokemonCard): effect is EvolveEffect;
 /**
  * Adds the "ability used" board effect to the given Pokemon.
  */
@@ -46,7 +52,7 @@ export declare function TAKE_X_MORE_PRIZE_CARDS(effect: KnockOutEffect, state: S
 export declare function THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_BENCHED_POKEMON(damage: number, effect: AttackEffect, store: StoreLike, state: State, min: number, max: number): State;
 export declare function ATTACH_X_NUMBER_OF_BASIC_ENERGY_CARDS_FROM_YOUR_DISCARD_TO_YOUR_BENCHED_POKEMON(effect: AttackEffect, store: StoreLike, state: State, amount: number): void;
 export declare function SHUFFLE_DECK(store: StoreLike, state: State, player: Player): State;
-export declare function DISCARD_X_ENERGY_FROM_YOUR_HAND(effect: PowerEffect, store: StoreLike, state: State, minAmount: number, maxAmount: number): void;
+export declare function DISCARD_X_ENERGY_FROM_YOUR_HAND(effect: PowerEffect, store: StoreLike, state: State, minAmount: number, maxAmount: number): State;
 /**
  * A getter for the player's prize slots.
  * @returns A list of card lists containing the player's prize slots.
@@ -86,4 +92,12 @@ export declare function IS_ABILITY_BLOCKED(store: StoreLike, state: State, playe
  * Finds `card` and moves it from its current CardList to `destination`.
  */
 export declare function MOVE_CARD_TO(state: State, card: Card, destination: CardList): void;
-export declare function SHOW_CARDS_TO_PLAYER(store: StoreLike, state: State, player: Player, cards: Card[]): false | undefined;
+export declare function SHOW_CARDS_TO_PLAYER(store: StoreLike, state: State, player: Player, cards: Card[]): State;
+export declare function CONFIRMATION_PROMPT(store: StoreLike, state: State, player: Player, callback: (result: boolean) => void): State;
+export declare function ADD_SPECIAL_CONDITIONS_TO_PLAYER_ACTIVE(store: StoreLike, state: State, player: Player, source: Card, specialConditions: SpecialCondition[], poisonDamage?: number, burnDamage?: number, sleepFlips?: number): void;
+export declare function ADD_SLEEP_TO_PLAYER_ACTIVE(store: StoreLike, state: State, player: Player, source: Card, sleepFlips?: number): void;
+export declare function ADD_POISON_TO_PLAYER_ACTIVE(store: StoreLike, state: State, player: Player, source: Card, poisonDamage?: number): void;
+export declare function ADD_BURN_TO_PLAYER_ACTIVE(store: StoreLike, state: State, player: Player, source: Card, burnDamage?: number): void;
+export declare function ADD_PARALYZED_TO_PLAYER_ACTIVE(store: StoreLike, state: State, player: Player, source: Card): void;
+export declare function ADD_CONFUSED_TO_PLAYER_ACTIVE(store: StoreLike, state: State, player: Player, source: Card): void;
+export declare function THIS_POKEMON_DOES_DAMAGE_TO_ITSELF(store: StoreLike, state: State, effect: AttackEffect): State;

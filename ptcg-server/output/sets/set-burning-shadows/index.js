@@ -15,6 +15,7 @@ const marill_1 = require("./marill");
 const marshadow_gx_1 = require("./marshadow-gx");
 const necrozma_gx_1 = require("./necrozma-gx");
 const plumeria_1 = require("./plumeria");
+const raichu_1 = require("./raichu");
 const ralts_1 = require("./ralts");
 const salazzle_gx_1 = require("./salazzle-gx");
 const sophocles_1 = require("./sophocles");
@@ -35,6 +36,7 @@ exports.setBurningShadows = [
     new marshadow_gx_1.MarshadowGX(),
     new necrozma_gx_1.NecrozmaGX(),
     new plumeria_1.Plumeria(),
+    new raichu_1.Raichu(),
     new ralts_1.Ralts(),
     new salazzle_gx_1.SalazzleGX(),
     new sophocles_1.Sophocles(),
