@@ -109,11 +109,9 @@ export class Raihan extends TrainerCard {
 
   public fullName: string = 'Raihan EVS';
 
-  public text: string =
-    'You can play this card only if 1 of your Pokemon was Knocked Out ' +
-    'during your opponent\'s last turn. Search your deck for a Pokemon, ' +
-    'a Trainer card, and a basic Energy card, reveal them, and put them ' +
-    'into your hand. Then, shuffle your deck.';
+  public text: string = `You can play this card only if any of your Pokémon were Knocked Out during your opponent\'s last turn.
+
+  Attach a basic Energy card from your discard pile to 1 of your Pokémon. If you do, search your deck for a card and put it into your hand. Then, shuffle your deck.`;
 
   public readonly RAIHAN_MARKER = 'RAIHAN_MARKER';
 

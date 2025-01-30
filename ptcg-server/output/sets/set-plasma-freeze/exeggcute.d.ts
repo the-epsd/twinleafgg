@@ -33,6 +33,5 @@ export declare class Exeggcute extends PokemonCard {
     fullName: string;
     cardImage: string;
     setNumber: string;
-    readonly PROPAGATION_MAREKER = "PROPAGATION_MAREKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

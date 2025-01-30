@@ -13,6 +13,7 @@ class BigAirBalloon extends trainer_card_1.TrainerCard {
         this.fullName = 'Big Air Balloon MEW';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '155';
+        this.regulationMark = 'G';
         this.text = 'The Stage 2 Pokémon this card is attached to has no Retreat Cost.';
     }
     reduceEffect(store, state, effect) {

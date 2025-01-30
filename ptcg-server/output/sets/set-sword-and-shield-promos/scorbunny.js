@@ -25,11 +25,11 @@ class Scorbunny extends pokemon_card_1.PokemonCard {
                 text: ''
             }];
         this.regulationMark = 'D';
-        this.set = 'SSP';
+        this.set = 'SWSH';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '71';
         this.name = 'Scorbunny';
-        this.fullName = 'Scorbunny SSP';
+        this.fullName = 'Scorbunny SWSH';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

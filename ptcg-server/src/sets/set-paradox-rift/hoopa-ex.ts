@@ -33,7 +33,7 @@ export class Hoopaex extends PokemonCard {
       cost: [CardType.DARK, CardType.DARK],
       damage: 50,
       damageCalculation: 'x',
-      text: 'During your next turn, this Pokémon can\'t attack.'
+      text: 'This attack does 50 damage for each Energy attached to all of your opponent\'s Pokémon.'
     },
     {
       name: 'Bandit\'s Fist',
