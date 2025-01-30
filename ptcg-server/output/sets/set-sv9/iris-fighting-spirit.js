@@ -5,6 +5,7 @@ const trainer_card_1 = require("../../game/store/card/trainer-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 const game_1 = require("../../game");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class IrisFightingSpirit extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -29,7 +30,7 @@ class IrisFightingSpirit extends trainer_card_1.TrainerCard {
                 if (player.hand.cards.length >= 6) {
                     return;
                 }
-                player.deck.moveTo(player.hand, 6 - player.hand.cards.length);
+                prefabs_1.DRAW_CARDS_UNTIL_CARDS_IN_HAND(player, 6);
             });
             return state;
         }

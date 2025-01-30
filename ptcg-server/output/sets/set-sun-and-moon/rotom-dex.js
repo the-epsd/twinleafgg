@@ -22,7 +22,7 @@ class RotomDex extends game_1.TrainerCard {
             if (prizeCount === 0)
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
             prefabs_1.SHUFFLE_PRIZES_INTO_DECK(store, state, player);
-            prefabs_1.DRAW_CARDS_AS_PRIZES(player, prizeCount);
+            prefabs_1.DRAW_CARDS_AS_FACE_DOWN_PRIZES(player, prizeCount);
             prefabs_1.MOVE_CARD_TO(state, this, player.discard);
             return state;
         }

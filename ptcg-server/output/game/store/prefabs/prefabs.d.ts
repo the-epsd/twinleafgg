@@ -14,7 +14,7 @@ export declare function WAS_ATTACK_USED(effect: Effect, index: number, user: Pok
  * A basic effect for checking the use of abilites.
  * @returns whether or not a specific ability was used.
  */
-export declare function WAS_ABILITY_USED(effect: Effect, index: number, user: PokemonCard): effect is PowerEffect;
+export declare function WAS_POWER_USED(effect: Effect, index: number, user: PokemonCard): effect is PowerEffect;
 /**
  * Adds the "ability used" board effect to the given Pokemon.
  */
@@ -31,7 +31,11 @@ export declare function PASSIVE_ABILITY_ACTIVATED(effect: Effect, user: PokemonC
  * @returns the game state after discarding a stadium card in play.
  */
 export declare function DISCARD_A_STADIUM_CARD_IN_PLAY(state: State): void;
-export declare function SEARCH_YOUR_DECK_FOR_X_POKEMON_AND_PUT_THEM_ONTO_YOUR_BENCH(store: StoreLike, state: State, effect: AttackEffect, min: number, max: number, stage: Stage): State;
+export declare function SEARCH_YOUR_DECK_FOR_STAGE_OF_POKEMON_AND_PUT_THEM_ONTO_YOUR_BENCH(store: StoreLike, state: State, effect: AttackEffect, min: number, max: number, stage: Stage): State;
+/**
+ * Search deck for `type` of Pokemon, show it to the opponent, put it into `player`'s hand, and shuffle `player`'s deck.
+ */
+export declare function SEARCH_YOUR_DECK_FOR_TYPE_OF_POKEMON_AND_PUT_INTO_HAND(store: StoreLike, state: State, player: Player, min: number, max: number, type: CardType): State;
 export declare function DISCARD_X_ENERGY_FROM_THIS_POKEMON(state: State, effect: AttackEffect, store: StoreLike, type: CardType, amount: number): State;
 export declare function FLIP_IF_HEADS(): void;
 export declare function THIS_ATTACK_DOES_X_MORE_DAMAGE(effect: AttackEffect, store: StoreLike, state: State, damage: number): State;
@@ -61,6 +65,25 @@ export declare function SHUFFLE_CARDS_INTO_DECK(store: StoreLike, state: State, 
  * Shuffle the prize cards into the deck.
  */
 export declare function SHUFFLE_PRIZES_INTO_DECK(store: StoreLike, state: State, player: Player): void;
-export declare function DRAW_CARDS_AS_PRIZES(player: Player, count: number): void;
+/**
+ * Draws `count` cards, putting them into your hand.
+ */
+export declare function DRAW_CARDS(player: Player, count: number): void;
+/**
+ * Draws cards until you have `count` cards in hand.
+ */
+export declare function DRAW_CARDS_UNTIL_CARDS_IN_HAND(player: Player, count: number): void;
+/**
+ * Draws `count` cards from the top of your deck as face down prize cards.
+ */
+export declare function DRAW_CARDS_AS_FACE_DOWN_PRIZES(player: Player, count: number): void;
+/**
+ * Checks if abilities are blocked on `card` for `player`.
+ * @returns `true` if the ability is blocked, `false` if the ability is able to go thru.
+ */
 export declare function IS_ABILITY_BLOCKED(store: StoreLike, state: State, player: Player, card: PokemonCard): boolean;
+/**
+ * Finds `card` and moves it from its current CardList to `destination`.
+ */
 export declare function MOVE_CARD_TO(state: State, card: Card, destination: CardList): void;
+export declare function SHOW_CARDS_TO_PLAYER(store: StoreLike, state: State, player: Player, cards: Card[]): false | undefined;

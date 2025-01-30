@@ -3,7 +3,7 @@ import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { SEARCH_YOUR_DECK_FOR_X_POKEMON_AND_PUT_THEM_ONTO_YOUR_BENCH } from '../../game/store/prefabs/prefabs';
+import { SEARCH_YOUR_DECK_FOR_STAGE_OF_POKEMON_AND_PUT_THEM_ONTO_YOUR_BENCH } from '../../game/store/prefabs/prefabs';
 
 
 export class HisuianBasculin extends PokemonCard {
@@ -18,18 +18,18 @@ export class HisuianBasculin extends PokemonCard {
 
   public weakness = [{ type: CardType.LIGHTNING }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Gather the Crew',
-      cost: [ ],
+      cost: [],
       damage: 0,
       text: 'Search your deck for up to 2 Basic Pokémon and put them onto your Bench. Then, shuffle your deck.'
     },
     {
       name: 'Tackle',
-      cost: [ CardType.WATER ],
+      cost: [CardType.WATER],
       damage: 10,
       text: ''
     }
@@ -37,7 +37,7 @@ export class HisuianBasculin extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      return SEARCH_YOUR_DECK_FOR_X_POKEMON_AND_PUT_THEM_ONTO_YOUR_BENCH(store, state, effect, 0, 2, Stage.BASIC);
+      return SEARCH_YOUR_DECK_FOR_STAGE_OF_POKEMON_AND_PUT_THEM_ONTO_YOUR_BENCH(store, state, effect, 0, 2, Stage.BASIC);
     }
 
     return state;

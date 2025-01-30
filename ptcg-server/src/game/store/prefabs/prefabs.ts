@@ -1,4 +1,4 @@
-import { AttachEnergyPrompt, Card, CardList, ChooseCardsPrompt, ChooseEnergyPrompt, ChoosePokemonPrompt, EnergyCard, GameError, GameMessage, Player, PlayerType, PowerType, ShuffleDeckPrompt, SlotType, State, StateUtils, StoreLike } from '../..';
+import { AttachEnergyPrompt, Card, CardList, ChooseCardsPrompt, ChooseEnergyPrompt, ChoosePokemonPrompt, EnergyCard, GameError, GameMessage, Player, PlayerType, PowerType, ShowCardsPrompt, ShuffleDeckPrompt, SlotType, State, StateUtils, StoreLike } from '../..';
 import { BoardEffect, CardType, EnergyType, Stage, SuperType } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
 import { DiscardCardsEffect, HealTargetEffect, PutDamageEffect } from '../effects/attack-effects';
@@ -20,7 +20,7 @@ export function WAS_ATTACK_USED(effect: Effect, index: number, user: PokemonCard
  * A basic effect for checking the use of abilites.
  * @returns whether or not a specific ability was used.
  */
-export function WAS_ABILITY_USED(effect: Effect, index: number, user: PokemonCard): effect is PowerEffect {
+export function WAS_POWER_USED(effect: Effect, index: number, user: PokemonCard): effect is PowerEffect {
   return effect instanceof PowerEffect && effect.power === user.powers[index];
 }
 
@@ -59,7 +59,7 @@ export function DISCARD_A_STADIUM_CARD_IN_PLAY(state: State) {
   }
 }
 
-export function SEARCH_YOUR_DECK_FOR_X_POKEMON_AND_PUT_THEM_ONTO_YOUR_BENCH(store: StoreLike, state: State, effect: AttackEffect, min: number, max: number, stage: Stage) {
+export function SEARCH_YOUR_DECK_FOR_STAGE_OF_POKEMON_AND_PUT_THEM_ONTO_YOUR_BENCH(store: StoreLike, state: State, effect: AttackEffect, min: number, max: number, stage: Stage) {
   const player = effect.player;
   const slots = player.bench.filter(b => b.cards.length === 0);
 
@@ -76,6 +76,30 @@ export function SEARCH_YOUR_DECK_FOR_X_POKEMON_AND_PUT_THEM_ONTO_YOUR_BENCH(stor
       player.deck.moveCardTo(card, slots[index]);
       slots[index].pokemonPlayedTurn = state.turn;
     });
+  });
+}
+
+/**
+ * Search deck for `type` of Pokemon, show it to the opponent, put it into `player`'s hand, and shuffle `player`'s deck.
+ */
+export function SEARCH_YOUR_DECK_FOR_TYPE_OF_POKEMON_AND_PUT_INTO_HAND(store: StoreLike, state: State, player: Player, min: number, max: number, type: CardType) {
+
+  if (player.deck.cards.length === 0)
+    throw new GameError(GameMessage.NO_CARDS_IN_DECK);
+
+  const opponent = StateUtils.getOpponent(state, player);
+
+  return store.prompt(state, new ChooseCardsPrompt(
+    player,
+    GameMessage.CHOOSE_CARD_TO_HAND,
+    player.deck,
+    { superType: SuperType.POKEMON, cardType: type },
+    { min, max, allowCancel: true },
+  ), selected => {
+    const cards = selected || [];
+    SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
+    cards.forEach(card => MOVE_CARD_TO(state, card, player.hand));
+    SHUFFLE_DECK(store, state, player)
   });
 }
 
@@ -190,7 +214,7 @@ export function ATTACH_X_NUMBER_OF_BASIC_ENERGY_CARDS_FROM_YOUR_DISCARD_TO_YOUR_
   });
 }
 
-export function SHUFFLE_DECK(store: StoreLike, state: State, player: Player) {
+export function SHUFFLE_DECK(store: StoreLike, state: State, player: Player): State {
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => player.deck.applyOrder(order));
 }
 
@@ -257,7 +281,24 @@ export function SHUFFLE_PRIZES_INTO_DECK(store: StoreLike, state: State, player:
   GET_PLAYER_PRIZES(player).forEach(p => p.cards = []);
 }
 
-export function DRAW_CARDS_AS_PRIZES(player: Player, count: number) {
+/**
+ * Draws `count` cards, putting them into your hand.
+ */
+export function DRAW_CARDS(player: Player, count: number) {
+  player.deck.moveTo(player.hand, Math.min(count, player.deck.cards.length));
+}
+
+/**
+ * Draws cards until you have `count` cards in hand.
+ */
+export function DRAW_CARDS_UNTIL_CARDS_IN_HAND(player: Player, count: number) {
+  player.deck.moveTo(player.hand, Math.max(count - player.hand.cards.length, 0))
+}
+
+/**
+ * Draws `count` cards from the top of your deck as face down prize cards.
+ */
+export function DRAW_CARDS_AS_FACE_DOWN_PRIZES(player: Player, count: number) {
   // Draw cards from the top of the deck to the prize cards
   for (let i = 0; i < count; i++) {
     const card = player.deck.cards.pop();
@@ -275,6 +316,10 @@ export function DRAW_CARDS_AS_PRIZES(player: Player, count: number) {
   player.prizes.forEach(p => p.isSecret = true);
 }
 
+/**
+ * Checks if abilities are blocked on `card` for `player`.
+ * @returns `true` if the ability is blocked, `false` if the ability is able to go thru.
+ */
 export function IS_ABILITY_BLOCKED(store: StoreLike, state: State, player: Player, card: PokemonCard): boolean {
   // Try to reduce PowerEffect, to check if something is blocking our ability
   try {
@@ -289,6 +334,19 @@ export function IS_ABILITY_BLOCKED(store: StoreLike, state: State, player: Playe
   return false;
 }
 
+/**
+ * Finds `card` and moves it from its current CardList to `destination`.
+ */
 export function MOVE_CARD_TO(state: State, card: Card, destination: CardList) {
   StateUtils.findCardList(state, card).moveCardTo(card, destination);
+}
+
+export function SHOW_CARDS_TO_PLAYER(store: StoreLike, state: State, player: Player, cards: Card[]) {
+  if (cards.length === 0)
+    return false;
+  store.prompt(state, new ShowCardsPrompt(
+    player.id,
+    GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
+    cards,
+  ), result => { return result; });
 }

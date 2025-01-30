@@ -1,7 +1,7 @@
 import { GameError, GameMessage, State, StoreLike, TrainerCard, TrainerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { DRAW_CARDS_AS_PRIZES, GET_PLAYER_PRIZES, MOVE_CARD_TO, SHUFFLE_PRIZES_INTO_DECK } from '../../game/store/prefabs/prefabs';
+import { DRAW_CARDS_AS_FACE_DOWN_PRIZES, GET_PLAYER_PRIZES, MOVE_CARD_TO, SHUFFLE_PRIZES_INTO_DECK } from '../../game/store/prefabs/prefabs';
 
 export class RotomDex extends TrainerCard {
 
@@ -29,7 +29,7 @@ export class RotomDex extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
 
       SHUFFLE_PRIZES_INTO_DECK(store, state, player);
-      DRAW_CARDS_AS_PRIZES(player, prizeCount);
+      DRAW_CARDS_AS_FACE_DOWN_PRIZES(player, prizeCount);
       MOVE_CARD_TO(state, this, player.discard);
       return state;
     }

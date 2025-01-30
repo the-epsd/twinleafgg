@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.MOVE_CARD_TO = exports.IS_ABILITY_BLOCKED = exports.DRAW_CARDS_AS_PRIZES = exports.SHUFFLE_PRIZES_INTO_DECK = exports.SHUFFLE_CARDS_INTO_DECK = exports.GET_PRIZES_AS_CARD_ARRAY = exports.GET_PLAYER_PRIZES = exports.DISCARD_X_ENERGY_FROM_YOUR_HAND = exports.SHUFFLE_DECK = exports.ATTACH_X_NUMBER_OF_BASIC_ENERGY_CARDS_FROM_YOUR_DISCARD_TO_YOUR_BENCHED_POKEMON = exports.THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_BENCHED_POKEMON = exports.TAKE_X_MORE_PRIZE_CARDS = exports.YOUR_OPPONENTS_POKEMON_IS_KNOCKED_OUT_BY_DAMAGE_FROM_THIS_ATTACK = exports.THIS_POKEMON_HAS_ANY_DAMAGE_COUNTERS_ON_IT = exports.HEAL_X_DAMAGE_FROM_THIS_POKEMON = exports.THIS_ATTACK_DOES_X_MORE_DAMAGE = exports.FLIP_IF_HEADS = exports.DISCARD_X_ENERGY_FROM_THIS_POKEMON = exports.SEARCH_YOUR_DECK_FOR_X_POKEMON_AND_PUT_THEM_ONTO_YOUR_BENCH = exports.DISCARD_A_STADIUM_CARD_IN_PLAY = exports.PASSIVE_ABILITY_ACTIVATED = exports.ABILITY_USED = exports.WAS_ABILITY_USED = exports.WAS_ATTACK_USED = void 0;
+exports.SHOW_CARDS_TO_PLAYER = exports.MOVE_CARD_TO = exports.IS_ABILITY_BLOCKED = exports.DRAW_CARDS_AS_FACE_DOWN_PRIZES = exports.DRAW_CARDS_UNTIL_CARDS_IN_HAND = exports.DRAW_CARDS = exports.SHUFFLE_PRIZES_INTO_DECK = exports.SHUFFLE_CARDS_INTO_DECK = exports.GET_PRIZES_AS_CARD_ARRAY = exports.GET_PLAYER_PRIZES = exports.DISCARD_X_ENERGY_FROM_YOUR_HAND = exports.SHUFFLE_DECK = exports.ATTACH_X_NUMBER_OF_BASIC_ENERGY_CARDS_FROM_YOUR_DISCARD_TO_YOUR_BENCHED_POKEMON = exports.THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_BENCHED_POKEMON = exports.TAKE_X_MORE_PRIZE_CARDS = exports.YOUR_OPPONENTS_POKEMON_IS_KNOCKED_OUT_BY_DAMAGE_FROM_THIS_ATTACK = exports.THIS_POKEMON_HAS_ANY_DAMAGE_COUNTERS_ON_IT = exports.HEAL_X_DAMAGE_FROM_THIS_POKEMON = exports.THIS_ATTACK_DOES_X_MORE_DAMAGE = exports.FLIP_IF_HEADS = exports.DISCARD_X_ENERGY_FROM_THIS_POKEMON = exports.SEARCH_YOUR_DECK_FOR_TYPE_OF_POKEMON_AND_PUT_INTO_HAND = exports.SEARCH_YOUR_DECK_FOR_STAGE_OF_POKEMON_AND_PUT_THEM_ONTO_YOUR_BENCH = exports.DISCARD_A_STADIUM_CARD_IN_PLAY = exports.PASSIVE_ABILITY_ACTIVATED = exports.ABILITY_USED = exports.WAS_POWER_USED = exports.WAS_ATTACK_USED = void 0;
 const __1 = require("../..");
 const card_types_1 = require("../card/card-types");
 const attack_effects_1 = require("../effects/attack-effects");
@@ -20,10 +20,10 @@ exports.WAS_ATTACK_USED = WAS_ATTACK_USED;
  * A basic effect for checking the use of abilites.
  * @returns whether or not a specific ability was used.
  */
-function WAS_ABILITY_USED(effect, index, user) {
+function WAS_POWER_USED(effect, index, user) {
     return effect instanceof game_effects_1.PowerEffect && effect.power === user.powers[index];
 }
-exports.WAS_ABILITY_USED = WAS_ABILITY_USED;
+exports.WAS_POWER_USED = WAS_POWER_USED;
 /**
  * Adds the "ability used" board effect to the given Pokemon.
  */
@@ -58,7 +58,7 @@ function DISCARD_A_STADIUM_CARD_IN_PLAY(state) {
     }
 }
 exports.DISCARD_A_STADIUM_CARD_IN_PLAY = DISCARD_A_STADIUM_CARD_IN_PLAY;
-function SEARCH_YOUR_DECK_FOR_X_POKEMON_AND_PUT_THEM_ONTO_YOUR_BENCH(store, state, effect, min, max, stage) {
+function SEARCH_YOUR_DECK_FOR_STAGE_OF_POKEMON_AND_PUT_THEM_ONTO_YOUR_BENCH(store, state, effect, min, max, stage) {
     const player = effect.player;
     const slots = player.bench.filter(b => b.cards.length === 0);
     return store.prompt(state, new __1.ChooseCardsPrompt(player, __1.GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH, player.deck, { superType: card_types_1.SuperType.POKEMON, stage }, { min, max: slots.length < max ? slots.length : max, allowCancel: true }), selected => {
@@ -69,7 +69,22 @@ function SEARCH_YOUR_DECK_FOR_X_POKEMON_AND_PUT_THEM_ONTO_YOUR_BENCH(store, stat
         });
     });
 }
-exports.SEARCH_YOUR_DECK_FOR_X_POKEMON_AND_PUT_THEM_ONTO_YOUR_BENCH = SEARCH_YOUR_DECK_FOR_X_POKEMON_AND_PUT_THEM_ONTO_YOUR_BENCH;
+exports.SEARCH_YOUR_DECK_FOR_STAGE_OF_POKEMON_AND_PUT_THEM_ONTO_YOUR_BENCH = SEARCH_YOUR_DECK_FOR_STAGE_OF_POKEMON_AND_PUT_THEM_ONTO_YOUR_BENCH;
+/**
+ * Search deck for `type` of Pokemon, show it to the opponent, put it into `player`'s hand, and shuffle `player`'s deck.
+ */
+function SEARCH_YOUR_DECK_FOR_TYPE_OF_POKEMON_AND_PUT_INTO_HAND(store, state, player, min, max, type) {
+    if (player.deck.cards.length === 0)
+        throw new __1.GameError(__1.GameMessage.NO_CARDS_IN_DECK);
+    const opponent = __1.StateUtils.getOpponent(state, player);
+    return store.prompt(state, new __1.ChooseCardsPrompt(player, __1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.POKEMON, cardType: type }, { min, max, allowCancel: true }), selected => {
+        const cards = selected || [];
+        SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
+        cards.forEach(card => MOVE_CARD_TO(state, card, player.hand));
+        SHUFFLE_DECK(store, state, player);
+    });
+}
+exports.SEARCH_YOUR_DECK_FOR_TYPE_OF_POKEMON_AND_PUT_INTO_HAND = SEARCH_YOUR_DECK_FOR_TYPE_OF_POKEMON_AND_PUT_INTO_HAND;
 function DISCARD_X_ENERGY_FROM_THIS_POKEMON(state, effect, store, type, amount) {
     const player = effect.player;
     const checkProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(player);
@@ -211,7 +226,24 @@ function SHUFFLE_PRIZES_INTO_DECK(store, state, player) {
     GET_PLAYER_PRIZES(player).forEach(p => p.cards = []);
 }
 exports.SHUFFLE_PRIZES_INTO_DECK = SHUFFLE_PRIZES_INTO_DECK;
-function DRAW_CARDS_AS_PRIZES(player, count) {
+/**
+ * Draws `count` cards, putting them into your hand.
+ */
+function DRAW_CARDS(player, count) {
+    player.deck.moveTo(player.hand, Math.min(count, player.deck.cards.length));
+}
+exports.DRAW_CARDS = DRAW_CARDS;
+/**
+ * Draws cards until you have `count` cards in hand.
+ */
+function DRAW_CARDS_UNTIL_CARDS_IN_HAND(player, count) {
+    player.deck.moveTo(player.hand, Math.max(count - player.hand.cards.length, 0));
+}
+exports.DRAW_CARDS_UNTIL_CARDS_IN_HAND = DRAW_CARDS_UNTIL_CARDS_IN_HAND;
+/**
+ * Draws `count` cards from the top of your deck as face down prize cards.
+ */
+function DRAW_CARDS_AS_FACE_DOWN_PRIZES(player, count) {
     // Draw cards from the top of the deck to the prize cards
     for (let i = 0; i < count; i++) {
         const card = player.deck.cards.pop();
@@ -228,7 +260,11 @@ function DRAW_CARDS_AS_PRIZES(player, count) {
     // Set the new prize cards to be face down
     player.prizes.forEach(p => p.isSecret = true);
 }
-exports.DRAW_CARDS_AS_PRIZES = DRAW_CARDS_AS_PRIZES;
+exports.DRAW_CARDS_AS_FACE_DOWN_PRIZES = DRAW_CARDS_AS_FACE_DOWN_PRIZES;
+/**
+ * Checks if abilities are blocked on `card` for `player`.
+ * @returns `true` if the ability is blocked, `false` if the ability is able to go thru.
+ */
 function IS_ABILITY_BLOCKED(store, state, player, card) {
     // Try to reduce PowerEffect, to check if something is blocking our ability
     try {
@@ -244,7 +280,16 @@ function IS_ABILITY_BLOCKED(store, state, player, card) {
     return false;
 }
 exports.IS_ABILITY_BLOCKED = IS_ABILITY_BLOCKED;
+/**
+ * Finds `card` and moves it from its current CardList to `destination`.
+ */
 function MOVE_CARD_TO(state, card, destination) {
     __1.StateUtils.findCardList(state, card).moveCardTo(card, destination);
 }
 exports.MOVE_CARD_TO = MOVE_CARD_TO;
+function SHOW_CARDS_TO_PLAYER(store, state, player, cards) {
+    if (cards.length === 0)
+        return false;
+    store.prompt(state, new __1.ShowCardsPrompt(player.id, __1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards), result => { return result; });
+}
+exports.SHOW_CARDS_TO_PLAYER = SHOW_CARDS_TO_PLAYER;

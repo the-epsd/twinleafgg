@@ -36,7 +36,7 @@ class HisuianBasculin extends pokemon_card_1.PokemonCard {
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
-            return prefabs_1.SEARCH_YOUR_DECK_FOR_X_POKEMON_AND_PUT_THEM_ONTO_YOUR_BENCH(store, state, effect, 0, 2, card_types_1.Stage.BASIC);
+            return prefabs_1.SEARCH_YOUR_DECK_FOR_STAGE_OF_POKEMON_AND_PUT_THEM_ONTO_YOUR_BENCH(store, state, effect, 0, 2, card_types_1.Stage.BASIC);
         }
         return state;
     }

@@ -5,6 +5,7 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt, GameMessage } from '../../game';
+import { DRAW_CARDS_UNTIL_CARDS_IN_HAND } from '../../game/store/prefabs/prefabs';
 
 export class IrisFightingSpirit extends TrainerCard {
 
@@ -46,7 +47,7 @@ export class IrisFightingSpirit extends TrainerCard {
           return;
         }
 
-        player.deck.moveTo(player.hand, 6 - player.hand.cards.length);
+        DRAW_CARDS_UNTIL_CARDS_IN_HAND(player, 6);
       });
 
       return state;

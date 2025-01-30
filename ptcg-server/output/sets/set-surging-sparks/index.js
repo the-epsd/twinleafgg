@@ -9,6 +9,7 @@ const archaludon_ex_1 = require("./archaludon-ex");
 const azelf_1 = require("./azelf");
 const azulmarill_1 = require("./azulmarill");
 const black_kyurem_ex_1 = require("./black-kyurem-ex");
+const blitzle_1 = require("./blitzle");
 const capsakid_1 = require("./capsakid.");
 const card_images_1 = require("./card-images");
 const celebration_fanfare_1 = require("./celebration-fanfare");
@@ -81,6 +82,7 @@ const slakoth_1 = require("./slakoth");
 const smoochum_1 = require("./smoochum");
 const surfer_1 = require("./surfer");
 const sylveon_ex_1 = require("./sylveon-ex");
+const tapu_koko_1 = require("./tapu-koko");
 const tatsugiri_ex_1 = require("./tatsugiri-ex");
 const tera_orb_1 = require("./tera-orb");
 const terapagos_1 = require("./terapagos");
@@ -191,6 +193,8 @@ exports.setSurgingSparks = [
     new sizzlipede_1.Sizzlipede(),
     new centiskorch_1.Centiskorch(),
     new cyclizar_ex_1.Cyclizarex(),
+    new blitzle_1.Blitzle(),
+    new tapu_koko_1.TapuKoko(),
     //Reprints
     new card_images_1.ScrambleSwitchSSP(),
     new card_images_1.CounterGainSSP(),
