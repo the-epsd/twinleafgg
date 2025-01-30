@@ -16,7 +16,7 @@ export class Ditto extends PokemonCard {
 
   public powers = [{
     name: 'Transform',
-    powerType: PowerType.POKEPOWER,
+    powerType: PowerType.POKEMON_POWER,
     text: 'If Ditto is your Active Pokémon, treat it as if it were the same card as the Defending Pokémon, including type, Hit Points, Weakness, and so on, except Ditto can’t evolve, always has this Pokémon Power, and you may treat any Energy attached to Ditto as Energy of any type. Ditto isn’t a copy of any other Pokémon while Ditto is Asleep, Confused, or Paralyzed.'
   }];
 

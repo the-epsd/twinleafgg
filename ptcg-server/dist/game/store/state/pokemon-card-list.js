@@ -26,6 +26,9 @@ export class PokemonCardList extends CardList {
             else if (card.name === 'Lillie\'s Poké Doll') {
                 result.push(card);
             }
+            else if (card.name === 'Clefairy Doll') {
+                result.push(card);
+            }
             else if (card.name === 'Rare Fossil') {
                 result.push(card);
             }
@@ -152,13 +155,13 @@ export class PokemonCardList extends CardList {
         this.boardEffect.push(sp);
     }
     hasRuleBox() {
-        return this.cards.some(c => c.tags.includes(CardTag.POKEMON_ex) || c.tags.includes(CardTag.RADIANT) || c.tags.includes(CardTag.ACE_SPEC) || c.tags.includes(CardTag.POKEMON_V) || c.tags.includes(CardTag.POKEMON_VMAX) || c.tags.includes(CardTag.POKEMON_VSTAR));
+        return this.cards.some(c => c.tags.includes(CardTag.POKEMON_ex) || c.tags.includes(CardTag.RADIANT) || c.tags.includes(CardTag.POKEMON_V) || c.tags.includes(CardTag.POKEMON_VMAX) || c.tags.includes(CardTag.POKEMON_VSTAR) || c.tags.includes(CardTag.POKEMON_GX) || c.tags.includes(CardTag.PRISM_STAR) || c.tags.includes(CardTag.BREAK));
     }
     vPokemon() {
         return this.cards.some(c => c.tags.includes(CardTag.POKEMON_V) || c.tags.includes(CardTag.POKEMON_VMAX) || c.tags.includes(CardTag.POKEMON_VSTAR));
     }
     exPokemon() {
-        return this.cards.some(c => c.tags.includes(CardTag.POKEMON_V));
+        return this.cards.some(c => c.tags.includes(CardTag.POKEMON_ex));
     }
     futurePokemon() {
         return this.cards.some(c => c.tags.includes(CardTag.FUTURE));

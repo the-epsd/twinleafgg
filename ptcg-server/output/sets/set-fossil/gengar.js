@@ -25,7 +25,7 @@ class Gengar extends pokemon_card_1.PokemonCard {
         this.powers = [{
                 name: 'Curse',
                 useWhenInPlay: true,
-                powerType: pokemon_types_1.PowerType.POKEPOWER,
+                powerType: pokemon_types_1.PowerType.POKEMON_POWER,
                 text: 'Once during your turn (before your attack), you may move 1 damage counter from 1 of your opponent\'s Pokémon to another(even if it would Knock Out the other Pokémon).This power can\'t be used if Gengar is Asleep, Confused, or Paralyzed.'
             }];
         this.attacks = [{

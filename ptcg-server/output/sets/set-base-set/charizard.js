@@ -22,7 +22,7 @@ class Charizard extends pokemon_card_1.PokemonCard {
         this.powers = [{
                 name: 'Energy Burn',
                 useWhenInPlay: true,
-                powerType: game_1.PowerType.POKEPOWER,
+                powerType: game_1.PowerType.POKEMON_POWER,
                 text: 'As often as you like during your turn (before your attack), you may turn all Energy attached to Charizard into R Energy for the rest of the turn. This power can\'t be used if Charizard is Asleep, Confused, or Paralyzed.'
             }];
         this.attacks = [
@@ -43,6 +43,12 @@ class Charizard extends pokemon_card_1.PokemonCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
+            const cardList = game_1.StateUtils.findCardList(state, this);
+            if (cardList.specialConditions.includes(card_types_1.SpecialCondition.ASLEEP) ||
+                cardList.specialConditions.includes(card_types_1.SpecialCondition.CONFUSED) ||
+                cardList.specialConditions.includes(card_types_1.SpecialCondition.PARALYZED)) {
+                return state;
+            }
             // Get the energy map for the player
             const checkProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(player);
             state = store.reduceEffect(state, checkProvidedEnergy);

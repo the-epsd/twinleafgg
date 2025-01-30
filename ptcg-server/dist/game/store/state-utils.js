@@ -2,6 +2,8 @@ import { GameError } from '../game-error';
 import { GameMessage } from '../game-message';
 import { PlayerType, SlotType } from './actions/play-card-action';
 import { CardType } from './card/card-types';
+import { PowerType } from './card/pokemon-types';
+import { PowerEffect } from './effects/game-effects';
 export class StateUtils {
     static getStadium(state) {
         throw new Error('Method not implemented.');
@@ -240,5 +242,19 @@ export class StateUtils {
             }
         }
         return undefined;
+    }
+    static checkAbilityBlocked(store, state, player, card) {
+        // Try to reduce PowerEffect, to check if something is blocking our ability
+        try {
+            store.reduceEffect(state, new PowerEffect(player, {
+                name: 'test',
+                powerType: PowerType.ABILITY,
+                text: ''
+            }, card));
+        }
+        catch (_a) {
+            return true;
+        }
+        return false;
     }
 }

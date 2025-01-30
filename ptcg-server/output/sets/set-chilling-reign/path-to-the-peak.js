@@ -6,7 +6,6 @@ const trainer_card_1 = require("../../game/store/card/trainer-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_1 = require("../../game");
-const check_effect_1 = require("../../game/store/effect-reducers/check-effect");
 class PathToThePeak extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -27,15 +26,16 @@ class PathToThePeak extends trainer_card_1.TrainerCard {
                 pokemonCard.tags.includes(card_types_1.CardTag.POKEMON_VMAX) ||
                 pokemonCard.tags.includes(card_types_1.CardTag.POKEMON_VSTAR) ||
                 pokemonCard.tags.includes(card_types_1.CardTag.POKEMON_ex) ||
+                pokemonCard.tags.includes(card_types_1.CardTag.POKEMON_EX) ||
+                pokemonCard.tags.includes(card_types_1.CardTag.BREAK) ||
+                pokemonCard.tags.includes(card_types_1.CardTag.POKEMON_GX) ||
+                pokemonCard.tags.includes(card_types_1.CardTag.PRISM_STAR) ||
                 pokemonCard.tags.includes(card_types_1.CardTag.RADIANT)) {
-                // pokemonCard.powers.length -= 1;
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
-            if (effect instanceof game_effects_1.UseStadiumEffect && state_utils_1.StateUtils.getStadiumCard(state) === this) {
-                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_STADIUM);
-            }
-            check_effect_1.checkState(store, state);
-            return state;
+        }
+        if (effect instanceof game_effects_1.UseStadiumEffect && state_utils_1.StateUtils.getStadiumCard(state) === this) {
+            throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_STADIUM);
         }
         return state;
     }

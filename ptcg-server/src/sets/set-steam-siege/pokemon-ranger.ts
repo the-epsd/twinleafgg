@@ -12,7 +12,7 @@ export class PokemonRanger extends TrainerCard {
 
   public set: string = 'STS';
 
-  public name: string = 'Pokemon Ranger';
+  public name: string = 'Pokémon Ranger';
 
   public fullName: string = 'Pokemon Ranger STS';
 

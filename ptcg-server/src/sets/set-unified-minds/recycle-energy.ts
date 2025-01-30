@@ -1,7 +1,6 @@
 import { Card } from '../../game';
 import { CardType, EnergyType } from '../../game/store/card/card-types';
 import { EnergyCard } from '../../game/store/card/energy-card';
-import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 import { CheckTableStateEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
@@ -32,11 +31,6 @@ export class RecycleEnergy extends EnergyCard {
   public RECYCLE_ENERGY_MARKER = 'RECYCLE_ENERGY_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    if (effect instanceof DiscardCardsEffect && effect.target.cards.includes(this)) {
-      const player = effect.player;
-      effect.target.moveCardTo(this, player.hand);
-    }
 
     if (effect instanceof AttachEnergyEffect && effect.energyCard === this) {
       const player = effect.player;

@@ -28,6 +28,7 @@ const mew_1 = require("./mew");
 const mewtwo_1 = require("./mewtwo");
 const mismagius_1 = require("./mismagius");
 const oddish_1 = require("./oddish");
+const pheromosa_buzzwole_gx_1 = require("./pheromosa-buzzwole-gx");
 const pokegear_30_1 = require("./pokegear-30");
 const poliwag_1 = require("./poliwag");
 const porygon_1 = require("./porygon");
@@ -82,4 +83,5 @@ exports.setUnbrokenBonds = [
     new volcanion_1.Volcanion(),
     new zeraora_1.Zeraora(),
     new greninja_zoroark_gx_1.GreninjaZoroarkGX(),
+    new pheromosa_buzzwole_gx_1.PheromosaBuzzwoleGX(),
 ];

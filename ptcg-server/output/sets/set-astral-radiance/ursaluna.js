@@ -47,7 +47,7 @@ class Ursaluna extends pokemon_card_1.PokemonCard {
                 return state;
             }
             const max = Math.min(cardsInDiscardPile, 2);
-            state = store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.discard, {}, { min: max, max: max, allowCancel: false }), selected => {
+            state = store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.discard, {}, { min: 1, max: max, allowCancel: false }), selected => {
                 const cards = selected || [];
                 store.prompt(state, [new game_1.ShowCardsPrompt(opponent.id, game_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards)], () => {
                     player.discard.moveCardsTo(cards, player.hand);

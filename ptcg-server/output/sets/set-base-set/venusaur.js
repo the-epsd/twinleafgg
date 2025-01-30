@@ -21,14 +21,11 @@ function* moveEnergy(next, store, state, effect) {
     if (!hasBasicEnergy || pokemonCount <= 1) {
         throw new __1.GameError(__1.GameMessage.CANNOT_USE_POWER);
     }
-    // We will discard this card after prompt confirmation
-    effect.preventDefault = true;
     let transfers = [];
     yield store.prompt(state, new move_energy_prompt_1.MoveEnergyPrompt(player.id, __1.GameMessage.MOVE_ENERGY_CARDS, __1.PlayerType.BOTTOM_PLAYER, [__1.SlotType.ACTIVE, __1.SlotType.BENCH], { cardType: card_types_1.CardType.GRASS }, { min: 1, max: 1, allowCancel: false }), result => {
         transfers = result || [];
         next();
     });
-    // Cancelled by the user
     if (transfers.length === 0) {
         return state;
     }
@@ -55,8 +52,8 @@ class Venusaur extends pokemon_card_1.PokemonCard {
         this.powers = [{
                 name: 'Energy Trans',
                 useWhenInPlay: true,
-                powerType: pokemon_types_1.PowerType.POKEPOWER,
-                text: 'As often as you like during your turn (before your attack), you may take 1 {G} Energy card attached to 1 of your Pokémon and attach it to a different one. This power can’t be used if Venusaur is Asleep, Confused, or Paralyzed.'
+                powerType: pokemon_types_1.PowerType.POKEMON_POWER,
+                text: 'As often as you like during your turn (before your attack), you may take 1 [G] Energy card attached to 1 of your Pokémon and attach it to a different one. This power can\'t be used if Venusaur is Asleep, Confused, or Paralyzed.'
             }];
         this.attacks = [{
                 name: 'Solarbeam',
@@ -67,6 +64,12 @@ class Venusaur extends pokemon_card_1.PokemonCard {
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
+            const cardList = __1.StateUtils.findCardList(state, this);
+            if (cardList.specialConditions.includes(card_types_1.SpecialCondition.ASLEEP) ||
+                cardList.specialConditions.includes(card_types_1.SpecialCondition.CONFUSED) ||
+                cardList.specialConditions.includes(card_types_1.SpecialCondition.PARALYZED)) {
+                return state;
+            }
             const generator = moveEnergy(() => generator.next(), store, state, effect);
             return generator.next().value;
         }

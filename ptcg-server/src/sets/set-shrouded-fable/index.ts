@@ -18,6 +18,7 @@ import { Eevee } from './eevee';
 import { Fezandipitiex } from './fezandipiti-ex';
 import { Fraxure } from './fraxure';
 import { Galvantula } from './galvantula';
+import { Genesect } from './genesect';
 import { Haxorus } from './haxorus';
 import { Horsea } from './horsea';
 import { Houndoom } from './houndoom';
@@ -67,6 +68,7 @@ export const setShroudedFable: Card[] = [
   new Fezandipitiex(),
   new Fraxure(),
   new Galvantula(),
+  new Genesect(),
   new Haxorus(),
   new Horsea(),
   new Houndoom(),

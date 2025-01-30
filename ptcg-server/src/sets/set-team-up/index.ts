@@ -11,6 +11,7 @@ import { GengarMimikyuGX } from './gengar-and-mimikyu-gx';
 import { Hitmonchan } from './hitmonchan';
 import { Hitmonlee } from './hitmonlee';
 import { Jirachi } from './jirachi';
+import {JudgeWhistle} from './judge-whistle';
 import { KakunaTEU } from './kakuna';
 import { Lapras } from './lapras';
 import { Mareep } from './mareep';
@@ -60,4 +61,5 @@ export const setTeamUp: Card[] = [
   new WeedleTEU2(),
   new Yveltal(),
   new Zapdos(),
+  new JudgeWhistle(),
 ];

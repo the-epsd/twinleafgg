@@ -18,7 +18,7 @@ class Muk extends pokemon_card_1.PokemonCard {
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.powers = [{
                 name: 'Toxic Gas',
-                powerType: game_1.PowerType.POKEPOWER,
+                powerType: game_1.PowerType.POKEMON_POWER,
                 text: 'Ignore all Pokémon Powers other than Toxic Gases. This power stops working while Muk is Asleep, Confused, or Paralyzed.'
             }];
         this.attacks = [
@@ -36,9 +36,15 @@ class Muk extends pokemon_card_1.PokemonCard {
         this.fullName = 'Muk FO';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_effects_1.PowerEffect && effect.power.powerType === game_1.PowerType.POKEPOWER && effect.power.name !== 'Toxic Gas') {
+        if (effect instanceof game_effects_1.PowerEffect && effect.power.powerType === game_1.PowerType.POKEMON_POWER && effect.power.name !== 'Toxic Gas') {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
+            const cardList = game_1.StateUtils.findCardList(state, this);
+            if (cardList.specialConditions.includes(card_types_1.SpecialCondition.ASLEEP) ||
+                cardList.specialConditions.includes(card_types_1.SpecialCondition.CONFUSED) ||
+                cardList.specialConditions.includes(card_types_1.SpecialCondition.PARALYZED)) {
+                return state;
+            }
             player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
                 if (cardList.getPokemonCard() === this && cardList.specialConditions.length > 0) {
                     return state;

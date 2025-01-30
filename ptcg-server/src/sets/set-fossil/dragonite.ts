@@ -16,7 +16,7 @@ export class Dragonite extends PokemonCard {
   public powers = [{
     name: 'Step In',
     useWhenInPlay: true,
-    powerType: PowerType.POKEPOWER,
+    powerType: PowerType.POKEMON_POWER,
     text: 'Once during your turn (before your attack), if Dragonite is on your Bench, you may switch it with your Active Pokémon.'
   }];
 
@@ -59,9 +59,7 @@ export class Dragonite extends PokemonCard {
           cardList.addBoardEffect(BoardEffect.ABILITY_USED);
         }
       });
-
       return state;
-
     }
 
     if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.STEP_IN_MARKER, this)) {
@@ -81,9 +79,6 @@ export class Dragonite extends PokemonCard {
       });
       return state;
     }
-
-
-
     return state;
   }
 }

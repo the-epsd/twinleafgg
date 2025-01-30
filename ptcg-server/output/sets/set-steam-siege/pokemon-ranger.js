@@ -10,7 +10,7 @@ class PokemonRanger extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
         this.set = 'STS';
-        this.name = 'Pokemon Ranger';
+        this.name = 'Pokémon Ranger';
         this.fullName = 'Pokemon Ranger STS';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '104';

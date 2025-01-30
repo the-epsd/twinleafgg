@@ -52,13 +52,16 @@ export const cardReplacements = [
   { from: 'Mallow GRI 127', to: 'Mallow TEF 127' },
 
   //SHF
-  { from: 'SnomSV SHF SV33', to: 'Applin SHF SV33' },
+  { from: 'Snom SHF SV33', to: 'Snom SHFSV SV33' },
 
   //DRM
   { from: 'Feebas DRM 28', to: 'Feebas BCR 28' },
 
   //SLG
   { from: 'Warp Energy SLG 70', to: 'Warp Energy SHL 70' },
+
+  //STS
+  { from: 'Pokémon Ranger STS 104', to: 'Pokemon Ranger STS 104' },
 
   //CES
   { from: 'Oricorio CES 30', to: 'Oricorio SHF 30' },
@@ -441,7 +444,7 @@ export const exportReplacements = [
   { from: 'Mallow TEF 127', to: 'Mallow GRI 127' },
 
   //SHF
-  { from: 'Applin SHF SV33', to: 'SnomSV SHF SV33' },
+  { from: 'Snom SHFSV SV33', to: 'Snom SHF SV33' },
 
   //DRM
   { from: 'Feebas BCR 28', to: 'Feebas DRM 28' },

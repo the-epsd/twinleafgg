@@ -13,6 +13,7 @@ const gengar_and_mimikyu_gx_1 = require("./gengar-and-mimikyu-gx");
 const hitmonchan_1 = require("./hitmonchan");
 const hitmonlee_1 = require("./hitmonlee");
 const jirachi_1 = require("./jirachi");
+const judge_whistle_1 = require("./judge-whistle");
 const kakuna_1 = require("./kakuna");
 const lapras_1 = require("./lapras");
 const mareep_1 = require("./mareep");
@@ -59,4 +60,5 @@ exports.setTeamUp = [
     new weedle_2_1.WeedleTEU2(),
     new yveltal_1.Yveltal(),
     new zapdos_1.Zapdos(),
+    new judge_whistle_1.JudgeWhistle(),
 ];

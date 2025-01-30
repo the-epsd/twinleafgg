@@ -6,6 +6,7 @@ import { Beedrill } from './beedrill';
 import { Bill } from './bill';
 import { Blastoise } from './blastoise';
 import { Bulbasaur } from './bulbasaur';
+import { Caterpie } from './caterpie';
 import { Chansey } from './chansey';
 import { Charizard } from './charizard';
 import { Charmander } from './charmander';
@@ -50,6 +51,7 @@ import { Magmar } from './magmar';
 import { Magnemite } from './magnemite';
 import { Magneton } from './magneton';
 import { Maintenance } from './maintenance';
+import { Metapod } from './metapod';
 import { Mewtwo } from './mewtwo';
 import { Nidoking } from './nidoking';
 import { NidoranMale } from './nidoran-male';
@@ -101,6 +103,7 @@ export const setBaseSet: Card[] = [
   new Bill(),
   new Blastoise(),
   new Bulbasaur(),
+  new Caterpie(),
   new Chansey(),
   new Charizard(),
   new Charmander(),
@@ -145,6 +148,7 @@ export const setBaseSet: Card[] = [
   new Magnemite(),
   new Magneton(),
   new Maintenance(),
+  new Metapod(),
   new Mewtwo(),
   new Nidoking(),
   new Nidorino(),

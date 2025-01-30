@@ -81,7 +81,6 @@ export class TripleAccelerationEnergy extends EnergyCard {
       });
       return state;
     }
-
     return state;
   }
 }

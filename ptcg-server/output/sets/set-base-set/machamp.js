@@ -25,7 +25,7 @@ class Machamp extends pokemon_card_1.PokemonCard {
         this.powers = [
             {
                 name: 'Strikes Back',
-                powerType: pokemon_types_1.PowerType.POKEPOWER,
+                powerType: pokemon_types_1.PowerType.POKEMON_POWER,
                 text: 'Whenever your opponent\'s attack damages Machamp (even if Machamp is Knocked Out), this power does 10 damage to the attacking Pokémon. (Don\'t apply Weakness and Resistance.) This power can\'t be used if Machamp is Asleep, Confused, or Paralyzed when your opponent attacks.'
             }
         ];
@@ -39,17 +39,19 @@ class Machamp extends pokemon_card_1.PokemonCard {
         ];
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof attack_effects_1.AfterDamageEffect) {
+        if (effect instanceof attack_effects_1.DealDamageEffect && effect.target.cards.includes(this)) {
             const player = effect.player;
             const cardList = game_1.StateUtils.findCardList(state, this);
-            if (cardList.specialConditions.length > 0) {
+            if (cardList.specialConditions.includes(card_types_1.SpecialCondition.ASLEEP) ||
+                cardList.specialConditions.includes(card_types_1.SpecialCondition.CONFUSED) ||
+                cardList.specialConditions.includes(card_types_1.SpecialCondition.PARALYZED)) {
                 return state;
             }
             // Try to reduce PowerEffect, to check if something is blocking our ability
             try {
                 const stub = new game_effects_1.PowerEffect(player, {
                     name: 'test',
-                    powerType: pokemon_types_1.PowerType.ABILITY,
+                    powerType: pokemon_types_1.PowerType.POKEMON_POWER,
                     text: ''
                 }, this);
                 store.reduceEffect(state, stub);

@@ -26,6 +26,7 @@ import { Mew } from './mew';
 import { Mewtwo } from './mewtwo';
 import { Mismagius } from './mismagius';
 import { Oddish } from './oddish';
+import {PheromosaBuzzwoleGX} from './pheromosa-buzzwole-gx';
 import { Pokegear30 } from './pokegear-30';
 import { Poliwag } from './poliwag';
 import { Porygon } from './porygon';
@@ -81,4 +82,5 @@ export const setUnbrokenBonds: Card[] = [
   new Volcanion(),
   new Zeraora(),
   new GreninjaZoroarkGX(),
+  new PheromosaBuzzwoleGX(),
 ];

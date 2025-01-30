@@ -36,6 +36,7 @@ const kricketune_1 = require("./kricketune");
 const lucario_v_1 = require("./lucario-v");
 const luxray_v_1 = require("./luxray-v");
 const magneton_1 = require("./magneton");
+const magnezone_1 = require("./magnezone");
 const mantine_1 = require("./mantine");
 const mightyena_1 = require("./mightyena");
 const miltank_1 = require("./miltank");
@@ -101,6 +102,7 @@ exports.setAstralRadiance = [
     new lucario_v_1.LucarioV(),
     new luxray_v_1.LuxrayV(),
     new magneton_1.Magneton(),
+    new magnezone_1.Magnezone(),
     new mightyena_1.Mightyena(),
     new mantine_1.Mantine(),
     new miltank_1.Miltank(),
