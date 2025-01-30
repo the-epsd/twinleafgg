@@ -2,6 +2,7 @@ import { EnergyRetrieval } from '../set-scarlet-and-violet/energy-retrieval';
 import { ExpShare } from '../set-scarlet-and-violet/exp-share';
 import { NestBall } from '../set-scarlet-and-violet/nest-ball';
 import { RareCandy } from '../set-scarlet-and-violet/rare-candy';
+import { RotomDex } from './rotom-dex';
 
 export class EnergyRetrievalSUM extends EnergyRetrieval {
   public setNumber = '116';
@@ -24,5 +25,11 @@ export class NestBallSUM extends NestBall {
 export class RareCandySUM extends RareCandy {
   public setNumber = '129';
   public fullName: string = 'Rare Candy SUM';
+  public set = 'SUM';
+}
+
+export class RotomDexSR extends RotomDex {
+  public setNumber = '159';
+  public fullName: string = 'Rotom DexSR SUM';
   public set = 'SUM';
 }

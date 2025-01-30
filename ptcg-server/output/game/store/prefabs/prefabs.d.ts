@@ -1,4 +1,4 @@
-import { Player, State, StoreLike } from '../..';
+import { Card, CardList, Player, State, StoreLike } from '../..';
 import { CardType, Stage } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
 import { Effect } from '../effects/effect';
@@ -15,7 +15,10 @@ export declare function WAS_ATTACK_USED(effect: Effect, index: number, user: Pok
  * @returns whether or not a specific ability was used.
  */
 export declare function WAS_ABILITY_USED(effect: Effect, index: number, user: PokemonCard): effect is PowerEffect;
-export declare function abilityUsed(player: Player, card: PokemonCard): void;
+/**
+ * Adds the "ability used" board effect to the given Pokemon.
+ */
+export declare function ABILITY_USED(player: Player, card: PokemonCard): void;
 /**
  *
  * A basic effect for checking whether or not a passive ability gets activated.
@@ -38,5 +41,26 @@ export declare function YOUR_OPPONENTS_POKEMON_IS_KNOCKED_OUT_BY_DAMAGE_FROM_THI
 export declare function TAKE_X_MORE_PRIZE_CARDS(effect: KnockOutEffect, state: State): State;
 export declare function THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_BENCHED_POKEMON(damage: number, effect: AttackEffect, store: StoreLike, state: State, min: number, max: number): State;
 export declare function ATTACH_X_NUMBER_OF_BASIC_ENERGY_CARDS_FROM_YOUR_DISCARD_TO_YOUR_BENCHED_POKEMON(effect: AttackEffect, store: StoreLike, state: State, amount: number): void;
-export declare function SHUFFLE_DECK(effect: Effect, store: StoreLike, state: State, player: Player): State;
+export declare function SHUFFLE_DECK(store: StoreLike, state: State, player: Player): State;
 export declare function DISCARD_X_ENERGY_FROM_YOUR_HAND(effect: PowerEffect, store: StoreLike, state: State, minAmount: number, maxAmount: number): void;
+/**
+ * A getter for the player's prize slots.
+ * @returns A list of card lists containing the player's prize slots.
+ */
+export declare function GET_PLAYER_PRIZES(player: Player): CardList[];
+/**
+ * A getter for all of a player's prizes.
+ * @returns A Card[] of all the player's prize cards.
+ */
+export declare function GET_PRIZES_AS_CARD_ARRAY(player: Player): Card[];
+/**
+ * Puts a list of cards into the deck, then shuffles the deck.
+ */
+export declare function SHUFFLE_CARDS_INTO_DECK(store: StoreLike, state: State, player: Player, cards: Card[]): void;
+/**
+ * Shuffle the prize cards into the deck.
+ */
+export declare function SHUFFLE_PRIZES_INTO_DECK(store: StoreLike, state: State, player: Player): void;
+export declare function DRAW_CARDS_AS_PRIZES(player: Player, count: number): void;
+export declare function IS_ABILITY_BLOCKED(store: StoreLike, state: State, player: Player, card: PokemonCard): boolean;
+export declare function MOVE_CARD_TO(state: State, card: Card, destination: CardList): void;

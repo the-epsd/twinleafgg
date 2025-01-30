@@ -10,7 +10,7 @@ import {
 import { PowerEffect, AttackEffect } from '../../game/store/effects/game-effects';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { abilityUsed } from '../../game/store/prefabs/prefabs';
+import { ABILITY_USED } from '../../game/store/prefabs/prefabs';
 
 
 export class Celebi extends PokemonCard {
@@ -98,7 +98,7 @@ export class Celebi extends PokemonCard {
       ), transfers => {
         transfers = transfers || [];
 
-        abilityUsed(player, this);
+        ABILITY_USED(player, this);
 
         // cancelled by user
         if (transfers.length === 0) {

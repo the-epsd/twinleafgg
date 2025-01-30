@@ -1,4 +1,4 @@
-import { AttachEnergyPrompt, Card, ChooseCardsPrompt, ChooseEnergyPrompt, ChoosePokemonPrompt, EnergyCard, GameError, GameMessage, Player, PlayerType, ShuffleDeckPrompt, SlotType, State, StateUtils, StoreLike } from '../..';
+import { AttachEnergyPrompt, Card, CardList, ChooseCardsPrompt, ChooseEnergyPrompt, ChoosePokemonPrompt, EnergyCard, GameError, GameMessage, Player, PlayerType, PowerType, ShuffleDeckPrompt, SlotType, State, StateUtils, StoreLike } from '../..';
 import { BoardEffect, CardType, EnergyType, Stage, SuperType } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
 import { DiscardCardsEffect, HealTargetEffect, PutDamageEffect } from '../effects/attack-effects';
@@ -24,7 +24,10 @@ export function WAS_ABILITY_USED(effect: Effect, index: number, user: PokemonCar
   return effect instanceof PowerEffect && effect.power === user.powers[index];
 }
 
-export function abilityUsed(player: Player, card: PokemonCard) {
+/**
+ * Adds the "ability used" board effect to the given Pokemon. 
+ */
+export function ABILITY_USED(player: Player, card: PokemonCard) {
   player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
     if (cardList.getPokemonCard() === card) {
       cardList.addBoardEffect(BoardEffect.ABILITY_USED);
@@ -187,12 +190,8 @@ export function ATTACH_X_NUMBER_OF_BASIC_ENERGY_CARDS_FROM_YOUR_DISCARD_TO_YOUR_
   });
 }
 
-export function SHUFFLE_DECK(effect: Effect, store: StoreLike, state: State, player: Player) {
-  console.log('Deck order before shuffle:', player.deck.cards.map(c => c.name));
-  return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-    player.deck.applyOrder(order);
-    console.log('Deck order after shuffle:', player.deck.cards.map(c => c.name));
-  });
+export function SHUFFLE_DECK(store: StoreLike, state: State, player: Player) {
+  return store.prompt(state, new ShuffleDeckPrompt(player.id), order => player.deck.applyOrder(order));
 }
 
 export function DISCARD_X_ENERGY_FROM_YOUR_HAND(effect: PowerEffect, store: StoreLike, state: State, minAmount: number, maxAmount: number) {
@@ -218,4 +217,78 @@ export function DISCARD_X_ENERGY_FROM_YOUR_HAND(effect: PowerEffect, store: Stor
     }
     player.hand.moveCardsTo(cards, player.discard);
   });
+}
+
+/**
+ * A getter for the player's prize slots.
+ * @returns A list of card lists containing the player's prize slots.
+ */
+export function GET_PLAYER_PRIZES(player: Player): CardList[] {
+  return player.prizes.filter(p => p.cards.length > 0);
+}
+
+
+/**
+ * A getter for all of a player's prizes.
+ * @returns A Card[] of all the player's prize cards.
+ */
+export function GET_PRIZES_AS_CARD_ARRAY(player: Player): Card[] {
+  const prizes = player.prizes.filter(p => p.cards.length > 0);
+  const allPrizeCards: Card[] = [];
+  prizes.forEach(p => allPrizeCards.push(...p.cards));
+  return allPrizeCards;
+}
+
+/**
+ * Puts a list of cards into the deck, then shuffles the deck.
+ */
+export function SHUFFLE_CARDS_INTO_DECK(store: StoreLike, state: State, player: Player, cards: Card[]) {
+  cards.forEach(card => {
+    player.deck.cards.unshift(card);
+  });
+  SHUFFLE_DECK(store, state, player);
+}
+
+/**
+ * Shuffle the prize cards into the deck. 
+ */
+export function SHUFFLE_PRIZES_INTO_DECK(store: StoreLike, state: State, player: Player) {
+  SHUFFLE_CARDS_INTO_DECK(store, state, player, GET_PRIZES_AS_CARD_ARRAY(player));
+  GET_PLAYER_PRIZES(player).forEach(p => p.cards = []);
+}
+
+export function DRAW_CARDS_AS_PRIZES(player: Player, count: number) {
+  // Draw cards from the top of the deck to the prize cards
+  for (let i = 0; i < count; i++) {
+    const card = player.deck.cards.pop();
+    if (card) {
+      const prize = player.prizes.find(p => p.cards.length === 0);
+      if (prize) {
+        prize.cards.push(card);
+      } else {
+        player.deck.cards.push(card);
+      }
+    }
+  }
+
+  // Set the new prize cards to be face down
+  player.prizes.forEach(p => p.isSecret = true);
+}
+
+export function IS_ABILITY_BLOCKED(store: StoreLike, state: State, player: Player, card: PokemonCard): boolean {
+  // Try to reduce PowerEffect, to check if something is blocking our ability
+  try {
+    store.reduceEffect(state, new PowerEffect(player, {
+      name: 'test',
+      powerType: PowerType.ABILITY,
+      text: ''
+    }, card));
+  } catch {
+    return true;
+  }
+  return false;
+}
+
+export function MOVE_CARD_TO(state: State, card: Card, destination: CardList) {
+  StateUtils.findCardList(state, card).moveCardTo(card, destination);
 }

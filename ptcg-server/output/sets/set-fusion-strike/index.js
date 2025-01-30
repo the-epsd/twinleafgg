@@ -41,6 +41,7 @@ const starmie_1 = require("./starmie");
 const staryu_1 = require("./staryu");
 const swampert_1 = require("./swampert");
 const totodile_1 = require("./totodile");
+const tsareena_v_1 = require("./tsareena-v");
 const yveltal_1 = require("./yveltal");
 exports.setFusionStrike = [
     new azumarill_1.Azumarill(),
@@ -72,6 +73,7 @@ exports.setFusionStrike = [
     new oricorio_1.Oricorio(),
     new power_tablet_1.PowerTablet(),
     new pyukumuku_1.Pyukumuku(),
+    new tsareena_v_1.TsareenaV(),
     new yveltal_1.Yveltal(),
     new shauna_1.Shauna(),
     new adventurers_discovery_1.AdventurersDiscovery(),

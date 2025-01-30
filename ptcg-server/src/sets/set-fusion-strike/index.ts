@@ -39,6 +39,7 @@ import { Starmie } from './starmie';
 import { Staryu } from './staryu';
 import { Swampert } from './swampert';
 import { Totodile } from './totodile';
+import { TsareenaV } from './tsareena-v';
 import { Yveltal } from './yveltal';
 
 
@@ -73,6 +74,7 @@ export const setFusionStrike: Card[] = [
   new Oricorio(),
   new PowerTablet(),
   new Pyukumuku(),
+  new TsareenaV(),
   new Yveltal(),
   new Shauna(),
   new AdventurersDiscovery(),

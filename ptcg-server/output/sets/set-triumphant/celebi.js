@@ -70,7 +70,7 @@ class Celebi extends pokemon_card_1.PokemonCard {
             }
             return store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_message_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.hand, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { superType: card_types_1.SuperType.ENERGY, name: 'Grass Energy' }, { allowCancel: true, min: 1, max: 1 }), transfers => {
                 transfers = transfers || [];
-                prefabs_1.abilityUsed(player, this);
+                prefabs_1.ABILITY_USED(player, this);
                 // cancelled by user
                 if (transfers.length === 0) {
                     return;

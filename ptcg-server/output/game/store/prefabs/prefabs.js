@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DISCARD_X_ENERGY_FROM_YOUR_HAND = exports.SHUFFLE_DECK = exports.ATTACH_X_NUMBER_OF_BASIC_ENERGY_CARDS_FROM_YOUR_DISCARD_TO_YOUR_BENCHED_POKEMON = exports.THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_BENCHED_POKEMON = exports.TAKE_X_MORE_PRIZE_CARDS = exports.YOUR_OPPONENTS_POKEMON_IS_KNOCKED_OUT_BY_DAMAGE_FROM_THIS_ATTACK = exports.THIS_POKEMON_HAS_ANY_DAMAGE_COUNTERS_ON_IT = exports.HEAL_X_DAMAGE_FROM_THIS_POKEMON = exports.THIS_ATTACK_DOES_X_MORE_DAMAGE = exports.FLIP_IF_HEADS = exports.DISCARD_X_ENERGY_FROM_THIS_POKEMON = exports.SEARCH_YOUR_DECK_FOR_X_POKEMON_AND_PUT_THEM_ONTO_YOUR_BENCH = exports.DISCARD_A_STADIUM_CARD_IN_PLAY = exports.PASSIVE_ABILITY_ACTIVATED = exports.abilityUsed = exports.WAS_ABILITY_USED = exports.WAS_ATTACK_USED = void 0;
+exports.MOVE_CARD_TO = exports.IS_ABILITY_BLOCKED = exports.DRAW_CARDS_AS_PRIZES = exports.SHUFFLE_PRIZES_INTO_DECK = exports.SHUFFLE_CARDS_INTO_DECK = exports.GET_PRIZES_AS_CARD_ARRAY = exports.GET_PLAYER_PRIZES = exports.DISCARD_X_ENERGY_FROM_YOUR_HAND = exports.SHUFFLE_DECK = exports.ATTACH_X_NUMBER_OF_BASIC_ENERGY_CARDS_FROM_YOUR_DISCARD_TO_YOUR_BENCHED_POKEMON = exports.THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_BENCHED_POKEMON = exports.TAKE_X_MORE_PRIZE_CARDS = exports.YOUR_OPPONENTS_POKEMON_IS_KNOCKED_OUT_BY_DAMAGE_FROM_THIS_ATTACK = exports.THIS_POKEMON_HAS_ANY_DAMAGE_COUNTERS_ON_IT = exports.HEAL_X_DAMAGE_FROM_THIS_POKEMON = exports.THIS_ATTACK_DOES_X_MORE_DAMAGE = exports.FLIP_IF_HEADS = exports.DISCARD_X_ENERGY_FROM_THIS_POKEMON = exports.SEARCH_YOUR_DECK_FOR_X_POKEMON_AND_PUT_THEM_ONTO_YOUR_BENCH = exports.DISCARD_A_STADIUM_CARD_IN_PLAY = exports.PASSIVE_ABILITY_ACTIVATED = exports.ABILITY_USED = exports.WAS_ABILITY_USED = exports.WAS_ATTACK_USED = void 0;
 const __1 = require("../..");
 const card_types_1 = require("../card/card-types");
 const attack_effects_1 = require("../effects/attack-effects");
@@ -24,14 +24,17 @@ function WAS_ABILITY_USED(effect, index, user) {
     return effect instanceof game_effects_1.PowerEffect && effect.power === user.powers[index];
 }
 exports.WAS_ABILITY_USED = WAS_ABILITY_USED;
-function abilityUsed(player, card) {
+/**
+ * Adds the "ability used" board effect to the given Pokemon.
+ */
+function ABILITY_USED(player, card) {
     player.forEachPokemon(__1.PlayerType.BOTTOM_PLAYER, cardList => {
         if (cardList.getPokemonCard() === card) {
             cardList.addBoardEffect(card_types_1.BoardEffect.ABILITY_USED);
         }
     });
 }
-exports.abilityUsed = abilityUsed;
+exports.ABILITY_USED = ABILITY_USED;
 /**
  *
  * A basic effect for checking whether or not a passive ability gets activated.
@@ -150,12 +153,8 @@ function ATTACH_X_NUMBER_OF_BASIC_ENERGY_CARDS_FROM_YOUR_DISCARD_TO_YOUR_BENCHED
     });
 }
 exports.ATTACH_X_NUMBER_OF_BASIC_ENERGY_CARDS_FROM_YOUR_DISCARD_TO_YOUR_BENCHED_POKEMON = ATTACH_X_NUMBER_OF_BASIC_ENERGY_CARDS_FROM_YOUR_DISCARD_TO_YOUR_BENCHED_POKEMON;
-function SHUFFLE_DECK(effect, store, state, player) {
-    console.log('Deck order before shuffle:', player.deck.cards.map(c => c.name));
-    return store.prompt(state, new __1.ShuffleDeckPrompt(player.id), order => {
-        player.deck.applyOrder(order);
-        console.log('Deck order after shuffle:', player.deck.cards.map(c => c.name));
-    });
+function SHUFFLE_DECK(store, state, player) {
+    return store.prompt(state, new __1.ShuffleDeckPrompt(player.id), order => player.deck.applyOrder(order));
 }
 exports.SHUFFLE_DECK = SHUFFLE_DECK;
 function DISCARD_X_ENERGY_FROM_YOUR_HAND(effect, store, state, minAmount, maxAmount) {
@@ -175,3 +174,77 @@ function DISCARD_X_ENERGY_FROM_YOUR_HAND(effect, store, state, minAmount, maxAmo
     });
 }
 exports.DISCARD_X_ENERGY_FROM_YOUR_HAND = DISCARD_X_ENERGY_FROM_YOUR_HAND;
+/**
+ * A getter for the player's prize slots.
+ * @returns A list of card lists containing the player's prize slots.
+ */
+function GET_PLAYER_PRIZES(player) {
+    return player.prizes.filter(p => p.cards.length > 0);
+}
+exports.GET_PLAYER_PRIZES = GET_PLAYER_PRIZES;
+/**
+ * A getter for all of a player's prizes.
+ * @returns A Card[] of all the player's prize cards.
+ */
+function GET_PRIZES_AS_CARD_ARRAY(player) {
+    const prizes = player.prizes.filter(p => p.cards.length > 0);
+    const allPrizeCards = [];
+    prizes.forEach(p => allPrizeCards.push(...p.cards));
+    return allPrizeCards;
+}
+exports.GET_PRIZES_AS_CARD_ARRAY = GET_PRIZES_AS_CARD_ARRAY;
+/**
+ * Puts a list of cards into the deck, then shuffles the deck.
+ */
+function SHUFFLE_CARDS_INTO_DECK(store, state, player, cards) {
+    cards.forEach(card => {
+        player.deck.cards.unshift(card);
+    });
+    SHUFFLE_DECK(store, state, player);
+}
+exports.SHUFFLE_CARDS_INTO_DECK = SHUFFLE_CARDS_INTO_DECK;
+/**
+ * Shuffle the prize cards into the deck.
+ */
+function SHUFFLE_PRIZES_INTO_DECK(store, state, player) {
+    SHUFFLE_CARDS_INTO_DECK(store, state, player, GET_PRIZES_AS_CARD_ARRAY(player));
+    GET_PLAYER_PRIZES(player).forEach(p => p.cards = []);
+}
+exports.SHUFFLE_PRIZES_INTO_DECK = SHUFFLE_PRIZES_INTO_DECK;
+function DRAW_CARDS_AS_PRIZES(player, count) {
+    // Draw cards from the top of the deck to the prize cards
+    for (let i = 0; i < count; i++) {
+        const card = player.deck.cards.pop();
+        if (card) {
+            const prize = player.prizes.find(p => p.cards.length === 0);
+            if (prize) {
+                prize.cards.push(card);
+            }
+            else {
+                player.deck.cards.push(card);
+            }
+        }
+    }
+    // Set the new prize cards to be face down
+    player.prizes.forEach(p => p.isSecret = true);
+}
+exports.DRAW_CARDS_AS_PRIZES = DRAW_CARDS_AS_PRIZES;
+function IS_ABILITY_BLOCKED(store, state, player, card) {
+    // Try to reduce PowerEffect, to check if something is blocking our ability
+    try {
+        store.reduceEffect(state, new game_effects_1.PowerEffect(player, {
+            name: 'test',
+            powerType: __1.PowerType.ABILITY,
+            text: ''
+        }, card));
+    }
+    catch (_a) {
+        return true;
+    }
+    return false;
+}
+exports.IS_ABILITY_BLOCKED = IS_ABILITY_BLOCKED;
+function MOVE_CARD_TO(state, card, destination) {
+    __1.StateUtils.findCardList(state, card).moveCardTo(card, destination);
+}
+exports.MOVE_CARD_TO = MOVE_CARD_TO;

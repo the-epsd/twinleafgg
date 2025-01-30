@@ -46,6 +46,7 @@ export const cardReplacements = [
 
   //SUM
   { from: 'Alolan Grimer SUM 57', to: 'Alolan Grimer XY 57' },
+  { from: 'Rotom Dex SUM 159', to: 'Rotom DexSR SM 159' },
 
   //GRI
   { from: 'Mallow GRI 127', to: 'Mallow TEF 127' },
@@ -434,6 +435,7 @@ export const exportReplacements = [
 
   //SUM
   { from: 'Alolan Grimer XY 57', to: 'Alolan Grimer SUM 57' },
+  { from: 'Rotom DexSR SM 159', to: 'Rotom Dex SUM 159' },
 
   //GRI
   { from: 'Mallow TEF 127', to: 'Mallow GRI 127' },

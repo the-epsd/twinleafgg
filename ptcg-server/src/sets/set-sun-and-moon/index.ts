@@ -3,7 +3,7 @@ import { Dartrix } from '../set-shining-fates/dartrix';
 import { AlolanGrimer } from './alolan-grimer';
 import { AlolanMuk } from './alolan-muk';
 import { AlolanRattata } from './alolan_rattata';
-import { EnergyRetrievalSUM, ExpShareSUM, NestBallSUM, RareCandySUM } from './card-images';
+import { EnergyRetrievalSUM, ExpShareSUM, NestBallSUM, RareCandySUM, RotomDexSR } from './card-images';
 import { DecidueyeGX } from './decidueye-gx';
 import { Dragonair } from './dragonair';
 import { Eevee } from './eevee';
@@ -17,6 +17,7 @@ import { PassimianSUM } from './passimian';
 import { ProfessorKukui } from './professor-kukui';
 import { RainbowEnergy } from './rainbow-energy';
 import { Repel } from './repel';
+import { RotomDex } from './rotom-dex';
 import { Rowlet } from './rowlet';
 import { TimerBall } from './timer-ball';
 
@@ -37,13 +38,17 @@ export const setSunAndMoon: Card[] = [
   new PassimianSUM(),
   new ProfessorKukui(),
   new RainbowEnergy(),
+  new RotomDex(),
   new Rowlet(),
   new Repel(),
   new TimerBall(),
 
-  //Reprints
+  // Reprints
   new NestBallSUM(),
   new RareCandySUM(),
   new EnergyRetrievalSUM(),
   new ExpShareSUM(),
+
+  // Full Arts
+  new RotomDexSR(),
 ];

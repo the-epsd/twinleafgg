@@ -14,6 +14,7 @@ import { Decidueye } from './decidueye';
 import { Dusclops } from './dusclops';
 import { Dusknoir } from './dusknoir';
 import { Duskull } from './duskull';
+import { Eevee } from './eevee';
 import { Fezandipitiex } from './fezandipiti-ex';
 import { Fraxure } from './fraxure';
 import { Galvantula } from './galvantula';
@@ -62,6 +63,7 @@ export const setShroudedFable: Card[] = [
   new Dusclops(),
   new Dusknoir(),
   new Duskull(),
+  new Eevee(),
   new Fezandipitiex(),
   new Fraxure(),
   new Galvantula(),

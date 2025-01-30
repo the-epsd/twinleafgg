@@ -5,6 +5,7 @@ const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class Hoopa extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -37,9 +38,9 @@ class Hoopa extends pokemon_card_1.PokemonCard {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             const benchPokemon = opponent.bench.map(b => b.getPokemonCard()).filter(card => card !== undefined);
-            const vPokemons = benchPokemon.filter(card => card.powers.length && !game_1.StateUtils.checkAbilityBlocked(store, state, opponent, card));
+            const vPokemons = benchPokemon.filter(card => card.powers.length && !prefabs_1.IS_ABILITY_BLOCKED(store, state, opponent, card));
             const opponentActive = opponent.active.getPokemonCard();
-            if (opponentActive && opponentActive.powers.length && !game_1.StateUtils.checkAbilityBlocked(store, state, opponent, opponentActive))
+            if (opponentActive && opponentActive.powers.length && !prefabs_1.IS_ABILITY_BLOCKED(store, state, opponent, opponentActive))
                 vPokemons.push(opponentActive);
             const vPokes = vPokemons.length;
             effect.damage += vPokes * 20;
