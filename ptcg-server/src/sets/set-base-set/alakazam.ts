@@ -10,7 +10,7 @@ import { CheckHpEffect } from '../../game/store/effects/check-effects';
 import { PlayerType, SlotType } from '../../game/store/actions/play-card-action';
 import { MoveDamagePrompt, DamageMap } from '../../game/store/prompts/move-damage-prompt';
 import { GameMessage } from '../../game/game-message';
-import { CoinFlipPrompt, GameError } from '../..';
+import { CoinFlipPrompt, GameError, PokemonCardList } from '../..';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 
 export class Alakazam extends PokemonCard {
@@ -25,7 +25,7 @@ export class Alakazam extends PokemonCard {
   public powers = [{
     name: 'Damage Swap',
     useWhenInPlay: true,
-    powerType: PowerType.POKEPOWER,
+    powerType: PowerType.POKEMON_POWER,
     text: 'As often as you like during your turn (before your attack), you may move 1 damage counter from 1 of your Pokémon to another as long as you don\'t Knock Out that Pokémon. This power can\'t be used if Alakazam is Asleep, Confused, or Paralyzed.'
   }];
 
@@ -49,6 +49,13 @@ export class Alakazam extends PokemonCard {
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
+      const cardList = StateUtils.findCardList(state, this) as PokemonCardList;
+
+      if (cardList.specialConditions.includes(SpecialCondition.ASLEEP) ||
+        cardList.specialConditions.includes(SpecialCondition.CONFUSED) ||
+        cardList.specialConditions.includes(SpecialCondition.PARALYZED)) {
+        return state;
+      }
 
       const damagedPokemon = [
         ...opponent.bench.filter(b => b.cards.length > 0 && b.damage > 0),

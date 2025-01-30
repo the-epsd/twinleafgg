@@ -2,7 +2,7 @@ import { CardTag, CardType, PokemonCard, Stage } from "../../game";
 export declare class MarniesMorgrem extends PokemonCard {
     stage: Stage;
     evolvesFrom: string;
-    cardTag: CardTag[];
+    tags: CardTag[];
     cardType: CardType;
     hp: number;
     weakness: {

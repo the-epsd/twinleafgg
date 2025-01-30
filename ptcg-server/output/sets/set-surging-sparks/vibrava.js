@@ -49,7 +49,7 @@ class Vibrava extends pokemon_card_1.PokemonCard {
         }
         if (effect instanceof attack_effects_1.PutDamageEffect
             && effect.target.marker.hasMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER)) {
-            effect.damage += 90;
+            effect.damage += 50;
             return state;
         }
         if (effect instanceof game_phase_effects_1.EndTurnEffect

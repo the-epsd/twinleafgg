@@ -58,22 +58,21 @@ export class Azelf extends PokemonCard {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const opponent = effect.opponent;
-      const benched = opponent.bench.filter(b => b.cards.length > 0 && b.damage > 0);
 
       if (opponent.active.damage > 0) {
         const activeDamageEffect = new PutCountersEffect(effect, 20);
+        activeDamageEffect.target = opponent.active;
         store.reduceEffect(state, activeDamageEffect);
       }
 
-      benched.forEach(target => {
-        if (target.damage > 0) {
+      opponent.bench.forEach((bench, index) => {
+        if (bench.cards.length > 0 && bench.damage > 0) {
           const damageEffect = new PutCountersEffect(effect, 20);
-          damageEffect.target = target;
+          damageEffect.target = bench;
           store.reduceEffect(state, damageEffect);
         }
       });
     }
-
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const specialConditionEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.CONFUSED]);

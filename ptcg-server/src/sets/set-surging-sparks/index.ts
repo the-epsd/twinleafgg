@@ -19,6 +19,7 @@ import { ChillTeaserToy } from './chill-teaser-toy';
 import { ClemontsQuickWit } from './clemonts-quick-wit';
 import { Cofagrigus } from './cofagrigus';
 import { Crocalor } from './crocalor';
+import { Cyclizarex } from './cyclizar-ex';
 import { Cyrano } from './cyrano';
 import { Deino } from './deino';
 import { Dialga } from './dialga';
@@ -188,6 +189,7 @@ export const setSurgingSparks: Card[] = [
   new Durantex(),
   new Sizzlipede(),
   new Centiskorch(),
+  new Cyclizarex(),
 
   //Reprints
   new ScrambleSwitchSSP(),

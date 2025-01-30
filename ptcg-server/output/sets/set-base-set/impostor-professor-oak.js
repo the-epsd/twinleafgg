@@ -9,11 +9,11 @@ class ImpostorProfessorOak extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.ITEM;
-        this.set = 'BS'; // Replace with the appropriate set abbreviation
+        this.set = 'BS';
         this.name = 'Impostor Professor Oak';
-        this.fullName = 'Impostor Professor Oak BS'; // Replace with the appropriate set abbreviation
-        this.cardImage = 'assets/cardback.png'; // Replace with the appropriate card image path
-        this.setNumber = '73'; // Replace with the appropriate set number
+        this.fullName = 'Impostor Professor Oak BS';
+        this.cardImage = 'assets/cardback.png';
+        this.setNumber = '73';
         this.text = 'Your opponent shuffles his or her hand into his or her deck, then draws 7 cards.';
     }
     reduceEffect(store, state, effect) {

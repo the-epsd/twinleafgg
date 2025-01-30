@@ -19,6 +19,7 @@ const duskull_1 = require("./duskull");
 const fezandipiti_ex_1 = require("./fezandipiti-ex");
 const fraxure_1 = require("./fraxure");
 const galvantula_1 = require("./galvantula");
+const genesect_1 = require("./genesect");
 const haxorus_1 = require("./haxorus");
 const horsea_1 = require("./horsea");
 const houndoom_1 = require("./houndoom");
@@ -66,6 +67,7 @@ exports.setShroudedFable = [
     new fezandipiti_ex_1.Fezandipitiex(),
     new fraxure_1.Fraxure(),
     new galvantula_1.Galvantula(),
+    new genesect_1.Genesect(),
     new haxorus_1.Haxorus(),
     new horsea_1.Horsea(),
     new houndoom_1.Houndoom(),

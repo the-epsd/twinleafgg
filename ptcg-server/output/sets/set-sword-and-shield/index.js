@@ -28,6 +28,7 @@ const snom_1 = require("./snom");
 const sobble_1 = require("./sobble");
 const toxicroak_1 = require("./toxicroak");
 const welder_1 = require("./welder");
+const zacian_v_1 = require("./zacian-v");
 exports.setSwordAndShield = [
     new air_balloon_1.AirBalloon(),
     new aurora_energy_1.AuroraEnergy(),
@@ -55,5 +56,6 @@ exports.setSwordAndShield = [
     new quick_ball_1.QuickBall(),
     new raboot_1.Raboot(),
     new toxicroak_1.Toxicroak(),
-    new welder_1.Welder()
+    new welder_1.Welder(),
+    new zacian_v_1.ZacianV(),
 ];

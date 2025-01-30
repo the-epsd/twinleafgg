@@ -20,6 +20,7 @@ const vanillish_1 = require("./vanillish");
 const vanillite_1 = require("./vanillite");
 const vanilluxe_1 = require("./vanilluxe");
 const xtransceiver_1 = require("./xtransceiver");
+const zweilous_1 = require("./zweilous");
 exports.setNobleVictories = [
     new archen_1.Archen(),
     new archeops_1.Archeops(),
@@ -39,5 +40,6 @@ exports.setNobleVictories = [
     new vanillish_1.Vanillish(),
     new vanillite_1.Vanillite(),
     new vanilluxe_1.Vanilluxe(),
-    new xtransceiver_1.Xtransceiver()
+    new xtransceiver_1.Xtransceiver(),
+    new zweilous_1.Zweilous(),
 ];

@@ -38,8 +38,9 @@ export class DarkraiVSTAR extends PokemonCard {
       name: 'Dark Pulse',
       cost: [CardType.COLORLESS, CardType.COLORLESS],
       damage: 30,
-      text: 'This attack does 30 more damage for each [D] Energy attached to all of your Pokémon.'
+      text: 'This attack does 30 more damage for each <span class="energy-symbol">[D]</span> Energy attached to all of your Pokémon.'
     }
+
   ];
 
   public set: string = 'ASR';

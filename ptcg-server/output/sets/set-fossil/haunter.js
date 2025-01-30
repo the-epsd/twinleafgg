@@ -20,7 +20,7 @@ class Haunter extends pokemon_card_1.PokemonCard {
         this.retreat = [];
         this.powers = [{
                 name: 'Transparency',
-                powerType: game_1.PowerType.POKEPOWER,
+                powerType: game_1.PowerType.POKEMON_POWER,
                 text: 'Whenever an attack does anything to Haunter, flip a coin. If heads, prevent all effects of that attack, including damage, done to Haunter. This power stops working while Haunter is Asleep, Confused, or Paralyzed.'
             }];
         this.attacks = [{
@@ -58,7 +58,7 @@ class Haunter extends pokemon_card_1.PokemonCard {
             try {
                 const stub = new game_effects_1.PowerEffect(player, {
                     name: 'test',
-                    powerType: game_1.PowerType.ABILITY,
+                    powerType: game_1.PowerType.POKEMON_POWER,
                     text: ''
                 }, this);
                 store.reduceEffect(state, stub);

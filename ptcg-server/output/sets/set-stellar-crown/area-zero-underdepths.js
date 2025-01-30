@@ -36,9 +36,9 @@ class AreaZeroUnderdepths extends trainer_card_1.TrainerCard {
                 });
                 return teraPokemon >= 1 ? 8 : 5;
             });
-            if (effect instanceof game_effects_1.UseStadiumEffect && game_1.StateUtils.getStadiumCard(state) === this) {
-                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_STADIUM);
-            }
+        }
+        if (effect instanceof game_effects_1.UseStadiumEffect && game_1.StateUtils.getStadiumCard(state) === this) {
+            throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_STADIUM);
         }
         return state;
     }

@@ -52,15 +52,15 @@ class Azelf extends pokemon_card_1.PokemonCard {
         // }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const opponent = effect.opponent;
-            const benched = opponent.bench.filter(b => b.cards.length > 0 && b.damage > 0);
             if (opponent.active.damage > 0) {
                 const activeDamageEffect = new attack_effects_1.PutCountersEffect(effect, 20);
+                activeDamageEffect.target = opponent.active;
                 store.reduceEffect(state, activeDamageEffect);
             }
-            benched.forEach(target => {
-                if (target.damage > 0) {
+            opponent.bench.forEach((bench, index) => {
+                if (bench.cards.length > 0 && bench.damage > 0) {
                     const damageEffect = new attack_effects_1.PutCountersEffect(effect, 20);
-                    damageEffect.target = target;
+                    damageEffect.target = bench;
                     store.reduceEffect(state, damageEffect);
                 }
             });

@@ -26,6 +26,7 @@ import { Snom } from './snom';
 import { Sobble } from './sobble';
 import { Toxicroak } from './toxicroak';
 import { Welder } from './welder';
+import {ZacianV} from './zacian-v';
 
 export const setSwordAndShield: Card[] = [
   new AirBalloon(),
@@ -54,5 +55,6 @@ export const setSwordAndShield: Card[] = [
   new QuickBall(),
   new Raboot(),
   new Toxicroak(),
-  new Welder()
+  new Welder(),
+  new ZacianV(),
 ];

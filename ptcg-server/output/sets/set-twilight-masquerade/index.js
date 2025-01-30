@@ -1,7 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setTwilightMasquerade = void 0;
+const abra_1 = require("./abra");
 const aggron_1 = require("./aggron");
+const alakazam_1 = require("./alakazam");
 const applin_1 = require("./applin");
 const applin_2_1 = require("./applin-2");
 const aron_1 = require("./aron");
@@ -43,6 +45,7 @@ const infernape_1 = require("./infernape");
 const iron_leaves_1 = require("./iron-leaves");
 const iron_thorns_ex_1 = require("./iron-thorns-ex");
 const jamming_tower_1 = require("./jamming-tower");
+const kadabra_1 = require("./kadabra");
 const kieran_1 = require("./kieran");
 const lairon_1 = require("./lairon");
 const lanas_assistance_1 = require("./lanas-assistance");
@@ -51,6 +54,7 @@ const love_ball_1 = require("./love-ball");
 const lucky_helmet_1 = require("./lucky-helmet");
 const luxio_1 = require("./luxio");
 const luxray_ex_1 = require("./luxray-ex");
+const magcargo_ex_1 = require("./magcargo-ex");
 const mightyena_1 = require("./mightyena");
 const monferno_1 = require("./monferno");
 const morpeko_1 = require("./morpeko");
@@ -63,7 +67,6 @@ const perrin_1 = require("./perrin");
 const phione_1 = require("./phione");
 const poltchageist_1 = require("./poltchageist");
 const poochyena_1 = require("./poochyena");
-const relicanth_1 = require("./relicanth");
 const rillaboom_1 = require("./rillaboom");
 const roto_stick_1 = require("./roto-stick");
 const scoop_up_cyclone_1 = require("./scoop-up-cyclone");
@@ -71,6 +74,7 @@ const scream_tail_ex_1 = require("./scream-tail-ex");
 const secret_box_1 = require("./secret-box");
 const sinistcha_1 = require("./sinistcha");
 const sinistcha_ex_1 = require("./sinistcha-ex");
+const slugma_1 = require("./slugma");
 const sunkern_1 = require("./sunkern");
 const survival_cast_1 = require("./survival-cast");
 const tatsugiri_1 = require("./tatsugiri");
@@ -116,7 +120,6 @@ exports.setTwilightMasquerade = [
     new morpeko_1.Morpeko(),
     new performance_flute_1.PerformanceFlute(),
     new poochyena_1.Poochyena(),
-    new relicanth_1.Relicanth(),
     new roto_stick_1.RotoStick(),
     new scoop_up_cyclone_1.ScoopUpCyclone(),
     new tatsugiri_1.Tatsugiri(),
@@ -165,4 +168,9 @@ exports.setTwilightMasquerade = [
     new poltchageist_1.Poltchageist(),
     new sinistcha_1.Sinistcha(),
     new sinistcha_ex_1.Sinistchaex(),
+    new slugma_1.Slugma(),
+    new magcargo_ex_1.Magcargoex(),
+    new abra_1.Abra(),
+    new kadabra_1.Kadabra(),
+    new alakazam_1.Alakazam(),
 ];

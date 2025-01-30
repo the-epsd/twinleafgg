@@ -36,6 +36,10 @@ import { Swirlix } from './swirlix';
 import { TagCall } from './tag-call';
 import { UltraNecrozma } from './ultra-necrozma';
 import { Wishiwashi } from './wishiwashi';
+import { BlastoisePiplupGX } from './blastoise-piplup-gx';
+import { CharizardBraixenGX } from './charizard-braixen-gx';
+import { TogepiCleffaIgglybuffGX } from './togepi-cleffa-igglybuff-gx';
+import { Carvanha } from './carvanha';
 
 
 export const setCosmicEclipse: Card[] = [
@@ -75,5 +79,9 @@ export const setCosmicEclipse: Card[] = [
   new Swirlix(),
   new TagCall(),
   new UltraNecrozma(),
-  new Wishiwashi()
+  new Wishiwashi(),
+  new BlastoisePiplupGX(),
+  new CharizardBraixenGX(),
+  new TogepiCleffaIgglybuffGX(),
+  new Carvanha(),
 ];

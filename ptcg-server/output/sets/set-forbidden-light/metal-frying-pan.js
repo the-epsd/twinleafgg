@@ -31,6 +31,10 @@ class MetalFryingPan extends trainer_card_1.TrainerCard {
                 effect.attackEffect.ignoreWeakness = true;
                 effect.damage = Math.max(0, effect.damage - 30);
                 effect.damageReduced = true;
+                const target = effect.target.getPokemonCard();
+                if (target) {
+                    target.weakness = [];
+                }
                 return state;
             }
         }

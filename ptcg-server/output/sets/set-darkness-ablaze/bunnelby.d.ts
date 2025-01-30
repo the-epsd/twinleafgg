@@ -14,7 +14,7 @@ export declare class Bunnelby extends PokemonCard {
         name: string;
         cost: CardType.COLORLESS[];
         damage: number;
-        damageMultiplier: string;
+        damageCalculation: string;
         text: string;
     }[];
     set: string;

@@ -17,12 +17,12 @@ export declare class NsKlinklang extends PokemonCard {
         cost: CardType.COLORLESS[];
         damage: number;
         text: string;
-        damageMultiplier?: undefined;
+        damageCalculation?: undefined;
     } | {
         name: string;
         cost: (CardType.METAL | CardType.COLORLESS)[];
         damage: number;
-        damageMultiplier: string;
+        damageCalculation: string;
         text: string;
     })[];
     set: string;

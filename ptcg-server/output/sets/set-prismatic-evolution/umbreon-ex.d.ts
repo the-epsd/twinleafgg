@@ -1,7 +1,7 @@
 import { PokemonCard, CardTag, Stage, CardType, Attack, State, StoreLike, CardList } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 export declare class Umbreonex extends PokemonCard {
-    cardTag: CardTag[];
+    tags: CardTag[];
     stage: Stage;
     evolvesFrom: string;
     cardType: CardType;

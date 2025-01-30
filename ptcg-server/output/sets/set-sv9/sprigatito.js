@@ -15,7 +15,7 @@ class Sprigatito extends game_1.PokemonCard {
                 name: 'Stomp Repeatedly',
                 cost: [C],
                 damage: 10,
-                damageMultiplier: 'x',
+                damageCalculation: 'x',
                 text: 'Flip 3 coins. This attack does 10 damage for each heads.'
             }];
         this.regulationMark = 'I';

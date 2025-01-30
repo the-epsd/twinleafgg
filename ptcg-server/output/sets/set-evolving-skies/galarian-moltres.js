@@ -19,7 +19,7 @@ class GalarianMoltres extends pokemon_card_1.PokemonCard {
                 name: 'Malevolent Charge',
                 useWhenInPlay: true,
                 powerType: game_1.PowerType.ABILITY,
-                text: 'When you play this Pokémon from your hand onto your Bench during your turn, you may attach up to 2 D Energy cards from your hand to this Pokémon.'
+                text: 'When you play this Pokémon from your hand onto your Bench during your turn, you may attach up to 2 [D] Energy cards from your hand to this Pokémon.'
             }];
         this.attacks = [
             {

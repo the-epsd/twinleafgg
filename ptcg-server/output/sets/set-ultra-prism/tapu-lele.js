@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TapuLele2 = void 0;
+exports.TapuLele = void 0;
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const check_effects_1 = require("../../game/store/effects/check-effects");
@@ -33,24 +33,25 @@ function* useMagicalSwap(next, store, state, effect) {
         }
     });
 }
-class TapuLele2 extends pokemon_card_1.PokemonCard {
+class TapuLele extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.BASIC;
-        this.cardType = card_types_1.CardType.PSYCHIC;
+        this.cardType = Y;
         this.hp = 110;
-        this.weakness = [{ type: card_types_1.CardType.PSYCHIC }];
-        this.retreat = [card_types_1.CardType.COLORLESS];
+        this.weakness = [{ type: M }];
+        this.resistance = [{ type: D, value: -20 }];
+        this.retreat = [C];
         this.attacks = [
             {
                 name: 'Psywave',
-                cost: [card_types_1.CardType.PSYCHIC],
+                cost: [Y],
                 damage: 20,
                 text: 'This attack does 20 damage times the amount of Energy attached to your opponent\'s Active Pokémon.'
             },
             {
                 name: 'Magical Swap',
-                cost: [card_types_1.CardType.PSYCHIC, card_types_1.CardType.COLORLESS],
+                cost: [Y, C],
                 damage: 0,
                 text: 'Move any number of damage counters on your opponent\'s Pokémon to their other Pokémon in any way you like.'
             },
@@ -78,4 +79,4 @@ class TapuLele2 extends pokemon_card_1.PokemonCard {
         return state;
     }
 }
-exports.TapuLele2 = TapuLele2;
+exports.TapuLele = TapuLele;

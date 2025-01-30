@@ -83,7 +83,7 @@ export class PromptChooseCardsComponent {
       this.result = [];
       return;
     }
-
+    
     const selectedCards = result.map(index => this.cards.cards[index]);
     const isValidSelection = this.promptValue.validate(selectedCards);
 

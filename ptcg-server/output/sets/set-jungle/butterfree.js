@@ -39,7 +39,7 @@ class Butterfree extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             this.USED_WHIRLWIND = true;
         }
-        if (effect instanceof attack_effects_1.AfterDamageEffect && this.USED_WHIRLWIND) {
+        if (effect instanceof attack_effects_1.AfterDamageEffect && this.USED_WHIRLWIND == true) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             const hasBench = opponent.bench.some(b => b.cards.length > 0);
@@ -54,7 +54,7 @@ class Butterfree extends pokemon_card_1.PokemonCard {
                 }
             });
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && this.USED_WHIRLWIND == true) {
             this.USED_WHIRLWIND = false;
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {

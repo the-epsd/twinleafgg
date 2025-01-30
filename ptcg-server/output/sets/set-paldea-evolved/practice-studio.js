@@ -21,11 +21,11 @@ class PracticeStudio extends trainer_card_1.TrainerCard {
         this.text = 'The attacks of Stage 1 Pokémon (both yours and your opponent\'s) do 10 more damage to the opponent\'s Active Pokémon (before applying Weakness and Resistance).';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof attack_effects_1.PutDamageEffect && effect.source.cards.includes(this)) {
+        if (effect instanceof attack_effects_1.PutDamageEffect && state_utils_1.StateUtils.getStadiumCard(state) === this) {
             const pokemonCard = effect.source.getPokemonCard();
             const opponent = state_utils_1.StateUtils.getOpponent(state, effect.player);
-            if (effect.damage > 0 && effect.target === opponent.active && (pokemonCard === null || pokemonCard === void 0 ? void 0 : pokemonCard.stage) === card_types_1.Stage.STAGE_1) {
-                effect.damage += 20;
+            if (effect.damage > 0 && effect.target === opponent.active && pokemonCard && pokemonCard.stage === card_types_1.Stage.STAGE_1) {
+                effect.damage += 10;
             }
         }
         if (effect instanceof game_effects_1.UseStadiumEffect && state_utils_1.StateUtils.getStadiumCard(state) === this) {

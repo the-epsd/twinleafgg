@@ -31,7 +31,7 @@ export class Morpeko extends PokemonCard {
     name: 'Energizer Wheel',
     cost: [CardType.DARK, CardType.DARK],
     damage: 70,
-    text: 'Move 2 D Energy from this Pokémon to 1 of your Benched Pokémon.'
+    text: 'Move 2 [D] Energy from this Pokémon to 1 of your Benched Pokémon.'
   }];
 
   public regulationMark = 'G';

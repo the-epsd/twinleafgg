@@ -15,7 +15,7 @@ export class Froslass extends PokemonCard {
   public evolvesFrom = 'Snorunt';
 
   public attacks = [{
-    name: 'Spitful Sigh',
+    name: 'Spiteful Sigh',
     cost: [CardType.WATER],
     damage: 20,
     text: 'Put up to 7 damage counters on this Pokémon. This attack does 20 damage for each damage counter you placed in this way. '

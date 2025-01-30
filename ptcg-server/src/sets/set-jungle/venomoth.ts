@@ -21,7 +21,7 @@ export class Venomoth extends PokemonCard {
   public powers = [{
     name: 'Shift',
     useWhenInPlay: true,
-    powerType: PowerType.POKEPOWER,
+    powerType: PowerType.POKEMON_POWER,
     text: 'Once during your turn (before your attack), you may change the type of Venomoth to the type of any other Pokémon in play other than Colorless. This power can\'t be used if Venomoth is Asleep, Confused, or Paralyzed.'
   }];
 
@@ -51,6 +51,12 @@ export class Venomoth extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
       const cardList = StateUtils.findCardList(state, this) as PokemonCardList;
 
+      if (cardList.specialConditions.includes(SpecialCondition.ASLEEP) ||
+        cardList.specialConditions.includes(SpecialCondition.CONFUSED) ||
+        cardList.specialConditions.includes(SpecialCondition.PARALYZED)) {
+        return state;
+      }
+
       const blocked: CardTarget[] = [];
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, index) => {
@@ -64,11 +70,6 @@ export class Venomoth extends PokemonCard {
           blocked.push(index);
         }
       });
-
-
-      if (cardList.specialConditions.length > 0) {
-        throw new GameError(GameMessage.CANNOT_USE_POWER);
-      }
 
       if (player.marker.hasMarker(this.SHIFT_MARKER)) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
@@ -90,7 +91,7 @@ export class Venomoth extends PokemonCard {
       });
     }
 
-    if (effect instanceof EndTurnEffect) {
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.SHIFT_MARKER, this)) {
       effect.player.marker.removeMarker(this.SHIFT_MARKER, this);
     }
 

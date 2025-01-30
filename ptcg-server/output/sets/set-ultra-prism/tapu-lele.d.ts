@@ -3,17 +3,21 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-export declare class TapuLele2 extends PokemonCard {
+export declare class TapuLele extends PokemonCard {
     stage: Stage;
     cardType: CardType;
     hp: number;
     weakness: {
-        type: CardType;
+        type: CardType.METAL;
     }[];
-    retreat: CardType[];
+    resistance: {
+        type: CardType.DARK;
+        value: number;
+    }[];
+    retreat: CardType.COLORLESS[];
     attacks: {
         name: string;
-        cost: CardType[];
+        cost: (CardType.COLORLESS | CardType.FAIRY)[];
         damage: number;
         text: string;
     }[];

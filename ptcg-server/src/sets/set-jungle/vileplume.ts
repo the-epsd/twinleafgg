@@ -21,7 +21,7 @@ export class Vileplume extends PokemonCard {
   public powers = [{
     name: 'Heal',
     useWhenInPlay: true,
-    powerType: PowerType.POKEPOWER,
+    powerType: PowerType.POKEMON_POWER,
     text: 'Once during your turn (before your attack), you may flip a coin. If heads, remove 1 damage counter from 1 of your Pokémon. This power can\'t be used if Vileplume is Asleep, Confused, or Paralyzed.'
   }];
 
@@ -51,8 +51,10 @@ export class Vileplume extends PokemonCard {
       const player = effect.player;
       const cardList = StateUtils.findCardList(state, this) as PokemonCardList;
 
-      if (cardList.specialConditions.length > 0) {
-        throw new GameError(GameMessage.CANNOT_USE_POWER);
+      if (cardList.specialConditions.includes(SpecialCondition.ASLEEP) ||
+        cardList.specialConditions.includes(SpecialCondition.CONFUSED) ||
+        cardList.specialConditions.includes(SpecialCondition.PARALYZED)) {
+        return state;
       }
 
       const blocked: CardTarget[] = [];
@@ -99,13 +101,11 @@ export class Vileplume extends PokemonCard {
             cardList.addBoardEffect(BoardEffect.ABILITY_USED);
           }
         });
-
         return state;
       });
-
     }
 
-    if (effect instanceof EndTurnEffect) {
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.HEAL_MARKER, this)) {
       effect.player.marker.removeMarker(this.HEAL_MARKER, this);
     }
 
@@ -123,7 +123,6 @@ export class Vileplume extends PokemonCard {
       player.active.addSpecialCondition(SpecialCondition.CONFUSED);
       return state;
     }
-
     return state;
   }
 }

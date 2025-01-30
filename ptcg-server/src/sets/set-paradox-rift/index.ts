@@ -30,6 +30,8 @@ import { Gholdengoex } from './gholdengo-ex';
 import { Gible } from './gible';
 import { Gimmighoul } from './gimmighoul';
 import { Gimmighoul2 } from './gimmighoul2';
+import { Golisopod } from './golisopod';
+import { Golisopodex } from './golisopod-ex';
 import { Groudon } from './groudon';
 import { Honedge } from './honedge';
 import { Hoopaex } from './hoopa-ex';
@@ -78,6 +80,7 @@ import { Trubbish } from './trubbish';
 import { Tsareenaex } from './tsareena-ex';
 import { Tulip } from './tulip';
 import { Veluza } from './veluza';
+import { Wimpod } from './wimpod';
 import { Xatu } from './xatu';
 import { Yamask } from './yamask';
 import { Zacian } from './zacian';
@@ -163,6 +166,9 @@ export const setParadoxRift: Card[] = [
   new Bombirdierex(),
   new Yamask(),
   new Cofagrigusex(),
+  new Wimpod(),
+  new Golisopod(),
+  new Golisopodex(),
 
   //Full s
   new ToedscruelIR(),

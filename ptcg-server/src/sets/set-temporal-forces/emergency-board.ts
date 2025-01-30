@@ -29,20 +29,19 @@ export class EmergencyBoard extends TrainerCard {
       const player = effect.player;
       const pokemonCard = player.active.getPokemonCard();
 
-
-
-      if (pokemonCard && pokemonCard.hp <= 30) {
-        effect.cost = [];
-      } else {
-        const index = effect.cost.indexOf(CardType.COLORLESS);
-        if (index !== -1) {
-          effect.cost.splice(index, 1);
+      if (pokemonCard) {
+        const remainingHp = pokemonCard.hp - player.active.damage;
+        if (remainingHp <= 30) {
+          effect.cost = [];
+        } else {
+          const index = effect.cost.indexOf(CardType.COLORLESS);
+          if (index !== -1) {
+            effect.cost.splice(index, 1);
+          }
         }
-        return state;
       }
       return state;
     }
     return state;
-
   }
 }

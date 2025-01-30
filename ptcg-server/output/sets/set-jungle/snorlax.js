@@ -18,7 +18,7 @@ class Snorlax extends pokemon_card_1.PokemonCard {
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.powers = [{
                 name: 'Thick Skinned',
-                powerType: game_1.PowerType.POKEPOWER,
+                powerType: game_1.PowerType.POKEMON_POWER,
                 text: 'Snorlax can\'t become Asleep, Confused, Paralyzed, or Poisoned. This power can\'t be used if Snorlax is already Asleep, Confused, or Paralyzed.'
             }];
         this.attacks = [{
@@ -35,15 +35,24 @@ class Snorlax extends pokemon_card_1.PokemonCard {
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof check_effects_1.CheckTableStateEffect) {
+            const player = state.players[state.activePlayer];
             const cardList = game_1.StateUtils.findCardList(state, this);
+            // Try reducing ability
+            try {
+                const stub = new game_effects_1.PowerEffect(player, {
+                    name: 'test',
+                    powerType: game_1.PowerType.POKEMON_POWER,
+                    text: ''
+                }, this);
+                store.reduceEffect(state, stub);
+            }
+            catch (_a) {
+                return state;
+            }
             if (cardList instanceof game_1.PokemonCardList && cardList.getPokemonCard() === this) {
-                const hasSpecialCondition = cardList.specialConditions.some(condition => condition !== card_types_1.SpecialCondition.ABILITY_USED);
-                if (cardList.specialConditions.length > 0) {
-                    throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
-                }
-                if (!hasSpecialCondition) {
-                    cardList.specialConditions = cardList.specialConditions.filter(condition => condition === card_types_1.SpecialCondition.ABILITY_USED);
-                }
+                cardList.specialConditions = cardList.specialConditions.filter(condition => condition !== card_types_1.SpecialCondition.ASLEEP &&
+                    condition !== card_types_1.SpecialCondition.CONFUSED &&
+                    condition !== card_types_1.SpecialCondition.PARALYZED);
             }
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

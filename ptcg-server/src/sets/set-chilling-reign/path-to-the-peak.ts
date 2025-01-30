@@ -6,7 +6,6 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { GameError, GameMessage } from '../../game';
-import { checkState } from '../../game/store/effect-reducers/check-effect';
 
 export class PathToThePeak extends TrainerCard {
 
@@ -23,36 +22,31 @@ export class PathToThePeak extends TrainerCard {
   public name = 'Path to the Peak';
 
   public fullName = 'Path to the Peak CRE';
-  
+
   public text = 'Pokémon with a Rule Box in play (both yours and your opponent\'s) have no Abilities. (Pokémon V, Pokémon-GX, etc. have Rule Boxes.)';
-    
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof PowerEffect && StateUtils.getStadiumCard(state) === this &&
-        !effect.power.exemptFromAbilityLock) {
+      !effect.power.exemptFromAbilityLock) {
 
       const pokemonCard = effect.card;
       if (pokemonCard.tags.includes(CardTag.POKEMON_V) ||
         pokemonCard.tags.includes(CardTag.POKEMON_VMAX) ||
         pokemonCard.tags.includes(CardTag.POKEMON_VSTAR) ||
         pokemonCard.tags.includes(CardTag.POKEMON_ex) ||
+        pokemonCard.tags.includes(CardTag.POKEMON_EX) ||
+        pokemonCard.tags.includes(CardTag.BREAK) ||
+        pokemonCard.tags.includes(CardTag.POKEMON_GX) ||
+        pokemonCard.tags.includes(CardTag.PRISM_STAR) ||
         pokemonCard.tags.includes(CardTag.RADIANT)) {
-        // pokemonCard.powers.length -= 1;
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
-
-      if (effect instanceof UseStadiumEffect && StateUtils.getStadiumCard(state) === this) {
-        throw new GameError(GameMessage.CANNOT_USE_STADIUM);
-      }
-
-      checkState(store, state);
-
-      return state;
     }
 
+    if (effect instanceof UseStadiumEffect && StateUtils.getStadiumCard(state) === this) {
+      throw new GameError(GameMessage.CANNOT_USE_STADIUM);
+    }
     return state;
   }
-
-
-
 }

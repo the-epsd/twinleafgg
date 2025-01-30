@@ -12,7 +12,7 @@ export declare class Sprigatito extends PokemonCard {
         name: string;
         cost: CardType.COLORLESS[];
         damage: number;
-        damageMultiplier: string;
+        damageCalculation: string;
         text: string;
     }[];
     regulationMark: string;

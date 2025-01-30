@@ -8,7 +8,7 @@ class MarniesMorpeko extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = game_1.Stage.BASIC;
-        this.cardTag = [game_1.CardTag.MARNIES];
+        this.tags = [game_1.CardTag.MARNIES];
         this.cardType = D;
         this.hp = 70;
         this.weakness = [{ type: G }];
@@ -17,7 +17,7 @@ class MarniesMorpeko extends game_1.PokemonCard {
                 name: 'Spike Wheel',
                 cost: [C, C, C],
                 damage: 20,
-                damageMultiplier: '+',
+                damageCalculation: '+',
                 text: 'This attack does 40 more damage for each [D] Energy attached to this Pokémon.'
             }];
         this.regulationMark = 'I';

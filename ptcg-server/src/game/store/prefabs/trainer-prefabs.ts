@@ -61,7 +61,7 @@ export function TRAINER_SHOW_OPPONENT_CARDS(effect: TrainerEffect, store: Store,
   }
 }
 
-export function TRAINER_SHUFFLE_DECK(effect: TrainerEffect, store: Store, state: State) {
+export function SHUFFLE_DECK(effect: TrainerEffect, store: Store, state: State) {
   const player = effect.player;
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);

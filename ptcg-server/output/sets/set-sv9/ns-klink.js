@@ -19,7 +19,7 @@ class NsKlink extends pokemon_card_1.PokemonCard {
                 name: 'Double Spin',
                 cost: [C],
                 damage: 10,
-                damageMultiplier: 'x',
+                damageCalculation: 'x',
                 text: 'Flip 2 coins. This attack does 10 damage for each heads.'
             }
         ];

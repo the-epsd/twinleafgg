@@ -94,6 +94,25 @@ export class CardInfoPaneComponent implements OnChanges {
     return enabledAbilities;
   }
 
+  private energyImageMap: { [key: string]: string } = {
+    'D': 'darkness',
+    'Y': 'fairy',
+    'F': 'fighting',
+    'R': 'fire',
+    'G': 'grass',
+    'L': 'lightning',
+    'M': 'metal',
+    'P': 'psychic',
+    'C': 'colorless',
+    'W': 'water'
+  };
+
+  transformEnergyText(text: string): string {
+    return text.replace(/\[([WFRGLPMDC])\]/g, (match, type) =>
+      `<img style="transform: translateY(6px)" src="assets/energy-icons/${this.energyImageMap[type]}.webp" alt="${this.energyImageMap[type]} Energy" width="18px">`
+    );
+  }
+
   public showCardImage(card: Card, facedown: boolean): Promise<void> {
     const dialog = this.dialog.open(CardImagePopupComponent, {
       maxWidth: '100%',

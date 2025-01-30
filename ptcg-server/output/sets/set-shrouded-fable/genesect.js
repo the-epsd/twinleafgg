@@ -37,17 +37,15 @@ class Genesect extends pokemon_card_1.PokemonCard {
         this.OPPONENT_CANNOT_PLAY_ACE_SPECS_MARKER = 'OPPONENT_CANNOT_PLAY_ACE_SPECS_MARKER';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_effects_1.PowerEffect
-            && effect.power.powerType === game_1.PowerType.ABILITY
-            && effect.power.name !== 'Ace Canceller') {
+        if (effect instanceof play_card_effects_1.PlayItemEffect && effect.trainerCard.tags.includes(card_types_1.CardTag.ACE_SPEC)) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             let isGenesectWithToolInPlay = false;
-            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-                if (card === this && cardList.tool !== undefined) {
-                    isGenesectWithToolInPlay = true;
-                }
-            });
+            // player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+            //   if (card === this && cardList.tool !== undefined) {
+            //     isGenesectWithToolInPlay = true;
+            //   }
+            // });
             opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList, card) => {
                 if (card === this && cardList.tool !== undefined) {
                     isGenesectWithToolInPlay = true;
@@ -56,38 +54,112 @@ class Genesect extends pokemon_card_1.PokemonCard {
             if (!isGenesectWithToolInPlay) {
                 return state;
             }
-            if (effect instanceof play_card_effects_1.PlayItemEffect) {
-                if (game_1.TrainerCard.tags.includes(card_types_1.CardTag.ACE_SPEC)) {
-                    throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);
-                }
+            // Try to reduce PowerEffect, to check if something is blocking our ability
+            try {
+                const stub = new game_effects_1.PowerEffect(player, {
+                    name: 'test',
+                    powerType: game_1.PowerType.ABILITY,
+                    text: ''
+                }, this);
+                store.reduceEffect(state, stub);
             }
-            if (effect instanceof play_card_effects_1.AttachPokemonToolEffect) {
-                const pokemonCard = effect.target.getPokemonCard();
-                if (pokemonCard === undefined) {
-                    throw new game_1.GameError(game_1.GameMessage.INVALID_TARGET);
-                }
-                if (effect.target.tool !== undefined) {
-                    if (effect.trainerCard.tags.includes(card_types_1.CardTag.ACE_SPEC)) {
-                        throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);
-                    }
-                }
-                if (effect instanceof play_card_effects_1.AttachEnergyEffect) {
-                    if (game_1.EnergyCard.tags.includes(card_types_1.CardTag.ACE_SPEC)) {
-                        throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);
-                    }
-                }
-                if (effect instanceof play_card_effects_1.PlayStadiumEffect) {
-                    if (game_1.TrainerCard.tags.includes(card_types_1.CardTag.ACE_SPEC)) {
-                        throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);
-                    }
-                }
-                if (effect instanceof play_card_effects_1.TrainerEffect) {
-                    if (game_1.TrainerCard.tags.includes(card_types_1.CardTag.ACE_SPEC)) {
-                        throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);
-                    }
-                }
+            catch (_a) {
+                return state;
             }
-            return state;
+            throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);
+        }
+        if (effect instanceof play_card_effects_1.AttachPokemonToolEffect && effect.trainerCard.tags.includes(card_types_1.CardTag.ACE_SPEC)) {
+            const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            let isGenesectWithToolInPlay = false;
+            // player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+            //   if (card === this && cardList.tool !== undefined) {
+            //     isGenesectWithToolInPlay = true;
+            //   }
+            // });
+            opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList, card) => {
+                if (card === this && cardList.tool !== undefined) {
+                    isGenesectWithToolInPlay = true;
+                }
+            });
+            if (!isGenesectWithToolInPlay) {
+                return state;
+            }
+            // Try to reduce PowerEffect, to check if something is blocking our ability
+            try {
+                const stub = new game_effects_1.PowerEffect(player, {
+                    name: 'test',
+                    powerType: game_1.PowerType.ABILITY,
+                    text: ''
+                }, this);
+                store.reduceEffect(state, stub);
+            }
+            catch (_b) {
+                return state;
+            }
+            throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);
+        }
+        if (effect instanceof play_card_effects_1.AttachEnergyEffect && effect.energyCard.tags.includes(card_types_1.CardTag.ACE_SPEC)) {
+            const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            let isGenesectWithToolInPlay = false;
+            // player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+            //   if (card === this && cardList.tool !== undefined) {
+            //     isGenesectWithToolInPlay = true;
+            //   }
+            // });
+            opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList, card) => {
+                if (card === this && cardList.tool !== undefined) {
+                    isGenesectWithToolInPlay = true;
+                }
+            });
+            if (!isGenesectWithToolInPlay) {
+                return state;
+            }
+            // Try to reduce PowerEffect, to check if something is blocking our ability
+            try {
+                const stub = new game_effects_1.PowerEffect(player, {
+                    name: 'test',
+                    powerType: game_1.PowerType.ABILITY,
+                    text: ''
+                }, this);
+                store.reduceEffect(state, stub);
+            }
+            catch (_c) {
+                return state;
+            }
+            throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);
+        }
+        if (effect instanceof play_card_effects_1.PlayStadiumEffect && effect.trainerCard.tags.includes(card_types_1.CardTag.ACE_SPEC)) {
+            const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            let isGenesectWithToolInPlay = false;
+            // player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+            //   if (card === this && cardList.tool !== undefined) {
+            //     isGenesectWithToolInPlay = true;
+            //   }
+            // });
+            opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList, card) => {
+                if (card === this && cardList.tool !== undefined) {
+                    isGenesectWithToolInPlay = true;
+                }
+            });
+            if (!isGenesectWithToolInPlay) {
+                return state;
+            }
+            // Try to reduce PowerEffect, to check if something is blocking our ability
+            try {
+                const stub = new game_effects_1.PowerEffect(player, {
+                    name: 'test',
+                    powerType: game_1.PowerType.ABILITY,
+                    text: ''
+                }, this);
+                store.reduceEffect(state, stub);
+            }
+            catch (_d) {
+                return state;
+            }
+            throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);
         }
         return state;
     }

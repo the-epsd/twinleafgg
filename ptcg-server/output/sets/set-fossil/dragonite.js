@@ -18,7 +18,7 @@ class Dragonite extends pokemon_card_1.PokemonCard {
         this.powers = [{
                 name: 'Step In',
                 useWhenInPlay: true,
-                powerType: game_1.PowerType.POKEPOWER,
+                powerType: game_1.PowerType.POKEMON_POWER,
                 text: 'Once during your turn (before your attack), if Dragonite is on your Bench, you may switch it with your Active Pokémon.'
             }];
         this.attacks = [{

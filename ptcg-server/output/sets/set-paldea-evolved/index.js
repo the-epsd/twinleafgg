@@ -13,6 +13,7 @@ const chi_yu_ex_1 = require("./chi-yu-ex");
 const chien_pao_ex_1 = require("./chien-pao-ex");
 const choice_belt_1 = require("./choice-belt");
 const clavell_1 = require("./clavell");
+const crocalor_1 = require("./crocalor");
 const cufant_1 = require("./cufant");
 const deino_1 = require("./deino");
 const delivery_drone_1 = require("./delivery-drone");
@@ -68,6 +69,7 @@ const wo_chien_ex_1 = require("./wo-chien-ex");
 const zweilous_1 = require("./zweilous");
 const naclstack_1 = require("./naclstack");
 const garganacl_1 = require("./garganacl");
+const skeledirge_ex_1 = require("./skeledirge-ex");
 //import { CalamitousSnowyMountain } from './new calamitous-snowy-mountain';
 exports.setPaldeaEvolved = [
     new arctibax_1.Arctibax(),
@@ -136,6 +138,8 @@ exports.setPaldeaEvolved = [
     new nacli_1.Nacli(),
     new naclstack_1.Naclstack(),
     new garganacl_1.Garganacl(),
+    new crocalor_1.Crocalor(),
+    new skeledirge_ex_1.Skeledirgeex(),
     // Full 
     new full_art_1.ArctibaxIR(),
     new full_art_1.BaxcaliburIR(),

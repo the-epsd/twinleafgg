@@ -21,7 +21,7 @@ class NsKlinklang extends pokemon_card_1.PokemonCard {
                 name: 'Triple Smash',
                 cost: [M, M, C],
                 damage: 120,
-                damageMultiplier: 'x',
+                damageCalculation: 'x',
                 text: 'Flip 3 coins. This attack does 120 damage for each heads.'
             }
         ];

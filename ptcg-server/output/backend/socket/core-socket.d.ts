@@ -11,6 +11,7 @@ export declare class CoreSocket {
     private socket;
     private core;
     private cache;
+    private socketCheckInterval;
     constructor(client: Client, socket: SocketWrapper, core: Core, cache: SocketCache);
     onConnect(client: Client): void;
     onDisconnect(client: Client): void;

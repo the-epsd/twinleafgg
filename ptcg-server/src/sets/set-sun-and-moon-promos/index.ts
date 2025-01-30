@@ -9,6 +9,8 @@ import { PikachuZekromGX } from './pikachu-and-zekrom-gx';
 import { ShiningCelebi } from './shining-celebi';
 import { ShiningLugia } from './shining-lugia';
 import { TapuKoko } from './tapu-koko';
+import { TapuLele } from './tapu-lele';
+import { TrevenantDusknoirGX } from './trevenant-dusknoir-gx';
 
 export const setSunAndMoonPromos: Card[] = [
   new FirefighterPikachu(),
@@ -21,4 +23,6 @@ export const setSunAndMoonPromos: Card[] = [
   new ShiningCelebi(),
   new ShiningLugia(),
   new TapuKoko(),
+  new TapuLele(),
+  new TrevenantDusknoirGX(),
 ];

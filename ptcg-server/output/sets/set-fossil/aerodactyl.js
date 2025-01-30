@@ -18,7 +18,7 @@ class Aerodactyl extends pokemon_card_1.PokemonCard {
         this.powers = [
             {
                 name: 'Prehistoric Power',
-                powerType: game_1.PowerType.POKEPOWER,
+                powerType: game_1.PowerType.POKEMON_POWER,
                 text: 'No more Evolution cards can be played. This power stops working while Aerodactyl is Asleep, Confused, or Paralyzed.',
             },
         ];
@@ -56,20 +56,16 @@ class Aerodactyl extends pokemon_card_1.PokemonCard {
             }
             if (isAerodactylInPlay) {
                 const cardList = game_1.StateUtils.findCardList(state, this);
-                if (cardList.specialConditions.includes(card_types_1.SpecialCondition.ASLEEP)) {
-                    return state;
-                }
-                if (cardList.specialConditions.includes(card_types_1.SpecialCondition.CONFUSED)) {
-                    return state;
-                }
-                if (cardList.specialConditions.includes(card_types_1.SpecialCondition.PARALYZED)) {
+                if (cardList.specialConditions.includes(card_types_1.SpecialCondition.ASLEEP) ||
+                    cardList.specialConditions.includes(card_types_1.SpecialCondition.CONFUSED) ||
+                    cardList.specialConditions.includes(card_types_1.SpecialCondition.PARALYZED)) {
                     return state;
                 }
                 // Try reducing ability
                 try {
                     const stub = new game_effects_1.PowerEffect(player, {
                         name: 'test',
-                        powerType: game_1.PowerType.POKEPOWER,
+                        powerType: game_1.PowerType.POKEMON_POWER,
                         text: ''
                     }, this);
                     store.reduceEffect(state, stub);

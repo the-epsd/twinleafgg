@@ -14,6 +14,7 @@ const galarian_mr_mime_1 = require("./galarian-mr-mime");
 const galarian_mr_rime_1 = require("./galarian-mr-rime");
 const heat_fire_energy_1 = require("./heat-fire-energy");
 const hiding_darkness_energy_1 = require("./hiding-darkness-energy");
+const hydreigon_1 = require("./hydreigon");
 const kangaskhan_1 = require("./kangaskhan");
 const klang_1 = require("./klang");
 const lugia_1 = require("./lugia");
@@ -58,4 +59,5 @@ exports.setDarknessAblaze = [
     new teddiursa_1.Teddiursa(),
     new ursaring_1.Ursaring(),
     new yell_horn_1.YellHorn(),
+    new hydreigon_1.Hydreigon(),
 ];

@@ -49,7 +49,7 @@ class Pidgeot extends pokemon_card_1.PokemonCard {
             cardList.moveTo(player.hand);
             cardList.clearEffects();
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.active.marker.hasMarker(this.BOUNCE_ACTIVE_MARKER, this)) {
             effect.player.active.marker.removeMarker(this.BOUNCE_ACTIVE_MARKER, this);
         }
         return state;

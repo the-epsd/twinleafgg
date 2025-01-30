@@ -3,7 +3,7 @@ import { Effect } from "../../game/store/effects/effect";
 export declare class MarniesGrimmsnarlex extends PokemonCard {
     stage: Stage;
     evolvesFrom: string;
-    cardTag: CardTag[];
+    tags: CardTag[];
     cardType: CardType;
     hp: number;
     weakness: {

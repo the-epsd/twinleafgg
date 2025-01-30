@@ -1,5 +1,6 @@
 import {
   Card,
+  CardList,
   CardTarget,
   ChooseCardsPrompt,
   GameError, GameMessage,
@@ -16,7 +17,7 @@ import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-pro
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
-function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
+function* playCard(next: Function, store: StoreLike, state: State, self: Plumeria, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
 
@@ -47,6 +48,27 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
   effect.preventDefault = true;
   player.hand.moveCardTo(effect.trainerCard, player.supporter);
+
+  const handTemp = new CardList();
+  handTemp.cards = player.hand.cards.filter(c => c !== self);
+
+  yield store.prompt(state, new ChooseCardsPrompt(
+    player,
+    GameMessage.CHOOSE_CARD_TO_DISCARD,
+    handTemp,
+    {},
+    { min: 2, max: 2, allowCancel: false }
+  ), selected => {
+    cardsInHand = selected || [];
+    next();
+  });
+
+  // Operation canceled by the user
+  if (cardsInHand.length === 0) {
+    return state;
+  }
+
+  player.hand.moveCardsTo(cardsInHand, player.discard);
 
   let targets: PokemonCardList[] = [];
   yield store.prompt(state, new ChoosePokemonPrompt(
@@ -113,7 +135,7 @@ export class Plumeria extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-      const generator = playCard(() => generator.next(), store, state, effect);
+      const generator = playCard(() => generator.next(), store, state, this, effect);
       return generator.next().value;
     }
     return state;

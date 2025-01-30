@@ -41,8 +41,10 @@ class ChooseCardsPrompt extends prompt_1.Prompt {
                 }
             }
         }
-        if (this.cards === this.player.deck || this.cards === this.player.discard) {
-            this.cards.sort();
+        if (!this.options.isSecret) {
+            if (this.cards === this.player.deck || this.cards === this.player.discard) {
+                this.cards.sort();
+            }
         }
         if (this.options.blocked.length > 0) {
             this.options.blocked = [];

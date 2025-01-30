@@ -35,7 +35,7 @@ class KyuremVMAX extends pokemon_card_1.PokemonCard {
         this.set = 'LOR';
         this.regulationMark = 'F';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '48';
+        this.setNumber = '49';
         this.name = 'Kyurem VMAX';
         this.fullName = 'Kyurem VMAX LOR';
         this.GLACIATED_WORLD_MARKER = 'GLACIATED_WORLD_MARKER';

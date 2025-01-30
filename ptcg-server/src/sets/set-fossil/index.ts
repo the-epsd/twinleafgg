@@ -17,6 +17,7 @@ import { Golduck } from './golduck';
 import { Golem } from './golem';
 import { Graveler } from './graveler';
 import { Grimer } from './grimer';
+import { Haunter } from './haunter';
 import { Hitmonlee } from './hitmonlee';
 import { Horsea } from './horsea';
 import { Hypno } from './hypno';
@@ -61,6 +62,7 @@ export const setFossil: Card[] = [
   new Golem(),
   new Graveler(),
   new Grimer(),
+  new Haunter(),
   new Hitmonlee(),
   new Horsea(),
   new Hypno(),

@@ -1,5 +1,7 @@
 import { Card } from '../../game/store/card/card';
+import {Abra} from './abra';
 import { Aggron } from './aggron';
+import {Alakazam} from './alakazam';
 import { Applin } from './applin';
 import { Applin2 } from './applin-2';
 import { Aron } from './aron';
@@ -41,6 +43,7 @@ import { Infernape } from './infernape';
 import { IronLeaves } from './iron-leaves';
 import { IronThornsex } from './iron-thorns-ex';
 import { JammingTower } from './jamming-tower';
+import {Kadabra} from './kadabra';
 import { Kieran } from './kieran';
 import { Lairon } from './lairon';
 import { LanasAssistance } from './lanas-assistance';
@@ -49,6 +52,7 @@ import { LoveBall } from './love-ball';
 import { LuckyHelmet } from './lucky-helmet';
 import { Luxio } from './luxio';
 import { Luxrayex } from './luxray-ex';
+import { Magcargoex } from './magcargo-ex';
 import { Mightyena } from './mightyena';
 import { Monferno } from './monferno';
 import { Morpeko } from './morpeko';
@@ -61,7 +65,6 @@ import { Perrin } from './perrin';
 import { Phione } from './phione';
 import { Poltchageist } from './poltchageist';
 import { Poochyena } from './poochyena';
-import { Relicanth } from './relicanth';
 import { Rillaboom } from './rillaboom';
 import { RotoStick } from './roto-stick';
 import { ScoopUpCyclone } from './scoop-up-cyclone';
@@ -69,6 +72,7 @@ import { ScreamTailex } from './scream-tail-ex';
 import { SecretBox } from './secret-box';
 import { Sinistcha } from './sinistcha';
 import { Sinistchaex } from './sinistcha-ex';
+import { Slugma } from './slugma';
 import { Sunkern } from './sunkern';
 import { SurvivalCast } from './survival-cast';
 import { Tatsugiri } from './tatsugiri';
@@ -116,7 +120,6 @@ export const setTwilightMasquerade: Card[] = [
   new Morpeko(),
   new PerformanceFlute(),
   new Poochyena(),
-  new Relicanth(),
   new RotoStick(),
   new ScoopUpCyclone(),
   new Tatsugiri(),
@@ -165,4 +168,9 @@ export const setTwilightMasquerade: Card[] = [
   new Poltchageist(),
   new Sinistcha(),
   new Sinistchaex(),
+  new Slugma(),
+  new Magcargoex(),
+  new Abra(),
+  new Kadabra(),
+  new Alakazam(),
 ];

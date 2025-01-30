@@ -32,6 +32,8 @@ const gholdengo_ex_1 = require("./gholdengo-ex");
 const gible_1 = require("./gible");
 const gimmighoul_1 = require("./gimmighoul");
 const gimmighoul2_1 = require("./gimmighoul2");
+const golisopod_1 = require("./golisopod");
+const golisopod_ex_1 = require("./golisopod-ex");
 const groudon_1 = require("./groudon");
 const honedge_1 = require("./honedge");
 const hoopa_ex_1 = require("./hoopa-ex");
@@ -80,6 +82,7 @@ const trubbish_1 = require("./trubbish");
 const tsareena_ex_1 = require("./tsareena-ex");
 const tulip_1 = require("./tulip");
 const veluza_1 = require("./veluza");
+const wimpod_1 = require("./wimpod");
 const xatu_1 = require("./xatu");
 const yamask_1 = require("./yamask");
 const zacian_1 = require("./zacian");
@@ -165,6 +168,9 @@ exports.setParadoxRift = [
     new bombirdier_ex_1.Bombirdierex(),
     new yamask_1.Yamask(),
     new cofagrigus_ex_1.Cofagrigusex(),
+    new wimpod_1.Wimpod(),
+    new golisopod_1.Golisopod(),
+    new golisopod_ex_1.Golisopodex(),
     //Full s
     new full_art_1.ToedscruelIR(),
     new full_art_1.SnoruntIR(),

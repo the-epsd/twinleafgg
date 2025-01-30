@@ -2,7 +2,7 @@ import { CardTag, CardType, PokemonCard, Stage, State, StoreLike } from "../../g
 import { Effect } from "../../game/store/effects/effect";
 export declare class MarniesMorpeko extends PokemonCard {
     stage: Stage;
-    cardTag: CardTag[];
+    tags: CardTag[];
     cardType: CardType;
     hp: number;
     weakness: {
@@ -13,7 +13,7 @@ export declare class MarniesMorpeko extends PokemonCard {
         name: string;
         cost: CardType.COLORLESS[];
         damage: number;
-        damageMultiplier: string;
+        damageCalculation: string;
         text: string;
     }[];
     regulationMark: string;

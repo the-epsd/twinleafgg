@@ -11,6 +11,7 @@ import { ChiYuex } from './chi-yu-ex';
 import { ChienPaoex } from './chien-pao-ex';
 import { ChoiceBelt } from './choice-belt';
 import { Clavell } from './clavell';
+import { Crocalor } from './crocalor';
 import { Cufant } from './cufant';
 import { Deino } from './deino';
 import { DeliveryDrone } from './delivery-drone';
@@ -66,6 +67,7 @@ import { WoChienex } from './wo-chien-ex';
 import { Zweilous } from './zweilous';
 import { Naclstack } from './naclstack';
 import { Garganacl } from './garganacl';
+import { Skeledirgeex } from './skeledirge-ex';
 //import { CalamitousSnowyMountain } from './new calamitous-snowy-mountain';
 
 export const setPaldeaEvolved: Card[] = [
@@ -136,6 +138,8 @@ export const setPaldeaEvolved: Card[] = [
   new Nacli(),
   new Naclstack(),
   new Garganacl(),
+  new Crocalor(),
+  new Skeledirgeex(),
 
   // Full 
   new ArctibaxIR(),

@@ -26,7 +26,7 @@ export class Haunter extends PokemonCard {
 
   public powers = [{
     name: 'Transparency',
-    powerType: PowerType.POKEPOWER,
+    powerType: PowerType.POKEMON_POWER,
     text: 'Whenever an attack does anything to Haunter, flip a coin. If heads, prevent all effects of that attack, including damage, done to Haunter. This power stops working while Haunter is Asleep, Confused, or Paralyzed.'
   }];
 
@@ -48,6 +48,7 @@ export class Haunter extends PokemonCard {
   public fullName: string = 'Haunter FO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
     function simulateCoinFlip(store: StoreLike, state: State, player: Player): boolean {
       const result = Math.random() < 0.5;
       const gameMessage = result ? GameLog.LOG_PLAYER_FLIPS_HEADS : GameLog.LOG_PLAYER_FLIPS_TAILS;
@@ -74,7 +75,7 @@ export class Haunter extends PokemonCard {
       try {
         const stub = new PowerEffect(player, {
           name: 'test',
-          powerType: PowerType.ABILITY,
+          powerType: PowerType.POKEMON_POWER,
           text: ''
         }, this);
         store.reduceEffect(state, stub);

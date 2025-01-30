@@ -35,19 +35,17 @@ class HisuianBasculegion extends pokemon_card_1.PokemonCard {
         this.setNumber = '44';
         this.name = 'Hisuian Basculegion';
         this.fullName = 'Hisuian Basculegion ASR';
-        this.RETALIATE_MARKER = 'RETALIATE_MARKER';
+        this.GRUDGE_DIVE_MARKER = 'GRUDGE_DIVE_MARKER';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.RETALIATE_MARKER, this)) {
-            effect.player.marker.removeMarker(this.RETALIATE_MARKER);
-        }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
-            if (player.marker.hasMarker(this.RETALIATE_MARKER)) {
+            if (player.marker.hasMarker(this.GRUDGE_DIVE_MARKER)) {
+                effect.damage += 90;
                 const specialConditionEffect = new attack_effects_1.AddSpecialConditionsEffect(effect, [card_types_1.SpecialCondition.CONFUSED]);
                 store.reduceEffect(state, specialConditionEffect);
-                effect.damage += 90;
             }
+            return state;
         }
         if (effect instanceof game_effects_1.KnockOutEffect && effect.player.marker.hasMarker(effect.player.DAMAGE_DEALT_MARKER)) {
             const player = effect.player;
@@ -59,9 +57,12 @@ class HisuianBasculegion extends pokemon_card_1.PokemonCard {
             const cardList = game_1.StateUtils.findCardList(state, this);
             const owner = game_1.StateUtils.findOwner(state, cardList);
             if (owner === player) {
-                effect.player.marker.addMarkerToState(this.RETALIATE_MARKER);
+                effect.player.marker.addMarkerToState(this.GRUDGE_DIVE_MARKER);
             }
             return state;
+        }
+        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+            effect.player.marker.removeMarker(this.GRUDGE_DIVE_MARKER);
         }
         return state;
     }

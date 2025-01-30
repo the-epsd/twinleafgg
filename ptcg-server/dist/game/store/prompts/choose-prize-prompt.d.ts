@@ -8,6 +8,7 @@ export interface ChoosePrizeOptions {
     count: number;
     max: number;
     blocked: number[];
+    useOpponentPrizes: boolean;
     allowCancel: boolean;
 }
 export declare class ChoosePrizePrompt extends Prompt<CardList[]> {

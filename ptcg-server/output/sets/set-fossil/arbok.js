@@ -54,7 +54,7 @@ class Arbok extends pokemon_card_1.PokemonCard {
                 }
             });
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && this.USED_TERROR_STRIKE == true) {
             this.USED_TERROR_STRIKE = false;
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {

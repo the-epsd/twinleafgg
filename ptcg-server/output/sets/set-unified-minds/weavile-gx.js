@@ -44,6 +44,7 @@ class WeavileGX extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.STAGE_1;
+        this.tags = [card_types_1.CardTag.POKEMON_GX];
         this.evolvesFrom = 'Sneasel';
         this.cardType = D;
         this.hp = 200;

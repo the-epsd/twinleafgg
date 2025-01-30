@@ -6,7 +6,7 @@ const card_types_1 = require("../../game/store/card/card-types");
 const trainer_card_1 = require("../../game/store/card/trainer-card");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 const choose_pokemon_prompt_1 = require("../../game/store/prompts/choose-pokemon-prompt");
-function* playCard(next, store, state, effect) {
+function* playCard(next, store, state, self, effect) {
     const player = effect.player;
     const opponent = game_1.StateUtils.getOpponent(state, player);
     if (player.supporterTurn > 0) {
@@ -32,6 +32,17 @@ function* playCard(next, store, state, effect) {
     }
     effect.preventDefault = true;
     player.hand.moveCardTo(effect.trainerCard, player.supporter);
+    const handTemp = new game_1.CardList();
+    handTemp.cards = player.hand.cards.filter(c => c !== self);
+    yield store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, handTemp, {}, { min: 2, max: 2, allowCancel: false }), selected => {
+        cardsInHand = selected || [];
+        next();
+    });
+    // Operation canceled by the user
+    if (cardsInHand.length === 0) {
+        return state;
+    }
+    player.hand.moveCardsTo(cardsInHand, player.discard);
     let targets = [];
     yield store.prompt(state, new choose_pokemon_prompt_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DISCARD_CARDS, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { allowCancel: false, blocked }), results => {
         targets = results || [];
@@ -75,7 +86,7 @@ class Plumeria extends trainer_card_1.TrainerCard {
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
-            const generator = playCard(() => generator.next(), store, state, effect);
+            const generator = playCard(() => generator.next(), store, state, this, effect);
             return generator.next().value;
         }
         return state;

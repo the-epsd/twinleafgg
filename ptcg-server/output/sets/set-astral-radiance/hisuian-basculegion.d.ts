@@ -30,6 +30,6 @@ export declare class HisuianBasculegion extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
-    readonly RETALIATE_MARKER = "RETALIATE_MARKER";
+    readonly GRUDGE_DIVE_MARKER = "GRUDGE_DIVE_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

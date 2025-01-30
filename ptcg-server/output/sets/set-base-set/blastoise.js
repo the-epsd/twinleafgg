@@ -20,7 +20,7 @@ class Blastoise extends pokemon_card_1.PokemonCard {
         this.powers = [{
                 name: 'Rain Dance',
                 useWhenInPlay: true,
-                powerType: game_1.PowerType.POKEPOWER,
+                powerType: game_1.PowerType.POKEMON_POWER,
                 text: 'As often as you like during your turn (before your attack), you may attach 1 W Energy card to 1 of your W Pokémon. (This doesn\'t use up your 1 Energy card attachment for the turn.) This power can\'t be used if Blastoise is Asleep, Confused, or Paralyzed.'
             }];
         this.attacks = [
@@ -59,8 +59,10 @@ class Blastoise extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
             const cardList = game_1.StateUtils.findCardList(state, this);
-            if (cardList.specialConditions.length > 0) {
-                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
+            if (cardList.specialConditions.includes(card_types_1.SpecialCondition.ASLEEP) ||
+                cardList.specialConditions.includes(card_types_1.SpecialCondition.CONFUSED) ||
+                cardList.specialConditions.includes(card_types_1.SpecialCondition.PARALYZED)) {
+                return state;
             }
             const hasEnergyInHand = player.hand.cards.some(c => {
                 return c instanceof game_1.EnergyCard

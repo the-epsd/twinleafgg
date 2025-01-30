@@ -12,6 +12,7 @@ import { GardevoirSylveonGX } from './gardevoir-and-sylveon-gx';
 import { Gloom } from './gloom';
 import { Goldeen } from './goldeen';
 import { GreensExploration } from './greens-exploration';
+import { GreninjaZoroarkGX } from './greninja-zoroark-gx';
 import { Hitmontop } from './hitmontop';
 import { Kartana } from './kartana';
 import { Lairon } from './lairon';
@@ -25,6 +26,7 @@ import { Mew } from './mew';
 import { Mewtwo } from './mewtwo';
 import { Mismagius } from './mismagius';
 import { Oddish } from './oddish';
+import {PheromosaBuzzwoleGX} from './pheromosa-buzzwole-gx';
 import { Pokegear30 } from './pokegear-30';
 import { Poliwag } from './poliwag';
 import { Porygon } from './porygon';
@@ -78,5 +80,7 @@ export const setUnbrokenBonds: Card[] = [
   new TripleAccelerationEnergy(),
   new Tyrogue(),
   new Volcanion(),
-  new Zeraora()
+  new Zeraora(),
+  new GreninjaZoroarkGX(),
+  new PheromosaBuzzwoleGX(),
 ];

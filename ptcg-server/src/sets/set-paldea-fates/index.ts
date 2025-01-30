@@ -7,6 +7,7 @@ import { Espathraex } from './espathra-ex';
 import { Frigibax } from './frigibax';
 import { Gastly } from './gastly';
 import { Gengar } from './gengar';
+import {GreatTuskex} from './great-tusk-ex';
 import { Haunter } from './haunter';
 import { Kilowattrel } from './kilowattrel';
 import { MimeJr } from './mime-jr';
@@ -31,6 +32,7 @@ export const setPaldeaFates: Card[] = [
   new Gastly(),
   new Haunter(),
   new TechnicalMachineCrisisPunch(),
+  new GreatTuskex(),
 
   //Reprints
   new CharmanderPAF(),

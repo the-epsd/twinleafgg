@@ -5,7 +5,7 @@ import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effect
 
 
 export class GardevoirSylveonGX extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX, CardTag.TAG_TEAM];
+  public tags = [CardTag.TAG_TEAM];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = CardType.FAIRY;
   public hp: number = 260;
@@ -22,7 +22,7 @@ export class GardevoirSylveonGX extends PokemonCard {
       name: 'Fairy Song',
       cost: [CardType.COLORLESS],
       damage: 0,
-      text: 'Search your deck for up to 2 Y Energy cards and attach them to your Benched Pokemon in any ' +
+      text: 'Search your deck for up to 2 [Y] Energy cards and attach them to your Benched Pokemon in any ' +
         'way you like. Then, shuffle your deck.'
     },
     {
@@ -35,7 +35,7 @@ export class GardevoirSylveonGX extends PokemonCard {
       name: 'Magical Miracle-GX',
       cost: [CardType.FAIRY, CardType.FAIRY, CardType.FAIRY],
       damage: 200,
-      text: 'If this Pokemon has at least 3 extra Y Energy attached to it (in addition to this attack\'s cost), ' +
+      text: 'If this Pokemon has at least 3 extra [Y] Energy attached to it (in addition to this attack\'s cost), ' +
         'your opponent shuffles their hand into their deck. (You can\'t use more than 1 GX attack in a game.)'
     },
   ];

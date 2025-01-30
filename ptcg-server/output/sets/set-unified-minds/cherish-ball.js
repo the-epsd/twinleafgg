@@ -30,6 +30,7 @@ function* playCard(next, store, state, effect) {
     if (cards.length > 0) {
         yield store.prompt(state, new game_1.ShowCardsPrompt(opponent.id, game_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards), () => next());
     }
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
     // And shuffle our deck
     return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => { player.deck.applyOrder(order); });
 }

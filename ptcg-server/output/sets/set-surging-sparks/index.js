@@ -21,6 +21,7 @@ const chill_teaser_toy_1 = require("./chill-teaser-toy");
 const clemonts_quick_wit_1 = require("./clemonts-quick-wit");
 const cofagrigus_1 = require("./cofagrigus");
 const crocalor_1 = require("./crocalor");
+const cyclizar_ex_1 = require("./cyclizar-ex");
 const cyrano_1 = require("./cyrano");
 const deino_1 = require("./deino");
 const dialga_1 = require("./dialga");
@@ -189,6 +190,7 @@ exports.setSurgingSparks = [
     new durant_ex_1.Durantex(),
     new sizzlipede_1.Sizzlipede(),
     new centiskorch_1.Centiskorch(),
+    new cyclizar_ex_1.Cyclizarex(),
     //Reprints
     new card_images_1.ScrambleSwitchSSP(),
     new card_images_1.CounterGainSSP(),

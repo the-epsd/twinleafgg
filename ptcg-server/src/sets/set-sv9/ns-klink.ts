@@ -17,7 +17,7 @@ export class NsKlink extends PokemonCard {
       name: 'Double Spin',
       cost: [C],
       damage: 10,
-      damageMultiplier: 'x',
+      damageCalculation: 'x',
       text: 'Flip 2 coins. This attack does 10 damage for each heads.'
     }
   ];
@@ -32,7 +32,7 @@ export class NsKlink extends PokemonCard {
 
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-  
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       return store.prompt(state, [

@@ -1,11 +1,11 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SuperType, EnergyType } from '../../game/store/card/card-types';
+import { Stage, CardType, SuperType, EnergyType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { Card, CardTarget, ChooseCardsPrompt, GameError, GameMessage, MoveEnergyPrompt, PlayerType, PokemonCardList, PowerType, ShuffleDeckPrompt, SlotType, StateUtils } from '../../game';
-import {CheckProvidedEnergyEffect} from '../../game/store/effects/check-effects';
+import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 
 function* useShadowConnection(next: Function, store: StoreLike, state: State, effect: PowerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -57,6 +57,7 @@ function* useShadowConnection(next: Function, store: StoreLike, state: State, ef
 
 export class WeavileGX extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
+  public tags = [CardTag.POKEMON_GX];
   public evolvesFrom = 'Sneasel';
   public cardType: CardType = D;
   public hp: number = 200;

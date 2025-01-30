@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.RecycleEnergy = void 0;
 const card_types_1 = require("../../game/store/card/card-types");
 const energy_card_1 = require("../../game/store/card/energy-card");
-const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const check_effects_1 = require("../../game/store/effects/check-effects");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class RecycleEnergy extends energy_card_1.EnergyCard {
@@ -22,10 +21,6 @@ class RecycleEnergy extends energy_card_1.EnergyCard {
         this.RECYCLE_ENERGY_MARKER = 'RECYCLE_ENERGY_MARKER';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof attack_effects_1.DiscardCardsEffect && effect.target.cards.includes(this)) {
-            const player = effect.player;
-            effect.target.moveCardTo(this, player.hand);
-        }
         if (effect instanceof play_card_effects_1.AttachEnergyEffect && effect.energyCard === this) {
             const player = effect.player;
             player.marker.addMarker(this.RECYCLE_ENERGY_MARKER, this);

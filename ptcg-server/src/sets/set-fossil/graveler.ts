@@ -57,7 +57,7 @@ export class Graveler extends PokemonCard {
       return state;
     }
 
-    if (effect instanceof EndTurnEffect) {
+    if (effect instanceof EndTurnEffect && effect.player.active.marker.hasMarker(this.HARDEN_MARKER, this)) {
       effect.player.active.marker.removeMarker(this.HARDEN_MARKER, this);
     }
 

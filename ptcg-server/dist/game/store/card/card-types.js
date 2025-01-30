@@ -28,11 +28,13 @@ export var CardTag;
     CardTag["TEAM_FLARE"] = "TEAM_FLARE";
     CardTag["MEGA"] = "MEGA";
     CardTag["PLAY_DURING_SETUP"] = "PLAY_DURING_SETUP";
+    CardTag["DELTA_SPECIES"] = "DELTA_SPECIES";
     CardTag["LILLIES"] = "LILLIES";
     CardTag["NS"] = "NS";
     CardTag["IONOS"] = "IONOS";
     CardTag["HOPS"] = "HOPS";
-    CardTag["DELTA_SPECIES"] = "DELTA_SPECIES";
+    CardTag["MARNIES"] = "MARNIES";
+    CardTag["STEVENS"] = "STEVENS";
 })(CardTag || (CardTag = {}));
 export var SuperType;
 (function (SuperType) {

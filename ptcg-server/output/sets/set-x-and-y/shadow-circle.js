@@ -17,7 +17,7 @@ class ShadowCircle extends trainer_card_1.TrainerCard {
         this.fullName = 'Shadow Circle XY';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '126';
-        this.text = 'Each Pokemon that has any D Energy attached to it (both yours ' +
+        this.text = 'Each Pokemon that has any [D] Energy attached to it (both yours ' +
             'and your opponent\'s) has no Weakness.';
     }
     reduceEffect(store, state, effect) {

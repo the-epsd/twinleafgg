@@ -30,7 +30,7 @@ export class Varoom extends PokemonCard {
     }
   ];
 
-  public set: string = 'OBF';
+  public set: string = 'SFA';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '43';
   public name: string = 'Varoom';

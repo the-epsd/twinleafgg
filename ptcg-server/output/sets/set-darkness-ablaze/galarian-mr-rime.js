@@ -23,7 +23,7 @@ class GalarianMrRime extends game_1.PokemonCard {
                 name: 'Mad Party',
                 cost: [W, C, C],
                 damage: 20,
-                damageMultiplier: 'x',
+                damageCalculation: 'x',
                 text: 'This attack does 20 damage for each Pokémon in your discard pile that has the Mad Party attack.'
             }];
         this.regulationMark = 'D';

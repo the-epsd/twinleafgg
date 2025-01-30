@@ -51,9 +51,7 @@ class Pokeball extends trainer_card_1.TrainerCard {
         this.setNumber = '185';
         this.name = 'Poké Ball';
         this.fullName = 'Poké Ball SVI';
-        this.text = 'Discard 2 cards from your hand. (If you can\'t discard 2 cards, ' +
-            'you can\'t play this card.) Search your deck for a card and put it into ' +
-            'your hand. Shuffle your deck afterward.';
+        this.text = 'Flip a coin. If heads, search your deck for a Pokémon, reveal it, and put it into your hand. Shuffle your deck afterward.';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {

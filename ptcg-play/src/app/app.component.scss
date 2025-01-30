@@ -20,3 +20,12 @@
 .ptcg-app-sidenav {
   width: map-get($ptcg-size, nav-menu);
 }
+
+@font-face {
+  font-family: 'PTCG';
+  src: url('/assets/fonts/ptcg-font.ttf') format('truetype');
+}
+
+.energy-symbol {
+  font-family: 'PTCG', sans-serif;
+}

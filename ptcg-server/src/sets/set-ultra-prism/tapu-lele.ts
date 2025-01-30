@@ -46,28 +46,30 @@ function* useMagicalSwap(next: Function, store: StoreLike, state: State, effect:
   });
 }
 
-export class TapuLele2 extends PokemonCard {
+export class TapuLele extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = CardType.PSYCHIC;
+  public cardType: CardType = Y;
 
   public hp: number = 110;
 
-  public weakness = [{ type: CardType.PSYCHIC }];
+  public weakness = [{ type: M }];
 
-  public retreat = [CardType.COLORLESS];
+  public resistance = [{ type: D, value: -20 }];
+
+  public retreat = [C];
 
   public attacks = [
     {
       name: 'Psywave',
-      cost: [CardType.PSYCHIC],
+      cost: [Y],
       damage: 20,
       text: 'This attack does 20 damage times the amount of Energy attached to your opponent\'s Active Pokémon.'
     },
     {
       name: 'Magical Swap',
-      cost: [CardType.PSYCHIC, CardType.COLORLESS],
+      cost: [Y, C],
       damage: 0,
       text: 'Move any number of damage counters on your opponent\'s Pokémon to their other Pokémon in any way you like.'
     },

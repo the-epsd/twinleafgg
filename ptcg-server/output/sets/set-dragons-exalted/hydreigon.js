@@ -56,14 +56,14 @@ class Hydreigon extends pokemon_card_1.PokemonCard {
                 useWhenInPlay: true,
                 powerType: game_1.PowerType.ABILITY,
                 text: 'As often as you like during your turn (before your attack), ' +
-                    'you may move a D Energy attached to 1 of your Pokemon to another ' +
+                    'you may move a [D] Energy attached to 1 of your Pokemon to another ' +
                     'of your Pokemon.'
             }];
         this.attacks = [{
                 name: 'Dragonblast',
                 cost: [card_types_1.CardType.PSYCHIC, card_types_1.CardType.DARK, card_types_1.CardType.DARK, card_types_1.CardType.COLORLESS],
                 damage: 140,
-                text: 'Discard 2 D Energy attached to this Pokemon.'
+                text: 'Discard 2 [D] Energy attached to this Pokemon.'
             }];
         this.set = 'DRX';
         this.name = 'Hydreigon';

@@ -7,9 +7,11 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --configuration=development --watch=false",
+    "start:local": "ng serve --configuration=local --watch=false",
     "start:eric": "set NODE_OPTIONS=--openssl-legacy-provider && ng serve",
     "build": "ng build",
     "build:development": "ng build --configuration=development",
+    "build:local": "ng build --configuration=local",
     "build:eric": "set NODE_OPTIONS=--openssl-legacy-provider && ng build --configuration=production",
     "build:prod": "ng build --configuration=production",
     "build:prod:server": "export NODE_OPTIONS=--openssl-legacy-provider && ng build --configuration=production",

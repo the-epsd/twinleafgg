@@ -21,7 +21,7 @@ export class Dedenne extends PokemonCard {
       name: 'Mad Party',
       cost: [P, C, C],
       damage: 20,
-      damageMultiplier: 'x',
+      damageCalculation: 'x',
       text: 'This attack does 20 damage for each Pokémon in your discard pile that has the Mad Party attack.'
     }
   ];
@@ -35,7 +35,7 @@ export class Dedenne extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '78';
-  
+
   public regulationMark = 'D';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

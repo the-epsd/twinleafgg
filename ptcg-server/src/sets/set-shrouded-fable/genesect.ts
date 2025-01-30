@@ -1,8 +1,8 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, GameError, GameMessage, TrainerCard, EnergyCard, PlayerType, PowerType, StateUtils } from '../../game';
+import { StoreLike, State, GameError, GameMessage, PlayerType, PowerType, StateUtils } from '../../game';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
-import { AttachEnergyEffect, AttachPokemonToolEffect, PlayItemEffect, PlayStadiumEffect, TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { AttachEnergyEffect, AttachPokemonToolEffect, PlayItemEffect, PlayStadiumEffect } from '../../game/store/effects/play-card-effects';
 
 export class Genesect extends PokemonCard {
 
@@ -49,18 +49,16 @@ export class Genesect extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: AttackEffect): State {
 
-    if (effect instanceof PowerEffect
-      && effect.power.powerType === PowerType.ABILITY
-      && effect.power.name !== 'Ace Canceller') {
+    if (effect instanceof PlayItemEffect && effect.trainerCard.tags.includes(CardTag.ACE_SPEC)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
       let isGenesectWithToolInPlay = false;
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-        if (card === this && cardList.tool !== undefined) {
-          isGenesectWithToolInPlay = true;
-        }
-      });
+      // player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+      //   if (card === this && cardList.tool !== undefined) {
+      //     isGenesectWithToolInPlay = true;
+      //   }
+      // });
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
         if (card === this && cardList.tool !== undefined) {
           isGenesectWithToolInPlay = true;
@@ -71,48 +69,122 @@ export class Genesect extends PokemonCard {
         return state;
       }
 
-      if (effect instanceof PlayItemEffect) {
-        if (TrainerCard.tags.includes(CardTag.ACE_SPEC)) {
+      // Try to reduce PowerEffect, to check if something is blocking our ability
+      try {
+        const stub = new PowerEffect(player, {
+          name: 'test',
+          powerType: PowerType.ABILITY,
+          text: ''
+        }, this);
+        store.reduceEffect(state, stub);
+      } catch {
+        return state;
+      }
+      throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+    }
 
-          throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+    if (effect instanceof AttachPokemonToolEffect && effect.trainerCard.tags.includes(CardTag.ACE_SPEC)) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      let isGenesectWithToolInPlay = false;
+      // player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+      //   if (card === this && cardList.tool !== undefined) {
+      //     isGenesectWithToolInPlay = true;
+      //   }
+      // });
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
+        if (card === this && cardList.tool !== undefined) {
+          isGenesectWithToolInPlay = true;
         }
+      });
+
+      if (!isGenesectWithToolInPlay) {
+        return state;
       }
 
+      // Try to reduce PowerEffect, to check if something is blocking our ability
+      try {
+        const stub = new PowerEffect(player, {
+          name: 'test',
+          powerType: PowerType.ABILITY,
+          text: ''
+        }, this);
+        store.reduceEffect(state, stub);
+      } catch {
+        return state;
+      }
+      throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+    }
 
-      if (effect instanceof AttachPokemonToolEffect) {
-        const pokemonCard = effect.target.getPokemonCard();
-        if (pokemonCard === undefined) {
-          throw new GameError(GameMessage.INVALID_TARGET);
+
+    if (effect instanceof AttachEnergyEffect && effect.energyCard.tags.includes(CardTag.ACE_SPEC)) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      let isGenesectWithToolInPlay = false;
+      // player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+      //   if (card === this && cardList.tool !== undefined) {
+      //     isGenesectWithToolInPlay = true;
+      //   }
+      // });
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
+        if (card === this && cardList.tool !== undefined) {
+          isGenesectWithToolInPlay = true;
         }
-        if (effect.target.tool !== undefined) {
-          if (effect.trainerCard.tags.includes(CardTag.ACE_SPEC)) {
-            throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-          }
-        }
+      });
 
-
-        if (effect instanceof AttachEnergyEffect) {
-          if (EnergyCard.tags.includes(CardTag.ACE_SPEC)) {
-            throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-          }
-        }
-
-
-        if (effect instanceof PlayStadiumEffect) {
-          if (TrainerCard.tags.includes(CardTag.ACE_SPEC)) {
-            throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-          }
-        }
-
-
-        if (effect instanceof TrainerEffect) {
-          if (TrainerCard.tags.includes(CardTag.ACE_SPEC)) {
-            throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-          }
-        }
+      if (!isGenesectWithToolInPlay) {
+        return state;
       }
 
-      return state;
+      // Try to reduce PowerEffect, to check if something is blocking our ability
+      try {
+        const stub = new PowerEffect(player, {
+          name: 'test',
+          powerType: PowerType.ABILITY,
+          text: ''
+        }, this);
+        store.reduceEffect(state, stub);
+      } catch {
+        return state;
+      }
+      throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+    }
+
+
+    if (effect instanceof PlayStadiumEffect && effect.trainerCard.tags.includes(CardTag.ACE_SPEC)) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      let isGenesectWithToolInPlay = false;
+      // player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+      //   if (card === this && cardList.tool !== undefined) {
+      //     isGenesectWithToolInPlay = true;
+      //   }
+      // });
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
+        if (card === this && cardList.tool !== undefined) {
+          isGenesectWithToolInPlay = true;
+        }
+      });
+
+      if (!isGenesectWithToolInPlay) {
+        return state;
+      }
+
+      // Try to reduce PowerEffect, to check if something is blocking our ability
+      try {
+        const stub = new PowerEffect(player, {
+          name: 'test',
+          powerType: PowerType.ABILITY,
+          text: ''
+        }, this);
+        store.reduceEffect(state, stub);
+      } catch {
+        return state;
+      }
+      throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
     }
     return state;
   }

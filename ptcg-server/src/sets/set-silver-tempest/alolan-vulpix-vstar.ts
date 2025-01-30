@@ -120,8 +120,11 @@ export class AlolanVulpixVSTAR extends PokemonCard {
 
     if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {
       if (effect.target.marker.hasMarker(this.PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER, this)) {
-        effect.preventDefault = true;
-        return state;
+        const source = effect.source.getPokemonCard() as PokemonCard;
+        if (!StateUtils.checkAbilityBlocked(store, state, effect.player, source)) {
+          effect.preventDefault = true;
+          return state;
+        }
       }
     }
 
@@ -129,7 +132,7 @@ export class AlolanVulpixVSTAR extends PokemonCard {
       && effect.player.active.marker.hasMarker(this.CLEAR_PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER, this)) {
       effect.player.active.marker.removeMarker(this.CLEAR_PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER, this);
       const opponent = StateUtils.getOpponent(state, effect.player);
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
         cardList.marker.removeMarker(this.PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER, this);
       });
       console.log('marker removed');

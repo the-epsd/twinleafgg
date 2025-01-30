@@ -9,7 +9,7 @@ class MarniesGrimmsnarlex extends game_1.PokemonCard {
         super(...arguments);
         this.stage = game_1.Stage.STAGE_2;
         this.evolvesFrom = 'Marnie\'s Morgrem';
-        this.cardTag = [game_1.CardTag.MARNIES, game_1.CardTag.POKEMON_ex];
+        this.tags = [game_1.CardTag.MARNIES, game_1.CardTag.POKEMON_ex];
         this.cardType = D;
         this.hp = 320;
         this.weakness = [{ type: G }];

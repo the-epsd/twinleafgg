@@ -28,6 +28,7 @@ const riolu_1 = require("./riolu");
 const roselia_1 = require("./roselia");
 const shiinotic_1 = require("./shiinotic");
 const sneasel_1 = require("./sneasel");
+const tapu_lele_1 = require("./tapu-lele");
 const turtwig_1 = require("./turtwig");
 const unit_energy_grw_1 = require("./unit-energy-grw");
 const unit_energy_lpm_1 = require("./unit-energy-lpm");
@@ -61,6 +62,7 @@ exports.setUltraPrism = [
     new roselia_1.Roselia(),
     new shiinotic_1.Shiinotic(),
     new sneasel_1.Sneasel(),
+    new tapu_lele_1.TapuLele(),
     new turtwig_1.Turtwig(),
     new unit_energy_grw_1.UnitEnergyGRW(),
     new unit_energy_lpm_1.UnitEnergyLPM(),

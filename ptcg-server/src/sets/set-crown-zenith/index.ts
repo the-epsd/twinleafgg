@@ -1,6 +1,4 @@
 import { Card } from '../../game/store/card/card';
-import { LostVacuum } from '../set-lost-origin/lost-vacuum';
-import { RotomV } from '../set-lost-origin/rotom-v';
 import { Absol } from './absol';
 import { Bidoof } from './bidoof';
 import { Hoopa } from './hoopa';
@@ -32,13 +30,11 @@ export const setCrownZenith: Card[] = [
   new RadiantCharizard(),
   new Zamazenta(),
   new Luxray(),
-  new LostVacuum(),
   new Mewtwo(),
   new ZamazentaV(),
   new RadiantEternatus(),
   new RegigigasV(),
   new RegigigasVSTAR(),
-  new RotomV(),
   new Salandit(),
   new Wailmer(),
   new Yanmega(),

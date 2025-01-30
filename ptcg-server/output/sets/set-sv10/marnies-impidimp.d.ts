@@ -2,7 +2,7 @@ import { CardTag, CardType, PokemonCard, Stage, State, StoreLike } from "../../g
 import { Effect } from "../../game/store/effects/effect";
 export declare class MarniesImpidimp extends PokemonCard {
     stage: Stage;
-    cardTag: CardTag[];
+    tags: CardTag[];
     cardType: CardType;
     hp: number;
     weakness: {

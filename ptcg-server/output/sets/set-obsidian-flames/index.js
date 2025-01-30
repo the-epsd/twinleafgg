@@ -18,6 +18,7 @@ const entei_1 = require("./entei");
 const finizen_1 = require("./finizen");
 const froakie_1 = require("./froakie");
 const full_art_1 = require("./full-art");
+const larvitar_1 = require("./larvitar");
 const letter_of_encouragement_1 = require("./letter-of-encouragement");
 const ninetales_1 = require("./ninetales");
 const oddish_1 = require("./oddish");
@@ -28,14 +29,19 @@ const pidgeotto_1 = require("./pidgeotto");
 const pidgey_1 = require("./pidgey");
 const pokemon_league_headquarters_1 = require("./pokemon-league-headquarters");
 const poppy_1 = require("./poppy");
+const pupitar_1 = require("./pupitar");
 const rowlet_1 = require("./rowlet");
 const ryme_1 = require("./ryme");
 const scizor_1 = require("./scizor");
 const seismitoad_1 = require("./seismitoad");
 const thundurus_1 = require("./thundurus");
 const toedscruel_ex_1 = require("./toedscruel-ex");
+const togekiss_1 = require("./togekiss");
+const togepi_1 = require("./togepi");
+const togetic_1 = require("./togetic");
 const town_store_1 = require("./town-store");
 const tympole_1 = require("./tympole");
+const tyranitar_ex_1 = require("./tyranitar-ex");
 const varoom_1 = require("./varoom");
 const vengeful_punch_1 = require("./vengeful-punch");
 const whiscash_1 = require("./whiscash");
@@ -77,6 +83,12 @@ exports.setObsidianFlames = [
     new varoom_1.Varoom(),
     new whiscash_1.Whiscash(),
     new decidueye_ex_1.Decidueyeex(),
+    new larvitar_1.Larvitar(),
+    new pupitar_1.Pupitar(),
+    new tyranitar_ex_1.Tyranitarex(),
+    new togepi_1.Togepi(),
+    new togetic_1.Togetic(),
+    new togekiss_1.Togekiss(),
     //Alt-s
     new full_art_1.BelliboltIR(),
     new full_art_1.CleffaIR(),

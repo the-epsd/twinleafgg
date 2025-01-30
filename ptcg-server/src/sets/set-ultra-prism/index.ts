@@ -26,6 +26,7 @@ import { Riolu } from './riolu';
 import { Roselia } from './roselia';
 import { Shiinotic } from './shiinotic';
 import { Sneasel } from './sneasel';
+import { TapuLele } from './tapu-lele';
 import { Turtwig } from './turtwig';
 import { UnitEnergyGRW } from './unit-energy-grw';
 import { UnitEnergyLPM } from './unit-energy-lpm';
@@ -60,6 +61,7 @@ export const setUltraPrism: Card[] = [
   new Roselia(),
   new Shiinotic(),
   new Sneasel(),
+  new TapuLele(),
   new Turtwig(),
   new UnitEnergyGRW(),
   new UnitEnergyLPM(),

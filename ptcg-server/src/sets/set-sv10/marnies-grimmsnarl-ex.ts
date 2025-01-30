@@ -6,7 +6,7 @@ import { AttackEffect, EvolveEffect, PowerEffect } from "../../game/store/effect
 export class MarniesGrimmsnarlex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Marnie\'s Morgrem';
-  public cardTag: CardTag[] = [CardTag.MARNIES, CardTag.POKEMON_ex];
+  public tags: CardTag[] = [CardTag.MARNIES, CardTag.POKEMON_ex];
   public cardType: CardType = D;
   public hp: number = 320;
   public weakness = [{ type: G }];

@@ -151,8 +151,10 @@ function ATTACH_X_NUMBER_OF_BASIC_ENERGY_CARDS_FROM_YOUR_DISCARD_TO_YOUR_BENCHED
 }
 exports.ATTACH_X_NUMBER_OF_BASIC_ENERGY_CARDS_FROM_YOUR_DISCARD_TO_YOUR_BENCHED_POKEMON = ATTACH_X_NUMBER_OF_BASIC_ENERGY_CARDS_FROM_YOUR_DISCARD_TO_YOUR_BENCHED_POKEMON;
 function SHUFFLE_DECK(effect, store, state, player) {
+    console.log('Deck order before shuffle:', player.deck.cards.map(c => c.name));
     return store.prompt(state, new __1.ShuffleDeckPrompt(player.id), order => {
         player.deck.applyOrder(order);
+        console.log('Deck order after shuffle:', player.deck.cards.map(c => c.name));
     });
 }
 exports.SHUFFLE_DECK = SHUFFLE_DECK;
@@ -164,7 +166,7 @@ function DISCARD_X_ENERGY_FROM_YOUR_HAND(effect, store, state, minAmount, maxAmo
     if (!hasEnergyInHand) {
         throw new __1.GameError(__1.GameMessage.CANNOT_USE_POWER);
     }
-    state = store.prompt(state, new __1.ChooseCardsPrompt(player, __1.GameMessage.CHOOSE_CARD_TO_DISCARD, player.hand, { superType: card_types_1.SuperType.ENERGY }, { allowCancel: true, min: minAmount, max: maxAmount }), cards => {
+    state = store.prompt(state, new __1.ChooseCardsPrompt(player, __1.GameMessage.CHOOSE_CARD_TO_DISCARD, player.hand, { superType: card_types_1.SuperType.ENERGY }, { allowCancel: false, min: minAmount, max: maxAmount }), cards => {
         cards = cards || [];
         if (cards.length === 0) {
             return;

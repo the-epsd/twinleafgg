@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TRAINER_SHUFFLE_DECK = exports.TRAINER_SHOW_OPPONENT_CARDS = exports.DISCARD_X_CARDS_FROM_YOUR_HAND = void 0;
+exports.SHUFFLE_DECK = exports.TRAINER_SHOW_OPPONENT_CARDS = exports.DISCARD_X_CARDS_FROM_YOUR_HAND = void 0;
 const game_error_1 = require("../../game-error");
 const game_message_1 = require("../../game-message");
 const card_1 = require("../card/card");
@@ -44,10 +44,10 @@ function TRAINER_SHOW_OPPONENT_CARDS(effect, store, state) {
     }
 }
 exports.TRAINER_SHOW_OPPONENT_CARDS = TRAINER_SHOW_OPPONENT_CARDS;
-function TRAINER_SHUFFLE_DECK(effect, store, state) {
+function SHUFFLE_DECK(effect, store, state) {
     const player = effect.player;
     return store.prompt(state, new shuffle_prompt_1.ShuffleDeckPrompt(player.id), order => {
         player.deck.applyOrder(order);
     });
 }
-exports.TRAINER_SHUFFLE_DECK = TRAINER_SHUFFLE_DECK;
+exports.SHUFFLE_DECK = SHUFFLE_DECK;

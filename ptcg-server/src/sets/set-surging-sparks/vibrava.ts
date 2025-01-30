@@ -66,9 +66,10 @@ export class Vibrava extends PokemonCard {
 
     if (effect instanceof PutDamageEffect
       && effect.target.marker.hasMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER)) {
-      effect.damage += 90;
+      effect.damage += 50;
       return state;
     }
+
     if (effect instanceof EndTurnEffect
       && effect.player.marker.hasMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER, this)) {
       effect.player.marker.removeMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER, this);
