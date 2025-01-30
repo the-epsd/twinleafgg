@@ -50,6 +50,7 @@ export declare function THIS_POKEMON_HAS_ANY_DAMAGE_COUNTERS_ON_IT(effect: Attac
 export declare function YOUR_OPPONENTS_POKEMON_IS_KNOCKED_OUT_BY_DAMAGE_FROM_THIS_ATTACK(effect: Effect, state: State): effect is KnockOutEffect;
 export declare function TAKE_X_MORE_PRIZE_CARDS(effect: KnockOutEffect, state: State): State;
 export declare function THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_BENCHED_POKEMON(damage: number, effect: AttackEffect, store: StoreLike, state: State, min: number, max: number): State;
+export declare function THIS_POKEMON_DOES_DAMAGE_TO_ITSELF(store: StoreLike, state: State, effect: AttackEffect): State;
 export declare function ATTACH_X_NUMBER_OF_BASIC_ENERGY_CARDS_FROM_YOUR_DISCARD_TO_YOUR_BENCHED_POKEMON(effect: AttackEffect, store: StoreLike, state: State, amount: number): void;
 export declare function SHUFFLE_DECK(store: StoreLike, state: State, player: Player): State;
 export declare function DISCARD_X_ENERGY_FROM_YOUR_HAND(effect: PowerEffect, store: StoreLike, state: State, minAmount: number, maxAmount: number): State;
@@ -100,4 +101,8 @@ export declare function ADD_POISON_TO_PLAYER_ACTIVE(store: StoreLike, state: Sta
 export declare function ADD_BURN_TO_PLAYER_ACTIVE(store: StoreLike, state: State, player: Player, source: Card, burnDamage?: number): void;
 export declare function ADD_PARALYZED_TO_PLAYER_ACTIVE(store: StoreLike, state: State, player: Player, source: Card): void;
 export declare function ADD_CONFUSED_TO_PLAYER_ACTIVE(store: StoreLike, state: State, player: Player, source: Card): void;
-export declare function THIS_POKEMON_DOES_DAMAGE_TO_ITSELF(store: StoreLike, state: State, effect: AttackEffect): State;
+export declare function REMOVE_MARKER_AT_END_OF_TURN(effect: Effect, source: Card, marker: string): void;
+export declare function REPLACE_MARKER_AT_END_OF_TURN(effect: Effect, source: Card, oldMarker: string, newMarker: string): void;
+export declare function ADD_MARKER(player: Player, source: Card, marker: string): void;
+export declare function HAS_MARKER(player: Player, source: Card, marker: string): boolean;
+export declare function BLOCK_EFFECT_IF_MARKER(player: Player, card: Card, marker: string): void;

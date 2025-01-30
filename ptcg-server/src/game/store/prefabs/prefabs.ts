@@ -5,6 +5,7 @@ import { DealDamageEffect, DiscardCardsEffect, HealTargetEffect, PutDamageEffect
 import { AddSpecialConditionsPowerEffect, CheckProvidedEnergyEffect } from '../effects/check-effects';
 import { Effect } from '../effects/effect';
 import { AttackEffect, EvolveEffect, KnockOutEffect, PowerEffect } from '../effects/game-effects';
+import { EndTurnEffect } from '../effects/game-phase-effects';
 
 /**
  * 
@@ -196,6 +197,12 @@ export function THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_BENCHED_POKEMON
     damageEffect.target = target;
     store.reduceEffect(state, damageEffect);
   });
+}
+
+export function THIS_POKEMON_DOES_DAMAGE_TO_ITSELF(store: StoreLike, state: State, effect: AttackEffect) {
+  const dealDamage = new DealDamageEffect(effect, 30);
+  dealDamage.target = effect.source;
+  return store.reduceEffect(state, dealDamage);
 }
 
 export function ATTACH_X_NUMBER_OF_BASIC_ENERGY_CARDS_FROM_YOUR_DISCARD_TO_YOUR_BENCHED_POKEMON(effect: AttackEffect, store: StoreLike, state: State, amount: number) {
@@ -394,8 +401,30 @@ export function ADD_CONFUSED_TO_PLAYER_ACTIVE(store: StoreLike, state: State, pl
 }
 //#endregion
 
-export function THIS_POKEMON_DOES_DAMAGE_TO_ITSELF(store: StoreLike, state: State, effect: AttackEffect) {
-  const dealDamage = new DealDamageEffect(effect, 30);
-  dealDamage.target = effect.source;
-  return store.reduceEffect(state, dealDamage);
+//#region Markers
+export function REMOVE_MARKER_AT_END_OF_TURN(effect: Effect, source: Card, marker: string) {
+  if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(marker, source))
+    effect.player.marker.removeMarker(marker, source);
 }
+
+export function REPLACE_MARKER_AT_END_OF_TURN(effect: Effect, source: Card, oldMarker: string, newMarker: string) {
+  if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(oldMarker, source)) {
+    effect.player.marker.removeMarker(oldMarker, source);
+    effect.player.marker.addMarker(newMarker, source);
+  }
+}
+
+export function ADD_MARKER(player: Player, source: Card, marker: string) {
+  player.marker.addMarker(marker, source);
+}
+
+export function HAS_MARKER(player: Player, source: Card, marker: string): boolean {
+  return player.marker.hasMarker(marker, source);
+}
+
+export function BLOCK_EFFECT_IF_MARKER(player: Player, card: Card, marker: string) {
+  if (player.marker.hasMarker(marker, card)) {
+    throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+  }
+}
+//#endregion

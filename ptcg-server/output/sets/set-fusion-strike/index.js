@@ -25,6 +25,7 @@ const heatmor_1 = require("./heatmor");
 const inteleon_v_1 = require("./inteleon-v");
 const inteleon_vmax_1 = require("./inteleon-vmax");
 const lapras_1 = require("./lapras");
+const maractus_1 = require("./maractus");
 const meloetta_1 = require("./meloetta");
 const mew_v_1 = require("./mew-v");
 const mew_vmax_1 = require("./mew-vmax");
@@ -66,6 +67,7 @@ exports.setFusionStrike = [
     new inteleon_vmax_1.InteleonVMAX(),
     new card_images_1.JudgeFST(),
     new lapras_1.Lapras(),
+    new maractus_1.Maractus(),
     new meloetta_1.Meloetta(),
     new mew_v_1.MewV(),
     new mew_vmax_1.MewVMAX(),

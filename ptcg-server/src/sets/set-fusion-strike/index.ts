@@ -23,6 +23,7 @@ import { Heatmor } from './heatmor';
 import { InteleonV } from './inteleon-v';
 import { InteleonVMAX } from './inteleon-vmax';
 import { Lapras } from './lapras';
+import { Maractus } from './maractus';
 import { Meloetta } from './meloetta';
 import { MewV } from './mew-v';
 import { MewVMAX } from './mew-vmax';
@@ -67,6 +68,7 @@ export const setFusionStrike: Card[] = [
   new InteleonVMAX(),
   new JudgeFST(),
   new Lapras(),
+  new Maractus(),
   new Meloetta(),
   new MewV(),
   new MewVMAX(),

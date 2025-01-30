@@ -1,11 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.THIS_POKEMON_DOES_DAMAGE_TO_ITSELF = exports.ADD_CONFUSED_TO_PLAYER_ACTIVE = exports.ADD_PARALYZED_TO_PLAYER_ACTIVE = exports.ADD_BURN_TO_PLAYER_ACTIVE = exports.ADD_POISON_TO_PLAYER_ACTIVE = exports.ADD_SLEEP_TO_PLAYER_ACTIVE = exports.ADD_SPECIAL_CONDITIONS_TO_PLAYER_ACTIVE = exports.CONFIRMATION_PROMPT = exports.SHOW_CARDS_TO_PLAYER = exports.MOVE_CARD_TO = exports.IS_ABILITY_BLOCKED = exports.DRAW_CARDS_AS_FACE_DOWN_PRIZES = exports.DRAW_CARDS_UNTIL_CARDS_IN_HAND = exports.DRAW_CARDS = exports.SHUFFLE_PRIZES_INTO_DECK = exports.SHUFFLE_CARDS_INTO_DECK = exports.GET_PRIZES_AS_CARD_ARRAY = exports.GET_PLAYER_PRIZES = exports.DISCARD_X_ENERGY_FROM_YOUR_HAND = exports.SHUFFLE_DECK = exports.ATTACH_X_NUMBER_OF_BASIC_ENERGY_CARDS_FROM_YOUR_DISCARD_TO_YOUR_BENCHED_POKEMON = exports.THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_BENCHED_POKEMON = exports.TAKE_X_MORE_PRIZE_CARDS = exports.YOUR_OPPONENTS_POKEMON_IS_KNOCKED_OUT_BY_DAMAGE_FROM_THIS_ATTACK = exports.THIS_POKEMON_HAS_ANY_DAMAGE_COUNTERS_ON_IT = exports.HEAL_X_DAMAGE_FROM_THIS_POKEMON = exports.THIS_ATTACK_DOES_X_MORE_DAMAGE = exports.FLIP_IF_HEADS = exports.DISCARD_X_ENERGY_FROM_THIS_POKEMON = exports.SEARCH_YOUR_DECK_FOR_TYPE_OF_POKEMON_AND_PUT_INTO_HAND = exports.SEARCH_YOUR_DECK_FOR_STAGE_OF_POKEMON_AND_PUT_THEM_ONTO_YOUR_BENCH = exports.DISCARD_A_STADIUM_CARD_IN_PLAY = exports.PASSIVE_ABILITY_ACTIVATED = exports.ABILITY_USED = exports.JUST_EVOLVED = exports.WAS_POWER_USED = exports.WAS_ATTACK_USED = void 0;
+exports.BLOCK_EFFECT_IF_MARKER = exports.HAS_MARKER = exports.ADD_MARKER = exports.REPLACE_MARKER_AT_END_OF_TURN = exports.REMOVE_MARKER_AT_END_OF_TURN = exports.ADD_CONFUSED_TO_PLAYER_ACTIVE = exports.ADD_PARALYZED_TO_PLAYER_ACTIVE = exports.ADD_BURN_TO_PLAYER_ACTIVE = exports.ADD_POISON_TO_PLAYER_ACTIVE = exports.ADD_SLEEP_TO_PLAYER_ACTIVE = exports.ADD_SPECIAL_CONDITIONS_TO_PLAYER_ACTIVE = exports.CONFIRMATION_PROMPT = exports.SHOW_CARDS_TO_PLAYER = exports.MOVE_CARD_TO = exports.IS_ABILITY_BLOCKED = exports.DRAW_CARDS_AS_FACE_DOWN_PRIZES = exports.DRAW_CARDS_UNTIL_CARDS_IN_HAND = exports.DRAW_CARDS = exports.SHUFFLE_PRIZES_INTO_DECK = exports.SHUFFLE_CARDS_INTO_DECK = exports.GET_PRIZES_AS_CARD_ARRAY = exports.GET_PLAYER_PRIZES = exports.DISCARD_X_ENERGY_FROM_YOUR_HAND = exports.SHUFFLE_DECK = exports.ATTACH_X_NUMBER_OF_BASIC_ENERGY_CARDS_FROM_YOUR_DISCARD_TO_YOUR_BENCHED_POKEMON = exports.THIS_POKEMON_DOES_DAMAGE_TO_ITSELF = exports.THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_BENCHED_POKEMON = exports.TAKE_X_MORE_PRIZE_CARDS = exports.YOUR_OPPONENTS_POKEMON_IS_KNOCKED_OUT_BY_DAMAGE_FROM_THIS_ATTACK = exports.THIS_POKEMON_HAS_ANY_DAMAGE_COUNTERS_ON_IT = exports.HEAL_X_DAMAGE_FROM_THIS_POKEMON = exports.THIS_ATTACK_DOES_X_MORE_DAMAGE = exports.FLIP_IF_HEADS = exports.DISCARD_X_ENERGY_FROM_THIS_POKEMON = exports.SEARCH_YOUR_DECK_FOR_TYPE_OF_POKEMON_AND_PUT_INTO_HAND = exports.SEARCH_YOUR_DECK_FOR_STAGE_OF_POKEMON_AND_PUT_THEM_ONTO_YOUR_BENCH = exports.DISCARD_A_STADIUM_CARD_IN_PLAY = exports.PASSIVE_ABILITY_ACTIVATED = exports.ABILITY_USED = exports.JUST_EVOLVED = exports.WAS_POWER_USED = exports.WAS_ATTACK_USED = void 0;
 const __1 = require("../..");
 const card_types_1 = require("../card/card-types");
 const attack_effects_1 = require("../effects/attack-effects");
 const check_effects_1 = require("../effects/check-effects");
 const game_effects_1 = require("../effects/game-effects");
+const game_phase_effects_1 = require("../effects/game-phase-effects");
 /**
  *
  * A basic effect for checking the use of attacks.
@@ -162,6 +163,12 @@ function THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_BENCHED_POKEMON(damage
     });
 }
 exports.THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_BENCHED_POKEMON = THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_BENCHED_POKEMON;
+function THIS_POKEMON_DOES_DAMAGE_TO_ITSELF(store, state, effect) {
+    const dealDamage = new attack_effects_1.DealDamageEffect(effect, 30);
+    dealDamage.target = effect.source;
+    return store.reduceEffect(state, dealDamage);
+}
+exports.THIS_POKEMON_DOES_DAMAGE_TO_ITSELF = THIS_POKEMON_DOES_DAMAGE_TO_ITSELF;
 function ATTACH_X_NUMBER_OF_BASIC_ENERGY_CARDS_FROM_YOUR_DISCARD_TO_YOUR_BENCHED_POKEMON(effect, store, state, amount) {
     const player = effect.player;
     state = store.prompt(state, new __1.AttachEnergyPrompt(player.id, __1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.discard, __1.PlayerType.BOTTOM_PLAYER, [__1.SlotType.BENCH, __1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC }, { allowCancel: true, min: amount, max: amount }), transfers => {
@@ -332,9 +339,31 @@ function ADD_CONFUSED_TO_PLAYER_ACTIVE(store, state, player, source) {
 }
 exports.ADD_CONFUSED_TO_PLAYER_ACTIVE = ADD_CONFUSED_TO_PLAYER_ACTIVE;
 //#endregion
-function THIS_POKEMON_DOES_DAMAGE_TO_ITSELF(store, state, effect) {
-    const dealDamage = new attack_effects_1.DealDamageEffect(effect, 30);
-    dealDamage.target = effect.source;
-    return store.reduceEffect(state, dealDamage);
+//#region Markers
+function REMOVE_MARKER_AT_END_OF_TURN(effect, source, marker) {
+    if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(marker, source))
+        effect.player.marker.removeMarker(marker, source);
 }
-exports.THIS_POKEMON_DOES_DAMAGE_TO_ITSELF = THIS_POKEMON_DOES_DAMAGE_TO_ITSELF;
+exports.REMOVE_MARKER_AT_END_OF_TURN = REMOVE_MARKER_AT_END_OF_TURN;
+function REPLACE_MARKER_AT_END_OF_TURN(effect, source, oldMarker, newMarker) {
+    if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(oldMarker, source)) {
+        effect.player.marker.removeMarker(oldMarker, source);
+        effect.player.marker.addMarker(newMarker, source);
+    }
+}
+exports.REPLACE_MARKER_AT_END_OF_TURN = REPLACE_MARKER_AT_END_OF_TURN;
+function ADD_MARKER(player, source, marker) {
+    player.marker.addMarker(marker, source);
+}
+exports.ADD_MARKER = ADD_MARKER;
+function HAS_MARKER(player, source, marker) {
+    return player.marker.hasMarker(marker, source);
+}
+exports.HAS_MARKER = HAS_MARKER;
+function BLOCK_EFFECT_IF_MARKER(player, card, marker) {
+    if (player.marker.hasMarker(marker, card)) {
+        throw new __1.GameError(__1.GameMessage.BLOCKED_BY_EFFECT);
+    }
+}
+exports.BLOCK_EFFECT_IF_MARKER = BLOCK_EFFECT_IF_MARKER;
+//#endregion
