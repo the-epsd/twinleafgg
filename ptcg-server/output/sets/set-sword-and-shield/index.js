@@ -3,6 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.setSwordAndShield = void 0;
 const air_balloon_1 = require("./air-balloon");
 const aurora_energy_1 = require("./aurora-energy");
+const baltoy_1 = require("./baltoy");
+const big_charm_1 = require("./big-charm");
 const centiskorch_1 = require("./centiskorch");
 const cinccino_1 = require("./cinccino");
 const cinderace_1 = require("./cinderace");
@@ -14,6 +16,7 @@ const frosmoth_1 = require("./frosmoth");
 const galarian_zigzagoon_1 = require("./galarian-zigzagoon");
 const galarian_perrserker_1 = require("./galarian_perrserker");
 const giant_hearth_1 = require("./giant-hearth");
+const gossifleur_1 = require("./gossifleur");
 const inteleon_1 = require("./inteleon");
 const maractus_1 = require("./maractus");
 const marnie_1 = require("./marnie");
@@ -58,4 +61,7 @@ exports.setSwordAndShield = [
     new toxicroak_1.Toxicroak(),
     new welder_1.Welder(),
     new zacian_v_1.ZacianV(),
+    new baltoy_1.Baltoy(),
+    new gossifleur_1.Gossifleur(),
+    new big_charm_1.BigCharm(),
 ];

@@ -1,6 +1,7 @@
 import { Card } from '../../game/store/card/card';
 import {Abra} from './abra';
 import { Aggron } from './aggron';
+import {Aipom} from './aipom';
 import {Alakazam} from './alakazam';
 import { Applin } from './applin';
 import { Applin2 } from './applin-2';
@@ -173,4 +174,5 @@ export const setTwilightMasquerade: Card[] = [
   new Abra(),
   new Kadabra(),
   new Alakazam(),
+  new Aipom(),
 ];

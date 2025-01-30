@@ -4,6 +4,7 @@ import { Delphox } from './delphox';
 import { DoubleColorlessEnergy } from './double-colorless-energy';
 import { Evosoda } from './evosoda';
 import { FairyEnergy } from './fairy-energy';
+import {Fennekin} from './fennekin';
 import { GreninjaXY } from './greninja';
 import { MuscleBand } from './muscle-band';
 import { Pikachu } from './pikachu';
@@ -33,5 +34,5 @@ export const setXY: Card[] = [
   new Trevenant(),
   new Voltorb(),
   new YveltalEx(),
-
+  new Fennekin(),
 ];

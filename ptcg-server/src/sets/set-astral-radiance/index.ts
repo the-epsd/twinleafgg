@@ -1,4 +1,5 @@
 import { Card } from '../../game/store/card/card';
+import {Absol} from './absol';
 import { Adaman } from './adaman';
 import { Bronzor } from './bronzor';
 import { CancelingCologne } from './canceling-cologne';
@@ -134,4 +135,5 @@ export const setAstralRadiance: Card[] = [
   new Ursaluna(),
   new WyrdeerV(),
   new Yanma(),
+  new Absol(),
 ];

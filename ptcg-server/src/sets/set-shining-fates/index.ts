@@ -6,7 +6,9 @@ import { ApplinSV, SnomSV } from './full-art';
 import { GalarianWeezing } from './galarian-weezing';
 import { Horsea } from './horsea';
 import { Koffing } from './koffing';
+import {Kyogre} from './kyogre';
 import { FrosmothSHF } from './other-prints';
+import {Reshiram} from './reshiram';
 import { Rillaboom } from './rillaboom';
 import { Rookidee } from './rookidee';
 import { Snom } from './snom';
@@ -23,6 +25,8 @@ export const setShiningFates: Card[] = [
   new Rookidee(),
   new Snom(),
   new Thwackey(),
+  new Reshiram(),
+  new Kyogre(),
 
   // Shiny Vault
   new ApplinSV(),

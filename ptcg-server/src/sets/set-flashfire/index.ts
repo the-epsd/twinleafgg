@@ -7,8 +7,10 @@ import { Lysandre } from './lysandre';
 import { MCharizardEX } from './m-charizard-ex';
 import { Milotic } from './milotic';
 import { Miltank } from './miltank';
+import {Ponyta} from './ponyta';
 import { ProtectionCube } from './protection-cube';
 import { Pyroar } from './pyroar';
+import {Rapidash} from './rapidash';
 import { SacredAsh } from './sacred-ash';
 import { Seedot } from './seedot';
 import { Skrelp } from './skrelp';
@@ -31,4 +33,6 @@ export const setFlashfire: Card[] = [
   new Skrelp(),
   new StartlingMegaphone(),
   new ToxicroakEx(),
+  new Ponyta(),
+  new Rapidash(),
 ];

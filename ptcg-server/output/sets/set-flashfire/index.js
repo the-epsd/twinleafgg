@@ -9,8 +9,10 @@ const lysandre_1 = require("./lysandre");
 const m_charizard_ex_1 = require("./m-charizard-ex");
 const milotic_1 = require("./milotic");
 const miltank_1 = require("./miltank");
+const ponyta_1 = require("./ponyta");
 const protection_cube_1 = require("./protection-cube");
 const pyroar_1 = require("./pyroar");
+const rapidash_1 = require("./rapidash");
 const sacred_ash_1 = require("./sacred-ash");
 const seedot_1 = require("./seedot");
 const skrelp_1 = require("./skrelp");
@@ -32,4 +34,6 @@ exports.setFlashfire = [
     new skrelp_1.Skrelp(),
     new startling_megaphone_1.StartlingMegaphone(),
     new toxicroak_ex_1.ToxicroakEx(),
+    new ponyta_1.Ponyta(),
+    new rapidash_1.Rapidash(),
 ];

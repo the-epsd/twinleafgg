@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.setTwilightMasquerade = void 0;
 const abra_1 = require("./abra");
 const aggron_1 = require("./aggron");
+const aipom_1 = require("./aipom");
 const alakazam_1 = require("./alakazam");
 const applin_1 = require("./applin");
 const applin_2_1 = require("./applin-2");
@@ -173,4 +174,5 @@ exports.setTwilightMasquerade = [
     new abra_1.Abra(),
     new kadabra_1.Kadabra(),
     new alakazam_1.Alakazam(),
+    new aipom_1.Aipom(),
 ];

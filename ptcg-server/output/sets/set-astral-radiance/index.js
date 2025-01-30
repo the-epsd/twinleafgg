@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setAstralRadiance = void 0;
+const absol_1 = require("./absol");
 const adaman_1 = require("./adaman");
 const bronzor_1 = require("./bronzor");
 const canceling_cologne_1 = require("./canceling-cologne");
@@ -132,4 +133,5 @@ exports.setAstralRadiance = [
     new ursaluna_1.Ursaluna(),
     new wyrdeer_v_1.WyrdeerV(),
     new yanma_1.Yanma(),
+    new absol_1.Absol(),
 ];
