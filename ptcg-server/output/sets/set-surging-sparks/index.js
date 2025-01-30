@@ -68,6 +68,8 @@ const pansear_1 = require("./pansear");
 const perfect_mixer_1 = require("./perfect-mixer");
 const phanpy_ir_1 = require("./phanpy-ir");
 const pikachu_ex_1 = require("./pikachu-ex");
+const quaquaval_1 = require("./quaquaval");
+const quaxly_1 = require("./quaxly");
 const quaxwell_1 = require("./quaxwell");
 const rabsca_1 = require("./rabsca");
 const rellor_1 = require("./rellor");
@@ -195,6 +197,8 @@ exports.setSurgingSparks = [
     new cyclizar_ex_1.Cyclizarex(),
     new blitzle_1.Blitzle(),
     new tapu_koko_1.TapuKoko(),
+    new quaxly_1.Quaxly(),
+    new quaquaval_1.Quaquaval(),
     //Reprints
     new card_images_1.ScrambleSwitchSSP(),
     new card_images_1.CounterGainSSP(),

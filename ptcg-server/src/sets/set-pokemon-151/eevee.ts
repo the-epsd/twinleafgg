@@ -57,7 +57,7 @@ export class Eevee extends PokemonCard {
         player,
         GameMessage.CHOOSE_CARD_TO_HAND,
         player.deck,
-        { superType: SuperType.POKEMON, stage: Stage.BASIC } as any,
+        { superType: SuperType.POKEMON } as any,
         { min: 0, max: 3, allowCancel: true, differentTypes: true }
       ), selected => {
         cards = selected || [];

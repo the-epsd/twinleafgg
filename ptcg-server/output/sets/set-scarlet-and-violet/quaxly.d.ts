@@ -1,9 +1,7 @@
-import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
-export declare class Quaxwell extends PokemonCard {
+import { PokemonCard, Stage, CardType } from '../../game';
+export declare class Quaxly extends PokemonCard {
     stage: Stage;
     cardType: CardType;
-    evolvesFrom: string;
     hp: number;
     weakness: {
         type: CardType.LIGHTNING;
@@ -11,14 +9,14 @@ export declare class Quaxwell extends PokemonCard {
     retreat: CardType.COLORLESS[];
     attacks: {
         name: string;
-        cost: CardType.WATER[];
+        cost: (CardType.WATER | CardType.COLORLESS)[];
         damage: number;
         text: string;
     }[];
-    set: string;
-    name: string;
-    fullName: string;
     regulationMark: string;
+    set: string;
     setNumber: string;
     cardImage: string;
+    name: string;
+    fullName: string;
 }

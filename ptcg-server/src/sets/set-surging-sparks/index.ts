@@ -66,6 +66,8 @@ import { Pansear } from './pansear';
 import { PerfectMixer } from './perfect-mixer';
 import { Phanpy } from './phanpy-ir';
 import { Pikachuex } from './pikachu-ex';
+import {Quaquaval} from './quaquaval';
+import {Quaxly} from './quaxly';
 import { Quaxwell } from './quaxwell';
 import { Rabsca } from './rabsca';
 import { Rellor } from './rellor';
@@ -194,6 +196,8 @@ export const setSurgingSparks: Card[] = [
   new Cyclizarex(),
   new Blitzle(),
   new TapuKoko(),
+  new Quaxly(),
+  new Quaquaval(),
 
   //Reprints
   new ScrambleSwitchSSP(),

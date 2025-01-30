@@ -7,6 +7,8 @@ export class Quaxwell extends PokemonCard {
 
   public cardType: CardType = W;
 
+  public evolvesFrom = 'Quaxly';
+
   public hp: number = 100;
 
   public weakness = [{ type: L }];
