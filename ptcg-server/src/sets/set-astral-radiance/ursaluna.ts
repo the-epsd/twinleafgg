@@ -78,7 +78,7 @@ export class Ursaluna extends PokemonCard {
         GameMessage.CHOOSE_CARD_TO_HAND,
         player.discard,
         {},
-        { min: max, max: max, allowCancel: false }
+        { min: 1, max: max, allowCancel: false }
       ), selected => {
         const cards = selected || [];
 
