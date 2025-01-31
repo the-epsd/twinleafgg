@@ -10,28 +10,27 @@ class CoreSocket {
         this.client = client;
         this.socket = socket;
         this.core = core;
-        // Set up 30 second interval for socket logging
+        // Set up 30 second interval for socket logging AND active socket verification
         this.socketCheckInterval = setInterval(() => {
-            // Simply log active sockets since we're tracking them
-            console.log(`Active socket: ${this.client.id} - User: ${this.client.user.name}`);
+            this.checkActiveSockets();
         }, 30000);
         // core listeners
         this.socket.addListener('core:getInfo', this.getCoreInfo.bind(this));
         this.socket.addListener('core:createGame', this.createGame.bind(this));
     }
     onConnect(client) {
-        console.log(`Socket connected - Client: ${client.id}, User: ${client.user.name}`);
         this.socket.emit('core:join', {
             clientId: client.id,
             user: CoreSocket.buildUserInfo(client.user)
         });
+        console.log(`[Socket ${client.id}] Connected - User: ${client.user.name}, Time: ${new Date().toISOString()}`);
     }
     onDisconnect(client) {
-        console.log(`Socket disconnected - Client: ${client.id}, User: ${client.user.name}`);
         if (this.socketCheckInterval) {
             clearInterval(this.socketCheckInterval);
         }
         this.socket.emit('core:leave', client.id);
+        console.log(`[Socket ${client.id}] Disconnected - User: ${client.user.name}, Time: ${new Date().toISOString()}`);
     }
     onGameAdd(game) {
         this.cache.lastLogIdCache[game.id] = 0;
@@ -64,6 +63,12 @@ class CoreSocket {
             return CoreSocket.buildUserInfo(u, connected);
         });
         this.socket.emit('core:usersInfo', userInfos);
+    }
+    checkActiveSockets() {
+        if (this.socket.socket.connected &&
+            Date.now() - this.socket.lastPong < 30000) {
+            console.log(`Verified active socket: ${this.client.id} - User: ${this.client.user.name}`);
+        }
     }
     buildCoreInfo() {
         return {

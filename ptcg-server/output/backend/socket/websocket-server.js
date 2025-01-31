@@ -8,9 +8,11 @@ const config_1 = require("../../config");
 class WebSocketServer {
     constructor(core) {
         this.core = core;
+        this.activeSockets = new Map();
     }
     async listen(httpServer) {
         const opts = {};
+        console.log(`[WebSocket] Server started with options:`, opts);
         if (config_1.config.backend.allowCors) {
             opts.cors = { origin: '*' };
         }
@@ -22,11 +24,24 @@ class WebSocketServer {
             const socketClient = new socket_client_1.SocketClient(user, this.core, server, socket);
             this.core.connect(socketClient);
             socketClient.attachListeners();
+            console.log(`[WebSocket] New connection from ${socket.id}`);
             socket.on('disconnect', () => {
                 this.core.disconnect(socketClient);
                 user.updateLastSeen();
             });
         });
+        this.cleanInactiveSockets();
+    }
+    cleanInactiveSockets() {
+        setInterval(() => {
+            const now = Date.now();
+            this.activeSockets.forEach((data, id) => {
+                if (now - data.lastPing > 45000) {
+                    data.socket.disconnect(true);
+                    this.activeSockets.delete(id);
+                }
+            });
+        }, 60000);
     }
 }
 exports.WebSocketServer = WebSocketServer;
