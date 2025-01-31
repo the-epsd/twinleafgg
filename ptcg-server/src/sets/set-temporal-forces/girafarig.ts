@@ -20,7 +20,7 @@ export class Girafarig extends PokemonCard {
       text: 'This attack does 10 more damage for each damage counter on your opponent\'s Active Pokémon.' }
   ];
 
-  public set: string = 'SVI';
+  public set: string = 'TEF';
   public regulationMark = 'H';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '66';

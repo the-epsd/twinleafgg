@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setCelestialStorm = void 0;
 const apricorn_maker_1 = require("./apricorn-maker");
+const articuno_gx_1 = require("./articuno-gx");
 const banette_gx_1 = require("./banette-gx");
 const copycat_1 = require("./copycat");
 const delcatty_1 = require("./delcatty");
@@ -52,4 +53,5 @@ exports.setCelestialStorm = [
     new swampert_1.Swampert(),
     new tate_and_liza_1.TateAndLiza(),
     new whismur_1.Whismur(),
+    new articuno_gx_1.ArticunoGX(),
 ];

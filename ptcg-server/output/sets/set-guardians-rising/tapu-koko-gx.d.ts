@@ -2,14 +2,11 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { PowerType, StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-export declare class ArticunoGX extends PokemonCard {
+export declare class TapuKokoGX extends PokemonCard {
     tags: CardTag[];
     stage: Stage;
     cardType: CardType;
     hp: number;
-    weakness: {
-        type: CardType.METAL;
-    }[];
     retreat: CardType.COLORLESS[];
     powers: {
         name: string;
@@ -18,14 +15,16 @@ export declare class ArticunoGX extends PokemonCard {
     }[];
     attacks: ({
         name: string;
-        cost: (CardType.WATER | CardType.COLORLESS)[];
+        cost: (CardType.LIGHTNING | CardType.COLORLESS)[];
         damage: number;
         text: string;
+        damageCalculation?: undefined;
         gxAttack?: undefined;
     } | {
         name: string;
-        cost: CardType.WATER[];
+        cost: (CardType.LIGHTNING | CardType.COLORLESS)[];
         damage: number;
+        damageCalculation: string;
         gxAttack: boolean;
         text: string;
     })[];

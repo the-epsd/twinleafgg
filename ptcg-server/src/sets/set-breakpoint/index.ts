@@ -5,6 +5,7 @@ import { FightingFuryBelt } from './fighting-fury-belt';
 import { Froakie } from './froakie';
 import { GreninjaBKP } from './greninja';
 import { Kricketot } from './kricketot';
+import {ManaphyEX} from './manaphy-ex';
 import { MaxElixir } from './max-elixir';
 import { Phantump } from './phantump';
 import { ReverseValley } from './reverse-valley';
@@ -26,5 +27,6 @@ export const setBreakpoint: Card[] = [
   new SplashEnergy(),
   new Staryu(),
   new Sudowoodo(),
-  new Zoroark()
+  new Zoroark(),
+  new ManaphyEX(),
 ];

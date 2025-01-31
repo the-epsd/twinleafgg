@@ -7,6 +7,7 @@ const fighting_fury_belt_1 = require("./fighting-fury-belt");
 const froakie_1 = require("./froakie");
 const greninja_1 = require("./greninja");
 const kricketot_1 = require("./kricketot");
+const manaphy_ex_1 = require("./manaphy-ex");
 const max_elixir_1 = require("./max-elixir");
 const phantump_1 = require("./phantump");
 const reverse_valley_1 = require("./reverse-valley");
@@ -27,5 +28,6 @@ exports.setBreakpoint = [
     new splash_energy_1.SplashEnergy(),
     new staryu_1.Staryu(),
     new sudowoodo_1.Sudowoodo(),
-    new zoroark_1.Zoroark()
+    new zoroark_1.Zoroark(),
+    new manaphy_ex_1.ManaphyEX(),
 ];

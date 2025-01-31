@@ -18,6 +18,7 @@ import { Ralts } from './ralts';
 import { SalazzleGX } from './salazzle-gx';
 import { Sophocles } from './sophocles';
 import { TapuBuluGX } from './tapu-bulu-gx';
+import {TapuFiniGX} from './tapu-fini-gx';
 import { WishfulBaton } from './wishful-baton';
 
 export const setBurningShadows: Card[] = [
@@ -41,4 +42,5 @@ export const setBurningShadows: Card[] = [
   new Sophocles(),
   new TapuBuluGX(),
   new WishfulBaton(),
+  new TapuFiniGX(),
 ];

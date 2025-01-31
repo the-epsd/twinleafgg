@@ -1,10 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, EnergyType } from '../../game/store/card/card-types';
+import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { EnergyCard } from '../../game';
+import {CheckProvidedEnergyEffect} from '../../game/store/effects/check-effects';
 
 export class Wailord extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -31,17 +31,19 @@ export class Wailord extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Hydro Pump
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]){
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
-      
-      let waterEnergies = 0;
-      player.active.cards.forEach(card =>{
-        if (card instanceof EnergyCard && card.energyType === EnergyType.BASIC && card.name === 'Water Energy'){
-          waterEnergies++;
-        }
-      });
 
-      effect.damage += 50 * waterEnergies;
+      const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player);
+      store.reduceEffect(state, checkProvidedEnergyEffect);
+
+      let energyCount = 0;
+      checkProvidedEnergyEffect.energyMap.forEach(em => {
+        energyCount += em.provides.filter(cardType => {
+          return cardType === CardType.WATER || cardType === CardType.ANY;
+        }).length;
+      });
+      effect.damage += energyCount * 50;
     }
     
     return state;
