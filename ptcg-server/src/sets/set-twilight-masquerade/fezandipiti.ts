@@ -1,18 +1,12 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, PowerType, PokemonCardList, GamePhase, GameLog, Player } from '../../game';
+import { StoreLike, State, StateUtils, PowerType, PokemonCardList, GamePhase, GameLog } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { CoinFlipEffect } from '../../game/store/effects/play-card-effects';
-
-function simulateCoinFlip(store: StoreLike, state: State, player: Player): boolean {
-  const result = Math.random() < 0.5;
-  const gameMessage = result ? GameLog.LOG_PLAYER_FLIPS_HEADS : GameLog.LOG_PLAYER_FLIPS_TAILS;
-  store.log(state, gameMessage, { name: player.name });
-  return result;
-}
+import { SIMULATE_COIN_FLIP } from '../../game/store/prefabs/prefabs';
 
 export class FezandipitiTWM extends PokemonCard {
 
@@ -88,7 +82,7 @@ export class FezandipitiTWM extends PokemonCard {
         return state;
       }
 
-      const coinFlipResult = simulateCoinFlip(store, state, player);
+      const coinFlipResult = SIMULATE_COIN_FLIP(store, state, player);
 
       if (!coinFlipResult) {
         effect.damage = 0;

@@ -1,10 +1,11 @@
-import { DamageMap, GameLog, GameMessage, GamePhase, Player, PlayerType, Power, PowerType, PutDamagePrompt, SlotType, State, StateUtils, StoreLike } from '../../game';
+import { DamageMap, GameLog, GameMessage, GamePhase, PlayerType, Power, PowerType, PutDamagePrompt, SlotType, State, StateUtils, StoreLike } from '../../game';
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { PutCountersEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { CoinFlipEffect } from '../../game/store/effects/play-card-effects';
+import { SIMULATE_COIN_FLIP } from '../../game/store/prefabs/prefabs';
 
 export class Dragapult extends PokemonCard {
 
@@ -53,13 +54,6 @@ export class Dragapult extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    function simulateCoinFlip(store: StoreLike, state: State, player: Player): boolean {
-      const result = Math.random() < 0.5;
-      const gameMessage = result ? GameLog.LOG_PLAYER_FLIPS_HEADS : GameLog.LOG_PLAYER_FLIPS_TAILS;
-      store.log(state, gameMessage, { name: player.name });
-      return result;
-    }
-
     if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -88,7 +82,7 @@ export class Dragapult extends PokemonCard {
         return state;
       }
 
-      const coinFlipResult = simulateCoinFlip(store, state, player);
+      const coinFlipResult = SIMULATE_COIN_FLIP(store, state, player);
 
       if (coinFlipResult) {
         effect.damage = 0;

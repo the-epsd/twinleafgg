@@ -61,12 +61,12 @@ export class Feraligatr extends PokemonCard {
       effect.damage += 120;
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      BLOCK_EFFECT_IF_MARKER(effect.player, this, this.ATTACK_USED_2_MARKER);
+      BLOCK_EFFECT_IF_MARKER(this.ATTACK_USED_2_MARKER, effect.player, this);
       effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
     }
 
     if (WAS_POWER_USED(effect, 0, this)) {
-      BLOCK_EFFECT_IF_MARKER(effect.player, this, this.TORRENTIAL_HEART_MARKER);
+      BLOCK_EFFECT_IF_MARKER(this.TORRENTIAL_HEART_MARKER, effect.player, this);
 
       const cardList = StateUtils.findCardList(state, this);
       if (cardList instanceof PokemonCardList) {

@@ -31,17 +31,17 @@ export class Amarys extends TrainerCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       DRAW_CARDS(effect.player, 4);
-      ADD_MARKER(effect.player, this, this.AMARYS_USED_MARKER);
+      ADD_MARKER(this.AMARYS_USED_MARKER, effect.player, this);
     }
 
-    if (effect instanceof EndTurnEffect && HAS_MARKER(effect.player, this, this.AMARYS_USED_MARKER)) {
+    if (effect instanceof EndTurnEffect && HAS_MARKER(this.AMARYS_USED_MARKER, effect.player, this)) {
       const hand = effect.player.hand;
       const discard = effect.player.discard;
 
       if (hand.cards.length >= 5)
         hand.moveCardsTo(hand.cards, discard)
     }
-      
+
     REMOVE_MARKER_AT_END_OF_TURN(effect, this, this.AMARYS_USED_MARKER);
 
     return state;

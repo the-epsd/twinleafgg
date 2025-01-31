@@ -8,12 +8,7 @@ const game_effects_1 = require("../../game/store/effects/game-effects");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const check_effects_1 = require("../../game/store/effects/check-effects");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
-function simulateCoinFlip(store, state, player) {
-    const result = Math.random() < 0.5;
-    const gameMessage = result ? game_1.GameLog.LOG_PLAYER_FLIPS_HEADS : game_1.GameLog.LOG_PLAYER_FLIPS_TAILS;
-    store.log(state, gameMessage, { name: player.name });
-    return result;
-}
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class FezandipitiTWM extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -78,7 +73,7 @@ class FezandipitiTWM extends pokemon_card_1.PokemonCard {
             catch (_b) {
                 return state;
             }
-            const coinFlipResult = simulateCoinFlip(store, state, player);
+            const coinFlipResult = prefabs_1.SIMULATE_COIN_FLIP(store, state, player);
             if (!coinFlipResult) {
                 effect.damage = 0;
                 store.log(state, game_1.GameLog.LOG_ABILITY_BLOCKS_DAMAGE, { name: opponent.name, pokemon: this.name });
