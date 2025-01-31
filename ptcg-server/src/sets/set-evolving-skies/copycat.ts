@@ -29,6 +29,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
   const cardsNumber = opponent.hand.cards.length;
   player.deck.moveTo(player.hand, cardsNumber);
+  player.supporter.moveCardTo(effect.trainerCard, player.discard);
   return state;
 }
 

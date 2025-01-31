@@ -53,6 +53,8 @@ import { PokemonCatcher } from './pokemon-catcher';
 import { Potion } from './potion';
 import { Primeape } from './primeape';
 import { ProfessorsResearch } from './professors-research';
+import {Quaxly} from './quaxly';
+import {Quaxwell} from './quaxwell';
 import { Ralts } from './ralts';
 import { RareCandy } from './rare-candy';
 import { Revavroom } from './revavroom';
@@ -152,6 +154,8 @@ export const setScarletAndViolet: Card[] = [
   new Banetteex(),
   new Shuppet(),
   new Spidopsex(),
+  new Quaxly(),
+  new Quaxwell(),
 
   //Alt-s
   new ArmarougeIR(),

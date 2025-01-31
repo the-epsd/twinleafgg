@@ -16,6 +16,7 @@ const decidueye_1 = require("./decidueye");
 const dusclops_1 = require("./dusclops");
 const dusknoir_1 = require("./dusknoir");
 const duskull_1 = require("./duskull");
+const eevee_1 = require("./eevee");
 const fezandipiti_ex_1 = require("./fezandipiti-ex");
 const fraxure_1 = require("./fraxure");
 const galvantula_1 = require("./galvantula");
@@ -64,6 +65,7 @@ exports.setShroudedFable = [
     new dusclops_1.Dusclops(),
     new dusknoir_1.Dusknoir(),
     new duskull_1.Duskull(),
+    new eevee_1.Eevee(),
     new fezandipiti_ex_1.Fezandipitiex(),
     new fraxure_1.Fraxure(),
     new galvantula_1.Galvantula(),

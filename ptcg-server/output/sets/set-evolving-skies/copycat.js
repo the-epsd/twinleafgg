@@ -22,6 +22,7 @@ function* playCard(next, store, state, self, effect) {
     });
     const cardsNumber = opponent.hand.cards.length;
     player.deck.moveTo(player.hand, cardsNumber);
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
     return state;
 }
 class Copycat extends trainer_card_1.TrainerCard {

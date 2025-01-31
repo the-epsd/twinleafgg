@@ -20,6 +20,8 @@ export class BigAirBalloon extends TrainerCard {
 
   public setNumber: string = '155';
 
+  public regulationMark = 'G';
+
   public text: string =
     'The Stage 2 Pokémon this card is attached to has no Retreat Cost.';
 

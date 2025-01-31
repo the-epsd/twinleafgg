@@ -6,7 +6,7 @@ const card_types_1 = require("../../game/store/card/card-types");
 const pokemon_types_1 = require("../../game/store/card/pokemon-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
-const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class Feraligatr extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -23,14 +23,12 @@ class Feraligatr extends pokemon_card_1.PokemonCard {
                 powerType: pokemon_types_1.PowerType.ABILITY,
                 text: 'Once during your turn, you may put 5 damage counters on this Pokémon. If you do, attacks used by this Pokémon do 120 more damage to your opponent\'s Active Pokémon during this turn (before applying Weakness and Resistance).'
             }];
-        this.attacks = [
-            {
+        this.attacks = [{
                 name: 'Giant Wave',
                 cost: [card_types_1.CardType.WATER, card_types_1.CardType.WATER],
                 damage: 160,
                 text: 'This Pokémon can\'t use Giant Wave during your next turn.'
-            }
-        ];
+            }];
         this.set = 'TEF';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '41';
@@ -41,48 +39,23 @@ class Feraligatr extends pokemon_card_1.PokemonCard {
         this.ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
-            effect.player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
-            effect.player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
-            console.log('marker cleared');
-        }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-            effect.player.marker.addMarker(this.ATTACK_USED_2_MARKER, this);
-            console.log('second marker added');
-        }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.TORRENTIAL_HEART_MARKER, this)) {
-            effect.player.marker.removeMarker(this.TORRENTIAL_HEART_MARKER, this);
-            console.log('torrential heart marker cleared');
-        }
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
-            if (effect.player.marker.hasMarker(this.TORRENTIAL_HEART_MARKER, this)) {
-                effect.damage += 120;
-            }
-            // Check marker
-            if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-                console.log('attack blocked');
-                throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);
-            }
+        prefabs_1.REMOVE_MARKER_AT_END_OF_TURN(effect, this, this.ATTACK_USED_2_MARKER);
+        prefabs_1.REPLACE_MARKER_AT_END_OF_TURN(effect, this, this.ATTACK_USED_MARKER, this.ATTACK_USED_2_MARKER);
+        prefabs_1.REMOVE_MARKER_AT_END_OF_TURN(effect, this, this.TORRENTIAL_HEART_MARKER);
+        if (effect instanceof game_effects_1.AttackEffect && effect.player.marker.hasMarker(this.TORRENTIAL_HEART_MARKER, this))
+            effect.damage += 120;
+        if (prefabs_1.WAS_ATTACK_USED(effect, 0, this)) {
+            prefabs_1.BLOCK_EFFECT_IF_MARKER(effect.player, this, this.ATTACK_USED_2_MARKER);
             effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
-            console.log('marker added');
         }
-        if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
-            const player = effect.player;
-            if (effect.player.marker.hasMarker(this.TORRENTIAL_HEART_MARKER, this)) {
-                console.log('power blocked');
-                throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);
+        if (prefabs_1.WAS_POWER_USED(effect, 0, this)) {
+            prefabs_1.BLOCK_EFFECT_IF_MARKER(effect.player, this, this.TORRENTIAL_HEART_MARKER);
+            const cardList = game_1.StateUtils.findCardList(state, this);
+            if (cardList instanceof game_1.PokemonCardList) {
+                cardList.damage += 50;
+                effect.player.marker.addMarker(this.TORRENTIAL_HEART_MARKER, this);
+                cardList.addBoardEffect(card_types_1.BoardEffect.ABILITY_USED);
             }
-            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
-                if (cardList.getPokemonCard() === this) {
-                    cardList.damage += 50;
-                }
-            });
-            effect.player.marker.addMarker(this.TORRENTIAL_HEART_MARKER, this);
-            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
-                if (cardList.getPokemonCard() === this) {
-                    cardList.addBoardEffect(card_types_1.BoardEffect.ABILITY_USED);
-                }
-            });
         }
         return state;
     }

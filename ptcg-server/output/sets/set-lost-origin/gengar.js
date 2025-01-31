@@ -72,8 +72,7 @@ class Gengar extends pokemon_card_1.PokemonCard {
             const player = effect.player;
             const opponent = __1.StateUtils.getOpponent(state, player);
             const opponentBenched = opponent.bench.reduce((left, b) => left + (b.cards.length ? 1 : 0), 0);
-            const attackEffect = effect;
-            const damageEffect = new attack_effects_1.PutDamageEffect(attackEffect, opponentBenched * 20);
+            const damageEffect = new attack_effects_1.PutCountersEffect(effect, opponentBenched * 20);
             return store.reduceEffect(state, damageEffect);
         }
         return state;

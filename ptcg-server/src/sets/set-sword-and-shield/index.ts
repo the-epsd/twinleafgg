@@ -1,6 +1,8 @@
 import { Card } from '../../game/store/card/card';
 import { AirBalloon } from './air-balloon';
 import { AuroraEnergy } from './aurora-energy';
+import {Baltoy} from './baltoy';
+import {BigCharm} from './big-charm';
 import { Centiskorch } from './centiskorch';
 import { Cinccino } from './cinccino';
 import { Cinderace } from './cinderace';
@@ -12,6 +14,7 @@ import { Frosmoth } from './frosmoth';
 import { GalarianZigzagoon } from './galarian-zigzagoon';
 import { GalarianPerrserker } from './galarian_perrserker';
 import { GiantHearth } from './giant-hearth';
+import {Gossifleur} from './gossifleur';
 import { Inteleon } from './inteleon';
 import { Maractus } from './maractus';
 import { Marnie } from './marnie';
@@ -57,4 +60,7 @@ export const setSwordAndShield: Card[] = [
   new Toxicroak(),
   new Welder(),
   new ZacianV(),
+  new Baltoy(),
+  new Gossifleur(),
+  new BigCharm(),
 ];

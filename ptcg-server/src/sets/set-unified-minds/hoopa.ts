@@ -3,6 +3,7 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
+import { IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 export class Hoopa extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -38,9 +39,9 @@ export class Hoopa extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       const benchPokemon = opponent.bench.map(b => b.getPokemonCard()).filter(card => card !== undefined) as PokemonCard[];
-      const vPokemons = benchPokemon.filter(card => card.powers.length && !StateUtils.checkAbilityBlocked(store, state, opponent, card));
+      const vPokemons = benchPokemon.filter(card => card.powers.length && !IS_ABILITY_BLOCKED(store, state, opponent, card));
       const opponentActive = opponent.active.getPokemonCard();
-      if (opponentActive && opponentActive.powers.length && !StateUtils.checkAbilityBlocked(store, state, opponent, opponentActive))
+      if (opponentActive && opponentActive.powers.length && !IS_ABILITY_BLOCKED(store, state, opponent, opponentActive))
         vPokemons.push(opponentActive);
       const vPokes = vPokemons.length;
       effect.damage += vPokes * 20;

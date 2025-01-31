@@ -55,6 +55,8 @@ const pokemon_catcher_1 = require("./pokemon-catcher");
 const potion_1 = require("./potion");
 const primeape_1 = require("./primeape");
 const professors_research_1 = require("./professors-research");
+const quaxly_1 = require("./quaxly");
+const quaxwell_1 = require("./quaxwell");
 const ralts_1 = require("./ralts");
 const rare_candy_1 = require("./rare-candy");
 const revavroom_1 = require("./revavroom");
@@ -152,6 +154,8 @@ exports.setScarletAndViolet = [
     new banette_ex_1.Banetteex(),
     new shuppet_1.Shuppet(),
     new spidops_ex_1.Spidopsex(),
+    new quaxly_1.Quaxly(),
+    new quaxwell_1.Quaxwell(),
     //Alt-s
     new full_art_1.ArmarougeIR(),
     new full_art_1.ArvenFA(),

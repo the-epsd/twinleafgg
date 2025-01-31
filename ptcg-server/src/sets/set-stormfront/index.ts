@@ -1,4 +1,5 @@
 import { Card } from '../../game/store/card/card';
+import {Gastly} from './gastly';
 import { LuxuryBall } from './luxury-ball';
 import { PokeBlower } from './poke-blower';
 import { PokeDrawer } from './poke-drawer';
@@ -8,5 +9,6 @@ export const setStormfront: Card[] = [
   new LuxuryBall(),
   new PokeBlower(),
   new PokeDrawer(),
-  new Sableye()
+  new Sableye(),
+  new Gastly(),
 ];

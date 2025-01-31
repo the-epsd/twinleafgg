@@ -1,13 +1,11 @@
 import { CardTarget } from './actions/play-card-action';
 import { Card } from './card/card';
 import { CardType } from './card/card-types';
-import { PokemonCard } from './card/pokemon-card';
 import { EnergyMap } from './prompts/choose-energy-prompt';
 import { CardList } from './state/card-list';
 import { Player } from './state/player';
 import { PokemonCardList } from './state/pokemon-card-list';
 import { State } from './state/state';
-import { StoreLike } from './store-like';
 export declare class StateUtils {
     static getStadium(state: State): void;
     static checkEnoughEnergy(energy: EnergyMap[], cost: CardType[]): boolean;
@@ -19,5 +17,4 @@ export declare class StateUtils {
     static findCardList(state: State, card: Card): CardList;
     static findOwner(state: State, cardList: CardList): Player;
     static getStadiumCard(state: State): Card | undefined;
-    static checkAbilityBlocked(store: StoreLike, state: State, player: Player, card: PokemonCard): boolean;
 }

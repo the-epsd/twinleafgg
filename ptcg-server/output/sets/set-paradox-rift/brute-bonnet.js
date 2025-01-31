@@ -5,10 +5,10 @@ const game_1 = require("../../game");
 const game_message_1 = require("../../game/game-message");
 const card_types_1 = require("../../game/store/card/card-types");
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
-const check_effects_1 = require("../../game/store/effects/check-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class BruteBonnet extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -80,13 +80,8 @@ class BruteBonnet extends pokemon_card_1.PokemonCard {
             if (player.marker.hasMarker(this.TOXIC_POWDER_MARKER, this)) {
                 throw new game_1.GameError(game_message_1.GameMessage.POWER_ALREADY_USED);
             }
-            const specialConditionEffect = new check_effects_1.AddSpecialConditionsPowerEffect(player, this.powers[0], // the Power object
-            this, // the PokemonCard
-            player.active, // target PokemonCardList
-            [card_types_1.SpecialCondition.POISONED]);
-            store.reduceEffect(state, specialConditionEffect);
-            const opponentSpecialConditionEffect = new check_effects_1.AddSpecialConditionsPowerEffect(opponent, this.powers[0], this, opponent.active, [card_types_1.SpecialCondition.POISONED]);
-            store.reduceEffect(state, opponentSpecialConditionEffect);
+            prefabs_1.ADD_POISON_TO_PLAYER_ACTIVE(store, state, player, this);
+            prefabs_1.ADD_POISON_TO_PLAYER_ACTIVE(store, state, opponent, this);
             player.marker.addMarker(this.TOXIC_POWDER_MARKER, this);
             player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
                 if (cardList.getPokemonCard() === this) {

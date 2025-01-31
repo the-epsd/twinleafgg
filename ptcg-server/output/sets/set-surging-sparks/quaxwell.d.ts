@@ -3,6 +3,7 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 export declare class Quaxwell extends PokemonCard {
     stage: Stage;
     cardType: CardType;
+    evolvesFrom: string;
     hp: number;
     weakness: {
         type: CardType.LIGHTNING;

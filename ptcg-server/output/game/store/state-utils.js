@@ -5,8 +5,6 @@ const game_error_1 = require("../game-error");
 const game_message_1 = require("../game-message");
 const play_card_action_1 = require("./actions/play-card-action");
 const card_types_1 = require("./card/card-types");
-const pokemon_types_1 = require("./card/pokemon-types");
-const game_effects_1 = require("./effects/game-effects");
 class StateUtils {
     static getStadium(state) {
         throw new Error('Method not implemented.');
@@ -245,20 +243,6 @@ class StateUtils {
             }
         }
         return undefined;
-    }
-    static checkAbilityBlocked(store, state, player, card) {
-        // Try to reduce PowerEffect, to check if something is blocking our ability
-        try {
-            store.reduceEffect(state, new game_effects_1.PowerEffect(player, {
-                name: 'test',
-                powerType: pokemon_types_1.PowerType.ABILITY,
-                text: ''
-            }, card));
-        }
-        catch (_a) {
-            return true;
-        }
-        return false;
     }
 }
 exports.StateUtils = StateUtils;

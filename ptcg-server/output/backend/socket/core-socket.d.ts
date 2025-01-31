@@ -19,6 +19,7 @@ export declare class CoreSocket {
     onGameDelete(game: Game): void;
     onStateChange(game: Game, state: State): void;
     onUsersUpdate(users: User[]): void;
+    private checkActiveSockets;
     private buildCoreInfo;
     private getCoreInfo;
     private createGame;

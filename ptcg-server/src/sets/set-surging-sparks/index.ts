@@ -7,6 +7,7 @@ import { Archaludonex } from './archaludon-ex';
 import { Azelf } from './azelf';
 import { Azumarill } from './azulmarill';
 import { BlackKyuremex } from './black-kyurem-ex';
+import { Blitzle } from './blitzle';
 import { Capsakid } from './capsakid.';
 import { CounterGainSSP, ScrambleSwitchSSP } from './card-images';
 import { CelebrationFanfare } from './celebration-fanfare';
@@ -65,6 +66,8 @@ import { Pansear } from './pansear';
 import { PerfectMixer } from './perfect-mixer';
 import { Phanpy } from './phanpy-ir';
 import { Pikachuex } from './pikachu-ex';
+import {Quaquaval} from './quaquaval';
+import {Quaxly} from './quaxly';
 import { Quaxwell } from './quaxwell';
 import { Rabsca } from './rabsca';
 import { Rellor } from './rellor';
@@ -79,6 +82,7 @@ import { SlakothSSP } from './slakoth';
 import { Smoochum } from './smoochum';
 import { Surfer } from './surfer';
 import { Sylveonex } from './sylveon-ex';
+import { TapuKoko } from './tapu-koko';
 import { Tatsugiriex } from './tatsugiri-ex';
 import { TeraOrb } from './tera-orb';
 import { Terapagos } from './terapagos';
@@ -190,6 +194,10 @@ export const setSurgingSparks: Card[] = [
   new Sizzlipede(),
   new Centiskorch(),
   new Cyclizarex(),
+  new Blitzle(),
+  new TapuKoko(),
+  new Quaxly(),
+  new Quaquaval(),
 
   //Reprints
   new ScrambleSwitchSSP(),

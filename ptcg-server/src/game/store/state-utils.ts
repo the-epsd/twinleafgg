@@ -3,15 +3,11 @@ import { GameMessage } from '../game-message';
 import { CardTarget, PlayerType, SlotType } from './actions/play-card-action';
 import { Card } from './card/card';
 import { CardType } from './card/card-types';
-import { PokemonCard } from './card/pokemon-card';
-import { PowerType } from './card/pokemon-types';
-import { PowerEffect } from './effects/game-effects';
 import { EnergyMap } from './prompts/choose-energy-prompt';
 import { CardList } from './state/card-list';
 import { Player } from './state/player';
 import { PokemonCardList } from './state/pokemon-card-list';
 import { State } from './state/state';
-import { StoreLike } from './store-like';
 
 export class StateUtils {
   static getStadium(state: State) {
@@ -274,19 +270,5 @@ export class StateUtils {
       }
     }
     return undefined;
-  }
-
-  public static checkAbilityBlocked(store: StoreLike, state: State, player: Player, card: PokemonCard): boolean {
-    // Try to reduce PowerEffect, to check if something is blocking our ability
-    try {
-      store.reduceEffect(state, new PowerEffect(player, {
-        name: 'test',
-        powerType: PowerType.ABILITY,
-        text: ''
-      }, card));
-    } catch {
-      return true;
-    }
-    return false;
   }
 }

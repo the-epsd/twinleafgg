@@ -235,6 +235,12 @@ function gameReducer(store, state, effect) {
         if (effect.poisonDamage !== undefined) {
             target.poisonDamage = effect.poisonDamage;
         }
+        if (effect.burnDamage !== undefined) {
+            target.burnDamage = effect.burnDamage;
+        }
+        if (effect.sleepFlips !== undefined) {
+            target.sleepFlips = effect.sleepFlips;
+        }
         return state;
     }
     if (effect instanceof game_effects_1.UseStadiumEffect) {

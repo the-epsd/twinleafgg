@@ -74,10 +74,9 @@ class Raihan extends trainer_card_1.TrainerCard {
         this.regulationMark = 'E';
         this.name = 'Raihan';
         this.fullName = 'Raihan EVS';
-        this.text = 'You can play this card only if 1 of your Pokemon was Knocked Out ' +
-            'during your opponent\'s last turn. Search your deck for a Pokemon, ' +
-            'a Trainer card, and a basic Energy card, reveal them, and put them ' +
-            'into your hand. Then, shuffle your deck.';
+        this.text = `You can play this card only if any of your Pokémon were Knocked Out during your opponent\'s last turn.
+
+  Attach a basic Energy card from your discard pile to 1 of your Pokémon. If you do, search your deck for a card and put it into your hand. Then, shuffle your deck.`;
         this.RAIHAN_MARKER = 'RAIHAN_MARKER';
     }
     reduceEffect(store, state, effect) {

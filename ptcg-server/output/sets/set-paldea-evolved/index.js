@@ -70,6 +70,7 @@ const zweilous_1 = require("./zweilous");
 const naclstack_1 = require("./naclstack");
 const garganacl_1 = require("./garganacl");
 const skeledirge_ex_1 = require("./skeledirge-ex");
+const quaquaval_ex_1 = require("./quaquaval-ex");
 //import { CalamitousSnowyMountain } from './new calamitous-snowy-mountain';
 exports.setPaldeaEvolved = [
     new arctibax_1.Arctibax(),
@@ -140,6 +141,7 @@ exports.setPaldeaEvolved = [
     new garganacl_1.Garganacl(),
     new crocalor_1.Crocalor(),
     new skeledirge_ex_1.Skeledirgeex(),
+    new quaquaval_ex_1.Quaquavalex(),
     // Full 
     new full_art_1.ArctibaxIR(),
     new full_art_1.BaxcaliburIR(),

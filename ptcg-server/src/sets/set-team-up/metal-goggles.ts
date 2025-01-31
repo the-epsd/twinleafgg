@@ -36,8 +36,6 @@ export class MetalGoggles extends TrainerCard {
 
       const player = StateUtils.findOwner(state, effect.target);
 
-
-
       if (sourceCard) {
         const checkPokemonTypeEffect = new CheckPokemonTypeEffect(effect.target);
         store.reduceEffect(state, checkPokemonTypeEffect);
@@ -59,8 +57,6 @@ export class MetalGoggles extends TrainerCard {
       const sourceCard = effect.target.getPokemonCard();
 
       const player = StateUtils.findOwner(state, effect.target);
-
-
 
       if (sourceCard) {
         const checkPokemonTypeEffect = new CheckPokemonTypeEffect(effect.target);

@@ -11,11 +11,14 @@ export type Middleware = (socket: Socket, next: (err?: any) => void) => void;
 
 export class WebSocketServer {
   public server: Server | undefined;
+  private activeSockets: Map<number, { socket: Socket, lastPing: number }> = new Map();
 
   constructor(private core: Core) { }
 
   public async listen(httpServer: http.Server): Promise<void> {
     const opts: Partial<ServerOptions> = {};
+
+    console.log(`[WebSocket] Server started with options:`, opts);
 
     if (config.backend.allowCors) {
       opts.cors = { origin: '*' };
@@ -33,11 +36,26 @@ export class WebSocketServer {
       this.core.connect(socketClient);
       socketClient.attachListeners();
 
+      console.log(`[WebSocket] New connection from ${socket.id}`);
+
       socket.on('disconnect', () => {
         this.core.disconnect(socketClient);
         user.updateLastSeen();
       });
     });
+    this.cleanInactiveSockets();
+  }
+
+  private cleanInactiveSockets() {
+    setInterval(() => {
+      const now = Date.now();
+      this.activeSockets.forEach((data, id) => {
+        if (now - data.lastPing > 45000) {
+          data.socket.disconnect(true);
+          this.activeSockets.delete(id);
+        }
+      });
+    }, 60000);
   }
 
 }

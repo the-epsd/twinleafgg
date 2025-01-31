@@ -10,6 +10,7 @@ export declare class BigAirBalloon extends TrainerCard {
     fullName: string;
     cardImage: string;
     setNumber: string;
+    regulationMark: string;
     text: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

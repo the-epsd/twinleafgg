@@ -8,6 +8,7 @@ const play_card_effects_1 = require("../../game/store/effects/play-card-effects"
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class AlolanVulpixVSTAR extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -92,7 +93,7 @@ class AlolanVulpixVSTAR extends pokemon_card_1.PokemonCard {
         if (effect instanceof attack_effects_1.PutDamageEffect && effect.target.cards.includes(this)) {
             if (effect.target.marker.hasMarker(this.PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER, this)) {
                 const source = effect.source.getPokemonCard();
-                if (!game_1.StateUtils.checkAbilityBlocked(store, state, effect.player, source)) {
+                if (!prefabs_1.IS_ABILITY_BLOCKED(store, state, effect.player, source)) {
                     effect.preventDefault = true;
                     return state;
                 }

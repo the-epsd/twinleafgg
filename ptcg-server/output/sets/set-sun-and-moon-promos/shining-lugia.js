@@ -10,6 +10,7 @@ const check_effects_1 = require("../../game/store/effects/check-effects");
 const game_2 = require("../../game");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const state_utils_1 = require("../../game/store/state-utils");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class ShiningLugia extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -42,7 +43,7 @@ class ShiningLugia extends pokemon_card_1.PokemonCard {
             const opponent = state_utils_1.StateUtils.getOpponent(state, player);
             const target = opponent.active.getPokemonCard();
             if (target !== undefined && target.powers.length > 0)
-                if (!state_utils_1.StateUtils.checkAbilityBlocked(store, state, player, target))
+                if (!prefabs_1.IS_ABILITY_BLOCKED(store, state, player, target))
                     effect.damage += 60;
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {

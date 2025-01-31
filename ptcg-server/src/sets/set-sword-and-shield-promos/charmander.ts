@@ -25,11 +25,11 @@ export class Charmander extends PokemonCard {
   }];
 
   public regulationMark = 'D';
-  public set = 'SSP';
+  public set = 'SWSH';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '92';
   public name = 'Charmander';
-  public fullName = 'Charmander SSP';
+  public fullName = 'Charmander SWSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

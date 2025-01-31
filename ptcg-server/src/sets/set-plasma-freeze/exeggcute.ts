@@ -6,7 +6,6 @@ import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { GameMessage } from '../../game/game-message';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { GameError } from '../../game/game-error';
 import { DiscardToHandEffect } from '../../game/store/effects/play-card-effects';
 
@@ -49,8 +48,6 @@ export class Exeggcute extends PokemonCard {
 
   public setNumber: string = '4';
 
-  public readonly PROPAGATION_MAREKER = 'PROPAGATION_MAREKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
@@ -61,11 +58,6 @@ export class Exeggcute extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      // Power already used
-      if (player.marker.hasMarker(this.PROPAGATION_MAREKER, this)) {
-        throw new GameError(GameMessage.POWER_ALREADY_USED);
-      }
-
       // Check if DiscardToHandEffect is prevented
       const discardEffect = new DiscardToHandEffect(player, this);
       store.reduceEffect(state, discardEffect);
@@ -74,15 +66,9 @@ export class Exeggcute extends PokemonCard {
         return state;
       }
 
-      player.marker.addMarker(this.PROPAGATION_MAREKER, this);
       player.discard.moveCardTo(this, player.hand);
       return state;
     }
-
-    if (effect instanceof EndTurnEffect) {
-      effect.player.marker.removeMarker(this.PROPAGATION_MAREKER, this);
-    }
-
     return state;
   }
 

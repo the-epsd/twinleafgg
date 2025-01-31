@@ -10,6 +10,7 @@ const capacious_bucket_1 = require("./capacious-bucket");
 const capture_energy_1 = require("./capture-energy");
 const caterpie_1 = require("./caterpie");
 const coalossal_1 = require("./coalossal");
+const cursed_shovel_1 = require("./cursed-shovel");
 const dragapult_1 = require("./dragapult");
 const duraludon_1 = require("./duraludon");
 const electivire_1 = require("./electivire");
@@ -52,4 +53,5 @@ exports.setRebelClash = [
     new training_court_1.TrainingCourt(),
     new twin_energy_1.TwinEnergy(),
     new vulpix_1.Vulpix(),
+    new cursed_shovel_1.CursedShovel(),
 ];

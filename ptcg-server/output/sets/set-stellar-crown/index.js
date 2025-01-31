@@ -34,6 +34,7 @@ const lacey_1 = require("./lacey");
 const lapras_ex_1 = require("./lapras-ex");
 const medicham_ex_1 = require("./medicham-ex");
 const meditite_1 = require("./meditite");
+const milcery_1 = require("./milcery");
 const noctowl_1 = require("./noctowl");
 const raboot_1 = require("./raboot");
 const raging_bolt_1 = require("./raging-bolt");
@@ -85,4 +86,5 @@ exports.setStellarCrown = [
     new terapagos_ex_1.Terapagosex(),
     new veluza_1.Veluza(),
     new zeraora_1.Zeraora(),
+    new milcery_1.Milcery(),
 ];

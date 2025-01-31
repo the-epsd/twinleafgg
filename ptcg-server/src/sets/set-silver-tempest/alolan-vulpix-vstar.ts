@@ -6,6 +6,7 @@ import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { ApplyWeaknessEffect, AfterDamageEffect, PutDamageEffect, DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 export class AlolanVulpixVSTAR extends PokemonCard {
 
@@ -121,7 +122,7 @@ export class AlolanVulpixVSTAR extends PokemonCard {
     if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {
       if (effect.target.marker.hasMarker(this.PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER, this)) {
         const source = effect.source.getPokemonCard() as PokemonCard;
-        if (!StateUtils.checkAbilityBlocked(store, state, effect.player, source)) {
+        if (!IS_ABILITY_BLOCKED(store, state, effect.player, source)) {
           effect.preventDefault = true;
           return state;
         }

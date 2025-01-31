@@ -26,11 +26,11 @@ export class Scorbunny extends PokemonCard {
   }];
 
   public regulationMark = 'D';
-  public set = 'SSP';
+  public set = 'SWSH';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '71';
   public name = 'Scorbunny';
-  public fullName = 'Scorbunny SSP';
+  public fullName = 'Scorbunny SWSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

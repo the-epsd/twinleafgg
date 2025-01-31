@@ -4,6 +4,7 @@ exports.SocketWrapper = void 0;
 class SocketWrapper {
     constructor(io, socket) {
         this.listeners = [];
+        this.lastPong = Date.now();
         this.io = io;
         this.socket = socket;
     }
@@ -27,6 +28,28 @@ class SocketWrapper {
     }
     emit(event, ...args) {
         return this.socket.emit(event, ...args);
+    }
+    startHeartbeat() {
+        const HEARTBEAT_INTERVAL = 15000;
+        const TIMEOUT = 30000;
+        setInterval(() => {
+            if (this.socket.connected) {
+                this.socket.emit('ping');
+                console.log(`[Socket ${this.socket.id}] Heartbeat sent`);
+                const pingTime = Date.now();
+                this.socket.once('pong', () => {
+                    this.lastPong = Date.now();
+                    console.log(`[Socket ${this.socket.id}] Pong received, connection healthy`);
+                });
+                // Check for timeout
+                setTimeout(() => {
+                    if (Date.now() - pingTime > TIMEOUT) {
+                        this.socket.disconnect(true);
+                        console.log(`[Socket ${this.socket.id}] Connection timed out`);
+                    }
+                }, TIMEOUT);
+            }
+        }, HEARTBEAT_INTERVAL);
     }
 }
 exports.SocketWrapper = SocketWrapper;

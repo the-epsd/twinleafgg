@@ -10,6 +10,7 @@ import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effect
 import { ChooseEnergyPrompt } from '../../game';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 import { StateUtils } from '../../game/store/state-utils';
+import { IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 
 export class ShiningLugia extends PokemonCard {
@@ -55,7 +56,7 @@ export class ShiningLugia extends PokemonCard {
       const target = opponent.active.getPokemonCard();
 
       if (target !== undefined && target.powers.length > 0)
-        if (!StateUtils.checkAbilityBlocked(store, state, player, target))
+        if (!IS_ABILITY_BLOCKED(store, state, player, target))
           effect.damage += 60;
     }
 

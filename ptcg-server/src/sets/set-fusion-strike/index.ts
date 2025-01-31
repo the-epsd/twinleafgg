@@ -23,6 +23,7 @@ import { Heatmor } from './heatmor';
 import { InteleonV } from './inteleon-v';
 import { InteleonVMAX } from './inteleon-vmax';
 import { Lapras } from './lapras';
+import { Maractus } from './maractus';
 import { Meloetta } from './meloetta';
 import { MewV } from './mew-v';
 import { MewVMAX } from './mew-vmax';
@@ -39,6 +40,7 @@ import { Starmie } from './starmie';
 import { Staryu } from './staryu';
 import { Swampert } from './swampert';
 import { Totodile } from './totodile';
+import { TsareenaV } from './tsareena-v';
 import { Yveltal } from './yveltal';
 
 
@@ -66,6 +68,7 @@ export const setFusionStrike: Card[] = [
   new InteleonVMAX(),
   new JudgeFST(),
   new Lapras(),
+  new Maractus(),
   new Meloetta(),
   new MewV(),
   new MewVMAX(),
@@ -73,6 +76,7 @@ export const setFusionStrike: Card[] = [
   new Oricorio(),
   new PowerTablet(),
   new Pyukumuku(),
+  new TsareenaV(),
   new Yveltal(),
   new Shauna(),
   new AdventurersDiscovery(),

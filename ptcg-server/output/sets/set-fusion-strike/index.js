@@ -25,6 +25,7 @@ const heatmor_1 = require("./heatmor");
 const inteleon_v_1 = require("./inteleon-v");
 const inteleon_vmax_1 = require("./inteleon-vmax");
 const lapras_1 = require("./lapras");
+const maractus_1 = require("./maractus");
 const meloetta_1 = require("./meloetta");
 const mew_v_1 = require("./mew-v");
 const mew_vmax_1 = require("./mew-vmax");
@@ -41,6 +42,7 @@ const starmie_1 = require("./starmie");
 const staryu_1 = require("./staryu");
 const swampert_1 = require("./swampert");
 const totodile_1 = require("./totodile");
+const tsareena_v_1 = require("./tsareena-v");
 const yveltal_1 = require("./yveltal");
 exports.setFusionStrike = [
     new azumarill_1.Azumarill(),
@@ -65,6 +67,7 @@ exports.setFusionStrike = [
     new inteleon_vmax_1.InteleonVMAX(),
     new card_images_1.JudgeFST(),
     new lapras_1.Lapras(),
+    new maractus_1.Maractus(),
     new meloetta_1.Meloetta(),
     new mew_v_1.MewV(),
     new mew_vmax_1.MewVMAX(),
@@ -72,6 +75,7 @@ exports.setFusionStrike = [
     new oricorio_1.Oricorio(),
     new power_tablet_1.PowerTablet(),
     new pyukumuku_1.Pyukumuku(),
+    new tsareena_v_1.TsareenaV(),
     new yveltal_1.Yveltal(),
     new shauna_1.Shauna(),
     new adventurers_discovery_1.AdventurersDiscovery(),

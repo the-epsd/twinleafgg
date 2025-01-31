@@ -32,6 +32,7 @@ import { Lacey } from './lacey';
 import { Laprasex } from './lapras-ex';
 import { Medichamex } from './medicham-ex';
 import { Meditite } from './meditite';
+import {Milcery} from './milcery';
 import { Noctowl } from './noctowl';
 import { Raboot } from './raboot';
 import { RagingBolt } from './raging-bolt';
@@ -84,5 +85,6 @@ export const setStellarCrown: Card[] = [
   new Terapagosex(),
   new Veluza(),
   new Zeraora(),
+  new Milcery(),
 
 ];

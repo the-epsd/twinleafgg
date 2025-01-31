@@ -1,12 +1,12 @@
 import { GameError, PlayerType, PowerType, State, StateUtils, StoreLike } from '../../game';
 import { GameMessage } from '../../game/game-message';
-import { BoardEffect, CardTag, CardType, SpecialCondition, Stage } from '../../game/store/card/card-types';
+import { BoardEffect, CardTag, CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { AddSpecialConditionsPowerEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { ADD_POISON_TO_PLAYER_ACTIVE } from '../../game/store/prefabs/prefabs';
 
 export class BruteBonnet extends PokemonCard {
 
@@ -103,24 +103,8 @@ export class BruteBonnet extends PokemonCard {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
 
-      const specialConditionEffect = new AddSpecialConditionsPowerEffect(
-        player,
-        this.powers[0], // the Power object
-        this,  // the PokemonCard
-        player.active, // target PokemonCardList
-        [SpecialCondition.POISONED]
-      );
-      store.reduceEffect(state, specialConditionEffect);
-
-      const opponentSpecialConditionEffect = new AddSpecialConditionsPowerEffect(
-        opponent,
-        this.powers[0],
-        this,
-        opponent.active,
-        [SpecialCondition.POISONED]
-      );
-      store.reduceEffect(state, opponentSpecialConditionEffect);
-
+      ADD_POISON_TO_PLAYER_ACTIVE(store, state, player, this);
+      ADD_POISON_TO_PLAYER_ACTIVE(store, state, opponent, this);
 
       player.marker.addMarker(this.TOXIC_POWDER_MARKER, this);
 

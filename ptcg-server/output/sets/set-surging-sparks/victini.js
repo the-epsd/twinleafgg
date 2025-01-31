@@ -6,7 +6,7 @@ const card_types_1 = require("../../game/store/card/card-types");
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const check_effects_1 = require("../../game/store/effects/check-effects");
-const game_effects_1 = require("../../game/store/effects/game-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class Victini extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -41,17 +41,8 @@ class Victini extends pokemon_card_1.PokemonCard {
         if (effect instanceof attack_effects_1.DealDamageEffect) {
             const player = effect.player;
             const opponent = __1.StateUtils.getOpponent(state, player);
-            try {
-                const stub = new game_effects_1.PowerEffect(player, {
-                    name: 'test',
-                    powerType: __1.PowerType.ABILITY,
-                    text: ''
-                }, this);
-                store.reduceEffect(state, stub);
-            }
-            catch (_c) {
+            if (prefabs_1.IS_ABILITY_BLOCKED(store, state, player, this))
                 return state;
-            }
             const hasVictiniInPlay = player.bench.some(b => b.cards.includes(this)) || player.active.cards.includes(this);
             let numberOfVictiniInPlay = 0;
             if (hasVictiniInPlay) {

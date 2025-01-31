@@ -13,6 +13,7 @@ import { Marill } from './marill';
 import { MarshadowGX } from './marshadow-gx';
 import { NecrozmaGX } from './necrozma-gx';
 import { Plumeria } from './plumeria';
+import { Raichu } from './raichu';
 import { Ralts } from './ralts';
 import { SalazzleGX } from './salazzle-gx';
 import { Sophocles } from './sophocles';
@@ -34,6 +35,7 @@ export const setBurningShadows: Card[] = [
   new MarshadowGX(),
   new NecrozmaGX(),
   new Plumeria(),
+  new Raichu(),
   new Ralts(),
   new SalazzleGX(),
   new Sophocles(),

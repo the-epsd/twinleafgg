@@ -9,7 +9,7 @@ import { GameMessage } from '../../game/game-message';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { GameError } from '../../game/game-error';
 import { PokemonCardList, StateUtils } from '../..';
-import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { PutCountersEffect } from '../../game/store/effects/attack-effects';
 
 export class Gengar extends PokemonCard {
 
@@ -94,8 +94,7 @@ export class Gengar extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const opponentBenched = opponent.bench.reduce((left, b) => left + (b.cards.length ? 1 : 0), 0);
-      const attackEffect = effect as AttackEffect;
-      const damageEffect = new PutDamageEffect(attackEffect, opponentBenched * 20);
+      const damageEffect = new PutCountersEffect(effect, opponentBenched * 20);
       return store.reduceEffect(state, damageEffect);
     }
 

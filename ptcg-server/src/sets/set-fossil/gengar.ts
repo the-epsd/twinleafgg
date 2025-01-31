@@ -12,7 +12,7 @@ import { MoveDamagePrompt, DamageMap } from '../../game/store/prompts/move-damag
 import { GameMessage } from '../../game/game-message';
 import { ChoosePokemonPrompt, GameError } from '../..';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
-import { abilityUsed } from '../../game/store/prefabs/prefabs';
+import { ABILITY_USED } from '../../game/store/prefabs/prefabs';
 
 export class Gengar extends PokemonCard {
 
@@ -108,7 +108,7 @@ export class Gengar extends PokemonCard {
             target.damage += 10;
           }
 
-          abilityUsed(player, this);
+          ABILITY_USED(player, this);
           return state;
         }
       });

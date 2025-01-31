@@ -4,6 +4,7 @@ import { StoreLike, State, PlayerType, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { PutCountersEffect } from '../../game/store/effects/attack-effects';
+import { IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 export class Cofagrigus extends PokemonCard {
 
@@ -56,7 +57,7 @@ export class Cofagrigus extends PokemonCard {
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
         if (card.powers.length > 0) {
-          if (!StateUtils.checkAbilityBlocked(store, state, player, card)) {
+          if (!IS_ABILITY_BLOCKED(store, state, player, card)) {
             const damageEffect = new PutCountersEffect(effect, 60);
             damageEffect.target = cardList;
             store.reduceEffect(state, damageEffect);
@@ -66,7 +67,7 @@ export class Cofagrigus extends PokemonCard {
 
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
         if (card.powers.length > 0) {
-          if (!StateUtils.checkAbilityBlocked(store, state, opponent, card)) {
+          if (!IS_ABILITY_BLOCKED(store, state, opponent, card)) {
             const damageEffect = new PutCountersEffect(effect, 60);
             damageEffect.target = cardList;
             store.reduceEffect(state, damageEffect);

@@ -8,6 +8,7 @@ class Quaxwell extends pokemon_card_1.PokemonCard {
         super(...arguments);
         this.stage = card_types_1.Stage.STAGE_1;
         this.cardType = W;
+        this.evolvesFrom = 'Quaxly';
         this.hp = 100;
         this.weakness = [{ type: L }];
         this.retreat = [C];

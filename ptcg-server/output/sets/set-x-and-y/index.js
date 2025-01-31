@@ -6,6 +6,7 @@ const delphox_1 = require("./delphox");
 const double_colorless_energy_1 = require("./double-colorless-energy");
 const evosoda_1 = require("./evosoda");
 const fairy_energy_1 = require("./fairy-energy");
+const fennekin_1 = require("./fennekin");
 const greninja_1 = require("./greninja");
 const muscle_band_1 = require("./muscle-band");
 const pikachu_1 = require("./pikachu");
@@ -34,4 +35,5 @@ exports.setXY = [
     new trevenant_1.Trevenant(),
     new voltorb_1.Voltorb(),
     new yveltal_ex_1.YveltalEx(),
+    new fennekin_1.Fennekin(),
 ];

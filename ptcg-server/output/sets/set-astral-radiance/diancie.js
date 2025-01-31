@@ -6,6 +6,7 @@ const card_types_1 = require("../../game/store/card/card-types");
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class Diancie extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -36,33 +37,13 @@ class Diancie extends pokemon_card_1.PokemonCard {
         if (effect instanceof play_card_effects_1.SupporterEffect) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            let isDiancieInPlay = false;
-            if (opponent.active.cards.includes(this)) {
-                isDiancieInPlay = true;
-            }
-            if (!isDiancieInPlay) {
-                return state;
-            }
-            // Try reducing ability for opponent
-            try {
-                const stub = new game_effects_1.PowerEffect(opponent, {
-                    name: 'test',
-                    powerType: game_1.PowerType.ABILITY,
-                    text: ''
-                }, this);
-                store.reduceEffect(state, stub);
-            }
-            catch (_a) {
+            if (!opponent.active.cards.includes(this) || prefabs_1.IS_ABILITY_BLOCKED(store, state, player, this)) {
                 return state;
             }
             effect.preventDefault = true;
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
-            const player = effect.player;
-            if (player.deck.cards.length === 0) {
-                return state;
-            }
-            player.deck.moveTo(player.hand, Math.min(2, player.deck.cards.length));
+            prefabs_1.DRAW_CARDS(effect.player, 2);
         }
         return state;
     }
