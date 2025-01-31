@@ -6,6 +6,7 @@ const card_types_1 = require("../../game/store/card/card-types");
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
+const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class Dragapult extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -38,9 +39,20 @@ class Dragapult extends pokemon_card_1.PokemonCard {
         this.fullName = 'Dragapult RCL';
     }
     reduceEffect(store, state, effect) {
+        function simulateCoinFlip(store, state, player) {
+            const result = Math.random() < 0.5;
+            const gameMessage = result ? game_1.GameLog.LOG_PLAYER_FLIPS_HEADS : game_1.GameLog.LOG_PLAYER_FLIPS_TAILS;
+            store.log(state, gameMessage, { name: player.name });
+            return result;
+        }
         if (effect instanceof attack_effects_1.PutDamageEffect && effect.target.cards.includes(this)) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
+            const pokemonCard = effect.target.getPokemonCard();
+            const sourceCard = effect.source.getPokemonCard();
+            if (pokemonCard !== this || sourceCard === undefined || state.phase !== game_1.GamePhase.ATTACK) {
+                return state;
+            }
             try {
                 const stub = new game_effects_1.PowerEffect(player, {
                     name: 'test',
@@ -52,15 +64,19 @@ class Dragapult extends pokemon_card_1.PokemonCard {
             catch (_a) {
                 return state;
             }
-            return store.prompt(state, [
-                new game_1.CoinFlipPrompt(player.id, game_1.GameMessage.COIN_FLIP)
-            ], result => {
-                if (result === true) {
-                    effect.preventDefault = true;
-                    store.log(state, game_1.GameLog.LOG_ABILITY_BLOCKS_DAMAGE, { name: opponent.name, pokemon: this.name });
-                    return state;
-                }
-            });
+            try {
+                const coinFlip = new play_card_effects_1.CoinFlipEffect(player);
+                store.reduceEffect(state, coinFlip);
+            }
+            catch (_b) {
+                return state;
+            }
+            const coinFlipResult = simulateCoinFlip(store, state, player);
+            if (coinFlipResult) {
+                effect.damage = 0;
+                store.log(state, game_1.GameLog.LOG_ABILITY_BLOCKS_DAMAGE, { name: opponent.name, pokemon: this.name });
+            }
+            return state;
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
