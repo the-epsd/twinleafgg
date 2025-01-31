@@ -69,6 +69,7 @@ import { Naclstack } from './naclstack';
 import { Garganacl } from './garganacl';
 import { Skeledirgeex } from './skeledirge-ex';
 import {Quaquavalex} from './quaquaval-ex';
+import {Copperajahex} from './copperajah-ex';
 //import { CalamitousSnowyMountain } from './new calamitous-snowy-mountain';
 
 export const setPaldeaEvolved: Card[] = [
@@ -142,6 +143,7 @@ export const setPaldeaEvolved: Card[] = [
   new Crocalor(),
   new Skeledirgeex(),
   new Quaquavalex(),
+  new Copperajahex(),
 
   // Full 
   new ArctibaxIR(),

@@ -14,6 +14,8 @@ const kiawe_1 = require("./kiawe");
 const marill_1 = require("./marill");
 const marshadow_gx_1 = require("./marshadow-gx");
 const necrozma_gx_1 = require("./necrozma-gx");
+const noibat_1 = require("./noibat");
+const noivern_gx_1 = require("./noivern-gx");
 const plumeria_1 = require("./plumeria");
 const raichu_1 = require("./raichu");
 const ralts_1 = require("./ralts");
@@ -44,4 +46,6 @@ exports.setBurningShadows = [
     new tapu_bulu_gx_1.TapuBuluGX(),
     new wishful_baton_1.WishfulBaton(),
     new tapu_fini_gx_1.TapuFiniGX(),
+    new noibat_1.Noibat(),
+    new noivern_gx_1.NoivernGX(),
 ];

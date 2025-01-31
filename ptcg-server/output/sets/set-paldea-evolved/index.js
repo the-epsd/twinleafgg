@@ -71,6 +71,7 @@ const naclstack_1 = require("./naclstack");
 const garganacl_1 = require("./garganacl");
 const skeledirge_ex_1 = require("./skeledirge-ex");
 const quaquaval_ex_1 = require("./quaquaval-ex");
+const copperajah_ex_1 = require("./copperajah-ex");
 //import { CalamitousSnowyMountain } from './new calamitous-snowy-mountain';
 exports.setPaldeaEvolved = [
     new arctibax_1.Arctibax(),
@@ -142,6 +143,7 @@ exports.setPaldeaEvolved = [
     new crocalor_1.Crocalor(),
     new skeledirge_ex_1.Skeledirgeex(),
     new quaquaval_ex_1.Quaquavalex(),
+    new copperajah_ex_1.Copperajahex(),
     // Full 
     new full_art_1.ArctibaxIR(),
     new full_art_1.BaxcaliburIR(),

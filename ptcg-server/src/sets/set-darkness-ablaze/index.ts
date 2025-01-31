@@ -27,6 +27,7 @@ import { Swanna } from './swanna';
 import { TapuKoko } from './tapu-koko';
 import { Teddiursa } from './teddiursa';
 import { Ursaring } from './ursaring';
+import {VikavoltV} from './vikavolt-v';
 import { YellHorn } from './yell-horn';
 
 export const setDarknessAblaze: Card[] = [
@@ -59,4 +60,5 @@ export const setDarknessAblaze: Card[] = [
   new Ursaring(),
   new YellHorn(),
   new Hydreigon(),
+  new VikavoltV(),
 ];

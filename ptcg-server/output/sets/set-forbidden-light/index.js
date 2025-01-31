@@ -18,6 +18,7 @@ const greninja_gx_1 = require("./greninja-gx");
 const inkay_1 = require("./inkay");
 const klefki_1 = require("./klefki");
 const lysandre_labs_1 = require("./lysandre-labs");
+const lysandre_ps_1 = require("./lysandre-ps");
 const magnezone_1 = require("./magnezone");
 const malamar_1 = require("./malamar");
 const metal_frying_pan_1 = require("./metal-frying-pan");
@@ -56,4 +57,5 @@ exports.setForbiddenLight = [
     new volcanion_prism_star_1.VolcanionPS(),
     new yveltal_gx_1.YveltalGX(),
     new dialga_gx_1.DialgaGX(),
+    new lysandre_ps_1.LysandrePS(),
 ];

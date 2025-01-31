@@ -12,6 +12,8 @@ import { Kiawe } from './kiawe';
 import { Marill } from './marill';
 import { MarshadowGX } from './marshadow-gx';
 import { NecrozmaGX } from './necrozma-gx';
+import {Noibat} from './noibat';
+import {NoivernGX} from './noivern-gx';
 import { Plumeria } from './plumeria';
 import { Raichu } from './raichu';
 import { Ralts } from './ralts';
@@ -43,4 +45,6 @@ export const setBurningShadows: Card[] = [
   new TapuBuluGX(),
   new WishfulBaton(),
   new TapuFiniGX(),
+  new Noibat(),
+  new NoivernGX(),
 ];
