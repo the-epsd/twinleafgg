@@ -16,7 +16,6 @@ export class CoreSocket {
   private socket: SocketWrapper;
   private core: Core;
   private cache: SocketCache;
-  private socketCheckInterval: NodeJS.Timer;
 
   constructor(client: Client, socket: SocketWrapper, core: Core, cache: SocketCache) {
     this.cache = cache;
@@ -24,31 +23,20 @@ export class CoreSocket {
     this.socket = socket;
     this.core = core;
 
-    // Set up 30 second interval for socket logging AND active socket verification
-    this.socketCheckInterval = setInterval(() => {
-      this.checkActiveSockets();
-    }, 30000);
-
     // core listeners
     this.socket.addListener('core:getInfo', this.getCoreInfo.bind(this));
     this.socket.addListener('core:createGame', this.createGame.bind(this));
   }
-
 
   public onConnect(client: Client): void {
     this.socket.emit('core:join', {
       clientId: client.id,
       user: CoreSocket.buildUserInfo(client.user)
     });
-    console.log(`[Socket ${client.id}] Connected - User: ${client.user.name}, Time: ${new Date().toISOString()}`);
   }
 
   public onDisconnect(client: Client): void {
-    if (this.socketCheckInterval) {
-      clearInterval(this.socketCheckInterval);
-    }
     this.socket.emit('core:leave', client.id);
-    console.log(`[Socket ${client.id}] Disconnected - User: ${client.user.name}, Time: ${new Date().toISOString()}`);
   }
 
   public onGameAdd(game: Game): void {
@@ -87,13 +75,6 @@ export class CoreSocket {
       return CoreSocket.buildUserInfo(u, connected);
     });
     this.socket.emit('core:usersInfo', userInfos);
-  }
-
-  private checkActiveSockets() {
-    if (this.socket.socket.connected &&
-      Date.now() - this.socket.lastPong < 30000) {
-      console.log(`Verified active socket: ${this.client.id} - User: ${this.client.user.name}`);
-    }
   }
 
   private buildCoreInfo(): CoreInfo {

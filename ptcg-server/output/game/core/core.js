@@ -17,7 +17,6 @@ class Core {
     constructor() {
         this.clients = [];
         this.games = [];
-        this.activeSockets = new Map();
         this.messager = new messager_1.Messager(this);
         const cleanerTask = new cleaner_task_1.CleanerTask(this);
         cleanerTask.startTasks();

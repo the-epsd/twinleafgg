@@ -34,11 +34,6 @@ export class SocketClient implements Client {
     this.gameSocket = new GameSocket(this, this.socket, core, this.cache);
     this.messageSocket = new MessageSocket(this, this.socket, core);
     this.matchmakingSocket = new MatchmakingSocket(this, this.socket, core);
-    this.socket.startHeartbeat();
-    core.activeSockets.set(this.id, {
-      socket: socket,
-      lastPing: Date.now()
-    });
   }
 
   public onConnect(client: Client): void {
@@ -64,12 +59,10 @@ export class SocketClient implements Client {
   public onStateChange(game: Game, state: State): void {
     this.coreSocket.onStateChange(game, state);
     this.gameSocket.onStateChange(game, state);
-    console.log(`[Client ${this.id}] State change: ${state.phase}`);
   }
 
   public onGameJoin(game: Game, client: Client): void {
     this.gameSocket.onGameJoin(game, client);
-    console.log(`[Client ${this.id}] Game joined: ${game.id}`);
   }
 
   public onGameLeave(game: Game, client: Client): void {

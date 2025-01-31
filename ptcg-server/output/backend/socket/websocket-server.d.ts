@@ -6,8 +6,6 @@ export declare type Middleware = (socket: Socket, next: (err?: any) => void) => 
 export declare class WebSocketServer {
     private core;
     server: Server | undefined;
-    private activeSockets;
     constructor(core: Core);
     listen(httpServer: http.Server): Promise<void>;
-    private cleanInactiveSockets;
 }

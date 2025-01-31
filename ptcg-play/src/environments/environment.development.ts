@@ -1,6 +1,6 @@
 export const environment = {
   apiUrl: 'https://play-server-dev.twinleaf.gg',
-  timeout: 30 * 1000,
+  timeout: 15 * 60 * 1000,
   production: true,
   apiVersion: 2,
   defaultPageSize: 50,
