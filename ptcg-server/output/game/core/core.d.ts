@@ -2,15 +2,10 @@ import { Client } from '../client/client.interface';
 import { Game } from './game';
 import { GameSettings } from './game-settings';
 import { Messager } from './messager';
-import { Socket } from 'socket.io';
 export declare class Core {
     clients: Client[];
     games: Game[];
     messager: Messager;
-    activeSockets: Map<number, {
-        socket: Socket;
-        lastPing: number;
-    }>;
     constructor();
     connect(client: Client): Client;
     disconnect(client: Client): void;

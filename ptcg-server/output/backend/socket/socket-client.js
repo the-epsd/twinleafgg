@@ -20,11 +20,6 @@ class SocketClient {
         this.gameSocket = new game_socket_1.GameSocket(this, this.socket, core, this.cache);
         this.messageSocket = new message_socket_1.MessageSocket(this, this.socket, core);
         this.matchmakingSocket = new matchmaking_socket_1.MatchmakingSocket(this, this.socket, core);
-        this.socket.startHeartbeat();
-        core.activeSockets.set(this.id, {
-            socket: socket,
-            lastPing: Date.now()
-        });
     }
     onConnect(client) {
         this.coreSocket.onConnect(client);
@@ -44,11 +39,9 @@ class SocketClient {
     onStateChange(game, state) {
         this.coreSocket.onStateChange(game, state);
         this.gameSocket.onStateChange(game, state);
-        console.log(`[Client ${this.id}] State change: ${state.phase}`);
     }
     onGameJoin(game, client) {
         this.gameSocket.onGameJoin(game, client);
-        console.log(`[Client ${this.id}] Game joined: ${game.id}`);
     }
     onGameLeave(game, client) {
         this.gameSocket.onGameLeave(game, client);

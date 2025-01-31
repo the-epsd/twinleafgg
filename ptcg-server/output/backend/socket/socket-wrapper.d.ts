@@ -6,10 +6,8 @@ export declare class SocketWrapper {
     io: Server;
     socket: Socket;
     private listeners;
-    lastPong: number;
     constructor(io: Server, socket: Socket);
     attachListeners(): void;
     addListener<T, R>(message: string, handler: Handler<T, R>): void;
     emit(event: string, ...args: any[]): boolean;
-    startHeartbeat(): void;
 }

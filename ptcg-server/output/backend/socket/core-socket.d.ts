@@ -11,7 +11,6 @@ export declare class CoreSocket {
     private socket;
     private core;
     private cache;
-    private socketCheckInterval;
     constructor(client: Client, socket: SocketWrapper, core: Core, cache: SocketCache);
     onConnect(client: Client): void;
     onDisconnect(client: Client): void;
@@ -19,7 +18,6 @@ export declare class CoreSocket {
     onGameDelete(game: Game): void;
     onStateChange(game: Game, state: State): void;
     onUsersUpdate(users: User[]): void;
-    private checkActiveSockets;
     private buildCoreInfo;
     private getCoreInfo;
     private createGame;

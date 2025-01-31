@@ -11,13 +11,11 @@ import { RankingCalculator } from './ranking-calculator';
 import { Scheduler, generateId } from '../../utils';
 import { config } from '../../config';
 import { Format } from '../store/card/card-types';
-import { Socket } from 'socket.io';
 
 export class Core {
   public clients: Client[] = [];
   public games: Game[] = [];
   public messager: Messager;
-  public activeSockets: Map<number, { socket: Socket, lastPing: number }> = new Map();
 
   constructor() {
     this.messager = new Messager(this);
