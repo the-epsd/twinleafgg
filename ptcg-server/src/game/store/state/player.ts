@@ -48,6 +48,8 @@ export class Player {
 
   usedGX: boolean = false;
 
+  assembledMewtwo: boolean = false;
+
   public readonly DAMAGE_DEALT_MARKER = 'DAMAGE_DEALT_MARKER';
 
   public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';

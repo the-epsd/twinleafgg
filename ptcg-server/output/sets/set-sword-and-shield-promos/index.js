@@ -9,6 +9,10 @@ const hisuian_electrode_v_1 = require("./hisuian-electrode-v");
 const leafeon_vstar_1 = require("./leafeon-vstar");
 const lucario_vstar_1 = require("./lucario-vstar");
 const manaphy_1 = require("./manaphy");
+const mewtwo_v_union_bl_1 = require("./mewtwo-v-union-bl");
+const mewtwo_v_union_br_1 = require("./mewtwo-v-union-br");
+const mewtwo_v_union_tl_1 = require("./mewtwo-v-union-tl");
+const mewtwo_v_union_tr_1 = require("./mewtwo-v-union-tr");
 const oricorio_1 = require("./oricorio");
 const professor_burnett_1 = require("./professor-burnett");
 const scorbunny_1 = require("./scorbunny");
@@ -31,4 +35,8 @@ exports.setSwordAndShieldPromos = [
     new tepig_1.Tepig(),
     new venusaur_v_1.VenusaurV(),
     new venusaur_vmax_1.VenusaurVMAX(),
+    new mewtwo_v_union_tl_1.MewtwoVUNIONTopLeft(),
+    new mewtwo_v_union_tr_1.MewtwoVUNIONTopRight(),
+    new mewtwo_v_union_bl_1.MewtwoVUNIONBottomLeft(),
+    new mewtwo_v_union_br_1.MewtwoVUNIONBottomRight(),
 ];

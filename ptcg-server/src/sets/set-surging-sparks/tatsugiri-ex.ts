@@ -91,7 +91,7 @@ export class Tatsugiriex extends PokemonCard {
       const maxPokemons = openSlots.length;
 
       const deckTop = new CardList();
-      player.deck.moveTo(deckTop, 8);
+      player.deck.moveTo(deckTop, 10);
 
       let cards: Card[] = [];
       return store.prompt(state, new ChooseCardsPrompt(
