@@ -16,9 +16,7 @@ class MegatonBlower extends trainer_card_1.TrainerCard {
         this.regulationMark = 'H';
         this.name = 'Megaton Blower';
         this.fullName = 'Megaton Blower SV7a';
-        this.text = 'You can use this card only if you go second, and only on your first turn.' +
-            '' +
-            'Search your deck for a Supporter card, reveal it, and put it into your hand. Then, shuffle your deck.';
+        this.text = 'Discard all Pokémon Tools and Special Energy from all of your opponent\'s Pokémon, and discard a Stadium in play.';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {

@@ -80,7 +80,7 @@ class Flannery extends trainer_card_1.TrainerCard {
         this.setNumber = '139';
         this.name = 'Flannery';
         this.fullName = 'Flannery CRE';
-        this.text = 'Discard a Special Energy attached to 1 of your opponent\'s Pokemon.';
+        this.text = 'Discard a Special Energy attached to 1 of your opponent\'s Pokémon, and discard a Stadium in play.';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {

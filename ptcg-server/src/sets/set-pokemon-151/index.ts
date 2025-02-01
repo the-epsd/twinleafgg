@@ -19,6 +19,7 @@ import { Ekans } from './ekans';
 import { Electabuzz } from './electabuzz';
 import { EnergySticker } from './energy-sticker';
 import { EreikasInvitation } from './erikas-invitation';
+import { Fearow } from './fearow';
 import { BulbasaurIR, IvysaurIR, CharmanderIR, CharmeleonIR, SquirtleIR, NidokingIR, VenusaurexFA, CharizardexFA, BlastoiseexFA, ArbokexFA, KangaskhanexFA, ZapdosexFA, MewexFA, ErikasInvitationFA, GiovannisCharismaFA, VenusaurexSIR, CharizardexSIR, BlastoiseexSIR, ZapdosexSIR, ErikasInvitationSIR, GiovannisCharismaSIR, MewexHR, SwitchHR, BasicPsychicEnergyHR, WartortleIR } from './full-art';
 import { GiovannisCharisma } from './giovannis-charisma';
 import { Gloom } from './gloom';
@@ -47,6 +48,7 @@ import { Sandshrew } from './sandshrew';
 import { Scyther } from './scyther';
 import { Seaking } from './seaking';
 import { Snorlax } from './snorlax';
+import { Spearow } from './spearow';
 import { Squirtle } from './squirtle';
 import { Starmie } from './starmie';
 import { Staryu } from './staryu';
@@ -77,6 +79,7 @@ export const setPokemon151: Card[] = [
   new Electabuzz(),
   new EnergySticker(),
   new EreikasInvitation(),
+  new Fearow(),
   new GiovannisCharisma(),
   new Gloom(),
   new Grabber(),
@@ -104,6 +107,7 @@ export const setPokemon151: Card[] = [
   new Scyther(),
   new Seaking(),
   new Snorlax(),
+  new Spearow(),
   new Squirtle(),
   new Staryu(),
   new Starmie(),

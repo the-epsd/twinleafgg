@@ -1,4 +1,5 @@
 import { Card } from '../../game/store/card/card';
+import { Accelgor } from './accelgor';
 import { Bagon } from './bagon';
 import { Banette } from './banette';
 import { Blazikenex } from './blaziken-ex';
@@ -55,6 +56,7 @@ import { Postwick } from './postwick';
 import { Pupitar } from './pupitar';
 import { Salamenceex } from './salamence-ex';
 import { Shelgon } from './shelgon';
+import { Shelmet } from './shelmet';
 import { Shuppet } from './shuppet';
 import { Sprigatito } from './sprigatito';
 import { Swinub } from './swinub';
@@ -92,6 +94,8 @@ export const setSV9: Card[] = [
   new IrisFightingSpirit(),
   new Wailmer(),
   new Wailord(),
+  new Shelmet(),
+  new Accelgor(),
 
   new LilliesClefairyex(),
   new LilliesComfy(),

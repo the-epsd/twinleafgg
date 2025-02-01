@@ -335,6 +335,24 @@ export function DRAW_CARDS_AS_FACE_DOWN_PRIZES(player: Player, count: number) {
   player.prizes.forEach(p => p.isSecret = true);
 }
 
+export function SEARCH_DECK_FOR_CARDS_TO_HAND(store: StoreLike, state: State, player: Player, min: number = 0, max: number = 1) {
+  if (player.deck.cards.length === 0)
+    return;
+  let cards: Card[] = [];
+  store.prompt(state, new ChooseCardsPrompt(
+    player,
+    GameMessage.CHOOSE_CARD_TO_HAND,
+    player.deck,
+    {},
+    { min: 0, max: 3, allowCancel: false }
+  ), selected => {
+    cards = selected || [];
+    player.deck.moveCardsTo(cards, player.hand);
+  });
+
+  SHUFFLE_DECK(store, state, player);
+}
+
 /**
  * Checks if abilities are blocked on `card` for `player`.
  * @returns `true` if the ability is blocked, `false` if the ability is able to go thru.
@@ -351,6 +369,13 @@ export function IS_ABILITY_BLOCKED(store: StoreLike, state: State, player: Playe
     return true;
   }
   return false;
+}
+
+export function CAN_EVOLVE_ON_FIRST_TURN_GOING_SECOND(state: State, player: Player, pokemon: PokemonCardList) {
+  if (state.turn === 2) {
+    player.canEvolve = true;
+    pokemon.pokemonPlayedTurn = state.turn - 1;
+  }
 }
 
 /**

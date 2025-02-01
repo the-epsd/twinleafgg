@@ -2,15 +2,15 @@ import { PowerType, State, StoreLike } from '../../game';
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
-export declare class Bronzor extends PokemonCard {
+export declare class Spearow extends PokemonCard {
     stage: Stage;
     cardType: CardType;
     hp: number;
     weakness: {
-        type: CardType.FIRE;
+        type: CardType.LIGHTNING;
     }[];
     resistance: {
-        type: CardType.PSYCHIC;
+        type: CardType.FIGHTING;
         value: number;
     }[];
     retreat: CardType.COLORLESS[];
@@ -21,7 +21,7 @@ export declare class Bronzor extends PokemonCard {
     }[];
     attacks: {
         name: string;
-        cost: (CardType.METAL | CardType.COLORLESS)[];
+        cost: CardType.COLORLESS[];
         damage: number;
         text: string;
     }[];

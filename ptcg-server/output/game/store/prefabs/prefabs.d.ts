@@ -87,11 +87,13 @@ export declare function DRAW_CARDS_UNTIL_CARDS_IN_HAND(player: Player, count: nu
  * Draws `count` cards from the top of your deck as face down prize cards.
  */
 export declare function DRAW_CARDS_AS_FACE_DOWN_PRIZES(player: Player, count: number): void;
+export declare function SEARCH_DECK_FOR_CARDS_TO_HAND(store: StoreLike, state: State, player: Player, min?: number, max?: number): void;
 /**
  * Checks if abilities are blocked on `card` for `player`.
  * @returns `true` if the ability is blocked, `false` if the ability is able to go thru.
  */
 export declare function IS_ABILITY_BLOCKED(store: StoreLike, state: State, player: Player, card: PokemonCard): boolean;
+export declare function CAN_EVOLVE_ON_FIRST_TURN_GOING_SECOND(state: State, player: Player, pokemon: PokemonCardList): void;
 /**
  * Finds `card` and moves it from its current CardList to `destination`.
  */
