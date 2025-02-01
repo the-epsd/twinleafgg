@@ -42,7 +42,7 @@ export class Raichu extends PokemonCard {
           ADD_PARALYZED_TO_PLAYER_ACTIVE(store, state, StateUtils.getOpponent(state, effect.player), this);
       }))
         if (WAS_ATTACK_USED(effect, 0, this))
-          THIS_POKEMON_DOES_DAMAGE_TO_ITSELF(store, state, effect);
+          THIS_POKEMON_DOES_DAMAGE_TO_ITSELF(store, state, effect, 30);
     return state;
   }
 }

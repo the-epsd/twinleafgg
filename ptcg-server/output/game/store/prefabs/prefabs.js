@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CLEAR_MARKER_AND_OPPONENTS_POKEMON_MARKER_AT_END_OF_TURN = exports.PREVENT_DAMAGE_IF_TARGET_HAS_MARKER = exports.BLOCK_EFFECT_IF_MARKER = exports.HAS_MARKER = exports.REMOVE_MARKER = exports.ADD_MARKER = exports.REPLACE_MARKER_AT_END_OF_TURN = exports.REMOVE_MARKER_AT_END_OF_TURN = exports.ADD_CONFUSION_TO_PLAYER_ACTIVE = exports.ADD_PARALYZED_TO_PLAYER_ACTIVE = exports.ADD_BURN_TO_PLAYER_ACTIVE = exports.ADD_POISON_TO_PLAYER_ACTIVE = exports.ADD_SLEEP_TO_PLAYER_ACTIVE = exports.ADD_SPECIAL_CONDITIONS_TO_PLAYER_ACTIVE = exports.SIMULATE_COIN_FLIP = exports.COIN_FLIP_PROMPT = exports.CONFIRMATION_PROMPT = exports.SHOW_CARDS_TO_PLAYER = exports.SWITCH_ACTIVE_WITH_BENCHED = exports.MOVE_CARD_TO = exports.CAN_EVOLVE_ON_FIRST_TURN_GOING_SECOND = exports.IS_ABILITY_BLOCKED = exports.SEARCH_DECK_FOR_CARDS_TO_HAND = exports.DRAW_CARDS_AS_FACE_DOWN_PRIZES = exports.DRAW_CARDS_UNTIL_CARDS_IN_HAND = exports.DRAW_CARDS = exports.SHUFFLE_PRIZES_INTO_DECK = exports.SHUFFLE_CARDS_INTO_DECK = exports.SHUFFLE_DECK = exports.GET_PRIZES_AS_CARD_ARRAY = exports.GET_PLAYER_PRIZES = exports.DISCARD_X_ENERGY_FROM_YOUR_HAND = exports.ATTACH_X_NUMBER_OF_BASIC_ENERGY_CARDS_FROM_YOUR_DISCARD_TO_YOUR_BENCHED_POKEMON = exports.THIS_POKEMON_DOES_DAMAGE_TO_ITSELF = exports.THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_BENCHED_POKEMON = exports.TAKE_X_MORE_PRIZE_CARDS = exports.YOUR_OPPONENTS_POKEMON_IS_KNOCKED_OUT_BY_DAMAGE_FROM_THIS_ATTACK = exports.THIS_POKEMON_HAS_ANY_DAMAGE_COUNTERS_ON_IT = exports.HEAL_X_DAMAGE_FROM_THIS_POKEMON = exports.THIS_ATTACK_DOES_X_MORE_DAMAGE = exports.FLIP_IF_HEADS = exports.DISCARD_X_ENERGY_FROM_THIS_POKEMON = exports.SEARCH_YOUR_DECK_FOR_TYPE_OF_POKEMON_AND_PUT_INTO_HAND = exports.SEARCH_YOUR_DECK_FOR_STAGE_OF_POKEMON_AND_PUT_THEM_ONTO_YOUR_BENCH = exports.DISCARD_A_STADIUM_CARD_IN_PLAY = exports.PASSIVE_ABILITY_ACTIVATED = exports.ABILITY_USED = exports.JUST_EVOLVED = exports.WAS_POWER_USED = exports.WAS_ATTACK_USED = void 0;
+exports.REMOVE_MARKER_AT_END_OF_TURN = exports.PREVENT_DAMAGE_IF_TARGET_HAS_MARKER = exports.BLOCK_EFFECT_IF_MARKER = exports.HAS_MARKER = exports.REMOVE_MARKER = exports.ADD_MARKER = exports.ADD_CONFUSION_TO_PLAYER_ACTIVE = exports.ADD_PARALYZED_TO_PLAYER_ACTIVE = exports.ADD_BURN_TO_PLAYER_ACTIVE = exports.ADD_POISON_TO_PLAYER_ACTIVE = exports.ADD_SLEEP_TO_PLAYER_ACTIVE = exports.ADD_SPECIAL_CONDITIONS_TO_PLAYER_ACTIVE = exports.SIMULATE_COIN_FLIP = exports.COIN_FLIP_PROMPT = exports.CONFIRMATION_PROMPT = exports.SHOW_CARDS_TO_PLAYER = exports.SWITCH_ACTIVE_WITH_BENCHED = exports.MOVE_CARD_TO = exports.CAN_EVOLVE_ON_FIRST_TURN_GOING_SECOND = exports.IS_ABILITY_BLOCKED = exports.SEARCH_DECK_FOR_CARDS_TO_HAND = exports.DRAW_CARDS_AS_FACE_DOWN_PRIZES = exports.DRAW_CARDS_UNTIL_CARDS_IN_HAND = exports.DRAW_CARDS = exports.SHUFFLE_PRIZES_INTO_DECK = exports.SHUFFLE_CARDS_INTO_DECK = exports.SHUFFLE_DECK = exports.GET_PRIZES_AS_CARD_ARRAY = exports.GET_PLAYER_PRIZES = exports.DISCARD_ALL_ENERGY_FROM_POKEMON = exports.DISCARD_X_ENERGY_FROM_YOUR_HAND = exports.ATTACH_X_NUMBER_OF_BASIC_ENERGY_CARDS_FROM_YOUR_DISCARD_TO_YOUR_BENCHED_POKEMON = exports.THIS_POKEMON_DOES_DAMAGE_TO_ITSELF = exports.THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_BENCHED_POKEMON = exports.PLAY_POKEMON_FROM_HAND_TO_BENCH = exports.TAKE_X_MORE_PRIZE_CARDS = exports.YOUR_OPPONENTS_POKEMON_IS_KNOCKED_OUT_BY_DAMAGE_FROM_THIS_ATTACK = exports.THIS_POKEMON_HAS_ANY_DAMAGE_COUNTERS_ON_IT = exports.HEAL_X_DAMAGE_FROM_THIS_POKEMON = exports.THIS_ATTACK_DOES_X_MORE_DAMAGE = exports.FLIP_IF_HEADS = exports.DISCARD_X_ENERGY_FROM_THIS_POKEMON = exports.SEARCH_YOUR_DECK_FOR_TYPE_OF_POKEMON_AND_PUT_INTO_HAND = exports.SEARCH_YOUR_DECK_FOR_STAGE_OF_POKEMON_AND_PUT_THEM_ONTO_YOUR_BENCH = exports.DISCARD_A_STADIUM_CARD_IN_PLAY = exports.PASSIVE_ABILITY_ACTIVATED = exports.ABILITY_USED = exports.JUST_EVOLVED = exports.WAS_POWER_USED = exports.WAS_ATTACK_USED = void 0;
+exports.CLEAR_MARKER_AND_OPPONENTS_POKEMON_MARKER_AT_END_OF_TURN = exports.REPLACE_MARKER_AT_END_OF_TURN = void 0;
 const __1 = require("../..");
 const card_types_1 = require("../card/card-types");
 const attack_effects_1 = require("../effects/attack-effects");
@@ -148,6 +149,15 @@ function TAKE_X_MORE_PRIZE_CARDS(effect, state) {
     return state;
 }
 exports.TAKE_X_MORE_PRIZE_CARDS = TAKE_X_MORE_PRIZE_CARDS;
+function PLAY_POKEMON_FROM_HAND_TO_BENCH(state, player, card) {
+    const slots = player.bench.filter(b => b.cards.length === 0);
+    if (slots.length === 0)
+        throw new __1.GameError(__1.GameMessage.NO_BENCH_SLOTS_AVAILABLE);
+    const validSlot = slots[0];
+    player.hand.moveCardTo(card, validSlot);
+    validSlot.pokemonPlayedTurn = state.turn;
+}
+exports.PLAY_POKEMON_FROM_HAND_TO_BENCH = PLAY_POKEMON_FROM_HAND_TO_BENCH;
 function THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_BENCHED_POKEMON(damage, effect, store, state, min, max) {
     const player = effect.player;
     const opponent = __1.StateUtils.getOpponent(state, player);
@@ -163,8 +173,8 @@ function THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_BENCHED_POKEMON(damage
     });
 }
 exports.THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_BENCHED_POKEMON = THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_BENCHED_POKEMON;
-function THIS_POKEMON_DOES_DAMAGE_TO_ITSELF(store, state, effect) {
-    const dealDamage = new attack_effects_1.DealDamageEffect(effect, 30);
+function THIS_POKEMON_DOES_DAMAGE_TO_ITSELF(store, state, effect, amount) {
+    const dealDamage = new attack_effects_1.DealDamageEffect(effect, amount);
     dealDamage.target = effect.source;
     return store.reduceEffect(state, dealDamage);
 }
@@ -201,6 +211,19 @@ function DISCARD_X_ENERGY_FROM_YOUR_HAND(effect, store, state, minAmount, maxAmo
     });
 }
 exports.DISCARD_X_ENERGY_FROM_YOUR_HAND = DISCARD_X_ENERGY_FROM_YOUR_HAND;
+function DISCARD_ALL_ENERGY_FROM_POKEMON(store, state, effect, card) {
+    const player = effect.player;
+    const cardList = __1.StateUtils.findCardList(state, card);
+    if (!(cardList instanceof __1.PokemonCardList))
+        throw new __1.GameError(__1.GameMessage.INVALID_TARGET);
+    const checkProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(player);
+    state = store.reduceEffect(state, checkProvidedEnergy);
+    const cards = checkProvidedEnergy.energyMap.map(e => e.card);
+    const discardEnergy = new attack_effects_1.DiscardCardsEffect(effect, cards);
+    discardEnergy.target = cardList;
+    store.reduceEffect(state, discardEnergy);
+}
+exports.DISCARD_ALL_ENERGY_FROM_POKEMON = DISCARD_ALL_ENERGY_FROM_POKEMON;
 /**
  * A getter for the player's prize slots.
  * @returns A list of card lists containing the player's prize slots.
@@ -384,18 +407,6 @@ function ADD_CONFUSION_TO_PLAYER_ACTIVE(store, state, player, source) {
 exports.ADD_CONFUSION_TO_PLAYER_ACTIVE = ADD_CONFUSION_TO_PLAYER_ACTIVE;
 //#endregion
 //#region Markers
-function REMOVE_MARKER_AT_END_OF_TURN(effect, source, marker) {
-    if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(marker, source))
-        effect.player.marker.removeMarker(marker, source);
-}
-exports.REMOVE_MARKER_AT_END_OF_TURN = REMOVE_MARKER_AT_END_OF_TURN;
-function REPLACE_MARKER_AT_END_OF_TURN(effect, source, oldMarker, newMarker) {
-    if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(oldMarker, source)) {
-        effect.player.marker.removeMarker(oldMarker, source);
-        effect.player.marker.addMarker(newMarker, source);
-    }
-}
-exports.REPLACE_MARKER_AT_END_OF_TURN = REPLACE_MARKER_AT_END_OF_TURN;
 function ADD_MARKER(marker, owner, source) {
     owner.marker.addMarker(marker, source);
 }
@@ -418,6 +429,18 @@ function PREVENT_DAMAGE_IF_TARGET_HAS_MARKER(effect, marker, source) {
         effect.preventDefault = true;
 }
 exports.PREVENT_DAMAGE_IF_TARGET_HAS_MARKER = PREVENT_DAMAGE_IF_TARGET_HAS_MARKER;
+function REMOVE_MARKER_AT_END_OF_TURN(effect, marker, source) {
+    if (effect instanceof game_phase_effects_1.EndTurnEffect && HAS_MARKER(marker, effect.player, source))
+        REMOVE_MARKER(marker, effect.player, source);
+}
+exports.REMOVE_MARKER_AT_END_OF_TURN = REMOVE_MARKER_AT_END_OF_TURN;
+function REPLACE_MARKER_AT_END_OF_TURN(effect, oldMarker, newMarker, source) {
+    if (effect instanceof game_phase_effects_1.EndTurnEffect && HAS_MARKER(oldMarker, effect.player, source)) {
+        REMOVE_MARKER(oldMarker, effect.player, source);
+        ADD_MARKER(newMarker, effect.player, source);
+    }
+}
+exports.REPLACE_MARKER_AT_END_OF_TURN = REPLACE_MARKER_AT_END_OF_TURN;
 /**
  * If an EndTurnEffect is given, will check for `clearerMarker` on the player whose turn it is,
  * and clear all of their opponent's `oppMarker`s.
@@ -425,7 +448,7 @@ exports.PREVENT_DAMAGE_IF_TARGET_HAS_MARKER = PREVENT_DAMAGE_IF_TARGET_HAS_MARKE
  */
 function CLEAR_MARKER_AND_OPPONENTS_POKEMON_MARKER_AT_END_OF_TURN(state, effect, clearerMarker, oppMarker, source) {
     if (effect instanceof game_phase_effects_1.EndTurnEffect && HAS_MARKER(clearerMarker, effect.player, source)) {
-        effect.player.marker.removeMarker(clearerMarker, source);
+        REMOVE_MARKER(clearerMarker, effect.player, source);
         const opponent = __1.StateUtils.getOpponent(state, effect.player);
         REMOVE_MARKER(oppMarker, opponent, source);
         opponent.forEachPokemon(__1.PlayerType.TOP_PLAYER, (cardList) => REMOVE_MARKER(oppMarker, cardList, source));

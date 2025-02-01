@@ -39,22 +39,22 @@ class Feraligatr extends pokemon_card_1.PokemonCard {
         this.ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
     }
     reduceEffect(store, state, effect) {
-        prefabs_1.REMOVE_MARKER_AT_END_OF_TURN(effect, this, this.ATTACK_USED_2_MARKER);
-        prefabs_1.REPLACE_MARKER_AT_END_OF_TURN(effect, this, this.ATTACK_USED_MARKER, this.ATTACK_USED_2_MARKER);
-        prefabs_1.REMOVE_MARKER_AT_END_OF_TURN(effect, this, this.TORRENTIAL_HEART_MARKER);
+        prefabs_1.REMOVE_MARKER_AT_END_OF_TURN(effect, this.ATTACK_USED_2_MARKER, this);
+        prefabs_1.REPLACE_MARKER_AT_END_OF_TURN(effect, this.ATTACK_USED_MARKER, this.ATTACK_USED_2_MARKER, this);
+        prefabs_1.REMOVE_MARKER_AT_END_OF_TURN(effect, this.TORRENTIAL_HEART_MARKER, this);
         if (effect instanceof game_effects_1.AttackEffect && effect.player.marker.hasMarker(this.TORRENTIAL_HEART_MARKER, this))
             effect.damage += 120;
         if (prefabs_1.WAS_ATTACK_USED(effect, 0, this)) {
             prefabs_1.BLOCK_EFFECT_IF_MARKER(this.ATTACK_USED_2_MARKER, effect.player, this);
-            effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
+            prefabs_1.ADD_MARKER(this.ATTACK_USED_MARKER, effect.player, this);
         }
         if (prefabs_1.WAS_POWER_USED(effect, 0, this)) {
             prefabs_1.BLOCK_EFFECT_IF_MARKER(this.TORRENTIAL_HEART_MARKER, effect.player, this);
             const cardList = game_1.StateUtils.findCardList(state, this);
             if (cardList instanceof game_1.PokemonCardList) {
                 cardList.damage += 50;
-                effect.player.marker.addMarker(this.TORRENTIAL_HEART_MARKER, this);
-                cardList.addBoardEffect(card_types_1.BoardEffect.ABILITY_USED);
+                prefabs_1.ADD_MARKER(this.ATTACK_USED_MARKER, effect.player, this);
+                prefabs_1.ABILITY_USED(effect.player, this);
             }
         }
         return state;

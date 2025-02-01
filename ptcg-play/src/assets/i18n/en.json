@@ -411,6 +411,7 @@
     "NOT_YOUR_TURN": "Not your turn.",
     "NO_STADIUM_IN_PLAY": "No stadium card in play.",
     "NO_CARDS_IN_DECK": "No more cards in deck.",
+    "NO_BENCH_SLOTS_AVAILABLE": "Not enough space on your Bench.",
     "POKEMON_CANT_EVOLVE_THIS_TURN": "Pokémon can't evolve this turn.",
     "POKEMON_TOOL_ALREADY_ATTACHED": "Pokémon already has a tool card.",
     "POWER_ALREADY_USED": "Ability was already used.",

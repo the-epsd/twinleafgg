@@ -144,6 +144,15 @@ export class Player {
     target.clearEffects();
   }
 
+  getPokemonInPlay(): PokemonCardList[] {
+    let list: PokemonCardList[] = [];
+    this.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, pokemonCard, target) => {
+      if (cardList)
+        list.push(cardList);
+    });
+    return list;
+  }
+
   vPokemon(): boolean {
     let result = false;
     this.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, pokemonCard, target) => {

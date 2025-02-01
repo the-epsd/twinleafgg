@@ -1,9 +1,9 @@
-import { Card, CardTarget, CardType, EnergyCard, GameError, GameLog, GameMessage, MoveEnergyPrompt, PlayerType, PokemonCard, PokemonCardList, PowerType, Resistance, SlotType, Stage, State, StateUtils, StoreLike, SuperType } from '../../game';
+import { Card, CardTarget, CardType, EnergyCard, GameError, GameMessage, MoveEnergyPrompt, PlayerType, PokemonCard, PokemonCardList, PowerType, Resistance, SlotType, Stage, State, StateUtils, StoreLike, SuperType } from '../../game';
 import { CheckProvidedEnergyEffect, CheckRetreatCostEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { PLAY_POKEMON_FROM_HAND_TO_BENCH, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class EelektrossUNM extends PokemonCard {
 
@@ -35,6 +35,7 @@ export class EelektrossUNM extends PokemonCard {
     {
       name: 'Electric Swamp',
       powerType: PowerType.ABILITY,
+      useFromHand: true,
       text: 'Once during your turn (before your attack), if this Pokemon is in your hand and you have at ' +
         'least 4 L Energy cards in play, you may play this Pokemon onto your Bench. If you do, move any number of ' +
         'L Energy from your other Pokemon to this Pokemon.'
@@ -52,8 +53,8 @@ export class EelektrossUNM extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    // Elusive Master
-    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this && effect.target.cards.length === 0) {
+    // Electric Swamp
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
       // Can't bench this Pokemon unless we have 4 Lightning Energy cards in play.
@@ -64,13 +65,11 @@ export class EelektrossUNM extends PokemonCard {
           (c.provides.includes(CardType.LIGHTNING) || c.provides.includes(CardType.ANY)))
         ).forEach(c => energyCards.push(c));
       });
-      if (energyCards.length < 4) { return state; }
+      if (energyCards.length < 4)
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
 
       // Bench this Pokemon to the desired slot.
-      effect.preventDefault = true;  // this might prevent errors from trying to bench a stage 2 idk
-      store.log(state, GameLog.LOG_PLAYER_PLAYS_BASIC_POKEMON, { name: player.name, card: this.name });
-      player.hand.moveCardTo(this, effect.target);
-      effect.target.pokemonPlayedTurn = state.turn;
+      PLAY_POKEMON_FROM_HAND_TO_BENCH(state, player, this);
 
       // Then, prompt player to move Lightning energy from their other Pokemon to this one.
       const blockedFrom: CardTarget[] = [];

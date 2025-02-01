@@ -1,7 +1,8 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, PowerType } from '../../game';
+import { StoreLike, State, PowerType, StateUtils, GameError, GameMessage } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
+import { GET_PLAYER_PRIZES, PLAY_POKEMON_FROM_HAND_TO_BENCH, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 
 export class Luxray extends PokemonCard {
@@ -23,7 +24,7 @@ export class Luxray extends PokemonCard {
   public powers = [{
     name: 'Swelling Flash',
     powerType: PowerType.ABILITY,
-    // useFromHand: true,
+    useFromHand: true,
     text: 'Once during your turn, if this Pokémon is in your hand and you have more Prize cards remaining than your opponent, you may put this Pokémon onto your Bench.'
   }];
 
@@ -47,43 +48,19 @@ export class Luxray extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    // if (effect instanceof PowerEffect
-    //   && effect.power.powerType === PowerType.ABILITY) {
+    if (WAS_POWER_USED(effect, 0, this)) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
 
-    //   const player = effect.player;
-    //   const opponent = StateUtils.getOpponent(state, player);
-    //   const slots: PokemonCardList[] = player.bench.filter(b => b.cards.length === 0);
+      if (GET_PLAYER_PRIZES(player).length <= GET_PLAYER_PRIZES(opponent).length)
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
 
-    //   if (player.getPrizeLeft() > opponent.getPrizeLeft()) {
-    //     // Check if bench has open slots
-    //     const openSlots = player.bench.filter(b => b.cards.length === 0);
+      PLAY_POKEMON_FROM_HAND_TO_BENCH(state, player, this);
+    }
 
-    //     if (openSlots.length === 0) {
-    //       // No open slots, throw error
-    //       throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-    //     }
+    if (WAS_ATTACK_USED(effect, 0, this))
+      THIS_POKEMON_DOES_DAMAGE_TO_ITSELF(store, state, effect, 20);
 
-    //     state = store.prompt(state, new ConfirmPrompt(
-    //       effect.player.id,
-    //       GameMessage.WANT_TO_USE_ABILITY,
-    //     ), wantToUse => {
-    //       if (wantToUse) {
-    //         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-    //           if (cardList.getPokemonCard() === this) {
-    //             store.log(state, GameLog.LOG_PLAYER_USES_ABILITY, { name: player.name, ability: 'Swelling Flash' });
-    //           }
-    //         });
-
-    //         const card = this;
-    //         player.hand.moveCardTo(card, slots[0]);
-    //         slots[0].pokemonPlayedTurn = state.turn;
-    //         store.log(state, GameLog.LOG_PLAYER_PLAYS_BASIC_POKEMON, { name: player.name, card: card.name });
-
-    //         return state;
-    //       }
-    //     });
-    //   }
-    // }
     return state;
   }
 }

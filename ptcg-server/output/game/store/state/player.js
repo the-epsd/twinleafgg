@@ -103,6 +103,14 @@ class Player {
         this.marker.removeMarker(this.UNRELENTING_ONSLAUGHT_2_MARKER);
         target.clearEffects();
     }
+    getPokemonInPlay() {
+        let list = [];
+        this.forEachPokemon(play_card_action_1.PlayerType.BOTTOM_PLAYER, (cardList, pokemonCard, target) => {
+            if (cardList)
+                list.push(cardList);
+        });
+        return list;
+    }
     vPokemon() {
         let result = false;
         this.forEachPokemon(play_card_action_1.PlayerType.BOTTOM_PLAYER, (cardList, pokemonCard, target) => {

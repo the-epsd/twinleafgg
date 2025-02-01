@@ -176,6 +176,17 @@ export function TAKE_X_MORE_PRIZE_CARDS(effect: KnockOutEffect, state: State) {
   return state;
 }
 
+export function PLAY_POKEMON_FROM_HAND_TO_BENCH(state: State, player: Player, card: Card) {
+  const slots: PokemonCardList[] = player.bench.filter(b => b.cards.length === 0);
+
+  if (slots.length === 0)
+    throw new GameError(GameMessage.NO_BENCH_SLOTS_AVAILABLE);
+
+  const validSlot = slots[0];
+  player.hand.moveCardTo(card, validSlot);
+  validSlot.pokemonPlayedTurn = state.turn;
+}
+
 export function THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_BENCHED_POKEMON(damage: number, effect: AttackEffect, store: StoreLike, state: State, min: number, max: number) {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
@@ -199,8 +210,8 @@ export function THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_BENCHED_POKEMON
   });
 }
 
-export function THIS_POKEMON_DOES_DAMAGE_TO_ITSELF(store: StoreLike, state: State, effect: AttackEffect) {
-  const dealDamage = new DealDamageEffect(effect, 30);
+export function THIS_POKEMON_DOES_DAMAGE_TO_ITSELF(store: StoreLike, state: State, effect: AttackEffect, amount: number) {
+  const dealDamage = new DealDamageEffect(effect, amount);
   dealDamage.target = effect.source;
   return store.reduceEffect(state, dealDamage);
 }
@@ -253,6 +264,21 @@ export function DISCARD_X_ENERGY_FROM_YOUR_HAND(effect: PowerEffect, store: Stor
     }
     player.hand.moveCardsTo(cards, player.discard);
   });
+}
+
+export function DISCARD_ALL_ENERGY_FROM_POKEMON(store: StoreLike, state: State, effect: AttackEffect, card: Card) {
+  const player = effect.player;
+  const cardList = StateUtils.findCardList(state, card);
+  if (!(cardList instanceof PokemonCardList))
+    throw new GameError(GameMessage.INVALID_TARGET);
+
+  const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
+  state = store.reduceEffect(state, checkProvidedEnergy);
+
+  const cards: Card[] = checkProvidedEnergy.energyMap.map(e => e.card);
+  const discardEnergy = new DiscardCardsEffect(effect, cards);
+  discardEnergy.target = cardList;
+  store.reduceEffect(state, discardEnergy);
 }
 
 /**
@@ -461,17 +487,6 @@ export function ADD_CONFUSION_TO_PLAYER_ACTIVE(store: StoreLike, state: State, p
 //#endregion
 
 //#region Markers
-export function REMOVE_MARKER_AT_END_OF_TURN(effect: Effect, source: Card, marker: string) {
-  if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(marker, source))
-    effect.player.marker.removeMarker(marker, source);
-}
-
-export function REPLACE_MARKER_AT_END_OF_TURN(effect: Effect, source: Card, oldMarker: string, newMarker: string) {
-  if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(oldMarker, source)) {
-    effect.player.marker.removeMarker(oldMarker, source);
-    effect.player.marker.addMarker(newMarker, source);
-  }
-}
 
 export function ADD_MARKER(marker: string, owner: Player | Card | PokemonCard | PokemonCardList, source: Card) {
   owner.marker.addMarker(marker, source);
@@ -495,6 +510,18 @@ export function PREVENT_DAMAGE_IF_TARGET_HAS_MARKER(effect: Effect, marker: stri
     effect.preventDefault = true;
 }
 
+export function REMOVE_MARKER_AT_END_OF_TURN(effect: Effect, marker: string, source: Card) {
+  if (effect instanceof EndTurnEffect && HAS_MARKER(marker, effect.player, source))
+    REMOVE_MARKER(marker, effect.player, source);
+}
+
+export function REPLACE_MARKER_AT_END_OF_TURN(effect: Effect, oldMarker: string, newMarker: string, source: Card) {
+  if (effect instanceof EndTurnEffect && HAS_MARKER(oldMarker, effect.player, source)) {
+    REMOVE_MARKER(oldMarker, effect.player, source);
+    ADD_MARKER(newMarker, effect.player, source);
+  }
+}
+
 /**
  * If an EndTurnEffect is given, will check for `clearerMarker` on the player whose turn it is,
  * and clear all of their opponent's `oppMarker`s.
@@ -502,7 +529,7 @@ export function PREVENT_DAMAGE_IF_TARGET_HAS_MARKER(effect: Effect, marker: stri
  */
 export function CLEAR_MARKER_AND_OPPONENTS_POKEMON_MARKER_AT_END_OF_TURN(state: State, effect: Effect, clearerMarker: string, oppMarker: string, source: Card) {
   if (effect instanceof EndTurnEffect && HAS_MARKER(clearerMarker, effect.player, source)) {
-    effect.player.marker.removeMarker(clearerMarker, source);
+    REMOVE_MARKER(clearerMarker, effect.player, source);
     const opponent = StateUtils.getOpponent(state, effect.player);
     REMOVE_MARKER(oppMarker, opponent, source);
     opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => REMOVE_MARKER(oppMarker, cardList, source));
