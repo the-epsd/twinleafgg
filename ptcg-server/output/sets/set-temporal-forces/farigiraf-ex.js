@@ -29,7 +29,7 @@ class Farigirafex extends pokemon_card_1.PokemonCard {
                 text: 'This attack also does 30 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
             }
         ];
-        this.set = 'SVI';
+        this.set = 'TEF';
         this.regulationMark = 'H';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '108';
