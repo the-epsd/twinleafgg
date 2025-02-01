@@ -4,9 +4,10 @@ import { StoreLike } from '../../game/store/store-like';
 import { GamePhase, State } from '../../game/store/state/state';
 import { PowerEffect, AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { GameLog, Player, PowerType, StateUtils } from '../../game';
+import { GameLog, PowerType, StateUtils } from '../../game';
 import { AddSpecialConditionsEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { CoinFlipEffect } from '../../game/store/effects/play-card-effects';
+import { SIMULATE_COIN_FLIP } from '../../game/store/prefabs/prefabs';
 
 export class Haunter extends PokemonCard {
 
@@ -49,13 +50,6 @@ export class Haunter extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    function simulateCoinFlip(store: StoreLike, state: State, player: Player): boolean {
-      const result = Math.random() < 0.5;
-      const gameMessage = result ? GameLog.LOG_PLAYER_FLIPS_HEADS : GameLog.LOG_PLAYER_FLIPS_TAILS;
-      store.log(state, gameMessage, { name: player.name });
-      return result;
-    }
-
     if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -90,7 +84,7 @@ export class Haunter extends PokemonCard {
         return state;
       }
 
-      const coinFlipResult = simulateCoinFlip(store, state, player);
+      const coinFlipResult = SIMULATE_COIN_FLIP(store, state, player);
 
       if (coinFlipResult) {
         effect.damage = 0;

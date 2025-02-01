@@ -1,5 +1,6 @@
 import { Card } from '../../game/store/card/card';
 import { ApricornMaker } from './apricorn-maker';
+import {ArticunoGX} from './articuno-gx';
 import { BanetteGX } from './banette-gx';
 import { Copycat } from './copycat';
 import { Delcatty } from './delcatty';
@@ -51,4 +52,5 @@ export const setCelestialStorm: Card[] = [
   new Swampert(),
   new TateAndLiza(),
   new Whismur(),
+  new ArticunoGX(),
 ];

@@ -16,6 +16,7 @@ import { GreninjaGX } from './greninja-gx';
 import { Inkay } from './inkay';
 import { Klefki } from './klefki';
 import { LysandreLabs } from './lysandre-labs';
+import {LysandrePS} from './lysandre-ps';
 import { Magnezone } from './magnezone';
 import { Malamar } from './malamar';
 import { MetalFryingPan } from './metal-frying-pan';
@@ -55,4 +56,5 @@ export const setForbiddenLight: Card[] = [
   new VolcanionPS(),
   new YveltalGX(),
   new DialgaGX(),
+  new LysandrePS(),
 ];

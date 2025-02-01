@@ -17,6 +17,7 @@ import { Oricorio } from './oricorio';
 import { Oricorio2 } from './oricorio-2';
 import { RescueStretcher } from './rescue-stretcher';
 import { SylveonGX } from './sylveon-gx';
+import {TapuKokoGX} from './tapu-koko-gx';
 import { TapuLeleGX } from './tapu-lele-gx';
 
 export const setGuardiansRising: Card[] = [
@@ -40,4 +41,5 @@ export const setGuardiansRising: Card[] = [
   new RescueStretcher(),
   new SylveonGX(),
   new TapuLeleGX(),
+  new TapuKokoGX(),
 ];

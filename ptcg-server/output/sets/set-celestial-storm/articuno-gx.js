@@ -9,32 +9,30 @@ const check_effects_1 = require("../../game/store/effects/check-effects");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const state_utils_1 = require("../../game/store/state-utils");
 const game_effects_1 = require("../../game/store/effects/game-effects");
-// LOT Articuno-GX 132 (https://limitlesstcg.com/cards/LOT/132)
 class ArticunoGX extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.tags = [card_types_1.CardTag.POKEMON_GX];
         this.stage = card_types_1.Stage.BASIC;
-        this.cardType = card_types_1.CardType.WATER;
+        this.cardType = W;
         this.hp = 170;
-        this.weakness = [{ type: card_types_1.CardType.METAL }];
-        this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
+        this.weakness = [{ type: M }];
+        this.retreat = [C, C];
         this.powers = [{
                 name: 'Legendary Ascent',
-                useWhenInPlay: false,
                 powerType: game_1.PowerType.ABILITY,
                 text: 'When you play this Pokémon from your hand onto your Bench during your turn, you may switch it with your Active Pokémon. If you do, move any number of [W] Energy from your other Pokémon to this Pokémon. '
             }];
         this.attacks = [
             {
                 name: 'Ice Wing',
-                cost: [card_types_1.CardType.WATER, card_types_1.CardType.WATER, card_types_1.CardType.COLORLESS],
+                cost: [W, W, C],
                 damage: 130,
-                text: 'This attack does 30 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+                text: ''
             },
             {
                 name: 'Cold Crush-GX',
-                cost: [card_types_1.CardType.WATER],
+                cost: [W],
                 damage: 0,
                 gxAttack: true,
                 text: 'Discard all Energy from both Active Pokémon. (You can\'t use more than 1 GX attack in a game.)'
@@ -47,7 +45,7 @@ class ArticunoGX extends pokemon_card_1.PokemonCard {
         this.fullName = 'Articuno-GX CES';
     }
     reduceEffect(store, state, effect) {
-        // Mysterious Guidance
+        // Legendary Ascent
         if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {
             const player = effect.player;
             // Try to reduce PowerEffect, to check if something is blocking our ability
@@ -82,14 +80,14 @@ class ArticunoGX extends pokemon_card_1.PokemonCard {
                             return;
                         }
                         blockedTo.push(target);
-                        if (cardList.cards.some(c => c instanceof game_1.EnergyCard)) {
+                        if (cardList.cards.some(c => c instanceof game_1.EnergyCard && c.name === 'Water Energy')) {
                             hasEnergyOnBench = true;
                         }
                     });
                     if (hasEnergyOnBench === false) {
                         return state;
                     }
-                    return store.prompt(state, new game_1.MoveEnergyPrompt(effect.player.id, game_1.GameMessage.MOVE_ENERGY_TO_ACTIVE, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { superType: card_types_1.SuperType.ENERGY }, { min: 1, allowCancel: false, blockedFrom, blockedTo }), result => {
+                    return store.prompt(state, new game_1.MoveEnergyPrompt(effect.player.id, game_1.GameMessage.MOVE_ENERGY_TO_ACTIVE, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { superType: card_types_1.SuperType.ENERGY, name: 'Water Energy' }, { min: 1, allowCancel: false, blockedFrom, blockedTo }), result => {
                         const transfers = result || [];
                         transfers.forEach(transfer => {
                             const source = state_utils_1.StateUtils.getTarget(state, player, transfer.from);
@@ -100,6 +98,7 @@ class ArticunoGX extends pokemon_card_1.PokemonCard {
                 }
             });
         }
+        // Cold Crush-GX
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
             const opponent = state_utils_1.StateUtils.getOpponent(state, player);

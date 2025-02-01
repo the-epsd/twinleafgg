@@ -49,8 +49,9 @@ export class MainService {
     if (game.players.some(p => p.clientId === clientId)) {
       // we are listed as players, but not connected.
       this.gameService.join(game.gameId).subscribe(() => {
-        this.router.navigate(['table', game.gameId]);
-      }, () => {});
+        // Remove automatic navigation
+        // this.router.navigate(['table', game.gameId]);
+      }, () => { });
     }
   }
 

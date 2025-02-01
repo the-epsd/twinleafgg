@@ -14,7 +14,7 @@ import { Tepig } from './tepig';
 import { VenusaurV } from './venusaur-v';
 import { VenusaurVMAX } from './venusaur-vmax';
 
-export const setSwordAndShieldPromos: Card[] = [
+export const setSwordAndShieldPromos: Card[] = [  
 
   new ChampionsFestival(),
   new Charmander(),

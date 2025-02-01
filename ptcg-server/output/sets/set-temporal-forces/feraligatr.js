@@ -45,11 +45,11 @@ class Feraligatr extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.player.marker.hasMarker(this.TORRENTIAL_HEART_MARKER, this))
             effect.damage += 120;
         if (prefabs_1.WAS_ATTACK_USED(effect, 0, this)) {
-            prefabs_1.BLOCK_EFFECT_IF_MARKER(effect.player, this, this.ATTACK_USED_2_MARKER);
+            prefabs_1.BLOCK_EFFECT_IF_MARKER(this.ATTACK_USED_2_MARKER, effect.player, this);
             effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
         }
         if (prefabs_1.WAS_POWER_USED(effect, 0, this)) {
-            prefabs_1.BLOCK_EFFECT_IF_MARKER(effect.player, this, this.TORRENTIAL_HEART_MARKER);
+            prefabs_1.BLOCK_EFFECT_IF_MARKER(this.TORRENTIAL_HEART_MARKER, effect.player, this);
             const cardList = game_1.StateUtils.findCardList(state, this);
             if (cardList instanceof game_1.PokemonCardList) {
                 cardList.damage += 50;

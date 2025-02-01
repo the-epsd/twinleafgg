@@ -1,4 +1,4 @@
-import { AttachEnergyPrompt, Card, CardList, ChooseCardsPrompt, ChooseEnergyPrompt, ChoosePokemonPrompt, ConfirmPrompt, EnergyCard, GameError, GameMessage, Player, PlayerType, PowerType, ShowCardsPrompt, ShuffleDeckPrompt, SlotType, State, StateUtils, StoreLike } from '../..';
+import { AttachEnergyPrompt, Card, CardList, ChooseCardsPrompt, ChooseEnergyPrompt, ChoosePokemonPrompt, CoinFlipPrompt, ConfirmPrompt, EnergyCard, GameError, GameLog, GameMessage, Player, PlayerType, PokemonCardList, PowerType, ShowCardsPrompt, ShuffleDeckPrompt, SlotType, State, StateUtils, StoreLike } from '../..';
 import { BoardEffect, CardType, EnergyType, SpecialCondition, Stage, SuperType } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
 import { DealDamageEffect, DiscardCardsEffect, HealTargetEffect, PutDamageEffect } from '../effects/attack-effects';
@@ -230,10 +230,6 @@ export function ATTACH_X_NUMBER_OF_BASIC_ENERGY_CARDS_FROM_YOUR_DISCARD_TO_YOUR_
   });
 }
 
-export function SHUFFLE_DECK(store: StoreLike, state: State, player: Player): State {
-  return store.prompt(state, new ShuffleDeckPrompt(player.id), order => player.deck.applyOrder(order));
-}
-
 export function DISCARD_X_ENERGY_FROM_YOUR_HAND(effect: PowerEffect, store: StoreLike, state: State, minAmount: number, maxAmount: number): State {
 
   const player = effect.player;
@@ -277,6 +273,13 @@ export function GET_PRIZES_AS_CARD_ARRAY(player: Player): Card[] {
   const allPrizeCards: Card[] = [];
   prizes.forEach(p => allPrizeCards.push(...p.cards));
   return allPrizeCards;
+}
+
+/**
+ * Shuffles the player's deck.
+ */
+export function SHUFFLE_DECK(store: StoreLike, state: State, player: Player): State {
+  return store.prompt(state, new ShuffleDeckPrompt(player.id), order => player.deck.applyOrder(order));
 }
 
 /**
@@ -332,6 +335,24 @@ export function DRAW_CARDS_AS_FACE_DOWN_PRIZES(player: Player, count: number) {
   player.prizes.forEach(p => p.isSecret = true);
 }
 
+export function SEARCH_DECK_FOR_CARDS_TO_HAND(store: StoreLike, state: State, player: Player, min: number = 0, max: number = 1) {
+  if (player.deck.cards.length === 0)
+    return;
+  let cards: Card[] = [];
+  store.prompt(state, new ChooseCardsPrompt(
+    player,
+    GameMessage.CHOOSE_CARD_TO_HAND,
+    player.deck,
+    {},
+    { min: 0, max: 3, allowCancel: false }
+  ), selected => {
+    cards = selected || [];
+    player.deck.moveCardsTo(cards, player.hand);
+  });
+
+  SHUFFLE_DECK(store, state, player);
+}
+
 /**
  * Checks if abilities are blocked on `card` for `player`.
  * @returns `true` if the ability is blocked, `false` if the ability is able to go thru.
@@ -350,11 +371,37 @@ export function IS_ABILITY_BLOCKED(store: StoreLike, state: State, player: Playe
   return false;
 }
 
+export function CAN_EVOLVE_ON_FIRST_TURN_GOING_SECOND(state: State, player: Player, pokemon: PokemonCardList) {
+  if (state.turn === 2) {
+    player.canEvolve = true;
+    pokemon.pokemonPlayedTurn = state.turn - 1;
+  }
+}
+
 /**
  * Finds `card` and moves it from its current CardList to `destination`.
  */
 export function MOVE_CARD_TO(state: State, card: Card, destination: CardList) {
   StateUtils.findCardList(state, card).moveCardTo(card, destination);
+}
+
+export function SWITCH_ACTIVE_WITH_BENCHED(store: StoreLike, state: State, player: Player) {
+  const hasBenched = player.bench.some(b => b.cards.length > 0);
+  if (!hasBenched)
+    return state;
+
+  return store.prompt(state, new ChoosePokemonPrompt(
+    player.id,
+    GameMessage.CHOOSE_NEW_ACTIVE_POKEMON,
+    PlayerType.BOTTOM_PLAYER,
+    [SlotType.BENCH],
+    { allowCancel: false },
+  ), selected => {
+    if (!selected || selected.length === 0)
+      return state;
+    const target = selected[0];
+    player.switchPokemon(target);
+  });
 }
 
 export function SHOW_CARDS_TO_PLAYER(store: StoreLike, state: State, player: Player, cards: Card[]): State {
@@ -369,6 +416,18 @@ export function SHOW_CARDS_TO_PLAYER(store: StoreLike, state: State, player: Pla
 
 export function CONFIRMATION_PROMPT(store: StoreLike, state: State, player: Player, callback: (result: boolean) => void): State {
   return store.prompt(state, new ConfirmPrompt(player.id, GameMessage.WANT_TO_USE_ABILITY), callback);
+}
+
+export function COIN_FLIP_PROMPT(store: StoreLike, state: State, player: Player, callback: (result: boolean) => void): State {
+  return store.prompt(state, new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP), callback);
+}
+
+
+export function SIMULATE_COIN_FLIP(store: StoreLike, state: State, player: Player): boolean {
+  const result = Math.random() < 0.5;
+  const gameMessage = result ? GameLog.LOG_PLAYER_FLIPS_HEADS : GameLog.LOG_PLAYER_FLIPS_TAILS;
+  store.log(state, gameMessage, { name: player.name });
+  return result;
 }
 
 //#region Special Conditions
@@ -396,7 +455,7 @@ export function ADD_PARALYZED_TO_PLAYER_ACTIVE(store: StoreLike, state: State, p
   ADD_SPECIAL_CONDITIONS_TO_PLAYER_ACTIVE(store, state, player, source, [SpecialCondition.PARALYZED]);
 }
 
-export function ADD_CONFUSED_TO_PLAYER_ACTIVE(store: StoreLike, state: State, player: Player, source: Card) {
+export function ADD_CONFUSION_TO_PLAYER_ACTIVE(store: StoreLike, state: State, player: Player, source: Card) {
   ADD_SPECIAL_CONDITIONS_TO_PLAYER_ACTIVE(store, state, player, source, [SpecialCondition.CONFUSED]);
 }
 //#endregion
@@ -414,17 +473,39 @@ export function REPLACE_MARKER_AT_END_OF_TURN(effect: Effect, source: Card, oldM
   }
 }
 
-export function ADD_MARKER(player: Player, source: Card, marker: string) {
-  player.marker.addMarker(marker, source);
+export function ADD_MARKER(marker: string, owner: Player | Card | PokemonCard | PokemonCardList, source: Card) {
+  owner.marker.addMarker(marker, source);
 }
 
-export function HAS_MARKER(player: Player, source: Card, marker: string): boolean {
-  return player.marker.hasMarker(marker, source);
+export function REMOVE_MARKER(marker: string, owner: Player | Card | PokemonCard | PokemonCardList, source?: Card) {
+  return owner.marker.removeMarker(marker, source);
 }
 
-export function BLOCK_EFFECT_IF_MARKER(player: Player, card: Card, marker: string) {
-  if (player.marker.hasMarker(marker, card)) {
+export function HAS_MARKER(marker: string, owner: Player | Card | PokemonCard | PokemonCardList, source?: Card): boolean {
+  return owner.marker.hasMarker(marker, source);
+}
+
+export function BLOCK_EFFECT_IF_MARKER(marker: string, owner: Player | Card | PokemonCard | PokemonCardList, source?: Card) {
+  if (HAS_MARKER(marker, owner, source))
     throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+}
+
+export function PREVENT_DAMAGE_IF_TARGET_HAS_MARKER(effect: Effect, marker: string, source?: Card) {
+  if (effect instanceof PutDamageEffect && HAS_MARKER(marker, effect.target, source))
+    effect.preventDefault = true;
+}
+
+/**
+ * If an EndTurnEffect is given, will check for `clearerMarker` on the player whose turn it is,
+ * and clear all of their opponent's `oppMarker`s.
+ * Useful for "During your opponent's next turn" effects.
+ */
+export function CLEAR_MARKER_AND_OPPONENTS_POKEMON_MARKER_AT_END_OF_TURN(state: State, effect: Effect, clearerMarker: string, oppMarker: string, source: Card) {
+  if (effect instanceof EndTurnEffect && HAS_MARKER(clearerMarker, effect.player, source)) {
+    effect.player.marker.removeMarker(clearerMarker, source);
+    const opponent = StateUtils.getOpponent(state, effect.player);
+    REMOVE_MARKER(oppMarker, opponent, source);
+    opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => REMOVE_MARKER(oppMarker, cardList, source));
   }
 }
 //#endregion

@@ -6,6 +6,7 @@ const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const check_effects_1 = require("../../game/store/effects/check-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class CharizardBraixenGX extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -37,20 +38,8 @@ class CharizardBraixenGX extends pokemon_card_1.PokemonCard {
     }
     reduceEffect(store, state, effect) {
         // Brilliant Flare
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
-            const player = effect.player;
-            if (player.deck.cards.length === 0) {
-                return state;
-            }
-            let cards = [];
-            store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, {}, { min: 0, max: 3, allowCancel: false }), selected => {
-                cards = selected || [];
-                player.deck.moveCardsTo(cards, player.hand);
-            });
-            store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
-                player.deck.applyOrder(order);
-            });
-        }
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0])
+            prefabs_1.SEARCH_DECK_FOR_CARDS_TO_HAND(store, state, effect.player, 0, 3);
         // Crimson Flame Pillar-GX
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;

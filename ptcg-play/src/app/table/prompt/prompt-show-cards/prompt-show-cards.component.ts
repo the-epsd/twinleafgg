@@ -4,6 +4,8 @@ import { ShowCardsPrompt, Card, GamePhase } from 'ptcg-server';
 import { CardsBaseService } from '../../../shared/cards/cards-base.service';
 import { GameService } from '../../../api/services/game.service';
 import { LocalGameState } from '../../../shared/session/session.interface';
+import { Subject, timer } from 'rxjs';
+import { take, takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'ptcg-prompt-show-cards',
@@ -19,6 +21,7 @@ export class PromptShowCardsComponent implements OnInit, OnDestroy {
 
   private isResolved = false;
   private timeoutId: any;
+  private destroyed$ = new Subject<void>();
 
   constructor(
     private cardsBaseService: CardsBaseService,
@@ -27,15 +30,17 @@ export class PromptShowCardsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.isLoading = true;
-    this.timeoutId = setTimeout(() => {
+    timer(3000).pipe(
+      take(1),
+      takeUntil(this.destroyed$)
+    ).subscribe(() => {
       this.resolvePrompt();
-    }, 3000);
+    });
   }
 
   ngOnDestroy() {
-    if (this.timeoutId) {
-      clearTimeout(this.timeoutId);
-    }
+    this.destroyed$.next();
+    this.destroyed$.complete();
   }
 
   public minimize() {

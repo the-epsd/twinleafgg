@@ -114,7 +114,7 @@ export class Flannery extends TrainerCard {
   public fullName: string = 'Flannery CRE';
 
   public text: string =
-    'Discard a Special Energy attached to 1 of your opponent\'s Pokemon.';
+    'Discard a Special Energy attached to 1 of your opponent\'s Pokémon, and discard a Stadium in play.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

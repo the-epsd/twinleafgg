@@ -22,6 +22,7 @@ const jumpluff_1 = require("./jumpluff");
 const leafeon_v_1 = require("./leafeon-v");
 const leafeon_vmax_1 = require("./leafeon-vmax");
 const mareep_1 = require("./mareep");
+const medicham_v_1 = require("./medicham-v");
 const pumpkaboo_1 = require("./pumpkaboo");
 const raihan_1 = require("./raihan");
 const rayquaza_v_1 = require("./rayquaza-v");
@@ -65,6 +66,7 @@ exports.setEvolvingSkies = [
     new leafeon_v_1.LeafeonV(),
     new leafeon_vmax_1.LeafeonVMAX(),
     new mareep_1.Mareep(),
+    new medicham_v_1.MedichamV(),
     new pumpkaboo_1.Pumpkaboo(),
     new raihan_1.Raihan(),
     new rayquaza_v_1.RayquazaV(),

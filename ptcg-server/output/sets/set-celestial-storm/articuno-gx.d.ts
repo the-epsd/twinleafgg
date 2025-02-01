@@ -8,24 +8,23 @@ export declare class ArticunoGX extends PokemonCard {
     cardType: CardType;
     hp: number;
     weakness: {
-        type: CardType;
+        type: CardType.METAL;
     }[];
-    retreat: CardType[];
+    retreat: CardType.COLORLESS[];
     powers: {
         name: string;
-        useWhenInPlay: boolean;
         powerType: PowerType;
         text: string;
     }[];
     attacks: ({
         name: string;
-        cost: CardType[];
+        cost: (CardType.WATER | CardType.COLORLESS)[];
         damage: number;
         text: string;
         gxAttack?: undefined;
     } | {
         name: string;
-        cost: CardType[];
+        cost: CardType.WATER[];
         damage: number;
         gxAttack: boolean;
         text: string;

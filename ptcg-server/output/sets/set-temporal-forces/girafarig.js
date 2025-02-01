@@ -21,7 +21,7 @@ class Girafarig extends pokemon_card_1.PokemonCard {
                 damageCalculation: '+',
                 text: 'This attack does 10 more damage for each damage counter on your opponent\'s Active Pokémon.' }
         ];
-        this.set = 'SVI';
+        this.set = 'TEF';
         this.regulationMark = 'H';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '66';

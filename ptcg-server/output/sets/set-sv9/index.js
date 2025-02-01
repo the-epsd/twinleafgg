@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setSV9 = void 0;
+const accelgor_1 = require("./accelgor");
 const bagon_1 = require("./bagon");
 const banette_1 = require("./banette");
 const blaziken_ex_1 = require("./blaziken-ex");
@@ -57,6 +58,7 @@ const postwick_1 = require("./postwick");
 const pupitar_1 = require("./pupitar");
 const salamence_ex_1 = require("./salamence-ex");
 const shelgon_1 = require("./shelgon");
+const shelmet_1 = require("./shelmet");
 const shuppet_1 = require("./shuppet");
 const sprigatito_1 = require("./sprigatito");
 const swinub_1 = require("./swinub");
@@ -92,6 +94,8 @@ exports.setSV9 = [
     new iris_fighting_spirit_1.IrisFightingSpirit(),
     new wailmer_1.Wailmer(),
     new wailord_1.Wailord(),
+    new shelmet_1.Shelmet(),
+    new accelgor_1.Accelgor(),
     new lillies_clefairy_ex_1.LilliesClefairyex(),
     new lillies_comfy_1.LilliesComfy(),
     new lillies_pearl_1.LilliesPearl(),

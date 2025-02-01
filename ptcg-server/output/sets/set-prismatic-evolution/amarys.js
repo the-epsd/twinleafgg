@@ -22,9 +22,9 @@ class Amarys extends trainer_card_1.TrainerCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
             prefabs_1.DRAW_CARDS(effect.player, 4);
-            prefabs_1.ADD_MARKER(effect.player, this, this.AMARYS_USED_MARKER);
+            prefabs_1.ADD_MARKER(this.AMARYS_USED_MARKER, effect.player, this);
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect && prefabs_1.HAS_MARKER(effect.player, this, this.AMARYS_USED_MARKER)) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && prefabs_1.HAS_MARKER(this.AMARYS_USED_MARKER, effect.player, this)) {
             const hand = effect.player.hand;
             const discard = effect.player.discard;
             if (hand.cards.length >= 5)

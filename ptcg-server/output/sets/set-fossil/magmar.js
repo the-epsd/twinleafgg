@@ -8,6 +8,7 @@ const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class Magmar extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -37,12 +38,6 @@ class Magmar extends pokemon_card_1.PokemonCard {
         this.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER = 'DEFENDING_POKEMON_CANNOT_ATTACK_MARKER';
     }
     reduceEffect(store, state, effect) {
-        function simulateCoinFlip(store, state, player) {
-            const result = Math.random() < 0.5;
-            const gameMessage = result ? game_1.GameLog.LOG_PLAYER_FLIPS_HEADS : game_1.GameLog.LOG_PLAYER_FLIPS_TAILS;
-            store.log(state, gameMessage, { name: player.name });
-            return result;
-        }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
@@ -58,7 +53,7 @@ class Magmar extends pokemon_card_1.PokemonCard {
             catch (_a) {
                 return state;
             }
-            const coinFlipResult = simulateCoinFlip(store, state, player);
+            const coinFlipResult = prefabs_1.SIMULATE_COIN_FLIP(store, state, player);
             if (!coinFlipResult) {
                 effect.damage = 0;
                 store.log(state, game_1.GameLog.LOG_ABILITY_BLOCKS_DAMAGE, { name: opponent.name, pokemon: this.name });

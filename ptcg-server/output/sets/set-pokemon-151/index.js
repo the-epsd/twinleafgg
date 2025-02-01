@@ -21,6 +21,7 @@ const ekans_1 = require("./ekans");
 const electabuzz_1 = require("./electabuzz");
 const energy_sticker_1 = require("./energy-sticker");
 const erikas_invitation_1 = require("./erikas-invitation");
+const fearow_1 = require("./fearow");
 const full_art_1 = require("./full-art");
 const giovannis_charisma_1 = require("./giovannis-charisma");
 const gloom_1 = require("./gloom");
@@ -49,6 +50,7 @@ const sandshrew_1 = require("./sandshrew");
 const scyther_1 = require("./scyther");
 const seaking_1 = require("./seaking");
 const snorlax_1 = require("./snorlax");
+const spearow_1 = require("./spearow");
 const squirtle_1 = require("./squirtle");
 const starmie_1 = require("./starmie");
 const staryu_1 = require("./staryu");
@@ -79,6 +81,7 @@ exports.setPokemon151 = [
     new electabuzz_1.Electabuzz(),
     new energy_sticker_1.EnergySticker(),
     new erikas_invitation_1.EreikasInvitation(),
+    new fearow_1.Fearow(),
     new giovannis_charisma_1.GiovannisCharisma(),
     new gloom_1.Gloom(),
     new grabber_1.Grabber(),
@@ -106,6 +109,7 @@ exports.setPokemon151 = [
     new scyther_1.Scyther(),
     new seaking_1.Seaking(),
     new snorlax_1.Snorlax(),
+    new spearow_1.Spearow(),
     new squirtle_1.Squirtle(),
     new staryu_1.Staryu(),
     new starmie_1.Starmie(),

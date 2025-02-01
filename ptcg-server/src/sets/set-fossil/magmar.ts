@@ -1,11 +1,12 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
-import { StoreLike, State, CoinFlipPrompt, GameMessage, StateUtils, GameLog, Player } from '../../game';
+import { StoreLike, State, CoinFlipPrompt, GameMessage, StateUtils, GameLog } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 import { CoinFlipEffect } from '../../game/store/effects/play-card-effects';
+import { SIMULATE_COIN_FLIP } from '../../game/store/prefabs/prefabs';
 
 export class Magmar extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -38,13 +39,6 @@ export class Magmar extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    function simulateCoinFlip(store: StoreLike, state: State, player: Player): boolean {
-      const result = Math.random() < 0.5;
-      const gameMessage = result ? GameLog.LOG_PLAYER_FLIPS_HEADS : GameLog.LOG_PLAYER_FLIPS_TAILS;
-      store.log(state, gameMessage, { name: player.name });
-      return result;
-    }
-
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -62,7 +56,7 @@ export class Magmar extends PokemonCard {
         return state;
       }
 
-      const coinFlipResult = simulateCoinFlip(store, state, player);
+      const coinFlipResult = SIMULATE_COIN_FLIP(store, state, player);
 
       if (!coinFlipResult) {
         effect.damage = 0;

@@ -29,6 +29,7 @@ const swanna_1 = require("./swanna");
 const tapu_koko_1 = require("./tapu-koko");
 const teddiursa_1 = require("./teddiursa");
 const ursaring_1 = require("./ursaring");
+const vikavolt_v_1 = require("./vikavolt-v");
 const yell_horn_1 = require("./yell-horn");
 exports.setDarknessAblaze = [
     new bird_keeper_1.BirdKeeper(),
@@ -60,4 +61,5 @@ exports.setDarknessAblaze = [
     new ursaring_1.Ursaring(),
     new yell_horn_1.YellHorn(),
     new hydreigon_1.Hydreigon(),
+    new vikavolt_v_1.VikavoltV(),
 ];

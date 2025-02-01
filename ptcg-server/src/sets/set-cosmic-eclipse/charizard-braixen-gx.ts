@@ -1,9 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType, EnergyType, SpecialCondition } from '../../game/store/card/card-types';
-import { AttachEnergyPrompt, Card, ChooseCardsPrompt, GameError, GameMessage, PlayerType, ShuffleDeckPrompt, SlotType, State, StateUtils, StoreLike } from '../../game';
+import { AttachEnergyPrompt, GameError, GameMessage, PlayerType, SlotType, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import {CheckProvidedEnergyEffect} from '../../game/store/effects/check-effects';
+import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { SEARCH_DECK_FOR_CARDS_TO_HAND } from '../../game/store/prefabs/prefabs';
 
 export class CharizardBraixenGX extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -36,29 +37,8 @@ export class CharizardBraixenGX extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Brilliant Flare
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const player = effect.player;
-      
-      if (player.deck.cards.length === 0) {
-        return state;
-      }
-
-      let cards: Card[] = [];
-      store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_HAND,
-        player.deck,
-        {},
-        { min: 0, max: 3, allowCancel: false }
-      ), selected => {
-        cards = selected || [];
-        player.deck.moveCardsTo(cards, player.hand);
-      });
-
-      store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-        player.deck.applyOrder(order);
-      });
-    }
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0])
+      SEARCH_DECK_FOR_CARDS_TO_HAND(store, state, effect.player, 0, 3);
 
     // Crimson Flame Pillar-GX
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {

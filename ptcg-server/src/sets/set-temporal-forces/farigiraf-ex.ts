@@ -29,7 +29,7 @@ export class Farigirafex extends PokemonCard {
     }
   ];
 
-  public set: string = 'SVI';
+  public set: string = 'TEF';
   public regulationMark = 'H';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '108';

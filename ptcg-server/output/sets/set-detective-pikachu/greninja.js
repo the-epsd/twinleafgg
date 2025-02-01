@@ -8,6 +8,7 @@ const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class Greninja extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -40,12 +41,6 @@ class Greninja extends pokemon_card_1.PokemonCard {
         this.blockDamage = false;
     }
     reduceEffect(store, state, effect) {
-        function simulateCoinFlip(store, state, player) {
-            const result = Math.random() < 0.5;
-            const gameMessage = result ? game_message_1.GameLog.LOG_PLAYER_FLIPS_HEADS : game_message_1.GameLog.LOG_PLAYER_FLIPS_TAILS;
-            store.log(state, gameMessage, { name: player.name });
-            return result;
-        }
         if (effect instanceof attack_effects_1.PutDamageEffect && effect.target.cards.includes(this)) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
@@ -72,7 +67,7 @@ class Greninja extends pokemon_card_1.PokemonCard {
             catch (_b) {
                 return state;
             }
-            const coinFlipResult = simulateCoinFlip(store, state, player);
+            const coinFlipResult = prefabs_1.SIMULATE_COIN_FLIP(store, state, player);
             if (coinFlipResult) {
                 effect.damage = 0;
                 store.log(state, game_message_1.GameLog.LOG_ABILITY_BLOCKS_DAMAGE, { name: opponent.name, pokemon: this.name });

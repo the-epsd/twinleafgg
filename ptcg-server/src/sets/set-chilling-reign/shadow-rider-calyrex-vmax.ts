@@ -47,7 +47,7 @@ export class ShadowRiderCalyrexVMAX extends PokemonCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '74';
+  public setNumber: string = '75';
 
   public name: string = 'Shadow Rider Calyrex VMAX';
 
