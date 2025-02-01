@@ -27,6 +27,7 @@ class MatchmakingSocket {
             response('error', errors_1.ApiErrorEnum.INVALID_FORMAT);
             return;
         }
+        console.log(`Player ${this.client.id} joined queue for format: ${params.format}`);
         this.matchmakingService.addToQueue(this.client.id, params.format, params.deck);
         response('ok');
     }

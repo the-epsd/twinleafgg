@@ -37,10 +37,12 @@ export class SocketClient implements Client {
   }
 
   public onConnect(client: Client): void {
+    console.log(`Client connected - ID: ${client.id}, Name: ${client.name}`);
     this.coreSocket.onConnect(client);
   }
 
   public onDisconnect(client: Client): void {
+    console.log(`Client disconnected - ID: ${client.id}, Name: ${client.name}`);
     this.coreSocket.onDisconnect(client);
   }
 

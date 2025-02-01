@@ -16,7 +16,6 @@ const goldeen_1 = require("./goldeen");
 const greens_exploration_1 = require("./greens-exploration");
 const greninja_zoroark_gx_1 = require("./greninja-zoroark-gx");
 const hitmontop_1 = require("./hitmontop");
-const honchkrow_gx_1 = require("./honchkrow-gx");
 const kartana_1 = require("./kartana");
 const lairon_1 = require("./lairon");
 const lickitung_1 = require("./lickitung");
@@ -28,7 +27,6 @@ const metal_core_barrier_1 = require("./metal-core-barrier");
 const mew_1 = require("./mew");
 const mewtwo_1 = require("./mewtwo");
 const mismagius_1 = require("./mismagius");
-const murkrow_1 = require("./murkrow");
 const oddish_1 = require("./oddish");
 const pheromosa_buzzwole_gx_1 = require("./pheromosa-buzzwole-gx");
 const pokegear_30_1 = require("./pokegear-30");
@@ -86,6 +84,4 @@ exports.setUnbrokenBonds = [
     new zeraora_1.Zeraora(),
     new greninja_zoroark_gx_1.GreninjaZoroarkGX(),
     new pheromosa_buzzwole_gx_1.PheromosaBuzzwoleGX(),
-    new murkrow_1.Murkrow(),
-    new honchkrow_gx_1.HonchkrowGX(),
 ];

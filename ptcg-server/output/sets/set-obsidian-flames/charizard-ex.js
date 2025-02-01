@@ -23,7 +23,7 @@ class Charizardex extends pokemon_card_1.PokemonCard {
                 powerType: game_1.PowerType.ABILITY,
                 text: 'When you play this Pokémon from your hand to evolve ' +
                     '1 of your Pokémon during your turn, you may search your ' +
-                    'deck for up to 3 Basic F Energy cards and attach them to ' +
+                    'deck for up to 3 Basic [R] Energy cards and attach them to ' +
                     'your Pokémon in any way you like. Then, shuffle your deck. '
             }];
         this.attacks = [

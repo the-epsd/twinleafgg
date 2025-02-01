@@ -22,9 +22,11 @@ class SocketClient {
         this.matchmakingSocket = new matchmaking_socket_1.MatchmakingSocket(this, this.socket, core);
     }
     onConnect(client) {
+        console.log(`Client connected - ID: ${client.id}, Name: ${client.name}`);
         this.coreSocket.onConnect(client);
     }
     onDisconnect(client) {
+        console.log(`Client disconnected - ID: ${client.id}, Name: ${client.name}`);
         this.coreSocket.onDisconnect(client);
     }
     onGameAdd(game) {

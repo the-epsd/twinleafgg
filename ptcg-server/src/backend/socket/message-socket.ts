@@ -31,6 +31,7 @@ export class MessageSocket {
 
   private async sendMessage(params: { userId: number, text: string },
     response: Response<{ message: MessageInfo, user: UserInfo }>): Promise<void> {
+    console.log(`Message from user ${this.client.id} to user ${params.userId}`);
     let messageInfo: MessageInfo;
     let userInfo: UserInfo;
 
