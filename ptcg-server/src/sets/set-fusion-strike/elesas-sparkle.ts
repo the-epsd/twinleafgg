@@ -6,7 +6,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { AttachEnergyPrompt, StateUtils } from '../../game';
+import { AttachEnergyPrompt, ChoosePokemonPrompt, GameError, StateUtils } from '../../game';
 
 export class ElesasSparkle extends TrainerCard {
 
@@ -33,6 +33,18 @@ export class ElesasSparkle extends TrainerCard {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
 
+      // Check if player has any Fusion Strike Pokemon in play
+      let hasFusionStrike = false;
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card) => {
+        if (card.tags.includes(CardTag.FUSION_STRIKE)) {
+          hasFusionStrike = true;
+        }
+      });
+
+      if (!hasFusionStrike) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      }
+
       const blocked2: CardTarget[] = [];
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
         if (!card.tags.includes(CardTag.FUSION_STRIKE)) {
@@ -40,37 +52,51 @@ export class ElesasSparkle extends TrainerCard {
         }
       });
 
-
-
-      // return store.prompt(state, new ChoosePokemonPrompt(
-      //   player.id,
-      //   GameMessage.ATTACH_ENERGY_TO_BENCH,
-      //   PlayerType.BOTTOM_PLAYER,
-      //   [SlotType.BENCH, SlotType.ACTIVE],
-      //   { min: 0, max: 2, blocked: blocked2 }
-      // ), chosen => {
-
-      //   chosen.forEach(target => {
-
-      state = store.prompt(state, new AttachEnergyPrompt(
+      state = store.prompt(state, new ChoosePokemonPrompt(
         player.id,
-        GameMessage.ATTACH_ENERGY_TO_ACTIVE,
-        player.deck,
+        GameMessage.CHOOSE_POKEMON_TO_ATTACH_CARDS,
         PlayerType.BOTTOM_PLAYER,
         [SlotType.BENCH, SlotType.ACTIVE],
-        { superType: SuperType.ENERGY, name: 'Fusion Strike Energy' },
-        { allowCancel: false, min: 0, max: 2, blockedTo: blocked2, differentTargets: true }
-      ), transfers => {
-        transfers = transfers || [];
-
-        if (transfers.length === 0) {
+        { min: 1, max: 2, blocked: blocked2 }
+      ), chosen => {
+        if (!chosen) {
           return;
         }
 
-        for (const transfer of transfers) {
-          const target = StateUtils.getTarget(state, player, transfer.to);
-          player.deck.moveCardTo(transfer.card, target);
-        }
+        const allowedTargets = chosen;
+
+        const notAllowedTargets: CardTarget[] = [];
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
+          if (!allowedTargets.some(pokemon =>
+            pokemon === (target.slot === SlotType.ACTIVE ? player.active : player.bench[target.index])
+          )) {
+            notAllowedTargets.push(target);
+          }
+        });
+
+
+        state = store.prompt(state, new AttachEnergyPrompt(
+          player.id,
+          GameMessage.ATTACH_ENERGY_TO_ACTIVE,
+          player.deck,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.BENCH, SlotType.ACTIVE],
+          { superType: SuperType.ENERGY, name: 'Fusion Strike Energy' },
+          { allowCancel: false, min: 0, max: 2, blockedTo: notAllowedTargets, differentTargets: true }
+        ), transfers => {
+          transfers = transfers || [];
+
+          if (transfers.length === 0) {
+            return;
+          }
+
+          player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
+          for (const transfer of transfers) {
+            const target = StateUtils.getTarget(state, player, transfer.to);
+            player.deck.moveCardTo(transfer.card, target);
+          }
+        });
       });
     }
     return state;
