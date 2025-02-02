@@ -1,0 +1,8 @@
+<div>
+  <button mat-button *ngIf="!isJoined" (click)="join()">
+    {{ 'BUTTON_JOIN' | translate }}
+  </button>
+  <button mat-button *ngIf="isJoined" (click)="leave()">
+    {{ 'BUTTON_LEAVE' | translate }}
+  </button>
+</div>

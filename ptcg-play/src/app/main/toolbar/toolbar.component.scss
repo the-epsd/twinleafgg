@@ -1,0 +1,58 @@
+@use '~@angular/material' as mat;
+@import '../../../theme/variables.scss';
+
+@mixin ptcg-toolbar-height() {
+  height: $ptcg-toolbar-height-desktop;
+
+  @media (max-width: 599px) {
+    height: $ptcg-toolbar-height-mobile;
+  }
+}
+
+:host {
+  z-index: 3;
+}
+
+mat-toolbar {
+  @include mat.elevation(5);
+  @include ptcg-toolbar-height();
+  flex: 0 0 auto;
+  background-color: #0E1117;
+
+  .epsd-spacer {
+    flex: 1 1 auto;
+  }
+
+  &.is-logged-in {
+    padding-right: 0;
+  }
+}
+
+::ng-deep .mat-badge-content {
+  transform: scale(.8) !important; // Increase this value to make the badge larger
+  transform-origin: center;
+  margin-top: 10px;
+  margin-right: 6px;
+  background-color: red;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.horizontal-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px; // Adjust this value to control spacing between items
+
+  .title-text {
+    margin-top: 3px;
+    font-size: 14px;
+  }
+}
+
+ptcg-user-bar {
+  cursor: pointer;
+  display: block;
+  left: unset;
+  width: map-get($ptcg-size, sidebar);
+  transform: scale(.8) !important; // Increase this value to make the badge larger
+}

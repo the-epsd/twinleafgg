@@ -1,0 +1,57 @@
+.ptcg-energy {
+  display: inline-block;
+  height: 2rem;
+  margin: 1px 1px;
+  width: 2rem;
+  overflow: hidden;
+  transform: scale(0.75);
+  transform-origin: top left;
+
+  &[type="grass"] {
+    background: transparent url(/assets/type-icons-small.png) -155px -6px no-repeat;
+  }
+
+  &[type="fighting"] {
+    background: transparent url(/assets/type-icons-small.png) -8px -46px no-repeat;
+  }
+
+  &[type="psychic"] {
+    background: transparent url(/assets/type-icons-small.png) -155px -46px no-repeat;
+  }
+
+  &[type="water"] {
+    background: transparent url(/assets/type-icons-small.png) -118px -6px no-repeat;
+  }
+
+  &[type="lightning"] {
+    background: transparent url(/assets/type-icons-small.png) -8px -6px no-repeat;
+  }
+
+  &[type="metal"] {
+    background: transparent url(/assets/type-icons-small.png) -81px -46px no-repeat;
+  }
+
+  &[type="darkness"] {
+    background: transparent url(/assets/type-icons-small.png) -44px -46px no-repeat;
+  }
+
+  &[type="fire"] {
+    background: transparent url(/assets/type-icons-small.png) -81px -6px no-repeat;
+  }
+
+  &[type="dragon"] {
+    background: transparent url(/assets/type-icons-small.png) -118px -46px no-repeat;
+  }
+
+  &[type="fairy"] {
+    background: transparent url(/assets/type-icons-small.png) -81px -87px no-repeat;
+  }
+
+  &[type="colorless"] {
+    background: transparent url(/assets/type-icons-small.png) -44px -6px no-repeat;
+  }
+
+  &[type="energyless"] {
+    background: transparent url(/assets/type-icons-small.png) -45px -87px no-repeat;
+  }
+}

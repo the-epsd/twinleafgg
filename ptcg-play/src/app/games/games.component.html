@@ -1,0 +1,57 @@
+<ptcg-sidebar-container>
+  <!-- <div class="news-banner" routerLink="/news">
+    <mat-toolbar color="accent">
+      <mat-icon>announcement</mat-icon>
+      <span class="latest-news">Latest News</span>
+      <span class="ptcg-u-spacer"></span>
+      <mat-icon>chevron_right</mat-icon>
+    </mat-toolbar>
+  </div> -->
+  <ptcg-sidebar>
+    <mat-nav-list>
+      <a mat-list-item *ngFor="let client of (clients$ | async)" class="ptcg-no-padding-list-item"
+        [matMenuTriggerFor]="menu">
+        <ptcg-user-bar [user]="client.user" [marked]="clientId === client.clientId">
+        </ptcg-user-bar>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item [routerLink]="['/profile', client.user.userId]">
+            {{ 'BUTTON_SHOW_PROFILE' | translate }}
+          </button>
+          <button mat-menu-item *ngIf="clientId !== client.clientId" [disabled]="loading"
+            (click)="createGame(client.clientId)">
+            {{ 'BUTTON_INVITE' | translate }}
+          </button>
+          <button mat-menu-item *ngIf="loggedUserId !== client.user.userId"
+            [routerLink]="['/message', client.user.userId]">
+            {{ 'BUTTON_SEND_MESSAGE' | translate }}
+          </button>
+        </mat-menu>
+      </a>
+    </mat-nav-list>
+  </ptcg-sidebar>
+  <div class="bg">
+    <ptcg-content [loading]="loading">
+
+      <mat-toolbar-row>
+        <h1 translate>GAMES_TITLE</h1>
+
+        <span class="ptcg-u-spacer"></span>
+
+
+        <!-- <button mat-raised-button color="primary" [disabled]="loading" (click)="createGame()">
+          {{ 'GAMES_CREATE_GAME_BUTTON' | translate }}
+        </button> -->
+      </mat-toolbar-row>
+
+      <!-- <ptcg-matchmaking-lobby></ptcg-matchmaking-lobby> -->
+
+      <div class="ptcg-active-games">
+        <ptcg-games-table></ptcg-games-table>
+      </div>
+
+      <div class="ptcg-recent-matches">
+        <ptcg-match-table></ptcg-match-table>
+      </div>
+    </ptcg-content>
+  </div>
+</ptcg-sidebar-container>

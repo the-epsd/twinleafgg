@@ -1,0 +1,26 @@
+@import '../../../theme/variables.scss';
+
+.ptcg-conversation {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+
+.ptcg-conversation-content {
+  display: block;
+  flex: 1 1;
+}
+
+.ptcg-conversation-content-inner {
+  padding-bottom: 0;
+}
+
+.ptcg-conversation-footer {
+  flex: 0 0;
+
+  mat-form-field {
+    padding: 0 map-get($padding, normal);
+    width: 100%;
+  }
+}

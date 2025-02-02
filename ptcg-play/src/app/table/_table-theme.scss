@@ -1,0 +1,156 @@
+@use '~@angular/material' as mat;
+
+
+@mixin ptcg-table-theme($theme) {
+  $background: map-get($theme, background);
+  $foreground: map-get($theme, foreground);
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $warn: map-get($theme, warn);
+
+  //Board + Card Slot Border
+  $table-border: solid 1px mat.get-color-from-palette($foreground, divider);
+  $active-player-background-color: mat.get-color-from-palette($background, focused-button);
+  // $hand-background-color: mat.get-color-from-palette($background, app-bar);
+  $table-sidebar-header-background-color: mat.get-color-from-palette($background, background);
+  $table-sidebar-logs-background-color: mat.get-color-from-palette($background, focused-button);
+  $table-sidebar-time-empty-progress: mat.get-color-from-palette($foreground, divider);
+  $table-sidebar-time-disabled-progress: mat.get-color-from-palette($foreground, disabled-button);
+  $table-sidebar-time-running-progress: mat.get-color-from-palette($accent);
+  $choose-avatar-background-color: mat.get-color-from-palette($background, hover);
+
+  // ptcg-hand {
+  //   background-color: #00000000;
+  //   border-top: $table-border;
+  //   color: mat.get-color-from-palette($foreground, text);
+  // }
+
+  .host {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  ptcg-board-card,
+  ptcg-board-card-list {
+    .empty {
+      // fill: $table-border;
+      outline: $table-border;
+    }
+  }
+
+  // ptcg-table-sidebar {
+  //   .ptcg-table-sidebar-header {
+  //     background-color: $table-sidebar-header-background-color;
+  //   }
+  // }
+
+  ptcg-player-bar {
+    .ptcg-player-bar.active {
+      background-color: #449058;
+
+      &:before {
+        background-color: #2D3748;
+      }
+    }
+  }
+
+  ptcg-game-logs {
+    .ptcg-system {
+      color: green;
+    }
+
+    .ptcg-player1 {
+      color: blue;
+    }
+
+    .ptcg-player2 {
+      color: red;
+    }
+
+    .ptcg-spectator {
+      color: mat.get-color-from-palette($foreground, hint-text);
+    }
+
+    // .ptcg-game-logs-header {
+    //   background-color: $table-sidebar-header-background-color;
+    // }
+    // .ptcg-game-logs-content {
+    //   background-color: $table-sidebar-logs-background-color;
+    // }
+    .ptcg-game-logs-content li {
+      border-bottom: $table-border;
+    }
+  }
+
+  ptcg-player-time {
+    .ptcg-player-time {
+      .ptcg-player-time-progress-empty {
+        background-color: $table-sidebar-time-empty-progress;
+      }
+
+      .ptcg-player-time-progress {
+        background-color: $table-sidebar-time-running-progress;
+      }
+
+      &.disabled .ptcg-player-time-progress {
+        background-color: $table-sidebar-time-disabled-progress;
+      }
+    }
+  }
+
+  ptcg-replay-controls {
+    .ptcg-replay-controls-header {
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+  }
+
+  ptcg-choose-avatar-popup {
+    .ptcg-avatar-items-container {
+      background-color: $choose-avatar-background-color;
+    }
+  }
+}
+
+@mixin ptcg-table-typography($config) {
+
+  ptcg-board-card {
+    .ptcg-board-card-label {
+      @include mat.typography-level($config, caption);
+    }
+  }
+
+  ptcg-board-card-list {
+    .ptcg-card-damage {
+      @include mat.typography-level($config, headline);
+    }
+
+    .ptcg-card-marker {
+      @include mat.typography-level($config, headline);
+    }
+  }
+
+  ptcg-game-logs {
+    .ptcg-game-logs-header mat-icon {
+      font-size: mat.font-size($config, input);
+    }
+
+    .ptcg-game-logs-content {
+      @include mat.typography-level($config, caption);
+    }
+  }
+
+  ptcg-player-time {
+    .ptcg-player-time {
+      @include mat.typography-level($config, caption);
+    }
+  }
+
+  ptcg-replay-controls {
+    .ptcg-replay-controls-header mat-icon {
+      font-size: mat.font-size($config, input);
+    }
+  }
+}

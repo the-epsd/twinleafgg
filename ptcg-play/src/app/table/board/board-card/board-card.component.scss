@@ -1,0 +1,326 @@
+@import '../../../../theme/variables.scss';
+
+$ptcg-max-energy-cards: 8;
+$ptcg-energy-card-offset: 13%;
+
+.ptcg-board-card {
+  max-width: map-get($ptcg-size, card);
+  min-width: map-get($ptcg-size, board-card);
+  position: relative;
+
+  &.empty:after {
+    content: "";
+    display: block;
+    padding-bottom: $card-aspect-ratio * 100%;
+  }
+
+  &.face-down>div:not(.ptcg-card-counts),
+  &.face-down>ptcg-card {
+    display: none;
+  }
+
+  &.face-down:after {
+    background-image: url(~src/assets/cardback.png);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    content: "";
+    display: block;
+    padding-bottom: $card-aspect-ratio * 100%;
+  }
+}
+
+.ptcg-energy-cards {
+  ptcg-card {
+    width: 30%;
+    top: 80%;
+    left: -11%;
+    z-index: 3;
+    position: absolute;
+    clip-path: circle(34%);
+
+    @for $i from 2 through $ptcg-max-energy-cards {
+      &:nth-child(#{$i}) {
+        left: calc(-11% + (#{$i - 1} * #{$ptcg-energy-card-offset}));
+      }
+    }
+  }
+}
+
+.ptcg-energy-more {
+  padding: $ptcg-board-tiny-padding 0;
+  position: absolute;
+  transform: translateY(-100%);
+
+  :host-context(.upside-down) & {
+    transform: translateY(-100%) rotate(180deg);
+  }
+}
+
+.upside-down {
+  transform: rotate(180deg);
+}
+
+.asleep-position {
+  transform: rotate(270deg);
+}
+
+.confused-position {
+  transform: rotate(180);
+}
+
+.paralyzed-position {
+  transform: rotate(90deg);
+}
+
+.ptcg-trainer-card {
+  width: 100%;
+  left: 35%;
+  position: absolute;
+  transform: rotate(90deg);
+}
+
+.ptcg-card-counts {
+  bottom: 0;
+  padding: $ptcg-board-tiny-padding 0;
+  position: absolute;
+  right: 0;
+  transform: translateY(100%);
+
+  :host-context(.upside-down) & {
+    transform: translateY(100%) rotate(180deg);
+  }
+}
+
+.ptcg-card-damage {
+  position: absolute;
+  top: -2%;
+  right: -2%;
+  z-index: 2;
+
+  :host-context(.upside-down) & {
+    transform: rotate(180deg);
+  }
+}
+
+.ptcg-ability-used {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  :host-context(.upside-down) & {
+    transform: translate(-50%, -50%) rotate(180deg);
+  }
+}
+
+.ptcg-card-marker {
+  z-index: 5;
+  left: 0;
+  padding: map-get($padding, small);
+  position: absolute;
+  top: 0;
+  transform: translateX(-100%);
+
+  &>div {
+    padding-bottom: $ptcg-board-tiny-padding;
+  }
+
+  :host-context(.upside-down) & {
+    transform: translateX(-100%) rotate(180deg);
+  }
+}
+
+.poison-marker {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(50%, 115%) rotate(15deg);
+  width: 200%;
+  height: 200%;
+  background-image: url('/assets/poison-marker.webp');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  pointer-events: none;
+  z-index: 10;
+
+  :host-context(.upside-down) & {
+    transform: translate(-185%, -150%) rotate(165deg);
+  }
+}
+
+.upside-down {
+  transform: rotate(180deg);
+}
+
+.ptcg-card-container {
+  &.rotate-180 {
+    transform: rotate(180deg);
+  }
+
+  &.rotate-90 {
+    transform: rotate(90deg);
+  }
+}
+
+.ptcg-special-conditions {
+  left: 0;
+  padding: map-get($padding, small);
+  position: absolute;
+  top: 0;
+  transform: translateX(100%);
+
+  &>div {
+    padding-bottom: $ptcg-board-tiny-padding;
+  }
+
+  .asleep {
+    transform: rotate(90deg);
+  }
+
+  .paralyzed {
+    transform: translateX(-220%) translateY(150%) rotate(270deg);
+  }
+
+  .confused {
+    transform: translateX(-220%) translateY(150%) rotate(270deg);
+  }
+
+  :host-context(.upside-down) & {
+    transform: translateX(-100%) translateY(150%) rotate(180deg);
+  }
+}
+
+.holo {
+  position: relative;
+  max-width: map-get($ptcg-size, card);
+  min-width: map-get($ptcg-size, board-card);
+  background:
+    linear-gradient(75deg,
+      #92f2f2 5%,
+      #a8d0f0 25%,
+      #d6cff1 45%,
+      #eed5f2 65%,
+      #c4f2e5 90%);
+  border-radius: 4px;
+  background-size: 200% 100%;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+.holo::after {
+  content: '';
+  opacity: 1;
+  border-radius: 4px;
+  position: absolute;
+  inset: 0;
+  animation: GradientScroll 2s linear infinite;
+  background: linear-gradient(110deg,
+      transparent 35%,
+      rgba(146, 242, 242, 0.5),
+      rgba(255, 255, 255, 0.6),
+      rgba(214, 207, 241, 0.5),
+      transparent 65%);
+  background-size: 300% 300%;
+  mix-blend-mode: soft-light;
+  -webkit-mask-image: url('/assets/card-mask.png');
+  mask-image: url('/assets/card-mask.png');
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  will-change: background-position;
+  transform: translateZ(0);
+}
+
+.fullart-holo {
+  position: relative;
+  max-width: map-get($ptcg-size, card);
+  min-width: map-get($ptcg-size, board-card);
+  background:
+    linear-gradient(75deg,
+      #92f2f2 5%,
+      #a8d0f0 25%,
+      #d6cff1 45%,
+      #eed5f2 65%,
+      #c4f2e5 90%);
+  border-radius: 4px;
+  background-size: 200% 100%;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+.fullart-holo::after {
+  content: '';
+  opacity: 1;
+  border-radius: 4px;
+  position: absolute;
+  inset: 0;
+  animation: GradientScroll 2s linear infinite;
+  background: linear-gradient(110deg,
+      transparent 35%,
+      rgba(146, 242, 242, 0.5),
+      rgba(255, 255, 255, 0.6),
+      rgba(214, 207, 241, 0.5),
+      transparent 65%);
+  background-size: 300% 300%;
+  mix-blend-mode: soft-light;
+  -webkit-mask-image: url('/assets/fa-card-mask.png');
+  mask-image: url('/assets/fa-card-mask.png');
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  will-change: background-position;
+  transform: translateZ(0);
+}
+
+.radiant-holo {
+  position: relative;
+  max-width: map-get($ptcg-size, card);
+  min-width: map-get($ptcg-size, board-card);
+  background: linear-gradient(75deg,
+      #92f2f2 5%,
+      #a8d0f0 25%,
+      #d6cff1 45%,
+      #eed5f2 65%,
+      #c4f2e5 90%);
+  border-radius: 4px;
+  background-size: 200% 100%;
+  will-change: transform;
+  transform: translateZ(0);
+
+  // ptcg-card {
+  //   position: relative;
+  //   z-index: 1;
+  // }
+
+  &::after {
+    content: '';
+    opacity: 4;
+    border-radius: 4px;
+    position: absolute;
+    inset: 0;
+    animation: GradientScroll 2s linear infinite;
+    background: linear-gradient(110deg,
+        transparent 35%,
+        rgba(146, 242, 242, 0.5),
+        rgba(255, 255, 255, 0.6),
+        rgba(214, 207, 241, 0.5),
+        transparent 65%);
+    background-size: 300% 300%;
+    mix-blend-mode: soft-light;
+    -webkit-mask-image: url('/assets/card-mask-radiant.png');
+    mask-image: url('/assets/card-mask-radiant.png');
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+    will-change: background-position;
+    transform: translateZ(0);
+  }
+}
+
+@keyframes GradientScroll {
+  from {
+    background-position: 100% 100%
+  }
+
+  to {
+    background-position: 0% 0%
+  }
+}

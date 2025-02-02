@@ -1,0 +1,65 @@
+@use '~@angular/material' as mat;
+
+@mixin ptcg-rank-colors {
+  $rank-colors: (
+    'master': #a836f4,
+    'ultra': #eeb300,
+    'great': #0055ff,
+    'poke': #e13131,
+    'banned': #4e1a19,
+    'bot': rgb(57, 80, 105),
+    'admin': #459058,
+    'mod': #27c2a8,
+  );
+
+@each $rank, $color in $rank-colors {
+  ptcg-badge[color="#{$rank}"] {
+    background-color: $color;
+    // color: white;
+    border-radius: 4px;
+  }
+}
+}
+
+@mixin ptcg-user-info-theme($theme) {
+  $background: map-get($theme, background);
+  $primary: map-get($theme, primary);
+
+  $avatar-background-color: mat.get-color-from-palette($background, app-bar);
+
+  ptcg-avatar {
+    .ptcg-avatar {
+      background-color: $avatar-background-color;
+      border-radius: 50%;
+    }
+
+    .ptcg-avatar.hoverable:hover:after {
+      background-color: mat.get-color-from-palette($background, hover);
+      border-radius: 50%;
+    }
+  }
+
+  ptcg-user-info-popup {
+    .ptcg-user-info-popup-pane {
+      background-color: mat.get-color-from-palette($background, focused-button);
+    }
+  }
+
+  ptcg-user-bar {
+    .ptcg-user-bar.marked .ptcg-user-name {
+      color: mat.get-color-from-palette($primary);
+    }
+  }
+
+  @include ptcg-rank-colors;
+}
+
+@mixin ptcg-user-info-typography($config) {
+  ptcg-user-bar {
+    @include mat.typography-level($config, caption);
+
+    .ptcg-user-name {
+      @include mat.typography-level($config, body-2);
+    }
+  }
+}

@@ -1,0 +1,45 @@
+@import '../app/shared/sidebar/_sidebar-theme.scss';
+@import '../app/login/login-popup/_login-popup-theme.scss';
+@import '../app/deck/deck-edit/_deck-edit-theme.scss';
+@import '../app/main/_main-theme.scss';
+@import '../app/profile/_profile.theme.scss';
+@import '../app/replays/_replays.theme.scss';
+@import '../app/shared/search-box/_search-box-theme.scss';
+@import '../app/shared/info/_info-theme.scss';
+@import '../app/messages/_messages.theme.scss';
+@import '../app/shared/user-info/badge/_badge-theme.scss';
+@import '../app/shared/cards/_cards-theme.scss';
+@import '../app/shared/file-input/_file-input.theme.scss';
+@import '../app/shared/user-info/_user-info.theme.scss';
+@import '../app/table/_table-theme.scss';
+@import '../app/table/prompt/_prompt-theme.scss';
+
+@mixin ptcg-theme($theme) {
+  @include ptcg-sidebar-theme($theme);
+  @include ptcg-deck-edit-theme($theme);
+  @include ptcg-login-popup-theme($theme);
+  @include ptcg-main-theme($theme);
+  @include ptcg-search-box-theme($theme);
+  @include ptcg-info-theme($theme);
+  @include ptcg-badge-theme($theme);
+  @include ptcg-cards-theme($theme);
+  @include ptcg-table-theme($theme);
+  @include ptcg-user-info-theme($theme);
+  @include ptcg-prompt-theme($theme);
+  @include ptcg-file-input-theme($theme);
+  @include ptcg-profile-theme($theme);
+  @include ptcg-replays-theme($theme);
+  @include ptcg-messages-theme($theme);
+}
+
+@mixin ptcg-typography($config) {
+  @include ptcg-cards-typography($config);
+  @include ptcg-main-typography($config);
+  @include ptcg-deck-edit-typography($config);
+  @include ptcg-user-info-typography($config);
+  @include ptcg-prompt-typography($config);
+  @include ptcg-info-typography($config);
+  @include ptcg-table-typography($config);
+  @include ptcg-file-input-typography($config);
+  @include ptcg-messages-typography($config);
+}

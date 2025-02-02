@@ -1,0 +1,193 @@
+<dnd-preview [allBackends]="true">
+  <ng-template let-type let-item="item">
+    <ng-container [ngSwitch]="type">
+      <div class="ptcg-card" *ngSwitchCase="'BOARD_SLOT'">
+        <img class="ptcg-card-preview" [ptcgImageCache]="item.scanUrl" ptcgDropHighlight="outside"
+          [ptcgDropHighlightVisible]="boardHighlight$ | async">
+      </div>
+      <div class="ptcg-card" *ngSwitchCase="'HAND_CARD'">
+        <img class="ptcg-card-preview" [ptcgImageCache]="item.data.scanUrl" ptcgDropHighlight="outside"
+          [ptcgDropHighlightVisible]="boardHighlight$ | async">
+      </div>
+    </ng-container>
+  </ng-template>
+</dnd-preview>
+
+<div id="top_div" [class.active]="isTopPlayerActive"></div>
+<div id="bottom_div" [class.active]="isBottomPlayerActive"></div>
+
+<div class="ptcg-board-outer-container responsive-board">
+
+  <div class="ptcg-board-container" [class.upside-down]="isUpsideDown" [dropTarget]="boardTarget">
+
+    <div class="ptcg-board-player upside-down">
+      <!-- Top Active -->
+      <div class="ptcg-board-row ptcg-board-active">
+        <ptcg-board-card [cardList]="topPlayer?.active" [owner]="topPlayer?.id === clientId"
+          (cardClick)="onCardClick($event, topPlayer?.active)">
+        </ptcg-board-card>
+      </div>
+
+      <!-- Top Bench -->
+      <div class="ptcg-board-row ptcg-board-bench">
+        <ptcg-board-card *ngFor="let slot of topBench
+        | slice:0:(topPlayer?.bench.length || defaultBenchSize); index as i" [cardList]="topPlayer?.bench[i]"
+          [owner]="topPlayer?.id === clientId" (cardClick)="onCardClick($event, topPlayer?.bench[i])">
+        </ptcg-board-card>
+      </div>
+
+      <!-- Top Lost Zone -->
+      <div class="ptcg-board-row ptcg-board-supporter">
+        <ptcg-board-card class="lost-zone" [cardList]="topPlayer?.lostzone" [owner]="topPlayer?.id === clientId"
+          (cardClick)="onLostZoneClick($event, topPlayer?.lostzone)" showCardCount="true"
+          [style.transform]="'rotate(90deg)'">
+        </ptcg-board-card>
+      </div>
+
+      <!-- Top Stadium -->
+      <!-- <div class="ptcg-board-row ptcg-board-stadium">
+        <ptcg-board-card class="stadium-card" [cardList]="topPlayer?.stadium" [owner]="topPlayer?.id === clientId"
+          (cardClick)="onStadiumClick($event)">
+        </ptcg-board-card>
+      </div> -->
+
+      <!-- Top Supporter -->
+      <div class="ptcg-board-row ptcg-board-stadium">
+        <ptcg-board-card [cardList]="topPlayer?.supporter" [owner]="topPlayer?.id === clientId"
+          (cardClick)="onCardClick($event, null)">
+        </ptcg-board-card>
+      </div>
+
+      <!-- Top Deck -->
+      <div class="ptcg-board-row ptcg-board-deck">
+        <div class="deck-container">
+          <ng-container *ngFor="let i of createRange(topPlayer?.deck?.cards?.length || 0); let idx = index">
+            <ptcg-board-card (click)="onDeckClick($event, topPlayer?.deck)" [cardList]="topPlayer?.deck"
+              [owner]="topPlayer" class="deck-card"
+              [style.transform]="'translate(' + (idx * 0.25) + 'px, ' + (idx * 0.25) + 'px)'">
+            </ptcg-board-card>
+          </ng-container>
+          <div class="card-count">{{topPlayer?.deck?.cards?.length || 0}}</div>
+        </div>
+      </div>
+
+      <!-- Top Discard -->
+      <div class="ptcg-board-row ptcg-board-discard">
+        <div class="discard-container">
+          <ng-container *ngFor="let i of createRange(topPlayer?.discard?.cards?.length || 0); let idx = index">
+            <ptcg-board-card (click)="onDiscardClick($event, topPlayer?.discard)" [cardList]="topPlayer?.discard"
+              [owner]="topPlayer" class="discard-card"
+              [style.transform]="'translate(' + (idx * 0.25) + 'px, ' + (idx * 0.25) + 'px)'">
+            </ptcg-board-card>
+          </ng-container>
+          <div class="card-count">{{topPlayer?.discard?.cards?.length || 0}}</div>
+        </div>
+      </div>
+
+      <!-- Top Prizes -->
+      <ptcg-board-prizes [player]="topPlayer" [clientId]="clientId" (prizeClick)="onPrizeClick(topPlayer, $event)">
+      </ptcg-board-prizes>
+    </div>
+
+    <div class="background-image-container">
+      <div class="marker-container top-markers">
+        <div class="gx-marker" [class.used]="topPlayer?.usedGX"></div>
+        <div class="vstar-marker" [class.used]="topPlayer?.usedVSTAR"></div>
+      </div>
+      <img src="assets/twinleaf-board-center.png" alt="Twinleaf Logo">
+      <div class="coin-flip-container">
+        <!-- <ptcg-coin-flip [prompt]="activeCoinFlipPrompt">
+        </ptcg-coin-flip> -->
+      </div>
+      <div class="marker-container bottom-markers">
+        <div class="vstar-marker" [class.used]="bottomPlayer?.usedVSTAR"></div>
+        <div class="gx-marker" [class.used]="bottomPlayer?.usedGX"></div>
+      </div>
+    </div>
+
+
+    <div class="ptcg-board-player">
+
+      <!-- Bottom Active -->
+      <div class="ptcg-board-row ptcg-board-active">
+        <div class="ptcg-board-drop-target" [dropTarget]="bottomActiveTarget" ptcgDropHighlight="outside"
+          [ptcgDropHighlightVisible]="bottomActiveHighlight$ | async">
+          <ptcg-board-card
+            [class.draggable]="!gameState.deleted && bottomPlayer?.id === clientId && bottomPlayer?.active.cards.length > 0"
+            [dragSource]="bottomActive.source" [noHTML5Preview]="true" [cardList]="bottomPlayer?.active"
+            [owner]="bottomPlayer?.id === clientId" (cardClick)="onActiveClick($event, bottomPlayer?.active)">
+          </ptcg-board-card>
+        </div>
+      </div>
+
+      <!-- Bottom Bench -->
+      <div class="ptcg-board-row ptcg-board-bench">
+        <div class="ptcg-board-drop-target" *ngFor="let slot of bottomBench
+        | slice:0:(bottomPlayer?.bench.length || defaultBenchSize)" [dropTarget]="bottomBenchTarget[slot.index]"
+          ptcgDropHighlight="outside" [ptcgDropHighlightVisible]="bottomBenchHighlight$[slot.index] | async">
+          <ptcg-board-card
+            [class.draggable]="!gameState.deleted && bottomPlayer?.id === clientId && bottomPlayer?.bench[slot.index].cards.length > 0"
+            [dragSource]="slot.source" [noHTML5Preview]="true" [cardList]="bottomPlayer?.bench[slot.index]"
+            [owner]="bottomPlayer?.id === clientId"
+            (cardClick)="onBenchClick($event, bottomPlayer?.bench[slot.index], slot.index)">
+          </ptcg-board-card>
+        </div>
+      </div>
+
+      <!-- Bottom Lost Zone -->
+      <div class="ptcg-board-row ptcg-board-stadium">
+        <ptcg-board-card class="lost-zone" [cardList]="bottomPlayer?.lostzone" [owner]="bottomPlayer?.id === clientId"
+          (cardClick)="onLostZoneClick($event, bottomPlayer?.lostzone)" showCardCount="true">
+        </ptcg-board-card>
+      </div>
+
+      <!-- Bottom Stadium -->
+      <div class="ptcg-board-row ptcg-board-stadium">
+        <ptcg-board-card class="stadium-card" [cardList]="bottomPlayer?.stadium" [owner]="bottomPlayer?.id === clientId"
+          (cardClick)="onStadiumClick($event)">
+        </ptcg-board-card>
+        <ptcg-board-card class="stadium-card" [cardList]="topPlayer?.stadium" [owner]="topPlayer?.id === clientId"
+          (cardClick)="onStadiumClick($event)">
+        </ptcg-board-card>
+      </div>
+
+      <!-- Bottom Supporter -->
+      <div class="ptcg-board-row ptcg-board-supporter">
+        <ptcg-board-card [cardList]="bottomPlayer?.supporter" [owner]="bottomPlayer?.id === clientId"
+          (cardClick)="onCardClick($event, null)">
+        </ptcg-board-card>
+      </div>
+
+      <!-- Bottom Deck -->
+      <div class="ptcg-board-row ptcg-board-deck">
+        <div class="deck-container">
+          <ng-container *ngFor="let i of createRange(bottomPlayer?.deck?.cards?.length || 0); let idx = index">
+            <ptcg-board-card (click)="onDeckClick($event, bottomPlayer?.deck)" [cardList]="bottomPlayer?.deck"
+              [owner]="bottomPlayer" class="deck-card"
+              [style.transform]="'translate(' + (idx * 0.25) + 'px, ' + (-idx * 0.25) + 'px)'">
+            </ptcg-board-card>
+          </ng-container>
+          <div class="card-count">{{bottomPlayer?.deck?.cards?.length || 0}}</div>
+        </div>
+      </div>
+
+      <!-- Bottom Discard -->
+      <div class="ptcg-board-row ptcg-board-discard">
+        <div class="discard-container">
+          <ng-container *ngFor="let i of createRange(bottomPlayer?.discard?.cards?.length || 0); let idx = index">
+            <ptcg-board-card (click)="onDiscardClick($event, bottomPlayer?.discard)" [cardList]="bottomPlayer?.discard"
+              [owner]="bottomPlayer" class="discard-card"
+              [style.transform]="'translate(' + (idx * 0.25) + 'px, ' + (-idx * 0.25) + 'px)'">
+            </ptcg-board-card>
+          </ng-container>
+          <div class="card-count">{{bottomPlayer?.discard?.cards?.length || 0}}</div>
+        </div>
+      </div>
+
+      <!-- Prizes -->
+      <ptcg-board-prizes [player]="bottomPlayer" [clientId]="clientId"
+        (prizeClick)="onPrizeClick(bottomPlayer, $event)">
+      </ptcg-board-prizes>
+    </div>
+  </div>
+</div>

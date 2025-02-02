@@ -1,0 +1,14 @@
+<h2 mat-dialog-title translate>
+  <!-- CARDS_LIST_OF_CARDS -->
+</h2>
+
+<mat-dialog-content>
+  <ptcg-card-list-pane [selected]="card" [cardList]="cardList" [facedown]="facedown" (cardClick)="close($event)">
+  </ptcg-card-list-pane>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-raised-button (click)="close()">
+    {{ 'BUTTON_CLOSE' | translate }}
+  </button>
+</mat-dialog-actions>

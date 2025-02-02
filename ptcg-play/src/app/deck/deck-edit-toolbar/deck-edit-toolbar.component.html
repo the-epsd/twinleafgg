@@ -1,0 +1,146 @@
+<form [formGroup]="form">
+  <mat-toolbar class="ptcg-deck-edit-toolbar">
+    <mat-toolbar-row>
+
+      <ptcg-search-box (search)="onSearch($event)" [showSearchButton]="false" [isActivated]="true"
+        label="{{ 'BUTTON_SEARCH_TEXT' | translate }}">
+      </ptcg-search-box>
+
+      <!-- <h1 *ngIf="deck" translate [translateParams]="{name: deck.name}">
+        DECK_EDIT_TITLE
+      </h1> -->
+
+      <!-- <button mat-raised-button [disabled]="disabled" (click)="onClearDeck()">
+        {{ 'BUTTON_RENAME' | translate }}
+      </button> -->
+
+      <!-- <span class="ptcg-u-spacer"></span> -->
+
+      <div class="super-type-buttons" style="width: 235px;">
+        <button mat-button *ngFor="let superType of superTypes; let first = first; let last = last"
+          (click)="toggleSuperType(superType.value)" [class.selected]="selectedSuperTypes.includes(superType.value)"
+          [class.left-rounded]="first" [class.right-rounded]="last">
+          {{ superType.label | translate }}
+        </button>
+      </div>
+
+      <mat-form-field class="narrow-select2">
+        <mat-select [multiple]="true" [placeholder]="'DECK_EDIT_ALL_FORMATS' | translate" formControlName="formats">
+          <mat-option *ngFor="let format of formats" [value]="format.value">
+            {{ format.label | translate }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="narrow-select1">
+        <mat-select [multiple]="true" [placeholder]="'DECK_EDIT_ALL_TAGS' | translate" formControlName="tags">
+          <mat-option *ngFor="let cardTag of cardTags" [value]="cardTag.value">
+            {{ cardTag.label | translate }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <ng-container *ngIf="isPokemonSelected()">
+        <ptcg-type-icons (typeSelected)="onTypeSelected($event)"></ptcg-type-icons>
+
+        <ng-container *ngIf="form.get('superTypes').value.includes('POKEMON')">
+          <ptcg-type-icons (typeSelected)="onTypeSelected($event)"></ptcg-type-icons>
+
+          <mat-form-field floatLabel="never" appearance="legacy">
+            <mat-select [multiple]="true" [placeholder]="'DECK_EDIT_STAGES' | translate" formControlName="stages">
+              <mat-option *ngFor="let stage of stages" [value]="stage.value">
+                {{ stage.label | translate }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field floatLabel="never" appearance="legacy">
+            <mat-select [multiple]="true" [placeholder]="'DECK_EDIT_ATTACK_COST' | translate"
+              formControlName="attackCosts">
+              <mat-option *ngFor="let cost of attackCost" [value]="cost.value">
+                {{ cost.label | translate }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field floatLabel="never" appearance="legacy">
+            <mat-select [multiple]="true" [placeholder]="'DECK_EDIT_RETREAT_COST' | translate"
+              formControlName="retreatCosts">
+              <mat-option *ngFor="let cost of retreatCost" [value]="cost.value">
+                {{ cost.label | translate }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </ng-container>
+      </ng-container>
+      <!-- <mat-form-field>
+        <mat-select [multiple]="true" [placeholder]="'DECK_EDIT_STAGES' | translate" formControlName="stages">
+          <mat-option *ngFor="let stage of stages" [value]="stage.value">
+            {{ stage.label | translate }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-select [multiple]="true" [placeholder]="'DECK_EDIT_ATTACK_COST' | translate" formControlName="attackCosts">
+          <mat-option *ngFor="let cost of attackCost" [value]="cost.value">
+            {{ cost.label | translate }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-select [multiple]="true" [placeholder]="'DECK_EDIT_RETREAT_COST' | translate"
+          formControlName="retreatCosts">
+          <mat-option *ngFor="let cost of retreatCost" [value]="cost.value">
+            {{ cost.label | translate }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field> -->
+
+      <ng-container *ngIf="isTrainerSelected()">
+        <mat-form-field class="narrow-select2">
+          <mat-select [multiple]="true" [placeholder]="'DECK_EDIT_TRAINERS' | translate" formControlName="trainerTypes">
+            <mat-option *ngFor="let trainerType of trainerTypes" [value]="trainerType.value">
+              {{ trainerType.label | translate }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </ng-container>
+
+      <ng-container *ngIf="isEnergySelected()">
+        <mat-form-field class="narrow-select3">
+          <mat-select [multiple]="true" [placeholder]="'DECK_EDIT_ENERGY' | translate" formControlName="energyTypes">
+            <mat-option *ngFor="let energyType of energyTypes" [value]="energyType.value">
+              {{ energyType.label | translate }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </ng-container>
+
+      <span class="ptcg-u-spacer"></span>
+
+      <button class="green-button" mat-raised-button (click)="onSave()" [routerLink]="['/deck']">
+        <!-- <mat-icon>arrow_back</mat-icon> -->
+        <span translate>DECK_EDIT_BACK</span>
+      </button>
+
+      <!-- <button mat-raised-button [disabled]="disabled" (click)="onClearDeck()">
+                    {{ 'BUTTON_CLEAR_DECK' | translate }}
+                  </button> -->
+      <button mat-raised-button class="green-button" (click)="exportToFile()">
+        {{ 'BUTTON_EXPORT' | translate }}
+      </button>
+
+      <button mat-raised-button class="green-button" (click)="importFromClipboard()">
+        {{ 'BUTTON_IMPORT' | translate }}
+      </button>
+
+      <button mat-raised-button class="green-button" (click)="onSave()">
+        {{ 'BUTTON_SAVE' | translate }}
+      </button>
+
+    </mat-toolbar-row>
+
+  </mat-toolbar>
+</form>

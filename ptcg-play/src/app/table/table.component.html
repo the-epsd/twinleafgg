@@ -1,0 +1,38 @@
+<!-- <video autoplay muted loop id="myVideo">
+  <source src="assets/star-bg.mp4" type="video/mp4">
+</video> -->
+
+<ptcg-sidebar-container>
+
+  <!-- Table sidebar -->
+  <ptcg-sidebar>
+    <ptcg-table-sidebar [clientId]="clientId" [gameState]="gameState" [topPlayer]="topPlayer"
+      [bottomPlayer]="bottomPlayer" (join)="play()">
+    </ptcg-table-sidebar>
+  </ptcg-sidebar>
+
+  <ptcg-content [loading]="loading || waiting">
+    <div class="ptcg-table" *ngIf="gameState">
+      <!-- <ptcg-vs-screen></ptcg-vs-screen> -->
+      <!-- Table board -->
+
+      <!-- Player's hand -->
+      <div class="opp-hand">
+        <ptcg-hand [player]="topPlayer" [gameState]="gameState" [clientId]="clientId" [isOpponent]="true"></ptcg-hand>
+      </div>
+      <ptcg-board [clientId]="clientId" [gameState]="gameState" [topPlayer]="topPlayer" [bottomPlayer]="bottomPlayer">
+      </ptcg-board>
+
+      <!-- Player's hand -->
+
+      <ptcg-hand [clientId]="clientId" [gameState]="gameState" [player]="bottomPlayer">
+      </ptcg-hand>
+
+
+      <!-- Player prompt -->
+      <ptcg-prompt [gameState]="gameState" [clientId]="clientId">
+      </ptcg-prompt>
+    </div>
+  </ptcg-content>
+
+</ptcg-sidebar-container>

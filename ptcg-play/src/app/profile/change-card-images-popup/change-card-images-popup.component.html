@@ -1,0 +1,24 @@
+<h2 mat-dialog-title translate>PROFILE_CHANGE_CARD_IMAGES_TITLE</h2>
+
+<mat-dialog-content>
+  <p translate>PROFILE_CHANGE_CARD_IMAGES_HINT</p>
+
+  <form #form="ngForm" autocomplete="off">
+    <mat-form-field>
+      <mat-label translate>LABEL_JSON_URL</mat-label>
+      <input matInput [placeholder]="'LABEL_JSON_URL' | translate" name="jsonUrl" [(ngModel)]="jsonUrl" required>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-raised-button color="warn" (click)="resetCardImages()">
+    {{ 'PROMPT_RESET' | translate }}
+  </button>
+  <button mat-raised-button mat-dialog-close>
+    {{ 'BUTTON_CANCEL' | translate }}
+  </button>
+  <button mat-raised-button color="primary" (click)="changeCardImages()" [disabled]="form.invalid">
+    {{ 'BUTTON_SAVE' | translate }}
+  </button>
+</mat-dialog-actions>

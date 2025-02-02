@@ -1,0 +1,76 @@
+@import '../../../theme/variables.scss';
+
+:host {
+  display: inline-flex;
+}
+
+$ptcg-deck-card-width: map-get($ptcg-size, card) + map-get($padding, small);
+
+.ptcg-deck-card {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  margin: map-get($padding, small);
+  width: $ptcg-deck-card-width;
+}
+
+.inspect-button {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  z-index: 10;
+  margin-right: -15px;
+}
+
+ptcg-card {
+  display: block;
+  touch-action: none;
+  width: map-get($ptcg-size, card);
+}
+
+.ptcg-deck-card-label {
+  display: block;
+  overflow: hidden;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.ptcg-deck-card-count {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  right: 34px;
+  bottom: 10px;
+  width: 32px;
+  height: 32px;
+  border: 2px solid #2d3748;
+  background-color: #0e1117;
+  border-radius: 50%;
+  // color: rgb(29, 35, 54);
+  font-weight: bold;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.ptcg-deck-card-info {
+  display: flex;
+  cursor: pointer;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+// .ptcg-card-damage {
+//   z-index: 3;
+//   position: absolute;
+//   top: -2%;
+//   right: -2%;
+
+//   :host-context(.upside-down) & {
+//     transform: rotate(180deg);
+//   }
+// }

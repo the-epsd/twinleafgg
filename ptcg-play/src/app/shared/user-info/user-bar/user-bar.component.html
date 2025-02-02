@@ -1,0 +1,29 @@
+<div class="ptcg-user-bar" [class.marked]="marked" [class.clickable]="openUserPopup && user.userId">
+
+  <ptcg-avatar class="ptcg-user-avatar" [avatarFile]="user.avatarFile" [hoverable]="openUserPopup && user.userId"
+    [openAvatarPopup]="openUserPopup && user.userId">
+  </ptcg-avatar>
+
+  <div class="ptcg-user-info">
+    <div class="ptcg-user-name">
+      <span class="ptcg-user-name-text" (click)="showUserInfoPopup(user)">
+        {{ user.name }}
+      </span>
+      <ptcg-badge
+        *ngIf="['Lugia', 'Charizard', 'Gardevoir', 'Dragapult', 'LostBox', 'Standard', 'GLC', 'Retro'].includes(user.name)"
+        color="bot">
+        BOT
+      </ptcg-badge>
+      <ptcg-badge *ngIf="['TheEPSD', 'OkamiAstra', 'wheatr', 'DanTDM', 'Charlie'].includes(user.name)" color="admin">
+        ADMIN
+      </ptcg-badge>
+      <ptcg-badge *ngIf="['Shutterstock'].includes(user.name)" color="mod">
+        MODERATOR
+      </ptcg-badge>
+    </div>
+    <div class="ptcg-user-ranking">
+      <ptcg-rank [ranking]="user.ranking" [rank]="user.rank"></ptcg-rank>
+    </div>
+  </div>
+
+</div>

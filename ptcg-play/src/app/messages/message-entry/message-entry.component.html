@@ -1,0 +1,28 @@
+<div class="ptcg-message-entry" [class.myself]="writtenByMe" *ngIf="user$ | async ; let user">
+
+  <mat-card class="ptcg-message-text">
+
+    <mat-card-content>
+      {{ message.text }}
+    </mat-card-content>
+
+    <mat-card-footer>
+      <div class="ptcg-message-footer">
+        <div class="ptcg-message-from">
+          {{ 'MESSAGES_MESSAGE_FROM' | translate: { name: user.name } }},
+          {{ message.created | date: ('DATE_FORMAT' | translate) }}
+        </div>
+        <div class="ptcg-message-seen" *ngIf="message.isRead">
+          <mat-icon>done</mat-icon>
+        </div>
+      </div>
+    </mat-card-footer>
+
+  </mat-card>
+
+  <ptcg-avatar class="ptcg-message-avatar"
+    openAvatarPopup="true"
+    [avatarFile]="user.avatarFile">
+  </ptcg-avatar>
+
+</div>

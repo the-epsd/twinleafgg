@@ -1,0 +1,42 @@
+// @import '../../../../theme/variables.scss';
+
+// .ptcg-board-deck {
+//   display: flex;
+//   flex-direction: column;
+//   height: 100%;
+//   width: 100%;
+//   position: relative;
+// }
+
+// .deck-container {
+//   width: calc(var(--card-size) * 1.15);
+//   height: calc(var(--card-size) * #{$card-aspect-ratio} * 1.15);
+//   position: absolute;
+//   left: 50%;
+//   transform: translateX(-50%);
+//   top: 27%;
+//   /* Moved up to match supporter */
+// }
+
+// .discard-container {
+//   width: calc(var(--card-size) * 1.15);
+//   height: calc(var(--card-size) * #{$card-aspect-ratio} * 1.15);
+//   position: absolute;
+//   left: 50%;
+//   transform: translateX(-50%);
+//   top: 120%;
+//   /* Moved down to match bench */
+// }
+
+// ptcg-board-card {
+//   width: 100%;
+//   height: 100%;
+//   position: absolute;
+// }
+
+// .deck-card,
+// .discard-card {
+//   position: absolute;
+//   left: 0;
+//   top: 0;
+// }

@@ -1,0 +1,36 @@
+<div class="ptcg-game-logs-header">
+  <h4 class="ptcg-game-logs-header-text" translate>TABLE_LOGS</h4>
+  <span class="ptcg-u-spacer"></span>
+  <mat-icon (click)="clearLogs()" matTooltip="Clear logs" matTooltipShowDelay="1000">
+    delete_outline
+  </mat-icon>
+  <mat-icon (click)="copyLogsToClipboard()" matTooltip="Copy logs to clipboard" matTooltipShowDelay="1000">
+    content_copy
+  </mat-icon>
+</div>
+
+<div class="ptcg-game-logs-content">
+  <ul>
+    <li *ngFor="let log of logs; trackBy: trackByFn">
+      <span class="timestamp">[{{log.params?.timestamp}}]</span>
+      <span [class]="log.className">{{log.name}}</span>
+      <span [class.private-log]="log.isPrivate">
+        {{ 'GAME_LOGS.' + log.message | translate: log.params }}
+      </span>
+    </li>
+  </ul>
+</div>
+
+
+<div class="ptcg-game-logs-footer">
+  <form class="game-logs-form" autocomplete="off">
+    <mat-form-field floatLabel="never" appearance="legacy">
+      <input #searchInput="matInput" name="message" maxlength="256" [(ngModel)]="message" [disabled]="isDeleted"
+        type="text" matInput [placeholder]="'MESSAGES_ENTER_MESSAGE' | translate">
+      <button mat-button matSuffix mat-icon-button [matTooltip]="'MESSAGES_SEND_MESSAGE' | translate"
+        matTooltipShowDelay="1000" [disabled]="isDeleted" (click)="sendMessage()">
+        <mat-icon>play_arrow</mat-icon>
+      </button>
+    </mat-form-field>
+  </form>
+</div>

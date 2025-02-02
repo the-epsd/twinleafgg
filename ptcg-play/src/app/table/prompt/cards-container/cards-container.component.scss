@@ -1,0 +1,36 @@
+@import '../../../../theme/variables.scss';
+
+$ptcg-cards-container-padding-v: map-get($padding, small);
+$ptcg-cards-container-padding-h: map-get($padding, normal); // for easier scrolling on mobile
+$ptcg-cards-container-border-radius: map-get($padding, small);
+
+$ptcg-cards-container-min-height: map-get($ptcg-size, card) * $card-aspect-ratio + 2 * map-get($padding, normal);
+$ptcg-cards-container-max-height: 2 * map-get($ptcg-size, card) * $card-aspect-ratio + 3 * map-get($padding, normal);
+$ptcg-cards-container-min-width: 3 * map-get($ptcg-size, card) + 4 * map-get($padding, normal);
+
+:host {
+  display: block;
+
+  background: rgba(26, 32, 44, 0.5);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 10px;
+
+
+
+  &:not(:last-child) {
+    margin-bottom: map-get($padding, normal);
+  }
+}
+
+.ptcg-cards-container {
+  border-radius: $ptcg-cards-container-border-radius;
+  display: flex;
+  flex-wrap: wrap;
+  max-height: $ptcg-cards-container-max-height;
+  max-width: 100%;
+  min-height: $ptcg-cards-container-min-height;
+  min-width: $ptcg-cards-container-min-width;
+  overflow: auto;
+  padding: $ptcg-cards-container-padding-v $ptcg-cards-container-padding-h;
+}

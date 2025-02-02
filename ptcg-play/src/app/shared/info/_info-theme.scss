@@ -1,0 +1,25 @@
+@use '~@angular/material' as mat;
+
+
+@mixin ptcg-info-theme($theme) {
+  $background: map-get($theme, background);
+  $foreground: map-get($theme, foreground);
+  $primary: map-get($theme, primary);
+
+  $info-background-color: mat.get-color-from-palette($background, dialog);
+  $deck-count-background-color: mat.get-color-from-palette($primary, 900);
+
+  .ptcg-info {
+    background-color: $deck-count-background-color;
+    color: mat.get-color-from-palette($foreground, text);
+  }
+
+}
+
+@mixin ptcg-info-typography($config) {
+
+  .ptcg-info {
+    @include mat.typography-level($config, caption);
+  }
+
+}

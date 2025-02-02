@@ -1,0 +1,98 @@
+.matchmaking-lobby {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  margin: 2rem auto;
+  max-width: 700px; // Smaller max-width
+}
+
+.lobby-content {
+  width: 100%;
+  padding: 1.5rem;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.top-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.rank-badge {
+  background: #459058;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.deck-tile {
+  margin: 0.5rem 0 2rem 0;
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.deck-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.deck-name {
+  font-size: 1.25rem;
+  color: white;
+}
+
+.mat-form-field {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.battle-button {
+  width: 100%;
+  height: 3.5rem;
+  background: #459058;
+  color: white;
+  font-weight: bold;
+
+  &:hover {
+    background: #3b7a4a;
+  }
+}
+
+.leave-button {
+  width: 100%;
+  height: 3.5rem;
+  background: #dc2626;
+  color: white;
+
+  &:hover {
+    background: #b91c1c;
+  }
+}
+
+.queue-status {
+  margin-top: 1rem;
+  color: white;
+
+  h3 {
+    margin-bottom: 0.5rem;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+
+    li {
+      padding: 0.5rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+  }
+}

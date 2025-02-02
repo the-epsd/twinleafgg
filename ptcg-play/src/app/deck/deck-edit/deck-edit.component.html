@@ -1,0 +1,13 @@
+<ptcg-content [loading]="loading">
+  <div class="ptcg-deck-edit">
+    <ptcg-deck-edit-toolbar [disabled]="loading" [deck]="deck" (filterChange)="toolbarFilter = $event"
+      (save)="saveDeck()" (import)="importFromClipboard()" (export)="exportDeck()" (clearDeck)="clearDeck()">
+    </ptcg-deck-edit-toolbar>
+
+    <ptcg-deck-edit-panes [toolbarFilter]="toolbarFilter" [(deckItems)]="deckItems">
+    </ptcg-deck-edit-panes>
+
+    <ptcg-deck-edit-info [deckItems]="deckItems">
+    </ptcg-deck-edit-info>
+  </div>
+</ptcg-content>

@@ -1,0 +1,91 @@
+@import '../../theme/variables.scss';
+
+.ptcg-u-padding {
+  background-color: #1a202c;
+}
+
+.mat-toolbar-row {
+  background-color: #1a202c;
+
+  >h1 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  >button {
+    margin-left: map-get($padding, small);
+    min-width: 80px;
+  }
+}
+
+.mat-header-row {
+  background-color: #2d3748;
+}
+
+.mat-cell {
+  background-color: #2d3748;
+}
+
+.mat-paginator {
+  background-color: #2d3748;
+}
+
+.mat-raised-button {
+  margin-top: 12px;
+  background-color: #449058;
+  border-radius: 16px;
+}
+
+// ... existing styles ...
+
+::ng-deep .ptcg-deck-edit-toolbar {
+  .mat-form-field-flex {
+    background-color: #090b0f;
+    border-radius: 32px;
+    padding: 0.5rem 1rem;
+    align-items: center;
+    font-size: 17px;
+    margin-top: 40px;
+    max-height: 40px;
+  }
+
+  .mat-form-field-infix {
+    padding: 0;
+    border-top: 0;
+  }
+
+  .mat-select-value {
+    color: #283142;
+    font-size: 14px;
+  }
+
+  .mat-form-field-label {
+    font-size: 14px;
+    color: #283142;
+  }
+
+  .mat-form-field-underline {
+    display: none;
+    margin-top: 4px;
+  }
+
+  .mat-form-field-flex input {
+    color: #449058;
+    font-size: 13px;
+  }
+
+  .mat-form-field-flex .mat-input-element {
+    color: #449058;
+    font-size: 13px;
+    margin-bottom: 1px;
+  }
+
+  .mat-focused .mat-form-field-flex {
+    background-color: #283142;
+
+    .mat-select-value {
+      width: 100%;
+      max-width: 100%;
+    }
+  }
+}

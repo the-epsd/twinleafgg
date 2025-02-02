@@ -1,0 +1,91 @@
+<!-- <ptcg-cards-container [keepInitialSize]="true">
+  <dnd-sortable-list
+    [spec]="topSortable.spec"
+    hoverTrigger="fixed"
+    [children]="topSortable.tempList"
+    [listId]="topListId">
+
+    <ng-template dndSortableTemplate let-context>
+      <ptcg-card
+        [ngClass]="{unavailable: !filterMap[context.data.card.fullName],
+          cardback: cardbackMap[context.data.index]}"
+        [dndSortableRender]="context"
+        #render="dndSortableRender"
+        [dragSource]="render.source" [noHTML5Preview]="true"
+        [ptcgCardPlaceholder]="render.isDragging$"
+        [card]="context.data.card"
+        (click)="showCardPopup(context)">
+      </ptcg-card>
+    </ng-template>
+
+  </dnd-sortable-list>
+</ptcg-cards-container>
+
+<ptcg-cards-container [keepInitialSize]="true" *ngIf="singlePaneMode === false">
+  <dnd-sortable-list
+    [spec]="bottomSortable.spec"
+    hoverTrigger="fixed"
+    [children]="bottomSortable.tempList"
+    [listId]="bottomListId">
+
+    <ng-template dndSortableTemplate let-context>
+      <ptcg-card
+      showCardCount="true"
+        [ngClass]="{cardback: cardbackMap[context.data.index]}"
+        [dndSortableRender]="context"
+        #render="dndSortableRender"
+        [dragSource]="render.source" [noHTML5Preview]="true"
+        [ptcgCardPlaceholder]="render.isDragging$"
+        [card]="context.data.card"
+        (click)="showCardPopup(context)">
+      </ptcg-card>
+    </ng-template>
+
+  </dnd-sortable-list>
+</ptcg-cards-container> -->
+
+<!-- <ptcg-cards-container [keepInitialSize]="true">
+  <dnd-sortable-list [spec]="topSortable.spec" hoverTrigger="fixed" [children]="topSortable.tempList"
+    [listId]="topListId"> -->
+
+<div class="cards-viewport">
+  <ptcg-cards-container [keepInitialSize]="false">
+    <dnd-sortable-list [spec]="topSortable.spec" [children]="topSortable.tempList" [listId]="topListId"
+      style="display: flex; flex-wrap: wrap; justify-content: center;">
+      <ng-template dndSortableTemplate let-context>
+        <ptcg-card [ngClass]="{
+    'unavailable': !filterMap[context.data.card.fullName],
+    'cardback': topCardbackMap[context.data.index],
+    'selected': isCardSelected(context.data.card)
+  }" [dndSortableRender]="context" #render="dndSortableRender" [dragSource]="render.source" [noHTML5Preview]="true"
+          [ptcgCardPlaceholder]="render.isDragging$" [card]="context.data.card" [showDetailButtons]="true"
+          (click)="toggleCardSelection(context.data.card)" (mouseenter)="context.data.showButtons = true"
+          (mouseleave)="context.data.showButtons = false">
+          <button mat-mini-fab color="primary" *ngIf="context.data.showButtons && 
+         showDetailButtons && 
+         !cardbackMap[context.data.index] && 
+         !topCardbackMap[context.data.index] && 
+         !(promptValue?.options?.isSecret)" class="inspect-button"
+            (click)="showCardInfo(context); $event.stopPropagation()">
+            <mat-icon>info_outline</mat-icon>
+          </button>
+        </ptcg-card>
+
+      </ng-template>
+    </dnd-sortable-list>
+  </ptcg-cards-container>
+</div>
+
+<!-- <ptcg-cards-container [keepInitialSize]="true" *ngIf="singlePaneMode === false">
+  <dnd-sortable-list [spec]="bottomSortable.spec" hoverTrigger="fixed" [children]="bottomSortable.tempList"
+    [listId]="bottomListId"> -->
+<div *ngIf="!noBottomPane" class="selected-cards" [ngClass]="{'setup-game': isSetupGame, 'compact': !isSetupGame}">
+  <div class="card-slot" *ngFor="let i of getSlotArray()">
+    <ptcg-card *ngIf="selectedCards[i]" class="card-slot" [card]="selectedCards[i]"
+      [ngClass]="{'cardback': bottomCardbackMap[selectedCards[i].originalIndex]}"
+      [isSecret]="promptValue?.options?.isSecret" (click)="toggleCardSelection(selectedCards[i])">
+    </ptcg-card>
+  </div>
+</div>
+<!-- </dnd-sortable-list>
+</ptcg-cards-container> -->

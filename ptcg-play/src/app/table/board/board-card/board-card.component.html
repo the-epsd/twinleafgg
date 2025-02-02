@@ -1,0 +1,87 @@
+<div class="ptcg-board-card" [ngClass]="{
+  empty: isEmpty, 
+  'face-down': isFaceDown, 
+  'upside-down': isUpsideDown
+  }">
+  <div class="ptcg-board-card" [class.asleep-position]="specialConditions.includes(SpecialCondition.ASLEEP)">
+    <div class="ptcg-card-container" [class.rotate-180]="specialConditions.includes(SpecialCondition.ASLEEP)">
+      <ptcg-card *ngIf="mainCard" [data]="mainCard"></ptcg-card>
+    </div>
+    <div class="ptcg-board-card" [class.confused-position]="specialConditions.includes(SpecialCondition.CONFUSED)">
+      <div class="ptcg-card-container" [class.rotate-180]="specialConditions.includes(SpecialCondition.CONFUSED)">
+        <ptcg-card *ngIf="mainCard" [data]="mainCard"></ptcg-card>
+      </div>
+      <div class="ptcg-board-card" [class.paralyzed-position]="specialConditions.includes(SpecialCondition.PARALYZED)">
+        <div class="ptcg-card-container" [class.rotate-180]="specialConditions.includes(SpecialCondition.PARALYZED)">
+          <ptcg-card *ngIf="mainCard" [data]="mainCard"></ptcg-card>
+        </div>
+
+        <div class="ptcg-energy-cards">
+          <ptcg-card [card]="energyCard" [customImageUrl]="getCustomImageUrl(energyCard)"
+            [attr.data-name]="energyCard.name" *ngFor="let energyCard of energyCards"
+            (click)="onCardClick(energyCard)"></ptcg-card>
+        </div>
+
+        <div class="ptcg-energy-more" *ngIf="moreEnergies > 0">
+          <ptcg-badge color="primary">
+            {{ 'TABLE_MORE_ENERGY' | translate: { count: moreEnergies } }}
+          </ptcg-badge>
+        </div>
+
+        <div class="ptcg-trainer-card" *ngIf="trainerCard">
+          <ptcg-card [card]="trainerCard" (click)="onCardClick(trainerCard)"></ptcg-card>
+        </div>
+
+        <ptcg-card [card]="mainCard" *ngIf="mainCard" (click)="onCardClick(mainCard)">
+          <ng-content></ng-content>
+        </ptcg-card>
+
+        <div class="ptcg-card-damage" *ngIf="damage > 0">
+          <ptcg-badge color="warn">{{ damage }}</ptcg-badge>
+        </div>
+
+        <div class="ptcg-special-conditions" *ngIf="specialConditions.length > 0">
+          <div *ngFor="let condition of specialConditions" [ngSwitch]="condition" [ngClass]="upside-down">
+            <div class="paralyzed">
+              <ptcg-badge color="accent" *ngSwitchCase="SpecialCondition.PARALYZED">
+                {{ 'LABEL_PARALYZED' | translate }}
+              </ptcg-badge>
+            </div>
+            <div class="confused">
+              <ptcg-badge color="accent" *ngSwitchCase="SpecialCondition.CONFUSED">
+                {{ 'LABEL_CONFUSED' | translate }}
+              </ptcg-badge>
+            </div>
+            <div class="asleep">
+              <ptcg-badge color="accent" *ngSwitchCase="SpecialCondition.ASLEEP">
+                {{ 'LABEL_ASLEEP' | translate }}
+              </ptcg-badge>
+            </div>
+            <div class="poison-marker" *ngSwitchCase="SpecialCondition.POISONED"></div>
+            <ptcg-badge color="accent" *ngSwitchCase="SpecialCondition.BURNED">
+              {{ 'LABEL_BURNED' | translate }}
+            </ptcg-badge>
+          </div>
+        </div>
+
+
+        <div class="ptcg-ability-used" style="pointer-events: none;"
+          *ngIf="boardEffect.includes(BoardEffect.ABILITY_USED)">
+          <ptcg-badge color="warn">
+            {{ 'LABEL_ABILITY_USED' | translate }}
+          </ptcg-badge>
+        </div>
+
+        <div class="ptcg-ability-used" style="pointer-events: none;"
+          *ngIf="specialConditions.includes(SpecialCondition.ABILITY_USED)">
+          <ptcg-badge color="warn">
+            {{ 'LABEL_ABILITY_USED' | translate }}
+          </ptcg-badge>
+        </div>
+
+        <div class="ptcg-card-counts" *ngIf="showCardCount && cardCount > 0">
+          <ptcg-badge>
+            {{ 'TABLE_CARDS_COUNT' | translate: { count: cardCount } }}
+          </ptcg-badge>
+        </div>
+      </div>

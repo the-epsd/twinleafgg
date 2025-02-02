@@ -1,0 +1,175 @@
+@import '../../../../theme/variables.scss';
+
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+ptcg-card {
+  margin: map-get($padding, small);
+  width: map-get($ptcg-size, card);
+
+  &.unavailable {
+    opacity: $ptcg-disabled-opacity;
+  }
+
+  &:not(.unavailable) {
+    touch-action: none;
+  }
+}
+
+dnd-sortable-list {
+  display: flex;
+  flex: 1 1 auto;
+  flex-wrap: wrap;
+}
+
+.selected-card {
+  box-shadow: 0 0 15px #449058, 0 0 0 1px #44905800;
+  transform: scale(1.05);
+  transition: all 0.2s ease;
+  border-radius: 5px;
+  width: map-get($ptcg-size, card);
+}
+
+.selected-cards {
+  display: grid;
+  grid-template-rows: auto auto;
+  gap: 20px;
+  padding: 20px;
+}
+
+.selected-cards.compact {
+  padding: 10px;
+  margin-top: 10px;
+  min-height: auto;
+  gap: 10px;
+}
+
+.card-slot {
+  width: 90px;
+  height: 125px;
+  border: 2px dotted rgba(255, 255, 255, 0.045);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+
+  .card-slot:first-child {
+    grid-row: 1;
+    grid-column: 1 / -1;
+    justify-self: center;
+  }
+
+  .card-slot:not(:first-child) {
+    grid-row: 2;
+  }
+}
+
+.selected-cards.setup-game {
+  display: grid;
+  grid-template-rows: auto auto;
+  grid-template-columns: repeat(5, 251px); // Explicitly set 5 columns
+  gap: 5px;
+  padding: 5px;
+  justify-content: center; // Center the entire grid
+
+  .card-slot:first-child {
+    grid-row: 1;
+    grid-column: 3; // Place in middle column
+    justify-self: center;
+  }
+
+  .card-slot:not(:first-child) {
+    grid-row: 2;
+  }
+}
+
+.selected-cards {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.carousel-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 0 20px;
+}
+
+.nav-button {
+  height: 48px;
+  width: 48px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+}
+
+.nav-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.selected {
+  box-shadow: 0 0 15px #449058, 0 0 0 1px #44905800;
+  transform: scale(1.05);
+  transition: all 0.2s ease;
+  border-radius: 5px;
+}
+
+.cards-viewport {
+  width: 1000px;
+  // height: 500px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  // border: 2px solid rgba(255, 255, 255, 0.2);
+  // border-radius: 8px;
+}
+
+dnd-sortable-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  // padding: 20px;
+  // justify-content: center;
+}
+
+ptcg-card {
+  flex: 0 0 auto;
+}
+
+.cards-carousel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.ptcg-cards-container {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  width: 1200px
+}
+
+.card-main {
+  transform: scale(1.2);
+  z-index: 2;
+}
+
+.card-side {
+  transform: scale(0.9);
+  opacity: 0.8;
+}
+
+.inspect-button {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  z-index: 10;
+  margin-right: -15px;
+}

@@ -1,0 +1,27 @@
+@import '../../../../theme/variables.scss';
+
+$avatar-size: map-get($ptcg-size, avatar);
+
+.concede-button {
+  background-color: #ba3232;
+}
+
+.end-turn-button {
+  background-color: blue;
+  color: white;
+}
+
+.ptcg-player-actions {
+  display: flex;
+  flex-direction: column;
+  grid-area: actions;
+  padding: 0 $ptcg-sidebar-tiny-padding;
+
+  & > * {
+    margin-top: $ptcg-sidebar-tiny-padding;
+  }
+
+  & > *:last-child {
+    margin-bottom: $ptcg-sidebar-tiny-padding;
+  }
+}

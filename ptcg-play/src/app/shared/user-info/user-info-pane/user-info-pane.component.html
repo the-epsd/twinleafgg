@@ -1,0 +1,37 @@
+<div class="ptcg-user-info-pane">
+  <div class="ptcg-profile-avatar">
+    <ptcg-avatar type="profile" openAvatarPopup="true" [avatarFile]="user.avatarFile">
+    </ptcg-avatar>
+  </div>
+  <div class="ptcg-profile-summary">
+    <table>
+      <tr>
+        <th translate>LABEL_NAME</th>
+        <td>{{ user.name }}</td>
+      </tr>
+      <tr>
+        <th translate>LABEL_RANKING</th>
+        <td><ptcg-rank [ranking]="user.ranking" [rank]="user.rank"></ptcg-rank></td>
+      </tr>
+      <tr>
+        <th translate>USERS_REGISTERED</th>
+        <td>
+          {{ user.registered | date: ('DATE_FORMAT' | translate) }}
+        </td>
+      </tr>
+      <tr>
+        <th translate>USERS_LAST_SEEN</th>
+        <td>
+          <span *ngIf="!user.connected; else connected">
+            {{ user.lastSeen | date: ('DATE_FORMAT' | translate) }}
+          </span>
+      <ng-template #connected>
+        <ptcg-badge>
+          {{ 'USERS_ONLINE' | translate }}
+        </ptcg-badge>
+      </ng-template>
+      </td>
+      </tr>
+    </table>
+  </div>
+</div>

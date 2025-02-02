@@ -1,0 +1,34 @@
+import { Client } from '../../game/client/client.interface';
+import { Game } from '../../game/core/game';
+import { State } from '../../game/store/state/state';
+import { Core } from '../../game/core/core';
+import { SocketCache } from './socket-cache';
+import { SocketWrapper } from './socket-wrapper';
+export declare class GameSocket {
+    private cache;
+    private client;
+    private socket;
+    private core;
+    private stateSanitizer;
+    constructor(client: Client, socket: SocketWrapper, core: Core, cache: SocketCache);
+    onGameJoin(game: Game, client: Client): void;
+    onGameLeave(game: Game, client: Client): void;
+    onStateChange(game: Game, state: State): void;
+    private joinGame;
+    private leaveGame;
+    private getGameStatus;
+    private dispatch;
+    private ability;
+    private trainerability;
+    private attack;
+    private stadium;
+    private playGame;
+    private playCard;
+    private resolvePrompt;
+    private reorderBench;
+    private reorderHand;
+    private retreat;
+    private passTurn;
+    private appendLog;
+    private changeAvatar;
+}

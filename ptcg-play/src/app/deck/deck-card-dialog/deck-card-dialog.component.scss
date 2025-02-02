@@ -1,0 +1,100 @@
+@import '../../../theme/variables.scss';
+
+$ptcg-deck-card-width: map-get($ptcg-size, card) + map-get($padding, large) + 50;
+
+#selectedCard {
+  width: 150px !important;
+}
+
+mat-dialog-content {
+  .top-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+
+    .selected-card-container {
+      flex: 1;
+    }
+
+    .alternate-printings {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      align-content: flex-start;
+      gap: 1rem;
+
+      ptcg-card {
+        width: $ptcg-deck-card-width;
+      }
+    }
+
+    @media (min-width: 640px) {
+      .alternate-printings {
+        flex: 1;
+      }
+
+      .selected-card-container {
+        flex: 1;
+      }
+    }
+
+    @media (min-width: 900px) {
+      .alternate-printings {
+        flex: 1;
+      }
+
+      .selected-card-container {
+        flex: 1;
+      }
+    }
+
+    @media (min-width: 1200px) {
+      .alternate-printings {
+        flex: 2;
+      }
+
+      .selected-card-container {
+        flex: 1;
+      }
+    }
+
+    @media (min-width: 1700px) {
+      .alternate-printings {
+        flex: 3;
+      }
+
+      .selected-card-container {
+        flex: 1;
+      }
+    }
+  }
+
+  .evo-container {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+
+    .evolves-to,
+    .evolves-from {
+      overflow-y: hidden;
+      overflow-x: auto;
+      margin-bottom: 2rem;
+      flex: 100%;
+      display: flex;
+      gap: 1rem;
+
+      ptcg-card {
+        width: $ptcg-deck-card-width;
+        min-width: $ptcg-deck-card-width;
+      }
+    }
+  }
+}
+
+.inspect-button {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  z-index: 10;
+  margin-right: -15px;
+}

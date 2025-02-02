@@ -1,0 +1,90 @@
+@import '../../../../theme/variables.scss';
+
+:host {
+  display: flex;
+  flex-direction: column;
+
+}
+
+.private-log {
+  font-style: italic;
+  // color: #888;
+}
+
+.ptcg-game-logs-header {
+  align-items: center;
+  display: flex;
+  flex: 0 0 auto;
+  padding: map-get($padding, small);
+
+  & mat-icon {
+    cursor: pointer;
+    height: 1em;
+    overflow: hidden;
+    width: 1em;
+  }
+}
+
+.ptcg-game-logs-content {
+  flex: 1 1 auto;
+  overflow: auto;
+
+  ul {
+    height: 0;
+    list-style-type: none;
+  }
+
+  li {
+    padding: $ptcg-sidebar-tiny-padding;
+  }
+}
+
+.ptcg-game-logs-footer {
+  flex: 0 0 auto;
+  padding: 0 $ptcg-sidebar-tiny-padding;
+
+  & form {
+    display: flex;
+  }
+
+  & mat-form-field {
+    width: 100%;
+  }
+}
+
+.timestamp {
+  color: #999;
+  margin-right: 5px;
+}
+
+.private-log {
+  font-style: italic;
+}
+
+.ptcg-player-1 {
+  color: #008000;
+}
+
+.ptcg-player-2 {
+  color: #800080;
+}
+
+.ptcg-player-3 {
+  color: #FFA500;
+}
+
+.ptcg-player-4 {
+  color: #0000FF;
+}
+
+.ptcg-system {
+  color: #999;
+}
+
+.ptcg-player-active {
+  color: blue;
+}
+
+.ptcg-player-opponent {
+  color: red;
+}

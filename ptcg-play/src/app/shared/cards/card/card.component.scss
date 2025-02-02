@@ -1,0 +1,166 @@
+@import '../../../../theme/variables.scss';
+
+:host.placeholder {
+  .card-container {
+
+    img,
+    .holo-overlay {
+      display: none;
+    }
+  }
+
+  .ptcg-card:after {
+    opacity: $ptcg-disabled-opacity;
+  }
+}
+
+:host.cardback {
+  .ptcg-card-scan {
+    display: none;
+  }
+
+  .holo-overlay {
+    display: none !important;
+  }
+
+  .card-name {
+    display: none !important;
+  }
+
+  .card-container {
+    background-image: url(~src/assets/cardback.png);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+  }
+
+  img {
+    display: none;
+  }
+
+  .ptcg-card:after {
+    background-image: url(~src/assets/cardback.png);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+  }
+}
+
+.ptcg-card {
+  width: 100%;
+  position: relative;
+}
+
+.card-container {
+  position: relative;
+  width: 100%;
+  will-change: transform;
+  transform: translateZ(0);
+
+  &:after {
+    content: "";
+    display: block;
+    padding-bottom: $card-aspect-ratio * 100%;
+  }
+}
+
+.ptcg-card-scan {
+  width: 100%;
+  height: 100%;
+  border-radius: $card-border-radius;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.card-name {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.6) 100%);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 8px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  backdrop-filter: blur(2px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  white-space: nowrap;
+}
+
+// .ptcg-card-preview {
+//   position: absolute;
+//   width: map-get($ptcg-size, card);
+// }
+
+.holo-overlay {
+  display: none;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  border-radius: $card-border-radius;
+  pointer-events: none;
+  animation: GradientScroll 2s linear infinite;
+  background: linear-gradient(110deg,
+      transparent 35%,
+      rgba(146, 242, 242, 0.5),
+      rgba(255, 255, 255, 0.6),
+      rgba(214, 207, 241, 0.5),
+      transparent 65%);
+  background-size: 300% 300%;
+  mix-blend-mode: soft-light;
+}
+
+.holo .holo-overlay {
+  display: block;
+  -webkit-mask-image: url('/assets/card-mask.png');
+  mask-image: url('/assets/card-mask.png');
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+}
+
+.trainer-holo .holo-overlay {
+  display: block;
+  -webkit-mask-image: url('/assets/card-mask-trainer.png');
+  mask-image: url('/assets/card-mask-trainer.png');
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+}
+
+.fullart-holo .holo-overlay {
+  display: block;
+  -webkit-mask-image: url('/assets/fa-card-mask.png');
+  mask-image: url('/assets/fa-card-mask.png');
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+}
+
+.radiant-holo .holo-overlay {
+  display: block;
+  opacity: 4;
+  -webkit-mask-image: url('/assets/card-mask-radiant.png');
+  mask-image: url('/assets/card-mask-radiant.png');
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+}
+
+.ace-spec-holo .holo-overlay {
+  display: block;
+  opacity: 4;
+  -webkit-mask-image: url('/assets/card-mask-ace-spec.png');
+  mask-image: url('/assets/card-mask-ace-spec.png');
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+}
+
+@keyframes GradientScroll {
+  from {
+    background-position: 100% 100%
+  }
+
+  to {
+    background-position: 0% 0%
+  }
+}

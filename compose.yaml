@@ -1,0 +1,24 @@
+services:
+  ptcg-server:
+    build:
+      context: ./ptcg-server
+      dockerfile: Dockerfile
+    ports:
+      - 8080:8080
+    volumes:
+      - ./ptcg-server:/usr/src/app
+    environment:
+      NODE_ENV: development
+
+  ptcg-play:
+    build:
+      context: ./ptcg-play
+      dockerfile: Dockerfile
+    ports:
+      - 4200:4200
+    volumes:
+      - ./ptcg-play:/usr/src/app
+    environment:
+      NODE_ENV: production
+    depends_on:
+      - ptcg-server

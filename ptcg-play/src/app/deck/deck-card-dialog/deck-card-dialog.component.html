@@ -1,0 +1,38 @@
+<h2 mat-dialog-title translate>{{ 'CARD_ALTERNATIVES_TITLE' | translate }}</h2>
+<mat-dialog-content>
+  <div class="top-row">
+    <div class="selected-card-container">
+      <ptcg-card [card]="data.card" id="selectedCard"></ptcg-card>
+    </div>
+    <div class="alternate-printings">
+      <ptcg-card *ngFor="let card of alternatePrintings$ | async" [card]="card">
+        <button mat-mini-fab color="primary" 
+                class="inspect-button"
+                (click)="onCardSelected(card, 'replace')">
+          <mat-icon>refresh</mat-icon>
+        </button>
+      </ptcg-card>
+    </div>
+  </div>
+  <div class="evo-container" *ngIf="isPokemon()">
+    <h2 mat-dialog-title translate>{{ 'CARD_EVOLUTION_LINES' | translate }}</h2>
+    <div class="evolves-from">
+      <ptcg-card *ngFor="let card of evolvesFrom$ | async" [card]="card">
+        <button mat-mini-fab color="primary" 
+                class="inspect-button"
+                (click)="onCardSelected(card, 'add')">
+          <mat-icon>add</mat-icon>
+        </button>
+      </ptcg-card>
+    </div>
+    <div class="evolves-to">
+      <ptcg-card *ngFor="let card of evolvesInto$ | async" [card]="card">
+        <button mat-mini-fab color="primary" 
+                class="inspect-button"
+                (click)="onCardSelected(card, 'add')">
+          <mat-icon>add</mat-icon>
+        </button>
+      </ptcg-card>
+    </div>    
+  </div>
+</mat-dialog-content>

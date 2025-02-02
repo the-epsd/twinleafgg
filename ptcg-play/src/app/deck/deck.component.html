@@ -1,0 +1,69 @@
+<body style="background-color:#1A202C;">
+  <ptcg-content [loading]="loading">
+    <mat-toolbar-row>
+      <h2 translate>DECK_TITLE</h2>
+
+      <span class="ptcg-u-spacer"></span>
+
+      <button mat-raised-button color="primary" class="deck-button" (click)="createDeck()">
+        <span>{{ 'DECK_CREATE' | translate }}</span>
+      </button>
+
+    </mat-toolbar-row>
+
+    <div class="deck-grid-container">
+      <div class="deck-grid">
+        <div class="deck-tile" *ngFor="let deck of decks"
+          [ngStyle]="{'background-image': getDeckBackground(deck.name)}">
+          <div class="deck-header">
+            <div class="deck-validity">
+              <mat-icon *ngIf="deck.isValid" color="primary">check</mat-icon>
+              <mat-icon *ngIf="!deck.isValid">remove</mat-icon>
+            </div>
+            <mat-icon *ngIf="defaultDeckId === deck.id" class="default-star" color="accent">star</mat-icon>
+          </div>
+
+
+          <div class="deck-card-types">
+            <ptcg-archetype [class]="getArchetype(deck.deckItems)"></ptcg-archetype>
+          </div>
+
+          <div class="deck-name">{{ deck.name }}</div>
+
+          <div class="deck-footer">
+            <div class="deck-formats">
+              <ptcg-deck-validity [deck]="deck.deckItems" [validOnly]="true"></ptcg-deck-validity>
+            </div>
+            <div class="deck-actions">
+              <button mat-button mat-raised-button class="action-button" [matMenuTriggerFor]="menu">
+                {{ 'BUTTON_ACTIONS' | translate }}
+              </button>
+              <mat-menu #menu="matMenu">
+                <button mat-menu-item [routerLink]="['/deck', deck.id]">
+                  {{ 'BUTTON_EDIT' | translate }}
+                </button>
+                <!-- <button mat-menu-item (click)="setAsDefault(deck.id)" *ngIf="defaultDeckId !== deck.id">
+                  {{ 'DECK_SET_AS_DEFAULT' | translate }}
+                </button> -->
+                <button mat-menu-item (click)="exportDeckList(deck)">
+                  {{ 'BUTTON_EXPORT_DECKLIST' | translate }}
+                </button>
+                <button mat-menu-item (click)="deleteDeck(deck.id)">
+                  {{ 'BUTTON_DELETE' | translate }}
+                </button>
+                <button mat-menu-item (click)="renameDeck(deck.id, deck.name)">
+                  {{ 'BUTTON_RENAME' | translate }}
+                </button>
+                <button mat-menu-item (click)="duplicateDeck(deck.id)">
+                  {{ 'DECK_DUPLICATE' | translate }}
+                </button>
+              </mat-menu>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </ptcg-content>
+</body>

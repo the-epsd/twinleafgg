@@ -1,0 +1,177 @@
+@use 'sass:math';
+@import '../../../../theme/variables.scss';
+
+::ng-deep .mat-dialog-container {
+  background: rgba(26, 32, 44, 0.5);
+  box-shadow: 0 8px 32px 0 rgba(48, 59, 81, 0.5);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.ptcg-card-info-pane {
+  display: flex;
+  background-image: map-get($ptcg-size, card);
+}
+
+.ptcg-card-info-image {
+  cursor: pointer;
+  flex: 1 1 33%;
+  min-width: map-get($ptcg-size, card);
+  padding-right: map-get($padding, normal);
+}
+
+.ptcg-card-info-text {
+  flex: 1 1 67%;
+}
+
+.title {
+  align-items: baseline;
+  border-top-left-radius: map-get($padding, small);
+  border-top-right-radius: map-get($padding, small);
+  display: flex;
+  padding: map-get($padding, small);
+  background-color: #1a202c7a;
+}
+
+.subtitle {
+  display: flex;
+  align-items: center;
+  padding: map-get($padding, small);
+  background-color: #2127347a;
+}
+
+.subtitle-hp {
+  margin: 0 math.div(map-get($padding, small), 2);
+}
+
+.subtitle-hp-value {
+  line-height: map-get($ptcg-size, energy-size);
+}
+
+.subtitle-hp-unit {
+  margin-right: math.div(map-get($padding, small), 2);
+}
+
+.subtitle-card-type {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: -12px; // Adjust this value to control spacing between icons
+}
+
+.attack,
+.power {
+  margin: map-get($padding, small) 0;
+  padding: map-get($padding, small);
+}
+
+.attack-cost {
+  display: flex;
+}
+
+.attack-name {
+  padding: 0 map-get($padding, small);
+}
+
+.attack-header {
+  align-items: center;
+  display: flex;
+}
+
+.attack-header+.card-text {
+  padding-top: map-get($padding, small);
+}
+
+.stats {
+  border-radius: map-get($padding, small);
+  display: flex;
+  padding: map-get($padding, small);
+  background-color: #2127347a;
+}
+
+.stats-item {
+  flex: 1 1 auto;
+  text-align: center;
+}
+
+.stats-item-header {
+  padding-bottom: math.div(map-get($padding, small), 2);
+}
+
+.stats-item-value {
+  align-items: flex-end;
+  display: flex;
+  justify-content: center;
+}
+
+.stats-item-value-type {
+  display: flex;
+  flex-direction: row;
+}
+
+ptcg-energy {
+  display: flex;
+}
+
+.card-text {
+  white-space: pre-wrap;
+}
+
+.ptcg-energy {
+  background-image: url(~src/assets/energy-types.png);
+  background-repeat: no-repeat;
+  display: inline-block;
+  height: 25px;
+  margin: 1px 1px;
+  width: 25px;
+
+  &[type="grass"] {
+    background-position: -25px -50px;
+  }
+
+  &[type="fighting"] {
+    background-position: -50px -25px;
+  }
+
+  &[type="psychic"] {
+    background-position: -75px -25px;
+  }
+
+  &[type="water"] {
+    background-position: -75px -50px;
+  }
+
+  &[type="lightning"] {
+    background-position: -25px -25px;
+  }
+
+  &[type="metal"] {
+    background-position: -75px 0;
+  }
+
+  &[type="darkness"] {
+    background-position: 0 -50px;
+  }
+
+  &[type="fire"] {
+    background-position: 0 0;
+  }
+
+  &[type="dragon"] {
+    background-position: 0 -25px;
+  }
+
+  &[type="fairy"] {
+    background-position: -50px 0;
+  }
+
+  &[type="colorless"] {
+    background-position: -25px 0;
+  }
+
+  &[type="energyless"] {
+    background-position: -50px -50px;
+  }
+}

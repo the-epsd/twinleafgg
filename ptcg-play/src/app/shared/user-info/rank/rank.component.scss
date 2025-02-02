@@ -1,0 +1,30 @@
+@import '../../../../theme/variables.scss';
+
+.ptcg-rank {
+  align-items: center;
+  display: flex;
+}
+
+.ptcg-ranking + ptcg-badge {
+  margin-left: map-get($padding, small);
+}
+
+ptcg-badge {
+  display: flex;
+}
+
+$rank-colors: (
+  'master': #a836f4,
+  'ultra': #eeb300,
+  'great': #0055ff,
+  'poke': #e13131,
+  'banned': #4e1a19,
+  'warn': green,
+);
+
+@each $color-name, $color-value in $rank-colors {
+  ptcg-badge[ngStyle*="{'background-color': '#{$color-name}'}"] {
+    background-color: $color-value;
+    color: white;
+  }
+}

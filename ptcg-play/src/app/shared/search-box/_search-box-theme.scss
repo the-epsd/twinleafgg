@@ -1,0 +1,25 @@
+@use '~@angular/material' as mat;
+
+@mixin ptcg-search-box-theme($theme) {
+  $primary: map-get($theme, primary);
+  $foreground: map-get($theme, foreground);
+
+  ptcg-search-box {
+    .mat-form-field-underline {
+      color: mat.get-color-from-palette($primary, text);
+    }
+
+    .mat-input-element {
+      color: mat.get-color-from-palette($foreground, text);
+    }
+
+    .mat-form-field-label {
+      color: mat.get-color-from-palette($foreground, disabled) !important;
+    }
+
+    
+
+  }
+}
+
+@mixin ptcg-search-box-typography($config) { }

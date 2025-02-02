@@ -1,0 +1,93 @@
+@import '../../../theme/variables.scss';
+
+:host {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: row;
+  overflow: auto;
+}
+
+.ptcg-deck-edit-container {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+.ptcg-deck-edit-panes-wrapper {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: row;
+  overflow: auto;
+  min-width: 250px;
+}
+
+.ptcg-deck-edit-pane,
+.ptcg-deck-edit-pane-secondary {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-content: flex-start;
+  // padding: 15px;
+  overflow-y: auto;
+}
+
+.ptcg-deck-edit-pane {
+  flex: 0 0 300px;
+  background-color: #222a3a;
+}
+
+.ptcg-deck-edit-pane-secondary {
+  flex: 1 1 auto;
+  background-color: #2D3748;
+}
+
+ptcg-deck-card {
+  margin: 5px;
+}
+
+ptcg-deck-card.placeholder {
+  opacity: $ptcg-disabled-opacity;
+  overflow: auto;
+}
+
+.ptcg-card-preview {
+  border-radius: $card-border-radius;
+  position: absolute;
+  width: map-get($ptcg-size, card);
+  overflow: auto;
+}
+
+.deck-validity {
+  display: flex;
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  justify-content: center;
+  align-items: bottom;
+}
+
+.deck-validity-container {
+  position: fixed;
+  bottom: 5.5%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+}
+
+// .deck-pane-container {
+//   position: relative;
+//   width: 100%;
+//   height: 100%;
+//   overflow: hidden;
+// }
+
+// .deck-pane {
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+//   width: 100%;
+//   height: auto;
+//   min-height: 100%;
+// }

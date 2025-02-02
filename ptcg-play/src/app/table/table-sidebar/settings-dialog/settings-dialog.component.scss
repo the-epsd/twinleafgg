@@ -1,0 +1,85 @@
+::ng-deep .mat-dialog-container {
+  background: rgba(26, 32, 44, 0.5);
+  box-shadow: 0 8px 32px 0 rgba(48, 59, 81, 0.5);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+
+  .mat-dialog-actions {
+    color: white;
+    caret-color: white;
+  }
+
+  .mat-raised-button {
+    margin-top: 12px;
+    background-color: #449058;
+    border-radius: 16px;
+  }
+}
+
+h2 {
+  margin: 0 0 16px 0;
+  font-size: 20px;
+  color: #fff;
+  font-weight: 500;
+}
+
+.settings-dialog-container {
+  min-width: 480px;
+}
+
+.settings-content {
+  padding: 16px 0;
+
+  label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #fff;
+
+    input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+    }
+  }
+}
+
+.settings-actions {
+  padding: 8px 0 0 0;
+  text-align: right;
+
+  button {
+    padding: 8px 16px;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: #fff;
+    cursor: pointer;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+  }
+}
+
+.slider-container {
+  margin-top: 16px;
+  color: #fff;
+
+  label {
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  input[type="range"] {
+    width: 100%;
+    margin: 8px 0;
+  }
+
+  span {
+    display: block;
+    text-align: center;
+    font-size: 14px;
+  }
+}

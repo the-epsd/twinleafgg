@@ -1,0 +1,480 @@
+@use 'sass:math';
+@import '../../../theme/variables.scss';
+
+:root {
+  --card-scale: 1;
+  --sidebar-width: 400px;
+  --card-size: calc(8vmin * var(--card-scale));
+  --padding-small: 1vmin;
+  --padding-normal: 2vmin;
+}
+
+$board-min-width: calc((4 + #{$ptcg-bench-slots}) * (var(--card-size) + #{map-get($padding, small)}));
+$board-min-height: calc(6 * var(--card-size) * #{$card-aspect-ratio} + 2 * #{map-get($padding, medium)});
+
+:host {
+  transform: translateY(0%);
+  display: flex;
+  overflow: auto;
+  z-index: 0;
+  justify-content: center;
+  width: calc(100vw - var(--sidebar-width));
+  height: 100%;
+  background-color: #091624;
+}
+
+.ptcg-board-outer-container {
+  width: 100%;
+  height: 82.5%;
+  // overflow: hidden;
+}
+
+.responsive-board {
+  min-width: 990px;
+}
+
+@media (max-width: 990px) {
+  .responsive-board {
+    transform-origin: top left;
+    transform: scale(calc(100vw / 990));
+    height: calc(100vh * (990 / 100vw));
+  }
+}
+
+.ptcg-board-container {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  margin: 0 auto;
+  width: 75%;
+  height: 100%;
+  transform: translateY(4%); // Apply transformY by default
+
+  @media (min-aspect-ratio: 4/3) {
+    transform: perspective(55em) rotateX(18deg);
+  }
+
+  transform-origin: center center;
+  transition: transform 0.5s ease;
+}
+
+.upside-down {
+  transform: scale(-1, -1);
+}
+
+.ptcg-board-player {
+  display: grid;
+  grid-template-columns: 2fr repeat(3, #{math.div($ptcg-bench-slots, 3)}fr) 2fr;
+  grid-template-rows: auto auto;
+  grid-template-areas:
+    "prizes stadium active supporter deck"
+    "prizes bench bench bench discard";
+
+  &.upside-down {
+    transform: rotate(180deg);
+  }
+}
+
+.ptcg-board-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.ptcg-board-player {
+  position: relative;
+  z-index: 1;
+}
+
+#bottom_div,
+#top_div {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+#bottom_div:after {
+  content: '';
+  position: absolute;
+  border-image: linear-gradient(90deg, #0052ff, #00a2ff, #0052ff) 1;
+  opacity: var(--bottom-opacity, 0.2);
+  top: 60%;
+  left: -55%;
+  right: -55%;
+  height: 100%;
+  // background: linear-gradient(0deg, #1a202cb5, #0d1016af), rgba(0, 90, 207, 0.75);
+  background: rgba(0, 90, 207, 0.225);
+  background-size: 56%;
+  background-position: center, top;
+  margin-top: -50px;
+  z-index: -1;
+}
+
+#top_div:after {
+  content: '';
+  position: absolute;
+  border-image: linear-gradient(90deg, #ff0000, #ff6b6b, #ff0000) 1;
+  opacity: var(--top-opacity, 0.2);
+  top: -20vh;
+  left: -40%;
+  right: -40%;
+  height: 50vh;
+  // background: linear-gradient(0deg, #1a202cb5, #0d1016af), rgba(255, 0, 0, 0.75);
+  background: rgba(255, 0, 0, 0.225);
+  background-size: 56%;
+  background-position: center;
+  transform: scaleY(-1);
+  z-index: -1;
+}
+
+#bottom_div:after,
+#top_div:after {
+  border: 8px solid var(--border-color);
+  transition: all 0.3s ease, border-color 0.3s ease;
+  border-top-left-radius: 50% 100%;
+  border-top-right-radius: 50% 100%;
+  border-image-slice: 1;
+}
+
+#top_div:after {
+  --border-color: rgba(255, 0, 0, 0.225);
+}
+
+#bottom_div:after {
+  --border-color: rgba(0, 90, 207, 0.225);
+}
+
+#top_div.active:after {
+  --top-opacity: 1;
+  border-color: var(--border-color);
+  // animation: glowRed 3s linear infinite;
+}
+
+#bottom_div.active:after {
+  --bottom-opacity: 1;
+  border-color: var(--border-color);
+  // animation: glowBlue 10s linear infinite;
+}
+
+@keyframes glowRed {
+  0% {
+    --border-color: rgb(145, 48, 48, 1);
+  }
+
+  100% {
+    --border-color: rgb(145, 48, 48, 1);
+  }
+}
+
+@keyframes glowBlue {
+  0% {
+    --border-color: rgb(34, 67, 112, 1);
+  }
+
+  100% {
+    --border-color: rgb(34, 67, 112, 1);
+  }
+}
+
+@keyframes spin {
+  0% {
+    --rotate: 0deg;
+  }
+
+  100% {
+    --rotate: 360deg;
+  }
+}
+
+@keyframes borderRotate {
+  from {
+    background-position: 0% center;
+  }
+
+  to {
+    background-position: 200% center;
+  }
+}
+
+.ptcg-board-row {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  justify-content: space-evenly;
+
+  >ptcg-board-card,
+  >.ptcg-board-drop-target {
+    width: calc(var(--card-size) * var(--card-scale));
+    height: calc(var(--card-size) * #{$card-aspect-ratio} * var(--card-scale));
+    max-width: 100%;
+  }
+}
+
+.ptcg-board-active {
+
+  >ptcg-board-card,
+  >.ptcg-board-drop-target {
+    width: calc(var(--card-size) * 1.45 * var(--card-scale));
+    height: calc(var(--card-size) * 1.45 * #{$card-aspect-ratio} * var(--card-scale));
+    max-width: 100%;
+  }
+}
+
+.ptcg-board-bench {
+
+  >ptcg-board-card,
+  >.ptcg-board-drop-target {
+    width: calc(var(--card-size) * 1.15 * var(--card-scale));
+    height: calc(var(--card-size) * 1.15 * #{$card-aspect-ratio} * var(--card-scale));
+    max-width: 100%;
+  }
+}
+
+.ptcg-board-supporter,
+.ptcg-board-stadium,
+.ptcg-board-deck,
+.ptcg-board-prizes,
+.ptcg-board-discard,
+.lost-zone {
+
+  >ptcg-board-card,
+  >.ptcg-board-drop-target {
+    width: calc(var(--card-size) * 1.15 * var(--card-scale));
+    height: calc(var(--card-size) * 1.15 * #{$card-aspect-ratio} * var(--card-scale));
+    max-width: 100%;
+  }
+}
+
+.ptcg-board-drop-target>ptcg-board-card {
+  display: block;
+  width: calc(100% * var(--card-scale));
+}
+
+ptcg-board-card.draggable {
+  touch-action: none;
+}
+
+ptcg-board-prizes {
+  grid-area: prizes;
+}
+
+.ptcg-board-active {
+  grid-area: active;
+  // transform: scale(1.25);
+  transform-origin: center bottom;
+}
+
+.deck-container {
+  grid-area: deck;
+  align-self: start;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .deck-card {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+}
+
+.discard-container {
+  grid-area: discard;
+  align-self: start;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .discard-card {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+}
+
+.ptcg-board-supporter {
+  grid-area: supporter;
+  align-self: start;
+}
+
+.ptcg-board-deck {
+  grid-area: deck;
+  align-self: center;
+
+  .deck-container {
+    grid-area: deck;
+    align-self: center;
+    width: calc(var(--card-size) * 1.15 * var(--card-scale));
+    height: calc(var(--card-size) * 1.15 * #{$card-aspect-ratio} * var(--card-scale));
+
+    .deck-card {
+      grid-area: deck;
+      align-self: center;
+      width: calc(var(--card-size) * 1.15 * var(--card-scale));
+      height: calc(var(--card-size) * 1.15 * #{$card-aspect-ratio} * var(--card-scale));
+    }
+  }
+}
+
+.card-count {
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.6) 100%);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 8px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  backdrop-filter: blur(2px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.ptcg-board-bench {
+  grid-area: bench;
+}
+
+.ptcg-board-discard {
+  grid-area: discard;
+  align-self: center;
+
+  .discard-container {
+    grid-area: discard;
+    align-self: center;
+    width: calc(var(--card-size) * 1.15 * var(--card-scale));
+    height: calc(var(--card-size) * 1.15 * #{$card-aspect-ratio} * var(--card-scale));
+
+    .discard-card {
+      grid-area: discard;
+      align-self: center;
+      width: calc(var(--card-size) * 1.15 * var(--card-scale));
+      height: calc(var(--card-size) * 1.15 * #{$card-aspect-ratio} * var(--card-scale));
+    }
+  }
+}
+
+.ptcg-board-stadium {
+  grid-area: stadium;
+}
+
+.lost-zone {
+  // align-self: flex-start;
+  transform: rotate(-90deg);
+}
+
+.stadium-card {
+  align-self: flex-start;
+  margin-top: -40px;
+  width: calc(var(--card-size) * 1.15 * var(--card-scale));
+  height: calc(var(--card-size) * 1.15 * #{$card-aspect-ratio} * var(--card-scale));
+
+  &.stadium-card-down {
+    transform: rotate(180deg);
+  }
+}
+
+.ptcg-card-preview {
+  border-radius: $card-border-radius;
+  position: absolute;
+  width: 91.2px; // Increased from var(--card-size)
+  transform: translate(15%, -55%); // Center on cursor
+  pointer-events: none;
+}
+
+.coin-flip-container {
+  position: absolute;
+  top: 50%;
+  right: 28.5%; // Move it to the right of the bottom markers
+  transform: translateY(-50%);
+  z-index: 1000;
+  pointer-events: auto;
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.background-image-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.background-image-container img {
+  width: 12.5%;
+  height: auto;
+  opacity: 1;
+  margin: 0 auto;
+}
+
+.marker-container {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.top-markers {
+  left: 37%;
+}
+
+.bottom-markers {
+  right: 37%;
+}
+
+.top-markers {
+
+  .vstar-marker,
+  .gx-marker {
+    transform: rotate(180deg);
+  }
+}
+
+.vstar-marker,
+.gx-marker {
+  width: 60px;
+  height: 30px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  display: block;
+}
+
+.vstar-marker {
+  background-image: url('../../../assets/markers/vstar-marker.png');
+
+  &.used {
+    background-image: url('../../../assets/markers/vstar-used.png');
+  }
+}
+
+.gx-marker {
+  background-image: url('../../../assets/markers/gx-marker.png');
+
+  &.used {
+    background-image: url('../../../assets/markers/gx-used.png');
+  }
+}
+
+.top-markers {
+
+  .vstar-marker,
+  .gx-marker {
+    transform: rotate(180deg);
+  }
+}

@@ -1,0 +1,56 @@
+@use '~@angular/material' as mat;
+@use '~@angular/cdk' as cdk;
+
+@mixin ptcg-prompt-theme($theme) {
+  $background: map-get($theme, background);
+  $foreground: map-get($theme, foreground);
+
+  $ptcg-cards-container-background: mat.get-color-from-palette($background, app-bar);
+  $swift-ease-out-duration: 400ms !default;
+  $swift-ease-out-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1) !default;
+
+  ptcg-prompt {
+    .ptcg-prompt-overlay {
+      background: cdk.$overlay-backdrop-color;
+      transition: opacity $swift-ease-out-duration $swift-ease-out-timing-function;
+
+    }
+
+    .ptcg-prompt-container {
+      @include mat.elevation(24);
+      background-color: mat.get-color-from-palette($background, dialog);
+      color: mat.get-color-from-palette($foreground, text);
+
+      background: rgba(26, 32, 44, 0.5);
+      box-shadow: 0 8px 32px 0 rgba(48, 59, 81, 0.5);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+
+    }
+  }
+
+  ptcg-cards-container .ptcg-cards-container,
+  ptcg-choose-pokemons-pane .ptcg-choose-pokemons-pane {
+
+    background: rgba(26, 32, 44, 0.25);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+
+  }
+
+}
+
+
+@mixin ptcg-prompt-typography($config) {
+
+  ptcg-prompt-move-damage {
+    .ptcg-damage-value {
+      @include mat.typography-level($config, button);
+      font-size: 1.5em;
+    }
+  }
+
+}

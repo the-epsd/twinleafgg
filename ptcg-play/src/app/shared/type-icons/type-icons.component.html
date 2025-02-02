@@ -1,0 +1,84 @@
+<!-- <div class="mr-1" [ngClass]="selectedType.value === cardType.ANY ? 'selected' : ''" *ngIf="showAll">
+  <button type="button" class="button-1" mat-raised-button
+    (click)="typeSelected.emit(cardType.ANY); selectedType.next(cardType.ANY)">
+    {{ 'BUTTON_ALL' | translate }}
+  </button>
+</div> -->
+
+<div class="mr-2" [ngClass]="selectedType.value === cardType.GRASS ? 'selected-2' : ''">
+  <button type="button" class="type-2"
+    style="background: transparent url(/assets/type-icons-small.png) -156px -7px no-repeat;"
+    (click)="onTypeClick(cardType.GRASS)">
+  </button>
+</div>
+
+<div class="mr-2" [ngClass]="selectedType.value === cardType.FIRE ? 'selected' : ''">
+  <button type="button" class="type"
+    style="background: transparent url(/assets/type-icons-small.png) -82px -7px no-repeat;"
+    (click)="onTypeClick(cardType.FIRE)">
+  </button>
+</div>
+
+<div class="mr-2" [ngClass]="selectedType.value === cardType.WATER ? 'selected' : ''">
+  <button type="button" class="type"
+    style="background: transparent url(/assets/type-icons-small.png) -119px -7px no-repeat;"
+    (click)="onTypeClick(cardType.WATER)">
+  </button>
+</div>
+
+<div class="mr-2" [ngClass]="selectedType.value === cardType.LIGHTNING ? 'selected' : ''">
+  <button type="button" class="type"
+    style="background: transparent url(/assets/type-icons-small.png) -9px -7px no-repeat;"
+    (click)="onTypeClick(cardType.LIGHTNING)">
+  </button>
+</div>
+
+<div class="mr-2" [ngClass]="selectedType.value === cardType.PSYCHIC ? 'selected' : ''">
+  <button type="button" class="type" [ngClass]="selectedType.value === cardType.PSYCHIC ? 'border-blue-500' : ''"
+    style="background: transparent url(/assets/type-icons-small.png) -156px -47px no-repeat;"
+    (click)="onTypeClick(cardType.PSYCHIC)">
+  </button>
+</div>
+
+<div class="mr-2" [ngClass]="selectedType.value === cardType.FIGHTING ? 'selected' : ''">
+  <button type="button" class="type"
+    style="background: transparent url(/assets/type-icons-small.png) -9px -47px no-repeat;"
+    (click)="onTypeClick(cardType.FIGHTING)">
+  </button>
+</div>
+
+<div class="mr-2" [ngClass]="selectedType.value === cardType.DARK ? 'selected' : ''">
+  <button type="button" class="type"
+    style="background: transparent url(/assets/type-icons-small.png) -45px -47px no-repeat;"
+    (click)="onTypeClick(cardType.DARK)">
+  </button>
+</div>
+
+<div class="mr-2" [ngClass]="selectedType.value === cardType.METAL ? 'selected' : ''">
+  <button type="button" class="type"
+    style="background: transparent url(/assets/type-icons-small.png) -82px -47px no-repeat;"
+    (click)="onTypeClick(cardType.METAL)">
+  </button>
+</div>
+
+<div class="mr-2" [ngClass]="selectedType.value === cardType.COLORLESS ? 'selected' : ''">
+  <button type="button" class="type"
+    style="background: transparent url(/assets/type-icons-small.png) -45px -7px no-repeat;"
+    (click)="onTypeClick(cardType.COLORLESS)">
+  </button>
+</div>
+
+<div class="mr-2" [ngClass]="selectedType.value === cardType.FAIRY ? 'selected' : ''">
+  <button type="button" class="type"
+    style="background: transparent url(/assets/type-icons-small.png) -82px -88px no-repeat;"
+    (click)="onTypeClick(cardType.FAIRY)">
+  </button>
+</div>
+
+
+<div class="mr-3" [ngClass]="selectedType.value === cardType.DRAGON ? 'selected' : ''">
+  <button type="button" class="type"
+    style="background: transparent url(/assets/type-icons-small.png) -119px -47px no-repeat;"
+    (click)="onTypeClick(cardType.DRAGON)">
+  </button>
+</div>

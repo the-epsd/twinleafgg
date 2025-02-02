@@ -1,0 +1,49 @@
+<ptcg-sidebar-container>
+
+  <ptcg-sidebar>
+    <mat-nav-list>
+      <a mat-list-item *ngFor="let conversation of (conversations$ | async)"
+        class="ptcg-no-padding-list-item">
+        <ptcg-contact-bar
+          [active]="userId === conversation.user1Id || userId === conversation.user2Id"
+          [conversation]="conversation"
+          [loggedUserId]="loggedUserId">
+        </ptcg-contact-bar>
+      </a>
+    </mat-nav-list>
+  </ptcg-sidebar>
+
+  <ptcg-content [loading]="loading">
+    <div class="ptcg-messages-container">
+      <mat-toolbar>
+        <mat-toolbar-row>
+          <h1 translate>MESSAGES_TITLE</h1>
+
+          <span class="ptcg-u-spacer"></span>
+
+          <button mat-raised-button color="primary" *ngIf="userId !== 0"
+            (click)="deleteConversation(userId)">
+            {{ 'MESSAGES_DELETE_CONVERSATION' | translate }}
+          </button>
+        </mat-toolbar-row>
+      </mat-toolbar>
+
+      <div *ngIf="userId === 0 ; else messages">
+        <div class="ptcg-u-padding">
+          <mat-card class="mat-elevation-z2" translate>
+            MESSAGES_NO_CONVERSATION_SELECTED
+          </mat-card>
+        </div>
+      </div>
+
+      <ng-template #messages>
+        <ptcg-conversation
+          [loggedUserId]="loggedUserId"
+          [userId]="userId">
+        </ptcg-conversation>
+      </ng-template>
+    </div>
+
+  </ptcg-content>
+
+</ptcg-sidebar-container>

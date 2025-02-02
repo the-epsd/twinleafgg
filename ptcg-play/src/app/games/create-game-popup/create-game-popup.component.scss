@@ -1,0 +1,39 @@
+@import '../../../theme/variables.scss';
+
+.ptcg-game-rule-checkbox {
+  display: flex;
+  margin: map-get($padding, small) 0;
+}
+
+// Custom styles for the mat-select dropdown
+::ng-deep .mat-select-panel {
+  // Background color of the dropdown panel
+  background-color: #333;
+  
+  // Text color of the options
+  .mat-option-text {
+    color: #fff;
+  }
+  
+  // Hover color for options
+  .mat-option:hover:not(.mat-option-disabled) {
+    background-color: #555;
+  }
+  
+  // Selected option color
+  .mat-selected {
+    background-color: #777;
+  }
+}
+
+// Custom styles for the mat-select trigger
+::ng-deep .mat-select-trigger {
+  // Text color of the selected value
+  color: #ccc;
+}
+
+// Custom styles for the mat-select arrow icon
+::ng-deep .mat-select-arrow {
+  // Color of the arrow icon
+  color: #999;
+}

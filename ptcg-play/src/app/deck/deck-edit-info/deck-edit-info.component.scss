@@ -1,0 +1,24 @@
+.deck-info {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px;
+  border-radius: 12px;
+  margin: 0 auto;
+  background-color: #1a1f29;
+}
+
+.deck-info span {
+  margin-right: 8px;
+  background-color: #1a1f29;
+}
+
+.deck-info span:last-child {
+  margin-right: 0;
+  background-color: #1a1f29;
+}
+
+:host {
+  display: flex;
+  justify-content: center;
+  background-color: #1a1f29;
+}

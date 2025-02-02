@@ -1,0 +1,32 @@
+<div class="ptcg-prompt-title">
+  <h2 translate>PROMPT_MOVE_ENERGY_TITLE</h2>
+  <div class="ptcg-u-spacer"></div>
+  <button mat-button mat-icon-button (click)="minimize()">
+    <mat-icon>keyboard_arrow_down</mat-icon>
+  </button>
+</div>
+
+<div class="ptcg-prompt-content">
+  <p [translate]="'GAME_MESSAGES.' + message"></p>
+
+  <ptcg-choose-pokemons-pane [pokemonData]="pokemonData" (cardClick)="onCardClick($event)"
+    (cardDrop)="onCardDrop($event)">
+  </ptcg-choose-pokemons-pane>
+
+  <ptcg-choose-cards-panes [cards]="selectedItem ? selectedItem.cardList.cards : []" [filter]="filter"
+    [blocked]="blocked" [singlePaneMode]="true" [noBottomPane]="true" [dragConfig]="getCardsPanesConfig()">
+  </ptcg-choose-cards-panes>
+</div>
+
+<div class="ptcg-prompt-actions">
+  <button mat-raised-button [disabled]="results.length === 0" (click)="reset()">
+    {{ 'PROMPT_RESET' | translate }}
+  </button>
+  <div class="ptcg-u-spacer"></div>
+  <button mat-raised-button *ngIf="allowedCancel" [disabled]="gameState.deleted" (click)="cancel()">
+    {{ 'BUTTON_CANCEL' | translate }}
+  </button>
+  <button mat-raised-button color="primary" [disabled]="gameState.deleted || isInvalid" (click)="confirm()">
+    {{ 'BUTTON_OK' | translate }}
+  </button>
+</div>

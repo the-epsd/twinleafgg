@@ -1,0 +1,164 @@
+@use '~@angular/material' as mat;
+
+
+@mixin ptcg-deck-edit-theme($theme) {
+  $background: map-get($theme, background);
+  $foreground: map-get($theme, foreground);
+  $primary: map-get($theme, primary);
+
+  $deck-edit-border: solid 0px mat.get-color-from-palette($foreground, divider);
+  $deck-edit-background-color: mat.get-color-from-palette($primary, 800);
+  $deck-edit-toolbar-background-color: mat.get-color-from-palette($background);
+
+  ptcg-deck-edit-panes {
+    .ptcg-deck-edit-pane.secondary {
+      background-color: $deck-edit-background-color;
+      border-top: $deck-edit-border;
+      color: mat.get-color-from-palette($foreground, text);
+    }
+  }
+
+  ptcg-deck-edit-toolbar {
+
+    .narrow-select1 {
+      width: 100px;
+    }
+
+    .narrow-select2 {
+      width: 125px;
+    }
+
+    .narrow-select3 {
+      width: 135px;
+    }
+
+    .super-type-buttons {
+      display: flex;
+
+      button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+
+        &.left-rounded {
+          border-top-left-radius: 32px;
+          border-bottom-left-radius: 32px;
+          border-top-right-radius: 0px;
+          border-bottom-right-radius: 0px;
+          background-color: #090b0f;
+          margin-left: 1rem;
+        }
+
+        &.right-rounded {
+          border-top-right-radius: 32px;
+          border-bottom-right-radius: 32px;
+          border-top-left-radius: 0px;
+          border-bottom-left-radius: 0px;
+          background-color: #090b0f;
+        }
+
+        &:not(:first-child):not(:last-child) {
+          border-radius: 0;
+          border-left: 1px solid #1a1f29;
+          border-right: 1px solid #1a1f29;
+          background-color: #090b0f;
+        }
+
+        &.selected,
+        &:not(:first-child):not(:last-child).selected {
+          background-color: #283142;
+          color: white;
+        }
+
+        &:not(:first-child):not(:last-child) {
+          border-radius: 0;
+          border-left: 1px solid #1a1f29;
+          border-right: 1px solid #1a1f29;
+        }
+      }
+    }
+
+    .mat-button-toggle-checked {
+      background-color: #283142;
+      color: mat.get-color-from-palette($primary, default-contrast) !important;
+    }
+
+    mat-form-field {
+
+
+      .mat-form-field-flex {
+        background-color: #090b0f;
+        border-radius: 32px;
+        padding: 0.5rem 1rem;
+        align-items: center;
+        font-size: 14px;
+        margin-top: 26px;
+        max-height: 36.5px;
+      }
+
+      .mat-form-field-infix {
+        padding: 0;
+        border-top: 0;
+      }
+
+      // .mat-select-arrow-wrapper {
+      //   transform: translateY(0);
+      // }
+
+      .mat-select-value {
+        color: #283142;
+        font-size: 14px;
+      }
+
+      .mat-form-field-label {
+        font-size: 14px;
+        color: #283142;
+      }
+
+      .mat-form-field-underline {
+        display: none;
+        margin-top: 4px;
+      }
+
+      &.mat-focused .mat-form-field-flex {
+        background-color: #283142;
+
+        .mat-select-value {
+          color: mat.get-color-from-palette($primary, default-contrast);
+          width: 100%;
+          max-width: 100%;
+        }
+      }
+    }
+
+    .search-toolbar {
+      background-color: $deck-edit-toolbar-background-color;
+      border-bottom: $deck-edit-border;
+
+      // & .mat-form-field-underline {
+      //   color: mat.get-color-from-palette($primary, text);
+      // }
+
+      & .mat-select {
+        color: mat.get-color-from-palette($foreground, text);
+      }
+    }
+  }
+
+  ptcg-deck-card {
+    .ptcg-deck-card-label {
+      color: mat.get-color-from-palette($foreground, text);
+    }
+  }
+}
+
+@mixin ptcg-deck-edit-typography($config) {
+
+  ptcg-deck-card {
+    .ptcg-deck-card-label {
+      @include mat.typography-level($config, caption);
+    }
+  }
+
+}

@@ -1,0 +1,13 @@
+<div class="bracket">
+  <div *ngFor="let round of bracket; let roundIndex = index" class="round">
+    <div *ngFor="let match of round; let matchIndex = index" class="match">
+      <div>{{ match.player1 }} vs {{ match.player2 }}</div>
+      <button *ngIf="match.winner === null" (click)="reportWinner(roundIndex, matchIndex, match.player1)">
+        {{ match.player1 }} Won
+      </button>
+      <button *ngIf="match.winner === null" (click)="reportWinner(roundIndex, matchIndex, match.player2)">
+        {{ match.player2 }} Won
+      </button>
+    </div>
+  </div>
+</div>

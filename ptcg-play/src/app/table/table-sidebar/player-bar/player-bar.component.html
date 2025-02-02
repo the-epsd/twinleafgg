@@ -1,0 +1,58 @@
+<div class="ptcg-player-bar" [ngClass]="{active: active}">
+
+  <ptcg-player-avatar class="ptcg-player-bar-avatar"
+    (click)="allowAvatarClick && onAvatarClick()"
+    [user]="userInfo$ | async"
+    [allowClick]="allowAvatarClick"
+    [avatarName]="avatarName">
+  </ptcg-player-avatar>
+
+  <div class="ptcg-player-info">
+    <div *ngIf="!isEmpty; then playerInfo else emptyInfo"></div>
+
+    <ng-template #playerInfo>
+      <h4 class="ptcg-player-name">
+        <span (click)="onUserNameClick()"
+          [class.clickable]="userInfo$ | async">
+          {{ name }}
+        </span>
+      </h4>
+      <div class="ptcg-player-rank">
+        <ptcg-rank *ngIf="userInfo$ | async as userInfo; else disconnected"
+          [ranking]="userInfo.ranking"
+          [rank]="userInfo.rank">
+        </ptcg-rank>
+        <ng-template #disconnected>
+          <ptcg-badge>
+            {{ 'TABLE_DISCONNECTED' | translate }}
+          </ptcg-badge>
+        </ng-template>
+      </div>
+    </ng-template>
+
+    <ng-template #emptyInfo>
+      <div class="ptcg-empty-info mat-caption" translate>TABLE_NO_PLAYER</div>
+    </ng-template>
+  </div>
+
+  <div class="ptcg-card-counts" *ngIf="!isEmpty">
+    <ptcg-badge>
+      {{ 'TABLE_DECK_COUNT' | translate: { count: deckCount } }}
+    </ptcg-badge>
+    <ptcg-badge>
+      {{ 'TABLE_HAND_COUNT' | translate: { count: handCount } }}
+    </ptcg-badge>
+    <ptcg-badge>
+      {{ 'TABLE_DISCARD_COUNT' | translate: { count: discardCount } }}
+    </ptcg-badge>
+    <ptcg-badge>
+      {{ 'TABLE_LOSTZONE_COUNT' | translate: { count: lostzoneCount } }}
+    </ptcg-badge>
+  </div>
+
+  <ptcg-player-time class="ptcg-time-left" *ngIf="playerStats && timeLimit > 0"
+    [timeLimit]="timeLimit"
+    [playerStats]="playerStats">
+  </ptcg-player-time>
+
+</div>

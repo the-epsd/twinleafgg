@@ -1,0 +1,12 @@
+.ptcg-login-popup-content form>p {
+  text-align: right;
+}
+
+.ptcg-login-popup-link {
+  display: block;
+
+  &.disabled {
+    cursor: auto;
+    text-decoration: none;
+  }
+}

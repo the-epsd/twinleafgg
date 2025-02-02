@@ -1,0 +1,35 @@
+@use 'sass:math';
+
+$ptcg-size: (
+  nav-menu: 200px,
+  sidebar: 200px,
+  card: 100px,
+  avatar: 44px,
+  profile-avatar: 100px,
+  board-card: 60px,
+  energy-size: 25px
+);
+
+$padding: (
+  small: 8px,
+  normal: 16px,
+  large: 32px
+);
+
+$card-border-radius: 3.5%;
+$card-aspect-ratio: 1.37;
+
+// Variables from angular material theme
+$ptcg-toolbar-height-desktop: map-get($ptcg-size, avatar) !default;
+$ptcg-toolbar-height-mobile: map-get($ptcg-size, avatar) !default;
+
+$ptcg-bench-slots: 8;
+$ptcg-disabled-opacity: .5;
+
+$ptcg-sidebar-tiny-padding: math.div(map-get($padding, small), 2);
+$ptcg-board-tiny-padding: math.div(map-get($padding, small), 4);
+
+$ptcg-prompt-padding: 24px !default;
+$ptcg-prompt-border-radius: 4px !default;
+$ptcg-prompt-max-height: 65vh !default;
+$ptcg-prompt-button-margin: 8px !default;

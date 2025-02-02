@@ -1,0 +1,19 @@
+<div class="ptcg-search-box">
+  <button mat-raised-button color="primary" [hidden]="isActivated" (click)="activateSearch()" *ngIf="showSearchButton">
+    <mat-icon>search</mat-icon>
+    {{ 'BUTTON_SEARCH' | translate }}
+  </button>
+
+  <form class="search-form" autocomplete="off" [hidden]="!isActivated && showSearchButton">
+    <mat-form-field floatLabel="never" appearance="legacy" style="min-width: 235px;">
+      <input #searchInput="matInput" name="searchValue" (blur)="onBlur()" (input)="onChange()" [(ngModel)]="searchValue"
+        type="text" matInput [placeholder]="label">
+    </mat-form-field>
+    <!-- <button mat-button
+      [matTooltip]="'BUTTON_CLEAR_FILTER' | translate"
+      matTooltipShowDelay="1000"
+      (click)="clearSearch()">
+      <mat-icon matSuffix >close</mat-icon>
+    </button> -->
+  </form>
+</div>

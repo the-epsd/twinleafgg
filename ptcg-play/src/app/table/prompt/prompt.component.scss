@@ -1,0 +1,97 @@
+@import '../../../theme/variables.scss';
+
+.ptcg-prompt-overlay {
+  bottom: 0;
+  display: none;
+  left: 0;
+  opacity: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+
+  &.active {
+    display: block;
+    opacity: .6;
+  }
+}
+
+.ptcg-prompt-container-wrapper {
+  align-items: center;
+  bottom: 0;
+  display: flex;
+  left: 0;
+  justify-content: center;
+  overflow: hidden;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 2;
+}
+
+.ptcg-prompt-container {
+  display: block;
+  margin: 0 auto;
+  max-width: calc(100% - 2 * #{map-get($padding, normal)});
+  padding: $ptcg-prompt-padding;
+  border-radius: $ptcg-prompt-border-radius;
+  box-sizing: border-box;
+  overflow: hidden;
+  outline: 0;
+  position: absolute;
+}
+
+.ptcg-prompt-card-preview {
+  position: absolute;
+  width: map-get($ptcg-size, card);
+}
+
+.ptcg-prompt-title {
+  margin: 0 0 map-get($padding, normal);
+  display: flex;
+}
+
+.ptcg-prompt-title>h2 {
+  align-self: center;
+}
+
+.ptcg-prompt-content {
+  display: block;
+  margin: 0 $ptcg-prompt-padding * -1;
+  padding: 0 $ptcg-prompt-padding;
+  max-height: $ptcg-prompt-max-height;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.ptcg-damage-prompt-content {
+  display: block;
+  margin: 0 $ptcg-prompt-padding * -1;
+  padding: 0 $ptcg-prompt-padding;
+  max-height: 30%;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.ptcg-prompt-actions {
+  padding: 8px 0;
+  display: flex;
+  flex-wrap: wrap;
+  min-height: 52px;
+  align-items: center;
+  justify-content: flex-end;
+
+  // Pull the actions down to avoid their padding stacking with the dialog's padding.
+  margin-bottom: -$ptcg-prompt-padding;
+
+  .mat-button-base+.mat-button-base,
+  .mat-mdc-button-base+.mat-mdc-button-base {
+    margin-left: $ptcg-prompt-button-margin;
+  }
+}
+
+.ptcg-minimized-prompt {
+  bottom: map-get($padding, large);
+  left: map-get($padding, large);
+  position: absolute;
+  z-index: 2;
+}

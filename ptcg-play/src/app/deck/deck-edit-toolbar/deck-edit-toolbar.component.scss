@@ -1,0 +1,44 @@
+@import '../../../theme/variables.scss';
+
+.ptcg-deck-edit-toolbar {
+  flex: 0 0 auto;
+  background-color: #1a1f29;
+}
+
+.green-button {
+  flex: 0 0 auto;
+  background-color: #090b0f;
+}
+
+.mat-toolbar-row {
+  >h1 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  >button {
+    margin-left: map-get($padding, small);
+    min-width: 80px;
+    border-radius: 32px;
+  }
+}
+
+.mat-toolbar-row {
+
+  place-items: center;
+
+
+  >mat-form-field,
+  >ptcg-search-box {
+    margin-left: map-get($padding, normal);
+  }
+
+  >mat-checkbox {
+    margin-left: map-get($padding, normal);
+  }
+
+  >*:first-child {
+    margin-left: 0;
+  }
+
+}

@@ -1,0 +1,50 @@
+@import '../../../../theme/variables.scss';
+
+.ptcg-avatar {
+  height: map-get($ptcg-size, avatar);
+  width: map-get($ptcg-size, avatar);
+  border-radius: 50%;
+}
+
+:host[type="profile"] > .ptcg-avatar {
+  height: map-get($ptcg-size, profile-avatar);
+  width: map-get($ptcg-size, profile-avatar);
+  border-radius: 50%;
+}
+
+:host[type="double"] > .ptcg-avatar {
+  height: 2 * map-get($ptcg-size, profile-avatar);
+  width: 2 * map-get($ptcg-size, profile-avatar);
+  border-radius: 50%;
+}
+
+.empty {
+  background-image: url(~src/assets/avatar.svg);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  border-radius: 50%;
+}
+
+.ptcg-avatar > img {
+  display: block;
+  height: 100%;
+  width: 100%;
+  border-radius: 50%;
+}
+
+.ptcg-avatar.hoverable {
+  cursor: pointer;
+  display: block;
+  position: relative;
+  border-radius: 50%;
+
+  &:after {
+    bottom: 0;
+    content: "";
+    display: block;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+}

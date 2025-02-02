@@ -1,0 +1,23 @@
+<div class="ptcg-prompt-title">
+  <h2 translate>PROMPT_ORDER_CARDS_TITLE</h2>
+  <div class="ptcg-u-spacer"></div>
+  <button mat-button mat-icon-button (click)="minimize()">
+    <mat-icon>keyboard_arrow_down</mat-icon>
+  </button>
+</div>
+
+<div class="ptcg-prompt-content">
+  <p [translate]="'GAME_MESSAGES.' + message"></p>
+
+  <ptcg-choose-cards-panes-2 [singlePaneMode]="true" [cards]="cards.cards" (changeCards)="onChange($event)">
+  </ptcg-choose-cards-panes-2>
+</div>
+
+<div class="ptcg-prompt-actions">
+  <button mat-raised-button *ngIf="allowedCancel" [disabled]="gameState.deleted" (click)="cancel()">
+    {{ 'BUTTON_CANCEL' | translate }}
+  </button>
+  <button mat-raised-button color="primary" [disabled]="gameState.deleted" (click)="confirm()">
+    {{ 'BUTTON_OK' | translate }}
+  </button>
+</div>

@@ -1,0 +1,29 @@
+:host {
+  display: block;
+  height: 100%;
+  overflow: hidden;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.ptcg-table {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+ptcg-board {
+  flex: 1 1 auto;
+  overflow: hidden;
+  margin-top: -2%;
+  margin-bottom: -2%;
+}
+
+ptcg-hand {
+  flex: 0 0 auto;
+  overflow: visible;
+  background: transparent;
+}

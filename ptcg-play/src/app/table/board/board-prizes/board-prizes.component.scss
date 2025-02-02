@@ -1,0 +1,28 @@
+@import '../../../../theme/variables.scss';
+
+.ptcg-board-prizes {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.ptcg-board-prizes-container {
+  position: absolute;
+  display: grid;
+  grid-template-columns: repeat(2, 60px);
+  grid-template-rows: repeat(3, 82px);
+  gap: var(--padding-small);
+  width: calc(60px * 2 + var(--padding-small));
+  height: calc(82px * 3 + var(--padding-small) * 2);
+  margin-top: 36%;
+}
+
+.ptcg-board-prize-card {
+  width: var(--card-size);
+  // height: 82px;
+}
+
+.ptcg-prompt-card-preview {
+  position: absolute;
+  width: map-get($ptcg-size, card);
+}

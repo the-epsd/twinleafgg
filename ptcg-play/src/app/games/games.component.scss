@@ -1,0 +1,30 @@
+.bg {
+  background-color: #1A202C;
+}
+
+.news-banner {
+  cursor: pointer;
+
+  .mat-toolbar {
+    min-height: 36px;
+    height: 36px;
+    font-size: calc(36px * 0.4); // Scales with toolbar height
+
+    .mat-icon {
+      height: calc(36px * 0.5);
+      width: calc(36px * 0.5);
+      font-size: calc(36px * 0.5);
+    }
+  }
+
+  .latest-news {
+    margin-left: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.news-banner:hover {
+  opacity: 0.9;
+}

@@ -1,0 +1,28 @@
+<div class="table-sidebar">
+
+  <div class="ptcg-table-sidebar-header">
+    <h3 translate [translateParams]="{ id: gameId }">TABLE_TABLE_NAME</h3>
+    <span class="ptcg-u-spacer"></span>
+    <ptcg-badge>
+      {{ 'TABLE_TURN_NUMBER' | translate: { turn: turn } }}
+    </ptcg-badge>
+  </div>
+
+
+  <ptcg-player-bar [gameState]="gameState" [clientId]="clientId" [player]="topPlayer" [replayPlayer]="topReplayPlayer"
+    [playerStats]="topPlayerStats" [active]="isTopPlayerActive">
+  </ptcg-player-bar>
+
+  <ptcg-player-bar [gameState]="gameState" [clientId]="clientId" [player]="bottomPlayer"
+    [replayPlayer]="bottomReplayPlayer" [playerStats]="bottomPlayerStats" [active]="isBottomPlayerActive">
+  </ptcg-player-bar>
+
+  <ptcg-player-actions [gameState]="gameState" [clientId]="clientId" (join)="join.next()">
+  </ptcg-player-actions>
+
+  <ptcg-replay-controls *ngIf="gameState?.replay" [gameState]="gameState">
+  </ptcg-replay-controls>
+
+  <ptcg-game-logs [gameState]="gameState"></ptcg-game-logs>
+
+</div>

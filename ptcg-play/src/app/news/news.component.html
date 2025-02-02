@@ -1,0 +1,67 @@
+<ptcg-content>
+  <mat-toolbar-row>
+    <button *ngIf="selectedPost" mat-icon-button (click)="selectedPost = null">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <h1>{{ selectedPost ? selectedPost.title : 'NEWS_AND_UPDATES' | translate }}</h1>
+  </mat-toolbar-row>
+
+  <!-- Full Post View -->
+  <div *ngIf="selectedPost" class="full-post">
+    <h2>{{ selectedPost.title }}</h2>
+    <div class="post-meta">
+      {{ selectedPost.date | date:'mediumDate' }} by {{ selectedPost.author }}
+    </div>
+    <div class="post-content">
+      {{ selectedPost.content }}
+    </div>
+  </div>
+
+  <!-- Posts Grid (shown when no post is selected) -->
+  <div *ngIf="!selectedPost" class="news-container">
+    <div *ngIf="featuredPost" class="featured-post" (click)="selectPost(featuredPost)">
+      <img [src]="featuredPost.image || 'assets/placeholder.png'" alt="Featured post cover">
+      <div class="overlay"></div>
+      <div class="content">
+        <div class="meta">
+          <mat-chip-list>
+            <mat-chip color="accent">J</mat-chip>
+          </mat-chip-list>
+          <span class="date">{{ featuredPost.date | date:'mediumDate' }}</span>
+        </div>
+        <h2>{{ featuredPost.title }}</h2>
+        <p *ngIf="featuredPost.preview">{{ featuredPost.preview }}</p>
+        <div class="actions">
+          <button mat-raised-button color="accent">Read Full Post</button>
+          <div class="author">
+            <mat-icon class="avatar">account_circle</mat-icon>
+            <span>By {{ featuredPost.author }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="posts-grid" *ngIf="!selectedPost">
+    <div *ngFor="let post of regularPosts" class="post-card" (click)="selectPost(post)">
+      <img [src]="post.image || 'assets/placeholder.png'" alt="Post cover">
+      <div class="overlay"></div>
+      <div class="content">
+        <div class="meta">
+          <mat-chip-list>
+            <mat-chip color="accent">J</mat-chip>
+          </mat-chip-list>
+          <span class="date">{{ post.date | date:'mediumDate' }}</span>
+        </div>
+        <h3>{{ post.title }}</h3>
+        <div class="actions">
+          <button mat-raised-button color="accent">Read Full Post</button>
+          <div class="author">
+            <mat-icon class="avatar">account_circle</mat-icon>
+            <span>By {{ post.author }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ptcg-content>

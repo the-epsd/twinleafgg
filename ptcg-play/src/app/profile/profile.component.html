@@ -1,0 +1,49 @@
+<ptcg-content [loading]="loading">
+  <mat-toolbar>
+    <mat-toolbar-row>
+      <h1 translate>PROFILE_TITLE</h1>
+
+      <span class="ptcg-u-spacer"></span>
+
+      <div *ngIf="owner$ | async ; then ownerActions ; else visitorActions"></div>
+      <ng-template #ownerActions>
+        <button mat-raised-button color="primary" [matMenuTriggerFor]="menu">
+          {{ 'PROFILE_EDIT_PROFILE' | translate }}
+        </button>
+        <mat-menu #menu="matMenu">
+          <!-- <button mat-menu-item (click)="editAvatars(userId)">
+            {{ 'PROFILE_EDIT_AVATARS' | translate }}
+          </button> -->
+          <!-- <button mat-menu-item (click)="changeEmail(userId)">
+            {{ 'PROFILE_CHANGE_EMAIL' | translate }}
+          </button> -->
+          <button mat-menu-item (click)="changePassword()">
+            {{ 'SET_PASSWORD_BUTTON' | translate }}
+          </button>
+          <button mat-menu-item (click)="openChangeCardImagesDialog()">
+            {{ 'PROFILE_CHANGE_CARD_IMAGES' | translate }}
+          </button>
+
+        </mat-menu>
+      </ng-template>
+      <ng-template #visitorActions>
+        <button mat-raised-button color="primary" [routerLink]="['/message', userId]">
+          {{ 'BUTTON_SEND_MESSAGE' | translate }}
+        </button>
+      </ng-template>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+  <div class="ptcg-user-details ptcg-u-padding" *ngIf="user$ | async; let user">
+    <mat-card>
+      <mat-card-content>
+        <ptcg-user-info-pane [user]="user"></ptcg-user-info-pane>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div class="ptcg-recent-matches ptcg-u-padding" *ngIf="user$ | async; let user">
+    <ptcg-match-table [userId]="user.userId"></ptcg-match-table>
+  </div>
+
+</ptcg-content>

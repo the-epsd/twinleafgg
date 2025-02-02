@@ -1,0 +1,66 @@
+<dnd-preview [allBackends]="true">
+  <ng-template let-type let-item="item">
+    <ng-container [ngSwitch]="type">
+      <div class="ptcg-card" *ngSwitchCase="'PROMPT_CARD'">
+        <ptcg-card class="ptcg-prompt-card-preview" [class.cardback]="item.data.isSecret" [card]="item.data.card">
+        </ptcg-card>
+      </div>
+    </ng-container>
+  </ng-template>
+</dnd-preview>
+
+<div class="ptcg-prompt">
+
+  <div class="ptcg-prompt-overlay" [ngClass]="{active: isPromptVisible}">
+  </div>
+
+  <div class="ptcg-prompt-container-wrapper" [hidden]="!isPromptVisible">
+    <div class="ptcg-prompt-container" *ngIf="prompt" [@state]="animationState" (@state.done)="onAnimationEnd($event)">
+      <div [ngSwitch]="prompt.type">
+        <ptcg-prompt-confirm *ngSwitchCase="'Confirm'" [gameState]="gameState" [prompt]="prompt"></ptcg-prompt-confirm>
+        <ptcg-prompt-alert *ngSwitchCase="'Alert'" [gameState]="gameState" [prompt]="prompt"></ptcg-prompt-alert>
+        <ptcg-prompt-attach-energy *ngSwitchCase="'Attach energy'" [gameState]="gameState"
+          [prompt]="prompt"></ptcg-prompt-attach-energy>
+        <ptcg-prompt-choose-attack *ngSwitchCase="'Choose attack'" [gameState]="gameState"
+          [prompt]="prompt"></ptcg-prompt-choose-attack>
+        <ptcg-prompt-choose-cards *ngSwitchCase="'Choose cards'" [gameState]="gameState"
+          [prompt]="prompt"></ptcg-prompt-choose-cards>
+        <ptcg-prompt-choose-energy *ngSwitchCase="'Choose energy'" [gameState]="gameState"
+          [prompt]="prompt"></ptcg-prompt-choose-energy>
+        <ptcg-prompt-choose-prize *ngSwitchCase="'Choose prize'" [gameState]="gameState"
+          [prompt]="prompt"></ptcg-prompt-choose-prize>
+        <ptcg-prompt-choose-pokemon *ngSwitchCase="'Choose pokemon'" [gameState]="gameState"
+          [prompt]="prompt"></ptcg-prompt-choose-pokemon>
+        <ptcg-prompt-game-over *ngSwitchCase="'Game over'" [gameState]="gameState"
+          [prompt]="prompt"></ptcg-prompt-game-over>
+        <ptcg-prompt-invite-player *ngSwitchCase="'Invite player'" [gameState]="gameState"
+          [prompt]="prompt"></ptcg-prompt-invite-player>
+        <ptcg-prompt-move-damage *ngSwitchCase="'Move damage'" [gameState]="gameState"
+          [prompt]="prompt"></ptcg-prompt-move-damage>
+        <ptcg-prompt-move-energy *ngSwitchCase="'Move energy'" [gameState]="gameState"
+          [prompt]="prompt"></ptcg-prompt-move-energy>
+        <ptcg-prompt-order-cards *ngSwitchCase="'Order cards'" [gameState]="gameState"
+          [prompt]="prompt"></ptcg-prompt-order-cards>
+        <ptcg-prompt-put-damage *ngSwitchCase="'Put damage'" [gameState]="gameState"
+          [prompt]="prompt"></ptcg-prompt-put-damage>
+        <ptcg-prompt-show-cards *ngSwitchCase="'Show cards'" [gameState]="gameState"
+          [prompt]="prompt"></ptcg-prompt-show-cards>
+        <ptcg-prompt-select *ngSwitchCase="'Select'" [gameState]="gameState" [prompt]="prompt"></ptcg-prompt-select>
+        <ptcg-prompt-remove-damage *ngSwitchCase="'Remove damage'" [gameState]="gameState"
+          [prompt]="prompt"></ptcg-prompt-remove-damage>
+        <ptcg-prompt-discard-energy *ngSwitchCase="'Discard energy'" [gameState]="gameState"
+          [prompt]="prompt"></ptcg-prompt-discard-energy>
+        <ptcg-prompt-confirm-cards *ngSwitchCase="'Confirm cards'" [gameState]="gameState"
+          [prompt]="prompt"></ptcg-prompt-confirm-cards>
+        <div *ngSwitchDefault translate [translateParams]="{type: prompt?.type}">PROMPT_UNKNOWN_TYPE</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ptcg-minimized-prompt" *ngIf="minimized">
+    <button mat-fab color="primary" (click)="maximize()">
+      <mat-icon>keyboard_arrow_up</mat-icon>
+    </button>
+  </div>
+
+</div>

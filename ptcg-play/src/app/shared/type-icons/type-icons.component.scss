@@ -1,0 +1,77 @@
+:host {
+  display: flex;
+  flex-wrap: wrap;
+  place-content: start;
+  place-items: center;
+
+  button.type {
+    display: inline-flex;
+    place-items: center;
+    padding-left: .75rem;
+    padding-right: .75rem;
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+    border-width: 1px;
+    border: transparent;
+    border-radius: 9999px;
+    cursor: pointer;
+    height: 2rem;
+    width: 2rem;
+    overflow: hidden;
+
+    &:focus {
+      outline: 2px solid transparent;
+      outline-offset: 2px;
+    }
+  }
+
+  button.type-2 {
+    margin-left: 1rem;
+    display: inline-flex;
+    place-items: center;
+    padding-left: .75rem;
+    padding-right: .75rem;
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+    border-width: 1px;
+    border: transparent;
+    border-radius: 9999px;
+    cursor: pointer;
+    height: 2rem;
+    width: 2rem;
+    overflow: hidden;
+
+    &:focus {
+      outline: 2px solid transparent;
+      outline-offset: 2px;
+    }
+  }
+
+  .button-1 {
+    border-radius: 32px;
+  }
+
+  .mr-1 {
+    margin-left: 1rem;
+    margin-right: .9rem;
+  }
+
+  .mr-2 {
+    margin-top: .5rem;
+    margin-right: .5rem;
+  }
+
+  .mr-3 {
+    margin-top: .5rem;
+    margin-right: 0rem;
+  }
+
+}
+
+.selected {
+  border-bottom: 2px solid rgb(59, 84, 124);
+}
+
+.selected-2 {
+  border-bottom: 2px solid rgb(59, 84, 124);
+}

@@ -1,0 +1,31 @@
+<h2 mat-dialog-title>
+  <span *ngIf="facedown" translate>CARDS_UNKNOWN</span>
+  
+</h2>
+
+<mat-dialog-content>
+  <ptcg-card-info-pane
+    [card]="card"
+    [facedown]="facedown"
+    [options]="options"
+    (action)="close($event)">
+  </ptcg-card-info-pane>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-raised-button color="primary" *ngIf="cardList"
+    [disabled]="!card"
+    (click)="showCardList()">
+    {{ 'CARDS_SHOW_CARD_LIST' | translate }}
+  </button>
+  <section class="ptcg-card-info-reveal-cards" *ngIf="allowReveal">
+    <mat-checkbox color="primary" name="reveal-card"
+      [checked]="!facedown" (change)="facedown = !facedown">
+      {{ 'CARDS_REVEAL_CARDS' | translate }}
+    </mat-checkbox>
+  </section>
+  <span class="ptcg-u-spacer"></span>
+  <button mat-raised-button (click)="close()" cdkFocusInitial>
+    {{ 'BUTTON_CLOSE' | translate }}
+  </button>
+</mat-dialog-actions>

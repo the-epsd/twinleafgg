@@ -1,0 +1,39 @@
+@use '~@angular/material' as mat;
+
+
+@mixin ptcg-main-theme($theme) {
+  $background: map-get($theme, background);
+  $foreground: map-get($theme, foreground);
+  $primary: map-get($theme, primary);
+  $avatar-background-color: mat.get-color-from-palette($background, A400);
+  $logged-user-background-color: mat.get-color-from-palette($primary, 900); //mat-color($background, focused-button);
+  $logged-user-text-color: mat.get-contrast-color-from-palette($primary, A200);
+  $sidenav-table-header-background-color: mat.get-color-from-palette($background);
+  $sidenav-deleted-text-color: mat.get-color-from-palette($foreground, secondary-text);
+
+  ptcg-toolbar {
+    .ptcg-logged-user {
+      background-color: #0E1117;
+      color: $logged-user-text-color;
+    }
+  }
+
+  ptcg-sidenav {
+    .ptcg-sidenav-label-container.deleted {
+      color: $sidenav-deleted-text-color;
+    }
+
+    .ptcg-sidenav-header {
+      background-color: rgba(0, 0, 0, 0);
+    }
+  }
+}
+
+
+@mixin ptcg-main-typography($config) {
+  ptcg-sidenav-item {
+    .close-button-icon {
+      font-size: mat.font-size($config, body-1);
+    }
+  }
+}

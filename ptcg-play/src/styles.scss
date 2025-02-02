@@ -1,0 +1,129 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import "theme/app.scss";
+
+.type-icon-sm {
+  width: 2rem;
+  height: 2rem;
+  overflow: hidden;
+
+  &.type-icon-colorless,
+  &.type-icon-Colorless {
+    background: transparent url(/assets/type-icons-small.png) -44px -6px no-repeat;
+  }
+
+  &.type-icon-darkness,
+  &.type-icon-Darkness {
+    background: transparent url(/assets/type-icons-small.png) -44px -46px no-repeat;
+  }
+
+  &.type-icon-dragon,
+  &.type-icon-Dragon {
+    background: transparent url(/assets/type-icons-small.png) -118px -46px no-repeat;
+  }
+
+  &.type-icon-fairy,
+  &.type-icon-Fairy {
+    background: transparent url(/assets/type-icons-small.png) -81px -88px no-repeat;
+  }
+
+  &.type-icon-fighting,
+  &.type-icon-Fighting {
+    background: transparent url(/assets/type-icons-small.png) -8px -46px no-repeat;
+  }
+
+  &.type-icon-fire,
+  &.type-icon-Fire {
+    background: transparent url(/assets/type-icons-small.png) -81px -6px no-repeat;
+  }
+
+  &.type-icon-grass,
+  &.type-icon-Grass {
+    background: transparent url(/assets/type-icons-small.png) -155px -6px no-repeat;
+  }
+
+  &.type-icon-lightning,
+  &.type-icon-Lightning {
+    background: transparent url(/assets/type-icons-small.png) -8px -6px no-repeat;
+  }
+
+  &.type-icon-metal,
+  &.type-icon-Metal {
+    background: transparent url(/assets/type-icons-small.png) -81px -46px no-repeat;
+  }
+
+  &.type-icon-psychic,
+  &.type-icon-Psychic {
+    background: transparent url(/assets/type-icons-small.png) -155px -46px no-repeat;
+  }
+
+  &.type-icon-water,
+  &.type-icon-Water {
+    background: transparent url(/assets/type-icons-small.png) -118px -6px no-repeat;
+  }
+}
+
+.type-icon-md {
+  width: 104px;
+  height: 104px;
+  @apply overflow-hidden;
+
+  &.type-icon-colorless,
+  &.type-icon-Colorless {
+    background: transparent url(/assets/type-icons.png) -144px -20px no-repeat;
+  }
+
+  &.type-icon-darkness,
+  &.type-icon-Darkness {
+    background: transparent url(/assets/type-icons.png) -144px -151px no-repeat;
+  }
+
+  &.type-icon-dragon,
+  &.type-icon-Dragon {
+    background: transparent url(/assets/type-icons.png) -387px -151px no-repeat;
+  }
+
+  &.type-icon-fairy,
+  &.type-icon-Fairy {
+    background: transparent url(/assets/type-icons.png) -265px -288px no-repeat;
+  }
+
+  &.type-icon-fighting,
+  &.type-icon-Fighting {
+    background: transparent url(/assets/type-icons.png) -26px -151px no-repeat;
+  }
+
+  &.type-icon-fire,
+  &.type-icon-Fire {
+    background: transparent url(/assets/type-icons.png) -265px -20px no-repeat;
+  }
+
+  &.type-icon-grass,
+  &.type-icon-Grass {
+    background: transparent url(/assets/type-icons.png) -508px -20px no-repeat;
+  }
+
+  &.type-icon-lightning,
+  &.type-icon-Lightning {
+    background: transparent url(/assets/type-icons.png) -26px -20px no-repeat;
+  }
+
+  &.type-icon-metal,
+  &.type-icon-Metal {
+    background: transparent url(/assets/type-icons.png) -265px -151px no-repeat;
+  }
+
+  &.type-icon-psychic,
+  &.type-icon-Psychic {
+    background: transparent url(/assets/type-icons.png) -508px -151px no-repeat;
+  }
+
+  &.type-icon-water,
+  &.type-icon-Water {
+    background: transparent url(/assets/type-icons.png) -387px -20px no-repeat;
+  }
+}
+
+.toast-offset {
+  margin-top: 55px !important;
+}

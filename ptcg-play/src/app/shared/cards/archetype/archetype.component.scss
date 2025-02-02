@@ -1,0 +1,243 @@
+.ptcg-archetype {
+  background-image: url(~src/assets/energy-types.png);
+  background-repeat: no-repeat;
+  display: inline-block;
+  height: 32px;
+  margin: 0 0px;
+  width: 36px;
+
+  &[archetype="unown"] {
+    background-size: contain;
+    background-image: url(~src/assets/archetypes/unown.png);
+  }
+
+  &[archetype="arceus"] {
+    background-size: contain;
+    background-image: url(~src/assets/archetypes/arceus.png);
+  }
+
+  &[archetype="charizard"] {
+    background-size: contain;
+    background-image: url(~src/assets/archetypes/charizard.png);
+  }
+
+  &[archetype="pidgeot"] {
+    background-size: contain;
+    background-image: url(~src/assets/archetypes/pidgeot.png);
+  }
+
+  &[archetype="miraidon"] {
+    background-size: contain;
+    background-image: url(~src/assets/archetypes/miraidon.png);
+  }
+
+  &[archetype="pikachu"] {
+    background-size: contain;
+    background-image: url(~src/assets/archetypes/pikachu.png);
+  }
+
+  &[archetype="giratina"] {
+    background-size: contain;
+    background-image: url(~src/assets/archetypes/giratina.png);
+  }
+
+  &[archetype="chien-pao"] {
+    background-size: contain;
+    background-image: url(~src/assets/archetypes/chien-pao.png);
+  }
+
+  // &[archetype="baxcalibur"] {
+  //   background-size: contain;
+  //   background-image: url(~src/assets/archetypes/baxcalibur.png);
+  // }
+
+  &[archetype="comfey"] {
+    background-size: contain;
+    background-image: url(~src/assets/archetypes/comfey.png);
+  }
+
+  // &[archetype="sableye"] {
+  //   background-size: contain;
+  //   background-image: url(~src/assets/archetypes/sableye.png);
+  // }
+
+  &[archetype="raging-bolt"] {
+    background-size: contain;
+    background-image: url(~src/assets/archetypes/raging-bolt.png);
+  }
+
+  // &[archetype="solrock"] {
+  //   background-size: contain;
+  //   background-image: url(~src/assets/archetypes/solrock.png);
+  // }
+
+  // &[archetype="lunatone"] {
+  //   background-size: contain;
+  //   background-image: url(~src/assets/archetypes/lunatone.png);
+  // }
+
+  // &[archetype="kyurem"] {
+  //   background-size: contain;
+  //   background-image: url(~src/assets/archetypes/kyurem.png);
+  // }
+
+  // &[archetype="murkrow"] {
+  //   background-size: contain;
+  //   background-image: url(~src/assets/archetypes/murkrow.png);
+  // }
+
+  // &[archetype="flamigo"] {
+  //   background-size: contain;
+  //   background-image: url(~src/assets/archetypes/flamigo.png);
+  // }
+
+  &[archetype="snorlax"] {
+    background-size: contain;
+    background-image: url(~src/assets/archetypes/snorlax.png);
+  }
+
+  &[archetype="lugia"] {
+    background-size: contain;
+    background-image: url(~src/assets/archetypes/lugia.png);
+  }
+
+  // &[archetype="absol"] {
+  //   background-size: contain;
+  //   background-image: url(~src/assets/archetypes/absol.png);
+  // }
+
+  // &[archetype="dipplin"] {
+  //   background-size: contain;
+  //   background-image: url(~src/assets/archetypes/dipplin.png);
+  // }
+
+  // &[archetype="thwackey"] {
+  //   background-size: contain;
+  //   background-image: url(~src/assets/archetypes/thwackey.png);
+  // }
+
+  // &[archetype="bibarel"] {
+  //   background-size: contain;
+  //   background-image: url(~src/assets/archetypes/bibarel.png);
+  // }
+
+  // &[archetype="iron-crown"] {
+  //   background-size: contain;
+  //   background-image: url(~src/assets/archetypes/iron-crown.png);
+  // }
+
+  // &[archetype="gholdengo"] {
+  //   background-size: contain;
+  //   background-image: url(~src/assets/archetypes/gholdengo.png);
+  // }
+
+  &[archetype="palkia-origin"] {
+    background-size: contain;
+    background-image: url(~src/assets/archetypes/palkia-origin.png);
+  }
+
+  // &[archetype="archeops"] {
+  //   background-size: contain;
+  //   background-image: url(~src/assets/archetypes/archeops.png);
+  // }
+
+  // &[archetype="blissey"] {
+  //   background-size: contain;
+  //   background-image: url(~src/assets/archetypes/blissey.png);
+  // }
+
+  // &[archetype="cinccino"] {
+  //   background-size: contain;
+  //   background-image: url(~src/assets/archetypes/cinccino.png);
+  // }
+
+  &[archetype="dragapult"] {
+    background-size: contain;
+    background-image: url(~src/assets/archetypes/dragapult.png);
+  }
+
+  // &[archetype="drifloon"] {
+  //   background-size: contain;
+  //   background-image: url(~src/assets/archetypes/drifloon.png);
+  // }
+
+  // &[archetype="froslass"] {
+  //   background-size: contain;
+  //   background-image: url(~src/assets/archetypes/froslass.png);
+  // }
+
+  &[archetype="gardevoir"] {
+    background-size: contain;
+    background-image: url(~src/assets/archetypes/gardevoir.png);
+  }
+
+  // &[archetype="greninja"] {
+  //   background-size: contain;
+  //   background-image: url(~src/assets/archetypes/greninja.png);
+  // }
+
+  // &[archetype="iron-hands"] {
+  //   background-size: contain;
+  //   background-image: url(~src/assets/archetypes/iron-hands.png);
+  // }
+
+  // &[archetype="koraidon"] {
+  //   background-size: contain;
+  //   background-image: url(~src/assets/archetypes/koraidon.png);
+  // }
+
+  // &[archetype="luxray"] {
+  //   background-size: contain;
+  //   background-image: url(~src/assets/archetypes/luxray.png);
+  // }
+
+  // &[archetype="ogerpon"] {
+  //   background-size: contain;
+  //   background-image: url(~src/assets/archetypes/ogerpon.png);
+  // }
+
+  // &[archetype="thwackey"] {
+  //   background-size: contain;
+  //   background-image: url(~src/assets/archetypes/thwackey.png);
+  // }
+
+  &[archetype="roaring-moon"] {
+    background-size: contain;
+    background-image: url(~src/assets/archetypes/roaring-moon.png);
+  }
+
+  // &[archetype="rotom"] {
+  //   background-size: contain;
+  //   background-image: url(~src/assets/archetypes/rotom.png);
+  // }
+
+  // &[archetype="sandy-shocks"] {
+  //   background-size: contain;
+  //   background-image: url(~src/assets/archetypes/sandy-shocks.png);
+  // }
+
+  // &[archetype="xatu"] {
+  //   background-size: contain;
+  //   background-image: url(~src/assets/archetypes/xatu.png);
+  // }
+
+  &[archetype="terapagos"] {
+    background-size: contain;
+    background-image: url(~src/assets/archetypes/terapagos.png);
+  }
+
+  &[archetype="iron-thorns"] {
+    background-size: contain;
+    background-image: url(~src/assets/archetypes/iron-thorns.png);
+  }
+
+  &[archetype="regidrago"] {
+    background-size: contain;
+    background-image: url(~src/assets/archetypes/regidrago.png);
+  }
+
+  &[archetype="ceruledge"] {
+    background-size: contain;
+    background-image: url(~src/assets/archetypes/ceruledge.png);
+  }
+}
