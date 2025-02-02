@@ -14,11 +14,19 @@ const mewtwo_v_union_br_1 = require("./mewtwo-v-union-br");
 const mewtwo_v_union_tl_1 = require("./mewtwo-v-union-tl");
 const mewtwo_v_union_tr_1 = require("./mewtwo-v-union-tr");
 const oricorio_1 = require("./oricorio");
+const pikachu_v_union_bl_1 = require("./pikachu-v-union-bl");
+const pikachu_v_union_br_1 = require("./pikachu-v-union-br");
+const pikachu_v_union_tl_1 = require("./pikachu-v-union-tl");
+const pikachu_v_union_tr_1 = require("./pikachu-v-union-tr");
 const professor_burnett_1 = require("./professor-burnett");
 const scorbunny_1 = require("./scorbunny");
 const tepig_1 = require("./tepig");
 const venusaur_v_1 = require("./venusaur-v");
 const venusaur_vmax_1 = require("./venusaur-vmax");
+const zacian_v_union_bl_1 = require("./zacian-v-union-bl");
+const zacian_v_union_br_1 = require("./zacian-v-union-br");
+const zacian_v_union_tl_1 = require("./zacian-v-union-tl");
+const zacian_v_union_tr_1 = require("./zacian-v-union-tr");
 exports.setSwordAndShieldPromos = [
     new champions_festival_1.ChampionsFestival(),
     new charmander_1.Charmander(),
@@ -39,4 +47,12 @@ exports.setSwordAndShieldPromos = [
     new mewtwo_v_union_tr_1.MewtwoVUNIONTopRight(),
     new mewtwo_v_union_bl_1.MewtwoVUNIONBottomLeft(),
     new mewtwo_v_union_br_1.MewtwoVUNIONBottomRight(),
+    new pikachu_v_union_tl_1.PikachuVUNIONTopLeft(),
+    new pikachu_v_union_tr_1.PikachuVUNIONTopRight(),
+    new pikachu_v_union_bl_1.PikachuVUNIONBottomLeft(),
+    new pikachu_v_union_br_1.PikachuVUNIONBottomRight(),
+    new zacian_v_union_tl_1.ZacianVUNIONTopLeft(),
+    new zacian_v_union_tr_1.ZacianVUNIONTopRight(),
+    new zacian_v_union_bl_1.ZacianVUNIONBottomLeft(),
+    new zacian_v_union_br_1.ZacianVUNIONBottomRight(),
 ];
