@@ -7,8 +7,7 @@ const card_types_1 = require("../../game/store/card/card-types");
 const state_utils_1 = require("../../game/store/state-utils");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
-const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
-const game_1 = require("../../game");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class Bruno extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -23,39 +22,28 @@ class Bruno extends trainer_card_1.TrainerCard {
         this.BRUNO_MARKER = 'BRUNO_MARKER';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
-            if (effect instanceof game_effects_1.KnockOutEffect) {
-                const player = effect.player;
-                const opponent = state_utils_1.StateUtils.getOpponent(state, player);
-                const duringTurn = [state_1.GamePhase.PLAYER_TURN, state_1.GamePhase.ATTACK].includes(state.phase);
-                const cards = player.hand.cards.filter(c => c !== this);
-                // Do not activate between turns, or when it's not opponents turn.
-                if (!duringTurn || state.players[state.activePlayer] !== opponent) {
-                    return state;
-                }
-                // No Pokemon KO last turn
-                if (!player.marker.hasMarker(this.BRUNO_MARKER)) {
-                    if (cards.length > 0) {
-                        player.hand.moveCardsTo(cards, player.deck);
-                        state = store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
-                            player.deck.applyOrder(order);
-                        });
-                    }
-                    player.deck.moveTo(player.hand, 5);
-                }
-                if (cards.length > 0) {
-                    player.hand.moveCardsTo(cards, player.deck);
-                    state = store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
-                        player.deck.applyOrder(order);
-                    });
-                }
-                player.deck.moveTo(player.hand, 5);
-            }
+        if (effect instanceof game_effects_1.KnockOutEffect) {
+            const player = effect.player;
+            const opponent = state_utils_1.StateUtils.getOpponent(state, player);
+            const duringTurn = [state_1.GamePhase.PLAYER_TURN, state_1.GamePhase.ATTACK].includes(state.phase);
+            // Do not activate between turns, or when it's not opponents turn.
+            if (!duringTurn || state.players[state.activePlayer] !== opponent)
+                return state;
+            const cardList = state_utils_1.StateUtils.findCardList(state, this);
+            const owner = state_utils_1.StateUtils.findOwner(state, cardList);
+            if (owner === player)
+                effect.player.marker.addMarker(this.BRUNO_MARKER, this);
             return state;
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.BRUNO_MARKER, this)) {
-            effect.player.marker.removeMarker(this.BRUNO_MARKER);
+        if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
+            const player = effect.player;
+            let cardsToDraw = 4;
+            if (prefabs_1.HAS_MARKER(this.BRUNO_MARKER, player, this))
+                cardsToDraw = 7;
+            prefabs_1.SHUFFLE_CARDS_INTO_DECK(store, state, player, player.hand.cards.filter(c => c !== this));
+            prefabs_1.DRAW_CARDS(player, cardsToDraw);
         }
+        prefabs_1.REMOVE_MARKER_AT_END_OF_TURN(effect, this.BRUNO_MARKER, this);
         return state;
     }
 }

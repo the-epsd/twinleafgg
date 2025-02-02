@@ -12,11 +12,11 @@
       "./src"
     ],
     "removeComments": false,
-    "preserveConstEnums": false,
+    "preserveConstEnums": true,
     "resolveJsonModule": true,
     "noEmitOnError": true,
     "allowSyntheticDefaultImports": true,
-    "strict": false,
+    "strict": true,
     "noUnusedLocals": true,
     "typeRoots": [
       "node_modules/@types"
