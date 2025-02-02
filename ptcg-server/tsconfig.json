@@ -2,16 +2,21 @@
   "compilerOptions": {
     "target": "es2017",
     "module": "commonjs",
-    "lib": ["dom", "es2019"],
+    "lib": [
+      "dom",
+      "es2019"
+    ],
     "declaration": true,
     "outDir": "output",
-    "rootDirs": ["./src"],
+    "rootDirs": [
+      "./src"
+    ],
     "removeComments": false,
-    "preserveConstEnums": true,
+    "preserveConstEnums": false,
     "resolveJsonModule": true,
     "noEmitOnError": true,
     "allowSyntheticDefaultImports": true,
-    "strict": true,
+    "strict": false,
     "noUnusedLocals": true,
     "typeRoots": [
       "node_modules/@types"
@@ -20,5 +25,6 @@
     "emitDecoratorMetadata": true
   },
   "include": [
-    "src/**/*.ts"  ]
+    "src/**/*.ts"
+  ]
 }
