@@ -25,7 +25,16 @@ Prerequisites:
 npm install
 ```
 
-2. Build the project and start it.
+2. Add a file named ".env" in the main ptcg-server directory. Paste these contents.
+
+```
+STORAGE_TYPE='sqlite'
+STORAGE_DATABASE='database.sq3'
+SERVER_PASSWORD=''
+SERVER_SECRET='!secret!'
+```
+
+3. Build the project and start it.
 
 ```
 npm run build
