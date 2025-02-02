@@ -46,7 +46,7 @@ export class MewtwoVUNIONBottomRight extends PokemonCard {
   public regulationMark = 'E';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '162';
-  public name: string = 'Mewtwo V-UNION (Bottom Right)';
+  public name: string = 'Mewtwo V-UNION';
   public fullName: string = 'Mewtwo V-UNION (Bottom Right) SP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
