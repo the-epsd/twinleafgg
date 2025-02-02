@@ -14,6 +14,7 @@ import { Goldeen } from './goldeen';
 import { GreensExploration } from './greens-exploration';
 import { GreninjaZoroarkGX } from './greninja-zoroark-gx';
 import { Hitmontop } from './hitmontop';
+import {HonchkrowGX} from './honchkrow-gx';
 import { Kartana } from './kartana';
 import { Lairon } from './lairon';
 import { Lickitung } from './lickitung';
@@ -25,6 +26,7 @@ import { MetalCoreBarrier } from './metal-core-barrier';
 import { Mew } from './mew';
 import { Mewtwo } from './mewtwo';
 import { Mismagius } from './mismagius';
+import {Murkrow} from './murkrow';
 import { Oddish } from './oddish';
 import {PheromosaBuzzwoleGX} from './pheromosa-buzzwole-gx';
 import { Pokegear30 } from './pokegear-30';
@@ -83,4 +85,6 @@ export const setUnbrokenBonds: Card[] = [
   new Zeraora(),
   new GreninjaZoroarkGX(),
   new PheromosaBuzzwoleGX(),
+  new Murkrow(),
+  new HonchkrowGX(),
 ];

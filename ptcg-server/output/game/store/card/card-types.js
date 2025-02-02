@@ -10,6 +10,7 @@ var CardTag;
     CardTag["POKEMON_V"] = "V";
     CardTag["POKEMON_VMAX"] = "VMAX";
     CardTag["POKEMON_VSTAR"] = "VSTAR";
+    CardTag["POKEMON_VUNION"] = "VUNION";
     CardTag["ACE_SPEC"] = "ACE_SPEC";
     CardTag["RADIANT"] = "RADIANT";
     CardTag["TEAM_PLASMA"] = "TEAM_PLASMA";
@@ -74,7 +75,8 @@ var Stage;
     Stage[Stage["STAGE_2"] = 4] = "STAGE_2";
     Stage[Stage["VMAX"] = 5] = "VMAX";
     Stage[Stage["VSTAR"] = 6] = "VSTAR";
-    Stage[Stage["MEGA"] = 7] = "MEGA";
+    Stage[Stage["VUNION"] = 7] = "VUNION";
+    Stage[Stage["MEGA"] = 8] = "MEGA";
 })(Stage = exports.Stage || (exports.Stage = {}));
 var Archetype;
 (function (Archetype) {

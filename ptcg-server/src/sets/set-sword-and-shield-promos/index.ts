@@ -7,6 +7,10 @@ import { HisuianElectrodeV } from './hisuian-electrode-v';
 import { LeafeonVSTAR } from './leafeon-vstar';
 import { LucarioVSTAR } from './lucario-vstar';
 import { Manaphy } from './manaphy';
+import {MewtwoVUNIONBottomLeft} from './mewtwo-v-union-bl';
+import {MewtwoVUNIONBottomRight} from './mewtwo-v-union-br';
+import {MewtwoVUNIONTopLeft} from './mewtwo-v-union-tl';
+import {MewtwoVUNIONTopRight} from './mewtwo-v-union-tr';
 import { Oricorio } from './oricorio';
 import { ProfessorBurnet } from './professor-burnett';
 import { Scorbunny } from './scorbunny';
@@ -31,4 +35,8 @@ export const setSwordAndShieldPromos: Card[] = [
   new Tepig(),
   new VenusaurV(),
   new VenusaurVMAX(),
+  new MewtwoVUNIONTopLeft(),
+  new MewtwoVUNIONTopRight(),
+  new MewtwoVUNIONBottomLeft(),
+  new MewtwoVUNIONBottomRight(),
 ];

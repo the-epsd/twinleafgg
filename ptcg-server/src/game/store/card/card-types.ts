@@ -7,6 +7,7 @@ export enum CardTag {
   POKEMON_V = 'V',
   POKEMON_VMAX = 'VMAX',
   POKEMON_VSTAR = 'VSTAR',
+  POKEMON_VUNION = 'VUNION',
   ACE_SPEC = 'ACE_SPEC',
   RADIANT = 'RADIANT',
   TEAM_PLASMA = 'TEAM_PLASMA',
@@ -71,6 +72,7 @@ export enum Stage {
   STAGE_2,
   VMAX,
   VSTAR,
+  VUNION,
   MEGA,
 }
 
