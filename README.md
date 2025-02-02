@@ -119,9 +119,10 @@ name
 fullName
 ```
 
-*Always* use an energy type's short form.
+*Always* use an energy type's short form, but *only* in the cards info section.
 ex.
 ```public cardType: CardType = L;```
+Use CardType.LIGHTNING in the reduceEffect.
 
 When making an attack or ability where it states an energy type, it should be placed in square brackets. 
 ex.
