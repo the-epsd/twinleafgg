@@ -72,6 +72,7 @@ const garganacl_1 = require("./garganacl");
 const skeledirge_ex_1 = require("./skeledirge-ex");
 const quaquaval_ex_1 = require("./quaquaval-ex");
 const copperajah_ex_1 = require("./copperajah-ex");
+const dunsparce_1 = require("./dunsparce");
 //import { CalamitousSnowyMountain } from './new calamitous-snowy-mountain';
 exports.setPaldeaEvolved = [
     new arctibax_1.Arctibax(),
@@ -90,6 +91,7 @@ exports.setPaldeaEvolved = [
     new deino_1.Deino(),
     new delivery_drone_1.DeliveryDrone(),
     new dudunsparce_1.Dudunsparce(),
+    new dunsparce_1.Dunsparce(),
     new fighting_au_lait_1.FightingAuLait(),
     new flamigo_1.Flamigo(),
     new floragato_1.Floragato(),

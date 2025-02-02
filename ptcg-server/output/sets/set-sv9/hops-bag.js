@@ -33,12 +33,9 @@ class HopsBag extends trainer_card_1.TrainerCard {
                 // No open slots, throw error
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
             }
-            const blocked = [];
-            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (list, card, target) => {
-                if (!card.tags.includes(card_types_1.CardTag.HOPS)) {
-                    blocked.push();
-                }
-            });
+            const blocked = player.deck.cards
+                .filter(c => !c.tags.includes(card_types_1.CardTag.HOPS))
+                .map(c => player.deck.cards.indexOf(c));
             // We will discard this card after prompt confirmation
             effect.preventDefault = true;
             const maxCards = Math.min(2, openSlots.length);

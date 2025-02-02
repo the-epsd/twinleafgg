@@ -87,7 +87,7 @@ export class MewVMAX extends PokemonCard {
     damage: 130,
     shredAttack: true,
     text: 'This attack\'s damage isn\'t affected by any effects on your ' +
-      'Opponent\'s Active Pokémon.'
+      'opponent\'s Active Pokémon.'
   }
   ];
 

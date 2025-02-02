@@ -1,15 +1,13 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, Card, StateUtils } from '../../game';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+import { StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
-import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
+import { DISCARD_ALL_ENERGY_FROM_POKEMON, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 
 export class VictiniV extends PokemonCard {
 
-  public tags = [ CardTag.POKEMON_V ];
+  public tags = [CardTag.POKEMON_V];
 
   public regulationMark = 'E';
 
@@ -21,19 +19,19 @@ export class VictiniV extends PokemonCard {
 
   public weakness = [{ type: CardType.WATER }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'V Bullet',
-      cost: [ CardType.FIRE ],
+      cost: [CardType.FIRE],
       damage: 10,
       text: 'If your opponent’s Active Pokémon is a Pokémon V, this ' +
         'attack does 50 more damage.'
     },
     {
-      name: 'Dragon Burst',
-      cost: [CardType.FIRE, CardType.COLORLESS ],
+      name: 'Flare Shot',
+      cost: [CardType.FIRE, CardType.COLORLESS],
       damage: 120,
       text: 'Discard all Energy from this Pokémon.'
     }
@@ -51,31 +49,22 @@ export class VictiniV extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-    
+
       const defending = opponent.active.getPokemonCard();
-      if (defending && (defending.tags.includes(CardTag.POKEMON_V) || 
-                          defending.tags.includes(CardTag.POKEMON_VMAX) ||
-                          defending.tags.includes(CardTag.POKEMON_VSTAR))) {
+      if (defending && (defending.tags.includes(CardTag.POKEMON_V) ||
+        defending.tags.includes(CardTag.POKEMON_VMAX) ||
+        defending.tags.includes(CardTag.POKEMON_VSTAR))) {
         effect.damage += 50;
       }
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-      const player = effect.player;
-        
-      const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
-      state = store.reduceEffect(state, checkProvidedEnergy);  
-        
-      const cards: Card[] = checkProvidedEnergy.energyMap.map(e => e.card);  
-      const discardEnergy = new DiscardCardsEffect(effect, cards);  
-      discardEnergy.target = player.active;
-      store.reduceEffect(state, discardEnergy);  
-    }
-    
-    return state; 
+    if (WAS_ATTACK_USED(effect, 1, this))
+      DISCARD_ALL_ENERGY_FROM_POKEMON(store, state, effect, this);
+
+    return state;
   }
-      
+
 }

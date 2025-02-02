@@ -1,6 +1,6 @@
-import { CardType, GameLog, PokemonCard, PowerType, Stage, State, StoreLike } from '../../game';
+import { CardType, GameError, GameMessage, PokemonCard, PowerType, Stage, State, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { PLAY_POKEMON_FROM_HAND_TO_BENCH, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class BeedrillVIV extends PokemonCard {
 
@@ -32,6 +32,7 @@ export class BeedrillVIV extends PokemonCard {
     {
       name: 'Elusive Master',
       powerType: PowerType.ABILITY,
+      useFromHand: true,
       text: 'Once during your turn, if this Pokemon is the last card in your hand, you may play it onto your Bench. If you do, draw 3 cards.'
     }
   ];
@@ -41,20 +42,13 @@ export class BeedrillVIV extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     // Elusive Master
-    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this && effect.target.cards.length === 0) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
-      // Can't bench this Pokemon unless its our last card in our hand.
-      if (player.hand.cards.filter(c => c !== this).length !== 0) { return state; }
+      if (player.hand.cards.filter(c => c !== this).length !== 0)
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
 
-      // Bench this Pokemon to the desired slot.
-      effect.preventDefault = true;  // this might prevent errors from trying to bench a stage 2 idk
-      store.log(state, GameLog.LOG_PLAYER_PLAYS_BASIC_POKEMON, { name: player.name, card: this.name });
-      player.hand.moveCardTo(this, effect.target);
-      effect.target.pokemonPlayedTurn = state.turn;
-
-      // Then, draw 3 cards.
+      PLAY_POKEMON_FROM_HAND_TO_BENCH(state, player, this);
       player.deck.moveTo(player.hand, 3);
-      return state;
     }
 
     return state;

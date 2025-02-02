@@ -25,6 +25,9 @@ export declare class Player {
     avatarName: string;
     usedVSTAR: boolean;
     usedGX: boolean;
+    assembledMewtwo: boolean;
+    assembledPikachu: boolean;
+    assembledZacian: boolean;
     readonly DAMAGE_DEALT_MARKER = "DAMAGE_DEALT_MARKER";
     readonly ATTACK_USED_MARKER = "ATTACK_USED_MARKER";
     readonly ATTACK_USED_2_MARKER = "ATTACK_USED_2_MARKER";
@@ -63,6 +66,7 @@ export declare class Player {
     getPrizeLeft(): number;
     forEachPokemon(player: PlayerType, handler: (cardList: PokemonCardList, pokemonCard: PokemonCard, target: CardTarget) => void): void;
     removePokemonEffects(target: PokemonCardList): void;
+    getPokemonInPlay(): PokemonCardList[];
     vPokemon(): boolean;
     singleStrike(): boolean;
     fusionStrike(): boolean;

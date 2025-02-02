@@ -68,8 +68,9 @@ import { Zweilous } from './zweilous';
 import { Naclstack } from './naclstack';
 import { Garganacl } from './garganacl';
 import { Skeledirgeex } from './skeledirge-ex';
-import {Quaquavalex} from './quaquaval-ex';
-import {Copperajahex} from './copperajah-ex';
+import { Quaquavalex } from './quaquaval-ex';
+import { Copperajahex } from './copperajah-ex';
+import { Dunsparce } from './dunsparce';
 //import { CalamitousSnowyMountain } from './new calamitous-snowy-mountain';
 
 export const setPaldeaEvolved: Card[] = [
@@ -90,6 +91,7 @@ export const setPaldeaEvolved: Card[] = [
   new Deino(),
   new DeliveryDrone(),
   new Dudunsparce(),
+  new Dunsparce(),
   new FightingAuLait(),
   new Flamigo(),
   new Floragato(),

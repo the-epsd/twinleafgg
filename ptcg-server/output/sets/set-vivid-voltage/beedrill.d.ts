@@ -18,6 +18,7 @@ export declare class BeedrillVIV extends PokemonCard {
     powers: {
         name: string;
         powerType: PowerType;
+        useFromHand: boolean;
         text: string;
     }[];
     attacks: {

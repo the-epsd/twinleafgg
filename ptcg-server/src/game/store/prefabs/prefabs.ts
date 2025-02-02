@@ -1,5 +1,5 @@
-import { AttachEnergyPrompt, Card, CardList, ChooseCardsPrompt, ChooseEnergyPrompt, ChoosePokemonPrompt, CoinFlipPrompt, ConfirmPrompt, EnergyCard, GameError, GameLog, GameMessage, Player, PlayerType, PokemonCardList, PowerType, ShowCardsPrompt, ShuffleDeckPrompt, SlotType, State, StateUtils, StoreLike } from '../..';
-import { BoardEffect, CardType, EnergyType, SpecialCondition, Stage, SuperType } from '../card/card-types';
+import { AttachEnergyPrompt, Card, CardList, ChooseCardsOptions, ChooseCardsPrompt, ChooseEnergyPrompt, ChoosePokemonPrompt, CoinFlipPrompt, ConfirmPrompt, EnergyCard, GameError, GameLog, GameMessage, Player, PlayerType, PokemonCardList, PowerType, ShowCardsPrompt, ShuffleDeckPrompt, SlotType, State, StateUtils, StoreLike } from '../..';
+import { BoardEffect, CardType, EnergyType, SpecialCondition, SuperType } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
 import { DealDamageEffect, DiscardCardsEffect, HealTargetEffect, PutDamageEffect } from '../effects/attack-effects';
 import { AddSpecialConditionsPowerEffect, CheckProvidedEnergyEffect } from '../effects/check-effects';
@@ -69,42 +69,39 @@ export function DISCARD_A_STADIUM_CARD_IN_PLAY(state: State) {
   }
 }
 
-export function SEARCH_YOUR_DECK_FOR_STAGE_OF_POKEMON_AND_PUT_THEM_ONTO_YOUR_BENCH(store: StoreLike, state: State, effect: AttackEffect, min: number, max: number, stage: Stage) {
-  const player = effect.player;
-  const slots = player.bench.filter(b => b.cards.length === 0);
+/**
+ * Search deck for Pokemon, show it to the opponent, put it into `player`'s hand, and shuffle `player`'s deck.
+ * A `filter` can be provided for the prompt as well.
+ */
+export function SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH(store: StoreLike, state: State, player: Player, filter: Partial<PokemonCard> = {}, options: Partial<ChooseCardsOptions> = {}) {
+  BLOCK_IF_DECK_EMPTY(player);
+  const slots = GET_PLAYER_BENCH_SLOTS(player);
+  BLOCK_IF_NO_SLOTS(slots);
+  filter.superType = SuperType.POKEMON;
 
   return store.prompt(state, new ChooseCardsPrompt(
-    player,
-    GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
-    player.deck,
-    { superType: SuperType.POKEMON, stage },
-    { min, max: slots.length < max ? slots.length : max, allowCancel: true }
+    player, GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH, player.deck, filter, options,
   ), selected => {
     const cards = selected || [];
-
     cards.forEach((card, index) => {
       player.deck.moveCardTo(card, slots[index]);
       slots[index].pokemonPlayedTurn = state.turn;
     });
+    SHUFFLE_DECK(store, state, player)
   });
 }
 
 /**
- * Search deck for `type` of Pokemon, show it to the opponent, put it into `player`'s hand, and shuffle `player`'s deck.
+ * Search deck for Pokemon, show it to the opponent, put it into `player`'s hand, and shuffle `player`'s deck.
+ * A `filter` can be provided for the prompt as well.
  */
-export function SEARCH_YOUR_DECK_FOR_TYPE_OF_POKEMON_AND_PUT_INTO_HAND(store: StoreLike, state: State, player: Player, min: number, max: number, type: CardType) {
-
-  if (player.deck.cards.length === 0)
-    throw new GameError(GameMessage.NO_CARDS_IN_DECK);
-
+export function SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND(store: StoreLike, state: State, player: Player, filter: Partial<PokemonCard> = {}, options: Partial<ChooseCardsOptions> = {}) {
+  BLOCK_IF_DECK_EMPTY(player);
   const opponent = StateUtils.getOpponent(state, player);
+  filter.superType = SuperType.POKEMON;
 
   return store.prompt(state, new ChooseCardsPrompt(
-    player,
-    GameMessage.CHOOSE_CARD_TO_HAND,
-    player.deck,
-    { superType: SuperType.POKEMON, cardType: type },
-    { min, max, allowCancel: true },
+    player, GameMessage.CHOOSE_CARD_TO_HAND, player.deck, filter, options,
   ), selected => {
     const cards = selected || [];
     SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
@@ -137,10 +134,6 @@ export function DISCARD_X_ENERGY_FROM_THIS_POKEMON(state: State, effect: AttackE
   });
 
   return state;
-}
-
-export function FLIP_IF_HEADS() {
-  console.log('Heads again!');
 }
 
 export function THIS_ATTACK_DOES_X_MORE_DAMAGE(effect: AttackEffect, store: StoreLike, state: State, damage: number) {
@@ -176,6 +169,12 @@ export function TAKE_X_MORE_PRIZE_CARDS(effect: KnockOutEffect, state: State) {
   return state;
 }
 
+export function PLAY_POKEMON_FROM_HAND_TO_BENCH(state: State, player: Player, card: Card) {
+  const slot = GET_FIRST_PLAYER_BENCH_SLOT(player);
+  player.hand.moveCardTo(card, slot);
+  slot.pokemonPlayedTurn = state.turn;
+}
+
 export function THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_BENCHED_POKEMON(damage: number, effect: AttackEffect, store: StoreLike, state: State, min: number, max: number) {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
@@ -199,8 +198,8 @@ export function THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_BENCHED_POKEMON
   });
 }
 
-export function THIS_POKEMON_DOES_DAMAGE_TO_ITSELF(store: StoreLike, state: State, effect: AttackEffect) {
-  const dealDamage = new DealDamageEffect(effect, 30);
+export function THIS_POKEMON_DOES_DAMAGE_TO_ITSELF(store: StoreLike, state: State, effect: AttackEffect, amount: number) {
+  const dealDamage = new DealDamageEffect(effect, amount);
   dealDamage.target = effect.source;
   return store.reduceEffect(state, dealDamage);
 }
@@ -253,6 +252,21 @@ export function DISCARD_X_ENERGY_FROM_YOUR_HAND(effect: PowerEffect, store: Stor
     }
     player.hand.moveCardsTo(cards, player.discard);
   });
+}
+
+export function DISCARD_ALL_ENERGY_FROM_POKEMON(store: StoreLike, state: State, effect: AttackEffect, card: Card) {
+  const player = effect.player;
+  const cardList = StateUtils.findCardList(state, card);
+  if (!(cardList instanceof PokemonCardList))
+    throw new GameError(GameMessage.INVALID_TARGET);
+
+  const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
+  state = store.reduceEffect(state, checkProvidedEnergy);
+
+  const cards: Card[] = checkProvidedEnergy.energyMap.map(e => e.card);
+  const discardEnergy = new DiscardCardsEffect(effect, cards);
+  discardEnergy.target = cardList;
+  store.reduceEffect(state, discardEnergy);
 }
 
 /**
@@ -422,13 +436,33 @@ export function COIN_FLIP_PROMPT(store: StoreLike, state: State, player: Player,
   return store.prompt(state, new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP), callback);
 }
 
-
 export function SIMULATE_COIN_FLIP(store: StoreLike, state: State, player: Player): boolean {
   const result = Math.random() < 0.5;
   const gameMessage = result ? GameLog.LOG_PLAYER_FLIPS_HEADS : GameLog.LOG_PLAYER_FLIPS_TAILS;
   store.log(state, gameMessage, { name: player.name });
   return result;
 }
+
+export function GET_FIRST_PLAYER_BENCH_SLOT(player: Player): PokemonCardList {
+  const slots = GET_PLAYER_BENCH_SLOTS(player);
+  BLOCK_IF_NO_SLOTS(slots);
+  return slots[0];
+}
+
+export function GET_PLAYER_BENCH_SLOTS(player: Player): PokemonCardList[] {
+  return player.bench.filter(b => b.cards.length === 0);
+}
+
+export function BLOCK_IF_NO_SLOTS(slots: PokemonCardList[]) {
+  if (slots.length === 0)
+    throw new GameError(GameMessage.NO_BENCH_SLOTS_AVAILABLE);
+}
+
+export function BLOCK_IF_DECK_EMPTY(player: Player) {
+  if (player.deck.cards.length === 0)
+    throw new GameError(GameMessage.NO_CARDS_IN_DECK);
+}
+
 
 //#region Special Conditions
 export function ADD_SPECIAL_CONDITIONS_TO_PLAYER_ACTIVE(
@@ -461,17 +495,6 @@ export function ADD_CONFUSION_TO_PLAYER_ACTIVE(store: StoreLike, state: State, p
 //#endregion
 
 //#region Markers
-export function REMOVE_MARKER_AT_END_OF_TURN(effect: Effect, source: Card, marker: string) {
-  if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(marker, source))
-    effect.player.marker.removeMarker(marker, source);
-}
-
-export function REPLACE_MARKER_AT_END_OF_TURN(effect: Effect, source: Card, oldMarker: string, newMarker: string) {
-  if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(oldMarker, source)) {
-    effect.player.marker.removeMarker(oldMarker, source);
-    effect.player.marker.addMarker(newMarker, source);
-  }
-}
 
 export function ADD_MARKER(marker: string, owner: Player | Card | PokemonCard | PokemonCardList, source: Card) {
   owner.marker.addMarker(marker, source);
@@ -495,6 +518,18 @@ export function PREVENT_DAMAGE_IF_TARGET_HAS_MARKER(effect: Effect, marker: stri
     effect.preventDefault = true;
 }
 
+export function REMOVE_MARKER_AT_END_OF_TURN(effect: Effect, marker: string, source: Card) {
+  if (effect instanceof EndTurnEffect && HAS_MARKER(marker, effect.player, source))
+    REMOVE_MARKER(marker, effect.player, source);
+}
+
+export function REPLACE_MARKER_AT_END_OF_TURN(effect: Effect, oldMarker: string, newMarker: string, source: Card) {
+  if (effect instanceof EndTurnEffect && HAS_MARKER(oldMarker, effect.player, source)) {
+    REMOVE_MARKER(oldMarker, effect.player, source);
+    ADD_MARKER(newMarker, effect.player, source);
+  }
+}
+
 /**
  * If an EndTurnEffect is given, will check for `clearerMarker` on the player whose turn it is,
  * and clear all of their opponent's `oppMarker`s.
@@ -502,7 +537,7 @@ export function PREVENT_DAMAGE_IF_TARGET_HAS_MARKER(effect: Effect, marker: stri
  */
 export function CLEAR_MARKER_AND_OPPONENTS_POKEMON_MARKER_AT_END_OF_TURN(state: State, effect: Effect, clearerMarker: string, oppMarker: string, source: Card) {
   if (effect instanceof EndTurnEffect && HAS_MARKER(clearerMarker, effect.player, source)) {
-    effect.player.marker.removeMarker(clearerMarker, source);
+    REMOVE_MARKER(clearerMarker, effect.player, source);
     const opponent = StateUtils.getOpponent(state, effect.player);
     REMOVE_MARKER(oppMarker, opponent, source);
     opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => REMOVE_MARKER(oppMarker, cardList, source));

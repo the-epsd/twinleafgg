@@ -42,7 +42,7 @@ export class Amarys extends TrainerCard {
         hand.moveCardsTo(hand.cards, discard)
     }
 
-    REMOVE_MARKER_AT_END_OF_TURN(effect, this, this.AMARYS_USED_MARKER);
+    REMOVE_MARKER_AT_END_OF_TURN(effect, this.AMARYS_USED_MARKER, this);
 
     return state;
   }

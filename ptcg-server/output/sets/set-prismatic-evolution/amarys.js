@@ -30,7 +30,7 @@ class Amarys extends trainer_card_1.TrainerCard {
             if (hand.cards.length >= 5)
                 hand.moveCardsTo(hand.cards, discard);
         }
-        prefabs_1.REMOVE_MARKER_AT_END_OF_TURN(effect, this, this.AMARYS_USED_MARKER);
+        prefabs_1.REMOVE_MARKER_AT_END_OF_TURN(effect, this.AMARYS_USED_MARKER, this);
         return state;
     }
 }

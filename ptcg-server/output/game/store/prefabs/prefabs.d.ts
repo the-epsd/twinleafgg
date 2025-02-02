@@ -1,5 +1,5 @@
-import { Card, CardList, Player, PokemonCardList, State, StoreLike } from '../..';
-import { CardType, SpecialCondition, Stage } from '../card/card-types';
+import { Card, CardList, ChooseCardsOptions, Player, PokemonCardList, State, StoreLike } from '../..';
+import { CardType, SpecialCondition } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
 import { Effect } from '../effects/effect';
 import { AttackEffect, EvolveEffect, KnockOutEffect, PowerEffect } from '../effects/game-effects';
@@ -37,22 +37,28 @@ export declare function PASSIVE_ABILITY_ACTIVATED(effect: Effect, user: PokemonC
  * @returns the game state after discarding a stadium card in play.
  */
 export declare function DISCARD_A_STADIUM_CARD_IN_PLAY(state: State): void;
-export declare function SEARCH_YOUR_DECK_FOR_STAGE_OF_POKEMON_AND_PUT_THEM_ONTO_YOUR_BENCH(store: StoreLike, state: State, effect: AttackEffect, min: number, max: number, stage: Stage): State;
 /**
- * Search deck for `type` of Pokemon, show it to the opponent, put it into `player`'s hand, and shuffle `player`'s deck.
+ * Search deck for Pokemon, show it to the opponent, put it into `player`'s hand, and shuffle `player`'s deck.
+ * A `filter` can be provided for the prompt as well.
  */
-export declare function SEARCH_YOUR_DECK_FOR_TYPE_OF_POKEMON_AND_PUT_INTO_HAND(store: StoreLike, state: State, player: Player, min: number, max: number, type: CardType): State;
+export declare function SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH(store: StoreLike, state: State, player: Player, filter?: Partial<PokemonCard>, options?: Partial<ChooseCardsOptions>): State;
+/**
+ * Search deck for Pokemon, show it to the opponent, put it into `player`'s hand, and shuffle `player`'s deck.
+ * A `filter` can be provided for the prompt as well.
+ */
+export declare function SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND(store: StoreLike, state: State, player: Player, filter?: Partial<PokemonCard>, options?: Partial<ChooseCardsOptions>): State;
 export declare function DISCARD_X_ENERGY_FROM_THIS_POKEMON(state: State, effect: AttackEffect, store: StoreLike, type: CardType, amount: number): State;
-export declare function FLIP_IF_HEADS(): void;
 export declare function THIS_ATTACK_DOES_X_MORE_DAMAGE(effect: AttackEffect, store: StoreLike, state: State, damage: number): State;
 export declare function HEAL_X_DAMAGE_FROM_THIS_POKEMON(effect: AttackEffect, store: StoreLike, state: State, damage: number): State;
 export declare function THIS_POKEMON_HAS_ANY_DAMAGE_COUNTERS_ON_IT(effect: AttackEffect, user: PokemonCard): boolean;
 export declare function YOUR_OPPONENTS_POKEMON_IS_KNOCKED_OUT_BY_DAMAGE_FROM_THIS_ATTACK(effect: Effect, state: State): effect is KnockOutEffect;
 export declare function TAKE_X_MORE_PRIZE_CARDS(effect: KnockOutEffect, state: State): State;
+export declare function PLAY_POKEMON_FROM_HAND_TO_BENCH(state: State, player: Player, card: Card): void;
 export declare function THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_BENCHED_POKEMON(damage: number, effect: AttackEffect, store: StoreLike, state: State, min: number, max: number): State;
-export declare function THIS_POKEMON_DOES_DAMAGE_TO_ITSELF(store: StoreLike, state: State, effect: AttackEffect): State;
+export declare function THIS_POKEMON_DOES_DAMAGE_TO_ITSELF(store: StoreLike, state: State, effect: AttackEffect, amount: number): State;
 export declare function ATTACH_X_NUMBER_OF_BASIC_ENERGY_CARDS_FROM_YOUR_DISCARD_TO_YOUR_BENCHED_POKEMON(effect: AttackEffect, store: StoreLike, state: State, amount: number): void;
 export declare function DISCARD_X_ENERGY_FROM_YOUR_HAND(effect: PowerEffect, store: StoreLike, state: State, minAmount: number, maxAmount: number): State;
+export declare function DISCARD_ALL_ENERGY_FROM_POKEMON(store: StoreLike, state: State, effect: AttackEffect, card: Card): void;
 /**
  * A getter for the player's prize slots.
  * @returns A list of card lists containing the player's prize slots.
@@ -103,19 +109,23 @@ export declare function SHOW_CARDS_TO_PLAYER(store: StoreLike, state: State, pla
 export declare function CONFIRMATION_PROMPT(store: StoreLike, state: State, player: Player, callback: (result: boolean) => void): State;
 export declare function COIN_FLIP_PROMPT(store: StoreLike, state: State, player: Player, callback: (result: boolean) => void): State;
 export declare function SIMULATE_COIN_FLIP(store: StoreLike, state: State, player: Player): boolean;
+export declare function GET_FIRST_PLAYER_BENCH_SLOT(player: Player): PokemonCardList;
+export declare function GET_PLAYER_BENCH_SLOTS(player: Player): PokemonCardList[];
+export declare function BLOCK_IF_NO_SLOTS(slots: PokemonCardList[]): void;
+export declare function BLOCK_IF_DECK_EMPTY(player: Player): void;
 export declare function ADD_SPECIAL_CONDITIONS_TO_PLAYER_ACTIVE(store: StoreLike, state: State, player: Player, source: Card, specialConditions: SpecialCondition[], poisonDamage?: number, burnDamage?: number, sleepFlips?: number): void;
 export declare function ADD_SLEEP_TO_PLAYER_ACTIVE(store: StoreLike, state: State, player: Player, source: Card, sleepFlips?: number): void;
 export declare function ADD_POISON_TO_PLAYER_ACTIVE(store: StoreLike, state: State, player: Player, source: Card, poisonDamage?: number): void;
 export declare function ADD_BURN_TO_PLAYER_ACTIVE(store: StoreLike, state: State, player: Player, source: Card, burnDamage?: number): void;
 export declare function ADD_PARALYZED_TO_PLAYER_ACTIVE(store: StoreLike, state: State, player: Player, source: Card): void;
 export declare function ADD_CONFUSION_TO_PLAYER_ACTIVE(store: StoreLike, state: State, player: Player, source: Card): void;
-export declare function REMOVE_MARKER_AT_END_OF_TURN(effect: Effect, source: Card, marker: string): void;
-export declare function REPLACE_MARKER_AT_END_OF_TURN(effect: Effect, source: Card, oldMarker: string, newMarker: string): void;
 export declare function ADD_MARKER(marker: string, owner: Player | Card | PokemonCard | PokemonCardList, source: Card): void;
 export declare function REMOVE_MARKER(marker: string, owner: Player | Card | PokemonCard | PokemonCardList, source?: Card): void;
 export declare function HAS_MARKER(marker: string, owner: Player | Card | PokemonCard | PokemonCardList, source?: Card): boolean;
 export declare function BLOCK_EFFECT_IF_MARKER(marker: string, owner: Player | Card | PokemonCard | PokemonCardList, source?: Card): void;
 export declare function PREVENT_DAMAGE_IF_TARGET_HAS_MARKER(effect: Effect, marker: string, source?: Card): void;
+export declare function REMOVE_MARKER_AT_END_OF_TURN(effect: Effect, marker: string, source: Card): void;
+export declare function REPLACE_MARKER_AT_END_OF_TURN(effect: Effect, oldMarker: string, newMarker: string, source: Card): void;
 /**
  * If an EndTurnEffect is given, will check for `clearerMarker` on the player whose turn it is,
  * and clear all of their opponent's `oppMarker`s.

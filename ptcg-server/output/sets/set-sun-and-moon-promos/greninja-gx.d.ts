@@ -14,8 +14,8 @@ export declare class GreninjaGXSMP extends PokemonCard {
     retreat: CardType[];
     powers: {
         name: string;
-        useWhenInPlay: boolean;
         powerType: PowerType;
+        useFromHand: boolean;
         text: string;
     }[];
     attacks: {

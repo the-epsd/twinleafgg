@@ -48,6 +48,12 @@ export class Player {
 
   usedGX: boolean = false;
 
+  assembledMewtwo: boolean = false;
+
+  assembledPikachu: boolean = false;
+
+  assembledZacian: boolean = false;
+
   public readonly DAMAGE_DEALT_MARKER = 'DAMAGE_DEALT_MARKER';
 
   public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
@@ -142,6 +148,15 @@ export class Player {
     this.marker.removeMarker(this.UNRELENTING_ONSLAUGHT_2_MARKER);
 
     target.clearEffects();
+  }
+
+  getPokemonInPlay(): PokemonCardList[] {
+    let list: PokemonCardList[] = [];
+    this.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, pokemonCard, target) => {
+      if (cardList)
+        list.push(cardList);
+    });
+    return list;
   }
 
   vPokemon(): boolean {

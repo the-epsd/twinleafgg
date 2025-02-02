@@ -3,7 +3,7 @@ import { AlolanExeggutor } from './alolan-exeggutor';
 import { BeastEnergy } from './beast-energy-prism-star';
 import { BeastRing } from './beast-ring';
 import { Buzzwole } from './buzzwole';
-import {DialgaGX} from './dialga-gx';
+import { DialgaGX } from './dialga-gx';
 import { DianciePS } from './diancie-prism-star';
 import { Diantha } from './diantha';
 import { Flabebe } from './flabebe';
@@ -16,7 +16,7 @@ import { GreninjaGX } from './greninja-gx';
 import { Inkay } from './inkay';
 import { Klefki } from './klefki';
 import { LysandreLabs } from './lysandre-labs';
-import {LysandrePS} from './lysandre-ps';
+import { LysandrePrismStar } from './lysandre-prism-star';
 import { Magnezone } from './magnezone';
 import { Malamar } from './malamar';
 import { MetalFryingPan } from './metal-frying-pan';
@@ -56,5 +56,5 @@ export const setForbiddenLight: Card[] = [
   new VolcanionPS(),
   new YveltalGX(),
   new DialgaGX(),
-  new LysandrePS(),
+  new LysandrePrismStar(),
 ];

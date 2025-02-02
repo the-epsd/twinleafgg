@@ -1,6 +1,6 @@
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { CardTag, Stage, SuperType, TrainerType } from '../../game/store/card/card-types';
-import { StoreLike, State, ChooseCardsPrompt, GameMessage, GameError, Card, PokemonCardList, ShuffleDeckPrompt, PlayerType } from '../../game';
+import { StoreLike, State, ChooseCardsPrompt, GameMessage, GameError, Card, PokemonCardList, ShuffleDeckPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 
@@ -43,12 +43,9 @@ export class HopsBag extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      const blocked: number[] = [];
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
-        if (!card.tags.includes(CardTag.HOPS)) {
-          blocked.push();
-        }
-      });
+      const blocked = player.deck.cards
+        .filter(c => !c.tags.includes(CardTag.HOPS))
+        .map(c => player.deck.cards.indexOf(c));
 
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;

@@ -42,7 +42,7 @@ class Raichu extends game_1.PokemonCard {
                     prefabs_1.ADD_PARALYZED_TO_PLAYER_ACTIVE(store, state, game_1.StateUtils.getOpponent(state, effect.player), this);
             }))
                 if (prefabs_1.WAS_ATTACK_USED(effect, 0, this))
-                    prefabs_1.THIS_POKEMON_DOES_DAMAGE_TO_ITSELF(store, state, effect);
+                    prefabs_1.THIS_POKEMON_DOES_DAMAGE_TO_ITSELF(store, state, effect, 30);
         return state;
     }
 }
