@@ -31,6 +31,7 @@ class ShadowRiderCalyrexVMAX extends pokemon_card_1.PokemonCard {
                 name: 'Max Geist',
                 cost: [card_types_1.CardType.PSYCHIC],
                 damage: 10,
+                damageCalculation: '+',
                 text: 'This attack does 30 more damage for each [P] Energy attached to all of your Pokémon.'
             }
         ];
@@ -86,21 +87,27 @@ class ShadowRiderCalyrexVMAX extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.UNDERWORLD_DOOR_MARKER, this)) {
             effect.player.marker.removeMarker(this.UNDERWORLD_DOOR_MARKER, this);
         }
+        // if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+        //   const player = effect.player;
+        //   const cardList = StateUtils.findCardList(state, this);
+        //   if (cardList === undefined) {
+        //     return state;
+        //   }
+        //   return store.prompt(state, new ChooseCardsPrompt(
+        //     player,
+        //     GameMessage.CHOOSE_CARD_TO_ATTACH,
+        //     player.discard,
+        //     { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Psychic Energy' },
+        //     { min: 0, max: 2, allowCancel: true }
+        //   ), cards => {
+        //     cards = cards || [];
+        //     if (cards.length > 0) {
+        //       player.discard.moveCardsTo(cards, cardList);
+        //     }
+        //     return state;
+        //   });
+        // }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
-            const player = effect.player;
-            const cardList = game_1.StateUtils.findCardList(state, this);
-            if (cardList === undefined) {
-                return state;
-            }
-            return store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_ATTACH, player.discard, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Psychic Energy' }, { min: 0, max: 2, allowCancel: true }), cards => {
-                cards = cards || [];
-                if (cards.length > 0) {
-                    player.discard.moveCardsTo(cards, cardList);
-                }
-                return state;
-            });
-        }
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
             let energies = 0;
             player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {

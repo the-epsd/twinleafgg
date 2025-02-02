@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, EnergyType, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, GameMessage, GameError, PlayerType, SlotType, StateUtils, PowerType, AttachEnergyPrompt, EnergyCard, ChooseCardsPrompt } from '../../game';
+import { StoreLike, State, GameMessage, GameError, PlayerType, SlotType, StateUtils, PowerType, AttachEnergyPrompt, EnergyCard } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
@@ -39,6 +39,7 @@ export class ShadowRiderCalyrexVMAX extends PokemonCard {
       name: 'Max Geist',
       cost: [CardType.PSYCHIC],
       damage: 10,
+      damageCalculation: '+',
       text: 'This attack does 30 more damage for each [P] Energy attached to all of your Pokémon.'
     }
   ];
@@ -109,33 +110,35 @@ export class ShadowRiderCalyrexVMAX extends PokemonCard {
         player.deck.moveTo(player.hand, 2);
       });
     }
+
     if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.UNDERWORLD_DOOR_MARKER, this)) {
       effect.player.marker.removeMarker(this.UNDERWORLD_DOOR_MARKER, this);
     }
+
+    // if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    //   const player = effect.player;
+
+    //   const cardList = StateUtils.findCardList(state, this);
+    //   if (cardList === undefined) {
+    //     return state;
+    //   }
+
+    //   return store.prompt(state, new ChooseCardsPrompt(
+    //     player,
+    //     GameMessage.CHOOSE_CARD_TO_ATTACH,
+    //     player.discard,
+    //     { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Psychic Energy' },
+    //     { min: 0, max: 2, allowCancel: true }
+    //   ), cards => {
+    //     cards = cards || [];
+    //     if (cards.length > 0) {
+    //       player.discard.moveCardsTo(cards, cardList);
+    //     }
+    //     return state;
+    //   });
+    // }
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const player = effect.player;
-
-      const cardList = StateUtils.findCardList(state, this);
-      if (cardList === undefined) {
-        return state;
-      }
-
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_ATTACH,
-        player.discard,
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Psychic Energy' },
-        { min: 0, max: 2, allowCancel: true }
-      ), cards => {
-        cards = cards || [];
-        if (cards.length > 0) {
-          player.discard.moveCardsTo(cards, cardList);
-        }
-        return state;
-      });
-    }
-
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
 
       let energies = 0;
