@@ -25,9 +25,7 @@ export declare class Player {
     avatarName: string;
     usedVSTAR: boolean;
     usedGX: boolean;
-    assembledMewtwo: boolean;
-    assembledPikachu: boolean;
-    assembledZacian: boolean;
+    assembledVUNIONs: string[];
     readonly DAMAGE_DEALT_MARKER = "DAMAGE_DEALT_MARKER";
     readonly ATTACK_USED_MARKER = "ATTACK_USED_MARKER";
     readonly ATTACK_USED_2_MARKER = "ATTACK_USED_2_MARKER";

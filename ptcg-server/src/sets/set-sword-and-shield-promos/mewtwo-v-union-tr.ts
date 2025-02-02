@@ -8,12 +8,12 @@ import { MewtwoVUNIONBottomRight } from './mewtwo-v-union-br';
 
 export class MewtwoVUNIONTopRight extends PokemonCard {
   public stage: Stage = Stage.VUNION;
-    public tags = [ CardTag.POKEMON_VUNION ];
+  public tags = [CardTag.POKEMON_VUNION];
   public cardType: CardType = P;
   public hp: number = 310;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];
-  public retreat = [ C, C ];
+  public retreat = [C, C];
 
   public powers: Power[] = [
     {
@@ -28,7 +28,7 @@ export class MewtwoVUNIONTopRight extends PokemonCard {
   public attacks = [
     {
       name: 'Super Regeneration',
-      cost: [ P, P, C ],
+      cost: [P, P, C],
       damage: 0,
       text: 'Heal 200 damage from this Pokémon.'
     }
@@ -43,14 +43,14 @@ export class MewtwoVUNIONTopRight extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // assemblin the v-union
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]){
+    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
       const slots: PokemonCardList[] = player.bench.filter(b => b.cards.length === 0);
 
-      if (player.assembledMewtwo){
+      if (player.assembledVUNIONs.includes(this.name)) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
-      if (slots.length === 0){
+      if (slots.length === 0) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
@@ -59,20 +59,20 @@ export class MewtwoVUNIONTopRight extends PokemonCard {
       let bottomLeftPiece = false;
       let bottomRightPiece = false;
       player.discard.cards.forEach((card, index) => {
-        if (card instanceof MewtwoVUNIONTopLeft){ topLeftPiece = true; }
-        if (card instanceof MewtwoVUNIONTopRight){ topRightPiece = true; }
-        if (card instanceof MewtwoVUNIONBottomLeft){ bottomLeftPiece = true; }
-        if (card instanceof MewtwoVUNIONBottomRight){ bottomRightPiece = true; }
+        if (card instanceof MewtwoVUNIONTopLeft) { topLeftPiece = true; }
+        if (card instanceof MewtwoVUNIONTopRight) { topRightPiece = true; }
+        if (card instanceof MewtwoVUNIONBottomLeft) { bottomLeftPiece = true; }
+        if (card instanceof MewtwoVUNIONBottomRight) { bottomRightPiece = true; }
       });
 
-      if (topLeftPiece && topRightPiece && bottomLeftPiece && bottomRightPiece){
+      if (topLeftPiece && topRightPiece && bottomLeftPiece && bottomRightPiece) {
         if (slots.length > 0) {
           // gotta make sure the actual mon ends up on top
-          player.discard.cards.forEach(card => { if (card instanceof MewtwoVUNIONTopRight){ player.discard.moveCardTo(card, slots[0]); }});
-          player.discard.cards.forEach(card => { if (card instanceof MewtwoVUNIONBottomLeft){ player.discard.moveCardTo(card, slots[0]); }});
-          player.discard.cards.forEach(card => { if (card instanceof MewtwoVUNIONBottomRight){ player.discard.moveCardTo(card, slots[0]); }});
-          player.discard.cards.forEach(card => { if (card instanceof MewtwoVUNIONTopLeft){ player.discard.moveCardTo(card, slots[0]); }});
-          player.assembledMewtwo = true;
+          player.discard.cards.forEach(card => { if (card instanceof MewtwoVUNIONTopRight) { player.discard.moveCardTo(card, slots[0]); } });
+          player.discard.cards.forEach(card => { if (card instanceof MewtwoVUNIONBottomLeft) { player.discard.moveCardTo(card, slots[0]); } });
+          player.discard.cards.forEach(card => { if (card instanceof MewtwoVUNIONBottomRight) { player.discard.moveCardTo(card, slots[0]); } });
+          player.discard.cards.forEach(card => { if (card instanceof MewtwoVUNIONTopLeft) { player.discard.moveCardTo(card, slots[0]); } });
+          player.assembledVUNIONs.push(this.name);
           slots[0].pokemonPlayedTurn = state.turn;
         }
       } else {

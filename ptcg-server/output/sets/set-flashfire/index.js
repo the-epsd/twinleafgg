@@ -18,6 +18,7 @@ const seedot_1 = require("./seedot");
 const skrelp_1 = require("./skrelp");
 const startling_megaphone_1 = require("./startling-megaphone");
 const toxicroak_ex_1 = require("./toxicroak-ex");
+const trick_shovel_1 = require("./trick-shovel");
 exports.setFlashfire = [
     new blacksmith_1.Blacksmith(),
     new dragalge_1.Dragalge(),
@@ -27,13 +28,14 @@ exports.setFlashfire = [
     new m_charizard_ex_1.MCharizardEX(),
     new milotic_1.Milotic(),
     new miltank_1.Miltank(),
+    new ponyta_1.Ponyta(),
     new protection_cube_1.ProtectionCube(),
     new pyroar_1.Pyroar(),
+    new rapidash_1.Rapidash(),
     new sacred_ash_1.SacredAsh(),
     new seedot_1.Seedot(),
     new skrelp_1.Skrelp(),
     new startling_megaphone_1.StartlingMegaphone(),
     new toxicroak_ex_1.ToxicroakEx(),
-    new ponyta_1.Ponyta(),
-    new rapidash_1.Rapidash(),
+    new trick_shovel_1.TrickShovel(),
 ];

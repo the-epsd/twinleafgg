@@ -47,7 +47,7 @@ export class ZacianVUNIONTopRight extends PokemonCard {
       const player = effect.player;
       const slots: PokemonCardList[] = player.bench.filter(b => b.cards.length === 0);
 
-      if (player.assembledZacian){
+      if (player.assembledVUNIONs.includes(this.name)) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
       if (slots.length === 0){
@@ -72,7 +72,7 @@ export class ZacianVUNIONTopRight extends PokemonCard {
           player.discard.cards.forEach(card => { if (card instanceof ZacianVUNIONBottomRight){ player.discard.moveCardTo(card, slots[0]); }});
           // gotta make sure the actual mon ends up on top
           player.discard.cards.forEach(card => { if (card instanceof ZacianVUNIONTopLeft){ player.discard.moveCardTo(card, slots[0]); }});
-          player.assembledZacian = true;
+          player.assembledVUNIONs.push(this.name);
           slots[0].pokemonPlayedTurn = state.turn;
         }
       } else {

@@ -1,4 +1,4 @@
-import { AttachEnergyPrompt, Card, CardList, ChooseCardsOptions, ChooseCardsPrompt, ChooseEnergyPrompt, ChoosePokemonPrompt, CoinFlipPrompt, ConfirmPrompt, EnergyCard, GameError, GameLog, GameMessage, Player, PlayerType, PokemonCardList, PowerType, ShowCardsPrompt, ShuffleDeckPrompt, SlotType, State, StateUtils, StoreLike } from '../..';
+import { AttachEnergyPrompt, Card, CardList, ChooseCardsOptions, ChooseCardsPrompt, ChooseEnergyPrompt, ChoosePokemonPrompt, CoinFlipPrompt, ConfirmPrompt, EnergyCard, GameError, GameLog, GameMessage, Player, PlayerType, PokemonCardList, PowerType, SelectPrompt, ShowCardsPrompt, ShuffleDeckPrompt, SlotType, State, StateUtils, StoreLike } from '../..';
 import { BoardEffect, CardType, EnergyType, SpecialCondition, SuperType } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
 import { DealDamageEffect, DiscardCardsEffect, HealTargetEffect, PutDamageEffect } from '../effects/attack-effects';
@@ -418,6 +418,23 @@ export function SWITCH_ACTIVE_WITH_BENCHED(store: StoreLike, state: State, playe
   });
 }
 
+export function LOOK_AT_TOPDECK_AND_DISCARD_OR_RETURN(store: StoreLike, state: State, choosingPlayer: Player, deckPlayer: Player) {
+  {
+    BLOCK_IF_DECK_EMPTY(deckPlayer);
+    const deckTop = new CardList();
+    deckPlayer.deck.moveTo(deckTop, 1);
+    SHOW_CARDS_TO_PLAYER(store, state, choosingPlayer, deckTop.cards);
+    SELECT_PROMPT_WITH_OPTIONS(store, state, choosingPlayer, [{
+      message: GameMessage.DISCARD_FROM_TOP_OF_DECK,
+      action: () => deckTop.moveToTopOfDestination(deckPlayer.discard),
+    },
+    {
+      message: GameMessage.RETURN_TO_TOP_OF_DECK,
+      action: () => deckTop.moveToTopOfDestination(deckPlayer.deck),
+    }])
+  }
+}
+
 export function SHOW_CARDS_TO_PLAYER(store: StoreLike, state: State, player: Player, cards: Card[]): State {
   if (cards.length === 0)
     return state;
@@ -426,6 +443,19 @@ export function SHOW_CARDS_TO_PLAYER(store: StoreLike, state: State, player: Pla
     GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
     cards,
   ), () => { });
+}
+
+export function SELECT_PROMPT(store: StoreLike, state: State, player: Player, values: string[], callback: (result: number) => void): State {
+  return store.prompt(state, new SelectPrompt(player.id, GameMessage.CHOOSE_OPTION, values, { allowCancel: false }), callback);
+}
+
+export function SELECT_PROMPT_WITH_OPTIONS(store: StoreLike, state: State, player: Player, options: { message: GameMessage, action: () => void }[]) {
+  return store.prompt(state, new SelectPrompt(
+    player.id, GameMessage.CHOOSE_OPTION, options.map(opt => opt.message), { allowCancel: false }
+  ), choice => {
+    const option = options[choice];
+    option.action();
+  });
 }
 
 export function CONFIRMATION_PROMPT(store: StoreLike, state: State, player: Player, callback: (result: boolean) => void): State {

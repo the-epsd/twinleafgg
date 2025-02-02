@@ -48,11 +48,7 @@ export class Player {
 
   usedGX: boolean = false;
 
-  assembledMewtwo: boolean = false;
-
-  assembledPikachu: boolean = false;
-
-  assembledZacian: boolean = false;
+  assembledVUNIONs: string[] = [];
 
   public readonly DAMAGE_DEALT_MARKER = 'DAMAGE_DEALT_MARKER';
 

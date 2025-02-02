@@ -1,4 +1,4 @@
-import { Card, CardList, ChooseCardsOptions, Player, PokemonCardList, State, StoreLike } from '../..';
+import { Card, CardList, ChooseCardsOptions, GameMessage, Player, PokemonCardList, State, StoreLike } from '../..';
 import { CardType, SpecialCondition } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
 import { Effect } from '../effects/effect';
@@ -105,7 +105,13 @@ export declare function CAN_EVOLVE_ON_FIRST_TURN_GOING_SECOND(state: State, play
  */
 export declare function MOVE_CARD_TO(state: State, card: Card, destination: CardList): void;
 export declare function SWITCH_ACTIVE_WITH_BENCHED(store: StoreLike, state: State, player: Player): State;
+export declare function LOOK_AT_TOPDECK_AND_DISCARD_OR_RETURN(store: StoreLike, state: State, choosingPlayer: Player, deckPlayer: Player): void;
 export declare function SHOW_CARDS_TO_PLAYER(store: StoreLike, state: State, player: Player, cards: Card[]): State;
+export declare function SELECT_PROMPT(store: StoreLike, state: State, player: Player, values: string[], callback: (result: number) => void): State;
+export declare function SELECT_PROMPT_WITH_OPTIONS(store: StoreLike, state: State, player: Player, options: {
+    message: GameMessage;
+    action: () => void;
+}[]): State;
 export declare function CONFIRMATION_PROMPT(store: StoreLike, state: State, player: Player, callback: (result: boolean) => void): State;
 export declare function COIN_FLIP_PROMPT(store: StoreLike, state: State, player: Player, callback: (result: boolean) => void): State;
 export declare function SIMULATE_COIN_FLIP(store: StoreLike, state: State, player: Player): boolean;

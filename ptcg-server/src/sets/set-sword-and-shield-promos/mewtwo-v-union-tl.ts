@@ -11,12 +11,12 @@ import { MewtwoVUNIONBottomRight } from './mewtwo-v-union-br';
 
 export class MewtwoVUNIONTopLeft extends PokemonCard {
   public stage: Stage = Stage.VUNION;
-  public tags = [ CardTag.POKEMON_VUNION ];
+  public tags = [CardTag.POKEMON_VUNION];
   public cardType: CardType = P;
   public hp: number = 310;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];
-  public retreat = [ C, C ];
+  public retreat = [C, C];
 
   public powers = [
     {
@@ -36,25 +36,25 @@ export class MewtwoVUNIONTopLeft extends PokemonCard {
   public attacks = [
     {
       name: 'Union Gain',
-      cost: [ C ],
+      cost: [C],
       damage: 0,
       text: 'Attach up to 2 [P] Energy cards from your discard pile to this Pokémon.'
     },
     {
       name: 'Super Regeneration',
-      cost: [ P, P, C ],
+      cost: [P, P, C],
       damage: 0,
       text: 'Heal 200 damage from this Pokémon.'
     },
     {
       name: 'Psyplosion',
-      cost: [ P, P, C ],
+      cost: [P, P, C],
       damage: 0,
       text: 'Put 16 damage counters on your opponent\'s Pokémon in any way you like.'
     },
     {
       name: 'Final Burn',
-      cost: [ P, P, P, C ],
+      cost: [P, P, P, C],
       damage: 300,
       text: ''
     }
@@ -71,14 +71,14 @@ export class MewtwoVUNIONTopLeft extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // assemblin the v-union
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]){
+    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
       const slots: PokemonCardList[] = player.bench.filter(b => b.cards.length === 0);
 
-      if (player.assembledMewtwo){
+      if (player.assembledVUNIONs.includes(this.name)) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
-      if (slots.length === 0){
+      if (slots.length === 0) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
@@ -87,20 +87,20 @@ export class MewtwoVUNIONTopLeft extends PokemonCard {
       let bottomLeftPiece = false;
       let bottomRightPiece = false;
       player.discard.cards.forEach(card => {
-        if (card instanceof MewtwoVUNIONTopLeft){ topLeftPiece = true; }
-        if (card instanceof MewtwoVUNIONTopRight){ topRightPiece = true; }
-        if (card instanceof MewtwoVUNIONBottomLeft){ bottomLeftPiece = true; }
-        if (card instanceof MewtwoVUNIONBottomRight){ bottomRightPiece = true; }
+        if (card instanceof MewtwoVUNIONTopLeft) { topLeftPiece = true; }
+        if (card instanceof MewtwoVUNIONTopRight) { topRightPiece = true; }
+        if (card instanceof MewtwoVUNIONBottomLeft) { bottomLeftPiece = true; }
+        if (card instanceof MewtwoVUNIONBottomRight) { bottomRightPiece = true; }
       });
 
-      if (topLeftPiece && topRightPiece && bottomLeftPiece && bottomRightPiece){
+      if (topLeftPiece && topRightPiece && bottomLeftPiece && bottomRightPiece) {
         if (slots.length > 0) {
-          player.discard.cards.forEach(card => { if (card instanceof MewtwoVUNIONTopRight){ player.discard.moveCardTo(card, slots[0]); }});
-          player.discard.cards.forEach(card => { if (card instanceof MewtwoVUNIONBottomLeft){ player.discard.moveCardTo(card, slots[0]); }});
-          player.discard.cards.forEach(card => { if (card instanceof MewtwoVUNIONBottomRight){ player.discard.moveCardTo(card, slots[0]); }});
+          player.discard.cards.forEach(card => { if (card instanceof MewtwoVUNIONTopRight) { player.discard.moveCardTo(card, slots[0]); } });
+          player.discard.cards.forEach(card => { if (card instanceof MewtwoVUNIONBottomLeft) { player.discard.moveCardTo(card, slots[0]); } });
+          player.discard.cards.forEach(card => { if (card instanceof MewtwoVUNIONBottomRight) { player.discard.moveCardTo(card, slots[0]); } });
           // gotta make sure the actual mon ends up on top
-          player.discard.cards.forEach(card => { if (card instanceof MewtwoVUNIONTopLeft){ player.discard.moveCardTo(card, slots[0]); }});
-          player.assembledMewtwo = true;
+          player.discard.cards.forEach(card => { if (card instanceof MewtwoVUNIONTopLeft) { player.discard.moveCardTo(card, slots[0]); } });
+          player.assembledVUNIONs.push(this.name);
           slots[0].pokemonPlayedTurn = state.turn;
         }
       } else {
@@ -129,18 +129,18 @@ export class MewtwoVUNIONTopLeft extends PokemonCard {
     }
 
     // Union Gain
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]){
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
 
       let psychicsInDiscard = 0;
       // checking for energies in the discard
       player.discard.cards.forEach(card => {
-        if (card instanceof EnergyCard && card.energyType === EnergyType.BASIC && card.name === 'Psychic Energy'){
+        if (card instanceof EnergyCard && card.energyType === EnergyType.BASIC && card.name === 'Psychic Energy') {
           psychicsInDiscard++;
         }
       })
 
-      if (psychicsInDiscard > 0){
+      if (psychicsInDiscard > 0) {
         const blocked: CardTarget[] = [];
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
           if (card !== this) {
@@ -166,12 +166,12 @@ export class MewtwoVUNIONTopLeft extends PokemonCard {
             const target = StateUtils.getTarget(state, player, transfer.to);
             player.discard.moveCardTo(transfer.card, target);
           }
-        });   
+        });
       }
-    } 
+    }
 
     // Super Regeneration
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]){
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
 
       const healing = new HealTargetEffect(effect, 200);
@@ -180,7 +180,7 @@ export class MewtwoVUNIONTopLeft extends PokemonCard {
     }
 
     // Psyplosion
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[2]){
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[2]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
