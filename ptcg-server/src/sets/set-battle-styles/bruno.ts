@@ -6,7 +6,6 @@ import { TrainerType } from '../../game/store/card/card-types';
 import { StateUtils } from '../../game/store/state-utils';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { KnockOutEffect } from '../../game/store/effects/game-effects';
-import { ShuffleDeckPrompt } from '../../game';
 import { DRAW_CARDS, HAS_MARKER, REMOVE_MARKER_AT_END_OF_TURN, SHUFFLE_CARDS_INTO_DECK } from '../../game/store/prefabs/prefabs';
 
 export class Bruno extends TrainerCard {

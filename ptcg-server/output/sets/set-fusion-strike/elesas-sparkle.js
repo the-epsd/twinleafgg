@@ -47,6 +47,7 @@ class ElesasSparkle extends trainer_card_1.TrainerCard {
                     player.deck.moveCardTo(transfer.card, target);
                 }
             });
+            player.supporter.moveCardTo(effect.trainerCard, player.discard);
         }
         return state;
     }
