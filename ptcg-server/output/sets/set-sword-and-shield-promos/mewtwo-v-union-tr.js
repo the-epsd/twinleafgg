@@ -39,7 +39,7 @@ class MewtwoVUNIONTopRight extends pokemon_card_1.PokemonCard {
         this.regulationMark = 'E';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '160';
-        this.name = 'Mewtwo V-UNION (Top Right)';
+        this.name = 'Mewtwo V-UNION';
         this.fullName = 'Mewtwo V-UNION (Top Right) SP';
     }
     reduceEffect(store, state, effect) {
