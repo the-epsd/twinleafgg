@@ -6,8 +6,8 @@ import { TrainerType } from '../../game/store/card/card-types';
 import { StateUtils } from '../../game/store/state-utils';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { KnockOutEffect } from '../../game/store/effects/game-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { ShuffleDeckPrompt } from '../../game';
+import { DRAW_CARDS, HAS_MARKER, REMOVE_MARKER_AT_END_OF_TURN, SHUFFLE_CARDS_INTO_DECK } from '../../game/store/prefabs/prefabs';
 
 export class Bruno extends TrainerCard {
 
@@ -31,52 +31,36 @@ export class Bruno extends TrainerCard {
   public readonly BRUNO_MARKER = 'BRUNO_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
 
-      if (effect instanceof KnockOutEffect) {
-        const player = effect.player;
-        const opponent = StateUtils.getOpponent(state, player);
-        const duringTurn = [GamePhase.PLAYER_TURN, GamePhase.ATTACK].includes(state.phase);
-        const cards = player.hand.cards.filter(c => c !== this);
+    if (effect instanceof KnockOutEffect) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+      const duringTurn = [GamePhase.PLAYER_TURN, GamePhase.ATTACK].includes(state.phase);
 
-        // Do not activate between turns, or when it's not opponents turn.
-        if (!duringTurn || state.players[state.activePlayer] !== opponent) {
-          return state;
-        }
+      // Do not activate between turns, or when it's not opponents turn.
+      if (!duringTurn || state.players[state.activePlayer] !== opponent)
+        return state;
 
+      const cardList = StateUtils.findCardList(state, this);
+      const owner = StateUtils.findOwner(state, cardList);
+      if (owner === player)
+        effect.player.marker.addMarker(this.BRUNO_MARKER, this);
 
-        // No Pokemon KO last turn
-        if (!player.marker.hasMarker(this.BRUNO_MARKER)) {
-
-          if (cards.length > 0) {
-            player.hand.moveCardsTo(cards, player.deck);
-
-            state = store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-              player.deck.applyOrder(order);
-            });
-          }
-          player.deck.moveTo(player.hand, 5);
-        }
-
-
-
-        if (cards.length > 0) {
-          player.hand.moveCardsTo(cards, player.deck);
-
-          state = store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-            player.deck.applyOrder(order);
-          });
-        }
-        player.deck.moveTo(player.hand, 5);
-      }
       return state;
-
     }
 
+    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+      const player = effect.player;
+      let cardsToDraw = 4;
+      if (HAS_MARKER(this.BRUNO_MARKER, player, this))
+        cardsToDraw = 7;
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.BRUNO_MARKER, this)) {
-      effect.player.marker.removeMarker(this.BRUNO_MARKER);
+      SHUFFLE_CARDS_INTO_DECK(store, state, player, player.hand.cards.filter(c => c !== this));
+      DRAW_CARDS(player, cardsToDraw);
     }
+
+    REMOVE_MARKER_AT_END_OF_TURN(effect, this.BRUNO_MARKER, this);
+
     return state;
   }
 }
