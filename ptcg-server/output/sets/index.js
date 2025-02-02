@@ -14,6 +14,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./set-base-set"), exports);
 __exportStar(require("./set-fossil"), exports);
 __exportStar(require("./set-jungle"), exports);
+__exportStar(require("./set-team-rocket"), exports);
 __exportStar(require("./set-vending-series"), exports);
 __exportStar(require("./set-wotc-promos"), exports);
 //Retro Energy

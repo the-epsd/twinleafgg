@@ -17,6 +17,7 @@ const max_rod_1 = require("./max-rod");
 const pupitar_1 = require("./pupitar");
 const regigigas_1 = require("./regigigas");
 const seaking_1 = require("./seaking");
+const sylveon_1 = require("./sylveon");
 const treasure_tracker_1 = require("./treasure-tracker");
 const tyranitar_ex_1 = require("./tyranitar-ex");
 const umbreon_ex_1 = require("./umbreon-ex");
@@ -33,6 +34,7 @@ exports.setPrismaticEvolution = [
     new umbreon_ex_1.Umbreonex(),
     new leafeon_ex_1.Leafeonex(),
     new glaceon_ex_1.Glaceonex(),
+    new sylveon_1.Sylveon(),
     new seaking_1.Seaking(),
     new regigigas_1.Regigigas(),
     new max_rod_1.MaxRod(),

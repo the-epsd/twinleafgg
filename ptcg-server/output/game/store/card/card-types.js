@@ -13,6 +13,7 @@ var CardTag;
     CardTag["POKEMON_VUNION"] = "VUNION";
     CardTag["ACE_SPEC"] = "ACE_SPEC";
     CardTag["RADIANT"] = "RADIANT";
+    CardTag["ROCKETS_SECRET_MACHINE"] = "ROCKETS_SECRET_MACHINE";
     CardTag["TEAM_PLASMA"] = "TEAM_PLASMA";
     CardTag["FUSION_STRIKE"] = "FUSION_STRIKE";
     CardTag["SINGLE_STRIKE"] = "SINGLE_STRIKE";

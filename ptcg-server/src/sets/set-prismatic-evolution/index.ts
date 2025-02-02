@@ -15,6 +15,7 @@ import { MaxRod } from './max-rod';
 import { Pupitar } from './pupitar';
 import { Regigigas } from './regigigas';
 import { Seaking } from './seaking';
+import { Sylveon } from './sylveon';
 import { TreasureTracker } from './treasure-tracker';
 import { Tyranitarex } from './tyranitar-ex';
 import { Umbreonex } from './umbreon-ex';
@@ -32,6 +33,7 @@ export const setPrismaticEvolution: Card[] = [
   new Umbreonex(),
   new Leafeonex(),
   new Glaceonex(),
+  new Sylveon(),
   new Seaking(),
   new Regigigas(),
   new MaxRod(),
