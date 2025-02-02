@@ -4,6 +4,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckRetreatCostEffect } from '../../game/store/effects/check-effects';
+import { PokemonCard } from '../../game';
 
 
 export class BigAirBalloon extends TrainerCard {
@@ -27,8 +28,10 @@ export class BigAirBalloon extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof CheckRetreatCostEffect && effect.player.active.tool === this && effect.player.active.stage === Stage.STAGE_2) {
-      effect.cost = [];
+    if (effect instanceof CheckRetreatCostEffect && effect.player.active.tool === this) {
+      const card = effect.player.active.getPokemonCard();
+      if (card instanceof PokemonCard && card.stage === Stage.STAGE_2)
+        effect.cost = [];
     }
 
     return state;

@@ -6,6 +6,7 @@ import { Blazikenex } from './blaziken-ex';
 import { BrocksRecruitment } from './brocks-recruitment';
 import { Combusken } from './combusken';
 import { Dudunsparceex } from './dudunsparce-ex';
+import { Dunsparce } from './dunsparce';
 import { ExchangeTicket } from './exchange-ticket';
 import { Floragato } from './floragato';
 import { HopsBag } from './hops-bag';
@@ -76,6 +77,7 @@ export const setSV9: Card[] = [
   new Mamoswineex(),
   new BrocksRecruitment(),
   new ExchangeTicket(),
+  new Dunsparce(),
   new Dudunsparceex(),
   new Bagon(),
   new Shelgon(),

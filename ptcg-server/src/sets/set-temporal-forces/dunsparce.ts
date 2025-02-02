@@ -15,24 +15,19 @@ export class Dunsparce extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = CardType.COLORLESS;
+  public cardType: CardType = C;
 
   public hp: number = 60;
 
-  public weakness = [{ type: CardType.FIGHTING }];
+  public weakness = [{ type: F }];
 
   public retreat = [];
 
   public attacks = [
-    {
-      name: 'Gnaw',
-      cost: [CardType.COLORLESS],
-      damage: 10,
-      text: ''
-    },
+    { name: 'Gnaw', cost: [C], damage: 10, text: '' },
     {
       name: 'Dig',
-      cost: [CardType.COLORLESS],
+      cost: [C, C],
       damage: 30,
       text: 'Flip a coin. If heads, during your opponent\'s next turn, prevent all damage from and effects of attacks done to this Pokémon.'
     }

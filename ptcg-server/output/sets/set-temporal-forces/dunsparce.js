@@ -14,20 +14,15 @@ class Dunsparce extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.BASIC;
-        this.cardType = card_types_1.CardType.COLORLESS;
+        this.cardType = C;
         this.hp = 60;
-        this.weakness = [{ type: card_types_1.CardType.FIGHTING }];
+        this.weakness = [{ type: F }];
         this.retreat = [];
         this.attacks = [
-            {
-                name: 'Gnaw',
-                cost: [card_types_1.CardType.COLORLESS],
-                damage: 10,
-                text: ''
-            },
+            { name: 'Gnaw', cost: [C], damage: 10, text: '' },
             {
                 name: 'Dig',
-                cost: [card_types_1.CardType.COLORLESS],
+                cost: [C, C],
                 damage: 30,
                 text: 'Flip a coin. If heads, during your opponent\'s next turn, prevent all damage from and effects of attacks done to this Pokémon.'
             }

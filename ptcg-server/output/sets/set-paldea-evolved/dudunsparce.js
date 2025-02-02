@@ -13,18 +13,16 @@ class Dudunsparce extends pokemon_card_1.PokemonCard {
         this.cardType = card_types_1.CardType.COLORLESS;
         this.hp = 140;
         this.weakness = [{ type: card_types_1.CardType.FIGHTING }];
-        this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
-        this.attacks = [{
-                name: 'Mud-Slap',
-                cost: [card_types_1.CardType.COLORLESS],
-                damage: 30,
-                text: ''
-            }, {
-                name: 'Dig AWay Flash',
-                cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
+        this.retreat = [C, C, C];
+        this.attacks = [
+            { name: 'Mud-Slap', cost: [C], damage: 30, text: '' },
+            {
+                name: 'Dig Away Flash',
+                cost: [C, C, C, C],
                 damage: 100,
                 text: 'Your opponent\'s Active Pokémon is now Paralyzed. Shuffle this Pokémon and all attached cards into your deck.'
-            }];
+            }
+        ];
         this.regulationMark = 'G';
         this.set = 'PAL';
         this.cardImage = 'assets/cardback.png';

@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.REMOVE_MARKER_AT_END_OF_TURN = exports.PREVENT_DAMAGE_IF_TARGET_HAS_MARKER = exports.BLOCK_EFFECT_IF_MARKER = exports.HAS_MARKER = exports.REMOVE_MARKER = exports.ADD_MARKER = exports.ADD_CONFUSION_TO_PLAYER_ACTIVE = exports.ADD_PARALYZED_TO_PLAYER_ACTIVE = exports.ADD_BURN_TO_PLAYER_ACTIVE = exports.ADD_POISON_TO_PLAYER_ACTIVE = exports.ADD_SLEEP_TO_PLAYER_ACTIVE = exports.ADD_SPECIAL_CONDITIONS_TO_PLAYER_ACTIVE = exports.SIMULATE_COIN_FLIP = exports.COIN_FLIP_PROMPT = exports.CONFIRMATION_PROMPT = exports.SHOW_CARDS_TO_PLAYER = exports.SWITCH_ACTIVE_WITH_BENCHED = exports.MOVE_CARD_TO = exports.CAN_EVOLVE_ON_FIRST_TURN_GOING_SECOND = exports.IS_ABILITY_BLOCKED = exports.SEARCH_DECK_FOR_CARDS_TO_HAND = exports.DRAW_CARDS_AS_FACE_DOWN_PRIZES = exports.DRAW_CARDS_UNTIL_CARDS_IN_HAND = exports.DRAW_CARDS = exports.SHUFFLE_PRIZES_INTO_DECK = exports.SHUFFLE_CARDS_INTO_DECK = exports.SHUFFLE_DECK = exports.GET_PRIZES_AS_CARD_ARRAY = exports.GET_PLAYER_PRIZES = exports.DISCARD_ALL_ENERGY_FROM_POKEMON = exports.DISCARD_X_ENERGY_FROM_YOUR_HAND = exports.ATTACH_X_NUMBER_OF_BASIC_ENERGY_CARDS_FROM_YOUR_DISCARD_TO_YOUR_BENCHED_POKEMON = exports.THIS_POKEMON_DOES_DAMAGE_TO_ITSELF = exports.THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_BENCHED_POKEMON = exports.PLAY_POKEMON_FROM_HAND_TO_BENCH = exports.TAKE_X_MORE_PRIZE_CARDS = exports.YOUR_OPPONENTS_POKEMON_IS_KNOCKED_OUT_BY_DAMAGE_FROM_THIS_ATTACK = exports.THIS_POKEMON_HAS_ANY_DAMAGE_COUNTERS_ON_IT = exports.HEAL_X_DAMAGE_FROM_THIS_POKEMON = exports.THIS_ATTACK_DOES_X_MORE_DAMAGE = exports.FLIP_IF_HEADS = exports.DISCARD_X_ENERGY_FROM_THIS_POKEMON = exports.SEARCH_YOUR_DECK_FOR_TYPE_OF_POKEMON_AND_PUT_INTO_HAND = exports.SEARCH_YOUR_DECK_FOR_STAGE_OF_POKEMON_AND_PUT_THEM_ONTO_YOUR_BENCH = exports.DISCARD_A_STADIUM_CARD_IN_PLAY = exports.PASSIVE_ABILITY_ACTIVATED = exports.ABILITY_USED = exports.JUST_EVOLVED = exports.WAS_POWER_USED = exports.WAS_ATTACK_USED = void 0;
-exports.CLEAR_MARKER_AND_OPPONENTS_POKEMON_MARKER_AT_END_OF_TURN = exports.REPLACE_MARKER_AT_END_OF_TURN = void 0;
+exports.HAS_MARKER = exports.REMOVE_MARKER = exports.ADD_MARKER = exports.ADD_CONFUSION_TO_PLAYER_ACTIVE = exports.ADD_PARALYZED_TO_PLAYER_ACTIVE = exports.ADD_BURN_TO_PLAYER_ACTIVE = exports.ADD_POISON_TO_PLAYER_ACTIVE = exports.ADD_SLEEP_TO_PLAYER_ACTIVE = exports.ADD_SPECIAL_CONDITIONS_TO_PLAYER_ACTIVE = exports.BLOCK_IF_DECK_EMPTY = exports.BLOCK_IF_NO_SLOTS = exports.GET_PLAYER_BENCH_SLOTS = exports.GET_FIRST_PLAYER_BENCH_SLOT = exports.SIMULATE_COIN_FLIP = exports.COIN_FLIP_PROMPT = exports.CONFIRMATION_PROMPT = exports.SHOW_CARDS_TO_PLAYER = exports.SWITCH_ACTIVE_WITH_BENCHED = exports.MOVE_CARD_TO = exports.CAN_EVOLVE_ON_FIRST_TURN_GOING_SECOND = exports.IS_ABILITY_BLOCKED = exports.SEARCH_DECK_FOR_CARDS_TO_HAND = exports.DRAW_CARDS_AS_FACE_DOWN_PRIZES = exports.DRAW_CARDS_UNTIL_CARDS_IN_HAND = exports.DRAW_CARDS = exports.SHUFFLE_PRIZES_INTO_DECK = exports.SHUFFLE_CARDS_INTO_DECK = exports.SHUFFLE_DECK = exports.GET_PRIZES_AS_CARD_ARRAY = exports.GET_PLAYER_PRIZES = exports.DISCARD_ALL_ENERGY_FROM_POKEMON = exports.DISCARD_X_ENERGY_FROM_YOUR_HAND = exports.ATTACH_X_NUMBER_OF_BASIC_ENERGY_CARDS_FROM_YOUR_DISCARD_TO_YOUR_BENCHED_POKEMON = exports.THIS_POKEMON_DOES_DAMAGE_TO_ITSELF = exports.THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_BENCHED_POKEMON = exports.PLAY_POKEMON_FROM_HAND_TO_BENCH = exports.TAKE_X_MORE_PRIZE_CARDS = exports.YOUR_OPPONENTS_POKEMON_IS_KNOCKED_OUT_BY_DAMAGE_FROM_THIS_ATTACK = exports.THIS_POKEMON_HAS_ANY_DAMAGE_COUNTERS_ON_IT = exports.HEAL_X_DAMAGE_FROM_THIS_POKEMON = exports.THIS_ATTACK_DOES_X_MORE_DAMAGE = exports.DISCARD_X_ENERGY_FROM_THIS_POKEMON = exports.SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND = exports.SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH = exports.DISCARD_A_STADIUM_CARD_IN_PLAY = exports.PASSIVE_ABILITY_ACTIVATED = exports.ABILITY_USED = exports.JUST_EVOLVED = exports.WAS_POWER_USED = exports.WAS_ATTACK_USED = void 0;
+exports.CLEAR_MARKER_AND_OPPONENTS_POKEMON_MARKER_AT_END_OF_TURN = exports.REPLACE_MARKER_AT_END_OF_TURN = exports.REMOVE_MARKER_AT_END_OF_TURN = exports.PREVENT_DAMAGE_IF_TARGET_HAS_MARKER = exports.BLOCK_EFFECT_IF_MARKER = void 0;
 const __1 = require("../..");
 const card_types_1 = require("../card/card-types");
 const attack_effects_1 = require("../effects/attack-effects");
@@ -69,33 +69,41 @@ function DISCARD_A_STADIUM_CARD_IN_PLAY(state) {
     }
 }
 exports.DISCARD_A_STADIUM_CARD_IN_PLAY = DISCARD_A_STADIUM_CARD_IN_PLAY;
-function SEARCH_YOUR_DECK_FOR_STAGE_OF_POKEMON_AND_PUT_THEM_ONTO_YOUR_BENCH(store, state, effect, min, max, stage) {
-    const player = effect.player;
-    const slots = player.bench.filter(b => b.cards.length === 0);
-    return store.prompt(state, new __1.ChooseCardsPrompt(player, __1.GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH, player.deck, { superType: card_types_1.SuperType.POKEMON, stage }, { min, max: slots.length < max ? slots.length : max, allowCancel: true }), selected => {
+/**
+ * Search deck for Pokemon, show it to the opponent, put it into `player`'s hand, and shuffle `player`'s deck.
+ * A `filter` can be provided for the prompt as well.
+ */
+function SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH(store, state, player, filter = {}, options = {}) {
+    BLOCK_IF_DECK_EMPTY(player);
+    const slots = GET_PLAYER_BENCH_SLOTS(player);
+    BLOCK_IF_NO_SLOTS(slots);
+    filter.superType = card_types_1.SuperType.POKEMON;
+    return store.prompt(state, new __1.ChooseCardsPrompt(player, __1.GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH, player.deck, filter, options), selected => {
         const cards = selected || [];
         cards.forEach((card, index) => {
             player.deck.moveCardTo(card, slots[index]);
             slots[index].pokemonPlayedTurn = state.turn;
         });
+        SHUFFLE_DECK(store, state, player);
     });
 }
-exports.SEARCH_YOUR_DECK_FOR_STAGE_OF_POKEMON_AND_PUT_THEM_ONTO_YOUR_BENCH = SEARCH_YOUR_DECK_FOR_STAGE_OF_POKEMON_AND_PUT_THEM_ONTO_YOUR_BENCH;
+exports.SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH = SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH;
 /**
- * Search deck for `type` of Pokemon, show it to the opponent, put it into `player`'s hand, and shuffle `player`'s deck.
+ * Search deck for Pokemon, show it to the opponent, put it into `player`'s hand, and shuffle `player`'s deck.
+ * A `filter` can be provided for the prompt as well.
  */
-function SEARCH_YOUR_DECK_FOR_TYPE_OF_POKEMON_AND_PUT_INTO_HAND(store, state, player, min, max, type) {
-    if (player.deck.cards.length === 0)
-        throw new __1.GameError(__1.GameMessage.NO_CARDS_IN_DECK);
+function SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND(store, state, player, filter = {}, options = {}) {
+    BLOCK_IF_DECK_EMPTY(player);
     const opponent = __1.StateUtils.getOpponent(state, player);
-    return store.prompt(state, new __1.ChooseCardsPrompt(player, __1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, { superType: card_types_1.SuperType.POKEMON, cardType: type }, { min, max, allowCancel: true }), selected => {
+    filter.superType = card_types_1.SuperType.POKEMON;
+    return store.prompt(state, new __1.ChooseCardsPrompt(player, __1.GameMessage.CHOOSE_CARD_TO_HAND, player.deck, filter, options), selected => {
         const cards = selected || [];
         SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
         cards.forEach(card => MOVE_CARD_TO(state, card, player.hand));
         SHUFFLE_DECK(store, state, player);
     });
 }
-exports.SEARCH_YOUR_DECK_FOR_TYPE_OF_POKEMON_AND_PUT_INTO_HAND = SEARCH_YOUR_DECK_FOR_TYPE_OF_POKEMON_AND_PUT_INTO_HAND;
+exports.SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND = SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND;
 function DISCARD_X_ENERGY_FROM_THIS_POKEMON(state, effect, store, type, amount) {
     const player = effect.player;
     const checkProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(player);
@@ -113,10 +121,6 @@ function DISCARD_X_ENERGY_FROM_THIS_POKEMON(state, effect, store, type, amount) 
     return state;
 }
 exports.DISCARD_X_ENERGY_FROM_THIS_POKEMON = DISCARD_X_ENERGY_FROM_THIS_POKEMON;
-function FLIP_IF_HEADS() {
-    console.log('Heads again!');
-}
-exports.FLIP_IF_HEADS = FLIP_IF_HEADS;
 function THIS_ATTACK_DOES_X_MORE_DAMAGE(effect, store, state, damage) {
     effect.damage += damage;
     return state;
@@ -150,12 +154,9 @@ function TAKE_X_MORE_PRIZE_CARDS(effect, state) {
 }
 exports.TAKE_X_MORE_PRIZE_CARDS = TAKE_X_MORE_PRIZE_CARDS;
 function PLAY_POKEMON_FROM_HAND_TO_BENCH(state, player, card) {
-    const slots = player.bench.filter(b => b.cards.length === 0);
-    if (slots.length === 0)
-        throw new __1.GameError(__1.GameMessage.NO_BENCH_SLOTS_AVAILABLE);
-    const validSlot = slots[0];
-    player.hand.moveCardTo(card, validSlot);
-    validSlot.pokemonPlayedTurn = state.turn;
+    const slot = GET_FIRST_PLAYER_BENCH_SLOT(player);
+    player.hand.moveCardTo(card, slot);
+    slot.pokemonPlayedTurn = state.turn;
 }
 exports.PLAY_POKEMON_FROM_HAND_TO_BENCH = PLAY_POKEMON_FROM_HAND_TO_BENCH;
 function THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_BENCHED_POKEMON(damage, effect, store, state, min, max) {
@@ -380,6 +381,26 @@ function SIMULATE_COIN_FLIP(store, state, player) {
     return result;
 }
 exports.SIMULATE_COIN_FLIP = SIMULATE_COIN_FLIP;
+function GET_FIRST_PLAYER_BENCH_SLOT(player) {
+    const slots = GET_PLAYER_BENCH_SLOTS(player);
+    BLOCK_IF_NO_SLOTS(slots);
+    return slots[0];
+}
+exports.GET_FIRST_PLAYER_BENCH_SLOT = GET_FIRST_PLAYER_BENCH_SLOT;
+function GET_PLAYER_BENCH_SLOTS(player) {
+    return player.bench.filter(b => b.cards.length === 0);
+}
+exports.GET_PLAYER_BENCH_SLOTS = GET_PLAYER_BENCH_SLOTS;
+function BLOCK_IF_NO_SLOTS(slots) {
+    if (slots.length === 0)
+        throw new __1.GameError(__1.GameMessage.NO_BENCH_SLOTS_AVAILABLE);
+}
+exports.BLOCK_IF_NO_SLOTS = BLOCK_IF_NO_SLOTS;
+function BLOCK_IF_DECK_EMPTY(player) {
+    if (player.deck.cards.length === 0)
+        throw new __1.GameError(__1.GameMessage.NO_CARDS_IN_DECK);
+}
+exports.BLOCK_IF_DECK_EMPTY = BLOCK_IF_DECK_EMPTY;
 //#region Special Conditions
 function ADD_SPECIAL_CONDITIONS_TO_PLAYER_ACTIVE(store, state, player, source, specialConditions, poisonDamage = 10, burnDamage = 20, sleepFlips = 1) {
     store.reduceEffect(state, new check_effects_1.AddSpecialConditionsPowerEffect(player, source, player.active, specialConditions, poisonDamage, burnDamage, sleepFlips));

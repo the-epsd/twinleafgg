@@ -61,7 +61,7 @@ class MewVMAX extends pokemon_card_1.PokemonCard {
                 damage: 130,
                 shredAttack: true,
                 text: 'This attack\'s damage isn\'t affected by any effects on your ' +
-                    'Opponent\'s Active Pokémon.'
+                    'opponent\'s Active Pokémon.'
             }
         ];
         this.set = 'FST';

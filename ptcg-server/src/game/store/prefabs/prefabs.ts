@@ -1,5 +1,5 @@
-import { AttachEnergyPrompt, Card, CardList, ChooseCardsPrompt, ChooseEnergyPrompt, ChoosePokemonPrompt, CoinFlipPrompt, ConfirmPrompt, EnergyCard, GameError, GameLog, GameMessage, Player, PlayerType, PokemonCardList, PowerType, ShowCardsPrompt, ShuffleDeckPrompt, SlotType, State, StateUtils, StoreLike } from '../..';
-import { BoardEffect, CardType, EnergyType, SpecialCondition, Stage, SuperType } from '../card/card-types';
+import { AttachEnergyPrompt, Card, CardList, ChooseCardsOptions, ChooseCardsPrompt, ChooseEnergyPrompt, ChoosePokemonPrompt, CoinFlipPrompt, ConfirmPrompt, EnergyCard, GameError, GameLog, GameMessage, Player, PlayerType, PokemonCardList, PowerType, ShowCardsPrompt, ShuffleDeckPrompt, SlotType, State, StateUtils, StoreLike } from '../..';
+import { BoardEffect, CardType, EnergyType, SpecialCondition, SuperType } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
 import { DealDamageEffect, DiscardCardsEffect, HealTargetEffect, PutDamageEffect } from '../effects/attack-effects';
 import { AddSpecialConditionsPowerEffect, CheckProvidedEnergyEffect } from '../effects/check-effects';
@@ -69,42 +69,39 @@ export function DISCARD_A_STADIUM_CARD_IN_PLAY(state: State) {
   }
 }
 
-export function SEARCH_YOUR_DECK_FOR_STAGE_OF_POKEMON_AND_PUT_THEM_ONTO_YOUR_BENCH(store: StoreLike, state: State, effect: AttackEffect, min: number, max: number, stage: Stage) {
-  const player = effect.player;
-  const slots = player.bench.filter(b => b.cards.length === 0);
+/**
+ * Search deck for Pokemon, show it to the opponent, put it into `player`'s hand, and shuffle `player`'s deck.
+ * A `filter` can be provided for the prompt as well.
+ */
+export function SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH(store: StoreLike, state: State, player: Player, filter: Partial<PokemonCard> = {}, options: Partial<ChooseCardsOptions> = {}) {
+  BLOCK_IF_DECK_EMPTY(player);
+  const slots = GET_PLAYER_BENCH_SLOTS(player);
+  BLOCK_IF_NO_SLOTS(slots);
+  filter.superType = SuperType.POKEMON;
 
   return store.prompt(state, new ChooseCardsPrompt(
-    player,
-    GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
-    player.deck,
-    { superType: SuperType.POKEMON, stage },
-    { min, max: slots.length < max ? slots.length : max, allowCancel: true }
+    player, GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH, player.deck, filter, options,
   ), selected => {
     const cards = selected || [];
-
     cards.forEach((card, index) => {
       player.deck.moveCardTo(card, slots[index]);
       slots[index].pokemonPlayedTurn = state.turn;
     });
+    SHUFFLE_DECK(store, state, player)
   });
 }
 
 /**
- * Search deck for `type` of Pokemon, show it to the opponent, put it into `player`'s hand, and shuffle `player`'s deck.
+ * Search deck for Pokemon, show it to the opponent, put it into `player`'s hand, and shuffle `player`'s deck.
+ * A `filter` can be provided for the prompt as well.
  */
-export function SEARCH_YOUR_DECK_FOR_TYPE_OF_POKEMON_AND_PUT_INTO_HAND(store: StoreLike, state: State, player: Player, min: number, max: number, type: CardType) {
-
-  if (player.deck.cards.length === 0)
-    throw new GameError(GameMessage.NO_CARDS_IN_DECK);
-
+export function SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND(store: StoreLike, state: State, player: Player, filter: Partial<PokemonCard> = {}, options: Partial<ChooseCardsOptions> = {}) {
+  BLOCK_IF_DECK_EMPTY(player);
   const opponent = StateUtils.getOpponent(state, player);
+  filter.superType = SuperType.POKEMON;
 
   return store.prompt(state, new ChooseCardsPrompt(
-    player,
-    GameMessage.CHOOSE_CARD_TO_HAND,
-    player.deck,
-    { superType: SuperType.POKEMON, cardType: type },
-    { min, max, allowCancel: true },
+    player, GameMessage.CHOOSE_CARD_TO_HAND, player.deck, filter, options,
   ), selected => {
     const cards = selected || [];
     SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
@@ -137,10 +134,6 @@ export function DISCARD_X_ENERGY_FROM_THIS_POKEMON(state: State, effect: AttackE
   });
 
   return state;
-}
-
-export function FLIP_IF_HEADS() {
-  console.log('Heads again!');
 }
 
 export function THIS_ATTACK_DOES_X_MORE_DAMAGE(effect: AttackEffect, store: StoreLike, state: State, damage: number) {
@@ -177,14 +170,9 @@ export function TAKE_X_MORE_PRIZE_CARDS(effect: KnockOutEffect, state: State) {
 }
 
 export function PLAY_POKEMON_FROM_HAND_TO_BENCH(state: State, player: Player, card: Card) {
-  const slots: PokemonCardList[] = player.bench.filter(b => b.cards.length === 0);
-
-  if (slots.length === 0)
-    throw new GameError(GameMessage.NO_BENCH_SLOTS_AVAILABLE);
-
-  const validSlot = slots[0];
-  player.hand.moveCardTo(card, validSlot);
-  validSlot.pokemonPlayedTurn = state.turn;
+  const slot = GET_FIRST_PLAYER_BENCH_SLOT(player);
+  player.hand.moveCardTo(card, slot);
+  slot.pokemonPlayedTurn = state.turn;
 }
 
 export function THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_BENCHED_POKEMON(damage: number, effect: AttackEffect, store: StoreLike, state: State, min: number, max: number) {
@@ -448,13 +436,33 @@ export function COIN_FLIP_PROMPT(store: StoreLike, state: State, player: Player,
   return store.prompt(state, new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP), callback);
 }
 
-
 export function SIMULATE_COIN_FLIP(store: StoreLike, state: State, player: Player): boolean {
   const result = Math.random() < 0.5;
   const gameMessage = result ? GameLog.LOG_PLAYER_FLIPS_HEADS : GameLog.LOG_PLAYER_FLIPS_TAILS;
   store.log(state, gameMessage, { name: player.name });
   return result;
 }
+
+export function GET_FIRST_PLAYER_BENCH_SLOT(player: Player): PokemonCardList {
+  const slots = GET_PLAYER_BENCH_SLOTS(player);
+  BLOCK_IF_NO_SLOTS(slots);
+  return slots[0];
+}
+
+export function GET_PLAYER_BENCH_SLOTS(player: Player): PokemonCardList[] {
+  return player.bench.filter(b => b.cards.length === 0);
+}
+
+export function BLOCK_IF_NO_SLOTS(slots: PokemonCardList[]) {
+  if (slots.length === 0)
+    throw new GameError(GameMessage.NO_BENCH_SLOTS_AVAILABLE);
+}
+
+export function BLOCK_IF_DECK_EMPTY(player: Player) {
+  if (player.deck.cards.length === 0)
+    throw new GameError(GameMessage.NO_CARDS_IN_DECK);
+}
+
 
 //#region Special Conditions
 export function ADD_SPECIAL_CONDITIONS_TO_PLAYER_ACTIVE(

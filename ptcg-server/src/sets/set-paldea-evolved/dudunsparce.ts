@@ -5,6 +5,7 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { SHUFFLE_THIS_POKEMON_AND_ALL_ATTACHED_CARDS_INTO_YOUR_DECK, YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED } from '../../game/store/prefabs/attack-effects';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { Attack } from '../../game';
 
 
 export class Dudunsparce extends PokemonCard {
@@ -19,19 +20,17 @@ export class Dudunsparce extends PokemonCard {
 
   public weakness = [{ type: CardType.FIGHTING }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [C, C, C];
 
-  public attacks = [{
-    name: 'Mud-Slap',
-    cost: [ CardType.COLORLESS ],
-    damage: 30,
-    text: ''
-  }, {
-    name: 'Dig AWay Flash',
-    cost: [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ],
-    damage: 100,
-    text: 'Your opponent\'s Active Pokémon is now Paralyzed. Shuffle this Pokémon and all attached cards into your deck.'
-  }];
+  public attacks: Attack[] = [
+    { name: 'Mud-Slap', cost: [C], damage: 30, text: '' },
+    {
+      name: 'Dig Away Flash',
+      cost: [C, C, C, C],
+      damage: 100,
+      text: 'Your opponent\'s Active Pokémon is now Paralyzed. Shuffle this Pokémon and all attached cards into your deck.'
+    }
+  ];
 
   public regulationMark = 'G';
 
