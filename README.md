@@ -1,5 +1,5 @@
 # Twinleaf.gg Open Source Project
-# PTCG Simulator
+# Pokémon TCG Simulator
 
 The project is created to allow players of the PTCG to experience current and past formats that are not otherwise accesible in an online, web-based client.
 
