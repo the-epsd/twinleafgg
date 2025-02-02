@@ -1,43 +1,38 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Vileplume = void 0;
+exports.Cryogonal = void 0;
 const game_1 = require("../../game");
-const game_effects_1 = require("../../game/store/effects/game-effects");
 const prefabs_1 = require("../../game/store/prefabs/prefabs");
-class Vileplume extends game_1.PokemonCard {
+class Cryogonal extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.stage = game_1.Stage.STAGE_2;
-        this.evolvesFrom = 'Gloom';
-        this.cardType = game_1.CardType.GRASS;
-        this.hp = 140;
-        this.weakness = [{ type: game_1.CardType.FIRE }];
-        this.retreat = [game_1.CardType.COLORLESS, game_1.CardType.COLORLESS];
-        this.powers = [{
-                name: 'Fully Blooming Energy',
-                powerType: game_1.PowerType.ABILITY,
-                text: 'When you play this Pokémon from your hand to evolve 1 of your Pokémon during your turn, you may look at the top 8 cards of your deck and attach any number of Basic Energy cards you find there to your Pokémon in any way you like. Shuffle the other cards back into your deck.'
-            }];
-        this.attacks = [{
+        this.stage = game_1.Stage.BASIC;
+        this.cardType = W;
+        this.hp = 90;
+        this.weakness = [{ type: M }];
+        this.retreat = [C];
+        this.attacks = [
+            {
                 name: 'Solar Beam',
                 cost: [game_1.CardType.GRASS, game_1.CardType.COLORLESS, game_1.CardType.COLORLESS],
                 damage: 90,
                 text: ''
-            }];
-        this.set = 'MEW';
-        this.regulationMark = 'G';
+            },
+            { name: 'Icy Snow', cost: [W, C], damage: 30, text: '' }
+        ];
+        this.set = 'EVS';
+        this.regulationMark = 'E';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '45';
-        this.name = 'Vileplume';
-        this.fullName = 'Vileplume MEW';
+        this.setNumber = '43';
+        this.name = 'Cryogonal';
+        this.fullName = 'Cryogonal EVS';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_effects_1.EvolveEffect && effect.pokemonCard === this) {
+        if (prefabs_1.WAS_ATTACK_USED(effect, 0, this)) {
             const player = effect.player;
-            if (!prefabs_1.IS_ABILITY_BLOCKED(store, state, player, this))
-                return state;
             const temp = new game_1.CardList();
             player.deck.moveTo(temp, 8);
+            prefabs_1.SHOW_CARDS_TO_PLAYER(store, state, player, temp.cards);
             // Check if any cards drawn are basic energy
             const energyCardsDrawn = temp.cards.filter(card => {
                 return card instanceof game_1.EnergyCard && card.energyType === game_1.EnergyType.BASIC;
@@ -56,12 +51,7 @@ class Vileplume extends game_1.PokemonCard {
                             const target = game_1.StateUtils.getTarget(state, player, transfer.to);
                             temp.moveCardTo(transfer.card, target); // Move card to target
                         }
-                        temp.cards.forEach(card => {
-                            temp.moveCardTo(card, player.deck); // Move card to deck
-                            return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
-                                player.deck.applyOrder(order);
-                            });
-                        });
+                        prefabs_1.SHUFFLE_CARDS_INTO_DECK(store, state, player, temp.cards);
                     }
                     return state;
                 });
@@ -71,4 +61,4 @@ class Vileplume extends game_1.PokemonCard {
         return state;
     }
 }
-exports.Vileplume = Vileplume;
+exports.Cryogonal = Cryogonal;

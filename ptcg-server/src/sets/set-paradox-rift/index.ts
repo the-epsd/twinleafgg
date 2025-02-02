@@ -72,6 +72,7 @@ import { TechnicalMachineDevolution } from './technical-machine-devolution';
 import { TechnicalMachineEvolution } from './technical-machine-evolution';
 import { TechnicalMachineTurboEnergize } from './technical-machine-turbo-energize';
 import { TechnoRadar } from './techno-radar';
+import { Tinkatink } from './tinkatink';
 import { Tinkatuff } from './tinkatuff';
 import { Toedscool } from './toedscool';
 import { Toedscool2 } from './toedscool2';
@@ -152,6 +153,7 @@ export const setParadoxRift: Card[] = [
   new TechnicalMachineDevolution(),
   new TechnicalMachineEvolution(),
   new TechnicalMachineTurboEnergize(),
+  new Tinkatink(),
   new Tinkatuff(),
   new Toedscool(),
   new Toedscool2(),

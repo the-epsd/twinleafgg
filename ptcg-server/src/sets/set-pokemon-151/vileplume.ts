@@ -1,6 +1,7 @@
 import { PokemonCard, Stage, CardType, PowerType, AttachEnergyPrompt, CardList, EnergyCard, EnergyType, GameMessage, PlayerType, SlotType, State, StateUtils, StoreLike, SuperType, ShuffleDeckPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { EvolveEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { EvolveEffect } from '../../game/store/effects/game-effects';
+import { IS_ABILITY_BLOCKED, SHUFFLE_CARDS_INTO_DECK } from '../../game/store/prefabs/prefabs';
 
 export class Vileplume extends PokemonCard {
 
@@ -45,24 +46,12 @@ export class Vileplume extends PokemonCard {
 
     if (effect instanceof EvolveEffect && effect.pokemonCard === this) {
 
-
       const player = effect.player;
 
-      // Try to reduce PowerEffect, to check if something is blocking our ability
-      try {
-        const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
-      } catch {
+      if (!IS_ABILITY_BLOCKED(store, state, player, this))
         return state;
-      }
 
       const temp = new CardList();
-
-
       player.deck.moveTo(temp, 8);
 
       // Check if any cards drawn are basic energy
@@ -72,15 +61,8 @@ export class Vileplume extends PokemonCard {
 
       // If no energy cards were drawn, move all cards to deck
       if (energyCardsDrawn.length == 0) {
-        temp.cards.slice(0, 8).forEach(card => {
-          temp.moveCardTo(card, player.deck);
-          return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-            player.deck.applyOrder(order);
-          });
-        });
+        SHUFFLE_CARDS_INTO_DECK(store, state, player, temp.cards);
       } else {
-
-
         // Prompt to attach energy if any were drawn
         return store.prompt(state, new AttachEnergyPrompt(
           player.id,
@@ -107,7 +89,6 @@ export class Vileplume extends PokemonCard {
           }
           return state;
         });
-        return state;
       }
       return state;
     }

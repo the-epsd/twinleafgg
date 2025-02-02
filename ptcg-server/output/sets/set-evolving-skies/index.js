@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setEvolvingSkies = void 0;
 const copycat_1 = require("./copycat");
+const cryogonal_1 = require("./cryogonal");
 const crystal_cave_1 = require("./crystal-cave");
 const dragonite_v_1 = require("./dragonite-v");
 const drampa_1 = require("./drampa");
@@ -46,6 +47,7 @@ const zoroark_1 = require("./zoroark");
 const zorua_1 = require("./zorua");
 exports.setEvolvingSkies = [
     new copycat_1.Copycat(),
+    new cryogonal_1.Cryogonal(),
     new crystal_cave_1.CrystalCave(),
     new dragonite_v_1.DragoniteV(),
     new drampa_1.Drampa(),

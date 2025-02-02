@@ -29,6 +29,7 @@ const enhanced_hammer_1 = require("./enhanced-hammer");
 const farfetchd_1 = require("./farfetchd");
 const festival_plaza_1 = require("./festival-plaza");
 const fezandipiti_1 = require("./fezandipiti");
+const finizen_1 = require("./finizen");
 const froakie_1 = require("./froakie");
 const frogadier_1 = require("./frogadier");
 const froslass_1 = require("./froslass");
@@ -103,6 +104,7 @@ exports.setTwilightMasquerade = [
     new emolga_1.Emolga(),
     new farfetchd_1.Farfetchd(),
     new fezandipiti_1.FezandipitiTWM(),
+    new finizen_1.Finizen(),
     new froslass_1.Froslass(),
     new goldeen_1.Goldeen(),
     new gurdurr_1.Gurdurr(),

@@ -6,6 +6,7 @@ const exeggcute_1 = require("./exeggcute");
 const exeggutor_1 = require("./exeggutor");
 const float_stone_1 = require("./float-stone");
 const frozen_city_1 = require("./frozen-city");
+const latias_ex_1 = require("./latias-ex");
 const mr_mime_1 = require("./mr-mime");
 const rock_guard_1 = require("./rock-guard");
 const superior_energy_retrieval_1 = require("./superior-energy-retrieval");
@@ -15,6 +16,7 @@ exports.setPlasmaFreeze = [
     new exeggutor_1.Exeggutor(),
     new float_stone_1.FloatStone(),
     new frozen_city_1.FrozenCity(),
+    new latias_ex_1.LatiasEX(),
     new mr_mime_1.MrMime(),
     new rock_guard_1.RockGuard(),
     new superior_energy_retrieval_1.SuperiorEnergyRetrieval(),
