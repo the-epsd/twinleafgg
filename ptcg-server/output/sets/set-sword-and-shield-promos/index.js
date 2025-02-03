@@ -5,6 +5,10 @@ const champions_festival_1 = require("./champions-festival");
 const charmander_1 = require("./charmander");
 const deoxys_v_1 = require("./deoxys-v");
 const deoxys_vstar_1 = require("./deoxys-vstar");
+const greninja_v_union_bl_1 = require("./greninja-v-union-bl");
+const greninja_v_union_br_1 = require("./greninja-v-union-br");
+const greninja_v_union_tl_1 = require("./greninja-v-union-tl");
+const greninja_v_union_tr_1 = require("./greninja-v-union-tr");
 const hisuian_electrode_v_1 = require("./hisuian-electrode-v");
 const leafeon_vstar_1 = require("./leafeon-vstar");
 const lucario_vstar_1 = require("./lucario-vstar");
@@ -13,6 +17,10 @@ const mewtwo_v_union_bl_1 = require("./mewtwo-v-union-bl");
 const mewtwo_v_union_br_1 = require("./mewtwo-v-union-br");
 const mewtwo_v_union_tl_1 = require("./mewtwo-v-union-tl");
 const mewtwo_v_union_tr_1 = require("./mewtwo-v-union-tr");
+const morpeko_v_union_bl_1 = require("./morpeko-v-union-bl");
+const morpeko_v_union_br_1 = require("./morpeko-v-union-br");
+const morpeko_v_union_tl_1 = require("./morpeko-v-union-tl");
+const morpeko_v_union_tr_1 = require("./morpeko-v-union-tr");
 const oricorio_1 = require("./oricorio");
 const pikachu_v_union_bl_1 = require("./pikachu-v-union-bl");
 const pikachu_v_union_br_1 = require("./pikachu-v-union-br");
@@ -55,4 +63,12 @@ exports.setSwordAndShieldPromos = [
     new zacian_v_union_tr_1.ZacianVUNIONTopRight(),
     new zacian_v_union_bl_1.ZacianVUNIONBottomLeft(),
     new zacian_v_union_br_1.ZacianVUNIONBottomRight(),
+    new greninja_v_union_tl_1.GreninjaVUNIONTopLeft(),
+    new greninja_v_union_tr_1.GreninjaVUNIONTopRight(),
+    new greninja_v_union_bl_1.GreninjaVUNIONBottomLeft(),
+    new greninja_v_union_br_1.GreninjaVUNIONBottomRight(),
+    new morpeko_v_union_tl_1.MorpekoVUNIONTopLeft(),
+    new morpeko_v_union_tr_1.MorpekoVUNIONTopRight(),
+    new morpeko_v_union_bl_1.MorpekoVUNIONBottomLeft(),
+    new morpeko_v_union_br_1.MorpekoVUNIONBottomRight(),
 ];
