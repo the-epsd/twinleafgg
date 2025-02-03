@@ -123,7 +123,7 @@ export class GreninjaVUNIONTopLeft extends PokemonCard {
 
     // Ninja Body
     if (effect instanceof PlayItemEffect && effect.target && effect.target.cards.includes(this)){
-      const player = StateUtils.findOwner(state, effect.target);
+      /*const player = StateUtils.findOwner(state, effect.target);
 
       try {
         const stub = new PowerEffect(player, {
@@ -134,7 +134,7 @@ export class GreninjaVUNIONTopLeft extends PokemonCard {
         store.reduceEffect(state, stub);
       } catch {
         return state;
-      }
+      }*/
 
       effect.preventDefault = true;
     }
@@ -154,7 +154,7 @@ export class GreninjaVUNIONTopLeft extends PokemonCard {
       }
 
       if (opponent.hand.cards.length === 0) {
-        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
       state = store.prompt(state, new ShowCardsPrompt(
@@ -221,7 +221,7 @@ export class GreninjaVUNIONTopLeft extends PokemonCard {
     }
 
     // Waterfall Bind
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[3]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       opponent.active.marker.addMarker(this.WATERFALL_BIND_MARKER, this);

@@ -12,7 +12,7 @@ import { PlayItemEffect } from '../../game/store/effects/play-card-effects';
 import {PlayerType} from '../../game';
 
 export class Tyranitar extends PokemonCard {
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Pupitar';
   public cardType: CardType = CardType.DARK;
   public hp: number = 190;

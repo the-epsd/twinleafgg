@@ -14,7 +14,7 @@ export class Accelgor extends PokemonCard {
     name: 'Ephemeral Poison',
     cost: [G, C],
     damage: 70,
-    text: 'Your opponent’s Active Pokémon is now Confused and Poisoned. Switch this Pokémon with 1 of your Benched Pokémon.'
+    text: 'Your opponent\'s Active Pokémon is now Confused and Poisoned. Switch this Pokémon with 1 of your Benched Pokémon.'
   }];
 
   public regulationMark: string = 'I';
