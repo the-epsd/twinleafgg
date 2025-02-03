@@ -130,7 +130,6 @@ export class PokemonCardList extends CardList {
     this.marker.removeMarker(PokemonCardList.UNRELENTING_ONSLAUGHT_2_MARKER);
 
     this.marker.markers = [];
-    this.removeBoardEffect(BoardEffect.ABILITY_USED);
     this.removeSpecialCondition(SpecialCondition.POISONED);
     this.removeSpecialCondition(SpecialCondition.ASLEEP);
     this.removeSpecialCondition(SpecialCondition.BURNED);
