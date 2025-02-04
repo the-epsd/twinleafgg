@@ -78,6 +78,7 @@ var Stage;
     Stage[Stage["VSTAR"] = 6] = "VSTAR";
     Stage[Stage["VUNION"] = 7] = "VUNION";
     Stage[Stage["MEGA"] = 8] = "MEGA";
+    Stage[Stage["BREAK"] = 9] = "BREAK";
 })(Stage = exports.Stage || (exports.Stage = {}));
 var Archetype;
 (function (Archetype) {

@@ -75,6 +75,7 @@ export enum Stage {
   VSTAR,
   VUNION,
   MEGA,
+  BREAK,
 }
 
 export enum Archetype {

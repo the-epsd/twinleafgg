@@ -68,7 +68,8 @@ export declare enum Stage {
     VMAX = 5,
     VSTAR = 6,
     VUNION = 7,
-    MEGA = 8
+    MEGA = 8,
+    BREAK = 9
 }
 export declare enum Archetype {
     UNOWN = "Unown",
