@@ -99,15 +99,15 @@ class DawnWingsNecrozmaGX extends pokemon_card_1.PokemonCard {
             effect.preventDefault = true;
             return state;
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.INVASION_MARKER, this)) {
             effect.player.marker.removeMarker(this.INVASION_MARKER, this);
-            if (effect.player.marker.hasMarker(this.CLEAR_ECLIPSE_MARKER, this)) {
-                effect.player.marker.removeMarker(this.CLEAR_ECLIPSE_MARKER, this);
-                const opponent = game_2.StateUtils.getOpponent(state, effect.player);
-                opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList) => {
-                    cardList.marker.removeMarker(this.ECLIPSE_MARKER, this);
-                });
-            }
+        }
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.CLEAR_ECLIPSE_MARKER, this)) {
+            effect.player.marker.removeMarker(this.CLEAR_ECLIPSE_MARKER, this);
+            const opponent = game_2.StateUtils.getOpponent(state, effect.player);
+            opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList) => {
+                cardList.marker.removeMarker(this.ECLIPSE_MARKER, this);
+            });
         }
         return state;
     }

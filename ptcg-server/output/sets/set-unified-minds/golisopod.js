@@ -36,7 +36,7 @@ class Golisopod extends pokemon_card_1.PokemonCard {
         this.fullName = 'Golisopod UNM';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && this.movedToActiveThisTurn) {
             this.movedToActiveThisTurn = false;
         }
         if (effect instanceof check_effects_1.CheckRetreatCostEffect && effect.player.active.getPokemonCard() === this) {

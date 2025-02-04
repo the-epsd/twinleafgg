@@ -65,13 +65,14 @@ class ReshiramCharizardGX extends game_1.PokemonCard {
             marker.addMarker(this.ATTACK_USED_MARKER, this);
         }
         // Flare Strike -- Some silly-looking code to handle the attack next turn logic
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
-            const marker = effect.player.marker;
-            marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
-            if (marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-                marker.removeMarker(this.ATTACK_USED_MARKER, this);
-                marker.addMarker(this.ATTACK_USED_2_MARKER, this);
-            }
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
+            effect.player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
+            effect.player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
+            console.log('marker cleared');
+        }
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+            effect.player.marker.addMarker(this.ATTACK_USED_2_MARKER, this);
+            console.log('second marker added');
         }
         // Double Blaze-GX
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[2]) {

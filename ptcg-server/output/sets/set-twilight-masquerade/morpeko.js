@@ -42,9 +42,8 @@ class Morpeko extends pokemon_card_1.PokemonCard {
         this.SNACK_SEARCH_MARKER = 'SNACK_SEARCH_MARKER';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
-            const player = effect.player;
-            player.marker.removeMarker(this.SNACK_SEARCH_MARKER, this);
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.SNACK_SEARCH_MARKER, this)) {
+            effect.player.marker.removeMarker(this.SNACK_SEARCH_MARKER, this);
         }
         if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {
             const player = effect.player;

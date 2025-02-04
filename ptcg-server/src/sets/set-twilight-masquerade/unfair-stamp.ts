@@ -51,7 +51,7 @@ export class UnfairStamp extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
 
-  public tags = [ CardTag.ACE_SPEC ];
+  public tags = [CardTag.ACE_SPEC];
 
   public set: string = 'TWM';
 
@@ -97,8 +97,8 @@ export class UnfairStamp extends TrainerCard {
       return state;
     }
 
-    if (effect instanceof EndTurnEffect) {
-      effect.player.marker.removeMarker(this.UNFAIR_STAMP_MARKER);
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.UNFAIR_STAMP_MARKER, this)) {
+      effect.player.marker.removeMarker(this.UNFAIR_STAMP_MARKER, this);
     }
 
     return state;

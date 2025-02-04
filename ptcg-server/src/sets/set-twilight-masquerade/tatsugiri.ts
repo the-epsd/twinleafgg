@@ -111,9 +111,8 @@ export class Tatsugiri extends PokemonCard {
         });
       });
     }
-    if (effect instanceof EndTurnEffect) {
-      const player = (effect as EndTurnEffect).player;
-      player.marker.removeMarker(this.CROWD_PULLER_MARKER, this);
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.CROWD_PULLER_MARKER, this)) {
+      effect.player.marker.removeMarker(this.CROWD_PULLER_MARKER, this);
     }
 
     return state;

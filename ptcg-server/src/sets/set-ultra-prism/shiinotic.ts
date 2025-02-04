@@ -39,7 +39,7 @@ export class Shiinotic extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof EndTurnEffect) {
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ILLUMINATE_MARKER)) {
       const player = effect.player;
       player.marker.removeMarker(this.ILLUMINATE_MARKER, this);
     }

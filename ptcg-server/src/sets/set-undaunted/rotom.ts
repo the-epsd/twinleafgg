@@ -117,7 +117,7 @@ export class Rotom extends PokemonCard {
       return state;
     }
 
-    if (effect instanceof EndTurnEffect) {
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.MISCHIEVOUS_TRICK_MAREKER, this)) {
       effect.player.marker.removeMarker(this.MISCHIEVOUS_TRICK_MAREKER, this);
     }
 

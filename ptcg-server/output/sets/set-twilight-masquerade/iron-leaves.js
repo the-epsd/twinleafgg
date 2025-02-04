@@ -57,7 +57,7 @@ class IronLeaves extends pokemon_card_1.PokemonCard {
                 player.discard.moveCardsTo(cards, player.hand);
             });
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.RETALIATE_MARKER, this)) {
             effect.player.marker.removeMarker(this.RETALIATE_MARKER);
         }
         // if (effect instanceof DealDamageEffect || effect instanceof PutDamageEffect) {

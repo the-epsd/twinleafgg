@@ -1,6 +1,5 @@
 import { GameError } from '../../game-error';
 import { GameMessage } from '../../game-message';
-import { GamePhase } from '../state/state';
 import { PutDamageEffect, DealDamageEffect, DiscardCardsEffect, AddMarkerEffect, HealTargetEffect, AddSpecialConditionsEffect, RemoveSpecialConditionsEffect, ApplyWeaknessEffect, AfterDamageEffect, PutCountersEffect, CardsToHandEffect, KnockOutOpponentEffect, KOEffect, LostZoneCardsEffect } from '../effects/attack-effects';
 import { HealEffect } from '../effects/game-effects';
 import { StateUtils } from '../state-utils';
@@ -31,6 +30,8 @@ export function attackReducer(store, state, effect) {
             afterDamageEffect.target = effect.target;
             store.reduceEffect(state, afterDamageEffect);
         }
+        const afterAttackEffect = new AfterAttackEffect(effect.player);
+        store.reduceEffect(state, afterAttackEffect);
     }
     if (effect instanceof DealDamageEffect) {
         const base = effect.attackEffect;
@@ -93,10 +94,6 @@ export function attackReducer(store, state, effect) {
     if (effect instanceof AfterDamageEffect) {
         const targetOwner = StateUtils.findOwner(state, effect.target);
         targetOwner.marker.addMarkerToState(effect.player.DAMAGE_DEALT_MARKER);
-        // Add AfterAttackEffect here
-        state.phase = GamePhase.AFTER_ATTACK;
-        const afterAttackEffect = new AfterAttackEffect(effect.player);
-        store.reduceEffect(state, afterAttackEffect);
     }
     if (effect instanceof DiscardCardsEffect) {
         const target = effect.target;

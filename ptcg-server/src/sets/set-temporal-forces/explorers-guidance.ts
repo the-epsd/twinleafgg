@@ -30,9 +30,8 @@ export class ExplorersGuidance extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof EndTurnEffect) {
-      const player = effect.player;
-      player.ancientSupporter = false;
+    if (effect instanceof EndTurnEffect && effect.player.ancientSupporter) {
+      effect.player.ancientSupporter = false;
     }
 
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

@@ -25,7 +25,7 @@ class Kieran extends trainer_card_1.TrainerCard {
     • Your Pokémon's attacks do 30 more damage to your opponent's Active Pokémon ex and Pokémon V this turn.`;
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.KIERAN_MARKER, this)) {
             effect.player.marker.removeMarker(this.KIERAN_MARKER, this);
             return state;
         }

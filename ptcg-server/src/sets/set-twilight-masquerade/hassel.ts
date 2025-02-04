@@ -25,35 +25,35 @@ function* playCard(next: Function, store: StoreLike, state: State,
   player.hand.moveCardTo(effect.trainerCard, player.supporter);
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
-  
+
   // No Pokemon KO last turn
   if (!player.marker.hasMarker(self.HASSEL_MARKER)) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
-  
+
   if (player.deck.cards.length === 0) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
-  
+
   if (player.supporterTurn > 0) {
     throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
   }
-      
+
   const deckTop = new CardList();
   player.deck.moveTo(deckTop, 8);
-      
+
   return store.prompt(state, new ChooseCardsPrompt(
     player,
     GameMessage.CHOOSE_CARD_TO_HAND,
     deckTop,
-    { },
+    {},
     { min: 0, max: 3, allowCancel: false }
   ), selected => {
     deckTop.moveCardsTo(selected, player.hand);
     deckTop.moveTo(player.deck);
     player.supporter.moveCardTo(effect.trainerCard, player.discard);
-    
-    
+
+
     return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
       player.deck.applyOrder(order);
       return state;
@@ -107,7 +107,7 @@ export class Hassel extends TrainerCard {
       return state;
     }
 
-    if (effect instanceof EndTurnEffect) {
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.HASSEL_MARKER, this)) {
       effect.player.marker.removeMarker(this.HASSEL_MARKER, this);
     }
 

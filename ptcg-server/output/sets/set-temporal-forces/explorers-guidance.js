@@ -20,9 +20,8 @@ class ExplorersGuidance extends trainer_card_1.TrainerCard {
         this.text = 'Look at the top 6 cards of your deck and put 2 of them into your hand. Discard the other cards.';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
-            const player = effect.player;
-            player.ancientSupporter = false;
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.ancientSupporter) {
+            effect.player.ancientSupporter = false;
         }
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
             const player = effect.player;

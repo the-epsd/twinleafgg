@@ -73,8 +73,8 @@ class UnfairStamp extends trainer_card_1.TrainerCard {
             }
             return state;
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
-            effect.player.marker.removeMarker(this.UNFAIR_STAMP_MARKER);
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.UNFAIR_STAMP_MARKER, this)) {
+            effect.player.marker.removeMarker(this.UNFAIR_STAMP_MARKER, this);
         }
         return state;
     }

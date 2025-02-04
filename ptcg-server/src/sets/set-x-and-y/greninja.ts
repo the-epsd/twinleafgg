@@ -114,7 +114,7 @@ export class GreninjaXY extends PokemonCard {
       }
     }
 
-    if (effect instanceof EndTurnEffect) {
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.WATER_SHURIKEN_MARKER, this)) {
       effect.player.marker.removeMarker(this.WATER_SHURIKEN_MARKER, this);
     }
     return state;

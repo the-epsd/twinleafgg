@@ -47,7 +47,7 @@ export class Spiritomb extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: AttackEffect): State {
 
-    if (effect instanceof EndTurnEffect) {
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.BUILDING_SPITE_MARKER, this)) {
       const player = effect.player;
       player.marker.removeMarker(this.BUILDING_SPITE_MARKER, this);
     }

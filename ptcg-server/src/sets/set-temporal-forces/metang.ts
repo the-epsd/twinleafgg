@@ -57,9 +57,8 @@ export class Metang extends PokemonCard {
       player.marker.removeMarker(this.METAL_MAKER_MARKER, this);
     }
 
-    if (effect instanceof EndTurnEffect) {
-      const player = effect.player;
-      player.marker.removeMarker(this.METAL_MAKER_MARKER, this);
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.METAL_MAKER_MARKER, this)) {
+      effect.player.marker.removeMarker(this.METAL_MAKER_MARKER, this);
     }
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {

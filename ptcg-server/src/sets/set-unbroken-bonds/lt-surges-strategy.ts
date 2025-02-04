@@ -23,36 +23,36 @@ export class LtSurgesStrategy extends TrainerCard {
 
   public text: string =
     'You can play this card only if you have more Prize cards remaining than your opponent. During this turn, you can play 3 Supporter cards (including this card).';
-  
+
   public playedSurgeThisTurn = false;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-      
+
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      
+
       if (player.getPrizeLeft() <= opponent.getPrizeLeft()) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
-      
+
       if (this.playedSurgeThisTurn) {
-        
+
       } else {
         // going to be increased by one in the play-trainer file
         player.supporterTurn = -2;
         player.hand.moveCardTo(this, player.discard);
-        
-        this.playedSurgeThisTurn = true;        
-      }     
-      
+
+        this.playedSurgeThisTurn = true;
+      }
+
       return state;
     }
-    
-    if (effect instanceof EndTurnEffect) {
+
+    if (effect instanceof EndTurnEffect && this.playedSurgeThisTurn) {
       this.playedSurgeThisTurn = false;
     }
-    
+
     return state;
   }
 

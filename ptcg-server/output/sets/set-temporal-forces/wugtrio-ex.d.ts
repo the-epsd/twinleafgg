@@ -24,6 +24,6 @@ export declare class Wugtrioex extends PokemonCard {
     regulationMark: string;
     cardImage: string;
     setNumber: string;
-    readonly NUMBING_HOLD_MARKER = "NUMBING_HOLD_MARKER";
+    readonly DEFENDING_POKEMON_CANNOT_RETREAT_MARKER = "DEFENDING_POKEMON_CANNOT_RETREAT_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

@@ -29,7 +29,7 @@ class Zapdos extends pokemon_card_1.PokemonCard {
         this.fullName = 'Zapdos TEU';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && this.movedToActiveThisTurn) {
             this.movedToActiveThisTurn = false;
         }
         if (effect instanceof game_effects_1.RetreatEffect && effect.player.active.getPokemonCard() !== this) {

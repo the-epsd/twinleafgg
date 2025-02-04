@@ -37,7 +37,7 @@ class Shiinotic extends pokemon_card_1.PokemonCard {
         this.ILLUMINATE_MARKER = 'ILLUMINATE_MARKER';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.ILLUMINATE_MARKER)) {
             const player = effect.player;
             player.marker.removeMarker(this.ILLUMINATE_MARKER, this);
         }
