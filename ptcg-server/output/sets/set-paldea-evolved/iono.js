@@ -16,8 +16,9 @@ class Iono extends trainer_card_1.TrainerCard {
         this.setNumber = '185';
         this.name = 'Iono';
         this.fullName = 'Iono PAL';
-        this.text = 'Each player shuffles his or her hand into his or her deck. ' +
-            'Then, each player draws a card for each of his or her remaining Prize cards.';
+        this.text = 'Each player shuffles their hand and puts it on the bottom of their deck. ' +
+            'If either player put any cards on the bottom of their deck in this way, ' +
+            'each player draws a card for each of their remaining Prize cards.';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {

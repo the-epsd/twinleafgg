@@ -1,5 +1,5 @@
-import { AttachEnergyPrompt, Card, CardList, ChooseCardsOptions, ChooseCardsPrompt, ChooseEnergyPrompt, ChoosePokemonPrompt, CoinFlipPrompt, ConfirmPrompt, EnergyCard, GameError, GameLog, GameMessage, Player, PlayerType, PokemonCardList, PowerType, SelectPrompt, ShowCardsPrompt, ShuffleDeckPrompt, SlotType, State, StateUtils, StoreLike } from '../..';
-import { BoardEffect, CardType, EnergyType, SpecialCondition, SuperType } from '../card/card-types';
+import { AttachEnergyOptions, AttachEnergyPrompt, Card, CardList, ChooseCardsOptions, ChooseCardsPrompt, ChooseEnergyPrompt, ChoosePokemonPrompt, CoinFlipPrompt, ConfirmPrompt, EnergyCard, FilterType, GameError, GameLog, GameMessage, Player, PlayerType, PokemonCardList, PowerType, SelectPrompt, ShowCardsPrompt, ShuffleDeckPrompt, SlotType, State, StateUtils, StoreLike } from '../..';
+import { BoardEffect, CardType, SpecialCondition, SuperType } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
 import { DealDamageEffect, DiscardCardsEffect, HealTargetEffect, PutDamageEffect } from '../effects/attack-effects';
 import { AddSpecialConditionsPowerEffect, CheckProvidedEnergyEffect } from '../effects/check-effects';
@@ -204,24 +204,16 @@ export function THIS_POKEMON_DOES_DAMAGE_TO_ITSELF(store: StoreLike, state: Stat
   return store.reduceEffect(state, dealDamage);
 }
 
-export function ATTACH_X_NUMBER_OF_BASIC_ENERGY_CARDS_FROM_YOUR_DISCARD_TO_YOUR_BENCHED_POKEMON(effect: AttackEffect, store: StoreLike, state: State, amount: number) {
-
-  const player = effect.player;
+export function ATTACH_ENERGY_FROM_DISCARD(store: StoreLike, state: State, player: Player, playerType: PlayerType, slots: SlotType[], filter: FilterType = {}, options: Partial<AttachEnergyOptions> = {}) {
+  filter.superType = SuperType.ENERGY;
 
   state = store.prompt(state, new AttachEnergyPrompt(
-    player.id,
-    GameMessage.ATTACH_ENERGY_TO_BENCH,
-    player.discard,
-    PlayerType.BOTTOM_PLAYER,
-    [SlotType.BENCH, SlotType.ACTIVE],
-    { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-    { allowCancel: true, min: amount, max: amount },
+    player.id, GameMessage.ATTACH_ENERGY_CARDS, player.discard, playerType, slots, filter, options,
   ), transfers => {
     transfers = transfers || [];
     // cancelled by user
-    if (transfers.length === 0) {
+    if (transfers.length === 0)
       return state;
-    }
     for (const transfer of transfers) {
       const target = StateUtils.getTarget(state, player, transfer.to);
       player.discard.moveCardTo(transfer.card, target);
