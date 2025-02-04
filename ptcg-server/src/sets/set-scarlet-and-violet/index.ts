@@ -11,6 +11,7 @@ import { Capsakid } from './capsakid';
 import { Charcadet } from './charcadet';
 import { CrushingHammer } from './crushing-hammer';
 import { Cyclizar } from './cyclizar';
+import { Croagunk } from './croagunk';
 import { DefianceBand } from './defiance-band';
 import { Dolliv } from './dolliv';
 import { Drifloon } from './drifloon';
@@ -53,8 +54,8 @@ import { PokemonCatcher } from './pokemon-catcher';
 import { Potion } from './potion';
 import { Primeape } from './primeape';
 import { ProfessorsResearch } from './professors-research';
-import {Quaxly} from './quaxly';
-import {Quaxwell} from './quaxwell';
+import { Quaxly } from './quaxly';
+import { Quaxwell } from './quaxwell';
 import { Ralts } from './ralts';
 import { RareCandy } from './rare-candy';
 import { Revavroom } from './revavroom';
@@ -62,6 +63,7 @@ import { Riolu } from './riolu';
 import { Riolu2 } from './riolu2';
 import { RockChestplate } from './rock-chestplate';
 import { RockyHelmet } from './rocky-helmet';
+import { Seviper } from './seviper';
 import { Scatterbug } from './scatterbug';
 import { Scovillain } from './scovillain';
 import { Shuppet } from './shuppet';
@@ -92,6 +94,7 @@ export const setScarletAndViolet: Card[] = [
   new Capsakid(),
   new Charcadet(),
   new CrushingHammer(),
+  new Croagunk(),
   new Cyclizar(),
   new DefianceBand(),
   new Dolliv(),
@@ -143,6 +146,7 @@ export const setScarletAndViolet: Card[] = [
   new RockyHelmet(),
   new Scatterbug(),
   new Scovillain(),
+  new Seviper(),
   new Spewpa(),
   new Skwovet(),
   new Switch(),
