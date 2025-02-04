@@ -26,7 +26,7 @@ class Poliwhirl extends pokemon_card_1.PokemonCard {
             {
                 name: 'Amnesia',
                 cost: [card_types_1.CardType.WATER, card_types_1.CardType.WATER],
-                text: 'Choose 1 of the Defending Pokémon’s attacks. That Pokémon can’t use that attack during your opponent’s next turn.',
+                text: 'Choose 1 of the Defending Pokémon\'s attacks. That Pokémon can\'t use that attack during your opponent\'s next turn.',
                 damage: 0
             },
             {

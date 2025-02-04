@@ -35,7 +35,7 @@ export class KricketuneV extends PokemonCard {
     text: 'Once during your turn, , you may draw cards until you have ' +
       '3 cards in your hand. If this Pokémon is in the Active Spot, ' +
       'you may draw cards until you have 4 cards in your hand ' +
-      'instead. You can’t use more than 1 Exciting Stage Ability ' +
+      'instead. You can\'t use more than 1 Exciting Stage Ability ' +
       'each turn.'
   }];
 

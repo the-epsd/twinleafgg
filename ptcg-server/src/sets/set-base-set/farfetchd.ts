@@ -40,7 +40,7 @@ export class Farfetchd extends PokemonCard {
       name: 'Leek Slap',
       cost: [CardType.COLORLESS],
       damage: 30,
-      text: 'Flip a coin. If tails, this attack does nothing. Either way, you can’t use this attack again as long as Farfetch’d stays in play (even putting Farfetch’d on the Bench won’t let you use it again).'
+      text: 'Flip a coin. If tails, this attack does nothing. Either way, you can\'t use this attack again as long as Farfetch\'d stays in play (even putting Farfetch\'d on the Bench won\'t let you use it again).'
     },
     {
       name: 'Pot Smash',

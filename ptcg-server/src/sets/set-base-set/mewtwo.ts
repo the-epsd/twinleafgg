@@ -30,7 +30,7 @@ export class Mewtwo extends PokemonCard {
   }, {
     name: 'Barrier',
     cost: [P, P],
-    text: 'Discard 1 {P} Energy card attached to Mewtwo in order to prevent all effects of attacks, including damage, done to Mewtwo during your opponent’s next turn.',
+    text: 'Discard 1 {P} Energy card attached to Mewtwo in order to prevent all effects of attacks, including damage, done to Mewtwo during your opponent\'s next turn.',
     damage: 0
   }];
 

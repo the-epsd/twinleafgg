@@ -9,7 +9,7 @@ import { StateUtils } from '../../game/store/state-utils';
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
 import { PlayItemEffect } from '../../game/store/effects/play-card-effects';
-import {PlayerType} from '../../game';
+import { PlayerType } from '../../game';
 
 export class Tyranitar extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -17,19 +17,19 @@ export class Tyranitar extends PokemonCard {
   public cardType: CardType = CardType.DARK;
   public hp: number = 190;
   public weakness = [{ type: CardType.GRASS }];
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Daunting Gaze',
     powerType: PowerType.ABILITY,
-    text: 'While this Pokémon is in the Active Spot, your opponent can’t play any Item cards from their hand.'
+    text: 'While this Pokémon is in the Active Spot, your opponent can\'t play any Item cards from their hand.'
   }];
 
   public attacks = [{
     name: 'Crackling Stomp',
-    cost: [ CardType.DARK, CardType.COLORLESS ],
+    cost: [CardType.DARK, CardType.COLORLESS],
     damage: 150,
-    text: 'Discard the top 2 cards of your opponent’s deck.'
+    text: 'Discard the top 2 cards of your opponent\'s deck.'
   }];
 
   public set: string = 'SV9';
@@ -45,7 +45,7 @@ export class Tyranitar extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      
+
       opponent.deck.moveTo(opponent.discard, 2);
     }
 
@@ -66,15 +66,15 @@ export class Tyranitar extends PokemonCard {
         }
       });
 
-      if (!isTyranitarInPlay){
+      if (!isTyranitarInPlay) {
         return state;
       }
 
-      if (player.active.getPokemonCard() === this && opponent.active.getPokemonCard() !== this){
+      if (player.active.getPokemonCard() === this && opponent.active.getPokemonCard() !== this) {
         return state;
       }
 
-      if (opponent.active.getPokemonCard() === this){
+      if (opponent.active.getPokemonCard() === this) {
         // Try to reduce PowerEffect, to check if something is blocking our ability
         try {
           const powerEffect = new PowerEffect(player, this.powers[0], this);
@@ -85,7 +85,7 @@ export class Tyranitar extends PokemonCard {
 
         throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
       }
-      
+
     }
 
     return state;

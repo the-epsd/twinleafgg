@@ -29,7 +29,7 @@ class VictiniVMAX extends pokemon_card_1.PokemonCard {
                 name: 'Max Victory',
                 cost: [card_types_1.CardType.FIRE, card_types_1.CardType.COLORLESS],
                 damage: 100,
-                text: 'If your opponent’s Active Pokémon is a Pokémon V, this ' +
+                text: 'If your opponent\'s Active Pokémon is a Pokémon V, this ' +
                     'attack does 120 more damage.'
             }
         ];

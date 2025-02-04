@@ -27,7 +27,7 @@ export class Levincia extends TrainerCard {
   public setNumber = '98';
 
   public text: string =
-    'Once during each player’s turn, that player may put up to 2 Basic [L] Energy cards from their discard pile into their hand.';
+    'Once during each player\'s turn, that player may put up to 2 Basic [L] Energy cards from their discard pile into their hand.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof UseStadiumEffect && StateUtils.getStadiumCard(state) === this) {

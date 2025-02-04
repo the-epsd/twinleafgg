@@ -31,7 +31,7 @@ class Magnemite extends pokemon_card_1.PokemonCard {
                 name: 'Selfdestruct',
                 cost: [card_types_1.CardType.LIGHTNING, card_types_1.CardType.LIGHTNING, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
                 damage: 40,
-                text: 'Does 10 damage to each Pokémon on each player’s Bench. (Don’t apply Weakness and Resistance for Benched Pokémon.) Magnemite does 40 damage to itself.'
+                text: 'Does 10 damage to each Pokémon on each player\'s Bench. (Don\'t apply Weakness and Resistance for Benched Pokémon.) Magnemite does 40 damage to itself.'
             }
         ];
     }

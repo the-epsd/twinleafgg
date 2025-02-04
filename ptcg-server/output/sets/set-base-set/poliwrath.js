@@ -25,7 +25,7 @@ class Poliwrath extends pokemon_card_1.PokemonCard {
                 name: 'Water Gun',
                 cost: [card_types_1.CardType.WATER, card_types_1.CardType.WATER, card_types_1.CardType.COLORLESS],
                 damage: 30,
-                text: 'Does 30 damage plus 10 more damage for each {W} Energy attached to Poliwrath but not used to pay for this attack’s Energy cost. Extra {W} Energy after the 2nd doesn’t count.'
+                text: 'Does 30 damage plus 10 more damage for each {W} Energy attached to Poliwrath but not used to pay for this attack\'s Energy cost. Extra {W} Energy after the 2nd doesn\'t count.'
             },
             {
                 name: 'Whirlpool',

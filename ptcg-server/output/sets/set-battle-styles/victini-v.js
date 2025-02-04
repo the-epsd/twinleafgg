@@ -20,7 +20,7 @@ class VictiniV extends pokemon_card_1.PokemonCard {
                 name: 'V Bullet',
                 cost: [card_types_1.CardType.FIRE],
                 damage: 10,
-                text: 'If your opponent’s Active Pokémon is a Pokémon V, this ' +
+                text: 'If your opponent\'s Active Pokémon is a Pokémon V, this ' +
                     'attack does 50 more damage.'
             },
             {

@@ -31,7 +31,7 @@ class Nidoking extends pokemon_card_1.PokemonCard {
                 name: 'Toxic',
                 cost: [card_types_1.CardType.GRASS, card_types_1.CardType.GRASS, card_types_1.CardType.GRASS],
                 damage: 20,
-                text: 'The Defending Pokémon is now Poisoned. It now takes 20 Poison damage instead of 10 after each player’s turn (even if it was already Poisoned).'
+                text: 'The Defending Pokémon is now Poisoned. It now takes 20 Poison damage instead of 10 after each player\'s turn (even if it was already Poisoned).'
             }
         ];
     }

@@ -20,7 +20,7 @@ class NsJoltik extends pokemon_card_1.PokemonCard {
                 name: 'Crackling Short',
                 cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
                 damage: 30,
-                text: 'Before doing damage, discard all Pokémon Tool cards from your opponent’s Active Pokémon. If you discarded a Pokémon Tool card in this way, your opponent’s Active Pokémon is now Paralyzed.'
+                text: 'Before doing damage, discard all Pokémon Tool cards from your opponent\'s Active Pokémon. If you discarded a Pokémon Tool card in this way, your opponent\'s Active Pokémon is now Paralyzed.'
             }
         ];
         this.set = 'SV9';

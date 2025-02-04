@@ -8,7 +8,7 @@ import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
 
 export class VictiniVMAX extends PokemonCard {
 
-  public tags = [ CardTag.POKEMON_VMAX ];
+  public tags = [CardTag.POKEMON_VMAX];
 
   public regulationMark = 'E';
 
@@ -22,22 +22,22 @@ export class VictiniVMAX extends PokemonCard {
 
   public weakness = [{ type: CardType.WATER }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Spreading Flames',
-      cost: [ CardType.COLORLESS ],
+      cost: [CardType.COLORLESS],
       damage: 0,
       text: 'Attach up to 3 {R} Energy cards from your discard pile to ' +
         'your Pokémon in any way you like.'
     },
     {
       name: 'Max Victory',
-      cost: [CardType.FIRE, CardType.COLORLESS ],
+      cost: [CardType.FIRE, CardType.COLORLESS],
       damage: 100,
-      text: 'If your opponent’s Active Pokémon is a Pokémon V, this ' +
-      'attack does 120 more damage.'
+      text: 'If your opponent\'s Active Pokémon is a Pokémon V, this ' +
+        'attack does 120 more damage.'
     }
   ];
 
@@ -52,20 +52,20 @@ export class VictiniVMAX extends PokemonCard {
   public fullName: string = 'Victini VMAX BST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    
+
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
-    
-    
+
+
       return store.prompt(state, new AttachEnergyPrompt(
         player.id,
         GameMessage.ATTACH_ENERGY_CARDS,
         player.discard,
         PlayerType.BOTTOM_PLAYER,
-        [ SlotType.BENCH, SlotType.ACTIVE ],
+        [SlotType.BENCH, SlotType.ACTIVE],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fire Energy' },
-        { allowCancel: true, min: 0, max: 3 }  
+        { allowCancel: true, min: 0, max: 3 }
       ), transfers => {
         transfers = transfers || [];
         for (const transfer of transfers) {
@@ -76,23 +76,23 @@ export class VictiniVMAX extends PokemonCard {
         }
       });
     }
-  
-  
+
+
 
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-    
+
       const defending = opponent.active.getPokemonCard();
-      if (defending && (defending.tags.includes(CardTag.POKEMON_V) || 
-                          defending.tags.includes(CardTag.POKEMON_VMAX) ||
-                          defending.tags.includes(CardTag.POKEMON_VSTAR))) {
+      if (defending && (defending.tags.includes(CardTag.POKEMON_V) ||
+        defending.tags.includes(CardTag.POKEMON_VMAX) ||
+        defending.tags.includes(CardTag.POKEMON_VSTAR))) {
         effect.damage += 100;
       }
     }
-    
-    return state; 
+
+    return state;
   }
-      
+
 }

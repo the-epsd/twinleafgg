@@ -20,7 +20,7 @@ class Pidgey extends pokemon_card_1.PokemonCard {
                 name: 'Corner',
                 cost: [C],
                 damage: 0,
-                text: 'The Defending Pokémon can\’t retreat until the end of your opponent\’s next turn.'
+                text: 'The Defending Pokémon can\'t retreat until the end of your opponent\'s next turn.'
             },
             {
                 name: 'Gust',

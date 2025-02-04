@@ -19,7 +19,7 @@ class Levincia extends trainer_card_1.TrainerCard {
         this.regulationMark = 'I';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '98';
-        this.text = 'Once during each player’s turn, that player may put up to 2 Basic [L] Energy cards from their discard pile into their hand.';
+        this.text = 'Once during each player\'s turn, that player may put up to 2 Basic [L] Energy cards from their discard pile into their hand.';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.UseStadiumEffect && state_utils_1.StateUtils.getStadiumCard(state) === this) {

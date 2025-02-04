@@ -23,7 +23,7 @@ class Absol extends pokemon_card_1.PokemonCard {
                 name: 'Claw Rend',
                 cost: [D, C],
                 damage: 50,
-                text: 'If your opponent’s Active Pokémon already has any damage counters on it, this attack does 70 more damage.'
+                text: 'If your opponent\'s Active Pokémon already has any damage counters on it, this attack does 70 more damage.'
             }
         ];
         this.weakness = [{ type: G }];

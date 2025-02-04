@@ -53,7 +53,7 @@ class Hassel extends trainer_card_1.TrainerCard {
         this.regulationMark = 'H';
         this.name = 'Hassel';
         this.fullName = 'Hassel TWM';
-        this.text = 'You can play this card only if any of your Pokémon were Knocked Out during your opponent’s last turn. Look at the top 8 cards of your deck. Put up to 3 of them into your hand, and shuffle the rest into your deck.';
+        this.text = 'You can play this card only if any of your Pokémon were Knocked Out during your opponent\'s last turn. Look at the top 8 cards of your deck. Put up to 3 of them into your hand, and shuffle the rest into your deck.';
         this.HASSEL_MARKER = 'HASSEL_MARKER';
     }
     reduceEffect(store, state, effect) {

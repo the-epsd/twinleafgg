@@ -20,7 +20,7 @@ class Psyduck extends pokemon_card_1.PokemonCard {
                 name: 'Headache',
                 cost: [P],
                 damage: 0,
-                text: 'Your opponent can’t play Trainer cards during his or her next turn.'
+                text: 'Your opponent can\'t play Trainer cards during his or her next turn.'
             },
             {
                 name: 'Fury Swipes',

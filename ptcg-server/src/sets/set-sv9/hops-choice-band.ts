@@ -27,7 +27,7 @@ export class HopsChoiceBand extends TrainerCard {
   public fullName: string = 'Hop\'s Choice Band SV9';
 
   public text: string =
-    'When the Hop\'s Pokémon this card is attached to uses an attack, that attack costs 1 [C] Energy less and does 30 more damage to your opponent’s Active Pokémon (before applying Weakness and Resistance).';
+    'When the Hop\'s Pokémon this card is attached to uses an attack, that attack costs 1 [C] Energy less and does 30 more damage to your opponent\'s Active Pokémon (before applying Weakness and Resistance).';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -50,13 +50,10 @@ export class HopsChoiceBand extends TrainerCard {
 
     if (effect instanceof DealDamageEffect && effect.source.cards.includes(this)) {
       const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, effect.player);
+      const opponent = StateUtils.getOpponent(state, player);
 
-
-
-      if (effect.target !== player.active && effect.target !== opponent.active) {
+      if (effect.target !== opponent.active)
         return state;
-      }
 
       const sourceCard = effect.source.getPokemonCard();
       if (sourceCard && sourceCard.tags.includes(CardTag.HOPS)) {

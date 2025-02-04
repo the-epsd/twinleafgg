@@ -19,14 +19,14 @@ export class Absol extends PokemonCard {
     },
     {
       name: 'Claw Rend',
-      cost: [ D, C ],
+      cost: [D, C],
       damage: 50,
-      text: 'If your opponent’s Active Pokémon already has any damage counters on it, this attack does 70 more damage.'
+      text: 'If your opponent\'s Active Pokémon already has any damage counters on it, this attack does 70 more damage.'
     }
   ];
 
   public weakness = [{ type: G }];
-  public retreat = [ C ];
+  public retreat = [C];
   public set: string = 'ASR';
   public regulationMark = 'F';
   public cardImage: string = 'assets/cardback.png';
@@ -55,7 +55,7 @@ export class Absol extends PokemonCard {
     }
 
     //Claw Rend
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {      
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

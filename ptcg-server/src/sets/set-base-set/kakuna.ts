@@ -1,7 +1,7 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
 import { Attack } from '../../game/store/card/pokemon-types';
-import { CoinFlipPrompt } from '../../game/store/prompts/coin-flip-prompt';  
+import { CoinFlipPrompt } from '../../game/store/prompts/coin-flip-prompt';
 import { AddSpecialConditionsEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
@@ -13,9 +13,9 @@ import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 export class Kakuna extends PokemonCard {
 
   public name = 'Kakuna';
-  
+
   public set = 'BS';
-  
+
   public fullName = 'Kakuna BS';
 
   public stage = Stage.STAGE_1;
@@ -25,7 +25,7 @@ export class Kakuna extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '33';
-  
+
   public cardType = CardType.GRASS;
 
   public hp = 80;
@@ -33,12 +33,12 @@ export class Kakuna extends PokemonCard {
   public weakness = [{ type: CardType.FIRE }];
 
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
-  
+
   public attacks: Attack[] = [
     {
       name: 'Stiffen',
       cost: [CardType.COLORLESS, CardType.COLORLESS],
-      text: 'Flip a coin. If heads, prevent all damage done to Kakuna during your opponent’s next turn. (Any other effects of attacks still happen.)',
+      text: 'Flip a coin. If heads, prevent all damage done to Kakuna during your opponent\'s next turn. (Any other effects of attacks still happen.)',
       damage: 0
     },
     {
@@ -59,9 +59,9 @@ export class Kakuna extends PokemonCard {
         }
       });
     }
-    
-    if (effect instanceof PutDamageEffect && 
-        effect.target.marker.hasMarker(PokemonCardList.PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER)) {
+
+    if (effect instanceof PutDamageEffect &&
+      effect.target.marker.hasMarker(PokemonCardList.PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER)) {
       effect.preventDefault = true;
       return state;
     }

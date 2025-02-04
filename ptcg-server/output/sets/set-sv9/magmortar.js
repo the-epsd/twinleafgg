@@ -19,14 +19,14 @@ class Magmortar extends pokemon_card_1.PokemonCard {
         this.powers = [{
                 name: 'Magma Surge',
                 powerType: game_1.PowerType.ABILITY,
-                text: 'During Pokémon Checkup, put 3 more damage counters on your opponent’s Burned Pokémon.'
+                text: 'During Pokémon Checkup, put 3 more damage counters on your opponent\'s Burned Pokémon.'
             }];
         this.attacks = [
             {
                 name: 'Searing Flame',
                 cost: [card_types_1.CardType.FIRE, card_types_1.CardType.FIRE, card_types_1.CardType.COLORLESS],
                 damage: 90,
-                text: 'Flip a coin. If heads, your opponent’s Active Pokémon is now Burned.'
+                text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Burned.'
             }
         ];
         this.set = 'SV9';

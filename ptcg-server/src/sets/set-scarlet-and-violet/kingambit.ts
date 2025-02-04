@@ -21,7 +21,7 @@ export class Kingambit extends PokemonCard {
   public powers = [{
     name: 'Leadership',
     powerType: PowerType.ABILITY,
-    text: 'Your Basic Pokémon\'s attacks do 30 more damage to your opponent’s Active Pokémon (before applying Weakness and Resistance).'
+    text: 'Your Basic Pokémon\'s attacks do 30 more damage to your opponent\'s Active Pokémon (before applying Weakness and Resistance).'
   }];
 
   public attacks = [

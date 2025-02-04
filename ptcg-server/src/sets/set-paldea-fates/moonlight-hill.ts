@@ -4,20 +4,20 @@ import { HealEffect, UseStadiumEffect } from '../../game/store/effects/game-effe
 export class MoonlightHill extends TrainerCard {
 
   public regulationMark = 'G';
-  
+
   public cardImage: string = 'assets/cardback.png';
-  
+
   public setNumber: string = '81';
-    
+
   public trainerType = TrainerType.STADIUM;
-  
+
   public set = 'PAF';
-  
+
   public name = 'Moonlit Hill';
-  
+
   public fullName = 'Moonlit Hill PAF';
-  
-  public text = 'Once during each player’s turn, that play may discard a Basic [P] Energy from their hand. If they do, they may heal 30 damage from each of their Pokémon.';
+
+  public text = 'Once during each player\'s turn, that play may discard a Basic [P] Energy from their hand. If they do, they may heal 30 damage from each of their Pokémon.';
 
   reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof UseStadiumEffect && StateUtils.getStadiumCard(state) === this) {
@@ -25,7 +25,7 @@ export class MoonlightHill extends TrainerCard {
     }
     return state;
   }
-  
+
   useStadium(store: StoreLike, state: State, effect: UseStadiumEffect): State {
     const player = effect.player;
 
@@ -53,7 +53,7 @@ export class MoonlightHill extends TrainerCard {
       // Heal each Pokemon by 10 damage
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
         const healEffect = new HealEffect(player, cardList, 30);
-        state = store.reduceEffect(state, healEffect); 
+        state = store.reduceEffect(state, healEffect);
       });
       return state;
     });

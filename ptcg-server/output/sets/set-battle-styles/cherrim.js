@@ -23,7 +23,7 @@ class Cherrim extends pokemon_card_1.PokemonCard {
                 powerType: game_1.PowerType.ABILITY,
                 text: 'As often as you like during your turn, you may attach a ' +
                     'G Energy card from your hand to 1 of your Pokémon ' +
-                    'that doesn’t have a Rule Box (Pokémon V, Pokémon-GX, ' +
+                    'that doesn\'t have a Rule Box (Pokémon V, Pokémon-GX, ' +
                     'etc. have Rule Boxes).'
             }];
         this.attacks = [

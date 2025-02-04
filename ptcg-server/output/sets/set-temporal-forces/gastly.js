@@ -44,7 +44,7 @@ class Gastly extends pokemon_card_1.PokemonCard {
                 name: 'Mysterious Beam',
                 cost: [card_types_1.CardType.DARK],
                 damage: 0,
-                text: 'Flip a coin. If heads, discard an Energy attached to your opponent’s Active Pokémon.'
+                text: 'Flip a coin. If heads, discard an Energy attached to your opponent\'s Active Pokémon.'
             },
             {
                 name: 'Suffocating Gas',

@@ -8,24 +8,24 @@ import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { AddSpecialConditionsPowerEffect } from '../../game/store/effects/check-effects';
 
 export class Volcanionex extends PokemonCard {
-  public tags = [ CardTag.POKEMON_ex ];
+  public tags = [CardTag.POKEMON_ex];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = CardType.FIRE;
   public hp: number = 220;
   public weakness = [{ type: CardType.WATER }];
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Scorching Steam',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
-    text: 'Once during your turn, if this Pokemon is in your Active Spot, you may make your opponent’s Active Pokémon Burned.'
+    text: 'Once during your turn, if this Pokemon is in your Active Spot, you may make your opponent\'s Active Pokémon Burned.'
   }];
 
   public attacks = [
     {
       name: 'Heat Cyclone',
-      cost: [ CardType.FIRE, CardType.FIRE, CardType.COLORLESS ],
+      cost: [CardType.FIRE, CardType.FIRE, CardType.COLORLESS],
       damage: 160,
       text: 'Move an Energy from this Pokémon to 1 of your Benched Pokémon.'
     }
@@ -42,20 +42,20 @@ export class Volcanionex extends PokemonCard {
   public readonly SCORCHING_STEAM = 'SCORCHING_STEAM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this){
+    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       effect.player.marker.removeMarker(this.SCORCHING_STEAM, this);
     }
 
     // Scorching Steam
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]){
+    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      if (player.active.getPokemonCard() !== this){
+      if (player.active.getPokemonCard() !== this) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      if (player.marker.hasMarker(this.SCORCHING_STEAM, this)){
+      if (player.marker.hasMarker(this.SCORCHING_STEAM, this)) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
@@ -75,17 +75,17 @@ export class Volcanionex extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const hasBench = player.bench.some(b => b.cards.length > 0);
-  
+
       if (hasBench === false) {
         return state;
       }
-  
+
       return store.prompt(state, new AttachEnergyPrompt(
         player.id,
         GameMessage.ATTACH_ENERGY_TO_BENCH,
         player.active,
         PlayerType.TOP_PLAYER,
-        [ SlotType.BENCH ],
+        [SlotType.BENCH],
         { superType: SuperType.ENERGY },
         { allowCancel: false, min: 1, max: 1 }
       ), transfers => {
@@ -97,7 +97,7 @@ export class Volcanionex extends PokemonCard {
       });
     }
 
-    if (effect instanceof EndTurnEffect){
+    if (effect instanceof EndTurnEffect) {
       effect.player.marker.removeMarker(this.SCORCHING_STEAM, this);
     }
 

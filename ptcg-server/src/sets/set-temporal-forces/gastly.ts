@@ -8,12 +8,12 @@ function* useMysteriousBeam(next: Function, store: StoreLike, state: State,
   effect: AttackEffect): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
-  
+
   // Active Pokemon has no energy cards attached
   if (!player.active.cards.some(c => c instanceof EnergyCard)) {
     return state;
   }
-  
+
   let flipResult = false;
   yield store.prompt(state, new CoinFlipPrompt(
     player.id, GameMessage.COIN_FLIP
@@ -21,11 +21,11 @@ function* useMysteriousBeam(next: Function, store: StoreLike, state: State,
     flipResult = result;
     next();
   });
-  
+
   if (flipResult) {
     return state;
   }
-  
+
   let cards: Card[] = [];
   yield store.prompt(state, new ChooseCardsPrompt(
     player,
@@ -37,7 +37,7 @@ function* useMysteriousBeam(next: Function, store: StoreLike, state: State,
     cards = selected || [];
     next();
   });
-  
+
   const discardEnergy = new DiscardCardsEffect(effect, cards);
   discardEnergy.target = player.active;
   return store.reduceEffect(state, discardEnergy);
@@ -55,14 +55,14 @@ export class Gastly extends PokemonCard {
 
   public weakness = [{ type: CardType.FIGHTING }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Mysterious Beam',
       cost: [CardType.DARK],
       damage: 0,
-      text: 'Flip a coin. If heads, discard an Energy attached to your opponent’s Active Pokémon.'
+      text: 'Flip a coin. If heads, discard an Energy attached to your opponent\'s Active Pokémon.'
     },
     {
       name: 'Suffocating Gas',
@@ -88,9 +88,8 @@ export class Gastly extends PokemonCard {
       const generator = useMysteriousBeam(() => generator.next(), store, state, effect);
       return generator.next().value;
     }
-  
+
     return state;
   }
-  
+
 }
-  

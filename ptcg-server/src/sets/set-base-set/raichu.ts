@@ -13,17 +13,17 @@ import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 export class Raichu extends PokemonCard {
 
   public name = 'Raichu';
-  
+
   public set = 'BS';
-  
+
   public fullName = 'Raichu BS';
 
   public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '14';
-  
+
   public stage: Stage = Stage.STAGE_1;
-  
+
   public cardType: CardType = CardType.LIGHTNING;
 
   public hp: number = 80;
@@ -35,13 +35,13 @@ export class Raichu extends PokemonCard {
   public readonly CLEAR_AGILITY_MARKER = 'CLEAR_AGILITY_MARKER';
 
   public readonly AGILITY_MARKER = 'AGILITY_MARKER';
-  
+
   public attacks: Attack[] = [
     {
       name: 'Agility',
       cost: [CardType.LIGHTNING, CardType.COLORLESS, CardType.COLORLESS],
       damage: 20,
-      text: 'Flip a coin. If heads, during your opponent’s next turn, prevent all effects of attacks, including damage, done to Raichu.'
+      text: 'Flip a coin. If heads, during your opponent\'s next turn, prevent all effects of attacks, including damage, done to Raichu.'
     },
     {
       name: 'Thunder',
@@ -54,10 +54,10 @@ export class Raichu extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      
+
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      
+
       return store.prompt(state, new CoinFlipPrompt(
         effect.player.id, GameMessage.COIN_FLIP
       ), (flipResult) => {
@@ -66,9 +66,9 @@ export class Raichu extends PokemonCard {
           opponent.marker.addMarker(this.CLEAR_AGILITY_MARKER, this);
         }
       });
-      
+
     }
-    
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
 
       return store.prompt(state, new CoinFlipPrompt(
@@ -82,10 +82,10 @@ export class Raichu extends PokemonCard {
       });
 
     }
-    
-    if (effect instanceof EndTurnEffect && 
-        effect.player.marker.hasMarker(this.CLEAR_AGILITY_MARKER, this)) {
-        
+
+    if (effect instanceof EndTurnEffect &&
+      effect.player.marker.hasMarker(this.CLEAR_AGILITY_MARKER, this)) {
+
       effect.player.marker.removeMarker(this.CLEAR_AGILITY_MARKER, this);
 
       const opponent = StateUtils.getOpponent(state, effect.player);
@@ -93,20 +93,20 @@ export class Raichu extends PokemonCard {
         cardList.marker.removeMarker(this.AGILITY_MARKER, this);
       });
     }
-    
-    if (effect instanceof AbstractAttackEffect && effect.target.cards.includes(this) && 
-        effect.target.marker.hasMarker(this.AGILITY_MARKER, this)) {
+
+    if (effect instanceof AbstractAttackEffect && effect.target.cards.includes(this) &&
+      effect.target.marker.hasMarker(this.AGILITY_MARKER, this)) {
       const pokemonCard = effect.target.getPokemonCard();
       const sourceCard = effect.source.getPokemonCard();
-  
+
       if (pokemonCard !== this) {
         return state;
       }
-  
-      if (sourceCard) {  
+
+      if (sourceCard) {
         effect.preventDefault = true;
       }
-      
+
       return state;
     }
 
