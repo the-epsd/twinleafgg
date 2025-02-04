@@ -13,6 +13,7 @@ const capsakid_1 = require("./capsakid");
 const charcadet_1 = require("./charcadet");
 const crushing_hammer_1 = require("./crushing-hammer");
 const cyclizar_1 = require("./cyclizar");
+const croagunk_1 = require("./croagunk");
 const defiance_band_1 = require("./defiance-band");
 const dolliv_1 = require("./dolliv");
 const drifloon_1 = require("./drifloon");
@@ -64,6 +65,7 @@ const riolu_1 = require("./riolu");
 const riolu2_1 = require("./riolu2");
 const rock_chestplate_1 = require("./rock-chestplate");
 const rocky_helmet_1 = require("./rocky-helmet");
+const seviper_1 = require("./seviper");
 const scatterbug_1 = require("./scatterbug");
 const scovillain_1 = require("./scovillain");
 const shuppet_1 = require("./shuppet");
@@ -92,6 +94,7 @@ exports.setScarletAndViolet = [
     new capsakid_1.Capsakid(),
     new charcadet_1.Charcadet(),
     new crushing_hammer_1.CrushingHammer(),
+    new croagunk_1.Croagunk(),
     new cyclizar_1.Cyclizar(),
     new defiance_band_1.DefianceBand(),
     new dolliv_1.Dolliv(),
@@ -143,6 +146,7 @@ exports.setScarletAndViolet = [
     new rocky_helmet_1.RockyHelmet(),
     new scatterbug_1.Scatterbug(),
     new scovillain_1.Scovillain(),
+    new seviper_1.Seviper(),
     new spewpa_1.Spewpa(),
     new skwovet_1.Skwovet(),
     new switch_1.Switch(),

@@ -50,6 +50,7 @@ const victini_v_1 = require("./victini-v");
 const victini_vmax_1 = require("./victini-vmax");
 const victreebel_1 = require("./victreebel");
 const weepinbell_1 = require("./weepinbell");
+const zubat_1 = require("./zubat");
 exports.setBattleStyles = [
     new bellsprout_1.Bellsprout(),
     new bronzong_1.Bronzong(),
@@ -100,4 +101,5 @@ exports.setBattleStyles = [
     new victreebel_1.Victreebel(),
     new weepinbell_1.Weepinbell(),
     new falinks_1.Falinks(),
+    new zubat_1.Zubat(),
 ];
