@@ -716,6 +716,28 @@ export const exportReplacements = [
   { from: 'LuxuriousCapeHR PAR 265', to: 'Luxurious Cape PAR 265' },
   { from: 'ReversalEnergyHR PAR 266', to: 'Reversal Energy PAR 266' },
 
+  //PAF Shiny Vault
+  { from: 'CharmanderSV PAF 109', to: 'Charmander PAF 109' },
+  { from: 'CharmeleonSV PAF 110', to: 'Charmeleon PAF 110' },
+  { from: 'FrigibaxSV PAF 128', to: 'Frigibax PAF 128' },
+  { from: 'MimeJrSV PAF 157', to: 'Mime Jr. PAF 157' },
+  { from: 'Espathra exSV PAF 214', to: 'Espathra exSV PAF 214' },
+  { from: 'WugtrioFA PAF 224', to: 'Wugtrio PAF 224' },
+  { from: 'PalafinFA PAF 225', to: 'Palafin PAF 225' },
+  { from: 'PawmiFA PAF 226', to: 'Pawmi PAF 226' },
+  { from: 'CliveFA PAF 227', to: 'Clive PAF 227' },
+  { from: 'NemonaFA PAF 229', to: 'Nemona PAF 229' },
+  { from: 'Paldean StudentFA PAF 230', to: 'Paldean Student PAF 230' },
+  { from: 'Paldean StudentFA2 PAF 231', to: 'Paldean Student PAF 231' },
+  { from: 'Mew exSIR PAF 232', to: 'Mew exSIR PAF 232' },
+  { from: 'Gardevoir exSIR PAF 233', to: 'Gardevoir ex PAF 233' },
+  { from: 'Charizard exSIR PAF 234', to: 'Charizard ex PAF 234' },
+  { from: 'ArvenSIR PAF 236', to: 'Arven PAF 235' },
+  { from: 'CliveSIR PAF 236', to: 'Clive PAF 236' },
+  { from: 'IonoSIR PAF 237', to: 'Iono PAF 237' },
+  { from: 'NemonaSIR PAF 238', to: 'Nemona PAF 238' },
+  { from: 'PennySIR PAF 236', to: 'Penny PAF 239' },
+
   //TEF
   //TEF FA
   { from: 'GrotleIR TEF 164', to: 'Grotle TEF 164' },
