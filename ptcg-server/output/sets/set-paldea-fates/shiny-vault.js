@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WingullSV = exports.SnorlaxSV = exports.DittoSV = exports.DodrioSV = exports.DoduoSV = exports.PidgeottoSV = exports.PidgeySV = exports.NoibatSV = exports.RevavroomSV = exports.ScizorSV = exports.MurkrowSV = exports.HawluchaSV = exports.LucarioSV = exports.RioluSV = exports.TinkatonSV = exports.TinkatuffSV = exports.TinkatinkSV = exports.MimikyuSV = exports.KlefkiSV = exports.SpiritombSV = exports.MimeJrSV = exports.DrifloonSV = exports.RaltsSV = exports.XatuSV = exports.NatuSV = exports.CleffaSV = exports.KilowattrelSV = exports.WattrelSV = exports.ThundurusSV = exports.LuxraySV = exports.BaxcaliburSV = exports.ArctibaxSV = exports.FrigibaxSV = exports.PalafinSV = exports.FinizenSV = exports.StarmieSV = exports.StaryuSV = exports.ArmarougeSV = exports.CharcadetSV = exports.EnteiSV = exports.CharmeleonSV = exports.CharmanderSV = exports.CapsakidSV = exports.ArbolivaSV = exports.DollivSV = exports.SmolivSV = exports.PinecoSV = exports.VileplumeSV = exports.GloomSV = exports.OddishSV = void 0;
-exports.PennySV = exports.IonoSV = exports.ArvenSV = exports.CharizardexSVSIR = exports.GardevoirexSVSIR = exports.MewexSVSIR = exports.PaldeanStudentSV2 = exports.PaldeanStudentSV1 = exports.JudgeSV = exports.SquawkabillyexSV = exports.PidgeotexSV = exports.NoivernexSV = exports.GardevoirexSV = exports.MewexSV = exports.EspathraexSV2 = exports.ToedscruelexSV = exports.ForretressexSV = exports.FlamigoSV = exports.SkwovetSV = exports.PelipperSV = void 0;
+exports.DittoSV = exports.DodrioSV = exports.DoduoSV = exports.PidgeottoSV = exports.PidgeySV = exports.NoibatSV = exports.RevavroomSV = exports.ScizorSV = exports.MurkrowSV = exports.HawluchaSV = exports.LucarioSV = exports.RioluSV = exports.TinkatonSV = exports.TinkatuffSV = exports.TinkatinkSV = exports.MimikyuSV = exports.KlefkiSV = exports.SpiritombSV = exports.MimeJrSV = exports.DrifloonSV = exports.KirliaSV = exports.RaltsSV = exports.XatuSV = exports.NatuSV = exports.CleffaSV = exports.KilowattrelSV = exports.WattrelSV = exports.PawmiSV = exports.ThundurusSV = exports.LuxraySV = exports.BaxcaliburSV = exports.ArctibaxSV = exports.FrigibaxSV = exports.PalafinSV = exports.FinizenSV = exports.StarmieSV = exports.StaryuSV = exports.ArmarougeSV = exports.CharcadetSV = exports.EnteiSV = exports.CharmeleonSV = exports.CharmanderSV = exports.CapsakidSV = exports.ArbolivaSV = exports.DollivSV = exports.SmolivSV = exports.PinecoSV = exports.VileplumeSV = exports.GloomSV = exports.OddishSV = void 0;
+exports.KoraidonexUR = exports.TingLuexUR = exports.MiraidonexUR = exports.ChienPaoexUR = exports.ChiYuexUR = exports.WoChienexUR = exports.PennySV = exports.NemonaSV2 = exports.IonoSV = exports.CliveSV2 = exports.ArvenSV = exports.CharizardexSVSIR = exports.GardevoirexSVSIR = exports.MewexSVSIR = exports.PaldeanStudentSV2 = exports.PaldeanStudentSV1 = exports.NemonaSV = exports.JudgeSV = exports.CliveSV = exports.PawmiSVFA = exports.PalafinSVFA = exports.WugtrioSVFA = exports.SquawkabillyexSV = exports.PidgeotexSV = exports.NoivernexSV = exports.GardevoirexSV = exports.MewexSV = exports.EspathraexSV = exports.ToedscruelexSV = exports.ForretressexSV = exports.FlamigoSV = exports.SkwovetSV = exports.PelipperSV = exports.WingullSV = exports.SnorlaxSV = void 0;
 const charizard_ex_1 = require("../set-obsidian-flames/charizard-ex");
 const cleffa_1 = require("../set-obsidian-flames/cleffa");
 const entei_1 = require("../set-obsidian-flames/entei");
@@ -69,6 +69,17 @@ const mime_jr_1 = require("./mime-jr");
 const students_in_paldea_1 = require("./students-in-paldea");
 const snorlax_1 = require("../set-pokemon-151/snorlax");
 const tinkatuff_1 = require("../set-paldea-evolved/tinkatuff");
+const kirlia_1 = require("../set-scarlet-and-violet/kirlia");
+const pawmi_1 = require("../set-scarlet-and-violet/pawmi");
+const wugtrio_1 = require("../set-scarlet-and-violet/wugtrio");
+const wo_chien_ex_1 = require("../set-paldea-evolved/wo-chien-ex");
+const chi_yu_ex_1 = require("../set-paldea-evolved/chi-yu-ex");
+const chien_pao_ex_1 = require("../set-paldea-evolved/chien-pao-ex");
+const miraidon_ex_1 = require("../set-scarlet-and-violet/miraidon-ex");
+const ting_lu_ex_1 = require("../set-paldea-evolved/ting-lu-ex");
+const koraidon_ex_1 = require("../set-scarlet-and-violet/koraidon-ex");
+const nemona_1 = require("../set-scarlet-and-violet/nemona");
+const clive_1 = require("./clive");
 class OddishSV extends oddish_1.Oddish {
     constructor() {
         super(...arguments);
@@ -267,6 +278,15 @@ class ThundurusSV extends thundurus_1.Thundurus {
     }
 }
 exports.ThundurusSV = ThundurusSV;
+class PawmiSV extends pawmi_1.Pawmi {
+    constructor() {
+        super(...arguments);
+        this.setNumber = '142';
+        this.set = 'PAF';
+        this.fullName = 'Pawmi PAF';
+    }
+}
+exports.PawmiSV = PawmiSV;
 class WattrelSV extends wattrel_1.Wattrel {
     constructor() {
         super(...arguments);
@@ -321,6 +341,15 @@ class RaltsSV extends ralts_1.Ralts {
     }
 }
 exports.RaltsSV = RaltsSV;
+class KirliaSV extends kirlia_1.Kirlia {
+    constructor() {
+        super(...arguments);
+        this.setNumber = '154';
+        this.set = 'PAF';
+        this.fullName = 'Kirlia PAF';
+    }
+}
+exports.KirliaSV = KirliaSV;
 class DrifloonSV extends drifloon_1.Drifloon {
     constructor() {
         super(...arguments);
@@ -396,200 +425,300 @@ exports.TinkatonSV = TinkatonSV;
 class RioluSV extends riolu2_1.Riolu2 {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_173_R_EN_LG.png';
+        this.setNumber = '173';
+        this.set = 'PAF';
+        this.fullName = 'Riolu PAF';
     }
 }
 exports.RioluSV = RioluSV;
 class LucarioSV extends lucario_1.Lucario {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_174_R_EN_LG.png';
+        this.setNumber = '174';
+        this.set = 'PAF';
+        this.fullName = 'Lucario PAF';
     }
 }
 exports.LucarioSV = LucarioSV;
 class HawluchaSV extends hawlucha_1.Hawlucha {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_175_R_EN_LG.png';
+        this.setNumber = '175';
+        this.set = 'PAF';
+        this.fullName = 'Hawlucha PAF';
     }
 }
 exports.HawluchaSV = HawluchaSV;
 class MurkrowSV extends murkrow_1.Murkrow {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_181_R_EN_LG.png';
+        this.setNumber = '181';
+        this.set = 'PAF';
+        this.fullName = 'Murkrow PAF';
     }
 }
 exports.MurkrowSV = MurkrowSV;
 class ScizorSV extends scizor_1.Scizor {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_191_R_EN_LG.png';
+        this.setNumber = '191';
+        this.set = 'PAF';
+        this.fullName = 'Scizor PAF';
     }
 }
 exports.ScizorSV = ScizorSV;
 class RevavroomSV extends revavroom_1.Revavroom {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_193_R_EN_LG.png';
+        this.setNumber = '193';
+        this.set = 'PAF';
+        this.fullName = 'Revavroom PAF';
     }
 }
 exports.RevavroomSV = RevavroomSV;
 class NoibatSV extends noibat_1.Noibat {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_194_R_EN_LG.png';
+        this.setNumber = '194';
+        this.set = 'PAF';
+        this.fullName = 'Noibat PAF';
     }
 }
 exports.NoibatSV = NoibatSV;
 class PidgeySV extends pidgey_1.Pidgey {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_196_R_EN_LG.png';
+        this.setNumber = '196';
+        this.set = 'PAF';
+        this.fullName = 'Pidgey PAF';
     }
 }
 exports.PidgeySV = PidgeySV;
 class PidgeottoSV extends pidgeotto_1.Pidgeotto {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_197_R_EN_LG.png';
+        this.setNumber = '197';
+        this.set = 'PAF';
+        this.fullName = 'Pidgeotto PAF';
     }
 }
 exports.PidgeottoSV = PidgeottoSV;
 class DoduoSV extends doduo_1.Doduo {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_199_R_EN_LG.png';
+        this.setNumber = '199';
+        this.set = 'PAF';
+        this.fullName = 'Doduo PAF';
     }
 }
 exports.DoduoSV = DoduoSV;
 class DodrioSV extends dodrio_1.Dodrio {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_200_R_EN_LG.png';
+        this.setNumber = '200';
+        this.set = 'PAF';
+        this.fullName = 'Dodrio PAF';
     }
 }
 exports.DodrioSV = DodrioSV;
 class DittoSV extends ditto_1.Ditto {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_201_R_EN_LG.png';
+        this.setNumber = '201';
+        this.set = 'PAF';
+        this.fullName = 'Ditto PAF';
     }
 }
 exports.DittoSV = DittoSV;
 class SnorlaxSV extends snorlax_1.Snorlax {
     constructor() {
         super(...arguments);
-        this.fullName = 'Snorlax PAF';
-        this.set = 'PAF';
         this.setNumber = '202';
+        this.set = 'PAF';
+        this.fullName = 'Snorlax PAF';
     }
 }
 exports.SnorlaxSV = SnorlaxSV;
 class WingullSV extends wingull_1.Wingull {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_203_R_EN_LG.png';
+        this.setNumber = '203';
+        this.set = 'PAF';
+        this.fullName = 'Wingull PAF';
     }
 }
 exports.WingullSV = WingullSV;
 class PelipperSV extends pelipper_1.Pelipper {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_204_R_EN_LG.png';
+        this.setNumber = '204';
+        this.set = 'PAF';
+        this.fullName = 'Pelipper PAF';
     }
 }
 exports.PelipperSV = PelipperSV;
 class SkwovetSV extends skwovet_1.Skwovet {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_205_R_EN_LG.png';
+        this.setNumber = '205';
+        this.set = 'PAF';
+        this.fullName = 'Skwovet PAF';
     }
 }
 exports.SkwovetSV = SkwovetSV;
 class FlamigoSV extends flamigo_1.Flamigo {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_211_R_EN_LG.png';
+        this.setNumber = '211';
+        this.set = 'PAF';
+        this.fullName = 'Flamigo PAF';
     }
 }
 exports.FlamigoSV = FlamigoSV;
-//Shiny ex
+// Shiny ex
 class ForretressexSV extends forretress_ex_1.Forretressex {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_212_R_EN_LG.png';
+        this.setNumber = '212';
+        this.set = 'PAF';
+        this.fullName = 'Forretress ex PAF';
     }
 }
 exports.ForretressexSV = ForretressexSV;
 class ToedscruelexSV extends toedscruel_ex_1.Toedscruelex {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_213_R_EN_LG.png';
+        this.setNumber = '213';
+        this.set = 'PAF';
+        this.fullName = 'Toedscruel ex PAF';
     }
 }
 exports.ToedscruelexSV = ToedscruelexSV;
-class EspathraexSV2 extends espathra_ex_1.Espathraex {
+class EspathraexSV extends espathra_ex_1.Espathraex {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_214_R_EN_LG.png';
+        this.setNumber = '214';
+        this.set = 'PAF';
+        this.fullName = 'Espathra exSV PAF';
     }
 }
-exports.EspathraexSV2 = EspathraexSV2;
+exports.EspathraexSV = EspathraexSV;
 class MewexSV extends mew_ex_1.Mewex {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_216_R_EN_LG.png';
+        this.setNumber = '216';
+        this.set = 'PAF';
+        this.fullName = 'Mew ex PAF';
     }
 }
 exports.MewexSV = MewexSV;
 class GardevoirexSV extends gardevoir_ex_1.Gardevoirex {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_217_R_EN_LG.png';
+        this.setNumber = '217';
+        this.set = 'PAF';
+        this.fullName = 'Gardevoir ex PAF';
     }
 }
 exports.GardevoirexSV = GardevoirexSV;
 class NoivernexSV extends noivern_ex_1.Noivernex {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_220_R_EN_LG.png';
+        this.setNumber = '220';
+        this.set = 'PAF';
+        this.fullName = 'Noivern ex PAF';
     }
 }
 exports.NoivernexSV = NoivernexSV;
 class PidgeotexSV extends pidgeot_ex_1.Pidgeotex {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_221_R_EN_LG.png';
+        this.setNumber = '221';
+        this.set = 'PAF';
+        this.fullName = 'Pidgeot ex PAF';
     }
 }
 exports.PidgeotexSV = PidgeotexSV;
 class SquawkabillyexSV extends squawkabilly_ex_1.Squawkabillyex {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_223_R_EN_LG.png';
+        this.setNumber = '223';
+        this.set = 'PAF';
+        this.fullName = 'Squawkabilly ex PAF';
     }
 }
 exports.SquawkabillyexSV = SquawkabillyexSV;
+// Shiny Full arts
+class WugtrioSVFA extends wugtrio_1.Wugtrio {
+    constructor() {
+        super(...arguments);
+        this.setNumber = '224';
+        this.set = 'PAF';
+        this.fullName = 'WugtrioFA PAF';
+    }
+}
+exports.WugtrioSVFA = WugtrioSVFA;
+class PalafinSVFA extends palafin_1.Palafin {
+    constructor() {
+        super(...arguments);
+        this.setNumber = '225';
+        this.set = 'PAF';
+        this.fullName = 'PalafinFA PAF';
+    }
+}
+exports.PalafinSVFA = PalafinSVFA;
+class PawmiSVFA extends palafin_1.Palafin {
+    constructor() {
+        super(...arguments);
+        this.setNumber = '226';
+        this.set = 'PAF';
+        this.fullName = 'PawmiFA PAF';
+    }
+}
+exports.PawmiSVFA = PawmiSVFA;
 // FA Trainers
+class CliveSV extends clive_1.Clive {
+    constructor() {
+        super(...arguments);
+        this.setNumber = '227';
+        this.set = 'PAF';
+        this.fullName = 'CliveFA PAF';
+    }
+}
+exports.CliveSV = CliveSV;
 class JudgeSV extends judge_1.Judge {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_228_R_EN_LG.png';
+        this.setNumber = '228';
+        this.set = 'PAF';
+        this.fullName = 'Judge PAF';
     }
 }
 exports.JudgeSV = JudgeSV;
+class NemonaSV extends nemona_1.Nemona {
+    constructor() {
+        super(...arguments);
+        this.setNumber = '229';
+        this.set = 'PAF';
+        this.fullName = 'NemonaFA PAF';
+    }
+}
+exports.NemonaSV = NemonaSV;
 class PaldeanStudentSV1 extends students_in_paldea_1.StudentsInPaldea {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_230_R_EN_LG.png';
+        this.setNumber = '230';
+        this.set = 'PAF';
+        this.fullName = 'Paldean StudentFA PAF';
     }
 }
 exports.PaldeanStudentSV1 = PaldeanStudentSV1;
 class PaldeanStudentSV2 extends students_in_paldea_1.StudentsInPaldea {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_231_R_EN_LG.png';
+        this.setNumber = '231';
+        this.set = 'PAF';
+        this.fullName = 'Paldean StudentFA2 PAF';
     }
 }
 exports.PaldeanStudentSV2 = PaldeanStudentSV2;
@@ -597,21 +726,27 @@ exports.PaldeanStudentSV2 = PaldeanStudentSV2;
 class MewexSVSIR extends mew_ex_1.Mewex {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_232_R_EN_LG.png';
+        this.setNumber = '232';
+        this.set = 'PAF';
+        this.fullName = 'Mew exSIR PAF';
     }
 }
 exports.MewexSVSIR = MewexSVSIR;
 class GardevoirexSVSIR extends gardevoir_ex_1.Gardevoirex {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_233_R_EN_LG.png';
+        this.setNumber = '233';
+        this.set = 'PAF';
+        this.fullName = 'Gardevoir exSIR PAF';
     }
 }
 exports.GardevoirexSVSIR = GardevoirexSVSIR;
 class CharizardexSVSIR extends charizard_ex_1.Charizardex {
     constructor() {
         super(...arguments);
-        this.cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_234_R_EN_LG.png';
+        this.setNumber = '234';
+        this.set = 'PAF';
+        this.fullName = 'Charizard exSIR PAF';
     }
 }
 exports.CharizardexSVSIR = CharizardexSVSIR;
@@ -625,6 +760,15 @@ class ArvenSV extends arven_1.Arven {
     }
 }
 exports.ArvenSV = ArvenSV;
+class CliveSV2 extends clive_1.Clive {
+    constructor() {
+        super(...arguments);
+        this.setNumber = '236';
+        this.set = 'PAF';
+        this.fullName = 'CliveSIR PAF';
+    }
+}
+exports.CliveSV2 = CliveSV2;
 class IonoSV extends iono_1.Iono {
     constructor() {
         super(...arguments);
@@ -634,6 +778,15 @@ class IonoSV extends iono_1.Iono {
     }
 }
 exports.IonoSV = IonoSV;
+class NemonaSV2 extends nemona_1.Nemona {
+    constructor() {
+        super(...arguments);
+        this.setNumber = '238';
+        this.set = 'PAF';
+        this.fullName = 'NemonaSIR PAF';
+    }
+}
+exports.NemonaSV2 = NemonaSV2;
 class PennySV extends penny_1.Penny {
     constructor() {
         super(...arguments);
@@ -643,3 +796,57 @@ class PennySV extends penny_1.Penny {
     }
 }
 exports.PennySV = PennySV;
+class WoChienexUR extends wo_chien_ex_1.WoChienex {
+    constructor() {
+        super(...arguments);
+        this.setNumber = '240';
+        this.set = 'PAF';
+        this.fullName = 'Wo-Chien ex PAF';
+    }
+}
+exports.WoChienexUR = WoChienexUR;
+class ChiYuexUR extends chi_yu_ex_1.ChiYuex {
+    constructor() {
+        super(...arguments);
+        this.setNumber = '241';
+        this.set = 'PAF';
+        this.fullName = 'Chi-Yu ex PAF';
+    }
+}
+exports.ChiYuexUR = ChiYuexUR;
+class ChienPaoexUR extends chien_pao_ex_1.ChienPaoex {
+    constructor() {
+        super(...arguments);
+        this.setNumber = '242';
+        this.set = 'PAF';
+        this.fullName = 'Chien-Pao ex PAF';
+    }
+}
+exports.ChienPaoexUR = ChienPaoexUR;
+class MiraidonexUR extends miraidon_ex_1.Miraidonex {
+    constructor() {
+        super(...arguments);
+        this.setNumber = '243';
+        this.set = 'PAF';
+        this.fullName = 'Miraidon ex PAF';
+    }
+}
+exports.MiraidonexUR = MiraidonexUR;
+class TingLuexUR extends ting_lu_ex_1.TingLuex {
+    constructor() {
+        super(...arguments);
+        this.setNumber = '244';
+        this.set = 'PAF';
+        this.fullName = 'Ting-Lu ex PAF';
+    }
+}
+exports.TingLuexUR = TingLuexUR;
+class KoraidonexUR extends koraidon_ex_1.Koraidonex {
+    constructor() {
+        super(...arguments);
+        this.setNumber = '245';
+        this.set = 'PAF';
+        this.fullName = 'Koraidon ex PAF';
+    }
+}
+exports.KoraidonexUR = KoraidonexUR;

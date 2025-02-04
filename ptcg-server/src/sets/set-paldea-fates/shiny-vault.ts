@@ -65,6 +65,17 @@ import { MimeJr } from './mime-jr';
 import { StudentsInPaldea } from './students-in-paldea';
 import { Snorlax } from '../set-pokemon-151/snorlax';
 import { Tinkatuff } from '../set-paldea-evolved/tinkatuff';
+import { Kirlia } from '../set-scarlet-and-violet/kirlia';
+import { Pawmi } from '../set-scarlet-and-violet/pawmi';
+import { Wugtrio } from '../set-scarlet-and-violet/wugtrio';
+import { WoChienex } from '../set-paldea-evolved/wo-chien-ex';
+import { ChiYuex } from '../set-paldea-evolved/chi-yu-ex';
+import { ChienPaoex } from '../set-paldea-evolved/chien-pao-ex';
+import { Miraidonex } from '../set-scarlet-and-violet/miraidon-ex';
+import { TingLuex } from '../set-paldea-evolved/ting-lu-ex';
+import { Koraidonex } from '../set-scarlet-and-violet/koraidon-ex';
+import { Nemona } from '../set-scarlet-and-violet/nemona';
+import { Clive } from './clive';
 
 export class OddishSV extends Oddish {
   public setNumber = '92';
@@ -198,6 +209,12 @@ export class ThundurusSV extends Thundurus {
   public fullName: string = 'Thundurus PAF';
 }
 
+export class PawmiSV extends Pawmi {
+  public setNumber = '142';
+  public set = 'PAF';
+  public fullName: string = 'Pawmi PAF';
+}
+
 export class WattrelSV extends Wattrel {
   public setNumber = '145';
   public set = 'PAF';
@@ -232,6 +249,12 @@ export class RaltsSV extends Ralts {
   public setNumber = '153';
   public set = 'PAF';
   public fullName: string = 'Ralts PAF';
+}
+
+export class KirliaSV extends Kirlia {
+  public setNumber = '154';
+  public set = 'PAF';
+  public fullName: string = 'Kirlia PAF';
 }
 
 export class DrifloonSV extends Drifloon {
@@ -282,136 +305,228 @@ export class TinkatonSV extends Tinkaton {
   public fullName: string = 'Tinkaton PAF';
 }
 
-
 export class RioluSV extends Riolu2 {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_173_R_EN_LG.png';
+  public setNumber = '173';
+  public set = 'PAF';
+  public fullName: string = 'Riolu PAF';
 }
 
 export class LucarioSV extends Lucario {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_174_R_EN_LG.png';
+  public setNumber = '174';
+  public set = 'PAF';
+  public fullName: string = 'Lucario PAF';
 }
 
 export class HawluchaSV extends Hawlucha {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_175_R_EN_LG.png';
+  public setNumber = '175';
+  public set = 'PAF';
+  public fullName: string = 'Hawlucha PAF';
 }
 
 export class MurkrowSV extends Murkrow {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_181_R_EN_LG.png';
+  public setNumber = '181';
+  public set = 'PAF';
+  public fullName: string = 'Murkrow PAF';
 }
 
 export class ScizorSV extends Scizor {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_191_R_EN_LG.png';
+  public setNumber = '191';
+  public set = 'PAF';
+  public fullName: string = 'Scizor PAF';
 }
 
 export class RevavroomSV extends Revavroom {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_193_R_EN_LG.png';
+  public setNumber = '193';
+  public set = 'PAF';
+  public fullName: string = 'Revavroom PAF';
 }
 
 export class NoibatSV extends Noibat {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_194_R_EN_LG.png';
+  public setNumber = '194';
+  public set = 'PAF';
+  public fullName: string = 'Noibat PAF';
 }
 
 export class PidgeySV extends Pidgey {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_196_R_EN_LG.png';
+  public setNumber = '196';
+  public set = 'PAF';
+  public fullName: string = 'Pidgey PAF';
 }
 
 export class PidgeottoSV extends Pidgeotto {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_197_R_EN_LG.png';
+  public setNumber = '197';
+  public set = 'PAF';
+  public fullName: string = 'Pidgeotto PAF';
 }
 
 export class DoduoSV extends Doduo {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_199_R_EN_LG.png';
+  public setNumber = '199';
+  public set = 'PAF';
+  public fullName: string = 'Doduo PAF';
 }
 
 export class DodrioSV extends Dodrio {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_200_R_EN_LG.png';
+  public setNumber = '200';
+  public set = 'PAF';
+  public fullName: string = 'Dodrio PAF';
 }
 
 export class DittoSV extends Ditto {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_201_R_EN_LG.png';
-}
-export class SnorlaxSV extends Snorlax {
-  public fullName = 'Snorlax PAF';
+  public setNumber = '201';
   public set = 'PAF';
+  public fullName: string = 'Ditto PAF';
+}
+
+export class SnorlaxSV extends Snorlax {
   public setNumber = '202';
+  public set = 'PAF';
+  public fullName = 'Snorlax PAF';
 }
 
 export class WingullSV extends Wingull {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_203_R_EN_LG.png';
+  public setNumber = '203';
+  public set = 'PAF';
+  public fullName: string = 'Wingull PAF';
 }
 
 export class PelipperSV extends Pelipper {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_204_R_EN_LG.png';
+  public setNumber = '204';
+  public set = 'PAF';
+  public fullName: string = 'Pelipper PAF';
 }
 
 export class SkwovetSV extends Skwovet {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_205_R_EN_LG.png';
+  public setNumber = '205';
+  public set = 'PAF';
+  public fullName: string = 'Skwovet PAF';
 }
 
 export class FlamigoSV extends Flamigo {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_211_R_EN_LG.png';
+  public setNumber = '211';
+  public set = 'PAF';
+  public fullName: string = 'Flamigo PAF';
 }
 
-//Shiny ex
+// Shiny ex
 
 export class ForretressexSV extends Forretressex {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_212_R_EN_LG.png';
+  public setNumber = '212';
+  public set = 'PAF';
+  public fullName: string = 'Forretress ex PAF';
 }
 
 export class ToedscruelexSV extends Toedscruelex {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_213_R_EN_LG.png';
+  public setNumber = '213';
+  public set = 'PAF';
+  public fullName: string = 'Toedscruel ex PAF';
 }
 
-export class EspathraexSV2 extends Espathraex {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_214_R_EN_LG.png';
+export class EspathraexSV extends Espathraex {
+  public setNumber = '214';
+  public set = 'PAF';
+  public fullName: string = 'Espathra exSV PAF';
 }
 
 export class MewexSV extends Mewex {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_216_R_EN_LG.png';
+  public setNumber = '216';
+  public set = 'PAF';
+  public fullName: string = 'Mew ex PAF';
 }
 
 export class GardevoirexSV extends Gardevoirex {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_217_R_EN_LG.png';
+  public setNumber = '217';
+  public set = 'PAF';
+  public fullName: string = 'Gardevoir ex PAF';
 }
 
 export class NoivernexSV extends Noivernex {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_220_R_EN_LG.png';
+  public setNumber = '220';
+  public set = 'PAF';
+  public fullName: string = 'Noivern ex PAF';
 }
 
 export class PidgeotexSV extends Pidgeotex {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_221_R_EN_LG.png';
+  public setNumber = '221';
+  public set = 'PAF';
+  public fullName: string = 'Pidgeot ex PAF';
 }
 
 export class SquawkabillyexSV extends Squawkabillyex {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_223_R_EN_LG.png';
+  public setNumber = '223';
+  public set = 'PAF';
+  public fullName: string = 'Squawkabilly ex PAF';
+}
+
+// Shiny Full arts
+
+export class WugtrioSVFA extends Wugtrio {
+  public setNumber = '224';
+  public set = 'PAF';
+  public fullName: string = 'WugtrioFA PAF';
+}
+
+export class PalafinSVFA extends Palafin {
+  public setNumber = '225';
+  public set = 'PAF';
+  public fullName: string = 'PalafinFA PAF';
+}
+
+export class PawmiSVFA extends Palafin {
+  public setNumber = '226';
+  public set = 'PAF';
+  public fullName: string = 'PawmiFA PAF';
 }
 
 // FA Trainers
 
+export class CliveSV extends Clive {
+  public setNumber = '227';
+  public set = 'PAF';
+  public fullName: string = 'CliveFA PAF';
+}
+
 export class JudgeSV extends Judge {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_228_R_EN_LG.png';
+  public setNumber = '228';
+  public set = 'PAF';
+  public fullName: string = 'Judge PAF';
+}
+
+export class NemonaSV extends Nemona {
+  public setNumber = '229';
+  public set = 'PAF';
+  public fullName: string = 'NemonaFA PAF';
 }
 
 export class PaldeanStudentSV1 extends StudentsInPaldea {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_230_R_EN_LG.png';
+  public setNumber = '230';
+  public set = 'PAF';
+  public fullName: string = 'Paldean StudentFA PAF';
 }
 
 export class PaldeanStudentSV2 extends StudentsInPaldea {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_231_R_EN_LG.png';
+  public setNumber = '231';
+  public set = 'PAF';
+  public fullName: string = 'Paldean StudentFA2 PAF';
 }
 
 // SIR Pokemon
 
 export class MewexSVSIR extends Mewex {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_232_R_EN_LG.png';
+  public setNumber = '232';
+  public set = 'PAF';
+  public fullName: string = 'Mew exSIR PAF';
 }
 
 export class GardevoirexSVSIR extends Gardevoirex {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_233_R_EN_LG.png';
+  public setNumber = '233';
+  public set = 'PAF';
+  public fullName: string = 'Gardevoir exSIR PAF';
 }
 
 export class CharizardexSVSIR extends Charizardex {
-  public cardImage = 'https://limitlesstcg.nyc3.digitaloceanspaces.com/tpci/PAF/PAF_234_R_EN_LG.png';
+  public setNumber = '234';
+  public set = 'PAF';
+  public fullName: string = 'Charizard exSIR PAF';
 }
 
 // SIR Trainers
@@ -422,14 +537,62 @@ export class ArvenSV extends Arven {
   public fullName: string = 'ArvenSIR PAF';
 }
 
+export class CliveSV2 extends Clive {
+  public setNumber = '236';
+  public set = 'PAF';
+  public fullName: string = 'CliveSIR PAF';
+}
+
 export class IonoSV extends Iono {
   public setNumber = '237';
   public set = 'PAF';
   public fullName: string = 'IonoSIR PAF';
 }
 
+export class NemonaSV2 extends Nemona {
+  public setNumber = '238';
+  public set = 'PAF';
+  public fullName: string = 'NemonaSIR PAF';
+}
+
 export class PennySV extends Penny {
   public setNumber = '239';
   public set = 'PAF';
   public fullName: string = 'PennySIR PAF';
-} 
+}
+
+export class WoChienexUR extends WoChienex {
+  public setNumber = '240';
+  public set = 'PAF';
+  public fullName: string = 'Wo-Chien ex PAF';
+}
+
+export class ChiYuexUR extends ChiYuex {
+  public setNumber = '241';
+  public set = 'PAF';
+  public fullName: string = 'Chi-Yu ex PAF';
+}
+
+export class ChienPaoexUR extends ChienPaoex {
+  public setNumber = '242';
+  public set = 'PAF';
+  public fullName: string = 'Chien-Pao ex PAF';
+}
+
+export class MiraidonexUR extends Miraidonex {
+  public setNumber = '243';
+  public set = 'PAF';
+  public fullName: string = 'Miraidon ex PAF';
+}
+
+export class TingLuexUR extends TingLuex {
+  public setNumber = '244';
+  public set = 'PAF';
+  public fullName: string = 'Ting-Lu ex PAF';
+}
+
+export class KoraidonexUR extends Koraidonex {
+  public setNumber = '245';
+  public set = 'PAF';
+  public fullName: string = 'Koraidon ex PAF';
+}

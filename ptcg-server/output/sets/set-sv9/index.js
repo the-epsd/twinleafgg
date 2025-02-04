@@ -66,6 +66,7 @@ const shuppet_1 = require("./shuppet");
 const spike_energy_1 = require("./spike-energy");
 const sprigatito_1 = require("./sprigatito");
 const swinub_1 = require("./swinub");
+const tapu_koko_ex_1 = require("./tapu-koko-ex");
 const torchic_1 = require("./torchic");
 const tyranitar_1 = require("./tyranitar");
 const volcanion_ex_1 = require("./volcanion-ex");
@@ -75,6 +76,7 @@ exports.setSV9 = [
     new torchic_1.Torchic(),
     new combusken_1.Combusken(),
     new blaziken_ex_1.Blazikenex(),
+    new tapu_koko_ex_1.TapuKokoex(),
     new swinub_1.Swinub(),
     new piloswine_1.Piloswine(),
     new mamoswine_ex_1.Mamoswineex(),

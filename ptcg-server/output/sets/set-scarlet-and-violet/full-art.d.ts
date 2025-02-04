@@ -5,6 +5,7 @@ import { Arven } from './arven';
 import { Gardevoirex } from './gardevoir-ex';
 import { Jacq } from './jacq';
 import { Katy } from './katy';
+import { Kirlia } from './kirlia';
 import { Koraidonex } from './koraidon-ex';
 import { Magnezoneex } from './magnezone-ex';
 import { Miraidonex } from './miraidon-ex';
@@ -113,6 +114,10 @@ export declare class ProfessorsResearchFA2 extends ProfessorsResearch {
     fullName: string;
 }
 export declare class RaltsIR extends Ralts {
+    setNumber: string;
+    fullName: string;
+}
+export declare class KirliaIR extends Kirlia {
     setNumber: string;
     fullName: string;
 }

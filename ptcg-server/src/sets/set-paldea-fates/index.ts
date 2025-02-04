@@ -7,13 +7,13 @@ import { Espathraex } from './espathra-ex';
 import { Frigibax } from './frigibax';
 import { Gastly } from './gastly';
 import { Gengar } from './gengar';
-import {GreatTuskex} from './great-tusk-ex';
+import { GreatTuskex } from './great-tusk-ex';
 import { Haunter } from './haunter';
 import { Kilowattrel } from './kilowattrel';
 import { MimeJr } from './mime-jr';
 import { MoonlightHill } from './moonlight-hill';
 import { Scovillainex } from './scovillain-ex';
-import { ArbolivaSV, ArctibaxSV, ArmarougeSV, BaxcaliburSV, CapsakidSV, CharcadetSV, CharmanderSV, CharmeleonSV, CleffaSV, DollivSV, DrifloonSV, EnteiSV, FinizenSV, FrigibaxSV, GloomSV, KilowattrelSV, KlefkiSV, LuxraySV, MimeJrSV, MimikyuSV, NatuSV, OddishSV, PalafinSV, PinecoSV, RaltsSV, SmolivSV, SnorlaxSV, SpiritombSV, StarmieSV, StaryuSV, ThundurusSV, TinkatinkSV, TinkatonSV, TinkatuffSV, VileplumeSV, WattrelSV, XatuSV } from './shiny-vault';
+import { ArbolivaSV, ArctibaxSV, ArmarougeSV, ArvenSV, BaxcaliburSV, CapsakidSV, CharcadetSV, CharizardexSVSIR, CharmanderSV, CharmeleonSV, ChienPaoexUR, ChiYuexUR, CleffaSV, CliveSV, CliveSV2, DittoSV, DodrioSV, DoduoSV, DollivSV, DrifloonSV, EnteiSV, EspathraexSV, FinizenSV, FlamigoSV, ForretressexSV, FrigibaxSV, GardevoirexSV, GardevoirexSVSIR, GloomSV, HawluchaSV, IonoSV, JudgeSV, KilowattrelSV, KirliaSV, KlefkiSV, KoraidonexUR, LucarioSV, LuxraySV, MewexSV, MewexSVSIR, MimeJrSV, MimikyuSV, MiraidonexUR, MurkrowSV, NatuSV, NemonaSV, NemonaSV2, NoibatSV, NoivernexSV, OddishSV, PalafinSV, PalafinSVFA, PaldeanStudentSV1, PaldeanStudentSV2, PawmiSV, PawmiSVFA, PelipperSV, PennySV, PidgeotexSV, PidgeottoSV, PidgeySV, PinecoSV, RaltsSV, RevavroomSV, RioluSV, ScizorSV, SkwovetSV, SmolivSV, SnorlaxSV, SpiritombSV, SquawkabillyexSV, StarmieSV, StaryuSV, ThundurusSV, TingLuexUR, TinkatinkSV, TinkatonSV, TinkatuffSV, ToedscruelexSV, VileplumeSV, WattrelSV, WingullSV, WoChienexUR, WugtrioSVFA, XatuSV } from './shiny-vault';
 import { StudentsInPaldea } from './students-in-paldea';
 import { TechnicalMachineCrisisPunch } from './technical-machine-crisis-punch';
 
@@ -79,20 +79,67 @@ export const setPaldeaFates: Card[] = [
   new BaxcaliburSV(),
   new LuxraySV(),
   new ThundurusSV(),
+  new PawmiSV(),
   new WattrelSV(),
   new KilowattrelSV(),
   new CleffaSV(),
   new NatuSV(),
   new XatuSV(),
   new RaltsSV(),
+  new KirliaSV(),
   new DrifloonSV(),
-  new SpiritombSV(),
   new MimeJrSV(),
+  new SpiritombSV(),
   new KlefkiSV(),
   new MimikyuSV(),
   new TinkatinkSV(),
   new TinkatuffSV(),
   new TinkatonSV(),
+  new RioluSV(),
+  new LucarioSV(),
+  new HawluchaSV(),
+  new MurkrowSV(),
+  new ScizorSV(),
+  new RevavroomSV(),
+  new NoibatSV(),
+  new PidgeySV(),
+  new PidgeottoSV(),
+  new DoduoSV(),
+  new DodrioSV(),
+  new DittoSV(),
   new SnorlaxSV(),
-
+  new WingullSV(),
+  new PelipperSV(),
+  new SkwovetSV(),
+  new FlamigoSV(),
+  new ForretressexSV(),
+  new ToedscruelexSV(),
+  new EspathraexSV(),
+  new MewexSV(),
+  new GardevoirexSV(),
+  new NoivernexSV(),
+  new PidgeotexSV(),
+  new SquawkabillyexSV(),
+  new WugtrioSVFA(),
+  new PalafinSVFA(),
+  new PawmiSVFA(),
+  new CliveSV(),
+  new JudgeSV(),
+  new NemonaSV(),
+  new PaldeanStudentSV1(),
+  new PaldeanStudentSV2(),
+  new MewexSVSIR(),
+  new GardevoirexSVSIR(),
+  new CharizardexSVSIR(),
+  new ArvenSV(),
+  new CliveSV2(),
+  new IonoSV(),
+  new NemonaSV2(),
+  new PennySV(),
+  new WoChienexUR(),
+  new ChiYuexUR(),
+  new ChienPaoexUR(),
+  new MiraidonexUR(),
+  new TingLuexUR(),
+  new KoraidonexUR(),
 ];

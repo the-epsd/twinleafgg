@@ -40,6 +40,7 @@ const exciting_stadium_1 = require("./exciting-stadium");
 const exeggcute_1 = require("./exeggcute");
 const flygon_ex_1 = require("./flygon-ex");
 const fuecoco_1 = require("./fuecoco");
+const full_art_1 = require("./full-art");
 const gimmighoul_1 = require("./gimmighoul");
 const gouging_fire_1 = require("./gouging-fire");
 const gravity_mountain_1 = require("./gravity-mountain");
@@ -199,7 +200,10 @@ exports.setSurgingSparks = [
     new tapu_koko_1.TapuKoko(),
     new quaxly_1.Quaxly(),
     new quaquaval_1.Quaquaval(),
-    //Reprints
+    // Reprints
     new card_images_1.ScrambleSwitchSSP(),
     new card_images_1.CounterGainSSP(),
+    // Full Art
+    new full_art_1.LarvestaIR(),
+    new full_art_1.FeebasIR(),
 ];

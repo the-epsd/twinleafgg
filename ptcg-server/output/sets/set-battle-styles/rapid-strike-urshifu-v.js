@@ -21,8 +21,7 @@ class RapidStrikeUrshifuV extends pokemon_card_1.PokemonCard {
                 name: 'Strafe',
                 cost: [card_types_1.CardType.FIGHTING],
                 damage: 30,
-                text: 'You may switch this Pokémon with 1 of your Benched ' +
-                    'Pokémon. '
+                text: 'You may switch this Pokémon with 1 of your Benched Pokémon.'
             }, {
                 name: 'Hundred Furious Blows',
                 cost: [card_types_1.CardType.FIGHTING, card_types_1.CardType.FIGHTING, card_types_1.CardType.COLORLESS],

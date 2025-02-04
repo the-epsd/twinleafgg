@@ -130,6 +130,7 @@ export const cardReplacements = [
   { from: "Professor's Research SVI 242", to: "Professor's ResearchFA1 SVI 242" },
   { from: "Professor's Research SVI 241", to: "Professor's ResearchFA2 SVI 241" },
   { from: 'Ralts SVI 211', to: 'RaltsIR SVI 211' },
+  { from: 'Kirlia SVI 212', to: 'KirliaIR SVI 212' },
   { from: 'Rare Candy SVI 256', to: 'Rare CandyHR SVI 256' },
   { from: 'Skwovet SVI 222', to: 'SkwovetIR SVI 222' },
   { from: 'Team Star Grunt SVI 242', to: 'Team Star GruntFA SVI 242' },
@@ -258,6 +259,28 @@ export const cardReplacements = [
   { from: 'Porygon-Z PAR 214', to: 'PorygonZIR PAR 214' },
   { from: 'Cyclizar PAR 215', to: 'CyclizarIR PAR 215' },
   { from: 'Iron Jugulis PAR 216', to: 'IronJugulisIR PAR 216' },
+
+  //PAF Shiny Vault & Full arts
+  { from: 'Charmander PAF 109', to: 'CharmanderSV PAF 109' },
+  { from: 'Charmeleon PAF 110', to: 'CharmeleonSV PAF 110' },
+  { from: 'Frigibax PAF 128', to: 'FrigibaxSV PAF 128' },
+  { from: 'Mime Jr. PAF 157', to: 'MimeJrSV PAF 157' },
+  { from: 'Espathra ex PAF 214', to: 'Espathra exSV PAF 214' },
+  { from: 'Wugtrio PAF 224', to: 'WugtrioFA PAF 224' },
+  { from: 'Palafin PAF 225', to: 'PalafinFA PAF 225' },
+  { from: 'Pawmi PAF 226', to: 'PawmiFA PAF 226' },
+  { from: 'Clive PAF 227', to: 'CliveFA PAF 227' },
+  { from: 'Nemona PAF 229', to: 'NemonaFA PAF 229' },
+  { from: 'Paldean Student PAF 230', to: 'Paldean StudentFA PAF 230' },
+  { from: 'Paldean Student PAF 231', to: 'Paldean StudentFA2 PAF 231' },
+  { from: 'Mew ex PAF 232', to: 'Mew exSIR PAF 232' },
+  { from: 'Gardevoir ex PAF 233', to: 'Gardevoir exSIR PAF 233' },
+  { from: 'Charizard ex PAF 234', to: 'Charizard exSIR PAF 234' },
+  { from: 'Arven PAF 236', to: 'ArvenSIR PAF 235' },
+  { from: 'Clive PAF 236', to: 'CliveSIR PAF 236' },
+  { from: 'Iono PAF 237', to: 'IonoSIR PAF 237' },
+  { from: 'Nemona PAF 238', to: 'NemonaSIR PAF 238' },
+  { from: 'Penny PAF 236', to: 'PennySIR PAF 239' },
 
   //TEF
   //TEF FA
@@ -397,6 +420,7 @@ export const cardReplacements = [
 
   //SSP FA
   { from: 'Larvesta SSP 196', to: 'LarvestaIR SSP 196' },
+  { from: 'Feebas SSP 198', to: 'FeebasIR SSP 198' },
 
   //PRE FA
   { from: 'Amarys PRE 132', to: 'AmarysFA PRE 132' },
@@ -562,6 +586,7 @@ export const exportReplacements = [
   { from: "Professor's ResearchFA1 SVI 242", to: "Professor's Research SVI 242" },
   { from: "Professor's ResearchFA2 SVI 241", to: "Professor's Research SVI 241" },
   { from: 'RaltsIR SVI 211', to: 'Ralts SVI 211' },
+  { from: 'KirliaIR SVI 212', to: 'Kirlia SVI 212' },
   { from: 'Rare CandyHR SVI 256', to: 'Rare Candy SVI 256' },
   { from: 'SkwovetIR SVI 222', to: 'Skwovet SVI 222' },
   { from: 'Team Star GruntFA SVI 242', to: 'Team Star Grunt SVI 242' },
@@ -829,6 +854,7 @@ export const exportReplacements = [
 
   //SSP FA
   { from: 'LarvestaIR SSP 196', to: 'Larvesta SSP 196' },
+  { from: 'FeebasIR SSP 198', to: 'Feebas SSP 198' },
 
   //PRE FA
   { from: 'AmarysFA PRE 132', to: 'Amarys PRE 132' },

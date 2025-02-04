@@ -64,6 +64,7 @@ import { Shuppet } from './shuppet';
 import { SpikeEnergy } from './spike-energy';
 import { Sprigatito } from './sprigatito';
 import { Swinub } from './swinub';
+import { TapuKokoex } from './tapu-koko-ex';
 import { Torchic } from './torchic';
 import { Tyranitar } from './tyranitar';
 import { Volcanionex } from './volcanion-ex';
@@ -75,6 +76,7 @@ export const setSV9: Card[] = [
   new Torchic(),
   new Combusken(),
   new Blazikenex(),
+  new TapuKokoex(),
   new Swinub(),
   new Piloswine(),
   new Mamoswineex(),

@@ -38,6 +38,7 @@ import { ExcitingStadium } from './exciting-stadium';
 import { Exeggcute } from './exeggcute';
 import { Flygonex } from './flygon-ex';
 import { Fuecoco } from './fuecoco';
+import { FeebasIR, LarvestaIR } from './full-art';
 import { Gimmighoul } from './gimmighoul';
 import { GougingFire } from './gouging-fire';
 import { GravityMountain } from './gravity-mountain';
@@ -66,8 +67,8 @@ import { Pansear } from './pansear';
 import { PerfectMixer } from './perfect-mixer';
 import { Phanpy } from './phanpy-ir';
 import { Pikachuex } from './pikachu-ex';
-import {Quaquaval} from './quaquaval';
-import {Quaxly} from './quaxly';
+import { Quaquaval } from './quaquaval';
+import { Quaxly } from './quaxly';
 import { Quaxwell } from './quaxwell';
 import { Rabsca } from './rabsca';
 import { Rellor } from './rellor';
@@ -199,7 +200,11 @@ export const setSurgingSparks: Card[] = [
   new Quaxly(),
   new Quaquaval(),
 
-  //Reprints
+  // Reprints
   new ScrambleSwitchSSP(),
   new CounterGainSSP(),
+
+  // Full Art
+  new LarvestaIR(),
+  new FeebasIR(),
 ];

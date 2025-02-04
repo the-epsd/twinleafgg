@@ -5,6 +5,7 @@ import { Arven } from './arven';
 import { Gardevoirex } from './gardevoir-ex';
 import { Jacq } from './jacq';
 import { Katy } from './katy';
+import { Kirlia } from './kirlia';
 import { Koraidonex } from './koraidon-ex';
 import { Magnezoneex } from './magnezone-ex';
 import { Miraidonex } from './miraidon-ex';
@@ -140,6 +141,11 @@ export class ProfessorsResearchFA2 extends ProfessorsResearch {
 export class RaltsIR extends Ralts {
   public setNumber = '211';
   public fullName = 'RaltsIR SVI';
+}
+
+export class KirliaIR extends Kirlia {
+  public setNumber = '212';
+  public fullName = 'KirliaIR SVI';
 }
 
 export class RareCandyHR extends RareCandy {

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TeamStarGruntFA = exports.SkwovetIR = exports.RareCandyHR = exports.RaltsIR = exports.ProfessorsResearchFA2 = exports.ProfessorsResearchFA1 = exports.PennySIR = exports.PennyFA = exports.NestBallHR = exports.MiriamSIR = exports.MiriamFA = exports.MiraidonexHR = exports.MiraidonexSIR = exports.MiraidonexFA = exports.MagnezoneexFA = exports.KoraidonexHR = exports.KoraidonexSIR = exports.KoraidonexFA = exports.KatyFA = exports.JacqSIR = exports.JacqFA = exports.GardevoirexSIR = exports.GardevoirexFA = exports.LightningEnergyHR = exports.FightingEnergyHR = exports.ArvenSIR = exports.ArvenFA = exports.ArmarougeIR = void 0;
+exports.TeamStarGruntFA = exports.SkwovetIR = exports.RareCandyHR = exports.KirliaIR = exports.RaltsIR = exports.ProfessorsResearchFA2 = exports.ProfessorsResearchFA1 = exports.PennySIR = exports.PennyFA = exports.NestBallHR = exports.MiriamSIR = exports.MiriamFA = exports.MiraidonexHR = exports.MiraidonexSIR = exports.MiraidonexFA = exports.MagnezoneexFA = exports.KoraidonexHR = exports.KoraidonexSIR = exports.KoraidonexFA = exports.KatyFA = exports.JacqSIR = exports.JacqFA = exports.GardevoirexSIR = exports.GardevoirexFA = exports.LightningEnergyHR = exports.FightingEnergyHR = exports.ArvenSIR = exports.ArvenFA = exports.ArmarougeIR = void 0;
 const fighting_energy_1 = require("../set-scarlet-and-violet-energy/fighting-energy");
 const lightning_energy_1 = require("../set-scarlet-and-violet-energy/lightning-energy");
 const armarouge_1 = require("./armarouge");
@@ -8,6 +8,7 @@ const arven_1 = require("./arven");
 const gardevoir_ex_1 = require("./gardevoir-ex");
 const jacq_1 = require("./jacq");
 const katy_1 = require("./katy");
+const kirlia_1 = require("./kirlia");
 const koraidon_ex_1 = require("./koraidon-ex");
 const magnezone_ex_1 = require("./magnezone-ex");
 const miraidon_ex_1 = require("./miraidon-ex");
@@ -219,6 +220,14 @@ class RaltsIR extends ralts_1.Ralts {
     }
 }
 exports.RaltsIR = RaltsIR;
+class KirliaIR extends kirlia_1.Kirlia {
+    constructor() {
+        super(...arguments);
+        this.setNumber = '212';
+        this.fullName = 'KirliaIR SVI';
+    }
+}
+exports.KirliaIR = KirliaIR;
 class RareCandyHR extends rare_candy_1.RareCandy {
     constructor() {
         super(...arguments);
