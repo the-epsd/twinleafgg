@@ -14,8 +14,7 @@ import {
 } from '../effects/attack-effects';
 import { HealEffect } from '../effects/game-effects';
 import { StateUtils } from '../state-utils';
-
-
+import { AfterAttackEffect } from '../effects/game-phase-effects';
 
 export function attackReducer(store: StoreLike, state: State, effect: Effect): State {
 
@@ -50,6 +49,8 @@ export function attackReducer(store: StoreLike, state: State, effect: Effect): S
       afterDamageEffect.target = effect.target;
       store.reduceEffect(state, afterDamageEffect);
     }
+    const afterAttackEffect = new AfterAttackEffect(effect.player);
+    store.reduceEffect(state, afterAttackEffect);
   }
 
   if (effect instanceof DealDamageEffect) {

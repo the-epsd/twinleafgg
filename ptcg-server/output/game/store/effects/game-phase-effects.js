@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BetweenTurnsEffect = exports.WhoBeginsEffect = exports.EndTurnEffect = exports.ChooseStartingPokemonEffect = exports.DrewTopdeckEffect = exports.BeginTurnEffect = exports.GamePhaseEffects = void 0;
+exports.BetweenTurnsEffect = exports.WhoBeginsEffect = exports.EndTurnEffect = exports.ChoosePrizeEffect = exports.AfterAttackEffect = exports.ChooseStartingPokemonEffect = exports.DrewTopdeckEffect = exports.BeginTurnEffect = exports.GamePhaseEffects = void 0;
 var GamePhaseEffects;
 (function (GamePhaseEffects) {
     GamePhaseEffects["BEGIN_TURN_EFFECT"] = "BEGIN_TURN_EFFECT";
@@ -9,6 +9,8 @@ var GamePhaseEffects;
     GamePhaseEffects["BETWEEN_TURNS_EFFECT"] = "BETWEEN_TURNS_EFFECT";
     GamePhaseEffects["CHOOSE_STARTING_POKEMON_EFFECT"] = "CHOOSE_STARTING_POKEMON_EFFECT";
     GamePhaseEffects["DREW_TOPDECK_EFFECT"] = "DREW_TOPDECK_EFFECT";
+    GamePhaseEffects["CHOOSE_PRIZE_EFFECT"] = "CHOOSE_PRIZE_EFFECT";
+    GamePhaseEffects["AFTER_ATTACK_EFFECT"] = "AFTER_ATTACK_EFFECT";
 })(GamePhaseEffects = exports.GamePhaseEffects || (exports.GamePhaseEffects = {}));
 class BeginTurnEffect {
     constructor(player) {
@@ -35,6 +37,22 @@ class ChooseStartingPokemonEffect {
     }
 }
 exports.ChooseStartingPokemonEffect = ChooseStartingPokemonEffect;
+class AfterAttackEffect {
+    constructor(player) {
+        this.type = GamePhaseEffects.AFTER_ATTACK_EFFECT;
+        this.preventDefault = false;
+        this.player = player;
+    }
+}
+exports.AfterAttackEffect = AfterAttackEffect;
+class ChoosePrizeEffect {
+    constructor(player) {
+        this.type = GamePhaseEffects.CHOOSE_PRIZE_EFFECT;
+        this.preventDefault = false;
+        this.player = player;
+    }
+}
+exports.ChoosePrizeEffect = ChoosePrizeEffect;
 class EndTurnEffect {
     constructor(player) {
         this.type = GamePhaseEffects.END_TURN_EFFECT;

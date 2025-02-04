@@ -8,12 +8,12 @@ export declare class Zubat extends PokemonCard {
     cardType: CardType;
     hp: number;
     weakness: {
-        type: CardType;
+        type: CardType.FIGHTING;
     }[];
-    retreat: CardType[];
+    retreat: CardType.COLORLESS[];
     attacks: {
         name: string;
-        cost: CardType[];
+        cost: CardType.COLORLESS[];
         damage: number;
         text: string;
     }[];
@@ -23,5 +23,6 @@ export declare class Zubat extends PokemonCard {
     cardImage: string;
     name: string;
     fullName: string;
+    usedHideInShadows: boolean;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

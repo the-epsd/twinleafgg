@@ -9,9 +9,9 @@ export declare class LumineonV extends PokemonCard {
     cardType: CardType;
     hp: number;
     weakness: {
-        type: CardType;
+        type: CardType.LIGHTNING;
     }[];
-    retreat: CardType[];
+    retreat: CardType.COLORLESS[];
     powers: {
         name: string;
         powerType: PowerType;
@@ -19,7 +19,7 @@ export declare class LumineonV extends PokemonCard {
     }[];
     attacks: {
         name: string;
-        cost: CardType[];
+        cost: (CardType.WATER | CardType.COLORLESS)[];
         damage: number;
         text: string;
     }[];
@@ -28,5 +28,6 @@ export declare class LumineonV extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
+    usedAquaReturn: boolean;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

@@ -8,8 +8,10 @@ export declare enum GamePhase {
     SETUP = 1,
     PLAYER_TURN = 2,
     ATTACK = 3,
-    BETWEEN_TURNS = 4,
-    FINISHED = 5
+    AFTER_ATTACK = 4,
+    CHOOSE_PRIZES = 5,
+    BETWEEN_TURNS = 6,
+    FINISHED = 7
 }
 export declare enum GameWinner {
     NONE = -1,

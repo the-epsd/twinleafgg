@@ -6,6 +6,8 @@ export var GamePhaseEffects;
     GamePhaseEffects["BETWEEN_TURNS_EFFECT"] = "BETWEEN_TURNS_EFFECT";
     GamePhaseEffects["CHOOSE_STARTING_POKEMON_EFFECT"] = "CHOOSE_STARTING_POKEMON_EFFECT";
     GamePhaseEffects["DREW_TOPDECK_EFFECT"] = "DREW_TOPDECK_EFFECT";
+    GamePhaseEffects["CHOOSE_PRIZE_EFFECT"] = "CHOOSE_PRIZE_EFFECT";
+    GamePhaseEffects["AFTER_ATTACK_EFFECT"] = "AFTER_ATTACK_EFFECT";
 })(GamePhaseEffects || (GamePhaseEffects = {}));
 export class BeginTurnEffect {
     constructor(player) {
@@ -25,6 +27,20 @@ export class DrewTopdeckEffect {
 export class ChooseStartingPokemonEffect {
     constructor(player) {
         this.type = GamePhaseEffects.CHOOSE_STARTING_POKEMON_EFFECT;
+        this.preventDefault = false;
+        this.player = player;
+    }
+}
+export class AfterAttackEffect {
+    constructor(player) {
+        this.type = GamePhaseEffects.AFTER_ATTACK_EFFECT;
+        this.preventDefault = false;
+        this.player = player;
+    }
+}
+export class ChoosePrizeEffect {
+    constructor(player) {
+        this.type = GamePhaseEffects.CHOOSE_PRIZE_EFFECT;
         this.preventDefault = false;
         this.player = player;
     }

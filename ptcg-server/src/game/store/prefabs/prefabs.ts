@@ -5,7 +5,7 @@ import { DealDamageEffect, DiscardCardsEffect, HealTargetEffect, PutDamageEffect
 import { AddSpecialConditionsPowerEffect, CheckProvidedEnergyEffect } from '../effects/check-effects';
 import { Effect } from '../effects/effect';
 import { AttackEffect, EvolveEffect, KnockOutEffect, PowerEffect } from '../effects/game-effects';
-import { EndTurnEffect } from '../effects/game-phase-effects';
+import { AfterAttackEffect, EndTurnEffect } from '../effects/game-phase-effects';
 
 /**
  * 
@@ -24,6 +24,11 @@ export function WAS_ATTACK_USED(effect: Effect, index: number, user: PokemonCard
 export function WAS_POWER_USED(effect: Effect, index: number, user: PokemonCard): effect is PowerEffect {
   return effect instanceof PowerEffect && effect.power === user.powers[index];
 }
+
+export const AFTER_ATTACK = (effect: Effect): effect is AfterAttackEffect => {
+  return effect instanceof AfterAttackEffect;
+};
+
 
 /**
  * 

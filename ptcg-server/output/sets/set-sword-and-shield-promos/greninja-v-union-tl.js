@@ -135,18 +135,18 @@ class GreninjaVUNIONTopLeft extends pokemon_card_1.PokemonCard {
         }
         // Ninja Body
         if (effect instanceof play_card_effects_1.PlayItemEffect && effect.target && effect.target.cards.includes(this)) {
-            const player = game_1.StateUtils.findOwner(state, effect.target);
+            /*const player = StateUtils.findOwner(state, effect.target);
+      
             try {
-                const stub = new game_effects_1.PowerEffect(player, {
-                    name: 'test',
-                    powerType: game_1.PowerType.ABILITY,
-                    text: ''
-                }, this);
-                store.reduceEffect(state, stub);
-            }
-            catch (_a) {
-                return state;
-            }
+              const stub = new PowerEffect(player, {
+                name: 'test',
+                powerType: PowerType.ABILITY,
+                text: ''
+              }, this);
+              store.reduceEffect(state, stub);
+            } catch {
+              return state;
+            }*/
             effect.preventDefault = true;
         }
         // Antidote Jutsu
@@ -161,7 +161,7 @@ class GreninjaVUNIONTopLeft extends pokemon_card_1.PokemonCard {
                 throw new game_1.GameError(game_1.GameMessage.POWER_ALREADY_USED);
             }
             if (opponent.hand.cards.length === 0) {
-                throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
+                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
             state = store.prompt(state, new game_1.ShowCardsPrompt(player.id, game_1.GameMessage.CARDS_SHOWED_BY_EFFECT, opponent.hand.cards), () => { });
             this.marker.addMarker(this.FEEL_THE_WAY_MARKER, this);
@@ -207,7 +207,7 @@ class GreninjaVUNIONTopLeft extends pokemon_card_1.PokemonCard {
             });
         }
         // Waterfall Bind
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[3]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             opponent.active.marker.addMarker(this.WATERFALL_BIND_MARKER, this);

@@ -7,7 +7,9 @@ export declare enum GamePhaseEffects {
     WHO_BEGINS_EFFECT = "WHO_BEGINS_EFFECT",
     BETWEEN_TURNS_EFFECT = "BETWEEN_TURNS_EFFECT",
     CHOOSE_STARTING_POKEMON_EFFECT = "CHOOSE_STARTING_POKEMON_EFFECT",
-    DREW_TOPDECK_EFFECT = "DREW_TOPDECK_EFFECT"
+    DREW_TOPDECK_EFFECT = "DREW_TOPDECK_EFFECT",
+    CHOOSE_PRIZE_EFFECT = "CHOOSE_PRIZE_EFFECT",
+    AFTER_ATTACK_EFFECT = "AFTER_ATTACK_EFFECT"
 }
 export declare class BeginTurnEffect implements Effect {
     readonly type: string;
@@ -23,6 +25,18 @@ export declare class DrewTopdeckEffect implements Effect {
     constructor(player: Player, handCard: Card);
 }
 export declare class ChooseStartingPokemonEffect implements Effect {
+    readonly type: string;
+    preventDefault: boolean;
+    player: Player;
+    constructor(player: Player);
+}
+export declare class AfterAttackEffect implements Effect {
+    readonly type: string;
+    preventDefault: boolean;
+    player: Player;
+    constructor(player: Player);
+}
+export declare class ChoosePrizeEffect implements Effect {
     readonly type: string;
     preventDefault: boolean;
     player: Player;

@@ -8,7 +8,7 @@ import { TrainerType, Stage } from '../../game/store/card/card-types';
 import { CheckHpEffect } from '../../game/store/effects/check-effects';
 import { StateUtils } from '../../game/store/state-utils';
 import { UseStadiumEffect } from '../../game/store/effects/game-effects';
-import { PlayerType } from '../../game';
+import { PlayerType, PokemonCardList } from '../../game';
 
 export class GravityMountain extends TrainerCard {
 
@@ -30,22 +30,19 @@ export class GravityMountain extends TrainerCard {
     'The maximum HP of all Stage 2 Pokémon in play is reduced by 30.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
     if (effect instanceof CheckHpEffect && StateUtils.getStadiumCard(state) === this) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
+      const checkStage2 = (cardList: PokemonCardList) => {
         const pokemonCard = cardList.getPokemonCard();
         if (pokemonCard?.stage === Stage.STAGE_2) {
           effect.hp -= 30;
         }
-      });
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-        const pokemonCard = cardList.getPokemonCard();
-        if (pokemonCard?.stage === Stage.STAGE_2) {
-          effect.hp -= 30;
-        }
-      });
+      };
+
+      effect.player.forEachPokemon(PlayerType.BOTTOM_PLAYER, checkStage2);
+      StateUtils.getOpponent(state, effect.player).forEachPokemon(PlayerType.TOP_PLAYER, checkStage2);
     }
+
 
     if (effect instanceof UseStadiumEffect && StateUtils.getStadiumCard(state) === this) {
       throw new GameError(GameMessage.CANNOT_USE_STADIUM);

@@ -3,6 +3,7 @@ import { CardType, SpecialCondition } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
 import { Effect } from '../effects/effect';
 import { AttackEffect, EvolveEffect, KnockOutEffect, PowerEffect } from '../effects/game-effects';
+import { AfterAttackEffect } from '../effects/game-phase-effects';
 /**
  *
  * A basic effect for checking the use of attacks.
@@ -15,6 +16,7 @@ export declare function WAS_ATTACK_USED(effect: Effect, index: number, user: Pok
  * @returns whether or not a specific ability was used.
  */
 export declare function WAS_POWER_USED(effect: Effect, index: number, user: PokemonCard): effect is PowerEffect;
+export declare const AFTER_ATTACK: (effect: Effect) => effect is AfterAttackEffect;
 /**
  *
  * Checks whether or not the Pokemon just evolved.

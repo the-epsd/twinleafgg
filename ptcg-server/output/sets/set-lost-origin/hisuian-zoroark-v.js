@@ -5,6 +5,7 @@ const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class HisuianZoroarkV extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -34,44 +35,30 @@ class HisuianZoroarkV extends game_1.PokemonCard {
         this.setNumber = '146';
         this.name = 'Hisuian Zoroark V';
         this.fullName = 'Hisuian Zoroark V LOR';
-        this.voidReturn = false;
+        this.usedVoidReturn = false;
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
-            this.voidReturn = true;
+        if (prefabs_1.WAS_ATTACK_USED(effect, 0, this)) {
+            this.usedVoidReturn = true;
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect && this.voidReturn == true) {
+        if (effect instanceof game_phase_effects_1.AfterAttackEffect && this.usedVoidReturn) {
             const player = effect.player;
-            const hasBenched = player.bench.some(b => b.cards.length > 0);
-            if (!hasBenched) {
+            prefabs_1.SWITCH_ACTIVE_WITH_BENCHED(store, state, player);
+            this.usedVoidReturn = false;
+        }
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
+            const player = effect.player;
+            const hasBench = player.bench.some(b => b.cards.length > 0);
+            if (hasBench === false) {
                 return state;
             }
-            state = store.prompt(state, new game_1.ConfirmPrompt(effect.player.id, game_1.GameMessage.WANT_TO_SWITCH_POKEMON), wantToUse => {
-                if (wantToUse) {
-                    return state = store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_NEW_ACTIVE_POKEMON, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { allowCancel: false }), selected => {
-                        if (!selected || selected.length === 0) {
-                            return state;
-                        }
-                        const target = selected[0];
-                        player.switchPokemon(target);
-                        this.voidReturn = false;
-                    });
+            return store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.active, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { superType: card_types_1.SuperType.ENERGY }, { allowCancel: false, min: 1, max: 1 }), transfers => {
+                transfers = transfers || [];
+                for (const transfer of transfers) {
+                    const target = game_1.StateUtils.getTarget(state, player, transfer.to);
+                    player.active.moveCardTo(transfer.card, target);
                 }
             });
-            if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
-                const player = effect.player;
-                const hasBench = player.bench.some(b => b.cards.length > 0);
-                if (hasBench === false) {
-                    return state;
-                }
-                return store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.active, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { superType: card_types_1.SuperType.ENERGY }, { allowCancel: false, min: 1, max: 1 }), transfers => {
-                    transfers = transfers || [];
-                    for (const transfer of transfers) {
-                        const target = game_1.StateUtils.getTarget(state, player, transfer.to);
-                        player.active.moveCardTo(transfer.card, target);
-                    }
-                });
-            }
         }
         return state;
     }

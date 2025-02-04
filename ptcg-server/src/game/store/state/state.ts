@@ -9,6 +9,8 @@ export enum GamePhase {
   SETUP,
   PLAYER_TURN,
   ATTACK,
+  AFTER_ATTACK,
+  CHOOSE_PRIZES,
   BETWEEN_TURNS,
   FINISHED
 }
