@@ -401,7 +401,7 @@ export declare class PalafinSVFA extends Palafin {
     set: string;
     fullName: string;
 }
-export declare class PawmiSVFA extends Palafin {
+export declare class PawmiSVFA extends Pawmi {
     setNumber: string;
     set: string;
     fullName: string;

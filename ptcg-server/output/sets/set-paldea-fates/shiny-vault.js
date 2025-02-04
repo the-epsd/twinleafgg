@@ -667,7 +667,7 @@ class PalafinSVFA extends palafin_1.Palafin {
     }
 }
 exports.PalafinSVFA = PalafinSVFA;
-class PawmiSVFA extends palafin_1.Palafin {
+class PawmiSVFA extends pawmi_1.Pawmi {
     constructor() {
         super(...arguments);
         this.setNumber = '226';

@@ -471,7 +471,7 @@ export class PalafinSVFA extends Palafin {
   public fullName: string = 'PalafinFA PAF';
 }
 
-export class PawmiSVFA extends Palafin {
+export class PawmiSVFA extends Pawmi {
   public setNumber = '226';
   public set = 'PAF';
   public fullName: string = 'PawmiFA PAF';

@@ -83,6 +83,8 @@ const vitality_band_1 = require("./vitality-band");
 const wiglett_1 = require("./wiglett");
 const wugtrio_1 = require("./wugtrio");
 const youngster_1 = require("./youngster");
+const kirlia_1 = require("./kirlia");
+const pawmi_1 = require("./pawmi");
 exports.setScarletAndViolet = [
     new annihilape_1.Annihilape(),
     new arboliva_1.Arboliva(),
@@ -113,6 +115,7 @@ exports.setScarletAndViolet = [
     new judge_1.Judge(),
     new katy_1.Katy(),
     new kingambit_1.Kingambit(),
+    new kirlia_1.Kirlia(),
     new klefki_1.Klefki(),
     new koraidon_ex_1.Koraidonex(),
     new lucario_1.Lucario(),
@@ -128,6 +131,7 @@ exports.setScarletAndViolet = [
     new nemona_1.Nemona(),
     new nest_ball_1.NestBall(),
     new pal_pad_1.PalPad(),
+    new pawmi_1.Pawmi(),
     new pawniard_1.Pawniard(),
     new penny_1.Penny(),
     new picnic_basket_1.PicnicBasket(),
@@ -171,6 +175,7 @@ exports.setScarletAndViolet = [
     new full_art_1.JacqFA(),
     new full_art_1.JacqSIR(),
     new full_art_1.KatyFA(),
+    new full_art_1.KirliaIR(),
     new full_art_1.KoraidonexFA(),
     new full_art_1.KoraidonexSIR(),
     new full_art_1.KoraidonexHR(),
