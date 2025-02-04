@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setSV9 = void 0;
+const rockruff_1 = require("../set-forbidden-light/rockruff");
 const accelgor_1 = require("./accelgor");
 const bagon_1 = require("./bagon");
 const banette_1 = require("./banette");
@@ -37,6 +38,7 @@ const lillies_comfy_1 = require("./lillies-comfy");
 const lillies_cutiefly_1 = require("./lillies-cutiefly");
 const lillies_pearl_1 = require("./lillies-pearl");
 const lillies_ribombee_1 = require("./lillies-ribombee");
+const lycanroc_1 = require("./lycanroc");
 const magmar_1 = require("./magmar");
 const magmortar_1 = require("./magmortar");
 const mamoswine_ex_1 = require("./mamoswine-ex");
@@ -61,6 +63,7 @@ const salamence_ex_1 = require("./salamence-ex");
 const shelgon_1 = require("./shelgon");
 const shelmet_1 = require("./shelmet");
 const shuppet_1 = require("./shuppet");
+const spike_energy_1 = require("./spike-energy");
 const sprigatito_1 = require("./sprigatito");
 const swinub_1 = require("./swinub");
 const torchic_1 = require("./torchic");
@@ -98,6 +101,9 @@ exports.setSV9 = [
     new wailord_1.Wailord(),
     new shelmet_1.Shelmet(),
     new accelgor_1.Accelgor(),
+    new rockruff_1.Rockruff(),
+    new lycanroc_1.Lycanroc(),
+    new spike_energy_1.SpikeEnergy(),
     new lillies_clefairy_ex_1.LilliesClefairyex(),
     new lillies_comfy_1.LilliesComfy(),
     new lillies_pearl_1.LilliesPearl(),

@@ -1,4 +1,5 @@
 import { Card } from '../../game/store/card/card';
+import { Rockruff } from '../set-forbidden-light/rockruff';
 import { Accelgor } from './accelgor';
 import { Bagon } from './bagon';
 import { Banette } from './banette';
@@ -35,6 +36,7 @@ import { LilliesComfy } from './lillies-comfy';
 import { LilliesCutiefly } from './lillies-cutiefly';
 import { LilliesPearl } from './lillies-pearl';
 import { LilliesRibombee } from './lillies-ribombee';
+import { Lycanroc } from './lycanroc';
 import { Magmar } from './magmar';
 import { Magmortar } from './magmortar';
 import { Mamoswineex } from './mamoswine-ex';
@@ -59,6 +61,7 @@ import { Salamenceex } from './salamence-ex';
 import { Shelgon } from './shelgon';
 import { Shelmet } from './shelmet';
 import { Shuppet } from './shuppet';
+import { SpikeEnergy } from './spike-energy';
 import { Sprigatito } from './sprigatito';
 import { Swinub } from './swinub';
 import { Torchic } from './torchic';
@@ -98,6 +101,9 @@ export const setSV9: Card[] = [
   new Wailord(),
   new Shelmet(),
   new Accelgor(),
+  new Rockruff(),
+  new Lycanroc(),
+  new SpikeEnergy(),
 
   new LilliesClefairyex(),
   new LilliesComfy(),
