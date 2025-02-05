@@ -71,6 +71,9 @@ import { Skeledirgeex } from './skeledirge-ex';
 import { Quaquavalex } from './quaquaval-ex';
 import { Copperajahex } from './copperajah-ex';
 import { Dunsparce } from './dunsparce';
+import {Glimmet} from './glimmet';
+import {Glimmet2} from './glimmet-2';
+import {Glimmora} from './glimmora';
 //import { CalamitousSnowyMountain } from './new calamitous-snowy-mountain';
 
 export const setPaldeaEvolved: Card[] = [
@@ -146,6 +149,9 @@ export const setPaldeaEvolved: Card[] = [
   new Skeledirgeex(),
   new Quaquavalex(),
   new Copperajahex(),
+  new Glimmet(),
+  new Glimmet2(),
+  new Glimmora(),
 
   // Full 
   new ArctibaxIR(),

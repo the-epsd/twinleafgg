@@ -55,6 +55,7 @@ import { LisiasAppeal } from './lisias-appeal';
 import { Magnemite } from './magnemite';
 import { Magneton } from './magneton';
 import { Marill } from './marill';
+import {MeddlingMemo} from './meddling-memo';
 import { MegatonBlower } from './megaton-blower';
 import { Meowstic } from './meowstic';
 import { Mesprit } from './mesprit';
@@ -199,6 +200,7 @@ export const setSurgingSparks: Card[] = [
   new TapuKoko(),
   new Quaxly(),
   new Quaquaval(),
+  new MeddlingMemo(),
 
   // Reprints
   new ScrambleSwitchSSP(),

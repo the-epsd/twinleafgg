@@ -57,6 +57,7 @@ const lisias_appeal_1 = require("./lisias-appeal");
 const magnemite_1 = require("./magnemite");
 const magneton_1 = require("./magneton");
 const marill_1 = require("./marill");
+const meddling_memo_1 = require("./meddling-memo");
 const megaton_blower_1 = require("./megaton-blower");
 const meowstic_1 = require("./meowstic");
 const mesprit_1 = require("./mesprit");
@@ -200,6 +201,7 @@ exports.setSurgingSparks = [
     new tapu_koko_1.TapuKoko(),
     new quaxly_1.Quaxly(),
     new quaquaval_1.Quaquaval(),
+    new meddling_memo_1.MeddlingMemo(),
     // Reprints
     new card_images_1.ScrambleSwitchSSP(),
     new card_images_1.CounterGainSSP(),

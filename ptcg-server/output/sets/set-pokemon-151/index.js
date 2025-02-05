@@ -29,6 +29,7 @@ const grabber_1 = require("./grabber");
 const hitmonlee_1 = require("./hitmonlee");
 const ivysaur_1 = require("./ivysaur");
 const jolteon_1 = require("./jolteon");
+const jynx_ex_1 = require("./jynx-ex");
 const kangaskhan_ex_1 = require("./kangaskhan-ex");
 const koffing_1 = require("./koffing");
 const leftovers_1 = require("./leftovers");
@@ -126,6 +127,7 @@ exports.setPokemon151 = [
     new weezing_1.Weezing(),
     new zapdos_ex_1.Zapdosex(),
     new big_air_balloon_1.BigAirBalloon(),
+    new jynx_ex_1.Jynxex(),
     //Full 
     new full_art_1.BulbasaurIR(),
     new full_art_1.IvysaurIR(),

@@ -27,6 +27,7 @@ import { Grabber } from './grabber';
 import { HitmonleeMEW } from './hitmonlee';
 import { Ivysaur } from './ivysaur';
 import { Jolteon } from './jolteon';
+import {Jynxex} from './jynx-ex';
 import { Kangaskhanex } from './kangaskhan-ex';
 import { Koffing } from './koffing';
 import { Leftovers } from './leftovers';
@@ -124,6 +125,7 @@ export const setPokemon151: Card[] = [
   new Weezing(),
   new Zapdosex(),
   new BigAirBalloon(),
+  new Jynxex(),
 
   //Full 
   new BulbasaurIR(),
