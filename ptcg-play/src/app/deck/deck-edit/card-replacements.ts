@@ -103,8 +103,8 @@ export const cardReplacements = [
   //SVI
   { from: 'Pokégear 3.0 SVI 186', to: 'Pokegear SVI 186' },
   { from: 'Pokémon Catcher SVI 187', to: 'Pokemon Catcher SVI 187' },
-  { from: 'Professor\'s Research SVI 189', to: 'Professor\'s Research SVI 189' },
-  { from: 'Professor\'s Research SVI 190', to: 'Professor\'s Research SVI 190' },
+  { from: 'Professor\'s Research SVI 189', to: 'Professor\'s Research SVI 189 189' },
+  { from: 'Professor\'s Research SVI 190', to: 'Professor\'s Research SVI 190 189' },
   { from: 'Riolu SVI 113', to: 'Riolu2 SVI 113' },
 
   //SVI FA
@@ -131,7 +131,7 @@ export const cardReplacements = [
   { from: 'Nest Ball SVI 255', to: 'Nest BallHR SVI 255' },
   { from: 'Penny SVI 239', to: 'PennyFA SVI 239' },
   { from: 'Penny SVI 252', to: 'PennySIR SVI 252' },
-  { from: "Professor's Research SVI 242", to: "Professor's ResearchFA1 SVI 242" },
+  { from: "Professor's Research SVI 240", to: "Professor's ResearchFA1 SVI 242" },
   { from: "Professor's Research SVI 241", to: "Professor's ResearchFA2 SVI 241" },
   { from: 'Ralts SVI 211', to: 'RaltsIR SVI 211' },
   { from: 'Kirlia SVI 212', to: 'KirliaIR SVI 212' },
@@ -564,7 +564,7 @@ export const exportReplacements = [
   { from: 'Pokegear SVI 186', to: 'Pokégear 3.0 SVI 186' },
   { from: 'Pokemon Catcher SVI 187', to: 'Pokémon Catcher SVI 187' },
   { from: 'Professor\'s Research SVI 189 189', to: 'Professor\'s Research SVI 189' },
-  { from: 'Professor\'s Research SVI 190 189', to: 'Professor\'s Research SVI 190 190' },
+  { from: 'Professor\'s Research SVI 190 189', to: 'Professor\'s Research SVI 190' },
   { from: 'Riolu2 SVI 113', to: 'Riolu SVI 113' },
 
   //SVI FA
@@ -591,7 +591,7 @@ export const exportReplacements = [
   { from: 'Nest BallHR SVI 255', to: 'Nest Ball SVI 255' },
   { from: 'PennyFA SVI 239', to: 'Penny SVI 239' },
   { from: 'PennySIR SVI 252', to: 'Penny SVI 252' },
-  { from: "Professor's ResearchFA1 SVI 242", to: "Professor's Research SVI 242" },
+  { from: "Professor's ResearchFA1 SVI 242", to: "Professor's Research SVI 240" },
   { from: "Professor's ResearchFA2 SVI 241", to: "Professor's Research SVI 241" },
   { from: 'RaltsIR SVI 211', to: 'Ralts SVI 211' },
   { from: 'KirliaIR SVI 212', to: 'Kirlia SVI 212' },

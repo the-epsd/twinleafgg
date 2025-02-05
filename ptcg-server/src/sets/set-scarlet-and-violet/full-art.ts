@@ -135,12 +135,12 @@ export class PennySIR extends Penny {
 }
 
 export class ProfessorsResearchFA1 extends ProfessorsResearch {
-  public setNumber = '';
+  public setNumber = '242';
   public fullName = 'Professor\'s ResearchFA1 SVI 242';
 }
 
 export class ProfessorsResearchFA2 extends ProfessorsResearch {
-  public setNumber = '';
+  public setNumber = '241';
   public fullName = 'Professor\'s ResearchFA2 SVI 241';
 }
 

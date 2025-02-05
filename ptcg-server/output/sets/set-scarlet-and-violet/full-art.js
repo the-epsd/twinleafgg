@@ -208,7 +208,7 @@ exports.PennySIR = PennySIR;
 class ProfessorsResearchFA1 extends professors_research_1.ProfessorsResearch {
     constructor() {
         super(...arguments);
-        this.setNumber = '';
+        this.setNumber = '242';
         this.fullName = 'Professor\'s ResearchFA1 SVI 242';
     }
 }
@@ -216,7 +216,7 @@ exports.ProfessorsResearchFA1 = ProfessorsResearchFA1;
 class ProfessorsResearchFA2 extends professors_research_1.ProfessorsResearch {
     constructor() {
         super(...arguments);
-        this.setNumber = '';
+        this.setNumber = '241';
         this.fullName = 'Professor\'s ResearchFA2 SVI 241';
     }
 }

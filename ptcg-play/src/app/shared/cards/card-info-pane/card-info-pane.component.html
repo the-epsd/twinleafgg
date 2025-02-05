@@ -1,6 +1,7 @@
 <div class="ptcg-card-info-pane">
   <div class="ptcg-card-info-image">
     <ptcg-card [card]="card" [class.cardback]="facedown" (click)="showCardImage(card, facedown)"></ptcg-card>
+    <span class="subtitle-set-code">{{card.set}} {{card.setNumber}}</span>
   </div>
 
   <div class="ptcg-card-info-text" *ngIf="!facedown && card.superType === SuperType.POKEMON">
