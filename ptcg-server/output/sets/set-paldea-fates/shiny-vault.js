@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DittoSV = exports.DodrioSV = exports.DoduoSV = exports.PidgeottoSV = exports.PidgeySV = exports.NoibatSV = exports.RevavroomSV = exports.ScizorSV = exports.MurkrowSV = exports.HawluchaSV = exports.LucarioSV = exports.RioluSV = exports.TinkatonSV = exports.TinkatuffSV = exports.TinkatinkSV = exports.MimikyuSV = exports.KlefkiSV = exports.SpiritombSV = exports.MimeJrSV = exports.DrifloonSV = exports.KirliaSV = exports.RaltsSV = exports.XatuSV = exports.NatuSV = exports.CleffaSV = exports.KilowattrelSV = exports.WattrelSV = exports.PawmiSV = exports.ThundurusSV = exports.LuxraySV = exports.BaxcaliburSV = exports.ArctibaxSV = exports.FrigibaxSV = exports.PalafinSV = exports.FinizenSV = exports.StarmieSV = exports.StaryuSV = exports.ArmarougeSV = exports.CharcadetSV = exports.EnteiSV = exports.CharmeleonSV = exports.CharmanderSV = exports.CapsakidSV = exports.ArbolivaSV = exports.DollivSV = exports.SmolivSV = exports.PinecoSV = exports.VileplumeSV = exports.GloomSV = exports.OddishSV = void 0;
-exports.KoraidonexUR = exports.TingLuexUR = exports.MiraidonexUR = exports.ChienPaoexUR = exports.ChiYuexUR = exports.WoChienexUR = exports.PennySV = exports.NemonaSV2 = exports.IonoSV = exports.CliveSV2 = exports.ArvenSV = exports.CharizardexSVSIR = exports.GardevoirexSVSIR = exports.MewexSVSIR = exports.PaldeanStudentSV2 = exports.PaldeanStudentSV1 = exports.NemonaSV = exports.JudgeSV = exports.CliveSV = exports.PawmiSVFA = exports.PalafinSVFA = exports.WugtrioSVFA = exports.SquawkabillyexSV = exports.PidgeotexSV = exports.NoivernexSV = exports.GardevoirexSV = exports.MewexSV = exports.EspathraexSV = exports.ToedscruelexSV = exports.ForretressexSV = exports.FlamigoSV = exports.SkwovetSV = exports.PelipperSV = exports.WingullSV = exports.SnorlaxSV = void 0;
+exports.DoduoSV = exports.PidgeottoSV = exports.PidgeySV = exports.NoibatSV = exports.RevavroomSV = exports.ScizorSV = exports.MurkrowSV = exports.HawluchaSV = exports.LucarioSV = exports.RioluSV = exports.TinkatonSV = exports.TinkatuffSV = exports.TinkatinkSV = exports.MimikyuSV = exports.KlefkiSV = exports.SpiritombSV = exports.MimeJrSV = exports.DrifloonSV = exports.KirliaSV = exports.RaltsSV = exports.XatuSV = exports.NatuSV = exports.CleffaSV = exports.KilowattrelSV = exports.WattrelSV = exports.PawmotSV = exports.PawmoSV = exports.PawmiSV = exports.ThundurusSV = exports.LuxraySV = exports.BaxcaliburSV = exports.ArctibaxSV = exports.FrigibaxSV = exports.PalafinSV = exports.FinizenSV = exports.StarmieSV = exports.StaryuSV = exports.ArmarougeSV = exports.CharcadetSV = exports.EnteiSV = exports.CharmeleonSV = exports.CharmanderSV = exports.CapsakidSV = exports.ArbolivaSV = exports.DollivSV = exports.SmolivSV = exports.PinecoSV = exports.VileplumeSV = exports.GloomSV = exports.OddishSV = void 0;
+exports.KoraidonexUR = exports.TingLuexUR = exports.MiraidonexUR = exports.ChienPaoexUR = exports.ChiYuexUR = exports.WoChienexUR = exports.PennySV = exports.NemonaSV2 = exports.IonoSV = exports.CliveSV2 = exports.ArvenSV = exports.CharizardexSVSIR = exports.GardevoirexSVSIR = exports.MewexSVSIR = exports.PaldeanStudentSV2 = exports.PaldeanStudentSV1 = exports.NemonaSV = exports.JudgeSV = exports.CliveSV = exports.PawmiSVFA = exports.PalafinSVFA = exports.WugtrioSVFA = exports.SquawkabillyexSV = exports.PidgeotexSV = exports.NoivernexSV = exports.GardevoirexSV = exports.MewexSV = exports.EspathraexSV = exports.ToedscruelexSV = exports.ForretressexSV = exports.FlamigoSV = exports.SkwovetSV = exports.PelipperSV = exports.WingullSV = exports.SnorlaxSV = exports.DittoSV = exports.DodrioSV = void 0;
 const charizard_ex_1 = require("../set-obsidian-flames/charizard-ex");
 const cleffa_1 = require("../set-obsidian-flames/cleffa");
 const entei_1 = require("../set-obsidian-flames/entei");
@@ -80,6 +80,8 @@ const ting_lu_ex_1 = require("../set-paldea-evolved/ting-lu-ex");
 const koraidon_ex_1 = require("../set-scarlet-and-violet/koraidon-ex");
 const nemona_1 = require("../set-scarlet-and-violet/nemona");
 const clive_1 = require("./clive");
+const pawmo_1 = require("../set-scarlet-and-violet/pawmo");
+const pawmot_1 = require("../set-scarlet-and-violet/pawmot");
 class OddishSV extends oddish_1.Oddish {
     constructor() {
         super(...arguments);
@@ -287,6 +289,24 @@ class PawmiSV extends pawmi_1.Pawmi {
     }
 }
 exports.PawmiSV = PawmiSV;
+class PawmoSV extends pawmo_1.Pawmo {
+    constructor() {
+        super(...arguments);
+        this.setNumber = '143';
+        this.set = 'PAF';
+        this.fullName = 'Pawmo PAF';
+    }
+}
+exports.PawmoSV = PawmoSV;
+class PawmotSV extends pawmot_1.Pawmot {
+    constructor() {
+        super(...arguments);
+        this.setNumber = '144';
+        this.set = 'PAF';
+        this.fullName = 'Pawmot PAF';
+    }
+}
+exports.PawmotSV = PawmotSV;
 class WattrelSV extends wattrel_1.Wattrel {
     constructor() {
         super(...arguments);

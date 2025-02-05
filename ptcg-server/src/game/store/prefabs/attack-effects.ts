@@ -129,6 +129,32 @@ export function THIS_ATTACK_DOES_X_DAMAGE_FOR_EACH_POKEMON_IN_YOUR_DISCARD_PILE(
   effect.damage = pokemonCount * damage;
 }
 
+export function THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_POKEMON(
+  damage: number,
+  effect: AttackEffect,
+  store: StoreLike,
+  state: State
+) {
+  const player = effect.player;
+  const opponent = StateUtils.getOpponent(state, player);
+
+  const targets = opponent.getPokemonInPlay();
+  if (targets.length === 0)
+    return state;
+
+  return store.prompt(state, new ChoosePokemonPrompt(
+    player.id,
+    GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+    PlayerType.TOP_PLAYER,
+    [SlotType.BENCH, SlotType.ACTIVE],
+  ), selected => {
+    const target = selected[0];
+    const damageEffect = new PutDamageEffect(effect, damage);
+    damageEffect.target = target;
+    store.reduceEffect(state, damageEffect);
+  });
+}
+
 export function THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_BENCHED_POKEMON(
   damage: number, 
   effect: AttackEffect, 

@@ -85,6 +85,8 @@ const wugtrio_1 = require("./wugtrio");
 const youngster_1 = require("./youngster");
 const kirlia_1 = require("./kirlia");
 const pawmi_1 = require("./pawmi");
+const pawmo_1 = require("./pawmo");
+const pawmot_1 = require("./pawmot");
 exports.setScarletAndViolet = [
     new annihilape_1.Annihilape(),
     new arboliva_1.Arboliva(),
@@ -132,6 +134,8 @@ exports.setScarletAndViolet = [
     new nest_ball_1.NestBall(),
     new pal_pad_1.PalPad(),
     new pawmi_1.Pawmi(),
+    new pawmo_1.Pawmo(),
+    new pawmot_1.Pawmot(),
     new pawniard_1.Pawniard(),
     new penny_1.Penny(),
     new picnic_basket_1.PicnicBasket(),
@@ -166,6 +170,7 @@ exports.setScarletAndViolet = [
     new quaxwell_1.Quaxwell(),
     //Alt-s
     new full_art_1.ArmarougeIR(),
+    new full_art_1.PawmotIR(),
     new full_art_1.ArvenFA(),
     new full_art_1.ArvenSIR(),
     new full_art_1.FightingEnergyHR(),

@@ -24,6 +24,7 @@ const ninetales_1 = require("./ninetales");
 const oddish_1 = require("./oddish");
 const palafin_1 = require("./palafin");
 const palpitoad_1 = require("./palpitoad");
+const pawmot_ex_1 = require("./pawmot-ex");
 const pidgeot_ex_1 = require("./pidgeot-ex");
 const pidgeotto_1 = require("./pidgeotto");
 const pidgey_1 = require("./pidgey");
@@ -65,6 +66,7 @@ exports.setObsidianFlames = [
     new oddish_1.Oddish(),
     new palafin_1.Palafin(),
     new palpitoad_1.Palpitoad(),
+    new pawmot_ex_1.Pawmotex(),
     new pidgeotto_1.Pidgeotto(),
     new pidgeot_ex_1.Pidgeotex(),
     new pidgey_1.Pidgey(),

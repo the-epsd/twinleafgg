@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { SnorlaxIR } from './alt-arts';
+import { PawmotSVP, SnorlaxIR } from './alt-arts';
 import { Ampharosex } from './ampharos-ex';
 import { Charmander } from './charmander';
 import { Mimikyuex } from './mimikyu-ex';
@@ -17,5 +17,6 @@ export const setScarletAndVioletPromos: Card[] = [
   new TMMachine(),
 
   // Alt arts
+  new PawmotSVP(),
   new SnorlaxIR(),
 ];

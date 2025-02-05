@@ -76,6 +76,8 @@ import { TingLuex } from '../set-paldea-evolved/ting-lu-ex';
 import { Koraidonex } from '../set-scarlet-and-violet/koraidon-ex';
 import { Nemona } from '../set-scarlet-and-violet/nemona';
 import { Clive } from './clive';
+import { Pawmo } from '../set-scarlet-and-violet/pawmo';
+import { Pawmot } from '../set-scarlet-and-violet/pawmot';
 export declare class OddishSV extends Oddish {
     setNumber: string;
     set: string;
@@ -187,6 +189,16 @@ export declare class ThundurusSV extends Thundurus {
     fullName: string;
 }
 export declare class PawmiSV extends Pawmi {
+    setNumber: string;
+    set: string;
+    fullName: string;
+}
+export declare class PawmoSV extends Pawmo {
+    setNumber: string;
+    set: string;
+    fullName: string;
+}
+export declare class PawmotSV extends Pawmot {
     setNumber: string;
     set: string;
     fullName: string;

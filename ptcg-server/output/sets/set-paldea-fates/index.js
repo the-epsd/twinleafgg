@@ -79,6 +79,8 @@ exports.setPaldeaFates = [
     new shiny_vault_1.LuxraySV(),
     new shiny_vault_1.ThundurusSV(),
     new shiny_vault_1.PawmiSV(),
+    new shiny_vault_1.PawmoSV(),
+    new shiny_vault_1.PawmotSV(),
     new shiny_vault_1.WattrelSV(),
     new shiny_vault_1.KilowattrelSV(),
     new shiny_vault_1.CleffaSV(),

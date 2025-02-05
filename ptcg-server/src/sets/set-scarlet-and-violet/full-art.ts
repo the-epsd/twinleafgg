@@ -11,6 +11,7 @@ import { Magnezoneex } from './magnezone-ex';
 import { Miraidonex } from './miraidon-ex';
 import { Miriam } from './miriam';
 import { NestBall } from './nest-ball';
+import { Pawmot } from './pawmot';
 import { Penny } from './penny';
 import { ProfessorsResearch } from './professors-research';
 import { Ralts } from './ralts';
@@ -21,6 +22,11 @@ import { TeamStarGrunt } from './team-star-grunt';
 export class ArmarougeIR extends Armarouge {
   public setNumber = '203';
   public fullName: string = 'ArmarougeIR SVI';
+}
+
+export class PawmotIR extends Pawmot {
+  public setNumber = '209';
+  public fullName: string = 'PawmotIR SVI';
 }
 
 export class ArvenFA extends Arven {

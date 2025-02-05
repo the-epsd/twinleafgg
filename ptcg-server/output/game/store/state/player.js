@@ -107,7 +107,7 @@ class Player {
     getPokemonInPlay() {
         let list = [];
         this.forEachPokemon(play_card_action_1.PlayerType.BOTTOM_PLAYER, (cardList, pokemonCard, target) => {
-            if (cardList)
+            if (cardList.cards.length !== 0)
                 list.push(cardList);
         });
         return list;

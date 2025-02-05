@@ -13,7 +13,7 @@ import { Kilowattrel } from './kilowattrel';
 import { MimeJr } from './mime-jr';
 import { MoonlightHill } from './moonlight-hill';
 import { Scovillainex } from './scovillain-ex';
-import { ArbolivaSV, ArctibaxSV, ArmarougeSV, ArvenSV, BaxcaliburSV, CapsakidSV, CharcadetSV, CharizardexSVSIR, CharmanderSV, CharmeleonSV, ChienPaoexUR, ChiYuexUR, CleffaSV, CliveSV, CliveSV2, DittoSV, DodrioSV, DoduoSV, DollivSV, DrifloonSV, EnteiSV, EspathraexSV, FinizenSV, FlamigoSV, ForretressexSV, FrigibaxSV, GardevoirexSV, GardevoirexSVSIR, GloomSV, HawluchaSV, IonoSV, JudgeSV, KilowattrelSV, KirliaSV, KlefkiSV, KoraidonexUR, LucarioSV, LuxraySV, MewexSV, MewexSVSIR, MimeJrSV, MimikyuSV, MiraidonexUR, MurkrowSV, NatuSV, NemonaSV, NemonaSV2, NoibatSV, NoivernexSV, OddishSV, PalafinSV, PalafinSVFA, PaldeanStudentSV1, PaldeanStudentSV2, PawmiSV, PawmiSVFA, PelipperSV, PennySV, PidgeotexSV, PidgeottoSV, PidgeySV, PinecoSV, RaltsSV, RevavroomSV, RioluSV, ScizorSV, SkwovetSV, SmolivSV, SnorlaxSV, SpiritombSV, SquawkabillyexSV, StarmieSV, StaryuSV, ThundurusSV, TingLuexUR, TinkatinkSV, TinkatonSV, TinkatuffSV, ToedscruelexSV, VileplumeSV, WattrelSV, WingullSV, WoChienexUR, WugtrioSVFA, XatuSV } from './shiny-vault';
+import { ArbolivaSV, ArctibaxSV, ArmarougeSV, ArvenSV, BaxcaliburSV, CapsakidSV, CharcadetSV, CharizardexSVSIR, CharmanderSV, CharmeleonSV, ChienPaoexUR, ChiYuexUR, CleffaSV, CliveSV, CliveSV2, DittoSV, DodrioSV, DoduoSV, DollivSV, DrifloonSV, EnteiSV, EspathraexSV, FinizenSV, FlamigoSV, ForretressexSV, FrigibaxSV, GardevoirexSV, GardevoirexSVSIR, GloomSV, HawluchaSV, IonoSV, JudgeSV, KilowattrelSV, KirliaSV, KlefkiSV, KoraidonexUR, LucarioSV, LuxraySV, MewexSV, MewexSVSIR, MimeJrSV, MimikyuSV, MiraidonexUR, MurkrowSV, NatuSV, NemonaSV, NemonaSV2, NoibatSV, NoivernexSV, OddishSV, PalafinSV, PalafinSVFA, PaldeanStudentSV1, PaldeanStudentSV2, PawmiSV, PawmiSVFA, PawmoSV, PawmotSV, PelipperSV, PennySV, PidgeotexSV, PidgeottoSV, PidgeySV, PinecoSV, RaltsSV, RevavroomSV, RioluSV, ScizorSV, SkwovetSV, SmolivSV, SnorlaxSV, SpiritombSV, SquawkabillyexSV, StarmieSV, StaryuSV, ThundurusSV, TingLuexUR, TinkatinkSV, TinkatonSV, TinkatuffSV, ToedscruelexSV, VileplumeSV, WattrelSV, WingullSV, WoChienexUR, WugtrioSVFA, XatuSV } from './shiny-vault';
 import { StudentsInPaldea } from './students-in-paldea';
 import { TechnicalMachineCrisisPunch } from './technical-machine-crisis-punch';
 
@@ -80,6 +80,8 @@ export const setPaldeaFates: Card[] = [
   new LuxraySV(),
   new ThundurusSV(),
   new PawmiSV(),
+  new PawmoSV(),
+  new PawmotSV(),
   new WattrelSV(),
   new KilowattrelSV(),
   new CleffaSV(),

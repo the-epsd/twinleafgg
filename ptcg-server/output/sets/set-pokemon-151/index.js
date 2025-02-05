@@ -60,6 +60,7 @@ const venonat_1 = require("./venonat");
 const venusaur_ex_1 = require("./venusaur-ex");
 const vileplume_1 = require("./vileplume");
 const wartortle_1 = require("./wartortle");
+const weedle_1 = require("./weedle");
 const weezing_1 = require("./weezing");
 const zapdos_ex_1 = require("./zapdos-ex");
 exports.setPokemon151 = [
@@ -121,6 +122,7 @@ exports.setPokemon151 = [
     new venusaur_ex_1.Venusaurex(),
     new vileplume_1.Vileplume(),
     new wartortle_1.Wartortle(),
+    new weedle_1.Weedle(),
     new weezing_1.Weezing(),
     new zapdos_ex_1.Zapdosex(),
     new big_air_balloon_1.BigAirBalloon(),

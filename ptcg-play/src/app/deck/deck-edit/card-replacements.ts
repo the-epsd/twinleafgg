@@ -63,17 +63,20 @@ export const cardReplacements = [
   //STS
   { from: 'Pokémon Ranger STS 104', to: 'Pokemon Ranger STS 104' },
 
-  //CES
-  { from: 'Oricorio CES 30', to: 'Oricorio SHF 30' },
-
   //UPR
   { from: 'Mt. Coronet UPR 130', to: 'Mt. Coronet RCL 130' },
 
-  //UNB
-  { from: 'Porygon-Z UNB 157', to: 'Porygon-Z PAL 157' },
+  //CES
+  { from: 'Oricorio CES 30', to: 'Oricorio SHF 30' },
 
   //LOT
   { from: 'Lost Blender LOT 181', to: 'Lost Blender LOR 181' },
+
+  //TEU
+  { from: 'Gengar & Mimikyu-GX TEU 53', to: 'Gengar & Mimikyu-GX SM9 53' },
+
+  //UNB
+  { from: 'Porygon-Z UNB 157', to: 'Porygon-Z PAL 157' },
 
   //RCL
   { from: 'Horror Psychic Energy RCL 172', to: 'Horror Psychic Energy DAA 172' },
@@ -106,6 +109,7 @@ export const cardReplacements = [
 
   //SVI FA
   { from: 'Armarouge SVI 203', to: 'ArmarougeIR SVI 203' },
+  { from: 'Pawmot SVI 209', to: 'PawmotIR SVI 209' },
   { from: 'Arven SVI 235', to: 'ArvenFA SVI 235' },
   { from: 'Arven SVI 249', to: 'ArvenSIR SVI 249' },
   { from: 'Fighting Energy SVI 258', to: 'Fighting EnergyHR SVI 258' },
@@ -523,17 +527,20 @@ export const exportReplacements = [
   //SLG
   { from: 'Warp Energy SHL 70', to: 'Warp Energy SLG 70' },
 
-  //CES
-  { from: 'Oricorio SHF 30', to: 'Oricorio CES 30' },
-
   //UPR
   { from: 'Mt. Coronet RCL 130', to: 'Mt. Coronet UPR 130' },
 
-  //UNB
-  { from: 'Porygon-Z PAL 157', to: 'Porygon-Z UNB 157' },
+  //CES
+  { from: 'Oricorio SHF 30', to: 'Oricorio CES 30' },
 
   //LOT
   { from: 'Lost Blender LOR 181', to: 'Lost Blender LOT 181' },
+
+  //TEU
+  { from: 'Gengar & Mimikyu-GX SM9 53', to: 'Gengar & Mimikyu-GX TEU 53' },
+
+  //UNB
+  { from: 'Porygon-Z PAL 157', to: 'Porygon-Z UNB 157' },
 
   //RCL
   { from: 'Horror Psychic Energy DAA 172', to: 'Horror Psychic Energy RCL 172' },
@@ -562,6 +569,7 @@ export const exportReplacements = [
 
   //SVI FA
   { from: 'ArmarougeIR SVI 203', to: 'Armarouge SVI 203' },
+  { from: 'PawmotIR SVI 209', to: 'Pawmot SVI 209' },
   { from: 'ArvenFA SVI 235', to: 'Arven SVI 235' },
   { from: 'ArvenSIR SVI 249', to: 'Arven SVI 249' },
   { from: 'Fighting EnergyHR SVI 258', to: 'Fighting Energy SVI 258' },
