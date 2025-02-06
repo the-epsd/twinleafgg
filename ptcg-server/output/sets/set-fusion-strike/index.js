@@ -38,6 +38,7 @@ const schoolgirl_1 = require("./schoolgirl");
 const shauna_1 = require("./shauna");
 const shellder_1 = require("./shellder");
 const shelmet_1 = require("./shelmet");
+const skaters_park_1 = require("./skaters-park");
 const starmie_1 = require("./starmie");
 const staryu_1 = require("./staryu");
 const swampert_1 = require("./swampert");
@@ -84,6 +85,7 @@ exports.setFusionStrike = [
     new accelgor_1.Accelgor(),
     new shellder_1.Shellder(),
     new shelmet_1.Shelmet(),
+    new skaters_park_1.SkatersPark(),
     new starmie_1.Starmie(),
     new staryu_1.Staryu(),
     new swampert_1.Swampert(),

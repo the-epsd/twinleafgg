@@ -6,6 +6,7 @@ const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class IronThornsex extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -70,10 +71,10 @@ class IronThornsex extends pokemon_card_1.PokemonCard {
             }
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
-            effect.player.marker.addMarker(this.BOLT_CYCLONE_MARKER, this);
+            prefabs_1.ADD_MARKER(this.BOLT_CYCLONE_MARKER, effect.player, this);
             return state;
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.BOLT_CYCLONE_MARKER, this)) {
+        if (effect instanceof game_phase_effects_1.AfterAttackEffect && prefabs_1.HAS_MARKER(this.BOLT_CYCLONE_MARKER, effect.player, this)) {
             const player = effect.player;
             const hasBench = player.bench.some(b => b.cards.length > 0);
             if (hasBench === false) {
@@ -86,9 +87,9 @@ class IronThornsex extends pokemon_card_1.PokemonCard {
                     const target = game_1.StateUtils.getTarget(state, player, transfer.to);
                     player.active.moveCardTo(transfer.card, target);
                 }
-                effect.player.marker.removeMarker(this.BOLT_CYCLONE_MARKER, this);
             });
         }
+        prefabs_1.REMOVE_MARKER_AT_END_OF_TURN(effect, this.BOLT_CYCLONE_MARKER, this);
         return state;
     }
 }

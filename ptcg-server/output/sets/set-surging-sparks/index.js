@@ -18,6 +18,7 @@ const ceruledge_1 = require("./ceruledge");
 const ceruledge_ex_1 = require("./ceruledge-ex");
 const charcadet_1 = require("./charcadet");
 const cherish_carrier_1 = require("./cherish-carrier");
+const chien_pao_1 = require("./chien-pao");
 const chill_teaser_toy_1 = require("./chill-teaser-toy");
 const clemonts_quick_wit_1 = require("./clemonts-quick-wit");
 const cofagrigus_1 = require("./cofagrigus");
@@ -172,6 +173,7 @@ exports.setSurgingSparks = [
     new rellor_1.Rellor(),
     new rabsca_1.Rabsca(),
     new wo_chien_1.Wochien(),
+    new chien_pao_1.ChienPao(),
     new dusk_ball_1.DuskBall(),
     new gimmighoul_1.Gimmighoul(),
     new energy_search_pro_1.EnergySearchPro(),

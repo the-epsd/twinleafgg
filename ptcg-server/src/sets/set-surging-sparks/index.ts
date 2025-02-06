@@ -16,6 +16,7 @@ import { Ceruledge } from './ceruledge';
 import { Ceruledgeex } from './ceruledge-ex';
 import { Charcadet } from './charcadet';
 import { CherishCarrier } from './cherish-carrier';
+import { ChienPao } from './chien-pao';
 import { ChillTeaserToy } from './chill-teaser-toy';
 import { ClemontsQuickWit } from './clemonts-quick-wit';
 import { Cofagrigus } from './cofagrigus';
@@ -55,7 +56,7 @@ import { LisiasAppeal } from './lisias-appeal';
 import { Magnemite } from './magnemite';
 import { Magneton } from './magneton';
 import { Marill } from './marill';
-import {MeddlingMemo} from './meddling-memo';
+import { MeddlingMemo } from './meddling-memo';
 import { MegatonBlower } from './megaton-blower';
 import { Meowstic } from './meowstic';
 import { Mesprit } from './mesprit';
@@ -171,6 +172,7 @@ export const setSurgingSparks: Card[] = [
   new Rellor(),
   new Rabsca(),
   new Wochien(),
+  new ChienPao(),
   new DuskBall(),
   new Gimmighoul(),
   new EnergySearchPro(),

@@ -3,7 +3,8 @@ import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-
 import { PowerType, StoreLike, State, GameError, GameMessage, AttachEnergyPrompt, PlayerType, SlotType, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { AfterAttackEffect } from '../../game/store/effects/game-phase-effects';
+import { ADD_MARKER, HAS_MARKER, REMOVE_MARKER_AT_END_OF_TURN } from '../../game/store/prefabs/prefabs';
 
 export class IronThornsex extends PokemonCard {
 
@@ -87,11 +88,11 @@ export class IronThornsex extends PokemonCard {
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      effect.player.marker.addMarker(this.BOLT_CYCLONE_MARKER, this);
+      ADD_MARKER(this.BOLT_CYCLONE_MARKER, effect.player, this);
       return state;
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.BOLT_CYCLONE_MARKER, this)) {
+    if (effect instanceof AfterAttackEffect && HAS_MARKER(this.BOLT_CYCLONE_MARKER, effect.player, this)) {
       const player = effect.player;
       const hasBench = player.bench.some(b => b.cards.length > 0);
 
@@ -114,9 +115,10 @@ export class IronThornsex extends PokemonCard {
           const target = StateUtils.getTarget(state, player, transfer.to);
           player.active.moveCardTo(transfer.card, target);
         }
-        effect.player.marker.removeMarker(this.BOLT_CYCLONE_MARKER, this);
       });
     }
+
+    REMOVE_MARKER_AT_END_OF_TURN(effect, this.BOLT_CYCLONE_MARKER, this);
 
     return state;
   }
