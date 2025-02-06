@@ -66,7 +66,7 @@ class Charizard extends pokemon_card_1.PokemonCard {
                 deckTop.moveTo(player.discard);
             });
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.BATTLE_SENSE_MARKER, this)) {
             effect.player.marker.removeMarker(this.BATTLE_SENSE_MARKER, this);
         }
         return state;

@@ -65,6 +65,20 @@ import { MimeJr } from './mime-jr';
 import { StudentsInPaldea } from './students-in-paldea';
 import { Snorlax } from '../set-pokemon-151/snorlax';
 import { Tinkatuff } from '../set-paldea-evolved/tinkatuff';
+import { Kirlia } from '../set-scarlet-and-violet/kirlia';
+import { Pawmi } from '../set-scarlet-and-violet/pawmi';
+import { Wugtrio } from '../set-scarlet-and-violet/wugtrio';
+import { WoChienex } from '../set-paldea-evolved/wo-chien-ex';
+import { ChiYuex } from '../set-paldea-evolved/chi-yu-ex';
+import { ChienPaoex } from '../set-paldea-evolved/chien-pao-ex';
+import { Miraidonex } from '../set-scarlet-and-violet/miraidon-ex';
+import { TingLuex } from '../set-paldea-evolved/ting-lu-ex';
+import { Koraidonex } from '../set-scarlet-and-violet/koraidon-ex';
+import { Nemona } from '../set-scarlet-and-violet/nemona';
+import { Clive } from './clive';
+import { Pawmo } from '../set-scarlet-and-violet/pawmo';
+import { Pawmot } from '../set-scarlet-and-violet/pawmot';
+import { Slowpoke } from '../set-scarlet-and-violet/slowpoke';
 export declare class OddishSV extends Oddish {
     setNumber: string;
     set: string;
@@ -130,6 +144,11 @@ export declare class ArmarougeSV extends Armarouge {
     set: string;
     fullName: string;
 }
+export declare class SlowpokeSV extends Slowpoke {
+    setNumber: string;
+    set: string;
+    fullName: string;
+}
 export declare class StaryuSV extends Staryu {
     setNumber: string;
     set: string;
@@ -175,6 +194,21 @@ export declare class ThundurusSV extends Thundurus {
     set: string;
     fullName: string;
 }
+export declare class PawmiSV extends Pawmi {
+    setNumber: string;
+    set: string;
+    fullName: string;
+}
+export declare class PawmoSV extends Pawmo {
+    setNumber: string;
+    set: string;
+    fullName: string;
+}
+export declare class PawmotSV extends Pawmot {
+    setNumber: string;
+    set: string;
+    fullName: string;
+}
 export declare class WattrelSV extends Wattrel {
     setNumber: string;
     set: string;
@@ -201,6 +235,11 @@ export declare class XatuSV extends Xatu {
     fullName: string;
 }
 export declare class RaltsSV extends Ralts {
+    setNumber: string;
+    set: string;
+    fullName: string;
+}
+export declare class KirliaSV extends Kirlia {
     setNumber: string;
     set: string;
     fullName: string;
@@ -246,101 +285,191 @@ export declare class TinkatonSV extends Tinkaton {
     fullName: string;
 }
 export declare class RioluSV extends Riolu2 {
-    cardImage: string;
+    setNumber: string;
+    set: string;
+    fullName: string;
 }
 export declare class LucarioSV extends Lucario {
-    cardImage: string;
+    setNumber: string;
+    set: string;
+    fullName: string;
 }
 export declare class HawluchaSV extends Hawlucha {
-    cardImage: string;
+    setNumber: string;
+    set: string;
+    fullName: string;
 }
 export declare class MurkrowSV extends Murkrow {
-    cardImage: string;
+    setNumber: string;
+    set: string;
+    fullName: string;
 }
 export declare class ScizorSV extends Scizor {
-    cardImage: string;
+    setNumber: string;
+    set: string;
+    fullName: string;
 }
 export declare class RevavroomSV extends Revavroom {
-    cardImage: string;
+    setNumber: string;
+    set: string;
+    fullName: string;
 }
 export declare class NoibatSV extends Noibat {
-    cardImage: string;
+    setNumber: string;
+    set: string;
+    fullName: string;
 }
 export declare class PidgeySV extends Pidgey {
-    cardImage: string;
+    setNumber: string;
+    set: string;
+    fullName: string;
 }
 export declare class PidgeottoSV extends Pidgeotto {
-    cardImage: string;
+    setNumber: string;
+    set: string;
+    fullName: string;
 }
 export declare class DoduoSV extends Doduo {
-    cardImage: string;
+    setNumber: string;
+    set: string;
+    fullName: string;
 }
 export declare class DodrioSV extends Dodrio {
-    cardImage: string;
+    setNumber: string;
+    set: string;
+    fullName: string;
 }
 export declare class DittoSV extends Ditto {
-    cardImage: string;
+    setNumber: string;
+    set: string;
+    fullName: string;
 }
 export declare class SnorlaxSV extends Snorlax {
-    fullName: string;
-    set: string;
     setNumber: string;
+    set: string;
+    fullName: string;
 }
 export declare class WingullSV extends Wingull {
-    cardImage: string;
+    setNumber: string;
+    set: string;
+    fullName: string;
 }
 export declare class PelipperSV extends Pelipper {
-    cardImage: string;
+    setNumber: string;
+    set: string;
+    fullName: string;
 }
 export declare class SkwovetSV extends Skwovet {
-    cardImage: string;
+    setNumber: string;
+    set: string;
+    fullName: string;
 }
 export declare class FlamigoSV extends Flamigo {
-    cardImage: string;
+    setNumber: string;
+    set: string;
+    fullName: string;
 }
 export declare class ForretressexSV extends Forretressex {
-    cardImage: string;
+    setNumber: string;
+    set: string;
+    fullName: string;
 }
 export declare class ToedscruelexSV extends Toedscruelex {
-    cardImage: string;
+    setNumber: string;
+    set: string;
+    fullName: string;
 }
-export declare class EspathraexSV2 extends Espathraex {
-    cardImage: string;
+export declare class EspathraexSV extends Espathraex {
+    setNumber: string;
+    set: string;
+    fullName: string;
 }
 export declare class MewexSV extends Mewex {
-    cardImage: string;
+    setNumber: string;
+    set: string;
+    fullName: string;
 }
 export declare class GardevoirexSV extends Gardevoirex {
-    cardImage: string;
+    setNumber: string;
+    set: string;
+    fullName: string;
 }
 export declare class NoivernexSV extends Noivernex {
-    cardImage: string;
+    setNumber: string;
+    set: string;
+    fullName: string;
 }
 export declare class PidgeotexSV extends Pidgeotex {
-    cardImage: string;
+    setNumber: string;
+    set: string;
+    fullName: string;
 }
 export declare class SquawkabillyexSV extends Squawkabillyex {
-    cardImage: string;
+    setNumber: string;
+    set: string;
+    fullName: string;
+}
+export declare class WugtrioSVFA extends Wugtrio {
+    setNumber: string;
+    set: string;
+    fullName: string;
+}
+export declare class PalafinSVFA extends Palafin {
+    setNumber: string;
+    set: string;
+    fullName: string;
+}
+export declare class PawmiSVFA extends Pawmi {
+    setNumber: string;
+    set: string;
+    fullName: string;
+}
+export declare class CliveSV extends Clive {
+    setNumber: string;
+    set: string;
+    fullName: string;
 }
 export declare class JudgeSV extends Judge {
-    cardImage: string;
+    setNumber: string;
+    set: string;
+    fullName: string;
+}
+export declare class NemonaSV extends Nemona {
+    setNumber: string;
+    set: string;
+    fullName: string;
 }
 export declare class PaldeanStudentSV1 extends StudentsInPaldea {
-    cardImage: string;
+    setNumber: string;
+    set: string;
+    fullName: string;
 }
 export declare class PaldeanStudentSV2 extends StudentsInPaldea {
-    cardImage: string;
+    setNumber: string;
+    set: string;
+    fullName: string;
 }
 export declare class MewexSVSIR extends Mewex {
-    cardImage: string;
+    setNumber: string;
+    set: string;
+    fullName: string;
 }
 export declare class GardevoirexSVSIR extends Gardevoirex {
-    cardImage: string;
+    setNumber: string;
+    set: string;
+    fullName: string;
 }
 export declare class CharizardexSVSIR extends Charizardex {
-    cardImage: string;
+    setNumber: string;
+    set: string;
+    fullName: string;
 }
 export declare class ArvenSV extends Arven {
+    setNumber: string;
+    set: string;
+    fullName: string;
+}
+export declare class CliveSV2 extends Clive {
     setNumber: string;
     set: string;
     fullName: string;
@@ -350,7 +479,42 @@ export declare class IonoSV extends Iono {
     set: string;
     fullName: string;
 }
+export declare class NemonaSV2 extends Nemona {
+    setNumber: string;
+    set: string;
+    fullName: string;
+}
 export declare class PennySV extends Penny {
+    setNumber: string;
+    set: string;
+    fullName: string;
+}
+export declare class WoChienexUR extends WoChienex {
+    setNumber: string;
+    set: string;
+    fullName: string;
+}
+export declare class ChiYuexUR extends ChiYuex {
+    setNumber: string;
+    set: string;
+    fullName: string;
+}
+export declare class ChienPaoexUR extends ChienPaoex {
+    setNumber: string;
+    set: string;
+    fullName: string;
+}
+export declare class MiraidonexUR extends Miraidonex {
+    setNumber: string;
+    set: string;
+    fullName: string;
+}
+export declare class TingLuexUR extends TingLuex {
+    setNumber: string;
+    set: string;
+    fullName: string;
+}
+export declare class KoraidonexUR extends Koraidonex {
     setNumber: string;
     set: string;
     fullName: string;

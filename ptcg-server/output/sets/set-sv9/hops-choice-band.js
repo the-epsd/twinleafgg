@@ -17,7 +17,7 @@ class HopsChoiceBand extends trainer_card_1.TrainerCard {
         this.regulationMark = 'I';
         this.name = 'Hop\'s Choice Band';
         this.fullName = 'Hop\'s Choice Band SV9';
-        this.text = 'When the Hop\'s Pokémon this card is attached to uses an attack, that attack costs 1 [C] Energy less and does 30 more damage to your opponent’s Active Pokémon (before applying Weakness and Resistance).';
+        this.text = 'When the Hop\'s Pokémon this card is attached to uses an attack, that attack costs 1 [C] Energy less and does 30 more damage to your opponent\'s Active Pokémon (before applying Weakness and Resistance).';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof check_effects_1.CheckAttackCostEffect && effect.player.active.cards.includes(this)) {
@@ -34,10 +34,9 @@ class HopsChoiceBand extends trainer_card_1.TrainerCard {
         }
         if (effect instanceof attack_effects_1.DealDamageEffect && effect.source.cards.includes(this)) {
             const player = effect.player;
-            const opponent = state_utils_1.StateUtils.getOpponent(state, effect.player);
-            if (effect.target !== player.active && effect.target !== opponent.active) {
+            const opponent = state_utils_1.StateUtils.getOpponent(state, player);
+            if (effect.target !== opponent.active)
                 return state;
-            }
             const sourceCard = effect.source.getPokemonCard();
             if (sourceCard && sourceCard.tags.includes(card_types_1.CardTag.HOPS)) {
                 effect.damage += 30;

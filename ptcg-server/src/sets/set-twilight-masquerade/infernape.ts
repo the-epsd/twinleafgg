@@ -58,7 +58,7 @@ export class Infernape extends PokemonCard {
       player.marker.removeMarker(this.TAR_GENERATOR_MARKER, this);
     }
 
-    if (effect instanceof EndTurnEffect) {
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.TAR_GENERATOR_MARKER, this)) {
       effect.player.marker.removeMarker(this.TAR_GENERATOR_MARKER, this);
     }
 

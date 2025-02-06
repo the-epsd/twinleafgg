@@ -17,6 +17,7 @@ const cardManager = CardManager.getInstance();
 cardManager.defineSet(sets.setBaseSet);
 cardManager.defineSet(sets.setJungle);
 cardManager.defineSet(sets.setFossil);
+cardManager.defineSet(sets.setTeamRocket);
 cardManager.defineSet(sets.setWOTCPromos);
 cardManager.defineSet(sets.setVendingSeries);
 

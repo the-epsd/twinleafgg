@@ -16,6 +16,7 @@ import { Ceruledge } from './ceruledge';
 import { Ceruledgeex } from './ceruledge-ex';
 import { Charcadet } from './charcadet';
 import { CherishCarrier } from './cherish-carrier';
+import { ChienPao } from './chien-pao';
 import { ChillTeaserToy } from './chill-teaser-toy';
 import { ClemontsQuickWit } from './clemonts-quick-wit';
 import { Cofagrigus } from './cofagrigus';
@@ -38,6 +39,7 @@ import { ExcitingStadium } from './exciting-stadium';
 import { Exeggcute } from './exeggcute';
 import { Flygonex } from './flygon-ex';
 import { Fuecoco } from './fuecoco';
+import { FeebasIR, LarvestaIR } from './full-art';
 import { Gimmighoul } from './gimmighoul';
 import { GougingFire } from './gouging-fire';
 import { GravityMountain } from './gravity-mountain';
@@ -54,6 +56,7 @@ import { LisiasAppeal } from './lisias-appeal';
 import { Magnemite } from './magnemite';
 import { Magneton } from './magneton';
 import { Marill } from './marill';
+import { MeddlingMemo } from './meddling-memo';
 import { MegatonBlower } from './megaton-blower';
 import { Meowstic } from './meowstic';
 import { Mesprit } from './mesprit';
@@ -66,8 +69,8 @@ import { Pansear } from './pansear';
 import { PerfectMixer } from './perfect-mixer';
 import { Phanpy } from './phanpy-ir';
 import { Pikachuex } from './pikachu-ex';
-import {Quaquaval} from './quaquaval';
-import {Quaxly} from './quaxly';
+import { Quaquaval } from './quaquaval';
+import { Quaxly } from './quaxly';
 import { Quaxwell } from './quaxwell';
 import { Rabsca } from './rabsca';
 import { Rellor } from './rellor';
@@ -169,6 +172,7 @@ export const setSurgingSparks: Card[] = [
   new Rellor(),
   new Rabsca(),
   new Wochien(),
+  new ChienPao(),
   new DuskBall(),
   new Gimmighoul(),
   new EnergySearchPro(),
@@ -198,8 +202,13 @@ export const setSurgingSparks: Card[] = [
   new TapuKoko(),
   new Quaxly(),
   new Quaquaval(),
+  new MeddlingMemo(),
 
-  //Reprints
+  // Reprints
   new ScrambleSwitchSSP(),
   new CounterGainSSP(),
+
+  // Full Art
+  new LarvestaIR(),
+  new FeebasIR(),
 ];

@@ -63,17 +63,20 @@ export const cardReplacements = [
   //STS
   { from: 'Pokémon Ranger STS 104', to: 'Pokemon Ranger STS 104' },
 
-  //CES
-  { from: 'Oricorio CES 30', to: 'Oricorio SHF 30' },
-
   //UPR
   { from: 'Mt. Coronet UPR 130', to: 'Mt. Coronet RCL 130' },
 
-  //UNB
-  { from: 'Porygon-Z UNB 157', to: 'Porygon-Z PAL 157' },
+  //CES
+  { from: 'Oricorio CES 30', to: 'Oricorio SHF 30' },
 
   //LOT
   { from: 'Lost Blender LOT 181', to: 'Lost Blender LOR 181' },
+
+  //TEU
+  { from: 'Gengar & Mimikyu-GX TEU 53', to: 'Gengar & Mimikyu-GX SM9 53' },
+
+  //UNB
+  { from: 'Porygon-Z UNB 157', to: 'Porygon-Z PAL 157' },
 
   //RCL
   { from: 'Horror Psychic Energy RCL 172', to: 'Horror Psychic Energy DAA 172' },
@@ -100,12 +103,14 @@ export const cardReplacements = [
   //SVI
   { from: 'Pokégear 3.0 SVI 186', to: 'Pokegear SVI 186' },
   { from: 'Pokémon Catcher SVI 187', to: 'Pokemon Catcher SVI 187' },
-  { from: 'Professor\'s Research SVI 189', to: 'Professor\'s Research SVI 189' },
-  { from: 'Professor\'s Research SVI 190', to: 'Professor\'s Research SVI 190' },
+  { from: 'Professor\'s Research SVI 189', to: 'Professor\'s Research SVI 189 189' },
+  { from: 'Professor\'s Research SVI 190', to: 'Professor\'s Research SVI 190 189' },
   { from: 'Riolu SVI 113', to: 'Riolu2 SVI 113' },
 
   //SVI FA
   { from: 'Armarouge SVI 203', to: 'ArmarougeIR SVI 203' },
+  { from: 'Slowpoke SVI 204', to: 'SlowpokeIR SVI 204' },
+  { from: 'Pawmot SVI 209', to: 'PawmotIR SVI 209' },
   { from: 'Arven SVI 235', to: 'ArvenFA SVI 235' },
   { from: 'Arven SVI 249', to: 'ArvenSIR SVI 249' },
   { from: 'Fighting Energy SVI 258', to: 'Fighting EnergyHR SVI 258' },
@@ -127,9 +132,10 @@ export const cardReplacements = [
   { from: 'Nest Ball SVI 255', to: 'Nest BallHR SVI 255' },
   { from: 'Penny SVI 239', to: 'PennyFA SVI 239' },
   { from: 'Penny SVI 252', to: 'PennySIR SVI 252' },
-  { from: "Professor's Research SVI 242", to: "Professor's ResearchFA1 SVI 242" },
+  { from: "Professor's Research SVI 240", to: "Professor's ResearchFA1 SVI 242" },
   { from: "Professor's Research SVI 241", to: "Professor's ResearchFA2 SVI 241" },
   { from: 'Ralts SVI 211', to: 'RaltsIR SVI 211' },
+  { from: 'Kirlia SVI 212', to: 'KirliaIR SVI 212' },
   { from: 'Rare Candy SVI 256', to: 'Rare CandyHR SVI 256' },
   { from: 'Skwovet SVI 222', to: 'SkwovetIR SVI 222' },
   { from: 'Team Star Grunt SVI 242', to: 'Team Star GruntFA SVI 242' },
@@ -258,6 +264,28 @@ export const cardReplacements = [
   { from: 'Porygon-Z PAR 214', to: 'PorygonZIR PAR 214' },
   { from: 'Cyclizar PAR 215', to: 'CyclizarIR PAR 215' },
   { from: 'Iron Jugulis PAR 216', to: 'IronJugulisIR PAR 216' },
+
+  //PAF Shiny Vault & Full arts
+  { from: 'Charmander PAF 109', to: 'CharmanderSV PAF 109' },
+  { from: 'Charmeleon PAF 110', to: 'CharmeleonSV PAF 110' },
+  { from: 'Frigibax PAF 128', to: 'FrigibaxSV PAF 128' },
+  { from: 'Mime Jr. PAF 157', to: 'MimeJrSV PAF 157' },
+  { from: 'Espathra ex PAF 214', to: 'Espathra exSV PAF 214' },
+  { from: 'Wugtrio PAF 224', to: 'WugtrioFA PAF 224' },
+  { from: 'Palafin PAF 225', to: 'PalafinFA PAF 225' },
+  { from: 'Pawmi PAF 226', to: 'PawmiFA PAF 226' },
+  { from: 'Clive PAF 227', to: 'CliveFA PAF 227' },
+  { from: 'Nemona PAF 229', to: 'NemonaFA PAF 229' },
+  { from: 'Paldean Student PAF 230', to: 'Paldean StudentFA PAF 230' },
+  { from: 'Paldean Student PAF 231', to: 'Paldean StudentFA2 PAF 231' },
+  { from: 'Mew ex PAF 232', to: 'Mew exSIR PAF 232' },
+  { from: 'Gardevoir ex PAF 233', to: 'Gardevoir exSIR PAF 233' },
+  { from: 'Charizard ex PAF 234', to: 'Charizard exSIR PAF 234' },
+  { from: 'Arven PAF 236', to: 'ArvenSIR PAF 235' },
+  { from: 'Clive PAF 236', to: 'CliveSIR PAF 236' },
+  { from: 'Iono PAF 237', to: 'IonoSIR PAF 237' },
+  { from: 'Nemona PAF 238', to: 'NemonaSIR PAF 238' },
+  { from: 'Penny PAF 236', to: 'PennySIR PAF 239' },
 
   //TEF
   //TEF FA
@@ -397,8 +425,13 @@ export const cardReplacements = [
 
   //SSP FA
   { from: 'Larvesta SSP 196', to: 'LarvestaIR SSP 196' },
+  { from: 'Feebas SSP 198', to: 'FeebasIR SSP 198' },
 
   //PRE FA
+  { from: 'Professor\'s Research PRE 122', to: 'Professor\'s ResearchO PRE 122' },
+  { from: 'Professor\'s Research PRE 123', to: 'Professor\'s ResearchE PRE 123' },
+  { from: 'Professor\'s Research PRE 124', to: 'Professor\'s ResearchR PRE 124' },
+  { from: 'Professor\'s Research PRE 125', to: 'Professor\'s ResearchS PRE 125' },
   { from: 'Amarys PRE 132', to: 'AmarysFA PRE 132' },
   { from: 'Atticus PRE 133', to: 'AtticusFA PRE 133' },
   { from: 'Atticus PRE 134', to: 'AtticusFA2 PRE 134' },
@@ -499,17 +532,20 @@ export const exportReplacements = [
   //SLG
   { from: 'Warp Energy SHL 70', to: 'Warp Energy SLG 70' },
 
-  //CES
-  { from: 'Oricorio SHF 30', to: 'Oricorio CES 30' },
-
   //UPR
   { from: 'Mt. Coronet RCL 130', to: 'Mt. Coronet UPR 130' },
 
-  //UNB
-  { from: 'Porygon-Z PAL 157', to: 'Porygon-Z UNB 157' },
+  //CES
+  { from: 'Oricorio SHF 30', to: 'Oricorio CES 30' },
 
   //LOT
   { from: 'Lost Blender LOR 181', to: 'Lost Blender LOT 181' },
+
+  //TEU
+  { from: 'Gengar & Mimikyu-GX SM9 53', to: 'Gengar & Mimikyu-GX TEU 53' },
+
+  //UNB
+  { from: 'Porygon-Z PAL 157', to: 'Porygon-Z UNB 157' },
 
   //RCL
   { from: 'Horror Psychic Energy DAA 172', to: 'Horror Psychic Energy RCL 172' },
@@ -533,11 +569,13 @@ export const exportReplacements = [
   { from: 'Pokegear SVI 186', to: 'Pokégear 3.0 SVI 186' },
   { from: 'Pokemon Catcher SVI 187', to: 'Pokémon Catcher SVI 187' },
   { from: 'Professor\'s Research SVI 189 189', to: 'Professor\'s Research SVI 189' },
-  { from: 'Professor\'s Research SVI 190 189', to: 'Professor\'s Research SVI 190 190' },
+  { from: 'Professor\'s Research SVI 190 189', to: 'Professor\'s Research SVI 190' },
   { from: 'Riolu2 SVI 113', to: 'Riolu SVI 113' },
 
   //SVI FA
   { from: 'ArmarougeIR SVI 203', to: 'Armarouge SVI 203' },
+  { from: 'SlowpokeIR SVI 204', to: 'Slowpoke SVI 204' },
+  { from: 'PawmotIR SVI 209', to: 'Pawmot SVI 209' },
   { from: 'ArvenFA SVI 235', to: 'Arven SVI 235' },
   { from: 'ArvenSIR SVI 249', to: 'Arven SVI 249' },
   { from: 'Fighting EnergyHR SVI 258', to: 'Fighting Energy SVI 258' },
@@ -559,9 +597,10 @@ export const exportReplacements = [
   { from: 'Nest BallHR SVI 255', to: 'Nest Ball SVI 255' },
   { from: 'PennyFA SVI 239', to: 'Penny SVI 239' },
   { from: 'PennySIR SVI 252', to: 'Penny SVI 252' },
-  { from: "Professor's ResearchFA1 SVI 242", to: "Professor's Research SVI 242" },
+  { from: "Professor's ResearchFA1 SVI 242", to: "Professor's Research SVI 240" },
   { from: "Professor's ResearchFA2 SVI 241", to: "Professor's Research SVI 241" },
   { from: 'RaltsIR SVI 211', to: 'Ralts SVI 211' },
+  { from: 'KirliaIR SVI 212', to: 'Kirlia SVI 212' },
   { from: 'Rare CandyHR SVI 256', to: 'Rare Candy SVI 256' },
   { from: 'SkwovetIR SVI 222', to: 'Skwovet SVI 222' },
   { from: 'Team Star GruntFA SVI 242', to: 'Team Star Grunt SVI 242' },
@@ -690,6 +729,28 @@ export const exportReplacements = [
   { from: 'CounterCatcherHR PAR 264', to: 'Counter Catcher PAR 264' },
   { from: 'LuxuriousCapeHR PAR 265', to: 'Luxurious Cape PAR 265' },
   { from: 'ReversalEnergyHR PAR 266', to: 'Reversal Energy PAR 266' },
+
+  //PAF Shiny Vault
+  { from: 'CharmanderSV PAF 109', to: 'Charmander PAF 109' },
+  { from: 'CharmeleonSV PAF 110', to: 'Charmeleon PAF 110' },
+  { from: 'FrigibaxSV PAF 128', to: 'Frigibax PAF 128' },
+  { from: 'MimeJrSV PAF 157', to: 'Mime Jr. PAF 157' },
+  { from: 'Espathra exSV PAF 214', to: 'Espathra exSV PAF 214' },
+  { from: 'WugtrioFA PAF 224', to: 'Wugtrio PAF 224' },
+  { from: 'PalafinFA PAF 225', to: 'Palafin PAF 225' },
+  { from: 'PawmiFA PAF 226', to: 'Pawmi PAF 226' },
+  { from: 'CliveFA PAF 227', to: 'Clive PAF 227' },
+  { from: 'NemonaFA PAF 229', to: 'Nemona PAF 229' },
+  { from: 'Paldean StudentFA PAF 230', to: 'Paldean Student PAF 230' },
+  { from: 'Paldean StudentFA2 PAF 231', to: 'Paldean Student PAF 231' },
+  { from: 'Mew exSIR PAF 232', to: 'Mew exSIR PAF 232' },
+  { from: 'Gardevoir exSIR PAF 233', to: 'Gardevoir ex PAF 233' },
+  { from: 'Charizard exSIR PAF 234', to: 'Charizard ex PAF 234' },
+  { from: 'ArvenSIR PAF 236', to: 'Arven PAF 235' },
+  { from: 'CliveSIR PAF 236', to: 'Clive PAF 236' },
+  { from: 'IonoSIR PAF 237', to: 'Iono PAF 237' },
+  { from: 'NemonaSIR PAF 238', to: 'Nemona PAF 238' },
+  { from: 'PennySIR PAF 236', to: 'Penny PAF 239' },
 
   //TEF
   //TEF FA
@@ -829,8 +890,13 @@ export const exportReplacements = [
 
   //SSP FA
   { from: 'LarvestaIR SSP 196', to: 'Larvesta SSP 196' },
+  { from: 'FeebasIR SSP 198', to: 'Feebas SSP 198' },
 
-  //PRE FA
+  //PRE Reprints & FA
+  { from: 'Professor\'s ResearchO PRE 122', to: 'Professor\'s Research PRE 122' },
+  { from: 'Professor\'s ResearchE PRE 123', to: 'Professor\'s Research PRE 123' },
+  { from: 'Professor\'s ResearchR PRE 124', to: 'Professor\'s Research PRE 124' },
+  { from: 'Professor\'s ResearchS PRE 125', to: 'Professor\'s Research PRE 125' },
   { from: 'AmarysFA PRE 132', to: 'Amarys PRE 132' },
   { from: 'AtticusFA PRE 133', to: 'Atticus PRE 133' },
   { from: 'AtticusFA2 PRE 134', to: 'Atticus PRE 134' },

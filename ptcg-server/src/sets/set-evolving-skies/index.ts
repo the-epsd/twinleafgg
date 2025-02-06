@@ -1,5 +1,6 @@
 import { Card } from '../../game/store/card/card';
 import { Copycat } from './copycat';
+import { Cryogonal } from './cryogonal';
 import { CrystalCave } from './crystal-cave';
 import { DragoniteV } from './dragonite-v';
 import { Drampa } from './drampa';
@@ -47,6 +48,7 @@ import { Zorua } from './zorua';
 export const setEvolvingSkies: Card[] = [
 
   new Copycat(),
+  new Cryogonal(),
   new CrystalCave(),
   new DragoniteV(),
   new Drampa(),

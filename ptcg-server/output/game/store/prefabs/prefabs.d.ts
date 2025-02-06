@@ -1,8 +1,9 @@
-import { Card, CardList, ChooseCardsOptions, Player, PokemonCardList, State, StoreLike } from '../..';
+import { AttachEnergyOptions, Card, CardList, ChooseCardsOptions, EnergyCard, FilterType, GameMessage, Player, PlayerType, PokemonCardList, SlotType, State, StoreLike } from '../..';
 import { CardType, SpecialCondition } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
 import { Effect } from '../effects/effect';
 import { AttackEffect, EvolveEffect, KnockOutEffect, PowerEffect } from '../effects/game-effects';
+import { AfterAttackEffect } from '../effects/game-phase-effects';
 /**
  *
  * A basic effect for checking the use of attacks.
@@ -15,6 +16,7 @@ export declare function WAS_ATTACK_USED(effect: Effect, index: number, user: Pok
  * @returns whether or not a specific ability was used.
  */
 export declare function WAS_POWER_USED(effect: Effect, index: number, user: PokemonCard): effect is PowerEffect;
+export declare const AFTER_ATTACK: (effect: Effect) => effect is AfterAttackEffect;
 /**
  *
  * Checks whether or not the Pokemon just evolved.
@@ -56,7 +58,8 @@ export declare function TAKE_X_MORE_PRIZE_CARDS(effect: KnockOutEffect, state: S
 export declare function PLAY_POKEMON_FROM_HAND_TO_BENCH(state: State, player: Player, card: Card): void;
 export declare function THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_BENCHED_POKEMON(damage: number, effect: AttackEffect, store: StoreLike, state: State, min: number, max: number): State;
 export declare function THIS_POKEMON_DOES_DAMAGE_TO_ITSELF(store: StoreLike, state: State, effect: AttackEffect, amount: number): State;
-export declare function ATTACH_X_NUMBER_OF_BASIC_ENERGY_CARDS_FROM_YOUR_DISCARD_TO_YOUR_BENCHED_POKEMON(effect: AttackEffect, store: StoreLike, state: State, amount: number): void;
+export declare function ATTACH_ENERGY_FROM_DECK(store: StoreLike, state: State, player: Player, playerType: PlayerType, slots: SlotType[], filter?: Partial<EnergyCard>, options?: Partial<AttachEnergyOptions>): void;
+export declare function ATTACH_ENERGY_FROM_DISCARD(store: StoreLike, state: State, player: Player, playerType: PlayerType, slots: SlotType[], filter?: FilterType, options?: Partial<AttachEnergyOptions>): void;
 export declare function DISCARD_X_ENERGY_FROM_YOUR_HAND(effect: PowerEffect, store: StoreLike, state: State, minAmount: number, maxAmount: number): State;
 export declare function DISCARD_ALL_ENERGY_FROM_POKEMON(store: StoreLike, state: State, effect: AttackEffect, card: Card): void;
 /**
@@ -105,7 +108,13 @@ export declare function CAN_EVOLVE_ON_FIRST_TURN_GOING_SECOND(state: State, play
  */
 export declare function MOVE_CARD_TO(state: State, card: Card, destination: CardList): void;
 export declare function SWITCH_ACTIVE_WITH_BENCHED(store: StoreLike, state: State, player: Player): State;
+export declare function LOOK_AT_TOPDECK_AND_DISCARD_OR_RETURN(store: StoreLike, state: State, choosingPlayer: Player, deckPlayer: Player): void;
 export declare function SHOW_CARDS_TO_PLAYER(store: StoreLike, state: State, player: Player, cards: Card[]): State;
+export declare function SELECT_PROMPT(store: StoreLike, state: State, player: Player, values: string[], callback: (result: number) => void): State;
+export declare function SELECT_PROMPT_WITH_OPTIONS(store: StoreLike, state: State, player: Player, options: {
+    message: GameMessage;
+    action: () => void;
+}[]): State;
 export declare function CONFIRMATION_PROMPT(store: StoreLike, state: State, player: Player, callback: (result: boolean) => void): State;
 export declare function COIN_FLIP_PROMPT(store: StoreLike, state: State, player: Player, callback: (result: boolean) => void): State;
 export declare function SIMULATE_COIN_FLIP(store: StoreLike, state: State, player: Player): boolean;

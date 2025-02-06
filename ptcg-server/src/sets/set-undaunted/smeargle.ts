@@ -103,7 +103,7 @@ export class Smeargle extends PokemonCard {
       });
     }
 
-    if (effect instanceof EndTurnEffect) {
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.PORTRAIT_MARKER, this)) {
       effect.player.marker.removeMarker(this.PORTRAIT_MARKER, this);
     }
 

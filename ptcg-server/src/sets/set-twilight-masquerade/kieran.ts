@@ -34,7 +34,7 @@ export class Kieran extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof EndTurnEffect) {
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.KIERAN_MARKER, this)) {
       effect.player.marker.removeMarker(this.KIERAN_MARKER, this);
       return state;
     }

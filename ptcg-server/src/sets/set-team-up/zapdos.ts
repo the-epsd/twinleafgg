@@ -29,25 +29,25 @@ export class Zapdos extends PokemonCard {
   ];
 
   public set: string = 'TEU';
-  
+
   public cardImage: string = 'assets/cardback.png';
-  
+
   public setNumber: string = '40';
-  
+
   public name: string = 'Zapdos';
-  
+
   public fullName: string = 'Zapdos TEU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-  
-    if (effect instanceof EndTurnEffect) {
-      this.movedToActiveThisTurn = false; 
+
+    if (effect instanceof EndTurnEffect && this.movedToActiveThisTurn) {
+      this.movedToActiveThisTurn = false;
     }
-    
+
     if (effect instanceof RetreatEffect && effect.player.active.getPokemonCard() !== this) {
       this.movedToActiveThisTurn = true;
     }
-    
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       effect.ignoreWeakness = true;
       if (this.movedToActiveThisTurn) {

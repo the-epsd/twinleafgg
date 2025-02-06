@@ -17,7 +17,7 @@ export class Larvitar extends PokemonCard {
       name: 'Crunch',
       cost: [CardType.COLORLESS, CardType.COLORLESS],
       damage: 20,
-      text: 'Flip a coin. If heads, discard an Energy from your opponent’s Active Pokémon.'
+      text: 'Flip a coin. If heads, discard an Energy from your opponent\'s Active Pokémon.'
     }
   ];
 

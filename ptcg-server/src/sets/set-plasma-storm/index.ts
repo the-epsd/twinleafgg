@@ -1,5 +1,6 @@
 import { Card } from '../../game/store/card/card';
 import { Bicycle } from './bicycle';
+import { BlackKyuremEX } from './black-kyurem-ex';
 import { EscapeRopePLS } from './card-images';
 import { Colress } from './colress';
 import { ColressMachine } from './colress-machine';
@@ -19,6 +20,7 @@ import { Zubat } from './zubat';
 
 export const setPlasmaStorm: Card[] = [
   new Bicycle(),
+  new BlackKyuremEX(),
   new Colress(),
   new ColressMachine(),
   new Donphan(),

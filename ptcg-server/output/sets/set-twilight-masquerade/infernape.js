@@ -44,7 +44,7 @@ class Infernape extends pokemon_card_1.PokemonCard {
             const player = effect.player;
             player.marker.removeMarker(this.TAR_GENERATOR_MARKER, this);
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.TAR_GENERATOR_MARKER, this)) {
             effect.player.marker.removeMarker(this.TAR_GENERATOR_MARKER, this);
         }
         if (prefabs_1.WAS_ATTACK_USED(effect, 0, this)) {

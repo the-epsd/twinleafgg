@@ -1,11 +1,11 @@
-import { AttachEnergyPrompt, Card, CardList, ChooseCardsOptions, ChooseCardsPrompt, ChooseEnergyPrompt, ChoosePokemonPrompt, CoinFlipPrompt, ConfirmPrompt, EnergyCard, GameError, GameLog, GameMessage, Player, PlayerType, PokemonCardList, PowerType, ShowCardsPrompt, ShuffleDeckPrompt, SlotType, State, StateUtils, StoreLike } from '../..';
-import { BoardEffect, CardType, EnergyType, SpecialCondition, SuperType } from '../card/card-types';
+import { AttachEnergyOptions, AttachEnergyPrompt, Card, CardList, ChooseCardsOptions, ChooseCardsPrompt, ChooseEnergyPrompt, ChoosePokemonPrompt, CoinFlipPrompt, ConfirmPrompt, EnergyCard, FilterType, GameError, GameLog, GameMessage, Player, PlayerType, PokemonCardList, PowerType, SelectPrompt, ShowCardsPrompt, ShuffleDeckPrompt, SlotType, State, StateUtils, StoreLike } from '../..';
+import { BoardEffect, CardType, SpecialCondition, SuperType } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
 import { DealDamageEffect, DiscardCardsEffect, HealTargetEffect, PutDamageEffect } from '../effects/attack-effects';
 import { AddSpecialConditionsPowerEffect, CheckProvidedEnergyEffect } from '../effects/check-effects';
 import { Effect } from '../effects/effect';
 import { AttackEffect, EvolveEffect, KnockOutEffect, PowerEffect } from '../effects/game-effects';
-import { EndTurnEffect } from '../effects/game-phase-effects';
+import { AfterAttackEffect, EndTurnEffect } from '../effects/game-phase-effects';
 
 /**
  * 
@@ -24,6 +24,11 @@ export function WAS_ATTACK_USED(effect: Effect, index: number, user: PokemonCard
 export function WAS_POWER_USED(effect: Effect, index: number, user: PokemonCard): effect is PowerEffect {
   return effect instanceof PowerEffect && effect.power === user.powers[index];
 }
+
+export const AFTER_ATTACK = (effect: Effect): effect is AfterAttackEffect => {
+  return effect instanceof AfterAttackEffect;
+};
+
 
 /**
  * 
@@ -204,24 +209,34 @@ export function THIS_POKEMON_DOES_DAMAGE_TO_ITSELF(store: StoreLike, state: Stat
   return store.reduceEffect(state, dealDamage);
 }
 
-export function ATTACH_X_NUMBER_OF_BASIC_ENERGY_CARDS_FROM_YOUR_DISCARD_TO_YOUR_BENCHED_POKEMON(effect: AttackEffect, store: StoreLike, state: State, amount: number) {
-
-  const player = effect.player;
+export function ATTACH_ENERGY_FROM_DECK(store: StoreLike, state: State, player: Player, playerType: PlayerType, slots: SlotType[], filter: Partial<EnergyCard> = {}, options: Partial<AttachEnergyOptions> = {}) {
+  filter.superType = SuperType.ENERGY;
 
   state = store.prompt(state, new AttachEnergyPrompt(
-    player.id,
-    GameMessage.ATTACH_ENERGY_TO_BENCH,
-    player.discard,
-    PlayerType.BOTTOM_PLAYER,
-    [SlotType.BENCH, SlotType.ACTIVE],
-    { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-    { allowCancel: true, min: amount, max: amount },
+    player.id, GameMessage.ATTACH_ENERGY_CARDS, player.deck, playerType, slots, filter, options,
   ), transfers => {
     transfers = transfers || [];
     // cancelled by user
-    if (transfers.length === 0) {
+    if (transfers.length === 0)
       return state;
+    for (const transfer of transfers) {
+      const target = StateUtils.getTarget(state, player, transfer.to);
+      player.discard.moveCardTo(transfer.card, target);
     }
+    SHUFFLE_DECK(store, state, player);
+  });
+}
+
+export function ATTACH_ENERGY_FROM_DISCARD(store: StoreLike, state: State, player: Player, playerType: PlayerType, slots: SlotType[], filter: FilterType = {}, options: Partial<AttachEnergyOptions> = {}) {
+  filter.superType = SuperType.ENERGY;
+
+  state = store.prompt(state, new AttachEnergyPrompt(
+    player.id, GameMessage.ATTACH_ENERGY_CARDS, player.discard, playerType, slots, filter, options,
+  ), transfers => {
+    transfers = transfers || [];
+    // cancelled by user
+    if (transfers.length === 0)
+      return state;
     for (const transfer of transfers) {
       const target = StateUtils.getTarget(state, player, transfer.to);
       player.discard.moveCardTo(transfer.card, target);
@@ -418,6 +433,23 @@ export function SWITCH_ACTIVE_WITH_BENCHED(store: StoreLike, state: State, playe
   });
 }
 
+export function LOOK_AT_TOPDECK_AND_DISCARD_OR_RETURN(store: StoreLike, state: State, choosingPlayer: Player, deckPlayer: Player) {
+  {
+    BLOCK_IF_DECK_EMPTY(deckPlayer);
+    const deckTop = new CardList();
+    deckPlayer.deck.moveTo(deckTop, 1);
+    SHOW_CARDS_TO_PLAYER(store, state, choosingPlayer, deckTop.cards);
+    SELECT_PROMPT_WITH_OPTIONS(store, state, choosingPlayer, [{
+      message: GameMessage.DISCARD_FROM_TOP_OF_DECK,
+      action: () => deckTop.moveToTopOfDestination(deckPlayer.discard),
+    },
+    {
+      message: GameMessage.RETURN_TO_TOP_OF_DECK,
+      action: () => deckTop.moveToTopOfDestination(deckPlayer.deck),
+    }])
+  }
+}
+
 export function SHOW_CARDS_TO_PLAYER(store: StoreLike, state: State, player: Player, cards: Card[]): State {
   if (cards.length === 0)
     return state;
@@ -426,6 +458,19 @@ export function SHOW_CARDS_TO_PLAYER(store: StoreLike, state: State, player: Pla
     GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
     cards,
   ), () => { });
+}
+
+export function SELECT_PROMPT(store: StoreLike, state: State, player: Player, values: string[], callback: (result: number) => void): State {
+  return store.prompt(state, new SelectPrompt(player.id, GameMessage.CHOOSE_OPTION, values, { allowCancel: false }), callback);
+}
+
+export function SELECT_PROMPT_WITH_OPTIONS(store: StoreLike, state: State, player: Player, options: { message: GameMessage, action: () => void }[]) {
+  return store.prompt(state, new SelectPrompt(
+    player.id, GameMessage.CHOOSE_OPTION, options.map(opt => opt.message), { allowCancel: false }
+  ), choice => {
+    const option = options[choice];
+    option.action();
+  });
 }
 
 export function CONFIRMATION_PROMPT(store: StoreLike, state: State, player: Player, callback: (result: boolean) => void): State {

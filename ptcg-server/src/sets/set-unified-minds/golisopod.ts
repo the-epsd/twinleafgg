@@ -46,7 +46,7 @@ export class Golisopod extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof EndTurnEffect) {
+    if (effect instanceof EndTurnEffect && this.movedToActiveThisTurn) {
       this.movedToActiveThisTurn = false;
     }
 

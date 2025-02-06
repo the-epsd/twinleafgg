@@ -82,7 +82,7 @@ class GreninjaXY extends pokemon_card_1.PokemonCard {
                 state = store.reduceEffect(state, afterDamage);
             }
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.WATER_SHURIKEN_MARKER, this)) {
             effect.player.marker.removeMarker(this.WATER_SHURIKEN_MARKER, this);
         }
         return state;

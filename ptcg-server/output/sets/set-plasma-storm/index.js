@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setPlasmaStorm = void 0;
 const bicycle_1 = require("./bicycle");
+const black_kyurem_ex_1 = require("./black-kyurem-ex");
 const card_images_1 = require("./card-images");
 const colress_1 = require("./colress");
 const colress_machine_1 = require("./colress-machine");
@@ -20,6 +21,7 @@ const virbank_city_gym_1 = require("./virbank-city-gym");
 const zubat_1 = require("./zubat");
 exports.setPlasmaStorm = [
     new bicycle_1.Bicycle(),
+    new black_kyurem_ex_1.BlackKyuremEX(),
     new colress_1.Colress(),
     new colress_machine_1.ColressMachine(),
     new donphan_1.Donphan(),

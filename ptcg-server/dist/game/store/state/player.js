@@ -26,6 +26,7 @@ export class Player {
         this.avatarName = '';
         this.usedVSTAR = false;
         this.usedGX = false;
+        this.assembledVUNIONs = [];
         this.DAMAGE_DEALT_MARKER = 'DAMAGE_DEALT_MARKER';
         this.ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
         this.ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
@@ -99,6 +100,14 @@ export class Player {
         this.marker.removeMarker(this.UNRELENTING_ONSLAUGHT_MARKER);
         this.marker.removeMarker(this.UNRELENTING_ONSLAUGHT_2_MARKER);
         target.clearEffects();
+    }
+    getPokemonInPlay() {
+        let list = [];
+        this.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, pokemonCard, target) => {
+            if (cardList)
+                list.push(cardList);
+        });
+        return list;
     }
     vPokemon() {
         let result = false;

@@ -98,9 +98,8 @@ export class Pidgeotto extends PokemonCard {
       });
     }
 
-    if (effect instanceof EndTurnEffect) {
-      const player = (effect as EndTurnEffect).player;
-      player.marker.removeMarker(this.AIR_MAIL_MARKER, this);
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.AIR_MAIL_MARKER, this)) {
+      effect.player.marker.removeMarker(this.AIR_MAIL_MARKER, this);
     }
 
     return state;

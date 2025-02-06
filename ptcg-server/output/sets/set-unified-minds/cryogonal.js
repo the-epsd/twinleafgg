@@ -39,7 +39,7 @@ class CryogonalUNM extends game_1.PokemonCard {
             throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_ABILITY);
         }
         // Remove marker at the end of a player's turn
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.FROZEN_LOCK_MARKER)) {
             effect.player.marker.removeMarker(this.FROZEN_LOCK_MARKER);
         }
         return state;

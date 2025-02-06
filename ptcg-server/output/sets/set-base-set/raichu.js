@@ -28,7 +28,7 @@ class Raichu extends pokemon_card_1.PokemonCard {
                 name: 'Agility',
                 cost: [card_types_1.CardType.LIGHTNING, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
                 damage: 20,
-                text: 'Flip a coin. If heads, during your opponent’s next turn, prevent all effects of attacks, including damage, done to Raichu.'
+                text: 'Flip a coin. If heads, during your opponent\'s next turn, prevent all effects of attacks, including damage, done to Raichu.'
             },
             {
                 name: 'Thunder',

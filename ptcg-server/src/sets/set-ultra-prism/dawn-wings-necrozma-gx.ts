@@ -125,21 +125,19 @@ export class DawnWingsNecrozmaGX extends PokemonCard {
       return state;
     }
 
-
-    if (effect instanceof EndTurnEffect) {
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.INVASION_MARKER, this)) {
       effect.player.marker.removeMarker(this.INVASION_MARKER, this);
-
-      if (effect.player.marker.hasMarker(this.CLEAR_ECLIPSE_MARKER, this)) {
-
-        effect.player.marker.removeMarker(this.CLEAR_ECLIPSE_MARKER, this);
-
-        const opponent = StateUtils.getOpponent(state, effect.player);
-        opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-          cardList.marker.removeMarker(this.ECLIPSE_MARKER, this);
-        });
-      }
     }
 
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.CLEAR_ECLIPSE_MARKER, this)) {
+
+      effect.player.marker.removeMarker(this.CLEAR_ECLIPSE_MARKER, this);
+
+      const opponent = StateUtils.getOpponent(state, effect.player);
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
+        cardList.marker.removeMarker(this.ECLIPSE_MARKER, this);
+      });
+    }
     return state;
   }
 }

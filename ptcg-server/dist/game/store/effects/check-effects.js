@@ -114,13 +114,15 @@ export class CheckTableStateEffect {
     }
 }
 export class AddSpecialConditionsPowerEffect {
-    constructor(player, power, card, target, specialConditions) {
+    constructor(player, source, target, specialConditions, poisonDamage = 10, burnDamage = 20, sleepFlips = 1) {
         this.type = CheckEffects.ADD_SPECIAL_CONDITIONS_EFFECT;
         this.preventDefault = false;
         this.player = player;
-        this.power = power;
-        this.card = card;
+        this.source = source;
         this.target = target;
         this.specialConditions = specialConditions;
+        this.poisonDamage = poisonDamage;
+        this.burnDamage = burnDamage;
+        this.sleepFlips = sleepFlips;
     }
 }

@@ -8,27 +8,27 @@ import { StateUtils } from '../../game/store/state-utils';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 
 export class Salamenceex extends PokemonCard {
-  public tags = [ CardTag.POKEMON_ex ];
+  public tags = [CardTag.POKEMON_ex];
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Shelgon';
   public cardType: CardType = CardType.DRAGON;
   public hp: number = 320;
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
-    { 
-      name: 'Wide Blast', 
-      cost: [ CardType.FIRE, CardType.COLORLESS, CardType.COLORLESS ], 
-      damage: 0, 
-      text: 'This attack does 50 damage to each of your opponent’s Benched Pokémon. (Don’t apply Weakness and Resistance for Benched Pokémon.)' 
+    {
+      name: 'Wide Blast',
+      cost: [CardType.FIRE, CardType.COLORLESS, CardType.COLORLESS],
+      damage: 0,
+      text: 'This attack does 50 damage to each of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
     },
-    { 
-      name: 'Dragon Impact', 
-      cost: [ CardType.FIRE, CardType.WATER, CardType.COLORLESS, CardType.COLORLESS ], 
-      damage: 300, 
-      text: 'Discard 2 Energy from this Pokémon.' 
+    {
+      name: 'Dragon Impact',
+      cost: [CardType.FIRE, CardType.WATER, CardType.COLORLESS, CardType.COLORLESS],
+      damage: 300,
+      text: 'Discard 2 Energy from this Pokémon.'
     },
-        
+
   ];
 
   public set: string = 'SV9';
@@ -45,8 +45,8 @@ export class Salamenceex extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) =>{
-        if (cardList !== opponent.active){
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
+        if (cardList !== opponent.active) {
           const damageEffect = new PutDamageEffect(effect, 50);
           damageEffect.target = cardList;
           store.reduceEffect(state, damageEffect);
@@ -55,9 +55,9 @@ export class Salamenceex extends PokemonCard {
     }
 
     // Dragon Impact
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]){
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
-        
+
       if (!player.active.cards.some(c => c instanceof EnergyCard)) {
         return state;
       }
@@ -69,7 +69,7 @@ export class Salamenceex extends PokemonCard {
         player.id,
         GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
         checkProvidedEnergy.energyMap,
-        [ CardType.COLORLESS, CardType.COLORLESS ],
+        [CardType.COLORLESS, CardType.COLORLESS],
         { allowCancel: false }
       ), energy => {
         const cards: Card[] = (energy || []).map(e => e.card);

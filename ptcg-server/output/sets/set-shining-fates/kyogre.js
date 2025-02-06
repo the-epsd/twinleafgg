@@ -17,7 +17,7 @@ class Kyogre extends pokemon_card_1.PokemonCard {
                 name: 'Amazing Surge',
                 cost: [W, L, M, C],
                 damage: 0,
-                text: 'This attack does 80 damage to each of your opponent\’s Pokémon. (Don\’t apply Weakness and Resistance for Benched Pokémon.)'
+                text: 'This attack does 80 damage to each of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
             }];
         this.set = 'SHF';
         this.regulationMark = 'D';

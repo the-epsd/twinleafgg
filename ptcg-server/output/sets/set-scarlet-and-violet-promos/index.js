@@ -16,5 +16,6 @@ exports.setScarletAndVioletPromos = [
     new tinkaton_ex_1.Tinkatonex(),
     new tm_machine_1.TMMachine(),
     // Alt arts
+    new alt_arts_1.PawmotSVP(),
     new alt_arts_1.SnorlaxIR(),
 ];

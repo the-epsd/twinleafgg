@@ -70,9 +70,8 @@ class Drakloak extends game_1.PokemonCard {
                 return state;
             });
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
-            const player = effect.player;
-            player.marker.removeMarker(this.TELLING_SPIRIT_MARKER, this);
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.TELLING_SPIRIT_MARKER, this)) {
+            effect.player.marker.removeMarker(this.TELLING_SPIRIT_MARKER, this);
         }
         return state;
     }

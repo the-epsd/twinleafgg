@@ -21,7 +21,7 @@ class Volcanionex extends pokemon_card_1.PokemonCard {
                 name: 'Scorching Steam',
                 useWhenInPlay: true,
                 powerType: game_1.PowerType.ABILITY,
-                text: 'Once during your turn, if this Pokemon is in your Active Spot, you may make your opponent’s Active Pokémon Burned.'
+                text: 'Once during your turn, if this Pokemon is in your Active Spot, you may make your opponent\'s Active Pokémon Burned.'
             }];
         this.attacks = [
             {

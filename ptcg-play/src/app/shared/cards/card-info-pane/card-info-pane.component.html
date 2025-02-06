@@ -5,7 +5,7 @@
 
   <div class="ptcg-card-info-text" *ngIf="!facedown && card.superType === SuperType.POKEMON">
     <div class="title">
-      <span>{{card.name}}</span>
+      <span>{{card.name}}</span> <span class="subtitle-set-code">{{card.set}} {{card.setNumber}}</span>
       <div class="ptcg-u-spacer"></div>
       <div class="subtitle-hp">
         <span class="subtitle-hp-unit" translate>CARDS_HP</span>
@@ -124,7 +124,7 @@
 
   <div class="ptcg-card-info-text" *ngIf="!facedown && card.superType === SuperType.ENERGY">
     <div class="title">
-      {{card.name}}
+      <span>{{card.name}}</span> <span class="subtitle-set-code">{{card.set}} {{card.setNumber}}</span>
     </div>
     <div class="subtitle">
       <div class="subtitle-stage" [ngSwitch]="card.energyType">
@@ -150,7 +150,7 @@
 
   <div class="ptcg-card-info-text" *ngIf="!facedown && card.superType === SuperType.TRAINER">
     <div class="title">
-      {{card.name}}
+      <span>{{card.name}}</span> <span class="subtitle-set-code">{{card.set}} {{card.setNumber}}</span>
     </div>
     <div class="subtitle">
       <div class="subtitle-stage" [ngSwitch]="card.trainerType">

@@ -22,6 +22,6 @@ export declare class HisuianZoroarkV extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
-    voidReturn: boolean;
+    usedVoidReturn: boolean;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

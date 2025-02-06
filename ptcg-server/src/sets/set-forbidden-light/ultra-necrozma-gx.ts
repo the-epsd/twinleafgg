@@ -7,9 +7,8 @@ import {
 } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { DiscardCardsEffect, PutCountersEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { DiscardCardsEffect, PutCountersEffect } from '../../game/store/effects/attack-effects';
 
-// FLI Ultra Necrozma-GX 95 (https://limitlesstcg.com/cards/FLI/95)
 export class UltraNecrozmaGX extends PokemonCard {
 
   public tags = [CardTag.POKEMON_GX, CardTag.ULTRA_BEAST];
@@ -55,7 +54,6 @@ export class UltraNecrozmaGX extends PokemonCard {
     // Photon Geyser
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
 
       const psychicEnergy = player.active.cards.filter(card =>
         card instanceof EnergyCard && card.name === 'Psychic Energy'
@@ -65,11 +63,9 @@ export class UltraNecrozmaGX extends PokemonCard {
       discardEnergy.target = player.active;
       store.reduceEffect(state, discardEnergy);
 
-      const damageAmount = psychicEnergy.length * 80;
-      const damageEffect = new PutDamageEffect(effect, damageAmount);
-      damageEffect.target = opponent.active;
-      store.reduceEffect(state, damageEffect);
+      effect.damage += psychicEnergy.length * 80;
     }
+
     // Sky Scorching Light-GX
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;

@@ -45,9 +45,8 @@ export class Jirachi extends PokemonCard {
       return state;
     }
 
-    if (effect instanceof EndTurnEffect) {
-      const player = effect.player;
-      player.marker.removeMarker(this.STELLAR_WISH_MARKER, this);
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.STELLAR_WISH_MARKER, this)) {
+      effect.player.marker.removeMarker(this.STELLAR_WISH_MARKER, this);
     }
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {

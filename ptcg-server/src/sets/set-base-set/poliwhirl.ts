@@ -12,11 +12,11 @@ import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 export class Poliwhirl extends PokemonCard {
 
   public name = 'Poliwhirl';
-  
+
   public set = 'BS';
-  
+
   public fullName = 'Poliwhirl BS';
-  
+
   public cardType = CardType.WATER;
 
   public stage = Stage.STAGE_1;
@@ -34,12 +34,12 @@ export class Poliwhirl extends PokemonCard {
   public retreat = [CardType.COLORLESS];
 
   public forgottenAttack: Attack | null = null;
-  
+
   public attacks: Attack[] = [
     {
       name: 'Amnesia',
       cost: [CardType.WATER, CardType.WATER],
-      text: 'Choose 1 of the Defending Pokémon’s attacks. That Pokémon can’t use that attack during your opponent’s next turn.',
+      text: 'Choose 1 of the Defending Pokémon\'s attacks. That Pokémon can\'t use that attack during your opponent\'s next turn.',
       damage: 0
     },
     {
@@ -55,52 +55,52 @@ export class Poliwhirl extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const pokemonCard = opponent.active.getPokemonCard();
-        
+
       if (pokemonCard === undefined || pokemonCard.attacks.length === 0) {
         return state;
       }
-        
+
       let selected: any;
       return store.prompt(state, new ChooseAttackPrompt(
         player.id,
         GameMessage.CHOOSE_ATTACK_TO_DISABLE,
-        [ pokemonCard ],
+        [pokemonCard],
         { allowCancel: false }
       ), result => {
         selected = result;
-        
+
         if (selected === null) {
           return state;
         }
-        
+
         opponent.active.marker.addMarker(PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER, this);
         this.forgottenAttack = selected;
-        
-          
+
+
         store.log(state, GameLog.LOG_PLAYER_DISABLES_ATTACK, {
           name: player.name,
           // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           attack: this.forgottenAttack!.name
         });
-        
+
         return state;
       });
     }
-    
+
     if (effect instanceof AttackEffect && effect.attack === this.forgottenAttack &&
-        effect.player.active.marker.hasMarker(PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER, this)) {
+      effect.player.active.marker.hasMarker(PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER, this)) {
       throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
     }
-    
-    if (effect instanceof EndTurnEffect && 
-        effect.player.active.marker.hasMarker(PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER, this)) {
+
+    if (effect instanceof EndTurnEffect &&
+      effect.player.active.marker.hasMarker(PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER, this)) {
 
       effect.player.active.marker.removeMarker(PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER, this);
 
       effect.player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
         cardList.marker.removeMarker(PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER, this);
       });
-      
+
       this.forgottenAttack = null;
     }
 
@@ -113,7 +113,7 @@ export class Poliwhirl extends PokemonCard {
         effect.damage = heads * 30;
       });
     }
-    
+
     return state;
   }
 

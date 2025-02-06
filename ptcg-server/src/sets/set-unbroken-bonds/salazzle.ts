@@ -43,7 +43,7 @@ export class Salazzle extends PokemonCard {
       player.marker.removeMarker(this.ROAST_REVEAL_MARKER, this);
     }
 
-    if (effect instanceof EndTurnEffect) {
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ROAST_REVEAL_MARKER, this)) {
       const player = effect.player;
       player.marker.removeMarker(this.ROAST_REVEAL_MARKER, this);
     }

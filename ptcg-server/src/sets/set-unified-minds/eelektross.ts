@@ -122,7 +122,7 @@ export class EelektrossUNM extends PokemonCard {
       throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
     }
 
-    if (effect instanceof EndTurnEffect) {
+    if (effect instanceof EndTurnEffect && effect.player.active.marker.hasMarker(PokemonCardList.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this)) {
       effect.player.active.marker.removeMarker(PokemonCardList.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
     }
 

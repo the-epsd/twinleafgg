@@ -79,7 +79,7 @@ class Smeargle extends pokemon_card_1.PokemonCard {
                 effect.damage = 20 * heads;
             });
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.PORTRAIT_MARKER, this)) {
             effect.player.marker.removeMarker(this.PORTRAIT_MARKER, this);
         }
         return state;

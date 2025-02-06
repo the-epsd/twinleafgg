@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Vileplume = void 0;
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class Vileplume extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -33,18 +34,8 @@ class Vileplume extends game_1.PokemonCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.EvolveEffect && effect.pokemonCard === this) {
             const player = effect.player;
-            // Try to reduce PowerEffect, to check if something is blocking our ability
-            try {
-                const stub = new game_effects_1.PowerEffect(player, {
-                    name: 'test',
-                    powerType: game_1.PowerType.ABILITY,
-                    text: ''
-                }, this);
-                store.reduceEffect(state, stub);
-            }
-            catch (_a) {
+            if (!prefabs_1.IS_ABILITY_BLOCKED(store, state, player, this))
                 return state;
-            }
             const temp = new game_1.CardList();
             player.deck.moveTo(temp, 8);
             // Check if any cards drawn are basic energy
@@ -53,12 +44,7 @@ class Vileplume extends game_1.PokemonCard {
             });
             // If no energy cards were drawn, move all cards to deck
             if (energyCardsDrawn.length == 0) {
-                temp.cards.slice(0, 8).forEach(card => {
-                    temp.moveCardTo(card, player.deck);
-                    return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
-                        player.deck.applyOrder(order);
-                    });
-                });
+                prefabs_1.SHUFFLE_CARDS_INTO_DECK(store, state, player, temp.cards);
             }
             else {
                 // Prompt to attach energy if any were drawn
@@ -79,7 +65,6 @@ class Vileplume extends game_1.PokemonCard {
                     }
                     return state;
                 });
-                return state;
             }
             return state;
         }

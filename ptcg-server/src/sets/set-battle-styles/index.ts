@@ -48,6 +48,7 @@ import { VictiniV } from './victini-v';
 import { VictiniVMAX } from './victini-vmax';
 import { Victreebel } from './victreebel';
 import { Weepinbell } from './weepinbell';
+import { Zubat } from './zubat';
 
 export const setBattleStyles: Card[] = [
   new Bellsprout(),
@@ -99,4 +100,5 @@ export const setBattleStyles: Card[] = [
   new Victreebel(),
   new Weepinbell(),
   new Falinks(),
+  new Zubat(),
 ];

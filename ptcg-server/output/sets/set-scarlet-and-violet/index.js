@@ -13,6 +13,7 @@ const capsakid_1 = require("./capsakid");
 const charcadet_1 = require("./charcadet");
 const crushing_hammer_1 = require("./crushing-hammer");
 const cyclizar_1 = require("./cyclizar");
+const croagunk_1 = require("./croagunk");
 const defiance_band_1 = require("./defiance-band");
 const dolliv_1 = require("./dolliv");
 const drifloon_1 = require("./drifloon");
@@ -64,6 +65,7 @@ const riolu_1 = require("./riolu");
 const riolu2_1 = require("./riolu2");
 const rock_chestplate_1 = require("./rock-chestplate");
 const rocky_helmet_1 = require("./rocky-helmet");
+const seviper_1 = require("./seviper");
 const scatterbug_1 = require("./scatterbug");
 const scovillain_1 = require("./scovillain");
 const shuppet_1 = require("./shuppet");
@@ -81,6 +83,11 @@ const vitality_band_1 = require("./vitality-band");
 const wiglett_1 = require("./wiglett");
 const wugtrio_1 = require("./wugtrio");
 const youngster_1 = require("./youngster");
+const kirlia_1 = require("./kirlia");
+const pawmi_1 = require("./pawmi");
+const pawmo_1 = require("./pawmo");
+const pawmot_1 = require("./pawmot");
+const slowpoke_1 = require("./slowpoke");
 exports.setScarletAndViolet = [
     new annihilape_1.Annihilape(),
     new arboliva_1.Arboliva(),
@@ -92,6 +99,7 @@ exports.setScarletAndViolet = [
     new capsakid_1.Capsakid(),
     new charcadet_1.Charcadet(),
     new crushing_hammer_1.CrushingHammer(),
+    new croagunk_1.Croagunk(),
     new cyclizar_1.Cyclizar(),
     new defiance_band_1.DefianceBand(),
     new dolliv_1.Dolliv(),
@@ -110,6 +118,7 @@ exports.setScarletAndViolet = [
     new judge_1.Judge(),
     new katy_1.Katy(),
     new kingambit_1.Kingambit(),
+    new kirlia_1.Kirlia(),
     new klefki_1.Klefki(),
     new koraidon_ex_1.Koraidonex(),
     new lucario_1.Lucario(),
@@ -125,6 +134,9 @@ exports.setScarletAndViolet = [
     new nemona_1.Nemona(),
     new nest_ball_1.NestBall(),
     new pal_pad_1.PalPad(),
+    new pawmi_1.Pawmi(),
+    new pawmo_1.Pawmo(),
+    new pawmot_1.Pawmot(),
     new pawniard_1.Pawniard(),
     new penny_1.Penny(),
     new picnic_basket_1.PicnicBasket(),
@@ -143,8 +155,10 @@ exports.setScarletAndViolet = [
     new rocky_helmet_1.RockyHelmet(),
     new scatterbug_1.Scatterbug(),
     new scovillain_1.Scovillain(),
+    new seviper_1.Seviper(),
     new spewpa_1.Spewpa(),
     new skwovet_1.Skwovet(),
+    new slowpoke_1.Slowpoke(),
     new switch_1.Switch(),
     new team_star_grunt_1.TeamStarGrunt(),
     new torkoal_1.Torkoal(),
@@ -158,6 +172,7 @@ exports.setScarletAndViolet = [
     new quaxwell_1.Quaxwell(),
     //Alt-s
     new full_art_1.ArmarougeIR(),
+    new full_art_1.PawmotIR(),
     new full_art_1.ArvenFA(),
     new full_art_1.ArvenSIR(),
     new full_art_1.FightingEnergyHR(),
@@ -167,6 +182,7 @@ exports.setScarletAndViolet = [
     new full_art_1.JacqFA(),
     new full_art_1.JacqSIR(),
     new full_art_1.KatyFA(),
+    new full_art_1.KirliaIR(),
     new full_art_1.KoraidonexFA(),
     new full_art_1.KoraidonexSIR(),
     new full_art_1.KoraidonexHR(),
@@ -184,6 +200,7 @@ exports.setScarletAndViolet = [
     new full_art_1.RaltsIR(),
     new full_art_1.RareCandyHR(),
     new full_art_1.SkwovetIR(),
+    new full_art_1.SlowpokeIR(),
     new smoliv_1.Smoliv(),
     new full_art_1.TeamStarGruntFA(),
     new toedscool_1.Toedscool(),

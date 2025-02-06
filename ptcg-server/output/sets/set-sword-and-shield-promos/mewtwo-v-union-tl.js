@@ -73,7 +73,7 @@ class MewtwoVUNIONTopLeft extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
             const slots = player.bench.filter(b => b.cards.length === 0);
-            if (player.assembledMewtwo) {
+            if (player.assembledVUNIONs.includes(this.name)) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
             }
             if (slots.length === 0) {
@@ -112,7 +112,7 @@ class MewtwoVUNIONTopLeft extends pokemon_card_1.PokemonCard {
                     player.discard.cards.forEach(card => { if (card instanceof MewtwoVUNIONTopLeft) {
                         player.discard.moveCardTo(card, slots[0]);
                     } });
-                    player.assembledMewtwo = true;
+                    player.assembledVUNIONs.push(this.name);
                     slots[0].pokemonPlayedTurn = state.turn;
                 }
             }

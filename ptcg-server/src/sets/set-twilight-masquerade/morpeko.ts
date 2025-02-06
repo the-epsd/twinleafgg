@@ -55,9 +55,8 @@ export class Morpeko extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof EndTurnEffect) {
-      const player = (effect as EndTurnEffect).player;
-      player.marker.removeMarker(this.SNACK_SEARCH_MARKER, this);
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.SNACK_SEARCH_MARKER, this)) {
+      effect.player.marker.removeMarker(this.SNACK_SEARCH_MARKER, this);
     }
 
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {

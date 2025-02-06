@@ -18,7 +18,7 @@ class NsCastle extends trainer_card_1.TrainerCard {
         this.regulationMark = 'I';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '97';
-        this.text = 'Each N’s Pokémon in play (both yours and your opponent’s) has no Retreat Cost.';
+        this.text = 'Each N\'s Pokémon in play (both yours and your opponent\'s) has no Retreat Cost.';
     }
     reduceEffect(store, state, effect) {
         var _a;

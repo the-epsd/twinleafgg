@@ -4,7 +4,7 @@ import { Player } from '../state/player';
 import { PokemonCardList } from '../state/pokemon-card-list';
 import { Resistance, Weakness, Attack, Power } from '../card/pokemon-types';
 import { EnergyMap } from '../prompts/choose-energy-prompt';
-import { PokemonCard } from '../card/pokemon-card';
+import { Card } from '../card/card';
 export declare enum CheckEffects {
     CHECK_HP_EFFECT = "CHECK_HP_EFFECT",
     CHECK_PRIZES_COUNT_EFFECT = "CHECK_PRIZE_COUNT_EFFECT",
@@ -100,10 +100,11 @@ export declare class AddSpecialConditionsPowerEffect implements Effect {
     readonly type: string;
     preventDefault: boolean;
     poisonDamage?: number;
+    burnDamage?: number;
+    sleepFlips?: number;
     specialConditions: SpecialCondition[];
     player: Player;
-    power: Power;
-    card: PokemonCard;
+    source: Card;
     target: PokemonCardList;
-    constructor(player: Player, power: Power, card: PokemonCard, target: PokemonCardList, specialConditions: SpecialCondition[]);
+    constructor(player: Player, source: Card, target: PokemonCardList, specialConditions: SpecialCondition[], poisonDamage?: number, burnDamage?: number, sleepFlips?: number);
 }

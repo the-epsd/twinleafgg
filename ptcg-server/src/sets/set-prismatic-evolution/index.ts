@@ -1,4 +1,5 @@
 import { Card } from '../../game/store/card/card';
+import { ProfessorsResearchE, ProfessorsResearchO, ProfessorsResearchR, ProfessorsResearchS } from './alt-arts';
 import { Amarys } from './amarys';
 import { BlackBeltsTraining } from './black-belts-training';
 import { Bronzor } from './bronzor';
@@ -15,6 +16,7 @@ import { MaxRod } from './max-rod';
 import { Pupitar } from './pupitar';
 import { Regigigas } from './regigigas';
 import { Seaking } from './seaking';
+import { Sylveon } from './sylveon';
 import { TreasureTracker } from './treasure-tracker';
 import { Tyranitarex } from './tyranitar-ex';
 import { Umbreonex } from './umbreon-ex';
@@ -32,6 +34,7 @@ export const setPrismaticEvolution: Card[] = [
   new Umbreonex(),
   new Leafeonex(),
   new Glaceonex(),
+  new Sylveon(),
   new Seaking(),
   new Regigigas(),
   new MaxRod(),
@@ -40,6 +43,12 @@ export const setPrismaticEvolution: Card[] = [
   new Pupitar(),
   new Tyranitarex(),
   new Bronzor(),
+
+  // Reprints
+  new ProfessorsResearchO(),
+  new ProfessorsResearchE(),
+  new ProfessorsResearchR(),
+  new ProfessorsResearchS(),
 
   // Full arts
   new AmarysFA(),

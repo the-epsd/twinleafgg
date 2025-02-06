@@ -15,7 +15,7 @@ export declare class Hitmonchan extends PokemonCard {
         type: CardType;
     }[];
     retreat: CardType[];
-    hitAndRun: boolean;
+    usedHitAndRun: boolean;
     attacks: {
         name: string;
         cost: CardType[];

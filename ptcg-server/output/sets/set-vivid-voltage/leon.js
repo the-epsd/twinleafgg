@@ -32,7 +32,7 @@ class Leon extends trainer_card_1.TrainerCard {
             }
             return state;
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.LEON_MARKER, this)) {
             effect.player.marker.removeMarker(this.LEON_MARKER, this);
             return state;
         }

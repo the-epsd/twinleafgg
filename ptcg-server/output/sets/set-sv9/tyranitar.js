@@ -13,7 +13,7 @@ const game_1 = require("../../game");
 class Tyranitar extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.stage = card_types_1.Stage.BASIC;
+        this.stage = card_types_1.Stage.STAGE_2;
         this.evolvesFrom = 'Pupitar';
         this.cardType = card_types_1.CardType.DARK;
         this.hp = 190;
@@ -22,13 +22,13 @@ class Tyranitar extends pokemon_card_1.PokemonCard {
         this.powers = [{
                 name: 'Daunting Gaze',
                 powerType: pokemon_types_1.PowerType.ABILITY,
-                text: 'While this Pokémon is in the Active Spot, your opponent can’t play any Item cards from their hand.'
+                text: 'While this Pokémon is in the Active Spot, your opponent can\'t play any Item cards from their hand.'
             }];
         this.attacks = [{
                 name: 'Crackling Stomp',
                 cost: [card_types_1.CardType.DARK, card_types_1.CardType.COLORLESS],
                 damage: 150,
-                text: 'Discard the top 2 cards of your opponent’s deck.'
+                text: 'Discard the top 2 cards of your opponent\'s deck.'
             }];
         this.set = 'SV9';
         this.regulationMark = 'I';

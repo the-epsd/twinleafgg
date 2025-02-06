@@ -17,7 +17,7 @@ export class Magmar extends PokemonCard {
       name: 'Searing Flame',
       cost: [CardType.FIRE, CardType.COLORLESS],
       damage: 30,
-      text: 'Flip a coin. If heads, your opponent’s Active Pokémon is now Burned.'
+      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Burned.'
     }
   ];
 

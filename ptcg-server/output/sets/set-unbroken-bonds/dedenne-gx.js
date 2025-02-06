@@ -45,9 +45,8 @@ class DedenneGX extends pokemon_card_1.PokemonCard {
         this.DEDECHANGE_MARKER = 'DEDECHANGE_MARKER';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
-            const player = effect.player;
-            player.marker.removeMarker(this.DEDECHANGE_MARKER, this);
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.DEDECHANGE_MARKER)) {
+            effect.player.marker.removeMarker(this.DEDECHANGE_MARKER, this);
         }
         if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {
             const player = effect.player;

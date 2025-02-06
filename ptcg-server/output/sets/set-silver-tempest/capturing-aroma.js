@@ -42,7 +42,9 @@ class CapturingAroma extends trainer_card_1.TrainerCard {
                         // Operation canceled by the user
                         if (cards.length === 0) {
                             player.supporter.moveCardTo(this, player.discard);
-                            return state;
+                            return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
+                                player.deck.applyOrder(order);
+                            });
                         }
                         cards.forEach((card, index) => {
                             store.log(state, game_message_1.GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });

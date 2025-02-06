@@ -6,8 +6,10 @@ export declare enum CardTag {
     POKEMON_V = "V",
     POKEMON_VMAX = "VMAX",
     POKEMON_VSTAR = "VSTAR",
+    POKEMON_VUNION = "VUNION",
     ACE_SPEC = "ACE_SPEC",
     RADIANT = "RADIANT",
+    ROCKETS_SECRET_MACHINE = "ROCKETS_SECRET_MACHINE",
     TEAM_PLASMA = "TEAM_PLASMA",
     FUSION_STRIKE = "FUSION_STRIKE",
     SINGLE_STRIKE = "SINGLE_STRIKE",
@@ -65,7 +67,9 @@ export declare enum Stage {
     STAGE_2 = 4,
     VMAX = 5,
     VSTAR = 6,
-    MEGA = 7
+    VUNION = 7,
+    MEGA = 8,
+    BREAK = 9
 }
 export declare enum Archetype {
     UNOWN = "Unown",

@@ -109,7 +109,7 @@ export class TealMaskOgerponex extends PokemonCard {
       });
     }
 
-    if (effect instanceof EndTurnEffect) {
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.TEAL_DANCE_MARKER, this)) {
       effect.player.marker.removeMarker(this.TEAL_DANCE_MARKER, this);
     }
 

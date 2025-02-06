@@ -17,7 +17,7 @@ class Kingambit extends pokemon_card_1.PokemonCard {
         this.powers = [{
                 name: 'Leadership',
                 powerType: game_1.PowerType.ABILITY,
-                text: 'Your Basic Pokémon\'s attacks do 30 more damage to your opponent’s Active Pokémon (before applying Weakness and Resistance).'
+                text: 'Your Basic Pokémon\'s attacks do 30 more damage to your opponent\'s Active Pokémon (before applying Weakness and Resistance).'
             }];
         this.attacks = [
             {

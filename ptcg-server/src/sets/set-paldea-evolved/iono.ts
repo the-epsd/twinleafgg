@@ -25,12 +25,13 @@ export class Iono extends TrainerCard {
   public fullName: string = 'Iono PAL';
 
   public text: string =
-    'Each player shuffles his or her hand into his or her deck. ' +
-    'Then, each player draws a card for each of his or her remaining Prize cards.';
-    
+    'Each player shuffles their hand and puts it on the bottom of their deck. ' +
+    'If either player put any cards on the bottom of their deck in this way, ' +
+    'each player draws a card for each of their remaining Prize cards.';
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-    
+
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -39,7 +40,7 @@ export class Iono extends TrainerCard {
       if (supporterTurn > 0) {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
-      
+
       player.hand.moveCardTo(effect.trainerCard, player.supporter);
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
@@ -62,27 +63,27 @@ export class Iono extends TrainerCard {
       if (player.hand.cards.length === 0 && opponent.hand.cards.length === 0) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
-    
+
       player.hand.moveCardsTo(cards, deckBottom);
       opponent.hand.moveTo(opponentDeckBottom);
 
       deckBottom.moveTo(player.deck);
       opponentDeckBottom.moveTo(opponent.deck);
-    
+
       player.deck.moveTo(player.hand, player.getPrizeLeft());
       opponent.deck.moveTo(opponent.hand, opponent.getPrizeLeft());
 
       player.supporter.moveCardTo(effect.trainerCard, player.discard);
-      
+
 
     }
-    
+
     return state;
   }
 
   shufflePlayerHand(player: Player): void {
     const hand = player.hand.cards;
-  
+
     // Shuffle the hand using the Fisher-Yates shuffle algorithm
     for (let i = hand.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));

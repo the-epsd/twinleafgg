@@ -10,6 +10,7 @@ export enum CardTag {
   POKEMON_VUNION = 'VUNION',
   ACE_SPEC = 'ACE_SPEC',
   RADIANT = 'RADIANT',
+  ROCKETS_SECRET_MACHINE = 'ROCKETS_SECRET_MACHINE',
   TEAM_PLASMA = 'TEAM_PLASMA',
   FUSION_STRIKE = 'FUSION_STRIKE',
   SINGLE_STRIKE = 'SINGLE_STRIKE',
@@ -74,6 +75,7 @@ export enum Stage {
   VSTAR,
   VUNION,
   MEGA,
+  BREAK,
 }
 
 export enum Archetype {

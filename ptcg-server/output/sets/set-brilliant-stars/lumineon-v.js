@@ -6,16 +6,17 @@ const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 const game_1 = require("../../game");
+const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 class LumineonV extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.tags = [card_types_1.CardTag.POKEMON_V];
         this.regulationMark = 'F';
         this.stage = card_types_1.Stage.BASIC;
-        this.cardType = card_types_1.CardType.WATER;
+        this.cardType = W;
         this.hp = 170;
-        this.weakness = [{ type: card_types_1.CardType.LIGHTNING }];
-        this.retreat = [card_types_1.CardType.COLORLESS];
+        this.weakness = [{ type: L }];
+        this.retreat = [C];
         this.powers = [{
                 name: 'Luminous Sign',
                 powerType: game_1.PowerType.ABILITY,
@@ -27,7 +28,7 @@ class LumineonV extends pokemon_card_1.PokemonCard {
         this.attacks = [
             {
                 name: 'Aqua Return',
-                cost: [card_types_1.CardType.WATER, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
+                cost: [W, C, C],
                 damage: 120,
                 text: 'Shuffle this Pokémon and all attached cards into your deck.'
             }
@@ -37,6 +38,7 @@ class LumineonV extends pokemon_card_1.PokemonCard {
         this.setNumber = '40';
         this.name = 'Lumineon V';
         this.fullName = 'Lumineon V BRS';
+        this.usedAquaReturn = false;
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {
@@ -87,9 +89,13 @@ class LumineonV extends pokemon_card_1.PokemonCard {
             });
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+            this.usedAquaReturn = true;
+        }
+        if (effect instanceof game_phase_effects_1.AfterAttackEffect && this.usedAquaReturn) {
             const player = effect.player;
             player.active.clearEffects();
             player.active.moveTo(player.deck);
+            this.usedAquaReturn = false;
             return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
                 player.deck.applyOrder(order);
             });

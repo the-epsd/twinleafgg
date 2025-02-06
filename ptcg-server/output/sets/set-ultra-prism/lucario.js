@@ -74,7 +74,7 @@ class LucarioUPR extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             effect.ignoreResistance = true;
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.PRECOGNITIVE_MARKER, this)) {
             effect.player.marker.removeMarker(this.PRECOGNITIVE_MARKER, this);
         }
         return state;

@@ -2,6 +2,7 @@
 export * from './set-base-set';
 export * from './set-fossil';
 export * from './set-jungle';
+export * from './set-team-rocket';
 export * from './set-vending-series';
 export * from './set-wotc-promos';
 

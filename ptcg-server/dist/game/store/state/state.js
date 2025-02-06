@@ -5,8 +5,10 @@ export var GamePhase;
     GamePhase[GamePhase["SETUP"] = 1] = "SETUP";
     GamePhase[GamePhase["PLAYER_TURN"] = 2] = "PLAYER_TURN";
     GamePhase[GamePhase["ATTACK"] = 3] = "ATTACK";
-    GamePhase[GamePhase["BETWEEN_TURNS"] = 4] = "BETWEEN_TURNS";
-    GamePhase[GamePhase["FINISHED"] = 5] = "FINISHED";
+    GamePhase[GamePhase["AFTER_ATTACK"] = 4] = "AFTER_ATTACK";
+    GamePhase[GamePhase["CHOOSE_PRIZES"] = 5] = "CHOOSE_PRIZES";
+    GamePhase[GamePhase["BETWEEN_TURNS"] = 6] = "BETWEEN_TURNS";
+    GamePhase[GamePhase["FINISHED"] = 7] = "FINISHED";
 })(GamePhase || (GamePhase = {}));
 export var GameWinner;
 (function (GameWinner) {

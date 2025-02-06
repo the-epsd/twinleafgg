@@ -33,13 +33,10 @@ class BlackBelt extends trainer_card_1.TrainerCard {
             }
             player.marker.addMarker(this.BLACK_BELT_MARKER, this);
         }
-        if (effect instanceof attack_effects_1.DealDamageEffect) {
-            const marker = effect.player.marker;
-            if (marker.hasMarker(this.BLACK_BELT_MARKER, this) && effect.damage > 0) {
-                effect.damage += 40;
-            }
+        if (effect instanceof attack_effects_1.DealDamageEffect && effect.player.marker.hasMarker(this.BLACK_BELT_MARKER, this) && effect.damage > 0) {
+            effect.damage += 40;
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.BLACK_BELT_MARKER, this)) {
             effect.player.marker.removeMarker(this.BLACK_BELT_MARKER, this);
         }
         return state;

@@ -6,6 +6,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import {ABILITY_USED} from '../../game/store/prefabs/prefabs';
 
 function* useNightJoker(next: Function, store: StoreLike, state: State,
   effect: AttackEffect): IterableIterator<State> {
@@ -132,6 +133,7 @@ export class NsZoroarkex extends PokemonCard {
         { allowCancel: false, min: 1, max: 1 }
       ), cards => {
         cards = cards || [];
+        ABILITY_USED(player, this);
         player.marker.addMarker(this.TRADE_MARKER, this);
         player.hand.moveCardsTo(cards, player.discard);
         player.deck.moveTo(player.hand, 2);

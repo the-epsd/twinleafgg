@@ -5,18 +5,29 @@ import { Arven } from './arven';
 import { Gardevoirex } from './gardevoir-ex';
 import { Jacq } from './jacq';
 import { Katy } from './katy';
+import { Kirlia } from './kirlia';
 import { Koraidonex } from './koraidon-ex';
 import { Magnezoneex } from './magnezone-ex';
 import { Miraidonex } from './miraidon-ex';
 import { Miriam } from './miriam';
 import { NestBall } from './nest-ball';
+import { Pawmot } from './pawmot';
 import { Penny } from './penny';
 import { ProfessorsResearch } from './professors-research';
 import { Ralts } from './ralts';
 import { RareCandy } from './rare-candy';
 import { Skwovet } from './skwovet';
+import { Slowpoke } from './slowpoke';
 import { TeamStarGrunt } from './team-star-grunt';
 export declare class ArmarougeIR extends Armarouge {
+    setNumber: string;
+    fullName: string;
+}
+export declare class SlowpokeIR extends Slowpoke {
+    setNumber: string;
+    fullName: string;
+}
+export declare class PawmotIR extends Pawmot {
     setNumber: string;
     fullName: string;
 }
@@ -113,6 +124,10 @@ export declare class ProfessorsResearchFA2 extends ProfessorsResearch {
     fullName: string;
 }
 export declare class RaltsIR extends Ralts {
+    setNumber: string;
+    fullName: string;
+}
+export declare class KirliaIR extends Kirlia {
     setNumber: string;
     fullName: string;
 }

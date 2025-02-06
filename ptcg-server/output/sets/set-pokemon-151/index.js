@@ -29,7 +29,9 @@ const grabber_1 = require("./grabber");
 const hitmonlee_1 = require("./hitmonlee");
 const ivysaur_1 = require("./ivysaur");
 const jolteon_1 = require("./jolteon");
+const jynx_ex_1 = require("./jynx-ex");
 const kangaskhan_ex_1 = require("./kangaskhan-ex");
+const koffing_1 = require("./koffing");
 const leftovers_1 = require("./leftovers");
 const machoke_1 = require("./machoke");
 const machop_1 = require("./machop");
@@ -59,6 +61,8 @@ const venonat_1 = require("./venonat");
 const venusaur_ex_1 = require("./venusaur-ex");
 const vileplume_1 = require("./vileplume");
 const wartortle_1 = require("./wartortle");
+const weedle_1 = require("./weedle");
+const weezing_1 = require("./weezing");
 const zapdos_ex_1 = require("./zapdos-ex");
 exports.setPokemon151 = [
     new abra_1.Abra(),
@@ -89,6 +93,7 @@ exports.setPokemon151 = [
     new ivysaur_1.Ivysaur(),
     new jolteon_1.Jolteon(),
     new kangaskhan_ex_1.Kangaskhanex(),
+    new koffing_1.Koffing(),
     new leftovers_1.Leftovers(),
     new machop_1.Machop(),
     new machoke_1.Machoke(),
@@ -118,8 +123,11 @@ exports.setPokemon151 = [
     new venusaur_ex_1.Venusaurex(),
     new vileplume_1.Vileplume(),
     new wartortle_1.Wartortle(),
+    new weedle_1.Weedle(),
+    new weezing_1.Weezing(),
     new zapdos_ex_1.Zapdosex(),
     new big_air_balloon_1.BigAirBalloon(),
+    new jynx_ex_1.Jynxex(),
     //Full 
     new full_art_1.BulbasaurIR(),
     new full_art_1.IvysaurIR(),

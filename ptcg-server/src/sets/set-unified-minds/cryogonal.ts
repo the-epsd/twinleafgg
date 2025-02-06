@@ -39,7 +39,9 @@ export class CryogonalUNM extends PokemonCard {
     }
 
     // Remove marker at the end of a player's turn
-    if (effect instanceof EndTurnEffect) { effect.player.marker.removeMarker(this.FROZEN_LOCK_MARKER); }
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.FROZEN_LOCK_MARKER)) {
+      effect.player.marker.removeMarker(this.FROZEN_LOCK_MARKER);
+    }
     return state;
   }
 }

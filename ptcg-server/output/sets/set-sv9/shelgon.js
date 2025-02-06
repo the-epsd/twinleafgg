@@ -20,7 +20,7 @@ class Shelgon extends pokemon_card_1.PokemonCard {
                 name: 'Guard Press',
                 cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
                 damage: 30,
-                text: 'During your opponent’s next turn, this Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance).'
+                text: 'During your opponent\'s next turn, this Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance).'
             },
             {
                 name: 'Heavy Impact',

@@ -48,7 +48,7 @@ export class Player {
 
   usedGX: boolean = false;
 
-  assembledMewtwo: boolean = false;
+  assembledVUNIONs: string[] = [];
 
   public readonly DAMAGE_DEALT_MARKER = 'DAMAGE_DEALT_MARKER';
 
@@ -149,7 +149,7 @@ export class Player {
   getPokemonInPlay(): PokemonCardList[] {
     let list: PokemonCardList[] = [];
     this.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, pokemonCard, target) => {
-      if (cardList)
+      if (cardList.cards.length !== 0)
         list.push(cardList);
     });
     return list;

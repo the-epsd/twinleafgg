@@ -19,7 +19,7 @@ class Larvitar extends pokemon_card_1.PokemonCard {
                 name: 'Crunch',
                 cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
                 damage: 20,
-                text: 'Flip a coin. If heads, discard an Energy from your opponent’s Active Pokémon.'
+                text: 'Flip a coin. If heads, discard an Energy from your opponent\'s Active Pokémon.'
             }
         ];
         this.set = 'SV9';

@@ -1,6 +1,7 @@
 import { GameError } from '../../game-error';
 import { GameLog, GameMessage } from '../../game-message';
-import { CardTag, SpecialCondition, Stage, SuperType } from '../card/card-types';
+import { CardTag, SpecialCondition, Stage, SuperType, TrainerType } from '../card/card-types';
+import { TrainerCard } from '../card/trainer-card';
 import { ApplyWeaknessEffect, DealDamageEffect } from '../effects/attack-effects';
 import { AddSpecialConditionsPowerEffect, CheckAttackCostEffect, CheckPokemonStatsEffect, CheckPokemonTypeEffect, CheckProvidedEnergyEffect } from '../effects/check-effects';
 import { AttackEffect, EvolveEffect, HealEffect, KnockOutEffect, PowerEffect, TrainerPowerEffect, UseAttackEffect, UsePowerEffect, UseStadiumEffect, UseTrainerPowerEffect } from '../effects/game-effects';
@@ -113,8 +114,10 @@ function* useAttack(next, store, state, effect) {
         yield store.prompt(state, new ConfirmPrompt(player.id, GameMessage.WANT_TO_ATTACK_AGAIN), wantToAttackAgain => {
             if (wantToAttackAgain) {
                 if (hasBarrageAbility) {
+                    const attackableCards = player.active.cards.filter(card => card.superType === SuperType.POKEMON ||
+                        (card.superType === SuperType.TRAINER && card instanceof TrainerCard && card.trainerType === TrainerType.TOOL && card.attacks.length > 0));
                     // Use ChooseAttackPrompt for Barrage ability
-                    store.prompt(state, new ChooseAttackPrompt(player.id, GameMessage.CHOOSE_ATTACK_TO_COPY, [player.active.cards[0]], { allowCancel: false }), selectedAttack => {
+                    store.prompt(state, new ChooseAttackPrompt(player.id, GameMessage.CHOOSE_ATTACK_TO_COPY, attackableCards, { allowCancel: false }), selectedAttack => {
                         if (selectedAttack) {
                             const secondAttackEffect = new AttackEffect(player, opponent, selectedAttack);
                             state = useAttack(() => next(), store, state, secondAttackEffect).next().value;
@@ -125,21 +128,27 @@ function* useAttack(next, store, state, effect) {
                                 const dealDamage = new DealDamageEffect(secondAttackEffect, secondAttackEffect.damage);
                                 state = store.reduceEffect(state, dealDamage);
                             }
-                            return state; // Successfully executed attack, exit the function
+                            state = store.reduceEffect(state, new EndTurnEffect(player));
+                            return state;
                         }
                         next();
                     });
                 }
                 else {
-                    // Recursively call useAttack for the second attack (for non-Barrage abilities)
                     const dealDamage = new DealDamageEffect(attackEffect, attackEffect.damage);
                     state = store.reduceEffect(state, dealDamage);
+                    state = store.reduceEffect(state, new EndTurnEffect(player));
                 }
+            }
+            else {
+                state = store.reduceEffect(state, new EndTurnEffect(player));
             }
             next();
         });
     }
-    return store.reduceEffect(state, new EndTurnEffect(player));
+    if (!canAttackAgain && !hasBarrageAbility) {
+        return store.reduceEffect(state, new EndTurnEffect(player));
+    }
 }
 export function gameReducer(store, state, effect) {
     if (effect instanceof KnockOutEffect) {
@@ -154,7 +163,7 @@ export function gameReducer(store, state, effect) {
             if (card.tags.includes(CardTag.POKEMON_EX) || card.tags.includes(CardTag.POKEMON_V) || card.tags.includes(CardTag.POKEMON_VSTAR) || card.tags.includes(CardTag.POKEMON_ex) || card.tags.includes(CardTag.POKEMON_GX)) {
                 effect.prizeCount += 1;
             }
-            if (card.tags.includes(CardTag.POKEMON_VMAX) || card.tags.includes(CardTag.TAG_TEAM)) {
+            if (card.tags.includes(CardTag.POKEMON_VMAX) || card.tags.includes(CardTag.TAG_TEAM) || card.tags.includes(CardTag.POKEMON_VUNION)) {
                 effect.prizeCount += 2;
             }
             store.log(state, GameLog.LOG_POKEMON_KO, { name: card.name });
@@ -231,6 +240,12 @@ export function gameReducer(store, state, effect) {
         });
         if (effect.poisonDamage !== undefined) {
             target.poisonDamage = effect.poisonDamage;
+        }
+        if (effect.burnDamage !== undefined) {
+            target.burnDamage = effect.burnDamage;
+        }
+        if (effect.sleepFlips !== undefined) {
+            target.sleepFlips = effect.sleepFlips;
         }
         return state;
     }

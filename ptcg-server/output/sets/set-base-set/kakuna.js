@@ -26,7 +26,7 @@ class Kakuna extends pokemon_card_1.PokemonCard {
             {
                 name: 'Stiffen',
                 cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
-                text: 'Flip a coin. If heads, prevent all damage done to Kakuna during your opponent’s next turn. (Any other effects of attacks still happen.)',
+                text: 'Flip a coin. If heads, prevent all damage done to Kakuna during your opponent\'s next turn. (Any other effects of attacks still happen.)',
                 damage: 0
             },
             {

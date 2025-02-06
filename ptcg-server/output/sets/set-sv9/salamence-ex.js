@@ -22,7 +22,7 @@ class Salamenceex extends pokemon_card_1.PokemonCard {
                 name: 'Wide Blast',
                 cost: [card_types_1.CardType.FIRE, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
                 damage: 0,
-                text: 'This attack does 50 damage to each of your opponent’s Benched Pokémon. (Don’t apply Weakness and Resistance for Benched Pokémon.)'
+                text: 'This attack does 50 damage to each of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
             },
             {
                 name: 'Dragon Impact',

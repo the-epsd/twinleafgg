@@ -12,6 +12,7 @@ import {
   GameLog,
   PlayerType
 } from '../../game';
+import { AfterAttackEffect } from '../../game/store/effects/game-phase-effects';
 
 export class LumineonV extends PokemonCard {
 
@@ -21,13 +22,13 @@ export class LumineonV extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = CardType.WATER;
+  public cardType: CardType = W;
 
   public hp: number = 170;
 
-  public weakness = [{ type: CardType.LIGHTNING }];
+  public weakness = [{ type: L }];
 
-  public retreat = [CardType.COLORLESS];
+  public retreat = [C];
 
   public powers = [{
     name: 'Luminous Sign',
@@ -41,7 +42,7 @@ export class LumineonV extends PokemonCard {
   public attacks = [
     {
       name: 'Aqua Return',
-      cost: [CardType.WATER, CardType.COLORLESS, CardType.COLORLESS],
+      cost: [W, C, C],
       damage: 120,
       text: 'Shuffle this Pokémon and all attached cards into your deck.'
     }
@@ -56,6 +57,8 @@ export class LumineonV extends PokemonCard {
   public name: string = 'Lumineon V';
 
   public fullName: string = 'Lumineon V BRS';
+
+  public usedAquaReturn: boolean = false;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -78,6 +81,7 @@ export class LumineonV extends PokemonCard {
       } catch {
         return state;
       }
+
       state = store.prompt(state, new ConfirmPrompt(
         effect.player.id,
         GameMessage.WANT_TO_USE_ABILITY,
@@ -125,10 +129,15 @@ export class LumineonV extends PokemonCard {
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+      this.usedAquaReturn = true;
+    }
+
+    if (effect instanceof AfterAttackEffect && this.usedAquaReturn) {
       const player = effect.player;
 
       player.active.clearEffects();
       player.active.moveTo(player.deck);
+      this.usedAquaReturn = false;
 
       return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
         player.deck.applyOrder(order);

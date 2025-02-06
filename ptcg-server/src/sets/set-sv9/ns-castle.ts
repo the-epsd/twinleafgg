@@ -18,12 +18,12 @@ export class NsCastle extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber = '97';
 
-  public text: string = 'Each N’s Pokémon in play (both yours and your opponent’s) has no Retreat Cost.';
+  public text: string = 'Each N\'s Pokémon in play (both yours and your opponent\'s) has no Retreat Cost.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof CheckRetreatCostEffect && StateUtils.getStadiumCard(state) === this) {
-      if (effect.player.active.getPokemonCard()?.tags.includes(CardTag.NS)){
-        effect.cost = [  ];
+      if (effect.player.active.getPokemonCard()?.tags.includes(CardTag.NS)) {
+        effect.cost = [];
       }
     }
 

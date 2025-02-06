@@ -29,9 +29,9 @@ class GengarMimikyuGX extends game_1.PokemonCard {
                 text: 'Your opponent can\'t play any cards from their hand during their next turn. If this Pokémon has at least 1 extra [P] Energy attached to it (in addition to this attack\'s cost), each player draws cards until they have 7 cards in their hand. (You can\'t use more than 1 GX attack in a game.)'
             }
         ];
-        this.set = 'SM9';
+        this.set = 'TEU';
         this.name = 'Gengar & Mimikyu-GX';
-        this.fullName = 'Gengar & Mimikyu-GX SM9';
+        this.fullName = 'Gengar & Mimikyu-GX TEU';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '53';
         this.CANNOT_PLAY_CARDS_FROM_HAND_MARKER = 'CANT_PLAY_CARDS_FROM_HAND_MARKER';

@@ -42,9 +42,8 @@ class Jirachi extends pokemon_card_1.PokemonCard {
             player.marker.removeMarker(this.STELLAR_WISH_MARKER, this);
             return state;
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
-            const player = effect.player;
-            player.marker.removeMarker(this.STELLAR_WISH_MARKER, this);
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.STELLAR_WISH_MARKER, this)) {
+            effect.player.marker.removeMarker(this.STELLAR_WISH_MARKER, this);
         }
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;

@@ -6,6 +6,7 @@ import { PokemonCardList } from '../state/pokemon-card-list';
 import { Card } from '../card/card';
 import { CardTarget } from '../actions/play-card-action';
 import { TrainerCard } from '../card/trainer-card';
+import { CardList } from '../state/card-list';
 export declare enum GameEffects {
     RETREAT_EFFECT = "RETREAT_EFFECT",
     USE_ATTACK_EFFECT = "USE_ATTACK_EFFECT",
@@ -23,6 +24,7 @@ export declare class RetreatEffect implements Effect {
     player: Player;
     benchIndex: number;
     ignoreStatusConditions: boolean;
+    moveRetreatCostTo: CardList;
     constructor(player: Player, benchIndex: number);
 }
 export declare class UsePowerEffect implements Effect {

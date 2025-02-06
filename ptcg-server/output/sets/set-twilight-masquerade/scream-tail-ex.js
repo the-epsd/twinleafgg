@@ -72,7 +72,7 @@ class ScreamTailex extends pokemon_card_1.PokemonCard {
                     throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);
                 }
             }
-            if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+            if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.SUDDEN_SHRIEK_MARKER, this)) {
                 effect.player.marker.removeMarker(this.SUDDEN_SHRIEK_MARKER, this);
             }
         }

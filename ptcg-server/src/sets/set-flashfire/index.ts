@@ -7,15 +7,16 @@ import { Lysandre } from './lysandre';
 import { MCharizardEX } from './m-charizard-ex';
 import { Milotic } from './milotic';
 import { Miltank } from './miltank';
-import {Ponyta} from './ponyta';
+import { Ponyta } from './ponyta';
 import { ProtectionCube } from './protection-cube';
 import { Pyroar } from './pyroar';
-import {Rapidash} from './rapidash';
+import { Rapidash } from './rapidash';
 import { SacredAsh } from './sacred-ash';
 import { Seedot } from './seedot';
 import { Skrelp } from './skrelp';
 import { StartlingMegaphone } from './startling-megaphone';
 import { ToxicroakEx } from './toxicroak-ex';
+import { TrickShovel } from './trick-shovel';
 
 export const setFlashfire: Card[] = [
   new Blacksmith(),
@@ -26,13 +27,14 @@ export const setFlashfire: Card[] = [
   new MCharizardEX(),
   new Milotic(),
   new Miltank(),
+  new Ponyta(),
   new ProtectionCube(),
   new Pyroar(),
+  new Rapidash(),
   new SacredAsh(),
   new Seedot(),
   new Skrelp(),
   new StartlingMegaphone(),
   new ToxicroakEx(),
-  new Ponyta(),
-  new Rapidash(),
+  new TrickShovel(),
 ];

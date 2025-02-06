@@ -26,5 +26,6 @@ export declare class Yveltal extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
+    readonly DEFENDING_POKEMON_CANNOT_RETREAT_MARKER = "DEFENDING_POKEMON_CANNOT_RETREAT_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

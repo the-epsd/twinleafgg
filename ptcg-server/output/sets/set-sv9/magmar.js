@@ -19,7 +19,7 @@ class Magmar extends pokemon_card_1.PokemonCard {
                 name: 'Searing Flame',
                 cost: [card_types_1.CardType.FIRE, card_types_1.CardType.COLORLESS],
                 damage: 30,
-                text: 'Flip a coin. If heads, your opponent’s Active Pokémon is now Burned.'
+                text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Burned.'
             }
         ];
         this.set = 'SV9';

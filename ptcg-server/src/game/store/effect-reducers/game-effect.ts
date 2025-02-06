@@ -1,7 +1,8 @@
 import { GameError } from '../../game-error';
 import { GameLog, GameMessage } from '../../game-message';
-import { CardTag, CardType, SpecialCondition, Stage, SuperType } from '../card/card-types';
+import { CardTag, CardType, SpecialCondition, Stage, SuperType, TrainerType } from '../card/card-types';
 import { Resistance, Weakness } from '../card/pokemon-types';
+import { TrainerCard } from '../card/trainer-card';
 import { ApplyWeaknessEffect, DealDamageEffect } from '../effects/attack-effects';
 import {
   AddSpecialConditionsPowerEffect,
@@ -115,10 +116,10 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
     yield store.prompt(state, new CoinFlipPrompt(
       player.id,
       GameMessage.FLIP_CONFUSION),
-    result => {
-      flip = result;
-      next();
-    });
+      result => {
+        flip = result;
+        next();
+      });
 
     if (flip === false) {
       store.log(state, GameLog.LOG_HURTS_ITSELF);
@@ -170,11 +171,17 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
     ), wantToAttackAgain => {
       if (wantToAttackAgain) {
         if (hasBarrageAbility) {
+
+          const attackableCards = player.active.cards.filter(card =>
+            card.superType === SuperType.POKEMON ||
+            (card.superType === SuperType.TRAINER && card instanceof TrainerCard && card.trainerType === TrainerType.TOOL && card.attacks.length > 0)
+          );
+
           // Use ChooseAttackPrompt for Barrage ability
           store.prompt(state, new ChooseAttackPrompt(
             player.id,
             GameMessage.CHOOSE_ATTACK_TO_COPY,
-            [player.active.cards[0]],
+            attackableCards,
             { allowCancel: false }
           ), selectedAttack => {
             if (selectedAttack) {
@@ -190,20 +197,26 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
                 state = store.reduceEffect(state, dealDamage);
               }
 
-              return state; // Successfully executed attack, exit the function
+              state = store.reduceEffect(state, new EndTurnEffect(player));
+              return state;
             }
             next();
           });
         } else {
-          // Recursively call useAttack for the second attack (for non-Barrage abilities)
           const dealDamage = new DealDamageEffect(attackEffect, attackEffect.damage);
           state = store.reduceEffect(state, dealDamage);
+          state = store.reduceEffect(state, new EndTurnEffect(player));
         }
+      } else {
+        state = store.reduceEffect(state, new EndTurnEffect(player));
       }
       next();
     });
   }
-  return store.reduceEffect(state, new EndTurnEffect(player));
+
+  if (!canAttackAgain && !hasBarrageAbility) {
+    return store.reduceEffect(state, new EndTurnEffect(player));
+  }
 }
 
 export function gameReducer(store: StoreLike, state: State, effect: Effect): State {

@@ -6,7 +6,6 @@ const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
-const check_effects_1 = require("../../game/store/effects/check-effects");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 class Wugtrioex extends pokemon_card_1.PokemonCard {
     constructor() {
@@ -38,7 +37,7 @@ class Wugtrioex extends pokemon_card_1.PokemonCard {
         this.regulationMark = 'H';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '60';
-        this.NUMBING_HOLD_MARKER = 'NUMBING_HOLD_MARKER';
+        this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER = 'DEFENDING_POKEMON_CANNOT_RETREAT_MARKER';
     }
     reduceEffect(store, state, effect) {
         // Tricolor Pump
@@ -63,13 +62,13 @@ class Wugtrioex extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            opponent.active.marker.addMarker(this.NUMBING_HOLD_MARKER, this);
+            opponent.active.marker.addMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
         }
-        if (effect instanceof check_effects_1.CheckRetreatCostEffect && effect.player.active.marker.hasMarker(this.NUMBING_HOLD_MARKER, this)) {
+        if (effect instanceof game_effects_1.RetreatEffect && effect.player.active.marker.hasMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this)) {
             throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
-            effect.player.active.marker.removeMarker(this.NUMBING_HOLD_MARKER, this);
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.active.marker.hasMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this)) {
+            effect.player.active.marker.removeMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
         }
         return state;
     }

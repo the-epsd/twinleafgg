@@ -97,7 +97,7 @@ export class LucarioUPR extends PokemonCard {
       effect.ignoreResistance = true;
     }
 
-    if (effect instanceof EndTurnEffect) {
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.PRECOGNITIVE_MARKER, this)) {
       effect.player.marker.removeMarker(this.PRECOGNITIVE_MARKER, this);
     }
     return state;

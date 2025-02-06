@@ -118,7 +118,7 @@ export class Jirachi extends PokemonCard {
 
     }
 
-    if (effect instanceof EndTurnEffect) {
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.DREAMY_REVELATION_MARKER, this)) {
       const player = (effect as EndTurnEffect).player;
       player.marker.removeMarker(this.DREAMY_REVELATION_MARKER, this);
     }

@@ -1,8 +1,8 @@
 import { Card } from '../../game/store/card/card';
-import {Abra} from './abra';
+import { Abra } from './abra';
 import { Aggron } from './aggron';
-import {Aipom} from './aipom';
-import {Alakazam} from './alakazam';
+import { Aipom } from './aipom';
+import { Alakazam } from './alakazam';
 import { Applin } from './applin';
 import { Applin2 } from './applin-2';
 import { Aron } from './aron';
@@ -27,6 +27,7 @@ import { EnhancedHammer } from './enhanced-hammer';
 import { Farfetchd } from './farfetchd';
 import { FestivalGrounds } from './festival-plaza';
 import { FezandipitiTWM } from './fezandipiti';
+import { Finizen } from './finizen';
 import { Froakie } from './froakie';
 import { Frogadier } from './frogadier';
 import { Froslass } from './froslass';
@@ -44,7 +45,7 @@ import { Infernape } from './infernape';
 import { IronLeaves } from './iron-leaves';
 import { IronThornsex } from './iron-thorns-ex';
 import { JammingTower } from './jamming-tower';
-import {Kadabra} from './kadabra';
+import { Kadabra } from './kadabra';
 import { Kieran } from './kieran';
 import { Lairon } from './lairon';
 import { LanasAssistance } from './lanas-assistance';
@@ -103,6 +104,7 @@ export const setTwilightMasquerade: Card[] = [
   new Emolga(),
   new Farfetchd(),
   new FezandipitiTWM(),
+  new Finizen(),
   new Froslass(),
   new Goldeen(),
   new Gurdurr(),

@@ -26,7 +26,7 @@ export class VictiniV extends PokemonCard {
       name: 'V Bullet',
       cost: [CardType.FIRE],
       damage: 10,
-      text: 'If your opponent’s Active Pokémon is a Pokémon V, this ' +
+      text: 'If your opponent\'s Active Pokémon is a Pokémon V, this ' +
         'attack does 50 more damage.'
     },
     {

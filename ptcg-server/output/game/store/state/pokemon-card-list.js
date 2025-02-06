@@ -87,7 +87,6 @@ class PokemonCardList extends card_list_1.CardList {
         this.marker.removeMarker(PokemonCardList.UNRELENTING_ONSLAUGHT_MARKER);
         this.marker.removeMarker(PokemonCardList.UNRELENTING_ONSLAUGHT_2_MARKER);
         this.marker.markers = [];
-        this.removeBoardEffect(card_types_1.BoardEffect.ABILITY_USED);
         this.removeSpecialCondition(card_types_1.SpecialCondition.POISONED);
         this.removeSpecialCondition(card_types_1.SpecialCondition.ASLEEP);
         this.removeSpecialCondition(card_types_1.SpecialCondition.BURNED);

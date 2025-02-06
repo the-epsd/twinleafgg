@@ -11,22 +11,22 @@ export class Shelgon extends PokemonCard {
   public evolvesFrom = 'Bagon';
   public cardType: CardType = CardType.DRAGON;
   public hp: number = 100;
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
-    { 
-      name: 'Guard Press', 
-      cost: [ CardType.COLORLESS, CardType.COLORLESS ], 
-      damage: 30, 
-      text: 'During your opponent’s next turn, this Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance).' 
+    {
+      name: 'Guard Press',
+      cost: [CardType.COLORLESS, CardType.COLORLESS],
+      damage: 30,
+      text: 'During your opponent\'s next turn, this Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance).'
     },
-    { 
-      name: 'Heavy Impact', 
-      cost: [ CardType.FIRE, CardType.WATER, CardType.COLORLESS ], 
-      damage: 80, 
-      text: '' 
+    {
+      name: 'Heavy Impact',
+      cost: [CardType.FIRE, CardType.WATER, CardType.COLORLESS],
+      damage: 80,
+      text: ''
     },
-              
+
   ];
 
   public set: string = 'SV9';
@@ -39,12 +39,12 @@ export class Shelgon extends PokemonCard {
 
   public readonly GUARD_PRESS = 'GUARD_PRESS';
   public readonly CLEAR_GUARD_PRESS = 'CLEAR_GUARD_PRESS';
-  
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]){
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      
+
       player.active.marker.addMarker(this.GUARD_PRESS, this);
       opponent.marker.addMarker(this.CLEAR_GUARD_PRESS, this);
     }
@@ -56,7 +56,7 @@ export class Shelgon extends PokemonCard {
 
     if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.CLEAR_GUARD_PRESS, this)) {
       effect.player.marker.removeMarker(this.CLEAR_GUARD_PRESS, this);
-        
+
       const opponent = StateUtils.getOpponent(state, effect.player);
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
         cardList.marker.removeMarker(this.GUARD_PRESS, this);
@@ -65,5 +65,5 @@ export class Shelgon extends PokemonCard {
 
     return state;
   }
-  
+
 }

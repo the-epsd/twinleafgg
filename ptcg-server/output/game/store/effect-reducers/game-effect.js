@@ -4,6 +4,7 @@ exports.gameReducer = void 0;
 const game_error_1 = require("../../game-error");
 const game_message_1 = require("../../game-message");
 const card_types_1 = require("../card/card-types");
+const trainer_card_1 = require("../card/trainer-card");
 const attack_effects_1 = require("../effects/attack-effects");
 const check_effects_1 = require("../effects/check-effects");
 const game_effects_1 = require("../effects/game-effects");
@@ -116,8 +117,10 @@ function* useAttack(next, store, state, effect) {
         yield store.prompt(state, new confirm_prompt_1.ConfirmPrompt(player.id, game_message_1.GameMessage.WANT_TO_ATTACK_AGAIN), wantToAttackAgain => {
             if (wantToAttackAgain) {
                 if (hasBarrageAbility) {
+                    const attackableCards = player.active.cards.filter(card => card.superType === card_types_1.SuperType.POKEMON ||
+                        (card.superType === card_types_1.SuperType.TRAINER && card instanceof trainer_card_1.TrainerCard && card.trainerType === card_types_1.TrainerType.TOOL && card.attacks.length > 0));
                     // Use ChooseAttackPrompt for Barrage ability
-                    store.prompt(state, new choose_attack_prompt_1.ChooseAttackPrompt(player.id, game_message_1.GameMessage.CHOOSE_ATTACK_TO_COPY, [player.active.cards[0]], { allowCancel: false }), selectedAttack => {
+                    store.prompt(state, new choose_attack_prompt_1.ChooseAttackPrompt(player.id, game_message_1.GameMessage.CHOOSE_ATTACK_TO_COPY, attackableCards, { allowCancel: false }), selectedAttack => {
                         if (selectedAttack) {
                             const secondAttackEffect = new game_effects_1.AttackEffect(player, opponent, selectedAttack);
                             state = useAttack(() => next(), store, state, secondAttackEffect).next().value;
@@ -128,21 +131,27 @@ function* useAttack(next, store, state, effect) {
                                 const dealDamage = new attack_effects_1.DealDamageEffect(secondAttackEffect, secondAttackEffect.damage);
                                 state = store.reduceEffect(state, dealDamage);
                             }
-                            return state; // Successfully executed attack, exit the function
+                            state = store.reduceEffect(state, new game_phase_effects_1.EndTurnEffect(player));
+                            return state;
                         }
                         next();
                     });
                 }
                 else {
-                    // Recursively call useAttack for the second attack (for non-Barrage abilities)
                     const dealDamage = new attack_effects_1.DealDamageEffect(attackEffect, attackEffect.damage);
                     state = store.reduceEffect(state, dealDamage);
+                    state = store.reduceEffect(state, new game_phase_effects_1.EndTurnEffect(player));
                 }
+            }
+            else {
+                state = store.reduceEffect(state, new game_phase_effects_1.EndTurnEffect(player));
             }
             next();
         });
     }
-    return store.reduceEffect(state, new game_phase_effects_1.EndTurnEffect(player));
+    if (!canAttackAgain && !hasBarrageAbility) {
+        return store.reduceEffect(state, new game_phase_effects_1.EndTurnEffect(player));
+    }
 }
 function gameReducer(store, state, effect) {
     if (effect instanceof game_effects_1.KnockOutEffect) {

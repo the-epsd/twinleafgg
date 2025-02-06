@@ -29,7 +29,7 @@ class Player {
         this.avatarName = '';
         this.usedVSTAR = false;
         this.usedGX = false;
-        this.assembledMewtwo = false;
+        this.assembledVUNIONs = [];
         this.DAMAGE_DEALT_MARKER = 'DAMAGE_DEALT_MARKER';
         this.ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
         this.ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
@@ -107,7 +107,7 @@ class Player {
     getPokemonInPlay() {
         let list = [];
         this.forEachPokemon(play_card_action_1.PlayerType.BOTTOM_PLAYER, (cardList, pokemonCard, target) => {
-            if (cardList)
+            if (cardList.cards.length !== 0)
                 list.push(cardList);
         });
         return list;

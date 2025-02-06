@@ -21,5 +21,6 @@ export declare class Accelgor extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
+    usedEphemeralPoison: boolean;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

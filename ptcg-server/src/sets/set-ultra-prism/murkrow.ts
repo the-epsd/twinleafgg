@@ -2,9 +2,8 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State, GameMessage, StateUtils, GameError } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect, RetreatEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { CheckRetreatCostEffect } from '../../game/store/effects/check-effects';
 
 export class Murkrow extends PokemonCard {
 
@@ -39,22 +38,22 @@ export class Murkrow extends PokemonCard {
 
   public fullName: string = 'Murkrow UPR';
 
-  public readonly MEAN_LOOK_MARKER = 'MEAN_LOOK_MARKER';
+  public readonly DEFENDING_POKEMON_CANNOT_RETREAT_MARKER = 'DEFENDING_POKEMON_CANNOT_RETREAT_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Mean Look
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      opponent.active.marker.addMarker(this.MEAN_LOOK_MARKER, this);
+      opponent.active.marker.addMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
     }
 
-    if (effect instanceof CheckRetreatCostEffect && effect.player.active.marker.hasMarker(this.MEAN_LOOK_MARKER, this)) {
+    if (effect instanceof RetreatEffect && effect.player.active.marker.hasMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this)) {
       throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
     }
 
-    if (effect instanceof EndTurnEffect) {
-      effect.player.active.marker.removeMarker(this.MEAN_LOOK_MARKER, this);
+    if (effect instanceof EndTurnEffect && effect.player.active.marker.hasMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this)) {
+      effect.player.active.marker.removeMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
     }
 
     return state;
