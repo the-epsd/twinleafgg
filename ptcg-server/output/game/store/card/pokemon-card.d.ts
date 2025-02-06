@@ -1,7 +1,4 @@
-import { Effect } from '../effects/effect';
 import { Marker } from '../state/card-marker';
-import { State } from '../state/state';
-import { StoreLike } from '../store-like';
 import { Card } from './card';
 import { SuperType, Stage, PokemonType, CardType, CardTag, Format } from './card-types';
 import { Attack, Weakness, Resistance, Power } from './pokemon-types';
@@ -26,5 +23,4 @@ export declare abstract class PokemonCard extends Card {
     tools: TrainerCard[];
     archetype: CardType[];
     canAttackTwice?: boolean;
-    reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }
