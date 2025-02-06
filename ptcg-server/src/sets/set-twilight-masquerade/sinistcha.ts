@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, EnergyType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, DamageMap, PlayerType, PutDamagePrompt, GameMessage, SlotType, ChooseCardsPrompt } from '../../game';
+import { StoreLike, State, StateUtils, DamageMap, PlayerType, PutDamagePrompt, GameMessage, SlotType, EnergyCard, DiscardEnergyPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PutCountersEffect } from '../../game/store/effects/attack-effects';
 import { AttackEffect } from '../../game/store/effects/game-effects';
@@ -77,17 +77,44 @@ export class Sinistcha extends PokemonCard {
     // Spill the Tea
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]){
       const player = effect.player;
+      
+      let totalGrassEnergy = 0;
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
+        const grassCount = cardList.cards.filter(card =>
+          card instanceof EnergyCard && card.name === 'Grass Energy'
+        ).length;
+        totalGrassEnergy += grassCount;
+      });
 
-      store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_DISCARD,
-        player.hand,
+      console.log('Total Grass Energy: ' + totalGrassEnergy);
+
+      return store.prompt(state, new DiscardEnergyPrompt(
+        player.id,
+        GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
+        PlayerType.BOTTOM_PLAYER,
+        [SlotType.ACTIVE, SlotType.BENCH],// Card source is target Pokemon
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Grass Energy' },
-        { allowCancel: false, min: 0, max: 3 }
-      ), cards => {
-        cards = cards || [];
-        effect.damage = 70 * cards.length;
-        player.hand.moveCardsTo(cards, player.discard);
+        { min: 0, max: Math.min(totalGrassEnergy, 3), allowCancel: false }
+      ), transfers => {
+
+        if (transfers === null) {
+          return;
+        }
+
+        for (const transfer of transfers) {
+          let totalDiscarded = 0;
+
+          const source = StateUtils.getTarget(state, player, transfer.from);
+          const target = player.discard;
+          source.moveCardTo(transfer.card, target);
+
+          totalDiscarded = transfers.length;
+
+          effect.damage = totalDiscarded * 70;
+
+        }
+        console.log('Total Damage: ' + effect.damage);
+        return state;
       });
     }
 

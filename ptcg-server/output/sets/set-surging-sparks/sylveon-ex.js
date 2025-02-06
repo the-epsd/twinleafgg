@@ -65,7 +65,7 @@ class Sylveonex extends pokemon_card_1.PokemonCard {
             opponent.active.marker.addMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
             opponent.marker.addMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
         }
-        if (effect instanceof attack_effects_1.PutDamageEffect && effect.source.marker.hasMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this)) {
+        if (effect instanceof attack_effects_1.DealDamageEffect && effect.source.marker.hasMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this)) {
             effect.damage -= 100;
             return state;
         }
