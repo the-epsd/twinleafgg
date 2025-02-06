@@ -78,6 +78,7 @@ import { Nemona } from '../set-scarlet-and-violet/nemona';
 import { Clive } from './clive';
 import { Pawmo } from '../set-scarlet-and-violet/pawmo';
 import { Pawmot } from '../set-scarlet-and-violet/pawmot';
+import { Slowpoke } from '../set-scarlet-and-violet/slowpoke';
 
 export class OddishSV extends Oddish {
   public setNumber = '92';
@@ -155,6 +156,12 @@ export class ArmarougeSV extends Armarouge {
   public setNumber = '115';
   public set = 'PAF';
   public fullName: string = 'Armarouge PAF';
+}
+
+export class SlowpokeSV extends Slowpoke {
+  public setNumber = '116';
+  public set = 'PAF';
+  public fullName: string = 'Slowpoke PAF';
 }
 
 export class StaryuSV extends Staryu {

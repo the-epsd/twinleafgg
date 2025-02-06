@@ -20,6 +20,7 @@ class RetreatEffect {
         this.ignoreStatusConditions = false;
         this.player = player;
         this.benchIndex = benchIndex;
+        this.moveRetreatCostTo = player.discard;
     }
 }
 exports.RetreatEffect = RetreatEffect;

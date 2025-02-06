@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TeamStarGruntFA = exports.SkwovetIR = exports.RareCandyHR = exports.KirliaIR = exports.RaltsIR = exports.ProfessorsResearchFA2 = exports.ProfessorsResearchFA1 = exports.PennySIR = exports.PennyFA = exports.NestBallHR = exports.MiriamSIR = exports.MiriamFA = exports.MiraidonexHR = exports.MiraidonexSIR = exports.MiraidonexFA = exports.MagnezoneexFA = exports.KoraidonexHR = exports.KoraidonexSIR = exports.KoraidonexFA = exports.KatyFA = exports.JacqSIR = exports.JacqFA = exports.GardevoirexSIR = exports.GardevoirexFA = exports.LightningEnergyHR = exports.FightingEnergyHR = exports.ArvenSIR = exports.ArvenFA = exports.PawmotIR = exports.ArmarougeIR = void 0;
+exports.TeamStarGruntFA = exports.SkwovetIR = exports.RareCandyHR = exports.KirliaIR = exports.RaltsIR = exports.ProfessorsResearchFA2 = exports.ProfessorsResearchFA1 = exports.PennySIR = exports.PennyFA = exports.NestBallHR = exports.MiriamSIR = exports.MiriamFA = exports.MiraidonexHR = exports.MiraidonexSIR = exports.MiraidonexFA = exports.MagnezoneexFA = exports.KoraidonexHR = exports.KoraidonexSIR = exports.KoraidonexFA = exports.KatyFA = exports.JacqSIR = exports.JacqFA = exports.GardevoirexSIR = exports.GardevoirexFA = exports.LightningEnergyHR = exports.FightingEnergyHR = exports.ArvenSIR = exports.ArvenFA = exports.PawmotIR = exports.SlowpokeIR = exports.ArmarougeIR = void 0;
 const fighting_energy_1 = require("../set-scarlet-and-violet-energy/fighting-energy");
 const lightning_energy_1 = require("../set-scarlet-and-violet-energy/lightning-energy");
 const armarouge_1 = require("./armarouge");
@@ -20,6 +20,7 @@ const professors_research_1 = require("./professors-research");
 const ralts_1 = require("./ralts");
 const rare_candy_1 = require("./rare-candy");
 const skwovet_1 = require("./skwovet");
+const slowpoke_1 = require("./slowpoke");
 const team_star_grunt_1 = require("./team-star-grunt");
 class ArmarougeIR extends armarouge_1.Armarouge {
     constructor() {
@@ -29,6 +30,14 @@ class ArmarougeIR extends armarouge_1.Armarouge {
     }
 }
 exports.ArmarougeIR = ArmarougeIR;
+class SlowpokeIR extends slowpoke_1.Slowpoke {
+    constructor() {
+        super(...arguments);
+        this.setNumber = '204';
+        this.fullName = 'SlowpokeIR SVI';
+    }
+}
+exports.SlowpokeIR = SlowpokeIR;
 class PawmotIR extends pawmot_1.Pawmot {
     constructor() {
         super(...arguments);
@@ -208,7 +217,7 @@ exports.PennySIR = PennySIR;
 class ProfessorsResearchFA1 extends professors_research_1.ProfessorsResearch {
     constructor() {
         super(...arguments);
-        this.setNumber = '242';
+        this.setNumber = '240';
         this.fullName = 'Professor\'s ResearchFA1 SVI 242';
     }
 }
