@@ -17,8 +17,13 @@ import { ProfessorsResearch } from './professors-research';
 import { Ralts } from './ralts';
 import { RareCandy } from './rare-candy';
 import { Skwovet } from './skwovet';
+import { Slowpoke } from './slowpoke';
 import { TeamStarGrunt } from './team-star-grunt';
 export declare class ArmarougeIR extends Armarouge {
+    setNumber: string;
+    fullName: string;
+}
+export declare class SlowpokeIR extends Slowpoke {
     setNumber: string;
     fullName: string;
 }

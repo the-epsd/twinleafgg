@@ -78,6 +78,7 @@ import { Nemona } from '../set-scarlet-and-violet/nemona';
 import { Clive } from './clive';
 import { Pawmo } from '../set-scarlet-and-violet/pawmo';
 import { Pawmot } from '../set-scarlet-and-violet/pawmot';
+import { Slowpoke } from '../set-scarlet-and-violet/slowpoke';
 export declare class OddishSV extends Oddish {
     setNumber: string;
     set: string;
@@ -139,6 +140,11 @@ export declare class CharcadetSV extends Charcadet {
     fullName: string;
 }
 export declare class ArmarougeSV extends Armarouge {
+    setNumber: string;
+    set: string;
+    fullName: string;
+}
+export declare class SlowpokeSV extends Slowpoke {
     setNumber: string;
     set: string;
     fullName: string;

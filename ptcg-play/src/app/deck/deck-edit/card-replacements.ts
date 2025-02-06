@@ -109,6 +109,7 @@ export const cardReplacements = [
 
   //SVI FA
   { from: 'Armarouge SVI 203', to: 'ArmarougeIR SVI 203' },
+  { from: 'Slowpoke SVI 204', to: 'SlowpokeIR SVI 204' },
   { from: 'Pawmot SVI 209', to: 'PawmotIR SVI 209' },
   { from: 'Arven SVI 235', to: 'ArvenFA SVI 235' },
   { from: 'Arven SVI 249', to: 'ArvenSIR SVI 249' },
@@ -427,6 +428,10 @@ export const cardReplacements = [
   { from: 'Feebas SSP 198', to: 'FeebasIR SSP 198' },
 
   //PRE FA
+  { from: 'Professor\'s Research PRE 122', to: 'Professor\'s ResearchO PRE 122' },
+  { from: 'Professor\'s Research PRE 123', to: 'Professor\'s ResearchE PRE 123' },
+  { from: 'Professor\'s Research PRE 124', to: 'Professor\'s ResearchR PRE 124' },
+  { from: 'Professor\'s Research PRE 125', to: 'Professor\'s ResearchS PRE 125' },
   { from: 'Amarys PRE 132', to: 'AmarysFA PRE 132' },
   { from: 'Atticus PRE 133', to: 'AtticusFA PRE 133' },
   { from: 'Atticus PRE 134', to: 'AtticusFA2 PRE 134' },
@@ -569,6 +574,7 @@ export const exportReplacements = [
 
   //SVI FA
   { from: 'ArmarougeIR SVI 203', to: 'Armarouge SVI 203' },
+  { from: 'SlowpokeIR SVI 204', to: 'Slowpoke SVI 204' },
   { from: 'PawmotIR SVI 209', to: 'Pawmot SVI 209' },
   { from: 'ArvenFA SVI 235', to: 'Arven SVI 235' },
   { from: 'ArvenSIR SVI 249', to: 'Arven SVI 249' },
@@ -886,7 +892,11 @@ export const exportReplacements = [
   { from: 'LarvestaIR SSP 196', to: 'Larvesta SSP 196' },
   { from: 'FeebasIR SSP 198', to: 'Feebas SSP 198' },
 
-  //PRE FA
+  //PRE Reprints & FA
+  { from: 'Professor\'s ResearchO PRE 122', to: 'Professor\'s Research PRE 122' },
+  { from: 'Professor\'s ResearchE PRE 123', to: 'Professor\'s Research PRE 123' },
+  { from: 'Professor\'s ResearchR PRE 124', to: 'Professor\'s Research PRE 124' },
+  { from: 'Professor\'s ResearchS PRE 125', to: 'Professor\'s Research PRE 125' },
   { from: 'AmarysFA PRE 132', to: 'Amarys PRE 132' },
   { from: 'AtticusFA PRE 133', to: 'Atticus PRE 133' },
   { from: 'AtticusFA2 PRE 134', to: 'Atticus PRE 134' },

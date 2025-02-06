@@ -87,6 +87,7 @@ const kirlia_1 = require("./kirlia");
 const pawmi_1 = require("./pawmi");
 const pawmo_1 = require("./pawmo");
 const pawmot_1 = require("./pawmot");
+const slowpoke_1 = require("./slowpoke");
 exports.setScarletAndViolet = [
     new annihilape_1.Annihilape(),
     new arboliva_1.Arboliva(),
@@ -157,6 +158,7 @@ exports.setScarletAndViolet = [
     new seviper_1.Seviper(),
     new spewpa_1.Spewpa(),
     new skwovet_1.Skwovet(),
+    new slowpoke_1.Slowpoke(),
     new switch_1.Switch(),
     new team_star_grunt_1.TeamStarGrunt(),
     new torkoal_1.Torkoal(),
@@ -198,6 +200,7 @@ exports.setScarletAndViolet = [
     new full_art_1.RaltsIR(),
     new full_art_1.RareCandyHR(),
     new full_art_1.SkwovetIR(),
+    new full_art_1.SlowpokeIR(),
     new smoliv_1.Smoliv(),
     new full_art_1.TeamStarGruntFA(),
     new toedscool_1.Toedscool(),

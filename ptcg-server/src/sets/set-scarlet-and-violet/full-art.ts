@@ -17,11 +17,17 @@ import { ProfessorsResearch } from './professors-research';
 import { Ralts } from './ralts';
 import { RareCandy } from './rare-candy';
 import { Skwovet } from './skwovet';
+import { Slowpoke } from './slowpoke';
 import { TeamStarGrunt } from './team-star-grunt';
 
 export class ArmarougeIR extends Armarouge {
   public setNumber = '203';
   public fullName: string = 'ArmarougeIR SVI';
+}
+
+export class SlowpokeIR extends Slowpoke {
+  public setNumber = '204';
+  public fullName: string = 'SlowpokeIR SVI';
 }
 
 export class PawmotIR extends Pawmot {
@@ -135,7 +141,7 @@ export class PennySIR extends Penny {
 }
 
 export class ProfessorsResearchFA1 extends ProfessorsResearch {
-  public setNumber = '242';
+  public setNumber = '240';
   public fullName = 'Professor\'s ResearchFA1 SVI 242';
 }
 

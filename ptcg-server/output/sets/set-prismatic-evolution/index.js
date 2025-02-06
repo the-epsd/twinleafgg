@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setPrismaticEvolution = void 0;
+const alt_arts_1 = require("./alt-arts");
 const amarys_1 = require("./amarys");
 const black_belts_training_1 = require("./black-belts-training");
 const bronzor_1 = require("./bronzor");
@@ -43,6 +44,11 @@ exports.setPrismaticEvolution = [
     new pupitar_1.Pupitar(),
     new tyranitar_ex_1.Tyranitarex(),
     new bronzor_1.Bronzor(),
+    // Reprints
+    new alt_arts_1.ProfessorsResearchO(),
+    new alt_arts_1.ProfessorsResearchE(),
+    new alt_arts_1.ProfessorsResearchR(),
+    new alt_arts_1.ProfessorsResearchS(),
     // Full arts
     new full_art_1.AmarysFA(),
     new full_art_1.AtticusFA(),

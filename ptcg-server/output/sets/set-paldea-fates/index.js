@@ -69,6 +69,7 @@ exports.setPaldeaFates = [
     new shiny_vault_1.EnteiSV(),
     new shiny_vault_1.CharcadetSV(),
     new shiny_vault_1.ArmarougeSV(),
+    new shiny_vault_1.SlowpokeSV(),
     new shiny_vault_1.StaryuSV(),
     new shiny_vault_1.StarmieSV(),
     new shiny_vault_1.FinizenSV(),
