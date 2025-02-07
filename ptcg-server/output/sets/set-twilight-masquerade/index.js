@@ -42,6 +42,7 @@ const hassel_1 = require("./hassel");
 const hearthflame_mask_ogerpon_ex_1 = require("./hearthflame-mask-ogerpon-ex");
 const heatran_1 = require("./heatran");
 const hisuian_arcanine_1 = require("./hisuian-arcanine");
+const hisuian_growlithe_1 = require("./hisuian-growlithe");
 const hyper_aroma_1 = require("./hyper-aroma");
 const infernape_1 = require("./infernape");
 const iron_leaves_1 = require("./iron-leaves");
@@ -113,6 +114,7 @@ exports.setTwilightMasquerade = [
     new hearthflame_mask_ogerpon_ex_1.HearthflameMaskOgerponex(),
     new heatran_1.Heatran(),
     new hisuian_arcanine_1.HisuianArcanine(),
+    new hisuian_growlithe_1.HisuianGrowlithe(),
     new lairon_1.Lairon(),
     new lanas_assistance_1.LanasAssistance(),
     new legacy_energy_1.LegacyEnergy(),

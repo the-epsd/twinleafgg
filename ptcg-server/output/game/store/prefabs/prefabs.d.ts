@@ -97,6 +97,7 @@ export declare function DRAW_CARDS_UNTIL_CARDS_IN_HAND(player: Player, count: nu
  */
 export declare function DRAW_CARDS_AS_FACE_DOWN_PRIZES(player: Player, count: number): void;
 export declare function SEARCH_DECK_FOR_CARDS_TO_HAND(store: StoreLike, state: State, player: Player, min?: number, max?: number): void;
+export declare function GET_CARDS_ON_BOTTOM_OF_DECK(player: Player, amount?: number): Card[];
 /**
  * Checks if abilities are blocked on `card` for `player`.
  * @returns `true` if the ability is blocked, `false` if the ability is able to go thru.

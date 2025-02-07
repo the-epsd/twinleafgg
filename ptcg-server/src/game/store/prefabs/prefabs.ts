@@ -382,6 +382,12 @@ export function SEARCH_DECK_FOR_CARDS_TO_HAND(store: StoreLike, state: State, pl
   SHUFFLE_DECK(store, state, player);
 }
 
+export function GET_CARDS_ON_BOTTOM_OF_DECK(player: Player, amount: number = 1): Card[] {
+  const start = player.deck.cards.length < amount ? 0 : player.deck.cards.length - amount;
+  const end = player.deck.cards.length;
+  return player.deck.cards.slice(start, end);
+}
+
 /**
  * Checks if abilities are blocked on `card` for `player`.
  * @returns `true` if the ability is blocked, `false` if the ability is able to go thru.

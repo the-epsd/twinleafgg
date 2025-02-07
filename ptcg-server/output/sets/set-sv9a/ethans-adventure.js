@@ -8,7 +8,6 @@ class EthansAdventure extends game_1.TrainerCard {
     constructor() {
         super(...arguments);
         this.trainerType = game_1.TrainerType.SUPPORTER;
-        this.tags = [game_1.CardTag.ETHANS];
         this.regulationMark = 'I';
         this.cardImage = 'assets/cardback.png';
         this.set = 'SV9a';
