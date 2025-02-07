@@ -54,12 +54,12 @@ export class MorpekoVUNIONTopLeft extends PokemonCard {
     }
   ];
 
-  public set: string = 'SP';
+  public set: string = 'SWSH';
   public regulationMark = 'E';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '216';
+  public setNumber: string = '215';
   public name: string = 'Morpeko V-UNION';
-  public fullName: string = 'Morpeko V-UNION (Top Left) SP';
+  public fullName: string = 'Morpeko V-UNION (Top Left) SWSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // assemblin the v-union

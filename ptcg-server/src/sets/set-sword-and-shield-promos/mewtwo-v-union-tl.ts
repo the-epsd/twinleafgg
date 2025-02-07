@@ -60,12 +60,12 @@ export class MewtwoVUNIONTopLeft extends PokemonCard {
     }
   ];
 
-  public set: string = 'SP';
+  public set: string = 'SWSH';
   public regulationMark = 'E';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '308';
   public name: string = 'Mewtwo V-UNION';
-  public fullName: string = 'Mewtwo V-UNION (Top Left) SP';
+  public fullName: string = 'Mewtwo V-UNION (Top Left) SWSH';
 
   public readonly MEWTWO_ASSEMBLED = 'MEWTWO_ASSEMBLED';
 

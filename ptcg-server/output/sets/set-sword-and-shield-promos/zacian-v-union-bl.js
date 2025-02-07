@@ -35,12 +35,12 @@ class ZacianVUNIONBottomLeft extends pokemon_card_1.PokemonCard {
                 text: ''
             }
         ];
-        this.set = 'SP';
+        this.set = 'SWSH';
         this.regulationMark = 'E';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '165';
         this.name = 'Zacian V-UNION';
-        this.fullName = 'Zacian V-UNION (Bottom Left) SP';
+        this.fullName = 'Zacian V-UNION (Bottom Left) SWSH';
     }
     reduceEffect(store, state, effect) {
         // assemblin the v-union

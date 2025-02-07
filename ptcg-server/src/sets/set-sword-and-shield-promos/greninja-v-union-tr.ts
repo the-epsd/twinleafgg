@@ -38,12 +38,12 @@ export class GreninjaVUNIONTopRight extends PokemonCard {
     },
   ];
 
-  public set: string = 'SP';
+  public set: string = 'SWSH';
   public regulationMark = 'E';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '156';
   public name: string = 'Greninja V-UNION';
-  public fullName: string = 'Greninja V-UNION (Top Right) SP';
+  public fullName: string = 'Greninja V-UNION (Top Right) SWSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // assemblin the v-union

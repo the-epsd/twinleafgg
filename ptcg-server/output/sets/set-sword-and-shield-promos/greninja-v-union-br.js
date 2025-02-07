@@ -40,12 +40,12 @@ class GreninjaVUNIONBottomRight extends pokemon_card_1.PokemonCard {
                 text: 'During your opponent\'s next turn, the Defending Pokémon can\'t retreat.'
             }
         ];
-        this.set = 'SP';
+        this.set = 'SWSH';
         this.regulationMark = 'E';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '158';
         this.name = 'Greninja V-UNION';
-        this.fullName = 'Greninja V-UNION (Bottom Right) SP';
+        this.fullName = 'Greninja V-UNION (Bottom Right) SWSH';
     }
     reduceEffect(store, state, effect) {
         // assemblin the v-union

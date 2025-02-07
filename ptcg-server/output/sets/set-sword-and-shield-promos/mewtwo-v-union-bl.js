@@ -35,12 +35,12 @@ class MewtwoVUNIONBottomLeft extends pokemon_card_1.PokemonCard {
                 text: 'Put 16 damage counters on your opponent\'s Pokémon in any way you like.'
             }
         ];
-        this.set = 'SP';
+        this.set = 'SWSH';
         this.regulationMark = 'E';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '161';
         this.name = 'Mewtwo V-UNION';
-        this.fullName = 'Mewtwo V-UNION (Bottom Left) SP';
+        this.fullName = 'Mewtwo V-UNION (Bottom Left) SWSH';
     }
     reduceEffect(store, state, effect) {
         // assemblin the v-union

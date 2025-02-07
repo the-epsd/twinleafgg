@@ -72,12 +72,12 @@ export class GreninjaVUNIONTopLeft extends PokemonCard {
     }
   ];
 
-  public set: string = 'SP';
+  public set: string = 'SWSH';
   public regulationMark = 'E';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '155';
   public name: string = 'Greninja V-UNION';
-  public fullName: string = 'Greninja V-UNION (Top Left) SP';
+  public fullName: string = 'Greninja V-UNION (Top Left) SWSH';
 
   public readonly WATERFALL_BIND_MARKER = 'WATERFALL_BIND_MARKER';
   public readonly FEEL_THE_WAY_MARKER = 'FEEL_THE_WAY_MARKER';

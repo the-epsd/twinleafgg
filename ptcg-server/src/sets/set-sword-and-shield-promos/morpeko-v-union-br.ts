@@ -3,9 +3,9 @@ import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { GameError, GameMessage, PokemonCardList, Power, PowerType, State, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
-import {MorpekoVUNIONTopLeft} from './morpeko-v-union-tl';
-import {MorpekoVUNIONTopRight} from './morpeko-v-union-tr';
-import {MorpekoVUNIONBottomLeft} from './morpeko-v-union-bl';
+import { MorpekoVUNIONTopLeft } from './morpeko-v-union-tl';
+import { MorpekoVUNIONTopRight } from './morpeko-v-union-tr';
+import { MorpekoVUNIONBottomLeft } from './morpeko-v-union-bl';
 
 export class MorpekoVUNIONBottomRight extends PokemonCard {
   public stage: Stage = Stage.VUNION;
@@ -34,12 +34,12 @@ export class MorpekoVUNIONBottomRight extends PokemonCard {
     }
   ];
 
-  public set: string = 'SP';
+  public set: string = 'SWSH';
   public regulationMark = 'E';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '219';
+  public setNumber: string = '218';
   public name: string = 'Morpeko V-UNION';
-  public fullName: string = 'Morpeko V-UNION (Bottom Right) SP';
+  public fullName: string = 'Morpeko V-UNION (Bottom Right) SWSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // assemblin the v-union

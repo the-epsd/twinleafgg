@@ -39,12 +39,12 @@ class GreninjaVUNIONTopRight extends pokemon_card_1.PokemonCard {
                 text: ''
             },
         ];
-        this.set = 'SP';
+        this.set = 'SWSH';
         this.regulationMark = 'E';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '156';
         this.name = 'Greninja V-UNION';
-        this.fullName = 'Greninja V-UNION (Top Right) SP';
+        this.fullName = 'Greninja V-UNION (Top Right) SWSH';
     }
     reduceEffect(store, state, effect) {
         // assemblin the v-union

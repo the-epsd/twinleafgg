@@ -35,12 +35,12 @@ class ZacianVUNIONTopRight extends pokemon_card_1.PokemonCard {
                 text: 'During your opponent\'s next turn, the Defending Pokémon\'s attacks do 150 less damage (before applying Weakness and Resistance).'
             }
         ];
-        this.set = 'SP';
+        this.set = 'SWSH';
         this.regulationMark = 'E';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '164';
         this.name = 'Zacian V-UNION';
-        this.fullName = 'Zacian V-UNION (Top Right) SP';
+        this.fullName = 'Zacian V-UNION (Top Right) SWSH';
     }
     reduceEffect(store, state, effect) {
         // assemblin the v-union

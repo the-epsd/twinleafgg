@@ -35,12 +35,12 @@ class MewtwoVUNIONTopRight extends pokemon_card_1.PokemonCard {
                 text: 'Heal 200 damage from this Pokémon.'
             }
         ];
-        this.set = 'SP';
+        this.set = 'SWSH';
         this.regulationMark = 'E';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '160';
         this.name = 'Mewtwo V-UNION';
-        this.fullName = 'Mewtwo V-UNION (Top Right) SP';
+        this.fullName = 'Mewtwo V-UNION (Top Right) SWSH';
     }
     reduceEffect(store, state, effect) {
         // assemblin the v-union

@@ -35,12 +35,12 @@ class MorpekoVUNIONBottomLeft extends pokemon_card_1.PokemonCard {
                 text: 'Discard all Energy from this Pokémon. This attack does 100 damage for each card you discarded in this way.'
             }
         ];
-        this.set = 'SP';
+        this.set = 'SWSH';
         this.regulationMark = 'E';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '218';
+        this.setNumber = '217';
         this.name = 'Morpeko V-UNION';
-        this.fullName = 'Morpeko V-UNION (Bottom Left) SP';
+        this.fullName = 'Morpeko V-UNION (Bottom Left) SWSH';
     }
     reduceEffect(store, state, effect) {
         // assemblin the v-union
