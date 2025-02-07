@@ -19,6 +19,7 @@ const duskull_1 = require("./duskull");
 const eevee_1 = require("./eevee");
 const fezandipiti_ex_1 = require("./fezandipiti-ex");
 const fraxure_1 = require("./fraxure");
+const full_art_1 = require("./full-art");
 const galvantula_1 = require("./galvantula");
 const genesect_1 = require("./genesect");
 const haxorus_1 = require("./haxorus");
@@ -98,4 +99,38 @@ exports.setShroudedFable = [
     new yveltal_1.Yveltal(),
     new zoroark_1.Zoroark(),
     new zorua_1.Zorua(),
+    // Full art
+    new full_art_1.TapuBuluIR(),
+    new full_art_1.HoundoomIR(),
+    new full_art_1.HorseaIR(),
+    new full_art_1.DuskullIR(),
+    new full_art_1.DusclopsIR(),
+    new full_art_1.DusknoirIR(),
+    new full_art_1.CresseliaIR(),
+    new full_art_1.MunkidoriIR(),
+    new full_art_1.FezandipitiIR(),
+    new full_art_1.OkidogiIR(),
+    new full_art_1.ZoruaIR(),
+    new full_art_1.CufantIR(),
+    new full_art_1.FraxureIR(),
+    new full_art_1.KingdraexFA(),
+    new full_art_1.RevavroomexFA(),
+    new full_art_1.OkidogiexFA(),
+    new full_art_1.MunkidoriexFA(),
+    new full_art_1.FezandipitiexFA(),
+    new full_art_1.PecharuntexFA(),
+    new full_art_1.CassiopeiaFA(),
+    new full_art_1.ColresssTenacityFA(),
+    new full_art_1.JaninesSecretArtFA(),
+    new full_art_1.XerosicsMachinationsFA(),
+    new full_art_1.OkidogiexSIR(),
+    new full_art_1.MunkidoriexSIR(),
+    new full_art_1.FezandipitiexSIR(),
+    new full_art_1.PecharuntexSIR(),
+    new full_art_1.CassiopeiaSIR(),
+    new full_art_1.PecharuntexUR(),
+    new full_art_1.EarthenVesselUR(),
+    new full_art_1.PowerglassUR(),
+    new full_art_1.DarknessEnergyUR(),
+    new full_art_1.MetalEnergyUR()
 ];

@@ -17,6 +17,7 @@ import { Duskull } from './duskull';
 import { Eevee } from './eevee';
 import { Fezandipitiex } from './fezandipiti-ex';
 import { Fraxure } from './fraxure';
+import { CassiopeiaFA, CassiopeiaSIR, ColresssTenacityFA, CresseliaIR, CufantIR, DarknessEnergyUR, DusclopsIR, DusknoirIR, DuskullIR, EarthenVesselUR, FezandipitiexFA, FezandipitiexSIR, FezandipitiIR, FraxureIR, HorseaIR, HoundoomIR, JaninesSecretArtFA, KingdraexFA, MetalEnergyUR, MunkidoriexFA, MunkidoriexSIR, MunkidoriIR, OkidogiexFA, OkidogiexSIR, OkidogiIR, PecharuntexFA, PecharuntexSIR, PecharuntexUR, PowerglassUR, RevavroomexFA, TapuBuluIR, XerosicsMachinationsFA, ZoruaIR } from './full-art';
 import { Galvantula } from './galvantula';
 import { Genesect } from './genesect';
 import { Haxorus } from './haxorus';
@@ -98,4 +99,38 @@ export const setShroudedFable: Card[] = [
   new Zoroark(),
   new Zorua(),
 
+  // Full art
+  new TapuBuluIR(),
+  new HoundoomIR(),
+  new HorseaIR(),
+  new DuskullIR(),
+  new DusclopsIR(),
+  new DusknoirIR(),
+  new CresseliaIR(),
+  new MunkidoriIR(),
+  new FezandipitiIR(),
+  new OkidogiIR(),
+  new ZoruaIR(),
+  new CufantIR(),
+  new FraxureIR(),
+  new KingdraexFA(),
+  new RevavroomexFA(),
+  new OkidogiexFA(),
+  new MunkidoriexFA(),
+  new FezandipitiexFA(),
+  new PecharuntexFA(),
+  new CassiopeiaFA(),
+  new ColresssTenacityFA(),
+  new JaninesSecretArtFA(),
+  new XerosicsMachinationsFA(),
+  new OkidogiexSIR(),
+  new MunkidoriexSIR(),
+  new FezandipitiexSIR(),
+  new PecharuntexSIR(),
+  new CassiopeiaSIR(),
+  new PecharuntexUR(),
+  new EarthenVesselUR(),
+  new PowerglassUR(),
+  new DarknessEnergyUR(),
+  new MetalEnergyUR()
 ];

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.FezandipitiTWM = void 0;
+exports.Fezandipiti = void 0;
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
@@ -9,7 +9,7 @@ const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const check_effects_1 = require("../../game/store/effects/check-effects");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 const prefabs_1 = require("../../game/store/prefabs/prefabs");
-class FezandipitiTWM extends pokemon_card_1.PokemonCard {
+class Fezandipiti extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.BASIC;
@@ -92,4 +92,4 @@ class FezandipitiTWM extends pokemon_card_1.PokemonCard {
         return state;
     }
 }
-exports.FezandipitiTWM = FezandipitiTWM;
+exports.Fezandipiti = Fezandipiti;

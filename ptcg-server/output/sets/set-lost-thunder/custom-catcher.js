@@ -98,6 +98,7 @@ class CustomCatcher extends trainer_card_1.TrainerCard {
                     throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
                 }
                 player.deck.moveTo(player.hand, cardsToDraw);
+                player.supporter.moveCardTo(this, player.discard);
                 for (let i = 0; i < cardsToDraw; i++) {
                     store.log(state, game_message_1.GameLog.LOG_PLAYER_DRAWS_CARD, { name: player.name });
                 }

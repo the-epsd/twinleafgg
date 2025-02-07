@@ -52,29 +52,20 @@ class NsDarmanitan extends pokemon_card_1.PokemonCard {
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
-            const opponent = game_1.StateUtils.getOpponent(state, player);
-            // discard time
-            const checkProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(player, player.active);
+            const checkProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(player);
             state = store.reduceEffect(state, checkProvidedEnergy);
-            const cards = [];
-            checkProvidedEnergy.energyMap.forEach(em => {
-                cards.push(em.card);
-            });
+            const cards = checkProvidedEnergy.energyMap.map(e => e.card);
             const discardEnergy = new attack_effects_1.DiscardCardsEffect(effect, cards);
             discardEnergy.target = player.active;
             store.reduceEffect(state, discardEnergy);
-            // bench snipe gaming
-            const hasBenched = opponent.bench.some(b => b.cards.length > 0);
-            if (!hasBenched) {
-                return state;
-            }
-            return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH], { allowCancel: false }), targets => {
-                if (!targets || targets.length === 0) {
-                    return;
-                }
-                const damageEffect = new attack_effects_1.PutDamageEffect(effect, 90);
-                damageEffect.target = targets[0];
-                store.reduceEffect(state, damageEffect);
+            const max = Math.min(1);
+            return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH], { min: max, max, allowCancel: false }), selected => {
+                const targets = selected || [];
+                targets.forEach(target => {
+                    const damageEffect = new attack_effects_1.PutDamageEffect(effect, 120);
+                    damageEffect.target = target;
+                    store.reduceEffect(state, damageEffect);
+                });
             });
         }
         return state;

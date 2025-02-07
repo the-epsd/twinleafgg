@@ -103,7 +103,7 @@ exports.setTwilightMasquerade = [
     new dragapult_ex_1.Dragapultex(),
     new emolga_1.Emolga(),
     new farfetchd_1.Farfetchd(),
-    new fezandipiti_1.FezandipitiTWM(),
+    new fezandipiti_1.Fezandipiti(),
     new finizen_1.Finizen(),
     new froslass_1.Froslass(),
     new goldeen_1.Goldeen(),

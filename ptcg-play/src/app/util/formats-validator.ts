@@ -355,5 +355,7 @@ export const SetReleaseDates: { [key: string]: Date } = {
   'SSP': new Date('2024-11-08'),
   'SV8a': new Date('2024-12-06'),
   'PRE': new Date('2025-01-17'),
-  'SV9': new Date('2025-03-28'),
+  'SV9': new Date('2025-01-01'),
+  'SV9a': new Date('2025-01-01'),
+  'SV10': new Date('2025-01-01'),
 }

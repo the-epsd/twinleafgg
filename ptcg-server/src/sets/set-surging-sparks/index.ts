@@ -39,7 +39,7 @@ import { ExcitingStadium } from './exciting-stadium';
 import { Exeggcute } from './exeggcute';
 import { Flygonex } from './flygon-ex';
 import { Fuecoco } from './fuecoco';
-import { FeebasIR, LarvestaIR } from './full-art';
+import { ArchaludonexFA, ArchaludonexSIR, CounterGainUR, CyranoFA, FeebasIR, HydreigonexFA, HydreigonexSIR, JetEnergyUR, LarvestaIR, LatiasexFA, LatiasexSIR, LisiasAppealFA, LisiasAppealSIR, MiloticexFA, MiloticexSIR, NightStretcherUR, PikachuexFA, PikachuexSIR, PikachuexUR, SurferFA } from './full-art';
 import { Gimmighoul } from './gimmighoul';
 import { GougingFire } from './gouging-fire';
 import { GravityMountain } from './gravity-mountain';
@@ -211,4 +211,22 @@ export const setSurgingSparks: Card[] = [
   // Full Art
   new LarvestaIR(),
   new FeebasIR(),
+  new MiloticexFA(),
+  new PikachuexFA(),
+  new LatiasexFA(),
+  new HydreigonexFA(),
+  new ArchaludonexFA(),
+  new CyranoFA(),
+  new LisiasAppealFA(),
+  new SurferFA(),
+  new MiloticexSIR(),
+  new PikachuexSIR(),
+  new LatiasexSIR(),
+  new HydreigonexSIR(),
+  new ArchaludonexSIR(),
+  new LisiasAppealSIR(),
+  new PikachuexUR(),
+  new CounterGainUR(),
+  new NightStretcherUR(),
+  new JetEnergyUR(),
 ];

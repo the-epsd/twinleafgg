@@ -5,30 +5,31 @@ const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class IronHandsex extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.BASIC;
-        this.regulationMark = 'G';
         this.tags = [card_types_1.CardTag.POKEMON_ex, card_types_1.CardTag.FUTURE];
-        this.cardType = card_types_1.CardType.LIGHTNING;
+        this.cardType = L;
         this.hp = 230;
-        this.weakness = [{ type: card_types_1.CardType.FIGHTING }];
-        this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
+        this.weakness = [{ type: F }];
+        this.retreat = [C, C, C, C];
         this.attacks = [
             {
                 name: 'Arm Press',
-                cost: [card_types_1.CardType.LIGHTNING, card_types_1.CardType.LIGHTNING, card_types_1.CardType.COLORLESS],
+                cost: [L, L, C],
                 damage: 160,
                 text: ''
             },
             {
                 name: 'Amp You Very Much',
-                cost: [card_types_1.CardType.LIGHTNING, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
+                cost: [L, C, C, C],
                 damage: 120,
                 text: 'If your opponent\'s Pokemon is Knocked Out by damage from this attack, take 1 more Prize card.'
             },
         ];
+        this.regulationMark = 'G';
         this.set = 'PAR';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '70';
@@ -37,10 +38,10 @@ class IronHandsex extends pokemon_card_1.PokemonCard {
         this.usedAmpYouVeryMuch = false;
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+        if (prefabs_1.WAS_ATTACK_USED(effect, 0, this)) {
             this.usedAmpYouVeryMuch = false;
         }
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
+        if (prefabs_1.WAS_ATTACK_USED(effect, 1, this)) {
             this.usedAmpYouVeryMuch = true;
         }
         if (effect instanceof game_effects_1.KnockOutEffect && effect.target === effect.player.active) {

@@ -29,14 +29,12 @@ export class NsDarmanitan extends PokemonCard {
       damage: 30,
       text: 'This attack does 30 damage for each Basic Energy card in your opponent\'s discard pile.'
     },
-
     {
       name: 'Darman-i-cannon',
       cost: [R, R, C],
       damage: 90,
       text: 'Discard all Energy from this Pokémon. This attack also does 90 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
     },
-
   ];
 
   public regulationMark = 'I';
@@ -53,6 +51,7 @@ export class NsDarmanitan extends PokemonCard {
 
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -69,44 +68,32 @@ export class NsDarmanitan extends PokemonCard {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
 
-      // discard time
-      const checkProvidedEnergy = new CheckProvidedEnergyEffect(player, player.active);
+      const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
       state = store.reduceEffect(state, checkProvidedEnergy);
 
-      const cards: Card[] = [];
-      checkProvidedEnergy.energyMap.forEach(em => {
-        cards.push(em.card);
-      });
-
+      const cards: Card[] = checkProvidedEnergy.energyMap.map(e => e.card);
       const discardEnergy = new DiscardCardsEffect(effect, cards);
       discardEnergy.target = player.active;
       store.reduceEffect(state, discardEnergy);
 
-      // bench snipe gaming
-      const hasBenched = opponent.bench.some(b => b.cards.length > 0);
-      if (!hasBenched) {
-        return state;
-      }
+      const max = Math.min(1);
 
       return store.prompt(state, new ChoosePokemonPrompt(
         player.id,
         GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
         PlayerType.TOP_PLAYER,
         [SlotType.BENCH],
-        { allowCancel: false }
-      ), targets => {
-        if (!targets || targets.length === 0) {
-          return;
-        }
-        const damageEffect = new PutDamageEffect(effect, 90);
-        damageEffect.target = targets[0];
-        store.reduceEffect(state, damageEffect);
+        { min: max, max, allowCancel: false }
+      ), selected => {
+        const targets = selected || [];
+        targets.forEach(target => {
+          const damageEffect = new PutDamageEffect(effect, 120);
+          damageEffect.target = target;
+          store.reduceEffect(state, damageEffect);
+        });
       });
     }
-
     return state;
   }
-
 }

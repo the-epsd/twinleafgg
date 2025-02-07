@@ -13,10 +13,10 @@ class Feraligatr extends pokemon_card_1.PokemonCard {
         this.regulationMark = 'H';
         this.stage = card_types_1.Stage.STAGE_2;
         this.evolvesFrom = 'Croconaw';
-        this.cardType = card_types_1.CardType.WATER;
+        this.cardType = W;
         this.hp = 180;
-        this.weakness = [{ type: card_types_1.CardType.LIGHTNING }];
-        this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
+        this.weakness = [{ type: L }];
+        this.retreat = [C, C, C];
         this.powers = [{
                 name: 'Torrential Heart',
                 useWhenInPlay: true,
@@ -25,7 +25,7 @@ class Feraligatr extends pokemon_card_1.PokemonCard {
             }];
         this.attacks = [{
                 name: 'Giant Wave',
-                cost: [card_types_1.CardType.WATER, card_types_1.CardType.WATER],
+                cost: [W, W],
                 damage: 160,
                 text: 'This Pokémon can\'t use Giant Wave during your next turn.'
             }];
