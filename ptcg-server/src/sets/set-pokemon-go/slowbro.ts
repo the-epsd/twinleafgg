@@ -1,4 +1,4 @@
-import { PokemonCard, Stage, CardType, StoreLike, State, StateUtils } from '../../game';
+import { PokemonCard, Stage, CardType, StoreLike, State, StateUtils, SpecialCondition } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { TAKE_X_PRIZES } from '../../game/store/prefabs/prefabs';
@@ -47,15 +47,12 @@ export class Slowbro extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      /*
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const active = opponent.active;
 
       active.addSpecialCondition(SpecialCondition.ASLEEP);
       player.active.addSpecialCondition(SpecialCondition.ASLEEP);
-      */
-      return TAKE_X_PRIZES(store, state, effect.player, 5);
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {

@@ -36,15 +36,11 @@ class Slowbro extends game_1.PokemonCard {
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
-            /*
             const player = effect.player;
-            const opponent = StateUtils.getOpponent(state, player);
+            const opponent = game_1.StateUtils.getOpponent(state, player);
             const active = opponent.active;
-      
-            active.addSpecialCondition(SpecialCondition.ASLEEP);
-            player.active.addSpecialCondition(SpecialCondition.ASLEEP);
-            */
-            return prefabs_1.TAKE_X_PRIZES(store, state, effect.player, 5);
+            active.addSpecialCondition(game_1.SpecialCondition.ASLEEP);
+            player.active.addSpecialCondition(game_1.SpecialCondition.ASLEEP);
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
