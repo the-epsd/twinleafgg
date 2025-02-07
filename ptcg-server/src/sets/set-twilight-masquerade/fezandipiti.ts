@@ -8,7 +8,7 @@ import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effect
 import { CoinFlipEffect } from '../../game/store/effects/play-card-effects';
 import { SIMULATE_COIN_FLIP } from '../../game/store/prefabs/prefabs';
 
-export class FezandipitiTWM extends PokemonCard {
+export class Fezandipiti extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
