@@ -1,4 +1,4 @@
-import { Attack, CardTag, CardType, GameError, GameMessage, PokemonCard, PokemonCardList, Power, PowerType, Stage, State, StateUtils, StoreLike, Weakness } from "../../game";
+import { Attack, CardList, CardTag, CardType, GameError, GameMessage, PokemonCard, PokemonCardList, Power, PowerType, Stage, State, StateUtils, StoreLike, Weakness } from "../../game";
 import { Effect } from "../../game/store/effects/effect";
 import { BLOCK_IF_DECK_EMPTY, GET_CARDS_ON_BOTTOM_OF_DECK, WAS_POWER_USED } from "../../game/store/prefabs/prefabs";
 
@@ -31,21 +31,22 @@ export class MistysPsyduck extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
       BLOCK_IF_DECK_EMPTY(player);
 
       const cardList = StateUtils.findCardList(state, this) as PokemonCardList;
-      if (cardList === player.active) {
+      if (player.active.cards.includes(this) || opponent.active.cards.includes(this)) {
         new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
       player.deck.moveCardsTo(GET_CARDS_ON_BOTTOM_OF_DECK(player, 1), player.discard);
 
-      cardList.cards.forEach(c => {
-        if (c !== this)
-          cardList.moveCardTo(c, player.discard);
-      })
-
-      cardList.moveToTopOfDestination(player.deck);
+      const deckTop = new CardList();
+      cardList.moveTo(deckTop);
+      cardList.cards.forEach((c) => {
+        c.cards.moveTo(player.discard);
+      });
+      deckTop.moveToTopOfDestination(player.deck);
     }
     return state;
   }
