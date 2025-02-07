@@ -8,6 +8,7 @@ import { Dhelmise } from './dhelmise';
 import { ElectrodeGX } from './electrode-gx';
 import { Fisherman } from './fisherman';
 import { HustleBelt } from './hustle-belt';
+import { JirachiPrismStar } from './jirachi-prism-star';
 import { LastChancePotion } from './last-chance-potion';
 import { Magcargo } from './magcargo';
 import { Marshtomp } from './marshtomp';
@@ -35,6 +36,7 @@ export const setCelestialStorm: Card[] = [
   new ElectrodeGX(),
   new Fisherman(),
   new HustleBelt(),
+  new JirachiPrismStar(),
   new LastChancePotion(),
   new Magcargo(),
   new Marshtomp(),

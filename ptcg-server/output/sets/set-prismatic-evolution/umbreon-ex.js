@@ -3,7 +3,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Umbreonex = void 0;
 const game_1 = require("../../game");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
+const check_effects_1 = require("../../game/store/effects/check-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class Umbreonex extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -42,75 +44,13 @@ class Umbreonex extends game_1.PokemonCard {
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
-            // const opponent = StateUtils.getOpponent(state, player);
-            const prizes = player.prizes.filter(p => p.isSecret);
-            if (prizes.length === 0) {
-                throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
-            }
-            const cards = [];
-            prizes.forEach(p => { p.cards.forEach(c => cards.push(c)); });
-            // const blocked: number[] = [];
-            // player.prizes.forEach((p, index) => {
-            //   if (p.faceUpPrize) {
-            //     blocked.push(index);
-            //   }
-            //   if (p.isPublic) {
-            //     blocked.push(index);
-            //   }
-            //   if (!p.isSecret) {
-            //     blocked.push(index);
-            //   }
-            // });
-            // Keep track of which prizes were originally face down
-            const originallyFaceDown = player.prizes.map(p => p.isSecret);
-            // Make prizes no more secret, before displaying prompt
-            prizes.forEach(p => { p.isSecret = true; });
-            // state = store.prompt(state, new ChoosePrizePrompt(
-            //   player.id,
-            //   GameMessage.CHOOSE_POKEMON,
-            //   { count: 1, blocked: blocked, allowCancel: true },
-            // ), chosenPrize => {
-            const allPrizeCards = new game_1.CardList();
-            player.prizes.forEach(prizeList => {
-                allPrizeCards.cards.push(...prizeList.cards);
-            });
-            store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_HAND, allPrizeCards, {}, { min: 1, max: 1, allowCancel: false, isSecret: true }), chosenPrize => {
-                // if (chosenPrize === null || chosenPrize.length === 0) {
-                //   player.prizes.forEach((p, index) => {
-                //     if (originallyFaceDown[index]) {
-                //       p.isSecret = true;
-                //     }
-                //   });
-                //   player.supporter.moveCardTo(effect.trainerCard, player.discard);
-                //   const faceDownPrizes = player.prizes.filter((p, index) => originallyFaceDown[index]);
-                //   this.shuffleFaceDownPrizeCards(faceDownPrizes);
-                //   return state;
-                // }
-                const prizePokemon = chosenPrize[0];
-                const hand = player.hand;
-                // Find the prize list containing the chosen card
-                const chosenPrizeList = player.prizes.find(prizeList => prizeList.cards.includes(prizePokemon));
-                // if (chosenPrize.length > 0) {
-                //   state = store.prompt(state, new ShowCardsPrompt(
-                //     opponent.id,
-                //     GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-                //     chosenPrize
-                //   ), () => { });
-                // }
-                if (chosenPrizeList) {
-                    chosenPrizeList.moveCardTo(prizePokemon, hand);
-                }
-                // At the end, when resetting prize cards:
-                player.prizes.forEach((p, index) => {
-                    if (originallyFaceDown[index]) {
-                        p.isSecret = true;
-                    }
-                });
-                // Shuffle only the face-down prize cards
-                const faceDownPrizes = player.prizes.filter((p, index) => originallyFaceDown[index]);
-                this.shuffleFaceDownPrizeCards(faceDownPrizes);
-                return state;
-            });
+            const checkProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(player);
+            state = store.reduceEffect(state, checkProvidedEnergy);
+            const cards = checkProvidedEnergy.energyMap.map(e => e.card);
+            const discardEnergy = new attack_effects_1.DiscardCardsEffect(effect, cards);
+            discardEnergy.target = player.active;
+            store.reduceEffect(state, discardEnergy);
+            return prefabs_1.TAKE_X_PRIZES(store, state, player, 1);
         }
         if (effect instanceof attack_effects_1.PutDamageEffect) {
             const player = effect.player;

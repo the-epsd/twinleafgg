@@ -1,33 +1,32 @@
-import { PokemonCard, PowerType } from '../../game';
-import { CardType, Stage } from '../../game/store/card/card-types';
+import { PokemonCard } from '../../game/store/card/pokemon-card';
+import { Stage, CardType } from '../../game/store/card/card-types';
+import { StoreLike, State, PowerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { State } from '../../game/store/state/state';
-import { StoreLike } from '../../game/store/store-like';
 export declare class Chansey extends PokemonCard {
     stage: Stage;
-    regulationMark: string;
     cardType: CardType;
-    weakness: {
-        type: CardType;
-    }[];
     hp: number;
-    retreat: CardType[];
+    weakness: {
+        type: CardType.FIGHTING;
+    }[];
+    retreat: CardType.COLORLESS[];
     powers: {
         name: string;
         powerType: PowerType;
         text: string;
-        useWhenInPlay: boolean;
     }[];
     attacks: {
         name: string;
-        cost: CardType[];
+        cost: CardType.COLORLESS[];
         damage: number;
         text: string;
     }[];
     set: string;
-    cardImage: string;
     setNumber: string;
+    cardImage: string;
     name: string;
     fullName: string;
+    abilityUsed: boolean;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
+    private handlePrizeEffect;
 }

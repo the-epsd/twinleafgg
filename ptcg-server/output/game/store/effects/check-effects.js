@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AddSpecialConditionsPowerEffect = exports.CheckTableStateEffect = exports.CheckProvidedEnergyEffect = exports.CheckAttackCostEffect = exports.CheckRetreatCostEffect = exports.CheckPokemonTypeEffect = exports.CheckPokemonStatsEffect = exports.CheckPokemonPlayedTurnEffect = exports.CheckHpEffect = exports.CheckPokemonAttacksEffect = exports.CheckPokemonPowersEffect = exports.CheckEffects = void 0;
+exports.CheckPrizesDestinationEffect = exports.AddSpecialConditionsPowerEffect = exports.CheckTableStateEffect = exports.CheckProvidedEnergyEffect = exports.CheckAttackCostEffect = exports.CheckRetreatCostEffect = exports.CheckPokemonTypeEffect = exports.CheckPokemonStatsEffect = exports.CheckPokemonPlayedTurnEffect = exports.CheckHpEffect = exports.CheckPokemonAttacksEffect = exports.CheckPokemonPowersEffect = exports.CheckEffects = void 0;
 var CheckEffects;
 (function (CheckEffects) {
     CheckEffects["CHECK_HP_EFFECT"] = "CHECK_HP_EFFECT";
@@ -15,6 +15,7 @@ var CheckEffects;
     CheckEffects["CHECK_POKEMON_PLAYED_TURN_EFFECT"] = "CHECK_POKEMON_PLAYED_TURN_EFFECT";
     CheckEffects["CHECK_TABLE_STATE_EFFECT"] = "CHECK_TABLE_STATE_EFFECT";
     CheckEffects["ADD_SPECIAL_CONDITIONS_EFFECT"] = "ADD_SPECIAL_CONDITIONS_EFFECT";
+    CheckEffects["CHECK_PRIZES_DESTINATION_EFFECT"] = "CHECK_PRIZES_DESTINATION_EFFECT";
 })(CheckEffects = exports.CheckEffects || (exports.CheckEffects = {}));
 class CheckPokemonPowersEffect {
     constructor(player, target) {
@@ -140,3 +141,12 @@ class AddSpecialConditionsPowerEffect {
     }
 }
 exports.AddSpecialConditionsPowerEffect = AddSpecialConditionsPowerEffect;
+class CheckPrizesDestinationEffect {
+    constructor(player, destination) {
+        this.type = CheckEffects.CHECK_PRIZES_DESTINATION_EFFECT;
+        this.preventDefault = false;
+        this.player = player;
+        this.destination = destination;
+    }
+}
+exports.CheckPrizesDestinationEffect = CheckPrizesDestinationEffect;

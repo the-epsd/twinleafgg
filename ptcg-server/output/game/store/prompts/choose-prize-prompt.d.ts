@@ -10,6 +10,7 @@ export interface ChoosePrizeOptions {
     blocked: number[];
     useOpponentPrizes: boolean;
     allowCancel: boolean;
+    destination?: CardList;
 }
 export declare class ChoosePrizePrompt extends Prompt<CardList[]> {
     message: GameMessage;

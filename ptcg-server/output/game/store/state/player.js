@@ -60,6 +60,8 @@ class Player {
         //GX-Attack Dedicated Section
         this.usedAlteredCreation = false;
         this.alteredCreationDamage = false;
+        // Taken prize cards ("taken" means "moved to the player's hand")
+        this.prizesTaken = 0;
     }
     getPrizeLeft() {
         return this.prizes.reduce((left, p) => left + p.cards.length, 0);

@@ -54,6 +54,18 @@ export declare function THIS_ATTACK_DOES_X_MORE_DAMAGE(effect: AttackEffect, sto
 export declare function HEAL_X_DAMAGE_FROM_THIS_POKEMON(effect: AttackEffect, store: StoreLike, state: State, damage: number): State;
 export declare function THIS_POKEMON_HAS_ANY_DAMAGE_COUNTERS_ON_IT(effect: AttackEffect, user: PokemonCard): boolean;
 export declare function YOUR_OPPONENTS_POKEMON_IS_KNOCKED_OUT_BY_DAMAGE_FROM_THIS_ATTACK(effect: Effect, state: State): effect is KnockOutEffect;
+export interface TakeSpecificPrizesOptions {
+    destination?: CardList;
+    skipReduce?: boolean;
+}
+export interface TakeXPrizesOptions extends TakeSpecificPrizesOptions {
+    promptOptions?: {
+        allowCancel?: boolean;
+        blocked?: number[];
+    };
+}
+export declare function TAKE_SPECIFIC_PRIZES(store: StoreLike, state: State, player: Player, prizes: CardList[], options?: TakeSpecificPrizesOptions): void;
+export declare function TAKE_X_PRIZES(store: StoreLike, state: State, player: Player, count: number, options?: TakeXPrizesOptions, callback?: (chosenPrizes: CardList[]) => void): State;
 export declare function TAKE_X_MORE_PRIZE_CARDS(effect: KnockOutEffect, state: State): State;
 export declare function PLAY_POKEMON_FROM_HAND_TO_BENCH(state: State, player: Player, card: Card): void;
 export declare function THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_BENCHED_POKEMON(damage: number, effect: AttackEffect, store: StoreLike, state: State, min: number, max: number): State;
@@ -115,7 +127,7 @@ export declare function SELECT_PROMPT_WITH_OPTIONS(store: StoreLike, state: Stat
     message: GameMessage;
     action: () => void;
 }[]): State;
-export declare function CONFIRMATION_PROMPT(store: StoreLike, state: State, player: Player, callback: (result: boolean) => void): State;
+export declare function CONFIRMATION_PROMPT(store: StoreLike, state: State, player: Player, callback: (result: boolean) => void, message?: GameMessage): State;
 export declare function COIN_FLIP_PROMPT(store: StoreLike, state: State, player: Player, callback: (result: boolean) => void): State;
 export declare function SIMULATE_COIN_FLIP(store: StoreLike, state: State, player: Player): boolean;
 export declare function GET_FIRST_PLAYER_BENCH_SLOT(player: Player): PokemonCardList;

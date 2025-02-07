@@ -3,7 +3,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.setLostOrigin = void 0;
 const arezu_1 = require("./arezu");
 const banette_1 = require("./banette");
+const barbaracle_1 = require("./barbaracle");
 const beautifly_1 = require("./beautifly");
+const binacle_1 = require("./binacle");
 const bouffalant_1 = require("./bouffalant");
 const box_of_disaster_1 = require("./box-of-disaster");
 const colress_s_experiment_1 = require("./colress's-experiment");
@@ -59,7 +61,9 @@ const volo_1 = require("./volo");
 const wurmple_1 = require("./wurmple");
 exports.setLostOrigin = [
     new banette_1.Banette(),
+    new barbaracle_1.Barbaracle(),
     new beautifly_1.Beautifly(),
+    new binacle_1.Binacle(),
     new bouffalant_1.Bouffalant(),
     new colress_s_experiment_1.ColresssExperiment(),
     new comfey_1.Comfey(),
