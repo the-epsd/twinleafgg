@@ -1,4 +1,4 @@
-import { Attack, CardList, CardTag, CardType, PokemonCard, Stage, State, StoreLike, SuperType, Weakness } from "../../game";
+import { Attack, CardList, CardTag, CardType, PokemonCard, Stage, State, StoreLike, Weakness } from "../../game";
 import { Effect } from "../../game/store/effects/effect";
 import { WAS_ATTACK_USED } from "../../game/store/prefabs/prefabs";
 
@@ -36,14 +36,10 @@ export class MistysGyarados extends PokemonCard {
       const deckTop = new CardList();
       player.deck.moveTo(deckTop, 7);
 
-      let mistysPokemon = 0;
-      deckTop.cards.forEach(c => {
-        if (c.tags.includes(CardTag.MISTYS) && c.superType === SuperType.POKEMON)
-          mistysPokemon++;
-      })
-      deckTop.moveCardsTo(deckTop.cards, player.discard);
+      const mistysPokemon = deckTop.cards.filter(c => c.tags.includes(CardTag.MISTYS) && c instanceof PokemonCard);
 
-      effect.damage = 70 * mistysPokemon;
+      effect.damage = 70 * mistysPokemon.length;
+      deckTop.moveTo(player.discard, deckTop.cards.length);
     }
 
     return state;

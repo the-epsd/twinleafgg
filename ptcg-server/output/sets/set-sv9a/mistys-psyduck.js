@@ -30,17 +30,19 @@ class MistysPsyduck extends game_1.PokemonCard {
     reduceEffect(store, state, effect) {
         if (prefabs_1.WAS_POWER_USED(effect, 0, this)) {
             const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
             prefabs_1.BLOCK_IF_DECK_EMPTY(player);
             const cardList = game_1.StateUtils.findCardList(state, this);
-            if (cardList === player.active) {
+            if (player.active.cards.includes(this) || opponent.active.cards.includes(this)) {
                 new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
             player.deck.moveCardsTo(prefabs_1.GET_CARDS_ON_BOTTOM_OF_DECK(player, 1), player.discard);
-            cardList.cards.forEach(c => {
-                if (c !== this)
-                    cardList.moveCardTo(c, player.discard);
+            const deckTop = new game_1.CardList();
+            cardList.moveTo(deckTop);
+            cardList.cards.forEach((c) => {
+                c.cards.moveTo(player.discard);
             });
-            cardList.moveToTopOfDestination(player.deck);
+            deckTop.moveToTopOfDestination(player.deck);
         }
         return state;
     }

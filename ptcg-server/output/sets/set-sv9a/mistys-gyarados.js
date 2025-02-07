@@ -35,13 +35,9 @@ class MistysGyarados extends game_1.PokemonCard {
             const player = effect.player;
             const deckTop = new game_1.CardList();
             player.deck.moveTo(deckTop, 7);
-            let mistysPokemon = 0;
-            deckTop.cards.forEach(c => {
-                if (c.tags.includes(game_1.CardTag.MISTYS) && c.superType === game_1.SuperType.POKEMON)
-                    mistysPokemon++;
-            });
-            deckTop.moveCardsTo(deckTop.cards, player.discard);
-            effect.damage = 70 * mistysPokemon;
+            const mistysPokemon = deckTop.cards.filter(c => c.tags.includes(game_1.CardTag.MISTYS) && c instanceof game_1.PokemonCard);
+            effect.damage = 70 * mistysPokemon.length;
+            deckTop.moveTo(player.discard, deckTop.cards.length);
         }
         return state;
     }
