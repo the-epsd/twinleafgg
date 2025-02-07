@@ -26,7 +26,7 @@ import { Emolga } from './emolga';
 import { EnhancedHammer } from './enhanced-hammer';
 import { Farfetchd } from './farfetchd';
 import { FestivalGrounds } from './festival-plaza';
-import { FezandipitiTWM } from './fezandipiti';
+import { Fezandipiti } from './fezandipiti';
 import { Finizen } from './finizen';
 import { Froakie } from './froakie';
 import { Frogadier } from './frogadier';
@@ -40,6 +40,7 @@ import { Hassel } from './hassel';
 import { HearthflameMaskOgerponex } from './hearthflame-mask-ogerpon-ex';
 import { Heatran } from './heatran';
 import { HisuianArcanine } from './hisuian-arcanine';
+import { HisuianGrowlithe } from './hisuian-growlithe';
 import { HyperAroma } from './hyper-aroma';
 import { Infernape } from './infernape';
 import { IronLeaves } from './iron-leaves';
@@ -103,7 +104,7 @@ export const setTwilightMasquerade: Card[] = [
   new Dragapultex(),
   new Emolga(),
   new Farfetchd(),
-  new FezandipitiTWM(),
+  new Fezandipiti(),
   new Finizen(),
   new Froslass(),
   new Goldeen(),
@@ -113,6 +114,7 @@ export const setTwilightMasquerade: Card[] = [
   new HearthflameMaskOgerponex(),
   new Heatran(),
   new HisuianArcanine(),
+  new HisuianGrowlithe(),
   new Lairon(),
   new LanasAssistance(),
   new LegacyEnergy(),

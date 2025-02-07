@@ -6,6 +6,14 @@ export declare class Articuno extends PokemonCard {
     stage: Stage;
     cardType: CardType;
     hp: number;
+    weakness: {
+        type: CardType.LIGHTNING;
+    }[];
+    resistance: {
+        type: CardType.FIGHTING;
+        value: number;
+    }[];
+    retreat: CardType.COLORLESS[];
     powers: {
         name: string;
         powerType: PowerType;
@@ -13,18 +21,10 @@ export declare class Articuno extends PokemonCard {
     }[];
     attacks: {
         name: string;
-        cost: CardType[];
+        cost: CardType.WATER[];
         damage: number;
         text: string;
     }[];
-    weakness: {
-        type: CardType;
-    }[];
-    resistance: {
-        type: CardType;
-        value: number;
-    }[];
-    retreat: CardType[];
     set: string;
     cardImage: string;
     setNumber: string;

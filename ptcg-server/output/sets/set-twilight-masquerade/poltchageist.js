@@ -5,7 +5,7 @@ const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
-const game_effects_1 = require("../../game/store/effects/game-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class Poltchageist extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -40,30 +40,9 @@ class Poltchageist extends pokemon_card_1.PokemonCard {
             if (effect.target === player.active || effect.target === opponent.active) {
                 return state;
             }
-            // why must i always ability lock check also is the only reason rs-pk is loved is how many things have poke-body/power lock it seems like everything in that format just has that 
-            try {
-                const stub = new game_effects_1.PowerEffect(player, {
-                    name: 'test',
-                    powerType: game_1.PowerType.ABILITY,
-                    text: ''
-                }, this);
-                store.reduceEffect(state, stub);
-            }
-            catch (_a) {
-                return state;
-            }
             // Target is this
             if (effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
-                // why must i always ability lock check also is the only reason rs-pk is loved is how many things have poke-body/power lock it seems like everything in that format just has that 
-                try {
-                    const stub = new game_effects_1.PowerEffect(player, {
-                        name: 'test',
-                        powerType: game_1.PowerType.ABILITY,
-                        text: ''
-                    }, this);
-                    store.reduceEffect(state, stub);
-                }
-                catch (_b) {
+                if (prefabs_1.IS_ABILITY_BLOCKED(store, state, player, this)) {
                     return state;
                 }
                 effect.preventDefault = true;

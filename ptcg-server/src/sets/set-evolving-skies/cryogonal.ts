@@ -1,4 +1,4 @@
-import { PokemonCard, Stage, CardType, AttachEnergyPrompt, CardList, EnergyCard, EnergyType, GameMessage, PlayerType, SlotType, State, StateUtils, StoreLike, SuperType } from '../../game';
+import { PokemonCard, Stage, AttachEnergyPrompt, CardList, EnergyCard, EnergyType, GameMessage, PlayerType, SlotType, State, StateUtils, StoreLike, SuperType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { SHOW_CARDS_TO_PLAYER, SHUFFLE_CARDS_INTO_DECK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
@@ -12,10 +12,11 @@ export class Cryogonal extends PokemonCard {
 
   public attacks = [
     {
-      name: 'Solar Beam',
-      cost: [CardType.GRASS, CardType.COLORLESS, CardType.COLORLESS],
-      damage: 90,
-      text: ''
+      name: 'Element Chain',
+      cost: [W],
+      damage: 0,
+      text: 'Look at the top 6 cards of your deck and attach any number of basic Energy cards ' +
+        'you find there to your Pokémon in any way you like. Shuffle the other cards back into your deck.'
     },
     { name: 'Icy Snow', cost: [W, C], damage: 30, text: '' }
   ];
@@ -33,7 +34,7 @@ export class Cryogonal extends PokemonCard {
 
       const player = effect.player;
       const temp = new CardList();
-      player.deck.moveTo(temp, 8);
+      player.deck.moveTo(temp, 6);
 
       SHOW_CARDS_TO_PLAYER(store, state, player, temp.cards);
 

@@ -1,4 +1,4 @@
-import { AttachEnergyPrompt, Card, CardList, CardTag, CardType, EnergyCard, EnergyType, GameMessage, PlayerType, PokemonCard, ShowCardsPrompt, ShuffleDeckPrompt, SlotType, Stage, State, StateUtils, StoreLike, SuperType } from '../../game';
+import { AttachEnergyPrompt, Card, CardList, CardTag, CardType, EnergyCard, GameMessage, PlayerType, PokemonCard, ShowCardsPrompt, ShuffleDeckPrompt, SlotType, Stage, State, StateUtils, StoreLike, SuperType } from '../../game';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
@@ -83,7 +83,7 @@ export class Laprasex extends PokemonCard {
       player.deck.moveTo(temp, 20);
       // Check if any cards drawn are basic energy
       const energyCardsDrawn = temp.cards.filter(card => {
-        return card instanceof EnergyCard && card.energyType === EnergyType.BASIC;
+        return card instanceof EnergyCard;
       });
 
       // If no energy cards were drawn, move all cards to deck & shuffle
@@ -117,7 +117,7 @@ export class Laprasex extends PokemonCard {
           temp, // Only show drawn energies
           PlayerType.BOTTOM_PLAYER,
           [SlotType.BENCH, SlotType.ACTIVE],
-          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+          { superType: SuperType.ENERGY },
           { min: 0, max: energyCardsDrawn.length }
         ), transfers => {
 

@@ -1,16 +1,16 @@
-import { PokemonCard, Stage, CardType, State, StoreLike } from '../../game';
+import { PokemonCard, Stage, State, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 export declare class Cryogonal extends PokemonCard {
     stage: Stage;
-    cardType: CardType.WATER;
+    cardType: import("../../game").CardType.WATER;
     hp: number;
     weakness: {
-        type: CardType.METAL;
+        type: import("../../game").CardType.METAL;
     }[];
-    retreat: CardType.COLORLESS[];
+    retreat: import("../../game").CardType.COLORLESS[];
     attacks: {
         name: string;
-        cost: CardType[];
+        cost: (import("../../game").CardType.WATER | import("../../game").CardType.COLORLESS)[];
         damage: number;
         text: string;
     }[];

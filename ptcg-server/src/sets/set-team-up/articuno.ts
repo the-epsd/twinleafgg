@@ -10,9 +10,15 @@ export class Articuno extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = CardType.WATER;
+  public cardType: CardType = W;
 
   public hp: number = 110;
+
+  public weakness = [{ type: L }];
+
+  public resistance = [{ type: F, value: -20 }];
+
+  public retreat = [C, C];
 
   public powers = [{
     name: 'Blizzard Veil',
@@ -22,16 +28,10 @@ export class Articuno extends PokemonCard {
 
   public attacks = [{
     name: 'Cold Cyclone',
-    cost: [CardType.WATER, CardType.WATER],
+    cost: [W, W],
     damage: 70,
     text: 'Move 2 [W] Energy from this Pokémon to 1 of your Benched Pokémon.'
   }];
-  
-  public weakness = [{ type: CardType.LIGHTNING }];
-  
-  public resistance = [{ type: CardType.FIGHTING, value: -20 }];
-  
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public set: string = 'TEU';
 
@@ -60,7 +60,7 @@ export class Articuno extends PokemonCard {
         PlayerType.BOTTOM_PLAYER,
         [SlotType.BENCH],
         { superType: SuperType.ENERGY },
-        { allowCancel: false, min: 2, max: 2, validCardTypes: [CardType.WATER, CardType.ANY, CardType.WLFM, CardType.GRW] }
+        { allowCancel: false, min: 2, max: 2, validCardTypes: [W, CardType.ANY, CardType.WLFM, CardType.GRW] }
       ), transfers => {
         transfers = transfers || [];
         for (const transfer of transfers) {
@@ -68,26 +68,26 @@ export class Articuno extends PokemonCard {
           player.active.moveCardTo(transfer.card, target);
         }
       });
-      
+
     }
-    
+
     if (effect instanceof SupporterEffect) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const target = effect.target;
-      
+
       let isArticunoInPlay = false;
       let targetIsWaterPokemon = false;
 
       if (opponent.active.cards.includes(this)) {
         isArticunoInPlay = true;
       }
-      
+
       if (!!target && target instanceof PokemonCardList) {
         const checkPokemonTypeEffect = new CheckPokemonTypeEffect(target as PokemonCardList);
         store.reduceEffect(state, checkPokemonTypeEffect);
-        
-        targetIsWaterPokemon = checkPokemonTypeEffect.cardTypes.includes(CardType.WATER);
+
+        targetIsWaterPokemon = checkPokemonTypeEffect.cardTypes.includes(W);
       }
 
       if (!isArticunoInPlay || !targetIsWaterPokemon) {
@@ -105,10 +105,10 @@ export class Articuno extends PokemonCard {
       } catch {
         return state;
       }
-      
+
       effect.preventDefault = true;
     }
-    
+
     return state;
   }
 }

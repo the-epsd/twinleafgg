@@ -3,38 +3,39 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { GamePhase, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, KnockOutEffect } from '../../game/store/effects/game-effects';
+import { KnockOutEffect } from '../../game/store/effects/game-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class IronHandsex extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
-  public regulationMark = 'G';
-
   public tags = [CardTag.POKEMON_ex, CardTag.FUTURE];
 
-  public cardType: CardType = CardType.LIGHTNING;
+  public cardType: CardType = L;
 
   public hp: number = 230;
 
-  public weakness = [{ type: CardType.FIGHTING }];
+  public weakness = [{ type: F }];
 
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
+  public retreat = [C, C, C, C];
 
   public attacks = [
     {
       name: 'Arm Press',
-      cost: [CardType.LIGHTNING, CardType.LIGHTNING, CardType.COLORLESS],
+      cost: [L, L, C],
       damage: 160,
       text: ''
     },
     {
       name: 'Amp You Very Much',
-      cost: [CardType.LIGHTNING, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
+      cost: [L, C, C, C],
       damage: 120,
       text: 'If your opponent\'s Pokemon is Knocked Out by damage from this attack, take 1 more Prize card.'
     },
   ];
+
+  public regulationMark = 'G';
 
   public set: string = 'PAR';
 
@@ -50,11 +51,11 @@ export class IronHandsex extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       this.usedAmpYouVeryMuch = false;
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       this.usedAmpYouVeryMuch = true;
     }
 

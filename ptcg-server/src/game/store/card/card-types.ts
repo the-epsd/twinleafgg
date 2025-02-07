@@ -37,6 +37,8 @@ export enum CardTag {
   HOPS = 'HOPS',
   MARNIES = 'MARNIES',
   STEVENS = 'STEVENS',
+  ETHANS = 'ETHANS',
+  MISTYS = 'MISTYS',
 }
 
 export enum SuperType {

@@ -14,13 +14,13 @@ export class Feraligatr extends PokemonCard {
 
   public evolvesFrom = 'Croconaw';
 
-  public cardType: CardType = CardType.WATER;
+  public cardType: CardType = W;
 
   public hp: number = 180;
 
-  public weakness = [{ type: CardType.LIGHTNING }];
+  public weakness = [{ type: L }];
 
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
+  public retreat = [C, C, C];
 
   public powers = [{
     name: 'Torrential Heart',
@@ -31,7 +31,7 @@ export class Feraligatr extends PokemonCard {
 
   public attacks = [{
     name: 'Giant Wave',
-    cost: [CardType.WATER, CardType.WATER],
+    cost: [W, W],
     damage: 160,
     text: 'This Pokémon can\'t use Giant Wave during your next turn.'
   }];

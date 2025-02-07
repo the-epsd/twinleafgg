@@ -21,7 +21,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   //let playTwoCards = false;
 
   if (benchCount > 0) {
-  // playTwoCards = true;
+    // playTwoCards = true;
 
     // Discard second Cross Switcher +
     const second = player.hand.cards.find(c => {
@@ -32,7 +32,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     }
 
     const hasBench = player.bench.some(b => b.cards.length > 0);
-    
+
     if (hasBench === false) {
       throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
     }
@@ -44,7 +44,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
       player.id,
       GameMessage.CHOOSE_POKEMON_TO_SWITCH,
       PlayerType.TOP_PLAYER,
-      [ SlotType.BENCH ],
+      [SlotType.BENCH],
       { allowCancel: false }
     ), targets => {
       if (!targets || targets.length === 0) {
@@ -53,16 +53,16 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
       opponent.active.clearEffects();
       opponent.switchPokemon(targets[0]);
       next();
-    
+
       // Do not discard the card yet
       effect.preventDefault = true;
-    
+
       let target: PokemonCardList[] = [];
       return store.prompt(state, new ChoosePokemonPrompt(
         player.id,
         GameMessage.CHOOSE_POKEMON_TO_SWITCH,
         PlayerType.BOTTOM_PLAYER,
-        [ SlotType.BENCH ],
+        [SlotType.BENCH],
         { allowCancel: false }
       ), results => {
         target = results || [];
@@ -71,7 +71,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
         if (target.length === 0) {
           return state;
         }
-    
+
         // Discard trainer only when user selected a Pokemon
         player.active.clearEffects();
         player.switchPokemon(target[0]);
@@ -98,20 +98,20 @@ export class CustomCatcher extends TrainerCard {
   public setNumber: string = '171';
 
   public text: string =
-    'You may play 2 Custom Catcher cards at once.' + 
+    'You may play 2 Custom Catcher cards at once.' +
     '' +
     '• If you played 1 card, draw cards until you have 3 cards in your hand.' +
     '• If you played 2 cards, switch 1 of your opponent\'s Benched Pokémon with their Active Pokémon. (This effect works one time for 2 cards.)';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-      const player = effect.player; 
+      const player = effect.player;
       let drawUpToThree = false;
-      
+
       const count = player.hand.cards.reduce((sum, c) => {
         return sum + (c.name === this.name ? 1 : 0);
       }, 0);
-      
+
       if (count > 1) {
         state = store.prompt(state, new ConfirmPrompt(
           effect.player.id,
@@ -123,11 +123,11 @@ export class CustomCatcher extends TrainerCard {
             const generator = playCard(() => generator.next(), store, state, effect);
             return generator.next().value;
           }
-        });        
+        });
       } else {
-        drawUpToThree = true;  
+        drawUpToThree = true;
       }
-      
+
       if (drawUpToThree) {
         const cards = player.hand.cards.filter(c => c !== this);
         const cardsToDraw = Math.max(0, 3 - cards.length);
@@ -137,9 +137,10 @@ export class CustomCatcher extends TrainerCard {
         }
 
         player.deck.moveTo(player.hand, cardsToDraw);
-        
+        player.supporter.moveCardTo(this, player.discard);
+
         for (let i = 0; i < cardsToDraw; i++) {
-          store.log(state, GameLog.LOG_PLAYER_DRAWS_CARD, { name: player.name });        
+          store.log(state, GameLog.LOG_PLAYER_DRAWS_CARD, { name: player.name });
         }
       }
     }

@@ -13,10 +13,11 @@ class Cryogonal extends game_1.PokemonCard {
         this.retreat = [C];
         this.attacks = [
             {
-                name: 'Solar Beam',
-                cost: [game_1.CardType.GRASS, game_1.CardType.COLORLESS, game_1.CardType.COLORLESS],
-                damage: 90,
-                text: ''
+                name: 'Element Chain',
+                cost: [W],
+                damage: 0,
+                text: 'Look at the top 6 cards of your deck and attach any number of basic Energy cards ' +
+                    'you find there to your Pokémon in any way you like. Shuffle the other cards back into your deck.'
             },
             { name: 'Icy Snow', cost: [W, C], damage: 30, text: '' }
         ];
@@ -31,7 +32,7 @@ class Cryogonal extends game_1.PokemonCard {
         if (prefabs_1.WAS_ATTACK_USED(effect, 0, this)) {
             const player = effect.player;
             const temp = new game_1.CardList();
-            player.deck.moveTo(temp, 8);
+            player.deck.moveTo(temp, 6);
             prefabs_1.SHOW_CARDS_TO_PLAYER(store, state, player, temp.cards);
             // Check if any cards drawn are basic energy
             const energyCardsDrawn = temp.cards.filter(card => {

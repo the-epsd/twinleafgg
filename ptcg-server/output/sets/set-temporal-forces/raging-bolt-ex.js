@@ -50,14 +50,6 @@ class RagingBoltex extends pokemon_card_1.PokemonCard {
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
-            // return store.prompt(state, new ChoosePokemonPrompt(
-            //   player.id,
-            //   GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
-            //   PlayerType.BOTTOM_PLAYER,
-            //   [SlotType.ACTIVE, SlotType.BENCH],
-            //   { min: 1, max: 6, allowCancel: true }
-            // ), targets => {
-            //   targets.forEach(target => {
             let totalEnergy = 0;
             player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList) => {
                 const basicEnergyCount = cardList.cards.filter(card => card instanceof game_1.EnergyCard && card.energyType === card_types_1.EnergyType.BASIC).length;
