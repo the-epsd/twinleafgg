@@ -13,6 +13,7 @@ export declare class Chansey extends PokemonCard {
     powers: {
         name: string;
         powerType: PowerType;
+        exemptFromAbilityLock: boolean;
         text: string;
     }[];
     attacks: {

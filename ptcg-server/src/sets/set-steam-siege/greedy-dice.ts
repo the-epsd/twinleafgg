@@ -68,16 +68,25 @@ export class GreedyDice extends TrainerCard {
     }, GameMessage.WANT_TO_USE_ITEM_FROM_PRIZES);
 
     // If the player declines, move the original prize card to hand
-    if (!wantToUse) {
-      effect.preventDefault = false;
-      const prizeIndex = player.prizes.findIndex(prize => prize.cards.includes(this));
+    const prizeIndex = player.prizes.findIndex(prize => prize.cards.includes(this));
+    const fallback: (prizeIndex: number) => void = (prizeIndex) => {
       if (prizeIndex !== -1) {
         TAKE_SPECIFIC_PRIZES(store, state, player, [player.prizes[prizeIndex]], { skipReduce: true });
       }
+      return;
+    }
+
+    if (!wantToUse) {
+      effect.preventDefault = false;
+      fallback(prizeIndex);
       return state;
     }
 
+    // Now that we've confirmed the card can be played, we can update the state
+    // (per wording of the card, this still counts as a prize taken even if
+    // it does not go to the player's hand)
     this.cardUsed = true;
+    player.prizesTaken += 1;
 
     // If the player agrees, discard Greedy Dice
     for (const [index, prize] of player.prizes.entries()) {

@@ -24,8 +24,8 @@ export class JirachiPrismStar extends PokemonCard {
 
   public powers = [{
     name: 'Wish Upon a Star',
-    useWhenInPlay: false,
     powerType: PowerType.ABILITY,
+    exemptFromAbilityLock: true,
     text: 'If you took this Pokémon as a face-down Prize card during your turn and your Bench isn\'t full, ' +
     'before you put it into your hand, you may put it onto your Bench and take 1 more Prize card.'
   }];
@@ -126,16 +126,19 @@ export class JirachiPrismStar extends PokemonCard {
     }, GameMessage.WANT_TO_USE_ABILITY_FROM_PRIZES);
 
     // If the player declines, move the original prize card to hand
-    if (!wantToUse) {
-      effect.preventDefault = false;
-      const prizeIndex = player.prizes.findIndex(prize => prize.cards.includes(this));
+    const prizeIndex = player.prizes.findIndex(prize => prize.cards.includes(this));
+    const fallback: (prizeIndex: number) => void = (prizeIndex) => {
       if (prizeIndex !== -1) {
         TAKE_SPECIFIC_PRIZES(store, state, player, [player.prizes[prizeIndex]], { skipReduce: true });
       }
-      return state;
+      return;
     }
 
-    this.abilityUsed = true;
+    if (!wantToUse) {
+      effect.preventDefault = false;
+      fallback(prizeIndex);
+      return state;
+    }
 
     // We have an all clear, so let's move the card to bench
     // (Unfortunately, we have to check this again closer to the end of the flow
@@ -144,8 +147,16 @@ export class JirachiPrismStar extends PokemonCard {
     const emptyBenchSlots = GET_PLAYER_BENCH_SLOTS(player);
     
     if (emptyBenchSlots.length === 0) {
+      effect.preventDefault = false;
+      fallback(prizeIndex);
       return state;
     }
+
+    // Now that we've confirmed the ability is allowed, we can update the state
+    // (per wording of the ability, this still counts as a prize taken even if
+    // it does not go to the player's hand)
+    this.abilityUsed = true;
+    player.prizesTaken += 1;
     
     const targetSlot = emptyBenchSlots[0];
     for (const [index, prize] of player.prizes.entries()) {
