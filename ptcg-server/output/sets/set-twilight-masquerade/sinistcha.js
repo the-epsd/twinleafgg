@@ -65,10 +65,27 @@ class Sinistcha extends pokemon_card_1.PokemonCard {
         // Spill the Tea
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
-            store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, player.hand, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Grass Energy' }, { allowCancel: false, min: 0, max: 3 }), cards => {
-                cards = cards || [];
-                effect.damage = 70 * cards.length;
-                player.hand.moveCardsTo(cards, player.discard);
+            let totalGrassEnergy = 0;
+            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList) => {
+                const grassCount = cardList.cards.filter(card => card instanceof game_1.EnergyCard && card.name === 'Grass Energy').length;
+                totalGrassEnergy += grassCount;
+            });
+            console.log('Total Grass Energy: ' + totalGrassEnergy);
+            return store.prompt(state, new game_1.DiscardEnergyPrompt(player.id, game_1.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], // Card source is target Pokemon
+            { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Grass Energy' }, { min: 0, max: Math.min(totalGrassEnergy, 3), allowCancel: false }), transfers => {
+                if (transfers === null) {
+                    return;
+                }
+                for (const transfer of transfers) {
+                    let totalDiscarded = 0;
+                    const source = game_1.StateUtils.getTarget(state, player, transfer.from);
+                    const target = player.discard;
+                    source.moveCardTo(transfer.card, target);
+                    totalDiscarded = transfers.length;
+                    effect.damage = totalDiscarded * 70;
+                }
+                console.log('Total Damage: ' + effect.damage);
+                return state;
             });
         }
         return state;

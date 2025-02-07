@@ -12,36 +12,44 @@ import { Decidueyeex } from './decidueye-ex';
 import { Dragonair } from './dragonair';
 import { Dragoniteex } from './dragonite-ex';
 import { Dratini } from './dratini';
+import {Eiscueex} from './eiscue-ex';
 import { Entei } from './entei';
 import { Finizen } from './finizen';
 import { Froakie } from './froakie';
 import { BelliboltIR, CleffaIR, PidgeyIR, PidgeottoIR, ScizorIR, CharizardexFA, PidgeotexFA, PoppyFA, CharizardexSIR, PidgeotexSIR, PoppySIR, CharizardexHR, FireEnergyHR, VaroomIR, ArtazonHR } from './full-art';
-import {Larvitar} from './larvitar';
+import {Glimmet} from './glimmet';
+import {Glimmoraex} from './glimmora-ex';
+import {Greavard} from './greavard';
+import {Houndstoneex} from './houndstone-ex';
+import { Larvitar } from './larvitar';
 import { LetterOfEncouragement } from './letter-of-encouragement';
+import {Miraidonex} from './miraidon-ex';
 import { Ninetales } from './ninetales';
 import { Oddish } from './oddish';
 import { Palafin } from './palafin';
 import { Palpitoad } from './palpitoad';
+import { Pawmotex } from './pawmot-ex';
 import { Pidgeotex } from './pidgeot-ex';
 import { Pidgeotto } from './pidgeotto';
 import { Pidgey } from './pidgey';
 import { PokemonLeagueHeadquarters } from './pokemon-league-headquarters';
 import { Poppy } from './poppy';
-import {Pupitar} from './pupitar';
+import { Pupitar } from './pupitar';
 import { Rowlet } from './rowlet';
 import { Ryme } from './ryme';
 import { Scizor } from './scizor';
 import { Seismitoad } from './seismitoad';
 import { Thundurus } from './thundurus';
 import { Toedscruelex } from './toedscruel-ex';
-import {Togekiss} from './togekiss';
-import {Togepi} from './togepi';
-import {Togetic} from './togetic';
+import { Togekiss } from './togekiss';
+import { Togepi } from './togepi';
+import { Togetic } from './togetic';
 import { TownStore } from './town-store';
 import { Tympole } from './tympole';
-import {Tyranitarex} from './tyranitar-ex';
+import { Tyranitarex } from './tyranitar-ex';
 import { Varoom } from './varoom';
 import { VengefulPunch } from './vengeful-punch';
+import {Victiniex} from './victini-ex';
 import { Whiscash } from './whiscash';
 
 
@@ -66,6 +74,7 @@ export const setObsidianFlames: Card[] = [
   new Oddish(),
   new Palafin(),
   new Palpitoad(),
+  new Pawmotex(),
   new Pidgeotto(),
   new Pidgeotex(),
   new Pidgey(),
@@ -90,6 +99,13 @@ export const setObsidianFlames: Card[] = [
   new Togepi(),
   new Togetic(),
   new Togekiss(),
+  new Victiniex(),
+  new Eiscueex(),
+  new Miraidonex(),
+  new Greavard(),
+  new Houndstoneex(),
+  new Glimmet(),
+  new Glimmoraex(),
 
   //Alt-s
 

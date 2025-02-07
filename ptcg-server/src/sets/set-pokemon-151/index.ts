@@ -27,6 +27,7 @@ import { Grabber } from './grabber';
 import { HitmonleeMEW } from './hitmonlee';
 import { Ivysaur } from './ivysaur';
 import { Jolteon } from './jolteon';
+import {Jynxex} from './jynx-ex';
 import { Kangaskhanex } from './kangaskhan-ex';
 import { Koffing } from './koffing';
 import { Leftovers } from './leftovers';
@@ -58,6 +59,7 @@ import { Venonat } from './venonat';
 import { Venusaurex } from './venusaur-ex';
 import { Vileplume } from './vileplume';
 import { Wartortle } from './wartortle';
+import { Weedle } from './weedle';
 import { Weezing } from './weezing';
 import { Zapdosex } from './zapdos-ex';
 export const setPokemon151: Card[] = [
@@ -119,9 +121,11 @@ export const setPokemon151: Card[] = [
   new Venusaurex(),
   new Vileplume(),
   new Wartortle(),
+  new Weedle(),
   new Weezing(),
   new Zapdosex(),
   new BigAirBalloon(),
+  new Jynxex(),
 
   //Full 
   new BulbasaurIR(),

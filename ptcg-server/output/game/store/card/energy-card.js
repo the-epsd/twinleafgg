@@ -13,17 +13,6 @@ class EnergyCard extends card_1.Card {
         this.text = '';
         this.isBlocked = false;
         this.blendedEnergies = [];
-        // public getEnergies(): EnergyCard[] {
-        //   const result: EnergyCard[] = [];
-        //   for (const card of this.cards.cards) {
-        //     if (card.superType === SuperType.ENERGY) {
-        //       result.push(card as EnergyCard);
-        //     } else if (card.name === 'Electrode') {
-        //       result.push(card as EnergyCard);
-        //     }
-        //   }
-        //   return result;
-        // }
     }
 }
 exports.EnergyCard = EnergyCard;

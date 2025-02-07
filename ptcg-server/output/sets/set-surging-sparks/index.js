@@ -18,6 +18,7 @@ const ceruledge_1 = require("./ceruledge");
 const ceruledge_ex_1 = require("./ceruledge-ex");
 const charcadet_1 = require("./charcadet");
 const cherish_carrier_1 = require("./cherish-carrier");
+const chien_pao_1 = require("./chien-pao");
 const chill_teaser_toy_1 = require("./chill-teaser-toy");
 const clemonts_quick_wit_1 = require("./clemonts-quick-wit");
 const cofagrigus_1 = require("./cofagrigus");
@@ -57,6 +58,7 @@ const lisias_appeal_1 = require("./lisias-appeal");
 const magnemite_1 = require("./magnemite");
 const magneton_1 = require("./magneton");
 const marill_1 = require("./marill");
+const meddling_memo_1 = require("./meddling-memo");
 const megaton_blower_1 = require("./megaton-blower");
 const meowstic_1 = require("./meowstic");
 const mesprit_1 = require("./mesprit");
@@ -171,6 +173,7 @@ exports.setSurgingSparks = [
     new rellor_1.Rellor(),
     new rabsca_1.Rabsca(),
     new wo_chien_1.Wochien(),
+    new chien_pao_1.ChienPao(),
     new dusk_ball_1.DuskBall(),
     new gimmighoul_1.Gimmighoul(),
     new energy_search_pro_1.EnergySearchPro(),
@@ -200,6 +203,7 @@ exports.setSurgingSparks = [
     new tapu_koko_1.TapuKoko(),
     new quaxly_1.Quaxly(),
     new quaquaval_1.Quaquaval(),
+    new meddling_memo_1.MeddlingMemo(),
     // Reprints
     new card_images_1.ScrambleSwitchSSP(),
     new card_images_1.CounterGainSSP(),

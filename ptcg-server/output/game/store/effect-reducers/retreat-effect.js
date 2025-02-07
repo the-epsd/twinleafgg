@@ -57,13 +57,13 @@ function retreatReducer(store, state, effect) {
         if (state_utils_1.StateUtils.checkExactEnergy(checkProvidedEnergy.energyMap, checkRetreatCost.cost)) {
             const cards = flatMap(checkProvidedEnergy.energyMap, e => Array.from({ length: e.provides.length }, () => e.card));
             player.active.clearEffects();
-            player.active.moveCardsTo(cards, player.discard);
+            player.active.moveCardsTo(cards, effect.moveRetreatCostTo);
             retreatPokemon(store, state, effect);
             const activePokemonCard = player.active.getPokemonCard();
             activePokemonCard.movedToActiveThisTurn = true;
             return state;
         }
-        return store.prompt(state, new choose_energy_prompt_1.ChooseEnergyPrompt(player.id, game_message_1.GameMessage.CHOOSE_ENERGY_TO_DISCARD, checkProvidedEnergy.energyMap, checkRetreatCost.cost), energy => {
+        return store.prompt(state, new choose_energy_prompt_1.ChooseEnergyPrompt(player.id, game_message_1.GameMessage.CHOOSE_ENERGY_TO_PAY_RETREAT_COST, checkProvidedEnergy.energyMap, checkRetreatCost.cost), energy => {
             if (energy === null) {
                 return; // operation cancelled
             }
@@ -74,7 +74,7 @@ function retreatReducer(store, state, effect) {
             }
             const cards = energy.map(e => e.card);
             player.active.clearEffects();
-            player.active.moveCardsTo(cards, player.discard);
+            player.active.moveCardsTo(cards, effect.moveRetreatCostTo);
             retreatPokemon(store, state, effect);
             const activePokemonCard = player.active.getPokemonCard();
             activePokemonCard.movedToActiveThisTurn = true;

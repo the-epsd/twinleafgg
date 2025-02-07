@@ -1,4 +1,5 @@
 import { Card } from '../../game/store/card/card';
+import { ProfessorsResearchE, ProfessorsResearchO, ProfessorsResearchR, ProfessorsResearchS } from './alt-arts';
 import { Amarys } from './amarys';
 import { BlackBeltsTraining } from './black-belts-training';
 import { Bronzor } from './bronzor';
@@ -42,6 +43,12 @@ export const setPrismaticEvolution: Card[] = [
   new Pupitar(),
   new Tyranitarex(),
   new Bronzor(),
+
+  // Reprints
+  new ProfessorsResearchO(),
+  new ProfessorsResearchE(),
+  new ProfessorsResearchR(),
+  new ProfessorsResearchS(),
 
   // Full arts
   new AmarysFA(),

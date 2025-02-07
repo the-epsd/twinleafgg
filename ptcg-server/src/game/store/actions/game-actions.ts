@@ -26,7 +26,7 @@ export class UseAbilityAction implements Action {
 
 export class UseTrainerAbilityAction implements Action {
 
-  readonly type: string = 'USE_ABILITY_ACTION';
+  readonly type: string = 'USE_TRAINER_ABILITY_ACTION';
 
   constructor(
     public clientId: number,

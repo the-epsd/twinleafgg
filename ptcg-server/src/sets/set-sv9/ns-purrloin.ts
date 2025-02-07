@@ -16,7 +16,7 @@ export class NsPurrloin extends PokemonCard {
     {
       name: 'Pilfer',
       cost: [CardType.DARK, CardType.COLORLESS],
-      damage: 20,
+      damage: 30,
       text: 'Your opponent reveals their hand. Put a card you find there on the bottom of their deck.'
     }
   ];

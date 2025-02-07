@@ -4,6 +4,7 @@ import { Card, ChooseCardsPrompt, ShuffleDeckPrompt } from '../../game';
 import { StoreLike, State, GameMessage } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
+import {SHOW_CARDS_TO_PLAYER} from '../../game/store/prefabs/prefabs';
 
 export class Gimmighoul extends PokemonCard {
 
@@ -51,6 +52,7 @@ export class Gimmighoul extends PokemonCard {
     // Minor Errand-Running
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
+      const opponent = effect.opponent;
 
       if (player.deck.cards.length === 0) {
         return state;
@@ -65,6 +67,9 @@ export class Gimmighoul extends PokemonCard {
         { min: 0, max: 2, allowCancel: false }
       ), selected => {
         cards = selected || [];
+
+        SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
+
         player.deck.moveCardsTo(cards, player.hand);
       });
 

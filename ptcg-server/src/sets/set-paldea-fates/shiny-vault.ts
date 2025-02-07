@@ -76,6 +76,9 @@ import { TingLuex } from '../set-paldea-evolved/ting-lu-ex';
 import { Koraidonex } from '../set-scarlet-and-violet/koraidon-ex';
 import { Nemona } from '../set-scarlet-and-violet/nemona';
 import { Clive } from './clive';
+import { Pawmo } from '../set-scarlet-and-violet/pawmo';
+import { Pawmot } from '../set-scarlet-and-violet/pawmot';
+import { Slowpoke } from '../set-scarlet-and-violet/slowpoke';
 
 export class OddishSV extends Oddish {
   public setNumber = '92';
@@ -155,6 +158,12 @@ export class ArmarougeSV extends Armarouge {
   public fullName: string = 'Armarouge PAF';
 }
 
+export class SlowpokeSV extends Slowpoke {
+  public setNumber = '116';
+  public set = 'PAF';
+  public fullName: string = 'Slowpoke PAF';
+}
+
 export class StaryuSV extends Staryu {
   public setNumber = '118';
   public set = 'PAF';
@@ -214,6 +223,19 @@ export class PawmiSV extends Pawmi {
   public set = 'PAF';
   public fullName: string = 'Pawmi PAF';
 }
+
+export class PawmoSV extends Pawmo {
+  public setNumber = '143';
+  public set = 'PAF';
+  public fullName: string = 'Pawmo PAF';
+}
+
+export class PawmotSV extends Pawmot {
+  public setNumber = '144';
+  public set = 'PAF';
+  public fullName: string = 'Pawmot PAF';
+}
+
 
 export class WattrelSV extends Wattrel {
   public setNumber = '145';

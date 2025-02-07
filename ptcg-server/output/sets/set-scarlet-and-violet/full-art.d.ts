@@ -11,13 +11,23 @@ import { Magnezoneex } from './magnezone-ex';
 import { Miraidonex } from './miraidon-ex';
 import { Miriam } from './miriam';
 import { NestBall } from './nest-ball';
+import { Pawmot } from './pawmot';
 import { Penny } from './penny';
 import { ProfessorsResearch } from './professors-research';
 import { Ralts } from './ralts';
 import { RareCandy } from './rare-candy';
 import { Skwovet } from './skwovet';
+import { Slowpoke } from './slowpoke';
 import { TeamStarGrunt } from './team-star-grunt';
 export declare class ArmarougeIR extends Armarouge {
+    setNumber: string;
+    fullName: string;
+}
+export declare class SlowpokeIR extends Slowpoke {
+    setNumber: string;
+    fullName: string;
+}
+export declare class PawmotIR extends Pawmot {
     setNumber: string;
     fullName: string;
 }

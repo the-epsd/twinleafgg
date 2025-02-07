@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.config = void 0;
 exports.config = {
     backend: {
-        address: 'http://server.epsd.ca',
+        address: 'https://play-server.twinleaf.gg',
         port: 8080,
         registrationEnabled: true,
         allowCors: true,
@@ -21,7 +21,7 @@ exports.config = {
     core: {
         debug: false,
         // How often should we execute the background tasks
-        schedulerInterval: 30 * 60 * 1000,
+        schedulerInterval: 24 * 60 * 60 * 1000,
         // Wait till next hour before running tasks
         schedulerStartNextHour: false,
         // Decrease players' ranking every day

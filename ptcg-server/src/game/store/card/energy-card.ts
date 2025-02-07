@@ -20,16 +20,4 @@ export abstract class EnergyCard extends Card {
   public blendedEnergies: CardType[] = [];
 
   public energyEffect: EnergyEffect | undefined;
-
-  // public getEnergies(): EnergyCard[] {
-  //   const result: EnergyCard[] = [];
-  //   for (const card of this.cards.cards) {
-  //     if (card.superType === SuperType.ENERGY) {
-  //       result.push(card as EnergyCard);
-  //     } else if (card.name === 'Electrode') {
-  //       result.push(card as EnergyCard);
-  //     }
-  //   }
-  //   return result;
-  // }
 }

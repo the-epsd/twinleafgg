@@ -57,6 +57,7 @@ import { NsZorua } from './ns-zorua';
 import { Piloswine } from './piloswine';
 import { Postwick } from './postwick';
 import { Pupitar } from './pupitar';
+import { Regirock } from './regirock';
 import { Salamenceex } from './salamence-ex';
 import { Shelgon } from './shelgon';
 import { Shelmet } from './shelmet';
@@ -106,6 +107,7 @@ export const setSV9: Card[] = [
   new Rockruff(),
   new Lycanroc(),
   new SpikeEnergy(),
+  new Regirock(),
 
   new LilliesClefairyex(),
   new LilliesComfy(),
