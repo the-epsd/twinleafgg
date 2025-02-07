@@ -26,7 +26,7 @@ import { Emolga } from './emolga';
 import { EnhancedHammer } from './enhanced-hammer';
 import { Farfetchd } from './farfetchd';
 import { FestivalGrounds } from './festival-plaza';
-import { FezandipitiTWM } from './fezandipiti';
+import { Fezandipiti } from './fezandipiti';
 import { Finizen } from './finizen';
 import { Froakie } from './froakie';
 import { Frogadier } from './frogadier';
@@ -103,7 +103,7 @@ export const setTwilightMasquerade: Card[] = [
   new Dragapultex(),
   new Emolga(),
   new Farfetchd(),
-  new FezandipitiTWM(),
+  new Fezandipiti(),
   new Finizen(),
   new Froslass(),
   new Goldeen(),
