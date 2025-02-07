@@ -11,16 +11,28 @@ import { Magnezoneex } from './magnezone-ex';
 import { Miraidonex } from './miraidon-ex';
 import { Miriam } from './miriam';
 import { NestBall } from './nest-ball';
+import { Pawmot } from './pawmot';
 import { Penny } from './penny';
 import { ProfessorsResearch } from './professors-research';
 import { Ralts } from './ralts';
 import { RareCandy } from './rare-candy';
 import { Skwovet } from './skwovet';
+import { Slowpoke } from './slowpoke';
 import { TeamStarGrunt } from './team-star-grunt';
 
 export class ArmarougeIR extends Armarouge {
   public setNumber = '203';
   public fullName: string = 'ArmarougeIR SVI';
+}
+
+export class SlowpokeIR extends Slowpoke {
+  public setNumber = '204';
+  public fullName: string = 'SlowpokeIR SVI';
+}
+
+export class PawmotIR extends Pawmot {
+  public setNumber = '209';
+  public fullName: string = 'PawmotIR SVI';
 }
 
 export class ArvenFA extends Arven {
@@ -129,12 +141,12 @@ export class PennySIR extends Penny {
 }
 
 export class ProfessorsResearchFA1 extends ProfessorsResearch {
-  public setNumber = '';
+  public setNumber = '240';
   public fullName = 'Professor\'s ResearchFA1 SVI 242';
 }
 
 export class ProfessorsResearchFA2 extends ProfessorsResearch {
-  public setNumber = '';
+  public setNumber = '241';
   public fullName = 'Professor\'s ResearchFA2 SVI 241';
 }
 

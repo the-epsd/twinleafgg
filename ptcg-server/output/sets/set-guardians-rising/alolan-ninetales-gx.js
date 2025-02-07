@@ -80,11 +80,11 @@ class AlolanNinetalesGX extends pokemon_card_1.PokemonCard {
             const player = effect.player;
             const opponent = state_utils_1.StateUtils.getOpponent(state, player);
             // Check if player has used GX attack
-            /*      if (player.usedGX == true) {
-              throw new GameError(GameMessage.LABEL_GX_USED);
+            if (player.usedGX == true) {
+                throw new game_1.GameError(game_2.GameMessage.LABEL_GX_USED);
             }
             // set GX attack as used for game
-            player.usedGX = true; */
+            player.usedGX = true;
             opponent.active.damage += player.active.damage;
             player.active.damage = 0;
         }

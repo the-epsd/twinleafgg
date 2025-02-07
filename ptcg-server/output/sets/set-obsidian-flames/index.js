@@ -14,16 +14,23 @@ const decidueye_ex_1 = require("./decidueye-ex");
 const dragonair_1 = require("./dragonair");
 const dragonite_ex_1 = require("./dragonite-ex");
 const dratini_1 = require("./dratini");
+const eiscue_ex_1 = require("./eiscue-ex");
 const entei_1 = require("./entei");
 const finizen_1 = require("./finizen");
 const froakie_1 = require("./froakie");
 const full_art_1 = require("./full-art");
+const glimmet_1 = require("./glimmet");
+const glimmora_ex_1 = require("./glimmora-ex");
+const greavard_1 = require("./greavard");
+const houndstone_ex_1 = require("./houndstone-ex");
 const larvitar_1 = require("./larvitar");
 const letter_of_encouragement_1 = require("./letter-of-encouragement");
+const miraidon_ex_1 = require("./miraidon-ex");
 const ninetales_1 = require("./ninetales");
 const oddish_1 = require("./oddish");
 const palafin_1 = require("./palafin");
 const palpitoad_1 = require("./palpitoad");
+const pawmot_ex_1 = require("./pawmot-ex");
 const pidgeot_ex_1 = require("./pidgeot-ex");
 const pidgeotto_1 = require("./pidgeotto");
 const pidgey_1 = require("./pidgey");
@@ -44,6 +51,7 @@ const tympole_1 = require("./tympole");
 const tyranitar_ex_1 = require("./tyranitar-ex");
 const varoom_1 = require("./varoom");
 const vengeful_punch_1 = require("./vengeful-punch");
+const victini_ex_1 = require("./victini-ex");
 const whiscash_1 = require("./whiscash");
 exports.setObsidianFlames = [
     new absol_ex_1.Absolex(),
@@ -65,6 +73,7 @@ exports.setObsidianFlames = [
     new oddish_1.Oddish(),
     new palafin_1.Palafin(),
     new palpitoad_1.Palpitoad(),
+    new pawmot_ex_1.Pawmotex(),
     new pidgeotto_1.Pidgeotto(),
     new pidgeot_ex_1.Pidgeotex(),
     new pidgey_1.Pidgey(),
@@ -89,6 +98,13 @@ exports.setObsidianFlames = [
     new togepi_1.Togepi(),
     new togetic_1.Togetic(),
     new togekiss_1.Togekiss(),
+    new victini_ex_1.Victiniex(),
+    new eiscue_ex_1.Eiscueex(),
+    new miraidon_ex_1.Miraidonex(),
+    new greavard_1.Greavard(),
+    new houndstone_ex_1.Houndstoneex(),
+    new glimmet_1.Glimmet(),
+    new glimmora_ex_1.Glimmoraex(),
     //Alt-s
     new full_art_1.BelliboltIR(),
     new full_art_1.CleffaIR(),

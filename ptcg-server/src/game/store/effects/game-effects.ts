@@ -6,6 +6,7 @@ import { PokemonCardList } from '../state/pokemon-card-list';
 import { Card } from '../card/card';
 import { CardTarget } from '../actions/play-card-action';
 import { TrainerCard } from '../card/trainer-card';
+import { CardList } from '../state/card-list';
 
 export enum GameEffects {
   RETREAT_EFFECT = 'RETREAT_EFFECT',
@@ -25,10 +26,12 @@ export class RetreatEffect implements Effect {
   public player: Player;
   public benchIndex: number;
   public ignoreStatusConditions = false;
+  public moveRetreatCostTo: CardList;
 
   constructor(player: Player, benchIndex: number) {
     this.player = player;
     this.benchIndex = benchIndex;
+    this.moveRetreatCostTo = player.discard;
   }
 }
 export class UsePowerEffect implements Effect {

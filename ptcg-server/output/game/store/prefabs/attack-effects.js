@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED = exports.YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED = exports.YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED = exports.YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_BURNED = exports.YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP = exports.THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_BENCHED_POKEMON = exports.THIS_ATTACK_DOES_X_DAMAGE_FOR_EACH_POKEMON_IN_YOUR_DISCARD_PILE = exports.SHUFFLE_THIS_POKEMON_AND_ALL_ATTACHED_CARDS_INTO_YOUR_DECK = exports.PUT_X_DAMAGE_COUNTERS_ON_YOUR_OPPONENTS_ACTIVE_POKEMON = exports.PUT_X_CARDS_FROM_YOUR_DISCARD_PILE_INTO_YOUR_HAND = exports.HEAL_X_DAMAGE_FROM_THIS_POKEMON = exports.DRAW_CARDS_UNTIL_YOU_HAVE_X_CARDS_IN_HAND = exports.DISCARD_A_STADIUM_CARD_IN_PLAY = void 0;
+exports.YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED = exports.YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED = exports.YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED = exports.YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_BURNED = exports.YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP = exports.THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_BENCHED_POKEMON = exports.THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_POKEMON = exports.THIS_ATTACK_DOES_X_DAMAGE_FOR_EACH_POKEMON_IN_YOUR_DISCARD_PILE = exports.SHUFFLE_THIS_POKEMON_AND_ALL_ATTACHED_CARDS_INTO_YOUR_DECK = exports.PUT_X_DAMAGE_COUNTERS_ON_YOUR_OPPONENTS_ACTIVE_POKEMON = exports.PUT_X_CARDS_FROM_YOUR_DISCARD_PILE_INTO_YOUR_HAND = exports.HEAL_X_DAMAGE_FROM_THIS_POKEMON = exports.DRAW_CARDS_UNTIL_YOU_HAVE_X_CARDS_IN_HAND = exports.DISCARD_A_STADIUM_CARD_IN_PLAY = void 0;
 const pokemon_card_1 = require("../card/pokemon-card");
 const __1 = require("../..");
 const attack_effects_1 = require("../effects/attack-effects");
@@ -83,6 +83,20 @@ function THIS_ATTACK_DOES_X_DAMAGE_FOR_EACH_POKEMON_IN_YOUR_DISCARD_PILE(damage,
     effect.damage = pokemonCount * damage;
 }
 exports.THIS_ATTACK_DOES_X_DAMAGE_FOR_EACH_POKEMON_IN_YOUR_DISCARD_PILE = THIS_ATTACK_DOES_X_DAMAGE_FOR_EACH_POKEMON_IN_YOUR_DISCARD_PILE;
+function THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_POKEMON(damage, effect, store, state) {
+    const player = effect.player;
+    const opponent = __1.StateUtils.getOpponent(state, player);
+    const targets = opponent.getPokemonInPlay();
+    if (targets.length === 0)
+        return state;
+    return store.prompt(state, new __2.ChoosePokemonPrompt(player.id, __2.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, __2.PlayerType.TOP_PLAYER, [__2.SlotType.BENCH, __2.SlotType.ACTIVE]), selected => {
+        const target = selected[0];
+        const damageEffect = new attack_effects_1.PutDamageEffect(effect, damage);
+        damageEffect.target = target;
+        store.reduceEffect(state, damageEffect);
+    });
+}
+exports.THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_POKEMON = THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_POKEMON;
 function THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_BENCHED_POKEMON(damage, effect, store, state) {
     const player = effect.player;
     const opponent = __1.StateUtils.getOpponent(state, player);

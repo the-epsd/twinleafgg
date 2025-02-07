@@ -59,6 +59,7 @@ const ns_zorua_1 = require("./ns-zorua");
 const piloswine_1 = require("./piloswine");
 const postwick_1 = require("./postwick");
 const pupitar_1 = require("./pupitar");
+const regirock_1 = require("./regirock");
 const salamence_ex_1 = require("./salamence-ex");
 const shelgon_1 = require("./shelgon");
 const shelmet_1 = require("./shelmet");
@@ -106,6 +107,7 @@ exports.setSV9 = [
     new rockruff_1.Rockruff(),
     new lycanroc_1.Lycanroc(),
     new spike_energy_1.SpikeEnergy(),
+    new regirock_1.Regirock(),
     new lillies_clefairy_ex_1.LilliesClefairyex(),
     new lillies_comfy_1.LilliesComfy(),
     new lillies_pearl_1.LilliesPearl(),

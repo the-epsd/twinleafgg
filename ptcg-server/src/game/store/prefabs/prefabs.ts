@@ -209,6 +209,24 @@ export function THIS_POKEMON_DOES_DAMAGE_TO_ITSELF(store: StoreLike, state: Stat
   return store.reduceEffect(state, dealDamage);
 }
 
+export function ATTACH_ENERGY_FROM_DECK(store: StoreLike, state: State, player: Player, playerType: PlayerType, slots: SlotType[], filter: Partial<EnergyCard> = {}, options: Partial<AttachEnergyOptions> = {}) {
+  filter.superType = SuperType.ENERGY;
+
+  state = store.prompt(state, new AttachEnergyPrompt(
+    player.id, GameMessage.ATTACH_ENERGY_CARDS, player.deck, playerType, slots, filter, options,
+  ), transfers => {
+    transfers = transfers || [];
+    // cancelled by user
+    if (transfers.length === 0)
+      return state;
+    for (const transfer of transfers) {
+      const target = StateUtils.getTarget(state, player, transfer.to);
+      player.discard.moveCardTo(transfer.card, target);
+    }
+    SHUFFLE_DECK(store, state, player);
+  });
+}
+
 export function ATTACH_ENERGY_FROM_DISCARD(store: StoreLike, state: State, player: Player, playerType: PlayerType, slots: SlotType[], filter: FilterType = {}, options: Partial<AttachEnergyOptions> = {}) {
   filter.superType = SuperType.ENERGY;
 

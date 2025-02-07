@@ -21,7 +21,7 @@ import { EnergySearch } from './energy-search';
 import { EnergySwitch } from './energy-switch';
 import { ExpShare } from './exp-share';
 import { Flittle } from './flittle';
-import { ArmarougeIR, ArvenFA, ArvenSIR, FightingEnergyHR, LightningEnergyHR, GardevoirexFA, GardevoirexSIR, JacqFA, JacqSIR, KatyFA, KoraidonexFA, KoraidonexSIR, KoraidonexHR, MagnezoneexFA, MiraidonexFA, MiraidonexSIR, MiraidonexHR, MiriamFA, MiriamSIR, NestBallHR, PennyFA, PennySIR, ProfessorsResearchFA1, ProfessorsResearchFA2, RaltsIR, RareCandyHR, SkwovetIR, TeamStarGruntFA, KirliaIR } from './full-art';
+import { ArmarougeIR, ArvenFA, ArvenSIR, FightingEnergyHR, LightningEnergyHR, GardevoirexFA, GardevoirexSIR, JacqFA, JacqSIR, KatyFA, KoraidonexFA, KoraidonexSIR, KoraidonexHR, MagnezoneexFA, MiraidonexFA, MiraidonexSIR, MiraidonexHR, MiriamFA, MiriamSIR, NestBallHR, PennyFA, PennySIR, ProfessorsResearchFA1, ProfessorsResearchFA2, RaltsIR, RareCandyHR, SkwovetIR, TeamStarGruntFA, KirliaIR, PawmotIR, SlowpokeIR } from './full-art';
 import { Gardevoirex } from './gardevoir-ex';
 import { Growlithe } from './growlithe';
 import { Gyaradosex } from './gyarados-ex';
@@ -83,6 +83,9 @@ import { Wugtrio } from './wugtrio';
 import { Youngster } from './youngster';
 import { Kirlia } from './kirlia';
 import { Pawmi } from './pawmi';
+import { Pawmo } from './pawmo';
+import { Pawmot } from './pawmot';
+import { Slowpoke } from './slowpoke';
 
 
 export const setScarletAndViolet: Card[] = [
@@ -132,6 +135,8 @@ export const setScarletAndViolet: Card[] = [
   new NestBall(),
   new PalPad(),
   new Pawmi(),
+  new Pawmo(),
+  new Pawmot(),
   new Pawniard(),
   new Penny(),
   new PicnicBasket(),
@@ -153,6 +158,7 @@ export const setScarletAndViolet: Card[] = [
   new Seviper(),
   new Spewpa(),
   new Skwovet(),
+  new Slowpoke(),
   new Switch(),
   new TeamStarGrunt(),
   new Torkoal(),
@@ -167,6 +173,7 @@ export const setScarletAndViolet: Card[] = [
 
   //Alt-s
   new ArmarougeIR(),
+  new PawmotIR(),
   new ArvenFA(),
   new ArvenSIR(),
   new FightingEnergyHR(),
@@ -194,6 +201,7 @@ export const setScarletAndViolet: Card[] = [
   new RaltsIR(),
   new RareCandyHR(),
   new SkwovetIR(),
+  new SlowpokeIR(),
   new Smoliv(),
   new TeamStarGruntFA(),
   new Toedscool(),
