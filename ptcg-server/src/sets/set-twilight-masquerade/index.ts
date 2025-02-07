@@ -40,6 +40,7 @@ import { Hassel } from './hassel';
 import { HearthflameMaskOgerponex } from './hearthflame-mask-ogerpon-ex';
 import { Heatran } from './heatran';
 import { HisuianArcanine } from './hisuian-arcanine';
+import { HisuianGrowlithe } from './hisuian-growlithe';
 import { HyperAroma } from './hyper-aroma';
 import { Infernape } from './infernape';
 import { IronLeaves } from './iron-leaves';
@@ -113,6 +114,7 @@ export const setTwilightMasquerade: Card[] = [
   new HearthflameMaskOgerponex(),
   new Heatran(),
   new HisuianArcanine(),
+  new HisuianGrowlithe(),
   new Lairon(),
   new LanasAssistance(),
   new LegacyEnergy(),
