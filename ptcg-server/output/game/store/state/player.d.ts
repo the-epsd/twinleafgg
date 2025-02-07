@@ -61,6 +61,7 @@ export declare class Player {
     canAttackFirstTurn: boolean;
     usedAlteredCreation: boolean;
     alteredCreationDamage: boolean;
+    prizesTaken: number;
     getPrizeLeft(): number;
     forEachPokemon(player: PlayerType, handler: (cardList: PokemonCardList, pokemonCard: PokemonCard, target: CardTarget) => void): void;
     removePokemonEffects(target: PokemonCardList): void;

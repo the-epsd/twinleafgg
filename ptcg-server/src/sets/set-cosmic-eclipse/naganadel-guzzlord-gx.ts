@@ -1,10 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, GameError, GameMessage, StateUtils, PowerType, ChoosePrizePrompt, PlayerType, ChooseCardsPrompt } from '../../game';
+import { StoreLike, State, GameError, GameMessage, StateUtils, PowerType, PlayerType, ChooseCardsPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, HealEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import {CheckProvidedEnergyEffect} from '../../game/store/effects/check-effects';
-import {ABILITY_USED} from '../../game/store/prefabs/prefabs';
+import {ABILITY_USED, TAKE_X_PRIZES} from '../../game/store/prefabs/prefabs';
 import {EndTurnEffect} from '../../game/store/effects/game-phase-effects';
 
 export class NaganadelGuzzlordGX extends PokemonCard {
@@ -106,15 +106,7 @@ export class NaganadelGuzzlordGX extends PokemonCard {
 
       if (!meetsExtraEffectCost) { return state; }  // If we don't have the extra energy, we just deal damage.
 
-      return store.prompt(state, new ChoosePrizePrompt(
-        player.id,
-        GameMessage.CHOOSE_PRIZE_CARD,
-        { count: 2, allowCancel: false }
-      ), prizes => {
-        for (const prize of prizes){
-          prize.moveTo(player.hand);
-        }
-      });
+      return TAKE_X_PRIZES(store, state, player, 2);
     }
 
     if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.VIOLENT_APPETITE_MARKER, this)){

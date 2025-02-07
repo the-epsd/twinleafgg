@@ -1,6 +1,7 @@
-import { PokemonCard, Stage, CardType, StoreLike, State, SpecialCondition, GameMessage, ChoosePrizePrompt, StateUtils } from '../../game';
+import { PokemonCard, Stage, CardType, StoreLike, State, StateUtils, SpecialCondition } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
+import { TAKE_X_PRIZES } from '../../game/store/prefabs/prefabs';
 
 export class Slowbro extends PokemonCard {
 
@@ -57,29 +58,10 @@ export class Slowbro extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
 
       const player = effect.player;
-      const prizes = player.prizes.filter(p => p.isSecret);
       const opponent = StateUtils.getOpponent(state, player);
 
-      const prizesTaken = 6 - opponent.getPrizeLeft();
-
-      if (prizesTaken === 1) {
-
-        state = store.prompt(state, new ChoosePrizePrompt(
-          player.id,
-          GameMessage.CHOOSE_POKEMON,
-          { count: 2, allowCancel: true },
-        ), chosenPrize => {
-
-          if (chosenPrize === null || chosenPrize.length === 0) {
-            prizes.forEach(p => { p.isSecret = true; });
-            return state;
-          }
-          const prizePokemon = chosenPrize[0];
-          const prizePokemon2 = chosenPrize[1];
-          const hand = player.hand;
-          prizePokemon.moveTo(hand);
-          prizePokemon2.moveTo(hand);
-        });
+      if (opponent.getPrizeLeft() === 1) {
+        return TAKE_X_PRIZES(store, state, player, 2);
       }
     }
     return state;

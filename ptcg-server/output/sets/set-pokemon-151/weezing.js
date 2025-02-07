@@ -53,10 +53,7 @@ class Weezing extends game_1.PokemonCard {
                     return;
                 const dealDamage = new game_effects_1.KnockOutEffect(opponent, opponent.active);
                 store.reduceEffect(state, dealDamage);
-                return store.prompt(state, new game_1.ChoosePrizePrompt(player.id, game_1.GameMessage.CHOOSE_PRIZE_CARD, { count: dealDamage.prizeCount, allowCancel: false }), (result) => {
-                    for (const cardList of result)
-                        cardList.moveCardsTo(cardList.cards, player.hand);
-                });
+                return prefabs_1.TAKE_X_PRIZES(store, state, player, dealDamage.prizeCount);
             });
         }
         if (prefabs_1.WAS_ATTACK_USED(effect, 0, this)) {

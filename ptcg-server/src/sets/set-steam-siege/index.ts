@@ -1,5 +1,6 @@
 import { Card } from '../../game/store/card/card';
 import { Cobalion } from './cobalion';
+import { GreedyDice } from './greedy-dice';
 import { NinjaBoy } from './ninja-boy';
 import { PokemonRanger } from './pokemon-ranger';
 import { SpecialCharge } from './special-charge';
@@ -9,6 +10,7 @@ import { VolcanionEX } from './volcanion-ex';
 
 export const setSteamSiege: Card[] = [
   new Cobalion(),
+  new GreedyDice(),
   new NinjaBoy(),
   new PokemonRanger(),
   new SpecialCharge(),

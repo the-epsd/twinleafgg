@@ -1,10 +1,10 @@
-import { AttachEnergyOptions, AttachEnergyPrompt, Card, CardList, ChooseCardsOptions, ChooseCardsPrompt, ChooseEnergyPrompt, ChoosePokemonPrompt, CoinFlipPrompt, ConfirmPrompt, EnergyCard, FilterType, GameError, GameLog, GameMessage, Player, PlayerType, PokemonCardList, PowerType, SelectPrompt, ShowCardsPrompt, ShuffleDeckPrompt, SlotType, State, StateUtils, StoreLike } from '../..';
+import { AttachEnergyOptions, AttachEnergyPrompt, Card, CardList, ChooseCardsOptions, ChooseCardsPrompt, ChooseEnergyPrompt, ChoosePokemonPrompt, ChoosePrizePrompt, CoinFlipPrompt, ConfirmPrompt, EnergyCard, FilterType, GameError, GameLog, GameMessage, Player, PlayerType, PokemonCardList, PowerType, SelectPrompt, ShowCardsPrompt, ShuffleDeckPrompt, SlotType, State, StateUtils, StoreLike } from '../..';
 import { BoardEffect, CardType, SpecialCondition, SuperType } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
 import { DealDamageEffect, DiscardCardsEffect, HealTargetEffect, PutDamageEffect } from '../effects/attack-effects';
-import { AddSpecialConditionsPowerEffect, CheckProvidedEnergyEffect } from '../effects/check-effects';
+import { AddSpecialConditionsPowerEffect, CheckPrizesDestinationEffect, CheckProvidedEnergyEffect } from '../effects/check-effects';
 import { Effect } from '../effects/effect';
-import { AttackEffect, EvolveEffect, KnockOutEffect, PowerEffect } from '../effects/game-effects';
+import { AttackEffect, DrawPrizesEffect, EvolveEffect, KnockOutEffect, PowerEffect } from '../effects/game-effects';
 import { AfterAttackEffect, EndTurnEffect } from '../effects/game-phase-effects';
 
 /**
@@ -167,6 +167,90 @@ export function THIS_POKEMON_HAS_ANY_DAMAGE_COUNTERS_ON_IT(effect: AttackEffect,
 export function YOUR_OPPONENTS_POKEMON_IS_KNOCKED_OUT_BY_DAMAGE_FROM_THIS_ATTACK(effect: Effect, state: State): effect is KnockOutEffect {
   // TODO: this shouldn't work for attacks with damage counters, but I think it will
   return effect instanceof KnockOutEffect;
+}
+
+export interface TakeSpecificPrizesOptions {
+  destination?: CardList;
+  skipReduce?: boolean;
+}
+
+export interface TakeXPrizesOptions extends TakeSpecificPrizesOptions {
+  promptOptions?: {
+    allowCancel?: boolean;
+    blocked?: number[];
+  };
+}
+
+export function TAKE_SPECIFIC_PRIZES(
+  store: StoreLike, 
+  state: State, 
+  player: Player, 
+  prizes: CardList[],
+  options: TakeSpecificPrizesOptions = {}
+): void {
+  let { destination = player.hand, skipReduce = false } = options;
+  let preventDefault;
+
+  if (!skipReduce) {
+    const drawPrizesEffect = new DrawPrizesEffect(
+      player,
+      prizes,
+      destination
+    );
+
+    // Reduce the prizes destination for effects that override it and take place before any
+    // DrawPrizesEffect is processed (e.g. Barbaracle LOR)
+    const prizesDestinationEffect = new CheckPrizesDestinationEffect(player, drawPrizesEffect.destination);
+    store.reduceEffect(state, prizesDestinationEffect);
+
+    // If nothing prevented the override, apply the new destination
+    if (!prizesDestinationEffect.preventDefault) {
+      drawPrizesEffect.destination = prizesDestinationEffect.destination;
+    }
+
+    // Process the actual DrawPrizesEffect
+    store.reduceEffect(state, drawPrizesEffect);
+
+    preventDefault = drawPrizesEffect.preventDefault;
+    destination = drawPrizesEffect.destination;
+  } else {
+    destination = player.hand;
+  }
+
+  if (!preventDefault) {
+    prizes.forEach(prize => {
+      if (player.prizes.includes(prize)) {
+        prize.moveTo(destination);
+
+        if (destination === player.hand) {
+          // If the destination is the hand, we've "taken" a prize
+          player.prizesTaken += 1;
+        }
+      }
+    });
+  }
+}
+
+export function TAKE_X_PRIZES(
+  store: StoreLike, 
+  state: State, 
+  player: Player,
+  count: number,
+  options: TakeXPrizesOptions = {},
+  callback?: (chosenPrizes: CardList[]) => void
+): State {
+  const { promptOptions = {}, ...takeOptions } = options;
+  
+  state = store.prompt(state, new ChoosePrizePrompt(
+    player.id,
+    GameMessage.CHOOSE_PRIZE_CARD,
+    { count, allowCancel: false, ...promptOptions }
+  ), result => {
+    TAKE_SPECIFIC_PRIZES(store, state, player, result, takeOptions);
+    if(callback) callback(result);
+  });
+
+  return state;
 }
 
 export function TAKE_X_MORE_PRIZE_CARDS(effect: KnockOutEffect, state: State) {
@@ -479,8 +563,8 @@ export function SELECT_PROMPT_WITH_OPTIONS(store: StoreLike, state: State, playe
   });
 }
 
-export function CONFIRMATION_PROMPT(store: StoreLike, state: State, player: Player, callback: (result: boolean) => void): State {
-  return store.prompt(state, new ConfirmPrompt(player.id, GameMessage.WANT_TO_USE_ABILITY), callback);
+export function CONFIRMATION_PROMPT(store: StoreLike, state: State, player: Player, callback: (result: boolean) => void, message: GameMessage = GameMessage.WANT_TO_USE_ABILITY): State {
+  return store.prompt(state, new ConfirmPrompt(player.id, message), callback);
 }
 
 export function COIN_FLIP_PROMPT(store: StoreLike, state: State, player: Player, callback: (result: boolean) => void): State {

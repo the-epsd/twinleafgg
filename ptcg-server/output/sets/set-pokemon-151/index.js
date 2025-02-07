@@ -8,6 +8,7 @@ const articuno_1 = require("./articuno");
 const big_air_balloon_1 = require("./big-air-balloon");
 const blastoise_ex_1 = require("./blastoise-ex");
 const bulbasaur_1 = require("./bulbasaur");
+const chansey_1 = require("./chansey");
 const charizard_ex_1 = require("./charizard-ex");
 const charmander_1 = require("./charmander");
 const charmeleon_1 = require("./charmeleon");
@@ -72,6 +73,7 @@ exports.setPokemon151 = [
     new articuno_1.Articuno(),
     new blastoise_ex_1.Blastoiseex(),
     new bulbasaur_1.Bulbasaur(),
+    new chansey_1.Chansey(),
     new charizard_ex_1.Charizardex(),
     new charmeleon_1.Charmeleon(),
     new charmander_1.Charmander(),

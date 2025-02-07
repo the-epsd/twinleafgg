@@ -8,6 +8,7 @@ const choose_cards_prompt_1 = require("../../game/store/prompts/choose-cards-pro
 const state_utils_1 = require("../../game/store/state-utils");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class KartanaGX extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -112,9 +113,7 @@ class KartanaGX extends pokemon_card_1.PokemonCard {
             }
             // set GX attack as used for game
             player.usedGX = true;
-            return store.prompt(state, new game_1.ChoosePrizePrompt(player.id, game_1.GameMessage.CHOOSE_PRIZE_CARD, { count: 1, allowCancel: false }), prizes => {
-                prizes[0].moveTo(player.hand);
-            });
+            return prefabs_1.TAKE_X_PRIZES(store, state, player, 1);
         }
         return state;
     }

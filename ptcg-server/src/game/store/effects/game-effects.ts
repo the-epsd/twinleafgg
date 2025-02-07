@@ -17,7 +17,8 @@ export enum GameEffects {
   ATTACK_EFFECT = 'ATTACK_EFFECT',
   KNOCK_OUT_EFFECT = 'KNOCK_OUT_EFFECT',
   HEAL_EFFECT = 'HEAL_EFFECT',
-  EVOLVE_EFFECT = 'EVOLVE_EFFECT'
+  EVOLVE_EFFECT = 'EVOLVE_EFFECT',
+  DRAW_PRIZES_EFFECT = 'DRAW_PRIZES_EFFECT'
 }
 
 export class RetreatEffect implements Effect {
@@ -160,6 +161,7 @@ export class KnockOutEffect implements Effect {
   public player: Player;
   public target: PokemonCardList;
   public prizeCount: number;
+  public prizeDestination?: CardList;
   public isLostCity: boolean = false;
 
   constructor(player: Player, target: PokemonCardList) {
@@ -211,6 +213,20 @@ export class EvolveEffect implements Effect {
     this.player = player;
     this.target = target;
     this.pokemonCard = pokemonCard;
+  }
+}
+
+export class DrawPrizesEffect implements Effect {
+  readonly type: string = GameEffects.DRAW_PRIZES_EFFECT;
+  public preventDefault = false;
+  public player: Player;
+  public prizes: CardList[];
+  public destination: CardList;
+
+  constructor(player: Player, prizes: CardList[], destination: CardList) {
+    this.player = player;
+    this.prizes = prizes;
+    this.destination = destination;
   }
 }
 

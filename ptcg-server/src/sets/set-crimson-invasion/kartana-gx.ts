@@ -1,11 +1,12 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, EnergyType, CardTag } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, GameMessage, GameError, EnergyCard, ConfirmPrompt, ShuffleDeckPrompt, ChoosePrizePrompt, PlayerType, CardTarget, PokemonCardList, ChoosePokemonPrompt, SlotType, Card } from '../../game';
+import { PowerType, StoreLike, State, GameMessage, GameError, EnergyCard, ConfirmPrompt, ShuffleDeckPrompt, PlayerType, CardTarget, PokemonCardList, ChoosePokemonPrompt, SlotType, Card } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { StateUtils } from '../../game/store/state-utils';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { TAKE_X_PRIZES } from '../../game/store/prefabs/prefabs';
 
 export class KartanaGX extends PokemonCard {
 
@@ -154,13 +155,7 @@ export class KartanaGX extends PokemonCard {
       // set GX attack as used for game
       player.usedGX = true;
 
-      return store.prompt(state, new ChoosePrizePrompt(
-        player.id,
-        GameMessage.CHOOSE_PRIZE_CARD,
-        { count: 1, allowCancel: false }
-      ), prizes => {
-        prizes[0].moveTo(player.hand);
-      });
+      return TAKE_X_PRIZES(store, state, player, 1);
     }
 
     return state;

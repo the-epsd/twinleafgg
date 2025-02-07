@@ -1,40 +1,61 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, GameMessage, PowerType } from '../../game';
+import { Stage, CardType, CardTag, SpecialCondition } from '../../game/store/card/card-types';
+import { StoreLike, State, PowerType, GameMessage, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { DrawPrizesEffect } from '../../game/store/effects/game-effects';
-import { CoinFlipEffect } from '../../game/store/effects/play-card-effects';
-import { CONFIRMATION_PROMPT, GET_PLAYER_BENCH_SLOTS, IS_ABILITY_BLOCKED, SIMULATE_COIN_FLIP, TAKE_SPECIFIC_PRIZES, TAKE_X_PRIZES } from '../../game/store/prefabs/prefabs';
+import { AttackEffect, DrawPrizesEffect } from '../../game/store/effects/game-effects';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
+import { CONFIRMATION_PROMPT, GET_PLAYER_BENCH_SLOTS, IS_ABILITY_BLOCKED, TAKE_SPECIFIC_PRIZES, TAKE_X_PRIZES } from '../../game/store/prefabs/prefabs';
 
-export class Chansey extends PokemonCard {
+export class JirachiPrismStar extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = C;
-  public hp: number = 110;
-  public weakness = [{ type: F }];
-  public retreat = [C, C];
+
+  public tags: string[] = [CardTag.PRISM_STAR];
+
+  public cardType: CardType = M;
+
+  public hp: number = 80;
+
+  public weakness = [{ type: R }];
+
+  public resistance = [{ type: P, value: -20 }];
+
+  public retreat = [C];
+
   public powers = [{
-    name: 'Lucky Bonus',
+    name: 'Wish Upon a Star',
     powerType: PowerType.ABILITY,
     exemptFromAbilityLock: true,
     text: 'If you took this Pokémon as a face-down Prize card during your turn and your Bench isn\'t full, ' +
-          'before you put it into your hand, you may put it onto your Bench. If you put this Pokémon onto your ' +
-          'Bench in this way, flip a coin. If heads, take 1 more Prize card.'
+    'before you put it into your hand, you may put it onto your Bench and take 1 more Prize card.'
   }];
-  public attacks = [{
-    name: 'Gentle Slap',
-    cost: [C, C, C],
-    damage: 70,
-    text: ''
-  }];
-  public set: string = 'MEW';
-  public setNumber: string = '113';
+
+  public attacks = [
+    {
+      name: 'Perish Dream',
+      cost: [C, C, C],
+      damage: 10,
+      text: 'This Pokémon is now Asleep. At the end of your opponent\'s next turn, the Defending Pokémon will be Knocked Out.'
+    },
+  ];
+
+  public set: string = 'CES';
+
+  public setNumber: string = '97';
+
   public cardImage: string = 'assets/cardback.png';
-  public name: string = 'Chansey';
-  public fullName: string = 'Chansey MEW';
+
+  public name: string = 'Jirachi Prism Star';
+
+  public fullName: string = 'Jirachi Prism Star CES';
+
+  public readonly KNOCKOUT_MARKER = 'KNOCKOUT_MARKER';
+  public readonly CLEAR_KNOCKOUT_MARKER = 'CLEAR_KNOCKOUT_MARKER';
 
   public abilityUsed = false;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    // Ability
     if (effect instanceof DrawPrizesEffect) {
       const generator = this.handlePrizeEffect(
         () => generator.next(),
@@ -44,6 +65,33 @@ export class Chansey extends PokemonCard {
       );
       return generator.next().value;
     }
+    
+    // Attack
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+      const specialConditionEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.ASLEEP]);
+
+      // First part of the attack
+      specialConditionEffect.target = effect.player.active;
+      store.reduceEffect(state, specialConditionEffect);
+
+      // Second part of the attack
+      effect.player.marker.addMarker(this.KNOCKOUT_MARKER, this);
+      opponent.active.marker.addMarker(this.CLEAR_KNOCKOUT_MARKER, this);
+      console.log('first marker added');
+    }
+
+    if (effect instanceof EndTurnEffect && effect.player.active.marker.hasMarker(this.CLEAR_KNOCKOUT_MARKER, this)) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      effect.player.active.damage = 999;
+      effect.player.active.marker.removeMarker(this.CLEAR_KNOCKOUT_MARKER, this);
+      opponent.marker.removeMarker(this.KNOCKOUT_MARKER, this);
+      console.log('clear marker added');
+    }
+
     return state;
   }
 
@@ -55,11 +103,12 @@ export class Chansey extends PokemonCard {
     if (!prizeCard || GET_PLAYER_BENCH_SLOTS(player).length === 0 || !prizeCard.isSecret || effect.destination !== player.hand) {
       return state;
     }
-     
+
     // Prevent unintended multiple uses
     if (this.abilityUsed) {
       return state;
     }
+    this.abilityUsed = true;
 
     // Check if ability is blocked
     if (IS_ABILITY_BLOCKED(store, state, player, this)) {
@@ -118,20 +167,6 @@ export class Chansey extends PokemonCard {
       }
     }
 
-    // Handle coin flip
-    try {
-      const coinFlip = new CoinFlipEffect(player);
-      store.reduceEffect(state, coinFlip);
-    } catch {
-      return state;
-    }
-
-    let coinResult = SIMULATE_COIN_FLIP(store, state, player);
-
-    if (!coinResult) {
-      return state;
-    }
-
     // Handle extra prize (excluding the group this card is in)
     yield TAKE_X_PRIZES(store, state, player, 1, {
       promptOptions: {
@@ -141,4 +176,4 @@ export class Chansey extends PokemonCard {
 
     return state;
   }
-} 
+}
