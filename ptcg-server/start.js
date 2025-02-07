@@ -137,6 +137,7 @@ cardManager.defineSet(sets.setStellarCrown);
 cardManager.defineSet(sets.setSurgingSparks);
 cardManager.defineSet(sets.setPrismaticEvolution);
 cardManager.defineSet(sets.setSV9);
+cardManager.defineSet(sets.setSV9a);
 cardManager.defineSet(sets.setSV10);
 
 cardManager.defineSet(sets.setTest);

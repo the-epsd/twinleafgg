@@ -64,7 +64,7 @@ class Armarouge extends pokemon_card_1.PokemonCard {
                 useWhenInPlay: true,
                 powerType: game_1.PowerType.ABILITY,
                 text: 'As often as you like during your turn, you may move a ' +
-                    'R Energy from 1 of your Benched Pokémon to your Active ' +
+                    '[R] Energy from 1 of your Benched Pokémon to your Active ' +
                     'Pokémon.'
             }];
         this.attacks = [{

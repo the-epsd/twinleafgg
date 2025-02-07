@@ -1,0 +1,27 @@
+import { Card } from '../../game/store/card/card';
+import { EthansAdventure } from './ethans-adventure';
+import { EthansCyndaquil } from './ethans-cyndaquil';
+import { EthansHoOhex } from './ethans-ho-oh-ex';
+import { EthansMagcargo } from './ethans-magcargo';
+import { EthansPichu } from './ethans-pichu';
+import { EthansQuilava } from './ethans-quilava';
+import { EthansSlugma } from './ethans-slugma';
+import { EthansTyphlosion } from './ethans-typhlosion';
+import { SacredAshSV9a } from './other-prints';
+
+export const setSV9a: Card[] = [
+  new EthansAdventure(),
+  new EthansHoOhex(),
+
+  new EthansCyndaquil(),
+  new EthansQuilava(),
+  new EthansTyphlosion(),
+
+  new EthansSlugma(),
+  new EthansMagcargo(),
+
+  new EthansPichu(),
+
+  // Reprints
+  new SacredAshSV9a(),
+];

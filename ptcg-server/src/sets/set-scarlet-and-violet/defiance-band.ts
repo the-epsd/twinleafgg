@@ -33,18 +33,15 @@ export class DefianceBand extends TrainerCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-
-
       if (player.getPrizeLeft() <= opponent.getPrizeLeft()) {
         return state;
       }
+
       const opponentActive = opponent.active.getPokemonCard();
       if (opponentActive && effect.target.cards.includes(opponentActive)) {
         effect.damage += 30;
       }
     }
-
     return state;
   }
-
 }

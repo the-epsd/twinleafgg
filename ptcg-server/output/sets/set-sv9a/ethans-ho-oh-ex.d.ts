@@ -1,19 +1,25 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { State, StoreLike } from '../../game';
+import { PowerType, StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-export declare class IronHandsex extends PokemonCard {
-    stage: Stage;
+export declare class EthansHoOhex extends PokemonCard {
     tags: CardTag[];
+    stage: Stage;
     cardType: CardType;
     hp: number;
     weakness: {
-        type: CardType.FIGHTING;
+        type: CardType.WATER;
     }[];
     retreat: CardType.COLORLESS[];
+    powers: {
+        name: string;
+        powerType: PowerType;
+        useWhenInPlay: boolean;
+        text: string;
+    }[];
     attacks: {
         name: string;
-        cost: (CardType.LIGHTNING | CardType.COLORLESS)[];
+        cost: CardType.FIRE[];
         damage: number;
         text: string;
     }[];
@@ -23,6 +29,6 @@ export declare class IronHandsex extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
-    private usedAmpYouVeryMuch;
+    readonly SHINING_FEATHER_MARKER = "SHINING_FEATHER_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

@@ -35,9 +35,6 @@ export class VitalityBand extends TrainerCard {
       if (effect.target !== player.active && effect.target !== opponent.active) {
         return state;
       }
-
-
-
       effect.damage += 10;
     }
     return state;
