@@ -87,7 +87,7 @@ export class EthansHoOhex extends PokemonCard {
       state = store.prompt(state, new AttachEnergyPrompt(
         player.id,
         GameMessage.ATTACH_ENERGY_TO_ACTIVE,
-        player.discard,
+        player.hand,
         PlayerType.BOTTOM_PLAYER,
         [SlotType.BENCH, SlotType.ACTIVE],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fire Energy' },
