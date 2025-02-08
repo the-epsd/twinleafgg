@@ -44,7 +44,9 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   // Operation canceled by the user
   if (cards.length === 0) {
     player.supporter.moveCardTo(effect.trainerCard, player.discard);
-    return state;
+    return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+      player.deck.applyOrder(order);
+    });
   }
 
   cards.forEach((card, index) => {

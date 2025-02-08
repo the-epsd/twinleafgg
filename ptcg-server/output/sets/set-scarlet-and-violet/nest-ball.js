@@ -30,7 +30,9 @@ function* playCard(next, store, state, effect) {
     // Operation canceled by the user
     if (cards.length === 0) {
         player.supporter.moveCardTo(effect.trainerCard, player.discard);
-        return state;
+        return store.prompt(state, new shuffle_prompt_1.ShuffleDeckPrompt(player.id), order => {
+            player.deck.applyOrder(order);
+        });
     }
     cards.forEach((card, index) => {
         player.deck.moveCardTo(card, slots[index]);
