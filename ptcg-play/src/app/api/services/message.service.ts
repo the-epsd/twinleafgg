@@ -15,15 +15,15 @@ export class MessageService {
     private api: ApiService,
     private sessionService: SessionService,
     private socketService: SocketService
-  ) {}
+  ) { }
 
   public init() {
     this.socketService.on('message:received', (
-      data: {message: MessageInfo, user: UserInfo}
+      data: { message: MessageInfo, user: UserInfo }
     ) => this.onMessageReceived(data.message, data.user));
 
     this.socketService.on('message:read', (
-      data: {user: UserInfo}
+      data: { user: UserInfo }
     ) => this.onMessageRead(data.user));
   }
 
@@ -63,6 +63,7 @@ export class MessageService {
   }
 
   public sendMessage(userId: number, text: string): Observable<MessageResponse> {
+    text = text.replace(/[^\x00-\x7F]/g, '');
     return this.socketService.emit('message:send', { userId, text });
   }
 
