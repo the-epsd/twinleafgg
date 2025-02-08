@@ -79,6 +79,8 @@ const tinkatuff_1 = require("./tinkatuff");
 const toedscool_1 = require("./toedscool");
 const toedscool2_1 = require("./toedscool2");
 const toedscruel_1 = require("./toedscruel");
+const toxel_1 = require("./toxel");
+const toxtricity_ex_1 = require("./toxtricity-ex");
 const trubbish_1 = require("./trubbish");
 const tsareena_ex_1 = require("./tsareena-ex");
 const tulip_1 = require("./tulip");
@@ -173,6 +175,8 @@ exports.setParadoxRift = [
     new wimpod_1.Wimpod(),
     new golisopod_1.Golisopod(),
     new golisopod_ex_1.Golisopodex(),
+    new toxel_1.Toxel(),
+    new toxtricity_ex_1.Toxtricityex(),
     //Full s
     new full_art_1.ToedscruelIR(),
     new full_art_1.SnoruntIR(),

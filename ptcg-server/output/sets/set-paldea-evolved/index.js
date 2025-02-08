@@ -77,6 +77,7 @@ const glimmet_1 = require("./glimmet");
 const glimmet_2_1 = require("./glimmet-2");
 const glimmora_1 = require("./glimmora");
 const tinkatuff_2_1 = require("./tinkatuff-2");
+const bellibolt_ex_1 = require("./bellibolt-ex");
 //import { CalamitousSnowyMountain } from './new calamitous-snowy-mountain';
 exports.setPaldeaEvolved = [
     new arctibax_1.Arctibax(),
@@ -154,6 +155,7 @@ exports.setPaldeaEvolved = [
     new glimmet_1.Glimmet(),
     new glimmet_2_1.Glimmet2(),
     new glimmora_1.Glimmora(),
+    new bellibolt_ex_1.Belliboltex(),
     // Full 
     new full_art_1.ArctibaxIR(),
     new full_art_1.BaxcaliburIR(),

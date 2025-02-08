@@ -77,6 +77,8 @@ import { Tinkatuff } from './tinkatuff';
 import { Toedscool } from './toedscool';
 import { Toedscool2 } from './toedscool2';
 import { Toedscruel } from './toedscruel';
+import {Toxel} from './toxel';
+import {Toxtricityex} from './toxtricity-ex';
 import { Trubbish } from './trubbish';
 import { Tsareenaex } from './tsareena-ex';
 import { Tulip } from './tulip';
@@ -171,6 +173,8 @@ export const setParadoxRift: Card[] = [
   new Wimpod(),
   new Golisopod(),
   new Golisopodex(),
+  new Toxel(),
+  new Toxtricityex(),
 
   //Full s
   new ToedscruelIR(),
