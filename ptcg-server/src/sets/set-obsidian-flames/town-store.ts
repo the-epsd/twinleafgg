@@ -30,7 +30,10 @@ function* useStadium(next: Function, store: StoreLike, state: State, effect: Use
 
       // Operation canceled by the user
       if (cards.length === 0) {
-        return state;
+        return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+          player.deck.applyOrder(order);
+          return state;
+        });
       }
 
       cards.forEach((card, index) => {
