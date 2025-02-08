@@ -147,7 +147,6 @@ function gamePhaseReducer(store, state, effect) {
     if (effect instanceof game_phase_effects_1.EndTurnEffect) {
         const player = state.players[state.activePlayer];
         player.canEvolve = false;
-        player.canAttackFirstTurn = false;
         player.forEachPokemon(play_card_action_1.PlayerType.BOTTOM_PLAYER, cardList => {
             cardList.attacksThisTurn = 0;
         });

@@ -56,7 +56,6 @@ class Player {
         this.pecharuntexIsInPlay = false;
         this.usedFanCall = false;
         this.canEvolve = false;
-        this.canAttackFirstTurn = false;
         //GX-Attack Dedicated Section
         this.usedAlteredCreation = false;
         this.alteredCreationDamage = false;

@@ -18,6 +18,7 @@ export class TalonflameV extends PokemonCard {
       name: 'Fast Flight',
       cost: [C],
       damage: 0,
+      canUseOnFirstTurn: true,
       text: 'If you go first, you can use this attack during your first turn. Discard your hand and draw 6 cards.',
     },
     {
@@ -39,15 +40,9 @@ export class TalonflameV extends PokemonCard {
 
     const player = state.players[state.activePlayer];
 
-    if (state.turn == 1 && player.active.cards[0] == this) {
-      player.canAttackFirstTurn = true;
-    }
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      if (player.canAttackFirstTurn) {
-        player.hand.moveTo(player.discard, player.hand.cards.length);
-        DRAW_CARDS(player, 6);
-      }
+      player.hand.moveTo(player.discard, player.hand.cards.length);
+      DRAW_CARDS(player, 6);
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {

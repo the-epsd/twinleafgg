@@ -85,7 +85,6 @@ export class Player {
   pecharuntexIsInPlay = false;
   usedFanCall = false;
   canEvolve = false;
-  canAttackFirstTurn = false;
 
 
   //GX-Attack Dedicated Section

@@ -58,7 +58,6 @@ export declare class Player {
     pecharuntexIsInPlay: boolean;
     usedFanCall: boolean;
     canEvolve: boolean;
-    canAttackFirstTurn: boolean;
     usedAlteredCreation: boolean;
     alteredCreationDamage: boolean;
     prizesTaken: number;

@@ -29,14 +29,15 @@ class Exeggcute extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.BASIC;
-        this.cardType = card_types_1.CardType.GRASS;
+        this.cardType = G;
         this.hp = 30;
-        this.weakness = [{ type: card_types_1.CardType.FIRE }];
-        this.retreat = [card_types_1.CardType.COLORLESS];
+        this.weakness = [{ type: R }];
+        this.retreat = [C];
         this.attacks = [{
                 name: 'Precocious Evolution',
-                cost: [card_types_1.CardType.COLORLESS],
+                cost: [C],
                 damage: 0,
+                canUseOnFirstTurn: true,
                 text: 'If you go first, you can use this attack on your first turn. Search your deck for a card that evolves from this Pokémon and put it onto this Pokémon to evolve it. Then, shuffle your deck.'
             }
         ];
@@ -47,10 +48,6 @@ class Exeggcute extends pokemon_card_1.PokemonCard {
         this.fullName = 'Exeggcute SV7a';
     }
     reduceEffect(store, state, effect) {
-        const player = state.players[state.activePlayer];
-        if (state.turn == 1 && player.active.cards[0] == this) {
-            player.canAttackFirstTurn = true;
-        }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const generator = useAscension(() => generator.next(), store, state, effect);
             return generator.next().value;
