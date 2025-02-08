@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GreedyDice = void 0;
+const game_1 = require("../../game");
 const game_message_1 = require("../../game/game-message");
 const card_types_1 = require("../../game/store/card/card-types");
 const trainer_card_1 = require("../../game/store/card/trainer-card");
@@ -23,6 +24,9 @@ class GreedyDice extends trainer_card_1.TrainerCard {
         this.cardUsed = false;
     }
     reduceEffect(store, state, effect) {
+        if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
+            throw new game_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
+        }
         if (effect instanceof game_effects_1.DrawPrizesEffect) {
             const generator = this.handlePrizeEffect(() => generator.next(), store, state, effect);
             return generator.next().value;
@@ -85,6 +89,7 @@ class GreedyDice extends trainer_card_1.TrainerCard {
         if (!coinResult) {
             return state;
         }
+        player.supporter.moveCardTo(this, player.discard);
         // Handle extra prize (excluding the group this card is in)
         yield prefabs_1.TAKE_X_PRIZES(store, state, player, 1, {
             promptOptions: {

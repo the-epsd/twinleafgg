@@ -1,18 +1,19 @@
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { CardTag, TrainerType } from '../../game/store/card/card-types';
 import { DrawPrizesEffect } from '../../game/store/effects/game-effects';
-import { StoreLike, State, PokemonCard } from '../../game';
+import { StoreLike, State, PokemonCard, GameError } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH, CONFIRMATION_PROMPT, GET_PLAYER_BENCH_SLOTS, TAKE_SPECIFIC_PRIZES } from '../../game/store/prefabs/prefabs';
 import { GameMessage } from '../../game/game-message';
+import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 
 export class DreamBall extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
 
   public regulationMark = 'E';
-  
+
   public set: string = 'EVS';
-  
+
   public setNumber: string = '146';
 
   public cardImage: string = 'assets/cardback.png';
@@ -28,6 +29,11 @@ export class DreamBall extends TrainerCard {
     'Search your deck for a Pokémon and put it onto your Bench. Then, shuffle your deck.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
+    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+      throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+    }
+
     // Only act when this card is drawn as a Prize.
     if (effect instanceof DrawPrizesEffect) {
       const generator = this.handlePrizeEffect(() => generator.next(), store, state, effect);
@@ -44,7 +50,7 @@ export class DreamBall extends TrainerCard {
     if (!prizeCard || GET_PLAYER_BENCH_SLOTS(player).length === 0 || !prizeCard.isSecret || effect.destination !== player.hand) {
       return state;
     }
-    
+
     // Prevent prize card from going to hand until we complete the card effect flow
     effect.preventDefault = true;
 
@@ -78,11 +84,11 @@ export class DreamBall extends TrainerCard {
 
     // Search for a Pokémon and put it onto the bench
     const emptyBenchSlots = GET_PLAYER_BENCH_SLOTS(player);
-    
+
     if (emptyBenchSlots.length === 0) {
       return state;
     }
-    
+
     // Can't search for Pokémon with specific "coming into play" rules
     const searchBlocked: number[] = [];
     player.deck.cards.forEach((card, index) => {
@@ -96,6 +102,8 @@ export class DreamBall extends TrainerCard {
       }
     });
 
+    player.supporter.moveCardTo(this, player.discard);
+
     yield SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH(
       store,
       state,
@@ -103,7 +111,7 @@ export class DreamBall extends TrainerCard {
       {},
       { min: 1, max: 1, allowCancel: false, blocked: searchBlocked }
     );
-    
+
     return state;
   }
 }

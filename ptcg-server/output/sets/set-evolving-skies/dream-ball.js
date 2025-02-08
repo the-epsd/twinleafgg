@@ -7,6 +7,7 @@ const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_1 = require("../../game");
 const prefabs_1 = require("../../game/store/prefabs/prefabs");
 const game_message_1 = require("../../game/game-message");
+const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class DreamBall extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -23,6 +24,9 @@ class DreamBall extends trainer_card_1.TrainerCard {
             'Search your deck for a Pokémon and put it onto your Bench. Then, shuffle your deck.';
     }
     reduceEffect(store, state, effect) {
+        if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
+            throw new game_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
+        }
         // Only act when this card is drawn as a Prize.
         if (effect instanceof game_effects_1.DrawPrizesEffect) {
             const generator = this.handlePrizeEffect(() => generator.next(), store, state, effect);
@@ -79,6 +83,7 @@ class DreamBall extends trainer_card_1.TrainerCard {
                 searchBlocked.push(index);
             }
         });
+        player.supporter.moveCardTo(this, player.discard);
         yield prefabs_1.SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH(store, state, player, {}, { min: 1, max: 1, allowCancel: false, blocked: searchBlocked });
         return state;
     }

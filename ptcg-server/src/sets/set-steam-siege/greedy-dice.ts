@@ -1,9 +1,10 @@
+import { GameError } from '../../game';
 import { GameMessage } from '../../game/game-message';
 import { TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { DrawPrizesEffect } from '../../game/store/effects/game-effects';
-import { CoinFlipEffect } from '../../game/store/effects/play-card-effects';
+import { CoinFlipEffect, TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { CONFIRMATION_PROMPT, SIMULATE_COIN_FLIP, TAKE_SPECIFIC_PRIZES, TAKE_X_PRIZES } from '../../game/store/prefabs/prefabs';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
@@ -11,9 +12,9 @@ import { StoreLike } from '../../game/store/store-like';
 export class GreedyDice extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
-  
+
   public set: string = 'STS';
-  
+
   public setNumber: string = '102';
 
   public cardImage: string = 'assets/cardback.png';
@@ -31,11 +32,16 @@ export class GreedyDice extends TrainerCard {
   public cardUsed = false;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
+    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+      throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+    }
+
     if (effect instanceof DrawPrizesEffect) {
       const generator = this.handlePrizeEffect(
         () => generator.next(),
-        store, 
-        state, 
+        store,
+        state,
         effect
       );
       return generator.next().value;
@@ -56,7 +62,7 @@ export class GreedyDice extends TrainerCard {
     if (this.cardUsed) {
       return state;
     }
-    
+
     // Prevent prize card from going to hand until we complete the card effect flow
     effect.preventDefault = true;
 
@@ -109,6 +115,8 @@ export class GreedyDice extends TrainerCard {
     if (!coinResult) {
       return state;
     }
+
+    player.supporter.moveCardTo(this, player.discard);
 
     // Handle extra prize (excluding the group this card is in)
     yield TAKE_X_PRIZES(store, state, player, 1, {
