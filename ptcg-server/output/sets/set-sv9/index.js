@@ -42,6 +42,7 @@ const lycanroc_1 = require("./lycanroc");
 const magmar_1 = require("./magmar");
 const magmortar_1 = require("./magmortar");
 const mamoswine_ex_1 = require("./mamoswine-ex");
+const maractus_1 = require("./maractus");
 const meowscarada_1 = require("./meowscarada");
 const ns_castle_1 = require("./ns-castle");
 const ns_darmanItan_1 = require("./ns-darmanItan");
@@ -108,6 +109,7 @@ exports.setSV9 = [
     new lycanroc_1.Lycanroc(),
     new spike_energy_1.SpikeEnergy(),
     new regirock_1.Regirock(),
+    new maractus_1.Maractus(),
     new lillies_clefairy_ex_1.LilliesClefairyex(),
     new lillies_comfy_1.LilliesComfy(),
     new lillies_pearl_1.LilliesPearl(),
