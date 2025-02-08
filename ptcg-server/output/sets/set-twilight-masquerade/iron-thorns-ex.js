@@ -21,7 +21,9 @@ class IronThornsex extends pokemon_card_1.PokemonCard {
                 name: 'Initialization',
                 powerType: game_1.PowerType.ABILITY,
                 exemptFromInitialize: true,
-                text: 'While this Pokémon is in the Active Spot, Pokémon with a Rule Box in play (except any Future Pokémon) don\'t have any Abilities.'
+                text: 'As long as this Pokémon is in the Active Spot, Pokémon with a Rule Box in play ' +
+                    '(both yours and your opponent\'s) have no Abilities, except for Future Pokémon. ' +
+                    '(Pokémon ex, Pokémon V, etc. have Rule Boxes.) '
             }];
         this.attacks = [
             {

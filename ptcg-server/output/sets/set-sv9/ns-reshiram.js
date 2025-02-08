@@ -20,7 +20,7 @@ class NsReshiram extends pokemon_card_1.PokemonCard {
                 text: 'This attack does 20 damage for each damage counter on this Pokémon.'
             },
             {
-                name: 'Raging Hammer',
+                name: 'Virtuous Flame',
                 cost: [R, R, L, C],
                 damage: 170,
                 text: ''
