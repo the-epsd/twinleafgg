@@ -51,7 +51,7 @@ class Poliwrath extends pokemon_card_1.PokemonCard {
             effect.damage += extraEnergies * 10;
         }
         if (prefabs_1.WAS_ATTACK_USED(effect, 1, this)) {
-            costs_1.DISCARD_X_ENERGY_FROM_THIS_POKEMON(state, effect, store, card_types_1.CardType.COLORLESS, 1);
+            costs_1.DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, 1);
         }
         return state;
     }

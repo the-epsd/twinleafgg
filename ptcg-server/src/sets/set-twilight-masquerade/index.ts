@@ -66,6 +66,9 @@ import { Palafinex } from './palafin-ex';
 import { PerformanceFlute } from './performance-flute';
 import { Perrin } from './perrin';
 import { Phione } from './phione';
+import { Poliwag } from './poliwag';
+import { Poliwhirl } from './poliwhirl';
+import { Poliwrath } from './poliwrath';
 import { Poltchageist } from './poltchageist';
 import { Poochyena } from './poochyena';
 import { Rillaboom } from './rillaboom';
@@ -179,4 +182,7 @@ export const setTwilightMasquerade: Card[] = [
   new Kadabra(),
   new Alakazam(),
   new Aipom(),
+  new Poliwag(),
+  new Poliwhirl(),
+  new Poliwrath(),
 ];

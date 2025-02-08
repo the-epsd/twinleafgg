@@ -81,6 +81,9 @@ export const cardReplacements = [
   //RCL
   { from: 'Horror Psychic Energy RCL 172', to: 'Horror Psychic Energy DAA 172' },
 
+  //VIV
+  { from: 'Talonflame V VIV 168', to: 'Talonflame VFA VIV 168' },
+
   //CRE
   { from: 'Klara CRE 145', to: 'Klara CRE 145 145' },
 
@@ -147,11 +150,14 @@ export const cardReplacements = [
   { from: 'Frigibax PAL 208', to: 'FrigibaxIR PAL 208' },
   { from: 'Arctibax PAL 209', to: 'ArctibaxIR PAL 209' },
   { from: 'Baxcalibur PAL 210', to: 'BaxcaliburIR PAL 210' },
+  { from: 'Tinkatink PAL 216', to: 'TinkatinkIR PAL 216' },
+  { from: 'Tinkatuff PAL 217', to: 'TinkatuffIR PAL 217' },
   { from: 'Flamigo PAL 227', to: 'FlamigoIR PAL 227' },
   { from: 'Meowscarada ex PAL 231', to: 'Meowscarada exFA PAL 231' },
   { from: 'Wo-Chien ex PAL 232', to: 'Wo-Chien exFA PAL 232' },
   { from: 'Chi-Yu ex PAL 234', to: 'Chi-Yu exFA PAL 234' },
   { from: 'Chien-Pao ex PAL 236', to: 'Chien-Pao exFA PAL 236' },
+  { from: 'Tinkaton ex PAL 240', to: 'Tinkaton exFA PAL 240' },
   { from: 'Ting-Lu ex PAL 243', to: 'Ting-Lu exFA PAL 243' },
   { from: 'Noivern ex PAL 246', to: 'Noivern exFA PAL 246' },
   { from: 'Squawkabilly ex PAL 247', to: 'Squawkabilly exFA PAL 247' },
@@ -164,6 +170,7 @@ export const cardReplacements = [
   { from: 'Wo-Chien ex PAL 257', to: 'Wo-Chien exSIR PAL 257' },
   { from: 'Chi-Yu ex PAL 259', to: 'Chi-Yu exSIR PAL 259' },
   { from: 'Chien-Pao ex PAL 261', to: 'Chien-Pao exSIR PAL 261' },
+  { from: 'Tinkaton ex PAL 262', to: 'Tinkaton exSIR PAL 262' },
   { from: 'Ting-Lu ex PAL 263', to: 'Ting-Lu exSIR PAL 263' },
   { from: 'Squawkabilly ex PAL 264', to: 'Squawkabilly exSIR PAL 264' },
   { from: 'Boss\'s Orders PAL 265', to: 'Boss\'s OrdersSIR PAL 265' },
@@ -593,6 +600,9 @@ export const exportReplacements = [
   //RCL
   { from: 'Horror Psychic Energy DAA 172', to: 'Horror Psychic Energy RCL 172' },
 
+  //VIV
+  { from: 'Talonflame VFA VIV 168', to: 'Talonflame V VIV 168' },
+
   //CRE
   { from: 'Klara CRE 145 145', to: 'Klara CRE 145' },
 
@@ -655,11 +665,14 @@ export const exportReplacements = [
   { from: 'FrigibaxIR PAL 208', to: 'Frigibax PAL 208' },
   { from: 'ArctibaxIR PAL 209', to: 'Arctibax PAL 209' },
   { from: 'BaxcaliburIR PAL 210', to: 'Baxcalibur PAL 210' },
+  { from: 'TinkatinkIR PAL 216', to: 'Tinkatink PAL 216' },
+  { from: 'TinkatuffIR PAL 217', to: 'Tinkatuff PAL 217' },
   { from: 'FlamigoIR PAL 227', to: 'Flamigo PAL 227' },
   { from: 'Meowscarada exFA PAL 231', to: 'Meowscarada ex PAL 231' },
   { from: 'Wo-Chien exFA PAL 232', to: 'Wo-Chien ex PAL 232' },
   { from: 'Chi-Yu exFA PAL 234', to: 'Chi-Yu ex PAL 234' },
   { from: 'Chien-Pao exFA PAL 236', to: 'Chien-Pao ex PAL 236' },
+  { from: 'Tinkaton exFA PAL 240', to: 'Tinkaton ex PAL 240' },
   { from: 'Ting-Lu exFA PAL 243', to: 'Ting-Lu ex PAL 243' },
   { from: 'Noivern exFA PAL 246', to: 'Noivern ex PAL 246' },
   { from: 'Squawkabilly exFA PAL 247', to: 'Squawkabilly ex PAL 247' },
@@ -672,6 +685,7 @@ export const exportReplacements = [
   { from: 'Wo-Chien exSIR PAL 257', to: 'Wo-Chien ex PAL 257' },
   { from: 'Chi-Yu exSIR PAL 259', to: 'Chi-Yu ex PAL 259' },
   { from: 'Chien-Pao exSIR PAL 261', to: 'Chien-Pao ex PAL 261' },
+  { from: 'Tinkaton exSIR PAL 262', to: 'Tinkaton ex PAL 262' },
   { from: 'Ting-Lu exSIR PAL 263', to: 'Ting-Lu ex PAL 263' },
   { from: 'Squawkabilly exSIR PAL 264', to: 'Squawkabilly ex PAL 264' },
   { from: 'Boss\'s OrdersSIR PAL 265', to: 'Boss\'s Orders PAL 265' },

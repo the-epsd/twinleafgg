@@ -8,6 +8,7 @@ const game_effects_1 = require("../../game/store/effects/game-effects");
 const check_effects_1 = require("../../game/store/effects/check-effects");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const prefabs_1 = require("../../game/store/prefabs/prefabs");
+const costs_1 = require("../../game/store/prefabs/costs");
 class Moltres extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -62,7 +63,7 @@ class Moltres extends pokemon_card_1.PokemonCard {
             opponent.deck.moveTo(opponent.discard, totalDiscarded);
         }
         if (prefabs_1.WAS_ATTACK_USED(effect, 1, this)) {
-            prefabs_1.DISCARD_X_ENERGY_FROM_THIS_POKEMON(state, effect, store, card_types_1.CardType.COLORLESS, 3);
+            costs_1.DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, 3);
         }
         return state;
     }

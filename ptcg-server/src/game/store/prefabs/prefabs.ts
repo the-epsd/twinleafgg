@@ -1,5 +1,5 @@
-import { AttachEnergyOptions, AttachEnergyPrompt, Card, CardList, ChooseCardsOptions, ChooseCardsPrompt, ChooseEnergyPrompt, ChoosePokemonPrompt, ChoosePrizePrompt, CoinFlipPrompt, ConfirmPrompt, EnergyCard, FilterType, GameError, GameLog, GameMessage, Player, PlayerType, PokemonCardList, PowerType, SelectPrompt, ShowCardsPrompt, ShuffleDeckPrompt, SlotType, State, StateUtils, StoreLike } from '../..';
-import { BoardEffect, CardType, SpecialCondition, SuperType } from '../card/card-types';
+import { AttachEnergyOptions, AttachEnergyPrompt, Card, CardList, ChooseCardsOptions, ChooseCardsPrompt, ChoosePokemonPrompt, ChoosePrizePrompt, CoinFlipPrompt, ConfirmPrompt, EnergyCard, FilterType, GameError, GameLog, GameMessage, Player, PlayerType, PokemonCardList, PowerType, SelectPrompt, ShowCardsPrompt, ShuffleDeckPrompt, SlotType, State, StateUtils, StoreLike } from '../..';
+import { BoardEffect, SpecialCondition, SuperType } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
 import { DealDamageEffect, DiscardCardsEffect, HealTargetEffect, PutDamageEffect } from '../effects/attack-effects';
 import { AddSpecialConditionsPowerEffect, CheckPrizesDestinationEffect, CheckProvidedEnergyEffect } from '../effects/check-effects';
@@ -113,32 +113,6 @@ export function SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND(store: StoreLike,
     cards.forEach(card => MOVE_CARD_TO(state, card, player.hand));
     SHUFFLE_DECK(store, state, player)
   });
-}
-
-export function DISCARD_X_ENERGY_FROM_THIS_POKEMON(state: State, effect: AttackEffect, store: StoreLike, type: CardType, amount: number) {
-  const player = effect.player;
-  const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
-  state = store.reduceEffect(state, checkProvidedEnergy);
-
-  const energyList: CardType[] = [];
-  for (let i = 0; i < amount; i++) {
-    energyList.push(type);
-  }
-
-  state = store.prompt(state, new ChooseEnergyPrompt(
-    player.id,
-    GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
-    checkProvidedEnergy.energyMap,
-    energyList,
-    { allowCancel: false }
-  ), energy => {
-    const cards: Card[] = (energy || []).map(e => e.card);
-    const discardEnergy = new DiscardCardsEffect(effect, cards);
-    discardEnergy.target = player.active;
-    return store.reduceEffect(state, discardEnergy);
-  });
-
-  return state;
 }
 
 export function THIS_ATTACK_DOES_X_MORE_DAMAGE(effect: AttackEffect, store: StoreLike, state: State, damage: number) {
@@ -569,6 +543,11 @@ export function CONFIRMATION_PROMPT(store: StoreLike, state: State, player: Play
 
 export function COIN_FLIP_PROMPT(store: StoreLike, state: State, player: Player, callback: (result: boolean) => void): State {
   return store.prompt(state, new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP), callback);
+}
+
+export function MULTIPLE_COIN_FLIPS_PROMPT(store: StoreLike, state: State, player: Player, amount: number, callback: (results: boolean[]) => void): State {
+  let prompts: CoinFlipPrompt[] = new Array(amount).fill(0).map((_) => new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP));
+  return store.prompt(state, prompts, callback)
 }
 
 export function SIMULATE_COIN_FLIP(store: StoreLike, state: State, player: Player): boolean {

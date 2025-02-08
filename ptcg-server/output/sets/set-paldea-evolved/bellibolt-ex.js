@@ -5,6 +5,7 @@ const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const prefabs_1 = require("../../game/store/prefabs/prefabs");
 const attack_effects_1 = require("../../game/store/prefabs/attack-effects");
+const costs_1 = require("../../game/store/prefabs/costs");
 class Belliboltex extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -45,7 +46,7 @@ class Belliboltex extends pokemon_card_1.PokemonCard {
         if (prefabs_1.WAS_ATTACK_USED(effect, 1, this)) {
             prefabs_1.CONFIRMATION_PROMPT(store, state, effect.player, result => {
                 if (result) {
-                    prefabs_1.DISCARD_X_ENERGY_FROM_THIS_POKEMON(state, effect, store, L, 2);
+                    costs_1.DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, 2, L);
                     prefabs_1.ADD_PARALYZED_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);
                 }
             });

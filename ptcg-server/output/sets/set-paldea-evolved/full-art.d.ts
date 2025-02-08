@@ -60,6 +60,7 @@ export declare class ChienPaoexFA extends ChienPaoex {
     fullName: string;
 }
 export declare class TinkatonexFA extends Tinkatonex {
+    set: string;
     setNumber: string;
     fullName: string;
 }
@@ -112,6 +113,7 @@ export declare class ChienPaoexSIR extends ChienPaoex {
     fullName: string;
 }
 export declare class TinkatonexSIR extends Tinkatonex {
+    set: string;
     setNumber: string;
     fullName: string;
 }

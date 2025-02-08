@@ -5,7 +5,7 @@ const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
-const prefabs_1 = require("../../game/store/prefabs/prefabs");
+const costs_1 = require("../../game/store/prefabs/costs");
 class Flareon extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -48,7 +48,7 @@ class Flareon extends pokemon_card_1.PokemonCard {
             });
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
-            prefabs_1.DISCARD_X_ENERGY_FROM_THIS_POKEMON(state, effect, store, card_types_1.CardType.FIRE, 1);
+            costs_1.DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, 1, R);
         }
         return state;
     }

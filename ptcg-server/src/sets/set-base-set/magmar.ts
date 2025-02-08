@@ -1,7 +1,7 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { Attack } from '../../game/store/card/pokemon-types';
-import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../game/store/prefabs/prefabs';
+import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../game/store/prefabs/costs';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { State } from '../../game/store/state/state';
@@ -10,11 +10,11 @@ import { StoreLike } from '../../game/store/store-like';
 export class Magmar extends PokemonCard {
 
   public name = 'Magmar';
-  
+
   public set = 'BS';
-  
+
   public fullName = 'Magmar BS';
-  
+
   public cardType = CardType.FIRE;
 
   public stage = Stage.BASIC;
@@ -46,9 +46,9 @@ export class Magmar extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-      DISCARD_X_ENERGY_FROM_THIS_POKEMON(state, effect, store, CardType.FIRE, 1);
+      DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, 1, R);
     }
-    
+
     return state;
   }
 

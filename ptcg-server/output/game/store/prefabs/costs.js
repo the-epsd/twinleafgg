@@ -16,7 +16,7 @@ const __1 = require("../..");
  * @param amount
  * @returns
  */
-function DISCARD_X_ENERGY_FROM_THIS_POKEMON(state, effect, store, type, amount) {
+function DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, amount, type = C) {
     const player = effect.player;
     const checkProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(player);
     state = store.reduceEffect(state, checkProvidedEnergy);

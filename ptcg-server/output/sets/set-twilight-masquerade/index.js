@@ -68,6 +68,9 @@ const palafin_ex_1 = require("./palafin-ex");
 const performance_flute_1 = require("./performance-flute");
 const perrin_1 = require("./perrin");
 const phione_1 = require("./phione");
+const poliwag_1 = require("./poliwag");
+const poliwhirl_1 = require("./poliwhirl");
+const poliwrath_1 = require("./poliwrath");
 const poltchageist_1 = require("./poltchageist");
 const poochyena_1 = require("./poochyena");
 const rillaboom_1 = require("./rillaboom");
@@ -179,4 +182,7 @@ exports.setTwilightMasquerade = [
     new kadabra_1.Kadabra(),
     new alakazam_1.Alakazam(),
     new aipom_1.Aipom(),
+    new poliwag_1.Poliwag(),
+    new poliwhirl_1.Poliwhirl(),
+    new poliwrath_1.Poliwrath(),
 ];

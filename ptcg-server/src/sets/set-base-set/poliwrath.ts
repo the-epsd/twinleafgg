@@ -69,7 +69,7 @@ export class Poliwrath extends PokemonCard {
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      DISCARD_X_ENERGY_FROM_THIS_POKEMON(state, effect, store, CardType.COLORLESS, 1);
+      DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, 1);
     }
 
     return state;

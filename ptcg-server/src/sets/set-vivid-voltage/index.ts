@@ -10,6 +10,7 @@ import { CoatingMetalEnergy } from './coating-metal-energy';
 import { Dhelmise } from './dhelmise';
 import { DonphanVIV } from './donphan';
 import { Duraludon } from './duraludon';
+import { TalonflameVFA } from './full-art';
 import { Jirachi } from './jirachi';
 import { Leon } from './leon';
 import { Magearna } from './magearna';
@@ -21,6 +22,7 @@ import { Slugma } from './slugma';
 import { Snorlax } from './snorlax';
 import { StoneFightingEnergy } from './stone-fighting-energy';
 import { Taillow } from './taillow';
+import { TalonflameV } from './talonflame-v';
 import { Wailmer } from './wailmer';
 import { Wailord } from './wailord';
 import { WashWaterEnergy } from './wash-water-energy';
@@ -50,9 +52,13 @@ export const setVividVoltage: Card[] = [
   new Snorlax(),
   new StoneFightingEnergy(),
   new Taillow(),
+  new TalonflameV(),
   new Wailmer(),
   new Wailord(),
   new WashWaterEnergy(),
   new WeedleVIV(),
-  new Zekrom()
+  new Zekrom(),
+
+  // Full art
+  new TalonflameVFA(),
 ];

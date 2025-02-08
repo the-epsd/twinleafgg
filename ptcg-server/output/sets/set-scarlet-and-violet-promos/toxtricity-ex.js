@@ -33,7 +33,7 @@ class Toxtricityex extends pokemon_card_1.PokemonCard {
     reduceEffect(store, state, effect) {
         // Strumming Thunder
         if (prefabs_1.WAS_ATTACK_USED(effect, 0, this)) {
-            costs_1.DISCARD_X_ENERGY_FROM_THIS_POKEMON(state, effect, store, C, 2);
+            costs_1.DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, 2);
         }
         return state;
     }

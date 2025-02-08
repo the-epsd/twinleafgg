@@ -32,8 +32,8 @@ export class Toxtricityex extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Strumming Thunder
-    if (WAS_ATTACK_USED(effect, 0, this)){
-      DISCARD_X_ENERGY_FROM_THIS_POKEMON(state, effect, store, C, 2);
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, 2);
     }
 
     return state;

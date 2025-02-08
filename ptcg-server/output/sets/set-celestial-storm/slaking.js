@@ -6,7 +6,7 @@ const card_types_1 = require("../../game/store/card/card-types");
 const pokemon_types_1 = require("../../game/store/card/pokemon-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
-const prefabs_1 = require("../../game/store/prefabs/prefabs");
+const costs_1 = require("../../game/store/prefabs/costs");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 class Slaking extends pokemon_card_1.PokemonCard {
     constructor() {
@@ -82,7 +82,7 @@ class Slaking extends pokemon_card_1.PokemonCard {
             }
             effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
             console.log('marker added');
-            prefabs_1.DISCARD_X_ENERGY_FROM_THIS_POKEMON(state, effect, store, card_types_1.CardType.COLORLESS, 1);
+            costs_1.DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, 1);
         }
         return state;
     }

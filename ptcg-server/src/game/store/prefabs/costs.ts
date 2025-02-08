@@ -18,7 +18,7 @@ import { CardType } from '../card/card-types';
  * @param amount 
  * @returns 
  */
-export function DISCARD_X_ENERGY_FROM_THIS_POKEMON(state: State, effect: AttackEffect, store: StoreLike, type: CardType, amount: number) {
+export function DISCARD_X_ENERGY_FROM_THIS_POKEMON(store: StoreLike, state: State, effect: AttackEffect, amount: number, type: CardType = C) {
   const player = effect.player;
   const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
   state = store.reduceEffect(state, checkProvidedEnergy);

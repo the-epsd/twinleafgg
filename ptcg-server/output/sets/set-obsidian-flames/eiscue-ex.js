@@ -7,6 +7,7 @@ const prefabs_1 = require("../../game/store/prefabs/prefabs");
 const game_1 = require("../../game");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
+const costs_1 = require("../../game/store/prefabs/costs");
 class Eiscueex extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -35,7 +36,7 @@ class Eiscueex extends pokemon_card_1.PokemonCard {
     reduceEffect(store, state, effect) {
         if (prefabs_1.WAS_ATTACK_USED(effect, 0, this)) {
             const opponent = effect.opponent;
-            prefabs_1.DISCARD_X_ENERGY_FROM_THIS_POKEMON(state, effect, store, C, 1);
+            costs_1.DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, 1);
             opponent.marker.addMarker(this.SCALDING_BLOCK_MARKER, this);
             opponent.active.marker.addMarker(this.SCALDING_BLOCK_MARKER, this);
         }

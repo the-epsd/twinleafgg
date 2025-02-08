@@ -4,7 +4,7 @@ import { PowerType } from '../../game/store/card/pokemon-types';
 import { StoreLike, State, StateUtils, GameError, GameMessage } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
-import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../game/store/prefabs/prefabs';
+import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../game/store/prefabs/costs';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class Slaking extends PokemonCard {
@@ -93,7 +93,7 @@ export class Slaking extends PokemonCard {
       effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
       console.log('marker added');
 
-      DISCARD_X_ENERGY_FROM_THIS_POKEMON(state, effect, store, CardType.COLORLESS, 1);
+      DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, 1);
 
     }
 

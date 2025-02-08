@@ -249,6 +249,7 @@ exports.ChienPaoexFA = ChienPaoexFA;
 class TinkatonexFA extends tinkaton_ex_1.Tinkatonex {
     constructor() {
         super(...arguments);
+        this.set = 'PAL';
         this.setNumber = '240';
         this.fullName = 'Tinkaton exFA PAL';
     }
@@ -389,6 +390,7 @@ exports.ChienPaoexSIR = ChienPaoexSIR;
 class TinkatonexSIR extends tinkaton_ex_1.Tinkatonex {
     constructor() {
         super(...arguments);
+        this.set = 'PAL';
         this.setNumber = '262';
         this.fullName = 'Tinkaton exSIR PAL';
     }

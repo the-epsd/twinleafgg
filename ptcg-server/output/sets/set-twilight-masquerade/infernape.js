@@ -10,6 +10,7 @@ const game_phase_effects_1 = require("../../game/store/effects/game-phase-effect
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 const prefabs_1 = require("../../game/store/prefabs/prefabs");
 const check_effects_1 = require("../../game/store/effects/check-effects");
+const costs_1 = require("../../game/store/prefabs/costs");
 class Infernape extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -48,7 +49,7 @@ class Infernape extends pokemon_card_1.PokemonCard {
             effect.player.marker.removeMarker(this.TAR_GENERATOR_MARKER, this);
         }
         if (prefabs_1.WAS_ATTACK_USED(effect, 0, this)) {
-            prefabs_1.DISCARD_X_ENERGY_FROM_THIS_POKEMON(state, effect, store, card_types_1.CardType.COLORLESS, 1);
+            costs_1.DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, 1);
         }
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;

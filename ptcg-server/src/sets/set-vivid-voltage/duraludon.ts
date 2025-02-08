@@ -3,7 +3,7 @@ import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../game/store/prefabs/prefabs';
+import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../game/store/prefabs/costs';
 
 export class Duraludon extends PokemonCard {
 
@@ -14,7 +14,7 @@ export class Duraludon extends PokemonCard {
   public hp: number = 130;
 
   public weakness = [{ type: CardType.FIRE }];
-  
+
   public resistance = [{ type: CardType.GRASS, value: -30 }];
 
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
@@ -53,12 +53,12 @@ export class Duraludon extends PokemonCard {
       effect.damage += effect.player.active.damage;
       return state;
     }
-    
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-      DISCARD_X_ENERGY_FROM_THIS_POKEMON(state, effect, store, CardType.COLORLESS, 1);
+      DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, 1);
       return state;
     }
-    
+
     return state;
   }
 }

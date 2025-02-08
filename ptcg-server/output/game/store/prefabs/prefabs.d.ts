@@ -1,5 +1,5 @@
 import { AttachEnergyOptions, Card, CardList, ChooseCardsOptions, EnergyCard, FilterType, GameMessage, Player, PlayerType, PokemonCardList, SlotType, State, StoreLike } from '../..';
-import { CardType, SpecialCondition } from '../card/card-types';
+import { SpecialCondition } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
 import { Effect } from '../effects/effect';
 import { AttackEffect, EvolveEffect, KnockOutEffect, PowerEffect } from '../effects/game-effects';
@@ -49,7 +49,6 @@ export declare function SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH(store: S
  * A `filter` can be provided for the prompt as well.
  */
 export declare function SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND(store: StoreLike, state: State, player: Player, filter?: Partial<PokemonCard>, options?: Partial<ChooseCardsOptions>): State;
-export declare function DISCARD_X_ENERGY_FROM_THIS_POKEMON(state: State, effect: AttackEffect, store: StoreLike, type: CardType, amount: number): State;
 export declare function THIS_ATTACK_DOES_X_MORE_DAMAGE(effect: AttackEffect, store: StoreLike, state: State, damage: number): State;
 export declare function HEAL_X_DAMAGE_FROM_THIS_POKEMON(effect: AttackEffect, store: StoreLike, state: State, damage: number): State;
 export declare function THIS_POKEMON_HAS_ANY_DAMAGE_COUNTERS_ON_IT(effect: AttackEffect, user: PokemonCard): boolean;
@@ -130,6 +129,7 @@ export declare function SELECT_PROMPT_WITH_OPTIONS(store: StoreLike, state: Stat
 }[]): State;
 export declare function CONFIRMATION_PROMPT(store: StoreLike, state: State, player: Player, callback: (result: boolean) => void, message?: GameMessage): State;
 export declare function COIN_FLIP_PROMPT(store: StoreLike, state: State, player: Player, callback: (result: boolean) => void): State;
+export declare function MULTIPLE_COIN_FLIPS_PROMPT(store: StoreLike, state: State, player: Player, amount: number, callback: (results: boolean[]) => void): State;
 export declare function SIMULATE_COIN_FLIP(store: StoreLike, state: State, player: Player): boolean;
 export declare function GET_FIRST_PLAYER_BENCH_SLOT(player: Player): PokemonCardList;
 export declare function GET_PLAYER_BENCH_SLOTS(player: Player): PokemonCardList[];

@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setSurgingSparks = void 0;
+const annihilape_1 = require("../set-scarlet-and-violet/annihilape");
 const alolan_diglett_1 = require("./alolan-diglett");
 const alolan_dugtrio_1 = require("./alolan-dugtrio");
 const alolan_exeggutor_ex_1 = require("./alolan-exeggutor-ex");
@@ -204,6 +205,7 @@ exports.setSurgingSparks = [
     new quaxly_1.Quaxly(),
     new quaquaval_1.Quaquaval(),
     new meddling_memo_1.MeddlingMemo(),
+    new annihilape_1.Annihilape(),
     // Reprints
     new card_images_1.ScrambleSwitchSSP(),
     new card_images_1.CounterGainSSP(),

@@ -251,6 +251,7 @@ export class ChienPaoexFA extends ChienPaoex {
 // }
 
 export class TinkatonexFA extends Tinkatonex {
+  public set = 'PAL';
   public setNumber = '240';
   public fullName: string = 'Tinkaton exFA PAL';
 }
@@ -361,6 +362,7 @@ export class ChienPaoexSIR extends ChienPaoex {
 }
 
 export class TinkatonexSIR extends Tinkatonex {
+  public set = 'PAL';
   public setNumber = '262';
   public fullName: string = 'Tinkaton exSIR PAL';
 }

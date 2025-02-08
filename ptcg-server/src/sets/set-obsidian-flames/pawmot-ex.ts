@@ -34,7 +34,7 @@ export class Pawmotex extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      DISCARD_X_ENERGY_FROM_THIS_POKEMON(state, effect, store, L, 2);
+      DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, 2, L);
       THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_POKEMON(220, effect, store, state);
     }
 

@@ -4,6 +4,7 @@ exports.Toxtricityex = void 0;
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const prefabs_1 = require("../../game/store/prefabs/prefabs");
+const costs_1 = require("../../game/store/prefabs/costs");
 class Toxtricityex extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -42,7 +43,7 @@ class Toxtricityex extends pokemon_card_1.PokemonCard {
         }
         // Gaia Punk
         if (prefabs_1.WAS_ATTACK_USED(effect, 1, this)) {
-            prefabs_1.DISCARD_X_ENERGY_FROM_THIS_POKEMON(state, effect, store, L, 3);
+            costs_1.DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, 3, L);
         }
         return state;
     }

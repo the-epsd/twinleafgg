@@ -68,7 +68,7 @@ export class SlitherWing extends PokemonCard {
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      DISCARD_X_ENERGY_FROM_THIS_POKEMON(state, effect, store, CardType.COLORLESS, 2);
+      DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, 2);
     }
     return state;
   }

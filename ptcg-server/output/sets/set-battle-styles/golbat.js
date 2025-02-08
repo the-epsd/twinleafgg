@@ -7,6 +7,7 @@ const game_1 = require("../../game");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const prefabs_1 = require("../../game/store/prefabs/prefabs");
+const costs_1 = require("../../game/store/prefabs/costs");
 class Golbat extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -57,7 +58,7 @@ class Golbat extends pokemon_card_1.PokemonCard {
             return state;
         }
         if (prefabs_1.WAS_ATTACK_USED(effect, 1, this)) {
-            prefabs_1.DISCARD_X_ENERGY_FROM_THIS_POKEMON(state, effect, store, card_types_1.CardType.COLORLESS, 1);
+            costs_1.DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, 1);
         }
         return state;
     }
