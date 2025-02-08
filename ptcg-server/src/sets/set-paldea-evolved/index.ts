@@ -23,7 +23,7 @@ import { Forretressex } from './forretress-ex';
 import { Frigibax } from './frigibax';
 import { Frigibax2 } from './frigibax-2';
 import { Fuecoco } from './fuecoco';
-import { ArctibaxIR, BaxcaliburIR, BossOrdersFA, ChiYuexFA, ChienPaoexFA, ClavellFA, FlamigoIR, FrigibaxIR, GiacomoFA, GrushaFA, IonoFA, MeowscaradaexFA, NoivernexFA, SquawkabillyexFA, SuperRodHR, SuperiorEnergyRetrievalHR, TingLuexFA, WoChienexFA, MeowscaradaexSIR, WoChienexSIR, ChiYuexSIR, ChienPaoexSIR, TingLuexSIR, SquawkabillyexSIR, BossOrdersSIR, GiacomoSIR, GrushaSIR, IonoSIR, MeowscaradaexHR, ChienPaoexHR, TingLuexHR } from './full-art';
+import { ArctibaxIR, BaxcaliburIR, BossOrdersFA, ChiYuexFA, ChienPaoexFA, ClavellFA, FlamigoIR, FrigibaxIR, GiacomoFA, GrushaFA, IonoFA, MeowscaradaexFA, NoivernexFA, SquawkabillyexFA, SuperRodHR, SuperiorEnergyRetrievalHR, TingLuexFA, WoChienexFA, MeowscaradaexSIR, WoChienexSIR, ChiYuexSIR, ChienPaoexSIR, TingLuexSIR, SquawkabillyexSIR, BossOrdersSIR, GiacomoSIR, GrushaSIR, IonoSIR, MeowscaradaexHR, ChienPaoexHR, TingLuexHR, TinkatinkIR, TinkatuffIR, TinkatonexFA, TinkatonexSIR } from './full-art';
 import { Giacomo } from './giacomo';
 import { GreatBall } from './great-ball';
 import { Grusha } from './grusha';
@@ -74,6 +74,7 @@ import { Dunsparce } from './dunsparce';
 import {Glimmet} from './glimmet';
 import {Glimmet2} from './glimmet-2';
 import {Glimmora} from './glimmora';
+import { Tinkatuff2 } from './tinkatuff-2';
 //import { CalamitousSnowyMountain } from './new calamitous-snowy-mountain';
 
 export const setPaldeaEvolved: Card[] = [
@@ -137,6 +138,7 @@ export const setPaldeaEvolved: Card[] = [
   new TingLuex(),
   new Tinkatink(),
   new Tinkatuff(),
+  new Tinkatuff2(),
   new Tinkaton(),
   new Wattrel(),
   new Wingull(),
@@ -156,6 +158,8 @@ export const setPaldeaEvolved: Card[] = [
   // Full 
   new ArctibaxIR(),
   new BaxcaliburIR(),
+  new TinkatinkIR(),
+  new TinkatuffIR(),
   new BossOrdersFA(),
   new ChiYuexFA(),
   new ChienPaoexFA(),
@@ -167,6 +171,7 @@ export const setPaldeaEvolved: Card[] = [
   new IonoFA(),
   new MeowscaradaexFA(),
   new NoivernexFA(),
+  new TinkatonexFA(),
   new SquawkabillyexFA(),
   new SuperRodHR(),
   new SuperiorEnergyRetrievalHR(),
@@ -176,6 +181,7 @@ export const setPaldeaEvolved: Card[] = [
   new WoChienexSIR(),
   new ChiYuexSIR(),
   new ChienPaoexSIR(),
+  new TinkatonexSIR(),
   new TingLuexSIR(),
   new SquawkabillyexSIR(),
   new BossOrdersSIR(),

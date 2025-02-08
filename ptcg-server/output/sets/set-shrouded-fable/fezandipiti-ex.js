@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Fezandipitiex = void 0;
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
-const state_1 = require("../../game/store/state/state");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
@@ -61,7 +60,7 @@ class Fezandipitiex extends pokemon_card_1.PokemonCard {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             // Do not activate between turns, or when it's not opponents turn.
-            if (state.phase !== state_1.GamePhase.ATTACK || state.players[state.activePlayer] !== opponent) {
+            if (state.players[state.activePlayer] !== opponent) {
                 return state;
             }
             const cardList = game_1.StateUtils.findCardList(state, this);

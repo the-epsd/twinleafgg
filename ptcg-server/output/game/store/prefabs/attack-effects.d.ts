@@ -11,6 +11,8 @@ export declare function HEAL_X_DAMAGE_FROM_THIS_POKEMON(damage: number, effect: 
 export declare function PUT_X_CARDS_FROM_YOUR_DISCARD_PILE_INTO_YOUR_HAND(x: number, filterFn: ((card: Card) => boolean) | undefined, store: StoreLike, state: State, effect: AttackEffect): State;
 export declare function PUT_X_DAMAGE_COUNTERS_ON_YOUR_OPPONENTS_ACTIVE_POKEMON(x: number, store: StoreLike, state: State, effect: AttackEffect): State;
 export declare function SHUFFLE_THIS_POKEMON_AND_ALL_ATTACHED_CARDS_INTO_YOUR_DECK(store: StoreLike, state: State, effect: AttackEffect): State;
+export declare function FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE(store: StoreLike, state: State, effect: AttackEffect, amount: number): void;
+export declare function THIS_ATTACKS_DAMAGE_ISNT_AFFECTED_BY_EFFECTS(store: StoreLike, state: State, effect: AttackEffect, amount: number): void;
 export declare function THIS_ATTACK_DOES_X_DAMAGE_FOR_EACH_POKEMON_IN_YOUR_DISCARD_PILE(damage: number, filterFn: ((card: PokemonCard) => boolean) | undefined, effect: AttackEffect): void;
 export declare function THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_POKEMON(damage: number, effect: AttackEffect, store: StoreLike, state: State): State;
 export declare function THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_BENCHED_POKEMON(damage: number, effect: AttackEffect, store: StoreLike, state: State): State;

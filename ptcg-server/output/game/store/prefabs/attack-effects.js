@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED = exports.YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED = exports.YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED = exports.YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_BURNED = exports.YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP = exports.THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_BENCHED_POKEMON = exports.THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_POKEMON = exports.THIS_ATTACK_DOES_X_DAMAGE_FOR_EACH_POKEMON_IN_YOUR_DISCARD_PILE = exports.SHUFFLE_THIS_POKEMON_AND_ALL_ATTACHED_CARDS_INTO_YOUR_DECK = exports.PUT_X_DAMAGE_COUNTERS_ON_YOUR_OPPONENTS_ACTIVE_POKEMON = exports.PUT_X_CARDS_FROM_YOUR_DISCARD_PILE_INTO_YOUR_HAND = exports.HEAL_X_DAMAGE_FROM_THIS_POKEMON = exports.DRAW_CARDS_UNTIL_YOU_HAVE_X_CARDS_IN_HAND = exports.DISCARD_A_STADIUM_CARD_IN_PLAY = void 0;
+exports.YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED = exports.YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED = exports.YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED = exports.YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_BURNED = exports.YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP = exports.THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_BENCHED_POKEMON = exports.THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_POKEMON = exports.THIS_ATTACK_DOES_X_DAMAGE_FOR_EACH_POKEMON_IN_YOUR_DISCARD_PILE = exports.THIS_ATTACKS_DAMAGE_ISNT_AFFECTED_BY_EFFECTS = exports.FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE = exports.SHUFFLE_THIS_POKEMON_AND_ALL_ATTACHED_CARDS_INTO_YOUR_DECK = exports.PUT_X_DAMAGE_COUNTERS_ON_YOUR_OPPONENTS_ACTIVE_POKEMON = exports.PUT_X_CARDS_FROM_YOUR_DISCARD_PILE_INTO_YOUR_HAND = exports.HEAL_X_DAMAGE_FROM_THIS_POKEMON = exports.DRAW_CARDS_UNTIL_YOU_HAVE_X_CARDS_IN_HAND = exports.DISCARD_A_STADIUM_CARD_IN_PLAY = void 0;
 const pokemon_card_1 = require("../card/pokemon-card");
 const __1 = require("../..");
 const attack_effects_1 = require("../effects/attack-effects");
@@ -9,6 +9,7 @@ const card_types_1 = require("../card/card-types");
 const attack_effects_2 = require("../effects/attack-effects");
 const card_types_2 = require("../card/card-types");
 const __3 = require("../..");
+const prefabs_1 = require("./prefabs");
 /**
  * These prefabs are for general attack effects.
  */
@@ -72,6 +73,30 @@ function SHUFFLE_THIS_POKEMON_AND_ALL_ATTACHED_CARDS_INTO_YOUR_DECK(store, state
     });
 }
 exports.SHUFFLE_THIS_POKEMON_AND_ALL_ATTACHED_CARDS_INTO_YOUR_DECK = SHUFFLE_THIS_POKEMON_AND_ALL_ATTACHED_CARDS_INTO_YOUR_DECK;
+function FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE(store, state, effect, amount) {
+    prefabs_1.COIN_FLIP_PROMPT(store, state, effect.player, (result => {
+        if (result) {
+            effect.damage += amount;
+        }
+    }));
+}
+exports.FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE = FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE;
+function THIS_ATTACKS_DAMAGE_ISNT_AFFECTED_BY_EFFECTS(store, state, effect, amount) {
+    const player = effect.player;
+    const opponent = __1.StateUtils.getOpponent(state, player);
+    const dealDamage = new attack_effects_1.DealDamageEffect(effect, amount);
+    store.reduceEffect(state, dealDamage);
+    const applyWeakness = new attack_effects_1.ApplyWeaknessEffect(effect, dealDamage.damage);
+    store.reduceEffect(state, applyWeakness);
+    const damage = applyWeakness.damage;
+    effect.damage = 0;
+    if (damage > 0) {
+        opponent.active.damage += damage;
+        const afterDamage = new attack_effects_1.AfterDamageEffect(effect, damage);
+        state = store.reduceEffect(state, afterDamage);
+    }
+}
+exports.THIS_ATTACKS_DAMAGE_ISNT_AFFECTED_BY_EFFECTS = THIS_ATTACKS_DAMAGE_ISNT_AFFECTED_BY_EFFECTS;
 function THIS_ATTACK_DOES_X_DAMAGE_FOR_EACH_POKEMON_IN_YOUR_DISCARD_PILE(damage, filterFn = () => true, effect) {
     const player = effect.player;
     let pokemonCount = 0;

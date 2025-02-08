@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SuperiorEnergyRetrievalHR = exports.SuperRodHR = exports.TingLuexHR = exports.ChienPaoexHR = exports.MeowscaradaexHR = exports.IonoSIR = exports.GrushaSIR = exports.GiacomoSIR = exports.BossOrdersSIR = exports.SquawkabillyexSIR = exports.TingLuexSIR = exports.ChienPaoexSIR = exports.ChiYuexSIR = exports.WoChienexSIR = exports.MeowscaradaexSIR = exports.IonoFA = exports.GrushaFA = exports.GiacomoFA = exports.ClavellFA = exports.BossOrdersFA = exports.SquawkabillyexFA = exports.NoivernexFA = exports.TingLuexFA = exports.ChienPaoexFA = exports.ChiYuexFA = exports.WoChienexFA = exports.MeowscaradaexFA = exports.FlamigoIR = exports.BaxcaliburIR = exports.ArctibaxIR = exports.FrigibaxIR = void 0;
+exports.SuperiorEnergyRetrievalHR = exports.SuperRodHR = exports.TingLuexHR = exports.ChienPaoexHR = exports.MeowscaradaexHR = exports.IonoSIR = exports.GrushaSIR = exports.GiacomoSIR = exports.BossOrdersSIR = exports.SquawkabillyexSIR = exports.TingLuexSIR = exports.TinkatonexSIR = exports.ChienPaoexSIR = exports.ChiYuexSIR = exports.WoChienexSIR = exports.MeowscaradaexSIR = exports.IonoFA = exports.GrushaFA = exports.GiacomoFA = exports.ClavellFA = exports.BossOrdersFA = exports.SquawkabillyexFA = exports.NoivernexFA = exports.TingLuexFA = exports.TinkatonexFA = exports.ChienPaoexFA = exports.ChiYuexFA = exports.WoChienexFA = exports.MeowscaradaexFA = exports.FlamigoIR = exports.TinkatuffIR = exports.TinkatinkIR = exports.BaxcaliburIR = exports.ArctibaxIR = exports.FrigibaxIR = void 0;
+const tinkaton_ex_1 = require("../set-scarlet-and-violet-promos/tinkaton-ex");
 const arctibax_1 = require("./arctibax");
 const baxcalibur_1 = require("./baxcalibur");
 const boss_orders_1 = require("./boss-orders");
@@ -18,6 +19,8 @@ const squawkabilly_ex_1 = require("./squawkabilly-ex");
 const super_rod_1 = require("./super-rod");
 const superior_energy_retrieval_1 = require("./superior-energy-retrieval");
 const ting_lu_ex_1 = require("./ting-lu-ex");
+const tinkatink_1 = require("./tinkatink");
+const tinkatuff_2_1 = require("./tinkatuff-2");
 const wo_chien_ex_1 = require("./wo-chien-ex");
 // export class HeracrossIR extends Heracross {
 //   public setNumber = '194';
@@ -119,14 +122,22 @@ exports.BaxcaliburIR = BaxcaliburIR;
 //   public setNumber = '215';
 //   public fullName: string = 'RabscaIR PAL';
 // }
-// export class TinkatinkIR extends Tinkatink {
-//   public setNumber = '216';
-//   public fullName: string = 'TinkatinkIR PAL';
-// }
-// export class TinkatuffIR extends Tinkatuff {
-//   public setNumber = '217';
-//   public fullName: string = 'TinkatuffIR PAL';
-// }
+class TinkatinkIR extends tinkatink_1.Tinkatink {
+    constructor() {
+        super(...arguments);
+        this.setNumber = '216';
+        this.fullName = 'TinkatinkIR PAL';
+    }
+}
+exports.TinkatinkIR = TinkatinkIR;
+class TinkatuffIR extends tinkatuff_2_1.Tinkatuff2 {
+    constructor() {
+        super(...arguments);
+        this.setNumber = '217';
+        this.fullName = 'TinkatuffIR PAL';
+    }
+}
+exports.TinkatuffIR = TinkatuffIR;
 // export class Paldean TaurosIR extends Paldean Tauros {
 //   public setNumber = '218';
 //   public fullName: string = 'Paldean TaurosIR PAL';
@@ -235,10 +246,14 @@ exports.ChienPaoexFA = ChienPaoexFA;
 //   public setNumber = '239';
 //   public fullName: string = 'Dedenne exFA PAL';
 // }
-// export class Tinkaton exFA extends Tinkaton ex {
-//   public setNumber = '240';
-//   public fullName: string = 'Tinkaton exFA PAL';
-// }
+class TinkatonexFA extends tinkaton_ex_1.Tinkatonex {
+    constructor() {
+        super(...arguments);
+        this.setNumber = '240';
+        this.fullName = 'Tinkaton exFA PAL';
+    }
+}
+exports.TinkatonexFA = TinkatonexFA;
 // export class Lycanroc exFA extends Lycanroc ex {
 //   public setNumber = '241';
 //   public fullName: string = 'Lycanroc exFA PAL';
@@ -371,10 +386,14 @@ class ChienPaoexSIR extends chien_pao_ex_1.ChienPaoex {
     }
 }
 exports.ChienPaoexSIR = ChienPaoexSIR;
-// export class Tinkaton exSIR extends Tinkaton ex {
-//   public setNumber = '262';
-//   public fullName: string = 'Tinkaton exSIR PAL';
-// }
+class TinkatonexSIR extends tinkaton_ex_1.Tinkatonex {
+    constructor() {
+        super(...arguments);
+        this.setNumber = '262';
+        this.fullName = 'Tinkaton exSIR PAL';
+    }
+}
+exports.TinkatonexSIR = TinkatonexSIR;
 class TingLuexSIR extends ting_lu_ex_1.TingLuex {
     constructor() {
         super(...arguments);

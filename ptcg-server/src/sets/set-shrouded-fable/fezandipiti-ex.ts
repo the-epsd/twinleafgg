@@ -1,7 +1,7 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, BoardEffect } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
-import { GamePhase, State } from '../../game/store/state/state';
+import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { ChoosePokemonPrompt, GameError, GameMessage, PlayerType, PowerType, SlotType, StateUtils } from '../../game';
 import { AttackEffect, KnockOutEffect, PowerEffect } from '../../game/store/effects/game-effects';
@@ -82,7 +82,7 @@ export class Fezandipitiex extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       // Do not activate between turns, or when it's not opponents turn.
-      if (state.phase !== GamePhase.ATTACK || state.players[state.activePlayer] !== opponent) {
+      if (state.players[state.activePlayer] !== opponent) {
         return state;
       }
 

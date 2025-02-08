@@ -3,7 +3,8 @@ import { CardType, Stage, SuperType } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, KnockOutEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect, KnockOutEffect } from '../../game/store/effects/game-effects';
+import { IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 export class Veluza extends PokemonCard {
 
@@ -49,14 +50,7 @@ export class Veluza extends PokemonCard {
       effect.player.marker.hasMarker(effect.player.DAMAGE_DEALT_MARKER)) {
       const player = effect.player;
 
-      try {
-        const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
-      } catch {
+      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
         return state;
       }
 

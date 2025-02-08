@@ -1,3 +1,4 @@
+import { Tinkatonex } from '../set-scarlet-and-violet-promos/tinkaton-ex';
 import { Arctibax } from './arctibax';
 import { Baxcalibur } from './baxcalibur';
 import { BossOrders } from './boss-orders';
@@ -15,6 +16,8 @@ import { Squawkabillyex } from './squawkabilly-ex';
 import { SuperRod } from './super-rod';
 import { SuperiorEnergyRetrieval } from './superior-energy-retrieval';
 import { TingLuex } from './ting-lu-ex';
+import { Tinkatink } from './tinkatink';
+import { Tinkatuff2 } from './tinkatuff-2';
 import { WoChienex } from './wo-chien-ex';
 
 // export class HeracrossIR extends Heracross {
@@ -127,15 +130,15 @@ export class BaxcaliburIR extends Baxcalibur {
 //   public fullName: string = 'RabscaIR PAL';
 // }
 
-// export class TinkatinkIR extends Tinkatink {
-//   public setNumber = '216';
-//   public fullName: string = 'TinkatinkIR PAL';
-// }
+export class TinkatinkIR extends Tinkatink {
+  public setNumber = '216';
+  public fullName: string = 'TinkatinkIR PAL';
+}
 
-// export class TinkatuffIR extends Tinkatuff {
-//   public setNumber = '217';
-//   public fullName: string = 'TinkatuffIR PAL';
-// }
+export class TinkatuffIR extends Tinkatuff2 {
+  public setNumber = '217';
+  public fullName: string = 'TinkatuffIR PAL';
+}
 
 // export class Paldean TaurosIR extends Paldean Tauros {
 //   public setNumber = '218';
@@ -247,10 +250,10 @@ export class ChienPaoexFA extends ChienPaoex {
 //   public fullName: string = 'Dedenne exFA PAL';
 // }
 
-// export class Tinkaton exFA extends Tinkaton ex {
-//   public setNumber = '240';
-//   public fullName: string = 'Tinkaton exFA PAL';
-// }
+export class TinkatonexFA extends Tinkatonex {
+  public setNumber = '240';
+  public fullName: string = 'Tinkaton exFA PAL';
+}
 
 // export class Lycanroc exFA extends Lycanroc ex {
 //   public setNumber = '241';
@@ -357,10 +360,10 @@ export class ChienPaoexSIR extends ChienPaoex {
   public fullName: string = 'Chien-Pao exSIR PAL';
 }
 
-// export class Tinkaton exSIR extends Tinkaton ex {
-//   public setNumber = '262';
-//   public fullName: string = 'Tinkaton exSIR PAL';
-// }
+export class TinkatonexSIR extends Tinkatonex {
+  public setNumber = '262';
+  public fullName: string = 'Tinkaton exSIR PAL';
+}
 
 export class TingLuexSIR extends TingLuex {
   public setNumber = '263';

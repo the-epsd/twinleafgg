@@ -147,6 +147,7 @@ export declare function HAS_MARKER(marker: string, owner: Player | Card | Pokemo
 export declare function BLOCK_EFFECT_IF_MARKER(marker: string, owner: Player | Card | PokemonCard | PokemonCardList, source?: Card): void;
 export declare function PREVENT_DAMAGE_IF_TARGET_HAS_MARKER(effect: Effect, marker: string, source?: Card): void;
 export declare function REMOVE_MARKER_AT_END_OF_TURN(effect: Effect, marker: string, source: Card): void;
+export declare function REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN(effect: Effect, marker: string, source: Card): void;
 export declare function REPLACE_MARKER_AT_END_OF_TURN(effect: Effect, oldMarker: string, newMarker: string, source: Card): void;
 /**
  * If an EndTurnEffect is given, will check for `clearerMarker` on the player whose turn it is,
@@ -154,3 +155,4 @@ export declare function REPLACE_MARKER_AT_END_OF_TURN(effect: Effect, oldMarker:
  * Useful for "During your opponent's next turn" effects.
  */
 export declare function CLEAR_MARKER_AND_OPPONENTS_POKEMON_MARKER_AT_END_OF_TURN(state: State, effect: Effect, clearerMarker: string, oppMarker: string, source: Card): void;
+export declare function BLOCK_RETREAT_IF_MARKER(effect: Effect, marker: string, source: Card): void;

@@ -4,7 +4,7 @@ import { PokemonCard } from '../card/pokemon-card';
 import { DealDamageEffect, DiscardCardsEffect, HealTargetEffect, PutDamageEffect } from '../effects/attack-effects';
 import { AddSpecialConditionsPowerEffect, CheckPrizesDestinationEffect, CheckProvidedEnergyEffect } from '../effects/check-effects';
 import { Effect } from '../effects/effect';
-import { AttackEffect, DrawPrizesEffect, EvolveEffect, KnockOutEffect, PowerEffect } from '../effects/game-effects';
+import { AttackEffect, DrawPrizesEffect, EvolveEffect, KnockOutEffect, PowerEffect, RetreatEffect } from '../effects/game-effects';
 import { AfterAttackEffect, EndTurnEffect } from '../effects/game-phase-effects';
 
 /**
@@ -182,9 +182,9 @@ export interface TakeXPrizesOptions extends TakeSpecificPrizesOptions {
 }
 
 export function TAKE_SPECIFIC_PRIZES(
-  store: StoreLike, 
-  state: State, 
-  player: Player, 
+  store: StoreLike,
+  state: State,
+  player: Player,
   prizes: CardList[],
   options: TakeSpecificPrizesOptions = {}
 ): void {
@@ -232,22 +232,22 @@ export function TAKE_SPECIFIC_PRIZES(
 }
 
 export function TAKE_X_PRIZES(
-  store: StoreLike, 
-  state: State, 
+  store: StoreLike,
+  state: State,
   player: Player,
   count: number,
   options: TakeXPrizesOptions = {},
   callback?: (chosenPrizes: CardList[]) => void
 ): State {
   const { promptOptions = {}, ...takeOptions } = options;
-  
+
   state = store.prompt(state, new ChoosePrizePrompt(
     player.id,
     GameMessage.CHOOSE_PRIZE_CARD,
     { count, allowCancel: false, ...promptOptions }
   ), result => {
     TAKE_SPECIFIC_PRIZES(store, state, player, result, takeOptions);
-    if(callback) callback(result);
+    if (callback) callback(result);
   });
 
   return state;
@@ -658,6 +658,11 @@ export function REMOVE_MARKER_AT_END_OF_TURN(effect: Effect, marker: string, sou
     REMOVE_MARKER(marker, effect.player, source);
 }
 
+export function REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN(effect: Effect, marker: string, source: Card) {
+  if (effect instanceof EndTurnEffect && HAS_MARKER(marker, effect.player.active, source))
+    REMOVE_MARKER(marker, effect.player.active, source);
+}
+
 export function REPLACE_MARKER_AT_END_OF_TURN(effect: Effect, oldMarker: string, newMarker: string, source: Card) {
   if (effect instanceof EndTurnEffect && HAS_MARKER(oldMarker, effect.player, source)) {
     REMOVE_MARKER(oldMarker, effect.player, source);
@@ -678,4 +683,10 @@ export function CLEAR_MARKER_AND_OPPONENTS_POKEMON_MARKER_AT_END_OF_TURN(state: 
     opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => REMOVE_MARKER(oppMarker, cardList, source));
   }
 }
+
+export function BLOCK_RETREAT_IF_MARKER(effect: Effect, marker: string, source: Card) {
+  if (effect instanceof RetreatEffect && effect.player.active.marker.hasMarker(marker, source))
+    throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+}
+
 //#endregion

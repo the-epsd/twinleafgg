@@ -64,7 +64,6 @@ import { Kilowattrel } from './kilowattrel';
 import { MimeJr } from './mime-jr';
 import { StudentsInPaldea } from './students-in-paldea';
 import { Snorlax } from '../set-pokemon-151/snorlax';
-import { Tinkatuff } from '../set-paldea-evolved/tinkatuff';
 import { Kirlia } from '../set-scarlet-and-violet/kirlia';
 import { Pawmi } from '../set-scarlet-and-violet/pawmi';
 import { Wugtrio } from '../set-scarlet-and-violet/wugtrio';
@@ -79,6 +78,7 @@ import { Clive } from './clive';
 import { Pawmo } from '../set-scarlet-and-violet/pawmo';
 import { Pawmot } from '../set-scarlet-and-violet/pawmot';
 import { Slowpoke } from '../set-scarlet-and-violet/slowpoke';
+import { Tinkatuff2 } from '../set-paldea-evolved/tinkatuff-2';
 export declare class OddishSV extends Oddish {
     setNumber: string;
     set: string;
@@ -274,7 +274,7 @@ export declare class TinkatinkSV extends Tinkatink {
     set: string;
     fullName: string;
 }
-export declare class TinkatuffSV extends Tinkatuff {
+export declare class TinkatuffSV extends Tinkatuff2 {
     setNumber: string;
     set: string;
     fullName: string;

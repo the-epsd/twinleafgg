@@ -16,7 +16,7 @@ class BillowingSmoke extends trainer_card_1.TrainerCard {
         this.setNumber = '158';
         this.name = 'Billowing Smoke';
         this.fullName = 'Billowing Smoke DAA';
-        this.text = 'If the Pokémon this card is attached to is Knocked Out by damage from an attack from your opponent’s Pokémon, ' +
+        this.text = 'If the Pokémon this card is attached to is Knocked Out by damage from an attack from your opponent\'s Pokémon, ' +
             'that player discards any Prize cards they would take for that Knock Out instead of putting those cards into their hand.';
     }
     reduceEffect(store, state, effect) {

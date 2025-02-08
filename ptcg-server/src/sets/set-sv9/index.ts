@@ -40,6 +40,7 @@ import { Lycanroc } from './lycanroc';
 import { Magmar } from './magmar';
 import { Magmortar } from './magmortar';
 import { Mamoswineex } from './mamoswine-ex';
+import { Maractus } from './maractus';
 import { Meowscarada } from './meowscarada';
 import { NsCastle } from './ns-castle';
 import { NsDarmanitan } from './ns-darmanItan';
@@ -108,6 +109,7 @@ export const setSV9: Card[] = [
   new Lycanroc(),
   new SpikeEnergy(),
   new Regirock(),
+  new Maractus(),
 
   new LilliesClefairyex(),
   new LilliesComfy(),

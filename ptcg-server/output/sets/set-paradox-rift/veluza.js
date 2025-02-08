@@ -6,6 +6,7 @@ const card_types_1 = require("../../game/store/card/card-types");
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const check_effects_1 = require("../../game/store/effects/check-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class Veluza extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -38,15 +39,7 @@ class Veluza extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.KnockOutEffect && effect.target.cards.includes(this) &&
             effect.player.marker.hasMarker(effect.player.DAMAGE_DEALT_MARKER)) {
             const player = effect.player;
-            try {
-                const stub = new game_effects_1.PowerEffect(player, {
-                    name: 'test',
-                    powerType: game_1.PowerType.ABILITY,
-                    text: ''
-                }, this);
-                store.reduceEffect(state, stub);
-            }
-            catch (_a) {
+            if (prefabs_1.IS_ABILITY_BLOCKED(store, state, player, this)) {
                 return state;
             }
             return store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.active, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { superType: card_types_1.SuperType.ENERGY }, { allowCancel: false, min: 0, max: 2, validCardTypes: [card_types_1.CardType.WATER, card_types_1.CardType.ANY, card_types_1.CardType.WLFM, card_types_1.CardType.GRW] }), transfers => {
