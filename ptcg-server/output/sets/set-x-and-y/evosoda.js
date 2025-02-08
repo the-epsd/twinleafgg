@@ -11,7 +11,7 @@ const choose_pokemon_prompt_1 = require("../../game/store/prompts/choose-pokemon
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_manager_1 = require("../../game/cards/card-manager");
 const choose_cards_prompt_1 = require("../../game/store/prompts/choose-cards-prompt");
-const game_1 = require("../../game");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 function* playCard(next, store, state, effect) {
     const player = effect.player;
     if (player.deck.cards.length === 0) {
@@ -51,10 +51,9 @@ function* playCard(next, store, state, effect) {
         cards = selected || [];
         next();
     });
-    // Canceled by user, he didn't found the card in the deck
     if (cards.length === 0) {
         player.supporter.moveCardTo(effect.trainerCard, player.discard);
-        return state;
+        return state; // canceled by user
     }
     const evolution = cards[0];
     const blocked2 = [];
@@ -70,6 +69,7 @@ function* playCard(next, store, state, effect) {
     });
     if (targets.length === 0) {
         player.supporter.moveCardTo(effect.trainerCard, player.discard);
+        prefabs_1.SHUFFLE_DECK(store, state, player);
         return state; // canceled by user
     }
     const pokemonCard = targets[0].getPokemonCard();
@@ -81,9 +81,7 @@ function* playCard(next, store, state, effect) {
     targets[0].clearEffects();
     targets[0].pokemonPlayedTurn = state.turn;
     player.supporter.moveCardTo(effect.trainerCard, player.discard);
-    return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
-        player.deck.applyOrder(order);
-    });
+    prefabs_1.SHUFFLE_DECK(store, state, player);
 }
 class Evosoda extends trainer_card_1.TrainerCard {
     constructor() {
@@ -94,10 +92,7 @@ class Evosoda extends trainer_card_1.TrainerCard {
         this.fullName = 'Evosoda XY';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '116';
-        this.text = 'Search your deck for a card that evolves from 1 of your Pokemon and put ' +
-            'it onto that Pokemon. (This counts as evolving that Pokemon). ' +
-            'Shuffle your deck afterward. You can\'t use this card during your first ' +
-            'turn or on a Pokemon that was put into play this turn.';
+        this.text = 'Search your deck for a card that evolves from 1 of your Pokémon and put it onto that Pokémon. (This counts as evolving that Pokémon.) Shuffle your deck afterward. You can\'t use this card during your first turn or on a Pokémon that was put into play this turn.';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {

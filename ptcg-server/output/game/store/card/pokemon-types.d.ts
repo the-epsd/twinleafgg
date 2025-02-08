@@ -18,6 +18,7 @@ export interface Attack {
     gxAttack?: boolean;
     shredAttack?: boolean;
     useOnBench?: boolean;
+    canUseOnFirstTurn?: boolean;
     name: string;
     text: string;
     effect?: (store: StoreLike, state: State, effect: AttackEffect) => void;

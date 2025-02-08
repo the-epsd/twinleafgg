@@ -13,7 +13,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { CardManager } from '../../game/cards/card-manager';
 import { PokemonCardList } from '../../game/store/state/pokemon-card-list';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
-import { ShuffleDeckPrompt } from '../../game';
+import { SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -81,6 +81,8 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
   // Canceled by user, he didn't found the card in the deck
   if (cards.length === 0) {
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
+    SHUFFLE_DECK(store, state, player);
     return state;
   }
 
@@ -106,10 +108,14 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   });
 
   if (targets.length === 0) {
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
+    SHUFFLE_DECK(store, state, player);
     return state; // canceled by user
   }
   const pokemonCard = targets[0].getPokemonCard();
   if (pokemonCard === undefined) {
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
+    SHUFFLE_DECK(store, state, player);
     return state; // invalid target?
   }
 
@@ -119,27 +125,18 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   targets[0].pokemonPlayedTurn = state.turn;
   player.supporter.moveCardTo(effect.trainerCard, player.discard);
 
-  return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-    player.deck.applyOrder(order);
-  });
+  SHUFFLE_DECK(store, state, player);
 }
 
 export class DuskStone extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
-
   public set: string = 'UNB';
-
   public name: string = 'Dusk Stone';
-
   public fullName: string = 'Dusk Stone UNB';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '167';
-
-  public text: string =
-    'Search your deck for a Mismagius, Honchkrow, Chandelure, or Aegislash, including Pokémon-GX, that evolves from 1 of your Pokémon in play, and put it onto that Pokémon to evolve it. Then, shuffle your deck. You can use this card during your first turn or on a Pokémon that was put into play this turn.';
+  public text: string = 'Search your deck for a Mismagius, Honchkrow, Chandelure, or Aegislash, including Pokémon-GX, that evolves from 1 of your Pokémon in play, and put it onto that Pokémon to evolve it. Then, shuffle your deck. You can use this card during your first turn or on a Pokémon that was put into play this turn.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

@@ -13,7 +13,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { CardManager } from '../../game/cards/card-manager';
 import { PokemonCardList } from '../../game/store/state/pokemon-card-list';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
-import { ShuffleDeckPrompt } from '../../game';
+import { SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -67,10 +67,9 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     next();
   });
 
-  // Canceled by user, he didn't found the card in the deck
   if (cards.length === 0) {
     player.supporter.moveCardTo(effect.trainerCard, player.discard);
-    return state;
+    return state;  // canceled by user
   }
 
   const evolution = cards[0] as PokemonCard;
@@ -96,6 +95,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
   if (targets.length === 0) {
     player.supporter.moveCardTo(effect.trainerCard, player.discard);
+    SHUFFLE_DECK(store, state, player);
     return state; // canceled by user
   }
   const pokemonCard = targets[0].getPokemonCard();
@@ -109,30 +109,18 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   targets[0].pokemonPlayedTurn = state.turn;
   player.supporter.moveCardTo(effect.trainerCard, player.discard);
 
-  return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-    player.deck.applyOrder(order);
-  });
+  SHUFFLE_DECK(store, state, player);
 }
 
 export class Evosoda extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
-
   public set: string = 'XY';
-
   public name: string = 'Evosoda';
-
   public fullName: string = 'Evosoda XY';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '116';
-
-  public text: string =
-    'Search your deck for a card that evolves from 1 of your Pokemon and put ' +
-    'it onto that Pokemon. (This counts as evolving that Pokemon). ' +
-    'Shuffle your deck afterward. You can\'t use this card during your first ' +
-    'turn or on a Pokemon that was put into play this turn.';
+  public text: string = 'Search your deck for a card that evolves from 1 of your Pokémon and put it onto that Pokémon. (This counts as evolving that Pokémon.) Shuffle your deck afterward. You can\'t use this card during your first turn or on a Pokémon that was put into play this turn.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
