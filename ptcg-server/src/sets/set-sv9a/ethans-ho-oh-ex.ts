@@ -104,7 +104,7 @@ export class EthansHoOhex extends PokemonCard {
 
         for (const transfer of transfers) {
           const target = StateUtils.getTarget(state, player, transfer.to);
-          player.discard.moveCardTo(transfer.card, target);
+          player.hand.moveCardTo(transfer.card, target);
         }
 
         return state;

@@ -73,7 +73,7 @@ class EthansHoOhex extends pokemon_card_1.PokemonCard {
                 }
                 for (const transfer of transfers) {
                     const target = game_1.StateUtils.getTarget(state, player, transfer.to);
-                    player.discard.moveCardTo(transfer.card, target);
+                    player.hand.moveCardTo(transfer.card, target);
                 }
                 return state;
             });
