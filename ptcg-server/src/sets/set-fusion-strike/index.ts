@@ -39,6 +39,7 @@ import { Shelmet } from './shelmet';
 import { SkatersPark } from './skaters-park';
 import { Starmie } from './starmie';
 import { Staryu } from './staryu';
+import { Steelix } from './steelix';
 import { Swampert } from './swampert';
 import { Totodile } from './totodile';
 import { TsareenaV } from './tsareena-v';
@@ -89,6 +90,7 @@ export const setFusionStrike: Card[] = [
   new SkatersPark(),
   new Starmie(),
   new Staryu(),
+  new Steelix(),
   new Swampert(),
   new Totodile(),
 ];
