@@ -1,9 +1,8 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, GameError, PlayerType, GameMessage } from '../../game';
-import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { DISCARD_A_STADIUM_CARD_IN_PLAY, THIS_ATTACK_DOES_X_MORE_DAMAGE, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Primeape extends PokemonCard {
   public evolvesFrom = 'Mankey';
@@ -38,6 +37,7 @@ export class Primeape extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {
+      const stadiumCard = StateUtils.getStadiumCard(state);
       if (!stadiumCard) {
         return state;
       }
@@ -68,6 +68,8 @@ export class Primeape extends PokemonCard {
           benchPokemonWithDamage++;
         }
       });
+      //The attack needs to be reset; otherwise, it will always cause 50 damage, even without any Pokémon with damage on the bench.
+      effect.damage = 0;
       THIS_ATTACK_DOES_X_MORE_DAMAGE(effect, store, state, 50 * benchPokemonWithDamage);
     }
     return state;
