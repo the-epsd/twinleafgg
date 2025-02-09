@@ -3,7 +3,7 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, GameError, PlayerType, GameMessage } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
-
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Primeape extends PokemonCard {
   public evolvesFrom = 'Mankey';
@@ -37,35 +37,29 @@ export class Primeape extends PokemonCard {
   public regulationMark = 'E';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const stadiumCard = StateUtils.getStadiumCard(state);
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       if (!stadiumCard) {
         return state;
       }
 
+      //Discard only the opponent's stadium.
       const stadiumCardList = StateUtils.findCardList(state, stadiumCard);
       const owner = StateUtils.findOwner(state, stadiumCardList);
-
-      if (stadiumCard !== undefined && owner !== effect.player) {
-        const cardList = StateUtils.findCardList(state, stadiumCard);
-        const player = StateUtils.findOwner(state, cardList);
-        cardList.moveTo(player.discard);
+      if (owner !== effect.player) {
+        DISCARD_A_STADIUM_CARD_IN_PLAY(state);
         return state;
       }
-
       return state;
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
+      //I check how many Pokémon are on the bench to know how much damage the attack will cause.
       const player = effect.player
       const hasBenched = player.bench.some(b => b.cards.length > 0);
-
       if (!hasBenched) {
         throw new GameError(GameMessage.CANNOT_USE_ATTACK);
       }
-
       let benchPokemonWithDamage = 0;
-
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
         if (cardList === player.active) {
           return;
@@ -74,8 +68,7 @@ export class Primeape extends PokemonCard {
           benchPokemonWithDamage++;
         }
       });
-      effect.damage = benchPokemonWithDamage * 50;
-      return state;
+      THIS_ATTACK_DOES_X_MORE_DAMAGE(effect, store, state, 50 * benchPokemonWithDamage);
     }
     return state;
   }
