@@ -18,7 +18,7 @@ export class UseTrainerAbilityAction {
         this.clientId = clientId;
         this.name = name;
         this.target = target;
-        this.type = 'USE_ABILITY_ACTION';
+        this.type = 'USE_TRAINER_ABILITY_ACTION';
     }
 }
 export class UseStadiumAction {

@@ -37,6 +37,8 @@ export var CardTag;
     CardTag["HOPS"] = "HOPS";
     CardTag["MARNIES"] = "MARNIES";
     CardTag["STEVENS"] = "STEVENS";
+    CardTag["ETHANS"] = "ETHANS";
+    CardTag["MISTYS"] = "MISTYS";
 })(CardTag || (CardTag = {}));
 export var SuperType;
 (function (SuperType) {
