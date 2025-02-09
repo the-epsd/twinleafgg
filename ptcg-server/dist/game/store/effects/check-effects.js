@@ -12,6 +12,7 @@ export var CheckEffects;
     CheckEffects["CHECK_POKEMON_PLAYED_TURN_EFFECT"] = "CHECK_POKEMON_PLAYED_TURN_EFFECT";
     CheckEffects["CHECK_TABLE_STATE_EFFECT"] = "CHECK_TABLE_STATE_EFFECT";
     CheckEffects["ADD_SPECIAL_CONDITIONS_EFFECT"] = "ADD_SPECIAL_CONDITIONS_EFFECT";
+    CheckEffects["CHECK_PRIZES_DESTINATION_EFFECT"] = "CHECK_PRIZES_DESTINATION_EFFECT";
 })(CheckEffects || (CheckEffects = {}));
 export class CheckPokemonPowersEffect {
     constructor(player, target) {
@@ -124,5 +125,13 @@ export class AddSpecialConditionsPowerEffect {
         this.poisonDamage = poisonDamage;
         this.burnDamage = burnDamage;
         this.sleepFlips = sleepFlips;
+    }
+}
+export class CheckPrizesDestinationEffect {
+    constructor(player, destination) {
+        this.type = CheckEffects.CHECK_PRIZES_DESTINATION_EFFECT;
+        this.preventDefault = false;
+        this.player = player;
+        this.destination = destination;
     }
 }

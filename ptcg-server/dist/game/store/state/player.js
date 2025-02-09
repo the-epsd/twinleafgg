@@ -53,10 +53,11 @@ export class Player {
         this.pecharuntexIsInPlay = false;
         this.usedFanCall = false;
         this.canEvolve = false;
-        this.canAttackFirstTurn = false;
         //GX-Attack Dedicated Section
         this.usedAlteredCreation = false;
         this.alteredCreationDamage = false;
+        // Taken prize cards ("taken" means "moved to the player's hand")
+        this.prizesTaken = 0;
     }
     getPrizeLeft() {
         return this.prizes.reduce((left, p) => left + p.cards.length, 0);
@@ -104,7 +105,7 @@ export class Player {
     getPokemonInPlay() {
         let list = [];
         this.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, pokemonCard, target) => {
-            if (cardList)
+            if (cardList.cards.length !== 0)
                 list.push(cardList);
         });
         return list;

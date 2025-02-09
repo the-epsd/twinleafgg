@@ -1,6 +1,6 @@
 export const config = {
     backend: {
-        address: 'http://server.epsd.ca',
+        address: 'https://play-server.twinleaf.gg',
         port: 8080,
         registrationEnabled: true,
         allowCors: true,
@@ -18,7 +18,7 @@ export const config = {
     core: {
         debug: false,
         // How often should we execute the background tasks
-        schedulerInterval: 30 * 60 * 1000,
+        schedulerInterval: 24 * 60 * 60 * 1000,
         // Wait till next hour before running tasks
         schedulerStartNextHour: false,
         // Decrease players' ranking every day
