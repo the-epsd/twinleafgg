@@ -3,7 +3,8 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { AFTER_ATTACK, SWITCH_ACTIVE_WITH_BENCHED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { AttackEffect } from '../../game/store/effects/game-effects';
+import { ChoosePokemonPrompt, GameMessage, PlayerType, SlotType } from '../../game';
 
 export class Zubat extends PokemonCard {
 
@@ -37,15 +38,29 @@ export class Zubat extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (WAS_ATTACK_USED(effect, 0, this)) {
-      this.usedHideInShadows = true;
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+      const player = effect.player;
+      const hasBenched = player.bench.some(b => b.cards.length > 0);
+
+      if (!hasBenched) {
+        return state;
+      }
+
+      return store.prompt(state, new ChoosePokemonPrompt(
+        player.id,
+        GameMessage.CHOOSE_NEW_ACTIVE_POKEMON,
+        PlayerType.BOTTOM_PLAYER,
+        [SlotType.BENCH],
+        { allowCancel: true },
+      ), selected => {
+        if (!selected || selected.length === 0) {
+          return state;
+        }
+        const target = selected[0];
+        player.switchPokemon(target);
+      });
     }
 
-    if (AFTER_ATTACK(effect) && this.usedHideInShadows) {
-      const player = effect.player;
-      SWITCH_ACTIVE_WITH_BENCHED(store, state, player);
-      this.usedHideInShadows = false;
-    }
-    return state;
+    return state
   }
 }
