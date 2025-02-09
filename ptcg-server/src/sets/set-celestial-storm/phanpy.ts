@@ -2,10 +2,10 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, CoinFlipPrompt, GameMessage, PlayerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { CheckHpEffect } from '../../game/store/effects/check-effects';
 import { PutDamageEffect, AbstractAttackEffect } from '../../game/store/effects/attack-effects';
+import { ADD_MARKER, HAS_MARKER, REMOVE_MARKER, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class Phanpy extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -38,46 +38,43 @@ export class Phanpy extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
+    if (WAS_ATTACK_USED(effect, 1, this)) {
+      const opponent = StateUtils.getOpponent(state, effect.player);
       state = store.prompt(state, new CoinFlipPrompt(
-        player.id, GameMessage.COIN_FLIP
+        effect.player.id, GameMessage.COIN_FLIP
       ), flipResult => {
         if (flipResult) {
-          player.active.marker.addMarker(this.PREVENT_KNOCKED_OUT_DURING_OPPONENTS_NEXT_TURN_MARKER, this);
-          opponent.marker.addMarker(this.CLEAR_PREVENT_KNOCKED_OUT_DURING_OPPONENTS_NEXT_TURN_MARKER, this);
+          ADD_MARKER(this.PREVENT_KNOCKED_OUT_DURING_OPPONENTS_NEXT_TURN_MARKER, effect.player.active, this);
+          ADD_MARKER(this.CLEAR_PREVENT_KNOCKED_OUT_DURING_OPPONENTS_NEXT_TURN_MARKER, opponent, this);
         }
       });
 
       return state;
     }
-    //Endure UP
 
+    //Endure UP
     if (effect instanceof AbstractAttackEffect && effect instanceof PutDamageEffect
-      && effect.target.marker.hasMarker(this.PREVENT_KNOCKED_OUT_DURING_OPPONENTS_NEXT_TURN_MARKER)) {
+      && HAS_MARKER(this.PREVENT_KNOCKED_OUT_DURING_OPPONENTS_NEXT_TURN_MARKER, effect.target, this)) {
       const player = StateUtils.findOwner(state, effect.target);
       const checkHpEffect = new CheckHpEffect(player, effect.target);
       store.reduceEffect(state, checkHpEffect);
-      const selectedTarget = player.active;
-      const targetDamage = selectedTarget.damage;
 
-      if (effect.damage >= (checkHpEffect.hp - targetDamage)) {
+      if (effect.damage >= (checkHpEffect.hp - player.active.damage)) {
         effect.preventDefault = true;
         effect.target.damage = checkHpEffect.hp - 10;
       }
       return state;
     }
 
-    if (effect instanceof EndTurnEffect
-      && effect.player.marker.hasMarker(this.CLEAR_PREVENT_KNOCKED_OUT_DURING_OPPONENTS_NEXT_TURN_MARKER, this)) {
-      effect.player.marker.removeMarker(this.CLEAR_PREVENT_KNOCKED_OUT_DURING_OPPONENTS_NEXT_TURN_MARKER, this);
+    REMOVE_MARKER_AT_END_OF_TURN(effect, this.CLEAR_PREVENT_KNOCKED_OUT_DURING_OPPONENTS_NEXT_TURN_MARKER, this);
+
+    if (effect instanceof EndTurnEffect) {
+      //Remove the marker from Phanpy at the end of the opponent's turn.
       const opponent = StateUtils.getOpponent(state, effect.player);
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-        cardList.marker.removeMarker(this.PREVENT_KNOCKED_OUT_DURING_OPPONENTS_NEXT_TURN_MARKER, this);
+        REMOVE_MARKER(this.PREVENT_KNOCKED_OUT_DURING_OPPONENTS_NEXT_TURN_MARKER, cardList, this);
       });
-    }
-
+    };
     return state;
   }
 }
