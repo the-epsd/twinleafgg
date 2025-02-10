@@ -1,6 +1,8 @@
 import { GameError } from '../../game-error';
 import { GameLog, GameMessage } from '../../game-message';
 import { Card } from '../card/card';
+import { TrainerCard } from '../card/trainer-card';
+import { Effect } from '../effects/effect';
 import { TrainerEffect } from '../effects/play-card-effects';
 import { ChooseCardsPrompt } from '../prompts/choose-cards-prompt';
 import { ShowCardsPrompt } from '../prompts/show-cards-prompt';
@@ -9,6 +11,10 @@ import { StateUtils } from '../state-utils';
 import { State } from '../state/state';
 import { Store } from '../store';
 import { StoreLike } from '../store-like';
+
+export function WAS_TRAINER_USED(effect: Effect, card: TrainerCard): effect is TrainerEffect {
+  return effect instanceof TrainerEffect && effect.trainerCard === card;
+}
 
 export function DISCARD_X_CARDS_FROM_YOUR_HAND(effect: TrainerEffect, store: StoreLike, state: State, minAmount: number, maxAmount: number) {
 

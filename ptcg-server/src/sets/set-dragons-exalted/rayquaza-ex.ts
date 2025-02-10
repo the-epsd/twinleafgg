@@ -11,47 +11,37 @@ import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 
 export class RayquazaEx extends PokemonCard {
 
-  public tags = [ CardTag.POKEMON_EX ];
-
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.DRAGON;
-
+  public tags = [CardTag.POKEMON_EX];
+  public cardType: CardType = N;
   public hp: number = 170;
-
-  public weakness = [{ type: CardType.DRAGON }];
-
-  public retreat = [ CardType.COLORLESS ];
+  public weakness = [{ type: N }];
+  public retreat = [C];
 
   public attacks = [
     {
       name: 'Celestial Roar',
-      cost: [ CardType.COLORLESS ],
+      cost: [C],
       damage: 0,
-      text: 'Discard the top 3 cards of your deck. If any of those cards ' +
-        'are Energy cards, attach them to this Pokemon.'
+      text: 'Discard the top 3 cards of your deck. If any of those cards are Energy cards, attach them to this Pokémon.'
     },
     {
       name: 'Dragon Burst',
-      cost: [CardType.FIRE, CardType.LIGHTNING ],
+      cost: [R, L],
       damage: 60,
-      text: 'Discard all basic R Energy or all basic L Energy attached to ' +
-        'this Pokemon. This attack does 60 damage times the number of Energy ' +
-        'cards you discarded.'
+      damageCalculation: 'x',
+      text: 'Discard all basic [R] Energy or all basic [L] Energy attached to this Pokémon. This attack does 60 damage times the number of Energy cards you discarded.'
     }
   ];
 
   public set: string = 'DRX';
-
   public name: string = 'Rayquaza EX';
-
   public fullName: string = 'Rayquaza EX DRX';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '85';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const temp = new CardList();
@@ -71,7 +61,7 @@ export class RayquazaEx extends PokemonCard {
       return store.prompt(state, new SelectPrompt(
         player.id,
         GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
-        [ GameMessage.ALL_FIRE_ENERGIES, GameMessage.ALL_LIGHTNING_ENERGIES ],
+        [GameMessage.ALL_FIRE_ENERGIES, GameMessage.ALL_LIGHTNING_ENERGIES],
         { allowCancel: false }
       ), choice => {
         const cardType = choice === 0 ? CardType.FIRE : CardType.LIGHTNING;

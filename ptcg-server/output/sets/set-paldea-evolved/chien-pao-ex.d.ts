@@ -3,15 +3,14 @@ import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, PowerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 export declare class ChienPaoex extends PokemonCard {
-    regulationMark: string;
-    tags: CardTag[];
     stage: Stage;
+    tags: CardTag[];
     cardType: CardType;
     hp: number;
     weakness: {
-        type: CardType;
+        type: CardType.METAL;
     }[];
-    retreat: CardType[];
+    retreat: CardType.COLORLESS[];
     powers: {
         name: string;
         useWhenInPlay: boolean;
@@ -20,14 +19,15 @@ export declare class ChienPaoex extends PokemonCard {
     }[];
     attacks: {
         name: string;
-        cost: CardType[];
+        cost: CardType.WATER[];
         damage: number;
         damageCalculation: string;
         text: string;
     }[];
+    regulationMark: string;
     set: string;
-    cardImage: string;
     setNumber: string;
+    cardImage: string;
     name: string;
     fullName: string;
     readonly SHIVERY_CHILL_MARKER = "SHIVERY_CHILL_MARKER";

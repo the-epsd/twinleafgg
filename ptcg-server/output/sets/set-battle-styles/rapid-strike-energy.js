@@ -11,16 +11,16 @@ class RapidStrikeEnergy extends energy_card_1.EnergyCard {
         super(...arguments);
         this.tags = [card_types_1.CardTag.RAPID_STRIKE];
         this.regulationMark = 'E';
-        this.provides = [card_types_1.CardType.COLORLESS];
+        this.provides = [C];
         this.energyType = card_types_1.EnergyType.SPECIAL;
         this.set = 'BST';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '140';
         this.name = 'Rapid Strike Energy';
         this.fullName = 'Rapid Strike Energy BST';
-        this.text = 'This card can only be attached to a Rapid Strike Pokémon. If this card is attached to anything other than a Rapid Strike Pokémon, discard this card.' +
-            '' +
-            'As long as this card is attached to a Pokémon, it provides 2 in any combination of W Energy and F Energy.';
+        this.text = `This card can only be attached to a Rapid Strike Pokémon. If this card is attached to anything other than a Rapid Strike Pokémon, discard this card.
+
+As long as this card is attached to a Pokémon, it provides 2 in any combination of [W] Energy and [F] Energy.`;
     }
     reduceEffect(store, state, effect) {
         // Provide energy when attached to Rapid Strike Pokemon

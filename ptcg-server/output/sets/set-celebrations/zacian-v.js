@@ -10,33 +10,30 @@ const game_phase_effects_1 = require("../../game/store/effects/game-phase-effect
 class ZacianV extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.tags = [card_types_1.CardTag.POKEMON_V];
         this.stage = card_types_1.Stage.BASIC;
-        this.cardType = card_types_1.CardType.PSYCHIC;
+        this.tags = [card_types_1.CardTag.POKEMON_V];
+        this.cardType = P;
         this.hp = 220;
-        this.weakness = [{ type: card_types_1.CardType.METAL }];
-        this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
+        this.weakness = [{ type: M }];
+        this.retreat = [C, C];
         this.powers = [{
                 name: 'Roar of the Sword',
                 useWhenInPlay: true,
                 powerType: game_1.PowerType.ABILITY,
-                text: 'Once during your turn, you may search your deck for a ' +
-                    'P Energy card and attach it to 1 of your Pokémon. Then,' +
-                    'shuffle your deck. If you use this Ability, your turn ends.'
+                text: 'Once during your turn, you may search your deck for a [P] Energy card and attach it to 1 of your Pokémon. Then, shuffle your deck. If you use this Ability, your turn ends.'
             }];
         this.attacks = [
             {
                 name: 'Storm Slash',
-                cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
+                cost: [C, C, C],
                 damage: 60,
-                text: 'This attack does 30 more damage for each [P] Energy ' +
-                    'attached to this Pokémon.'
+                text: 'This attack does 30 more damage for each [P] Energy attached to this Pokémon.'
             }
         ];
-        this.set = 'CEL';
-        this.cardImage = 'assets/cardback.png';
-        this.setNumber = '16';
         this.regulationMark = 'E';
+        this.set = 'CEL';
+        this.setNumber = '16';
+        this.cardImage = 'assets/cardback.png';
         this.name = 'Zacian V';
         this.fullName = 'Zacian V CEL';
         this.RUSH_IN_MARKER = 'RUSH_IN_MARKER';

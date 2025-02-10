@@ -13,7 +13,7 @@ export class Recycle extends TrainerCard {
 
   public name: string = 'Recycle';
 
-  public fullName: string = 'Gambler FO';
+  public fullName: string = 'Recycle FO';
 
   public text: string = 'Flip a coin. If heads, put a card in your discard pile on top of your deck.';
 

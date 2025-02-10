@@ -29,28 +29,26 @@ class Oddish extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.BASIC;
-        this.cardType = card_types_1.CardType.GRASS;
+        this.cardType = G;
         this.hp = 40;
-        this.weakness = [{ type: card_types_1.CardType.PSYCHIC }];
-        this.retreat = [card_types_1.CardType.COLORLESS];
+        this.weakness = [{ type: P }];
+        this.retreat = [C];
         this.attacks = [{
                 name: 'Ram',
-                cost: [card_types_1.CardType.COLORLESS],
+                cost: [C],
                 damage: 10,
                 text: ''
             }, {
                 name: 'Find a Friend',
-                cost: [card_types_1.CardType.GRASS],
+                cost: [G],
                 damage: 0,
-                text: 'Flip a coin. If heads, search your deck for a G Pokemon, ' +
-                    'show it to your opponent, and put it into your hand. ' +
-                    'Shuffle your deck afterward.'
+                text: 'Flip a coin. If heads, search your deck for a [G] Pokémon, show it to your opponent, and put it into your hand. Shuffle your deck afterward.'
             }];
         this.set = 'UD';
+        this.setNumber = '60';
+        this.cardImage = 'assets/cardback.png';
         this.name = 'Oddish';
         this.fullName = 'Oddish UD';
-        this.cardImage = 'assets/cardback.png';
-        this.setNumber = '60';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {

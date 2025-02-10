@@ -11,49 +11,34 @@ import { AttachEnergyPrompt } from '../../game/store/prompts/attach-energy-promp
 import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
 
 export class Cherrim extends PokemonCard {
-
   public stage: Stage = Stage.STAGE_1;
-
   public regulationMark = 'E';
-
   public evolvesFrom = 'Cherubi';
-
-  public cardType: CardType = CardType.GRASS;
-
+  public cardType: CardType = G;
   public hp: number = 80;
-
-  public weakness = [{ type: CardType.FIRE }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: R }];
+  public retreat = [C, C];
 
   public powers = [{
     name: 'Spring Bloom',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
-    text: 'As often as you like during your turn, you may attach a ' +
-      'G Energy card from your hand to 1 of your Pokémon ' +
-      'that doesn\'t have a Rule Box (Pokémon V, Pokémon-GX, ' +
-      'etc. have Rule Boxes).'
-
+    text: 'As often as you like during your turn, you may attach a [G] Energy card from your hand to 1 of your Pokémon that doesn\'t have a Rule Box(Pokémon V, Pokémon- GX, etc.have Rule Boxes).'
   }];
 
   public attacks = [
     {
       name: 'Seed Bomb',
-      cost: [CardType.GRASS, CardType.COLORLESS, CardType.COLORLESS],
+      cost: [G, C, C],
       damage: 70,
       text: ''
     }
   ];
 
   public set: string = 'BST';
-
-  public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '8';
-
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cherrim';
-
   public fullName: string = 'Cherrim BST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

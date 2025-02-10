@@ -11,33 +11,32 @@ const check_effects_1 = require("../../game/store/effects/check-effects");
 class Gardevoirex extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.regulationMark = 'G';
-        this.tags = [card_types_1.CardTag.POKEMON_ex];
         this.stage = card_types_1.Stage.STAGE_2;
         this.evolvesFrom = 'Kirlia';
-        this.cardType = card_types_1.CardType.PSYCHIC;
+        this.tags = [card_types_1.CardTag.POKEMON_ex];
+        this.cardType = P;
         this.hp = 310;
-        this.weakness = [{ type: card_types_1.CardType.DARK }];
-        this.resistance = [{ type: card_types_1.CardType.FIGHTING, value: -30 }];
-        this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
+        this.weakness = [{ type: D }];
+        this.resistance = [{ type: F, value: -30 }];
+        this.retreat = [C, C];
         this.powers = [{
                 name: 'Psychic Embrace',
                 useWhenInPlay: true,
                 powerType: game_1.PowerType.ABILITY,
-                text: 'As often as you like during your turn (before your attack), ' +
-                    'you may attach a P Energy card from your discard pile to 1 of your Pokemon.'
+                text: 'As often as you like during your turn, you may attach a Basic [P] Energy card from your discard pile to 1 of your [P] Pokémon. If you attached Energy to a Pokémon in this way, put 2 damage counters on that Pokémon. You can\'t use this Ability on a Pokémon that would be Knocked Out.'
             }];
         this.attacks = [
             {
                 name: 'Miracle Force',
-                cost: [card_types_1.CardType.PSYCHIC, card_types_1.CardType.PSYCHIC, card_types_1.CardType.COLORLESS],
+                cost: [P, P, C],
                 damage: 190,
                 text: 'This Pokémon recovers from all Special Conditions.'
             }
         ];
+        this.regulationMark = 'G';
         this.set = 'SVI';
-        this.cardImage = 'assets/cardback.png';
         this.setNumber = '86';
+        this.cardImage = 'assets/cardback.png';
         this.name = 'Gardevoir ex';
         this.fullName = 'Gardevoir ex SVI';
     }

@@ -13,30 +13,30 @@ class Blastoise extends pokemon_card_1.PokemonCard {
         super(...arguments);
         this.stage = card_types_1.Stage.STAGE_2;
         this.evolvesFrom = 'Wartortle';
-        this.cardType = card_types_1.CardType.WATER;
+        this.cardType = W;
         this.hp = 140;
-        this.weakness = [{ type: card_types_1.CardType.GRASS }];
-        this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
+        this.weakness = [{ type: G }];
+        this.retreat = [C, C, C, C];
         this.powers = [{
                 name: 'Deluge',
                 useWhenInPlay: true,
                 powerType: game_1.PowerType.ABILITY,
-                text: 'As often as you like during your turn (before your attack), ' +
-                    'you may attach a W Energy card from your hand to 1 of your Pokemon.'
+                text: 'As often as you like during your turn (before your attack), you may attach a [W] Energy card from your hand to 1 of your Pokémon.'
             }];
         this.attacks = [
             {
                 name: 'Hydro Pump',
-                cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
+                cost: [C, C, C, C],
                 damage: 60,
-                text: 'Does 10 more damage for each W Energy attached to this Pokemon.'
+                damageCalculation: '+',
+                text: 'Does 10 more damage for each [W] Energy attached to this Pokémon.'
             }
         ];
         this.set = 'BCR';
+        this.setNumber = '31';
         this.name = 'Blastoise';
         this.fullName = 'Blastoise BCR';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '31';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

@@ -1,7 +1,10 @@
+import { TrainerCard } from '../card/trainer-card';
+import { Effect } from '../effects/effect';
 import { TrainerEffect } from '../effects/play-card-effects';
 import { State } from '../state/state';
 import { Store } from '../store';
 import { StoreLike } from '../store-like';
+export declare function WAS_TRAINER_USED(effect: Effect, card: TrainerCard): effect is TrainerEffect;
 export declare function DISCARD_X_CARDS_FROM_YOUR_HAND(effect: TrainerEffect, store: StoreLike, state: State, minAmount: number, maxAmount: number): void;
 export declare function TRAINER_SHOW_OPPONENT_CARDS(effect: TrainerEffect, store: Store, state: State): void;
 export declare function SHUFFLE_DECK(effect: TrainerEffect, store: Store, state: State): State;

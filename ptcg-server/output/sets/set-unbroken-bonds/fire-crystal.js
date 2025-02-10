@@ -8,6 +8,7 @@ const card_types_1 = require("../../game/store/card/card-types");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 const choose_cards_prompt_1 = require("../../game/store/prompts/choose-cards-prompt");
 const energy_card_1 = require("../../game/store/card/energy-card");
+const trainer_prefabs_1 = require("../../game/store/prefabs/trainer-prefabs");
 function* playCard(next, store, state, effect) {
     const player = effect.player;
     // Player has no Fire Energy in the discard pile
@@ -43,10 +44,10 @@ class FireCrystal extends trainer_card_1.TrainerCard {
         this.setNumber = '173';
         this.name = 'Fire Crystal';
         this.fullName = 'Fire Crystal UNB';
-        this.text = 'Put 3 R Energy cards from your discard pile into your hand.';
+        this.text = 'Put 3 [R] Energy cards from your discard pile into your hand.';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
+        if (trainer_prefabs_1.WAS_TRAINER_USED(effect, this)) {
             const player = effect.player;
             // Check if DiscardToHandEffect is prevented
             const discardEffect = new play_card_effects_1.DiscardToHandEffect(player, this);

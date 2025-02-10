@@ -9,29 +9,28 @@ class Turtwig extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.BASIC;
-        this.cardType = card_types_1.CardType.GRASS;
+        this.cardType = G;
         this.hp = 70;
-        this.weakness = [{ type: card_types_1.CardType.FIRE }];
-        this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
-        this.evolvesInto = 'Grotle';
+        this.weakness = [{ type: R }];
+        this.retreat = [C, C];
         this.attacks = [{
                 name: 'Synthesis',
-                cost: [card_types_1.CardType.GRASS],
+                cost: [G],
                 damage: 0,
-                text: 'Search your deck for a G Energy card and attach it to 1 of your Pokemon. Then, shuffle your deck'
+                text: 'Search your deck for a [G] Energy card and attach it to 1 of your Pokémon. Then, shuffle your deck.'
             },
             {
                 name: 'Headbutt Bounce',
-                cost: [card_types_1.CardType.GRASS, card_types_1.CardType.COLORLESS],
+                cost: [G, C],
                 damage: 30,
                 text: ''
             }
         ];
         this.set = 'UPR';
-        this.name = 'Turtwig';
-        this.fullName = 'Turtwig UPR';
         this.setNumber = '6';
         this.cardImage = 'assets/cardback.png';
+        this.name = 'Turtwig';
+        this.fullName = 'Turtwig UPR';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

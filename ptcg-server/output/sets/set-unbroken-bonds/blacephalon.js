@@ -8,31 +8,31 @@ class BlacephalonUNB extends game_1.PokemonCard {
         super(...arguments);
         this.tags = [game_1.CardTag.ULTRA_BEAST];
         this.stage = game_1.Stage.BASIC;
-        this.cardType = game_1.CardType.FIRE;
+        this.cardType = R;
         this.hp = 120;
-        this.weakness = [{ type: game_1.CardType.WATER }];
-        this.retreat = [game_1.CardType.COLORLESS, game_1.CardType.COLORLESS];
+        this.weakness = [{ type: W }];
+        this.retreat = [C, C];
+        this.attacks = [
+            {
+                name: 'Blazer',
+                cost: [R],
+                damage: 10,
+                damageCalculation: '+',
+                text: 'Turn 1 of your face-down Prize cards face up. If it\'s a [R] Energy card, this attack does 50 more damage. (That Prize card remains face up for the rest of the game.) '
+            },
+            {
+                name: 'Fireball Circus',
+                cost: [R, R, R],
+                damage: 0,
+                damageCalculation: 'x',
+                text: 'Discard any number of [R] Energy cards from your hand. This attack does 50 damage for each card you discarded in this way.'
+            },
+        ];
         this.set = 'UNB';
         this.setNumber = '32';
         this.cardImage = 'assets/cardback.png';
         this.name = 'Blacephalon';
         this.fullName = 'Blacephalon UNB';
-        this.attacks = [
-            {
-                name: 'Blazer',
-                cost: [game_1.CardType.FIRE],
-                damage: 10,
-                text: 'Turn 1 of your face-down Prize cards face up. If it\'s a R Energy card, this attack does ' +
-                    '50 more damage. (That Prize card remains face up for the rest of the game.)'
-            },
-            {
-                name: 'Fireball Circus',
-                cost: [game_1.CardType.FIRE, game_1.CardType.FIRE, game_1.CardType.FIRE],
-                damage: 0,
-                text: 'Discard any number of R Energy cards from your hand. This attack does 50 damage for ' +
-                    'each card you discarded in this way..'
-            },
-        ];
     }
     reduceEffect(store, state, effect) {
         // Blazer

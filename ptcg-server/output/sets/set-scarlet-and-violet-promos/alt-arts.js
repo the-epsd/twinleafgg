@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SnorlaxIR = exports.PawmotSVP = void 0;
+exports.SnorlaxSVP = exports.PawmotSVP = void 0;
 const snorlax_1 = require("../set-pokemon-151/snorlax");
 const pawmot_1 = require("../set-scarlet-and-violet/pawmot");
 class PawmotSVP extends pawmot_1.Pawmot {
@@ -12,12 +12,12 @@ class PawmotSVP extends pawmot_1.Pawmot {
     }
 }
 exports.PawmotSVP = PawmotSVP;
-class SnorlaxIR extends snorlax_1.Snorlax {
+class SnorlaxSVP extends snorlax_1.Snorlax {
     constructor() {
         super(...arguments);
         this.setNumber = '51';
-        this.fullName = 'SnorlaxIR SVP';
+        this.fullName = 'Snorlax SVP';
         this.set = 'SVP';
     }
 }
-exports.SnorlaxIR = SnorlaxIR;
+exports.SnorlaxSVP = SnorlaxSVP;

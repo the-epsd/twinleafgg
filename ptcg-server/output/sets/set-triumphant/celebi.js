@@ -14,33 +14,29 @@ class Celebi extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.BASIC;
-        this.cardType = card_types_1.CardType.GRASS;
+        this.cardType = G;
         this.hp = 60;
-        this.weakness = [{ type: card_types_1.CardType.FIRE }];
-        this.retreat = [card_types_1.CardType.COLORLESS];
+        this.weakness = [{ type: R }];
+        this.retreat = [C];
         this.powers = [{
                 name: 'Forest Breath',
                 powerType: game_1.PowerType.POKEPOWER,
                 useWhenInPlay: true,
-                text: 'Once during your turn (before your attack), if Celebi is your ' +
-                    'Active Pokemon, you may attach a G Energy card from your hand ' +
-                    'to 1 of your Pokemon. This power can\'t be used if Celebi is ' +
-                    'affected by a Special Condition.'
+                text: 'Once during your turn (before your attack), if Celebi is your Active Pokémon, you may attach a [G] Energy card from your hand to 1 of your Pokémon. This power can\'t be used if Celebi is affected by a Special Condition.'
             }];
         this.attacks = [
             {
                 name: 'Time Circle',
-                cost: [card_types_1.CardType.GRASS, card_types_1.CardType.PSYCHIC, card_types_1.CardType.COLORLESS],
+                cost: [G, P, C],
                 damage: 30,
-                text: 'During your opponent\'s next turn, prevent all damage done to ' +
-                    'Celebi by attacks from your opponent\'s Stage 1 or Stage 2 Pokemon.'
+                text: 'During your opponent\'s next turn, prevent all damage done to Celebi by attacks from your opponent\'s Stage 1 or Stage 2 Pokémon.'
             }
         ];
         this.set = 'TM';
+        this.setNumber = '92';
+        this.cardImage = 'assets/cardback.png';
         this.name = 'Celebi';
         this.fullName = 'Celebi TM';
-        this.cardImage = 'assets/cardback.png';
-        this.setNumber = '92';
         this.FOREST_BREATH_MARKER = 'FOREST_BREATH_MARKER';
         this.TIME_CIRCLE_MARKER = 'TIME_CIRCLE_MARKER';
         this.CLEAR_TIME_CIRCLE_MARKER = 'CLEAR_TIME_CIRCLE_MARKER';

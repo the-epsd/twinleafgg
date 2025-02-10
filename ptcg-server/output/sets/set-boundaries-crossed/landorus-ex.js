@@ -11,33 +11,31 @@ const game_message_1 = require("../../game/game-message");
 class LandorusEx extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.tags = [card_types_1.CardTag.POKEMON_EX];
         this.stage = card_types_1.Stage.BASIC;
-        this.cardType = card_types_1.CardType.FIGHTING;
+        this.tags = [card_types_1.CardTag.POKEMON_EX];
+        this.cardType = F;
         this.hp = 180;
-        this.weakness = [{ type: card_types_1.CardType.WATER }];
-        this.resistance = [{ type: card_types_1.CardType.LIGHTNING, value: -20 }];
-        this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
+        this.weakness = [{ type: W }];
+        this.resistance = [{ type: L, value: -20 }];
+        this.retreat = [C, C, C];
         this.attacks = [
             {
                 name: 'Hammerhead',
-                cost: [card_types_1.CardType.FIGHTING],
+                cost: [F],
                 damage: 30,
-                text: 'Does 30 damage to 1 of your opponent\'s Benched Pokemon. ' +
-                    '(Don\'t apply Weakness and Resistance for Benched Pokemon.)'
+                text: 'Does 30 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
             }, {
                 name: 'Land\'s Judgment',
-                cost: [card_types_1.CardType.FIGHTING, card_types_1.CardType.FIGHTING, card_types_1.CardType.COLORLESS],
+                cost: [F, F, C],
                 damage: 80,
-                text: 'You may discard all F Energy attach to this Pokemon. ' +
-                    'If you do, this attack does 70 more damage.'
+                text: 'You may discard all [F] Energy attached to this Pokémon. If you do, this attack does 70 more damage.'
             },
         ];
         this.set = 'BCR';
+        this.setNumber = '89';
+        this.cardImage = 'assets/cardback.png';
         this.name = 'Landorus EX';
         this.fullName = 'Landorus EX BCR';
-        this.cardImage = 'assets/cardback.png';
-        this.setNumber = '89';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

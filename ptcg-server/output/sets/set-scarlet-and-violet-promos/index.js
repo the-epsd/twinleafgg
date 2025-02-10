@@ -19,5 +19,5 @@ exports.setScarletAndVioletPromos = [
     new toxtricity_ex_1.Toxtricityex(),
     // Alt arts
     new alt_arts_1.PawmotSVP(),
-    new alt_arts_1.SnorlaxIR(),
+    new alt_arts_1.SnorlaxSVP(),
 ];

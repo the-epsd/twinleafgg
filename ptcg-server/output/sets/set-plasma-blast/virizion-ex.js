@@ -37,34 +37,31 @@ function* useEmeraldSlash(next, store, state, effect) {
 class VirizionEx extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.tags = [card_types_1.CardTag.POKEMON_EX];
         this.stage = card_types_1.Stage.BASIC;
-        this.cardType = card_types_1.CardType.GRASS;
+        this.tags = [card_types_1.CardTag.POKEMON_EX];
+        this.cardType = G;
         this.hp = 170;
-        this.weakness = [{ type: card_types_1.CardType.FIRE }];
-        this.resistance = [{ type: card_types_1.CardType.WATER, value: -20 }];
-        this.retreat = [card_types_1.CardType.COLORLESS];
+        this.weakness = [{ type: R }];
+        this.resistance = [{ type: W, value: -20 }];
+        this.retreat = [C];
         this.powers = [{
                 name: 'Verdant Wind',
                 powerType: game_1.PowerType.ABILITY,
-                text: 'Each of your Pokemon that has any G Energy attached to it can\'t ' +
-                    'be affected by any Special Conditions. (Remove any Special Conditions ' +
-                    'affecting those Pokemon.)'
+                text: 'Each of your Pokémon that has any [G] Energy attached to it can\'t be affected by any Special Conditions. (Remove any Special Conditions affecting those Pokémon.)'
             }];
         this.attacks = [
             {
                 name: 'Emerald Slash',
-                cost: [card_types_1.CardType.GRASS, card_types_1.CardType.COLORLESS],
+                cost: [G, C],
                 damage: 50,
-                text: 'You may search your deck for 2 G Energy cards and attach them ' +
-                    'to 1 of your Benched Pokemon. Shuffle your deck afterward.'
+                text: 'You may search your deck for 2 [G] Energy cards and attach them to 1 of your Benched Pokémon. Shuffle your deck afterward.'
             }
         ];
         this.set = 'PLB';
+        this.setNumber = '9';
+        this.cardImage = 'assets/cardback.png';
         this.name = 'Virizion EX';
         this.fullName = 'Virizion EX PLB';
-        this.cardImage = 'assets/cardback.png';
-        this.setNumber = '9';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

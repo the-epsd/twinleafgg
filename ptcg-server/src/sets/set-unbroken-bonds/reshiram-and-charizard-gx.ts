@@ -7,33 +7,36 @@ import { AfterDamageEffect, ApplyWeaknessEffect } from '../../game/store/effects
 
 
 export class ReshiramCharizardGX extends PokemonCard {
-  public tags = [CardTag.TAG_TEAM];
+
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.FIRE;
+  public tags = [CardTag.POKEMON_GX, CardTag.TAG_TEAM];
+  public cardType: CardType = R;
   public hp: number = 270;
-  public weakness = [{ type: CardType.WATER }];
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: W }];
+  public retreat = [C, C, C];
 
   public attacks = [
     {
       name: 'Outrage',
-      cost: [CardType.FIRE, CardType.COLORLESS],
+      cost: [R, C],
       damage: 30,
+      damageCalculation: '+',
       text: 'This attack does 10 more damage for each damage counter on this Pokemon.'
     },
     {
       name: 'Flare Strike',
-      cost: [CardType.FIRE, CardType.FIRE, CardType.FIRE, CardType.COLORLESS],
+      cost: [R, R, R, C],
       damage: 230,
       text: 'This Pokemon can\'t use Flare Strike during your next turn.'
     },
     {
       name: 'Double Blaze-GX',
-      cost: [CardType.FIRE, CardType.FIRE, CardType.FIRE],
+      cost: [R, R, R],
       damage: 200,
       shred: false,
       gxAttack: true,
-      text: 'If this Pokemon has at least 3 extra R Energy attached to it (in addition to this attack\'s cost), ' +
+      damageCalculation: '+',
+      text: 'If this Pokemon has at least 3 extra [R] Energy attached to it (in addition to this attack\'s cost), ' +
         'this attack does 100 more damage, and this attack\'s damage isn\'t affected by any effects on your ' +
         'opponent\'s Active Pokemon. (You can\'t use more than 1 GX attack in a game.)'
     },

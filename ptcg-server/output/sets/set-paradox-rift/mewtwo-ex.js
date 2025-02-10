@@ -11,27 +11,27 @@ class Mewtwoex extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.BASIC;
-        this.regulationMark = 'G';
         this.tags = [card_types_1.CardTag.POKEMON_ex, card_types_1.CardTag.POKEMON_TERA];
-        this.cardType = card_types_1.CardType.LIGHTNING;
+        this.cardType = L;
         this.hp = 230;
-        this.weakness = [{ type: card_types_1.CardType.FIGHTING }];
-        this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
+        this.weakness = [{ type: F }];
+        this.retreat = [C, C];
         this.attacks = [
             {
                 name: 'Transfer Charge',
-                cost: [card_types_1.CardType.PSYCHIC],
+                cost: [P],
                 damage: 0,
-                text: 'Attach up to 2 Basic P Energy from your discard pile to your Pokemon in any way you like.'
+                text: 'Attach up to 2 Basic [P] Energy cards from your discard pile to your Pokémon in any way you like.'
             },
             {
                 name: 'Photon Kinesis',
-                cost: [card_types_1.CardType.PSYCHIC, card_types_1.CardType.PSYCHIC],
+                cost: [P, P],
                 damage: 10,
                 damageCalculation: '+',
-                text: 'This attack does 30 more damage for each P Energy attached to all of your Pokémon.'
+                text: 'This attack does 30 more damage for each [P] Energy attached to all of your Pokémon.'
             },
         ];
+        this.regulationMark = 'G';
         this.set = 'PAR';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '58';

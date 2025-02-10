@@ -10,30 +10,30 @@ const play_card_effects_1 = require("../../game/store/effects/play-card-effects"
 class SandyShocksex extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.regulationMark = 'G';
-        this.tags = [card_types_1.CardTag.POKEMON_ex, card_types_1.CardTag.ANCIENT];
         this.stage = card_types_1.Stage.BASIC;
-        this.cardType = card_types_1.CardType.FIGHTING;
+        this.tags = [card_types_1.CardTag.POKEMON_ex, card_types_1.CardTag.ANCIENT];
+        this.cardType = F;
         this.hp = 220;
-        this.weakness = [{ type: card_types_1.CardType.GRASS }];
-        this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
+        this.weakness = [{ type: G }];
+        this.retreat = [C, C];
         this.powers = [{
                 name: 'Magnetic Absorption',
                 useWhenInPlay: true,
                 powerType: game_1.PowerType.ABILITY,
-                text: 'Once during your turn, if your opponent has 4 or fewer Prize cards remaining, you may use this Ability. Attach a Basic F Energy card from your discard pile to this Pokémon.'
+                text: 'Once during your turn, if your opponent has 4 or fewer Prize cards remaining, you may attach a Basic [F] Energy card from your discard pile to this Pokémon.'
             }];
         this.attacks = [
             {
                 name: 'Earthen Spike',
-                cost: [card_types_1.CardType.FIGHTING, card_types_1.CardType.FIGHTING, card_types_1.CardType.COLORLESS],
+                cost: [F, F, C],
                 damage: 200,
                 text: 'During your next turn, this Pokémon can\'t attack.'
             }
         ];
+        this.regulationMark = 'G';
         this.set = 'PAR';
-        this.cardImage = 'assets/cardback.png';
         this.setNumber = '108';
+        this.cardImage = 'assets/cardback.png';
         this.name = 'Sandy Shocks ex';
         this.fullName = 'Sandy Shocks ex PAR';
         this.ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';

@@ -11,32 +11,32 @@ const game_phase_effects_1 = require("../../game/store/effects/game-phase-effect
 class KeldeoEx extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.tags = [card_types_1.CardTag.POKEMON_EX];
         this.stage = card_types_1.Stage.BASIC;
-        this.cardType = card_types_1.CardType.WATER;
+        this.tags = [card_types_1.CardTag.POKEMON_EX];
+        this.cardType = W;
         this.hp = 170;
-        this.weakness = [{ type: card_types_1.CardType.GRASS }];
-        this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
+        this.weakness = [{ type: G }];
+        this.retreat = [C, C];
         this.powers = [{
                 name: 'Rush In',
                 useWhenInPlay: true,
                 powerType: game_1.PowerType.ABILITY,
-                text: 'Once during your turn (before your attack), if this Pokemon is ' +
-                    'on your Bench, you may switch this Pokemon with your Active Pokemon.'
+                text: 'Once during your turn (before your attack), if this Pokémon is on your Bench, you may switch this Pokémon with your Active Pokémon.'
             }];
         this.attacks = [
             {
                 name: 'Secret Sword',
-                cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
+                cost: [C, C, C],
                 damage: 50,
-                text: 'Does 20 more damage for each W Energy attached to this Pokemon.'
+                damageCalculation: '+',
+                text: 'Does 20 more damage for each [W] Energy attached to this Pokémon.'
             }
         ];
         this.set = 'BCR';
+        this.setNumber = '49';
         this.name = 'Keldeo EX';
         this.fullName = 'Keldeo EX BCR';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '49';
         this.RUSH_IN_MARKER = 'RUSH_IN_MARKER';
     }
     reduceEffect(store, state, effect) {

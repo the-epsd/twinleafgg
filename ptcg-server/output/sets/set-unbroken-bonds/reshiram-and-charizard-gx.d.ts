@@ -1,27 +1,37 @@
 import { CardTag, CardType, PokemonCard, Stage, State, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 export declare class ReshiramCharizardGX extends PokemonCard {
-    tags: CardTag[];
     stage: Stage;
+    tags: CardTag[];
     cardType: CardType;
     hp: number;
     weakness: {
-        type: CardType;
+        type: CardType.WATER;
     }[];
-    retreat: CardType[];
+    retreat: CardType.COLORLESS[];
     attacks: ({
         name: string;
-        cost: CardType[];
+        cost: (CardType.FIRE | CardType.COLORLESS)[];
         damage: number;
+        damageCalculation: string;
         text: string;
         shred?: undefined;
         gxAttack?: undefined;
     } | {
         name: string;
-        cost: CardType[];
+        cost: (CardType.FIRE | CardType.COLORLESS)[];
+        damage: number;
+        text: string;
+        damageCalculation?: undefined;
+        shred?: undefined;
+        gxAttack?: undefined;
+    } | {
+        name: string;
+        cost: CardType.FIRE[];
         damage: number;
         shred: boolean;
         gxAttack: boolean;
+        damageCalculation: string;
         text: string;
     })[];
     set: string;

@@ -12,23 +12,23 @@ class Reshiram extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.BASIC;
-        this.cardType = card_types_1.CardType.FIRE;
+        this.cardType = R;
         this.hp = 130;
-        this.weakness = [{ type: card_types_1.CardType.WATER }];
-        this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
+        this.weakness = [{ type: W }];
+        this.retreat = [C, C];
         this.attacks = [
             {
                 name: 'Outrage',
-                cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
+                cost: [C, C],
                 damage: 20,
                 damageCalculation: '+',
                 text: 'Does 10 more damage for each damage counter on this Pokemon.'
             },
             {
                 name: 'Blue Flare',
-                cost: [card_types_1.CardType.FIRE, card_types_1.CardType.FIRE, card_types_1.CardType.COLORLESS],
+                cost: [R, R, C],
                 damage: 120,
-                text: 'Discard 2 R Energy attached to this Pokemon.'
+                text: 'Discard 2 [R] Energy attached to this Pokemon.'
             }
         ];
         this.set = 'BLW';

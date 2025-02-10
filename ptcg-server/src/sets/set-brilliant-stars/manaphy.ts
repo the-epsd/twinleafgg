@@ -21,18 +21,18 @@ export class Manaphy extends PokemonCard {
 
   public weakness = [{ type: CardType.LIGHTNING }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public powers = [{
     name: 'Wave Veil',
     powerType: PowerType.ABILITY,
     text: 'Prevent all damage done to your Benched Pokémon by ' +
-    'attacks from your opponent\'s Pokémon.'
+      'attacks from your opponent\'s Pokémon.'
   }];
 
   public attacks = [{
     name: 'Rain Splash',
-    cost: [ CardType.WATER ],
+    cost: [CardType.WATER],
     damage: 20,
     text: ''
   }];
@@ -52,40 +52,35 @@ export class Manaphy extends PokemonCard {
     if (effect instanceof PutDamageEffect) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-
-      if (effect.target === player.active || effect.target === opponent.active) {
-        return state;
-      }
-
       const targetPlayer = StateUtils.findOwner(state, effect.target);
 
-      let isManaphyInPlay = false;
-      targetPlayer.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-        if (card === this) {
-          isManaphyInPlay = true;
+      // Only check benched Pokemon
+      if (effect.target !== player.active && effect.target !== opponent.active) {
+        let isManaphyInPlay = false;
+        targetPlayer.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+          if (card === this) {
+            isManaphyInPlay = true;
+          }
+        });
+
+        if (isManaphyInPlay) {
+          // Try to reduce PowerEffect, to check if something is blocking our ability
+          try {
+            const stub = new PowerEffect(player, {
+              name: 'test',
+              powerType: PowerType.ABILITY,
+              text: ''
+            }, this);
+            store.reduceEffect(state, stub);
+
+            // Prevent damage only to benched Pokemon
+            effect.preventDefault = true;
+          } catch {
+            return state;
+          }
         }
-      });
-
-      if (!isManaphyInPlay) {
-        return state;
       }
-
-      // Try to reduce PowerEffect, to check if something is blocking our ability
-      try {
-        const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
-      } catch {
-        return state;
-      }
-
-      effect.preventDefault = true;
     }
-
     return state;
   }
-
 }

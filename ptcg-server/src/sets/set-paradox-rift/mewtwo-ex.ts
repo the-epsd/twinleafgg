@@ -9,43 +9,33 @@ import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 export class Mewtwoex extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
-
-  public regulationMark = 'G';
-
   public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
-
-  public cardType: CardType = CardType.LIGHTNING;
-
+  public cardType: CardType = L;
   public hp: number = 230;
-
-  public weakness = [{ type: CardType.FIGHTING }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: F }];
+  public retreat = [C, C];
 
   public attacks = [
     {
       name: 'Transfer Charge',
-      cost: [CardType.PSYCHIC],
+      cost: [P],
       damage: 0,
-      text: 'Attach up to 2 Basic P Energy from your discard pile to your Pokemon in any way you like.'
+      text: 'Attach up to 2 Basic [P] Energy cards from your discard pile to your Pokémon in any way you like.'
     },
     {
       name: 'Photon Kinesis',
-      cost: [CardType.PSYCHIC, CardType.PSYCHIC],
+      cost: [P, P],
       damage: 10,
       damageCalculation: '+',
-      text: 'This attack does 30 more damage for each P Energy attached to all of your Pokémon.'
+      text: 'This attack does 30 more damage for each [P] Energy attached to all of your Pokémon.'
     },
   ];
 
+  public regulationMark = 'G';
   public set: string = 'PAR';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '58';
-
   public name: string = 'Mewtwo ex';
-
   public fullName: string = 'Mewtwo ex PAR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

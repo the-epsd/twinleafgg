@@ -15,40 +15,30 @@ import { DiscardCardsEffect, PutDamageEffect } from '../../game/store/effects/at
 export class Pyroar extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_1;
-
   public evolvesFrom = 'Litleo';
-
-  public cardType: CardType = CardType.FIRE;
-
+  public cardType: CardType = R;
   public hp: number = 110;
-
-  public weakness = [{ type: CardType.WATER }];
-
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public weakness = [{ type: W }];
+  public retreat = [C, C];
 
   public powers = [{
     name: 'Intimidating Mane',
     powerType: PowerType.ABILITY,
-    text: 'Prevent all damage done to this Pokemon by attacks from your ' +
-      'opponent\'s Basic Pokemon.'
+    text: 'Prevent all damage done to this Pokémon by attacks from your opponent\'s Basic Pokémon.'
   }];
 
   public attacks = [{
     name: 'Scorching Fang',
-    cost: [ CardType.FIRE, CardType.COLORLESS, CardType.COLORLESS ],
+    cost: [R, C, C],
     damage: 60,
-    text: 'You may discard a R Energy attached to this Pokemon. If you do, ' +
-      'this attack does 30 more damage.'
+    damageCalculation: '+',
+    text: 'You may discard a [R] Energy attached to this Pokémon. If you do, this attack does 30 more damage.'
   }];
 
   public set: string = 'FLF';
-
   public name: string = 'Pyroar';
-
   public fullName: string = 'Pyroar FLF';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '20';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -63,7 +53,7 @@ export class Pyroar extends PokemonCard {
         player.id,
         GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
         checkProvidedEnergy.energyMap,
-        [ CardType.FIRE ],
+        [CardType.FIRE],
         { allowCancel: true }
       ), energy => {
         const cards: Card[] = (energy || []).map(e => e.card);

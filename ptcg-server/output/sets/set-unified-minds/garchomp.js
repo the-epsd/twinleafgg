@@ -1,20 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.GarchompUNM = void 0;
+exports.Garchomp = void 0;
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const check_effects_1 = require("../../game/store/effects/check-effects");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
-class GarchompUNM extends pokemon_card_1.PokemonCard {
+class Garchomp extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.STAGE_2;
         this.evolvesFrom = 'Gabite';
-        this.cardType = card_types_1.CardType.FIGHTING;
+        this.cardType = F;
         this.hp = 150;
-        this.weakness = [{ type: card_types_1.CardType.GRASS }];
+        this.weakness = [{ type: G }];
         this.retreat = [];
         this.powers = [{
                 name: 'Avenging Aura',
@@ -24,8 +24,9 @@ class GarchompUNM extends pokemon_card_1.PokemonCard {
         this.attacks = [
             {
                 name: 'Over Slice',
-                cost: [card_types_1.CardType.FIGHTING, card_types_1.CardType.COLORLESS],
+                cost: [F, C],
                 damage: 80,
+                damageCalculation: '+',
                 text: 'You may discard an Energy from this Pokémon. If you do, this attack does 40 more damage.'
             }
         ];
@@ -82,4 +83,4 @@ class GarchompUNM extends pokemon_card_1.PokemonCard {
         return state;
     }
 }
-exports.GarchompUNM = GarchompUNM;
+exports.Garchomp = Garchomp;

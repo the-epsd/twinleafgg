@@ -11,32 +11,30 @@ const game_message_1 = require("../../game/game-message");
 class RaikouEx extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.tags = [card_types_1.CardTag.POKEMON_EX];
         this.stage = card_types_1.Stage.BASIC;
-        this.cardType = card_types_1.CardType.LIGHTNING;
+        this.tags = [card_types_1.CardTag.POKEMON_EX];
+        this.cardType = L;
         this.hp = 170;
-        this.weakness = [{ type: card_types_1.CardType.FIGHTING }];
-        this.retreat = [card_types_1.CardType.COLORLESS];
+        this.weakness = [{ type: F }];
+        this.retreat = [C];
         this.attacks = [
             {
                 name: 'Thunder Fang',
-                cost: [card_types_1.CardType.LIGHTNING, card_types_1.CardType.COLORLESS],
+                cost: [L, C],
                 damage: 30,
                 text: 'Flip a coin. If heads, the Defending Pokemon is now Paralyzed.'
             }, {
                 name: 'Volt Bolt',
-                cost: [card_types_1.CardType.LIGHTNING, card_types_1.CardType.LIGHTNING, card_types_1.CardType.COLORLESS],
+                cost: [L, L, C],
                 damage: 0,
-                text: 'Discard all L Energy attached to this Pokemon. This attack ' +
-                    'does 100 damage to 1 of your opponent\'s Pokemon. ' +
-                    '(Don\'t apply Weakness and Resistance for Benched Pokemon.)'
+                text: 'Discard all [L] Energy attached to this Pokémon. This attack does 100 damage to 1 of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
             },
         ];
         this.set = 'DEX';
+        this.setNumber = '38';
+        this.cardImage = 'assets/cardback.png';
         this.name = 'Raikou EX';
         this.fullName = 'Raikou EX DEX';
-        this.cardImage = 'assets/cardback.png';
-        this.setNumber = '38';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

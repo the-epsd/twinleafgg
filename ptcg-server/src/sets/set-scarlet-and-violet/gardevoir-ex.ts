@@ -12,49 +12,36 @@ import { CheckHpEffect } from '../../game/store/effects/check-effects';
 
 export class Gardevoirex extends PokemonCard {
 
-  public regulationMark = 'G';
-
-  public tags = [CardTag.POKEMON_ex];
-
   public stage: Stage = Stage.STAGE_2;
-
   public evolvesFrom = 'Kirlia';
-
-  public cardType: CardType = CardType.PSYCHIC;
-
+  public tags = [CardTag.POKEMON_ex];
+  public cardType: CardType = P;
   public hp: number = 310;
-
-  public weakness = [{ type: CardType.DARK }];
-
-  public resistance = [{ type: CardType.FIGHTING, value: -30 }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: D }];
+  public resistance = [{ type: F, value: -30 }];
+  public retreat = [C, C];
 
   public powers = [{
     name: 'Psychic Embrace',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
-    text: 'As often as you like during your turn (before your attack), ' +
-      'you may attach a P Energy card from your discard pile to 1 of your Pokemon.'
+    text: 'As often as you like during your turn, you may attach a Basic [P] Energy card from your discard pile to 1 of your [P] Pokémon. If you attached Energy to a Pokémon in this way, put 2 damage counters on that Pokémon. You can\'t use this Ability on a Pokémon that would be Knocked Out.'
   }];
 
   public attacks = [
     {
       name: 'Miracle Force',
-      cost: [CardType.PSYCHIC, CardType.PSYCHIC, CardType.COLORLESS],
+      cost: [P, P, C],
       damage: 190,
       text: 'This Pokémon recovers from all Special Conditions.'
     }
   ];
 
+  public regulationMark = 'G';
   public set: string = 'SVI';
-
-  public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '86';
-
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gardevoir ex';
-
   public fullName: string = 'Gardevoir ex SVI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

@@ -4,33 +4,29 @@ import { CardType, EnergyType, SuperType, TrainerType } from '../../game/store/c
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
-import { AttachEnergyEffect, TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
 import { AttachEnergyPrompt } from '../../game/store/prompts/attach-energy-prompt';
 import { PlayerType, SlotType } from '../../game/store/actions/play-card-action';
 import { StateUtils } from '../../game/store/state-utils';
+import { WAS_TRAINER_USED } from '../../game/store/prefabs/trainer-prefabs';
 
 export class Welder extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;
-
   public set: string = 'UNB';
-
   public cardImage: string = 'assets/cardback.png';
-
   public name: string = 'Welder';
-
   public fullName: string = 'Welder UNB';
-
   public setNumber = '189';
 
   public text: string =
-    'Attach up to 2 R Energy cards from your hand to 1 of your Pokemon. ' +
-    'If you do, draw 3 cards.';
+    'Attach up to 2 [R] Energy cards from your hand to 1 of your Pokémon. If you do, draw 3 cards.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+
+    if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
 
       const hasEnergyInHand = player.hand.cards.some(c => {
@@ -52,7 +48,7 @@ export class Welder extends TrainerCard {
         PlayerType.BOTTOM_PLAYER,
         [SlotType.BENCH, SlotType.ACTIVE],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fire Energy' },
-        { min: 1, max: 2, allowCancel: true, sameTarget: true }
+        { min: 1, max: 2, allowCancel: false, sameTarget: true }
       ), transfers => {
         transfers = transfers || [];
         for (const transfer of transfers) {
@@ -64,7 +60,6 @@ export class Welder extends TrainerCard {
         if (transfers.length > 0) {
           player.deck.moveTo(player.hand, 3);
         }
-
         player.supporter.moveCardTo(this, player.discard);
       });
     }

@@ -18,29 +18,28 @@ class Bronzong extends pokemon_card_1.PokemonCard {
         super(...arguments);
         this.stage = card_types_1.Stage.STAGE_1;
         this.evolvesFrom = 'Bronzor';
-        this.cardType = card_types_1.CardType.METAL;
+        this.cardType = M;
         this.hp = 90;
-        this.weakness = [{ type: card_types_1.CardType.FIRE }];
-        this.resistance = [{ type: card_types_1.CardType.PSYCHIC, value: -20 }];
-        this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
+        this.weakness = [{ type: R }];
+        this.resistance = [{ type: P, value: -20 }];
+        this.retreat = [C, C, C];
         this.powers = [{
                 name: 'Metal Links',
                 useWhenInPlay: true,
                 powerType: pokemon_types_1.PowerType.ABILITY,
-                text: 'Once during your turn (before your attack), you may attach ' +
-                    'a M Energy card from your discard pile to 1 of your Benched Pokemon.'
+                text: 'Once during your turn (before your attack), you may attach a [M] Energy card from your discard pile to 1 of your Benched Pokémon.'
             }];
         this.attacks = [{
                 name: 'Hammer In',
-                cost: [card_types_1.CardType.METAL, card_types_1.CardType.METAL, card_types_1.CardType.COLORLESS],
+                cost: [M, M, C],
                 damage: 60,
                 text: ''
             }];
         this.set = 'PHF';
+        this.setNumber = '61';
+        this.cardImage = 'assets/cardback.png';
         this.name = 'Bronzong';
         this.fullName = 'Bronzong PHF';
-        this.cardImage = 'assets/cardback.png';
-        this.setNumber = '61';
         this.METAL_LINKS_MARKER = 'METAL_LINKS_MARKER';
     }
     reduceEffect(store, state, effect) {

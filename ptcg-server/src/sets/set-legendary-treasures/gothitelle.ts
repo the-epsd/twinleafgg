@@ -14,40 +14,30 @@ import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effect
 export class Gothitelle extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_2;
-
   public evolvesFrom = 'Gothorita';
-
-  public cardType: CardType = CardType.PSYCHIC;
-
+  public cardType: CardType = P;
   public hp: number = 130;
-
-  public weakness = [{ type: CardType.PSYCHIC }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: P }];
+  public retreat = [C, C];
 
   public powers = [{
     name: 'Magic Room',
     powerType: PowerType.ABILITY,
-    text: 'As long as this Pokemon is your Active Pokemon, your opponent ' +
-      'can\'t play any Item cards from his or her hand.'
+    text: 'As long as this Pokémon is your Active Pokémon, your opponent can\'t play any Item cards from his or her hand.'
   }];
 
   public attacks = [{
     name: 'Madkinesis',
-    cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
+    cost: [C, C, C],
     damage: 30,
-    text: 'Does 20 more damage for each P Energy attached to this Pokemon.'
+    text: 'Does 20 more damage for each [P] Energy attached to this Pokémon.'
   }];
 
   public set: string = 'LTR';
-
-  public name: string = 'Gothitelle';
-
-  public fullName: string = 'Gothitelle LTR';
-
-  public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '72';
+  public cardImage: string = 'assets/cardback.png';
+  public name: string = 'Gothitelle';
+  public fullName: string = 'Gothitelle LTR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

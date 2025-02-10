@@ -1,31 +1,31 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CryogonalUNM = void 0;
+exports.Cryogonal = void 0;
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
-class CryogonalUNM extends game_1.PokemonCard {
+class Cryogonal extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = game_1.Stage.BASIC;
-        this.cardType = game_1.CardType.WATER;
+        this.cardType = W;
         this.hp = 90;
-        this.weakness = [{ type: game_1.CardType.METAL }];
-        this.retreat = [game_1.CardType.COLORLESS];
+        this.weakness = [{ type: M }];
+        this.retreat = [C];
+        this.attacks = [
+            {
+                name: 'Frozen Lock',
+                cost: [W],
+                damage: 10,
+                text: 'Your opponent can\'t play any Item cards from their hand during their next turn.'
+            },
+        ];
         this.set = 'UNM';
         this.setNumber = '46';
         this.cardImage = 'assets/cardback.png';
         this.name = 'Cryogonal';
         this.fullName = 'Cryogonal UNM';
-        this.attacks = [
-            {
-                name: 'Frozen Lock',
-                cost: [game_1.CardType.WATER],
-                damage: 10,
-                text: 'Your opponent can\'t play any Item cards from their hand during their next turn.'
-            },
-        ];
         this.FROZEN_LOCK_MARKER = 'FROZEN_LOCK_MARKER';
     }
     reduceEffect(store, state, effect) {
@@ -45,4 +45,4 @@ class CryogonalUNM extends game_1.PokemonCard {
         return state;
     }
 }
-exports.CryogonalUNM = CryogonalUNM;
+exports.Cryogonal = Cryogonal;

@@ -10,9 +10,9 @@ export declare class Gothitelle extends PokemonCard {
     cardType: CardType;
     hp: number;
     weakness: {
-        type: CardType;
+        type: CardType.PSYCHIC;
     }[];
-    retreat: CardType[];
+    retreat: CardType.COLORLESS[];
     powers: {
         name: string;
         powerType: PowerType;
@@ -20,14 +20,14 @@ export declare class Gothitelle extends PokemonCard {
     }[];
     attacks: {
         name: string;
-        cost: CardType[];
+        cost: CardType.COLORLESS[];
         damage: number;
         text: string;
     }[];
     set: string;
+    setNumber: string;
+    cardImage: string;
     name: string;
     fullName: string;
-    cardImage: string;
-    setNumber: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

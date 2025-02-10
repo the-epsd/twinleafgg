@@ -15,27 +15,26 @@ class Gothitelle extends pokemon_card_1.PokemonCard {
         super(...arguments);
         this.stage = card_types_1.Stage.STAGE_2;
         this.evolvesFrom = 'Gothorita';
-        this.cardType = card_types_1.CardType.PSYCHIC;
+        this.cardType = P;
         this.hp = 130;
-        this.weakness = [{ type: card_types_1.CardType.PSYCHIC }];
-        this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
+        this.weakness = [{ type: P }];
+        this.retreat = [C, C];
         this.powers = [{
                 name: 'Magic Room',
                 powerType: pokemon_types_1.PowerType.ABILITY,
-                text: 'As long as this Pokemon is your Active Pokemon, your opponent ' +
-                    'can\'t play any Item cards from his or her hand.'
+                text: 'As long as this Pokémon is your Active Pokémon, your opponent can\'t play any Item cards from his or her hand.'
             }];
         this.attacks = [{
                 name: 'Madkinesis',
-                cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
+                cost: [C, C, C],
                 damage: 30,
-                text: 'Does 20 more damage for each P Energy attached to this Pokemon.'
+                text: 'Does 20 more damage for each [P] Energy attached to this Pokémon.'
             }];
         this.set = 'LTR';
+        this.setNumber = '72';
+        this.cardImage = 'assets/cardback.png';
         this.name = 'Gothitelle';
         this.fullName = 'Gothitelle LTR';
-        this.cardImage = 'assets/cardback.png';
-        this.setNumber = '72';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

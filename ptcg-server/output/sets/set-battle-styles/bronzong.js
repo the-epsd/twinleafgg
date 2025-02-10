@@ -46,28 +46,26 @@ class Bronzong extends pokemon_card_1.PokemonCard {
         super(...arguments);
         this.stage = card_types_1.Stage.STAGE_1;
         this.evolvesFrom = 'Bronzor';
-        this.regulationMark = 'E';
-        this.cardType = card_types_1.CardType.METAL;
+        this.cardType = M;
         this.hp = 110;
-        this.weakness = [{ type: card_types_1.CardType.FIRE }];
-        this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
+        this.weakness = [{ type: R }];
+        this.retreat = [C, C, C];
         this.powers = [{
                 name: 'Metal Transfer',
                 useWhenInPlay: true,
                 powerType: game_1.PowerType.ABILITY,
-                text: 'As often as you like during your turn, you may move a ' +
-                    'M Energy from 1 of your Pokémon to another of your ' +
-                    'Pokémon.'
+                text: 'As often as you like during your turn, you may move a [M] Energy from 1 of your Pokémon to another of your Pokémon.'
             }];
         this.attacks = [{
                 name: 'Zen Headbutt',
-                cost: [card_types_1.CardType.METAL, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
+                cost: [M, C, C],
                 damage: 70,
                 text: ''
             }];
+        this.regulationMark = 'E';
         this.set = 'BST';
-        this.cardImage = 'assets/cardback.png';
         this.setNumber = '102';
+        this.cardImage = 'assets/cardback.png';
         this.name = 'Bronzong';
         this.fullName = 'Bronzong BST';
     }

@@ -11,28 +11,28 @@ class Solrock extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.BASIC;
-        this.regulationMark = 'F';
-        this.cardType = card_types_1.CardType.FIGHTING;
+        this.cardType = F;
         this.hp = 90;
-        this.weakness = [{ type: card_types_1.CardType.GRASS }];
-        this.retreat = [card_types_1.CardType.COLORLESS];
+        this.weakness = [{ type: G }];
+        this.retreat = [C];
         this.powers = [{
                 name: 'Sun Energy',
                 powerType: game_1.PowerType.ABILITY,
                 useWhenInPlay: true,
-                text: 'Once during your turn, you may attach a P Energy card from your discard pile to 1 of your Lunatone.'
+                text: 'Once during your turn, you may attach a [P] Energy card from your discard pile to 1 of your Lunatone.'
             }];
         this.attacks = [
             {
                 name: 'Spinning Attack',
-                cost: [card_types_1.CardType.FIGHTING, card_types_1.CardType.COLORLESS],
+                cost: [F, C],
                 damage: 50,
                 text: ''
             }
         ];
+        this.regulationMark = 'F';
         this.set = 'PGO';
-        this.cardImage = 'assets/cardback.png';
         this.setNumber = '39';
+        this.cardImage = 'assets/cardback.png';
         this.name = 'Solrock';
         this.fullName = 'Solrock PGO';
         this.SUN_ENERGY_MARKER = 'SUN_ENERGY_MARKER';

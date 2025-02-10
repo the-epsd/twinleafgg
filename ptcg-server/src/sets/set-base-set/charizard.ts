@@ -12,45 +12,33 @@ import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 export class Charizard extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_2;
-
   public evolvesFrom = 'Charmeleon';
-
-  public cardType: CardType = CardType.FIRE;
-
+  public cardType: CardType = R;
   public hp: number = 120;
-
-  public weakness = [{
-    type: CardType.WATER
-  }];
-
-  public resistance = [{ type: CardType.FIGHTING, value: -30 }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: W }];
+  public resistance = [{ type: F, value: -30 }];
+  public retreat = [C, C, C];
 
   public powers = [{
     name: 'Energy Burn',
     useWhenInPlay: true,
     powerType: PowerType.POKEMON_POWER,
-    text: 'As often as you like during your turn (before your attack), you may turn all Energy attached to Charizard into R Energy for the rest of the turn. This power can\'t be used if Charizard is Asleep, Confused, or Paralyzed.'
+    text: 'As often as you like during your turn (before your attack), you may turn all [R] Energy attached to Charizard into [R] Energy for the rest of the turn. This power can\'t be used if Charizard is Asleep, Confused, or Paralyzed.'
   }];
 
   public attacks = [
     {
       name: 'Fire Spin',
-      cost: [CardType.FIRE, CardType.FIRE, CardType.FIRE, CardType.FIRE],
+      cost: [R, R, R, R],
       damage: 100,
       text: 'Discard 2 Energy cards attached to Charizard in order to use this attack.'
     }
   ];
 
   public set: string = 'BS';
-
   public setNumber: string = '4';
-
   public name: string = 'Charizard';
-
   public fullName: string = 'Charizard BS';
-
   public cardImage: string = 'assets/cardback.png';
 
   public readonly ENERGY_BURN_MARKER = 'ENERGY_BURN_MARKER';

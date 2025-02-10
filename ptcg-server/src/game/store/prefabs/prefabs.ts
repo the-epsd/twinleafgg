@@ -16,6 +16,14 @@ export function WAS_ATTACK_USED(effect: Effect, index: number, user: PokemonCard
   return effect instanceof AttackEffect && effect.attack === user.attacks[index];
 }
 
+export function DEAL_DAMAGE(effect: Effect): effect is DealDamageEffect {
+  return effect instanceof DealDamageEffect;
+}
+
+export function PUT_DAMAGE(effect: Effect): effect is PutDamageEffect {
+  return effect instanceof PutDamageEffect;
+}
+
 /**
  * 
  * A basic effect for checking the use of abilites.

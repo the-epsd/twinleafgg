@@ -1,8 +1,8 @@
 import { CardType, EnergyType } from '../../game/store/card/card-types';
 import { EnergyCard } from '../../game/store/card/energy-card';
-import { AbstractAttackEffect, DealDamageEffect } from '../../game/store/effects/attack-effects';
-import { CheckPokemonTypeEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
+import { DEAL_DAMAGE } from '../../game/store/prefabs/prefabs';
 
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
@@ -25,32 +25,21 @@ export class StoneFightingEnergy extends EnergyCard {
 
   public fullName = 'Stone Fighting Energy VIV';
 
-  public text =
-    'As long as this card is attached to a Pokémon, it provides [F] Energy.' +
-    '' +
-    'The [F] Pokémon this card is attached to takes 20 less damage from attacks from your opponent\'s Pokémon (after applying Weakness and Resistance).';
+  public text = `As long as this card is attached to a Pokémon, it provides [F] Energy.
+
+The [F] Pokémon this card is attached to takes 20 less damage from attacks from your opponent's Pokémon (after applying Weakness and Resistance).`;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
-      effect.energyMap.push({ card: this, provides: [CardType.FIGHTING] });
-      return state;
-    }
-
-    // Prevent effects of attacks
-    if (effect instanceof AbstractAttackEffect && effect.target?.cards?.includes(this)) {
+    if (DEAL_DAMAGE(effect) && effect.target?.cards?.includes(this)) {
       const checkPokemonType = new CheckPokemonTypeEffect(effect.target);
       store.reduceEffect(state, checkPokemonType);
 
       if (checkPokemonType.cardTypes.includes(CardType.FIGHTING)) {
-        if (effect instanceof DealDamageEffect) {
-          effect.damage = Math.max(0, effect.damage - 20);
-          return state;
-        }
+        effect.damage = Math.max(0, effect.damage - 20);
+        return state;
       }
     }
-
     return state;
   }
-
 }

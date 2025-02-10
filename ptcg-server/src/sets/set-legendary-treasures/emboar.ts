@@ -1,7 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, EnergyType, SuperType } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, StateUtils,
-  GameError, GameMessage, EnergyCard, PlayerType, SlotType } from '../../game';
+import {
+  PowerType, StoreLike, State, StateUtils,
+  GameError, GameMessage, EnergyCard, PlayerType, SlotType
+} from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { AttachEnergyPrompt } from '../../game/store/prompts/attach-energy-prompt';
@@ -10,42 +12,32 @@ import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
 export class Emboar extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_2;
-
   public evolvesFrom = 'Pignite';
-
-  public cardType: CardType = CardType.FIRE;
-
+  public cardType: CardType = R;
   public hp: number = 150;
-
-  public weakness = [{ type: CardType.WATER }];
-
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
+  public weakness = [{ type: W }];
+  public retreat = [C, C, C, C];
 
   public powers = [{
     name: 'Inferno Fandango',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
-    text: 'As often as you like during your turn (before your attack), ' +
-      'you may attach a R Energy card from your hand to 1 of your Pokemon.'
+    text: 'As often as you like during your turn (before your attack), you may attach a [R] Energy card from your hand to 1 of your Pokémon.'
   }];
 
   public attacks = [
     {
       name: 'Heat Crash',
-      cost: [ CardType.FIRE, CardType.FIRE, CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [R, R, C, C],
       damage: 80,
       text: ''
     }
   ];
 
   public set: string = 'LTR';
-
   public name: string = 'Emboar';
-
   public fullName: string = 'Emboar LTR';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '27';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -67,7 +59,7 @@ export class Emboar extends PokemonCard {
         GameMessage.ATTACH_ENERGY_CARDS,
         player.hand,
         PlayerType.BOTTOM_PLAYER,
-        [ SlotType.BENCH, SlotType.ACTIVE ],
+        [SlotType.BENCH, SlotType.ACTIVE],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fire Energy' },
         { allowCancel: true }
       ), transfers => {

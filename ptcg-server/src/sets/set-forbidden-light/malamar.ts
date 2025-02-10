@@ -16,26 +16,25 @@ import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 
 export class Malamar extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
-  public cardType: CardType = CardType.PSYCHIC;
-  public hp: number = 90;
-  public weakness = [{ type: CardType.PSYCHIC }];
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
   public evolvesFrom = 'Inkay';
+  public cardType: CardType = P;
+  public hp: number = 90;
+  public weakness = [{ type: P }];
+  public retreat = [C, C];
 
   public powers = [{
     name: 'Psychic Recharge',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
-    text: 'Once during your turn (before your attack), you may attach a P Energy card from your discard pile to 1 of your Benched Pokémon.'
+    text: 'Once during your turn (before your attack), you may attach a [P] Energy card from your discard pile to 1 of your Benched Pokémon.'
   }];
 
   public attacks = [{
     name: 'Psychic Sphere',
-    cost: [CardType.PSYCHIC, CardType.PSYCHIC, CardType.COLORLESS],
+    cost: [P, P, C],
     damage: 60,
     text: ''
   }];
-
 
   public set: string = 'FLI';
   public name: string = 'Malamar';

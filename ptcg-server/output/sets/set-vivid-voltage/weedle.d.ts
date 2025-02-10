@@ -5,20 +5,20 @@ export declare class WeedleVIV extends PokemonCard {
     cardType: CardType;
     hp: number;
     weakness: {
-        type: CardType;
+        type: CardType.FIRE;
     }[];
-    retreat: CardType[];
-    set: string;
-    setNumber: string;
-    cardImage: string;
-    regulationMark: string;
-    name: string;
-    fullName: string;
+    retreat: CardType.COLORLESS[];
     attacks: {
         name: string;
-        cost: CardType[];
+        cost: CardType.GRASS[];
         damage: number;
         text: string;
     }[];
+    regulationMark: string;
+    set: string;
+    setNumber: string;
+    cardImage: string;
+    name: string;
+    fullName: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

@@ -1,53 +1,45 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, EnergyType, SuperType } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, StateUtils,
-  GameError, GameMessage, EnergyCard, PlayerType, SlotType } from '../../game';
+import {
+  PowerType, StoreLike, State, StateUtils,
+  GameError, GameMessage, EnergyCard, PlayerType, SlotType
+} from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect, AttackEffect } from '../../game/store/effects/game-effects';
 import { AttachEnergyPrompt } from '../../game/store/prompts/attach-energy-prompt';
 import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
-import {CheckProvidedEnergyEffect} from '../../game/store/effects/check-effects';
+import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 
 export class Blastoise extends PokemonCard {
-
   public stage: Stage = Stage.STAGE_2;
-
   public evolvesFrom = 'Wartortle';
-
-  public cardType: CardType = CardType.WATER;
-
+  public cardType: CardType = W;
   public hp: number = 140;
-
-  public weakness = [{ type: CardType.GRASS }];
-
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
+  public weakness = [{ type: G }];
+  public retreat = [C, C, C, C];
 
   public powers = [{
     name: 'Deluge',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
-    text: 'As often as you like during your turn (before your attack), ' +
-      'you may attach a W Energy card from your hand to 1 of your Pokemon.'
+    text: 'As often as you like during your turn (before your attack), you may attach a [W] Energy card from your hand to 1 of your Pokémon.'
   }];
 
   public attacks = [
     {
       name: 'Hydro Pump',
-      cost: [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [C, C, C, C],
       damage: 60,
-      text: 'Does 10 more damage for each W Energy attached to this Pokemon.'
+      damageCalculation: '+',
+      text: 'Does 10 more damage for each [W] Energy attached to this Pokémon.'
     }
   ];
 
   public set: string = 'BCR';
-
-  public name: string = 'Blastoise';
-
-  public fullName: string = 'Blastoise BCR';
-
-  public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '31';
+  public name: string = 'Blastoise';
+  public fullName: string = 'Blastoise BCR';
+  public cardImage: string = 'assets/cardback.png';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -84,7 +76,7 @@ export class Blastoise extends PokemonCard {
         GameMessage.ATTACH_ENERGY_CARDS,
         player.hand,
         PlayerType.BOTTOM_PLAYER,
-        [ SlotType.BENCH, SlotType.ACTIVE ],
+        [SlotType.BENCH, SlotType.ACTIVE],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Water Energy' },
         { allowCancel: true }
       ), transfers => {

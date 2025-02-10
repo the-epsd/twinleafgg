@@ -7,18 +7,18 @@ export declare class Reshiram extends PokemonCard {
     cardType: CardType;
     hp: number;
     weakness: {
-        type: CardType;
+        type: CardType.WATER;
     }[];
-    retreat: CardType[];
+    retreat: CardType.COLORLESS[];
     attacks: ({
         name: string;
-        cost: CardType[];
+        cost: CardType.COLORLESS[];
         damage: number;
         damageCalculation: string;
         text: string;
     } | {
         name: string;
-        cost: CardType[];
+        cost: (CardType.FIRE | CardType.COLORLESS)[];
         damage: number;
         text: string;
         damageCalculation?: undefined;

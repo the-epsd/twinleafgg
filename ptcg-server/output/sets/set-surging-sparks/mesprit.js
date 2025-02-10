@@ -20,7 +20,7 @@ class Mesprit extends pokemon_card_1.PokemonCard {
                 name: 'Heart Fulfilment',
                 cost: [C],
                 damage: 0,
-                text: 'Attach up to 2 Basic P Energy from your hand to your Pokémon in any way you like.'
+                text: 'Attach up to 2 Basic [P] Energy cards from your hand to your Pokémon in any way you like.'
             }, {
                 name: 'Legendary Burst',
                 cost: [P, P],

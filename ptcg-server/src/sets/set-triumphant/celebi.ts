@@ -12,53 +12,37 @@ import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { ABILITY_USED } from '../../game/store/prefabs/prefabs';
 
-
 export class Celebi extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.GRASS;
-
+  public cardType: CardType = G;
   public hp: number = 60;
-
-  public weakness = [{ type: CardType.FIRE }];
-
-  public retreat = [CardType.COLORLESS];
+  public weakness = [{ type: R }];
+  public retreat = [C];
 
   public powers = [{
     name: 'Forest Breath',
     powerType: PowerType.POKEPOWER,
     useWhenInPlay: true,
-    text: 'Once during your turn (before your attack), if Celebi is your ' +
-      'Active Pokemon, you may attach a G Energy card from your hand ' +
-      'to 1 of your Pokemon. This power can\'t be used if Celebi is ' +
-      'affected by a Special Condition.'
+    text: 'Once during your turn (before your attack), if Celebi is your Active Pokémon, you may attach a [G] Energy card from your hand to 1 of your Pokémon. This power can\'t be used if Celebi is affected by a Special Condition.'
   }];
 
   public attacks = [
     {
       name: 'Time Circle',
-      cost: [CardType.GRASS, CardType.PSYCHIC, CardType.COLORLESS],
+      cost: [G, P, C],
       damage: 30,
-      text: 'During your opponent\'s next turn, prevent all damage done to ' +
-        'Celebi by attacks from your opponent\'s Stage 1 or Stage 2 Pokemon.'
+      text: 'During your opponent\'s next turn, prevent all damage done to Celebi by attacks from your opponent\'s Stage 1 or Stage 2 Pokémon.'
     }
   ];
 
   public set: string = 'TM';
-
+  public setNumber: string = '92';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Celebi';
-
   public fullName: string = 'Celebi TM';
 
-  public cardImage: string = 'assets/cardback.png';
-
-  public setNumber: string = '92';
-
   public readonly FOREST_BREATH_MARKER: string = 'FOREST_BREATH_MARKER';
-
   public readonly TIME_CIRCLE_MARKER: string = 'TIME_CIRCLE_MARKER';
-
   public readonly CLEAR_TIME_CIRCLE_MARKER: string = 'CLEAR_TIME_CIRCLE_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

@@ -41,28 +41,28 @@ class Froslass extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.STAGE_1;
-        this.regulationMark = 'E';
         this.evolvesFrom = 'Snorunt';
-        this.cardType = card_types_1.CardType.WATER;
+        this.cardType = W;
         this.hp = 90;
-        this.weakness = [{ type: card_types_1.CardType.METAL }];
-        this.retreat = [card_types_1.CardType.COLORLESS];
+        this.weakness = [{ type: M }];
+        this.retreat = [C];
         this.powers = [{
                 name: 'Frost Over',
                 powerType: game_1.PowerType.ABILITY,
-                text: 'When you play this Pokémon from your hand to evolve 1 of your Pokémon during your turn, you may attach a W Energy card from your discard pile to 1 of your Pokémon.'
+                text: 'When you play this Pokémon from your hand to evolve 1 of your Pokémon during your turn, you may attach a [W] Energy card from your discard pile to 1 of your Pokémon.'
             }];
         this.attacks = [
             {
                 name: 'Crystal Breath',
-                cost: [card_types_1.CardType.WATER, card_types_1.CardType.COLORLESS],
+                cost: [W, C],
                 damage: 90,
                 text: 'During your next turn, this Pokémon can\'t attack.'
             }
         ];
+        this.regulationMark = 'E';
         this.set = 'CRE';
-        this.cardImage = 'assets/cardback.png';
         this.setNumber = '36';
+        this.cardImage = 'assets/cardback.png';
         this.name = 'Froslass';
         this.fullName = 'Froslass CRE';
         this.ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';

@@ -47,7 +47,7 @@ function* useCallForFamily(next: Function, store: StoreLike, state: State,
   });
 }
 
-export class LilliesComfy extends PokemonCard {
+export class LilliesComfey extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
@@ -86,7 +86,7 @@ export class LilliesComfy extends PokemonCard {
 
   public name: string = 'Lillie\'s Comfey';
 
-  public fullName: string = 'Lillie\'s Comfy SV9';
+  public fullName: string = 'Lillie\'s Comfey SV9';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

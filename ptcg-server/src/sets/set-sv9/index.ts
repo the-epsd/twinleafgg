@@ -32,7 +32,7 @@ import { IrisFightingSpirit } from './iris-fighting-spirit';
 import { Larvitar } from './larvitar';
 import { Levincia } from './levincia';
 import { LilliesClefairyex } from './lillies-clefairy-ex';
-import { LilliesComfy } from './lillies-comfy';
+import { LilliesComfey } from './lillies-comfey';
 import { LilliesCutiefly } from './lillies-cutiefly';
 import { LilliesPearl } from './lillies-pearl';
 import { LilliesRibombee } from './lillies-ribombee';
@@ -112,7 +112,7 @@ export const setSV9: Card[] = [
   new Maractus(),
 
   new LilliesClefairyex(),
-  new LilliesComfy(),
+  new LilliesComfey(),
   new LilliesPearl(),
   new LilliesCutiefly(),
   new LilliesRibombee(),

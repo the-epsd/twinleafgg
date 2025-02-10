@@ -16,22 +16,21 @@ class Pyroar extends pokemon_card_1.PokemonCard {
         super(...arguments);
         this.stage = card_types_1.Stage.STAGE_1;
         this.evolvesFrom = 'Litleo';
-        this.cardType = card_types_1.CardType.FIRE;
+        this.cardType = R;
         this.hp = 110;
-        this.weakness = [{ type: card_types_1.CardType.WATER }];
-        this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
+        this.weakness = [{ type: W }];
+        this.retreat = [C, C];
         this.powers = [{
                 name: 'Intimidating Mane',
                 powerType: pokemon_types_1.PowerType.ABILITY,
-                text: 'Prevent all damage done to this Pokemon by attacks from your ' +
-                    'opponent\'s Basic Pokemon.'
+                text: 'Prevent all damage done to this Pokémon by attacks from your opponent\'s Basic Pokémon.'
             }];
         this.attacks = [{
                 name: 'Scorching Fang',
-                cost: [card_types_1.CardType.FIRE, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
+                cost: [R, C, C],
                 damage: 60,
-                text: 'You may discard a R Energy attached to this Pokemon. If you do, ' +
-                    'this attack does 30 more damage.'
+                damageCalculation: '+',
+                text: 'You may discard a [R] Energy attached to this Pokémon. If you do, this attack does 30 more damage.'
             }];
         this.set = 'FLF';
         this.name = 'Pyroar';

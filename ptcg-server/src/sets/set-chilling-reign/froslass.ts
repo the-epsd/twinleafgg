@@ -50,44 +50,33 @@ function* useLeParfum(next: Function, store: StoreLike, state: State,
 
 
 export class Froslass extends PokemonCard {
-
   public stage: Stage = Stage.STAGE_1;
-
-  public regulationMark = 'E';
-
   public evolvesFrom = 'Snorunt';
-
-  public cardType: CardType = CardType.WATER;
-
+  public cardType: CardType = W;
   public hp: number = 90;
-
-  public weakness = [{ type: CardType.METAL }];
-
-  public retreat = [CardType.COLORLESS];
+  public weakness = [{ type: M }];
+  public retreat = [C];
 
   public powers = [{
     name: 'Frost Over',
     powerType: PowerType.ABILITY,
-    text: 'When you play this Pokémon from your hand to evolve 1 of your Pokémon during your turn, you may attach a W Energy card from your discard pile to 1 of your Pokémon.'
+    text: 'When you play this Pokémon from your hand to evolve 1 of your Pokémon during your turn, you may attach a [W] Energy card from your discard pile to 1 of your Pokémon.'
   }];
 
   public attacks = [
     {
       name: 'Crystal Breath',
-      cost: [CardType.WATER, CardType.COLORLESS],
+      cost: [W, C],
       damage: 90,
       text: 'During your next turn, this Pokémon can\'t attack.'
     }
   ];
 
+  public regulationMark = 'E';
   public set: string = 'CRE';
-
-  public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '36';
-
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Froslass';
-
   public fullName: string = 'Froslass CRE';
 
   public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';

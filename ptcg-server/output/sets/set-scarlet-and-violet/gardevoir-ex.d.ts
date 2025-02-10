@@ -3,20 +3,19 @@ import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { PowerType, StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 export declare class Gardevoirex extends PokemonCard {
-    regulationMark: string;
-    tags: CardTag[];
     stage: Stage;
     evolvesFrom: string;
+    tags: CardTag[];
     cardType: CardType;
     hp: number;
     weakness: {
-        type: CardType;
+        type: CardType.DARK;
     }[];
     resistance: {
-        type: CardType;
+        type: CardType.FIGHTING;
         value: number;
     }[];
-    retreat: CardType[];
+    retreat: CardType.COLORLESS[];
     powers: {
         name: string;
         useWhenInPlay: boolean;
@@ -25,13 +24,14 @@ export declare class Gardevoirex extends PokemonCard {
     }[];
     attacks: {
         name: string;
-        cost: CardType[];
+        cost: (CardType.PSYCHIC | CardType.COLORLESS)[];
         damage: number;
         text: string;
     }[];
+    regulationMark: string;
     set: string;
-    cardImage: string;
     setNumber: string;
+    cardImage: string;
     name: string;
     fullName: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;

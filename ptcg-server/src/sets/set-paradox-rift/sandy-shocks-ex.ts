@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, EnergyType, SuperType } from '../../game/store/card/card-types';
+import { Stage, CardTag, EnergyType, SuperType } from '../../game/store/card/card-types';
 import { State } from '../../game/store/state/state';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { StoreLike } from '../../game/store/store-like';
@@ -10,44 +10,34 @@ import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 
 export class SandyShocksex extends PokemonCard {
 
-  public regulationMark = 'G';
-
-  public tags = [CardTag.POKEMON_ex, CardTag.ANCIENT];
-
   public stage = Stage.BASIC;
-
-  public cardType = CardType.FIGHTING;
-
+  public tags = [CardTag.POKEMON_ex, CardTag.ANCIENT];
+  public cardType = F;
   public hp = 220;
-
-  public weakness = [{ type: CardType.GRASS }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: G }];
+  public retreat = [C, C];
 
   public powers = [{
     name: 'Magnetic Absorption',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
-    text: 'Once during your turn, if your opponent has 4 or fewer Prize cards remaining, you may use this Ability. Attach a Basic F Energy card from your discard pile to this Pokémon.'
+    text: 'Once during your turn, if your opponent has 4 or fewer Prize cards remaining, you may attach a Basic [F] Energy card from your discard pile to this Pokémon.'
   }];
 
   public attacks = [
     {
       name: 'Earthen Spike',
-      cost: [CardType.FIGHTING, CardType.FIGHTING, CardType.COLORLESS],
+      cost: [F, F, C],
       damage: 200,
       text: 'During your next turn, this Pokémon can\'t attack.'
     }
   ];
 
+  public regulationMark = 'G';
   public set: string = 'PAR';
-
-  public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '108';
-
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sandy Shocks ex';
-
   public fullName: string = 'Sandy Shocks ex PAR';
 
   public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';

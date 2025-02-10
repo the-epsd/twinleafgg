@@ -12,36 +12,31 @@ const game_phase_effects_1 = require("../../game/store/effects/game-phase-effect
 class ChienPaoex extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.regulationMark = 'G';
-        this.tags = [card_types_1.CardTag.POKEMON_ex];
         this.stage = card_types_1.Stage.BASIC;
-        this.cardType = card_types_1.CardType.WATER;
+        this.tags = [card_types_1.CardTag.POKEMON_ex];
+        this.cardType = W;
         this.hp = 220;
-        this.weakness = [{ type: card_types_1.CardType.METAL }];
-        this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
+        this.weakness = [{ type: M }];
+        this.retreat = [C, C];
         this.powers = [{
                 name: 'Shivery Chill',
                 useWhenInPlay: true,
                 powerType: game_1.PowerType.ABILITY,
-                text: 'Once during your turn, if this Pokémon is in the Active ' +
-                    'Spot, you may search your deck for up to 2 Basic [W] Energy ' +
-                    'cards, reveal them, and put them into your hand. Then, ' +
-                    'shuffle your deck.'
+                text: 'Once during your turn, if this Pokémon is in the Active Spot, you may search your deck for up to 2 Basic [W] Energy cards, reveal them, and put them into your hand. Then, shuffle your deck.'
             }];
         this.attacks = [
             {
                 name: 'Hail Blade',
-                cost: [card_types_1.CardType.WATER, card_types_1.CardType.WATER],
+                cost: [W, W],
                 damage: 60,
                 damageCalculation: 'x',
-                text: 'You may discard any amount of W Energy from your ' +
-                    'Pokémon. This attack does 60 damage for each card you ' +
-                    'discarded in this way.'
+                text: 'You may discard any amount of [W] Energy from your Pokémon. This attack does 60 damage for each card you discarded in this way.'
             }
         ];
+        this.regulationMark = 'G';
         this.set = 'PAL';
-        this.cardImage = 'assets/cardback.png';
         this.setNumber = '61';
+        this.cardImage = 'assets/cardback.png';
         this.name = 'Chien-Pao ex';
         this.fullName = 'Chien-Pao ex PAL';
         this.SHIVERY_CHILL_MARKER = 'SHIVERY_CHILL_MARKER';

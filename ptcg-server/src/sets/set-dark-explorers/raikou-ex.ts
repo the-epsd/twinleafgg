@@ -4,50 +4,40 @@ import { StoreLike, State, Card, CoinFlipPrompt, ChoosePokemonPrompt, PlayerType
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
-import { DiscardCardsEffect, AddSpecialConditionsEffect,
-  PutDamageEffect } from '../../game/store/effects/attack-effects';
+import {
+  DiscardCardsEffect, AddSpecialConditionsEffect,
+  PutDamageEffect
+} from '../../game/store/effects/attack-effects';
 import { GameMessage } from '../../game/game-message';
 
 
 export class RaikouEx extends PokemonCard {
-
-  public tags = [ CardTag.POKEMON_EX ];
-
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.LIGHTNING;
-
+  public tags = [CardTag.POKEMON_EX];
+  public cardType: CardType = L;
   public hp: number = 170;
-
-  public weakness = [{ type: CardType.FIGHTING }];
-
-  public retreat = [ CardType.COLORLESS ];
+  public weakness = [{ type: F }];
+  public retreat = [C];
 
   public attacks = [
     {
       name: 'Thunder Fang',
-      cost: [ CardType.LIGHTNING, CardType.COLORLESS ],
+      cost: [L, C],
       damage: 30,
       text: 'Flip a coin. If heads, the Defending Pokemon is now Paralyzed.'
     }, {
       name: 'Volt Bolt',
-      cost: [ CardType.LIGHTNING, CardType.LIGHTNING, CardType.COLORLESS ],
+      cost: [L, L, C],
       damage: 0,
-      text: 'Discard all L Energy attached to this Pokemon. This attack ' +
-        'does 100 damage to 1 of your opponent\'s Pokemon. ' +
-        '(Don\'t apply Weakness and Resistance for Benched Pokemon.)'
+      text: 'Discard all [L] Energy attached to this Pokémon. This attack does 100 damage to 1 of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
     },
   ];
 
   public set: string = 'DEX';
-
-  public name: string = 'Raikou EX';
-
-  public fullName: string = 'Raikou EX DEX';
-
-  public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '38';
+  public cardImage: string = 'assets/cardback.png';
+  public name: string = 'Raikou EX';
+  public fullName: string = 'Raikou EX DEX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -86,7 +76,7 @@ export class RaikouEx extends PokemonCard {
         player.id,
         GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
         PlayerType.TOP_PLAYER,
-        [ SlotType.ACTIVE, SlotType.BENCH ],
+        [SlotType.ACTIVE, SlotType.BENCH],
         { allowCancel: false }
       ), selected => {
         const targets = selected || [];

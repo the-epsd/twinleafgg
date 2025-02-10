@@ -10,51 +10,35 @@ import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 
 export class ChienPaoex extends PokemonCard {
-
-  public regulationMark = 'G';
-
-  public tags = [CardTag.POKEMON_ex];
-
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.WATER;
-
+  public tags = [CardTag.POKEMON_ex];
+  public cardType: CardType = W;
   public hp: number = 220;
-
-  public weakness = [{ type: CardType.METAL }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: M }];
+  public retreat = [C, C];
 
   public powers = [{
     name: 'Shivery Chill',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
-    text: 'Once during your turn, if this Pokémon is in the Active ' +
-      'Spot, you may search your deck for up to 2 Basic [W] Energy ' +
-      'cards, reveal them, and put them into your hand. Then, ' +
-      'shuffle your deck.'
+    text: 'Once during your turn, if this Pokémon is in the Active Spot, you may search your deck for up to 2 Basic [W] Energy cards, reveal them, and put them into your hand. Then, shuffle your deck.'
   }];
 
   public attacks = [
     {
       name: 'Hail Blade',
-      cost: [CardType.WATER, CardType.WATER],
+      cost: [W, W],
       damage: 60,
       damageCalculation: 'x',
-      text: 'You may discard any amount of W Energy from your ' +
-        'Pokémon. This attack does 60 damage for each card you ' +
-        'discarded in this way.'
+      text: 'You may discard any amount of [W] Energy from your Pokémon. This attack does 60 damage for each card you discarded in this way.'
     }
   ];
 
+  public regulationMark = 'G';
   public set: string = 'PAL';
-
-  public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '61';
-
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Chien-Pao ex';
-
   public fullName: string = 'Chien-Pao ex PAL';
 
   public readonly SHIVERY_CHILL_MARKER = 'SHIVERY_CHILL_MARKER';

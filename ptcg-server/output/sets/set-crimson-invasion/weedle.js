@@ -13,7 +13,12 @@ class Weedle extends game_1.PokemonCard {
         this.weakness = [{ type: R }];
         this.retreat = [C];
         this.attacks = [
-            { name: 'Poison Sting', cost: [G], damage: 0, text: 'Your opponent\'s Active Pokémon is now Poisoned.' },
+            {
+                name: 'Poison Sting',
+                cost: [G],
+                damage: 0,
+                text: 'Your opponent\'s Active Pokémon is now Poisoned.'
+            },
         ];
         this.set = 'CIN';
         this.cardImage = 'assets/cardback.png';

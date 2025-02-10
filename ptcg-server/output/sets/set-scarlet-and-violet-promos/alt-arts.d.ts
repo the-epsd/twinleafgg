@@ -5,7 +5,7 @@ export declare class PawmotSVP extends Pawmot {
     fullName: string;
     set: string;
 }
-export declare class SnorlaxIR extends Snorlax {
+export declare class SnorlaxSVP extends Snorlax {
     setNumber: string;
     fullName: string;
     set: string;

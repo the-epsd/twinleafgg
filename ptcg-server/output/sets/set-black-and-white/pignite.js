@@ -11,21 +11,20 @@ class Pignite extends pokemon_card_1.PokemonCard {
         super(...arguments);
         this.stage = card_types_1.Stage.STAGE_1;
         this.evolvesFrom = 'Tepig';
-        this.cardType = card_types_1.CardType.FIRE;
+        this.cardType = R;
         this.hp = 100;
-        this.weakness = [{ type: card_types_1.CardType.WATER }];
-        this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
+        this.weakness = [{ type: W }];
+        this.retreat = [C, C, C];
         this.attacks = [
             {
                 name: 'Flame Charge',
-                cost: [card_types_1.CardType.COLORLESS],
+                cost: [C],
                 damage: 0,
-                text: 'Search your deck for a R Energy card and attach it to this ' +
-                    'Pokemon. Shuffle your deck afterward.'
+                text: 'Search your deck for a [R] Energy card and attach it to this Pokémon. Shuffle your deck afterward.'
             },
             {
                 name: 'Heat Crash',
-                cost: [card_types_1.CardType.FIRE, card_types_1.CardType.FIRE, card_types_1.CardType.COLORLESS],
+                cost: [R, R, C],
                 damage: 50,
                 text: ''
             }

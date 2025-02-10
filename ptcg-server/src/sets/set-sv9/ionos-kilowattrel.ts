@@ -21,7 +21,7 @@ export class IonosKilowattrel extends PokemonCard {
     name: 'Flash Draw',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
-    text: 'You must discard a Basic L Energy from this Pokémon in order to use this Ability. Once during your turn, you may draw cards until you have 6 cards in your hand.'
+    text: 'You may use this Ability once during your turn by discarding a Basic [L] Energy card from this Pokémon. Draw cards until you have 6 cards in your hand.'
   }];
 
   public attacks = [{
@@ -73,7 +73,7 @@ export class IonosKilowattrel extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      // If we have exactly 1 basic L energy attached, do it without a prompt
+      // If we have exactly 1 basic [L] energy attached, do it without a prompt
       if (lightningEnergy.length === 1) {
         lightningEnergy.forEach(card => cardList.moveCardTo(card, player.discard));
 

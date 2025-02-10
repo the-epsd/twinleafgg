@@ -1,18 +1,22 @@
-import { Attack, CardType, PokemonCard, Stage, State, StoreLike, Weakness } from "../../game";
+import { Attack, CardType, PokemonCard, Stage, State, StoreLike } from "../../game";
 import { Effect } from "../../game/store/effects/effect";
 import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED } from "../../game/store/prefabs/attack-effects";
 import { WAS_ATTACK_USED } from "../../game/store/prefabs/prefabs";
 
 export class Weedle extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = G;
   public hp: number = 50;
-  public weakness: Weakness[] = [{ type: R }];
-  public retreat: CardType[] = [C];
+  public weakness = [{ type: R }];
+  public retreat = [C];
 
   public attacks: Attack[] = [
-    { name: 'Poison Sting', cost: [G], damage: 0, text: 'Your opponent\'s Active Pokémon is now Poisoned.' },
+    {
+      name: 'Poison Sting',
+      cost: [G],
+      damage: 0,
+      text: 'Your opponent\'s Active Pokémon is now Poisoned.'
+    },
   ];
 
   public set: string = 'CIN';

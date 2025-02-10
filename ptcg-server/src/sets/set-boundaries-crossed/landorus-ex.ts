@@ -9,46 +9,33 @@ import { GameMessage } from '../../game/game-message';
 
 
 export class LandorusEx extends PokemonCard {
-
-  public tags = [ CardTag.POKEMON_EX ];
-
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.FIGHTING;
-
+  public tags = [CardTag.POKEMON_EX];
+  public cardType: CardType = F;
   public hp: number = 180;
-
-  public weakness = [{ type: CardType.WATER }];
-
-  public resistance = [{ type: CardType.LIGHTNING, value: -20 }];
-
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
+  public weakness = [{ type: W }];
+  public resistance = [{ type: L, value: -20 }];
+  public retreat = [C, C, C];
 
   public attacks = [
     {
       name: 'Hammerhead',
-      cost: [ CardType.FIGHTING ],
+      cost: [F],
       damage: 30,
-      text: 'Does 30 damage to 1 of your opponent\'s Benched Pokemon. ' +
-        '(Don\'t apply Weakness and Resistance for Benched Pokemon.)'
+      text: 'Does 30 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
     }, {
       name: 'Land\'s Judgment',
-      cost: [ CardType.FIGHTING, CardType.FIGHTING, CardType.COLORLESS ],
+      cost: [F, F, C],
       damage: 80,
-      text: 'You may discard all F Energy attach to this Pokemon. ' +
-        'If you do, this attack does 70 more damage.'
+      text: 'You may discard all [F] Energy attached to this Pokémon. If you do, this attack does 70 more damage.'
     },
   ];
 
   public set: string = 'BCR';
-
-  public name: string = 'Landorus EX';
-
-  public fullName: string = 'Landorus EX BCR';
-
-  public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '89';
+  public cardImage: string = 'assets/cardback.png';
+  public name: string = 'Landorus EX';
+  public fullName: string = 'Landorus EX BCR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -65,7 +52,7 @@ export class LandorusEx extends PokemonCard {
         player.id,
         GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
         PlayerType.TOP_PLAYER,
-        [ SlotType.BENCH ],
+        [SlotType.BENCH],
         { allowCancel: false }
       ), targets => {
         if (!targets || targets.length === 0) {
@@ -102,8 +89,6 @@ export class LandorusEx extends PokemonCard {
         }
       });
     }
-
     return state;
   }
-
 }

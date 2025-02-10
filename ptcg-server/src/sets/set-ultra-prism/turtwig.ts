@@ -5,33 +5,32 @@ import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 
 export class Turtwig extends PokemonCard {
+
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType = G;
   public hp: number = 70;
-  public weakness = [{ type: CardType.FIRE }];
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
-  public evolvesInto = 'Grotle';
+  public weakness = [{ type: R }];
+  public retreat = [C, C];
 
   public attacks = [{
     name: 'Synthesis',
-    cost: [CardType.GRASS],
+    cost: [G],
     damage: 0,
-    text: 'Search your deck for a G Energy card and attach it to 1 of your Pokemon. Then, shuffle your deck'
+    text: 'Search your deck for a [G] Energy card and attach it to 1 of your Pokémon. Then, shuffle your deck.'
   },
   {
     name: 'Headbutt Bounce',
-    cost: [CardType.GRASS, CardType.COLORLESS],
+    cost: [G, C],
     damage: 30,
     text: ''
   }
   ];
 
   public set: string = 'UPR';
-  public name: string = 'Turtwig';
-  public fullName: string = 'Turtwig UPR';
   public setNumber: string = '6';
   public cardImage: string = 'assets/cardback.png';
-  
+  public name: string = 'Turtwig';
+  public fullName: string = 'Turtwig UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

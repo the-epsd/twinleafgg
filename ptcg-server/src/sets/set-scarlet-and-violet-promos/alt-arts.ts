@@ -6,8 +6,8 @@ export class PawmotSVP extends Pawmot {
   public fullName: string = 'Pawmot SVP';
   public set = 'SVP';
 }
-export class SnorlaxIR extends Snorlax {
+export class SnorlaxSVP extends Snorlax {
   public setNumber = '51';
-  public fullName: string = 'SnorlaxIR SVP';
+  public fullName: string = 'Snorlax SVP';
   public set = 'SVP';
 }

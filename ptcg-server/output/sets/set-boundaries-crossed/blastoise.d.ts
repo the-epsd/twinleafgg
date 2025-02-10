@@ -8,9 +8,9 @@ export declare class Blastoise extends PokemonCard {
     cardType: CardType;
     hp: number;
     weakness: {
-        type: CardType;
+        type: CardType.GRASS;
     }[];
-    retreat: CardType[];
+    retreat: CardType.COLORLESS[];
     powers: {
         name: string;
         useWhenInPlay: boolean;
@@ -19,14 +19,15 @@ export declare class Blastoise extends PokemonCard {
     }[];
     attacks: {
         name: string;
-        cost: CardType[];
+        cost: CardType.COLORLESS[];
         damage: number;
+        damageCalculation: string;
         text: string;
     }[];
     set: string;
+    setNumber: string;
     name: string;
     fullName: string;
     cardImage: string;
-    setNumber: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

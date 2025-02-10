@@ -22,14 +22,14 @@ class RaichuV extends pokemon_card_1.PokemonCard {
                 cost: [L],
                 damage: 0,
                 canUseOnFirstTurn: true,
-                text: 'If you go first, you can use this attack during your first turn. Search your deck for a L Energy card and attach it to this Pokémon. Then, shuffle your deck.'
+                text: 'If you go first, you can use this attack during your first turn. Search your deck for a [L] Energy card and attach it to this Pokémon. Then, shuffle your deck.'
             },
             {
                 name: 'Dynamic Spark',
                 cost: [L, L],
                 damage: 60,
                 damageCalculation: 'x',
-                text: 'You may discard any amount of L Energy from your Pokémon. This attack does 60 damage for each card you discarded in this way.'
+                text: 'You may discard any amount of [L] Energy from your Pokémon. This attack does 60 damage for each card you discarded in this way.'
             }
         ];
         this.regulationMark = 'F';

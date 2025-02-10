@@ -6,13 +6,13 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 export declare class Malamar extends PokemonCard {
     stage: Stage;
+    evolvesFrom: string;
     cardType: CardType;
     hp: number;
     weakness: {
-        type: CardType;
+        type: CardType.PSYCHIC;
     }[];
-    retreat: CardType[];
-    evolvesFrom: string;
+    retreat: CardType.COLORLESS[];
     powers: {
         name: string;
         useWhenInPlay: boolean;
@@ -21,7 +21,7 @@ export declare class Malamar extends PokemonCard {
     }[];
     attacks: {
         name: string;
-        cost: CardType[];
+        cost: (CardType.PSYCHIC | CardType.COLORLESS)[];
         damage: number;
         text: string;
     }[];

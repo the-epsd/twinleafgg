@@ -23,17 +23,8 @@ export const cardReplacements = [
   { from: 'Pokemon Breeder BS 76', to: 'Pokémon Breeder BS 76' },
   { from: 'Pokemon Trader BS 77', to: 'Pokémon Trader BS 77' },
 
-  //JU
-  { from: 'Electrode JU 2', to: 'Electrode FO 2' },
-
-  //FO
-  { from: 'Recycle FO 61', to: 'Gambler FO 61' },
-
   //BWP
   { from: 'Tropical Beach BWP 50', to: 'Tropical Beach BWP50 BWP 50' },
-
-  //BLW
-  { from: 'Zoroark BLW 71', to: 'Zoroark BW 71' },
 
   //PLF
   { from: 'Mr. Mime PLF 47', to: 'Mr Mime PLF 47' },
@@ -53,9 +44,6 @@ export const cardReplacements = [
 
   //SHF
   { from: 'Snom SHF SV33', to: 'Snom SHFSV SV33' },
-
-  //DRM
-  { from: 'Feebas DRM 28', to: 'Feebas BCR 28' },
 
   //SLG
   { from: 'Warp Energy SLG 70', to: 'Warp Energy SHL 70' },
@@ -93,21 +81,13 @@ export const cardReplacements = [
   //ASR
   { from: 'Hisuian Qwilfish ASR 89', to: 'Hisuian Qwilfish2 ASR 89' },
 
-  //CRZ
-  { from: 'Zacian VSTAR CRZ 96', to: 'Zacian VSTAR 96' },
-
   // PR-SH
   { from: 'Deoxys V SSP 266', to: 'Deoxys V SP 266' },
   { from: 'Deoxys VSTAR SSP 268', to: 'Deoxys VSTAR SP 268' },
 
-  //SVP Alt-arts
-  { from: 'Snorlax SVP 51', to: 'SnorlaxIR SVP 51' },
-
   //SVI
   { from: 'Pokégear 3.0 SVI 186', to: 'Pokegear SVI 186' },
   { from: 'Pokémon Catcher SVI 187', to: 'Pokemon Catcher SVI 187' },
-  { from: 'Professor\'s Research SVI 189', to: 'Professor\'s Research SVI 189 189' },
-  { from: 'Professor\'s Research SVI 190', to: 'Professor\'s Research SVI 190 189' },
   { from: 'Riolu SVI 113', to: 'Riolu2 SVI 113' },
 
   //SVI FA
@@ -545,17 +525,8 @@ export const exportReplacements = [
   { from: 'Pokémon Breeder BS 76', to: 'Pokemon Breeder BS 76' },
   { from: 'Pokémon Trader BS 77', to: 'Pokemon Trader BS 77' },
 
-  //JU
-  { from: 'Electrode FO 2', to: 'Electrode JU 2' },
-
-  //FO
-  { from: 'Gambler FO 61', to: 'Recycle FO 61' },
-
   //BWP
   { from: 'Tropical Beach BWP50 BWP 50', to: 'Tropical Beach BWP 50' },
-
-  //BLW
-  { from: 'Zoroark BL 71', to: 'Zoroark BLW 71' },
 
   //PLF
   { from: 'Mr Mime PLF 47', to: 'Mr. Mime PLF 47' },
@@ -575,9 +546,6 @@ export const exportReplacements = [
 
   //SHF
   { from: 'Snom SHFSV SV33', to: 'Snom SHF SV33' },
-
-  //DRM
-  { from: 'Feebas BCR 28', to: 'Feebas DRM 28' },
 
   //SLG
   { from: 'Warp Energy SHL 70', to: 'Warp Energy SLG 70' },
@@ -612,17 +580,9 @@ export const exportReplacements = [
   //ASR
   { from: 'Hisuian Qwilfish2 ASR 89', to: 'Hisuian Qwilfish ASR 89' },
 
-  //CRZ
-  { from: 'Zacian VSTAR 96', to: 'Zacian VSTAR CRZ 96' },
-
-  //SVP Alt-arts
-  { from: 'SnorlaxIR SVP 51', to: 'Snorlax SVP 51' },
-
   //SVI
   { from: 'Pokegear SVI 186', to: 'Pokégear 3.0 SVI 186' },
   { from: 'Pokemon Catcher SVI 187', to: 'Pokémon Catcher SVI 187' },
-  { from: 'Professor\'s Research SVI 189 189', to: 'Professor\'s Research SVI 189' },
-  { from: 'Professor\'s Research SVI 190 189', to: 'Professor\'s Research SVI 190' },
   { from: 'Riolu2 SVI 113', to: 'Riolu SVI 113' },
 
   //SVI FA

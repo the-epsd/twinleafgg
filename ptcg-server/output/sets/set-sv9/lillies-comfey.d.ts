@@ -1,32 +1,31 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State } from '../../game';
+import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
+import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-export declare class Frosmoth extends PokemonCard {
+export declare class LilliesComfey extends PokemonCard {
     stage: Stage;
-    evolvesFrom: string;
+    tags: CardTag[];
     cardType: CardType;
     hp: number;
     weakness: {
         type: CardType.METAL;
     }[];
     retreat: CardType.COLORLESS[];
-    powers: {
+    attacks: ({
         name: string;
-        useWhenInPlay: boolean;
-        powerType: PowerType;
-        text: string;
-    }[];
-    attacks: {
-        name: string;
-        cost: (CardType.WATER | CardType.COLORLESS)[];
+        cost: CardType.COLORLESS[];
         damage: number;
         text: string;
-    }[];
+    } | {
+        name: string;
+        cost: CardType.PSYCHIC[];
+        damage: number;
+        text: string;
+    })[];
     regulationMark: string;
+    cardImage: string;
     set: string;
     setNumber: string;
-    cardImage: string;
     name: string;
     fullName: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;

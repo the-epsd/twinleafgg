@@ -12,23 +12,14 @@ import { StateUtils } from '../../game/store/state-utils';
 import { GameError } from '../../game';
 
 export class GardeniasVigor extends TrainerCard {
-
   public trainerType: TrainerType = TrainerType.SUPPORTER;
-
   public set: string = 'ASR';
-
   public regulationMark = 'F';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '143';
-
   public name: string = 'Gardenia\'s Vigor';
-
   public fullName: string = 'Gardenia\'s Vigor ASR';
-
-  public text: string =
-    'Draw 2 cards. If you drew any cards in this way, attach up to 2 G Energy cards from your hand to 1 of your Benched Pokémon.';
+  public text: string = 'Draw 2 cards. If you drew any cards in this way, attach up to 2 [G] Energy cards from your hand to 1 of your Benched Pokémon.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

@@ -11,8 +11,8 @@ import { GengarMimikyuGX } from './gengar-and-mimikyu-gx';
 import { Hitmonchan } from './hitmonchan';
 import { Hitmonlee } from './hitmonlee';
 import { Jirachi } from './jirachi';
-import {JudgeWhistle} from './judge-whistle';
-import { KakunaTEU } from './kakuna';
+import { JudgeWhistle } from './judge-whistle';
+import { Kakuna } from './kakuna';
 import { Lapras } from './lapras';
 import { Mareep } from './mareep';
 import { MetalGoggles } from './metal-goggles';
@@ -29,8 +29,6 @@ import { WeedleTEU2 } from './weedle-2';
 import { Yveltal } from './yveltal';
 import { Zapdos } from './zapdos';
 
-
-
 export const setTeamUp: Card[] = [
   // new Absol(), something weird is going on with checking retreat cost and adding retreat cost; attack works though
   new AlolanMuk(),
@@ -45,7 +43,7 @@ export const setTeamUp: Card[] = [
   new Hitmonchan(),
   new Hitmonlee(),
   new Jirachi(),
-  new KakunaTEU(),
+  new Kakuna(),
   new Lapras(),
   new Mareep(),
   new MetalGoggles(),

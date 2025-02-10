@@ -1,55 +1,43 @@
-import { Card, CardTarget, CardType, EnergyCard, GameError, GameMessage, MoveEnergyPrompt, PlayerType, PokemonCard, PokemonCardList, PowerType, Resistance, SlotType, Stage, State, StateUtils, StoreLike, SuperType } from '../../game';
+import { Card, CardTarget, CardType, EnergyCard, GameError, GameMessage, MoveEnergyPrompt, PlayerType, PokemonCard, PokemonCardList, PowerType, SlotType, Stage, State, StateUtils, StoreLike, SuperType } from '../../game';
 import { CheckProvidedEnergyEffect, CheckRetreatCostEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PLAY_POKEMON_FROM_HAND_TO_BENCH, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
-export class EelektrossUNM extends PokemonCard {
+export class Eelektross extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_2;
-
   public evolvesFrom: string = 'Eelektrik';
-
-  public cardType: CardType = CardType.LIGHTNING;
-
+  public cardType: CardType = L;
   public hp: number = 150;
-
-  public weakness = [{ type: CardType.FIGHTING }];
-
-  public resistance: Resistance[] = [{ type: CardType.METAL, value: -20 }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS,];
-
-  public set = 'UNM';
-
-  public setNumber = '66';
-
-  public cardImage = 'assets/cardback.png';
-
-  public name = 'Eelektross';
-
-  public fullName = 'Eelektross UNM';
+  public weakness = [{ type: F }];
+  public resistance = [{ type: M, value: -20 }];
+  public retreat = [C, C, C];
 
   public powers = [
     {
       name: 'Electric Swamp',
       powerType: PowerType.ABILITY,
       useFromHand: true,
-      text: 'Once during your turn (before your attack), if this Pokemon is in your hand and you have at ' +
-        'least 4 L Energy cards in play, you may play this Pokemon onto your Bench. If you do, move any number of ' +
-        'L Energy from your other Pokemon to this Pokemon.'
+      text: 'Once during your turn (before your attack), if this Pokémon is in your hand and you have at least 4 [L] Energy cards in play, you may play this Pokémon onto your Bench. If you do, move any number of [L] Energy from your other Pokémon to this Pokémon.'
     }
   ];
 
   public attacks = [
     {
       name: 'Hover Over',
-      cost: [CardType.LIGHTNING, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
+      cost: [L, C, C, C],
       damage: 130,
       text: 'The Defending Pokemon can\'t retreat during your opponent\'s next turn',
     }
   ];
+
+  public set = 'UNM';
+  public setNumber = '66';
+  public cardImage = 'assets/cardback.png';
+  public name = 'Eelektross';
+  public fullName = 'Eelektross UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

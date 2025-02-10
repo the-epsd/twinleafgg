@@ -53,22 +53,22 @@ export function attackReducer(store: StoreLike, state: State, effect: Effect): S
     store.reduceEffect(state, afterAttackEffect);
   }
 
-  if (effect instanceof DealDamageEffect) {
-    const base = effect.attackEffect;
+    if (effect instanceof DealDamageEffect) {
+      const base = effect.attackEffect;
 
-    const applyWeakness = new ApplyWeaknessEffect(base, effect.damage);
-    applyWeakness.target = effect.target;
-    applyWeakness.ignoreWeakness = base.ignoreWeakness;
-    applyWeakness.ignoreResistance = base.ignoreResistance;
-    state = store.reduceEffect(state, applyWeakness);
+      const applyWeakness = new ApplyWeaknessEffect(base, effect.damage);
+      applyWeakness.target = effect.target;
+      applyWeakness.ignoreWeakness = base.ignoreWeakness;
+      applyWeakness.ignoreResistance = base.ignoreResistance;
+      state = store.reduceEffect(state, applyWeakness);
 
-    const dealDamage = new PutDamageEffect(base, applyWeakness.damage);
-    dealDamage.target = effect.target;
-    dealDamage.weaknessApplied = true;
-    state = store.reduceEffect(state, dealDamage);
+      const dealDamage = new PutDamageEffect(base, applyWeakness.damage);
+      dealDamage.target = effect.target;
+      dealDamage.weaknessApplied = true;
+      state = store.reduceEffect(state, dealDamage);
 
-    return state;
-  }
+      return state;
+    }
 
   if (effect instanceof KOEffect) {
     const target = effect.target;

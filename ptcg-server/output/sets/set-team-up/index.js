@@ -44,7 +44,7 @@ exports.setTeamUp = [
     new hitmonchan_1.Hitmonchan(),
     new hitmonlee_1.Hitmonlee(),
     new jirachi_1.Jirachi(),
-    new kakuna_1.KakunaTEU(),
+    new kakuna_1.Kakuna(),
     new lapras_1.Lapras(),
     new mareep_1.Mareep(),
     new metal_goggles_1.MetalGoggles(),

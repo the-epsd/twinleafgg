@@ -11,14 +11,10 @@ import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 export class Feebas extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.WATER;
-
+  public cardType: CardType = W;
   public hp: number = 30;
-
-  public weakness = [{ type: CardType.GRASS }];
-
-  public retreat = [CardType.COLORLESS];
+  public weakness = [{ type: G }];
+  public retreat = [C];
 
   public powers = [{
     name: 'Submerge',
@@ -29,20 +25,16 @@ export class Feebas extends PokemonCard {
 
   public attacks = [{
     name: 'Rain Splash',
-    cost: [CardType.WATER],
+    cost: [W],
     damage: 10,
     text: ''
   }];
 
   public set: string = 'DRM';
-
-  public name: string = 'Feebas';
-
-  public fullName: string = 'Feebas BCR';
-
-  public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '28';
+  public cardImage: string = 'assets/cardback.png';
+  public name: string = 'Feebas';
+  public fullName: string = 'Feebas DRM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

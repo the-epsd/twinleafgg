@@ -3,39 +3,43 @@ import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { AbstractAttackEffect, AfterDamageEffect, ApplyWeaknessEffect } from '../../game/store/effects/attack-effects';
 
-export class KeldeoGXUNM extends PokemonCard {
-  public tags = [CardTag.POKEMON_GX];
+export class KeldeoGX extends PokemonCard {
+
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.WATER;
+  public tags = [CardTag.POKEMON_GX];
+  public cardType: CardType = W;
   public hp: number = 170;
-  public weakness = [{ type: CardType.GRASS }];
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
-  public set = 'UNM';
-  public setNumber = '47';
-  public cardImage = 'assets/cardback.png';
-  public name = 'Keldeo-GX';
-  public fullName = 'Keldeo-GX UNM';
+  public weakness = [{ type: G }];
+  public retreat = [C, C];
+
   public powers = [{
     name: 'Pure Heart',
     powerType: PowerType.ABILITY,
     text: 'Prevent all effects of attacks, including damage, done to this Pokemon ' +
       'by your opponent\'s Pokemon-GX or Pokemon-EX.'
   }];
+
   public attacks = [
     {
       name: 'Sonic Edge',
-      cost: [CardType.WATER, CardType.WATER, CardType.COLORLESS],
+      cost: [W, W, C],
       damage: 110,
       text: 'This attack\'s damage isn\'t affected by any effects on your opponent\'s Active Pokemon.'
     },
     {
       name: 'Resolute Blade-GX',
-      cost: [CardType.WATER, CardType.WATER, CardType.COLORLESS],
+      cost: [W, W, C],
       damage: 0,
       text: 'This attack does 50 damage for each of your opponent\'s Benched Pokemon. ' +
         '(You can\'t use more than 1 GX attack in a game.)'
     },
   ];
+
+  public set = 'UNM';
+  public setNumber = '47';
+  public cardImage = 'assets/cardback.png';
+  public name = 'Keldeo-GX';
+  public fullName = 'Keldeo-GX UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Pure Heart: Prevent damage & effects from Pokemon-EX

@@ -10,31 +10,30 @@ const play_card_effects_1 = require("../../game/store/effects/play-card-effects"
 class Frosmoth extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.regulationMark = 'D';
         this.stage = card_types_1.Stage.STAGE_1;
         this.evolvesFrom = 'Snom';
-        this.cardType = card_types_1.CardType.WATER;
+        this.cardType = W;
         this.hp = 90;
-        this.weakness = [{ type: card_types_1.CardType.METAL }];
-        this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
+        this.weakness = [{ type: M }];
+        this.retreat = [C, C];
         this.powers = [{
                 name: 'Ice Dance',
                 useWhenInPlay: true,
                 powerType: game_1.PowerType.ABILITY,
-                text: 'As often as you like during your turn, you may attach a ' +
-                    'Basic W Energy card from your hand to 1 of your Benched W Pokémon.'
+                text: 'As often as you like during your turn, you may attach a [W] Energy card from your hand to 1 of your Benched [W] Pokémon.'
             }];
         this.attacks = [
             {
                 name: 'Aurora Beam',
-                cost: [card_types_1.CardType.WATER, card_types_1.CardType.COLORLESS],
+                cost: [W, C],
                 damage: 30,
                 text: ''
             }
         ];
+        this.regulationMark = 'D';
         this.set = 'SSH';
-        this.cardImage = 'assets/cardback.png';
         this.setNumber = '64';
+        this.cardImage = 'assets/cardback.png';
         this.name = 'Frosmoth';
         this.fullName = 'Frosmoth SSH';
     }

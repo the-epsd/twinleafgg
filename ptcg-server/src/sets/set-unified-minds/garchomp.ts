@@ -6,18 +6,13 @@ import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { DealDamageEffect, DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 
-export class GarchompUNM extends PokemonCard {
+export class Garchomp extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_2;
-
   public evolvesFrom = 'Gabite';
-
-  public cardType: CardType = CardType.FIGHTING;
-
+  public cardType: CardType = F;
   public hp: number = 150;
-
-  public weakness = [{ type: CardType.GRASS }];
-
+  public weakness = [{ type: G }];
   public retreat = [];
 
   public powers = [{
@@ -29,20 +24,17 @@ export class GarchompUNM extends PokemonCard {
   public attacks = [
     {
       name: 'Over Slice',
-      cost: [CardType.FIGHTING, CardType.COLORLESS],
+      cost: [F, C],
       damage: 80,
+      damageCalculation: '+',
       text: 'You may discard an Energy from this Pokémon. If you do, this attack does 40 more damage.'
     }
   ];
 
   public set: string = 'UNM';
-
   public setNumber = '114';
-
   public cardImage = 'assets/cardback.png';
-
   public name: string = 'Garchomp';
-
   public fullName: string = 'Garchomp UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

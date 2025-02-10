@@ -3,14 +3,14 @@ import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, PowerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 export declare class ZacianV extends PokemonCard {
-    tags: CardTag[];
     stage: Stage;
+    tags: CardTag[];
     cardType: CardType;
     hp: number;
     weakness: {
-        type: CardType;
+        type: CardType.METAL;
     }[];
-    retreat: CardType[];
+    retreat: CardType.COLORLESS[];
     powers: {
         name: string;
         useWhenInPlay: boolean;
@@ -19,14 +19,14 @@ export declare class ZacianV extends PokemonCard {
     }[];
     attacks: {
         name: string;
-        cost: CardType[];
+        cost: CardType.COLORLESS[];
         damage: number;
         text: string;
     }[];
-    set: string;
-    cardImage: string;
-    setNumber: string;
     regulationMark: string;
+    set: string;
+    setNumber: string;
+    cardImage: string;
     name: string;
     fullName: string;
     readonly RUSH_IN_MARKER = "RUSH_IN_MARKER";

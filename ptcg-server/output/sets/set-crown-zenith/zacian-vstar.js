@@ -37,7 +37,7 @@ class ZacianVSTAR extends pokemon_card_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '96';
         this.name = 'Zacian VSTAR';
-        this.fullName = 'Zacian VSTAR';
+        this.fullName = 'Zacian VSTAR CRZ';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
