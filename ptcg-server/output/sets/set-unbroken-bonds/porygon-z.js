@@ -13,10 +13,10 @@ class PorygonZ extends pokemon_card_1.PokemonCard {
         super(...arguments);
         this.stage = card_types_1.Stage.STAGE_2;
         this.evolvesFrom = 'Porygon2';
-        this.cardType = card_types_1.CardType.COLORLESS;
+        this.cardType = C;
         this.hp = 130;
-        this.weakness = [{ type: card_types_1.CardType.FIGHTING }];
-        this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
+        this.weakness = [{ type: F }];
+        this.retreat = [C, C];
         this.powers = [{
                 name: 'Crazy Code',
                 useWhenInPlay: true,
@@ -26,16 +26,16 @@ class PorygonZ extends pokemon_card_1.PokemonCard {
         this.attacks = [
             {
                 name: 'Tantrum',
-                cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
+                cost: [C, C, C],
                 damage: 120,
                 text: 'This Pokémon is now Confused.'
             }
         ];
         this.set = 'UNB';
-        this.cardImage = 'assets/cardback.png';
         this.setNumber = '157';
+        this.cardImage = 'assets/cardback.png';
         this.name = 'Porygon-Z';
-        this.fullName = 'Porygon-Z PAL';
+        this.fullName = 'Porygon-Z UNB';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

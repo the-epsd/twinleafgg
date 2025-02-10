@@ -11,23 +11,21 @@ class Raichu extends pokemon_card_1.PokemonCard {
         super(...arguments);
         this.stage = card_types_1.Stage.STAGE_1;
         this.evolvesFrom = 'Pikachu';
-        this.evolvesTo = ['Raichu BREAK', 'Raichu LV.X'];
-        this.cardType = card_types_1.CardType.LIGHTNING;
+        this.cardType = L;
         this.hp = 90;
         this.weakness = [{ type: F }];
-        this.resistance = [];
-        this.retreat = [card_types_1.CardType.COLORLESS];
+        this.retreat = [C];
         this.attacks = [
             {
                 name: 'Gigashock',
-                cost: [card_types_1.CardType.LIGHTNING, card_types_1.CardType.LIGHTNING, card_types_1.CardType.LIGHTNING, card_types_1.CardType.LIGHTNING],
+                cost: [L, L, L, L],
                 damage: 30,
                 text: 'Choose 3 of your opponent\'s Benched Pokémon and this attack does 10 damage to each of them. (Don\'t apply Weakness and Resistance for Benched Pokémon.) If your opponent has fewer than 3 Benched Pokémon, do the damage to each of them.'
             }
         ];
         this.set = 'FO';
-        this.cardImage = 'assets/cardback.png';
         this.setNumber = '14';
+        this.cardImage = 'assets/cardback.png';
         this.name = 'Raichu';
         this.fullName = 'Raichu FO';
     }

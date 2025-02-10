@@ -15,7 +15,7 @@ export class Delinquent extends TrainerCard {
 
   public name: string = 'Delinquent';
 
-  public fullName: string = 'Delinquent BKT';
+  public fullName: string = 'Delinquent BKP';
 
   public cardImage: string = 'assets/cardback.png';
 

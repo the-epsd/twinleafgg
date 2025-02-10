@@ -83,24 +83,17 @@ function* playCard(next: Function, store: StoreLike, state: State,
 export class Klara extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;
-
-  public set: string = 'CRE';
-
-  public cardImage: string = 'assets/cardback.png';
-
-  public setNumber: string = '145';
-
   public regulationMark = 'E';
-
+  public set: string = 'CRE';
+  public setNumber: string = '145';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Klara';
+  public fullName: string = 'Klara CRE';
 
-  public fullName: string = 'Klara CRE 145';
+  public text: string = `Choose 1 or both:
 
-  public text: string =
-    'Choose 1 or both:' +
-    '' +
-    'Put up to 2 Pokémon from your discard pile into your hand.' +
-    'Put up to 2 basic Energy cards from your discard pile into your hand.';
+• Put up to 2 Pokémon from your discard pile into your hand.
+• Put up to 2 basic Energy cards from your discard pile into your hand.`;
 
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

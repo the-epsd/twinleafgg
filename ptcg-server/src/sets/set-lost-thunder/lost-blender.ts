@@ -18,7 +18,7 @@ export class LostBlender extends TrainerCard {
 
   public name: string = 'Lost Blender';
 
-  public fullName: string = 'Lost Blender LOR';
+  public fullName: string = 'Lost Blender LOT';
 
   public text: string =
     'Put 2 cards from your hand in the Lost Zone. If you do, draw a card.';

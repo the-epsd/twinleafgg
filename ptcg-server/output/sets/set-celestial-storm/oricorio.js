@@ -31,7 +31,7 @@ class Oricorio extends pokemon_card_1.PokemonCard {
         ];
         this.set = 'CES';
         this.name = 'Oricorio';
-        this.fullName = 'Oricorio SHF';
+        this.fullName = 'Oricorio CES';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '30';
     }

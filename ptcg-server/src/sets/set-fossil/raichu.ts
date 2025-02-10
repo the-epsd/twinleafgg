@@ -10,29 +10,24 @@ import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 export class Raichu extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Pikachu';
-  public evolvesTo = ['Raichu BREAK', 'Raichu LV.X'];
-  public cardType: CardType = CardType.LIGHTNING;
+  public cardType: CardType = L;
   public hp: number = 90;
   public weakness = [{ type: F }];
-  public resistance = [];
-  public retreat = [CardType.COLORLESS];
+  public retreat = [C];
+
   public attacks = [
     {
       name: 'Gigashock',
-      cost: [CardType.LIGHTNING, CardType.LIGHTNING, CardType.LIGHTNING, CardType.LIGHTNING],
+      cost: [L, L, L, L],
       damage: 30,
       text: 'Choose 3 of your opponent\'s Benched Pokémon and this attack does 10 damage to each of them. (Don\'t apply Weakness and Resistance for Benched Pokémon.) If your opponent has fewer than 3 Benched Pokémon, do the damage to each of them.'
     }
   ];
 
   public set: string = 'FO';
-
-  public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '14';
-
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Raichu';
-
   public fullName: string = 'Raichu FO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

@@ -14,7 +14,7 @@ class WarpEnergy extends energy_card_1.EnergyCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '70';
         this.name = 'Warp Energy';
-        this.fullName = 'Warp Energy SHL';
+        this.fullName = 'Warp Energy SLG';
         this.text = 'This card provides [C] Energy.' +
             '' +
             'When you attach this card from your hand to your Active Pokémon, switch that Pokémon with 1 of your Benched Pokémon.4244';

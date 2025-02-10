@@ -13,7 +13,7 @@ class DoubleDragonEnergy extends energy_card_1.EnergyCard {
         this.energyType = card_types_1.EnergyType.SPECIAL;
         this.set = 'ROS';
         this.name = 'Double Dragon Energy';
-        this.fullName = 'Double Dragon Energy SUM';
+        this.fullName = 'Double Dragon Energy ROS';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '97';
         this.text = 'This card can only be attached to [N] Pokémon.' +

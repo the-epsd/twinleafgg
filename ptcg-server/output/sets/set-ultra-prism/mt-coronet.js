@@ -56,7 +56,7 @@ class MtCoronet extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.STADIUM;
         this.set = 'UPR';
         this.name = 'Mt. Coronet';
-        this.fullName = 'Mt. Coronet RCL';
+        this.fullName = 'Mt. Coronet UPR';
         this.text = 'Once during each player\'s turn, that player may put 2 [M] Energy cards from their discard pile into their hand.';
     }
     reduceEffect(store, state, effect) {

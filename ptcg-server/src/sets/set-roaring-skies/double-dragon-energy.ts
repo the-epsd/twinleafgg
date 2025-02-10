@@ -17,7 +17,7 @@ export class DoubleDragonEnergy extends EnergyCard {
 
   public name = 'Double Dragon Energy';
 
-  public fullName = 'Double Dragon Energy SUM';
+  public fullName = 'Double Dragon Energy ROS';
 
   public cardImage: string = 'assets/cardback.png';
 

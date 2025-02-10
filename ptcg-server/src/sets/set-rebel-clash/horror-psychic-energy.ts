@@ -11,17 +11,12 @@ import { StoreLike } from '../../game/store/store-like';
 export class HorrorPsychicEnergy extends EnergyCard {
 
   public provides: CardType[] = [CardType.COLORLESS];
-
   public energyType = EnergyType.SPECIAL;
-
+  public regulationMark = 'D';
   public set: string = 'RCL';
-
   public name = 'Horror Psychic Energy';
-
-  public fullName = 'Horror Psychic Energy DAA';
-
+  public fullName = 'Horror Psychic Energy RCL';
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '172';
 
   public text =

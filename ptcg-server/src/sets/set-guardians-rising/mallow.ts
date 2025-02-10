@@ -81,7 +81,7 @@ export class Mallow extends TrainerCard {
 
   public name: string = 'Mallow';
 
-  public fullName: string = 'Mallow TEF';
+  public fullName: string = 'Mallow GRI';
 
   public text: string =
     'Search your deck for 2 cards, shuffle your deck, then put those cards on top of it in any order.';

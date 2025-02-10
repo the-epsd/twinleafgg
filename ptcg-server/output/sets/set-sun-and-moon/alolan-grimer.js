@@ -31,7 +31,7 @@ class AlolanGrimer extends pokemon_card_1.PokemonCard {
         ];
         this.set = 'SUM';
         this.name = 'Alolan Grimer';
-        this.fullName = 'Alolan Grimer XY';
+        this.fullName = 'Alolan Grimer SUM';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '57';
     }

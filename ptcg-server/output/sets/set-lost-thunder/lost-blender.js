@@ -13,7 +13,7 @@ class LostBlender extends trainer_card_1.TrainerCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '181';
         this.name = 'Lost Blender';
-        this.fullName = 'Lost Blender LOR';
+        this.fullName = 'Lost Blender LOT';
         this.text = 'Put 2 cards from your hand in the Lost Zone. If you do, draw a card.';
     }
     reduceEffect(store, state, effect) {

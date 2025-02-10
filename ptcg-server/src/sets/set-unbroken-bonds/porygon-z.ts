@@ -13,16 +13,11 @@ import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effe
 export class PorygonZ extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_2;
-
   public evolvesFrom = 'Porygon2';
-
-  public cardType: CardType = CardType.COLORLESS;
-
+  public cardType: CardType = C;
   public hp: number = 130;
-
-  public weakness = [{ type: CardType.FIGHTING }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: F }];
+  public retreat = [C, C];
 
   public powers = [{
     name: 'Crazy Code',
@@ -34,21 +29,17 @@ export class PorygonZ extends PokemonCard {
   public attacks = [
     {
       name: 'Tantrum',
-      cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
+      cost: [C, C, C],
       damage: 120,
       text: 'This Pokémon is now Confused.'
     }
   ];
 
   public set: string = 'UNB';
-
-  public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '157';
-
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Porygon-Z';
-
-  public fullName: string = 'Porygon-Z PAL';
+  public fullName: string = 'Porygon-Z UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
