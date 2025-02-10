@@ -25,6 +25,7 @@ import { LevelBall } from './level-ball';
 import { MimikyuV } from './mimikyu-v';
 import { NecrozmaV } from './necrozma-v';
 import { Octillery } from './octillery';
+import { Primeape } from './primeape';
 import { RapidStrikeEnergy } from './rapid-strike-energy';
 import { RapidStrikeScrollOfSwirls } from './rapid-strike-scroll-of-swirls';
 import { RapidStrikeUrshifuV } from './rapid-strike-urshifu-v';
@@ -76,6 +77,7 @@ export const setBattleStyles: Card[] = [
   new MimikyuV(),
   new NecrozmaV(),
   new Octillery(),
+  new Primeape(),
   new RapidStrikeEnergy(),
   new RapidStrikeScrollOfSwirls(),
   new RapidStrikeUrshifuV(),
