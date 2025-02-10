@@ -1,10 +1,7 @@
-import { BoardEffect, CardType, GameError, GameMessage, PlayerType, PokemonCard, PowerType, SpecialCondition, Stage, State, StoreLike } from "../../game";
+import { BoardEffect, CardType, GameError, GameMessage, PlayerType, PokemonCard, PowerType, Stage, State, StateUtils, StoreLike } from "../../game";
 import { Effect } from "../../game/store/effects/effect";
-import { AttackEffect, PowerEffect } from "../../game/store/effects/game-effects";
 import { PlayPokemonEffect, TrainerEffect } from "../../game/store/effects/play-card-effects";
-import { EndTurnEffect } from "../../game/store/effects/game-phase-effects";
-import { AddSpecialConditionsEffect } from "../../game/store/effects/attack-effects";
-
+import { ADD_MARKER, ADD_POISON_TO_PLAYER_ACTIVE, HAS_MARKER, REMOVE_MARKER, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED, WAS_POWER_USED } from "../../game/store/prefabs/prefabs";
 
 export class Crobat extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -46,33 +43,36 @@ export class Crobat extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof TrainerEffect && effect.trainerCard.name == 'Janine\'s Secret Art') {
-      effect.player.marker.addMarker(this.PLAY_JANINES_SECRET_ART_MARKER, this);
+      ADD_MARKER(this.PLAY_JANINES_SECRET_ART_MARKER, effect.player, this);
     }
 
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
-      effect.player.marker.removeMarker(this.SHADOWY_ENVOY_MARKER, this);
+      REMOVE_MARKER(this.SHADOWY_ENVOY_MARKER, effect.player, this);
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
-
+      //Check if the player's hand has fewer than 8 cards, and if they have not already used the ability.
       if (player.hand.cards.length >= 8) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
-
-      if (player.marker.hasMarker(this.SHADOWY_ENVOY_MARKER, this)) {
+      if (HAS_MARKER(this.SHADOWY_ENVOY_MARKER, player, this)) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
-
-      if (player.marker.hasMarker(this.PLAY_JANINES_SECRET_ART_MARKER, this)) {
+      //If Janine's card was played, draw cards until you have 8 in hand.
+      if (HAS_MARKER(this.PLAY_JANINES_SECRET_ART_MARKER, player, this)) {
+        /*When I tried to use the prefab to draw cards, I received this error:
+        Argument of type 'PowerEffect' is not assignable to parameter of type 'AttackEffect'.
+          Type 'PowerEffect' is missing the following properties from type 'AttackEffect': opponent, attack, damage, ignoreWeakness, and 3 more.ts(2345)*/
+        //DRAW_CARDS_UNTIL_YOU_HAVE_X_CARDS_IN_HAND(8, effect, state);
         while (player.hand.cards.length < 8) {
           if (player.deck.cards.length === 0) {
             break;
           }
           player.deck.moveTo(player.hand, 1);
         }
-
-        player.marker.addMarker(this.SHADOWY_ENVOY_MARKER, this);
+        //Mark the Pokémon to indicate that the ability has already been used.
+        ADD_MARKER(this.SHADOWY_ENVOY_MARKER, player, this);
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
           if (cardList.getPokemonCard() === this) {
             cardList.addBoardEffect(BoardEffect.ABILITY_USED);
@@ -84,15 +84,13 @@ export class Crobat extends PokemonCard {
       return state;
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.SHADOWY_ENVOY_MARKER, this)) {
-      effect.player.marker.removeMarker(this.SHADOWY_ENVOY_MARKER, this);
-      effect.player.marker.removeMarker(this.PLAY_JANINES_SECRET_ART_MARKER, this);
-    }
+    REMOVE_MARKER_AT_END_OF_TURN(effect, this.PLAY_JANINES_SECRET_ART_MARKER, this);
+    REMOVE_MARKER_AT_END_OF_TURN(effect, this.PLAY_JANINES_SECRET_ART_MARKER, this);
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const specialCondition = new AddSpecialConditionsEffect(effect, [SpecialCondition.POISONED]);
-      specialCondition.poisonDamage = 20;
-      store.reduceEffect(state, specialCondition);
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+      ADD_POISON_TO_PLAYER_ACTIVE(store, state, opponent, this, 20);
     }
     return state;
   }
