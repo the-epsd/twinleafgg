@@ -63,7 +63,7 @@ function writeReprints() {
 
     suffix = suffix || '';
     const baseClassName = implementation.className + (suffix ? implementation.setName + implementation.setNumber : '');
-    const newClassName = implementation.className + reprintSetName + suffix;
+    const newClassName = implementation.className + suffix + reprintSetName;
     const cardName = implementation.cardName || escapeQuotes(name);
     const fullName = `${cardName}${suffix} ${reprintSetName}`;
     newImports.push(`import { ${implementation.className}${suffix ? ' as ' + baseClassName : ''} } from "../${implementation.folder}/${removeTsExtension(implementation.file)}";`);
@@ -79,8 +79,8 @@ function writeReprints() {
 
     if (suffix) {
       const realName = `${cardName} ${reprintSetName}`;
-      importReplacements.push(`  { from: '${realName}', to: '${fullName}' },`);
-      exportReplacements.push(`  { from: '${fullName}', to: '${realName}' },`);
+      importReplacements.push(`  { from: '${realName} ${reprintNumber}', to: '${fullName} ${reprintNumber}' },`);
+      exportReplacements.push(`  { from: '${fullName} ${reprintNumber}', to: '${realName} ${reprintNumber}' },`);
     }
   }
 
