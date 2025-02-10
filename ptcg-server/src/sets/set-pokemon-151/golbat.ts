@@ -1,7 +1,7 @@
-import { CardType, ChoosePokemonPrompt, GameMessage, PlayerType, PokemonCard, SlotType, Stage, State, StoreLike } from "../../game";
-import { PutDamageEffect } from "../../game/store/effects/attack-effects";
+import { CardType, PokemonCard, Stage, State, StoreLike } from "../../game";
 import { Effect } from "../../game/store/effects/effect";
-import { AttackEffect } from "../../game/store/effects/game-effects";
+import { THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_POKEMON } from "../../game/store/prefabs/attack-effects";
+import { WAS_ATTACK_USED } from "../../game/store/prefabs/prefabs";
 
 export class Golbat extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -30,21 +30,8 @@ export class Golbat extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      return store.prompt(state, new ChoosePokemonPrompt(
-        effect.player.id,
-        GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-        PlayerType.TOP_PLAYER,
-        [SlotType.ACTIVE, SlotType.BENCH],
-        { min: 1, max: 1, allowCancel: false }
-      ), selected => {
-        const targets = selected || [];
-        targets.forEach(target => {
-          const damageEffect = new PutDamageEffect(effect, 40);
-          damageEffect.target = target;
-          store.reduceEffect(state, damageEffect);
-        });
-      });
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_POKEMON(40, effect, store, state);
     }
 
     return state;
