@@ -1,7 +1,6 @@
 import { ChooseCardsPrompt, CoinFlipPrompt, EnergyCard, GameError, GameMessage, PokemonCard, State, StoreLike, SuperType } from "../../game";
 import { Effect } from "../../game/store/effects/effect";
-import { AttackEffect } from "../../game/store/effects/game-effects";
-
+import { WAS_ATTACK_USED } from "../../game/store/prefabs/prefabs";
 
 export class Onix extends PokemonCard {
 
@@ -33,9 +32,9 @@ export class Onix extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      //I couldn't find a prefab that moves energies from the discard to the hand.
       const player = effect.player;
-
       const hasEnergyInDiscard = player.discard.cards.some(c => {
         return c instanceof EnergyCard;
       });
@@ -55,7 +54,8 @@ export class Onix extends PokemonCard {
       });
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
+      //Flip a coin. If tails, this attack does nothing.
       const player = effect.player;
       return store.prompt(state, [
         new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
