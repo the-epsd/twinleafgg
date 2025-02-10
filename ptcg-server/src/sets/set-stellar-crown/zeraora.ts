@@ -23,7 +23,7 @@ export class Zeraora extends PokemonCard {
 
   public set: string = 'SCR';
   public name: string = 'Zeraora';
-  public fullName: string = 'Zeraora SV7';
+  public fullName: string = 'Zeraora SCR';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '55';
 

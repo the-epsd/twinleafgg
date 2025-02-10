@@ -4,7 +4,7 @@ import { UserInfo } from 'ptcg-server';
 import { Observable, interval } from 'rxjs';
 import { Router } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { switchMap, filter } from 'rxjs/operators';
+import { switchMap, filter, take } from 'rxjs/operators';
 
 import { AlertService } from './shared/alert/alert.service';
 import { LoginRememberService } from './login/login-remember.service';
@@ -71,6 +71,14 @@ export class AppComponent implements OnInit {
       }
     });
 
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible' && this.isLoggedIn && !this.socketService.isEnabled) {
+        this.authToken$.pipe(take(1)).subscribe(authToken => {
+          this.socketService.enable(authToken);
+        });
+      }
+    });
+
     // Refresh token with given interval
     interval(environment.refreshTokenInterval).pipe(
       untilDestroyed(this),
@@ -84,6 +92,10 @@ export class AppComponent implements OnInit {
         }
       }
     });
+  }
+
+  public ngOnDestroy() {
+    document.removeEventListener('visibilitychange', () => { });
   }
 
   @HostListener('window:resize', ['$event'])

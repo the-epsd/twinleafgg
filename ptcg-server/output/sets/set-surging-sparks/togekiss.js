@@ -30,7 +30,7 @@ class Togekiss extends game_1.PokemonCard {
         this.setNumber = '72';
         this.cardImage = 'assets/cardback.png';
         this.name = 'Togekiss';
-        this.fullName = 'Togekiss SV8';
+        this.fullName = 'Togekiss SSP';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.KnockOutEffect && effect.target === effect.player.active) {

@@ -13,7 +13,7 @@ class RichEnergy extends energy_card_1.EnergyCard {
         this.set = 'SSP';
         this.regulationMark = 'H';
         this.name = 'Enriching Energy';
-        this.fullName = 'Rich Energy SV7a';
+        this.fullName = 'Rich Energy SSP';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '191';
         this.text = 'When this card is attached to a Pokémon, it provides 1 [C] Energy.' +

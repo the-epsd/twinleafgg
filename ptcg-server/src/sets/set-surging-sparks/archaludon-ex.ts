@@ -32,7 +32,7 @@ export class Archaludonex extends PokemonCard {
   public setNumber: string = '130';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Archaludon ex';
-  public fullName: string = 'Archaludon ex SV8';
+  public fullName: string = 'Archaludon ex SSP';
 
   public readonly METAL_DEFENDER_MARKER = 'METAL_DEFENDER_MARKER';
   public readonly CLEAR_METAL_DEFENDER_MARKER = 'CLEAR_METAL_DEFENDER_MARKER';

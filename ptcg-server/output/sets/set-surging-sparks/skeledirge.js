@@ -30,7 +30,7 @@ class Skeledirge extends game_1.PokemonCard {
         this.setNumber = '31';
         this.cardImage = 'assets/cardback.png';
         this.name = 'Skeledirge';
-        this.fullName = 'Skeledirge SV8';
+        this.fullName = 'Skeledirge SSP';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

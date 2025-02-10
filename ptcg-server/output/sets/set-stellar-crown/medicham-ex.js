@@ -36,7 +36,7 @@ class Medichamex extends pokemon_card_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '80';
         this.name = 'Medicham ex';
-        this.fullName = 'Medicham ex SV7';
+        this.fullName = 'Medicham ex SCR';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

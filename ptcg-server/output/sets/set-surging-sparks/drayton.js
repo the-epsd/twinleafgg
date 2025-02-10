@@ -67,7 +67,7 @@ class Drayton extends trainer_card_1.TrainerCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '174';
         this.name = 'Drayton';
-        this.fullName = 'Drayton SV7a';
+        this.fullName = 'Drayton SSP';
         this.text = 'Look at the top 7 cards of your deck. Choose a Pokémon and a Trainer card from those cards, reveal them, and put them into your hand. Shuffle the other cards back into your deck.';
     }
     reduceEffect(store, state, effect) {

@@ -49,7 +49,7 @@ export class LoginPopupComponent implements OnDestroy {
       .subscribe({
         next: response => {
           const removedUsernames = [''];
-          const bannedUsernames = ['Joacotaco24', 'leofanax', 'RedditKarmaGold', '10types'];
+          const bannedUsernames = ['Joacotaco24', 'leofanax', 'RedditKarmaGold'];
           if (bannedUsernames.includes(this.name)) {
             this.alertService.toast(this.translate.instant('User has been removed from the Beta Program for breach of Terms of Service'));
             this.dialogRef.close();

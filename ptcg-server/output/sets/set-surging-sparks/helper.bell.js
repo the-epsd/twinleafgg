@@ -14,7 +14,7 @@ class HelperBell extends trainer_card_1.TrainerCard {
         this.setNumber = '165';
         this.regulationMark = 'H';
         this.name = 'Call Bell';
-        this.fullName = 'Helper Bell SV7a';
+        this.fullName = 'Helper Bell SSP';
         this.text = 'You can use this card only if you go second, and only on your first turn.' +
             '' +
             'Search your deck for a Supporter card, reveal it, and put it into your hand. Then, shuffle your deck.';

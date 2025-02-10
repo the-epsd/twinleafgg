@@ -1,6 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
-import { Attack } from '../../game/store/card/pokemon-types';
+import { Stage, SpecialCondition } from '../../game/store/card/card-types';
 import { CoinFlipPrompt } from '../../game/store/prompts/coin-flip-prompt';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 import { AttackEffect } from '../../game/store/effects/game-effects';
@@ -11,32 +10,26 @@ import { GameMessage } from '../../game';
 
 export class Caterpie extends PokemonCard {
 
-  public name = 'Caterpie';
-  
-  public setNumber = '45';
-  
-  public set = 'BS';
-  
-  public fullName = 'Caterpie BS';
-  
-  public cardType = CardType.GRASS;
-
   public stage = Stage.BASIC;
-
+  public cardType = G;
   public hp = 40;
+  public weakness = [{ type: R }];
+  public retreat = [C];
 
-  public weakness = [{ type: CardType.FIRE }];
-
-  public retreat = [CardType.COLORLESS];
-
-  public attacks: Attack[] = [
+  public attacks = [
     {
       name: 'String Shot',
-      cost: [CardType.GRASS],
+      cost: [G],
       damage: 10,
       text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
     }
   ];
+
+  public set = 'BS';
+  public setNumber = '45';
+  public cardImage: string = 'assets/cardback.png';
+  public name = 'Caterpie';
+  public fullName = 'Caterpie BS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

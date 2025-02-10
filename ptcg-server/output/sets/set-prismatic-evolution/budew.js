@@ -28,7 +28,7 @@ class Budew extends pokemon_card_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '4';
         this.name = 'Budew';
-        this.fullName = 'Budew SV8a';
+        this.fullName = 'Budew PRE';
         this.OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER = 'OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER';
     }
     reduceEffect(store, state, effect) {

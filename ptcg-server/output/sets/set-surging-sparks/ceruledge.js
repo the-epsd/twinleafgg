@@ -33,7 +33,7 @@ class Ceruledge extends pokemon_card_1.PokemonCard {
         this.regulationMark = 'H';
         this.set = 'SSP';
         this.name = 'Ceruledge';
-        this.fullName = 'Ceruledge SV8';
+        this.fullName = 'Ceruledge SSP';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '35';
         this.ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';

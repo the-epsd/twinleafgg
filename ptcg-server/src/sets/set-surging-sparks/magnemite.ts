@@ -32,6 +32,6 @@ export class Magnemite extends PokemonCard {
 
   public name: string = 'Magnemite';
 
-  public fullName: string = 'Magnemite SV8';
+  public fullName: string = 'Magnemite SSP';
 
 }

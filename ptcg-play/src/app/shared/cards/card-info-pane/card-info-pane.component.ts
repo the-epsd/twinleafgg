@@ -104,11 +104,12 @@ export class CardInfoPaneComponent implements OnChanges {
     'M': 'metal',
     'P': 'psychic',
     'C': 'colorless',
-    'W': 'water'
+    'W': 'water',
+    'N': 'dragon'
   };
 
   transformEnergyText(text: string): string {
-    return text.replace(/\[([WFRGLPMDC])\]/g, (match, type) =>
+    return text.replace(/\[([WFRGLPMDCN])\]/g, (match, type) =>
       `<img align="top" style="transform: translateY(12px)" src="assets/energy-icons/${this.energyImageMap[type]}.webp" alt="${this.energyImageMap[type]} Energy" width="18px">`
     );
   }

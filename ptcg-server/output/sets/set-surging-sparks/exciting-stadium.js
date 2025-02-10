@@ -17,7 +17,7 @@ class ExcitingStadium extends trainer_card_1.TrainerCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '180';
         this.name = 'Lively Stadium';
-        this.fullName = 'Exciting Stadium SV8';
+        this.fullName = 'Exciting Stadium SSP';
         this.text = 'Basic Pokémon in play get +30 HP.';
     }
     reduceEffect(store, state, effect) {

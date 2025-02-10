@@ -61,7 +61,7 @@ export class TreasureTracker extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
 
-  public set: string = 'SV8a';
+  public set: string = 'PRE';
 
   public cardImage: string = 'assets/cardback.png';
 
@@ -69,7 +69,7 @@ export class TreasureTracker extends TrainerCard {
 
   public name: string = 'Treasure Tracker';
 
-  public fullName: string = 'Treasure Tracker SV8a';
+  public fullName: string = 'Treasure Tracker PRE';
 
   public text: string = 'Search your deck for up to 5 Pokémon Tool cards, reveal them, and then put them into your hand. Then, shuffle your deck.';
 

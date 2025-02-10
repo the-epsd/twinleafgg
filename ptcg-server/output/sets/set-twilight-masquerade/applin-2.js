@@ -28,7 +28,7 @@ class Applin2 extends pokemon_card_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '17';
         this.name = 'Applin';
-        this.fullName = 'Applin TWM 17';
+        this.fullName = 'Applin TWM1';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

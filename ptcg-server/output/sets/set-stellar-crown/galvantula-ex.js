@@ -39,7 +39,7 @@ class Galvantulaex extends pokemon_card_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '51';
         this.name = 'Galvantula ex';
-        this.fullName = 'Galvantula ex SV7';
+        this.fullName = 'Galvantula ex SCR';
         this.OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER = 'OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER';
     }
     reduceEffect(store, state, effect) {

@@ -26,7 +26,7 @@ class Uxie extends game_1.PokemonCard {
         this.setNumber = '78';
         this.cardImage = 'assets/cardback.png';
         this.name = 'Uxie';
-        this.fullName = 'Uxie SV8';
+        this.fullName = 'Uxie SSP';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

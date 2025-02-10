@@ -14,17 +14,11 @@
     <!-- Avatar image -->
     <mat-form-field>
       <mat-label translate>PROFILE_AVATAR_IMAGE</mat-label>
-      <ptcg-file-input #avatarFileInput required
-        ptcgErrorValidator [ptcgErrorValue]="avatarError"
-        ptcgFileSizeValidator [maxFileSize]="maxFileSize"
-        name="avatar" accept="jpg|jpeg|png"
-        [disabled]="loading"
-        [(ngModel)]="imageFile" #avatarField="ngModel"
-        (ngModelChange)="updatePreview($event)">
+      <ptcg-file-input #avatarFileInput required ptcgErrorValidator [ptcgErrorValue]="avatarError" ptcgFileSizeValidator
+        [maxFileSize]="maxFileSize" name="avatar" accept="jpg|jpeg|png" [disabled]="loading" [(ngModel)]="imageFile"
+        #avatarField="ngModel" (ngModelChange)="updatePreview($event)">
       </ptcg-file-input>
-      <button mat-icon-button matSuffix
-        *ngIf="!avatarFileInput.empty"
-        [disabled]="loading"
+      <button mat-icon-button matSuffix *ngIf="!avatarFileInput.empty" [disabled]="loading"
         (click)="avatarFileInput.clear($event)">
         <mat-icon>clear</mat-icon>
       </button>
@@ -38,9 +32,9 @@
     <!-- Avatar name -->
     <mat-form-field>
       <mat-label translate>PROFILE_AVATAR_NAME</mat-label>
-      <input matInput [placeholder]="'PROFILE_AVATAR_NAME' | translate" name="name"
-        [(ngModel)]="name" [disabled]="loading" #nameField="ngModel"
-        ptcgNameValidator [ptcgInvalidValue]="invalidName" required maxlength="32">
+      <input matInput [placeholder]="'PROFILE_AVATAR_NAME' | translate" name="name" [(ngModel)]="name"
+        [disabled]="loading" #nameField="ngModel" ptcgNameValidator [ptcgInvalidValue]="invalidName" required
+        maxlength="32">
       <mat-error>
         <div *ngIf="nameField.errors?.name" translate>VALIDATION_INVALID_NAME_FORMAT</div>
         <div *ngIf="nameField.errors?.invalidValue" translate>VALIDATION_NAME_ALREADY_IN_USE</div>
@@ -55,7 +49,7 @@
   <button mat-raised-button mat-dialog-close>
     {{ 'BUTTON_CANCEL' | translate }}
   </button>
-  <button mat-raised-button color="primary" (click)="uploadImage()" [disabled]="form.invalid">
+  <button mat-raised-button (click)="uploadImage()" [disabled]="form.invalid">
     {{ 'BUTTON_FILE_UPLOAD' | translate }}
   </button>
 </mat-dialog-actions>

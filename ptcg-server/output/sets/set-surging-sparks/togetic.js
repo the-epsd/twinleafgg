@@ -26,7 +26,7 @@ class Togetic extends game_1.PokemonCard {
         this.setNumber = '71';
         this.cardImage = 'assets/cardback.png';
         this.name = 'Togetic';
-        this.fullName = 'Togetic SV8';
+        this.fullName = 'Togetic SSP';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

@@ -44,7 +44,7 @@ export class Leafeonex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '6';
   public name: string = 'Leafeon ex';
-  public fullName: string = 'Leafeon ex SV8a';
+  public fullName: string = 'Leafeon ex PRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Psybeam

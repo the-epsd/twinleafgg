@@ -24,32 +24,32 @@ function* useFindAFriend(next, store, state, effect) {
 class Applin extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.regulationMark = 'H';
         this.stage = card_types_1.Stage.BASIC;
-        this.cardType = card_types_1.CardType.DRAGON;
+        this.cardType = N;
         this.hp = 40;
         this.weakness = [];
         this.resistance = [];
-        this.retreat = [card_types_1.CardType.COLORLESS];
+        this.retreat = [C];
         this.attacks = [
             {
                 name: 'Find a Friend',
-                cost: [card_types_1.CardType.COLORLESS],
+                cost: [C],
                 damage: 0,
                 text: 'Search your deck for a Pokémon, reveal it, and put it into your hand. Then, shuffle your deck.'
             },
             {
                 name: 'Rolling Tackle',
-                cost: [card_types_1.CardType.GRASS, card_types_1.CardType.FIRE],
+                cost: [G, R],
                 damage: 30,
                 text: ''
             }
         ];
+        this.regulationMark = 'H';
         this.set = 'TWM';
-        this.cardImage = 'assets/cardback.png';
         this.setNumber = '126';
+        this.cardImage = 'assets/cardback.png';
         this.name = 'Applin';
-        this.fullName = 'Applin TWM 126';
+        this.fullName = 'Applin TWM2';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

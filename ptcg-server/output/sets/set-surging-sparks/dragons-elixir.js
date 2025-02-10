@@ -31,7 +31,7 @@ class DragonsElixir extends trainer_card_1.TrainerCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '172';
         this.name = 'Dragon Elixir';
-        this.fullName = 'Dragon\'s Elixir SV7a';
+        this.fullName = 'Dragon\'s Elixir SSP';
         this.text = 'Heal 60 damage from your Active Dragon Pokémon.';
     }
     reduceEffect(store, state, effect) {

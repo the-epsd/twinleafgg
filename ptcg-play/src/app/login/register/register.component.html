@@ -79,8 +79,8 @@
     </p>
 
     <p>
-      <button mat-raised-button color="primary" [disabled]="loading || form.invalid"
-        [ngClass]="{'ptcg-u-loading': loading}" (click)="register()">
+      <button mat-raised-button [disabled]="loading || form.invalid" [ngClass]="{'ptcg-u-loading': loading}"
+        (click)="register()">
         {{ 'REGISTER_BUTTON' | translate }}
       </button>
     </p>

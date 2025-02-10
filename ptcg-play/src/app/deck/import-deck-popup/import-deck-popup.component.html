@@ -10,17 +10,11 @@
     <!-- Avatar image -->
     <mat-form-field>
       <mat-label translate>DECK_FILE</mat-label>
-      <ptcg-file-input #deckFileInput required
-        ptcgErrorValidator [ptcgErrorValue]="deckError"
-        ptcgFileSizeValidator [maxFileSize]="maxFileSize"
-        name="deck" accept="txt"
-        [disabled]="loading"
-        [(ngModel)]="deckFile" #deckField="ngModel"
-        (ngModelChange)="updatePreview($event)">
+      <ptcg-file-input #deckFileInput required ptcgErrorValidator [ptcgErrorValue]="deckError" ptcgFileSizeValidator
+        [maxFileSize]="maxFileSize" name="deck" accept="txt" [disabled]="loading" [(ngModel)]="deckFile"
+        #deckField="ngModel" (ngModelChange)="updatePreview($event)">
       </ptcg-file-input>
-      <button mat-icon-button matSuffix
-        *ngIf="!deckFileInput.empty"
-        [disabled]="loading"
+      <button mat-icon-button matSuffix *ngIf="!deckFileInput.empty" [disabled]="loading"
         (click)="deckFileInput.clear($event)">
         <mat-icon>clear</mat-icon>
       </button>
@@ -39,7 +33,7 @@
   <button mat-raised-button mat-dialog-close>
     {{ 'BUTTON_CANCEL' | translate }}
   </button>
-  <button mat-raised-button color="primary" (click)="importDeck()" [disabled]="form.invalid">
+  <button mat-raised-button (click)="importDeck()" [disabled]="form.invalid">
     {{ 'BUTTON_IMPORT' | translate }}
   </button>
 </mat-dialog-actions>

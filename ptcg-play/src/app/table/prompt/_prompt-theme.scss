@@ -16,6 +16,13 @@
 
     }
 
+    .mat-raised-button {
+      background-color: #449058;
+      border-radius: 16px;
+      margin-bottom: 6px;
+      margin-top: 4px;
+    }
+
     .ptcg-prompt-container {
       @include mat.elevation(24);
       background-color: mat.get-color-from-palette($background, dialog);
@@ -33,16 +40,12 @@
 
   ptcg-cards-container .ptcg-cards-container,
   ptcg-choose-pokemons-pane .ptcg-choose-pokemons-pane {
-
     background: rgba(26, 32, 44, 0.25);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.18);
-
   }
-
 }
-
 
 @mixin ptcg-prompt-typography($config) {
 

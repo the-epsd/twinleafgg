@@ -37,7 +37,7 @@ export class Budew extends PokemonCard {
 
   public name: string = 'Budew';
 
-  public fullName: string = 'Budew SV8a';
+  public fullName: string = 'Budew PRE';
 
   public readonly OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER = 'OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER';
 

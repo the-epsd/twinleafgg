@@ -10,19 +10,16 @@
   <p [translate]="'GAME_MESSAGES.' + prompt.message"></p>
 
   <ptcg-cards-container [keepInitialSize]="true">
-    <ptcg-card *ngFor="let card of prompt.cards" [card]="card"
-      (click)="onCardClick(card)">
+    <ptcg-card *ngFor="let card of prompt.cards" [card]="card" (click)="onCardClick(card)">
     </ptcg-card>
   </ptcg-cards-container>
 </div>
 
 <div class="ptcg-prompt-actions">
-  <button mat-raised-button *ngIf="prompt.options.allowCancel"
-    [disabled]="gameState.deleted" (click)="cancel()">
+  <button mat-raised-button *ngIf="prompt.options.allowCancel" [disabled]="gameState.deleted" (click)="cancel()">
     {{ 'BUTTON_CANCEL' | translate }}
   </button>
-  <button mat-raised-button color="primary" [disabled]="gameState.deleted"
-    (click)="confirm()">
+  <button mat-raised-button [disabled]="gameState.deleted" (click)="confirm()">
     {{ 'BUTTON_OK' | translate }}
   </button>
 </div>

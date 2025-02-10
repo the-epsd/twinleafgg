@@ -32,7 +32,7 @@ class FanRotom extends game_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '118';
         this.name = 'Fan Rotom';
-        this.fullName = 'Fan Rotom SV7';
+        this.fullName = 'Fan Rotom SCR';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_phase_effects_1.EndTurnEffect) {

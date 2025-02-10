@@ -33,7 +33,7 @@ class Laprasex extends game_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '32';
         this.name = 'Lapras ex';
-        this.fullName = 'Lapras ex SV7';
+        this.fullName = 'Lapras ex SCR';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

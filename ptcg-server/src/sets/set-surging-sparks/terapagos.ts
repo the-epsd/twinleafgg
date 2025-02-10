@@ -28,7 +28,7 @@ export class Terapagos extends PokemonCard {
   public setNumber: string = '161';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Terapagos';
-  public fullName: string = 'Terapagos SV8';
+  public fullName: string = 'Terapagos SSP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

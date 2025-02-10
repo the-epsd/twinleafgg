@@ -35,7 +35,7 @@ class Latiasex extends pokemon_card_1.PokemonCard {
         this.setNumber = '76';
         this.cardImage = 'assets/cardback.png';
         this.name = 'Latias ex';
-        this.fullName = 'Latias ex SV7a';
+        this.fullName = 'Latias ex SSP';
         this.ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
         this.ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
     }

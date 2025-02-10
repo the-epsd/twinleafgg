@@ -44,7 +44,7 @@ export class Seaking extends PokemonCard {
 
   public name: string = 'Seaking';
 
-  public fullName: string = 'Seaking SV8a';
+  public fullName: string = 'Seaking PRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

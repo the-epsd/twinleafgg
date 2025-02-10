@@ -33,7 +33,7 @@ class Noctowl extends game_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '115';
         this.name = 'Noctowl';
-        this.fullName = 'Noctowl SV7';
+        this.fullName = 'Noctowl SCR';
         this.JEWEL_HUNT_MARKER = 'JEWEL_HUNT_MARKER';
     }
     reduceEffect(store, state, effect) {

@@ -17,7 +17,7 @@ class GravityMountain extends trainer_card_1.TrainerCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '177';
         this.name = 'Gravity Mountain';
-        this.fullName = 'Gravity Mountain SV8';
+        this.fullName = 'Gravity Mountain SSP';
         this.text = 'The maximum HP of all Stage 2 Pokémon in play is reduced by 30.';
     }
     reduceEffect(store, state, effect) {

@@ -38,7 +38,7 @@ class Orthwormex extends pokemon_card_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '110';
         this.name = 'Orthworm ex';
-        this.fullName = 'Orthworm ex SV7';
+        this.fullName = 'Orthworm ex SCR';
         this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER = 'DEFENDING_POKEMON_CANNOT_RETREAT_MARKER';
     }
     reduceEffect(store, state, effect) {

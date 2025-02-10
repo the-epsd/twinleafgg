@@ -28,7 +28,7 @@ class Drednaw extends game_1.PokemonCard {
         this.regulationMark = 'H';
         this.set = 'SCR';
         this.name = 'Drednaw';
-        this.fullName = 'Drednaw SV7';
+        this.fullName = 'Drednaw SCR';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '44';
     }

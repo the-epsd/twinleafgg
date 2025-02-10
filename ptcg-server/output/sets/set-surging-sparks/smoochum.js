@@ -27,7 +27,7 @@ class Smoochum extends pokemon_card_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '75';
         this.name = 'Smoochum';
-        this.fullName = 'Smoochum SV7a';
+        this.fullName = 'Smoochum SSP';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

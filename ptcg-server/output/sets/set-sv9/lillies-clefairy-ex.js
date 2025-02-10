@@ -9,31 +9,30 @@ const check_effects_1 = require("../../game/store/effects/check-effects");
 class LilliesClefairyex extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.tags = [card_types_1.CardTag.POKEMON_ex, card_types_1.CardTag.LILLIES];
-        this.regulationMark = 'I';
         this.stage = card_types_1.Stage.BASIC;
-        this.cardType = card_types_1.CardType.PSYCHIC;
+        this.tags = [card_types_1.CardTag.POKEMON_ex, card_types_1.CardTag.LILLIES];
+        this.cardType = P;
         this.hp = 190;
-        this.weakness = [{ type: card_types_1.CardType.METAL }];
-        this.retreat = [card_types_1.CardType.COLORLESS];
+        this.weakness = [{ type: M }];
+        this.retreat = [C];
         this.powers = [{
                 name: 'Fairy Zone',
                 powerType: game_1.PowerType.ABILITY,
-                text: 'The weakness of each of your opponent\'s D Pokémon in play is now P. (Apply Weakness as x2.)',
+                text: 'The Weakness of each of your opponent\'s [N] Pokémon in play is now [P]. (Apply Weakness as x2.) ',
             }];
         this.attacks = [
             {
                 name: 'Full Moon Rondo',
-                cost: [card_types_1.CardType.PSYCHIC, card_types_1.CardType.COLORLESS],
+                cost: [P, C],
                 damage: 20,
                 damageCalculation: '+',
-                text: 'This attack does 20 more damage for each Benched ' +
-                    'Pokémon (both yours and your opponent\'s).'
+                text: 'This attack does 20 more damage for each Benched Pokémon (both yours and your opponent\'s).'
             }
         ];
+        this.regulationMark = 'I';
         this.set = 'SV9';
-        this.cardImage = 'assets/cardback.png';
         this.setNumber = '33';
+        this.cardImage = 'assets/cardback.png';
         this.name = 'Lillie\'s Clefairy ex';
         this.fullName = 'Lillie\'s Clefairy ex SV9';
         this.DRAGON_VULNERABILITY_MARKER = 'DRAGON_VULNERABILITY_MARKER';

@@ -37,7 +37,7 @@ export class Eevee extends PokemonCard {
 
   public name: string = 'Eevee';
 
-  public fullName: string = 'Eevee SVP';
+  public fullName: string = 'Eevee SSP';
 
   public cardImage: string = 'assets/cardback.png';
 

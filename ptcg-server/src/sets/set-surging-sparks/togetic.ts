@@ -24,7 +24,7 @@ export class Togetic extends PokemonCard {
   public setNumber: string = '71';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Togetic';
-  public fullName: string = 'Togetic SV8';
+  public fullName: string = 'Togetic SSP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

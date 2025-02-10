@@ -66,7 +66,7 @@ class Flareonex extends pokemon_card_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '14';
         this.name = 'Flareon ex';
-        this.fullName = 'Flareon ex SV8a';
+        this.fullName = 'Flareon ex PRE';
         // for preventing the pokemon from attacking on the next turn
         this.ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
         this.ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';

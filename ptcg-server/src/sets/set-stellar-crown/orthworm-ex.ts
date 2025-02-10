@@ -52,7 +52,7 @@ export class Orthwormex extends PokemonCard {
 
   public name: string = 'Orthworm ex';
 
-  public fullName: string = 'Orthworm ex SV7';
+  public fullName: string = 'Orthworm ex SCR';
 
   public readonly DEFENDING_POKEMON_CANNOT_RETREAT_MARKER = 'DEFENDING_POKEMON_CANNOT_RETREAT_MARKER';
 

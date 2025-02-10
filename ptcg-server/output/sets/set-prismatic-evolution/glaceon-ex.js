@@ -36,7 +36,7 @@ class Glaceonex extends pokemon_card_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '26';
         this.name = 'Glaceon ex';
-        this.fullName = 'Glaceon ex SV8a';
+        this.fullName = 'Glaceon ex PRE';
     }
     reduceEffect(store, state, effect) {
         // Frost Bullet

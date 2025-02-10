@@ -24,7 +24,7 @@ class Togepi extends game_1.PokemonCard {
         this.setNumber = '70';
         this.cardImage = 'assets/cardback.png';
         this.name = 'Togepi';
-        this.fullName = 'Togepi SV8';
+        this.fullName = 'Togepi SSP';
     }
 }
 exports.Togepi = Togepi;

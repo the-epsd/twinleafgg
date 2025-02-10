@@ -29,7 +29,7 @@ class Comfey extends game_1.PokemonCard {
         this.regulationMark = 'H';
         this.set = 'SCR';
         this.name = 'Comfey';
-        this.fullName = 'Comfey SV7';
+        this.fullName = 'Comfey SCR';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '63';
     }

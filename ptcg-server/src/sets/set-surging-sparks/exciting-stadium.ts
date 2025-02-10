@@ -23,7 +23,7 @@ export class ExcitingStadium extends TrainerCard {
 
   public name: string = 'Lively Stadium';
 
-  public fullName: string = 'Exciting Stadium SV8';
+  public fullName: string = 'Exciting Stadium SSP';
 
   public text: string =
     'Basic Pokémon in play get +30 HP.';

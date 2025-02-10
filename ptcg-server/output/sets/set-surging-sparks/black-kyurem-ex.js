@@ -29,7 +29,7 @@ class BlackKyuremex extends game_1.PokemonCard {
         this.setNumber = '48';
         this.cardImage = 'assets/cardback.png';
         this.name = 'Black Kyurem ex';
-        this.fullName = 'Black Kyurem ex SV7a';
+        this.fullName = 'Black Kyurem ex SSP';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

@@ -128,7 +128,7 @@ export class Vivillion extends PokemonCard {
   public regulationMark = 'H';
   public set: string = 'SSP';
   public name: string = 'Vivillion';
-  public fullName: string = 'Vivillion SV8';
+  public fullName: string = 'Vivillion SSP';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '7';
 

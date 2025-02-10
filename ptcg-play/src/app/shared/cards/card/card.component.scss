@@ -93,6 +93,12 @@
 //   width: map-get($ptcg-size, card);
 // }
 
+@mixin holo-base {
+  display: block;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+}
+
 .holo-overlay {
   display: none;
   position: absolute;
@@ -113,46 +119,24 @@
   mix-blend-mode: soft-light;
 }
 
-.holo .holo-overlay {
-  display: block;
-  -webkit-mask-image: url('/assets/card-mask.png');
-  mask-image: url('/assets/card-mask.png');
-  -webkit-mask-size: 100% 100%;
-  mask-size: 100% 100%;
-}
+$holo-types: (
+  'holo': 'card-mask',
+  'trainer-holo': 'card-mask-trainer',
+  'fullart-holo': 'fa-card-mask',
+  'radiant-holo': 'card-mask-radiant',
+  'ace-spec-holo': 'card-mask-ace-spec'
+);
 
-.trainer-holo .holo-overlay {
-  display: block;
-  -webkit-mask-image: url('/assets/card-mask-trainer.png');
-  mask-image: url('/assets/card-mask-trainer.png');
-  -webkit-mask-size: 100% 100%;
-  mask-size: 100% 100%;
-}
+@each $type, $mask in $holo-types {
+  .#{$type} .holo-overlay {
+    @include holo-base;
+    -webkit-mask-image: url('/assets/#{$mask}.png');
+    mask-image: url('/assets/#{$mask}.png');
 
-.fullart-holo .holo-overlay {
-  display: block;
-  -webkit-mask-image: url('/assets/fa-card-mask.png');
-  mask-image: url('/assets/fa-card-mask.png');
-  -webkit-mask-size: 100% 100%;
-  mask-size: 100% 100%;
-}
-
-.radiant-holo .holo-overlay {
-  display: block;
-  opacity: 4;
-  -webkit-mask-image: url('/assets/card-mask-radiant.png');
-  mask-image: url('/assets/card-mask-radiant.png');
-  -webkit-mask-size: 100% 100%;
-  mask-size: 100% 100%;
-}
-
-.ace-spec-holo .holo-overlay {
-  display: block;
-  opacity: 4;
-  -webkit-mask-image: url('/assets/card-mask-ace-spec.png');
-  mask-image: url('/assets/card-mask-ace-spec.png');
-  -webkit-mask-size: 100% 100%;
-  mask-size: 100% 100%;
+    @if $type =='radiant-holo' or $type =='ace-spec-holo' {
+      opacity: 4;
+    }
+  }
 }
 
 @keyframes GradientScroll {

@@ -35,7 +35,7 @@ export class Palkia extends PokemonCard {
 
   public name: string = 'Palkia';
 
-  public fullName: string = 'Palkia SV7a';
+  public fullName: string = 'Palkia SSP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

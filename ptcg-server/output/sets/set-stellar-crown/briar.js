@@ -13,7 +13,7 @@ class Briar extends game_1.TrainerCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '132';
         this.name = 'Briar';
-        this.fullName = 'Briar SV7';
+        this.fullName = 'Briar SCR';
         this.extraPrizes = false;
         this.text = 'You can use this card only if your opponent has exactly 2 Prize cards remaining.' +
             '' +

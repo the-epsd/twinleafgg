@@ -6,7 +6,7 @@ import { CapeOfToughness } from './cape-of-toughness';
 import { Combusken } from './combusken';
 import { CrobatV } from './crobat-v';
 import { Dedenne } from './dedenne';
-import { DucklettDAA } from './ducklett';
+import { Ducklett } from './ducklett';
 import { EternatusV } from './eternatus-v';
 import { EternatusVMAX } from './eternatus-vmax';
 import { GalarianMrMime } from './galarian-mr-mime';
@@ -28,7 +28,7 @@ import { Swanna } from './swanna';
 import { TapuKoko } from './tapu-koko';
 import { Teddiursa } from './teddiursa';
 import { Ursaring } from './ursaring';
-import {VikavoltV} from './vikavolt-v';
+import { VikavoltV } from './vikavolt-v';
 import { YellHorn } from './yell-horn';
 
 export const setDarknessAblaze: Card[] = [
@@ -39,7 +39,7 @@ export const setDarknessAblaze: Card[] = [
   new CrobatV(),
   new Combusken(),
   new Dedenne(),
-  new DucklettDAA(),
+  new Ducklett(),
   new EternatusV(),
   new EternatusVMAX(),
   new GalarianMrMime(),

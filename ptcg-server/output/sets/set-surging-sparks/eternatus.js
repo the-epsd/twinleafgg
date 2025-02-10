@@ -34,7 +34,7 @@ class Eternatus extends pokemon_card_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '141';
         this.name = 'Eternatus';
-        this.fullName = 'Eternatus SV8';
+        this.fullName = 'Eternatus SSP';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

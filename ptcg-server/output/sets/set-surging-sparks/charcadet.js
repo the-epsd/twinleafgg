@@ -22,7 +22,7 @@ class Charcadet extends pokemon_card_1.PokemonCard {
         this.regulationMark = 'H';
         this.set = 'SSP';
         this.name = 'Charcadet';
-        this.fullName = 'Charcadet SVP';
+        this.fullName = 'Charcadet SSP';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '32';
     }

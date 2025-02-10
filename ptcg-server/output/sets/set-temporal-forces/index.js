@@ -75,6 +75,7 @@ const sableye_1 = require("./sableye");
 const salvatore_1 = require("./salvatore");
 const sandy_shocks_1 = require("./sandy-shocks");
 const scizor_ex_1 = require("./scizor-ex");
+const scovillain_ex_1 = require("./scovillain-ex");
 const scyther_1 = require("./scyther");
 const skitty_1 = require("./skitty");
 const solosis_1 = require("./solosis");
@@ -159,6 +160,7 @@ exports.setTemporalForces = [
     new sableye_1.Sableye(),
     new salvatore_1.Salvatore(),
     new sandy_shocks_1.SandyShocks(),
+    new scovillain_ex_1.Scovillainex(),
     new skitty_1.Skitty(),
     new solosis_1.Solosis(),
     new torracat_1.Torracat(),

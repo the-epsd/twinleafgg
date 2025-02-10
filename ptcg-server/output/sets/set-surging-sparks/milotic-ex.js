@@ -31,7 +31,7 @@ class Miloticex extends game_1.PokemonCard {
         this.setNumber = '42';
         this.cardImage = 'assets/cardback.png';
         this.name = 'Milotic ex';
-        this.fullName = 'Milotic ex SV8';
+        this.fullName = 'Milotic ex SSP';
     }
     reduceEffect(store, state, effect) {
         // if (effect instanceof BetweenTurnsEffect) {

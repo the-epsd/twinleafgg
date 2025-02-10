@@ -47,7 +47,7 @@ class TeraOrb extends trainer_card_1.TrainerCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '189';
         this.name = 'Tera Orb';
-        this.fullName = 'Tera Orb svLN';
+        this.fullName = 'Tera Orb SSP';
         this.text = 'Search your deck for a Tera Pokémon, reveal it, and put it into your hand. Then shuffle your deck.';
     }
     reduceEffect(store, state, effect) {

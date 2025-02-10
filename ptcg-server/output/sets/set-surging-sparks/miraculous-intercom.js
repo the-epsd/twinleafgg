@@ -46,7 +46,7 @@ class MiraculousIntercom extends trainer_card_1.TrainerCard {
         this.regulationMark = 'H';
         this.set = 'SSP';
         this.name = 'Miracle Headset';
-        this.fullName = 'Miraculous Intercom SV8';
+        this.fullName = 'Miraculous Intercom SSP';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '183';
         this.text = 'Choose up to 2 Supporter cards from your discard pile, reveal them, and put them into your hand.';

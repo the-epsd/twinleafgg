@@ -22,7 +22,7 @@ class Marill extends pokemon_card_1.PokemonCard {
         this.regulationMark = 'H';
         this.set = 'SSP';
         this.name = 'Marill';
-        this.fullName = 'Marill svLN';
+        this.fullName = 'Marill SSP';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '73';
     }

@@ -17,8 +17,7 @@
       <ng-container matColumnDef="player1">
         <th mat-header-cell *matHeaderCellDef translate>LABEL_PLAYER_1</th>
         <td mat-cell *matCellDef="let match">
-          <ptcg-user-bar openUserPopup="true"
-            [user]="users[match.player1Id]"
+          <ptcg-user-bar openUserPopup="true" [user]="users[match.player1Id]"
             [marked]="match.winner === GameWinner.PLAYER_1">
           </ptcg-user-bar>
         </td>
@@ -28,8 +27,7 @@
       <ng-container matColumnDef="player2">
         <th mat-header-cell *matHeaderCellDef translate>LABEL_PLAYER_2</th>
         <td mat-cell *matCellDef="let match">
-          <ptcg-user-bar openUserPopup="true"
-            [user]="users[match.player2Id]"
+          <ptcg-user-bar openUserPopup="true" [user]="users[match.player2Id]"
             [marked]="match.winner === GameWinner.PLAYER_2">
           </ptcg-user-bar>
         </td>
@@ -79,18 +77,13 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
 
-    <mat-paginator class ="bg" hidePageSize="true"
-      [disabled]="loading"
-      [length]="matchesTotal"
-      [pageIndex]="pageIndex"
-      [pageSize]="pageSize"
-      [pageSizeOptions]="pageSizeOptions"
-      (page)="onPageChange($event)">
+    <mat-paginator class="bg" hidePageSize="true" [disabled]="loading" [length]="matchesTotal" [pageIndex]="pageIndex"
+      [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="onPageChange($event)">
     </mat-paginator>
 
     <div class="ptcg-u-padding ptcg-table-loading-failed" *ngIf="loadingFailed">
       <p translate>TABLE_ERROR_LOADING</p>
-      <button mat-raised-button color="primary" (click)="refresh(id)">
+      <button mat-raised-button (click)="refresh(id)">
         {{ 'BUTTON_TRY_AGAIN' | translate }}
       </button>
     </div>

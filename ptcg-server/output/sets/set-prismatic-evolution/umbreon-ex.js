@@ -35,7 +35,7 @@ class Umbreonex extends game_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '60';
         this.name = 'Umbreon ex';
-        this.fullName = 'Umbreon ex SV8a';
+        this.fullName = 'Umbreon ex PRE';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

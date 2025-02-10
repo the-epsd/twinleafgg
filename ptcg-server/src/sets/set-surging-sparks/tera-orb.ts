@@ -69,7 +69,7 @@ export class TeraOrb extends TrainerCard {
 
   public name: string = 'Tera Orb';
 
-  public fullName: string = 'Tera Orb svLN';
+  public fullName: string = 'Tera Orb SSP';
 
   public text =
     'Search your deck for a Tera Pokémon, reveal it, and put it into your hand. Then shuffle your deck.';

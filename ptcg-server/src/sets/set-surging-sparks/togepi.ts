@@ -21,5 +21,5 @@ export class Togepi extends PokemonCard {
   public setNumber: string = '70';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Togepi';
-  public fullName: string = 'Togepi SV8';
+  public fullName: string = 'Togepi SSP';
 }

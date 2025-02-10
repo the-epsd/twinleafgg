@@ -1,6 +1,7 @@
 import { AttachEnergyOptions, Card, CardList, ChooseCardsOptions, EnergyCard, FilterType, GameMessage, Player, PlayerType, PokemonCardList, SlotType, State, StoreLike } from '../..';
 import { SpecialCondition } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
+import { DealDamageEffect, PutDamageEffect } from '../effects/attack-effects';
 import { Effect } from '../effects/effect';
 import { AttackEffect, EvolveEffect, KnockOutEffect, PowerEffect } from '../effects/game-effects';
 import { AfterAttackEffect } from '../effects/game-phase-effects';
@@ -10,6 +11,8 @@ import { AfterAttackEffect } from '../effects/game-phase-effects';
  * @returns whether or not a specific attack was used.
  */
 export declare function WAS_ATTACK_USED(effect: Effect, index: number, user: PokemonCard): effect is AttackEffect;
+export declare function DEAL_DAMAGE(effect: Effect): effect is DealDamageEffect;
+export declare function PUT_DAMAGE(effect: Effect): effect is PutDamageEffect;
 /**
  *
  * A basic effect for checking the use of abilites.

@@ -1,13 +1,16 @@
-import { State, StoreLike } from '../../game';
-import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
+import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
+import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-export declare class Applin extends PokemonCard {
+export declare class Scovillainex extends PokemonCard {
     stage: Stage;
+    evolvesFrom: string;
+    tags: CardTag[];
     cardType: CardType;
     hp: number;
-    weakness: never[];
-    resistance: never[];
+    weakness: {
+        type: CardType.FIRE;
+    }[];
     retreat: CardType.COLORLESS[];
     attacks: ({
         name: string;
@@ -16,7 +19,7 @@ export declare class Applin extends PokemonCard {
         text: string;
     } | {
         name: string;
-        cost: (CardType.GRASS | CardType.FIRE)[];
+        cost: CardType.GRASS[];
         damage: number;
         text: string;
     })[];
@@ -26,5 +29,6 @@ export declare class Applin extends PokemonCard {
     cardImage: string;
     name: string;
     fullName: string;
+    readonly SPICY_BIND_MARKER = "SPICY_BIND_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

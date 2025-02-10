@@ -32,7 +32,7 @@ export class AlolanExeggutorex extends PokemonCard {
   public setNumber: string = '133';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Alolan Exeggutor ex';
-  public fullName: string = 'Alolan Exeggutor ex SV7a';
+  public fullName: string = 'Alolan Exeggutor ex SSP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

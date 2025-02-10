@@ -26,7 +26,7 @@ class Azelf extends pokemon_card_1.PokemonCard {
         this.setNumber = '80';
         this.cardImage = 'assets/cardback.png';
         this.name = 'Azelf';
-        this.fullName = 'Azelf SV8';
+        this.fullName = 'Azelf SSP';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

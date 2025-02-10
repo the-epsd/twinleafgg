@@ -2,12 +2,9 @@
 
   <ptcg-sidebar>
     <mat-nav-list>
-      <a mat-list-item *ngFor="let conversation of (conversations$ | async)"
-        class="ptcg-no-padding-list-item">
-        <ptcg-contact-bar
-          [active]="userId === conversation.user1Id || userId === conversation.user2Id"
-          [conversation]="conversation"
-          [loggedUserId]="loggedUserId">
+      <a mat-list-item *ngFor="let conversation of (conversations$ | async)" class="ptcg-no-padding-list-item">
+        <ptcg-contact-bar [active]="userId === conversation.user1Id || userId === conversation.user2Id"
+          [conversation]="conversation" [loggedUserId]="loggedUserId">
         </ptcg-contact-bar>
       </a>
     </mat-nav-list>
@@ -21,8 +18,7 @@
 
           <span class="ptcg-u-spacer"></span>
 
-          <button mat-raised-button color="primary" *ngIf="userId !== 0"
-            (click)="deleteConversation(userId)">
+          <button mat-raised-button *ngIf="userId !== 0" (click)="deleteConversation(userId)">
             {{ 'MESSAGES_DELETE_CONVERSATION' | translate }}
           </button>
         </mat-toolbar-row>
@@ -37,9 +33,7 @@
       </div>
 
       <ng-template #messages>
-        <ptcg-conversation
-          [loggedUserId]="loggedUserId"
-          [userId]="userId">
+        <ptcg-conversation [loggedUserId]="loggedUserId" [userId]="userId">
         </ptcg-conversation>
       </ng-template>
     </div>

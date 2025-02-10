@@ -46,7 +46,7 @@ export class Flygonex extends PokemonCard {
 
   public name: string = 'Flygon ex';
 
-  public fullName: string = 'Flygon ex SV7a';
+  public fullName: string = 'Flygon ex SSP';
 
   public stormBug: boolean = false;
 

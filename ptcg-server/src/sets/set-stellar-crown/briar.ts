@@ -17,7 +17,7 @@ export class Briar extends TrainerCard {
 
   public name: string = 'Briar';
 
-  public fullName: string = 'Briar SV7';
+  public fullName: string = 'Briar SCR';
 
   public extraPrizes = false;
 

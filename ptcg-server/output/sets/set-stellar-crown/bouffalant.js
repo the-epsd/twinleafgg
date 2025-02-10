@@ -28,7 +28,7 @@ class Bouffalant extends game_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '119';
         this.name = 'Bouffalant';
-        this.fullName = 'Bouffalant SV7';
+        this.fullName = 'Bouffalant SCR';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof attack_effects_1.PutDamageEffect) {

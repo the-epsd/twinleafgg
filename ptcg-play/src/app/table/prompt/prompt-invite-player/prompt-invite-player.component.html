@@ -25,7 +25,7 @@
 
   <div class="ptcg-no-decks" *ngIf="!loading && decks.length === 0">
     <p translate>PROMPT_INVITE_NO_DECK</p>
-    <button mat-raised-button color="primary" routerLink="/deck">
+    <button mat-raised-button routerLink="/deck">
       {{ 'PROMPT_INVITE_GO_TO_DECKS' | translate }}
     </button>
   </div>
@@ -36,8 +36,7 @@
   <button mat-raised-button [disabled]="gameState.deleted" (click)="cancel()">
     {{ 'BUTTON_CANCEL' | translate }}
   </button>
-  <button mat-raised-button color="primary" [disabled]="gameState.deleted || !deckId"
-    (click)="confirm()">
+  <button mat-raised-button [disabled]="gameState.deleted || !deckId" (click)="confirm()">
     {{ 'BUTTON_OK' | translate }}
   </button>
 </div>

@@ -51,7 +51,7 @@ class LisiasAppeal extends trainer_card_1.TrainerCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '179';
         this.name = 'Lisia\'s Appeal';
-        this.fullName = 'Lisia\'s Appeal SV8';
+        this.fullName = 'Lisia\'s Appeal SSP';
         this.text = 'Switch in 1 of your opponent\'s Benched Basic Pokémon to the Active Spot. The new Active Pokémon is now Confused.';
     }
     reduceEffect(store, state, effect) {
