@@ -2,29 +2,31 @@ import { PokemonCard, Stage, CardType, CardTag, StoreLike, State } from '../../g
 import { Effect } from '../../game/store/effects/effect';
 export declare class GengarMimikyuGX extends PokemonCard {
     stage: Stage;
+    tags: CardTag[];
     cardType: CardType;
     hp: number;
     weakness: {
-        type: CardType;
+        type: CardType.DARK;
     }[];
     resistance: {
-        type: CardType;
+        type: CardType.FIGHTING;
         value: number;
     }[];
-    retreat: CardType[];
-    tags: CardTag[];
+    retreat: CardType.COLORLESS[];
     attacks: ({
         name: string;
-        cost: CardType[];
+        cost: CardType.PSYCHIC[];
         damage: number;
+        damageCalculation: string;
         text: string;
         gxAttack?: undefined;
     } | {
         name: string;
-        cost: CardType[];
+        cost: CardType.PSYCHIC[];
         damage: number;
         gxAttack: boolean;
         text: string;
+        damageCalculation?: undefined;
     })[];
     set: string;
     name: string;

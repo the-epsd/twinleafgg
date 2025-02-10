@@ -31,7 +31,7 @@ class MrMime extends pokemon_card_1.PokemonCard {
             }];
         this.set = 'PLF';
         this.name = 'Mr. Mime';
-        this.fullName = 'Mr Mime PLF';
+        this.fullName = 'Mr. Mime PLF';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '47';
     }

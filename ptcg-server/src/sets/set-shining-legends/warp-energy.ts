@@ -20,7 +20,7 @@ export class WarpEnergy extends EnergyCard {
 
   public name = 'Warp Energy';
 
-  public fullName = 'Warp Energy SHL';
+  public fullName = 'Warp Energy SLG';
 
   public text =
     'This card provides [C] Energy.' +

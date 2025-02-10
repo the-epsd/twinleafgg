@@ -49,7 +49,7 @@ class Mallow extends trainer_card_1.TrainerCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '127';
         this.name = 'Mallow';
-        this.fullName = 'Mallow TEF';
+        this.fullName = 'Mallow GRI';
         this.text = 'Search your deck for 2 cards, shuffle your deck, then put those cards on top of it in any order.';
     }
     reduceEffect(store, state, effect) {

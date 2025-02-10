@@ -21,7 +21,7 @@ export class MrMime extends PokemonCard {
 
   public weakness = [{ type: CardType.PSYCHIC }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public powers = [{
     name: 'Bench Barrier',
@@ -31,7 +31,7 @@ export class MrMime extends PokemonCard {
 
   public attacks = [{
     name: 'Psy Bolt',
-    cost: [ CardType.PSYCHIC, CardType.COLORLESS ],
+    cost: [CardType.PSYCHIC, CardType.COLORLESS],
     damage: 20,
     text: 'Flip a coin. If heads, the Defending Pokemon is now Paralyzed.'
   }];
@@ -40,7 +40,7 @@ export class MrMime extends PokemonCard {
 
   public name: string = 'Mr. Mime';
 
-  public fullName: string = 'Mr Mime PLF';
+  public fullName: string = 'Mr. Mime PLF';
 
   public cardImage: string = 'assets/cardback.png';
 

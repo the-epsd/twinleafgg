@@ -32,7 +32,7 @@ export class Oricorio extends PokemonCard {
 
   public set: string = 'CES';
   public name: string = 'Oricorio';
-  public fullName: string = 'Oricorio SHF';
+  public fullName: string = 'Oricorio CES';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '30';
 

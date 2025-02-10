@@ -6,6 +6,7 @@ import { StoreLike } from '../../game/store/store-like';
 export declare class HorrorPsychicEnergy extends EnergyCard {
     provides: CardType[];
     energyType: EnergyType;
+    regulationMark: string;
     set: string;
     name: string;
     fullName: string;

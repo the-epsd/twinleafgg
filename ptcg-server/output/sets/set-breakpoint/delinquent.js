@@ -12,7 +12,7 @@ class Delinquent extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
         this.set = 'BKP';
         this.name = 'Delinquent';
-        this.fullName = 'Delinquent BKT';
+        this.fullName = 'Delinquent BKP';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '98';
         this.text = 'Discard any Stadium card in play. If you do, your opponent discards 3 cards from his or her hand.';

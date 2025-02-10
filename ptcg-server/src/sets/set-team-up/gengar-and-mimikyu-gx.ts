@@ -5,23 +5,24 @@ import { AttachEnergyEffect, AttachPokemonToolEffect, PlayItemEffect, PlayPokemo
 
 export class GengarMimikyuGX extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.PSYCHIC;
-  public hp: number = 240;
-  public weakness = [{ type: CardType.DARK }];
-  public resistance = [{ type: CardType.FIGHTING, value: -20 }];
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
   public tags = [CardTag.POKEMON_GX, CardTag.TAG_TEAM];
+  public cardType: CardType = P;
+  public hp: number = 240;
+  public weakness = [{ type: D }];
+  public resistance = [{ type: F, value: -20 }];
+  public retreat = [C, C];
 
   public attacks = [
     {
       name: 'Poltergeist',
-      cost: [CardType.PSYCHIC],
+      cost: [P, P],
       damage: 50,
+      damageCalculation: 'x',
       text: 'Your opponent reveals their hand. This attack does 50 damage for each Trainer card you find there.'
     },
     {
       name: 'Horror House-GX',
-      cost: [CardType.PSYCHIC],
+      cost: [P],
       damage: 0,
       gxAttack: true,
       text: 'Your opponent can\'t play any cards from their hand during their next turn. If this Pokémon has at least 1 extra [P] Energy attached to it (in addition to this attack\'s cost), each player draws cards until they have 7 cards in their hand. (You can\'t use more than 1 GX attack in a game.)'

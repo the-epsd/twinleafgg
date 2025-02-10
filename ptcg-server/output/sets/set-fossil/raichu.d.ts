@@ -6,23 +6,21 @@ import { Effect } from '../../game/store/effects/effect';
 export declare class Raichu extends PokemonCard {
     stage: Stage;
     evolvesFrom: string;
-    evolvesTo: string[];
     cardType: CardType;
     hp: number;
     weakness: {
         type: CardType.FIGHTING;
     }[];
-    resistance: never[];
-    retreat: CardType[];
+    retreat: CardType.COLORLESS[];
     attacks: {
         name: string;
-        cost: CardType[];
+        cost: CardType.LIGHTNING[];
         damage: number;
         text: string;
     }[];
     set: string;
-    cardImage: string;
     setNumber: string;
+    cardImage: string;
     name: string;
     fullName: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;

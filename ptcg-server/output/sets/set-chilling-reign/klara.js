@@ -59,16 +59,16 @@ class Klara extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.SUPPORTER;
-        this.set = 'CRE';
-        this.cardImage = 'assets/cardback.png';
-        this.setNumber = '145';
         this.regulationMark = 'E';
+        this.set = 'CRE';
+        this.setNumber = '145';
+        this.cardImage = 'assets/cardback.png';
         this.name = 'Klara';
-        this.fullName = 'Klara CRE 145';
-        this.text = 'Choose 1 or both:' +
-            '' +
-            'Put up to 2 Pokémon from your discard pile into your hand.' +
-            'Put up to 2 basic Energy cards from your discard pile into your hand.';
+        this.fullName = 'Klara CRE';
+        this.text = `Choose 1 or both:
+
+• Put up to 2 Pokémon from your discard pile into your hand.
+• Put up to 2 basic Energy cards from your discard pile into your hand.`;
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {

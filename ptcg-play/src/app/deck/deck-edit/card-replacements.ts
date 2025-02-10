@@ -23,57 +23,17 @@ export const cardReplacements = [
   { from: 'Pokemon Breeder BS 76', to: 'Pokémon Breeder BS 76' },
   { from: 'Pokemon Trader BS 77', to: 'Pokémon Trader BS 77' },
 
-  //BWP
-  { from: 'Tropical Beach BWP 50', to: 'Tropical Beach BWP50 BWP 50' },
-
-  //PLF
-  { from: 'Mr. Mime PLF 47', to: 'Mr Mime PLF 47' },
-
-  //ROS
-  { from: 'Double Dragon Energy ROS 97', to: 'Double Dragon Energy SUM 97' },
-
-  //BKP
-  { from: 'Delinquent BKP 98', to: 'Delinquent BKT 98' },
-
   //SUM
-  { from: 'Alolan Grimer SUM 57', to: 'Alolan Grimer XY 57' },
   { from: 'Rotom Dex SUM 159', to: 'Rotom DexSR SM 159' },
-
-  //GRI
-  { from: 'Mallow GRI 127', to: 'Mallow TEF 127' },
 
   //SHF
   { from: 'Snom SHF SV33', to: 'Snom SHFSV SV33' },
 
-  //SLG
-  { from: 'Warp Energy SLG 70', to: 'Warp Energy SHL 70' },
-
   //STS
   { from: 'Pokémon Ranger STS 104', to: 'Pokemon Ranger STS 104' },
 
-  //UPR
-  { from: 'Mt. Coronet UPR 130', to: 'Mt. Coronet RCL 130' },
-
-  //CES
-  { from: 'Oricorio CES 30', to: 'Oricorio SHF 30' },
-
-  //LOT
-  { from: 'Lost Blender LOT 181', to: 'Lost Blender LOR 181' },
-
-  //TEU
-  { from: 'Gengar & Mimikyu-GX TEU 53', to: 'Gengar & Mimikyu-GX SM9 53' },
-
-  //UNB
-  { from: 'Porygon-Z UNB 157', to: 'Porygon-Z PAL 157' },
-
-  //RCL
-  { from: 'Horror Psychic Energy RCL 172', to: 'Horror Psychic Energy DAA 172' },
-
   //VIV
   { from: 'Talonflame V VIV 168', to: 'Talonflame VFA VIV 168' },
-
-  //CRE
-  { from: 'Klara CRE 145', to: 'Klara CRE 145 145' },
 
   //PGO
   { from: 'PokéStop PGO 68', to: 'PokeStop PGO 68' },
@@ -417,8 +377,6 @@ export const cardReplacements = [
   { from: 'Pikachu ex PRE 179', to: 'Pikachu exUR PRE 179' },
   { from: 'Terapagos ex PRE 180', to: 'Terapagos exUR PRE 180' },
 
-  //SV9
-  { from: 'Lillie\'s Comfey SV9 43', to: 'Lillie\'s Comfy SV9 43' },
 ];
 
 export const exportReplacements = [
@@ -436,54 +394,17 @@ export const exportReplacements = [
   { from: 'Pokémon Breeder BS 76', to: 'Pokemon Breeder BS 76' },
   { from: 'Pokémon Trader BS 77', to: 'Pokemon Trader BS 77' },
 
-  //BWP
-  { from: 'Tropical Beach BWP50 BWP 50', to: 'Tropical Beach BWP 50' },
-
-  //PLF
-  { from: 'Mr Mime PLF 47', to: 'Mr. Mime PLF 47' },
-
-  //ROS
-  { from: 'Double Dragon Energy SUM 97', to: 'Double Dragon Energy ROS 97' },
-
-  //BKP
-  { from: 'Delinquent BKT 98', to: 'Delinquent BKP 98' },
-
   //SUM
-  { from: 'Alolan Grimer XY 57', to: 'Alolan Grimer SUM 57' },
   { from: 'Rotom DexSR SM 159', to: 'Rotom Dex SUM 159' },
-
-  //GRI
-  { from: 'Mallow TEF 127', to: 'Mallow GRI 127' },
 
   //SHF
   { from: 'Snom SHFSV SV33', to: 'Snom SHF SV33' },
 
-  //SLG
-  { from: 'Warp Energy SHL 70', to: 'Warp Energy SLG 70' },
-
-  //UPR
-  { from: 'Mt. Coronet RCL 130', to: 'Mt. Coronet UPR 130' },
-
-  //CES
-  { from: 'Oricorio SHF 30', to: 'Oricorio CES 30' },
-
-  //LOT
-  { from: 'Lost Blender LOR 181', to: 'Lost Blender LOT 181' },
-
-  //TEU
-  { from: 'Gengar & Mimikyu-GX SM9 53', to: 'Gengar & Mimikyu-GX TEU 53' },
-
-  //UNB
-  { from: 'Porygon-Z PAL 157', to: 'Porygon-Z UNB 157' },
-
-  //RCL
-  { from: 'Horror Psychic Energy DAA 172', to: 'Horror Psychic Energy RCL 172' },
+  //STS
+  { from: 'Pokemon Ranger STS 104', to: 'Pokémon Ranger STS 104' },
 
   //VIV
   { from: 'Talonflame VFA VIV 168', to: 'Talonflame V VIV 168' },
-
-  //CRE
-  { from: 'Klara CRE 145 145', to: 'Klara CRE 145' },
 
   //PGO
   { from: 'PokeStop PGO 68', to: 'PokéStop PGO 68' },
@@ -569,7 +490,6 @@ export const exportReplacements = [
   { from: 'Super RodHR PAL 276', to: 'Super Rod PAL 276' },
   { from: 'Superior Energy RetrievalHR PAL 277', to: 'Superior Energy Retrieval PAL 277' },
 
-  //151
   //151 FA
   { from: 'BulbasaurIR MEW 166', to: 'Bulbasaur MEW 166' },
   { from: 'IvysaurIR MEW 167', to: 'Ivysaur MEW 167' },
@@ -824,6 +744,4 @@ export const exportReplacements = [
   { from: 'Pikachu exUR PRE 179', to: 'Pikachu ex PRE 179' },
   { from: 'Terapagos exUR PRE 180', to: 'Terapagos ex PRE 180' },
 
-  //SV9
-  { from: 'Lillie\'s Comfy SV9 43', to: 'Lillie\'s Comfey SV9 43' },
 ];
