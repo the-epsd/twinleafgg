@@ -9,6 +9,7 @@ const cassiopeia_1 = require("./cassiopeia");
 const colresss_obsession_1 = require("./colresss-obsession");
 const copperajah_1 = require("./copperajah");
 const cresselia_1 = require("./cresselia");
+const crobat_1 = require("./crobat");
 const cufant_1 = require("./cufant");
 const dangerous_laser_1 = require("./dangerous-laser");
 const dartrix_1 = require("./dartrix");
@@ -59,6 +60,7 @@ exports.setShroudedFable = [
     new colresss_obsession_1.ColresssObsession(),
     new copperajah_1.Copperajah(),
     new cresselia_1.Cresselia(),
+    new crobat_1.Crobat(),
     new cufant_1.Cufant(),
     new dangerous_laser_1.DangerousLaser(),
     new dartrix_1.Dartrix(),

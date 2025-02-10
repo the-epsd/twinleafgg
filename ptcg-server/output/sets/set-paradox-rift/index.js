@@ -46,6 +46,8 @@ const jirachi_1 = require("./jirachi");
 const klawf_1 = require("./klawf");
 const latios_1 = require("./latios");
 const luxurious_cape_1 = require("./luxurious-cape");
+const magby_1 = require("./magby");
+const mantyke_1 = require("./mantyke");
 const mela_1 = require("./mela");
 const mewtwo_ex_1 = require("./mewtwo-ex");
 const minior_1 = require("./minior");
@@ -130,6 +132,8 @@ exports.setParadoxRift = [
     new klawf_1.Klawf(),
     new latios_1.Latios(),
     new luxurious_cape_1.LuxuriousCape(),
+    new magby_1.Magby(),
+    new mantyke_1.Mantyke(),
     new mela_1.Mela(),
     new mewtwo_ex_1.Mewtwoex(),
     new minior_1.Minior(),
@@ -179,7 +183,9 @@ exports.setParadoxRift = [
     new toxtricity_ex_1.Toxtricityex(),
     //Full s
     new full_art_1.ToedscruelIR(),
+    new full_art_1.MagbyIR(),
     new full_art_1.SnoruntIR(),
+    new full_art_1.MantykeIR(),
     new full_art_1.GimmighoulIR(),
     new full_art_1.GroudonIR(),
     new full_art_1.MiniorIR(),

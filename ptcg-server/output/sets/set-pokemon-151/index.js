@@ -26,6 +26,7 @@ const fearow_1 = require("./fearow");
 const full_art_1 = require("./full-art");
 const giovannis_charisma_1 = require("./giovannis-charisma");
 const gloom_1 = require("./gloom");
+const golbat_1 = require("./golbat");
 const grabber_1 = require("./grabber");
 const hitmonlee_1 = require("./hitmonlee");
 const ivysaur_1 = require("./ivysaur");
@@ -90,6 +91,7 @@ exports.setPokemon151 = [
     new fearow_1.Fearow(),
     new giovannis_charisma_1.GiovannisCharisma(),
     new gloom_1.Gloom(),
+    new golbat_1.Golbat(),
     new grabber_1.Grabber(),
     new hitmonlee_1.HitmonleeMEW(),
     new ivysaur_1.Ivysaur(),

@@ -41,6 +41,7 @@ const shelmet_1 = require("./shelmet");
 const skaters_park_1 = require("./skaters-park");
 const starmie_1 = require("./starmie");
 const staryu_1 = require("./staryu");
+const steelix_1 = require("./steelix");
 const swampert_1 = require("./swampert");
 const totodile_1 = require("./totodile");
 const tsareena_v_1 = require("./tsareena-v");
@@ -88,6 +89,7 @@ exports.setFusionStrike = [
     new skaters_park_1.SkatersPark(),
     new starmie_1.Starmie(),
     new staryu_1.Staryu(),
+    new steelix_1.Steelix(),
     new swampert_1.Swampert(),
     new totodile_1.Totodile(),
 ];

@@ -187,8 +187,10 @@ export const cardReplacements = [
   { from: 'Gimmighoul PAR 88', to: 'Gimmighoul2 PAR 88' },
   //PAR FA
   { from: 'Toedscruel PAR 185', to: 'ToedscruelIR PAR 185' },
+  { from: 'Magby PAR 186', to: 'MagbyIR PAR 186' },
   { from: 'Iron Moth PAR 187', to: 'IronMothIR PAR 187' },
   { from: 'Snorunt PAR 188', to: 'SnoruntIR PAR 188' },
+  { from: 'Mantyke PAR 189', to: 'MantykeIR PAR 189' },
   { from: 'Vanillish PAR 190', to: 'VanillishIR PAR 190' },
   { from: 'Blitzle PAR 195', to: 'BlitzleIR PAR 195' },
   { from: 'Joltik PAR 196', to: 'JoltikIR PAR 196' },
@@ -520,8 +522,10 @@ export const exportReplacements = [
   { from: 'Gimmighoul2 PAR 88', to: 'Gimmighoul PAR 88' },
   //PAR FA
   { from: 'ToedscruelIR PAR 185', to: 'Toedscruel PAR 185' },
+  { from: 'MagbyIR PAR 186', to: 'Magby PAR 186' },
   { from: 'IronMothIR PAR 187', to: 'Iron Moth PAR 187' },
   { from: 'SnoruntIR PAR 188', to: 'Snorunt PAR 188' },
+  { from: 'MantykeIR PAR 189', to: 'Mantyke PAR 189' },
   { from: 'VanillishIR PAR 190', to: 'Vanillish PAR 190' },
   { from: 'BlitzleIR PAR 195', to: 'Blitzle PAR 195' },
   { from: 'JoltikIR PAR 196', to: 'Joltik PAR 196' },
