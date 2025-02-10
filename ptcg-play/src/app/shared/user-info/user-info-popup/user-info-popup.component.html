@@ -7,14 +7,10 @@
 </mat-dialog-content>
 
 <mat-dialog-actions>
-  <button mat-raised-button color="primary"
-    [routerLink]="['/profile', userId]"
-    (click)="close()">
+  <button mat-raised-button [routerLink]="['/profile', userId]" (click)="close()">
     {{ 'BUTTON_SHOW_PROFILE' | translate }}
   </button>
-  <button mat-raised-button color="primary" *ngIf="visitor$ | async"
-    [routerLink]="['/message', userId]"
-    (click)="close()">
+  <button mat-raised-button *ngIf="visitor$ | async" [routerLink]="['/message', userId]" (click)="close()">
     {{ 'BUTTON_SEND_MESSAGE' | translate }}
   </button>
 

@@ -29,7 +29,7 @@ class Eevee extends game_1.PokemonCard {
         this.regulationMark = 'H';
         this.set = 'SSP';
         this.name = 'Eevee';
-        this.fullName = 'Eevee SVP';
+        this.fullName = 'Eevee SSP';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '143';
         this.EVOLUTIONARY_ADVANTAGE_MARKER = 'EVOLUTIONARY_ADVANTAGE_MARKER';

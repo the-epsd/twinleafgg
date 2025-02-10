@@ -32,7 +32,7 @@ class Mesprit extends pokemon_card_1.PokemonCard {
         this.setNumber = '79';
         this.cardImage = 'assets/cardback.png';
         this.name = 'Mesprit';
-        this.fullName = 'Mesprit SV8';
+        this.fullName = 'Mesprit SSP';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

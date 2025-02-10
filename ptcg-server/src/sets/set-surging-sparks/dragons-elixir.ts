@@ -47,7 +47,7 @@ export class DragonsElixir extends TrainerCard {
 
   public name: string = 'Dragon Elixir';
 
-  public fullName: string = 'Dragon\'s Elixir SV7a';
+  public fullName: string = 'Dragon\'s Elixir SSP';
 
   public text: string =
     'Heal 60 damage from your Active Dragon Pokémon.';

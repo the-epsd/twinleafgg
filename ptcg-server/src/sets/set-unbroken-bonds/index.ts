@@ -9,6 +9,7 @@ import { ElectromagneticRadar } from './electromagnetic-radar';
 import { Espurr } from './espurr';
 import { FireCrystal } from './fire-crystal';
 import { GardevoirSylveonGX } from './gardevoir-and-sylveon-gx';
+import {Gastly} from './gastly';
 import { Gloom } from './gloom';
 import { Goldeen } from './goldeen';
 import { GreensExploration } from './greens-exploration';
@@ -87,4 +88,5 @@ export const setUnbrokenBonds: Card[] = [
   new PheromosaBuzzwoleGX(),
   new Murkrow(),
   new HonchkrowGX(),
+  new Gastly(),
 ];

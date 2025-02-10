@@ -1,5 +1,5 @@
 <div class="ptcg-search-box">
-  <button mat-raised-button color="primary" [hidden]="isActivated" (click)="activateSearch()" *ngIf="showSearchButton">
+  <button mat-raised-button [hidden]="isActivated" (click)="activateSearch()" *ngIf="showSearchButton">
     <mat-icon>search</mat-icon>
     {{ 'BUTTON_SEARCH' | translate }}
   </button>

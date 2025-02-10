@@ -45,7 +45,7 @@ export class Hydreigonex extends PokemonCard {
 
   public name: string = 'Hydreigon ex';
 
-  public fullName: string = 'Hydreigon ex SV8';
+  public fullName: string = 'Hydreigon ex SSP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Crash Heads

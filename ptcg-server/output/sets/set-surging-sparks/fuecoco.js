@@ -24,7 +24,7 @@ class Fuecoco extends game_1.PokemonCard {
         this.setNumber = '29';
         this.cardImage = 'assets/cardback.png';
         this.name = 'Fuecoco';
-        this.fullName = 'Fuecoco SV8';
+        this.fullName = 'Fuecoco SSP';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

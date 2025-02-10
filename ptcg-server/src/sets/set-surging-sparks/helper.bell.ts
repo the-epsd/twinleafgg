@@ -19,7 +19,7 @@ export class HelperBell extends TrainerCard {
 
   public name: string = 'Call Bell';
 
-  public fullName: string = 'Helper Bell SV7a';
+  public fullName: string = 'Helper Bell SSP';
 
   public text: string =
     'You can use this card only if you go second, and only on your first turn.' +

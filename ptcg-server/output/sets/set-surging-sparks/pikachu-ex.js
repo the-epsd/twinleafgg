@@ -32,7 +32,7 @@ class Pikachuex extends game_1.PokemonCard {
         this.setNumber = '57';
         this.cardImage = 'assets/cardback.png';
         this.name = 'Pikachu ex';
-        this.fullName = 'Pikachu ex SV8';
+        this.fullName = 'Pikachu ex SSP';
         this.damageDealt = false;
     }
     reduceEffect(store, state, effect) {

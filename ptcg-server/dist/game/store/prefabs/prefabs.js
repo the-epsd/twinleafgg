@@ -23,6 +23,12 @@ import { AfterAttackEffect, EndTurnEffect } from '../effects/game-phase-effects'
 export function WAS_ATTACK_USED(effect, index, user) {
     return effect instanceof AttackEffect && effect.attack === user.attacks[index];
 }
+export function DEAL_DAMAGE(effect) {
+    return effect instanceof DealDamageEffect;
+}
+export function PUT_DAMAGE(effect) {
+    return effect instanceof PutDamageEffect;
+}
 /**
  *
  * A basic effect for checking the use of abilites.

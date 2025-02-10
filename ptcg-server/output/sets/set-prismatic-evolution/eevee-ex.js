@@ -35,7 +35,7 @@ class Eeveeex extends pokemon_card_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '75';
         this.name = 'Eevee ex';
-        this.fullName = 'Eevee ex SV8a';
+        this.fullName = 'Eevee ex PRE';
     }
     reduceEffect(store, state, effect) {
         // Rainbow DNA

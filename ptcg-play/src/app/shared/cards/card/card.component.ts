@@ -71,10 +71,12 @@ export class CardComponent {
 
   private isHoloCard(): boolean {
     const holoCards = [
+      //SVI
       'Armarouge SVI',
       'Hawlucha SVI',
       'Klefki SVI',
       'Revavroom SVI',
+      //PAL
       'Baxcalibur PAL',
       'Hydreigon PAL',
       'Lokix PAL',
@@ -82,9 +84,11 @@ export class CardComponent {
       'Mimikyu PAL',
       'Spiritomb PAL',
       'Tinkaton PAL',
+      //OBF
       'Entei OBF',
       'Scizor OBF',
       'Thundurus OBF',
+      //PAR
       'Brute Bonnet PAR',
       'Chi-Yu PAR',
       'Deoxys PAR',
@@ -93,6 +97,7 @@ export class CardComponent {
       'Morpeko PAR',
       'Xatu PAR',
       'Zacian PAR',
+      //TEF
       'Dudunsparce TEF',
       'Feraligatr TEF',
       'Flutter Mane TEF',
@@ -101,6 +106,7 @@ export class CardComponent {
       'Koraidon TEF',
       'Miraidon TEF',
       'Roaring Moon TEF',
+      //TWM
       'Froslass TWM',
       'Infernape TWM',
       'Iron Leaves TWM',
@@ -117,6 +123,7 @@ export class CardComponent {
       'Fezandipiti TWM',
       'Hisuian Arcanine TWM',
       'Heatran TWM',
+      //SCR
       'Drednaw SV7',
       'Zeraora SV7',
       'Alcremie SV7',
@@ -129,6 +136,7 @@ export class CardComponent {
       'Raging Bolt SV7',
       'Noctowl SV7',
       'Bouffalant SV7',
+      //SSP
       'Zarude SV8',
       'Rabsca SV8',
       'Skeledirge SV8',

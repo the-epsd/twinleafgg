@@ -32,7 +32,7 @@ export class Ceruledge extends PokemonCard {
   public regulationMark = 'H';
   public set: string = 'SSP';
   public name: string = 'Ceruledge';
-  public fullName: string = 'Ceruledge SV8';
+  public fullName: string = 'Ceruledge SSP';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '35';
 

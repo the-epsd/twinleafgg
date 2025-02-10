@@ -28,7 +28,7 @@ class Ninetales extends pokemon_card_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '17';
         this.name = 'Ninetales';
-        this.fullName = 'Ninetales SV8';
+        this.fullName = 'Ninetales SSP';
         this.ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
         this.ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
     }

@@ -77,7 +77,7 @@ export class Trapinch extends PokemonCard {
 
   public name: string = 'Trapinch';
 
-  public fullName: string = 'Trapinch SV7a';
+  public fullName: string = 'Trapinch SSP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

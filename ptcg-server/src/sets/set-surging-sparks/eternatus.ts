@@ -44,7 +44,7 @@ export class Eternatus extends PokemonCard {
 
   public name: string = 'Eternatus';
 
-  public fullName: string = 'Eternatus SV8';
+  public fullName: string = 'Eternatus SSP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

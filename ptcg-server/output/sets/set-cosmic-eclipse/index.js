@@ -43,6 +43,8 @@ const charizard_braixen_gx_1 = require("./charizard-braixen-gx");
 const togepi_cleffa_igglybuff_gx_1 = require("./togepi-cleffa-igglybuff-gx");
 const carvanha_1 = require("./carvanha");
 const naganadel_guzzlord_gx_1 = require("./naganadel-guzzlord-gx");
+const woobat_1 = require("./woobat");
+const swoobat_1 = require("./swoobat");
 exports.setCosmicEclipse = [
     new arceus_dialga_palkia_gx_1.ArceusDialgaPalkiaGX(),
     new bellelba_and_brycen_man_1.BellelbaAndBrycenMan(),
@@ -86,4 +88,6 @@ exports.setCosmicEclipse = [
     new togepi_cleffa_igglybuff_gx_1.TogepiCleffaIgglybuffGX(),
     new carvanha_1.Carvanha(),
     new naganadel_guzzlord_gx_1.NaganadelGuzzlordGX(),
+    new woobat_1.Woobat(),
+    new swoobat_1.Swoobat(),
 ];

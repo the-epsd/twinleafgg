@@ -36,7 +36,7 @@ class Cinderaceex extends pokemon_card_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '28';
         this.name = 'Cinderace ex';
-        this.fullName = 'Cinderace ex SV7';
+        this.fullName = 'Cinderace ex SCR';
         this.ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
         this.ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
     }

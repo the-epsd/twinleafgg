@@ -42,7 +42,7 @@ class PerfectMixer extends trainer_card_1.TrainerCard {
         this.regulationMark = 'H';
         this.set = 'SSP';
         this.name = 'Brilliant Blender';
-        this.fullName = 'Perfect Mixer svLS';
+        this.fullName = 'Perfect Mixer SSP';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '164';
         this.text = 'Search your deck for up to 5 cards and discard them. Then shuffle your deck.';

@@ -8,7 +8,7 @@
       <ptcg-search-box class="ptcg-deck-edit-toolbar" (search)="onSearch($event)" [showSearchButton]="false"
         [isActivated]="true"></ptcg-search-box>
 
-      <button mat-raised-button color="primary" (click)="refresh()">
+      <button mat-raised-button (click)="refresh()">
         {{ 'BUTTON_REFRESH' | translate }}
       </button>
     </mat-toolbar-row>

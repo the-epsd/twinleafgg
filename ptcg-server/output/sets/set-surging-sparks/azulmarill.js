@@ -34,7 +34,7 @@ class Azumarill extends pokemon_card_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '74';
         this.name = 'Azumarill';
-        this.fullName = 'Azumarill svLN';
+        this.fullName = 'Azumarill SSP';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof check_effects_1.CheckAttackCostEffect && effect.attack === this.attacks[0]) {

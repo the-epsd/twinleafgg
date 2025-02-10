@@ -24,7 +24,7 @@ class Magnemite extends pokemon_card_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '58';
         this.name = 'Magnemite';
-        this.fullName = 'Magnemite SV8';
+        this.fullName = 'Magnemite SSP';
     }
 }
 exports.Magnemite = Magnemite;

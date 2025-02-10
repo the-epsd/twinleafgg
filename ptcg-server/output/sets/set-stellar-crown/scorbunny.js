@@ -23,7 +23,7 @@ class Scorbunny extends game_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '26';
         this.name = 'Scorbunny';
-        this.fullName = 'Scorbunny SV7';
+        this.fullName = 'Scorbunny SCR';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

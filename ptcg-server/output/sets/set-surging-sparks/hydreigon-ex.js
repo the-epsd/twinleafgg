@@ -33,7 +33,7 @@ class Hydreigonex extends game_1.PokemonCard {
         this.setNumber = '119';
         this.cardImage = 'assets/cardback.png';
         this.name = 'Hydreigon ex';
-        this.fullName = 'Hydreigon ex SV8';
+        this.fullName = 'Hydreigon ex SSP';
     }
     reduceEffect(store, state, effect) {
         // Crash Heads

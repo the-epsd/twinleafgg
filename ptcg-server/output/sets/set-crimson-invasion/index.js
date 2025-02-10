@@ -6,6 +6,7 @@ const chimecho_1 = require("./chimecho");
 const counter_energy_1 = require("./counter-energy");
 const devoured_field_1 = require("./devoured-field");
 const gladion_1 = require("./gladion");
+const haunter_1 = require("./haunter");
 const kartana_gx_1 = require("./kartana-gx");
 const lusamine_1 = require("./lusamine");
 const misdreavus_1 = require("./misdreavus");
@@ -22,4 +23,5 @@ exports.setCrimsonInvasion = [
     new misdreavus_1.Misdreavus(),
     new weedle_1.Weedle(),
     new xerneas_1.Xerneas(),
+    new haunter_1.Haunter(),
 ];

@@ -21,7 +21,7 @@ export class GlisteningCrystal extends TrainerCard {
 
   public name: string = 'Sparkling Crystal';
 
-  public fullName: string = 'Glistening Crystal SV7';
+  public fullName: string = 'Glistening Crystal SCR';
 
   public text: string =
     'When the Tera Pokémon this card is attached to uses an attack, that attack costs 1 Energy less. (The Energy can be of any type.)';

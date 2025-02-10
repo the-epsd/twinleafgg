@@ -54,7 +54,7 @@ class Dialga extends pokemon_card_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '135';
         this.name = 'Dialga';
-        this.fullName = 'Dialga SV7a';
+        this.fullName = 'Dialga SSP';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

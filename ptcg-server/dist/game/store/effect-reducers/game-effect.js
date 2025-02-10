@@ -55,10 +55,10 @@ function* useAttack(next, store, state, effect) {
     // }
     const attack = effect.attack;
     let attackingPokemon = player.active;
-    // If this is Alakazam ex's attack from the bench, use that instead
+    // Check for attacks that can be used from bench
     player.bench.forEach(benchSlot => {
         const benchPokemon = benchSlot.getPokemonCard();
-        if (benchPokemon && benchPokemon.name === 'Alakazam ex' && benchPokemon.attacks.some(a => a.name === attack.name)) {
+        if (benchPokemon && benchPokemon.attacks.some(a => a.name === attack.name && a.useOnBench)) {
             attackingPokemon = benchSlot;
         }
     });
@@ -160,10 +160,10 @@ export function gameReducer(store, state, effect) {
             //   effect.prizeCount += 1;
             // }
             // Pokemon ex rule
-            if (card.tags.includes(CardTag.POKEMON_EX) || card.tags.includes(CardTag.POKEMON_V) || card.tags.includes(CardTag.POKEMON_VSTAR) || card.tags.includes(CardTag.POKEMON_ex) || card.tags.includes(CardTag.POKEMON_GX)) {
+            if (card.tags.includes(CardTag.POKEMON_EX) || card.tags.includes(CardTag.POKEMON_V) || card.tags.includes(CardTag.POKEMON_VSTAR) || card.tags.includes(CardTag.POKEMON_ex) || card.tags.includes(CardTag.POKEMON_GX) || card.tags.includes(CardTag.TAG_TEAM)) {
                 effect.prizeCount += 1;
             }
-            if (card.tags.includes(CardTag.POKEMON_VMAX) || card.tags.includes(CardTag.TAG_TEAM) || card.tags.includes(CardTag.POKEMON_VUNION)) {
+            if (card.tags.includes(CardTag.POKEMON_VMAX) || card.tags.includes(CardTag.POKEMON_VUNION)) {
                 effect.prizeCount += 2;
             }
             store.log(state, GameLog.LOG_POKEMON_KO, { name: card.name });

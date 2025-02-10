@@ -9,19 +9,15 @@
 <div class="ptcg-prompt-content">
   <p [translate]="'GAME_MESSAGES.' + message"></p>
 
-  <ptcg-choose-pokemons-pane
-    [pokemonData]="pokemonData"
-    (cardClick)="onCardClick($event)">
+  <ptcg-choose-pokemons-pane [pokemonData]="pokemonData" (cardClick)="onCardClick($event)">
   </ptcg-choose-pokemons-pane>
 
   <div class="ptcg-damage-pane">
-    <button mat-mini-fab color="accent" [disabled]="isRemoveDisabled"
-      (click)="removeDamage()">
+    <button mat-mini-fab color="accent" [disabled]="isRemoveDisabled" (click)="removeDamage()">
       <mat-icon>remove</mat-icon>
     </button>
     <ptcg-badge color="warn" class="ptcg-damage-value">{{ damage }}</ptcg-badge>
-    <button mat-mini-fab color="accent" [disabled]="isAddDisabled"
-      (click)="addDamage()">
+    <button mat-mini-fab color="accent" [disabled]="isAddDisabled" (click)="addDamage()">
       <mat-icon>add</mat-icon>
     </button>
   </div>
@@ -33,12 +29,10 @@
     {{ 'PROMPT_RESET' | translate }}
   </button>
   <div class="ptcg-u-spacer"></div>
-  <button mat-raised-button *ngIf="allowedCancel" [disabled]="gameState.deleted"
-    (click)="cancel()">
+  <button mat-raised-button *ngIf="allowedCancel" [disabled]="gameState.deleted" (click)="cancel()">
     {{ 'BUTTON_CANCEL' | translate }}
   </button>
-  <button mat-raised-button color="primary" [disabled]="gameState.deleted || isInvalid"
-    (click)="confirm()">
+  <button mat-raised-button [disabled]="gameState.deleted || isInvalid" (click)="confirm()">
     {{ 'BUTTON_OK' | translate }}
   </button>
 </div>

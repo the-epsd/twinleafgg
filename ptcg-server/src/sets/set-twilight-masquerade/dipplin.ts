@@ -8,9 +8,6 @@ export class Dipplin extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
 
   public evolvesFrom = 'Applin';
-
-  public regulationMark = 'H';
-
   public cardType: CardType = CardType.GRASS;
 
   public hp: number = 80;
@@ -36,15 +33,12 @@ export class Dipplin extends PokemonCard {
     }
   ];
 
+  public regulationMark = 'H';
   public set: string = 'TWM';
-
-  public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '18';
-
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dipplin';
-
-  public fullName: string = 'Dipplin TWM 18';
+  public fullName: string = 'Dipplin TWM1';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

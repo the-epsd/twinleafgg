@@ -43,7 +43,7 @@ export class Meditite extends PokemonCard {
 
   public name: string = 'Meditite';
 
-  public fullName: string = 'Meditite SV7';
+  public fullName: string = 'Meditite SCR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

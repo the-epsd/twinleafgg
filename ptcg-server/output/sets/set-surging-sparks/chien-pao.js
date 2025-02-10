@@ -31,7 +31,7 @@ class ChienPao extends pokemon_card_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '56';
         this.name = 'Chien-Pao';
-        this.fullName = 'Chien-Pao SV8';
+        this.fullName = 'Chien-Pao SSP';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {

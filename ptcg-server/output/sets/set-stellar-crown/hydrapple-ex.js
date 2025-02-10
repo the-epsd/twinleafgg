@@ -36,7 +36,7 @@ class Hydrappleex extends pokemon_card_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '14';
         this.name = 'Hydrapple ex';
-        this.fullName = 'Hydrapple ex SV7';
+        this.fullName = 'Hydrapple ex SCR';
         this.RIPE_CHARGE_MARKER = 'RIPE_CHARGE_MARKER';
     }
     reduceEffect(store, state, effect) {

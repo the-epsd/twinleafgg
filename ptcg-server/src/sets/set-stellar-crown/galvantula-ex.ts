@@ -43,7 +43,7 @@ export class Galvantulaex extends PokemonCard {
 
   public name: string = 'Galvantula ex';
 
-  public fullName: string = 'Galvantula ex SV7';
+  public fullName: string = 'Galvantula ex SCR';
 
   public readonly OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER = 'OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER';
 

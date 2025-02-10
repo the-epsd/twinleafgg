@@ -66,7 +66,7 @@ export class PerfectMixer extends TrainerCard {
 
   public name: string = 'Brilliant Blender';
 
-  public fullName: string = 'Perfect Mixer svLS';
+  public fullName: string = 'Perfect Mixer SSP';
 
   public cardImage: string = 'assets/cardback.png';
 

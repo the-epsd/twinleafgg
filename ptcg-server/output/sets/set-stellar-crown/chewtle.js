@@ -20,7 +20,7 @@ class Chewtle extends pokemon_card_1.PokemonCard {
         this.regulationMark = 'H';
         this.set = 'SCR';
         this.name = 'Chewtle';
-        this.fullName = 'Chewtle SV7';
+        this.fullName = 'Chewtle SCR';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '43';
     }

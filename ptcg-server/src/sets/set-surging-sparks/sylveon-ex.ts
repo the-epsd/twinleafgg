@@ -47,7 +47,7 @@ export class Sylveonex extends PokemonCard {
 
   public name: string = 'Sylveon ex';
 
-  public fullName: string = 'Sylveon ex SVP';
+  public fullName: string = 'Sylveon ex SSP';
 
   public readonly DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';
   public readonly CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';

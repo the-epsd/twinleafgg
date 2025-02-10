@@ -35,7 +35,7 @@ export class Cinderaceex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '28';
   public name: string = 'Cinderace ex';
-  public fullName: string = 'Cinderace ex SV7';
+  public fullName: string = 'Cinderace ex SCR';
 
   public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
   public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';

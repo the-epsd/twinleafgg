@@ -9,7 +9,6 @@ class Dipplin extends game_1.PokemonCard {
         super(...arguments);
         this.stage = card_types_1.Stage.STAGE_1;
         this.evolvesFrom = 'Applin';
-        this.regulationMark = 'H';
         this.cardType = card_types_1.CardType.GRASS;
         this.hp = 80;
         this.weakness = [{ type: card_types_1.CardType.FIRE }];
@@ -28,11 +27,12 @@ class Dipplin extends game_1.PokemonCard {
                 text: 'This attack does 20 damage for each of your Benched Pokémon.'
             }
         ];
+        this.regulationMark = 'H';
         this.set = 'TWM';
-        this.cardImage = 'assets/cardback.png';
         this.setNumber = '18';
+        this.cardImage = 'assets/cardback.png';
         this.name = 'Dipplin';
-        this.fullName = 'Dipplin TWM 18';
+        this.fullName = 'Dipplin TWM1';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

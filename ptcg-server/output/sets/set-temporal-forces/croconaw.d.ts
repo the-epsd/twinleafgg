@@ -9,12 +9,12 @@ export declare class Croconaw extends PokemonCard {
     cardType: CardType;
     hp: number;
     weakness: {
-        type: CardType;
+        type: CardType.LIGHTNING;
     }[];
-    retreat: CardType[];
+    retreat: CardType.COLORLESS[];
     attacks: {
         name: string;
-        cost: CardType[];
+        cost: CardType.WATER[];
         damage: number;
         text: string;
     }[];

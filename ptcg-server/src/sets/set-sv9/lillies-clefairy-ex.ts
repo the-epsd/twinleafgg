@@ -7,45 +7,34 @@ import { CheckPokemonStatsEffect } from '../../game/store/effects/check-effects'
 
 export class LilliesClefairyex extends PokemonCard {
 
-  public tags = [CardTag.POKEMON_ex, CardTag.LILLIES];
-
-  public regulationMark = 'I';
-
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.PSYCHIC;
-
+  public tags = [CardTag.POKEMON_ex, CardTag.LILLIES];
+  public cardType: CardType = P;
   public hp: number = 190;
-
-  public weakness = [{ type: CardType.METAL }];
-
-  public retreat = [CardType.COLORLESS];
+  public weakness = [{ type: M }];
+  public retreat = [C];
 
   public powers = [{
     name: 'Fairy Zone',
     powerType: PowerType.ABILITY,
-    text: 'The weakness of each of your opponent\'s D Pokémon in play is now P. (Apply Weakness as x2.)',
+    text: 'The Weakness of each of your opponent\'s [N] Pokémon in play is now [P]. (Apply Weakness as x2.) ',
   }];
 
   public attacks = [
     {
       name: 'Full Moon Rondo',
-      cost: [CardType.PSYCHIC, CardType.COLORLESS],
+      cost: [P, C],
       damage: 20,
       damageCalculation: '+',
-      text: 'This attack does 20 more damage for each Benched ' +
-        'Pokémon (both yours and your opponent\'s).'
+      text: 'This attack does 20 more damage for each Benched Pokémon (both yours and your opponent\'s).'
     }
   ];
 
+  public regulationMark = 'I';
   public set: string = 'SV9';
-
-  public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '33';
-
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lillie\'s Clefairy ex';
-
   public fullName: string = 'Lillie\'s Clefairy ex SV9';
 
   public readonly DRAGON_VULNERABILITY_MARKER = 'DRAGON_VULNERABILITY_MARKER';

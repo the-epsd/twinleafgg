@@ -8,7 +8,7 @@
       <ptcg-search-box class="ptcg-deck-edit-toolbar" (search)="onSearch($event)" [showSearchButton]="false"
         [isActivated]="true"></ptcg-search-box>
 
-      <button mat-raised-button color="primary" (click)="importFromFile()">
+      <button mat-raised-button (click)="importFromFile()">
         {{ 'BUTTON_IMPORT_FROM_FILE' | translate }}
       </button>
     </mat-toolbar-row>

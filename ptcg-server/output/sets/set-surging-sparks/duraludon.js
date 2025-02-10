@@ -33,7 +33,7 @@ class Duraludon extends game_1.PokemonCard {
         this.setNumber = '129';
         this.cardImage = 'assets/cardback.png';
         this.name = 'Duraludon';
-        this.fullName = 'Duraludon SV7a';
+        this.fullName = 'Duraludon SSP';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {

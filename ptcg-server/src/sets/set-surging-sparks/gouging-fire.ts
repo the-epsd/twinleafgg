@@ -44,7 +44,7 @@ export class GougingFire extends PokemonCard {
 
   public name: string = 'Gouging Fire';
 
-  public fullName: string = 'Gouging Fire SV7a';
+  public fullName: string = 'Gouging Fire SSP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

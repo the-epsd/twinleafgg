@@ -26,7 +26,7 @@ class Palkia extends pokemon_card_1.PokemonCard {
         this.setNumber = '136';
         this.regulationMark = 'H';
         this.name = 'Palkia';
-        this.fullName = 'Palkia SV7a';
+        this.fullName = 'Palkia SSP';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

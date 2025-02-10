@@ -37,44 +37,34 @@ function* useFindAFriend(next: Function, store: StoreLike, state: State,
 
 export class Applin extends PokemonCard {
 
-  public regulationMark = 'H';
-
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.DRAGON;
-
+  public cardType: CardType = N;
   public hp: number = 40;
-
   public weakness = [];
-
   public resistance = [];
-
-  public retreat = [CardType.COLORLESS];
+  public retreat = [C];
 
   public attacks = [
     {
       name: 'Find a Friend',
-      cost: [CardType.COLORLESS],
+      cost: [C],
       damage: 0,
       text: 'Search your deck for a Pokémon, reveal it, and put it into your hand. Then, shuffle your deck.'
     },
     {
       name: 'Rolling Tackle',
-      cost: [CardType.GRASS, CardType.FIRE],
+      cost: [G, R],
       damage: 30,
       text: ''
     }
   ];
 
+  public regulationMark = 'H';
   public set: string = 'TWM';
-
-  public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '126';
-
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Applin';
-
-  public fullName: string = 'Applin TWM 126';
+  public fullName: string = 'Applin TWM2';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

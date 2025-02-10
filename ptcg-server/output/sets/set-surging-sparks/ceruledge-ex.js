@@ -34,7 +34,7 @@ class Ceruledgeex extends pokemon_card_1.PokemonCard {
         this.regulationMark = 'H';
         this.set = 'SSP';
         this.name = 'Ceruledge ex';
-        this.fullName = 'Ceruledge ex SVP';
+        this.fullName = 'Ceruledge ex SSP';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '36';
     }

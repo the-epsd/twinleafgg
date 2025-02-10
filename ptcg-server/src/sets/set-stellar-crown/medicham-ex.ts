@@ -49,7 +49,7 @@ export class Medichamex extends PokemonCard {
 
   public name: string = 'Medicham ex';
 
-  public fullName: string = 'Medicham ex SV7';
+  public fullName: string = 'Medicham ex SCR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

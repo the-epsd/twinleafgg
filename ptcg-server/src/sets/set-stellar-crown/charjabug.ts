@@ -75,7 +75,7 @@ export class Charjabug extends PokemonCard {
 
   public name: string = 'Charjabug';
 
-  public fullName: string = 'Charjabug SV7';
+  public fullName: string = 'Charjabug SCR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

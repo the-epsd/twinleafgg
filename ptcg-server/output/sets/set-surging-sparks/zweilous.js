@@ -32,7 +32,7 @@ class Zweilous extends game_1.PokemonCard {
         this.setNumber = '118';
         this.cardImage = 'assets/cardback.png';
         this.name = 'Zweilous';
-        this.fullName = 'Zweilous SV8';
+        this.fullName = 'Zweilous SSP';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

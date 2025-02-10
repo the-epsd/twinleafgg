@@ -35,7 +35,7 @@ class Flygonex extends game_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '106';
         this.name = 'Flygon ex';
-        this.fullName = 'Flygon ex SV7a';
+        this.fullName = 'Flygon ex SSP';
         this.stormBug = false;
     }
     reduceEffect(store, state, effect) {

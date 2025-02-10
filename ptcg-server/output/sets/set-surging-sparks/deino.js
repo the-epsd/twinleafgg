@@ -31,7 +31,7 @@ class Deino extends game_1.PokemonCard {
         this.setNumber = '117';
         this.cardImage = 'assets/cardback.png';
         this.name = 'Deino';
-        this.fullName = 'Deino SV8';
+        this.fullName = 'Deino SSP';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

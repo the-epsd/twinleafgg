@@ -33,7 +33,7 @@ class Klefki extends pokemon_card_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '128';
         this.name = 'Klefki';
-        this.fullName = 'Klefki SV7a';
+        this.fullName = 'Klefki SSP';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

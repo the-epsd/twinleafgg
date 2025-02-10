@@ -55,7 +55,7 @@ class MaxRod extends trainer_card_1.TrainerCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '116';
         this.name = 'Max Rod';
-        this.fullName = 'Max Rod SV8a';
+        this.fullName = 'Max Rod PRE';
         this.text = 'Choose up to 5 in any combination of Pokémon and Basic Energy cards from your discard pile and put them into your hand.';
     }
     reduceEffect(store, state, effect) {

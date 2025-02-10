@@ -39,7 +39,7 @@ export class Azelf extends PokemonCard {
 
   public name: string = 'Azelf';
 
-  public fullName: string = 'Azelf SV8';
+  public fullName: string = 'Azelf SSP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

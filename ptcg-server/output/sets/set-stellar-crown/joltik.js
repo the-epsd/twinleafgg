@@ -24,7 +24,7 @@ class Joltik extends pokemon_card_1.PokemonCard {
         this.setNumber = '50';
         this.cardImage = 'assets/cardback.png';
         this.name = 'Joltik';
-        this.fullName = 'Joltik SV7';
+        this.fullName = 'Joltik SCR';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

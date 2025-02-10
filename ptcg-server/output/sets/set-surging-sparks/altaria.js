@@ -34,7 +34,7 @@ class Altaria extends pokemon_card_1.PokemonCard {
         this.setNumber = '134';
         this.cardImage = 'assets/cardback.png';
         this.name = 'Altaria';
-        this.fullName = 'Altaria SV7a';
+        this.fullName = 'Altaria SSP';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

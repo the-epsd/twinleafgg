@@ -40,7 +40,7 @@ exports.setDarknessAblaze = [
     new crobat_v_1.CrobatV(),
     new combusken_1.Combusken(),
     new dedenne_1.Dedenne(),
-    new ducklett_1.DucklettDAA(),
+    new ducklett_1.Ducklett(),
     new eternatus_v_1.EternatusV(),
     new eternatus_vmax_1.EternatusVMAX(),
     new galarian_mr_mime_1.GalarianMrMime(),

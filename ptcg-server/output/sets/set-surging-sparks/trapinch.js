@@ -55,7 +55,7 @@ class Trapinch extends pokemon_card_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '104';
         this.name = 'Trapinch';
-        this.fullName = 'Trapinch SV7a';
+        this.fullName = 'Trapinch SSP';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

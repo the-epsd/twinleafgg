@@ -19,7 +19,7 @@
   <button mat-raised-button *ngIf="prompt.options.allowCancel" [disabled]="gameState.deleted" (click)="cancel()">
     {{ 'BUTTON_NO' | translate }}
   </button>
-  <button mat-raised-button color="primary" [disabled]="gameState.deleted" (click)="confirm()">
+  <button mat-raised-button [disabled]="gameState.deleted" (click)="confirm()">
     {{ 'BUTTON_YES' | translate }}
   </button>
 </div>

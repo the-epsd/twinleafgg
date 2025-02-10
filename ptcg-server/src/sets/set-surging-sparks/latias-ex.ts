@@ -46,7 +46,7 @@ export class Latiasex extends PokemonCard {
 
   public name: string = 'Latias ex';
 
-  public fullName: string = 'Latias ex SV7a';
+  public fullName: string = 'Latias ex SSP';
 
   public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
   public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';

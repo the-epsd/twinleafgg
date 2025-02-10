@@ -32,7 +32,7 @@ class Seaking extends game_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '21';
         this.name = 'Seaking';
-        this.fullName = 'Seaking SV8a';
+        this.fullName = 'Seaking PRE';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

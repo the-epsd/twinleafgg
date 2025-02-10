@@ -15,7 +15,7 @@ class MegatonBlower extends trainer_card_1.TrainerCard {
         this.setNumber = '182';
         this.regulationMark = 'H';
         this.name = 'Megaton Blower';
-        this.fullName = 'Megaton Blower SV7a';
+        this.fullName = 'Megaton Blower SSP';
         this.text = 'Discard all Pokémon Tools and Special Energy from all of your opponent\'s Pokémon, and discard a Stadium in play.';
     }
     reduceEffect(store, state, effect) {

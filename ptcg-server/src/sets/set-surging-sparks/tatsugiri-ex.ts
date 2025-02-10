@@ -48,7 +48,7 @@ export class Tatsugiriex extends PokemonCard {
 
   public name: string = 'Tatsugiri ex';
 
-  public fullName: string = 'Tatsugiri ex SV8';
+  public fullName: string = 'Tatsugiri ex SSP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

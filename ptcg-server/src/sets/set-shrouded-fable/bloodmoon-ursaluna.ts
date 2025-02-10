@@ -39,7 +39,7 @@ export class BloodmoonUrsaluna extends PokemonCard {
     }
   ];
 
-  public set: string = 'SV6a';
+  public set: string = 'SFA';
 
   public cardImage: string = 'assets/cardback.png';
 
@@ -47,7 +47,7 @@ export class BloodmoonUrsaluna extends PokemonCard {
 
   public name: string = 'Bloodmoon Ursaluna';
 
-  public fullName: string = 'Bloodmoon Ursaluna SV6a';
+  public fullName: string = 'Bloodmoon Ursaluna SFA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

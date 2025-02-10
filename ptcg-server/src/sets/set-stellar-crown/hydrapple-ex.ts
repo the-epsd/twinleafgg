@@ -37,7 +37,7 @@ export class Hydrappleex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '14';
   public name: string = 'Hydrapple ex';
-  public fullName: string = 'Hydrapple ex SV7';
+  public fullName: string = 'Hydrapple ex SCR';
 
   public readonly RIPE_CHARGE_MARKER = 'RIPE_CHARGE_MARKER';
 

@@ -23,7 +23,7 @@ class Drifblim extends game_1.PokemonCard {
         this.regulationMark = 'H';
         this.set = 'SCR';
         this.name = 'Drifblim';
-        this.fullName = 'Drifblim SV7';
+        this.fullName = 'Drifblim SCR';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '61';
     }

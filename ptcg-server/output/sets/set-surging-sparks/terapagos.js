@@ -30,7 +30,7 @@ class Terapagos extends game_1.PokemonCard {
         this.setNumber = '161';
         this.cardImage = 'assets/cardback.png';
         this.name = 'Terapagos';
-        this.fullName = 'Terapagos SV8';
+        this.fullName = 'Terapagos SSP';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

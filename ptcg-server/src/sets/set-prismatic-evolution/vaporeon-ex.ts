@@ -44,7 +44,7 @@ export class Vaporeonex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '23';
   public name: string = 'Vaporeon ex';
-  public fullName: string = 'Vaporeon ex SV8a';
+  public fullName: string = 'Vaporeon ex PRE';
 
   // for preventing the pokemon from attacking on the next turn
   public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';

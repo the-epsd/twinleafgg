@@ -31,7 +31,7 @@ export class CanActivateService implements CanActivate {
     const isLoggedIn = !!loggedUser;
 
     if (isLoggedIn) {
-      const bannedUsernames = ['Joacotaco24', 'leofanax', 'RedditKarmaGold', '10types'];
+      const bannedUsernames = ['Joacotaco24', 'leofanax', 'RedditKarmaGold'];
 
       const betaEndedUsernames = []; // Add usernames here
 

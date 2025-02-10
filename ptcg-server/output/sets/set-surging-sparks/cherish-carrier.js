@@ -15,7 +15,7 @@ class CherishCarrier extends trainer_card_1.TrainerCard {
         this.setNumber = '185';
         this.regulationMark = 'H';
         this.name = 'Precious Trolley';
-        this.fullName = 'Cherish Carrier svLN';
+        this.fullName = 'Cherish Carrier SSP';
         this.text = 'Search your deck for any number of Basic Pokémon and put them onto your Bench. Then shuffle your deck.';
     }
     reduceEffect(store, state, effect) {

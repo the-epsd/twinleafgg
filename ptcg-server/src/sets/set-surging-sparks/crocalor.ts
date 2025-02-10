@@ -23,7 +23,7 @@ export class Crocalor extends PokemonCard {
   public setNumber: string = '30';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Crocalor';
-  public fullName: string = 'Crocalor SV8';
+  public fullName: string = 'Crocalor SSP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

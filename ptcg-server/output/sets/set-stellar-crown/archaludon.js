@@ -33,7 +33,7 @@ class Archaludon extends pokemon_card_1.PokemonCard {
         this.regulationMark = 'H';
         this.set = 'SCR';
         this.name = 'Archaludon';
-        this.fullName = 'Archaludon SV6a';
+        this.fullName = 'Archaludon SCR';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '107';
         this.ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';

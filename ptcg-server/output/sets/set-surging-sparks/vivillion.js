@@ -98,7 +98,7 @@ class Vivillion extends pokemon_card_1.PokemonCard {
         this.regulationMark = 'H';
         this.set = 'SSP';
         this.name = 'Vivillion';
-        this.fullName = 'Vivillion SV8';
+        this.fullName = 'Vivillion SSP';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '7';
     }

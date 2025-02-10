@@ -33,7 +33,7 @@ export class Altaria extends PokemonCard {
   public setNumber: string = '134';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Altaria';
-  public fullName: string = 'Altaria SV7a';
+  public fullName: string = 'Altaria SSP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

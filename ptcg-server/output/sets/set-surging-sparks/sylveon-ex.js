@@ -36,7 +36,7 @@ class Sylveonex extends pokemon_card_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '86';
         this.name = 'Sylveon ex';
-        this.fullName = 'Sylveon ex SVP';
+        this.fullName = 'Sylveon ex SSP';
         this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';
         this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';
         this.ANGELITE_MARKER = 'ANGELITE_MARKER';

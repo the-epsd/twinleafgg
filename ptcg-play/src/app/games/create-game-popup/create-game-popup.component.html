@@ -64,7 +64,7 @@
   <button mat-raised-button (click)="cancel()">
     {{ 'BUTTON_CANCEL' | translate }}
   </button>
-  <button mat-raised-button color="primary" (click)="confirm()" [disabled]="!hasValidDeck()">
+  <button mat-raised-button (click)="confirm()" [disabled]="!hasValidDeck()">
     {{ 'BUTTON_OK' | translate }}
   </button>
 </mat-dialog-actions>

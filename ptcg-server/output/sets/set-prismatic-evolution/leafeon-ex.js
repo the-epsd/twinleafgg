@@ -37,7 +37,7 @@ class Leafeonex extends pokemon_card_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '6';
         this.name = 'Leafeon ex';
-        this.fullName = 'Leafeon ex SV8a';
+        this.fullName = 'Leafeon ex PRE';
     }
     reduceEffect(store, state, effect) {
         // Psybeam

@@ -34,7 +34,7 @@ class GougingFire extends pokemon_card_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '38';
         this.name = 'Gouging Fire';
-        this.fullName = 'Gouging Fire SV7a';
+        this.fullName = 'Gouging Fire SSP';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {

@@ -4,7 +4,6 @@ import { Effect } from '../../game/store/effects/effect';
 export declare class Dipplin extends PokemonCard {
     stage: Stage;
     evolvesFrom: string;
-    regulationMark: string;
     cardType: CardType;
     hp: number;
     weakness: {
@@ -23,9 +22,10 @@ export declare class Dipplin extends PokemonCard {
         damage: number;
         text: string;
     }[];
+    regulationMark: string;
     set: string;
-    cardImage: string;
     setNumber: string;
+    cardImage: string;
     name: string;
     fullName: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;

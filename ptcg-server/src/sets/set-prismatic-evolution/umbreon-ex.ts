@@ -34,7 +34,7 @@ export class Umbreonex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '60';
   public name: string = 'Umbreon ex';
-  public fullName: string = 'Umbreon ex SV8a';
+  public fullName: string = 'Umbreon ex PRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -53,7 +53,7 @@ export class Umbreonex extends PokemonCard {
       const discardEnergy = new DiscardCardsEffect(effect, cards);
       discardEnergy.target = player.active;
       store.reduceEffect(state, discardEnergy);
-      
+
       return TAKE_X_PRIZES(store, state, player, 1);
     }
 

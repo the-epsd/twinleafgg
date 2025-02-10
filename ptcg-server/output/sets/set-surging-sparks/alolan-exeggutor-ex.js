@@ -33,7 +33,7 @@ class AlolanExeggutorex extends game_1.PokemonCard {
         this.setNumber = '133';
         this.cardImage = 'assets/cardback.png';
         this.name = 'Alolan Exeggutor ex';
-        this.fullName = 'Alolan Exeggutor ex SV7a';
+        this.fullName = 'Alolan Exeggutor ex SSP';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

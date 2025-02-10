@@ -23,7 +23,7 @@ export class GravityMountain extends TrainerCard {
 
   public name: string = 'Gravity Mountain';
 
-  public fullName: string = 'Gravity Mountain SV8';
+  public fullName: string = 'Gravity Mountain SSP';
 
   public text: string =
     'The maximum HP of all Stage 2 Pokémon in play is reduced by 30.';

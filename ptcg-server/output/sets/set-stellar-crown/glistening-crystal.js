@@ -14,7 +14,7 @@ class GlisteningCrystal extends trainer_card_1.TrainerCard {
         this.setNumber = '142';
         this.regulationMark = 'H';
         this.name = 'Sparkling Crystal';
-        this.fullName = 'Glistening Crystal SV7';
+        this.fullName = 'Glistening Crystal SCR';
         this.text = 'When the Tera Pokémon this card is attached to uses an attack, that attack costs 1 Energy less. (The Energy can be of any type.)';
     }
     reduceEffect(store, state, effect) {

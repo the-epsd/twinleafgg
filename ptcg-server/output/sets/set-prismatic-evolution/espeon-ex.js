@@ -36,7 +36,7 @@ class Espeonex extends pokemon_card_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '34';
         this.name = 'Espeon ex';
-        this.fullName = 'Espeon ex SV8a';
+        this.fullName = 'Espeon ex PRE';
     }
     reduceEffect(store, state, effect) {
         // Psych Out

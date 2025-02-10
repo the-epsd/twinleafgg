@@ -14,7 +14,7 @@ class Crispin extends trainer_card_1.TrainerCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '133';
         this.name = 'Crispin';
-        this.fullName = 'Crispin SV7';
+        this.fullName = 'Crispin SCR';
         this.text = 'Search your deck for up to 2 Basic Energy cards of different types, reveal them, and put 1 of them into your hand. Attach the other to 1 of your Pokémon. Then, shuffle your deck.';
     }
     reduceEffect(store, state, effect) {

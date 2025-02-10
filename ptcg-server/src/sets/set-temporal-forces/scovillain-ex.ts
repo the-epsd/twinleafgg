@@ -6,49 +6,37 @@ import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effe
 import { AttackEffect, RetreatEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
-
 export class Scovillainex extends PokemonCard {
 
-  public tags = [CardTag.POKEMON_ex];
-
   public stage: Stage = Stage.STAGE_1;
-
   public evolvesFrom = 'Capsakid';
-
-  public cardType: CardType = CardType.GRASS;
-
+  public tags = [CardTag.POKEMON_ex];
+  public cardType: CardType = G;
   public hp: number = 260;
-
-  public weakness = [{ type: CardType.FIRE }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: R }];
+  public retreat = [C, C];
 
   public attacks = [
     {
       name: 'Chili Snapper Bind',
-      cost: [CardType.COLORLESS],
+      cost: [C],
       damage: 0,
       text: 'Your opponent\'s Active Pokémon is now Burned. The Defending Pokémon can\'t retreat during your opponent\'s next turn.'
     },
     {
       name: 'Two-Headed Crushing',
-      cost: [CardType.GRASS, CardType.GRASS],
+      cost: [G, G],
       damage: 140,
       text: 'Discard a random card from your opponent\'s hand. Discard the top card of your opponent\'s deck.'
     }
   ];
 
   public regulationMark = 'G';
-
+  public set = 'TEF';
+  public setNumber: string = '22';
   public cardImage: string = 'assets/cardback.png';
-
-  public setNumber: string = '37';
-
-  public set = 'PAF';
-
   public name: string = 'Scovillain ex';
-
-  public fullName: string = 'Scovillain ex PAF';
+  public fullName: string = 'Scovillain ex TEF';
 
   public readonly SPICY_BIND_MARKER = 'SPICY_BIND_MARKER';
 

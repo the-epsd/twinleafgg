@@ -51,7 +51,7 @@ export class Jolteonex extends PokemonCard {
 
   public name: string = 'Jolteon ex';
 
-  public fullName: string = 'Jolteon ex SV8a';
+  public fullName: string = 'Jolteon ex PRE';
 
   public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
   public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';

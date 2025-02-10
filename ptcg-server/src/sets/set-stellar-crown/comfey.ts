@@ -28,7 +28,7 @@ export class Comfey extends PokemonCard {
   public regulationMark = 'H';
   public set: string = 'SCR';
   public name: string = 'Comfey';
-  public fullName: string = 'Comfey SV7';
+  public fullName: string = 'Comfey SCR';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '63';
 

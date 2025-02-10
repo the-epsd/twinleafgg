@@ -23,7 +23,7 @@ export class Joltik extends PokemonCard {
   public setNumber: string = '50';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Joltik';
-  public fullName: string = 'Joltik SV7';
+  public fullName: string = 'Joltik SCR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

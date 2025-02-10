@@ -89,7 +89,7 @@ export class Dialga extends PokemonCard {
 
   public name: string = 'Dialga';
 
-  public fullName: string = 'Dialga SV7a';
+  public fullName: string = 'Dialga SSP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

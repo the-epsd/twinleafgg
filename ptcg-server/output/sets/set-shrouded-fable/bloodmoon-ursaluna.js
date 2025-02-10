@@ -29,11 +29,11 @@ class BloodmoonUrsaluna extends pokemon_card_1.PokemonCard {
                 text: 'This attack does 30 more damage for each damage counter on your opponent\'s Active Pokémon.'
             }
         ];
-        this.set = 'SV6a';
+        this.set = 'SFA';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '25';
         this.name = 'Bloodmoon Ursaluna';
-        this.fullName = 'Bloodmoon Ursaluna SV6a';
+        this.fullName = 'Bloodmoon Ursaluna SFA';
     }
     reduceEffect(store, state, effect) {
         if ((effect instanceof play_card_effects_1.PlayPokemonEffect) && effect.pokemonCard === this) {

@@ -22,7 +22,7 @@ export class GlassTrumpet extends TrainerCard {
 
   public name: string = 'Glass Trumpet';
 
-  public fullName: string = 'Glass Trumpet SV7';
+  public fullName: string = 'Glass Trumpet SCR';
 
   public text: string =
     'You can use this card only if you have any Tera Pokémon in play.' +

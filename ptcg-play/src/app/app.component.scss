@@ -17,6 +17,25 @@
   }
 }
 
+::ng-deep .mat-dialog-container {
+  background: rgba(26, 32, 44, 0.5);
+  box-shadow: 0 8px 32px 0 rgba(48, 59, 81, 0.5);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+
+  .mat-dialog-actions {
+    color: white;
+    caret-color: white;
+  }
+
+  .mat-raised-button {
+    background-color: #449058;
+    border-radius: 16px;
+  }
+}
+
 .ptcg-app-sidenav {
   width: map-get($ptcg-size, nav-menu);
 }

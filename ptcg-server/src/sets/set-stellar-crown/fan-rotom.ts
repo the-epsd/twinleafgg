@@ -43,7 +43,7 @@ export class FanRotom extends PokemonCard {
 
   public name: string = 'Fan Rotom';
 
-  public fullName: string = 'Fan Rotom SV7';
+  public fullName: string = 'Fan Rotom SCR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -32,7 +32,7 @@ class Archaludonex extends game_1.PokemonCard {
         this.setNumber = '130';
         this.cardImage = 'assets/cardback.png';
         this.name = 'Archaludon ex';
-        this.fullName = 'Archaludon ex SV8';
+        this.fullName = 'Archaludon ex SSP';
         this.METAL_DEFENDER_MARKER = 'METAL_DEFENDER_MARKER';
         this.CLEAR_METAL_DEFENDER_MARKER = 'CLEAR_METAL_DEFENDER_MARKER';
     }

@@ -43,7 +43,7 @@ export class Archaludon extends PokemonCard {
 
   public name: string = 'Archaludon';
 
-  public fullName: string = 'Archaludon SV6a';
+  public fullName: string = 'Archaludon SCR';
 
   public cardImage: string = 'assets/cardback.png';
 

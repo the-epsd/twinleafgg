@@ -38,7 +38,7 @@ class Vaporeonex extends pokemon_card_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '23';
         this.name = 'Vaporeon ex';
-        this.fullName = 'Vaporeon ex SV8a';
+        this.fullName = 'Vaporeon ex PRE';
         // for preventing the pokemon from attacking on the next turn
         this.ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
         this.ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';

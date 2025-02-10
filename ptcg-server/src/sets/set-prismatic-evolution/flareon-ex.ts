@@ -92,7 +92,7 @@ export class Flareonex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '14';
   public name: string = 'Flareon ex';
-  public fullName: string = 'Flareon ex SV8a';
+  public fullName: string = 'Flareon ex PRE';
 
   // for preventing the pokemon from attacking on the next turn
   public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';

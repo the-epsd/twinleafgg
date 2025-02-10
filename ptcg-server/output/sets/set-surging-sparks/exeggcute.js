@@ -45,7 +45,7 @@ class Exeggcute extends pokemon_card_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '1';
         this.name = 'Exeggcute';
-        this.fullName = 'Exeggcute SV7a';
+        this.fullName = 'Exeggcute SSP';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
