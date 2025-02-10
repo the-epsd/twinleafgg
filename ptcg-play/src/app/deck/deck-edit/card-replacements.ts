@@ -373,6 +373,17 @@ export const cardReplacements = [
   { from: 'Pikachu ex PRE 179', to: 'Pikachu exUR PRE 179' },
   { from: 'Terapagos ex PRE 180', to: 'Terapagos exUR PRE 180' },
 
+  { from: 'Iron Bundle SVP 66', to: 'Iron Bundle2 SVP 66' },
+  { from: 'Charizard ex SVP 74', to: 'Charizard ex2 SVP 74' },
+  { from: 'Meowscarada ex SVP 78', to: 'Meowscarada ex2 SVP 78' },
+  { from: 'Skeledirge ex SVP 81', to: 'Skeledirge ex2 SVP 81' },
+  { from: 'Quaquaval ex SVP 84', to: 'Quaquaval ex2 SVP 84' },
+  { from: 'Koraidon SVP 91', to: 'Koraidon2 SVP 91' },
+  { from: 'Miraidon SVP 92', to: 'Miraidon2 SVP 92' },
+  { from: 'Armarouge ex SVP 125', to: 'Armarouge ex2 SVP 125' },
+  { from: 'Miraidon ex SVP 143', to: 'Miraidon ex2 SVP 143' },
+  { from: 'Magneton SVP 159', to: 'Magneton2 SVP 159' },
+  { from: 'Charizard ex SVP 161', to: 'Charizard ex3 SVP 161' },
 ];
 
 export const exportReplacements = [
@@ -740,4 +751,15 @@ export const exportReplacements = [
   { from: 'Pikachu exUR PRE 179', to: 'Pikachu ex PRE 179' },
   { from: 'Terapagos exUR PRE 180', to: 'Terapagos ex PRE 180' },
 
+  { from: 'Iron Bundle2 SVP 66', to: 'Iron Bundle SVP 66' },
+  { from: 'Charizard ex2 SVP 74', to: 'Charizard ex SVP 74' },
+  { from: 'Meowscarada ex2 SVP 78', to: 'Meowscarada ex SVP 78' },
+  { from: 'Skeledirge ex2 SVP 81', to: 'Skeledirge ex SVP 81' },
+  { from: 'Quaquaval ex2 SVP 84', to: 'Quaquaval ex SVP 84' },
+  { from: 'Koraidon2 SVP 91', to: 'Koraidon SVP 91' },
+  { from: 'Miraidon2 SVP 92', to: 'Miraidon SVP 92' },
+  { from: 'Armarouge ex2 SVP 125', to: 'Armarouge ex SVP 125' },
+  { from: 'Miraidon ex2 SVP 143', to: 'Miraidon ex SVP 143' },
+  { from: 'Magneton2 SVP 159', to: 'Magneton SVP 159' },
+  { from: 'Charizard ex3 SVP 161', to: 'Charizard ex SVP 161' },
 ];
