@@ -15,6 +15,7 @@ import { Phanpy } from './phanpy';
 import { PlasmaEnergy } from './plasma-energy';
 import { Ralts } from './ralts';
 import { ScrambleSwitch } from './scramble-switch';
+import {VictiniEX} from './victini-ex';
 import { VirbankCityGym } from './virbank-city-gym';
 import { Zubat } from './zubat';
 
@@ -36,6 +37,7 @@ export const setPlasmaStorm: Card[] = [
   new ScrambleSwitch(),
   new VirbankCityGym(),
   new Zubat(),
+  new VictiniEX(),
 
   //Reprints
   new EscapeRopePLS(),

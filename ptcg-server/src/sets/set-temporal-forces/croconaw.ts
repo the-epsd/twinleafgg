@@ -3,8 +3,8 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { ChoosePokemonPrompt, GameMessage, PlayerType, SlotType } from '../../game';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+import {AfterDamageEffect} from '../../game/store/effects/attack-effects';
+import {SWITCH_ACTIVE_WITH_BENCHED} from '../../game/store/prefabs/prefabs';
 
 export class Croconaw extends PokemonCard {
 
@@ -12,17 +12,17 @@ export class Croconaw extends PokemonCard {
 
   public evolvesFrom = 'Totodile';
 
-  public cardType: CardType = CardType.WATER;
+  public cardType: CardType = W;
 
   public hp: number = 90;
 
-  public weakness = [{ type: CardType.LIGHTNING }];
+  public weakness = [{ type: L }];
 
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public retreat = [C, C];
 
   public attacks = [{
     name: 'Reverse Thrust',
-    cost: [CardType.WATER],
+    cost: [W],
     damage: 30,
     text: 'Switch this Pokémon with 1 of your Benched Pokémon.'
   }];
@@ -41,10 +41,12 @@ export class Croconaw extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (effect instanceof AfterDamageEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
 
-      const hasBenched = player.bench.some(b => b.cards.length > 0);
+      SWITCH_ACTIVE_WITH_BENCHED(store, state, player);
+
+      /*const hasBenched = player.bench.some(b => b.cards.length > 0);
       if (!hasBenched) {
         return state;
       }
@@ -61,7 +63,7 @@ export class Croconaw extends PokemonCard {
         }
         const target = selected[0];
         player.switchPokemon(target);
-      });
+      }); */
     }
     return state;
   }

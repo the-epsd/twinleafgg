@@ -4,6 +4,7 @@ import { Chimecho } from './chimecho';
 import { CounterEnergy } from './counter-energy';
 import { DevouredField } from './devoured-field';
 import { Gladion } from './gladion';
+import { Haunter } from './haunter';
 import { KartanaGX } from './kartana-gx';
 import { Lusamine } from './lusamine';
 import { Misdreavus } from './misdreavus';
@@ -21,4 +22,5 @@ export const setCrimsonInvasion: Card[] = [
   new Misdreavus(),
   new Weedle(),
   new Xerneas(),
+  new Haunter(),
 ];

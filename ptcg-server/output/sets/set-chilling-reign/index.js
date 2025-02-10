@@ -24,6 +24,7 @@ const galarian_moltres_v_1 = require("./galarian-moltres-v");
 const galarian_zapdos_v_1 = require("./galarian-zapdos-v");
 const gallade_1 = require("./gallade");
 const gardevoir_1 = require("./gardevoir");
+const gengar_1 = require("./gengar");
 const golett_1 = require("./golett");
 const golurk_1 = require("./golurk");
 const ice_rider_calyrex_v_1 = require("./ice-rider-calyrex-v");
@@ -104,4 +105,5 @@ exports.setChillingReign = [
     new weedle_1.WeedleCRE(),
     new zarude_1.Zarude(),
     new kecleon_1.Kecleon(),
+    new gengar_1.Gengar(),
 ];

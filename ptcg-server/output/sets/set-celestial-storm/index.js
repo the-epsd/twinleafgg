@@ -7,6 +7,7 @@ const banette_gx_1 = require("./banette-gx");
 const copycat_1 = require("./copycat");
 const delcatty_1 = require("./delcatty");
 const dhelmise_1 = require("./dhelmise");
+const dunsparce_1 = require("./dunsparce");
 const electrode_gx_1 = require("./electrode-gx");
 const fisherman_1 = require("./fisherman");
 const hustle_belt_1 = require("./hustle-belt");
@@ -56,4 +57,5 @@ exports.setCelestialStorm = [
     new tate_and_liza_1.TateAndLiza(),
     new whismur_1.Whismur(),
     new articuno_gx_1.ArticunoGX(),
+    new dunsparce_1.Dunsparce(),
 ];

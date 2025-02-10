@@ -1,25 +1,33 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike } from '../../game/store/store-like';
-import { State } from '../../game/store/state/state';
+import { CardType, Stage } from '../../game/store/card/card-types';
+import { StoreLike, State, PowerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-export declare class Croconaw extends PokemonCard {
+export declare class Gengar extends PokemonCard {
     stage: Stage;
     evolvesFrom: string;
     cardType: CardType;
     hp: number;
     weakness: {
-        type: CardType.LIGHTNING;
+        type: CardType.DARK;
+    }[];
+    resistance: {
+        type: CardType.FIGHTING;
+        value: number;
     }[];
     retreat: CardType.COLORLESS[];
+    powers: {
+        name: string;
+        powerType: PowerType;
+        text: string;
+    }[];
     attacks: {
         name: string;
-        cost: CardType.WATER[];
+        cost: CardType.COLORLESS[];
         damage: number;
+        damageCalculation: string;
         text: string;
     }[];
     set: string;
-    regulationMark: string;
     cardImage: string;
     setNumber: string;
     name: string;

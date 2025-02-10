@@ -17,6 +17,7 @@ const phanpy_1 = require("./phanpy");
 const plasma_energy_1 = require("./plasma-energy");
 const ralts_1 = require("./ralts");
 const scramble_switch_1 = require("./scramble-switch");
+const victini_ex_1 = require("./victini-ex");
 const virbank_city_gym_1 = require("./virbank-city-gym");
 const zubat_1 = require("./zubat");
 exports.setPlasmaStorm = [
@@ -37,6 +38,7 @@ exports.setPlasmaStorm = [
     new scramble_switch_1.ScrambleSwitch(),
     new virbank_city_gym_1.VirbankCityGym(),
     new zubat_1.Zubat(),
+    new victini_ex_1.VictiniEX(),
     //Reprints
     new card_images_1.EscapeRopePLS(),
 ];
