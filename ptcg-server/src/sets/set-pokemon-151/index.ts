@@ -24,11 +24,12 @@ import { Fearow } from './fearow';
 import { BulbasaurIR, IvysaurIR, CharmanderIR, CharmeleonIR, SquirtleIR, NidokingIR, VenusaurexFA, CharizardexFA, BlastoiseexFA, ArbokexFA, KangaskhanexFA, ZapdosexFA, MewexFA, ErikasInvitationFA, GiovannisCharismaFA, VenusaurexSIR, CharizardexSIR, BlastoiseexSIR, ZapdosexSIR, ErikasInvitationSIR, GiovannisCharismaSIR, MewexHR, SwitchHR, BasicPsychicEnergyHR, WartortleIR } from './full-art';
 import { GiovannisCharisma } from './giovannis-charisma';
 import { Gloom } from './gloom';
+import { Golbat } from './golbat';
 import { Grabber } from './grabber';
 import { HitmonleeMEW } from './hitmonlee';
 import { Ivysaur } from './ivysaur';
 import { Jolteon } from './jolteon';
-import {Jynxex} from './jynx-ex';
+import { Jynxex } from './jynx-ex';
 import { Kangaskhanex } from './kangaskhan-ex';
 import { Koffing } from './koffing';
 import { Leftovers } from './leftovers';
@@ -88,6 +89,7 @@ export const setPokemon151: Card[] = [
   new Fearow(),
   new GiovannisCharisma(),
   new Gloom(),
+  new Golbat(),
   new Grabber(),
   new HitmonleeMEW(),
   new Ivysaur(),
