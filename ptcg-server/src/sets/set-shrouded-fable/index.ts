@@ -7,6 +7,7 @@ import { Cassiopeia } from './cassiopeia';
 import { ColresssObsession } from './colresss-obsession';
 import { Copperajah } from './copperajah';
 import { Cresselia } from './cresselia';
+import { Crobat } from './crobat';
 import { Cufant } from './cufant';
 import { DangerousLaser } from './dangerous-laser';
 import { Dartrix } from './dartrix';
@@ -58,6 +59,7 @@ export const setShroudedFable: Card[] = [
   new ColresssObsession(),
   new Copperajah(),
   new Cresselia(),
+  new Crobat(),
   new Cufant(),
   new DangerousLaser(),
   new Dartrix(),
