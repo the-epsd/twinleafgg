@@ -32,11 +32,11 @@ class DeoxysV extends pokemon_card_1.PokemonCard {
             },
         ];
         this.regulationMark = 'F';
-        this.set = 'SSP';
+        this.set = 'SWSH';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '266';
         this.name = 'Deoxys V';
-        this.fullName = 'Deoxys V SSP';
+        this.fullName = 'Deoxys V SWSH';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
