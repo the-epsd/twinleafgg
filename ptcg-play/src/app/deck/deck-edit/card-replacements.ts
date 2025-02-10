@@ -41,10 +41,6 @@ export const cardReplacements = [
   //ASR
   { from: 'Hisuian Qwilfish ASR 89', to: 'Hisuian Qwilfish2 ASR 89' },
 
-  // PR-SH
-  { from: 'Deoxys V SSP 266', to: 'Deoxys V SP 266' },
-  { from: 'Deoxys VSTAR SSP 268', to: 'Deoxys VSTAR SP 268' },
-
   //SVI
   { from: 'Pokégear 3.0 SVI 186', to: 'Pokegear SVI 186' },
   { from: 'Pokémon Catcher SVI 187', to: 'Pokemon Catcher SVI 187' },
