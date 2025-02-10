@@ -95,28 +95,22 @@ function* useFoulPlay(next: Function, store: StoreLike, state: State,
 export class Zoroark extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_1;
-
   public evolvesFrom: string = 'Zorua';
-
-  public cardType: CardType = CardType.DARK;
-
+  public cardType: CardType = D;
   public hp: number = 100;
-
-  public weakness = [{ type: CardType.FIGHTING }];
-
-  public resistance = [{ type: CardType.PSYCHIC, value: -20 }];
-
-  public retreat = [CardType.COLORLESS];
+  public weakness = [{ type: F }];
+  public resistance = [{ type: P, value: -20 }];
+  public retreat = [C];
 
   public attacks = [{
     name: 'Nasty Plot',
-    cost: [CardType.DARK],
+    cost: [D],
     damage: 0,
     text: 'Search your deck for a card and put it into your hand. ' +
       'Shuffle your deck afterward.'
   }, {
     name: 'Foul Play',
-    cost: [CardType.COLORLESS, CardType.COLORLESS],
+    cost: [C, C],
     damage: 0,
     copycatAttack: true,
     text: 'Choose 1 of the Defending Pokemon\'s attacks and use it ' +
@@ -124,14 +118,10 @@ export class Zoroark extends PokemonCard {
   }];
 
   public set: string = 'BLW';
-
-  public name: string = 'Zoroark';
-
-  public fullName: string = 'Zoroark BW';
-
-  public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '71';
+  public cardImage: string = 'assets/cardback.png';
+  public name: string = 'Zoroark';
+  public fullName: string = 'Zoroark BLW';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

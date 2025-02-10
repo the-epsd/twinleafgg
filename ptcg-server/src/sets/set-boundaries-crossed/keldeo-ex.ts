@@ -7,47 +7,36 @@ import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effect
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
-
 export class KeldeoEx extends PokemonCard {
-
-  public tags = [CardTag.POKEMON_EX];
-
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.WATER;
-
+  public tags = [CardTag.POKEMON_EX];
+  public cardType: CardType = W;
   public hp: number = 170;
-
-  public weakness = [{ type: CardType.GRASS }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: G }];
+  public retreat = [C, C];
 
   public powers = [{
     name: 'Rush In',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
-    text: 'Once during your turn (before your attack), if this Pokemon is ' +
-      'on your Bench, you may switch this Pokemon with your Active Pokemon.'
+    text: 'Once during your turn (before your attack), if this Pokémon is on your Bench, you may switch this Pokémon with your Active Pokémon.'
   }];
 
   public attacks = [
     {
       name: 'Secret Sword',
-      cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
+      cost: [C, C, C],
       damage: 50,
-      text: 'Does 20 more damage for each W Energy attached to this Pokemon.'
+      damageCalculation: '+',
+      text: 'Does 20 more damage for each [W] Energy attached to this Pokémon.'
     }
   ];
 
   public set: string = 'BCR';
-
-  public name: string = 'Keldeo EX';
-
-  public fullName: string = 'Keldeo EX BCR';
-
-  public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '49';
+  public name: string = 'Keldeo EX';
+  public fullName: string = 'Keldeo EX BCR';
+  public cardImage: string = 'assets/cardback.png';
 
   public readonly RUSH_IN_MARKER = 'RUSH_IN_MARKER';
 

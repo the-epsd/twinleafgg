@@ -61,37 +61,29 @@ function* useMetalTransfer(next: Function, store: StoreLike, state: State, effec
 export class Bronzong extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_1;
-
   public evolvesFrom = 'Bronzor';
-
-  public regulationMark = 'E';
-
-  public cardType: CardType = CardType.METAL;
-
+  public cardType: CardType = M;
   public hp: number = 110;
-
-  public weakness = [{ type: CardType.FIRE }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: R }];
+  public retreat = [C, C, C];
 
   public powers = [{
     name: 'Metal Transfer',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
-    text: 'As often as you like during your turn, you may move a ' +
-      'M Energy from 1 of your Pokémon to another of your ' +
-      'Pokémon.'
+    text: 'As often as you like during your turn, you may move a [M] Energy from 1 of your Pokémon to another of your Pokémon.'
   }];
   public attacks = [{
     name: 'Zen Headbutt',
-    cost: [CardType.METAL, CardType.COLORLESS, CardType.COLORLESS],
+    cost: [M, C, C],
     damage: 70,
     text: ''
   }];
-  public set = 'BST';
-  public cardImage: string = 'assets/cardback.png';
 
+  public regulationMark = 'E';
+  public set = 'BST';
   public setNumber: string = '102';
+  public cardImage: string = 'assets/cardback.png';
   public name = 'Bronzong';
   public fullName: string = 'Bronzong BST';
 

@@ -4,39 +4,36 @@ import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effect
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 
-export class KakunaTEU extends PokemonCard {
-
+export class Kakuna extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
-
   public evolvesFrom = 'Weedle';
-
-  public cardType: CardType = CardType.GRASS;
-
+  public cardType: CardType = G;
   public hp: number = 80;
-
-  public weakness = [{ type: CardType.FIRE }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
-
-  public set = 'TEU';
-
-  public setNumber = '4';
-
-  public cardImage = 'assets/cardback.png';
-
-  public name = 'Kakuna';
-
-  public fullName = 'Kakuna TEU';
+  public weakness = [{ type: R }];
+  public retreat = [C, C, C];
 
   public powers = [
     {
       name: 'Grass Cushion',
       powerType: PowerType.ABILITY,
-      text: 'If this Pokemon has any G Energy attached to it, it takes 30 less damage from attacks (after applying Weakness and Resistance).'
+      text: 'If this Pokémon has any [G] Energy attached to it, it takes 30 less damage from attacks (after applying Weakness and Resistance).'
     }
   ];
 
-  public attacks = [{ name: 'Bug Bite', cost: [CardType.COLORLESS, CardType.COLORLESS], damage: 20, text: '' }];
+  public attacks = [
+    {
+      name: 'Bug Bite',
+      cost: [C, C],
+      damage: 20,
+      text: ''
+    }
+  ];
+
+  public set = 'TEU';
+  public setNumber = '4';
+  public cardImage = 'assets/cardback.png';
+  public name = 'Kakuna';
+  public fullName = 'Kakuna TEU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

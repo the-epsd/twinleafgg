@@ -1,14 +1,16 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, EnergyType, SuperType } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, StateUtils, GameError, GameMessage,
-  EnergyCard, PlayerType, SlotType, PokemonCardList, ChooseCardsPrompt } from '../../game';
+import {
+  PowerType, StoreLike, State, StateUtils, GameError, GameMessage,
+  EnergyCard, PlayerType, SlotType, PokemonCardList, ChooseCardsPrompt
+} from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect, AttackEffect } from '../../game/store/effects/game-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import {AttachEnergyPrompt} from '../../game/store/prompts/attach-energy-prompt';
-import {CheckProvidedEnergyEffect} from '../../game/store/effects/check-effects';
-import {DiscardCardsEffect} from '../../game/store/effects/attack-effects';
+import { AttachEnergyPrompt } from '../../game/store/prompts/attach-energy-prompt';
+import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 
 function* useFlareDestroy(next: Function, store: StoreLike, state: State,
   effect: AttackEffect): IterableIterator<State> {
@@ -56,45 +58,32 @@ function* useFlareDestroy(next: Function, store: StoreLike, state: State,
 export class Typhlosion extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_2;
-
   public evolvesFrom = 'Quilava';
-
-  public cardType: CardType = CardType.FIRE;
-
+  public cardType: CardType = R;
   public hp: number = 140;
-
-  public weakness = [{ type: CardType.WATER }];
-
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public weakness = [{ type: W }];
+  public retreat = [C, C];
 
   public powers = [{
     name: 'Afterburner',
     powerType: PowerType.POKEPOWER,
     useWhenInPlay: true,
-    text: 'Once during your turn (before your attack), you may search your ' +
-      'discard pile for a R Energy card and attach it to 1 of your Pokemon. ' +
-      'If you do, put 1 damage counter on that Pokemon. This Power can\'t ' +
-      'be used if Typhlosion is affected by a Special Condition.'
+    text: 'Once during your turn (before your attack), you may search your discard pile for a [R] Energy card and attach it to 1 of your Pokémon. If you do, put 1 damage counter on that Pokémon. This power can\'t be used if Typhlosion is affected by a Special Condition.'
   }];
 
   public attacks = [
     {
       name: 'Flare Destroy',
-      cost: [ CardType.FIRE, CardType.FIRE, CardType.COLORLESS ],
+      cost: [R, R, C],
       damage: 70,
-      text: 'Discard an Energy card attached to Typhlosion and discard ' +
-        'an Energy card attached to the Defending Pokemon.'
+      text: 'Discard an Energy card attached to Typhlosion and discard an Energy card attached to the Defending Pokémon.'
     }
   ];
 
   public set: string = 'HS';
-
   public name: string = 'Typhlosion';
-
   public fullName: string = 'Typhlosion HS';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '110';
 
   public readonly AFTERBURNER_MAREKER = 'DYNAMOTOR_MAREKER';
@@ -134,7 +123,7 @@ export class Typhlosion extends PokemonCard {
         GameMessage.ATTACH_ENERGY_CARDS,
         player.discard,
         PlayerType.BOTTOM_PLAYER,
-        [ SlotType.ACTIVE, SlotType.BENCH ],
+        [SlotType.ACTIVE, SlotType.BENCH],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fire Energy' },
         { allowCancel: true, min: 1, max: 1 }
       ), transfers => {

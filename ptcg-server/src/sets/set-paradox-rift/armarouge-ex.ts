@@ -44,7 +44,7 @@ export class ArmarougeEX extends PokemonCard {
 
   public cardImage = 'assets/cardback.png';
 
-  public regulationMark: string = 'D';
+  public regulationMark: string = 'G';
 
   public name: string = 'Armarouge ex';
 

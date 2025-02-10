@@ -62,7 +62,7 @@ class Laprasex extends game_1.PokemonCard {
             player.deck.moveTo(temp, 20);
             // Check if any cards drawn are basic energy
             const energyCardsDrawn = temp.cards.filter(card => {
-                return card instanceof game_1.EnergyCard && card.energyType === game_1.EnergyType.BASIC;
+                return card instanceof game_1.EnergyCard;
             });
             // If no energy cards were drawn, move all cards to deck & shuffle
             if (energyCardsDrawn.length == 0) {
@@ -82,7 +82,7 @@ class Laprasex extends game_1.PokemonCard {
             if (energyCardsDrawn.length >= 1) {
                 // Prompt to attach energy if any were drawn
                 return store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_CARDS, temp, // Only show drawn energies
-                game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { superType: game_1.SuperType.ENERGY, energyType: game_1.EnergyType.BASIC }, { min: 0, max: energyCardsDrawn.length }), transfers => {
+                game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { superType: game_1.SuperType.ENERGY }, { min: 0, max: energyCardsDrawn.length }), transfers => {
                     // Attach energy based on prompt selection
                     if (transfers) {
                         for (const transfer of transfers) {

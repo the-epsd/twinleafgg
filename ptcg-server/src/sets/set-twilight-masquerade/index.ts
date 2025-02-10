@@ -40,6 +40,7 @@ import { Hassel } from './hassel';
 import { HearthflameMaskOgerponex } from './hearthflame-mask-ogerpon-ex';
 import { Heatran } from './heatran';
 import { HisuianArcanine } from './hisuian-arcanine';
+import { HisuianGrowlithe } from './hisuian-growlithe';
 import { HyperAroma } from './hyper-aroma';
 import { Infernape } from './infernape';
 import { IronLeaves } from './iron-leaves';
@@ -65,6 +66,9 @@ import { Palafinex } from './palafin-ex';
 import { PerformanceFlute } from './performance-flute';
 import { Perrin } from './perrin';
 import { Phione } from './phione';
+import { Poliwag } from './poliwag';
+import { Poliwhirl } from './poliwhirl';
+import { Poliwrath } from './poliwrath';
 import { Poltchageist } from './poltchageist';
 import { Poochyena } from './poochyena';
 import { Rillaboom } from './rillaboom';
@@ -113,6 +117,7 @@ export const setTwilightMasquerade: Card[] = [
   new HearthflameMaskOgerponex(),
   new Heatran(),
   new HisuianArcanine(),
+  new HisuianGrowlithe(),
   new Lairon(),
   new LanasAssistance(),
   new LegacyEnergy(),
@@ -177,4 +182,7 @@ export const setTwilightMasquerade: Card[] = [
   new Kadabra(),
   new Alakazam(),
   new Aipom(),
+  new Poliwag(),
+  new Poliwhirl(),
+  new Poliwrath(),
 ];

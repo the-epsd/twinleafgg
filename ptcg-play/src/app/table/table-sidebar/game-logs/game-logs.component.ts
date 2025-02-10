@@ -56,7 +56,7 @@ export class GameLogsComponent {
   }
 
   public sendMessage() {
-    const message = (this.message || '').trim();
+    const message = (this.message || '').trim().replace(/[^\x00-\x7F]/g, '');
     if (!this.state || message.length === 0) {
       return;
     }

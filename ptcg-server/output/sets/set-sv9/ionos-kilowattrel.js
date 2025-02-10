@@ -7,7 +7,7 @@ const game_1 = require("../../game");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
-const check_effects_1 = require("../../game/store/effects/check-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class IonosKilowattrel extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -23,7 +23,7 @@ class IonosKilowattrel extends pokemon_card_1.PokemonCard {
                 name: 'Flash Draw',
                 useWhenInPlay: true,
                 powerType: game_1.PowerType.ABILITY,
-                text: 'You must discard a Basic L Energy from this Pokémon in order to use this Ability. Once during your turn, you may draw cards until you have 6 cards in your hand.'
+                text: 'You may use this Ability once during your turn by discarding a Basic [L] Energy card from this Pokémon. Draw cards until you have 6 cards in your hand.'
             }];
         this.attacks = [{
                 name: 'Mach Bolt',
@@ -50,39 +50,34 @@ class IonosKilowattrel extends pokemon_card_1.PokemonCard {
         }
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
-            if (player.hand.cards.length >= 7) {
+            if (player.hand.cards.length >= 6) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
             if (player.marker.hasMarker(this.RUMBLING_ENGINE_MARKER, this)) {
                 throw new game_1.GameError(game_1.GameMessage.POWER_ALREADY_USED);
             }
-            const ionosKilowattrelCardList = game_1.StateUtils.findCardList(state, this);
-            const checkProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(player, ionosKilowattrelCardList);
-            state = store.reduceEffect(state, checkProvidedEnergy);
-            const hasLightningEnergy = checkProvidedEnergy.energyMap.some(energy => energy.provides.includes(card_types_1.CardType.LIGHTNING));
-            if (!hasLightningEnergy) {
+            const cardList = game_1.StateUtils.findCardList(state, this);
+            const lightningEnergy = cardList.cards.filter(c => c instanceof game_1.EnergyCard && c.superType === card_types_1.SuperType.ENERGY &&
+                c.energyType === card_types_1.EnergyType.BASIC && c.name === 'Lightning Energy');
+            if (lightningEnergy.length === 0) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
-            state = store.prompt(state, new game_1.ChooseEnergyPrompt(player.id, game_1.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, checkProvidedEnergy.energyMap, [card_types_1.CardType.LIGHTNING], { allowCancel: false }), energy => {
-                const cards = (energy || []).map(e => e.card);
-                cards.forEach(card => {
-                    const cardList = game_1.StateUtils.findCardList(state, card);
-                    if (cardList) {
-                        cardList.moveCardTo(card, player.discard);
-                    }
-                });
-                while (player.hand.cards.length < 6) {
-                    if (player.deck.cards.length === 0) {
-                        break;
-                    }
-                    player.deck.moveTo(player.hand, 1);
+            // If we have exactly 1 basic [L] energy attached, do it without a prompt
+            if (lightningEnergy.length === 1) {
+                lightningEnergy.forEach(card => cardList.moveCardTo(card, player.discard));
+                prefabs_1.DRAW_CARDS_UNTIL_CARDS_IN_HAND(player, 6);
+                prefabs_1.ADD_MARKER(this.RUMBLING_ENGINE_MARKER, player, this);
+                prefabs_1.ABILITY_USED(player, this);
+                return state;
+            }
+            state = store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, cardList, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Lightning Energy' }, { allowCancel: true, min: 0, max: 1 }), energy => {
+                if (energy === null || energy.length === 0) {
+                    return state;
                 }
-                player.marker.addMarker(this.RUMBLING_ENGINE_MARKER, this);
-                player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
-                    if (cardList.getPokemonCard() === this) {
-                        cardList.addBoardEffect(card_types_1.BoardEffect.ABILITY_USED);
-                    }
-                });
+                energy.forEach(card => cardList.moveCardTo(card, player.discard));
+                prefabs_1.DRAW_CARDS_UNTIL_CARDS_IN_HAND(player, 6);
+                prefabs_1.ADD_MARKER(this.RUMBLING_ENGINE_MARKER, player, this);
+                prefabs_1.ABILITY_USED(player, this);
             });
         }
         return state;

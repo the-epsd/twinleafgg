@@ -8,6 +8,7 @@ const game_error_1 = require("../../game/game-error");
 const game_message_1 = require("../../game/game-message");
 const choose_cards_prompt_1 = require("../../game/store/prompts/choose-cards-prompt");
 const game_1 = require("../../game");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 function* playCard(next, store, state, effect) {
     const player = effect.player;
     const supporterTurn = player.supporterTurn;
@@ -53,6 +54,8 @@ function* playCard(next, store, state, effect) {
     });
     // Canceled by user, he didn't found the card in the deck
     if (cards.length === 0) {
+        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+        prefabs_1.SHUFFLE_DECK(store, state, player);
         return state;
     }
     const evolution = cards[0];
@@ -68,10 +71,14 @@ function* playCard(next, store, state, effect) {
         next();
     });
     if (targets.length === 0) {
+        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+        prefabs_1.SHUFFLE_DECK(store, state, player);
         return state; // canceled by user
     }
     const pokemonCard = targets[0].getPokemonCard();
     if (pokemonCard === undefined) {
+        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+        prefabs_1.SHUFFLE_DECK(store, state, player);
         return state; // invalid target?
     }
     // Evolve Pokemon
@@ -79,9 +86,7 @@ function* playCard(next, store, state, effect) {
     targets[0].clearEffects();
     targets[0].pokemonPlayedTurn = state.turn;
     player.supporter.moveCardTo(effect.trainerCard, player.discard);
-    return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
-        player.deck.applyOrder(order);
-    });
+    prefabs_1.SHUFFLE_DECK(store, state, player);
 }
 class Salvatore extends trainer_card_1.TrainerCard {
     constructor() {

@@ -19,7 +19,7 @@ class GardeniasVigor extends trainer_card_1.TrainerCard {
         this.setNumber = '143';
         this.name = 'Gardenia\'s Vigor';
         this.fullName = 'Gardenia\'s Vigor ASR';
-        this.text = 'Draw 2 cards. If you drew any cards in this way, attach up to 2 G Energy cards from your hand to 1 of your Benched Pokémon.';
+        this.text = 'Draw 2 cards. If you drew any cards in this way, attach up to 2 [G] Energy cards from your hand to 1 of your Benched Pokémon.';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {

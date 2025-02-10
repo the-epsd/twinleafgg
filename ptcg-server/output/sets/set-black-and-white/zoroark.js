@@ -65,30 +65,30 @@ class Zoroark extends pokemon_card_1.PokemonCard {
         super(...arguments);
         this.stage = card_types_1.Stage.STAGE_1;
         this.evolvesFrom = 'Zorua';
-        this.cardType = card_types_1.CardType.DARK;
+        this.cardType = D;
         this.hp = 100;
-        this.weakness = [{ type: card_types_1.CardType.FIGHTING }];
-        this.resistance = [{ type: card_types_1.CardType.PSYCHIC, value: -20 }];
-        this.retreat = [card_types_1.CardType.COLORLESS];
+        this.weakness = [{ type: F }];
+        this.resistance = [{ type: P, value: -20 }];
+        this.retreat = [C];
         this.attacks = [{
                 name: 'Nasty Plot',
-                cost: [card_types_1.CardType.DARK],
+                cost: [D],
                 damage: 0,
                 text: 'Search your deck for a card and put it into your hand. ' +
                     'Shuffle your deck afterward.'
             }, {
                 name: 'Foul Play',
-                cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
+                cost: [C, C],
                 damage: 0,
                 copycatAttack: true,
                 text: 'Choose 1 of the Defending Pokemon\'s attacks and use it ' +
                     'as this attack.'
             }];
         this.set = 'BLW';
-        this.name = 'Zoroark';
-        this.fullName = 'Zoroark BW';
-        this.cardImage = 'assets/cardback.png';
         this.setNumber = '71';
+        this.cardImage = 'assets/cardback.png';
+        this.name = 'Zoroark';
+        this.fullName = 'Zoroark BLW';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

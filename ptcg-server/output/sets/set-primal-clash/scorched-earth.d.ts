@@ -6,10 +6,10 @@ import { TrainerType } from '../../game/store/card/card-types';
 export declare class ScorchedEarth extends TrainerCard {
     trainerType: TrainerType;
     set: string;
+    setNumber: string;
     name: string;
     fullName: string;
     cardImage: string;
-    setNumber: string;
     text: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

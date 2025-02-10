@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BlazikenV = void 0;
 const game_1 = require("../../game");
+const costs_1 = require("../../game/store/prefabs/costs");
 const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class BlazikenV extends game_1.PokemonCard {
     constructor() {
@@ -34,7 +35,7 @@ class BlazikenV extends game_1.PokemonCard {
     }
     reduceEffect(store, state, effect) {
         if (prefabs_1.WAS_ATTACK_USED(effect, 1, this)) {
-            prefabs_1.DISCARD_X_ENERGY_FROM_THIS_POKEMON(state, effect, store, game_1.CardType.COLORLESS, 2);
+            costs_1.DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, 2);
         }
         return state;
     }

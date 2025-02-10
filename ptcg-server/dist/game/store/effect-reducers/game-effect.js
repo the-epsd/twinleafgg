@@ -39,7 +39,7 @@ function* useAttack(next, store, state, effect) {
     const player = effect.player;
     const opponent = StateUtils.getOpponent(state, player);
     //Skip attack on first turn
-    if (state.turn === 1 && player.canAttackFirstTurn !== true && state.rules.attackFirstTurn == false) {
+    if (state.turn === 1 && effect.attack.canUseOnFirstTurn !== true && state.rules.attackFirstTurn == false) {
         throw new GameError(GameMessage.CANNOT_ATTACK_ON_FIRST_TURN);
     }
     const sp = player.active.specialConditions;

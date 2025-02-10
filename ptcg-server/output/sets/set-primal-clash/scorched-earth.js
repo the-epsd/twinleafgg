@@ -14,13 +14,11 @@ class ScorchedEarth extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.STADIUM;
         this.set = 'PRC';
+        this.setNumber = '138';
         this.name = 'Scorched Earth';
         this.fullName = 'Scorched Earth PRC';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '138';
-        this.text = 'Once during each player\'s turn, that player may discard ' +
-            'a R or F Energy card from his or her hand. If that player does so, ' +
-            'he or she draws 2 cards.';
+        this.text = 'Once during each player\'s turn, that player may discard a[R] or[F] Energy card from his or her hand.If that player does so, he or she draws 2 cards.';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.UseStadiumEffect && state_utils_1.StateUtils.getStadiumCard(state) === this) {

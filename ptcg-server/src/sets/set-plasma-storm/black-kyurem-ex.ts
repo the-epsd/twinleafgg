@@ -33,7 +33,7 @@ export class BlackKyuremEX extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 1, this))
-      DISCARD_X_ENERGY_FROM_THIS_POKEMON(state, effect, store, CardType.COLORLESS, 3);
+      DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, 3);
 
     return state;
   }

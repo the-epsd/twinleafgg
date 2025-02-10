@@ -7,6 +7,7 @@ const play_card_action_1 = require("../actions/play-card-action");
 const energy_card_1 = require("../card/energy-card");
 const check_effects_1 = require("../effects/check-effects");
 const game_effects_1 = require("../effects/game-effects");
+const prefabs_1 = require("../prefabs/prefabs");
 const choose_pokemon_prompt_1 = require("../prompts/choose-pokemon-prompt");
 const choose_prize_prompt_1 = require("../prompts/choose-prize-prompt");
 const coin_flip_prompt_1 = require("../prompts/coin-flip-prompt");
@@ -99,22 +100,33 @@ function chooseActivePokemons(state) {
     }
     return prompts;
 }
-function choosePrizeCards(store, state, prizesToTake) {
+function choosePrizeCards(store, state, prizeGroups) {
     const prompts = [];
     for (let i = 0; i < state.players.length; i++) {
         const player = state.players[i];
-        const prizeLeft = player.getPrizeLeft();
-        if (prizesToTake[i] > 0 && state.isSuddenDeath) {
-            // In sudden death, taking any prize cards means winning
-            endGame(store, state, i === 0 ? state_1.GameWinner.PLAYER_1 : state_1.GameWinner.PLAYER_2);
-            return [];
-        }
-        if (prizesToTake[i] > prizeLeft) {
-            prizesToTake[i] = prizeLeft;
-        }
-        if (prizesToTake[i] > 0) {
-            const prompt = new choose_prize_prompt_1.ChoosePrizePrompt(player.id, game_message_1.GameMessage.CHOOSE_PRIZE_CARD, { isSecret: player.prizes[0].isSecret, count: prizesToTake[i] });
-            prompts.push(prompt);
+        for (const group of prizeGroups[i]) {
+            const prizeLeft = player.getPrizeLeft();
+            // In sudden death, taking any prize card means winning
+            if (group.count > 0 && state.isSuddenDeath) {
+                endGame(store, state, i === 0 ? state_1.GameWinner.PLAYER_1 : state_1.GameWinner.PLAYER_2);
+                return [];
+            }
+            if (group.count > prizeLeft) {
+                group.count = prizeLeft;
+            }
+            if (group.count > 0) {
+                let message = game_message_1.GameMessage.CHOOSE_PRIZE_CARD;
+                // Choose a custom message based on the destination.
+                if (group.destination === player.discard) {
+                    message = game_message_1.GameMessage.CHOOSE_PRIZE_CARD_TO_DISCARD;
+                }
+                const prompt = new choose_prize_prompt_1.ChoosePrizePrompt(player.id, message, {
+                    isSecret: player.prizes[0].isSecret,
+                    count: group.count,
+                    destination: group.destination
+                });
+                prompts.push(prompt);
+            }
         }
     }
     return prompts;
@@ -262,8 +274,8 @@ function handlePrompts(store, state, prompts, onComplete) {
     }
     return store.prompt(state, prompt, (result) => {
         if (prompt instanceof choose_prize_prompt_1.ChoosePrizePrompt) {
-            const prizes = result;
-            prizes.forEach(prize => prize.moveTo(player.hand));
+            const destination = prompt.options.destination || player.hand;
+            prefabs_1.TAKE_SPECIFIC_PRIZES(store, state, player, result, { destination });
             handlePrompts(store, state, prompts, onComplete);
         }
         else if (prompt instanceof choose_pokemon_prompt_1.ChoosePokemonPrompt) {
@@ -287,7 +299,10 @@ function handlePrompts(store, state, prompts, onComplete) {
     });
 }
 function* executeCheckState(next, store, state, onComplete) {
-    const prizesToTake = [0, 0];
+    // Instead of a simple array of numbers per player, we build an array of PrizeGroup arrays.
+    // This is necessary because for some effects (e.g. Billowing Smoke) we need to differentiate how many prizes
+    // are related to each Knock Out in order, for example, to preemptively determine their destination
+    const prizeGroups = state.players.map(() => []);
     // This effect checks the general data from the table (bench size)
     const checkTableStateEffect = new check_effects_1.CheckTableStateEffect([5, 5]);
     store.reduceEffect(state, checkTableStateEffect);
@@ -296,23 +311,34 @@ function* executeCheckState(next, store, state, onComplete) {
         yield store.waitPrompt(state, () => next());
     }
     const pokemonsToDiscard = findKoPokemons(store, state);
-    for (const item of pokemonsToDiscard) {
-        const player = state.players[item.playerNum];
-        const knockOutEffect = new game_effects_1.KnockOutEffect(player, item.cardList);
+    for (const pokemonToDiscard of pokemonsToDiscard) {
+        const owner = state.players[pokemonToDiscard.playerNum];
+        const knockOutEffect = new game_effects_1.KnockOutEffect(owner, pokemonToDiscard.cardList);
         state = store.reduceEffect(state, knockOutEffect);
         if (store.hasPrompts()) {
             yield store.waitPrompt(state, () => next());
         }
         if (knockOutEffect.preventDefault === false) {
-            const opponentNum = item.playerNum === 0 ? 1 : 0;
-            prizesToTake[opponentNum] += knockOutEffect.prizeCount;
+            // Prizes go to the opponent of the knocked out Pokemon.
+            const opponentIndex = pokemonToDiscard.playerNum === 0 ? 1 : 0;
+            // Default destination is the opponent's hand.
+            const defaultDestination = state.players[opponentIndex].hand;
+            // If the knockout effect has a custom prize destination, use it; otherwise default.
+            const destination = knockOutEffect.prizeDestination || defaultDestination;
+            // Try to merge prize groups that share the same destination.
+            let group = prizeGroups[opponentIndex].find(g => g.destination === destination);
+            if (!group) {
+                group = { destination, count: 0 };
+                prizeGroups[opponentIndex].push(group);
+            }
+            group.count += knockOutEffect.prizeCount;
         }
     }
     const prompts = [
-        ...choosePrizeCards(store, state, prizesToTake),
+        ...choosePrizeCards(store, state, prizeGroups),
         ...chooseActivePokemons(state)
     ];
-    const completed = [false, false];
+    const completed = state.players.map(() => false);
     for (let i = 0; i < state.players.length; i++) {
         const player = state.players[i];
         const playerPrompts = prompts.filter(p => p.playerId === player.id);

@@ -9,44 +9,32 @@ import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 export class SingleStrikeUrshifuV extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
-
-  public regulationMark = 'E';
-
   public tags = [CardTag.POKEMON_V, CardTag.SINGLE_STRIKE];
-
-  public cardType: CardType = CardType.FIGHTING;
-
+  public cardType: CardType = F;
   public hp: number = 220;
-
-  public weakness = [{ type: CardType.PSYCHIC }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: P }];
+  public retreat = [C, C];
 
   public attacks = [
     {
       name: 'Laser Focus',
-      cost: [CardType.COLORLESS],
+      cost: [F],
       damage: 0,
-      text: 'Search your deck for up to 2 F Energy cards and attach ' +
-        'them to this Pokémon. Then, shuffle your deck.'
+      text: 'Search your deck for up to 2 [F] Energy cards and attach them to this Pokémon. Then, shuffle your deck.'
     },
     {
       name: 'Impact Blow',
-      cost: [CardType.FIGHTING, CardType.FIGHTING, CardType.COLORLESS],
+      cost: [F, F, C],
       damage: 180,
-      text: 'During your next turn, this Pokémon can\'t use ' +
-        'Impact Blow.'
+      text: 'During your next turn, this Pokémon can\'t use Impact Blow.'
     }
   ];
 
+  public regulationMark = 'E';
   public set: string = 'BST';
-
-  public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '85';
-
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Single Strike Urshifu V';
-
   public fullName: string = 'Single Strike Urshifu V BST';
 
   public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';

@@ -13,12 +13,19 @@ export declare class Bombirdierex extends PokemonCard {
         value: number;
     }[];
     retreat: CardType[];
-    attacks: {
+    attacks: ({
+        name: string;
+        cost: CardType[];
+        damage: number;
+        canUseOnFirstTurn: boolean;
+        text: string;
+    } | {
         name: string;
         cost: CardType[];
         damage: number;
         text: string;
-    }[];
+        canUseOnFirstTurn?: undefined;
+    })[];
     set: string;
     cardImage: string;
     regulationMark: string;

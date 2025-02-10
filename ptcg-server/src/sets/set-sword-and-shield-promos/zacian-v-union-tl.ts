@@ -56,12 +56,12 @@ export class ZacianVUNIONTopLeft extends PokemonCard {
     }
   ];
 
-  public set: string = 'SP';
+  public set: string = 'SWSH';
   public regulationMark = 'E';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '163';
   public name: string = 'Zacian V-UNION';
-  public fullName: string = 'Zacian V-UNION (Top Left) SP';
+  public fullName: string = 'Zacian V-UNION (Top Left) SWSH';
 
   public readonly DANCE_REDUCED_DAMAGE_MARKER = 'DANCE_REDUCED_DAMAGE_MARKER';
 

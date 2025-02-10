@@ -40,6 +40,7 @@ class Bombirdierex extends game_1.PokemonCard {
                 name: 'Fast Carrier',
                 cost: [game_1.CardType.COLORLESS],
                 damage: 0,
+                canUseOnFirstTurn: true,
                 text: 'If you go first, you can use this attack during your first turn. Search your deck for up to 3 Basic Pokémon and put them onto your Bench. Then, shuffle your deck.'
             },
             {
@@ -57,16 +58,9 @@ class Bombirdierex extends game_1.PokemonCard {
         this.fullName = 'Bombirdier ex PAR';
     }
     reduceEffect(store, state, effect) {
-        // Implement ability
-        const player = state.players[state.activePlayer];
-        if (state.turn == 1 && player.active.cards[0] == this) {
-            player.canAttackFirstTurn = true;
-        }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const generator = useCallForFamily(() => generator.next(), store, state, effect);
-            if (player.canAttackFirstTurn) {
-                return generator.next().value;
-            }
+            return generator.next().value;
         }
         // Implement attack
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {

@@ -9,20 +9,21 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
-import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
+import { SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
   const slots: PokemonCardList[] = player.bench.filter(b => b.cards.length === 0);
 
+  // No cards left in deck
   if (player.deck.cards.length === 0) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
   // Check if bench has open slots
   const openSlots = player.bench.filter(b => b.cards.length === 0);
 
+  // No open slots, throw error
   if (openSlots.length === 0) {
-    // No open slots, throw error
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
@@ -44,6 +45,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   // Operation canceled by the user
   if (cards.length === 0) {
     player.supporter.moveCardTo(effect.trainerCard, player.discard);
+    SHUFFLE_DECK(store, state, player);
     return state;
   }
 
@@ -55,29 +57,19 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
   player.supporter.moveCardTo(effect.trainerCard, player.discard);
 
-  return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-    player.deck.applyOrder(order);
-  });
+  SHUFFLE_DECK(store, state, player);
+  return state;
 }
 export class NestBall extends TrainerCard {
 
   public regulationMark = 'G';
-
   public trainerType: TrainerType = TrainerType.ITEM;
-
   public set: string = 'SVI';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '181';
-
   public name: string = 'Nest Ball';
-
   public fullName: string = 'Nest Ball SVI';
-
-  public text: string =
-    'Search your deck for a Basic Pokémon and put it onto your ' +
-    'Bench. Then, shuffle your deck.';
+  public text: string = 'Search your deck for a Basic Pokémon and put it onto your Bench. Then, shuffle your deck.';
 
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

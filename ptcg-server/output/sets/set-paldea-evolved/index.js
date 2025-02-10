@@ -76,6 +76,8 @@ const dunsparce_1 = require("./dunsparce");
 const glimmet_1 = require("./glimmet");
 const glimmet_2_1 = require("./glimmet-2");
 const glimmora_1 = require("./glimmora");
+const tinkatuff_2_1 = require("./tinkatuff-2");
+const bellibolt_ex_1 = require("./bellibolt-ex");
 //import { CalamitousSnowyMountain } from './new calamitous-snowy-mountain';
 exports.setPaldeaEvolved = [
     new arctibax_1.Arctibax(),
@@ -137,6 +139,7 @@ exports.setPaldeaEvolved = [
     new ting_lu_ex_1.TingLuex(),
     new tinkatink_1.Tinkatink(),
     new tinkatuff_1.Tinkatuff(),
+    new tinkatuff_2_1.Tinkatuff2(),
     new tinkaton_1.Tinkaton(),
     new wattrel_1.Wattrel(),
     new wingull_1.Wingull(),
@@ -152,9 +155,12 @@ exports.setPaldeaEvolved = [
     new glimmet_1.Glimmet(),
     new glimmet_2_1.Glimmet2(),
     new glimmora_1.Glimmora(),
+    new bellibolt_ex_1.Belliboltex(),
     // Full 
     new full_art_1.ArctibaxIR(),
     new full_art_1.BaxcaliburIR(),
+    new full_art_1.TinkatinkIR(),
+    new full_art_1.TinkatuffIR(),
     new full_art_1.BossOrdersFA(),
     new full_art_1.ChiYuexFA(),
     new full_art_1.ChienPaoexFA(),
@@ -166,6 +172,7 @@ exports.setPaldeaEvolved = [
     new full_art_1.IonoFA(),
     new full_art_1.MeowscaradaexFA(),
     new full_art_1.NoivernexFA(),
+    new full_art_1.TinkatonexFA(),
     new full_art_1.SquawkabillyexFA(),
     new full_art_1.SuperRodHR(),
     new full_art_1.SuperiorEnergyRetrievalHR(),
@@ -175,6 +182,7 @@ exports.setPaldeaEvolved = [
     new full_art_1.WoChienexSIR(),
     new full_art_1.ChiYuexSIR(),
     new full_art_1.ChienPaoexSIR(),
+    new full_art_1.TinkatonexSIR(),
     new full_art_1.TingLuexSIR(),
     new full_art_1.SquawkabillyexSIR(),
     new full_art_1.BossOrdersSIR(),

@@ -1,11 +1,12 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, PowerType, ChoosePokemonPrompt,
-  PlayerType, SlotType, GameMessage, Card, ChooseCardsPrompt, ShuffleDeckPrompt } from '../../game';
+import {
+  StoreLike, State, StateUtils, PowerType, ChoosePokemonPrompt,
+  PlayerType, SlotType, GameMessage, Card, ChooseCardsPrompt, ShuffleDeckPrompt
+} from '../../game';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect, CheckTableStateEffect } from '../../game/store/effects/check-effects';
-
 
 function* useEmeraldSlash(next: Function, store: StoreLike, state: State,
   effect: AttackEffect): IterableIterator<State> {
@@ -38,7 +39,7 @@ function* useEmeraldSlash(next: Function, store: StoreLike, state: State,
       player.id,
       GameMessage.CHOOSE_POKEMON_TO_ATTACH_CARDS,
       PlayerType.BOTTOM_PLAYER,
-      [ SlotType.BENCH ],
+      [SlotType.BENCH],
       { allowCancel: true }
     ), targets => {
       if (!targets || targets.length === 0) {
@@ -55,50 +56,35 @@ function* useEmeraldSlash(next: Function, store: StoreLike, state: State,
   });
 }
 
-
 export class VirizionEx extends PokemonCard {
-
-  public tags = [ CardTag.POKEMON_EX ];
-
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.GRASS;
-
+  public tags = [CardTag.POKEMON_EX];
+  public cardType: CardType = G;
   public hp: number = 170;
-
-  public weakness = [{ type: CardType.FIRE }];
-
-  public resistance = [{ type: CardType.WATER, value: -20 }];
-
-  public retreat = [ CardType.COLORLESS ];
+  public weakness = [{ type: R }];
+  public resistance = [{ type: W, value: -20 }];
+  public retreat = [C];
 
   public powers = [{
     name: 'Verdant Wind',
     powerType: PowerType.ABILITY,
-    text: 'Each of your Pokemon that has any G Energy attached to it can\'t ' +
-    'be affected by any Special Conditions. (Remove any Special Conditions ' +
-    'affecting those Pokemon.)'
+    text: 'Each of your Pokémon that has any [G] Energy attached to it can\'t be affected by any Special Conditions. (Remove any Special Conditions affecting those Pokémon.)'
   }];
 
   public attacks = [
     {
       name: 'Emerald Slash',
-      cost: [ CardType.GRASS, CardType.COLORLESS ],
+      cost: [G, C],
       damage: 50,
-      text: 'You may search your deck for 2 G Energy cards and attach them ' +
-        'to 1 of your Benched Pokemon. Shuffle your deck afterward.'
+      text: 'You may search your deck for 2 [G] Energy cards and attach them to 1 of your Benched Pokémon. Shuffle your deck afterward.'
     }
   ];
 
   public set: string = 'PLB';
-
-  public name: string = 'Virizion EX';
-
-  public fullName: string = 'Virizion EX PLB';
-
-  public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '9';
+  public cardImage: string = 'assets/cardback.png';
+  public name: string = 'Virizion EX';
+  public fullName: string = 'Virizion EX PLB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -128,7 +114,7 @@ export class VirizionEx extends PokemonCard {
         store.reduceEffect(state, checkProvidedEnergyEffect);
 
         const energyMap = checkProvidedEnergyEffect.energyMap;
-        const hasGrassEnergy = StateUtils.checkEnoughEnergy(energyMap, [ CardType.GRASS ]);
+        const hasGrassEnergy = StateUtils.checkEnoughEnergy(energyMap, [CardType.GRASS]);
 
         if (hasGrassEnergy) {
           // Try to reduce PowerEffect, to check if something is blocking our ability

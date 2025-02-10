@@ -17,43 +17,32 @@ import { StoreLike } from '../../game/store/store-like';
 export class Bronzong extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_1;
-
   public evolvesFrom = 'Bronzor';
-
-  public cardType: CardType = CardType.METAL;
-
+  public cardType: CardType = M;
   public hp: number = 90;
-
-  public weakness = [{ type: CardType.FIRE }];
-
-  public resistance = [{ type: CardType.PSYCHIC, value: -20 }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: R }];
+  public resistance = [{ type: P, value: -20 }];
+  public retreat = [C, C, C];
 
   public powers = [{
     name: 'Metal Links',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
-    text: 'Once during your turn (before your attack), you may attach ' +
-      'a M Energy card from your discard pile to 1 of your Benched Pokemon.'
+    text: 'Once during your turn (before your attack), you may attach a [M] Energy card from your discard pile to 1 of your Benched Pokémon.'
   }];
 
   public attacks = [{
     name: 'Hammer In',
-    cost: [CardType.METAL, CardType.METAL, CardType.COLORLESS],
+    cost: [M, M, C],
     damage: 60,
     text: ''
   }];
 
   public set: string = 'PHF';
-
-  public name: string = 'Bronzong';
-
-  public fullName: string = 'Bronzong PHF';
-
-  public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '61';
+  public cardImage: string = 'assets/cardback.png';
+  public name: string = 'Bronzong';
+  public fullName: string = 'Bronzong PHF';
 
   public readonly METAL_LINKS_MARKER = 'METAL_LINKS_MARKER';
 
@@ -68,18 +57,18 @@ export class Bronzong extends PokemonCard {
       const player = effect.player;
 
       const hasBench = player.bench.some(b => b.cards.length > 0);
-      
+
       if (!hasBench) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
       const hasEnergyInDiscard = player.discard.cards.some(c => {
         return c instanceof EnergyCard && c.provides.includes(CardType.METAL);
       });
-      
+
       if (!hasEnergyInDiscard) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
-      
+
       if (player.marker.hasMarker(this.METAL_LINKS_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
@@ -105,9 +94,9 @@ export class Bronzong extends PokemonCard {
           const target = StateUtils.getTarget(state, player, transfer.to);
           player.discard.moveCardTo(transfer.card, target);
         }
-        
+
         player.marker.addMarker(this.METAL_LINKS_MARKER, this);
-        
+
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
           if (cardList.getPokemonCard() === this) {
             cardList.addBoardEffect(BoardEffect.ABILITY_USED);

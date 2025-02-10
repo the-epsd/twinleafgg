@@ -8,41 +8,31 @@ import { GameMessage } from '../../game/game-message';
 export class Pignite extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_1;
-
   public evolvesFrom = 'Tepig';
-
-  public cardType: CardType = CardType.FIRE;
-
+  public cardType: CardType = R;
   public hp: number = 100;
-
-  public weakness = [{ type: CardType.WATER }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: W }];
+  public retreat = [C, C, C];
 
   public attacks = [
     {
       name: 'Flame Charge',
-      cost: [CardType.COLORLESS],
+      cost: [C],
       damage: 0,
-      text: 'Search your deck for a R Energy card and attach it to this ' +
-        'Pokemon. Shuffle your deck afterward.'
+      text: 'Search your deck for a [R] Energy card and attach it to this Pokémon. Shuffle your deck afterward.'
     },
     {
       name: 'Heat Crash',
-      cost: [CardType.FIRE, CardType.FIRE, CardType.COLORLESS],
+      cost: [R, R, C],
       damage: 50,
       text: ''
     }
   ];
 
   public set: string = 'BLW';
-
   public name: string = 'Pignite';
-
   public fullName: string = 'Pignite BLW';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '17';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

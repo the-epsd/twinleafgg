@@ -41,6 +41,7 @@ var CardTag;
     CardTag["MARNIES"] = "MARNIES";
     CardTag["STEVENS"] = "STEVENS";
     CardTag["ETHANS"] = "ETHANS";
+    CardTag["MISTYS"] = "MISTYS";
 })(CardTag = exports.CardTag || (exports.CardTag = {}));
 var SuperType;
 (function (SuperType) {

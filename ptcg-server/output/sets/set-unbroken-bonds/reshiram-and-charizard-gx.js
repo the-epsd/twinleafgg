@@ -9,32 +9,34 @@ const attack_effects_1 = require("../../game/store/effects/attack-effects");
 class ReshiramCharizardGX extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.tags = [game_1.CardTag.TAG_TEAM];
         this.stage = game_1.Stage.BASIC;
-        this.cardType = game_1.CardType.FIRE;
+        this.tags = [game_1.CardTag.POKEMON_GX, game_1.CardTag.TAG_TEAM];
+        this.cardType = R;
         this.hp = 270;
-        this.weakness = [{ type: game_1.CardType.WATER }];
-        this.retreat = [game_1.CardType.COLORLESS, game_1.CardType.COLORLESS, game_1.CardType.COLORLESS];
+        this.weakness = [{ type: W }];
+        this.retreat = [C, C, C];
         this.attacks = [
             {
                 name: 'Outrage',
-                cost: [game_1.CardType.FIRE, game_1.CardType.COLORLESS],
+                cost: [R, C],
                 damage: 30,
+                damageCalculation: '+',
                 text: 'This attack does 10 more damage for each damage counter on this Pokemon.'
             },
             {
                 name: 'Flare Strike',
-                cost: [game_1.CardType.FIRE, game_1.CardType.FIRE, game_1.CardType.FIRE, game_1.CardType.COLORLESS],
+                cost: [R, R, R, C],
                 damage: 230,
                 text: 'This Pokemon can\'t use Flare Strike during your next turn.'
             },
             {
                 name: 'Double Blaze-GX',
-                cost: [game_1.CardType.FIRE, game_1.CardType.FIRE, game_1.CardType.FIRE],
+                cost: [R, R, R],
                 damage: 200,
                 shred: false,
                 gxAttack: true,
-                text: 'If this Pokemon has at least 3 extra R Energy attached to it (in addition to this attack\'s cost), ' +
+                damageCalculation: '+',
+                text: 'If this Pokemon has at least 3 extra [R] Energy attached to it (in addition to this attack\'s cost), ' +
                     'this attack does 100 more damage, and this attack\'s damage isn\'t affected by any effects on your ' +
                     'opponent\'s Active Pokemon. (You can\'t use more than 1 GX attack in a game.)'
             },

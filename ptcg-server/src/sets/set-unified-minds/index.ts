@@ -3,18 +3,18 @@ import { AlolanGrimer } from './alolan-grimer';
 import { AlolanRaichu } from './alolan-raichu';
 import { CherishBall } from './cherish-ball';
 import { Cottonee } from './cottonee';
-import { CryogonalUNM } from './cryogonal';
+import { Cryogonal } from './cryogonal';
 import { DarkCity } from './dark-city';
-import { EelektrossUNM } from './eelektross';
+import { Eelektross } from './eelektross';
 import { FlyiniumZAirSlash } from './flyinium-z-air-slash';
 import { Froslass } from './froslass';
-import { GarchompUNM } from './garchomp';
+import { Garchomp } from './garchomp';
 import { GarchompGiratinaGX } from './garchomp-and-giratina-gx';
 import { Golisopod } from './golisopod';
 import { Hapu } from './hapu';
 import { Hoopa } from './hoopa';
 import { KarateBelt } from './karate-belt';
-import { KeldeoGXUNM } from './keldeo-gx';
+import { KeldeoGX } from './keldeo-gx';
 import { Lickilicky } from './lickilicky';
 import { MewtwoMewGX } from './mewtwo-and-mew-gx';
 import { Munchlax } from './munchlax';
@@ -41,18 +41,18 @@ export const setUnifiedMinds: Card[] = [
   new AlolanRaichu(),
   new CherishBall(),
   new Cottonee(),
-  new CryogonalUNM(),
+  new Cryogonal(),
   new DarkCity(),
-  new EelektrossUNM(),
+  new Eelektross(),
   new FlyiniumZAirSlash(),
   new Froslass(),
   new GarchompGiratinaGX(),
-  new GarchompUNM(),
+  new Garchomp(),
   new Golisopod(),
   new Hapu(),
   new Hoopa(),
   new KarateBelt(),
-  new KeldeoGXUNM(),
+  new KeldeoGX(),
   new Lickilicky(),
   new MewtwoMewGX(),
   new Munchlax(),

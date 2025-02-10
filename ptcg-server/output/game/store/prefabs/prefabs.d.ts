@@ -1,6 +1,7 @@
 import { AttachEnergyOptions, Card, CardList, ChooseCardsOptions, EnergyCard, FilterType, GameMessage, Player, PlayerType, PokemonCardList, SlotType, State, StoreLike } from '../..';
-import { CardType, SpecialCondition } from '../card/card-types';
+import { SpecialCondition } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
+import { DealDamageEffect, PutDamageEffect } from '../effects/attack-effects';
 import { Effect } from '../effects/effect';
 import { AttackEffect, EvolveEffect, KnockOutEffect, PowerEffect } from '../effects/game-effects';
 import { AfterAttackEffect } from '../effects/game-phase-effects';
@@ -10,6 +11,8 @@ import { AfterAttackEffect } from '../effects/game-phase-effects';
  * @returns whether or not a specific attack was used.
  */
 export declare function WAS_ATTACK_USED(effect: Effect, index: number, user: PokemonCard): effect is AttackEffect;
+export declare function DEAL_DAMAGE(effect: Effect): effect is DealDamageEffect;
+export declare function PUT_DAMAGE(effect: Effect): effect is PutDamageEffect;
 /**
  *
  * A basic effect for checking the use of abilites.
@@ -49,11 +52,22 @@ export declare function SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH(store: S
  * A `filter` can be provided for the prompt as well.
  */
 export declare function SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND(store: StoreLike, state: State, player: Player, filter?: Partial<PokemonCard>, options?: Partial<ChooseCardsOptions>): State;
-export declare function DISCARD_X_ENERGY_FROM_THIS_POKEMON(state: State, effect: AttackEffect, store: StoreLike, type: CardType, amount: number): State;
 export declare function THIS_ATTACK_DOES_X_MORE_DAMAGE(effect: AttackEffect, store: StoreLike, state: State, damage: number): State;
 export declare function HEAL_X_DAMAGE_FROM_THIS_POKEMON(effect: AttackEffect, store: StoreLike, state: State, damage: number): State;
 export declare function THIS_POKEMON_HAS_ANY_DAMAGE_COUNTERS_ON_IT(effect: AttackEffect, user: PokemonCard): boolean;
 export declare function YOUR_OPPONENTS_POKEMON_IS_KNOCKED_OUT_BY_DAMAGE_FROM_THIS_ATTACK(effect: Effect, state: State): effect is KnockOutEffect;
+export interface TakeSpecificPrizesOptions {
+    destination?: CardList;
+    skipReduce?: boolean;
+}
+export interface TakeXPrizesOptions extends TakeSpecificPrizesOptions {
+    promptOptions?: {
+        allowCancel?: boolean;
+        blocked?: number[];
+    };
+}
+export declare function TAKE_SPECIFIC_PRIZES(store: StoreLike, state: State, player: Player, prizes: CardList[], options?: TakeSpecificPrizesOptions): void;
+export declare function TAKE_X_PRIZES(store: StoreLike, state: State, player: Player, count: number, options?: TakeXPrizesOptions, callback?: (chosenPrizes: CardList[]) => void): State;
 export declare function TAKE_X_MORE_PRIZE_CARDS(effect: KnockOutEffect, state: State): State;
 export declare function PLAY_POKEMON_FROM_HAND_TO_BENCH(state: State, player: Player, card: Card): void;
 export declare function THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_BENCHED_POKEMON(damage: number, effect: AttackEffect, store: StoreLike, state: State, min: number, max: number): State;
@@ -97,6 +111,7 @@ export declare function DRAW_CARDS_UNTIL_CARDS_IN_HAND(player: Player, count: nu
  */
 export declare function DRAW_CARDS_AS_FACE_DOWN_PRIZES(player: Player, count: number): void;
 export declare function SEARCH_DECK_FOR_CARDS_TO_HAND(store: StoreLike, state: State, player: Player, min?: number, max?: number): void;
+export declare function GET_CARDS_ON_BOTTOM_OF_DECK(player: Player, amount?: number): Card[];
 /**
  * Checks if abilities are blocked on `card` for `player`.
  * @returns `true` if the ability is blocked, `false` if the ability is able to go thru.
@@ -115,8 +130,9 @@ export declare function SELECT_PROMPT_WITH_OPTIONS(store: StoreLike, state: Stat
     message: GameMessage;
     action: () => void;
 }[]): State;
-export declare function CONFIRMATION_PROMPT(store: StoreLike, state: State, player: Player, callback: (result: boolean) => void): State;
+export declare function CONFIRMATION_PROMPT(store: StoreLike, state: State, player: Player, callback: (result: boolean) => void, message?: GameMessage): State;
 export declare function COIN_FLIP_PROMPT(store: StoreLike, state: State, player: Player, callback: (result: boolean) => void): State;
+export declare function MULTIPLE_COIN_FLIPS_PROMPT(store: StoreLike, state: State, player: Player, amount: number, callback: (results: boolean[]) => void): State;
 export declare function SIMULATE_COIN_FLIP(store: StoreLike, state: State, player: Player): boolean;
 export declare function GET_FIRST_PLAYER_BENCH_SLOT(player: Player): PokemonCardList;
 export declare function GET_PLAYER_BENCH_SLOTS(player: Player): PokemonCardList[];
@@ -134,6 +150,7 @@ export declare function HAS_MARKER(marker: string, owner: Player | Card | Pokemo
 export declare function BLOCK_EFFECT_IF_MARKER(marker: string, owner: Player | Card | PokemonCard | PokemonCardList, source?: Card): void;
 export declare function PREVENT_DAMAGE_IF_TARGET_HAS_MARKER(effect: Effect, marker: string, source?: Card): void;
 export declare function REMOVE_MARKER_AT_END_OF_TURN(effect: Effect, marker: string, source: Card): void;
+export declare function REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN(effect: Effect, marker: string, source: Card): void;
 export declare function REPLACE_MARKER_AT_END_OF_TURN(effect: Effect, oldMarker: string, newMarker: string, source: Card): void;
 /**
  * If an EndTurnEffect is given, will check for `clearerMarker` on the player whose turn it is,
@@ -141,3 +158,4 @@ export declare function REPLACE_MARKER_AT_END_OF_TURN(effect: Effect, oldMarker:
  * Useful for "During your opponent's next turn" effects.
  */
 export declare function CLEAR_MARKER_AND_OPPONENTS_POKEMON_MARKER_AT_END_OF_TURN(state: State, effect: Effect, clearerMarker: string, oppMarker: string, source: Card): void;
+export declare function BLOCK_RETREAT_IF_MARKER(effect: Effect, marker: string, source: Card): void;

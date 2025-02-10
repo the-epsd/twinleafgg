@@ -10,6 +10,7 @@ const game_message_1 = require("../../game/game-message");
 const attach_energy_prompt_1 = require("../../game/store/prompts/attach-energy-prompt");
 const play_card_action_1 = require("../../game/store/actions/play-card-action");
 const state_utils_1 = require("../../game/store/state-utils");
+const trainer_prefabs_1 = require("../../game/store/prefabs/trainer-prefabs");
 class Welder extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -19,11 +20,10 @@ class Welder extends trainer_card_1.TrainerCard {
         this.name = 'Welder';
         this.fullName = 'Welder UNB';
         this.setNumber = '189';
-        this.text = 'Attach up to 2 R Energy cards from your hand to 1 of your Pokemon. ' +
-            'If you do, draw 3 cards.';
+        this.text = 'Attach up to 2 [R] Energy cards from your hand to 1 of your Pokémon. If you do, draw 3 cards.';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
+        if (trainer_prefabs_1.WAS_TRAINER_USED(effect, this)) {
             const player = effect.player;
             const hasEnergyInHand = player.hand.cards.some(c => {
                 return c instanceof energy_card_1.EnergyCard
@@ -35,7 +35,7 @@ class Welder extends trainer_card_1.TrainerCard {
             }
             effect.preventDefault = true;
             player.hand.moveCardTo(effect.trainerCard, player.supporter);
-            return store.prompt(state, new attach_energy_prompt_1.AttachEnergyPrompt(player.id, game_message_1.GameMessage.ATTACH_ENERGY_CARDS, player.hand, play_card_action_1.PlayerType.BOTTOM_PLAYER, [play_card_action_1.SlotType.BENCH, play_card_action_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Fire Energy' }, { min: 1, max: 2, allowCancel: true, sameTarget: true }), transfers => {
+            return store.prompt(state, new attach_energy_prompt_1.AttachEnergyPrompt(player.id, game_message_1.GameMessage.ATTACH_ENERGY_CARDS, player.hand, play_card_action_1.PlayerType.BOTTOM_PLAYER, [play_card_action_1.SlotType.BENCH, play_card_action_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Fire Energy' }, { min: 1, max: 2, allowCancel: false, sameTarget: true }), transfers => {
                 transfers = transfers || [];
                 for (const transfer of transfers) {
                     const target = state_utils_1.StateUtils.getTarget(state, player, transfer.to);

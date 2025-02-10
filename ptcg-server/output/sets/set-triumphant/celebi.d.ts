@@ -7,9 +7,9 @@ export declare class Celebi extends PokemonCard {
     cardType: CardType;
     hp: number;
     weakness: {
-        type: CardType;
+        type: CardType.FIRE;
     }[];
-    retreat: CardType[];
+    retreat: CardType.COLORLESS[];
     powers: {
         name: string;
         powerType: PowerType;
@@ -18,15 +18,15 @@ export declare class Celebi extends PokemonCard {
     }[];
     attacks: {
         name: string;
-        cost: CardType[];
+        cost: (CardType.GRASS | CardType.PSYCHIC | CardType.COLORLESS)[];
         damage: number;
         text: string;
     }[];
     set: string;
+    setNumber: string;
+    cardImage: string;
     name: string;
     fullName: string;
-    cardImage: string;
-    setNumber: string;
     readonly FOREST_BREATH_MARKER: string;
     readonly TIME_CIRCLE_MARKER: string;
     readonly CLEAR_TIME_CIRCLE_MARKER: string;

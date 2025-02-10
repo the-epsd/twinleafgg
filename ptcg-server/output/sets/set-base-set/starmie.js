@@ -6,7 +6,7 @@ const card_types_1 = require("../../game/store/card/card-types");
 const coin_flip_prompt_1 = require("../../game/store/prompts/coin-flip-prompt");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
-const prefabs_1 = require("../../game/store/prefabs/prefabs");
+const costs_1 = require("../../game/store/prefabs/costs");
 const game_1 = require("../../game");
 class Starmie extends pokemon_card_1.PokemonCard {
     constructor() {
@@ -39,7 +39,7 @@ class Starmie extends pokemon_card_1.PokemonCard {
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
-            prefabs_1.DISCARD_X_ENERGY_FROM_THIS_POKEMON(state, effect, store, card_types_1.CardType.WATER, 1);
+            costs_1.DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, 1, W);
             const player = effect.player;
             const heal = new game_effects_1.HealEffect(player, player.active, player.active.damage);
             heal.target = effect.player.active;

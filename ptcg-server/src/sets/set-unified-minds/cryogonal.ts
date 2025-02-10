@@ -4,25 +4,27 @@ import { AttackEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayItemEffect } from '../../game/store/effects/play-card-effects';
 
-export class CryogonalUNM extends PokemonCard {
+export class Cryogonal extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.WATER;
+  public cardType: CardType = W;
   public hp: number = 90;
-  public weakness = [{ type: CardType.METAL }];
-  public retreat = [CardType.COLORLESS];
+  public weakness = [{ type: M }];
+  public retreat = [C];
+
+  public attacks = [
+    {
+      name: 'Frozen Lock',
+      cost: [W],
+      damage: 10,
+      text: 'Your opponent can\'t play any Item cards from their hand during their next turn.'
+    },
+  ];
+
   public set = 'UNM';
   public setNumber = '46';
   public cardImage = 'assets/cardback.png';
   public name = 'Cryogonal';
   public fullName = 'Cryogonal UNM';
-  public attacks = [
-    {
-      name: 'Frozen Lock',
-      cost: [CardType.WATER],
-      damage: 10,
-      text: 'Your opponent can\'t play any Item cards from their hand during their next turn.'
-    },
-  ];
 
   private readonly FROZEN_LOCK_MARKER = 'FROZEN_LOCK_MARKER';
 

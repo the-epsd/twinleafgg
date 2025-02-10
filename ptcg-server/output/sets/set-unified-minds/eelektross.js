@@ -1,44 +1,42 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.EelektrossUNM = void 0;
+exports.Eelektross = void 0;
 const game_1 = require("../../game");
 const check_effects_1 = require("../../game/store/effects/check-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 const prefabs_1 = require("../../game/store/prefabs/prefabs");
-class EelektrossUNM extends game_1.PokemonCard {
+class Eelektross extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = game_1.Stage.STAGE_2;
         this.evolvesFrom = 'Eelektrik';
-        this.cardType = game_1.CardType.LIGHTNING;
+        this.cardType = L;
         this.hp = 150;
-        this.weakness = [{ type: game_1.CardType.FIGHTING }];
-        this.resistance = [{ type: game_1.CardType.METAL, value: -20 }];
-        this.retreat = [game_1.CardType.COLORLESS, game_1.CardType.COLORLESS, game_1.CardType.COLORLESS,];
-        this.set = 'UNM';
-        this.setNumber = '66';
-        this.cardImage = 'assets/cardback.png';
-        this.name = 'Eelektross';
-        this.fullName = 'Eelektross UNM';
+        this.weakness = [{ type: F }];
+        this.resistance = [{ type: M, value: -20 }];
+        this.retreat = [C, C, C];
         this.powers = [
             {
                 name: 'Electric Swamp',
                 powerType: game_1.PowerType.ABILITY,
                 useFromHand: true,
-                text: 'Once during your turn (before your attack), if this Pokemon is in your hand and you have at ' +
-                    'least 4 L Energy cards in play, you may play this Pokemon onto your Bench. If you do, move any number of ' +
-                    'L Energy from your other Pokemon to this Pokemon.'
+                text: 'Once during your turn (before your attack), if this Pokémon is in your hand and you have at least 4 [L] Energy cards in play, you may play this Pokémon onto your Bench. If you do, move any number of [L] Energy from your other Pokémon to this Pokémon.'
             }
         ];
         this.attacks = [
             {
                 name: 'Hover Over',
-                cost: [game_1.CardType.LIGHTNING, game_1.CardType.COLORLESS, game_1.CardType.COLORLESS, game_1.CardType.COLORLESS],
+                cost: [L, C, C, C],
                 damage: 130,
                 text: 'The Defending Pokemon can\'t retreat during your opponent\'s next turn',
             }
         ];
+        this.set = 'UNM';
+        this.setNumber = '66';
+        this.cardImage = 'assets/cardback.png';
+        this.name = 'Eelektross';
+        this.fullName = 'Eelektross UNM';
     }
     reduceEffect(store, state, effect) {
         // Electric Swamp
@@ -107,4 +105,4 @@ class EelektrossUNM extends game_1.PokemonCard {
         return state;
     }
 }
-exports.EelektrossUNM = EelektrossUNM;
+exports.Eelektross = Eelektross;

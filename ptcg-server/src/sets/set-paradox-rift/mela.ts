@@ -83,23 +83,16 @@ function* playCard(next: Function, store: StoreLike, state: State,
 export class Mela extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;
-
   public set: string = 'PAR';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '167';
-
   public regulationMark = 'G';
-
   public name: string = 'Mela';
-
   public fullName: string = 'Mela PAR';
 
-  public text: string =
-    'You can use this card only if any of your Pokémon were Knocked Out during your opponent\'s last turn.' +
-    '' +
-    'Attach a Basic R Energy card from your discard pile to 1 of your Pokémon. If you do, draw cards until you have 6 cards in your hand.';
+  public text: string = `You can use this card only if any of your Pokémon were Knocked Out during your opponent's last turn.
+
+Attach a Basic [R] Energy card from your discard pile to 1 of your Pokémon. If you do, draw cards until you have 6 cards in your hand.`;
 
   public readonly MELA_MARKER = 'MELA_MARKER';
 

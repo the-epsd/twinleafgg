@@ -12,21 +12,20 @@ class Emboar extends pokemon_card_1.PokemonCard {
         super(...arguments);
         this.stage = card_types_1.Stage.STAGE_2;
         this.evolvesFrom = 'Pignite';
-        this.cardType = card_types_1.CardType.FIRE;
+        this.cardType = R;
         this.hp = 150;
-        this.weakness = [{ type: card_types_1.CardType.WATER }];
-        this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
+        this.weakness = [{ type: W }];
+        this.retreat = [C, C, C, C];
         this.powers = [{
                 name: 'Inferno Fandango',
                 useWhenInPlay: true,
                 powerType: game_1.PowerType.ABILITY,
-                text: 'As often as you like during your turn (before your attack), ' +
-                    'you may attach a R Energy card from your hand to 1 of your Pokemon.'
+                text: 'As often as you like during your turn (before your attack), you may attach a [R] Energy card from your hand to 1 of your Pokémon.'
             }];
         this.attacks = [
             {
                 name: 'Heat Crash',
-                cost: [card_types_1.CardType.FIRE, card_types_1.CardType.FIRE, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
+                cost: [R, R, C, C],
                 damage: 80,
                 text: ''
             }

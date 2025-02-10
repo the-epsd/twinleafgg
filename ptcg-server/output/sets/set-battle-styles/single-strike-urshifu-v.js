@@ -11,31 +11,29 @@ class SingleStrikeUrshifuV extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.BASIC;
-        this.regulationMark = 'E';
         this.tags = [card_types_1.CardTag.POKEMON_V, card_types_1.CardTag.SINGLE_STRIKE];
-        this.cardType = card_types_1.CardType.FIGHTING;
+        this.cardType = F;
         this.hp = 220;
-        this.weakness = [{ type: card_types_1.CardType.PSYCHIC }];
-        this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
+        this.weakness = [{ type: P }];
+        this.retreat = [C, C];
         this.attacks = [
             {
                 name: 'Laser Focus',
-                cost: [card_types_1.CardType.COLORLESS],
+                cost: [F],
                 damage: 0,
-                text: 'Search your deck for up to 2 F Energy cards and attach ' +
-                    'them to this Pokémon. Then, shuffle your deck.'
+                text: 'Search your deck for up to 2 [F] Energy cards and attach them to this Pokémon. Then, shuffle your deck.'
             },
             {
                 name: 'Impact Blow',
-                cost: [card_types_1.CardType.FIGHTING, card_types_1.CardType.FIGHTING, card_types_1.CardType.COLORLESS],
+                cost: [F, F, C],
                 damage: 180,
-                text: 'During your next turn, this Pokémon can\'t use ' +
-                    'Impact Blow.'
+                text: 'During your next turn, this Pokémon can\'t use Impact Blow.'
             }
         ];
+        this.regulationMark = 'E';
         this.set = 'BST';
-        this.cardImage = 'assets/cardback.png';
         this.setNumber = '85';
+        this.cardImage = 'assets/cardback.png';
         this.name = 'Single Strike Urshifu V';
         this.fullName = 'Single Strike Urshifu V BST';
         this.ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';

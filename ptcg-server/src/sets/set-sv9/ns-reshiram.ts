@@ -25,7 +25,7 @@ export class NsReshiram extends PokemonCard {
     },
 
     {
-      name: 'Raging Hammer',
+      name: 'Virtuous Flame',
       cost: [R, R, L, C],
       damage: 170,
       text: ''

@@ -11,10 +11,10 @@ class Feebas extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.BASIC;
-        this.cardType = card_types_1.CardType.WATER;
+        this.cardType = W;
         this.hp = 30;
-        this.weakness = [{ type: card_types_1.CardType.GRASS }];
-        this.retreat = [card_types_1.CardType.COLORLESS];
+        this.weakness = [{ type: G }];
+        this.retreat = [C];
         this.powers = [{
                 name: 'Submerge',
                 powerType: pokemon_types_1.PowerType.ABILITY,
@@ -23,15 +23,15 @@ class Feebas extends pokemon_card_1.PokemonCard {
             }];
         this.attacks = [{
                 name: 'Rain Splash',
-                cost: [card_types_1.CardType.WATER],
+                cost: [W],
                 damage: 10,
                 text: ''
             }];
         this.set = 'DRM';
-        this.name = 'Feebas';
-        this.fullName = 'Feebas BCR';
-        this.cardImage = 'assets/cardback.png';
         this.setNumber = '28';
+        this.cardImage = 'assets/cardback.png';
+        this.name = 'Feebas';
+        this.fullName = 'Feebas DRM';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof attack_effects_1.PutDamageEffect) {

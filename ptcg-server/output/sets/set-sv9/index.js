@@ -34,7 +34,7 @@ const iris_fighting_spirit_1 = require("./iris-fighting-spirit");
 const larvitar_1 = require("./larvitar");
 const levincia_1 = require("./levincia");
 const lillies_clefairy_ex_1 = require("./lillies-clefairy-ex");
-const lillies_comfy_1 = require("./lillies-comfy");
+const lillies_comfey_1 = require("./lillies-comfey");
 const lillies_cutiefly_1 = require("./lillies-cutiefly");
 const lillies_pearl_1 = require("./lillies-pearl");
 const lillies_ribombee_1 = require("./lillies-ribombee");
@@ -42,6 +42,7 @@ const lycanroc_1 = require("./lycanroc");
 const magmar_1 = require("./magmar");
 const magmortar_1 = require("./magmortar");
 const mamoswine_ex_1 = require("./mamoswine-ex");
+const maractus_1 = require("./maractus");
 const meowscarada_1 = require("./meowscarada");
 const ns_castle_1 = require("./ns-castle");
 const ns_darmanItan_1 = require("./ns-darmanItan");
@@ -108,8 +109,9 @@ exports.setSV9 = [
     new lycanroc_1.Lycanroc(),
     new spike_energy_1.SpikeEnergy(),
     new regirock_1.Regirock(),
+    new maractus_1.Maractus(),
     new lillies_clefairy_ex_1.LilliesClefairyex(),
-    new lillies_comfy_1.LilliesComfy(),
+    new lillies_comfey_1.LilliesComfey(),
     new lillies_pearl_1.LilliesPearl(),
     new lillies_cutiefly_1.LilliesCutiefly(),
     new lillies_ribombee_1.LilliesRibombee(),

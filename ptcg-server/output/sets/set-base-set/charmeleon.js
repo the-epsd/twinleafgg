@@ -4,30 +4,28 @@ exports.Charmeleon = void 0;
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const prefabs_1 = require("../../game/store/prefabs/prefabs");
+const costs_1 = require("../../game/store/prefabs/costs");
 class Charmeleon extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.STAGE_1;
         this.evolvesFrom = 'Charmander';
-        this.cardType = card_types_1.CardType.FIRE;
+        this.cardType = R;
         this.hp = 80;
-        this.weakness = [{ type: card_types_1.CardType.WATER }];
-        this.retreat = [card_types_1.CardType.COLORLESS];
+        this.weakness = [{ type: W }];
+        this.retreat = [C];
         this.attacks = [
             {
                 name: 'Slash',
-                cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
+                cost: [C, C, C],
                 damage: 30,
                 text: '',
             },
             {
                 name: 'Flamethrower',
-                cost: [card_types_1.CardType.FIRE, card_types_1.CardType.FIRE, card_types_1.CardType.COLORLESS],
+                cost: [R, R, C],
                 damage: 50,
-                text: 'Discard 1 R Energy card attached to Charmeleon in order to use this attack.',
-                effect: (store, state, effect) => {
-                    prefabs_1.DISCARD_X_ENERGY_FROM_THIS_POKEMON(state, effect, store, card_types_1.CardType.FIRE, 1);
-                }
+                text: 'Discard 1 [R] Energy card attached to Charmeleon in order to use this attack.',
             },
         ];
         this.set = 'BS';
@@ -38,7 +36,7 @@ class Charmeleon extends pokemon_card_1.PokemonCard {
     }
     reduceEffect(store, state, effect) {
         if (prefabs_1.WAS_ATTACK_USED(effect, 1, this)) {
-            prefabs_1.DISCARD_X_ENERGY_FROM_THIS_POKEMON(state, effect, store, card_types_1.CardType.FIRE, 1);
+            costs_1.DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, 1, R);
         }
         return state;
     }

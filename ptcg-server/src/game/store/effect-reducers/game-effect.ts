@@ -71,7 +71,7 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
 
 
   //Skip attack on first turn
-  if (state.turn === 1 && player.canAttackFirstTurn !== true && state.rules.attackFirstTurn == false) {
+  if (state.turn === 1 && effect.attack.canUseOnFirstTurn !== true && state.rules.attackFirstTurn == false) {
     throw new GameError(GameMessage.CANNOT_ATTACK_ON_FIRST_TURN);
   }
 
@@ -91,10 +91,10 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
   const attack = effect.attack;
   let attackingPokemon = player.active;
 
-  // If this is Alakazam ex's attack from the bench, use that instead
+  // Check for attacks that can be used from bench
   player.bench.forEach(benchSlot => {
     const benchPokemon = benchSlot.getPokemonCard();
-    if (benchPokemon && benchPokemon.name === 'Alakazam ex' && benchPokemon.attacks.some(a => a.name === attack.name)) {
+    if (benchPokemon && benchPokemon.attacks.some(a => a.name === attack.name && a.useOnBench)) {
       attackingPokemon = benchSlot;
     }
   });
@@ -232,11 +232,11 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
       // }
 
       // Pokemon ex rule
-      if (card.tags.includes(CardTag.POKEMON_EX) || card.tags.includes(CardTag.POKEMON_V) || card.tags.includes(CardTag.POKEMON_VSTAR) || card.tags.includes(CardTag.POKEMON_ex) || card.tags.includes(CardTag.POKEMON_GX)) {
+      if (card.tags.includes(CardTag.POKEMON_EX) || card.tags.includes(CardTag.POKEMON_V) || card.tags.includes(CardTag.POKEMON_VSTAR) || card.tags.includes(CardTag.POKEMON_ex) || card.tags.includes(CardTag.POKEMON_GX) || card.tags.includes(CardTag.TAG_TEAM)) {
         effect.prizeCount += 1;
       }
-      
-      if (card.tags.includes(CardTag.POKEMON_VMAX) || card.tags.includes(CardTag.TAG_TEAM) || card.tags.includes(CardTag.POKEMON_VUNION)) {
+
+      if (card.tags.includes(CardTag.POKEMON_VMAX) || card.tags.includes(CardTag.POKEMON_VUNION)) {
         effect.prizeCount += 2;
       }
 

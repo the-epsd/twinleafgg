@@ -34,12 +34,12 @@ class MorpekoVUNIONTopRight extends pokemon_card_1.PokemonCard {
                 text: 'Draw cards until you have 10 cards in your hand.'
             }
         ];
-        this.set = 'SP';
+        this.set = 'SWSH';
         this.regulationMark = 'E';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '217';
+        this.setNumber = '216';
         this.name = 'Morpeko V-UNION';
-        this.fullName = 'Morpeko V-UNION (Top Right) SP';
+        this.fullName = 'Morpeko V-UNION (Top Right) SWSH';
     }
     reduceEffect(store, state, effect) {
         // assemblin the v-union

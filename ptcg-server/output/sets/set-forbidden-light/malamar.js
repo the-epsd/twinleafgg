@@ -17,20 +17,20 @@ class Malamar extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.STAGE_1;
-        this.cardType = card_types_1.CardType.PSYCHIC;
-        this.hp = 90;
-        this.weakness = [{ type: card_types_1.CardType.PSYCHIC }];
-        this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.evolvesFrom = 'Inkay';
+        this.cardType = P;
+        this.hp = 90;
+        this.weakness = [{ type: P }];
+        this.retreat = [C, C];
         this.powers = [{
                 name: 'Psychic Recharge',
                 useWhenInPlay: true,
                 powerType: pokemon_types_1.PowerType.ABILITY,
-                text: 'Once during your turn (before your attack), you may attach a P Energy card from your discard pile to 1 of your Benched Pokémon.'
+                text: 'Once during your turn (before your attack), you may attach a [P] Energy card from your discard pile to 1 of your Benched Pokémon.'
             }];
         this.attacks = [{
                 name: 'Psychic Sphere',
-                cost: [card_types_1.CardType.PSYCHIC, card_types_1.CardType.PSYCHIC, card_types_1.CardType.COLORLESS],
+                cost: [P, P, C],
                 damage: 60,
                 text: ''
             }];

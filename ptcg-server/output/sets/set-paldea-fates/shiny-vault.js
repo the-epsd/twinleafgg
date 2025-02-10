@@ -68,7 +68,6 @@ const kilowattrel_1 = require("./kilowattrel");
 const mime_jr_1 = require("./mime-jr");
 const students_in_paldea_1 = require("./students-in-paldea");
 const snorlax_1 = require("../set-pokemon-151/snorlax");
-const tinkatuff_1 = require("../set-paldea-evolved/tinkatuff");
 const kirlia_1 = require("../set-scarlet-and-violet/kirlia");
 const pawmi_1 = require("../set-scarlet-and-violet/pawmi");
 const wugtrio_1 = require("../set-scarlet-and-violet/wugtrio");
@@ -83,6 +82,7 @@ const clive_1 = require("./clive");
 const pawmo_1 = require("../set-scarlet-and-violet/pawmo");
 const pawmot_1 = require("../set-scarlet-and-violet/pawmot");
 const slowpoke_1 = require("../set-scarlet-and-violet/slowpoke");
+const tinkatuff_2_1 = require("../set-paldea-evolved/tinkatuff-2");
 class OddishSV extends oddish_1.Oddish {
     constructor() {
         super(...arguments);
@@ -434,7 +434,7 @@ class TinkatinkSV extends tinkatink_1.Tinkatink {
     }
 }
 exports.TinkatinkSV = TinkatinkSV;
-class TinkatuffSV extends tinkatuff_1.Tinkatuff {
+class TinkatuffSV extends tinkatuff_2_1.Tinkatuff2 {
     constructor() {
         super(...arguments);
         this.setNumber = '166';

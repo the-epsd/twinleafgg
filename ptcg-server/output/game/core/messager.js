@@ -11,7 +11,7 @@ class Messager {
         const message = new storage_1.Message();
         message.sender = client.user;
         message.created = time;
-        message.text = text;
+        message.text = text.replace(/[^\x00-\x7F]/g, '');
         await message.send(receiver);
         this.core.clients.forEach(c => {
             if (c.user.id === receiver.id) {

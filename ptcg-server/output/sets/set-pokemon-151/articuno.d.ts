@@ -25,10 +25,10 @@ export declare class Articuno extends PokemonCard {
         damage: number;
         text: string;
     }[];
-    set: string;
     regulationMark: string;
-    cardImage: string;
+    set: string;
     setNumber: string;
+    cardImage: string;
     name: string;
     fullName: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;

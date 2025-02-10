@@ -2,13 +2,13 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { PowerType, StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-export declare class GarchompUNM extends PokemonCard {
+export declare class Garchomp extends PokemonCard {
     stage: Stage;
     evolvesFrom: string;
     cardType: CardType;
     hp: number;
     weakness: {
-        type: CardType;
+        type: CardType.GRASS;
     }[];
     retreat: never[];
     powers: {
@@ -18,8 +18,9 @@ export declare class GarchompUNM extends PokemonCard {
     }[];
     attacks: {
         name: string;
-        cost: CardType[];
+        cost: (CardType.FIGHTING | CardType.COLORLESS)[];
         damage: number;
+        damageCalculation: string;
         text: string;
     }[];
     set: string;

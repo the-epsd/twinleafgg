@@ -7,8 +7,6 @@ export class EthansAdventure extends TrainerCard {
 
   public trainerType = TrainerType.SUPPORTER;
 
-  public tags = [CardTag.ETHANS];
-
   public regulationMark = 'I';
 
   public cardImage: string = 'assets/cardback.png';

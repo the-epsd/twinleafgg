@@ -1,12 +1,13 @@
 import { PokemonCard, Stage, CardType, CardTag, State, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { DISCARD_X_ENERGY_FROM_THIS_POKEMON, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../game/store/prefabs/costs';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class BlazikenV extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
-  public tags = [ CardTag.POKEMON_V, CardTag.RAPID_STRIKE ];
+  public tags = [CardTag.POKEMON_V, CardTag.RAPID_STRIKE];
 
   public cardType: CardType = CardType.FIRE;
 
@@ -44,7 +45,7 @@ export class BlazikenV extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      DISCARD_X_ENERGY_FROM_THIS_POKEMON(state, effect, store, CardType.COLORLESS, 2);
+      DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, 2);
     }
     return state;
   }

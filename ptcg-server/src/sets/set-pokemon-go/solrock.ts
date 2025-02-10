@@ -9,40 +9,31 @@ import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 export class Solrock extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
-
-  public regulationMark = 'F';
-
-  public cardType: CardType = CardType.FIGHTING;
-
+  public cardType: CardType = F;
   public hp: number = 90;
-
-  public weakness = [{ type: CardType.GRASS }];
-
-  public retreat = [CardType.COLORLESS];
+  public weakness = [{ type: G }];
+  public retreat = [C];
 
   public powers = [{
     name: 'Sun Energy',
     powerType: PowerType.ABILITY,
     useWhenInPlay: true,
-    text: 'Once during your turn, you may attach a P Energy card from your discard pile to 1 of your Lunatone.'
+    text: 'Once during your turn, you may attach a [P] Energy card from your discard pile to 1 of your Lunatone.'
   }];
 
   public attacks = [
     {
       name: 'Spinning Attack',
-      cost: [CardType.FIGHTING, CardType.COLORLESS],
+      cost: [F, C],
       damage: 50,
       text: ''
     }];
 
+  public regulationMark = 'F';
   public set: string = 'PGO';
-
-  public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '39';
-
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Solrock';
-
   public fullName: string = 'Solrock PGO';
 
   public readonly SUN_ENERGY_MARKER = 'SUN_ENERGY_MARKER';

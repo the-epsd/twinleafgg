@@ -36,35 +36,26 @@ function* useBugHunch(next: Function, store: StoreLike, state: State, effect: At
 export class WeedleVIV extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.GRASS;
-
+  public cardType: CardType = G;
   public hp: number = 40;
-
-  public weakness = [{ type: CardType.FIRE }];
-
-  public retreat = [CardType.COLORLESS];
-
-  public set = 'VIV';
-
-  public setNumber = '1';
-
-  public cardImage = 'assets/cardback.png';
-
-  public regulationMark: string = 'D';
-
-  public name = 'Weedle';
-
-  public fullName = 'Weedle VIV';
+  public weakness = [{ type: R }];
+  public retreat = [C];
 
   public attacks = [
     {
       name: 'Bug Hunch',
-      cost: [CardType.GRASS],
+      cost: [G],
       damage: 0,
-      text: 'Search your deck for up to 2 G Pokemon, reveal them, and put them into your hand. Then, shuffle your deck.'
+      text: 'Search your deck for up to 2 [G] Pokémon, reveal them, and put them into your hand. Then, shuffle your deck.'
     },
   ];
+
+  public regulationMark: string = 'D';
+  public set = 'VIV';
+  public setNumber = '1';
+  public cardImage = 'assets/cardback.png';
+  public name = 'Weedle';
+  public fullName = 'Weedle VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -73,7 +64,6 @@ export class WeedleVIV extends PokemonCard {
       const generator = useBugHunch(() => generator.next(), store, state, effect);
       return generator.next().value;
     }
-
     return state;
   }
 }

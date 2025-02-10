@@ -69,9 +69,9 @@ class Mela extends trainer_card_1.TrainerCard {
         this.regulationMark = 'G';
         this.name = 'Mela';
         this.fullName = 'Mela PAR';
-        this.text = 'You can use this card only if any of your Pokémon were Knocked Out during your opponent\'s last turn.' +
-            '' +
-            'Attach a Basic R Energy card from your discard pile to 1 of your Pokémon. If you do, draw cards until you have 6 cards in your hand.';
+        this.text = `You can use this card only if any of your Pokémon were Knocked Out during your opponent's last turn.
+
+Attach a Basic [R] Energy card from your discard pile to 1 of your Pokémon. If you do, draw cards until you have 6 cards in your hand.`;
         this.MELA_MARKER = 'MELA_MARKER';
     }
     reduceEffect(store, state, effect) {

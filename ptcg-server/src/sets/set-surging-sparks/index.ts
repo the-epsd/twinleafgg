@@ -1,4 +1,5 @@
 import { Card } from '../../game/store/card/card';
+import { Annihilape } from '../set-scarlet-and-violet/annihilape';
 import { AlolanDiglett } from './alolan-diglett';
 import { AlolanDugtrio } from './alolan-dugtrio';
 import { AlolanExeggutorex } from './alolan-exeggutor-ex';
@@ -203,6 +204,7 @@ export const setSurgingSparks: Card[] = [
   new Quaxly(),
   new Quaquaval(),
   new MeddlingMemo(),
+  new Annihilape(),
 
   // Reprints
   new ScrambleSwitchSSP(),

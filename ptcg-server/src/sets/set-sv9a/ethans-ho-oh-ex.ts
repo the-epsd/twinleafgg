@@ -87,7 +87,7 @@ export class EthansHoOhex extends PokemonCard {
       state = store.prompt(state, new AttachEnergyPrompt(
         player.id,
         GameMessage.ATTACH_ENERGY_TO_ACTIVE,
-        player.discard,
+        player.hand,
         PlayerType.BOTTOM_PLAYER,
         [SlotType.BENCH, SlotType.ACTIVE],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fire Energy' },
@@ -104,7 +104,7 @@ export class EthansHoOhex extends PokemonCard {
 
         for (const transfer of transfers) {
           const target = StateUtils.getTarget(state, player, transfer.to);
-          player.discard.moveCardTo(transfer.card, target);
+          player.hand.moveCardTo(transfer.card, target);
         }
 
         return state;

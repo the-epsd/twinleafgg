@@ -39,12 +39,12 @@ class GreninjaVUNIONBottomLeft extends pokemon_card_1.PokemonCard {
                 text: 'This attack does 100 damage to each of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
             },
         ];
-        this.set = 'SP';
+        this.set = 'SWSH';
         this.regulationMark = 'E';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '157';
         this.name = 'Greninja V-UNION';
-        this.fullName = 'Greninja V-UNION (Bottom Left) SP';
+        this.fullName = 'Greninja V-UNION (Bottom Left) SWSH';
     }
     reduceEffect(store, state, effect) {
         // assemblin the v-union

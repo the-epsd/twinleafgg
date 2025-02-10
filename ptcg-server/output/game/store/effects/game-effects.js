@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.EvolveEffect = exports.HealEffect = exports.KnockOutAttackEffect = exports.KnockOutEffect = exports.AttackEffect = exports.useToolEffect = exports.UseStadiumEffect = exports.UseAttackEffect = exports.TrainerPowerEffect = exports.PowerEffect = exports.UseTrainerPowerEffect = exports.UsePowerEffect = exports.RetreatEffect = exports.GameEffects = void 0;
+exports.DrawPrizesEffect = exports.EvolveEffect = exports.HealEffect = exports.KnockOutAttackEffect = exports.KnockOutEffect = exports.AttackEffect = exports.useToolEffect = exports.UseStadiumEffect = exports.UseAttackEffect = exports.TrainerPowerEffect = exports.PowerEffect = exports.UseTrainerPowerEffect = exports.UsePowerEffect = exports.RetreatEffect = exports.GameEffects = void 0;
 var GameEffects;
 (function (GameEffects) {
     GameEffects["RETREAT_EFFECT"] = "RETREAT_EFFECT";
@@ -12,6 +12,7 @@ var GameEffects;
     GameEffects["KNOCK_OUT_EFFECT"] = "KNOCK_OUT_EFFECT";
     GameEffects["HEAL_EFFECT"] = "HEAL_EFFECT";
     GameEffects["EVOLVE_EFFECT"] = "EVOLVE_EFFECT";
+    GameEffects["DRAW_PRIZES_EFFECT"] = "DRAW_PRIZES_EFFECT";
 })(GameEffects = exports.GameEffects || (exports.GameEffects = {}));
 class RetreatEffect {
     constructor(player, benchIndex) {
@@ -151,3 +152,13 @@ class EvolveEffect {
     }
 }
 exports.EvolveEffect = EvolveEffect;
+class DrawPrizesEffect {
+    constructor(player, prizes, destination) {
+        this.type = GameEffects.DRAW_PRIZES_EFFECT;
+        this.preventDefault = false;
+        this.player = player;
+        this.prizes = prizes;
+        this.destination = destination;
+    }
+}
+exports.DrawPrizesEffect = DrawPrizesEffect;

@@ -39,32 +39,32 @@ class Manaphy extends pokemon_card_1.PokemonCard {
         if (effect instanceof attack_effects_1.PutDamageEffect) {
             const player = effect.player;
             const opponent = state_utils_1.StateUtils.getOpponent(state, player);
-            if (effect.target === player.active || effect.target === opponent.active) {
-                return state;
-            }
             const targetPlayer = state_utils_1.StateUtils.findOwner(state, effect.target);
-            let isManaphyInPlay = false;
-            targetPlayer.forEachPokemon(play_card_action_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-                if (card === this) {
-                    isManaphyInPlay = true;
+            // Only check benched Pokemon
+            if (effect.target !== player.active && effect.target !== opponent.active) {
+                let isManaphyInPlay = false;
+                targetPlayer.forEachPokemon(play_card_action_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+                    if (card === this) {
+                        isManaphyInPlay = true;
+                    }
+                });
+                if (isManaphyInPlay) {
+                    // Try to reduce PowerEffect, to check if something is blocking our ability
+                    try {
+                        const stub = new game_effects_1.PowerEffect(player, {
+                            name: 'test',
+                            powerType: pokemon_types_1.PowerType.ABILITY,
+                            text: ''
+                        }, this);
+                        store.reduceEffect(state, stub);
+                        // Prevent damage only to benched Pokemon
+                        effect.preventDefault = true;
+                    }
+                    catch (_a) {
+                        return state;
+                    }
                 }
-            });
-            if (!isManaphyInPlay) {
-                return state;
             }
-            // Try to reduce PowerEffect, to check if something is blocking our ability
-            try {
-                const stub = new game_effects_1.PowerEffect(player, {
-                    name: 'test',
-                    powerType: pokemon_types_1.PowerType.ABILITY,
-                    text: ''
-                }, this);
-                store.reduceEffect(state, stub);
-            }
-            catch (_a) {
-                return state;
-            }
-            effect.preventDefault = true;
         }
         return state;
     }

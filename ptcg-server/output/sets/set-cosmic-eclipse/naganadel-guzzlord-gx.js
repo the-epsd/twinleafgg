@@ -90,11 +90,7 @@ class NaganadelGuzzlordGX extends pokemon_card_1.PokemonCard {
             if (!meetsExtraEffectCost) {
                 return state;
             } // If we don't have the extra energy, we just deal damage.
-            return store.prompt(state, new game_1.ChoosePrizePrompt(player.id, game_1.GameMessage.CHOOSE_PRIZE_CARD, { count: 2, allowCancel: false }), prizes => {
-                for (const prize of prizes) {
-                    prize.moveTo(player.hand);
-                }
-            });
+            return prefabs_1.TAKE_X_PRIZES(store, state, player, 2);
         }
         if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.VIOLENT_APPETITE_MARKER, this)) {
             effect.player.marker.removeMarker(this.VIOLENT_APPETITE_MARKER, this);

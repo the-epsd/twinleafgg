@@ -33,7 +33,7 @@ class Electrode extends pokemon_card_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '2';
         this.name = 'Electrode';
-        this.fullName = 'Electrode FO';
+        this.fullName = 'Electrode JU';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {

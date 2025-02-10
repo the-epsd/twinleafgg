@@ -34,7 +34,7 @@ class ArmarougeEX extends pokemon_card_1.PokemonCard {
         this.set = 'PAR';
         this.setNumber = '27';
         this.cardImage = 'assets/cardback.png';
-        this.regulationMark = 'D';
+        this.regulationMark = 'G';
         this.name = 'Armarouge ex';
         this.fullName = 'Armarouge ex PAR';
     }

@@ -1,19 +1,14 @@
 import { CardTag, CardType, PokemonCard, PowerType, Stage, State, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-export declare class KeldeoGXUNM extends PokemonCard {
-    tags: CardTag[];
+export declare class KeldeoGX extends PokemonCard {
     stage: Stage;
+    tags: CardTag[];
     cardType: CardType;
     hp: number;
     weakness: {
-        type: CardType;
+        type: CardType.GRASS;
     }[];
-    retreat: CardType[];
-    set: string;
-    setNumber: string;
-    cardImage: string;
-    name: string;
-    fullName: string;
+    retreat: CardType.COLORLESS[];
     powers: {
         name: string;
         powerType: PowerType;
@@ -21,9 +16,14 @@ export declare class KeldeoGXUNM extends PokemonCard {
     }[];
     attacks: {
         name: string;
-        cost: CardType[];
+        cost: (CardType.WATER | CardType.COLORLESS)[];
         damage: number;
         text: string;
     }[];
+    set: string;
+    setNumber: string;
+    cardImage: string;
+    name: string;
+    fullName: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

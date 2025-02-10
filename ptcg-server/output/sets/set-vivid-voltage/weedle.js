@@ -23,24 +23,24 @@ class WeedleVIV extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = game_1.Stage.BASIC;
-        this.cardType = game_1.CardType.GRASS;
+        this.cardType = G;
         this.hp = 40;
-        this.weakness = [{ type: game_1.CardType.FIRE }];
-        this.retreat = [game_1.CardType.COLORLESS];
-        this.set = 'VIV';
-        this.setNumber = '1';
-        this.cardImage = 'assets/cardback.png';
-        this.regulationMark = 'D';
-        this.name = 'Weedle';
-        this.fullName = 'Weedle VIV';
+        this.weakness = [{ type: R }];
+        this.retreat = [C];
         this.attacks = [
             {
                 name: 'Bug Hunch',
-                cost: [game_1.CardType.GRASS],
+                cost: [G],
                 damage: 0,
-                text: 'Search your deck for up to 2 G Pokemon, reveal them, and put them into your hand. Then, shuffle your deck.'
+                text: 'Search your deck for up to 2 [G] Pokémon, reveal them, and put them into your hand. Then, shuffle your deck.'
             },
         ];
+        this.regulationMark = 'D';
+        this.set = 'VIV';
+        this.setNumber = '1';
+        this.cardImage = 'assets/cardback.png';
+        this.name = 'Weedle';
+        this.fullName = 'Weedle VIV';
     }
     reduceEffect(store, state, effect) {
         // Bug Hunch

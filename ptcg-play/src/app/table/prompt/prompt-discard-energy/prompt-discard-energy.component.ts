@@ -30,11 +30,10 @@ export class PromptDiscardEnergyComponent implements OnInit {
   public filter: FilterType;
   public max: number | undefined;
   public allowedCancel: boolean;
-
+  private originalCardState = new Map<PokemonItem, Card[]>();
+  public tempDiscardPile: Card[] = [];
   private selectedEnergies: DiscardEnergyResult[] = [];
-  private availableEnergyCards = new Map<PokemonItem, Card[]>();
-  private selectedEnergyCards = new Map<PokemonItem, Card[]>();
-  private energySelectionsMap = new Map<string, DiscardEnergyResult[]>();
+  private selectedCards = new Set<Card>();
 
   constructor(private gameService: GameService) { }
 
@@ -58,102 +57,86 @@ export class PromptDiscardEnergyComponent implements OnInit {
     this.max = this.prompt.options.max;
     this.allowedCancel = this.prompt.options.allowCancel;
 
-    // Log 1: Available energy validation
+    // Store initial card states
     this.pokemonData.getRows().forEach(row => {
       row.items.forEach(item => {
-        const energyCards = item.cardList.cards.filter(
-          card => card.superType === SuperType.ENERGY
-        );
-        console.log('Available energy cards for Pokemon:', item.target, energyCards);
-        if (energyCards.length > 0) {
-          this.availableEnergyCards.set(item, [...energyCards]);
-        }
+        this.originalCardState.set(item, [...item.cardList.cards]);
       });
     });
   }
 
   public onCardClick(item: PokemonItem): void {
-    // Store current selections before switching Pokemon
     if (this.selectedItem) {
-      const key = `${this.selectedItem.target.player}-${this.selectedItem.target.slot}-${this.selectedItem.target.index}`;
-      this.energySelectionsMap.set(key, [...this.selectedEnergies]);
       this.selectedItem.selected = false;
     }
 
     this.selectedItem = item;
     this.selectedItem.selected = true;
 
-    // Restore previous selections for this Pokemon if they exist
-    const key = `${item.target.player}-${item.target.slot}-${item.target.index}`;
-    const previousSelections = this.energySelectionsMap.get(key) || [];
-    this.selectedEnergies = [...previousSelections];
-    this.results = [...this.selectedEnergies];
-
-    this.currentPokemonCards = item.cardList.cards.filter(card =>
-      card.superType === SuperType.ENERGY &&
-      !this.selectedEnergies.some(selected => selected.card === card)
+    // Filter out already selected cards from the viewport
+    this.currentPokemonCards = item.cardList.cards.filter(
+      card => card.superType === SuperType.ENERGY &&
+        !this.selectedCards.has(card)
     );
-
-    this.validateSelection();
   }
 
   public onChange(indices: number[]): void {
     if (!this.selectedItem) return;
 
-    // Use Set to ensure unique selections
-    const uniqueIndices = [...new Set(indices)];
-    const newSelections = uniqueIndices
-      .map(index => this.currentPokemonCards[index])
-      .filter(card => card.superType === SuperType.ENERGY)
-      .map(card => ({
-        from: this.selectedItem!,
-        card,
-        container: this.cardsContainer
-      }));
+    const selectedFromCurrentPokemon = indices.map(i => this.currentPokemonCards[i]);
 
-    // Store in map for this Pokemon
-    const key = `${this.selectedItem.target.player}-${this.selectedItem.target.slot}-${this.selectedItem.target.index}`;
-    this.energySelectionsMap.set(key, newSelections);
+    // Update global selection set
+    selectedFromCurrentPokemon.forEach(card => this.selectedCards.add(card));
 
-    // Update current selections
-    this.selectedEnergies = Array.from(this.energySelectionsMap.values()).flat();
-    this.results = [...this.selectedEnergies];
+    // Update results with all selected cards
+    this.results = Array.from(this.selectedCards).map(card => ({
+      from: this.findPokemonForCard(card),
+      card,
+      container: this.cardsContainer
+    }));
 
     this.validateSelection();
   }
 
-  private validateSelection(): void {
-    if (this.prompt.options.min === 0 && !this.selectedItem) {
-      this.isInvalid = false;
-      return;
-    }
+  private findPokemonForCard(card: Card): PokemonItem {
+    return this.pokemonData.getRows()
+      .flatMap(row => row.items)
+      .find(item => item.cardList.cards.includes(card))!;
+  }
 
-    const totalSelected = this.selectedEnergies.length;
-    const selectedTransfers = this.selectedEnergies.map(result => ({
+  private validateSelection(): void {
+    const selectedCards = this.results.map(result => ({
       from: result.from.target,
       to: null,
       card: result.card
     }));
 
-    this.isInvalid =
-      (this.prompt.options.min > 0 && totalSelected < this.prompt.options.min) ||
-      (this.prompt.options.max !== undefined && totalSelected > this.prompt.options.max) ||
-      !this.prompt.validate(selectedTransfers);
+    this.isInvalid = !this.prompt.validate(selectedCards);
   }
 
   public reset(): void {
-    this.selectedEnergies = [];
+    // Clear all selections
+    this.selectedCards.clear();
     this.results = [];
-    this.selectedItem = undefined;
 
+    // Restore original card lists for all Pokemon
     this.pokemonData.getRows().forEach(row => {
       row.items.forEach(item => {
         item.selected = false;
+        item.cardList.cards = [...this.originalCardState.get(item)!];
       });
     });
 
+    // Update current Pokemon's cards if one is selected
+    if (this.selectedItem) {
+      this.currentPokemonCards = this.selectedItem.cardList.cards.filter(
+        card => card.superType === SuperType.ENERGY
+      );
+    }
+
     this.validateSelection();
   }
+
 
   public confirm(): void {
     // Log 4: Final validation and confirmation

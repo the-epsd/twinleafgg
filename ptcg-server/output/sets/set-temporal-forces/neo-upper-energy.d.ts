@@ -7,10 +7,10 @@ export declare class NeoUpperEnergy extends EnergyCard {
     provides: CardType[];
     tags: CardTag[];
     energyType: EnergyType;
-    set: string;
     regulationMark: string;
-    cardImage: string;
+    set: string;
     setNumber: string;
+    cardImage: string;
     name: string;
     fullName: string;
     text: string;

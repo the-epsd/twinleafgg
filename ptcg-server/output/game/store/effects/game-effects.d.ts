@@ -16,7 +16,8 @@ export declare enum GameEffects {
     ATTACK_EFFECT = "ATTACK_EFFECT",
     KNOCK_OUT_EFFECT = "KNOCK_OUT_EFFECT",
     HEAL_EFFECT = "HEAL_EFFECT",
-    EVOLVE_EFFECT = "EVOLVE_EFFECT"
+    EVOLVE_EFFECT = "EVOLVE_EFFECT",
+    DRAW_PRIZES_EFFECT = "DRAW_PRIZES_EFFECT"
 }
 export declare class RetreatEffect implements Effect {
     readonly type: string;
@@ -102,6 +103,7 @@ export declare class KnockOutEffect implements Effect {
     player: Player;
     target: PokemonCardList;
     prizeCount: number;
+    prizeDestination?: CardList;
     isLostCity: boolean;
     constructor(player: Player, target: PokemonCardList);
 }
@@ -129,5 +131,13 @@ export declare class EvolveEffect implements Effect {
     target: PokemonCardList;
     pokemonCard: PokemonCard;
     constructor(player: Player, target: PokemonCardList, pokemonCard: PokemonCard);
+}
+export declare class DrawPrizesEffect implements Effect {
+    readonly type: string;
+    preventDefault: boolean;
+    player: Player;
+    prizes: CardList[];
+    destination: CardList;
+    constructor(player: Player, prizes: CardList[], destination: CardList);
 }
 export { Effect };

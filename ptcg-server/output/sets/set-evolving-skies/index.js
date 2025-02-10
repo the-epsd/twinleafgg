@@ -6,6 +6,7 @@ const cryogonal_1 = require("./cryogonal");
 const crystal_cave_1 = require("./crystal-cave");
 const dragonite_v_1 = require("./dragonite-v");
 const drampa_1 = require("./drampa");
+const dream_ball_1 = require("./dream-ball");
 const duraludon_v_1 = require("./duraludon-v");
 const duraludon_vmax_1 = require("./duraludon-vmax");
 const espeon_v_1 = require("./espeon-v");
@@ -51,6 +52,7 @@ exports.setEvolvingSkies = [
     new crystal_cave_1.CrystalCave(),
     new dragonite_v_1.DragoniteV(),
     new drampa_1.Drampa(),
+    new dream_ball_1.DreamBall(),
     new duraludon_v_1.DuraludonV(),
     new duraludon_vmax_1.DuraludonVMAX(),
     new espeon_v_1.EspeonV(),

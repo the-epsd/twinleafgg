@@ -13,30 +13,27 @@ class Cherrim extends pokemon_card_1.PokemonCard {
         this.stage = card_types_1.Stage.STAGE_1;
         this.regulationMark = 'E';
         this.evolvesFrom = 'Cherubi';
-        this.cardType = card_types_1.CardType.GRASS;
+        this.cardType = G;
         this.hp = 80;
-        this.weakness = [{ type: card_types_1.CardType.FIRE }];
-        this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
+        this.weakness = [{ type: R }];
+        this.retreat = [C, C];
         this.powers = [{
                 name: 'Spring Bloom',
                 useWhenInPlay: true,
                 powerType: game_1.PowerType.ABILITY,
-                text: 'As often as you like during your turn, you may attach a ' +
-                    'G Energy card from your hand to 1 of your Pokémon ' +
-                    'that doesn\'t have a Rule Box (Pokémon V, Pokémon-GX, ' +
-                    'etc. have Rule Boxes).'
+                text: 'As often as you like during your turn, you may attach a [G] Energy card from your hand to 1 of your Pokémon that doesn\'t have a Rule Box(Pokémon V, Pokémon- GX, etc.have Rule Boxes).'
             }];
         this.attacks = [
             {
                 name: 'Seed Bomb',
-                cost: [card_types_1.CardType.GRASS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
+                cost: [G, C, C],
                 damage: 70,
                 text: ''
             }
         ];
         this.set = 'BST';
-        this.cardImage = 'assets/cardback.png';
         this.setNumber = '8';
+        this.cardImage = 'assets/cardback.png';
         this.name = 'Cherrim';
         this.fullName = 'Cherrim BST';
     }

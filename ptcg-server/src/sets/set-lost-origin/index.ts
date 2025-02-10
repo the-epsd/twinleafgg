@@ -1,7 +1,9 @@
 import { Card } from '../../game/store/card/card';
 import { Arezu } from './arezu';
 import { Banette } from './banette';
+import { Barbaracle } from './barbaracle';
 import { Beautifly } from './beautifly';
+import { Binacle } from './binacle';
 import { Bouffalant } from './bouffalant';
 import { BoxOfDisaster } from './box-of-disaster';
 import { ColresssExperiment } from './colress\'s-experiment';
@@ -60,7 +62,9 @@ import { Wurmple } from './wurmple';
 export const setLostOrigin: Card[] = [
 
   new Banette(),
+  new Barbaracle(),
   new Beautifly(),
+  new Binacle(),
   new Bouffalant(),
   new ColresssExperiment(),
   new Comfey(),

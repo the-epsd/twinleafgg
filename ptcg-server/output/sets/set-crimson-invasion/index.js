@@ -9,6 +9,7 @@ const gladion_1 = require("./gladion");
 const kartana_gx_1 = require("./kartana-gx");
 const lusamine_1 = require("./lusamine");
 const misdreavus_1 = require("./misdreavus");
+const weedle_1 = require("./weedle");
 const xerneas_1 = require("./xerneas");
 exports.setCrimsonInvasion = [
     new buzzwole_gx_1.BuzzwoleGX(),
@@ -19,5 +20,6 @@ exports.setCrimsonInvasion = [
     new kartana_gx_1.KartanaGX(),
     new lusamine_1.Lusamine(),
     new misdreavus_1.Misdreavus(),
-    new xerneas_1.Xerneas()
+    new weedle_1.Weedle(),
+    new xerneas_1.Xerneas(),
 ];

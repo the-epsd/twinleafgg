@@ -30,7 +30,9 @@ function* useStadium(next, store, state, effect) {
             cards = selectedCards || [];
             // Operation canceled by the user
             if (cards.length === 0) {
-                return state;
+                return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
+                    player.deck.applyOrder(order);
+                });
             }
             if (cards[0].tags.includes(card_types_1.CardTag.POKEMON_V) ||
                 cards[0].tags.includes(card_types_1.CardTag.POKEMON_VSTAR) ||

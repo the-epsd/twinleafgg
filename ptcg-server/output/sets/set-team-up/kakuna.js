@@ -1,32 +1,39 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.KakunaTEU = void 0;
+exports.Kakuna = void 0;
 const game_1 = require("../../game");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const check_effects_1 = require("../../game/store/effects/check-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
-class KakunaTEU extends game_1.PokemonCard {
+class Kakuna extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = game_1.Stage.STAGE_1;
         this.evolvesFrom = 'Weedle';
-        this.cardType = game_1.CardType.GRASS;
+        this.cardType = G;
         this.hp = 80;
-        this.weakness = [{ type: game_1.CardType.FIRE }];
-        this.retreat = [game_1.CardType.COLORLESS, game_1.CardType.COLORLESS, game_1.CardType.COLORLESS];
+        this.weakness = [{ type: R }];
+        this.retreat = [C, C, C];
+        this.powers = [
+            {
+                name: 'Grass Cushion',
+                powerType: game_1.PowerType.ABILITY,
+                text: 'If this Pokémon has any [G] Energy attached to it, it takes 30 less damage from attacks (after applying Weakness and Resistance).'
+            }
+        ];
+        this.attacks = [
+            {
+                name: 'Bug Bite',
+                cost: [C, C],
+                damage: 20,
+                text: ''
+            }
+        ];
         this.set = 'TEU';
         this.setNumber = '4';
         this.cardImage = 'assets/cardback.png';
         this.name = 'Kakuna';
         this.fullName = 'Kakuna TEU';
-        this.powers = [
-            {
-                name: 'Grass Cushion',
-                powerType: game_1.PowerType.ABILITY,
-                text: 'If this Pokemon has any G Energy attached to it, it takes 30 less damage from attacks (after applying Weakness and Resistance).'
-            }
-        ];
-        this.attacks = [{ name: 'Bug Bite', cost: [game_1.CardType.COLORLESS, game_1.CardType.COLORLESS], damage: 20, text: '' }];
     }
     reduceEffect(store, state, effect) {
         // Grass Cushion
@@ -58,4 +65,4 @@ class KakunaTEU extends game_1.PokemonCard {
         return state;
     }
 }
-exports.KakunaTEU = KakunaTEU;
+exports.Kakuna = Kakuna;

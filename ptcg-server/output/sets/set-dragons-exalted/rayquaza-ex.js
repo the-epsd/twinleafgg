@@ -12,27 +12,25 @@ const attack_effects_1 = require("../../game/store/effects/attack-effects");
 class RayquazaEx extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.tags = [card_types_1.CardTag.POKEMON_EX];
         this.stage = card_types_1.Stage.BASIC;
-        this.cardType = card_types_1.CardType.DRAGON;
+        this.tags = [card_types_1.CardTag.POKEMON_EX];
+        this.cardType = N;
         this.hp = 170;
-        this.weakness = [{ type: card_types_1.CardType.DRAGON }];
-        this.retreat = [card_types_1.CardType.COLORLESS];
+        this.weakness = [{ type: N }];
+        this.retreat = [C];
         this.attacks = [
             {
                 name: 'Celestial Roar',
-                cost: [card_types_1.CardType.COLORLESS],
+                cost: [C],
                 damage: 0,
-                text: 'Discard the top 3 cards of your deck. If any of those cards ' +
-                    'are Energy cards, attach them to this Pokemon.'
+                text: 'Discard the top 3 cards of your deck. If any of those cards are Energy cards, attach them to this Pokémon.'
             },
             {
                 name: 'Dragon Burst',
-                cost: [card_types_1.CardType.FIRE, card_types_1.CardType.LIGHTNING],
+                cost: [R, L],
                 damage: 60,
-                text: 'Discard all basic R Energy or all basic L Energy attached to ' +
-                    'this Pokemon. This attack does 60 damage times the number of Energy ' +
-                    'cards you discarded.'
+                damageCalculation: 'x',
+                text: 'Discard all basic [R] Energy or all basic [L] Energy attached to this Pokémon. This attack does 60 damage times the number of Energy cards you discarded.'
             }
         ];
         this.set = 'DRX';

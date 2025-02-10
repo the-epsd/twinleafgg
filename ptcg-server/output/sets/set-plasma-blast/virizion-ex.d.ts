@@ -3,18 +3,18 @@ import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, PowerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 export declare class VirizionEx extends PokemonCard {
-    tags: CardTag[];
     stage: Stage;
+    tags: CardTag[];
     cardType: CardType;
     hp: number;
     weakness: {
-        type: CardType;
+        type: CardType.FIRE;
     }[];
     resistance: {
-        type: CardType;
+        type: CardType.WATER;
         value: number;
     }[];
-    retreat: CardType[];
+    retreat: CardType.COLORLESS[];
     powers: {
         name: string;
         powerType: PowerType;
@@ -22,14 +22,14 @@ export declare class VirizionEx extends PokemonCard {
     }[];
     attacks: {
         name: string;
-        cost: CardType[];
+        cost: (CardType.GRASS | CardType.COLORLESS)[];
         damage: number;
         text: string;
     }[];
     set: string;
+    setNumber: string;
+    cardImage: string;
     name: string;
     fullName: string;
-    cardImage: string;
-    setNumber: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

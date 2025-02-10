@@ -7,13 +7,14 @@ export declare class Exeggcute extends PokemonCard {
     cardType: CardType;
     hp: number;
     weakness: {
-        type: CardType;
+        type: CardType.FIRE;
     }[];
-    retreat: CardType[];
+    retreat: CardType.COLORLESS[];
     attacks: {
         name: string;
-        cost: CardType[];
+        cost: CardType.COLORLESS[];
         damage: number;
+        canUseOnFirstTurn: boolean;
         text: string;
     }[];
     set: string;

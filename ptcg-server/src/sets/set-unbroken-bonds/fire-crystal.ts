@@ -8,6 +8,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { DiscardToHandEffect, TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { EnergyCard } from '../../game/store/card/energy-card';
+import { WAS_TRAINER_USED } from '../../game/store/prefabs/trainer-prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -50,23 +51,18 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 export class FireCrystal extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
-
   public set: string = 'UNB';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '173';
-
   public name: string = 'Fire Crystal';
-
   public fullName: string = 'Fire Crystal UNB';
 
   public text: string =
-    'Put 3 R Energy cards from your discard pile into your hand.';
+    'Put 3 [R] Energy cards from your discard pile into your hand.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
 
+    if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
 
       // Check if DiscardToHandEffect is prevented
@@ -82,8 +78,6 @@ export class FireCrystal extends TrainerCard {
       const generator = playCard(() => generator.next(), store, state, effect);
       return generator.next().value;
     }
-
     return state;
   }
-
 }

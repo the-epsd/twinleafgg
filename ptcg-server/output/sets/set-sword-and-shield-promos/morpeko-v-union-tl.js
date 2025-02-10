@@ -54,12 +54,12 @@ class MorpekoVUNIONTopLeft extends pokemon_card_1.PokemonCard {
                 text: ''
             }
         ];
-        this.set = 'SP';
+        this.set = 'SWSH';
         this.regulationMark = 'E';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '216';
+        this.setNumber = '215';
         this.name = 'Morpeko V-UNION';
-        this.fullName = 'Morpeko V-UNION (Top Left) SP';
+        this.fullName = 'Morpeko V-UNION (Top Left) SWSH';
     }
     reduceEffect(store, state, effect) {
         // assemblin the v-union

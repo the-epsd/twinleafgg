@@ -1,13 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SHUFFLE_DECK = exports.TRAINER_SHOW_OPPONENT_CARDS = exports.DISCARD_X_CARDS_FROM_YOUR_HAND = void 0;
+exports.SHUFFLE_DECK = exports.TRAINER_SHOW_OPPONENT_CARDS = exports.DISCARD_X_CARDS_FROM_YOUR_HAND = exports.WAS_TRAINER_USED = void 0;
 const game_error_1 = require("../../game-error");
 const game_message_1 = require("../../game-message");
 const card_1 = require("../card/card");
+const play_card_effects_1 = require("../effects/play-card-effects");
 const choose_cards_prompt_1 = require("../prompts/choose-cards-prompt");
 const show_cards_prompt_1 = require("../prompts/show-cards-prompt");
 const shuffle_prompt_1 = require("../prompts/shuffle-prompt");
 const state_utils_1 = require("../state-utils");
+function WAS_TRAINER_USED(effect, card) {
+    return effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === card;
+}
+exports.WAS_TRAINER_USED = WAS_TRAINER_USED;
 function DISCARD_X_CARDS_FROM_YOUR_HAND(effect, store, state, minAmount, maxAmount) {
     const player = effect.player;
     let cards = [];

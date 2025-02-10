@@ -8,9 +8,9 @@ export declare class Emboar extends PokemonCard {
     cardType: CardType;
     hp: number;
     weakness: {
-        type: CardType;
+        type: CardType.WATER;
     }[];
-    retreat: CardType[];
+    retreat: CardType.COLORLESS[];
     powers: {
         name: string;
         useWhenInPlay: boolean;
@@ -19,7 +19,7 @@ export declare class Emboar extends PokemonCard {
     }[];
     attacks: {
         name: string;
-        cost: CardType[];
+        cost: (CardType.FIRE | CardType.COLORLESS)[];
         damage: number;
         text: string;
     }[];

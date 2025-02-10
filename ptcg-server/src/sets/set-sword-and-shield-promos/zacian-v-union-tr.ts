@@ -34,12 +34,12 @@ export class ZacianVUNIONTopRight extends PokemonCard {
     }
   ];
 
-  public set: string = 'SP';
+  public set: string = 'SWSH';
   public regulationMark = 'E';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '164';
   public name: string = 'Zacian V-UNION';
-  public fullName: string = 'Zacian V-UNION (Top Right) SP';
+  public fullName: string = 'Zacian V-UNION (Top Right) SWSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // assemblin the v-union

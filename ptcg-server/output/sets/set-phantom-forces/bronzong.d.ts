@@ -10,13 +10,13 @@ export declare class Bronzong extends PokemonCard {
     cardType: CardType;
     hp: number;
     weakness: {
-        type: CardType;
+        type: CardType.FIRE;
     }[];
     resistance: {
-        type: CardType;
+        type: CardType.PSYCHIC;
         value: number;
     }[];
-    retreat: CardType[];
+    retreat: CardType.COLORLESS[];
     powers: {
         name: string;
         useWhenInPlay: boolean;
@@ -25,15 +25,15 @@ export declare class Bronzong extends PokemonCard {
     }[];
     attacks: {
         name: string;
-        cost: CardType[];
+        cost: (CardType.METAL | CardType.COLORLESS)[];
         damage: number;
         text: string;
     }[];
     set: string;
+    setNumber: string;
+    cardImage: string;
     name: string;
     fullName: string;
-    cardImage: string;
-    setNumber: string;
     readonly METAL_LINKS_MARKER = "METAL_LINKS_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

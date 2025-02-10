@@ -85,12 +85,14 @@ export class Player {
   pecharuntexIsInPlay = false;
   usedFanCall = false;
   canEvolve = false;
-  canAttackFirstTurn = false;
 
 
   //GX-Attack Dedicated Section
   public usedAlteredCreation: boolean = false;
   public alteredCreationDamage: boolean = false;
+
+  // Taken prize cards ("taken" means "moved to the player's hand")
+  prizesTaken: number = 0;
 
   getPrizeLeft(): number {
     return this.prizes.reduce((left, p) => left + p.cards.length, 0);

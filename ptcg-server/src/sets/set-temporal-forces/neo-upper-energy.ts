@@ -9,27 +9,18 @@ import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effect
 export class NeoUpperEnergy extends EnergyCard {
 
   public provides: CardType[] = [CardType.COLORLESS];
-
   public tags = [CardTag.ACE_SPEC];
-
   public energyType = EnergyType.SPECIAL;
-
-  public set: string = 'TEF';
-
   public regulationMark = 'H';
-
-  public cardImage: string = 'assets/cardback.png';
-
+  public set: string = 'TEF';
   public setNumber: string = '162';
-
+  public cardImage: string = 'assets/cardback.png';
   public name = 'Neo Upper Energy';
-
   public fullName = 'Neo Upper Energy TEF';
 
-  public text =
-    'As long as this card is attached to a Pokémon, it provides C Energy.' +
-    '' +
-    'If this card is attached to a Stage 2 Pokémon, this card provides every type of Energy but provides only 2 Energy at a time instead.';
+  public text = `As long as this card is attached to a Pokémon, it provides [C] Energy.
+
+If this card is attached to a Stage 2 Pokémon, this card provides every type of Energy but provides only 2 Energy at a time.`;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {

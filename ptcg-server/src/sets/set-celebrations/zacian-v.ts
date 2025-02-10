@@ -9,47 +9,34 @@ import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class ZacianV extends PokemonCard {
 
-  public tags = [ CardTag.POKEMON_V ];
-
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.PSYCHIC;
-
+  public tags = [CardTag.POKEMON_V];
+  public cardType: CardType = P;
   public hp: number = 220;
-
-  public weakness = [{ type: CardType.METAL }];
-
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public weakness = [{ type: M }];
+  public retreat = [C, C];
 
   public powers = [{
     name: 'Roar of the Sword',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
-    text: 'Once during your turn, you may search your deck for a ' +
-      'P Energy card and attach it to 1 of your Pokémon. Then,' +
-      'shuffle your deck. If you use this Ability, your turn ends.'
+    text: 'Once during your turn, you may search your deck for a [P] Energy card and attach it to 1 of your Pokémon. Then, shuffle your deck. If you use this Ability, your turn ends.'
   }];
 
   public attacks = [
     {
       name: 'Storm Slash',
-      cost: [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [C, C, C],
       damage: 60,
-      text: 'This attack does 30 more damage for each [P] Energy ' +
-      'attached to this Pokémon.'
+      text: 'This attack does 30 more damage for each [P] Energy attached to this Pokémon.'
     }
   ];
 
-  public set: string = 'CEL';
-
-  public cardImage: string = 'assets/cardback.png';
-
-  public setNumber: string = '16';
-
   public regulationMark = 'E';
-
+  public set: string = 'CEL';
+  public setNumber: string = '16';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Zacian V';
-
   public fullName: string = 'Zacian V CEL';
 
   public readonly RUSH_IN_MARKER = 'RUSH_IN_MARKER';
@@ -65,7 +52,7 @@ export class ZacianV extends PokemonCard {
         GameMessage.ATTACH_ENERGY_TO_BENCH,
         player.deck,
         PlayerType.BOTTOM_PLAYER,
-        [ SlotType.BENCH, SlotType.ACTIVE ],
+        [SlotType.BENCH, SlotType.ACTIVE],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Psychic Energy' },
         { allowCancel: true, min: 0, max: 1 },
       ), transfers => {
@@ -82,7 +69,7 @@ export class ZacianV extends PokemonCard {
           player.deck.applyOrder(order);
         });
       });
-      
+
       const endTurnEffect = new EndTurnEffect(player);
       store.reduceEffect(state, endTurnEffect);
       return state;

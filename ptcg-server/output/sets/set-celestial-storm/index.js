@@ -10,6 +10,7 @@ const dhelmise_1 = require("./dhelmise");
 const electrode_gx_1 = require("./electrode-gx");
 const fisherman_1 = require("./fisherman");
 const hustle_belt_1 = require("./hustle-belt");
+const jirachi_prism_star_1 = require("./jirachi-prism-star");
 const last_chance_potion_1 = require("./last-chance-potion");
 const magcargo_1 = require("./magcargo");
 const marshtomp_1 = require("./marshtomp");
@@ -36,6 +37,7 @@ exports.setCelestialStorm = [
     new electrode_gx_1.ElectrodeGX(),
     new fisherman_1.Fisherman(),
     new hustle_belt_1.HustleBelt(),
+    new jirachi_prism_star_1.JirachiPrismStar(),
     new last_chance_potion_1.LastChancePotion(),
     new magcargo_1.Magcargo(),
     new marshtomp_1.Marshtomp(),

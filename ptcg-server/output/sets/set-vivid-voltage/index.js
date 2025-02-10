@@ -12,6 +12,7 @@ const coating_metal_energy_1 = require("./coating-metal-energy");
 const dhelmise_1 = require("./dhelmise");
 const donphan_1 = require("./donphan");
 const duraludon_1 = require("./duraludon");
+const full_art_1 = require("./full-art");
 const jirachi_1 = require("./jirachi");
 const leon_1 = require("./leon");
 const magearna_1 = require("./magearna");
@@ -23,6 +24,7 @@ const slugma_1 = require("./slugma");
 const snorlax_1 = require("./snorlax");
 const stone_fighting_energy_1 = require("./stone-fighting-energy");
 const taillow_1 = require("./taillow");
+const talonflame_v_1 = require("./talonflame-v");
 const wailmer_1 = require("./wailmer");
 const wailord_1 = require("./wailord");
 const wash_water_energy_1 = require("./wash-water-energy");
@@ -51,9 +53,12 @@ exports.setVividVoltage = [
     new snorlax_1.Snorlax(),
     new stone_fighting_energy_1.StoneFightingEnergy(),
     new taillow_1.Taillow(),
+    new talonflame_v_1.TalonflameV(),
     new wailmer_1.Wailmer(),
     new wailord_1.Wailord(),
     new wash_water_energy_1.WashWaterEnergy(),
     new weedle_1.WeedleVIV(),
-    new zekrom_1.Zekrom()
+    new zekrom_1.Zekrom(),
+    // Full art
+    new full_art_1.TalonflameVFA(),
 ];

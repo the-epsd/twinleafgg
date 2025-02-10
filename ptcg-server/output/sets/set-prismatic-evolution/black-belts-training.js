@@ -27,19 +27,19 @@ class BlackBeltsTraining extends trainer_card_1.TrainerCard {
             if (supporterTurn > 0) {
                 throw new game_1.GameError(game_1.GameMessage.SUPPORTER_ALREADY_PLAYED);
             }
+            supporterTurn == 1;
             player.hand.moveCardTo(effect.trainerCard, player.supporter);
             player.marker.addMarker(this.BLACK_BELTS_TRAINING_MARKER, this);
             player.supporter.moveCardTo(effect.trainerCard, player.discard);
             return state;
         }
-        if (effect instanceof attack_effects_1.DealDamageEffect && effect.target.exPokemon()) {
-            const marker = effect.player.marker;
-            if (marker.hasMarker(this.BLACK_BELTS_TRAINING_MARKER, this) && effect.damage > 0) {
+        if (effect instanceof attack_effects_1.DealDamageEffect && effect.player.marker.hasMarker(this.BLACK_BELTS_TRAINING_MARKER, this)) {
+            if (effect.target.exPokemon() && effect.damage > 0) {
                 effect.damage += 40;
             }
             return state;
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.BLACK_BELTS_TRAINING_MARKER, this)) {
             effect.player.marker.removeMarker(this.BLACK_BELTS_TRAINING_MARKER, this);
             return state;
         }

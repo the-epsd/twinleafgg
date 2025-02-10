@@ -9,6 +9,7 @@ export var GameEffects;
     GameEffects["KNOCK_OUT_EFFECT"] = "KNOCK_OUT_EFFECT";
     GameEffects["HEAL_EFFECT"] = "HEAL_EFFECT";
     GameEffects["EVOLVE_EFFECT"] = "EVOLVE_EFFECT";
+    GameEffects["DRAW_PRIZES_EFFECT"] = "DRAW_PRIZES_EFFECT";
 })(GameEffects || (GameEffects = {}));
 export class RetreatEffect {
     constructor(player, benchIndex) {
@@ -17,6 +18,7 @@ export class RetreatEffect {
         this.ignoreStatusConditions = false;
         this.player = player;
         this.benchIndex = benchIndex;
+        this.moveRetreatCostTo = player.discard;
     }
 }
 export class UsePowerEffect {
@@ -132,5 +134,14 @@ export class EvolveEffect {
         this.player = player;
         this.target = target;
         this.pokemonCard = pokemonCard;
+    }
+}
+export class DrawPrizesEffect {
+    constructor(player, prizes, destination) {
+        this.type = GameEffects.DRAW_PRIZES_EFFECT;
+        this.preventDefault = false;
+        this.player = player;
+        this.prizes = prizes;
+        this.destination = destination;
     }
 }

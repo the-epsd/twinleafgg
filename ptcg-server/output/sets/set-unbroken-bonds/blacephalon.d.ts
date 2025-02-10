@@ -6,19 +6,20 @@ export declare class BlacephalonUNB extends PokemonCard {
     cardType: CardType;
     hp: number;
     weakness: {
-        type: CardType;
+        type: CardType.WATER;
     }[];
-    retreat: CardType[];
+    retreat: CardType.COLORLESS[];
+    attacks: {
+        name: string;
+        cost: CardType.FIRE[];
+        damage: number;
+        damageCalculation: string;
+        text: string;
+    }[];
     set: string;
     setNumber: string;
     cardImage: string;
     name: string;
     fullName: string;
-    attacks: {
-        name: string;
-        cost: CardType[];
-        damage: number;
-        text: string;
-    }[];
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

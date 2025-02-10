@@ -6,31 +6,33 @@ import { AttackEffect } from '../../game/store/effects/game-effects';
 export class BlacephalonUNB extends PokemonCard {
   public tags = [CardTag.ULTRA_BEAST];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.FIRE;
+  public cardType: CardType = R;
   public hp: number = 120;
-  public weakness = [{ type: CardType.WATER }];
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: W }];
+  public retreat = [C, C];
+
+  public attacks = [
+    {
+      name: 'Blazer',
+      cost: [R],
+      damage: 10,
+      damageCalculation: '+',
+      text: 'Turn 1 of your face-down Prize cards face up. If it\'s a [R] Energy card, this attack does 50 more damage. (That Prize card remains face up for the rest of the game.) '
+    },
+    {
+      name: 'Fireball Circus',
+      cost: [R, R, R],
+      damage: 0,
+      damageCalculation: 'x',
+      text: 'Discard any number of [R] Energy cards from your hand. This attack does 50 damage for each card you discarded in this way.'
+    },
+  ];
+
   public set = 'UNB';
   public setNumber = '32';
   public cardImage = 'assets/cardback.png';
   public name = 'Blacephalon';
   public fullName = 'Blacephalon UNB';
-  public attacks = [
-    {
-      name: 'Blazer',
-      cost: [CardType.FIRE],
-      damage: 10,
-      text: 'Turn 1 of your face-down Prize cards face up. If it\'s a R Energy card, this attack does ' +
-        '50 more damage. (That Prize card remains face up for the rest of the game.)'
-    },
-    {
-      name: 'Fireball Circus',
-      cost: [CardType.FIRE, CardType.FIRE, CardType.FIRE],
-      damage: 0,
-      text: 'Discard any number of R Energy cards from your hand. This attack does 50 damage for ' +
-        'each card you discarded in this way..'
-    },
-  ];
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Blazer

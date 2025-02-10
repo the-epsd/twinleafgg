@@ -56,12 +56,12 @@ class ZacianVUNIONTopLeft extends pokemon_card_1.PokemonCard {
                 text: 'Discard 3 Energy from this Pokémon.'
             }
         ];
-        this.set = 'SP';
+        this.set = 'SWSH';
         this.regulationMark = 'E';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '163';
         this.name = 'Zacian V-UNION';
-        this.fullName = 'Zacian V-UNION (Top Left) SP';
+        this.fullName = 'Zacian V-UNION (Top Left) SWSH';
         this.DANCE_REDUCED_DAMAGE_MARKER = 'DANCE_REDUCED_DAMAGE_MARKER';
     }
     reduceEffect(store, state, effect) {

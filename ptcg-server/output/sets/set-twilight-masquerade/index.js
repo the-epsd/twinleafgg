@@ -42,6 +42,7 @@ const hassel_1 = require("./hassel");
 const hearthflame_mask_ogerpon_ex_1 = require("./hearthflame-mask-ogerpon-ex");
 const heatran_1 = require("./heatran");
 const hisuian_arcanine_1 = require("./hisuian-arcanine");
+const hisuian_growlithe_1 = require("./hisuian-growlithe");
 const hyper_aroma_1 = require("./hyper-aroma");
 const infernape_1 = require("./infernape");
 const iron_leaves_1 = require("./iron-leaves");
@@ -67,6 +68,9 @@ const palafin_ex_1 = require("./palafin-ex");
 const performance_flute_1 = require("./performance-flute");
 const perrin_1 = require("./perrin");
 const phione_1 = require("./phione");
+const poliwag_1 = require("./poliwag");
+const poliwhirl_1 = require("./poliwhirl");
+const poliwrath_1 = require("./poliwrath");
 const poltchageist_1 = require("./poltchageist");
 const poochyena_1 = require("./poochyena");
 const rillaboom_1 = require("./rillaboom");
@@ -113,6 +117,7 @@ exports.setTwilightMasquerade = [
     new hearthflame_mask_ogerpon_ex_1.HearthflameMaskOgerponex(),
     new heatran_1.Heatran(),
     new hisuian_arcanine_1.HisuianArcanine(),
+    new hisuian_growlithe_1.HisuianGrowlithe(),
     new lairon_1.Lairon(),
     new lanas_assistance_1.LanasAssistance(),
     new legacy_energy_1.LegacyEnergy(),
@@ -177,4 +182,7 @@ exports.setTwilightMasquerade = [
     new kadabra_1.Kadabra(),
     new alakazam_1.Alakazam(),
     new aipom_1.Aipom(),
+    new poliwag_1.Poliwag(),
+    new poliwhirl_1.Poliwhirl(),
+    new poliwrath_1.Poliwrath(),
 ];

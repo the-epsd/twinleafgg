@@ -64,7 +64,7 @@ class EthansHoOhex extends pokemon_card_1.PokemonCard {
                     blocked2.push(target);
                 }
             });
-            state = store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_ACTIVE, player.discard, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Fire Energy' }, { allowCancel: false, min: 0, max: 2, blockedTo: blocked2 }), transfers => {
+            state = store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_ACTIVE, player.hand, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Fire Energy' }, { allowCancel: false, min: 0, max: 2, blockedTo: blocked2 }), transfers => {
                 transfers = transfers || [];
                 prefabs_1.ADD_MARKER(this.SHINING_FEATHER_MARKER, player, this);
                 prefabs_1.ABILITY_USED(player, this);
@@ -73,7 +73,7 @@ class EthansHoOhex extends pokemon_card_1.PokemonCard {
                 }
                 for (const transfer of transfers) {
                     const target = game_1.StateUtils.getTarget(state, player, transfer.to);
-                    player.discard.moveCardTo(transfer.card, target);
+                    player.hand.moveCardTo(transfer.card, target);
                 }
                 return state;
             });

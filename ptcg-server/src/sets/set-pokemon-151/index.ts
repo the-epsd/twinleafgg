@@ -6,6 +6,7 @@ import { Articuno } from './articuno';
 import { BigAirBalloon } from './big-air-balloon';
 import { Blastoiseex } from './blastoise-ex';
 import { Bulbasaur } from './bulbasaur';
+import { Chansey } from './chansey';
 import { Charizardex } from './charizard-ex';
 import { Charmander } from './charmander';
 import { Charmeleon } from './charmeleon';
@@ -70,6 +71,7 @@ export const setPokemon151: Card[] = [
   new Articuno(),
   new Blastoiseex(),
   new Bulbasaur(),
+  new Chansey(),
   new Charizardex(),
   new Charmeleon(),
   new Charmander(),

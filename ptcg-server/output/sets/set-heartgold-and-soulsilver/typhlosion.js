@@ -40,26 +40,22 @@ class Typhlosion extends pokemon_card_1.PokemonCard {
         super(...arguments);
         this.stage = card_types_1.Stage.STAGE_2;
         this.evolvesFrom = 'Quilava';
-        this.cardType = card_types_1.CardType.FIRE;
+        this.cardType = R;
         this.hp = 140;
-        this.weakness = [{ type: card_types_1.CardType.WATER }];
-        this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
+        this.weakness = [{ type: W }];
+        this.retreat = [C, C];
         this.powers = [{
                 name: 'Afterburner',
                 powerType: game_1.PowerType.POKEPOWER,
                 useWhenInPlay: true,
-                text: 'Once during your turn (before your attack), you may search your ' +
-                    'discard pile for a R Energy card and attach it to 1 of your Pokemon. ' +
-                    'If you do, put 1 damage counter on that Pokemon. This Power can\'t ' +
-                    'be used if Typhlosion is affected by a Special Condition.'
+                text: 'Once during your turn (before your attack), you may search your discard pile for a [R] Energy card and attach it to 1 of your Pokémon. If you do, put 1 damage counter on that Pokémon. This power can\'t be used if Typhlosion is affected by a Special Condition.'
             }];
         this.attacks = [
             {
                 name: 'Flare Destroy',
-                cost: [card_types_1.CardType.FIRE, card_types_1.CardType.FIRE, card_types_1.CardType.COLORLESS],
+                cost: [R, R, C],
                 damage: 70,
-                text: 'Discard an Energy card attached to Typhlosion and discard ' +
-                    'an Energy card attached to the Defending Pokemon.'
+                text: 'Discard an Energy card attached to Typhlosion and discard an Energy card attached to the Defending Pokémon.'
             }
         ];
         this.set = 'HS';

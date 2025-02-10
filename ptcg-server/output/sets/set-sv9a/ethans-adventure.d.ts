@@ -1,8 +1,7 @@
-import { TrainerCard, TrainerType, StoreLike, State, CardTag } from "../../game";
+import { TrainerCard, TrainerType, StoreLike, State } from "../../game";
 import { Effect } from "../../game/store/effects/effect";
 export declare class EthansAdventure extends TrainerCard {
     trainerType: TrainerType;
-    tags: CardTag[];
     regulationMark: string;
     cardImage: string;
     set: string;

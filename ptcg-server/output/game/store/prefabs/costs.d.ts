@@ -14,4 +14,4 @@ import { CardType } from '../card/card-types';
  * @param amount
  * @returns
  */
-export declare function DISCARD_X_ENERGY_FROM_THIS_POKEMON(state: State, effect: AttackEffect, store: StoreLike, type: CardType, amount: number): State;
+export declare function DISCARD_X_ENERGY_FROM_THIS_POKEMON(store: StoreLike, state: State, effect: AttackEffect, amount: number, type?: CardType): State;

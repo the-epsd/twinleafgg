@@ -11,7 +11,6 @@ import { ShowCardsPrompt } from '../../game/store/prompts/show-cards-prompt';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
 import { GameMessage } from '../../game/game-message';
 
-
 function* useFindAFriend(next: Function, store: StoreLike, state: State,
   effect: AttackEffect): IterableIterator<State> {
   const player = effect.player;
@@ -47,38 +46,28 @@ function* useFindAFriend(next: Function, store: StoreLike, state: State,
 export class Oddish extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.GRASS;
-
+  public cardType: CardType = G;
   public hp: number = 40;
-
-  public weakness = [{ type: CardType.PSYCHIC }];
-
-  public retreat = [ CardType.COLORLESS ];
+  public weakness = [{ type: P }];
+  public retreat = [C];
 
   public attacks = [{
     name: 'Ram',
-    cost: [ CardType.COLORLESS ],
+    cost: [C],
     damage: 10,
     text: ''
   }, {
     name: 'Find a Friend',
-    cost: [ CardType.GRASS ],
+    cost: [G],
     damage: 0,
-    text: 'Flip a coin. If heads, search your deck for a G Pokemon, ' +
-      'show it to your opponent, and put it into your hand. ' +
-      'Shuffle your deck afterward.'
+    text: 'Flip a coin. If heads, search your deck for a [G] Pokémon, show it to your opponent, and put it into your hand. Shuffle your deck afterward.'
   }];
 
   public set: string = 'UD';
-
-  public name: string = 'Oddish';
-
-  public fullName: string = 'Oddish UD';
-
-  public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '60';
+  public cardImage: string = 'assets/cardback.png';
+  public name: string = 'Oddish';
+  public fullName: string = 'Oddish UD';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -88,5 +77,4 @@ export class Oddish extends PokemonCard {
     }
     return state;
   }
-
 }

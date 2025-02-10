@@ -1,3 +1,4 @@
+import { Tinkatonex } from '../set-scarlet-and-violet-promos/tinkaton-ex';
 import { Arctibax } from './arctibax';
 import { Baxcalibur } from './baxcalibur';
 import { BossOrders } from './boss-orders';
@@ -15,6 +16,8 @@ import { Squawkabillyex } from './squawkabilly-ex';
 import { SuperRod } from './super-rod';
 import { SuperiorEnergyRetrieval } from './superior-energy-retrieval';
 import { TingLuex } from './ting-lu-ex';
+import { Tinkatink } from './tinkatink';
+import { Tinkatuff2 } from './tinkatuff-2';
 import { WoChienex } from './wo-chien-ex';
 export declare class FrigibaxIR extends Frigibax {
     setNumber: string;
@@ -25,6 +28,14 @@ export declare class ArctibaxIR extends Arctibax {
     fullName: string;
 }
 export declare class BaxcaliburIR extends Baxcalibur {
+    setNumber: string;
+    fullName: string;
+}
+export declare class TinkatinkIR extends Tinkatink {
+    setNumber: string;
+    fullName: string;
+}
+export declare class TinkatuffIR extends Tinkatuff2 {
     setNumber: string;
     fullName: string;
 }
@@ -45,6 +56,11 @@ export declare class ChiYuexFA extends ChiYuex {
     fullName: string;
 }
 export declare class ChienPaoexFA extends ChienPaoex {
+    setNumber: string;
+    fullName: string;
+}
+export declare class TinkatonexFA extends Tinkatonex {
+    set: string;
     setNumber: string;
     fullName: string;
 }
@@ -93,6 +109,11 @@ export declare class ChiYuexSIR extends ChiYuex {
     fullName: string;
 }
 export declare class ChienPaoexSIR extends ChienPaoex {
+    setNumber: string;
+    fullName: string;
+}
+export declare class TinkatonexSIR extends Tinkatonex {
+    set: string;
     setNumber: string;
     fullName: string;
 }

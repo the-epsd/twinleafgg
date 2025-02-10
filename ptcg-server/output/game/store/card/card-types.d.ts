@@ -36,7 +36,8 @@ export declare enum CardTag {
     HOPS = "HOPS",
     MARNIES = "MARNIES",
     STEVENS = "STEVENS",
-    ETHANS = "ETHANS"
+    ETHANS = "ETHANS",
+    MISTYS = "MISTYS"
 }
 export declare enum SuperType {
     NONE = 0,

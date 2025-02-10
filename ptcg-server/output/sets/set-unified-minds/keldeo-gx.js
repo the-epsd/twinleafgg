@@ -1,23 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.KeldeoGXUNM = void 0;
+exports.KeldeoGX = void 0;
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
-class KeldeoGXUNM extends game_1.PokemonCard {
+class KeldeoGX extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.tags = [game_1.CardTag.POKEMON_GX];
         this.stage = game_1.Stage.BASIC;
-        this.cardType = game_1.CardType.WATER;
+        this.tags = [game_1.CardTag.POKEMON_GX];
+        this.cardType = W;
         this.hp = 170;
-        this.weakness = [{ type: game_1.CardType.GRASS }];
-        this.retreat = [game_1.CardType.COLORLESS, game_1.CardType.COLORLESS];
-        this.set = 'UNM';
-        this.setNumber = '47';
-        this.cardImage = 'assets/cardback.png';
-        this.name = 'Keldeo-GX';
-        this.fullName = 'Keldeo-GX UNM';
+        this.weakness = [{ type: G }];
+        this.retreat = [C, C];
         this.powers = [{
                 name: 'Pure Heart',
                 powerType: game_1.PowerType.ABILITY,
@@ -27,18 +22,23 @@ class KeldeoGXUNM extends game_1.PokemonCard {
         this.attacks = [
             {
                 name: 'Sonic Edge',
-                cost: [game_1.CardType.WATER, game_1.CardType.WATER, game_1.CardType.COLORLESS],
+                cost: [W, W, C],
                 damage: 110,
                 text: 'This attack\'s damage isn\'t affected by any effects on your opponent\'s Active Pokemon.'
             },
             {
                 name: 'Resolute Blade-GX',
-                cost: [game_1.CardType.WATER, game_1.CardType.WATER, game_1.CardType.COLORLESS],
+                cost: [W, W, C],
                 damage: 0,
                 text: 'This attack does 50 damage for each of your opponent\'s Benched Pokemon. ' +
                     '(You can\'t use more than 1 GX attack in a game.)'
             },
         ];
+        this.set = 'UNM';
+        this.setNumber = '47';
+        this.cardImage = 'assets/cardback.png';
+        this.name = 'Keldeo-GX';
+        this.fullName = 'Keldeo-GX UNM';
     }
     reduceEffect(store, state, effect) {
         // Pure Heart: Prevent damage & effects from Pokemon-EX
@@ -89,4 +89,4 @@ class KeldeoGXUNM extends game_1.PokemonCard {
         return state;
     }
 }
-exports.KeldeoGXUNM = KeldeoGXUNM;
+exports.KeldeoGX = KeldeoGX;

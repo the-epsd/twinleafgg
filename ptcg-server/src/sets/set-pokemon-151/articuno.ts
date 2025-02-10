@@ -17,7 +17,7 @@ export class Articuno extends PokemonCard {
   public powers = [{
     name: 'Ice Float',
     powerType: PowerType.ABILITY,
-    text: ' If this Pokémon has any W Energy attached, it has no Retreat Cost. '
+    text: 'If this Pokémon has any [W] Energy attached, it has no Retreat Cost.'
   }];
 
   public attacks = [{
@@ -27,10 +27,10 @@ export class Articuno extends PokemonCard {
     text: 'This attack also does 10 damage to each of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
   }];
 
-  public set: string = 'MEW';
   public regulationMark = 'G';
-  public cardImage: string = 'assets/cardback.png';
+  public set: string = 'MEW';
   public setNumber: string = '144';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Articuno';
   public fullName: string = 'Articuno MEW';
 

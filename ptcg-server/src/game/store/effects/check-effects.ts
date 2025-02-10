@@ -6,6 +6,7 @@ import { Resistance, Weakness, Attack, Power } from '../card/pokemon-types';
 import { EnergyMap } from '../prompts/choose-energy-prompt';
 import { TrainerCard } from '../card/trainer-card';
 import { Card } from '../card/card';
+import { CardList } from '../state/card-list';
 
 export enum CheckEffects {
   CHECK_HP_EFFECT = 'CHECK_HP_EFFECT',
@@ -19,7 +20,8 @@ export enum CheckEffects {
   CHECK_ENOUGH_ENERGY_EFFECT = 'CHECK_ENOUGH_ENERGY_EFFECT',
   CHECK_POKEMON_PLAYED_TURN_EFFECT = 'CHECK_POKEMON_PLAYED_TURN_EFFECT',
   CHECK_TABLE_STATE_EFFECT = 'CHECK_TABLE_STATE_EFFECT',
-  ADD_SPECIAL_CONDITIONS_EFFECT = 'ADD_SPECIAL_CONDITIONS_EFFECT'
+  ADD_SPECIAL_CONDITIONS_EFFECT = 'ADD_SPECIAL_CONDITIONS_EFFECT',
+  CHECK_PRIZES_DESTINATION_EFFECT = 'CHECK_PRIZES_DESTINATION_EFFECT'
 }
 
 export class CheckPokemonPowersEffect implements Effect {
@@ -187,5 +189,17 @@ export class AddSpecialConditionsPowerEffect implements Effect {
     this.poisonDamage = poisonDamage;
     this.burnDamage = burnDamage;
     this.sleepFlips = sleepFlips;
+  }
+}
+
+export class CheckPrizesDestinationEffect implements Effect {
+  readonly type: string = CheckEffects.CHECK_PRIZES_DESTINATION_EFFECT;
+  public preventDefault = false;
+  public player: Player;
+  public destination: CardList;
+
+  constructor(player: Player, destination: CardList) {
+    this.player = player;
+    this.destination = destination;
   }
 }

@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Slowbro = void 0;
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class Slowbro extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -43,21 +44,9 @@ class Slowbro extends game_1.PokemonCard {
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
-            const prizes = player.prizes.filter(p => p.isSecret);
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            const prizesTaken = 6 - opponent.getPrizeLeft();
-            if (prizesTaken === 1) {
-                state = store.prompt(state, new game_1.ChoosePrizePrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON, { count: 2, allowCancel: true }), chosenPrize => {
-                    if (chosenPrize === null || chosenPrize.length === 0) {
-                        prizes.forEach(p => { p.isSecret = true; });
-                        return state;
-                    }
-                    const prizePokemon = chosenPrize[0];
-                    const prizePokemon2 = chosenPrize[1];
-                    const hand = player.hand;
-                    prizePokemon.moveTo(hand);
-                    prizePokemon2.moveTo(hand);
-                });
+            if (opponent.getPrizeLeft() === 1) {
+                return prefabs_1.TAKE_X_PRIZES(store, state, player, 2);
             }
         }
         return state;

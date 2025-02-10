@@ -12,23 +12,21 @@ class Charizard extends pokemon_card_1.PokemonCard {
         super(...arguments);
         this.stage = card_types_1.Stage.STAGE_2;
         this.evolvesFrom = 'Charmeleon';
-        this.cardType = card_types_1.CardType.FIRE;
+        this.cardType = R;
         this.hp = 120;
-        this.weakness = [{
-                type: card_types_1.CardType.WATER
-            }];
-        this.resistance = [{ type: card_types_1.CardType.FIGHTING, value: -30 }];
-        this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
+        this.weakness = [{ type: W }];
+        this.resistance = [{ type: F, value: -30 }];
+        this.retreat = [C, C, C];
         this.powers = [{
                 name: 'Energy Burn',
                 useWhenInPlay: true,
                 powerType: game_1.PowerType.POKEMON_POWER,
-                text: 'As often as you like during your turn (before your attack), you may turn all Energy attached to Charizard into R Energy for the rest of the turn. This power can\'t be used if Charizard is Asleep, Confused, or Paralyzed.'
+                text: 'As often as you like during your turn (before your attack), you may turn all [R] Energy attached to Charizard into [R] Energy for the rest of the turn. This power can\'t be used if Charizard is Asleep, Confused, or Paralyzed.'
             }];
         this.attacks = [
             {
                 name: 'Fire Spin',
-                cost: [card_types_1.CardType.FIRE, card_types_1.CardType.FIRE, card_types_1.CardType.FIRE, card_types_1.CardType.FIRE],
+                cost: [R, R, R, R],
                 damage: 100,
                 text: 'Discard 2 Energy cards attached to Charizard in order to use this attack.'
             }

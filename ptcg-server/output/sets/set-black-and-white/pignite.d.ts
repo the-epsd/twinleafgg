@@ -8,12 +8,12 @@ export declare class Pignite extends PokemonCard {
     cardType: CardType;
     hp: number;
     weakness: {
-        type: CardType;
+        type: CardType.WATER;
     }[];
-    retreat: CardType[];
+    retreat: CardType.COLORLESS[];
     attacks: {
         name: string;
-        cost: CardType[];
+        cost: (CardType.FIRE | CardType.COLORLESS)[];
         damage: number;
         text: string;
     }[];

@@ -109,7 +109,7 @@ export class CardInfoPaneComponent implements OnChanges {
 
   transformEnergyText(text: string): string {
     return text.replace(/\[([WFRGLPMDC])\]/g, (match, type) =>
-      `<img style="transform: translateY(6px)" src="assets/energy-icons/${this.energyImageMap[type]}.webp" alt="${this.energyImageMap[type]} Energy" width="18px">`
+      `<img align="top" style="transform: translateY(12px)" src="assets/energy-icons/${this.energyImageMap[type]}.webp" alt="${this.energyImageMap[type]} Energy" width="18px">`
     );
   }
 

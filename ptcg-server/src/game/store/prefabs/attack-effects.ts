@@ -1,12 +1,13 @@
 import { PokemonCard } from '../card/pokemon-card';
 import { State, StateUtils } from '../..';
 import { AttackEffect } from '../effects/game-effects';
-import { HealTargetEffect, PutDamageEffect, PutCountersEffect } from '../effects/attack-effects';
+import { HealTargetEffect, PutDamageEffect, PutCountersEffect, DealDamageEffect, ApplyWeaknessEffect, AfterDamageEffect } from '../effects/attack-effects';
 import { StoreLike, Card, ChoosePokemonPrompt, PlayerType, SlotType, GameMessage } from '../..';
 import { SuperType, TrainerType } from '../card/card-types';
 import { AddSpecialConditionsEffect } from '../effects/attack-effects';
 import { SpecialCondition } from '../card/card-types';
 import { ChooseCardsPrompt, ShuffleDeckPrompt } from '../..';
+import { COIN_FLIP_PROMPT } from './prefabs';
 
 
 /**
@@ -18,7 +19,7 @@ export function DISCARD_A_STADIUM_CARD_IN_PLAY(
 ) {
   const stadiumCard = StateUtils.getStadiumCard(state);
   if (stadiumCard !== undefined) {
-  
+
     const cardList = StateUtils.findCardList(state, stadiumCard);
     const player = StateUtils.findOwner(state, cardList);
     cardList.moveTo(player.discard);
@@ -26,8 +27,8 @@ export function DISCARD_A_STADIUM_CARD_IN_PLAY(
 }
 
 export function DRAW_CARDS_UNTIL_YOU_HAVE_X_CARDS_IN_HAND(
-  x: number, 
-  effect: AttackEffect, 
+  x: number,
+  effect: AttackEffect,
   state: State
 ) {
   const player = effect.player;
@@ -42,8 +43,8 @@ export function DRAW_CARDS_UNTIL_YOU_HAVE_X_CARDS_IN_HAND(
 
 export function HEAL_X_DAMAGE_FROM_THIS_POKEMON(
   damage: number,
-  effect: AttackEffect, 
-  store: StoreLike, 
+  effect: AttackEffect,
+  store: StoreLike,
   state: State
 ) {
   const player = effect.player;
@@ -56,7 +57,7 @@ export function PUT_X_CARDS_FROM_YOUR_DISCARD_PILE_INTO_YOUR_HAND(
   x: number,
   filterFn: (card: Card) => boolean = () => true,
   store: StoreLike,
-  state: State, 
+  state: State,
   effect: AttackEffect
 ) {
   const player = effect.player;
@@ -79,9 +80,9 @@ export function PUT_X_CARDS_FROM_YOUR_DISCARD_PILE_INTO_YOUR_HAND(
       { superType: SuperType.TRAINER, trainerType: TrainerType.ITEM },
       { min, max, allowCancel: false }
     )], selected => {
-    const cards = selected || [];
-    player.discard.moveCardsTo(cards, player.hand);
-  });
+      const cards = selected || [];
+      player.discard.moveCardsTo(cards, player.hand);
+    });
 }
 
 export function PUT_X_DAMAGE_COUNTERS_ON_YOUR_OPPONENTS_ACTIVE_POKEMON(
@@ -99,9 +100,9 @@ export function PUT_X_DAMAGE_COUNTERS_ON_YOUR_OPPONENTS_ACTIVE_POKEMON(
 }
 
 export function SHUFFLE_THIS_POKEMON_AND_ALL_ATTACHED_CARDS_INTO_YOUR_DECK(
-  store: StoreLike, 
-  state: State, 
-  effect: AttackEffect){
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect) {
   const player = effect.player;
 
   player.active.moveTo(player.deck);
@@ -112,8 +113,47 @@ export function SHUFFLE_THIS_POKEMON_AND_ALL_ATTACHED_CARDS_INTO_YOUR_DECK(
   });
 }
 
+export function FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE(
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+  amount: number
+) {
+  COIN_FLIP_PROMPT(store, state, effect.player, (result => {
+    if (result) {
+      effect.damage += amount;
+    }
+  }));
+}
+
+export function THIS_ATTACKS_DAMAGE_ISNT_AFFECTED_BY_EFFECTS(
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+  amount: number,
+) {
+
+  const player = effect.player;
+  const opponent = StateUtils.getOpponent(state, player);
+
+  const dealDamage = new DealDamageEffect(effect, amount);
+  store.reduceEffect(state, dealDamage);
+
+  const applyWeakness = new ApplyWeaknessEffect(effect, dealDamage.damage);
+  store.reduceEffect(state, applyWeakness);
+  const damage = applyWeakness.damage;
+
+  effect.damage = 0;
+
+  if (damage > 0) {
+    opponent.active.damage += damage;
+    const afterDamage = new AfterDamageEffect(effect, damage);
+    state = store.reduceEffect(state, afterDamage);
+  }
+}
+
 export function THIS_ATTACK_DOES_X_DAMAGE_FOR_EACH_POKEMON_IN_YOUR_DISCARD_PILE(
-  damage: number, 
+  damage: number,
   filterFn: (card: PokemonCard) => boolean = () => true,
   effect: AttackEffect
 ) {
@@ -156,9 +196,9 @@ export function THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_POKEMON(
 }
 
 export function THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_BENCHED_POKEMON(
-  damage: number, 
-  effect: AttackEffect, 
-  store: StoreLike, 
+  damage: number,
+  effect: AttackEffect,
+  store: StoreLike,
   state: State
 ) {
   const player = effect.player;
@@ -183,60 +223,60 @@ export function THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_BENCHED_POKEMON
 }
 
 export function YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP(
-  store: StoreLike, 
-  state: State, 
+  store: StoreLike,
+  state: State,
   effect: AttackEffect
 ) {
   const specialConditionEffect = new AddSpecialConditionsEffect(
-    effect, [ SpecialCondition.ASLEEP ]
+    effect, [SpecialCondition.ASLEEP]
   );
   store.reduceEffect(state, specialConditionEffect);
 
 }
 
 export function YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_BURNED(
-  store: StoreLike, 
-  state: State, 
+  store: StoreLike,
+  state: State,
   effect: AttackEffect
 ) {
   const specialConditionEffect = new AddSpecialConditionsEffect(
-    effect, [ SpecialCondition.BURNED ]
+    effect, [SpecialCondition.BURNED]
   );
   store.reduceEffect(state, specialConditionEffect);
 
 }
 
 export function YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED(
-  store: StoreLike, 
-  state: State, 
+  store: StoreLike,
+  state: State,
   effect: AttackEffect
 ) {
   const specialConditionEffect = new AddSpecialConditionsEffect(
-    effect, [ SpecialCondition.CONFUSED ]
+    effect, [SpecialCondition.CONFUSED]
   );
   store.reduceEffect(state, specialConditionEffect);
 
 }
 
 export function YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED(
-  store: StoreLike, 
-  state: State, 
+  store: StoreLike,
+  state: State,
   effect: AttackEffect
 ) {
   const specialConditionEffect = new AddSpecialConditionsEffect(
-    effect, [ SpecialCondition.PARALYZED ]
+    effect, [SpecialCondition.PARALYZED]
   );
   store.reduceEffect(state, specialConditionEffect);
 
 }
 
 export function YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED(
-  store: StoreLike, 
-  state: State, 
+  store: StoreLike,
+  state: State,
   effect: AttackEffect
 ) {
   const specialConditionEffect = new AddSpecialConditionsEffect(
-    effect, [ SpecialCondition.POISONED ]
+    effect, [SpecialCondition.POISONED]
   );
   store.reduceEffect(state, specialConditionEffect);
 

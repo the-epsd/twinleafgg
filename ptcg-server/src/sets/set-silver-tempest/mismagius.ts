@@ -4,8 +4,9 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { PutCountersEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { CheckHpEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 export class Mismagius extends PokemonCard {
 
@@ -56,37 +57,20 @@ export class Mismagius extends PokemonCard {
 
     if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {
       const player = StateUtils.findOwner(state, effect.target);
-      const opponent = StateUtils.getOpponent(state, player);
-
       const pokemonCard = effect.target.getPokemonCard();
-      const sourceCard = effect.source.getPokemonCard();
 
-      if (pokemonCard !== this || sourceCard === undefined || state.phase !== GamePhase.ATTACK) {
+      if (pokemonCard !== this ||
+        state.phase !== GamePhase.ATTACK ||
+        IS_ABILITY_BLOCKED(store, state, player, this)
+      ) {
         return state;
       }
 
-      this.damageDealt = true;
+      const checkHpEffect = new CheckHpEffect(player, effect.target);
+      store.reduceEffect(state, checkHpEffect);
 
-      if (pokemonCard === this && this.damageDealt === true) {
-
-        // Try to reduce PowerEffect, to check if something is blocking our ability
-        try {
-          const stub = new PowerEffect(player, {
-            name: 'test',
-            powerType: PowerType.ABILITY,
-            text: ''
-          }, this);
-          store.reduceEffect(state, stub);
-        } catch {
-          return state;
-        }
-
-        const checkHpEffect = new CheckHpEffect(player, effect.target);
-        store.reduceEffect(state, checkHpEffect);
-
-        if (effect.target.damage === 0 && effect.damage >= checkHpEffect.hp) {
-          opponent.active.damage += 80;
-        }
+      if (effect.target.damage === 0 && effect.damage >= checkHpEffect.hp) {
+        effect.source.damage += 60;
       }
     }
 

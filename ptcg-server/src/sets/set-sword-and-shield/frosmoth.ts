@@ -10,46 +10,34 @@ import { AttachEnergyPrompt } from '../../game/store/prompts/attach-energy-promp
 import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
 
 export class Frosmoth extends PokemonCard {
-
-  public regulationMark = 'D';
-
   public stage: Stage = Stage.STAGE_1;
-
   public evolvesFrom = 'Snom';
-
-  public cardType: CardType = CardType.WATER;
-
+  public cardType: CardType = W;
   public hp: number = 90;
-
-  public weakness = [{ type: CardType.METAL }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: M }];
+  public retreat = [C, C];
 
   public powers = [{
     name: 'Ice Dance',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
-    text: 'As often as you like during your turn, you may attach a ' +
-      'Basic W Energy card from your hand to 1 of your Benched W Pokémon.'
+    text: 'As often as you like during your turn, you may attach a [W] Energy card from your hand to 1 of your Benched [W] Pokémon.'
   }];
 
   public attacks = [
     {
       name: 'Aurora Beam',
-      cost: [CardType.WATER, CardType.COLORLESS],
+      cost: [W, C],
       damage: 30,
       text: ''
     }
   ];
 
+  public regulationMark = 'D';
   public set: string = 'SSH';
-
-  public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '64';
-
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Frosmoth';
-
   public fullName: string = 'Frosmoth SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

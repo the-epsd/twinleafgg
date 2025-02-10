@@ -9,30 +9,30 @@ export declare class Zoroark extends PokemonCard {
     cardType: CardType;
     hp: number;
     weakness: {
-        type: CardType;
+        type: CardType.FIGHTING;
     }[];
     resistance: {
-        type: CardType;
+        type: CardType.PSYCHIC;
         value: number;
     }[];
-    retreat: CardType[];
+    retreat: CardType.COLORLESS[];
     attacks: ({
         name: string;
-        cost: CardType[];
+        cost: CardType.DARK[];
         damage: number;
         text: string;
         copycatAttack?: undefined;
     } | {
         name: string;
-        cost: CardType[];
+        cost: CardType.COLORLESS[];
         damage: number;
         copycatAttack: boolean;
         text: string;
     })[];
     set: string;
+    setNumber: string;
+    cardImage: string;
     name: string;
     fullName: string;
-    cardImage: string;
-    setNumber: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }
