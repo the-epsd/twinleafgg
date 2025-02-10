@@ -1,10 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, CoinFlipPrompt, GameMessage, PlayerType } from '../../game';
+import { StoreLike, State, StateUtils, PlayerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckHpEffect } from '../../game/store/effects/check-effects';
 import { PutDamageEffect, AbstractAttackEffect } from '../../game/store/effects/attack-effects';
-import { ADD_MARKER, HAS_MARKER, REMOVE_MARKER, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { ADD_MARKER, COIN_FLIP_PROMPT, HAS_MARKER, REMOVE_MARKER, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class Phanpy extends PokemonCard {
@@ -40,15 +40,12 @@ export class Phanpy extends PokemonCard {
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const opponent = StateUtils.getOpponent(state, effect.player);
-      state = store.prompt(state, new CoinFlipPrompt(
-        effect.player.id, GameMessage.COIN_FLIP
-      ), flipResult => {
-        if (flipResult) {
-          ADD_MARKER(this.PREVENT_KNOCKED_OUT_DURING_OPPONENTS_NEXT_TURN_MARKER, effect.player.active, this);
-          ADD_MARKER(this.CLEAR_PREVENT_KNOCKED_OUT_DURING_OPPONENTS_NEXT_TURN_MARKER, opponent, this);
-        }
+      COIN_FLIP_PROMPT(store, state, effect.player, result => {
+        if (!result)
+          return
+        ADD_MARKER(this.PREVENT_KNOCKED_OUT_DURING_OPPONENTS_NEXT_TURN_MARKER, effect.player.active, this);
+        ADD_MARKER(this.CLEAR_PREVENT_KNOCKED_OUT_DURING_OPPONENTS_NEXT_TURN_MARKER, opponent, this);
       });
-
       return state;
     }
 
