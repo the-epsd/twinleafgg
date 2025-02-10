@@ -11,6 +11,7 @@ const electromagnetic_radar_1 = require("./electromagnetic-radar");
 const espurr_1 = require("./espurr");
 const fire_crystal_1 = require("./fire-crystal");
 const gardevoir_and_sylveon_gx_1 = require("./gardevoir-and-sylveon-gx");
+const gastly_1 = require("./gastly");
 const gloom_1 = require("./gloom");
 const goldeen_1 = require("./goldeen");
 const greens_exploration_1 = require("./greens-exploration");
@@ -88,4 +89,5 @@ exports.setUnbrokenBonds = [
     new pheromosa_buzzwole_gx_1.PheromosaBuzzwoleGX(),
     new murkrow_1.Murkrow(),
     new honchkrow_gx_1.HonchkrowGX(),
+    new gastly_1.Gastly(),
 ];

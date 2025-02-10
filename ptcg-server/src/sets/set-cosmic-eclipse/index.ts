@@ -41,6 +41,8 @@ import { CharizardBraixenGX } from './charizard-braixen-gx';
 import { TogepiCleffaIgglybuffGX } from './togepi-cleffa-igglybuff-gx';
 import { Carvanha } from './carvanha';
 import {NaganadelGuzzlordGX} from './naganadel-guzzlord-gx';
+import {Woobat} from './woobat';
+import {Swoobat} from './swoobat';
 
 
 export const setCosmicEclipse: Card[] = [
@@ -86,4 +88,6 @@ export const setCosmicEclipse: Card[] = [
   new TogepiCleffaIgglybuffGX(),
   new Carvanha(),
   new NaganadelGuzzlordGX(),
+  new Woobat(),
+  new Swoobat(),
 ];
