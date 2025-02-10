@@ -1,7 +1,7 @@
 import { CardType, PlayerType, PokemonCard, Stage, State, StoreLike } from "../../game";
 import { PutDamageEffect } from "../../game/store/effects/attack-effects";
 import { Effect } from "../../game/store/effects/effect";
-import { AttackEffect } from "../../game/store/effects/game-effects";
+import { THIS_ATTACK_DOES_X_MORE_DAMAGE, WAS_ATTACK_USED } from "../../game/store/prefabs/prefabs";
 
 export class Steelix extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -36,13 +36,15 @@ export class Steelix extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      effect.damage = 2 * effect.player.active.damage;
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      //The attack needs to be reset; otherwise, it will always cause 20 damage.
+      effect.damage = 0;
+      THIS_ATTACK_DOES_X_MORE_DAMAGE(effect, store, state, 2 * effect.player.active.damage);
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
+      //I couldn't find a prefab to add damage to my Pokémon on the bench.
       const player = effect.player;
-
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
         if (cardList !== player.active) {
           const damageEffect = new PutDamageEffect(effect, 30);
