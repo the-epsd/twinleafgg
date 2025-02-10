@@ -23,6 +23,7 @@ import { LilliesPokeDoll } from './lillies-poke-doll';
 import { Lillipup } from './lillipup';
 import { MallowAndLana } from './mallow-and-lana';
 import { Natu } from './natu';
+import { Onix } from './onix';
 import { Phione } from './phione';
 import { Pikachu } from './pikachu';
 import { Ponyta } from './ponyta';
@@ -70,6 +71,7 @@ export const setCosmicEclipse: Card[] = [
   new Lillipup(),
   new MallowAndLana(),
   new Natu(),
+  new Onix(),
   new Phione(),
   new Pikachu(),
   new Ponyta(),
