@@ -8,6 +8,7 @@ import { Applin2 } from './applin-2';
 import { Aron } from './aron';
 import { Blisseyex } from './blissey-ex';
 import { BloodmoonUrsalunaex } from './bloodmoon-ursaluna-ex';
+import { BruteBonnet } from './brute-bonnet';
 import { BugCatchingSet } from './bug-catching-set';
 import { Caretaker } from './caretaker';
 import { Carmine } from './carmine';
@@ -97,6 +98,7 @@ export const setTwilightMasquerade: Card[] = [
   new Aron(),
   new Blisseyex(),
   // new BoomerangEnergy(),
+  new BruteBonnet(),
   new Carmine(),
   new Chimchar(),
   new Clefable(),
