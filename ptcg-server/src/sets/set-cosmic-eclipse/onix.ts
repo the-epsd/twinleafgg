@@ -1,6 +1,6 @@
-import { ChooseCardsPrompt, CoinFlipPrompt, EnergyCard, GameError, GameMessage, PokemonCard, State, StoreLike, SuperType } from "../../game";
+import { ChooseCardsPrompt, EnergyCard, GameError, GameMessage, PokemonCard, State, StoreLike, SuperType } from "../../game";
 import { Effect } from "../../game/store/effects/effect";
-import { WAS_ATTACK_USED } from "../../game/store/prefabs/prefabs";
+import { COIN_FLIP_PROMPT, WAS_ATTACK_USED } from "../../game/store/prefabs/prefabs";
 
 export class Onix extends PokemonCard {
 
@@ -56,14 +56,11 @@ export class Onix extends PokemonCard {
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
       //Flip a coin. If tails, this attack does nothing.
-      const player = effect.player;
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], result => {
-        if (result === false) {
-          effect.damage = 0;
-        }
-      });
+      COIN_FLIP_PROMPT(store, state, effect.player, result => {
+        if (result)
+          return;
+        effect.damage = 0;
+      })
     }
 
     return state;
