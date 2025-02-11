@@ -3,6 +3,7 @@ import { GameMessage } from '../game-message';
 import { CardTarget, PlayerType, SlotType } from './actions/play-card-action';
 import { Card } from './card/card';
 import { CardType } from './card/card-types';
+import { PokemonCard } from './card/pokemon-card';
 import { EnergyMap } from './prompts/choose-energy-prompt';
 import { CardList } from './state/card-list';
 import { Player } from './state/player';
@@ -261,6 +262,15 @@ export class StateUtils {
       }
     }
     throw new GameError(GameMessage.INVALID_GAME_STATE);
+  }
+
+  public static isPokemonInPlay(player: Player, card: PokemonCard): boolean {
+    player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, c) => {
+      if (c === card) {
+        return true;
+      }
+    });
+    return false;
   }
 
   public static getStadiumCard(state: State): Card | undefined {

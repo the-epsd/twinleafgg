@@ -1,4 +1,4 @@
-import { CardType, EnergyType } from '../../game/store/card/card-types';
+import { CardType, EnergyType, Stage } from '../../game/store/card/card-types';
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
@@ -30,7 +30,7 @@ export class PrismEnergy extends EnergyCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof CheckProvidedEnergyEffect
       && effect.source.cards.includes(this)
-      && effect.source.isBasic()) {
+      && effect.source.isStage(Stage.BASIC)) {
       effect.energyMap.push({ card: this, provides: [CardType.ANY] });
     }
     return state;

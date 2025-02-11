@@ -26,7 +26,7 @@ class SilentLab extends trainer_card_1.TrainerCard {
             const pokemonCard = effect.card;
             const cardList = state_utils_1.StateUtils.findCardList(state, pokemonCard);
             const isBasic = cardList instanceof pokemon_card_list_1.PokemonCardList
-                ? cardList.isBasic()
+                ? cardList.isStage(card_types_1.Stage.BASIC)
                 : pokemonCard.stage === card_types_1.Stage.BASIC;
             if (!effect.power.exemptFromAbilityLock) {
                 if (isBasic && pokemonCard.powers.some(power => power.powerType === game_1.PowerType.ABILITY)) {

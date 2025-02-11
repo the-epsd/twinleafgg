@@ -57,7 +57,6 @@ export class PokemonCardList extends CardList {
   // we must remember, which card acts as a pokemon tool.
   public tool: Card | undefined;
   public stadium: Card | undefined;
-  public stage: Stage = Stage.BASIC;
   public attacksThisTurn?: number;
   isActivatingCard: boolean = false;
 
@@ -91,12 +90,12 @@ export class PokemonCardList extends CardList {
     }
   }
 
-  public isBasic(): boolean {
-    const pokemons = this.getPokemons();
-    if (pokemons.length !== 1) {
+  public isStage(stage: Stage): boolean {
+    const pokemonCard = this.getPokemonCard();
+    if (pokemonCard === undefined) {
       return false;
     }
-    return pokemons[0].stage === Stage.BASIC;
+    return pokemonCard.stage === stage;
   }
 
   clearAttackEffects(): void {

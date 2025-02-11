@@ -5,7 +5,7 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
 import { SupporterEffect, TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { PlayerType, SlotType, StateUtils, GameError, GameMessage, PokemonCard, CardTarget } from '../../game';
+import { PlayerType, SlotType, StateUtils, GameError, GameMessage, CardTarget } from '../../game';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -22,8 +22,8 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   }
 
   const blocked: CardTarget[] = [];
-  player.bench.forEach((card, index) => {
-    if (card instanceof PokemonCard && card.stage !== Stage.BASIC) {
+  player.bench.forEach((card) => {
+    if (!card.isStage(Stage.BASIC)) {
       blocked.push();
     }
   });

@@ -47,7 +47,7 @@ class HearthflameMaskOgerponex extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            if (!opponent.active.isBasic()) {
+            if (!opponent.active.isStage(card_types_1.Stage.BASIC)) {
                 effect.damage += 140;
             }
             const checkProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(player);

@@ -23,7 +23,7 @@ class ExcitingStadium extends trainer_card_1.TrainerCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof check_effects_1.CheckHpEffect && state_utils_1.StateUtils.getStadiumCard(state) === this) {
             const pokemonCard = effect.target;
-            if (pokemonCard && pokemonCard.stage === card_types_1.Stage.BASIC) {
+            if (pokemonCard && pokemonCard.isStage(card_types_1.Stage.BASIC)) {
                 effect.hp += 30;
             }
         }

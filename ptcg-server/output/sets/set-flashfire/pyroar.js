@@ -60,7 +60,7 @@ class Pyroar extends pokemon_card_1.PokemonCard {
                 return state;
             }
             // It's not an attack
-            if (state.phase !== state_1.GamePhase.ATTACK || !effect.source.isBasic()) {
+            if (state.phase !== state_1.GamePhase.ATTACK || !effect.source.isStage(card_types_1.Stage.BASIC)) {
                 return state;
             }
             const player = state_utils_1.StateUtils.findOwner(state, effect.target);

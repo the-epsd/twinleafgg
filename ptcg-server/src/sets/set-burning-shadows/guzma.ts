@@ -84,7 +84,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
         const cardList = results[0];
 
-        if (cardList.stage == Stage.BASIC) {
+        if (cardList.isStage(Stage.BASIC)) {
           try {
             const supporterEffect = new SupporterEffect(player, effect.trainerCard);
             store.reduceEffect(state, supporterEffect);

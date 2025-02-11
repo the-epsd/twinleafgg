@@ -17,7 +17,6 @@ class PokemonCardList extends card_list_1.CardList {
         this.pokemonPlayedTurn = 0;
         this.sleepFlips = 1;
         this.boardEffect = [];
-        this.stage = card_types_1.Stage.BASIC;
         this.isActivatingCard = false;
     }
     getPokemons() {
@@ -53,12 +52,12 @@ class PokemonCardList extends card_list_1.CardList {
             return pokemons[pokemons.length - 1];
         }
     }
-    isBasic() {
-        const pokemons = this.getPokemons();
-        if (pokemons.length !== 1) {
+    isStage(stage) {
+        const pokemonCard = this.getPokemonCard();
+        if (pokemonCard === undefined) {
             return false;
         }
-        return pokemons[0].stage === card_types_1.Stage.BASIC;
+        return pokemonCard.stage === stage;
     }
     clearAttackEffects() {
         this.marker.markers = [];

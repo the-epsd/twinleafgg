@@ -18,8 +18,8 @@ function* playCard(next, store, state, effect) {
         throw new game_1.GameError(game_1.GameMessage.SUPPORTER_ALREADY_PLAYED);
     }
     const blocked = [];
-    player.bench.forEach((card, index) => {
-        if (card instanceof game_1.PokemonCard && card.stage !== card_types_1.Stage.BASIC) {
+    player.bench.forEach((card) => {
+        if (!card.isStage(card_types_1.Stage.BASIC)) {
             blocked.push();
         }
     });

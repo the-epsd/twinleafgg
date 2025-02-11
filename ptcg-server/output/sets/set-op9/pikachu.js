@@ -49,7 +49,7 @@ class Pikachu extends pokemon_card_1.PokemonCard {
             if (!(cardList instanceof game_1.PokemonCardList)) {
                 return state;
             }
-            if (cardList.pokemonPlayedTurn === state.turn && !cardList.isBasic()) {
+            if (cardList.pokemonPlayedTurn === state.turn && !cardList.isStage(card_types_1.Stage.BASIC)) {
                 const specialCondition = new attack_effects_1.AddSpecialConditionsEffect(effect, [card_types_1.SpecialCondition.PARALYZED]);
                 store.reduceEffect(state, specialCondition);
             }

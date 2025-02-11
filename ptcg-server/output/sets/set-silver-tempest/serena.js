@@ -62,7 +62,7 @@ class Serena extends trainer_card_1.TrainerCard {
                         return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_POKEMON_TO_SWITCH, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH], { allowCancel: false, blocked: blocked }), result => {
                             var _a, _b, _c;
                             const cardList = result[0];
-                            if (cardList.stage == card_types_1.Stage.BASIC) {
+                            if (cardList.isStage(card_types_1.Stage.BASIC)) {
                                 try {
                                     const supporterEffect = new play_card_effects_1.SupporterEffect(player, effect.trainerCard);
                                     store.reduceEffect(state, supporterEffect);
