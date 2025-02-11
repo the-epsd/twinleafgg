@@ -4,6 +4,7 @@ exports.setTemporalForces = void 0;
 const beldum_1 = require("./beldum");
 const biancas_devotion_1 = require("./biancas-devotion");
 const brambleghast_1 = require("./brambleghast");
+const bramblin_1 = require("./bramblin");
 const buddy_buddy_poffin_1 = require("./buddy-buddy-poffin");
 const card_images_1 = require("./card-images");
 const charjabug_1 = require("./charjabug");
@@ -94,6 +95,7 @@ exports.setTemporalForces = [
     new beldum_1.Beldum(),
     new biancas_devotion_1.BiancasDevotion(),
     new brambleghast_1.Brambleghast(),
+    new bramblin_1.Bramblin(),
     new buddy_buddy_poffin_1.BuddyBuddyPoffin(),
     new charjabug_1.Charjabug(),
     new chatot_1.Chatot(),

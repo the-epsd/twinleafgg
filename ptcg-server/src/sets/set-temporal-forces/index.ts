@@ -2,6 +2,7 @@ import { Card } from '../../game/store/card/card';
 import { Beldum } from './beldum';
 import { BiancasDevotion } from './biancas-devotion';
 import { Brambleghast } from './brambleghast';
+import { Bramblin } from './bramblin';
 import { BuddyBuddyPoffin } from './buddy-buddy-poffin';
 import { AncientBoosterEnergyCapsuleTEF, FutureBoosterEnergyCapsuleTEF } from './card-images';
 import { Charjabug } from './charjabug';
@@ -93,6 +94,7 @@ export const setTemporalForces: Card[] = [
   new Beldum(),
   new BiancasDevotion(),
   new Brambleghast(),
+  new Bramblin(),
   new BuddyBuddyPoffin(),
   new Charjabug(),
   new Chatot(),

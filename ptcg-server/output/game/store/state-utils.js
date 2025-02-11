@@ -236,13 +236,14 @@ class StateUtils {
         }
         throw new game_error_1.GameError(game_message_1.GameMessage.INVALID_GAME_STATE);
     }
-    static isPokemonInPlay(player, card) {
-        player.forEachPokemon(play_card_action_1.PlayerType.BOTTOM_PLAYER, (cardList, c) => {
-            if (c === card) {
-                return true;
+    static isPokemonInPlay(player, pokemon) {
+        let inPlay = false;
+        player.forEachPokemon(play_card_action_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+            if (card === pokemon) {
+                inPlay = true;
             }
         });
-        return false;
+        return inPlay;
     }
     static getStadiumCard(state) {
         for (const player of state.players) {

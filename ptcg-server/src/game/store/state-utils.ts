@@ -264,13 +264,14 @@ export class StateUtils {
     throw new GameError(GameMessage.INVALID_GAME_STATE);
   }
 
-  public static isPokemonInPlay(player: Player, card: PokemonCard): boolean {
-    player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, c) => {
-      if (c === card) {
-        return true;
+  public static isPokemonInPlay(player: Player, pokemon: PokemonCard): boolean {
+    let inPlay = false;
+    player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+      if (card === pokemon) {
+        inPlay = true;
       }
     });
-    return false;
+    return inPlay;
   }
 
   public static getStadiumCard(state: State): Card | undefined {

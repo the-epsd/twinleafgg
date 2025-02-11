@@ -17,6 +17,6 @@ export declare class StateUtils {
     static getTarget(state: State, player: Player, target: CardTarget): PokemonCardList;
     static findCardList(state: State, card: Card): CardList;
     static findOwner(state: State, cardList: CardList): Player;
-    static isPokemonInPlay(player: Player, card: PokemonCard): boolean;
+    static isPokemonInPlay(player: Player, pokemon: PokemonCard): boolean;
     static getStadiumCard(state: State): Card | undefined;
 }
