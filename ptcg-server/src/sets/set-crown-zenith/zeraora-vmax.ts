@@ -1,4 +1,4 @@
-import { PokemonCard, Stage, CardType, CardTag, StoreLike, State, PlayerType, StateUtils } from '../../game';
+import { PokemonCard, Stage, CardType, CardTag, StoreLike, State, PlayerType, StateUtils, PowerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../game/store/prefabs/costs';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
@@ -43,7 +43,7 @@ export class ZeraoraVMAX extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
       let numOpPokemonWithAbilities = 0;
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-        if (card.powers != null && card.powers.length > 0) {
+        if (card.powers != null && card.powers.length > 0 && card.powers.some((power) => power.powerType == PowerType.ABILITY)) {
           numOpPokemonWithAbilities++;
         }
 
