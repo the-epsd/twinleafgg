@@ -1,23 +1,17 @@
-import { AttachEnergyPrompt, Card, ChooseEnergyPrompt, EnergyCard, GameError, GameMessage, PlayerType, Power, PowerType, SlotType, State, StateUtils, StoreLike, Weakness } from '../../game';
-import { BoardEffect, CardType, EnergyType, Stage, SuperType } from '../../game/store/card/card-types';
+import { AttachEnergyPrompt, EnergyCard, GameError, GameMessage, PlayerType, Power, PowerType, SlotType, State, StateUtils, StoreLike, Weakness } from '../../game';
+import { CardType, EnergyType, Stage, SuperType } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
-import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
+import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../game/store/prefabs/costs';
+import { ABILITY_USED, ADD_MARKER, HAS_MARKER, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Reshiram extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-  
-  public cardType: CardType = CardType.DRAGON;
-  
-  public weakness: Weakness[] = [{ type: CardType.FAIRY }];
-  
+  public cardType: CardType = N;
+  public weakness: Weakness[] = [{ type: Y }];
   public hp: number = 130;
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public retreat = [C, C];
 
   public powers: Power[] = [
     {
@@ -27,31 +21,26 @@ export class Reshiram extends PokemonCard {
       text: 'Once during your turn (before your attack), if this Pokémon is your Active Pokémon, you may attach a [R] Energy card from your hand to 1 of your [N] Pokémon.'
     }
   ];
-  
+
   public attacks = [
     {
       name: 'Bright Wing',
-      cost: [CardType.FIRE, CardType.FIRE, CardType.LIGHTNING, CardType.COLORLESS],
+      cost: [R, R, L, C],
       damage: 110,
       text: 'Discard a [R] Energy attached to this Pokémon.'
     }
   ];
 
   public set: string = 'ROS';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '63';
-
   public name: string = 'Reshiram';
-
   public fullName: string = 'Reshiram ROS';
-  
   private readonly TURBOBLAZE_MARKER = 'TURBOBLAZE_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
       const hasEnergyInHand = player.hand.cards.some(c => {
@@ -59,11 +48,11 @@ export class Reshiram extends PokemonCard {
           && c.energyType === EnergyType.BASIC
           && c.provides.includes(CardType.FIRE);
       });
-      
-      if (player.marker.hasMarker(this.TURBOBLAZE_MARKER, this)) {
+
+      if (HAS_MARKER(this.TURBOBLAZE_MARKER, effect.player, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
-      
+
       if (!hasEnergyInHand) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
@@ -84,38 +73,18 @@ export class Reshiram extends PokemonCard {
           const attachEnergyEffect = new AttachEnergyEffect(player, energyCard, target);
           store.reduceEffect(state, attachEnergyEffect);
         }
-        
-        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-          if (cardList.getPokemonCard() === this) {
-            cardList.addBoardEffect(BoardEffect.ABILITY_USED);
-          }
-        });
-        
-        player.marker.addMarker(this.TURBOBLAZE_MARKER, this);
-        
+
+        ABILITY_USED(effect.player, this);
+        ADD_MARKER(this.TURBOBLAZE_MARKER, effect.player, this);
         return state;
       });
     }
-    
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const player = effect.player;
-      
-      const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
-      state = store.reduceEffect(state, checkProvidedEnergy);
-      
-      state = store.prompt(state, new ChooseEnergyPrompt(
-        player.id,
-        GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
-        checkProvidedEnergy.energyMap,
-        [ CardType.FIRE ],
-        { allowCancel: false }
-      ), energy => {
-        const cards: Card[] = (energy || []).map(e => e.card);
-        const discardEnergy = new DiscardCardsEffect(effect, cards);
-        discardEnergy.target = player.active;
-        store.reduceEffect(state, discardEnergy);
-      });
+
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, 1, F);
     }
+
+    REMOVE_MARKER_AT_END_OF_TURN(effect, this.TURBOBLAZE_MARKER, this);
 
     return state;
   }

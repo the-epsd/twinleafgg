@@ -3,7 +3,7 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { AFTER_ATTACK, SWITCH_ACTIVE_WITH_BENCHED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { SWITCH_ACTIVE_WITH_BENCHED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Zubat extends PokemonCard {
 
@@ -38,14 +38,9 @@ export class Zubat extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      this.usedHideInShadows = true;
+      SWITCH_ACTIVE_WITH_BENCHED(store, state, effect.player);
     }
 
-    if (AFTER_ATTACK(effect) && this.usedHideInShadows) {
-      const player = effect.player;
-      SWITCH_ACTIVE_WITH_BENCHED(store, state, player);
-      this.usedHideInShadows = false;
-    }
     return state;
   }
 }
