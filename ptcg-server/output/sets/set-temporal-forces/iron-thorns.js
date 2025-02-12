@@ -10,25 +10,20 @@ class IronThorns extends pokemon_card_1.PokemonCard {
         super(...arguments);
         this.stage = card_types_1.Stage.BASIC;
         this.tags = [card_types_1.CardTag.FUTURE];
-        this.cardType = card_types_1.CardType.LIGHTNING;
+        this.cardType = L;
         this.hp = 140;
-        this.weakness = [{ type: card_types_1.CardType.FIGHTING }];
+        this.weakness = [{ type: F }];
         this.resistance = [];
-        this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
+        this.retreat = [C, C, C];
         this.attacks = [
             {
                 name: 'Destructo-Press',
-                cost: [card_types_1.CardType.LIGHTNING, card_types_1.CardType.COLORLESS],
+                cost: [L, C],
                 damage: 70,
                 damageCalculation: 'x',
                 text: 'Reveal the top 5 cards of your deck. This attack does 70 damage times for each Future card you find there. Then, discard the revealed Future cards and shuffle the other cards back into your deck.'
             },
-            {
-                name: 'Megaton Lariat',
-                cost: [card_types_1.CardType.LIGHTNING, card_types_1.CardType.LIGHTNING, card_types_1.CardType.LIGHTNING, card_types_1.CardType.COLORLESS],
-                damage: 140,
-                text: 'If your opponent\'s Active Pokémon is a Pokémon ex or Pokémon V, this attack does 80 more damage.'
-            }
+            { name: 'Megaton Lariat', cost: [L, L, L, C], damage: 140, text: '' },
         ];
         this.set = 'TEF';
         this.regulationMark = 'H';

@@ -1,9 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, PowerType, StateUtils, GameError, PokemonCardList } from '../../game';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { GameMessage } from '../../game/game-message';
+import { DEAL_MORE_DAMAGE_IF_OPPONENT_ACTIVE_HAS_CARD_TAG, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Marshadow extends PokemonCard {
 
@@ -75,13 +76,8 @@ export class Marshadow extends PokemonCard {
       }
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      const opponentActive = opponent.active.getPokemonCard();
-      if (opponentActive && opponentActive.tags.includes(CardTag.ULTRA_BEAST)) {
-        effect.damage += 60;
-      }
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      DEAL_MORE_DAMAGE_IF_OPPONENT_ACTIVE_HAS_CARD_TAG(effect, state, 60, CardTag.ULTRA_BEAST);
     }
 
     return state;

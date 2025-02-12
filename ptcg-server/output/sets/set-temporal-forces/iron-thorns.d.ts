@@ -8,19 +8,19 @@ export declare class IronThorns extends PokemonCard {
     cardType: CardType;
     hp: number;
     weakness: {
-        type: CardType;
+        type: CardType.FIGHTING;
     }[];
     resistance: never[];
-    retreat: CardType[];
+    retreat: CardType.COLORLESS[];
     attacks: ({
         name: string;
-        cost: CardType[];
+        cost: (CardType.LIGHTNING | CardType.COLORLESS)[];
         damage: number;
         damageCalculation: string;
         text: string;
     } | {
         name: string;
-        cost: CardType[];
+        cost: (CardType.LIGHTNING | CardType.COLORLESS)[];
         damage: number;
         text: string;
         damageCalculation?: undefined;

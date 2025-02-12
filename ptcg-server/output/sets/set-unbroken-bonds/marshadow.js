@@ -6,6 +6,7 @@ const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_message_1 = require("../../game/game-message");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class Marshadow extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -57,13 +58,8 @@ class Marshadow extends pokemon_card_1.PokemonCard {
                 return state;
             }
         }
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
-            const player = effect.player;
-            const opponent = game_1.StateUtils.getOpponent(state, player);
-            const opponentActive = opponent.active.getPokemonCard();
-            if (opponentActive && opponentActive.tags.includes(card_types_1.CardTag.ULTRA_BEAST)) {
-                effect.damage += 60;
-            }
+        if (prefabs_1.WAS_ATTACK_USED(effect, 0, this)) {
+            prefabs_1.DEAL_MORE_DAMAGE_IF_OPPONENT_ACTIVE_HAS_CARD_TAG(effect, state, 60, card_types_1.CardTag.ULTRA_BEAST);
         }
         return state;
     }
