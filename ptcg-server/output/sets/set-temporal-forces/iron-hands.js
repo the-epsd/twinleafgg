@@ -25,7 +25,7 @@ class IronHands extends pokemon_card_1.PokemonCard {
             },
             {
                 name: 'Superalloy Hands',
-                cost: [],
+                cost: [L, L, C],
                 damage: 80,
                 damageCalculation: '+',
                 text: 'If your opponent\'s Active Pokémon is a Pokémon ex or Pokémon V, this attack does 80 more damage.'

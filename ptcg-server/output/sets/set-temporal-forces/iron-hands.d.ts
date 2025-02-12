@@ -19,7 +19,7 @@ export declare class IronHands extends PokemonCard {
         damageCalculation?: undefined;
     } | {
         name: string;
-        cost: never[];
+        cost: (CardType.LIGHTNING | CardType.COLORLESS)[];
         damage: number;
         damageCalculation: string;
         text: string;
