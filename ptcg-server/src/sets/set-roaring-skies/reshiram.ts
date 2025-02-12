@@ -46,7 +46,7 @@ export class Reshiram extends PokemonCard {
       const hasEnergyInHand = player.hand.cards.some(c => {
         return c instanceof EnergyCard
           && c.energyType === EnergyType.BASIC
-          && c.provides.includes(CardType.FIRE);
+          && c.provides.includes(R);
       });
 
       if (HAS_MARKER(this.TURBOBLAZE_MARKER, effect.player, this)) {
@@ -81,7 +81,7 @@ export class Reshiram extends PokemonCard {
     }
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, 1, F);
+      DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, 1, R);
     }
 
     REMOVE_MARKER_AT_END_OF_TURN(effect, this.TURBOBLAZE_MARKER, this);
