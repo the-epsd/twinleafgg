@@ -15,6 +15,8 @@ import { IronHandsex } from './iron-hands-ex';
 import { IronJugulis } from './iron-jugulis';
 import { IronValiantex } from './iron-valiant-ex';
 import { LuxuriousCape } from './luxurious-cape';
+import { Magby } from './magby';
+import { Mantyke } from './mantyke';
 import { Mela } from './mela';
 import { Minior } from './minior';
 import { Morpeko } from './morpeko';
@@ -32,7 +34,15 @@ export declare class ToedscruelIR extends Toedscruel {
     setNumber: string;
     fullName: string;
 }
+export declare class MagbyIR extends Magby {
+    setNumber: string;
+    fullName: string;
+}
 export declare class SnoruntIR extends Snorunt {
+    setNumber: string;
+    fullName: string;
+}
+export declare class MantykeIR extends Mantyke {
     setNumber: string;
     fullName: string;
 }

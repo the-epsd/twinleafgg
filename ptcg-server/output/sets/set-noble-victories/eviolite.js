@@ -19,7 +19,7 @@ class Eviolite extends trainer_card_1.TrainerCard {
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof attack_effects_1.PutDamageEffect && effect.target.cards.includes(this)) {
-            if (effect.target.tool === this && effect.target.isBasic()) {
+            if (effect.target.tool === this && effect.target.isStage(card_types_1.Stage.BASIC)) {
                 effect.damage -= 20;
             }
         }

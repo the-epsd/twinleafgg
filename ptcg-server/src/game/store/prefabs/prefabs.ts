@@ -1,5 +1,5 @@
 import { AttachEnergyOptions, AttachEnergyPrompt, Card, CardList, ChooseCardsOptions, ChooseCardsPrompt, ChoosePokemonPrompt, ChoosePrizePrompt, CoinFlipPrompt, ConfirmPrompt, EnergyCard, FilterType, GameError, GameLog, GameMessage, Player, PlayerType, PokemonCardList, PowerType, SelectPrompt, ShowCardsPrompt, ShuffleDeckPrompt, SlotType, State, StateUtils, StoreLike } from '../..';
-import { BoardEffect, SpecialCondition, SuperType } from '../card/card-types';
+import { BoardEffect, CardTag, SpecialCondition, SuperType } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
 import { DealDamageEffect, DiscardCardsEffect, HealTargetEffect, PutDamageEffect } from '../effects/attack-effects';
 import { AddSpecialConditionsPowerEffect, CheckPrizesDestinationEffect, CheckProvidedEnergyEffect } from '../effects/check-effects';
@@ -126,6 +126,21 @@ export function SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND(store: StoreLike,
 export function THIS_ATTACK_DOES_X_MORE_DAMAGE(effect: AttackEffect, store: StoreLike, state: State, damage: number) {
   effect.damage += damage;
   return state;
+}
+
+export function DEAL_MORE_DAMAGE_IF_OPPONENT_ACTIVE_HAS_CARD_TAG(effect: AttackEffect, state: State, damage: number, ...cardTags: CardTag[]) {
+  const opponent = StateUtils.getOpponent(state, effect.player);
+  const opponentActive = opponent.active.getPokemonCard() as PokemonCard
+  let includesAnyTags = false;
+  for (const tag of cardTags) {
+    if (opponentActive.tags.includes(tag)) {
+      includesAnyTags = true;
+    }
+  }
+
+  if (includesAnyTags) {
+    effect.damage += damage;
+  }
 }
 
 export function HEAL_X_DAMAGE_FROM_THIS_POKEMON(effect: AttackEffect, store: StoreLike, state: State, damage: number) {

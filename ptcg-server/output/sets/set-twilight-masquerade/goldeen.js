@@ -23,7 +23,7 @@ class Goldeen extends game_1.PokemonCard {
             {
                 name: 'Whirlpool',
                 cost: [C, C],
-                damage: 60,
+                damage: 10,
                 text: 'Flip a coin. If heads, discard an Energy from your opponent\'s Active Pokémon.'
             }
         ];

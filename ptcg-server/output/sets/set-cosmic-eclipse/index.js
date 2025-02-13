@@ -25,6 +25,7 @@ const lillies_poke_doll_1 = require("./lillies-poke-doll");
 const lillipup_1 = require("./lillipup");
 const mallow_and_lana_1 = require("./mallow-and-lana");
 const natu_1 = require("./natu");
+const onix_1 = require("./onix");
 const phione_1 = require("./phione");
 const pikachu_1 = require("./pikachu");
 const ponyta_1 = require("./ponyta");
@@ -70,6 +71,7 @@ exports.setCosmicEclipse = [
     new lillipup_1.Lillipup(),
     new mallow_and_lana_1.MallowAndLana(),
     new natu_1.Natu(),
+    new onix_1.Onix(),
     new phione_1.Phione(),
     new pikachu_1.Pikachu(),
     new ponyta_1.Ponyta(),

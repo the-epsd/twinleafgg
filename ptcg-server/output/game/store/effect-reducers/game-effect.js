@@ -97,6 +97,8 @@ function* useAttack(next, store, state, effect) {
         const dealDamage = new attack_effects_1.DealDamageEffect(attackEffect, attackEffect.damage);
         state = store.reduceEffect(state, dealDamage);
     }
+    const afterAttackEffect = new game_phase_effects_1.AfterAttackEffect(effect.player);
+    store.reduceEffect(state, afterAttackEffect);
     if (store.hasPrompts()) {
         yield store.waitPrompt(state, () => next());
     }

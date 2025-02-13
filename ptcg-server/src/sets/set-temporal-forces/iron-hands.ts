@@ -1,34 +1,35 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SpecialCondition } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, GameMessage, CoinFlipPrompt } from '../../game';
+import { StoreLike, State, GameMessage, CoinFlipPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
+import { DEAL_MORE_DAMAGE_IF_OPPONENT_ACTIVE_HAS_CARD_TAG, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class IronHands extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
-  public cardType: CardType = CardType.LIGHTNING;
+  public cardType: CardType = L;
 
   public hp: number = 140;
 
-  public weakness = [{ type: CardType.FIGHTING }];
+  public weakness = [{ type: F }];
 
   public resistance = [];
 
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
+  public retreat = [C, C, C];
 
   public attacks = [
     {
       name: 'Volt Wave',
-      cost: [CardType.LIGHTNING, CardType.COLORLESS],
+      cost: [L, C],
       damage: 30,
       text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
     },
     {
       name: 'Superalloy Hands',
-      cost: [CardType.LIGHTNING, CardType.LIGHTNING, CardType.COLORLESS],
+      cost: [ L, L, C ],
       damage: 80,
       damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon is a Pokémon ex or Pokémon V, this attack does 80 more damage.'
@@ -63,13 +64,8 @@ export class IronHands extends PokemonCard {
       });
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      const opponentActive = opponent.active.getPokemonCard();
-      if (opponentActive && (opponentActive.tags.includes(CardTag.POKEMON_V || CardTag.POKEMON_VSTAR || CardTag.POKEMON_VMAX || CardTag.POKEMON_ex))) {
-        effect.damage += 80;
-      }
+    if (WAS_ATTACK_USED(effect, 1, this)) {
+      DEAL_MORE_DAMAGE_IF_OPPONENT_ACTIVE_HAS_CARD_TAG(effect, state, 80, CardTag.POKEMON_ex, CardTag.POKEMON_V);
     }
     return state;
   }

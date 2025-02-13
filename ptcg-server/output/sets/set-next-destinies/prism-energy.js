@@ -21,7 +21,7 @@ class PrismEnergy extends energy_card_1.EnergyCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof check_effects_1.CheckProvidedEnergyEffect
             && effect.source.cards.includes(this)
-            && effect.source.isBasic()) {
+            && effect.source.isStage(card_types_1.Stage.BASIC)) {
             effect.energyMap.push({ card: this, provides: [card_types_1.CardType.ANY] });
         }
         return state;

@@ -2,9 +2,10 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, GameMessage, GameError, PowerType, StateUtils, PlayerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { CheckRetreatCostEffect } from '../../game/store/effects/check-effects';
+import { IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 export class Latiasex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -73,28 +74,9 @@ export class Latiasex extends PokemonCard {
         return state;
       }
 
-      let inPlay = false;
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-        if (card === this) {
-          inPlay = true;
-        }
-      });
-
-      if (inPlay) {
-
-        try {
-          const stub = new PowerEffect(player, {
-            name: 'test',
-            powerType: PowerType.ABILITY,
-            text: ''
-          }, this);
-          store.reduceEffect(state, stub);
-        } catch {
-          return state;
-        }
-
-        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-          if (cardList.stage === Stage.BASIC) {
+      if (StateUtils.isPokemonInPlay(player, this) && !IS_ABILITY_BLOCKED(store, state, player, this)) {
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+          if (card.stage === Stage.BASIC) {
             effect.cost = [];
           }
         });

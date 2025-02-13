@@ -60,7 +60,7 @@ export class HearthflameMaskOgerponex extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      if (!opponent.active.isBasic()) {
+      if (!opponent.active.isStage(Stage.BASIC)) {
         effect.damage += 140;
       }
 

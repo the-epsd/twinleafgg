@@ -18,6 +18,7 @@ const marshtomp_1 = require("./marshtomp");
 const mudkip_1 = require("./mudkip");
 const nuzleaf_1 = require("./nuzleaf");
 const oricorio_1 = require("./oricorio");
+const phanpy_1 = require("./phanpy");
 const rayquaza_gx_1 = require("./rayquaza-gx");
 const sableye_1 = require("./sableye");
 const shrine_of_punishment_1 = require("./shrine-of-punishment");
@@ -45,6 +46,7 @@ exports.setCelestialStorm = [
     new mudkip_1.Mudkip(),
     new nuzleaf_1.Nuzleaf(),
     new oricorio_1.Oricorio(),
+    new phanpy_1.Phanpy(),
     new rayquaza_gx_1.RayquazaGX(),
     new sableye_1.Sableye(),
     new shrine_of_punishment_1.ShrineOfPunishment(),

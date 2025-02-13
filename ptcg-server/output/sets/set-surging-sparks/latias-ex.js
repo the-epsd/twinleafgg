@@ -7,6 +7,7 @@ const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 const check_effects_1 = require("../../game/store/effects/check-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class Latiasex extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -56,26 +57,9 @@ class Latiasex extends pokemon_card_1.PokemonCard {
             if (owner !== player) {
                 return state;
             }
-            let inPlay = false;
-            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-                if (card === this) {
-                    inPlay = true;
-                }
-            });
-            if (inPlay) {
-                try {
-                    const stub = new game_effects_1.PowerEffect(player, {
-                        name: 'test',
-                        powerType: game_1.PowerType.ABILITY,
-                        text: ''
-                    }, this);
-                    store.reduceEffect(state, stub);
-                }
-                catch (_a) {
-                    return state;
-                }
-                player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
-                    if (cardList.stage === card_types_1.Stage.BASIC) {
+            if (game_1.StateUtils.isPokemonInPlay(player, this) && !prefabs_1.IS_ABILITY_BLOCKED(store, state, player, this)) {
+                player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+                    if (card.stage === card_types_1.Stage.BASIC) {
                         effect.cost = [];
                     }
                 });

@@ -51,7 +51,7 @@ export class Zeraora extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      if (opponent.active.isBasic()) {
+      if (opponent.active.isStage(Stage.BASIC)) {
         return state;
       } else {
         effect.damage += 30;

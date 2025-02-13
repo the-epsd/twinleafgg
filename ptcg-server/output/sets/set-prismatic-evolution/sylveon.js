@@ -24,6 +24,7 @@ class Sylveon extends pokemon_card_1.PokemonCard {
             }];
         this.attacks = [{ name: 'Magical Shot', cost: [P, C, C], damage: 100, text: '' }];
         this.set = 'PRE';
+        this.regulationMark = 'H';
         this.setNumber = '40';
         this.cardImage = 'assets/cardback.png';
         this.name = 'Sylveon';

@@ -20,7 +20,7 @@ import { EarthenVessel } from './earthen-vessel';
 import { Elekid } from './elekid';
 import { Flittle } from './flittle';
 import { Froslassex } from './froslass-ex';
-import { ToedscruelIR, SnoruntIR, GimmighoulIR, GroudonIR, MiniorIR, GarganacIR, SlitherWingIR, MorpekoIR, BruteBonnetIR, CyclizarIR, IronJugulisIR, FroslassexFA, GarchompexFA, TsareenaexFA, TapuKokoexFA, IronHandsexFA, IronValiantexFA, HoopaexFA, SandyShocksexFA, RoaringMoonexFA, GholdengoexFA, MelaFA, ProfessorSadasVitalityFA, ProfessorTurosScenarioFA, TulipFA, GarchompexSIR, TapuKokoexSIR, IronHandsexSIR, IronValiantexSIR, SandyShocksexSIR, RoaringMoonexSIR, GholdengoexSIR, MelaSIR, ProfessorSadasVitalitySIR, ProfessorTurosScenarioSIR, TulipSIR, GarchompexHR, IronValiantexHR, RoaringMoonexHR, BeachCourtHR, CounterCatcherHR, LuxuriousCapeHR, ReversalEnergyHR, GarbodorIR } from './full-art';
+import { ToedscruelIR, SnoruntIR, GimmighoulIR, GroudonIR, MiniorIR, GarganacIR, SlitherWingIR, MorpekoIR, BruteBonnetIR, CyclizarIR, IronJugulisIR, FroslassexFA, GarchompexFA, TsareenaexFA, TapuKokoexFA, IronHandsexFA, IronValiantexFA, HoopaexFA, SandyShocksexFA, RoaringMoonexFA, GholdengoexFA, MelaFA, ProfessorSadasVitalityFA, ProfessorTurosScenarioFA, TulipFA, GarchompexSIR, TapuKokoexSIR, IronHandsexSIR, IronValiantexSIR, SandyShocksexSIR, RoaringMoonexSIR, GholdengoexSIR, MelaSIR, ProfessorSadasVitalitySIR, ProfessorTurosScenarioSIR, TulipSIR, GarchompexHR, IronValiantexHR, RoaringMoonexHR, BeachCourtHR, CounterCatcherHR, LuxuriousCapeHR, ReversalEnergyHR, GarbodorIR, MantykeIR, MagbyIR } from './full-art';
 import { FutureBoosterEnergyCapsule } from './future-booster-energy-capsule';
 import { Gabite } from './gabite';
 import { Garbodor } from './garbodor';
@@ -44,6 +44,8 @@ import { Jirachi } from './jirachi';
 import { Klawf } from './klawf';
 import { Latios } from './latios';
 import { LuxuriousCape } from './luxurious-cape';
+import { Magby } from './magby';
+import { Mantyke } from './mantyke';
 import { Mela } from './mela';
 import { Mewtwoex } from './mewtwo-ex';
 import { Minior } from './minior';
@@ -77,8 +79,8 @@ import { Tinkatuff } from './tinkatuff';
 import { Toedscool } from './toedscool';
 import { Toedscool2 } from './toedscool2';
 import { Toedscruel } from './toedscruel';
-import {Toxel} from './toxel';
-import {Toxtricityex} from './toxtricity-ex';
+import { Toxel } from './toxel';
+import { Toxtricityex } from './toxtricity-ex';
 import { Trubbish } from './trubbish';
 import { Tsareenaex } from './tsareena-ex';
 import { Tulip } from './tulip';
@@ -128,6 +130,8 @@ export const setParadoxRift: Card[] = [
   new Klawf(),
   new Latios(),
   new LuxuriousCape(),
+  new Magby(),
+  new Mantyke(),
   new Mela(),
   new Mewtwoex(),
   new Minior(),
@@ -178,7 +182,9 @@ export const setParadoxRift: Card[] = [
 
   //Full s
   new ToedscruelIR(),
+  new MagbyIR(),
   new SnoruntIR(),
+  new MantykeIR(),
   new GimmighoulIR(),
   new GroudonIR(),
   new MiniorIR(),

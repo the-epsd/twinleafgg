@@ -3,8 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Regigigas = void 0;
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
-const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class Regigigas extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -32,12 +32,7 @@ class Regigigas extends pokemon_card_1.PokemonCard {
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
-            const player = effect.player;
-            const opponent = game_1.StateUtils.getOpponent(state, player);
-            const opponentActive = opponent.active.getPokemonCard();
-            if (opponentActive && (opponentActive.tags.includes(card_types_1.CardTag.POKEMON_TERA))) {
-                effect.damage += 230;
-            }
+            prefabs_1.DEAL_MORE_DAMAGE_IF_OPPONENT_ACTIVE_HAS_CARD_TAG(effect, state, 230, card_types_1.CardTag.POKEMON_TERA);
         }
         return state;
     }

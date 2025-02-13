@@ -41,7 +41,7 @@ class TreasureTracker extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.set = 'PRE';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '146';
+        this.setNumber = '131';
         this.name = 'Treasure Tracker';
         this.fullName = 'Treasure Tracker PRE';
         this.text = 'Search your deck for up to 5 Pokémon Tool cards, reveal them, and then put them into your hand. Then, shuffle your deck.';

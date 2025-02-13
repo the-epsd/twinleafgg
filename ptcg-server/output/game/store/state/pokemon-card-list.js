@@ -17,7 +17,6 @@ class PokemonCardList extends card_list_1.CardList {
         this.pokemonPlayedTurn = 0;
         this.sleepFlips = 1;
         this.boardEffect = [];
-        this.stage = card_types_1.Stage.BASIC;
         this.isActivatingCard = false;
     }
     getPokemons() {
@@ -53,12 +52,12 @@ class PokemonCardList extends card_list_1.CardList {
             return pokemons[pokemons.length - 1];
         }
     }
-    isBasic() {
-        const pokemons = this.getPokemons();
-        if (pokemons.length !== 1) {
+    isStage(stage) {
+        const pokemonCard = this.getPokemonCard();
+        if (pokemonCard === undefined) {
             return false;
         }
-        return pokemons[0].stage === card_types_1.Stage.BASIC;
+        return pokemonCard.stage === stage;
     }
     clearAttackEffects() {
         this.marker.markers = [];
@@ -156,6 +155,7 @@ class PokemonCardList extends card_list_1.CardList {
         ].includes(s) === false);
         this.boardEffect.push(sp);
     }
+    //Rule-Box Pokemon
     hasRuleBox() {
         return this.cards.some(c => c.tags.includes(card_types_1.CardTag.POKEMON_ex) || c.tags.includes(card_types_1.CardTag.RADIANT) || c.tags.includes(card_types_1.CardTag.POKEMON_V) || c.tags.includes(card_types_1.CardTag.POKEMON_VMAX) || c.tags.includes(card_types_1.CardTag.POKEMON_VSTAR) || c.tags.includes(card_types_1.CardTag.POKEMON_GX) || c.tags.includes(card_types_1.CardTag.PRISM_STAR) || c.tags.includes(card_types_1.CardTag.BREAK));
     }
@@ -165,17 +165,41 @@ class PokemonCardList extends card_list_1.CardList {
     exPokemon() {
         return this.cards.some(c => c.tags.includes(card_types_1.CardTag.POKEMON_ex));
     }
+    isTera() {
+        return this.cards.some(c => c.tags.includes(card_types_1.CardTag.POKEMON_TERA));
+    }
+    //Single/Rapid/Fusion Strike
+    singleStrikePokemon() {
+        return this.cards.some(c => c.tags.includes(card_types_1.CardTag.SINGLE_STRIKE));
+    }
+    rapidStrikePokemon() {
+        return this.cards.some(c => c.tags.includes(card_types_1.CardTag.RAPID_STRIKE));
+    }
+    fusionStrikePokemon() {
+        return this.cards.some(c => c.tags.includes(card_types_1.CardTag.FUSION_STRIKE));
+    }
+    //Future/Ancient
     futurePokemon() {
         return this.cards.some(c => c.tags.includes(card_types_1.CardTag.FUTURE));
     }
     ancientPokemon() {
         return this.cards.some(c => c.tags.includes(card_types_1.CardTag.ANCIENT));
     }
-    isTera() {
-        return this.cards.some(c => c.tags.includes(card_types_1.CardTag.POKEMON_TERA));
-    }
+    //Trainer Pokemon
     isLillies() {
         return this.cards.some(c => c.tags.includes(card_types_1.CardTag.LILLIES));
+    }
+    isNs() {
+        return this.cards.some(c => c.tags.includes(card_types_1.CardTag.NS));
+    }
+    isIonos() {
+        return this.cards.some(c => c.tags.includes(card_types_1.CardTag.IONOS));
+    }
+    isHops() {
+        return this.cards.some(c => c.tags.includes(card_types_1.CardTag.HOPS));
+    }
+    isEthans() {
+        return this.cards.some(c => c.tags.includes(card_types_1.CardTag.ETHANS));
     }
     getToolEffect() {
         if (!this.tool) {

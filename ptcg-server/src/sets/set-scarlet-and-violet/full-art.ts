@@ -46,11 +46,13 @@ export class ArvenSIR extends Arven {
 }
 
 export class FightingEnergyHR extends FightingEnergy {
+  public set = 'SVI';
   public setNumber = '258';
   public fullName: string = 'Fighting EnergyHR SVI';
 }
 
 export class LightningEnergyHR extends LightningEnergy {
+  public set = 'SVI';
   public setNumber = '257';
   public fullName: string = 'Lightning EnergyHR SVI';
 }

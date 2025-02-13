@@ -79,7 +79,7 @@ export class Terapagosex extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const opponentActive = opponent.active.getPokemonCard();
-      if (opponent.active.isBasic() && opponent.active.stage == Stage.BASIC && opponentActive?.cardType !== CardType.COLORLESS) {
+      if (opponent.active.isStage(Stage.BASIC) && opponentActive?.cardType !== CardType.COLORLESS) {
         effect.preventDefault = true;
         return state;
       }

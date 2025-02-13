@@ -69,7 +69,7 @@ export class FilterCardsPipe implements PipeTransform {
         return false;
       }
 
-      if (filter.tags.length && !filter.tags.includes(this.getTags(card))) {
+      if (filter.tags.length && !filter.tags.some((tag) => card.tags.includes(tag))) {
         return false;
       }
 
@@ -134,60 +134,6 @@ export class FilterCardsPipe implements PipeTransform {
     }
 
     return attackCosts.some(c => attacks.map(a => a.cost.length).includes(c));
-  }
-
-  private getTags(card: Card): CardTag {
-    if (card.tags.includes(CardTag.POKEMON_ex)) {
-      return CardTag.POKEMON_ex;
-    }
-    if (card.tags.includes(CardTag.POKEMON_V)) {
-      return CardTag.POKEMON_V;
-    }
-    if (card.tags.includes(CardTag.POKEMON_VSTAR)) {
-      return CardTag.POKEMON_VSTAR;
-    }
-    if (card.tags.includes(CardTag.POKEMON_VMAX)) {
-      return CardTag.POKEMON_VMAX;
-    }
-    if (card.tags.includes(CardTag.POKEMON_TERA)) {
-      return CardTag.POKEMON_TERA;
-    }
-    if (card.tags.includes(CardTag.RADIANT)) {
-      return CardTag.RADIANT;
-    }
-    if (card.tags.includes(CardTag.FUTURE)) {
-      return CardTag.ANCIENT;
-    }
-    if (card.tags.includes(CardTag.SINGLE_STRIKE)) {
-      return CardTag.SINGLE_STRIKE;
-    }
-    if (card.tags.includes(CardTag.RAPID_STRIKE)) {
-      return CardTag.RAPID_STRIKE;
-    }
-    if (card.tags.includes(CardTag.FUSION_STRIKE)) {
-      return CardTag.FUSION_STRIKE;
-    }
-    if (card.tags.includes(CardTag.POKEMON_GX)) {
-      return CardTag.POKEMON_GX;
-    }
-    if (card.tags.includes(CardTag.TAG_TEAM)) {
-      return CardTag.TAG_TEAM;
-    }
-    if (card.tags.includes(CardTag.ULTRA_BEAST)) {
-      return CardTag.ULTRA_BEAST;
-    }
-    if (card.tags.includes(CardTag.POKEMON_EX)) {
-      return CardTag.POKEMON_EX;
-    }
-    if (card.tags.includes(CardTag.TEAM_PLASMA)) {
-      return CardTag.TEAM_PLASMA;
-    }
-    if (card.tags.includes(CardTag.POKEMON_LV_X)) {
-      return CardTag.POKEMON_LV_X;
-    }
-    if (card.tags.includes(CardTag.POKEMON_SP)) {
-      return CardTag.POKEMON_SP;
-    }
   }
 
   private getFormats(card: PokemonCard | TrainerCard | Card): Format[] {

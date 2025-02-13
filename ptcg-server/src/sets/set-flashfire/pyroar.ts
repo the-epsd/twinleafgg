@@ -75,7 +75,7 @@ export class Pyroar extends PokemonCard {
       }
 
       // It's not an attack
-      if (state.phase !== GamePhase.ATTACK || !effect.source.isBasic()) {
+      if (state.phase !== GamePhase.ATTACK || !effect.source.isStage(Stage.BASIC)) {
         return state;
       }
 

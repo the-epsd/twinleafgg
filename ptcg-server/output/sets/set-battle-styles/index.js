@@ -27,6 +27,7 @@ const level_ball_1 = require("./level-ball");
 const mimikyu_v_1 = require("./mimikyu-v");
 const necrozma_v_1 = require("./necrozma-v");
 const octillery_1 = require("./octillery");
+const primeape_1 = require("./primeape");
 const rapid_strike_energy_1 = require("./rapid-strike-energy");
 const rapid_strike_scroll_of_swirls_1 = require("./rapid-strike-scroll-of-swirls");
 const rapid_strike_urshifu_v_1 = require("./rapid-strike-urshifu-v");
@@ -77,6 +78,7 @@ exports.setBattleStyles = [
     new mimikyu_v_1.MimikyuV(),
     new necrozma_v_1.NecrozmaV(),
     new octillery_1.Octillery(),
+    new primeape_1.Primeape(),
     new rapid_strike_energy_1.RapidStrikeEnergy(),
     new rapid_strike_scroll_of_swirls_1.RapidStrikeScrollOfSwirls(),
     new rapid_strike_urshifu_v_1.RapidStrikeUrshifuV(),

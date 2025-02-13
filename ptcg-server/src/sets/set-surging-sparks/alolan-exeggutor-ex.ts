@@ -74,7 +74,7 @@ export class AlolanExeggutorex extends PokemonCard {
       const opponentActive = opponent.active.getPokemonCard();
       const opponentBench = opponent.bench.filter(card => card.getPokemonCard()?.stage === Stage.BASIC);
       opponentBench.forEach(card => {
-        if (card.stage !== Stage.BASIC) {
+        if (!card.isStage(Stage.BASIC)) {
           blocked.push();
         }
       });

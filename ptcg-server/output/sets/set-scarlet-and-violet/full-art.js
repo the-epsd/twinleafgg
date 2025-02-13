@@ -65,6 +65,7 @@ exports.ArvenSIR = ArvenSIR;
 class FightingEnergyHR extends fighting_energy_1.FightingEnergy {
     constructor() {
         super(...arguments);
+        this.set = 'SVI';
         this.setNumber = '258';
         this.fullName = 'Fighting EnergyHR SVI';
     }
@@ -73,6 +74,7 @@ exports.FightingEnergyHR = FightingEnergyHR;
 class LightningEnergyHR extends lightning_energy_1.LightningEnergy {
     constructor() {
         super(...arguments);
+        this.set = 'SVI';
         this.setNumber = '257';
         this.fullName = 'Lightning EnergyHR SVI';
     }

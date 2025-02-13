@@ -1,6 +1,6 @@
 import { Card } from '../../game/store/card/card';
 import { ApricornMaker } from './apricorn-maker';
-import {ArticunoGX} from './articuno-gx';
+import { ArticunoGX } from './articuno-gx';
 import { BanetteGX } from './banette-gx';
 import { Copycat } from './copycat';
 import { Delcatty } from './delcatty';
@@ -16,6 +16,7 @@ import { Marshtomp } from './marshtomp';
 import { Mudkip } from './mudkip';
 import { Nuzleaf } from './nuzleaf';
 import { Oricorio } from './oricorio';
+import { Phanpy } from './phanpy';
 import { RayquazaGX } from './rayquaza-gx';
 import { Sableye } from './sableye';
 import { ShrineOfPunishment } from './shrine-of-punishment';
@@ -44,6 +45,7 @@ export const setCelestialStorm: Card[] = [
   new Mudkip(),
   new Nuzleaf(),
   new Oricorio(),
+  new Phanpy(),
   new RayquazaGX(),
   new Sableye(),
   new ShrineOfPunishment(),

@@ -11,5 +11,6 @@ exports.setEmergingPowers = [
     new cheren_1.Cheren(),
     new card_images_1.CrushingHammerEPO(),
     new max_potion_1.MaxPotion(),
+    new card_images_1.RecycleEPO(),
     new tornadus_1.Tornadus(),
 ];

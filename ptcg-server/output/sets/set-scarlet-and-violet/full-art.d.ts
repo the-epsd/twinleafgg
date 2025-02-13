@@ -40,10 +40,12 @@ export declare class ArvenSIR extends Arven {
     fullName: string;
 }
 export declare class FightingEnergyHR extends FightingEnergy {
+    set: string;
     setNumber: string;
     fullName: string;
 }
 export declare class LightningEnergyHR extends LightningEnergy {
+    set: string;
     setNumber: string;
     fullName: string;
 }

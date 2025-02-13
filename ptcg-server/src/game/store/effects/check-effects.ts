@@ -164,6 +164,7 @@ export class CheckTableStateEffect implements Effect {
   readonly type: string = CheckEffects.CHECK_TABLE_STATE_EFFECT;
   public preventDefault = false;
   public benchSizes: number[];
+  public player!: Player;
 
   constructor(benchSizes: number[]) {
     this.benchSizes = benchSizes;

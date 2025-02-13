@@ -96,6 +96,7 @@ export declare class CheckTableStateEffect implements Effect {
     readonly type: string;
     preventDefault: boolean;
     benchSizes: number[];
+    player: Player;
     constructor(benchSizes: number[]);
 }
 export declare class AddSpecialConditionsPowerEffect implements Effect {

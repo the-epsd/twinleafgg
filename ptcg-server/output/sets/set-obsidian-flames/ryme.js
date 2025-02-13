@@ -37,7 +37,7 @@ class Ryme extends trainer_card_1.TrainerCard {
             }
             return store.prompt(state, new game_1.ChoosePokemonPrompt(opponent.id, game_1.GameMessage.CHOOSE_POKEMON_TO_SWITCH, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { allowCancel: false }), results => {
                 const cardList = results[0];
-                if (cardList.stage == card_types_1.Stage.BASIC) {
+                if (cardList.isStage(card_types_1.Stage.BASIC)) {
                     try {
                         const supporterEffect = new play_card_effects_1.SupporterEffect(player, effect.trainerCard);
                         store.reduceEffect(state, supporterEffect);

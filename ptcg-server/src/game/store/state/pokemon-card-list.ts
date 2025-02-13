@@ -57,7 +57,6 @@ export class PokemonCardList extends CardList {
   // we must remember, which card acts as a pokemon tool.
   public tool: Card | undefined;
   public stadium: Card | undefined;
-  public stage: Stage = Stage.BASIC;
   public attacksThisTurn?: number;
   isActivatingCard: boolean = false;
 
@@ -91,12 +90,12 @@ export class PokemonCardList extends CardList {
     }
   }
 
-  public isBasic(): boolean {
-    const pokemons = this.getPokemons();
-    if (pokemons.length !== 1) {
+  public isStage(stage: Stage): boolean {
+    const pokemonCard = this.getPokemonCard();
+    if (pokemonCard === undefined) {
       return false;
     }
-    return pokemons[0].stage === Stage.BASIC;
+    return pokemonCard.stage === stage;
   }
 
   clearAttackEffects(): void {
@@ -205,6 +204,8 @@ export class PokemonCardList extends CardList {
     this.boardEffect.push(sp);
   }
 
+  //Rule-Box Pokemon
+
   hasRuleBox(): boolean {
     return this.cards.some(c => c.tags.includes(CardTag.POKEMON_ex) || c.tags.includes(CardTag.RADIANT) || c.tags.includes(CardTag.POKEMON_V) || c.tags.includes(CardTag.POKEMON_VMAX) || c.tags.includes(CardTag.POKEMON_VSTAR) || c.tags.includes(CardTag.POKEMON_GX) || c.tags.includes(CardTag.PRISM_STAR) || c.tags.includes(CardTag.BREAK));
   }
@@ -217,6 +218,26 @@ export class PokemonCardList extends CardList {
     return this.cards.some(c => c.tags.includes(CardTag.POKEMON_ex));
   }
 
+  isTera(): boolean {
+    return this.cards.some(c => c.tags.includes(CardTag.POKEMON_TERA));
+  }
+
+  //Single/Rapid/Fusion Strike
+
+  singleStrikePokemon(): boolean {
+    return this.cards.some(c => c.tags.includes(CardTag.SINGLE_STRIKE));
+  }
+
+  rapidStrikePokemon(): boolean {
+    return this.cards.some(c => c.tags.includes(CardTag.RAPID_STRIKE));
+  }
+
+  fusionStrikePokemon(): boolean {
+    return this.cards.some(c => c.tags.includes(CardTag.FUSION_STRIKE));
+  }
+
+  //Future/Ancient
+
   futurePokemon(): boolean {
     return this.cards.some(c => c.tags.includes(CardTag.FUTURE));
   }
@@ -225,12 +246,26 @@ export class PokemonCardList extends CardList {
     return this.cards.some(c => c.tags.includes(CardTag.ANCIENT));
   }
 
-  isTera(): boolean {
-    return this.cards.some(c => c.tags.includes(CardTag.POKEMON_TERA));
-  }
+  //Trainer Pokemon
 
   isLillies(): boolean {
     return this.cards.some(c => c.tags.includes(CardTag.LILLIES));
+  }
+
+  isNs(): boolean {
+    return this.cards.some(c => c.tags.includes(CardTag.NS));
+  }
+
+  isIonos(): boolean {
+    return this.cards.some(c => c.tags.includes(CardTag.IONOS));
+  }
+
+  isHops(): boolean {
+    return this.cards.some(c => c.tags.includes(CardTag.HOPS));
+  }
+
+  isEthans(): boolean {
+    return this.cards.some(c => c.tags.includes(CardTag.ETHANS));
   }
 
   getToolEffect(): Power | Attack | undefined {

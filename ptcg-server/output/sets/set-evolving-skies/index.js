@@ -32,6 +32,7 @@ const rayquaza_vmax_1 = require("./rayquaza-vmax");
 const regidrago_1 = require("./regidrago");
 const regieleki_1 = require("./regieleki");
 const rescue_carrier_1 = require("./rescue-carrier");
+const shopping_center_1 = require("./shopping-center");
 const skiploom_1 = require("./skiploom");
 const stormy_mountains_1 = require("./stormy-mountains");
 const suicune_v_1 = require("./suicune-v");
@@ -92,6 +93,7 @@ exports.setEvolvingSkies = [
     new switching_cups_1.SwitchingCups(),
     new vigoroth_1.Vigoroth(),
     new volcarona_v_1.VolcaronaV(),
+    new shopping_center_1.ShoppingCenter(),
     // Full  & Alternate 
     new full_art_1.RayquazaVAA(),
     new full_art_1.RayquazaVMAXAA(),

@@ -10,6 +10,7 @@ const applin_2_1 = require("./applin-2");
 const aron_1 = require("./aron");
 const blissey_ex_1 = require("./blissey-ex");
 const bloodmoon_ursaluna_ex_1 = require("./bloodmoon-ursaluna-ex");
+const brute_bonnet_1 = require("./brute-bonnet");
 const bug_catching_set_1 = require("./bug-catching-set");
 const caretaker_1 = require("./caretaker");
 const carmine_1 = require("./carmine");
@@ -97,6 +98,7 @@ exports.setTwilightMasquerade = [
     new aron_1.Aron(),
     new blissey_ex_1.Blisseyex(),
     // new BoomerangEnergy(),
+    new brute_bonnet_1.BruteBonnet(),
     new carmine_1.Carmine(),
     new chimchar_1.Chimchar(),
     new clefable_1.Clefable(),

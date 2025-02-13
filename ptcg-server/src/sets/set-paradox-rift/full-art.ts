@@ -15,6 +15,8 @@ import { IronHandsex } from './iron-hands-ex';
 import { IronJugulis } from './iron-jugulis';
 import { IronValiantex } from './iron-valiant-ex';
 import { LuxuriousCape } from './luxurious-cape';
+import { Magby } from './magby';
+import { Mantyke } from './mantyke';
 import { Mela } from './mela';
 import { Minior } from './minior';
 import { Morpeko } from './morpeko';
@@ -44,10 +46,10 @@ export class ToedscruelIR extends Toedscruel {
   public fullName: string = 'ToedscruelIR PAR';
 }
 
-// export class MagbyIR extends Magby {
-//   public setNumber = '186';
-//   public fullName: string = 'MagbyIR PAR';
-// }
+export class MagbyIR extends Magby {
+  public setNumber = '186';
+  public fullName: string = 'MagbyIR PAR';
+}
 
 // export class IronMothIR extends IronMoth {
 //   public setNumber = '187';
@@ -59,10 +61,10 @@ export class SnoruntIR extends Snorunt {
   public fullName: string = 'SnoruntIR PAR';
 }
 
-// export class MantykeIR extends Mantyke {
-//   public setNumber = '189';
-//   public fullName: string = 'MantykeIR PAR';
-// }
+export class MantykeIR extends Mantyke {
+  public setNumber = '189';
+  public fullName: string = 'MantykeIR PAR';
+}
 
 // export class VanillishIR extends Vanillish {
 //   public setNumber = '190';

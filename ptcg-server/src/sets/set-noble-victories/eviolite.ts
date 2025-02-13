@@ -1,5 +1,5 @@
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { TrainerType } from '../../game/store/card/card-types';
+import { Stage, TrainerType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
@@ -27,7 +27,7 @@ export class Eviolite extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {
-      if (effect.target.tool === this && effect.target.isBasic()) {
+      if (effect.target.tool === this && effect.target.isStage(Stage.BASIC)) {
         effect.damage -= 20;
       }
     }

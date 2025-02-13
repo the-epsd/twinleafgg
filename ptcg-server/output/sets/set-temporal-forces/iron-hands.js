@@ -6,25 +6,26 @@ const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class IronHands extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.BASIC;
-        this.cardType = card_types_1.CardType.LIGHTNING;
+        this.cardType = L;
         this.hp = 140;
-        this.weakness = [{ type: card_types_1.CardType.FIGHTING }];
+        this.weakness = [{ type: F }];
         this.resistance = [];
-        this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
+        this.retreat = [C, C, C];
         this.attacks = [
             {
                 name: 'Volt Wave',
-                cost: [card_types_1.CardType.LIGHTNING, card_types_1.CardType.COLORLESS],
+                cost: [L, C],
                 damage: 30,
                 text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
             },
             {
                 name: 'Superalloy Hands',
-                cost: [card_types_1.CardType.LIGHTNING, card_types_1.CardType.LIGHTNING, card_types_1.CardType.COLORLESS],
+                cost: [L, L, C],
                 damage: 80,
                 damageCalculation: '+',
                 text: 'If your opponent\'s Active Pokémon is a Pokémon ex or Pokémon V, this attack does 80 more damage.'
@@ -47,13 +48,8 @@ class IronHands extends pokemon_card_1.PokemonCard {
                 }
             });
         }
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
-            const player = effect.player;
-            const opponent = game_1.StateUtils.getOpponent(state, player);
-            const opponentActive = opponent.active.getPokemonCard();
-            if (opponentActive && (opponentActive.tags.includes(card_types_1.CardTag.POKEMON_V || card_types_1.CardTag.POKEMON_VSTAR || card_types_1.CardTag.POKEMON_VMAX || card_types_1.CardTag.POKEMON_ex))) {
-                effect.damage += 80;
-            }
+        if (prefabs_1.WAS_ATTACK_USED(effect, 1, this)) {
+            prefabs_1.DEAL_MORE_DAMAGE_IF_OPPONENT_ACTIVE_HAS_CARD_TAG(effect, state, 80, card_types_1.CardTag.POKEMON_ex, card_types_1.CardTag.POKEMON_V);
         }
         return state;
     }
