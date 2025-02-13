@@ -53,6 +53,10 @@ export class Reshiram extends PokemonCard {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
 
+      if (player.active.cards[0] !== this) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
+      }
+
       if (!hasEnergyInHand) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
