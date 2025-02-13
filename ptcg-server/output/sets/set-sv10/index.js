@@ -6,6 +6,7 @@ const marnies_grimmsnarl_ex_1 = require("./marnies-grimmsnarl-ex");
 const marnies_impidimp_1 = require("./marnies-impidimp");
 const marnies_morgrem_1 = require("./marnies-morgrem");
 const marnies_morpeko_1 = require("./marnies-morpeko");
+const other_prints_1 = require("./other-prints");
 const spikemuth_gym_1 = require("./spikemuth-gym");
 const stevens_beldum_1 = require("./stevens-beldum");
 const stevens_carbink_1 = require("./stevens-carbink");
@@ -22,4 +23,5 @@ exports.setSV10 = [
     new stevens_metagross_ex_1.StevensMetagrossex(),
     new stevens_carbink_1.StevensCarbink(),
     new granite_cave_1.GraniteCave(),
+    new other_prints_1.EnergyRecyclerSV10(),
 ];

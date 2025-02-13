@@ -4,6 +4,7 @@ import { MarniesGrimmsnarlex } from './marnies-grimmsnarl-ex';
 import { MarniesImpidimp } from './marnies-impidimp';
 import { MarniesMorgrem } from './marnies-morgrem';
 import { MarniesMorpeko } from './marnies-morpeko';
+import {EnergyRecyclerSV10} from './other-prints';
 import { SpikemuthGym } from './spikemuth-gym';
 import { StevensBeldum } from './stevens-beldum';
 import { StevensCarbink } from './stevens-carbink';
@@ -22,4 +23,6 @@ export const setSV10: Card[] = [
   new StevensMetagrossex(),
   new StevensCarbink(),
   new GraniteCave(),
+
+  new EnergyRecyclerSV10(),
 ];

@@ -38,7 +38,7 @@ class EthansAdventure extends game_1.TrainerCard {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
             }
             effect.preventDefault = true;
-            state = store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_DECK, player.discard, {}, { min: 1, max: 3, allowCancel: false, blocked }), cards => {
+            state = store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_DECK, player.deck, {}, { min: 0, max: 3, allowCancel: false, blocked }), cards => {
                 if (!cards || cards.length === 0) {
                     return state;
                 }

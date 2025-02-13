@@ -50,9 +50,9 @@ export class EthansAdventure extends TrainerCard {
       state = store.prompt(state, new ChooseCardsPrompt(
         player,
         GameMessage.CHOOSE_CARD_TO_DECK,
-        player.discard,
+        player.deck,
         {},
-        { min: 1, max: 3, allowCancel: false, blocked }
+        { min: 0, max: 3, allowCancel: false, blocked }
       ), cards => {
         if (!cards || cards.length === 0) {
           return state;

@@ -17,7 +17,7 @@ class Amarys extends trainer_card_1.TrainerCard {
         this.name = 'Amarys';
         this.fullName = 'Amarys PRE';
         this.AMARYS_USED_MARKER = 'AMARYS_USED_MARKER';
-        this.text = 'Shuffle your hand into your deck. Then, draw 4 cards. If your opponent has 3 or fewer Prize cards remaining, draw 8 cards instead.';
+        this.text = 'Draw 4 cards. At the end of this turn, if you have 5 or more cards in your hand, discard your hand.';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
