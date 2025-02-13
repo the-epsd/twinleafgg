@@ -52,7 +52,7 @@ class Kindler extends trainer_card_1.TrainerCard {
         this.set = 'BRS';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '143';
-        this.regulationMark = 'H';
+        this.regulationMark = 'F';
         this.name = 'Kindler';
         this.fullName = 'Kindler BRS';
         this.text = 'You can use this card only if you discard a [R] Energy card from your hand.' +

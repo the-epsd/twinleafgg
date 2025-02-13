@@ -23,7 +23,7 @@ import {
   UseStadiumEffect,
   UseTrainerPowerEffect
 } from '../effects/game-effects';
-import { EndTurnEffect } from '../effects/game-phase-effects';
+import { AfterAttackEffect, EndTurnEffect } from '../effects/game-phase-effects';
 import { ChooseAttackPrompt } from '../prompts/choose-attack-prompt';
 import { CoinFlipPrompt } from '../prompts/coin-flip-prompt';
 import { ConfirmPrompt } from '../prompts/confirm-prompt';
@@ -63,7 +63,6 @@ function applyWeaknessAndResistance(
 
   return (damage * multiply) + modifier;
 }
-
 
 function* useAttack(next: Function, store: StoreLike, state: State, effect: UseAttackEffect): IterableIterator<State> {
   const player = effect.player;
@@ -142,6 +141,9 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
     const dealDamage = new DealDamageEffect(attackEffect, attackEffect.damage);
     state = store.reduceEffect(state, dealDamage);
   }
+
+  const afterAttackEffect = new AfterAttackEffect(effect.player);
+  store.reduceEffect(state, afterAttackEffect);
 
   if (store.hasPrompts()) {
     yield store.waitPrompt(state, () => next());

@@ -6,7 +6,6 @@ const game_message_1 = require("../../game-message");
 const attack_effects_1 = require("../effects/attack-effects");
 const game_effects_1 = require("../effects/game-effects");
 const state_utils_1 = require("../state-utils");
-const game_phase_effects_1 = require("../effects/game-phase-effects");
 function attackReducer(store, state, effect) {
     if (effect instanceof attack_effects_1.PutDamageEffect) {
         const target = effect.target;
@@ -33,8 +32,6 @@ function attackReducer(store, state, effect) {
             afterDamageEffect.target = effect.target;
             store.reduceEffect(state, afterDamageEffect);
         }
-        const afterAttackEffect = new game_phase_effects_1.AfterAttackEffect(effect.player);
-        store.reduceEffect(state, afterAttackEffect);
     }
     if (effect instanceof attack_effects_1.DealDamageEffect) {
         const base = effect.attackEffect;

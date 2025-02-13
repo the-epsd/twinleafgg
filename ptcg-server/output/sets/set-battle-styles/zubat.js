@@ -4,6 +4,7 @@ exports.Zubat = void 0;
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const prefabs_1 = require("../../game/store/prefabs/prefabs");
+const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 class Zubat extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -12,7 +13,8 @@ class Zubat extends pokemon_card_1.PokemonCard {
         this.hp = 50;
         this.weakness = [{ type: F }];
         this.retreat = [C];
-        this.attacks = [{
+        this.attacks = [
+            {
                 name: 'Hide in Shadows',
                 cost: [C],
                 damage: 0,
@@ -37,7 +39,7 @@ class Zubat extends pokemon_card_1.PokemonCard {
         if (prefabs_1.WAS_ATTACK_USED(effect, 0, this)) {
             this.usedHideInShadows = true;
         }
-        if (prefabs_1.AFTER_ATTACK(effect) && this.usedHideInShadows) {
+        if (effect instanceof game_phase_effects_1.AfterAttackEffect && this.usedHideInShadows == true) {
             const player = effect.player;
             prefabs_1.SWITCH_ACTIVE_WITH_BENCHED(store, state, player);
             this.usedHideInShadows = false;
