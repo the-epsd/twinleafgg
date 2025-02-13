@@ -56,7 +56,7 @@ function* playCard(next: Function, store: StoreLike, state: State, self: Tyme, e
     });
 
     // dang if only i knew how to log something entirely unique
-    store.log(state, GameLog.LOG_PLAYER_RETURNS_CARD_TO_HAND, { name: player.name, card: pokemonName });
+    store.log(state, GameLog.LOG_PLAYER_CHOOSES, { name: player.name, string: pokemonName });
 
     return store.prompt(state, new SelectPrompt(
       opponent.id,
@@ -65,6 +65,8 @@ function* playCard(next: Function, store: StoreLike, state: State, self: Tyme, e
       { allowCancel: false }
     ), choice => {
       const option = options[choice];
+
+      store.log(state, GameLog.LOG_PLAYER_CHOOSES, { name: opponent.name, string: '' + option.value })
 
       store.prompt(state, new ShowCardsPrompt(
         opponent.id,

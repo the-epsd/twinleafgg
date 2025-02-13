@@ -45,9 +45,10 @@ function* playCard(next, store, state, self, effect) {
             }
         });
         // dang if only i knew how to log something entirely unique
-        store.log(state, game_message_1.GameLog.LOG_PLAYER_RETURNS_CARD_TO_HAND, { name: player.name, card: pokemonName });
+        store.log(state, game_message_1.GameLog.LOG_PLAYER_CHOOSES, { name: player.name, string: pokemonName });
         return store.prompt(state, new game_1.SelectPrompt(opponent.id, game_message_1.GameMessage.CHOOSE_OPTION, options.map(c => c.message), { allowCancel: false }), choice => {
             const option = options[choice];
+            store.log(state, game_message_1.GameLog.LOG_PLAYER_CHOOSES, { name: opponent.name, string: '' + option.value });
             store.prompt(state, new game_1.ShowCardsPrompt(opponent.id, game_message_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, selectedPokemon.cards), () => {
                 if (option.value === pokemonHP) {
                     opponent.deck.moveTo(opponent.hand, 4);
