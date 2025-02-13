@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setSurgingSparks = void 0;
-const annihilape_1 = require("../set-scarlet-and-violet/annihilape");
+const annihilape_1 = require("../set-surging-sparks/annihilape");
 const alolan_diglett_1 = require("./alolan-diglett");
 const alolan_dugtrio_1 = require("./alolan-dugtrio");
 const alolan_exeggutor_ex_1 = require("./alolan-exeggutor-ex");
@@ -96,6 +96,7 @@ const togekiss_1 = require("./togekiss");
 const togepi_1 = require("./togepi");
 const togetic_1 = require("./togetic");
 const trapinch_1 = require("./trapinch");
+const tyme_1 = require("./tyme");
 const uxie_1 = require("./uxie");
 const vibrava_1 = require("./vibrava");
 const vigoroth_1 = require("./vigoroth");
@@ -206,6 +207,7 @@ exports.setSurgingSparks = [
     new quaquaval_1.Quaquaval(),
     new meddling_memo_1.MeddlingMemo(),
     new annihilape_1.Annihilape(),
+    new tyme_1.Tyme(),
     // Reprints
     new card_images_1.ScrambleSwitchSSP(),
     new card_images_1.CounterGainSSP(),

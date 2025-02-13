@@ -1,29 +1,26 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State } from '../../game';
+import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-export declare class Sylveon extends PokemonCard {
+export declare class Porygon extends PokemonCard {
     stage: Stage;
-    evolvesFrom: string;
     cardType: CardType;
     hp: number;
     weakness: {
-        type: CardType.METAL;
+        type: CardType.FIGHTING;
     }[];
-    retreat: CardType.COLORLESS[];
-    powers: {
-        name: string;
-        powerType: PowerType;
-        text: string;
+    resistance: {
+        type: CardType.PSYCHIC;
+        value: number;
     }[];
+    retreat: never[];
     attacks: {
         name: string;
-        cost: (CardType.PSYCHIC | CardType.COLORLESS)[];
+        cost: CardType.COLORLESS[];
         damage: number;
         text: string;
     }[];
     set: string;
-    regulationMark: string;
     setNumber: string;
     cardImage: string;
     name: string;

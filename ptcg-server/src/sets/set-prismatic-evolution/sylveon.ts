@@ -25,6 +25,7 @@ export class Sylveon extends PokemonCard {
   public attacks = [{ name: 'Magical Shot', cost: [P, C, C], damage: 100, text: '' }];
 
   public set: string = 'PRE';
+  public regulationMark = 'H';
   public setNumber = '40';
   public cardImage = 'assets/cardback.png';
   public name: string = 'Sylveon';
