@@ -2,7 +2,7 @@ import { PokemonCard, PowerType, StateUtils } from '../../game';
 import { CardTag, CardType, Stage } from '../../game/store/card/card-types';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+import { IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
 import { GamePhase, State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
@@ -22,7 +22,14 @@ export class StevensCarbink extends PokemonCard {
       'The effect of Stone Palace doesn\'t stack.'
   }]
 
-  public attacks = [{ name: 'Magical Shot', cost: [P, C, C], damage: 80, text: '' }];
+  public attacks = [
+    {
+      name: 'Magical Shot',
+      cost: [P, C, C],
+      damage: 80,
+      text: ''
+    }
+  ];
 
   public regulationMark: string = 'I';
   public set: string = 'SVOD';
@@ -33,31 +40,16 @@ export class StevensCarbink extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PutDamageEffect) {
-      if (effect.damageReduced || state.phase != GamePhase.ATTACK)
-        return state;
-
+    if (effect instanceof PutDamageEffect && StateUtils.isPokemonInPlay(effect.player, this, 'bench')) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      let isBenched = false;
 
-      opponent.bench.forEach(benchPokemon => {
-        if (benchPokemon.getPokemonCard() === this)
-          isBenched = true;
-      });
-
-      if (!isBenched)
+      if (effect.damageReduced || state.phase != GamePhase.ATTACK) {
         return state;
+      }
 
       // Try to reduce PowerEffect, to check if something is blocking our ability
-      try {
-        const stub = new PowerEffect(opponent, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
-      } catch {
+      if (IS_ABILITY_BLOCKED(store, state, opponent, this)) {
         return state;
       }
 
@@ -67,9 +59,6 @@ export class StevensCarbink extends PokemonCard {
       }
       return state;
     }
-
-
     return state;
   }
-
 }

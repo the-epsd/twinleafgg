@@ -27,8 +27,8 @@ export class StevensMetang extends PokemonCard {
 
   public regulationMark: string = 'I';
   public set: string = 'SVOD';
-  public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '6';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Steven\'s Metang';
   public fullName: string = 'Steven\'s Metang SVOD';
 

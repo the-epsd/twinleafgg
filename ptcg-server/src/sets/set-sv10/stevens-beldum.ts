@@ -14,8 +14,8 @@ export class StevensBeldum extends PokemonCard {
 
   public regulationMark: string = 'I';
   public set: string = 'SVOD';
-  public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '5';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Steven\'s Beldum';
   public fullName: string = 'Steven\'s Beldum SVOD';
 

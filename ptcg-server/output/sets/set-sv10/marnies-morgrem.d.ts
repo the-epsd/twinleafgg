@@ -17,8 +17,8 @@ export declare class MarniesMorgrem extends PokemonCard {
     }[];
     regulationMark: string;
     set: string;
-    cardImage: string;
     setNumber: string;
+    cardImage: string;
     name: string;
     fullName: string;
 }

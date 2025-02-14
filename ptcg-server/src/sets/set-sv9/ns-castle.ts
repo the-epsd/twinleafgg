@@ -11,6 +11,7 @@ import { CheckRetreatCostEffect } from '../../game/store/effects/check-effects';
 
 export class NsCastle extends TrainerCard {
   public trainerType: TrainerType = TrainerType.STADIUM;
+  public tags = [CardTag.NS];
   public set: string = 'SV9';
   public name: string = 'N\'s Castle';
   public fullName: string = 'N\'s Castle SV9';

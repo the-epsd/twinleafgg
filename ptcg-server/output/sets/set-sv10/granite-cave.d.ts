@@ -7,8 +7,8 @@ export declare class GraniteCave extends TrainerCard {
     trainerType: TrainerType;
     regulationMark: string;
     set: string;
-    cardImage: string;
     setNumber: string;
+    cardImage: string;
     name: string;
     fullName: string;
     text: string;

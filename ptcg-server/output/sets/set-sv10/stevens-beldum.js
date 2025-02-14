@@ -16,8 +16,8 @@ class StevensBeldum extends game_1.PokemonCard {
         this.attacks = [{ name: 'Metal Slash', cost: [M, C], damage: 30, text: '' }];
         this.regulationMark = 'I';
         this.set = 'SVOD';
-        this.cardImage = 'assets/cardback.png';
         this.setNumber = '5';
+        this.cardImage = 'assets/cardback.png';
         this.name = 'Steven\'s Beldum';
         this.fullName = 'Steven\'s Beldum SVOD';
     }
