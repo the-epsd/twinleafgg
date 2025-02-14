@@ -50,7 +50,6 @@ export class CoreSocket {
   }
 
   public onGameAdd(game: Game): void {
-    console.log(`New game created. Total active games: ${this.core.games.length}`);
     // Initialize cache with reasonable defaults
     this.cache.lastLogIdCache[game.id] = 0;
     this.cache.gameInfoCache[game.id] = CoreSocket.buildGameInfo(game);
@@ -62,7 +61,6 @@ export class CoreSocket {
   }
 
   public onGameDelete(game: Game): void {
-    console.log(`Game deleted. Total active games: ${this.core.games.length - 1}`);
     // Clean up cache
     delete this.cache.gameInfoCache[game.id];
     delete this.cache.lastLogIdCache[game.id];
