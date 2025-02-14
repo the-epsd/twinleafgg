@@ -24,7 +24,7 @@ class MewtwoVUNIONBottomRight extends pokemon_card_1.PokemonCard {
                 text: 'Once per game during your turn, combine 4 different Mewtwo V-UNION from your discard pile and put them onto your bench.',
                 useFromDiscard: true,
                 exemptFromAbilityLock: true,
-                powerType: game_1.PowerType.ABILITY
+                powerType: game_1.PowerType.VUNION_ASSEMBLY,
             },
             {
                 name: 'Photon Barrier',

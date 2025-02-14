@@ -32,7 +32,8 @@ export enum PowerType {
   POKEPOWER,
   ABILITY,
   ANCIENT_TRAIT,
-  POKEMON_POWER
+  POKEMON_POWER,
+  VUNION_ASSEMBLY,
 }
 
 export interface Power {
@@ -45,5 +46,4 @@ export interface Power {
   useFromDiscard?: boolean;
   exemptFromAbilityLock?: boolean;
   exemptFromInitialize?: boolean;
-  barrage?: boolean;
 }

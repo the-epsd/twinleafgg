@@ -28,7 +28,8 @@ export declare enum PowerType {
     POKEPOWER = 1,
     ABILITY = 2,
     ANCIENT_TRAIT = 3,
-    POKEMON_POWER = 4
+    POKEMON_POWER = 4,
+    VUNION_ASSEMBLY = 5
 }
 export interface Power {
     name: string;
@@ -40,5 +41,4 @@ export interface Power {
     useFromDiscard?: boolean;
     exemptFromAbilityLock?: boolean;
     exemptFromInitialize?: boolean;
-    barrage?: boolean;
 }

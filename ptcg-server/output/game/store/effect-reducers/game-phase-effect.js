@@ -147,24 +147,13 @@ function gamePhaseReducer(store, state, effect) {
     if (effect instanceof game_phase_effects_1.EndTurnEffect) {
         const player = state.players[state.activePlayer];
         player.canEvolve = false;
-        player.forEachPokemon(play_card_action_1.PlayerType.BOTTOM_PLAYER, cardList => {
-            cardList.attacksThisTurn = 0;
-        });
-        player.forEachPokemon(play_card_action_1.PlayerType.BOTTOM_PLAYER, cardList => {
-            const pokemonCard = cardList.getPokemonCard();
-            if (pokemonCard && player.active.cards.includes(pokemonCard)) {
-                cardList.removeSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
-                cardList.removeBoardEffect(card_types_1.BoardEffect.ABILITY_USED);
-            }
-        });
-        effect.player.marker.removeMarker(effect.player.DAMAGE_DEALT_MARKER);
         player.forEachPokemon(play_card_action_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-            if (cardList === player.active) {
-                return;
-            }
             cardList.removeSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
             cardList.removeBoardEffect(card_types_1.BoardEffect.ABILITY_USED);
+            card.attacksThisTurn = 0;
+            card.maxAttacksThisTurn = 1;
         });
+        effect.player.marker.removeMarker(effect.player.DAMAGE_DEALT_MARKER);
         player.supporterTurn = 0;
         if (player === undefined) {
             throw new game_error_1.GameError(game_message_1.GameMessage.NOT_YOUR_TURN);

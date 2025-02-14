@@ -24,7 +24,9 @@ export class IrisFightingSpirit extends TrainerCard {
   public fullName: string = 'Iris\'s Fighting Spirit SV9';
 
   public text: string =
-    'Discard a card from your hand. If you do, draw cards until you have 6 cards in your hand.';
+    'You can use this card only if you discard another card from your hand.' +
+    '\n\n' +
+    'Draw cards until you have 6 cards in your hand.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

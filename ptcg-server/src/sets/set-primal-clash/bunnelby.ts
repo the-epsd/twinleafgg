@@ -52,6 +52,11 @@ export class Bunnelby extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
+    if (effect instanceof AttackEffect) {
+      this.maxAttacksThisTurn = 2;
+      this.allowSubsequentAttackChoice = true;
+    }
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);

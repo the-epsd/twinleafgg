@@ -16,7 +16,9 @@ class IrisFightingSpirit extends trainer_card_1.TrainerCard {
         this.setNumber = '94';
         this.name = 'Iris\'s Fighting Spirit';
         this.fullName = 'Iris\'s Fighting Spirit SV9';
-        this.text = 'Discard a card from your hand. If you do, draw cards until you have 6 cards in your hand.';
+        this.text = 'You can use this card only if you discard another card from your hand.' +
+            '\n\n' +
+            'Draw cards until you have 6 cards in your hand.';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {

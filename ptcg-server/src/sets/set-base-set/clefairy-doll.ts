@@ -26,6 +26,9 @@ export class ClefairyDoll extends TrainerCard {
   public cardType: CardType = C;
   public movedToActiveThisTurn = false;
   public pokemonType = PokemonType.NORMAL;
+  public attacksThisTurn: number = 0;
+  public maxAttacksThisTurn: number = 1;
+  public allowSubsequentAttackChoice: boolean = false;
 
   public weakness = [];
   public resistance = [];

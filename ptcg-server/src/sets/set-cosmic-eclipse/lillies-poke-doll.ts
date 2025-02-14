@@ -24,23 +24,18 @@ export class LilliesPokeDoll extends TrainerCard {
   public archetype = [];
 
   public hp: number = 30;
-
   public weakness = [];
-
   public retreat = [];
-
   public resistance = [];
-
   public attacks = [];
+  public attacksThisTurn: number = 0;
+  public maxAttacksThisTurn: number = 1;
+  public allowSubsequentAttackChoice: boolean = false;
 
   public set: string = 'CEC';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '197';
-
   public name: string = 'Lillie\'s Poké Doll';
-
   public fullName: string = 'Lillie\'s Poké Doll CEC';
 
   public powers: Power[] = [
