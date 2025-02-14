@@ -32,8 +32,7 @@
     "reflect-metadata": "^0.1.13",
     "socket.io": "^4.2.0",
     "sqlite3": "^5.1.6",
-    "typeorm": "^0.2.38",
-    "winston": "^3.17.0"
+    "typeorm": "^0.2.38"
   },
   "devDependencies": {
     "@types/express": "^4.17.7",
