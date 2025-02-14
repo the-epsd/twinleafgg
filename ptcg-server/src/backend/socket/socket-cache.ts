@@ -1,6 +1,9 @@
-import { GameInfo } from '../interfaces';
+import { CoreInfo, GameInfo } from '../interfaces';
 
 export class SocketCache {
-  gameInfoCache: {[id: number]: GameInfo} = {};
-  lastLogIdCache: {[id: number]: number} = {};
+  public gameInfoCache: { [key: string]: GameInfo } = {};
+  public lastLogIdCache: { [key: string]: number } = {};
+  public lastUserUpdate: number = 0;
+  public coreInfo: CoreInfo | null = null;
+  public coreInfoTimestamp: number = 0;
 }

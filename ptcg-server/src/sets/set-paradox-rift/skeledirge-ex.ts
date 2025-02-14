@@ -7,6 +7,7 @@ import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt'
 import { AfterDamageEffect, ApplyWeaknessEffect, DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { ABILITY_USED } from '../../game/store/prefabs/prefabs';
 
 export class SkeledirgeEX extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -82,6 +83,7 @@ export class SkeledirgeEX extends PokemonCard {
         const card = selected[0];
         player.hand.moveCardTo(card, player.discard);
         player.marker.addMarker(this.INCENDIARY_SONG_MARKER, this);
+        ABILITY_USED(player, this);
       });
     }
 

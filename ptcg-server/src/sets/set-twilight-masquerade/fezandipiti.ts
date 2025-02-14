@@ -55,7 +55,9 @@ export class Fezandipiti extends PokemonCard {
       const cardList = StateUtils.findCardList(state, this) as PokemonCardList;
 
       // Only blocks damage from attacks
-      if (effect.target !== cardList || state.phase !== GamePhase.ATTACK) { return state; }
+      if (effect.target !== cardList || state.phase !== GamePhase.ATTACK) {
+        return state;
+      }
 
       // Try to reduce PowerEffect, to check if something is blocking our ability
       try {

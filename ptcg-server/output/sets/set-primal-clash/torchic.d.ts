@@ -14,6 +14,7 @@ export declare class Torchic extends PokemonCard {
     powers: {
         name: string;
         powerType: PowerType;
+        barrage: boolean;
         text: string;
     }[];
     attacks: {
@@ -27,6 +28,5 @@ export declare class Torchic extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
-    attacksThisTurn: number;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

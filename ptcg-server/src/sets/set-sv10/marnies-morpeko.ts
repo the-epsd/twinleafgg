@@ -21,8 +21,8 @@ export class MarniesMorpeko extends PokemonCard {
 
   public regulationMark: string = 'I';
   public set: string = 'SVOM';
-  public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '8';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Marnie\'s Morpeko';
   public fullName: string = 'Marnie\'s Morpeko SVOM';
 

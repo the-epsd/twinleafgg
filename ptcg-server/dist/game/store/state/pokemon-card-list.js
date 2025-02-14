@@ -1,4 +1,4 @@
-import { BoardEffect, CardTag, SpecialCondition, Stage, SuperType } from '../card/card-types';
+import { BoardEffect, CardTag, SpecialCondition, SuperType } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
 import { CardList } from './card-list';
 import { Marker } from './card-marker';
@@ -14,7 +14,6 @@ export class PokemonCardList extends CardList {
         this.pokemonPlayedTurn = 0;
         this.sleepFlips = 1;
         this.boardEffect = [];
-        this.stage = Stage.BASIC;
         this.isActivatingCard = false;
     }
     getPokemons() {
@@ -50,12 +49,12 @@ export class PokemonCardList extends CardList {
             return pokemons[pokemons.length - 1];
         }
     }
-    isBasic() {
-        const pokemons = this.getPokemons();
-        if (pokemons.length !== 1) {
+    isStage(stage) {
+        const pokemonCard = this.getPokemonCard();
+        if (pokemonCard === undefined) {
             return false;
         }
-        return pokemons[0].stage === Stage.BASIC;
+        return pokemonCard.stage === stage;
     }
     clearAttackEffects() {
         this.marker.markers = [];
@@ -153,6 +152,7 @@ export class PokemonCardList extends CardList {
         ].includes(s) === false);
         this.boardEffect.push(sp);
     }
+    //Rule-Box Pokemon
     hasRuleBox() {
         return this.cards.some(c => c.tags.includes(CardTag.POKEMON_ex) || c.tags.includes(CardTag.RADIANT) || c.tags.includes(CardTag.POKEMON_V) || c.tags.includes(CardTag.POKEMON_VMAX) || c.tags.includes(CardTag.POKEMON_VSTAR) || c.tags.includes(CardTag.POKEMON_GX) || c.tags.includes(CardTag.PRISM_STAR) || c.tags.includes(CardTag.BREAK));
     }
@@ -162,17 +162,41 @@ export class PokemonCardList extends CardList {
     exPokemon() {
         return this.cards.some(c => c.tags.includes(CardTag.POKEMON_ex));
     }
+    isTera() {
+        return this.cards.some(c => c.tags.includes(CardTag.POKEMON_TERA));
+    }
+    //Single/Rapid/Fusion Strike
+    singleStrikePokemon() {
+        return this.cards.some(c => c.tags.includes(CardTag.SINGLE_STRIKE));
+    }
+    rapidStrikePokemon() {
+        return this.cards.some(c => c.tags.includes(CardTag.RAPID_STRIKE));
+    }
+    fusionStrikePokemon() {
+        return this.cards.some(c => c.tags.includes(CardTag.FUSION_STRIKE));
+    }
+    //Future/Ancient
     futurePokemon() {
         return this.cards.some(c => c.tags.includes(CardTag.FUTURE));
     }
     ancientPokemon() {
         return this.cards.some(c => c.tags.includes(CardTag.ANCIENT));
     }
-    isTera() {
-        return this.cards.some(c => c.tags.includes(CardTag.POKEMON_TERA));
-    }
+    //Trainer Pokemon
     isLillies() {
         return this.cards.some(c => c.tags.includes(CardTag.LILLIES));
+    }
+    isNs() {
+        return this.cards.some(c => c.tags.includes(CardTag.NS));
+    }
+    isIonos() {
+        return this.cards.some(c => c.tags.includes(CardTag.IONOS));
+    }
+    isHops() {
+        return this.cards.some(c => c.tags.includes(CardTag.HOPS));
+    }
+    isEthans() {
+        return this.cards.some(c => c.tags.includes(CardTag.ETHANS));
     }
     getToolEffect() {
         if (!this.tool) {

@@ -19,12 +19,10 @@ class WebSocketServer {
         server.use(auth_middleware_1.authMiddleware);
         server.on('connection', (socket) => {
             const user = socket.user;
-            console.log(`Connection opened - ${user.name} - Active connections: ${server.engine.clientsCount}`);
             const socketClient = new socket_client_1.SocketClient(user, this.core, server, socket);
             this.core.connect(socketClient);
             socketClient.attachListeners();
             socket.on('disconnect', () => {
-                console.log(`Connection closed - ${user.name} - Active connections: ${server.engine.clientsCount - 1}`);
                 this.core.disconnect(socketClient);
                 user.updateLastSeen();
             });

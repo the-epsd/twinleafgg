@@ -40,6 +40,10 @@ class Bunnelby extends pokemon_card_1.PokemonCard {
         this.setNumber = '121';
     }
     reduceEffect(store, state, effect) {
+        if (effect instanceof game_effects_1.AttackEffect) {
+            this.maxAttacksThisTurn = 2;
+            this.allowSubsequentAttackChoice = true;
+        }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const opponent = state_utils_1.StateUtils.getOpponent(state, player);

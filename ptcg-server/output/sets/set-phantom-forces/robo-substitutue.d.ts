@@ -18,6 +18,9 @@ export declare class RoboSubstitute extends TrainerCard {
     retreat: never[];
     resistance: never[];
     attacks: never[];
+    attacksThisTurn: number;
+    maxAttacksThisTurn: number;
+    allowSubsequentAttackChoice: boolean;
     set: string;
     cardImage: string;
     setNumber: string;

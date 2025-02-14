@@ -25,8 +25,7 @@ export class Amarys extends TrainerCard {
 
   public readonly AMARYS_USED_MARKER = 'AMARYS_USED_MARKER';
 
-  public text: string =
-    'Shuffle your hand into your deck. Then, draw 4 cards. If your opponent has 3 or fewer Prize cards remaining, draw 8 cards instead.';
+  public text: string = 'Draw 4 cards. At the end of this turn, if you have 5 or more cards in your hand, discard your hand.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

@@ -57,7 +57,6 @@ export class PokemonCardList extends CardList {
   // we must remember, which card acts as a pokemon tool.
   public tool: Card | undefined;
   public stadium: Card | undefined;
-  public attacksThisTurn?: number;
   isActivatingCard: boolean = false;
 
   public getPokemons(): PokemonCard[] {

@@ -44,6 +44,9 @@ class Unown extends pokemon_card_1.PokemonCard {
             if (benchIndex === -1) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
+            if (player.deck.cards.length === 0) {
+                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
+            }
             player.bench[benchIndex].moveTo(player.discard);
             player.bench[benchIndex].clearEffects();
             player.deck.moveTo(player.hand, 1);

@@ -8,7 +8,10 @@ class MatchmakingService {
         this.playerFormat = new Map();
         this.queueUpdates = new events_1.EventEmitter();
         this.lobbyCache = new Map();
+        this.lastCleanup = 0;
+        this.CLEANUP_INTERVAL = 60000; // Clean up every minute
         this.core = core;
+        this.startCleanupInterval();
     }
     static getInstance(core) {
         if (!MatchmakingService.instance) {
@@ -16,7 +19,37 @@ class MatchmakingService {
         }
         return MatchmakingService.instance;
     }
+    startCleanupInterval() {
+        setInterval(() => this.cleanup(), this.CLEANUP_INTERVAL);
+    }
+    cleanup() {
+        const now = Date.now();
+        if (now - this.lastCleanup < this.CLEANUP_INTERVAL) {
+            return;
+        }
+        // Clean up disconnected players from lobbies
+        for (const [format, lobby] of this.lobbies.entries()) {
+            const activePlayers = lobby.filter(([userId]) => this.core.clients.some(client => client.id === userId));
+            if (activePlayers.length !== lobby.length) {
+                this.lobbies.set(format, activePlayers);
+                this.emitLobbyUpdate(format);
+            }
+            if (activePlayers.length === 0) {
+                this.lobbies.delete(format);
+            }
+        }
+        // Clean up playerFormat map
+        for (const [userId] of this.playerFormat) {
+            if (!this.core.clients.some(client => client.id === userId)) {
+                this.playerFormat.delete(userId);
+            }
+        }
+        // Clear lobby cache
+        this.lobbyCache.clear();
+        this.lastCleanup = now;
+    }
     getLobby(format) {
+        this.cleanup();
         if (!this.lobbyCache.has(format)) {
             this.lobbyCache.set(format, this.lobbies.get(format) || []);
         }
@@ -24,6 +57,7 @@ class MatchmakingService {
     }
     async addToQueue(userId, format, deck) {
         var _a;
+        this.cleanup();
         if (!this.lobbies.has(format)) {
             this.lobbies.set(format, []);
         }
@@ -33,6 +67,7 @@ class MatchmakingService {
         await this.checkForMatch(format);
     }
     removeFromQueue(userId) {
+        this.cleanup();
         const format = this.playerFormat.get(userId);
         if (format) {
             const lobby = this.lobbies.get(format);
@@ -40,6 +75,9 @@ class MatchmakingService {
                 const index = lobby.findIndex(l => l[0] === userId);
                 if (index > -1) {
                     lobby.splice(index, 1);
+                }
+                if (lobby.length === 0) {
+                    this.lobbies.delete(format);
                 }
             }
             this.playerFormat.delete(userId);
@@ -56,6 +94,9 @@ class MatchmakingService {
             if (player1 && player2) {
                 console.log('Attempting to create match for Player 1 & Player 2');
                 this.createMatch(player1, player2, format);
+            }
+            if (lobby.length === 0) {
+                this.lobbies.delete(format);
             }
         }
         else {

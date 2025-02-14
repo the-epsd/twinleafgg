@@ -8,13 +8,13 @@ export declare class Archaludon extends PokemonCard {
     cardType: CardType;
     hp: number;
     weakness: {
-        type: CardType;
+        type: CardType.FIRE;
     }[];
     resistance: {
-        type: CardType;
+        type: CardType.GRASS;
         value: number;
     }[];
-    retreat: CardType[];
+    retreat: CardType.COLORLESS[];
     powers: {
         name: string;
         powerType: PowerType;
@@ -22,18 +22,17 @@ export declare class Archaludon extends PokemonCard {
     }[];
     attacks: {
         name: string;
-        cost: CardType[];
+        cost: (CardType.METAL | CardType.COLORLESS)[];
         damage: number;
         text: string;
     }[];
     regulationMark: string;
     set: string;
+    setNumber: string;
+    cardImage: string;
     name: string;
     fullName: string;
-    cardImage: string;
-    setNumber: string;
-    readonly ATTACK_USED_MARKER = "ATTACK_USED_MARKER";
-    readonly ATTACK_USED_2_MARKER = "ATTACK_USED_2_MARKER";
-    readonly OPPONENT_CANNOT_PLAY_STADIUMS_MARKER = "OPPONENT_CANNOT_PLAY_STADIUMS_MARKER";
+    private readonly ATTACK_USED_MARKER;
+    private readonly ATTACK_USED_2_MARKER;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

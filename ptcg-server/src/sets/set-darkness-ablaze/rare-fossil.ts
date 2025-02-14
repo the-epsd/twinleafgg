@@ -23,25 +23,19 @@ export class RareFossil extends TrainerCard {
   public archetype = [];
 
   public hp: number = 70;
-
   public weakness = [];
-
   public retreat = [];
-
   public resistance = [];
-
   public attacks = [];
+  public attacksThisTurn: number = 0;
+  public maxAttacksThisTurn: number = 1;
+  public allowSubsequentAttackChoice: boolean = false;
 
   public set: string = 'DAA';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '167';
-
   public name: string = 'Rare Fossil';
-
   public fullName: string = 'Rare Fossil DAA';
-
   public regulationMark = 'D';
 
   public powers: Power[] = [

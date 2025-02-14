@@ -61,8 +61,8 @@ class StevensMetagrossex extends game_1.PokemonCard {
         this.attacks = [{ name: 'Metal Stop', cost: [M, C, C], damage: 200, text: '' }];
         this.regulationMark = 'I';
         this.set = 'SVOD';
-        this.cardImage = 'assets/cardback.png';
         this.setNumber = '7';
+        this.cardImage = 'assets/cardback.png';
         this.name = 'Steven\'s Metagross ex';
         this.fullName = 'Steven\'s Metagross ex SVOD';
     }

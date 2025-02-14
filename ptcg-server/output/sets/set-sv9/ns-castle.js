@@ -12,6 +12,7 @@ class NsCastle extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.STADIUM;
+        this.tags = [card_types_1.CardTag.NS];
         this.set = 'SV9';
         this.name = 'N\'s Castle';
         this.fullName = 'N\'s Castle SV9';

@@ -30,8 +30,8 @@ export class MarniesGrimmsnarlex extends PokemonCard {
 
   public regulationMark: string = 'I';
   public set: string = 'SVOM';
-  public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '7';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Marnie\'s Grimmsnarl ex';
   public fullName: string = 'Marnie\'s Grimmsnarl ex SVOM';
 

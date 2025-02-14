@@ -26,4 +26,7 @@ var ApiErrorEnum;
     ApiErrorEnum["SOCKET_ERROR"] = "SOCKET_ERROR";
     ApiErrorEnum["INVALID_FORMAT"] = "INVALID_FORMAT";
     ApiErrorEnum["INVALID_USER"] = "INVALID_USER";
+    ApiErrorEnum["OPERATION_NOT_PERMITTED"] = "OPERATION_NOT_PERMITTED";
+    ApiErrorEnum["INVALID_PARAMETERS"] = "INVALID_PARAMETERS";
+    ApiErrorEnum["INTERNAL_SERVER_ERROR"] = "INTERNAL_SERVER_ERROR";
 })(ApiErrorEnum = exports.ApiErrorEnum || (exports.ApiErrorEnum = {}));

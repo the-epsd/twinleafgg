@@ -10,6 +10,15 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const cpu_monitor_1 = require("./backend/services/cpu-monitor");
 __exportStar(require("./backend"), exports);
 __exportStar(require("./game"), exports);
 __exportStar(require("./utils/base64"), exports);
+const monitor = new cpu_monitor_1.default({
+    logToConsole: true,
+    logToFile: true,
+    threshold: 50,
+    logPath: 'logs/cpu-profile.log'
+});
+// Log every 3 minutes
+monitor.start(180000);

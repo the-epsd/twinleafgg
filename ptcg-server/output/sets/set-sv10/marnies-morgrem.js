@@ -17,8 +17,8 @@ class MarniesMorgrem extends game_1.PokemonCard {
         ];
         this.regulationMark = 'I';
         this.set = 'SVOM';
-        this.cardImage = 'assets/cardback.png';
         this.setNumber = '6';
+        this.cardImage = 'assets/cardback.png';
         this.name = 'Marnie\'s Morgrem';
         this.fullName = 'Marnie\'s Morgrem SVOM';
     }

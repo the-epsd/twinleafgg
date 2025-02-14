@@ -42,7 +42,6 @@ export declare class PokemonCardList extends CardList {
     static readonly UNRELENTING_ONSLAUGHT_2_MARKER = "UNRELENTING_ONSLAUGHT_2_MARKER";
     tool: Card | undefined;
     stadium: Card | undefined;
-    attacksThisTurn?: number;
     isActivatingCard: boolean;
     getPokemons(): PokemonCard[];
     getPokemonCard(): PokemonCard | undefined;

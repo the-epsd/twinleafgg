@@ -30,8 +30,8 @@ class MarniesGrimmsnarlex extends game_1.PokemonCard {
             }];
         this.regulationMark = 'I';
         this.set = 'SVOM';
-        this.cardImage = 'assets/cardback.png';
         this.setNumber = '7';
+        this.cardImage = 'assets/cardback.png';
         this.name = 'Marnie\'s Grimmsnarl ex';
         this.fullName = 'Marnie\'s Grimmsnarl ex SVOM';
     }

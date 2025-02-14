@@ -24,6 +24,9 @@ class ClefairyDoll extends game_1.TrainerCard {
         this.cardType = C;
         this.movedToActiveThisTurn = false;
         this.pokemonType = card_types_1.PokemonType.NORMAL;
+        this.attacksThisTurn = 0;
+        this.maxAttacksThisTurn = 1;
+        this.allowSubsequentAttackChoice = false;
         this.weakness = [];
         this.resistance = [];
         this.retreat = [];
