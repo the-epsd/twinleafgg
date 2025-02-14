@@ -101,10 +101,6 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
 
   const attackingPokemonCard = attackingPokemon.getPokemonCard() as PokemonCard;
 
-  console.log('attacks this turn: ' + attackingPokemonCard.attacksThisTurn);
-  console.log('max attacks this turn: ' + attackingPokemonCard.maxAttacksThisTurn);
-  console.log('subsequent attack choice: ' + attackingPokemonCard.allowSubsequentAttackChoice);
-
   const checkAttackCost = new CheckAttackCostEffect(player, attack);
   state = store.reduceEffect(state, checkAttackCost);
 
