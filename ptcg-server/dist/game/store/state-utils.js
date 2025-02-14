@@ -233,6 +233,21 @@ export class StateUtils {
         }
         throw new GameError(GameMessage.INVALID_GAME_STATE);
     }
+    static isPokemonInPlay(player, pokemon, location) {
+        let inPlay = false;
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+            if (card === pokemon) {
+                if (location === 'bench' && cardList === player.active) {
+                    return;
+                }
+                if (location === 'active' && cardList !== player.active) {
+                    return;
+                }
+                inPlay = true;
+            }
+        });
+        return inPlay;
+    }
     static getStadiumCard(state) {
         for (const player of state.players) {
             if (player.stadium.cards.length > 0) {

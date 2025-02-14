@@ -3,7 +3,6 @@ import { GameMessage } from '../../game-message';
 import { PutDamageEffect, DealDamageEffect, DiscardCardsEffect, AddMarkerEffect, HealTargetEffect, AddSpecialConditionsEffect, RemoveSpecialConditionsEffect, ApplyWeaknessEffect, AfterDamageEffect, PutCountersEffect, CardsToHandEffect, KnockOutOpponentEffect, KOEffect, LostZoneCardsEffect } from '../effects/attack-effects';
 import { HealEffect } from '../effects/game-effects';
 import { StateUtils } from '../state-utils';
-import { AfterAttackEffect } from '../effects/game-phase-effects';
 export function attackReducer(store, state, effect) {
     if (effect instanceof PutDamageEffect) {
         const target = effect.target;
@@ -30,8 +29,6 @@ export function attackReducer(store, state, effect) {
             afterDamageEffect.target = effect.target;
             store.reduceEffect(state, afterDamageEffect);
         }
-        const afterAttackEffect = new AfterAttackEffect(effect.player);
-        store.reduceEffect(state, afterAttackEffect);
     }
     if (effect instanceof DealDamageEffect) {
         const base = effect.attackEffect;

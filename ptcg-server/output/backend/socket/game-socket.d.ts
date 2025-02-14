@@ -10,6 +10,8 @@ export declare class GameSocket {
     private socket;
     private core;
     private stateSanitizer;
+    private readonly MAX_MESSAGE_LENGTH;
+    private readonly MIN_MESSAGE_LENGTH;
     constructor(client: Client, socket: SocketWrapper, core: Core, cache: SocketCache);
     onGameJoin(game: Game, client: Client): void;
     onGameLeave(game: Game, client: Client): void;
