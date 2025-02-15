@@ -11,33 +11,16 @@ class StateSanitizer {
     constructor(client, cache) {
         this.client = client;
         this.cache = cache;
-        this.lastSanitizedState = new Map();
-        this.lastSanitizedTime = new Map();
-        this.SANITIZE_INTERVAL = 1000; // Only sanitize once per second per game
     }
     /**
      * Clear sensitive data, resolved prompts and old logs.
-     * Returns cached sanitized state if called within SANITIZE_INTERVAL
      */
     sanitize(state, gameId) {
-        const now = Date.now();
-        const lastTime = this.lastSanitizedTime.get(gameId) || 0;
-        // Return cached state if within interval
-        if (now - lastTime < this.SANITIZE_INTERVAL) {
-            const cachedState = this.lastSanitizedState.get(gameId);
-            if (cachedState) {
-                return cachedState;
-            }
-        }
-        // Perform sanitization
-        let sanitizedState = utils_1.deepClone(state, [card_1.Card]);
-        sanitizedState = this.filterPrompts(sanitizedState);
-        sanitizedState = this.removeLogs(sanitizedState, gameId);
-        sanitizedState = this.hideSecretCards(sanitizedState);
-        // Cache the result
-        this.lastSanitizedState.set(gameId, sanitizedState);
-        this.lastSanitizedTime.set(gameId, now);
-        return sanitizedState;
+        state = utils_1.deepClone(state, [card_1.Card]);
+        state = this.filterPrompts(state);
+        state = this.removeLogs(state, gameId);
+        state = this.hideSecretCards(state);
+        return state;
     }
     hideSecretCards(state) {
         if (state.cardNames.length === 0) {
@@ -95,6 +78,9 @@ class StateSanitizer {
         state.prompts = state.prompts.filter(prompt => {
             return prompt.result === undefined;
         });
+        // state.prompts = state.prompts.filter(prompt => {
+        //   return prompt.type === 'Coin flip' || prompt.playerId === this.client.id;
+        // });
         // Hide opponent's prompts. They may contain sensitive data.
         state.prompts = state.prompts.map(prompt => {
             if (prompt.playerId !== this.client.id) {

@@ -7,7 +7,6 @@ export declare class MatchmakingSocket {
     private core;
     private client;
     private matchmakingService;
-    private isInQueue;
     constructor(client: Client, socket: SocketWrapper, core: Core);
     onJoinQueue(from: Client, message: Message): void;
     onLeaveQueue(): void;
