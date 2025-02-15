@@ -76,8 +76,8 @@ export class StevensMetagrossex extends PokemonCard {
 
   public regulationMark: string = 'I';
   public set: string = 'SVOD';
-  public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '7';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Steven\'s Metagross ex';
   public fullName: string = 'Steven\'s Metagross ex SVOD';
 

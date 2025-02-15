@@ -175,27 +175,14 @@ export function gamePhaseReducer(store: StoreLike, state: State, effect: Effect)
 
     player.canEvolve = false;
 
-    player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-      cardList.attacksThisTurn = 0;
-    });
-
-    player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-      const pokemonCard = cardList.getPokemonCard();
-      if (pokemonCard && player.active.cards.includes(pokemonCard)) {
-        cardList.removeSpecialCondition(SpecialCondition.ABILITY_USED);
-        cardList.removeBoardEffect(BoardEffect.ABILITY_USED);
-      }
+    player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+      cardList.removeSpecialCondition(SpecialCondition.ABILITY_USED);
+      cardList.removeBoardEffect(BoardEffect.ABILITY_USED);
+      card.attacksThisTurn = 0;
+      card.maxAttacksThisTurn = 1;
     });
 
     effect.player.marker.removeMarker(effect.player.DAMAGE_DEALT_MARKER);
-
-    player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-      if (cardList === player.active) {
-        return;
-      }
-      cardList.removeSpecialCondition(SpecialCondition.ABILITY_USED);
-      cardList.removeBoardEffect(BoardEffect.ABILITY_USED);
-    });
 
     player.supporterTurn = 0;
 

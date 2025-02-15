@@ -10,7 +10,7 @@ import { AvatarInfo, AvatarAddRequest } from '../interfaces/avatar.interface';
 import { Controller, Get, Post } from './controller';
 import { ApiErrorEnum } from '../common/errors';
 import { config } from '../../config';
-import {Transaction, TransactionManager, EntityManager} from 'typeorm';
+import { Transaction, TransactionManager, EntityManager } from 'typeorm';
 
 export class Avatars extends Controller {
 
@@ -21,7 +21,7 @@ export class Avatars extends Controller {
     const user = await User.findOne(userId, { relations: ['avatars'] });
 
     if (user === undefined) {
-      res.send({error: ApiErrorEnum.PROFILE_INVALID});
+      res.send({ error: ApiErrorEnum.PROFILE_INVALID });
       return;
     }
 
@@ -31,7 +31,7 @@ export class Avatars extends Controller {
       fileName: avatar.fileName
     }));
 
-    res.send({ok: true, avatars});
+    res.send({ ok: true, avatars });
   }
 
   @Get('/get/:id')
@@ -40,7 +40,7 @@ export class Avatars extends Controller {
     const avatarId: number = parseInt(req.params.id, 10);
     const avatar = await Avatar.findOne(avatarId);
     if (avatar === undefined) {
-      res.send({error: ApiErrorEnum.AVATAR_INVALID});
+      res.send({ error: ApiErrorEnum.AVATAR_INVALID });
       return;
     }
     const avatarInfo: AvatarInfo = {
@@ -48,7 +48,7 @@ export class Avatars extends Controller {
       name: avatar.name,
       fileName: avatar.fileName
     };
-    res.send({ok: true, avatar: avatarInfo});
+    res.send({ ok: true, avatar: avatarInfo });
   }
 
   @Post('/find')
@@ -65,7 +65,7 @@ export class Avatars extends Controller {
     });
 
     if (avatars.length !== 1) {
-      res.send({error: ApiErrorEnum.AVATAR_INVALID});
+      res.send({ error: ApiErrorEnum.AVATAR_INVALID });
       return;
     }
     const avatar = avatars[0];
@@ -74,7 +74,7 @@ export class Avatars extends Controller {
       name: avatar.name,
       fileName: avatar.fileName
     };
-    res.send({ok: true, avatar: avatarInfo});
+    res.send({ ok: true, avatar: avatarInfo });
   }
 
   @Post('/add')
@@ -92,7 +92,7 @@ export class Avatars extends Controller {
 
     if (user === undefined) {
       res.status(400);
-      res.send({error: ApiErrorEnum.PROFILE_INVALID});
+      res.send({ error: ApiErrorEnum.PROFILE_INVALID });
       return;
     }
 
@@ -118,19 +118,21 @@ export class Avatars extends Controller {
       if (!user.avatarFile) {
         await manager.update(User, user.id, { avatarFile: avatar.fileName });
         user.avatarFile = avatar.fileName;
-        this.core.emit(c => c.onUsersUpdate([ user ]));
+        this.core.emit(c => c.onUsersUpdate([user]));
       }
     } catch (error) {
       res.status(400);
-      res.send({error: ApiErrorEnum.NAME_DUPLICATE});
+      res.send({ error: ApiErrorEnum.NAME_DUPLICATE });
       return;
     }
 
-    res.send({ok: true, avatar: {
-      id: avatar.id,
-      name: avatar.name,
-      fileName: avatar.fileName
-    }});
+    res.send({
+      ok: true, avatar: {
+        id: avatar.id,
+        name: avatar.name,
+        fileName: avatar.fileName
+      }
+    });
   }
 
   @Post('/delete')
@@ -147,7 +149,7 @@ export class Avatars extends Controller {
 
     if (user === undefined) {
       res.status(400);
-      res.send({error: ApiErrorEnum.PROFILE_INVALID});
+      res.send({ error: ApiErrorEnum.PROFILE_INVALID });
       return;
     }
 
@@ -155,7 +157,7 @@ export class Avatars extends Controller {
 
     if (avatar === undefined || avatar.user.id !== user.id) {
       res.status(400);
-      res.send({error: ApiErrorEnum.AVATAR_INVALID});
+      res.send({ error: ApiErrorEnum.AVATAR_INVALID });
       return;
     }
 
@@ -168,10 +170,10 @@ export class Avatars extends Controller {
       const avatarFile = newAvatar ? newAvatar.fileName : '';
       await manager.update(User, user.id, { avatarFile });
       user.avatarFile = avatarFile;
-      this.core.emit(c => c.onUsersUpdate([ user ]));
+      this.core.emit(c => c.onUsersUpdate([user]));
     }
 
-    res.send({ok: true});
+    res.send({ ok: true });
   }
 
   @Post('/rename')
@@ -188,7 +190,7 @@ export class Avatars extends Controller {
 
     if (user === undefined) {
       res.status(400);
-      res.send({error: ApiErrorEnum.PROFILE_INVALID});
+      res.send({ error: ApiErrorEnum.PROFILE_INVALID });
       return;
     }
 
@@ -196,7 +198,7 @@ export class Avatars extends Controller {
 
     if (avatar === undefined || avatar.user.id !== user.id) {
       res.status(400);
-      res.send({error: ApiErrorEnum.AVATAR_INVALID});
+      res.send({ error: ApiErrorEnum.AVATAR_INVALID });
       return;
     }
 
@@ -205,15 +207,17 @@ export class Avatars extends Controller {
       avatar = await avatar.save();
     } catch (error) {
       res.status(400);
-      res.send({error: ApiErrorEnum.NAME_DUPLICATE});
+      res.send({ error: ApiErrorEnum.NAME_DUPLICATE });
       return;
     }
 
-    res.send({ok: true, avatar: {
-      id: avatar.id,
-      name: avatar.name,
-      fileName: avatar.fileName
-    }});
+    res.send({
+      ok: true, avatar: {
+        id: avatar.id,
+        name: avatar.name,
+        fileName: avatar.fileName
+      }
+    });
   }
 
   @Post('/markAsDefault')
@@ -229,7 +233,7 @@ export class Avatars extends Controller {
 
     if (user === undefined) {
       res.status(400);
-      res.send({error: ApiErrorEnum.PROFILE_INVALID});
+      res.send({ error: ApiErrorEnum.PROFILE_INVALID });
       return;
     }
 
@@ -237,7 +241,7 @@ export class Avatars extends Controller {
 
     if (avatar === undefined || avatar.user.id !== user.id) {
       res.status(400);
-      res.send({error: ApiErrorEnum.AVATAR_INVALID});
+      res.send({ error: ApiErrorEnum.AVATAR_INVALID });
       return;
     }
 
@@ -249,10 +253,10 @@ export class Avatars extends Controller {
     try {
       user.avatarFile = avatar.fileName;
       user = await user.save();
-      this.core.emit(c => c.onUsersUpdate([ user as User ]));
+      this.core.emit(c => c.onUsersUpdate([user as User]));
     } catch (error) {
       res.status(400);
-      res.send({error: ApiErrorEnum.AVATAR_INVALID});
+      res.send({ error: ApiErrorEnum.AVATAR_INVALID });
       return;
     }
 

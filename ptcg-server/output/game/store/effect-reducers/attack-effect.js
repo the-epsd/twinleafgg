@@ -6,12 +6,12 @@ const game_message_1 = require("../../game-message");
 const attack_effects_1 = require("../effects/attack-effects");
 const game_effects_1 = require("../effects/game-effects");
 const state_utils_1 = require("../state-utils");
-const game_phase_effects_1 = require("../effects/game-phase-effects");
 function attackReducer(store, state, effect) {
     if (effect instanceof attack_effects_1.PutDamageEffect) {
         const target = effect.target;
-        const pokemonCard = target.getPokemonCard();
-        if (pokemonCard === undefined) {
+        const sourceOwner = state_utils_1.StateUtils.findOwner(state, effect.source);
+        const targetCard = target.getPokemonCard();
+        if (targetCard === undefined) {
             throw new game_error_1.GameError(game_message_1.GameMessage.ILLEGAL_ACTION);
         }
         const opponent = state_utils_1.StateUtils.getOpponent(state, effect.player);
@@ -29,12 +29,16 @@ function attackReducer(store, state, effect) {
         const targetOwner = state_utils_1.StateUtils.findOwner(state, target);
         targetOwner.marker.addMarkerToState(effect.player.DAMAGE_DEALT_MARKER);
         if (damage > 0) {
+            store.log(state, game_message_1.GameLog.LOG_PLAYER_DEALS_DAMAGE, {
+                name: sourceOwner.name,
+                damage: damage,
+                target: targetCard.name,
+                effect: effect.attack.name,
+            });
             const afterDamageEffect = new attack_effects_1.AfterDamageEffect(effect.attackEffect, damage);
             afterDamageEffect.target = effect.target;
             store.reduceEffect(state, afterDamageEffect);
         }
-        const afterAttackEffect = new game_phase_effects_1.AfterAttackEffect(effect.player);
-        store.reduceEffect(state, afterAttackEffect);
     }
     if (effect instanceof attack_effects_1.DealDamageEffect) {
         const base = effect.attackEffect;
@@ -87,12 +91,21 @@ function attackReducer(store, state, effect) {
     }
     if (effect instanceof attack_effects_1.PutCountersEffect) {
         const target = effect.target;
-        const pokemonCard = target.getPokemonCard();
-        if (pokemonCard === undefined) {
+        const sourceOwner = state_utils_1.StateUtils.findOwner(state, effect.source);
+        const targetCard = target.getPokemonCard();
+        if (targetCard === undefined) {
             throw new game_error_1.GameError(game_message_1.GameMessage.ILLEGAL_ACTION);
         }
         const damage = Math.max(0, effect.damage);
         target.damage += damage;
+        if (damage > 0) {
+            store.log(state, game_message_1.GameLog.LOG_PLAYER_PLACES_DAMAGE_COUNTERS, {
+                name: sourceOwner.name,
+                damage: damage,
+                target: targetCard.name,
+                effect: effect.attack.name,
+            });
+        }
     }
     if (effect instanceof attack_effects_1.AfterDamageEffect) {
         const targetOwner = state_utils_1.StateUtils.findOwner(state, effect.target);

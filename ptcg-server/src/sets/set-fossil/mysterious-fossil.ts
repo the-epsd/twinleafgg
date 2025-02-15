@@ -22,23 +22,18 @@ export class MysteriousFossil extends TrainerCard {
   public archetype = [];
 
   public hp: number = 30;
-
   public weakness = [];
-
   public retreat = [];
-
   public resistance = [];
-
   public attacks = [];
+  public attacksThisTurn: number = 0;
+  public maxAttacksThisTurn: number = 1;
+  public allowSubsequentAttackChoice: boolean = false;
 
   public set: string = 'FO';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '62';
-
   public name: string = 'Mysterious Fossil';
-
   public fullName: string = 'Mysterious Fossil FO';
 
   public powers: Power[] = [

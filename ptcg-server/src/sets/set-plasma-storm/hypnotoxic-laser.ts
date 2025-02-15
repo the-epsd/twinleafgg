@@ -1,5 +1,5 @@
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { TrainerType, SpecialCondition } from '../../game/store/card/card-types';
+import { TrainerType, SpecialCondition, CardTag } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
@@ -44,6 +44,8 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 export class HypnotoxicLaser extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
+
+  public tags: string[] = [CardTag.TEAM_PLASMA];
 
   public set: string = 'PLS';
 

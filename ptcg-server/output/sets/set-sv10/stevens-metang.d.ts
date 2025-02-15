@@ -25,8 +25,8 @@ export declare class StevensMetang extends PokemonCard {
     }[];
     regulationMark: string;
     set: string;
-    cardImage: string;
     setNumber: string;
+    cardImage: string;
     name: string;
     fullName: string;
     readonly ATTACK_USED_MARKER = "ATTACK_USED_MARKER";

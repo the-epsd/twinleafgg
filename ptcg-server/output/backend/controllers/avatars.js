@@ -107,11 +107,13 @@ class Avatars extends controller_1.Controller {
             res.send({ error: errors_1.ApiErrorEnum.NAME_DUPLICATE });
             return;
         }
-        res.send({ ok: true, avatar: {
+        res.send({
+            ok: true, avatar: {
                 id: avatar.id,
                 name: avatar.name,
                 fileName: avatar.fileName
-            } });
+            }
+        });
     }
     async onDelete(req, res, manager) {
         const body = req.body;
@@ -164,11 +166,13 @@ class Avatars extends controller_1.Controller {
             res.send({ error: errors_1.ApiErrorEnum.NAME_DUPLICATE });
             return;
         }
-        res.send({ ok: true, avatar: {
+        res.send({
+            ok: true, avatar: {
                 id: avatar.id,
                 name: avatar.name,
                 fileName: avatar.fileName
-            } });
+            }
+        });
     }
     async onMarkAsDefault(req, res) {
         const body = req.body;

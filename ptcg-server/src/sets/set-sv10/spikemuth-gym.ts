@@ -55,17 +55,11 @@ function* useStadium(next: Function, store: StoreLike, state: State, effect: Use
 export class SpikemuthGym extends TrainerCard {
 
   public trainerType = TrainerType.STADIUM;
-
   public set = 'SVOM';
-
   public setNumber: string = '19';
-
   public cardImage: string = 'assets/cardback.png';
-
   public regulationMark: string = 'I';
-
   public name = 'Spikemuth Gym';
-
   public fullName = 'Spikemuth Gym SVOM';
 
   public text = 'Once during each player\'s turn, that player may search their deck for a Marnie\'s Pokémon, ' +

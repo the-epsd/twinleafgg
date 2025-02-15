@@ -137,7 +137,7 @@ function DEAL_MORE_DAMAGE_IF_OPPONENT_ACTIVE_HAS_CARD_TAG(effect, state, damage,
     const opponentActive = opponent.active.getPokemonCard();
     let includesAnyTags = false;
     for (const tag of cardTags) {
-        if (opponentActive.tags.includes(tag)) {
+        if (opponentActive && opponentActive.tags.includes(tag)) {
             includesAnyTags = true;
         }
     }

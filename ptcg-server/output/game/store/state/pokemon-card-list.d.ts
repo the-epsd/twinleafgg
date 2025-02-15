@@ -42,7 +42,6 @@ export declare class PokemonCardList extends CardList {
     static readonly UNRELENTING_ONSLAUGHT_2_MARKER = "UNRELENTING_ONSLAUGHT_2_MARKER";
     tool: Card | undefined;
     stadium: Card | undefined;
-    attacksThisTurn?: number;
     isActivatingCard: boolean;
     getPokemons(): PokemonCard[];
     getPokemonCard(): PokemonCard | undefined;
@@ -57,9 +56,16 @@ export declare class PokemonCardList extends CardList {
     hasRuleBox(): boolean;
     vPokemon(): boolean;
     exPokemon(): boolean;
+    isTera(): boolean;
+    singleStrikePokemon(): boolean;
+    rapidStrikePokemon(): boolean;
+    fusionStrikePokemon(): boolean;
     futurePokemon(): boolean;
     ancientPokemon(): boolean;
-    isTera(): boolean;
     isLillies(): boolean;
+    isNs(): boolean;
+    isIonos(): boolean;
+    isHops(): boolean;
+    isEthans(): boolean;
     getToolEffect(): Power | Attack | undefined;
 }

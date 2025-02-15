@@ -22,8 +22,8 @@ class MarniesMorpeko extends game_1.PokemonCard {
             }];
         this.regulationMark = 'I';
         this.set = 'SVOM';
-        this.cardImage = 'assets/cardback.png';
         this.setNumber = '8';
+        this.cardImage = 'assets/cardback.png';
         this.name = 'Marnie\'s Morpeko';
         this.fullName = 'Marnie\'s Morpeko SVOM';
     }

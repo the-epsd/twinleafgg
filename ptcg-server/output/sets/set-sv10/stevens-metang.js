@@ -26,8 +26,8 @@ class StevensMetang extends game_1.PokemonCard {
             }];
         this.regulationMark = 'I';
         this.set = 'SVOD';
-        this.cardImage = 'assets/cardback.png';
         this.setNumber = '6';
+        this.cardImage = 'assets/cardback.png';
         this.name = 'Steven\'s Metang';
         this.fullName = 'Steven\'s Metang SVOD';
         this.ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';

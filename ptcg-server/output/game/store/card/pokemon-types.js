@@ -8,4 +8,5 @@ var PowerType;
     PowerType[PowerType["ABILITY"] = 2] = "ABILITY";
     PowerType[PowerType["ANCIENT_TRAIT"] = 3] = "ANCIENT_TRAIT";
     PowerType[PowerType["POKEMON_POWER"] = 4] = "POKEMON_POWER";
+    PowerType[PowerType["VUNION_ASSEMBLY"] = 5] = "VUNION_ASSEMBLY";
 })(PowerType = exports.PowerType || (exports.PowerType = {}));

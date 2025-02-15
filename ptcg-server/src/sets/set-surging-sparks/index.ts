@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { Annihilape } from '../set-scarlet-and-violet/annihilape';
+import { Annihilape } from '../set-surging-sparks/annihilape';
 import { AlolanDiglett } from './alolan-diglett';
 import { AlolanDugtrio } from './alolan-dugtrio';
 import { AlolanExeggutorex } from './alolan-exeggutor-ex';
@@ -94,6 +94,7 @@ import { Togekiss } from './togekiss';
 import { Togepi } from './togepi';
 import { Togetic } from './togetic';
 import { Trapinch } from './trapinch';
+import {Tyme} from './tyme';
 import { Uxie } from './uxie';
 import { Vibrava } from './vibrava';
 import { VigorothSSP } from './vigoroth';
@@ -205,6 +206,7 @@ export const setSurgingSparks: Card[] = [
   new Quaquaval(),
   new MeddlingMemo(),
   new Annihilape(),
+  new Tyme(),
 
   // Reprints
   new ScrambleSwitchSSP(),

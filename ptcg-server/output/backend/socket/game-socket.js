@@ -20,7 +20,7 @@ class GameSocket {
         this.socket.addListener('game:leave', this.leaveGame.bind(this));
         this.socket.addListener('game:getStatus', this.getGameStatus.bind(this));
         this.socket.addListener('game:action:ability', this.ability.bind(this));
-        this.socket.addListener('game:action:trainerAbility', this.trainerability.bind(this));
+        this.socket.addListener('game:action:ability', this.trainerability.bind(this));
         this.socket.addListener('game:action:attack', this.attack.bind(this));
         this.socket.addListener('game:action:stadium', this.stadium.bind(this));
         this.socket.addListener('game:action:play', this.playGame.bind(this));

@@ -5,13 +5,15 @@ import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { TrainerType } from '../../game/store/card/card-types';
+import { CardTag, TrainerType } from '../../game/store/card/card-types';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
 import { StateUtils } from '../../game/store/state-utils';
 
 export class Colress extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;
+
+  public tags: string[] = [CardTag.TEAM_PLASMA];
 
   public set: string = 'PLS';
 

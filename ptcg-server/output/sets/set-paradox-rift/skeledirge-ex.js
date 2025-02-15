@@ -7,8 +7,7 @@ const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const choose_cards_prompt_1 = require("../../game/store/prompts/choose-cards-prompt");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
-const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
-const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class SkeledirgeEX extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -42,14 +41,6 @@ class SkeledirgeEX extends pokemon_card_1.PokemonCard {
         this.INCENDIARY_SONG_MARKER = 'INCENDIARY_SONG_MARKER';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {
-            const player = effect.player;
-            player.marker.removeMarker(this.INCENDIARY_SONG_MARKER, this);
-        }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
-            const player = effect.player;
-            player.marker.removeMarker(this.INCENDIARY_SONG_MARKER, this);
-        }
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
             const hasEnergyInHand = player.hand.cards.some(c => {
@@ -68,13 +59,11 @@ class SkeledirgeEX extends pokemon_card_1.PokemonCard {
                 const card = selected[0];
                 player.hand.moveCardTo(card, player.discard);
                 player.marker.addMarker(this.INCENDIARY_SONG_MARKER, this);
+                prefabs_1.ABILITY_USED(player, this);
             });
         }
-        if (effect instanceof game_effects_1.AttackEffect) {
-            const player = effect.player;
-            if (player.marker.hasMarker(this.INCENDIARY_SONG_MARKER, this)) {
-                effect.damage += 60;
-            }
+        if (effect instanceof game_effects_1.AttackEffect && prefabs_1.HAS_MARKER(this.INCENDIARY_SONG_MARKER, effect.player, this)) {
+            effect.damage += 60;
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
@@ -103,6 +92,7 @@ class SkeledirgeEX extends pokemon_card_1.PokemonCard {
                 effect.preventDefault = true;
             }
         }
+        prefabs_1.REMOVE_MARKER_AT_END_OF_TURN(effect, this.INCENDIARY_SONG_MARKER, this);
         return state;
     }
 }

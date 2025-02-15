@@ -528,6 +528,7 @@
     "LOG_PLAYER_NO_CARDS_IN_DECK": "{{name}} has no more cards in their deck.",
     "LOG_PLAYER_NO_PRIZE_CARD": "{{name}} has no more Prize cards left.",
     "LOG_PLAYER_PLAYS_BASIC_POKEMON": "{{name}} puts {{card}} on their Bench.",
+    "LOG_PLAYER_DEALS_DAMAGE": "{{ name }} deals {{ damage }} to {{ target }} with {{ effect }}.",
     "LOG_PLAYER_PLACES_DAMAGE_COUNTERS": "{{ name }} places {{ damage }} on {{ target }} with {{ effect }}.",
     "LOG_PLAYER_RETURNS_TO_DECK_FROM_DISCARD": "{{name}} returns {{card}} from their Discard Pile into their Deck.",
     "LOG_PLAYER_PLAYS_ITEM": "{{name}} plays {{card}}.",
@@ -556,6 +557,7 @@
     "LOG_DISCARD_STADIUM_CHAOTIC_SWELL": "{{name}} discards {{card}} as a result of Chaotic Swell.",
     "LOG_PLAYER_PUTS_CARD_IN_LOST_ZONE": "{{name}} puts {{card}} in the lost zone from their hand.",
     "LOG_PLAYER_HEALS_POKEMON": "{{name}} heals {{pokemon}} for {{healingAmount}}.",
-    "LOG_HISUIAN_HEAVY_BALL": "{{name}} has taken {{card}} from their Prize Cards with Hisuian Heavy Ball."
+    "LOG_HISUIAN_HEAVY_BALL": "{{name}} has taken {{card}} from their Prize Cards with Hisuian Heavy Ball.",
+    "LOG_PLAYER_CHOOSES": "{{name}} chooses {{string}}."
   }
 }

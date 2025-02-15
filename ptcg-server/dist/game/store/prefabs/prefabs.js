@@ -116,6 +116,19 @@ export function THIS_ATTACK_DOES_X_MORE_DAMAGE(effect, store, state, damage) {
     effect.damage += damage;
     return state;
 }
+export function DEAL_MORE_DAMAGE_IF_OPPONENT_ACTIVE_HAS_CARD_TAG(effect, state, damage, ...cardTags) {
+    const opponent = StateUtils.getOpponent(state, effect.player);
+    const opponentActive = opponent.active.getPokemonCard();
+    let includesAnyTags = false;
+    for (const tag of cardTags) {
+        if (opponentActive.tags.includes(tag)) {
+            includesAnyTags = true;
+        }
+    }
+    if (includesAnyTags) {
+        effect.damage += damage;
+    }
+}
 export function HEAL_X_DAMAGE_FROM_THIS_POKEMON(effect, store, state, damage) {
     const player = effect.player;
     const healTargetEffect = new HealTargetEffect(effect, damage);

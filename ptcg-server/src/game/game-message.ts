@@ -223,6 +223,7 @@ export enum GameLog {
   LOG_PLAYER_NO_ACTIVE_POKEMON = 'LOG_PLAYER_NO_ACTIVE_POKEMON', // { name }
   LOG_PLAYER_NO_CARDS_IN_DECK = 'LOG_PLAYER_NO_CARDS_IN_DECK', // { name }
   LOG_PLAYER_NO_PRIZE_CARD = 'LOG_PLAYER_NO_PRIZE_CARD', // { name }
+  LOG_PLAYER_DEALS_DAMAGE = 'LOG_PLAYER_DEALS_DAMAGE', // { name, damage, target, effect }
   LOG_PLAYER_PLACES_DAMAGE_COUNTERS = 'LOG_PLAYER_PLACES_DAMAGE_COUNTERS', // { name, damage, target, effect }
   LOG_PLAYER_PLAYS_BASIC_POKEMON = 'LOG_PLAYER_PLAYS_BASIC_POKEMON', // { name, card }
   LOG_PLAYER_PLAYS_ITEM = 'LOG_PLAYER_PLAYS_ITEM', // { name, card }
@@ -252,6 +253,7 @@ export enum GameLog {
   LOG_PLAYER_PUTS_CARD_ON_BOTTOM_OF_DECK = 'LOG_PLAYER_PUTS_CARD_ON_BOTTOM_OF_DECK', // { name, card }
   LOG_HISUIAN_HEAVY_BALL = 'LOG_HISUIAN_HEAVY_BALL', // { name, card }
   LOG_SUDDEN_DEATH = 'LOG_SUDDEN_DEATH', // { name }
+  LOG_PLAYER_CHOOSES = 'LOG_PLAYER_CHOOSES', // { name, string }
 }
 
 // tslint:disable-next-line

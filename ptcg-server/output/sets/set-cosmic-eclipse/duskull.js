@@ -83,7 +83,7 @@ class Duskull extends game_1.PokemonCard {
             return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { min: 1, max: 1, allowCancel: false }), selected => {
                 const targets = selected || [];
                 targets.forEach(target => {
-                    const damageEffect = new attack_effects_1.PutDamageEffect(effect, 20);
+                    const damageEffect = new attack_effects_1.PutCountersEffect(effect, 20);
                     damageEffect.target = target;
                     store.reduceEffect(state, damageEffect);
                 });

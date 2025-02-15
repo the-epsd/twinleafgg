@@ -236,11 +236,17 @@ class StateUtils {
         }
         throw new game_error_1.GameError(game_message_1.GameMessage.INVALID_GAME_STATE);
     }
-    static isPokemonInPlay(player, pokemon) {
+    static isPokemonInPlay(player, pokemon, location) {
         let inPlay = false;
         player.forEachPokemon(play_card_action_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
             if (card === pokemon) {
-                inPlay = true;
+                if ((location === play_card_action_1.SlotType.BENCH && cardList === player.active) ||
+                    (location === play_card_action_1.SlotType.ACTIVE && cardList !== player.active)) {
+                    inPlay = false;
+                }
+                else {
+                    inPlay = true;
+                }
             }
         });
         return inPlay;

@@ -22,6 +22,9 @@ class MysteriousFossil extends game_1.TrainerCard {
         this.retreat = [];
         this.resistance = [];
         this.attacks = [];
+        this.attacksThisTurn = 0;
+        this.maxAttacksThisTurn = 1;
+        this.allowSubsequentAttackChoice = false;
         this.set = 'FO';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '62';

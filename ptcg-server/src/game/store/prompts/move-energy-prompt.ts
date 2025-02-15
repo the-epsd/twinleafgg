@@ -9,7 +9,7 @@ import { FilterType } from './choose-cards-prompt';
 
 export const MoveEnergyPromptType = 'Move energy';
 
-export type MoveEnergyResultType = {from: CardTarget, to: CardTarget, index: number}[];
+export type MoveEnergyResultType = { from: CardTarget, to: CardTarget, index: number }[];
 
 export interface CardTransfer {
   from: CardTarget;
@@ -65,6 +65,10 @@ export class MoveEnergyPrompt extends Prompt<CardTransfer[]> {
     result.forEach(t => {
       const cardList = StateUtils.getTarget(state, player, t.from);
       const card = cardList.cards[t.index];
+      // Verify this is a card.
+      if (!(card instanceof Card)) {
+        throw new GameError(GameMessage.INVALID_PROMPT_RESULT);
+      }
       transfers.push({ from: t.from, to: t.to, card });
     });
     return transfers;

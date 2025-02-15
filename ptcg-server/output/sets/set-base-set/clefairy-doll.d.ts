@@ -19,6 +19,9 @@ export declare class ClefairyDoll extends TrainerCard {
     cardType: CardType;
     movedToActiveThisTurn: boolean;
     pokemonType: PokemonType;
+    attacksThisTurn: number;
+    maxAttacksThisTurn: number;
+    allowSubsequentAttackChoice: boolean;
     weakness: never[];
     resistance: never[];
     retreat: never[];

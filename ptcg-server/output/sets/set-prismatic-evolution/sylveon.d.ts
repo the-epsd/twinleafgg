@@ -23,6 +23,7 @@ export declare class Sylveon extends PokemonCard {
         text: string;
     }[];
     set: string;
+    regulationMark: string;
     setNumber: string;
     cardImage: string;
     name: string;

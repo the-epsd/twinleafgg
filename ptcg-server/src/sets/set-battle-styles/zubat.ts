@@ -3,7 +3,8 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { AFTER_ATTACK, SWITCH_ACTIVE_WITH_BENCHED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { SWITCH_ACTIVE_WITH_BENCHED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { AfterAttackEffect } from '../../game/store/effects/game-phase-effects';
 
 export class Zubat extends PokemonCard {
 
@@ -13,18 +14,19 @@ export class Zubat extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [{
-    name: 'Hide in Shadows',
-    cost: [C],
-    damage: 0,
-    text: 'Switch this Pokémon with 1 of your Benched Pokémon.'
-  },
-  {
-    name: 'Speed Dive',
-    cost: [C, C],
-    damage: 20,
-    text: ''
-  }
+  public attacks = [
+    {
+      name: 'Hide in Shadows',
+      cost: [C],
+      damage: 0,
+      text: 'Switch this Pokémon with 1 of your Benched Pokémon.'
+    },
+    {
+      name: 'Speed Dive',
+      cost: [C, C],
+      damage: 20,
+      text: ''
+    }
   ];
 
   public regulationMark = 'E';
@@ -41,7 +43,7 @@ export class Zubat extends PokemonCard {
       this.usedHideInShadows = true;
     }
 
-    if (AFTER_ATTACK(effect) && this.usedHideInShadows) {
+    if (effect instanceof AfterAttackEffect && this.usedHideInShadows == true) {
       const player = effect.player;
       SWITCH_ACTIVE_WITH_BENCHED(store, state, player);
       this.usedHideInShadows = false;

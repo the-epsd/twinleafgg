@@ -14,8 +14,8 @@ class GraniteCave extends trainer_card_1.TrainerCard {
         this.trainerType = card_types_1.TrainerType.STADIUM;
         this.regulationMark = 'I';
         this.set = 'SVOD';
-        this.cardImage = 'assets/cardback.png';
         this.setNumber = '18';
+        this.cardImage = 'assets/cardback.png';
         this.name = 'Granite Cave';
         this.fullName = 'Granite Cave SVOD';
         this.text = 'Steven\'s Pokémon (both yours and your opponent\'s) take 30 less damage from attacks from the opponent\'s Pokémon (after applying Weakness and Resistance).';

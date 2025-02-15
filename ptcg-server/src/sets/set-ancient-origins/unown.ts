@@ -59,6 +59,10 @@ export class Unown extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
+      if (player.deck.cards.length === 0){
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
+      }
+
       player.bench[benchIndex].moveTo(player.discard);
       player.bench[benchIndex].clearEffects();
       player.deck.moveTo(player.hand, 1);

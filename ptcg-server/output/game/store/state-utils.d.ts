@@ -1,4 +1,4 @@
-import { CardTarget } from './actions/play-card-action';
+import { CardTarget, SlotType } from './actions/play-card-action';
 import { Card } from './card/card';
 import { CardType } from './card/card-types';
 import { PokemonCard } from './card/pokemon-card';
@@ -17,6 +17,6 @@ export declare class StateUtils {
     static getTarget(state: State, player: Player, target: CardTarget): PokemonCardList;
     static findCardList(state: State, card: Card): CardList;
     static findOwner(state: State, cardList: CardList): Player;
-    static isPokemonInPlay(player: Player, pokemon: PokemonCard): boolean;
+    static isPokemonInPlay(player: Player, pokemon: PokemonCard, location?: SlotType.BENCH | SlotType.ACTIVE): boolean;
     static getStadiumCard(state: State): Card | undefined;
 }

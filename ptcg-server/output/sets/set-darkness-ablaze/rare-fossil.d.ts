@@ -16,6 +16,9 @@ export declare class RareFossil extends TrainerCard {
     retreat: never[];
     resistance: never[];
     attacks: never[];
+    attacksThisTurn: number;
+    maxAttacksThisTurn: number;
+    allowSubsequentAttackChoice: boolean;
     set: string;
     cardImage: string;
     setNumber: string;

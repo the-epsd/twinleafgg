@@ -28,14 +28,12 @@ export class WebSocketServer {
 
     server.on('connection', (socket: Socket) => {
       const user: User = (socket as any).user;
-      console.log(`Connection opened - ${user.name} - Active connections: ${server.engine.clientsCount}`);
 
       const socketClient = new SocketClient(user, this.core, server, socket);
       this.core.connect(socketClient);
       socketClient.attachListeners();
 
       socket.on('disconnect', () => {
-        console.log(`Connection closed - ${user.name} - Active connections: ${server.engine.clientsCount - 1}`);
         this.core.disconnect(socketClient);
         user.updateLastSeen();
       });
