@@ -16,6 +16,7 @@ import { Centiskorch } from './centiskorch';
 import { Ceruledge } from './ceruledge';
 import { Ceruledgeex } from './ceruledge-ex';
 import { Charcadet } from './charcadet';
+import { Charcadet2 } from './charcadet-2';
 import { CherishCarrier } from './cherish-carrier';
 import { ChienPao } from './chien-pao';
 import { ChillTeaserToy } from './chill-teaser-toy';
@@ -94,7 +95,7 @@ import { Togekiss } from './togekiss';
 import { Togepi } from './togepi';
 import { Togetic } from './togetic';
 import { Trapinch } from './trapinch';
-import {Tyme} from './tyme';
+import { Tyme } from './tyme';
 import { Uxie } from './uxie';
 import { Vibrava } from './vibrava';
 import { VigorothSSP } from './vigoroth';
@@ -159,6 +160,7 @@ export const setSurgingSparks: Card[] = [
   new Latiasex(),
   new Ceruledgeex(),
   new Charcadet(),
+  new Charcadet2(),
   new Eevee(),
   new Sylveonex(),
   new LisiasAppeal(),
