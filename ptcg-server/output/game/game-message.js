@@ -47,6 +47,7 @@ var GameStoreMessage;
     GameStoreMessage["NOT_YOUR_TURN"] = "NOT_YOUR_TURN";
     GameStoreMessage["NO_STADIUM_IN_PLAY"] = "NO_STADIUM_IN_PLAY";
     GameStoreMessage["NO_CARDS_IN_DECK"] = "NO_CARDS_IN_DECK";
+    GameStoreMessage["NO_CARDS_IN_DISCARD"] = "NO_CARDS_IN_DISCARD";
     GameStoreMessage["POKEMON_CANT_EVOLVE_THIS_TURN"] = "POKEMON_CANT_EVOLVE_THIS_TURN";
     GameStoreMessage["POKEMON_TOOL_ALREADY_ATTACHED"] = "POKEMON_TOOL_ALREADY_ATTACHED";
     GameStoreMessage["POWER_ALREADY_USED"] = "POWER_ALREADY_USED";

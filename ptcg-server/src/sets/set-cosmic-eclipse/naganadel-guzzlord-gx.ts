@@ -3,9 +3,9 @@ import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-
 import { StoreLike, State, GameError, GameMessage, StateUtils, PowerType, PlayerType, ChooseCardsPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, HealEffect, PowerEffect } from '../../game/store/effects/game-effects';
-import {CheckProvidedEnergyEffect} from '../../game/store/effects/check-effects';
-import {ABILITY_USED, TAKE_X_PRIZES} from '../../game/store/prefabs/prefabs';
-import {EndTurnEffect} from '../../game/store/effects/game-phase-effects';
+import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { ABILITY_USED, BLOCK_IF_GX_ATTACK_USED, TAKE_X_PRIZES } from '../../game/store/prefabs/prefabs';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class NaganadelGuzzlordGX extends PokemonCard {
   public tags = [CardTag.TAG_TEAM, CardTag.ULTRA_BEAST];
@@ -13,9 +13,9 @@ export class NaganadelGuzzlordGX extends PokemonCard {
   public cardType: CardType = N;
   public hp: number = 280;
   public weakness = [{ type: Y }];
-  public retreat = [ C, C, C ];
+  public retreat = [C, C, C];
 
-  public powers = [{ 
+  public powers = [{
     name: 'Violent Appetite',
     powerType: PowerType.ABILITY,
     useWhenInPlay: true,
@@ -25,13 +25,13 @@ export class NaganadelGuzzlordGX extends PokemonCard {
   public attacks = [
     {
       name: 'Jet Pierce',
-      cost: [ P, D, C ],
+      cost: [P, D, C],
       damage: 180,
       text: ''
     },
     {
       name: 'Chaotic Order-GX',
-      cost: [ C ],
+      cost: [C],
       damage: 0,
       gxAttack: true,
       text: 'Turn all of your Prize cards face up. (Those Prize cards remain face up for the rest of the game.) If this Pokémon has at least 1 extra [P] Energy and 1 extra [D] Energy attached to it (in addition to this attack\'s cost), take 2 Prize cards. (You can\'t use more than 1 GX attack in a game.)'
@@ -48,21 +48,21 @@ export class NaganadelGuzzlordGX extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Violent Appetite
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]){
+    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-        if (card === this){
-          if (card.marker.hasMarker(this.VIOLENT_APPETITE_MARKER, this)){
+        if (card === this) {
+          if (card.marker.hasMarker(this.VIOLENT_APPETITE_MARKER, this)) {
             throw new GameError(GameMessage.POWER_ALREADY_USED);
           }
-          
+
           const hasPokemonInHand = player.hand.cards.some(b => b instanceof PokemonCard);
-          if (!hasPokemonInHand){
+          if (!hasPokemonInHand) {
             throw new GameError(GameMessage.CANNOT_USE_POWER);
           };
 
-          return store.prompt(state, new ChooseCardsPrompt( 
+          return store.prompt(state, new ChooseCardsPrompt(
             player,
             GameMessage.CHOOSE_CARDS,
             player.hand,
@@ -86,12 +86,9 @@ export class NaganadelGuzzlordGX extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
 
-      if (player.usedGX === true) {
-        throw new GameError(GameMessage.LABEL_GX_USED);
-      }
-
+      BLOCK_IF_GX_ATTACK_USED(player);
       player.usedGX = true;
-      
+
       player.prizes.forEach(p => {
         p.isPublic = true;
         p.faceUpPrize = true;
@@ -99,7 +96,7 @@ export class NaganadelGuzzlordGX extends PokemonCard {
       });
 
       // Check for the extra energy cost.
-      const extraEffectCost: CardType[] = [ P, D, C ];
+      const extraEffectCost: CardType[] = [P, D, C];
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
       store.reduceEffect(state, checkProvidedEnergy);
       const meetsExtraEffectCost = StateUtils.checkEnoughEnergy(checkProvidedEnergy.energyMap, extraEffectCost);
@@ -109,7 +106,7 @@ export class NaganadelGuzzlordGX extends PokemonCard {
       return TAKE_X_PRIZES(store, state, player, 2);
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.VIOLENT_APPETITE_MARKER, this)){
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.VIOLENT_APPETITE_MARKER, this)) {
       effect.player.marker.removeMarker(this.VIOLENT_APPETITE_MARKER, this);
       this.marker.removeMarker(this.VIOLENT_APPETITE_MARKER, this);
     }

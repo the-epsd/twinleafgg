@@ -9,6 +9,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { StateUtils } from '../../game/store/state-utils';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 import { PowerEffect, AttackEffect } from '../../game/store/effects/game-effects';
+import { BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 // LOT Magcargo-GX 44 (https://limitlesstcg.com/cards/LOT/44)
 export class MagcargoGX extends PokemonCard {
@@ -139,9 +140,7 @@ export class MagcargoGX extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       // Check if player has used GX attack
-      if (player.usedGX == true) {
-        throw new GameError(GameMessage.LABEL_GX_USED);
-      }
+      BLOCK_IF_GX_ATTACK_USED(player);
       // set GX attack as used for game
       player.usedGX = true;
 

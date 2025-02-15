@@ -1,11 +1,12 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, GameMessage, PlayerType, SlotType, ChoosePokemonPrompt, GameError } from '../../game';
+import { StoreLike, State, GameMessage, PlayerType, SlotType, ChoosePokemonPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { ChooseCardsPrompt, Card } from '../../game';
 import { ShuffleDeckPrompt } from '../../game';
 import { StateUtils } from '../../game/store/state-utils';
 import { AttackEffect } from '../../game/store/effects/game-effects';
+import { BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 // GRI Sylveon-GX 92 (https://limitlesstcg.com/cards/GRI/92)
 export class SylveonGX extends PokemonCard {
@@ -83,9 +84,7 @@ export class SylveonGX extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       // Check if player has used GX attack
-      if (player.usedGX == true) {
-        throw new GameError(GameMessage.LABEL_GX_USED);
-      }
+      BLOCK_IF_GX_ATTACK_USED(player);
       // set GX attack as used for game
       player.usedGX = true;
 

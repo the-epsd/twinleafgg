@@ -4,10 +4,10 @@ exports.BlackBeltsTraining = void 0;
 const trainer_card_1 = require("../../game/store/card/trainer-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
-const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 const game_1 = require("../../game");
 const prefabs_1 = require("../../game/store/prefabs/prefabs");
+const game_effects_1 = require("../../game/store/effects/game-effects");
 class BlackBeltsTraining extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -22,7 +22,6 @@ class BlackBeltsTraining extends trainer_card_1.TrainerCard {
         this.BLACK_BELTS_TRAINING_MARKER = 'BLACK_BELTS_TRAINING_MARKER';
     }
     reduceEffect(store, state, effect) {
-        var _a;
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
             const player = effect.player;
             const supporterTurn = player.supporterTurn;
@@ -35,10 +34,11 @@ class BlackBeltsTraining extends trainer_card_1.TrainerCard {
             player.supporter.moveCardTo(effect.trainerCard, player.discard);
             return state;
         }
-        if (effect instanceof attack_effects_1.DealDamageEffect && prefabs_1.HAS_MARKER(this.BLACK_BELTS_TRAINING_MARKER, effect.player, this)) {
+        if (effect instanceof game_effects_1.AttackEffect && prefabs_1.HAS_MARKER(this.BLACK_BELTS_TRAINING_MARKER, effect.player, this)) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            if (effect.target !== opponent.active || effect.damage <= 0 || ((_a = effect.target.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.tags.includes(card_types_1.CardTag.POKEMON_ex))) {
+            const oppActiveCard = effect.target.getPokemonCard();
+            if (effect.target !== opponent.active || effect.damage <= 0 || oppActiveCard.tags.includes(card_types_1.CardTag.POKEMON_ex)) {
                 return state;
             }
             effect.damage += 40;

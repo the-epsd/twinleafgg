@@ -8,6 +8,7 @@ const game_effects_1 = require("../../game/store/effects/game-effects");
 const check_effects_1 = require("../../game/store/effects/check-effects");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 // BUS Gardevoir-GX 93 (https://limitlesstcg.com/cards/BUS/93)
 class GardevoirGX extends pokemon_card_1.PokemonCard {
     constructor() {
@@ -101,15 +102,10 @@ class GardevoirGX extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
             // Check if player has used GX attack
-            if (player.usedGX == true) {
-                throw new game_1.GameError(game_1.GameMessage.LABEL_GX_USED);
-            }
+            prefabs_1.BLOCK_IF_GX_ATTACK_USED(player);
+            prefabs_1.BLOCK_IF_DISCARD_EMPTY(player);
             // set GX attack as used for game
             player.usedGX = true;
-            // Player does not have correct cards in discard
-            if (player.discard.cards.length === 0) {
-                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
-            }
             let cards = [];
             state = store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_DECK, player.discard, {}, { min: 1, max: 10, allowCancel: false }), selected => {
                 cards = selected || [];

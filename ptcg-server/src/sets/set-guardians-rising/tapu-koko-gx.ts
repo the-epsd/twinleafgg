@@ -1,12 +1,13 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { Stage, CardType, SuperType, CardTag } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, GameMessage, PlayerType, SlotType, MoveEnergyPrompt, ConfirmPrompt, PokemonCardList, EnergyCard, GameError } from '../../game';
+import { PowerType, StoreLike, State, GameMessage, PlayerType, SlotType, MoveEnergyPrompt, ConfirmPrompt, PokemonCardList, EnergyCard } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { StateUtils } from '../../game/store/state-utils';
 import { CardTarget } from '../../game';
 import { PowerEffect, AttackEffect } from '../../game/store/effects/game-effects';
+import { BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class TapuKokoGX extends PokemonCard {
   public tags = [CardTag.POKEMON_GX];
@@ -121,9 +122,7 @@ export class TapuKokoGX extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       // Check if player has used GX attack
-      if (player.usedGX == true) {
-        throw new GameError(GameMessage.LABEL_GX_USED);
-      }
+      BLOCK_IF_GX_ATTACK_USED(player);
       // set GX attack as used for game
       player.usedGX = true;
 

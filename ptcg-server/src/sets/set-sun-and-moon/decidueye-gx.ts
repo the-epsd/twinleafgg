@@ -10,6 +10,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect, AttackEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { BLOCK_IF_DISCARD_EMPTY, BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class DecidueyeGX extends PokemonCard {
 
@@ -112,37 +113,27 @@ export class DecidueyeGX extends PokemonCard {
     // Hollow Hunt-GX
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
-      // Check if player has used GX attack
-      if (player.usedGX == true) {
-        throw new GameError(GameMessage.LABEL_GX_USED);
-      }
+
+      BLOCK_IF_DISCARD_EMPTY(player);
+      BLOCK_IF_GX_ATTACK_USED(player);
+
       // set GX attack as used for game
       player.usedGX = true;
 
-      if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-        const player = effect.player;
+      const max = Math.min(3);
+      const min = max;
 
-        if (player.discard.cards.length === 0) {
-          return state;
-        }
-
-        const max = Math.min(3);
-        const min = max;
-
-        return store.prompt(state, [
-          new ChooseCardsPrompt(
-            player,
-            GameMessage.CHOOSE_CARD_TO_HAND,
-            player.discard,
-            {},
-            { min, max, allowCancel: false }
-          )], selected => {
+      return store.prompt(state, [
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_HAND,
+          player.discard,
+          {},
+          { min, max, allowCancel: false }
+        )], selected => {
           const cards = selected || [];
           player.discard.moveCardsTo(cards, player.hand);
         });
-      }
-
-      return state;
 
     }
 

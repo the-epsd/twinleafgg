@@ -40,7 +40,7 @@ export class ReversalEnergy extends EnergyCard {
       const isValidPokemon = attachedTo instanceof PokemonCard
         && attachedTo.stage !== Stage.BASIC
         && attachedTo.stage !== Stage.RESTORED
-        && !attachedTo.cardTag.includes(CardTag.POKEMON_V
+        && !attachedTo.tags.includes(CardTag.POKEMON_V
           || CardTag.POKEMON_ex
           || CardTag.POKEMON_VSTAR
           || CardTag.POKEMON_VMAX

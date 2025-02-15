@@ -537,6 +537,13 @@ export function LOOK_AT_TOPDECK_AND_DISCARD_OR_RETURN(store: StoreLike, state: S
   }
 }
 
+export function MOVE_CARDS_TO_HAND(store: StoreLike, state: State, player: Player, cards: Card[]) {
+  cards.forEach((card, index) => {
+    player.deck.moveCardTo(card, player.hand);
+    store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
+  });
+}
+
 export function SHOW_CARDS_TO_PLAYER(store: StoreLike, state: State, player: Player, cards: Card[]): State {
   if (cards.length === 0)
     return state;
@@ -598,6 +605,16 @@ export function BLOCK_IF_NO_SLOTS(slots: PokemonCardList[]) {
 export function BLOCK_IF_DECK_EMPTY(player: Player) {
   if (player.deck.cards.length === 0)
     throw new GameError(GameMessage.NO_CARDS_IN_DECK);
+}
+
+export function BLOCK_IF_DISCARD_EMPTY(player: Player) {
+  if (player.discard.cards.length === 0)
+    throw new GameError(GameMessage.NO_CARDS_IN_DISCARD);
+}
+
+export function BLOCK_IF_GX_ATTACK_USED(player: Player) {
+  if (player.usedGX === true)
+    throw new GameError(GameMessage.LABEL_GX_USED);
 }
 
 

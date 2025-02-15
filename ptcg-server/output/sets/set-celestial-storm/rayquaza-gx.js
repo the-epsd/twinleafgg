@@ -7,6 +7,7 @@ const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const check_effects_1 = require("../../game/store/effects/check-effects");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 // CES Rayquaza-GX 109 (https://limitlesstcg.com/cards/CES/109)
 class RayquazaGX extends pokemon_card_1.PokemonCard {
     constructor() {
@@ -115,9 +116,7 @@ class RayquazaGX extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
             // Check if player has used GX attack
-            if (player.usedGX == true) {
-                throw new game_1.GameError(game_1.GameMessage.LABEL_GX_USED);
-            }
+            prefabs_1.BLOCK_IF_GX_ATTACK_USED(player);
             // set GX attack as used for game
             player.usedGX = true;
             if (player.deck.cards.length === 0) {

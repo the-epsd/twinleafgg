@@ -3,6 +3,7 @@ import { EnergyType, SuperType, TrainerType } from '../../game/store/card/card-t
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { BLOCK_IF_DISCARD_EMPTY } from '../../game/store/prefabs/prefabs';
 
 export class MrStonesProject extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -29,9 +30,7 @@ export class MrStonesProject extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      if (player.discard.cards.length === 0) {
-        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-      }
+      BLOCK_IF_DISCARD_EMPTY(player);
 
       player.hand.moveCardTo(effect.trainerCard, player.supporter);
 

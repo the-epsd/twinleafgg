@@ -16,9 +16,9 @@ class Serena extends trainer_card_1.TrainerCard {
         this.regulationMark = 'F';
         this.name = 'Serena';
         this.fullName = 'Serena SIT';
-        this.text = 'Choose 1:' +
-            '• Discard up to 3 cards from your hand. (You must discard at least 1 card.) If you do, draw cards until you have 5 cards in your hand.' +
-            '• Switch 1 of your opponent\'s Benched Pokémon V with their Active Pokémon.. Shuffle the other cards back into your deck.';
+        this.text = 'Choose 1:\n\n' +
+            '• Discard up to 3 cards from your hand. (You must discard at least 1 card.) If you do, draw cards until you have 5 cards in your hand.\n' +
+            '• Switch 1 of your opponent\'s Benched Pokémon V with their Active Pokémon. Shuffle the other cards back into your deck.';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
@@ -55,7 +55,10 @@ class Serena extends trainer_card_1.TrainerCard {
                     action: () => {
                         const blocked = [];
                         opponent.bench.forEach((card, index) => {
-                            if (card instanceof game_1.PokemonCard && !((card.cardTag[0] == card_types_1.CardTag.POKEMON_V) || (card.cardTag[0] == card_types_1.CardTag.POKEMON_VMAX) || (card.cardTag[0] == card_types_1.CardTag.POKEMON_VSTAR))) {
+                            if (card instanceof game_1.PokemonCard && !((card.tags.includes(card_types_1.CardTag.POKEMON_V)) ||
+                                (card.tags.includes(card_types_1.CardTag.POKEMON_VMAX)) ||
+                                (card.tags.includes(card_types_1.CardTag.POKEMON_VSTAR)) ||
+                                (card.tags.includes(card_types_1.CardTag.POKEMON_VUNION)))) {
                                 blocked.push({ player: game_1.PlayerType.TOP_PLAYER, slot: game_1.SlotType.BENCH, index });
                             }
                         });

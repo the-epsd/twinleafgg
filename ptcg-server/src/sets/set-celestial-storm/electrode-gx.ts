@@ -4,6 +4,7 @@ import { StoreLike, State, PowerType, GameMessage, PlayerType, SlotType, EnergyC
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { DiscardEnergyPrompt } from '../../game/store/prompts/discard-energy-prompt';
+import { BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class ElectrodeGX extends PokemonCard {
 
@@ -112,9 +113,7 @@ export class ElectrodeGX extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
 
-      if (player.usedGX === true) {
-        throw new GameError(GameMessage.LABEL_GX_USED);
-      }
+      BLOCK_IF_GX_ATTACK_USED(player);
 
       // return store.prompt(state, new ChoosePokemonPrompt(
       //   player.id,

@@ -19,7 +19,7 @@ class HopsZacianex extends pokemon_card_1.PokemonCard {
         this.resistance = [{ type: G, value: -30 }];
         this.attacks = [
             {
-                name: 'Close Cleave',
+                name: 'Insta-Strike',
                 cost: [C],
                 damage: 30,
                 text: 'This attack also does 30 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'

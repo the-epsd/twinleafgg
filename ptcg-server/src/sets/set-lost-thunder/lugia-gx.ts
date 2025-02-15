@@ -6,6 +6,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { StateUtils } from '../../game/store/state-utils';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 // CIN Lugia-GX 57 (https://limitlesstcg.com/cards/CIN/57)
 export class LugiaGX extends PokemonCard {
@@ -76,9 +77,7 @@ export class LugiaGX extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       // Check if player has used GX attack
-      if (player.usedGX == true) {
-        throw new GameError(GameMessage.LABEL_GX_USED);
-      }
+      BLOCK_IF_GX_ATTACK_USED(player);
       // set GX attack as used for game
       player.usedGX = true;
 

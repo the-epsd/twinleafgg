@@ -1,9 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, ChooseCardsPrompt, GameMessage, GameError, PowerType, StateUtils, PokemonCardList } from '../../game';
+import { StoreLike, State, ChooseCardsPrompt, GameMessage, PowerType, StateUtils, PokemonCardList } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { BLOCK_IF_DISCARD_EMPTY } from '../../game/store/prefabs/prefabs';
 
 export class Minun extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -36,10 +37,8 @@ export class Minun extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
 
-      if (player.discard.cards.length === 0) {
-        throw new GameError(GameMessage.CANNOT_USE_ATTACK);
-      }
-
+      BLOCK_IF_DISCARD_EMPTY(player);
+      
       return store.prompt(state, new ChooseCardsPrompt(
         player,
         GameMessage.CHOOSE_CARD_TO_HAND,

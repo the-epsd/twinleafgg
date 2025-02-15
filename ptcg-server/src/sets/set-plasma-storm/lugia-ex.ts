@@ -67,7 +67,6 @@ export class LugiaEx extends PokemonCard {
           return state;
         }
 
-
         if (energyCard instanceof EnergyCard && energyCard.name == 'Plasma Energy')
 
           return store.prompt(state, new ChooseCardsPrompt(

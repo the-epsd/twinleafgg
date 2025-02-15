@@ -39,6 +39,7 @@ export class NecrozmaV extends PokemonCard {
       name: 'Special Laser',
       cost: [CardType.PSYCHIC, CardType.PSYCHIC, CardType.COLORLESS],
       damage: 100,
+      damageCalculation: '+',
       text: 'If this Pokémon has any Special Energy attached, this ' +
         'attack does 120 more damage. '
     }
@@ -89,16 +90,17 @@ export class NecrozmaV extends PokemonCard {
       const checkEnergy = new CheckProvidedEnergyEffect(player, pokemon);
       store.reduceEffect(state, checkEnergy);
 
-      let damage = 100;
-
+      let hasSpecialEnergy: boolean = false;
       checkEnergy.energyMap.forEach(em => {
         const energyCard = em.card;
         if (energyCard instanceof EnergyCard && energyCard.energyType === EnergyType.SPECIAL) {
-          damage += 120;
+          hasSpecialEnergy = true;
         }
       });
 
-      effect.damage = damage;
+      if (hasSpecialEnergy) {
+        effect.damage += 120;
+      }
 
     }
     return state;

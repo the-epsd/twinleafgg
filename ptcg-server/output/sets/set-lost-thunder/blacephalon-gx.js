@@ -8,6 +8,7 @@ const game_2 = require("../../game");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const state_utils_1 = require("../../game/store/state-utils");
 const game_effects_1 = require("../../game/store/effects/game-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class BlacephalonGX extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -78,9 +79,7 @@ class BlacephalonGX extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[2]) {
             const player = effect.player;
             // Check if player has used GX attack
-            if (player.usedGX == true) {
-                throw new game_1.GameError(game_2.GameMessage.LABEL_GX_USED);
-            }
+            prefabs_1.BLOCK_IF_GX_ATTACK_USED(player);
             // set GX attack as used for game
             player.usedGX = true;
             return store.prompt(state, new game_1.ChoosePrizePrompt(player.id, game_2.GameMessage.CHOOSE_PRIZE_CARD, { count: 1, allowCancel: false }), prizes => {

@@ -4,10 +4,10 @@ import { CardTag, TrainerType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { GameError, GameMessage, StateUtils } from '../../game';
 import { HAS_MARKER } from '../../game/store/prefabs/prefabs';
+import { AttackEffect } from '../../game/store/effects/game-effects';
 
 export class BlackBeltsTraining extends TrainerCard {
 
@@ -47,10 +47,11 @@ export class BlackBeltsTraining extends TrainerCard {
       return state;
     }
 
-    if (effect instanceof DealDamageEffect && HAS_MARKER(this.BLACK_BELTS_TRAINING_MARKER, effect.player, this)) {
+    if (effect instanceof AttackEffect && HAS_MARKER(this.BLACK_BELTS_TRAINING_MARKER, effect.player, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      if (effect.target !== opponent.active || effect.damage <= 0 || effect.target.getPokemonCard()?.tags.includes(CardTag.POKEMON_ex)) {
+      const oppActiveCard = effect.target.getPokemonCard();
+      if (effect.target !== opponent.active || effect.damage <= 0 || oppActiveCard.tags.includes(CardTag.POKEMON_ex)) {
         return state;
       }
       effect.damage += 40;

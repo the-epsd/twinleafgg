@@ -13,6 +13,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect, AttackEffect } from '../../game/store/effects/game-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 // CES Rayquaza-GX 109 (https://limitlesstcg.com/cards/CES/109)
 export class RayquazaGX extends PokemonCard {
@@ -160,9 +161,7 @@ export class RayquazaGX extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
       // Check if player has used GX attack
-      if (player.usedGX == true) {
-        throw new GameError(GameMessage.LABEL_GX_USED);
-      }
+      BLOCK_IF_GX_ATTACK_USED(player);
       // set GX attack as used for game
       player.usedGX = true;
 

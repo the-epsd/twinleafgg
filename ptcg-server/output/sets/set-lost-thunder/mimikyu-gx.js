@@ -8,6 +8,7 @@ const card_types_2 = require("../../game/store/card/card-types");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const state_utils_1 = require("../../game/store/state-utils");
 const game_effects_1 = require("../../game/store/effects/game-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class MimikyuGX extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -63,9 +64,7 @@ class MimikyuGX extends pokemon_card_1.PokemonCard {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
             // Check if player has used GX attack
-            if (player.usedGX == true) {
-                throw new game_1.GameError(game_1.GameMessage.LABEL_GX_USED);
-            }
+            prefabs_1.BLOCK_IF_GX_ATTACK_USED(player);
             // set GX attack as used for game
             player.usedGX = true;
             store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_PICK_UP, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH], { min: 1, max: 1, allowCancel: false }), selection => {

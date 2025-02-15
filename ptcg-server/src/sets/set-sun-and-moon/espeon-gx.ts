@@ -2,7 +2,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, GameMessage, PlayerType, SlotType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { DamageMap, GameError } from '../../game';
+import { DamageMap } from '../../game';
 import { SpecialCondition } from '../../game/store/card/card-types';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
@@ -11,6 +11,7 @@ import { PutCountersEffect } from '../../game/store/effects/attack-effects';
 import { CheckHpEffect } from '../../game/store/effects/check-effects';
 import { StateUtils } from '../../game/store/state-utils';
 import { AttackEffect } from '../../game/store/effects/game-effects';
+import { BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 // SUM Espeon-GX 61 (https://limitlesstcg.com/cards/SUM/61)
 export class EspeonGX extends PokemonCard {
@@ -86,9 +87,7 @@ export class EspeonGX extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       // Check if player has used GX attack
-      if (player.usedGX == true) {
-        throw new GameError(GameMessage.LABEL_GX_USED);
-      }
+      BLOCK_IF_GX_ATTACK_USED(player);
       // set GX attack as used for game
       player.usedGX = true;
 

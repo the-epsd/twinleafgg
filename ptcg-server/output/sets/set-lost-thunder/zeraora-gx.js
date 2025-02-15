@@ -7,6 +7,7 @@ const game_1 = require("../../game");
 const check_effects_1 = require("../../game/store/effects/check-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class ZeraoraGX extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -98,14 +99,12 @@ class ZeraoraGX extends pokemon_card_1.PokemonCard {
             if (!hasEnergyInDiscard) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_ATTACK);
             }
-            if (player.usedGX === true) {
-                throw new game_1.GameError(game_1.GameMessage.LABEL_GX_USED);
-            }
             // Check marker
             if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
                 console.log('attack blocked');
                 throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);
             }
+            prefabs_1.BLOCK_IF_GX_ATTACK_USED(player);
             player.usedGX = true;
             state = store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.discard, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Lightning Energy' }, { allowCancel: true, min: 1, max: 5 }), transfers => {
                 transfers = transfers || [];

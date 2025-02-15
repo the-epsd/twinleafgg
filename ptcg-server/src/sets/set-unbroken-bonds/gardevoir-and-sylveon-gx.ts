@@ -1,7 +1,8 @@
-import { AttachEnergyPrompt, CardTag, CardType, GameError, GameMessage, MoveEnergyPrompt, PlayerType, PokemonCard, ShuffleDeckPrompt, SlotType, Stage, State, StateUtils, StoreLike, SuperType } from '../../game';
+import { AttachEnergyPrompt, CardTag, CardType, GameMessage, MoveEnergyPrompt, PlayerType, PokemonCard, ShuffleDeckPrompt, SlotType, Stage, State, StateUtils, StoreLike, SuperType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 
 export class GardevoirSylveonGX extends PokemonCard {
@@ -93,9 +94,7 @@ export class GardevoirSylveonGX extends PokemonCard {
       const player = effect.player;
       const opponent = effect.opponent;
 
-      if (player.usedGX == true) {
-        throw new GameError(GameMessage.LABEL_GX_USED);
-      }
+      BLOCK_IF_GX_ATTACK_USED(player);
       player.usedGX = true;
 
       const extraEffectCost: CardType[] = [CardType.FAIRY, CardType.FAIRY, CardType.FAIRY, CardType.FAIRY, CardType.FAIRY, CardType.FAIRY];

@@ -6,6 +6,7 @@ const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class Munchlax extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -30,9 +31,7 @@ class Munchlax extends pokemon_card_1.PokemonCard {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             let cards = [];
-            if (player.discard.cards.length === 0) {
-                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
-            }
+            prefabs_1.BLOCK_IF_DISCARD_EMPTY(player);
             // Checking to see if ability is being blocked
             try {
                 const stub = new game_effects_1.PowerEffect(player, {

@@ -1,4 +1,4 @@
-import { Attack, GameError, GameMessage, PokemonCardList, StateUtils } from '../../game';
+import { Attack, PokemonCardList, StateUtils } from '../../game';
 import { CardType, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { AbstractAttackEffect } from '../../game/store/effects/attack-effects';
@@ -6,6 +6,7 @@ import { CheckPokemonAttacksEffect } from '../../game/store/effects/check-effect
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
@@ -49,13 +50,10 @@ export class FlyiniumZAirSlash extends TrainerCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
 
-      if (player.usedGX === true) {
-        throw new GameError(GameMessage.LABEL_GX_USED);
-      }
-
       const cardList = StateUtils.findCardList(state, this) as PokemonCardList;
       cardList.marker.addMarker(this.FLYINIUM_Z_MARKER, this);
 
+      BLOCK_IF_GX_ATTACK_USED(player);
       player.usedGX = true;
 
       return state;
