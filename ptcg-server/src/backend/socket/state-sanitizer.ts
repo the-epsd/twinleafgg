@@ -10,9 +10,6 @@ import { SuperType } from '../../game/store/card/card-types';
 import { deepClone } from '../../utils';
 
 export class StateSanitizer {
-  private lastSanitizedState: Map<number, State> = new Map();
-  private lastSanitizedTime: Map<number, number> = new Map();
-  private readonly SANITIZE_INTERVAL = 1000; // Only sanitize once per second per game
 
   constructor(
     private client: Client,
@@ -21,31 +18,13 @@ export class StateSanitizer {
 
   /**
    * Clear sensitive data, resolved prompts and old logs.
-   * Returns cached sanitized state if called within SANITIZE_INTERVAL
    */
   public sanitize(state: State, gameId: number): State {
-    const now = Date.now();
-    const lastTime = this.lastSanitizedTime.get(gameId) || 0;
-
-    // Return cached state if within interval
-    if (now - lastTime < this.SANITIZE_INTERVAL) {
-      const cachedState = this.lastSanitizedState.get(gameId);
-      if (cachedState) {
-        return cachedState;
-      }
-    }
-
-    // Perform sanitization
-    let sanitizedState = deepClone(state, [Card]);
-    sanitizedState = this.filterPrompts(sanitizedState);
-    sanitizedState = this.removeLogs(sanitizedState, gameId);
-    sanitizedState = this.hideSecretCards(sanitizedState);
-
-    // Cache the result
-    this.lastSanitizedState.set(gameId, sanitizedState);
-    this.lastSanitizedTime.set(gameId, now);
-
-    return sanitizedState;
+    state = deepClone(state, [Card]);
+    state = this.filterPrompts(state);
+    state = this.removeLogs(state, gameId);
+    state = this.hideSecretCards(state);
+    return state;
   }
 
   private hideSecretCards(state: State) {
@@ -107,9 +86,14 @@ export class StateSanitizer {
 
   private filterPrompts(state: State): State {
     // Filter resolved prompts, not needed anymore
+
     state.prompts = state.prompts.filter(prompt => {
       return prompt.result === undefined;
     });
+
+    // state.prompts = state.prompts.filter(prompt => {
+    //   return prompt.type === 'Coin flip' || prompt.playerId === this.client.id;
+    // });
 
     // Hide opponent's prompts. They may contain sensitive data.
     state.prompts = state.prompts.map(prompt => {

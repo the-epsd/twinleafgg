@@ -29,53 +29,35 @@ export class CoreSocket {
   }
 
   public onConnect(client: Client): void {
-    // Throttle connection events
-    setTimeout(() => {
-      this.socket.emit('core:join', {
-        clientId: client.id,
-        user: CoreSocket.buildUserInfo(client.user)
-      });
-    }, 100);
+    this.socket.emit('core:join', {
+      clientId: client.id,
+      user: CoreSocket.buildUserInfo(client.user)
+    });
   }
 
   public onDisconnect(client: Client): void {
-    // Clean up any resources
-    if (this.cache.gameInfoCache[client.id]) {
-      delete this.cache.gameInfoCache[client.id];
-    }
-    if (this.cache.lastLogIdCache[client.id]) {
-      delete this.cache.lastLogIdCache[client.id];
-    }
     this.socket.emit('core:leave', client.id);
   }
 
   public onGameAdd(game: Game): void {
-    // Initialize cache with reasonable defaults
+    console.log(`New game created. Total active games: ${this.core.games.length}`);
     this.cache.lastLogIdCache[game.id] = 0;
     this.cache.gameInfoCache[game.id] = CoreSocket.buildGameInfo(game);
-
-    // Throttle game creation events
-    setTimeout(() => {
-      this.socket.emit('core:createGame', this.cache.gameInfoCache[game.id]);
-    }, 100);
+    this.socket.emit('core:createGame', this.cache.gameInfoCache[game.id]);
   }
 
   public onGameDelete(game: Game): void {
-    // Clean up cache
+    console.log(`Game deleted. Total active games: ${this.core.games.length - 1}`);
     delete this.cache.gameInfoCache[game.id];
     delete this.cache.lastLogIdCache[game.id];
     this.socket.emit('core:deleteGame', game.id);
   }
 
   public onStateChange(game: Game, state: State): void {
-    // Only emit if state actually changed
     const gameInfo = CoreSocket.buildGameInfo(game);
     if (!deepCompare(gameInfo, this.cache.gameInfoCache[game.id])) {
       this.cache.gameInfoCache[game.id] = gameInfo;
-      // Throttle state change events
-      setTimeout(() => {
-        this.socket.emit('core:gameInfo', gameInfo);
-      }, 100);
+      this.socket.emit('core:gameInfo', gameInfo);
     }
   }
 
@@ -84,12 +66,6 @@ export class CoreSocket {
     if (core === undefined) {
       return;
     }
-
-    // Limit frequency of user updates
-    if (this.cache.lastUserUpdate && Date.now() - this.cache.lastUserUpdate < 1000) {
-      return;
-    }
-    this.cache.lastUserUpdate = Date.now();
 
     const me = users.find(u => u.id === this.client.user.id);
     if (me !== undefined) {
@@ -104,12 +80,7 @@ export class CoreSocket {
   }
 
   private buildCoreInfo(): CoreInfo {
-    // Cache core info for 1 second to prevent excessive rebuilding
-    if (this.cache.coreInfo && Date.now() - this.cache.coreInfoTimestamp < 1000) {
-      return this.cache.coreInfo;
-    }
-
-    const coreInfo = {
+    return {
       clientId: this.client.id,
       clients: this.core.clients.map(client => ({
         clientId: client.id,
@@ -118,10 +89,6 @@ export class CoreSocket {
       users: this.core.clients.map(client => CoreSocket.buildUserInfo(client.user)),
       games: this.core.games.map(game => CoreSocket.buildGameInfo(game))
     };
-
-    this.cache.coreInfo = coreInfo;
-    this.cache.coreInfoTimestamp = Date.now();
-    return coreInfo;
   }
 
   private getCoreInfo(data: void, response: Response<CoreInfo>): void {

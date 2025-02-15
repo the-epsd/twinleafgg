@@ -6,8 +6,6 @@ export declare class SocketWrapper {
     io: Server;
     socket: Socket;
     private listeners;
-    private readonly MAX_LISTENERS;
-    private readonly TIMEOUT;
     constructor(io: Server, socket: Socket);
     attachListeners(): void;
     addListener<T, R>(message: string, handler: Handler<T, R>): void;
