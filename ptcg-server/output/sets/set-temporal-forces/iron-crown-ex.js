@@ -64,13 +64,13 @@ class IronCrownex extends pokemon_card_1.PokemonCard {
                 });
             });
         }
-        if (effect instanceof game_effects_1.AttackEffect) {
+        if (effect instanceof attack_effects_1.DealDamageEffect) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, effect.player);
             const source = effect.source.getPokemonCard();
-            if (game_1.StateUtils.isPokemonInPlay(player, this) && source.tags.includes(card_types_1.CardTag.FUTURE) &&
-                source.name !== 'Iron Crown ex' && prefabs_1.IS_ABILITY_BLOCKED(store, state, player, this) &&
-                effect.target !== opponent.active && effect.damage > 0) {
+            if (state.phase === game_1.GamePhase.ATTACK && game_1.StateUtils.isPokemonInPlay(player, this) &&
+                source.tags.includes(card_types_1.CardTag.FUTURE) && source.name !== 'Iron Crown ex' &&
+                effect.target === opponent.active && effect.damage > 0 && !prefabs_1.IS_ABILITY_BLOCKED(store, state, player, this)) {
                 effect.damage += 20;
             }
         }

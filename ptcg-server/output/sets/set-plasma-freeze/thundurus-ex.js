@@ -66,7 +66,7 @@ class ThundurusEX extends game_1.PokemonCard {
                 }
             });
         }
-        if (prefabs_1.WAS_ATTACK_USED(effect, 0, this)) {
+        if (prefabs_1.WAS_ATTACK_USED(effect, 1, this)) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             const pokemon = player.active;

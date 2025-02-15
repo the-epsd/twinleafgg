@@ -1,9 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, PowerType, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, StateUtils } from '../../game';
+import { StoreLike, State, PowerType, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, StateUtils, GamePhase } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { AfterDamageEffect, ApplyWeaknessEffect } from '../../game/store/effects/attack-effects';
+import { AfterDamageEffect, ApplyWeaknessEffect, DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 export class IronCrownex extends PokemonCard {
@@ -89,14 +89,14 @@ export class IronCrownex extends PokemonCard {
       });
     }
 
-    if (effect instanceof AttackEffect) {
+    if (effect instanceof DealDamageEffect) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, effect.player);
       const source = effect.source.getPokemonCard() as PokemonCard;
 
-      if (StateUtils.isPokemonInPlay(player, this) && source.tags.includes(CardTag.FUTURE) &&
-        source.name !== 'Iron Crown ex' && IS_ABILITY_BLOCKED(store, state, player, this) &&
-        effect.target !== opponent.active && effect.damage > 0
+      if (state.phase === GamePhase.ATTACK && StateUtils.isPokemonInPlay(player, this) &&
+        source.tags.includes(CardTag.FUTURE) && source.name !== 'Iron Crown ex' &&
+        effect.target === opponent.active && effect.damage > 0 && !IS_ABILITY_BLOCKED(store, state, player, this)
       ) {
         effect.damage += 20;
       }

@@ -80,7 +80,7 @@ export class ThundurusEX extends PokemonCard {
       });
     }
 
-    if (WAS_ATTACK_USED(effect, 0, this)) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
 
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);

@@ -2,8 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DeoxysEX = void 0;
 const game_1 = require("../../game");
+const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const check_effects_1 = require("../../game/store/effects/check-effects");
-const game_effects_1 = require("../../game/store/effects/game-effects");
 const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class DeoxysEX extends game_1.PokemonCard {
     constructor() {
@@ -54,14 +54,14 @@ class DeoxysEX extends game_1.PokemonCard {
                 effect.damage += opponentEnergyCount * 30;
             }
         }
-        if (effect instanceof game_effects_1.AttackEffect) {
+        if (effect instanceof attack_effects_1.DealDamageEffect) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, effect.player);
             const source = effect.source.getPokemonCard();
-            if (game_1.StateUtils.isPokemonInPlay(player, this) && source.tags.includes(game_1.CardTag.TEAM_PLASMA) &&
-                source.name !== 'Deoxys EX' && effect.target !== opponent.active && effect.damage > 0 &&
-                prefabs_1.IS_ABILITY_BLOCKED(store, state, player, this)) {
-                effect.damage += 20;
+            if (state.phase === game_1.GamePhase.ATTACK && game_1.StateUtils.isPokemonInPlay(player, this) &&
+                source.tags.includes(game_1.CardTag.TEAM_PLASMA) && source.name !== 'Deoxys EX' &&
+                effect.target === opponent.active && effect.damage > 0 && !prefabs_1.IS_ABILITY_BLOCKED(store, state, player, this)) {
+                effect.damage += 10;
             }
         }
         return state;

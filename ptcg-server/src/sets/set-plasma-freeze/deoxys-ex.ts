@@ -1,7 +1,7 @@
-import { Attack, CardTag, CardType, EnergyCard, PokemonCard, Power, PowerType, Stage, State, StateUtils, StoreLike, Weakness } from "../../game";
+import { Attack, CardTag, CardType, EnergyCard, GamePhase, PokemonCard, Power, PowerType, Stage, State, StateUtils, StoreLike, Weakness } from "../../game";
+import { DealDamageEffect } from "../../game/store/effects/attack-effects";
 import { CheckProvidedEnergyEffect } from "../../game/store/effects/check-effects";
 import { Effect } from "../../game/store/effects/effect";
-import { AttackEffect } from "../../game/store/effects/game-effects";
 import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from "../../game/store/prefabs/prefabs";
 
 export class DeoxysEX extends PokemonCard {
@@ -61,16 +61,16 @@ export class DeoxysEX extends PokemonCard {
       }
     }
 
-    if (effect instanceof AttackEffect) {
+    if (effect instanceof DealDamageEffect) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, effect.player);
       const source = effect.source.getPokemonCard() as PokemonCard;
 
-      if (StateUtils.isPokemonInPlay(player, this) && source.tags.includes(CardTag.TEAM_PLASMA) &&
-        source.name !== 'Deoxys EX' && effect.target !== opponent.active && effect.damage > 0 &&
-        IS_ABILITY_BLOCKED(store, state, player, this)
+      if (state.phase === GamePhase.ATTACK && StateUtils.isPokemonInPlay(player, this) &&
+        source.tags.includes(CardTag.TEAM_PLASMA) && source.name !== 'Deoxys EX' &&
+        effect.target === opponent.active && effect.damage > 0 && !IS_ABILITY_BLOCKED(store, state, player, this)
       ) {
-        effect.damage += 20;
+        effect.damage += 10;
       }
     }
 
