@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MoveEnergyPrompt = exports.MoveEnergyPromptType = void 0;
+const card_1 = require("../card/card");
 const game_error_1 = require("../../game-error");
 const game_message_1 = require("../../game-message");
 const prompt_1 = require("./prompt");
@@ -36,6 +37,10 @@ class MoveEnergyPrompt extends prompt_1.Prompt {
         result.forEach(t => {
             const cardList = state_utils_1.StateUtils.getTarget(state, player, t.from);
             const card = cardList.cards[t.index];
+            // Verify this is a card.
+            if (!(card instanceof card_1.Card)) {
+                throw new game_error_1.GameError(game_message_1.GameMessage.INVALID_PROMPT_RESULT);
+            }
             transfers.push({ from: t.from, to: t.to, card });
         });
         return transfers;

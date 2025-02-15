@@ -1,5 +1,5 @@
 import { Card, CardTarget, CardType, ChooseCardsPrompt, ChoosePokemonPrompt, GameError, GameLog, GameMessage, PlayerType, PokemonCard, PokemonCardList, Power, PowerType, ShuffleDeckPrompt, SlotType, State, StoreLike, SuperType } from '../../game';
-import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { PutCountersEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 
@@ -131,7 +131,7 @@ export class Duskull extends PokemonCard {
       ), selected => {
         const targets = selected || [];
         targets.forEach(target => {
-          const damageEffect = new PutDamageEffect(effect, 20);
+          const damageEffect = new PutCountersEffect(effect, 20);
           damageEffect.target = target;
           store.reduceEffect(state, damageEffect);
         });

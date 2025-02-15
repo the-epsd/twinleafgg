@@ -74,6 +74,10 @@ export class AttachEnergyPrompt extends Prompt<CardAssign[]> {
     result.forEach(t => {
       const cardList = this.cardList;
       const card = cardList.cards[t.index];
+      // Verify this is a card.
+      if (!(card instanceof Card)) {
+        throw new GameError(GameMessage.INVALID_PROMPT_RESULT);
+      }
       // Verify card is an energy card
       if (card.superType !== SuperType.ENERGY) {
         throw new GameError(GameMessage.INVALID_PROMPT_RESULT);

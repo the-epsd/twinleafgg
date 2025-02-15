@@ -65,7 +65,7 @@ function applyWeaknessAndResistance(
   return (damage * multiply) + modifier;
 }
 
-function* useAttack(next: Function, store: StoreLike, state: State, effect: UseAttackEffect): IterableIterator<State> {
+function* useAttack(next: Function, store: StoreLike, state: State, effect: UseAttackEffect | AttackEffect): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
 
@@ -133,7 +133,8 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
 
   store.log(state, GameLog.LOG_PLAYER_USES_ATTACK, { name: player.name, attack: attack.name });
   state.phase = GamePhase.ATTACK;
-  const attackEffect = new AttackEffect(player, opponent, attack);
+
+  const attackEffect = (effect instanceof AttackEffect) ? effect : new AttackEffect(player, opponent, attack);
   state = store.reduceEffect(state, attackEffect);
 
   if (store.hasPrompts()) {

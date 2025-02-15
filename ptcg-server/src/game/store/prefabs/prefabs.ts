@@ -130,10 +130,10 @@ export function THIS_ATTACK_DOES_X_MORE_DAMAGE(effect: AttackEffect, store: Stor
 
 export function DEAL_MORE_DAMAGE_IF_OPPONENT_ACTIVE_HAS_CARD_TAG(effect: AttackEffect, state: State, damage: number, ...cardTags: CardTag[]) {
   const opponent = StateUtils.getOpponent(state, effect.player);
-  const opponentActive = opponent.active.getPokemonCard() as PokemonCard
+  const opponentActive = opponent.active.getPokemonCard();
   let includesAnyTags = false;
   for (const tag of cardTags) {
-    if (opponentActive.tags.includes(tag)) {
+    if (opponentActive && opponentActive.tags.includes(tag)) {
       includesAnyTags = true;
     }
   }

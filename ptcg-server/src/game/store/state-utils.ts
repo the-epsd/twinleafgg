@@ -264,17 +264,16 @@ export class StateUtils {
     throw new GameError(GameMessage.INVALID_GAME_STATE);
   }
 
-  public static isPokemonInPlay(player: Player, pokemon: PokemonCard, location?: 'bench' | 'active'): boolean {
+  public static isPokemonInPlay(player: Player, pokemon: PokemonCard, location?: SlotType.BENCH | SlotType.ACTIVE): boolean {
     let inPlay = false;
     player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
       if (card === pokemon) {
-        if (location === 'bench' && cardList === player.active) {
-          return;
+        if ((location === SlotType.BENCH && cardList === player.active) ||
+          (location === SlotType.ACTIVE && cardList !== player.active)) {
+          inPlay = false;
+        } else {
+          inPlay = true;
         }
-        if (location === 'active' && cardList !== player.active) {
-          return;
-        }
-        inPlay = true;
       }
     });
     return inPlay;

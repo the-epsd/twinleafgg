@@ -88,7 +88,7 @@ function* useAttack(next, store, state, effect) {
     }
     store.log(state, game_message_1.GameLog.LOG_PLAYER_USES_ATTACK, { name: player.name, attack: attack.name });
     state.phase = state_1.GamePhase.ATTACK;
-    const attackEffect = new game_effects_1.AttackEffect(player, opponent, attack);
+    const attackEffect = (effect instanceof game_effects_1.AttackEffect) ? effect : new game_effects_1.AttackEffect(player, opponent, attack);
     state = store.reduceEffect(state, attackEffect);
     if (store.hasPrompts()) {
         yield store.waitPrompt(state, () => next());

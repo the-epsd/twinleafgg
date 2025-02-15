@@ -528,6 +528,7 @@
     "LOG_PLAYER_NO_CARDS_IN_DECK": "{{name}} has no more cards in their deck.",
     "LOG_PLAYER_NO_PRIZE_CARD": "{{name}} has no more Prize cards left.",
     "LOG_PLAYER_PLAYS_BASIC_POKEMON": "{{name}} puts {{card}} on their Bench.",
+    "LOG_PLAYER_DEALS_DAMAGE": "{{ name }} deals {{ damage }} to {{ target }} with {{ effect }}.",
     "LOG_PLAYER_PLACES_DAMAGE_COUNTERS": "{{ name }} places {{ damage }} on {{ target }} with {{ effect }}.",
     "LOG_PLAYER_RETURNS_TO_DECK_FROM_DISCARD": "{{name}} returns {{card}} from their Discard Pile into their Deck.",
     "LOG_PLAYER_PLAYS_ITEM": "{{name}} plays {{card}}.",
