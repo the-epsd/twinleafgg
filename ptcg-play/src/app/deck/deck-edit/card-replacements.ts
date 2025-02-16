@@ -400,6 +400,9 @@ export const cardReplacements = [
   { from: 'Pecharunt ex SFA 95', to: 'Pecharunt exUR SFA 95' },
   { from: 'Powerglass SFA 97', to: 'PowerglassUR SFA 97' },
 
+  //SSP
+  { from: 'Charcadet SSP 33', to: 'Charcadet 2 SSP 33' },
+
   //SSP FA
   { from: 'Larvesta SSP 196', to: 'LarvestaIR SSP 196' },
   { from: 'Feebas SSP 198', to: 'FeebasIR SSP 198' },
