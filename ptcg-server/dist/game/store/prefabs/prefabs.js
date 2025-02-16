@@ -15,6 +15,7 @@ import { DealDamageEffect, DiscardCardsEffect, HealTargetEffect, PutDamageEffect
 import { AddSpecialConditionsPowerEffect, CheckPrizesDestinationEffect, CheckProvidedEnergyEffect } from '../effects/check-effects';
 import { AttackEffect, DrawPrizesEffect, EvolveEffect, KnockOutEffect, PowerEffect, RetreatEffect } from '../effects/game-effects';
 import { AfterAttackEffect, EndTurnEffect } from '../effects/game-phase-effects';
+import { MoveCardsEffect } from '../effects/game-effects';
 /**
  *
  * A basic effect for checking the use of attacks.
@@ -121,7 +122,7 @@ export function DEAL_MORE_DAMAGE_IF_OPPONENT_ACTIVE_HAS_CARD_TAG(effect, state, 
     const opponentActive = opponent.active.getPokemonCard();
     let includesAnyTags = false;
     for (const tag of cardTags) {
-        if (opponentActive.tags.includes(tag)) {
+        if (opponentActive && opponentActive.tags.includes(tag)) {
             includesAnyTags = true;
         }
     }
@@ -416,6 +417,12 @@ export function LOOK_AT_TOPDECK_AND_DISCARD_OR_RETURN(store, state, choosingPlay
             }]);
     }
 }
+export function MOVE_CARDS_TO_HAND(store, state, player, cards) {
+    cards.forEach((card, index) => {
+        player.deck.moveCardTo(card, player.hand);
+        store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
+    });
+}
 export function SHOW_CARDS_TO_PLAYER(store, state, player, cards) {
     if (cards.length === 0)
         return state;
@@ -461,6 +468,14 @@ export function BLOCK_IF_NO_SLOTS(slots) {
 export function BLOCK_IF_DECK_EMPTY(player) {
     if (player.deck.cards.length === 0)
         throw new GameError(GameMessage.NO_CARDS_IN_DECK);
+}
+export function BLOCK_IF_DISCARD_EMPTY(player) {
+    if (player.discard.cards.length === 0)
+        throw new GameError(GameMessage.NO_CARDS_IN_DISCARD);
+}
+export function BLOCK_IF_GX_ATTACK_USED(player) {
+    if (player.usedGX === true)
+        throw new GameError(GameMessage.LABEL_GX_USED);
 }
 //#region Special Conditions
 export function ADD_SPECIAL_CONDITIONS_TO_PLAYER_ACTIVE(store, state, player, source, specialConditions, poisonDamage = 10, burnDamage = 20, sleepFlips = 1) {
@@ -532,3 +547,6 @@ export function BLOCK_RETREAT_IF_MARKER(effect, marker, source) {
         throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
 }
 //#endregion
+export function MOVE_CARDS(store, state, source, destination, options = {}) {
+    return store.reduceEffect(state, new MoveCardsEffect(source, destination, options));
+}
