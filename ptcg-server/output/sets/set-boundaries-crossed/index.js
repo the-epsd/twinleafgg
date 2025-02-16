@@ -5,6 +5,7 @@ const aspertia_city_gym_1 = require("./aspertia-city-gym");
 const blastoise_1 = require("./blastoise");
 const card_images_1 = require("./card-images");
 const computer_search_1 = require("./computer-search");
+const ditto_1 = require("./ditto");
 const dusclops_1 = require("./dusclops");
 const dusknoir_1 = require("./dusknoir");
 const duskull_1 = require("./duskull");
@@ -21,6 +22,7 @@ exports.setBoundariesCrossed = [
     new aspertia_city_gym_1.AspertiaCityGym(),
     new blastoise_1.Blastoise(),
     new computer_search_1.ComputerSearch(),
+    new ditto_1.Ditto(),
     new dusclops_1.Dusclops(),
     new dusknoir_1.Dusknoir(),
     new duskull_1.Duskull(),

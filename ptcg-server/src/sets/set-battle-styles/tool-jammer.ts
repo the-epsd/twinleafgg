@@ -31,8 +31,6 @@ export class ToolJammer extends TrainerCard {
       const opponent = StateUtils.getOpponent(state, player);
       const opponentActivePokemon = opponent.active;
 
-
-
       if (opponentActivePokemon && opponentActivePokemon.tool) {
         opponentActivePokemon.tool.reduceEffect = () => state;
       }

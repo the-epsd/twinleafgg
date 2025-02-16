@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setBlackAndWhite = void 0;
+const herdier_1 = require("./herdier");
 const lillipup_1 = require("./lillipup");
 const pignite_1 = require("./pignite");
 const plus_power_1 = require("./plus-power");
@@ -13,6 +14,7 @@ const zekrom_1 = require("./zekrom");
 const zoroark_1 = require("./zoroark");
 const zorua_1 = require("./zorua");
 exports.setBlackAndWhite = [
+    new herdier_1.Herdier(),
     new lillipup_1.Lillipup(),
     new pignite_1.Pignite(),
     new plus_power_1.PlusPower(),

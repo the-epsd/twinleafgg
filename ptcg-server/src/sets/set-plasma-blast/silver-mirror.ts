@@ -4,7 +4,6 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { AbstractAttackEffect } from '../../game/store/effects/attack-effects';
-import { PokemonCard } from '../../game';
 
 
 export class SilverMirror extends TrainerCard {
@@ -23,8 +22,10 @@ export class SilverMirror extends TrainerCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof AbstractAttackEffect && effect.target.cards.includes(this)) {
-      const sourceCard = effect.source.getPokemonCard() as PokemonCard;
-      if (sourceCard.tags.includes(CardTag.TEAM_PLASMA)) {
+      const targetCard = effect.target.getPokemonCard();
+      const sourceCard = effect.source.getPokemonCard();
+      
+      if ( targetCard && !targetCard.tags.includes(CardTag.POKEMON_EX) && sourceCard && sourceCard.tags.includes(CardTag.TEAM_PLASMA)) {
         effect.preventDefault = true;
       }
     }

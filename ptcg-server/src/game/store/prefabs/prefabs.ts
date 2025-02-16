@@ -692,15 +692,15 @@ export function REPLACE_MARKER_AT_END_OF_TURN(effect: Effect, oldMarker: string,
 
 /**
  * If an EndTurnEffect is given, will check for `clearerMarker` on the player whose turn it is,
- * and clear all of their opponent's `oppMarker`s.
+ * and clear all of the player or opponent's `pokemonMarker`s.
  * Useful for "During your opponent's next turn" effects.
  */
-export function CLEAR_MARKER_AND_OPPONENTS_POKEMON_MARKER_AT_END_OF_TURN(state: State, effect: Effect, clearerMarker: string, oppMarker: string, source: Card) {
+export function CLEAR_MARKER_AND_OPPONENTS_POKEMON_MARKER_AT_END_OF_TURN(state: State, effect: Effect, clearerMarker: string, pokemonMarker: string, source: Card) {
   if (effect instanceof EndTurnEffect && HAS_MARKER(clearerMarker, effect.player, source)) {
     REMOVE_MARKER(clearerMarker, effect.player, source);
     const opponent = StateUtils.getOpponent(state, effect.player);
-    REMOVE_MARKER(oppMarker, opponent, source);
-    opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => REMOVE_MARKER(oppMarker, cardList, source));
+    REMOVE_MARKER(pokemonMarker, opponent, source);
+    opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => REMOVE_MARKER(pokemonMarker, cardList, source));
   }
 }
 

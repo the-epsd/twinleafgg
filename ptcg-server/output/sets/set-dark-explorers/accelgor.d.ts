@@ -23,5 +23,6 @@ export declare class Accelgor extends PokemonCard {
     fullName: string;
     cardImage: string;
     setNumber: string;
+    usedDeckAndCover: boolean;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }
