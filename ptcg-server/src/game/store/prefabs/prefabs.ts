@@ -6,6 +6,7 @@ import { AddSpecialConditionsPowerEffect, CheckPrizesDestinationEffect, CheckPro
 import { Effect } from '../effects/effect';
 import { AttackEffect, DrawPrizesEffect, EvolveEffect, KnockOutEffect, PowerEffect, RetreatEffect } from '../effects/game-effects';
 import { AfterAttackEffect, EndTurnEffect } from '../effects/game-phase-effects';
+import { MoveCardsEffect } from '../effects/game-effects';
 
 /**
  * 
@@ -709,3 +710,19 @@ export function BLOCK_RETREAT_IF_MARKER(effect: Effect, marker: string, source: 
 }
 
 //#endregion
+
+export function MOVE_CARDS(
+  store: StoreLike,
+  state: State,
+  source: CardList | PokemonCardList,
+  destination: CardList | PokemonCardList,
+  options: {
+    cards?: Card[],
+    count?: number,
+    toTop?: boolean,
+    toBottom?: boolean,
+    skipCleanup?: boolean
+  } = {}
+): State {
+  return store.reduceEffect(state, new MoveCardsEffect(source, destination, options));
+}

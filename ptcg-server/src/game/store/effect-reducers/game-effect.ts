@@ -1,6 +1,6 @@
 import { GameError } from '../../game-error';
 import { GameLog, GameMessage } from '../../game-message';
-import { CardTag, CardType, SpecialCondition, Stage, SuperType, TrainerType } from '../card/card-types';
+import { BoardEffect, CardTag, CardType, SpecialCondition, Stage, SuperType, TrainerType } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
 import { Attack, Resistance, Weakness } from '../card/pokemon-types';
 import { TrainerCard } from '../card/trainer-card';
@@ -33,6 +33,8 @@ import { CardList } from '../state/card-list';
 import { GamePhase, State } from '../state/state';
 import { StoreLike } from '../store-like';
 import { checkState } from './check-effect';
+import { MoveCardsEffect } from '../effects/game-effects';
+import { PokemonCardList } from '../state/pokemon-card-list';
 
 function applyWeaknessAndResistance(
   damage: number,
@@ -378,6 +380,66 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
     effect.target.marker.markers = [];
     effect.target.marker.markers = [];
     effect.target.marker.markers = [];
+  }
+
+  if (effect instanceof MoveCardsEffect) {
+    const source = effect.source;
+    const destination = effect.destination;
+
+    // If source is a PokemonCardList, always clean up when moving cards
+    if (source instanceof PokemonCardList) {
+      source.clearEffects();
+      source.damage = 0;
+      source.specialConditions = [];
+      source.marker.markers = [];
+      source.tool = undefined;
+      source.removeBoardEffect(BoardEffect.ABILITY_USED);
+    }
+
+    // If specific cards are specified
+    if (effect.cards) {
+      if (source instanceof PokemonCardList) {
+        source.moveCardsTo(effect.cards, destination);
+        if (effect.toBottom) {
+          destination.cards = [...destination.cards.slice(effect.cards.length), ...effect.cards];
+        } else if (effect.toTop) {
+          destination.cards = [...effect.cards, ...destination.cards];
+        }
+      } else {
+        source.moveCardsTo(effect.cards, destination);
+        if (effect.toBottom) {
+          destination.cards = [...destination.cards.slice(effect.cards.length), ...effect.cards];
+        } else if (effect.toTop) {
+          destination.cards = [...effect.cards, ...destination.cards];
+        }
+      }
+    }
+    // If count is specified
+    else if (effect.count !== undefined) {
+      const cards = source.cards.slice(0, effect.count);
+      source.moveCardsTo(cards, destination);
+      if (effect.toBottom) {
+        destination.cards = [...destination.cards.slice(cards.length), ...cards];
+      } else if (effect.toTop) {
+        destination.cards = [...cards, ...destination.cards];
+      }
+    }
+    // Move all cards
+    else {
+      if (effect.toTop) {
+        source.moveToTopOfDestination(destination);
+      } else {
+        source.moveTo(destination);
+      }
+    }
+
+    // If source is a PokemonCardList and we moved all cards, discard remaining attached cards
+    if (source instanceof PokemonCardList && source.getPokemons().length === 0) {
+      const player = StateUtils.findOwner(state, source);
+      source.moveTo(player.discard);
+    }
+
+    return state;
   }
 
   return state;

@@ -1,19 +1,25 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
+import { StoreLike, State, PowerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-export declare class EthansCyndaquil extends PokemonCard {
+export declare class CynthiasRoserade extends PokemonCard {
     stage: Stage;
+    evolvesFrom: string;
     tags: CardTag[];
     cardType: CardType;
     hp: number;
     weakness: {
-        type: CardType.WATER;
+        type: CardType.FIRE;
     }[];
     retreat: CardType.COLORLESS[];
+    powers: {
+        name: string;
+        powerType: PowerType;
+        text: string;
+    }[];
     attacks: {
         name: string;
-        cost: CardType.FIRE[];
+        cost: (CardType.GRASS | CardType.COLORLESS)[];
         damage: number;
         text: string;
     }[];

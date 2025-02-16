@@ -5,6 +5,7 @@ const __1 = require("../..");
 const card_types_1 = require("../../game/store/card/card-types");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class LilliesPokeDoll extends __1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -47,21 +48,18 @@ class LilliesPokeDoll extends __1.TrainerCard {
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0] && effect.player.active.cards.includes(this)) {
-            const cardList = effect.player.active;
             const player = effect.player;
-            store.log(state, __1.GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: effect.player.name, card: this.name });
-            if (player.bench.every(b => b.cards.length === 0)) {
-                // technical implementation does not matter exactly because this ends the game
-                effect.player.active.clearEffects();
-                effect.player.active.clearAttackEffects();
-                effect.player.active.moveCardsTo(effect.player.active.cards, player.deck);
-            }
-            else {
-                player.switchPokemon(cardList);
-                const pokeDollCardList = __1.StateUtils.findCardList(state, this);
-                pokeDollCardList.moveCardsTo(pokeDollCardList.cards.filter(c => c === this), effect.player.deck);
-                pokeDollCardList.moveCardsTo(pokeDollCardList.cards.filter(c => c !== this), effect.player.discard);
-            }
+            const pokeDollCardList = __1.StateUtils.findCardList(state, this);
+            store.log(state, __1.GameLog.LOG_PLAYER_PUTS_CARD_ON_BOTTOM_OF_DECK, { name: player.name, card: this.name });
+            // Move Lillie's Poke Doll to bottom of deck
+            state = prefabs_1.MOVE_CARDS(store, state, pokeDollCardList, player.deck, {
+                cards: [this],
+                toBottom: true
+            });
+            // Move any attached cards to discard
+            state = prefabs_1.MOVE_CARDS(store, state, pokeDollCardList, player.discard, {
+                cards: pokeDollCardList.cards.filter(c => c !== this)
+            });
         }
         if (effect instanceof play_card_effects_1.PlayItemEffect && effect.trainerCard === this) {
             const player = effect.player;

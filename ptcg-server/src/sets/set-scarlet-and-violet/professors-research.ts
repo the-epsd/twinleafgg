@@ -6,6 +6,7 @@ import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType } from '../../game/store/card/card-types';
+import { MoveCardsEffect } from '../../game/store/effects/game-effects';
 
 export class ProfessorsResearch extends TrainerCard {
 
@@ -36,7 +37,13 @@ export class ProfessorsResearch extends TrainerCard {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
 
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
+      // Move to supporter pile
+      state = store.reduceEffect(state, new MoveCardsEffect(
+        player.hand,
+        player.supporter,
+        { cards: [effect.trainerCard] }
+      ));
+
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
@@ -44,11 +51,27 @@ export class ProfessorsResearch extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
+      // Discard hand
       const cards = player.hand.cards.filter(c => c !== this);
-      player.hand.moveCardsTo(cards, player.discard);
-      player.deck.moveTo(player.hand, 7);
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+      state = store.reduceEffect(state, new MoveCardsEffect(
+        player.hand,
+        player.discard,
+        { cards }
+      ));
 
+      // Draw 7 cards
+      state = store.reduceEffect(state, new MoveCardsEffect(
+        player.deck,
+        player.hand,
+        { count: 7 }
+      ));
+
+      // Discard supporter
+      state = store.reduceEffect(state, new MoveCardsEffect(
+        player.supporter,
+        player.discard,
+        { cards: [effect.trainerCard] }
+      ));
     }
 
     return state;

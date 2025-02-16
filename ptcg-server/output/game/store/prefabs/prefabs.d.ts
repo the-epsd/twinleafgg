@@ -163,3 +163,10 @@ export declare function REPLACE_MARKER_AT_END_OF_TURN(effect: Effect, oldMarker:
  */
 export declare function CLEAR_MARKER_AND_OPPONENTS_POKEMON_MARKER_AT_END_OF_TURN(state: State, effect: Effect, clearerMarker: string, oppMarker: string, source: Card): void;
 export declare function BLOCK_RETREAT_IF_MARKER(effect: Effect, marker: string, source: Card): void;
+export declare function MOVE_CARDS(store: StoreLike, state: State, source: CardList | PokemonCardList, destination: CardList | PokemonCardList, options?: {
+    cards?: Card[];
+    count?: number;
+    toTop?: boolean;
+    toBottom?: boolean;
+    skipCleanup?: boolean;
+}): State;

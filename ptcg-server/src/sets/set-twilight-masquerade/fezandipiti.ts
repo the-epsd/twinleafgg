@@ -49,21 +49,14 @@ export class Fezandipiti extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Adrena-Pheromone
-    if (effect instanceof PutDamageEffect) {
+    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {
       const player = effect.player;
-      const opponent = effect.opponent;
+      const opponent = StateUtils.getOpponent(state, player);
+      const pokemonCard = effect.target.getPokemonCard();
+      const sourceCard = effect.source.getPokemonCard();
       const cardList = StateUtils.findCardList(state, this) as PokemonCardList;
 
-      // Only blocks damage from attacks
-      if (effect.target !== cardList || state.phase !== GamePhase.ATTACK) {
-        return state;
-      }
-
-      // Try to reduce PowerEffect, to check if something is blocking our ability
-      try {
-        const powerEffect = new PowerEffect(player, this.powers[0], this);
-        store.reduceEffect(state, powerEffect);
-      } catch {
+      if (pokemonCard !== this || sourceCard === undefined || state.phase !== GamePhase.ATTACK) {
         return state;
       }
 
@@ -71,12 +64,31 @@ export class Fezandipiti extends PokemonCard {
       const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player, cardList);
       store.reduceEffect(state, checkProvidedEnergyEffect);
       let hasDarkEnergy: boolean = false;
-      checkProvidedEnergyEffect.energyMap.forEach(
-        energy => { energy.provides.forEach(e => { if (e == CardType.DARK) { hasDarkEnergy = true; } }); }
-      );
-      if (!hasDarkEnergy) { return state; }
 
-      // Flip a coin, and if heads, prevent damage.
+      checkProvidedEnergyEffect.energyMap.forEach(
+        energy => {
+          energy.provides.forEach(e => {
+            if (e === CardType.DARK) {
+              hasDarkEnergy = true;
+            }
+          });
+        }
+      );
+      if (!hasDarkEnergy) {
+        return state;
+      }
+
+      try {
+        const stub = new PowerEffect(player, {
+          name: 'test',
+          powerType: PowerType.ABILITY,
+          text: ''
+        }, this);
+        store.reduceEffect(state, stub);
+      } catch {
+        return state;
+      }
+
       try {
         const coinFlip = new CoinFlipEffect(player);
         store.reduceEffect(state, coinFlip);
@@ -86,10 +98,12 @@ export class Fezandipiti extends PokemonCard {
 
       const coinFlipResult = SIMULATE_COIN_FLIP(store, state, player);
 
-      if (!coinFlipResult) {
+      if (coinFlipResult) {
         effect.damage = 0;
         store.log(state, GameLog.LOG_ABILITY_BLOCKS_DAMAGE, { name: opponent.name, pokemon: this.name });
       }
+
+      return state;
     }
 
     // Energy Feather

@@ -7,7 +7,6 @@ import { StoreLike } from '../../game/store/store-like';
 export declare class TechnicalMachineEvolution extends TrainerCard {
     trainerType: TrainerType;
     regulationMark: string;
-    tags: never[];
     set: string;
     cardImage: string;
     setNumber: string;

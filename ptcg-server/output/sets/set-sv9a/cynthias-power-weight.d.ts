@@ -1,14 +1,15 @@
 import { TrainerCard } from '../../game/store/card/trainer-card';
+import { TrainerType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { TrainerType } from '../../game';
-export declare class ProfessorTurosScenario extends TrainerCard {
+export declare class CynthiasPowerWeight extends TrainerCard {
     trainerType: TrainerType;
+    tags: CardTag[];
     regulationMark: string;
     set: string;
-    cardImage: string;
     setNumber: string;
+    cardImage: string;
     name: string;
     fullName: string;
     text: string;

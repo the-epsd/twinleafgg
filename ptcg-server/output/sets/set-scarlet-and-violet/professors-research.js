@@ -6,6 +6,7 @@ const game_message_1 = require("../../game/game-message");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 const trainer_card_1 = require("../../game/store/card/trainer-card");
 const card_types_1 = require("../../game/store/card/card-types");
+const game_effects_1 = require("../../game/store/effects/game-effects");
 class ProfessorsResearch extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -25,16 +26,20 @@ class ProfessorsResearch extends trainer_card_1.TrainerCard {
             if (supporterTurn > 0) {
                 throw new game_error_1.GameError(game_message_1.GameMessage.SUPPORTER_ALREADY_PLAYED);
             }
-            player.hand.moveCardTo(effect.trainerCard, player.supporter);
+            // Move to supporter pile
+            state = store.reduceEffect(state, new game_effects_1.MoveCardsEffect(player.hand, player.supporter, { cards: [effect.trainerCard] }));
             // We will discard this card after prompt confirmation
             effect.preventDefault = true;
             if (player.deck.cards.length === 0) {
                 throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
             }
+            // Discard hand
             const cards = player.hand.cards.filter(c => c !== this);
-            player.hand.moveCardsTo(cards, player.discard);
-            player.deck.moveTo(player.hand, 7);
-            player.supporter.moveCardTo(effect.trainerCard, player.discard);
+            state = store.reduceEffect(state, new game_effects_1.MoveCardsEffect(player.hand, player.discard, { cards }));
+            // Draw 7 cards
+            state = store.reduceEffect(state, new game_effects_1.MoveCardsEffect(player.deck, player.hand, { count: 7 }));
+            // Discard supporter
+            state = store.reduceEffect(state, new game_effects_1.MoveCardsEffect(player.supporter, player.discard, { cards: [effect.trainerCard] }));
         }
         return state;
     }
