@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, GameMessage, GameError, PowerType, StateUtils, PlayerType } from '../../game';
+import { StoreLike, State, GameMessage, GameError, PowerType, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
@@ -76,11 +76,11 @@ export class Latiasex extends PokemonCard {
 
       IS_ABILITY_BLOCKED(store, state, player, this);
 
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-        if (card.stage === Stage.BASIC) {
-          effect.cost = [];
-        }
-      });
+      const pokemonCard = player.active.getPokemonCard();
+
+      if (pokemonCard && pokemonCard.stage == Stage.BASIC) {
+        effect.cost = [];
+      }
       return state;
     }
 

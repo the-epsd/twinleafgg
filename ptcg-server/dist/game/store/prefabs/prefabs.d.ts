@@ -125,6 +125,7 @@ export declare function CAN_EVOLVE_ON_FIRST_TURN_GOING_SECOND(state: State, play
 export declare function MOVE_CARD_TO(state: State, card: Card, destination: CardList): void;
 export declare function SWITCH_ACTIVE_WITH_BENCHED(store: StoreLike, state: State, player: Player): State;
 export declare function LOOK_AT_TOPDECK_AND_DISCARD_OR_RETURN(store: StoreLike, state: State, choosingPlayer: Player, deckPlayer: Player): void;
+export declare function MOVE_CARDS_TO_HAND(store: StoreLike, state: State, player: Player, cards: Card[]): void;
 export declare function SHOW_CARDS_TO_PLAYER(store: StoreLike, state: State, player: Player, cards: Card[]): State;
 export declare function SELECT_PROMPT(store: StoreLike, state: State, player: Player, values: string[], callback: (result: number) => void): State;
 export declare function SELECT_PROMPT_WITH_OPTIONS(store: StoreLike, state: State, player: Player, options: {
@@ -139,6 +140,8 @@ export declare function GET_FIRST_PLAYER_BENCH_SLOT(player: Player): PokemonCard
 export declare function GET_PLAYER_BENCH_SLOTS(player: Player): PokemonCardList[];
 export declare function BLOCK_IF_NO_SLOTS(slots: PokemonCardList[]): void;
 export declare function BLOCK_IF_DECK_EMPTY(player: Player): void;
+export declare function BLOCK_IF_DISCARD_EMPTY(player: Player): void;
+export declare function BLOCK_IF_GX_ATTACK_USED(player: Player): void;
 export declare function ADD_SPECIAL_CONDITIONS_TO_PLAYER_ACTIVE(store: StoreLike, state: State, player: Player, source: Card, specialConditions: SpecialCondition[], poisonDamage?: number, burnDamage?: number, sleepFlips?: number): void;
 export declare function ADD_SLEEP_TO_PLAYER_ACTIVE(store: StoreLike, state: State, player: Player, source: Card, sleepFlips?: number): void;
 export declare function ADD_POISON_TO_PLAYER_ACTIVE(store: StoreLike, state: State, player: Player, source: Card, poisonDamage?: number): void;
@@ -160,3 +163,10 @@ export declare function REPLACE_MARKER_AT_END_OF_TURN(effect: Effect, oldMarker:
  */
 export declare function CLEAR_MARKER_AND_OPPONENTS_POKEMON_MARKER_AT_END_OF_TURN(state: State, effect: Effect, clearerMarker: string, oppMarker: string, source: Card): void;
 export declare function BLOCK_RETREAT_IF_MARKER(effect: Effect, marker: string, source: Card): void;
+export declare function MOVE_CARDS(store: StoreLike, state: State, source: CardList | PokemonCardList, destination: CardList | PokemonCardList, options?: {
+    cards?: Card[];
+    count?: number;
+    toTop?: boolean;
+    toBottom?: boolean;
+    skipCleanup?: boolean;
+}): State;

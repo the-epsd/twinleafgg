@@ -10,6 +10,7 @@ export var GameEffects;
     GameEffects["HEAL_EFFECT"] = "HEAL_EFFECT";
     GameEffects["EVOLVE_EFFECT"] = "EVOLVE_EFFECT";
     GameEffects["DRAW_PRIZES_EFFECT"] = "DRAW_PRIZES_EFFECT";
+    GameEffects["MOVE_CARDS_EFFECT"] = "MOVE_CARDS_EFFECT";
 })(GameEffects || (GameEffects = {}));
 export class RetreatEffect {
     constructor(player, benchIndex) {
@@ -143,5 +144,18 @@ export class DrawPrizesEffect {
         this.player = player;
         this.prizes = prizes;
         this.destination = destination;
+    }
+}
+export class MoveCardsEffect {
+    constructor(source, destination, options = {}) {
+        this.type = GameEffects.MOVE_CARDS_EFFECT;
+        this.preventDefault = false;
+        this.source = source;
+        this.destination = destination;
+        this.cards = options.cards;
+        this.count = options.count;
+        this.toTop = options.toTop;
+        this.toBottom = options.toBottom;
+        this.skipCleanup = options.skipCleanup;
     }
 }
