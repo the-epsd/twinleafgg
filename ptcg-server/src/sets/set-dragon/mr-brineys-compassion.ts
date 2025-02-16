@@ -30,11 +30,11 @@ export class MrBrineysCompassion extends TrainerCard {
       const blocked: CardTarget[] = [];
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
-        if (!card.cardTag.includes(CardTag.POKEMON_ex)) {
+        if (!card.tags.includes(CardTag.POKEMON_ex)) {
           hasNonexPokemon = true;
           return;
         }
-        if (card.cardTag.includes(CardTag.POKEMON_ex)) {
+        if (card.tags.includes(CardTag.POKEMON_ex)) {
           blocked.push(target);
         }
       });

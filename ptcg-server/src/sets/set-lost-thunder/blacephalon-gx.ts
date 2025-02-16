@@ -1,11 +1,12 @@
   import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SpecialCondition, SuperType, EnergyType } from '../../game/store/card/card-types';
-import { AttachEnergyPrompt, CardList, ChoosePrizePrompt, DiscardEnergyPrompt, GameError } from '../../game';
+import { AttachEnergyPrompt, CardList, ChoosePrizePrompt, DiscardEnergyPrompt } from '../../game';
 import { StoreLike, State, GameMessage, PlayerType, SlotType, EnergyCard } from '../../game';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { StateUtils } from '../../game/store/state-utils';
 import { AttackEffect } from '../../game/store/effects/game-effects';
+import { BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class BlacephalonGX extends PokemonCard {
 
@@ -108,9 +109,7 @@ export class BlacephalonGX extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[2]) {
       const player = effect.player;
       // Check if player has used GX attack
-      if (player.usedGX == true) {
-        throw new GameError(GameMessage.LABEL_GX_USED);
-      }
+      BLOCK_IF_GX_ATTACK_USED(player);
       // set GX attack as used for game
       player.usedGX = true;
 

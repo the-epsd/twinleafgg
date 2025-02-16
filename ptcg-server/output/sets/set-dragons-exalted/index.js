@@ -6,6 +6,8 @@ const blend_energy_wlfm_1 = require("./blend-energy-wlfm");
 const bouffalant_1 = require("./bouffalant");
 const deino_1 = require("./deino");
 const devolution_spray_1 = require("./devolution-spray");
+const drifblim_1 = require("./drifblim");
+const drifloon_1 = require("./drifloon");
 const emolga_1 = require("./emolga");
 const gabite_1 = require("./gabite");
 const garbodor_1 = require("./garbodor");
@@ -24,6 +26,8 @@ exports.setDragonsExalted = [
     new bouffalant_1.Bouffalant(),
     new deino_1.Deino(),
     new devolution_spray_1.DevolutionSpray(),
+    new drifloon_1.Drifloon(),
+    new drifblim_1.Drifblim(),
     new emolga_1.Emolga(),
     new gabite_1.Gabite(),
     new garbodor_1.Garbodor(),

@@ -9,6 +9,7 @@ const check_effects_1 = require("../../game/store/effects/check-effects");
 const game_3 = require("../../game");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 // UPR Dusk Mane Necrozma-GX 90 (https://limitlesstcg.com/cards/UPR/90)
 class DuskManeNecrozmaGX extends pokemon_card_1.PokemonCard {
     constructor() {
@@ -67,9 +68,7 @@ class DuskManeNecrozmaGX extends pokemon_card_1.PokemonCard {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
             // Check if player has used GX attack
-            if (player.usedGX == true) {
-                throw new game_1.GameError(game_1.GameMessage.LABEL_GX_USED);
-            }
+            prefabs_1.BLOCK_IF_GX_ATTACK_USED(player);
             // set GX attack as used for game
             player.usedGX = true;
         }

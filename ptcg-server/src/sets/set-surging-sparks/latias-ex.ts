@@ -65,7 +65,7 @@ export class Latiasex extends PokemonCard {
       console.log('second marker added');
     }
 
-    if (effect instanceof CheckRetreatCostEffect) {
+    if (effect instanceof CheckRetreatCostEffect && StateUtils.isPokemonInPlay(effect.player, this)) {
       const player = effect.player;
       const cardList = StateUtils.findCardList(state, this);
       const owner = StateUtils.findOwner(state, cardList);
@@ -74,13 +74,14 @@ export class Latiasex extends PokemonCard {
         return state;
       }
 
-      if (StateUtils.isPokemonInPlay(player, this) && !IS_ABILITY_BLOCKED(store, state, player, this)) {
-        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-          if (card.stage === Stage.BASIC) {
-            effect.cost = [];
-          }
-        });
-      }
+      IS_ABILITY_BLOCKED(store, state, player, this);
+
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+        if (card.stage === Stage.BASIC) {
+          effect.cost = [];
+        }
+      });
+      return state;
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

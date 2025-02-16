@@ -18,6 +18,7 @@ import {
   ShuffleDeckPrompt
 } from '../../game';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class TapuLeleGX extends PokemonCard {
 
@@ -164,10 +165,7 @@ export class TapuLeleGX extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      if (player.usedGX === true) {
-        throw new GameError(GameMessage.LABEL_GX_USED);
-      }
-
+      BLOCK_IF_GX_ATTACK_USED(player);
       let targets: PokemonCardList[] = [];
       return store.prompt(state, new ChoosePokemonPrompt(
         player.id,

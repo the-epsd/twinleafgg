@@ -1,4 +1,4 @@
-import { PokemonCard, PowerType, StateUtils } from '../../game';
+import { PokemonCard, PowerType, SlotType, StateUtils } from '../../game';
 import { CardTag, CardType, Stage } from '../../game/store/card/card-types';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
@@ -40,7 +40,7 @@ export class StevensCarbink extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PutDamageEffect && StateUtils.isPokemonInPlay(effect.player, this, 'bench')) {
+    if (effect instanceof PutDamageEffect && StateUtils.isPokemonInPlay(effect.player, this, SlotType.BENCH)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

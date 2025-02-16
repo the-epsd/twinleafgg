@@ -38,6 +38,7 @@ class HypnotoxicLaser extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.ITEM;
+        this.tags = [card_types_1.CardTag.TEAM_PLASMA];
         this.set = 'PLS';
         this.name = 'Hypnotoxic Laser';
         this.fullName = 'Hypnotoxic Laser PLS';

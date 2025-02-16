@@ -1,5 +1,5 @@
 import { GameError } from '../../game-error';
-import { GameMessage } from '../../game-message';
+import { GameLog, GameMessage } from '../../game-message';
 import { Effect } from '../effects/effect';
 import { State } from '../state/state';
 import { StoreLike } from '../store-like';
@@ -19,9 +19,10 @@ export function attackReducer(store: StoreLike, state: State, effect: Effect): S
 
   if (effect instanceof PutDamageEffect) {
     const target = effect.target;
-    const pokemonCard = target.getPokemonCard();
+    const sourceOwner = StateUtils.findOwner(state, effect.source);
+    const targetCard = target.getPokemonCard();
 
-    if (pokemonCard === undefined) {
+    if (targetCard === undefined) {
       throw new GameError(GameMessage.ILLEGAL_ACTION);
     }
 
@@ -45,6 +46,13 @@ export function attackReducer(store: StoreLike, state: State, effect: Effect): S
     targetOwner.marker.addMarkerToState(effect.player.DAMAGE_DEALT_MARKER);
 
     if (damage > 0) {
+      store.log(state, GameLog.LOG_PLAYER_DEALS_DAMAGE, {
+        name: sourceOwner.name,
+        damage: damage,
+        target: targetCard.name,
+        effect: effect.attack.name,
+      });
+
       const afterDamageEffect = new AfterDamageEffect(effect.attackEffect, damage);
       afterDamageEffect.target = effect.target;
       store.reduceEffect(state, afterDamageEffect);
@@ -115,13 +123,23 @@ export function attackReducer(store: StoreLike, state: State, effect: Effect): S
 
   if (effect instanceof PutCountersEffect) {
     const target = effect.target;
-    const pokemonCard = target.getPokemonCard();
-    if (pokemonCard === undefined) {
+    const sourceOwner = StateUtils.findOwner(state, effect.source);
+    const targetCard = target.getPokemonCard();
+    if (targetCard === undefined) {
       throw new GameError(GameMessage.ILLEGAL_ACTION);
     }
 
     const damage = Math.max(0, effect.damage);
     target.damage += damage;
+
+    if (damage > 0) {
+      store.log(state, GameLog.LOG_PLAYER_PLACES_DAMAGE_COUNTERS, {
+        name: sourceOwner.name,
+        damage: damage,
+        target: targetCard.name,
+        effect: effect.attack.name,
+      });
+    }
   }
 
   if (effect instanceof AfterDamageEffect) {

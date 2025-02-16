@@ -4,6 +4,8 @@ import { BlendEnergyWLFM } from './blend-energy-wlfm';
 import { Bouffalant } from './bouffalant';
 import { Deino } from './deino';
 import { DevolutionSpray } from './devolution-spray';
+import { Drifblim } from './drifblim';
+import { Drifloon } from './drifloon';
 import { Emolga } from './emolga';
 import { Gabite } from './gabite';
 import { Garbodor } from './garbodor';
@@ -23,6 +25,8 @@ export const setDragonsExalted: Card[] = [
   new Bouffalant(),
   new Deino(),
   new DevolutionSpray(),
+  new Drifloon(),
+  new Drifblim(),
   new Emolga(),
   new Gabite(),
   new Garbodor(),

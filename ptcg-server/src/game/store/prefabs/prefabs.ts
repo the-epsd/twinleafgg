@@ -6,6 +6,7 @@ import { AddSpecialConditionsPowerEffect, CheckPrizesDestinationEffect, CheckPro
 import { Effect } from '../effects/effect';
 import { AttackEffect, DrawPrizesEffect, EvolveEffect, KnockOutEffect, PowerEffect, RetreatEffect } from '../effects/game-effects';
 import { AfterAttackEffect, EndTurnEffect } from '../effects/game-phase-effects';
+import { MoveCardsEffect } from '../effects/game-effects';
 
 /**
  * 
@@ -130,10 +131,10 @@ export function THIS_ATTACK_DOES_X_MORE_DAMAGE(effect: AttackEffect, store: Stor
 
 export function DEAL_MORE_DAMAGE_IF_OPPONENT_ACTIVE_HAS_CARD_TAG(effect: AttackEffect, state: State, damage: number, ...cardTags: CardTag[]) {
   const opponent = StateUtils.getOpponent(state, effect.player);
-  const opponentActive = opponent.active.getPokemonCard() as PokemonCard
+  const opponentActive = opponent.active.getPokemonCard();
   let includesAnyTags = false;
   for (const tag of cardTags) {
-    if (opponentActive.tags.includes(tag)) {
+    if (opponentActive && opponentActive.tags.includes(tag)) {
       includesAnyTags = true;
     }
   }
@@ -537,6 +538,13 @@ export function LOOK_AT_TOPDECK_AND_DISCARD_OR_RETURN(store: StoreLike, state: S
   }
 }
 
+export function MOVE_CARDS_TO_HAND(store: StoreLike, state: State, player: Player, cards: Card[]) {
+  cards.forEach((card, index) => {
+    player.deck.moveCardTo(card, player.hand);
+    store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
+  });
+}
+
 export function SHOW_CARDS_TO_PLAYER(store: StoreLike, state: State, player: Player, cards: Card[]): State {
   if (cards.length === 0)
     return state;
@@ -598,6 +606,16 @@ export function BLOCK_IF_NO_SLOTS(slots: PokemonCardList[]) {
 export function BLOCK_IF_DECK_EMPTY(player: Player) {
   if (player.deck.cards.length === 0)
     throw new GameError(GameMessage.NO_CARDS_IN_DECK);
+}
+
+export function BLOCK_IF_DISCARD_EMPTY(player: Player) {
+  if (player.discard.cards.length === 0)
+    throw new GameError(GameMessage.NO_CARDS_IN_DISCARD);
+}
+
+export function BLOCK_IF_GX_ATTACK_USED(player: Player) {
+  if (player.usedGX === true)
+    throw new GameError(GameMessage.LABEL_GX_USED);
 }
 
 
@@ -692,3 +710,19 @@ export function BLOCK_RETREAT_IF_MARKER(effect: Effect, marker: string, source: 
 }
 
 //#endregion
+
+export function MOVE_CARDS(
+  store: StoreLike,
+  state: State,
+  source: CardList | PokemonCardList,
+  destination: CardList | PokemonCardList,
+  options: {
+    cards?: Card[],
+    count?: number,
+    toTop?: boolean,
+    toBottom?: boolean,
+    skipCleanup?: boolean
+  } = {}
+): State {
+  return store.reduceEffect(state, new MoveCardsEffect(source, destination, options));
+}

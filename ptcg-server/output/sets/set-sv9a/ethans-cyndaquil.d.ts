@@ -3,8 +3,8 @@ import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 export declare class EthansCyndaquil extends PokemonCard {
-    tags: CardTag[];
     stage: Stage;
+    tags: CardTag[];
     cardType: CardType;
     hp: number;
     weakness: {
@@ -19,8 +19,8 @@ export declare class EthansCyndaquil extends PokemonCard {
     }[];
     regulationMark: string;
     set: string;
-    cardImage: string;
     setNumber: string;
+    cardImage: string;
     name: string;
     fullName: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;

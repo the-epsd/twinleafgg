@@ -6,6 +6,7 @@ const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class IronCrownex extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -66,35 +67,11 @@ class IronCrownex extends pokemon_card_1.PokemonCard {
         if (effect instanceof attack_effects_1.DealDamageEffect) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, effect.player);
-            let hasIronCrownexInPlay = false;
-            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-                if (card === this) {
-                    hasIronCrownexInPlay = true;
-                }
-            });
-            if (!hasIronCrownexInPlay) {
-                return state;
-            }
-            // Try to reduce PowerEffect, to check if something is blocking our ability
-            try {
-                const stub = new game_effects_1.PowerEffect(player, {
-                    name: 'test',
-                    powerType: game_1.PowerType.ABILITY,
-                    text: ''
-                }, this);
-                store.reduceEffect(state, stub);
-            }
-            catch (_a) {
-                return state;
-            }
-            if (effect.target !== player.active && effect.target !== opponent.active) {
-                return state;
-            }
-            const futurePokemon = effect.player.active.getPokemonCard();
-            if (futurePokemon && futurePokemon.tags.includes(card_types_1.CardTag.FUTURE)) {
-                if (futurePokemon && futurePokemon.name !== 'Iron Crown ex' && effect.damage > 0) {
-                    effect.damage += 20;
-                }
+            const source = effect.source.getPokemonCard();
+            if (state.phase === game_1.GamePhase.ATTACK && game_1.StateUtils.isPokemonInPlay(player, this) &&
+                source.tags.includes(card_types_1.CardTag.FUTURE) && source.name !== 'Iron Crown ex' &&
+                effect.target === opponent.active && effect.damage > 0 && !prefabs_1.IS_ABILITY_BLOCKED(store, state, player, this)) {
+                effect.damage += 20;
             }
         }
         return state;

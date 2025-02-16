@@ -4,15 +4,15 @@ exports.EspeonGX = void 0;
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
-const game_2 = require("../../game");
 const card_types_2 = require("../../game/store/card/card-types");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const check_effects_1 = require("../../game/store/effects/check-effects");
-const game_3 = require("../../game");
+const game_2 = require("../../game");
 const attack_effects_2 = require("../../game/store/effects/attack-effects");
 const check_effects_2 = require("../../game/store/effects/check-effects");
 const state_utils_1 = require("../../game/store/state-utils");
 const game_effects_1 = require("../../game/store/effects/game-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 // SUM Espeon-GX 61 (https://limitlesstcg.com/cards/SUM/61)
 class EspeonGX extends pokemon_card_1.PokemonCard {
     constructor() {
@@ -71,9 +71,7 @@ class EspeonGX extends pokemon_card_1.PokemonCard {
             const player = effect.player;
             const opponent = state_utils_1.StateUtils.getOpponent(state, player);
             // Check if player has used GX attack
-            if (player.usedGX == true) {
-                throw new game_2.GameError(game_1.GameMessage.LABEL_GX_USED);
-            }
+            prefabs_1.BLOCK_IF_GX_ATTACK_USED(player);
             // set GX attack as used for game
             player.usedGX = true;
             const maxAllowedDamage = [];
@@ -85,7 +83,7 @@ class EspeonGX extends pokemon_card_1.PokemonCard {
                 maxAllowedDamage.push({ target, damage: checkHpEffect.hp });
             });
             const damage = Math.min(100, damageLeft);
-            return store.prompt(state, new game_3.PutDamagePrompt(effect.player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], damage, maxAllowedDamage, { allowCancel: false }), targets => {
+            return store.prompt(state, new game_2.PutDamagePrompt(effect.player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], damage, maxAllowedDamage, { allowCancel: false }), targets => {
                 const results = targets || [];
                 for (const result of results) {
                     const target = state_utils_1.StateUtils.getTarget(state, player, result.target);

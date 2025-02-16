@@ -16,7 +16,7 @@ function* useStadium(next, store, state, effect) {
     }
     const blocked = [];
     player.deck.cards.forEach((card, index) => {
-        if (card instanceof game_1.PokemonCard && (!card.cardTag.includes(card_types_1.CardTag.MARNIES)))
+        if (card instanceof game_1.PokemonCard && (!card.tags.includes(card_types_1.CardTag.MARNIES)))
             blocked.push(index);
     });
     let cards = [];

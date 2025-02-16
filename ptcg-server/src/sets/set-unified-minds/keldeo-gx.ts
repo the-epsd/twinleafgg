@@ -1,7 +1,8 @@
-import { CardTag, CardType, GameError, GameMessage, PokemonCard, PowerType, Stage, State, StateUtils, StoreLike } from '../../game';
+import { CardTag, CardType, PokemonCard, PowerType, Stage, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { AbstractAttackEffect, AfterDamageEffect, ApplyWeaknessEffect } from '../../game/store/effects/attack-effects';
+import { BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class KeldeoGX extends PokemonCard {
 
@@ -82,7 +83,7 @@ export class KeldeoGX extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
       const opponent = effect.opponent;
-      if (player.usedGX == true) { throw new GameError(GameMessage.LABEL_GX_USED); }
+      BLOCK_IF_GX_ATTACK_USED(player);
       player.usedGX = true;
       let benchCount = 0;
       opponent.bench.forEach(b => benchCount += b.cards.length > 0 ? 1 : 0);

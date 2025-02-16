@@ -23,20 +23,18 @@ export class IonosBelliboltex extends PokemonCard {
   public retreat = [C, C];
 
   public powers = [{
-    name: 'Electro Streamer',
+    name: 'Electric Streamer',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
-    text: 'As often as you like during your turn, you may attach a basic [L] Energy card from your hand to 1 of your Iono\'s Pokemon.'
+    text: 'As often as you like during your turn, you may attach a Basic [L] Energy card from your hand to 1 of your Iono\'s Pokemon.'
   }];
 
-  public attacks = [
-    {
-      name: 'Thunderous Bolt',
-      cost: [L, L, L, C],
-      damage: 230,
-      text: 'During your next turn, this Pokemon can\'t attack.'
-    }
-  ];
+  public attacks = [{
+    name: 'Thunderous Bolt',
+    cost: [L, L, L, C],
+    damage: 230,
+    text: 'During your next turn, this Pokemon can\'t attack.'
+  }];
 
   public regulationMark = 'I';
 

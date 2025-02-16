@@ -8,6 +8,7 @@ const game_1 = require("../../game");
 const check_effects_1 = require("../../game/store/effects/check-effects");
 const state_utils_1 = require("../../game/store/state-utils");
 const game_effects_1 = require("../../game/store/effects/game-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class TapuKokoGX extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -102,9 +103,7 @@ class TapuKokoGX extends pokemon_card_1.PokemonCard {
             const player = effect.player;
             const opponent = state_utils_1.StateUtils.getOpponent(state, player);
             // Check if player has used GX attack
-            if (player.usedGX == true) {
-                throw new game_1.GameError(game_1.GameMessage.LABEL_GX_USED);
-            }
+            prefabs_1.BLOCK_IF_GX_ATTACK_USED(player);
             // set GX attack as used for game
             player.usedGX = true;
             let energies = 0;

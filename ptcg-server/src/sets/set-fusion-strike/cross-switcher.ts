@@ -15,85 +15,89 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   const opponent = StateUtils.getOpponent(state, player);
   const name = effect.trainerCard.name;
 
+  // Count Cross Switchers in hand
   const count = player.hand.cards.reduce((sum, c) => {
     return sum + (c.name === name ? 1 : 0);
   }, 0);
 
-  // Don't allow to play both cross switchers when opponen has an empty bench
+  // Must have 2 Cross Switchers to play
+  if (count < 2) {
+    throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+  }
+
+  // Check if opponent has any benched Pokemon
   const benchCount = opponent.bench.reduce((sum, b) => {
     return sum + (b.cards.length > 0 ? 1 : 0);
   }, 0);
 
-  //let playTwoCards = false;
+  if (benchCount === 0) {
+    throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+  }
 
-  if (benchCount > 0 && count >= 2) {
-  // playTwoCards = true;
+  // Check if player has any benched Pokemon
+  const hasBench = player.bench.some(b => b.cards.length > 0);
+  if (!hasBench) {
+    throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+  }
 
-    // Discard second Cross Switcher +
-    const second = player.hand.cards.find(c => {
-      return c.name === name && c !== effect.trainerCard;
-    });
-    if (second !== undefined) {
-      player.hand.moveCardTo(second, player.discard);
+  // Discard second Cross Switcher
+  const second = player.hand.cards.find(c => {
+    return c.name === name && c !== effect.trainerCard;
+  });
+  if (second !== undefined) {
+    player.hand.moveCardTo(second, player.discard);
+  }
+
+  // We will discard this card after prompt confirmation
+  effect.preventDefault = true;
+
+  return store.prompt(state, new ChoosePokemonPrompt(
+    player.id,
+    GameMessage.CHOOSE_POKEMON_TO_SWITCH,
+    PlayerType.TOP_PLAYER,
+    [SlotType.BENCH],
+    { allowCancel: false }
+  ), targets => {
+    if (!targets || targets.length === 0) {
+      return;
     }
+    opponent.active.clearEffects();
+    opponent.switchPokemon(targets[0]);
+    next();
 
-    const hasBench = player.bench.some(b => b.cards.length > 0);
-    
-    if (hasBench === false) {
-      throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-    }
-
-    // We will discard this card after prompt confirmation
+    // Do not discard the card yet
     effect.preventDefault = true;
 
+    let target: PokemonCardList[] = [];
     return store.prompt(state, new ChoosePokemonPrompt(
       player.id,
       GameMessage.CHOOSE_POKEMON_TO_SWITCH,
-      PlayerType.TOP_PLAYER,
-      [ SlotType.BENCH ],
+      PlayerType.BOTTOM_PLAYER,
+      [SlotType.BENCH],
       { allowCancel: false }
-    ), targets => {
-      if (!targets || targets.length === 0) {
-        return;
-      }
-      opponent.active.clearEffects();
-      opponent.switchPokemon(targets[0]);
+    ), results => {
+      target = results || [];
       next();
-    
-      // Do not discard the card yet
-      effect.preventDefault = true;
-    
-      let target: PokemonCardList[] = [];
-      return store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_POKEMON_TO_SWITCH,
-        PlayerType.BOTTOM_PLAYER,
-        [ SlotType.BENCH ],
-        { allowCancel: false }
-      ), results => {
-        target = results || [];
-        next();
 
-        if (target.length === 0) {
-          return state;
-        }
-    
-        // Discard trainer only when user selected a Pokemon
-        player.active.clearEffects();
-        player.switchPokemon(target[0]);
-
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+      if (target.length === 0) {
         return state;
-      });
+      }
+
+      // Discard trainer only when user selected a Pokemon
+      player.active.clearEffects();
+      player.switchPokemon(target[0]);
+
+      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+      return state;
     });
-  }
+  });
 }
 
 export class CrossSwitcher extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
 
-  public tags = [ CardTag.FUSION_STRIKE ];
+  public tags = [CardTag.FUSION_STRIKE];
 
   public regulationMark = 'E';
 

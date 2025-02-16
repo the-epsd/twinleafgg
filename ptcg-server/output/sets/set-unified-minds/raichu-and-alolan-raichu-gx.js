@@ -7,6 +7,7 @@ const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const check_effects_1 = require("../../game/store/effects/check-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class RaichuAlolanRaichuGX extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -47,9 +48,7 @@ class RaichuAlolanRaichuGX extends pokemon_card_1.PokemonCard {
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
-            if (player.usedGX === true) {
-                throw new game_1.GameError(game_1.GameMessage.LABEL_GX_USED);
-            }
+            prefabs_1.BLOCK_IF_GX_ATTACK_USED(player);
             player.usedGX = true;
             const checkProvidedEnergyEffect = new check_effects_1.CheckProvidedEnergyEffect(player);
             store.reduceEffect(state, checkProvidedEnergyEffect);

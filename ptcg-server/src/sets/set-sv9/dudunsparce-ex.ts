@@ -42,7 +42,7 @@ export class Dudunsparceex extends PokemonCard {
 
       let opponentexPokemon = 0;
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
-        if (card.cardTag.includes(CardTag.POKEMON_ex)) {
+        if (card.tags.includes(CardTag.POKEMON_ex)) {
           opponentexPokemon++;
         }
       });

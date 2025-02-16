@@ -11,6 +11,7 @@ const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const card_types_2 = require("../../game/store/card/card-types");
 const game_effects_2 = require("../../game/store/effects/game-effects");
 const attack_effects_2 = require("../../game/store/effects/attack-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class ShuckleGX extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -98,9 +99,7 @@ class ShuckleGX extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_2.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
             // Check if player has used GX attack
-            if (player.usedGX == true) {
-                throw new game_1.GameError(game_1.GameMessage.LABEL_GX_USED);
-            }
+            prefabs_1.BLOCK_IF_GX_ATTACK_USED(player);
             // set GX attack as used for game
             player.usedGX = true;
             const specialCondition = new attack_effects_1.AddSpecialConditionsEffect(effect, [card_types_2.SpecialCondition.PARALYZED]);

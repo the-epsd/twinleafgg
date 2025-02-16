@@ -13,6 +13,7 @@ const game_5 = require("../../game");
 const check_effects_1 = require("../../game/store/effects/check-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_6 = require("../../game");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 // CES Banette-GX 66 (https://limitlesstcg.com/cards/CES/66)
 class BanetteGX extends pokemon_card_1.PokemonCard {
     constructor() {
@@ -113,13 +114,9 @@ class BanetteGX extends pokemon_card_1.PokemonCard {
         // Shadowy Hunter-GX
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
-            if (player.discard.cards.length === 0) {
-                throw new game_1.GameError(game_2.GameMessage.CANNOT_USE_POWER);
-            }
             // Check if player has used GX attack
-            if (player.usedGX == true) {
-                throw new game_1.GameError(game_2.GameMessage.LABEL_GX_USED);
-            }
+            prefabs_1.BLOCK_IF_GX_ATTACK_USED(player);
+            prefabs_1.BLOCK_IF_DISCARD_EMPTY(player);
             // set GX attack as used for game
             player.usedGX = true;
             return store.prompt(state, [

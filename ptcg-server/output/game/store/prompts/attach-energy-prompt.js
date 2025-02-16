@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AttachEnergyPrompt = exports.AttachEnergyPromptType = void 0;
+const card_1 = require("../card/card");
 const game_error_1 = require("../../game-error");
 const game_message_1 = require("../../game-message");
 const prompt_1 = require("./prompt");
@@ -39,6 +40,10 @@ class AttachEnergyPrompt extends prompt_1.Prompt {
         result.forEach(t => {
             const cardList = this.cardList;
             const card = cardList.cards[t.index];
+            // Verify this is a card.
+            if (!(card instanceof card_1.Card)) {
+                throw new game_error_1.GameError(game_message_1.GameMessage.INVALID_PROMPT_RESULT);
+            }
             // Verify card is an energy card
             if (card.superType !== card_types_1.SuperType.ENERGY) {
                 throw new game_error_1.GameError(game_message_1.GameMessage.INVALID_PROMPT_RESULT);

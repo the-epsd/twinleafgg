@@ -4,6 +4,7 @@ exports.KeldeoGX = void 0;
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class KeldeoGX extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -78,9 +79,7 @@ class KeldeoGX extends game_1.PokemonCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
             const opponent = effect.opponent;
-            if (player.usedGX == true) {
-                throw new game_1.GameError(game_1.GameMessage.LABEL_GX_USED);
-            }
+            prefabs_1.BLOCK_IF_GX_ATTACK_USED(player);
             player.usedGX = true;
             let benchCount = 0;
             opponent.bench.forEach(b => benchCount += b.cards.length > 0 ? 1 : 0);

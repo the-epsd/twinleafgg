@@ -5,6 +5,7 @@ const game_1 = require("../../game");
 const card_types_1 = require("../../game/store/card/card-types");
 const trainer_card_1 = require("../../game/store/card/trainer-card");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class MrStonesProject extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -27,9 +28,7 @@ class MrStonesProject extends trainer_card_1.TrainerCard {
             if (player.deck.cards.length === 0) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
             }
-            if (player.discard.cards.length === 0) {
-                throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
-            }
+            prefabs_1.BLOCK_IF_DISCARD_EMPTY(player);
             player.hand.moveCardTo(effect.trainerCard, player.supporter);
             const options = [
                 {

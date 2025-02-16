@@ -7,6 +7,7 @@ import { ChooseEnergyPrompt } from '../../game';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
+import { BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 // UPR Dusk Mane Necrozma-GX 90 (https://limitlesstcg.com/cards/UPR/90)
 export class DuskManeNecrozmaGX extends PokemonCard {
@@ -88,9 +89,7 @@ export class DuskManeNecrozmaGX extends PokemonCard {
       }
 
       // Check if player has used GX attack
-      if (player.usedGX == true) {
-        throw new GameError(GameMessage.LABEL_GX_USED);
-      }
+      BLOCK_IF_GX_ATTACK_USED(player);
       // set GX attack as used for game
       player.usedGX = true;
     }

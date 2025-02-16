@@ -8,6 +8,7 @@ const game_effects_1 = require("../../game/store/effects/game-effects");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 // citing empoleon to help make this (https://github.com/keeshii/ryuu-play/blob/master/ptcg-server/src/sets/set-black-and-white/empoleon.ts)
 function* useTricksterGX(next, store, state, effect) {
     const player = effect.player;
@@ -16,9 +17,7 @@ function* useTricksterGX(next, store, state, effect) {
     const oppBenched = opponent.bench.filter(b => b.cards.length > 0);
     const allOpponentPokemon = oppActive ? [oppActive, ...oppBenched.map(b => b.getPokemonCard())].filter((pokemon) => pokemon !== undefined) : [];
     // Check if player has used GX attack
-    if (player.usedGX == true) {
-        throw new game_1.GameError(game_1.GameMessage.LABEL_GX_USED);
-    }
+    prefabs_1.BLOCK_IF_GX_ATTACK_USED(player);
     let selected;
     yield store.prompt(state, new game_1.ChooseAttackPrompt(player.id, game_1.GameMessage.CHOOSE_ATTACK_TO_COPY, allOpponentPokemon, { allowCancel: false }), result => {
         selected = result;

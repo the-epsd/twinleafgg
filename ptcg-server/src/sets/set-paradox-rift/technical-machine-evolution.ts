@@ -79,7 +79,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Attac
       GameMessage.CHOOSE_CARD_TO_EVOLVE,
       player.deck,
       { superType: SuperType.POKEMON },
-      { min: 1, max: 1, allowCancel: true, blocked }
+      { min: 0, max: 1, allowCancel: false, blocked }
     ), selected => {
       cards = selected || [];
       next();
@@ -103,23 +103,14 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Attac
   });
 }
 
-
 export class TechnicalMachineEvolution extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.TOOL;
-
   public regulationMark = 'G';
-
-  public tags = [];
-
   public set: string = 'PAR';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '178';
-
   public name: string = 'Technical Machine: Evolution';
-
   public fullName: string = 'Technical Machine: Evolution PAR';
 
   public attacks: Attack[] = [{

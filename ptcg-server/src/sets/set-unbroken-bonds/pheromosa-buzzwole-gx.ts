@@ -1,9 +1,10 @@
-import { CardTag, CardType, ChoosePokemonPrompt, GameError, GameMessage, GamePhase, PlayerType, PokemonCard, SlotType, Stage, State, StateUtils, StoreLike } from '../../game';
+import { CardTag, CardType, ChoosePokemonPrompt, GameMessage, GamePhase, PlayerType, PokemonCard, SlotType, Stage, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, KnockOutEffect } from '../../game/store/effects/game-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 
 export class PheromosaBuzzwoleGX extends PokemonCard {
@@ -12,24 +13,24 @@ export class PheromosaBuzzwoleGX extends PokemonCard {
   public cardType: CardType = G;
   public hp: number = 260;
   public weakness = [{ type: R }];
-  public retreat = [ C, C ];
+  public retreat = [C, C];
 
   public attacks = [
     {
       name: 'Jet Punch',
-      cost: [ G ],
+      cost: [G],
       damage: 30,
       text: 'This attack does 30 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
     },
     {
       name: 'Elegant Sole',
-      cost: [ G, G, C ],
+      cost: [G, G, C],
       damage: 190,
       text: 'During your next turn, this Pokémon\'s Elegant Sole attack\'s base damage is 60.'
     },
     {
       name: 'Beast Game-GX',
-      cost: [ G ],
+      cost: [G],
       damage: 50,
       shred: false,
       gxAttack: true,
@@ -105,9 +106,7 @@ export class PheromosaBuzzwoleGX extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[2]) {
       const player = effect.player;
 
-      if (player.usedGX == true) {
-        throw new GameError(GameMessage.LABEL_GX_USED);
-      }
+      BLOCK_IF_GX_ATTACK_USED(player);
       player.usedGX = true;
 
       this.usedBaseBeastGame = true;
@@ -145,7 +144,7 @@ export class PheromosaBuzzwoleGX extends PokemonCard {
           this.usedBaseBeastGame = false;
 
           // additional effect from gx attack
-          if (this.usedEnhancedBeastGame){
+          if (this.usedEnhancedBeastGame) {
             effect.prizeCount += 2;
             this.usedEnhancedBeastGame = false;
           }

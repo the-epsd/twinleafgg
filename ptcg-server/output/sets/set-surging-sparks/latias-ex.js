@@ -50,20 +50,20 @@ class Latiasex extends pokemon_card_1.PokemonCard {
             effect.player.marker.addMarker(this.ATTACK_USED_2_MARKER, this);
             console.log('second marker added');
         }
-        if (effect instanceof check_effects_1.CheckRetreatCostEffect) {
+        if (effect instanceof check_effects_1.CheckRetreatCostEffect && game_1.StateUtils.isPokemonInPlay(effect.player, this)) {
             const player = effect.player;
             const cardList = game_1.StateUtils.findCardList(state, this);
             const owner = game_1.StateUtils.findOwner(state, cardList);
             if (owner !== player) {
                 return state;
             }
-            if (game_1.StateUtils.isPokemonInPlay(player, this) && !prefabs_1.IS_ABILITY_BLOCKED(store, state, player, this)) {
-                player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-                    if (card.stage === card_types_1.Stage.BASIC) {
-                        effect.cost = [];
-                    }
-                });
-            }
+            prefabs_1.IS_ABILITY_BLOCKED(store, state, player, this);
+            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+                if (card.stage === card_types_1.Stage.BASIC) {
+                    effect.cost = [];
+                }
+            });
+            return state;
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             // Check marker

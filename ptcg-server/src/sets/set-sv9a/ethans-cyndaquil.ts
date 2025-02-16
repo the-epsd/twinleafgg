@@ -7,17 +7,11 @@ import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../game/store/prefabs/cos
 
 
 export class EthansCyndaquil extends PokemonCard {
-
-  public tags = [CardTag.ETHANS];
-
   public stage: Stage = Stage.BASIC;
-
+  public tags = [CardTag.ETHANS];
   public cardType: CardType = R;
-
   public hp: number = 70;
-
   public weakness = [{ type: W }];
-
   public retreat = [C];
 
   public attacks = [
@@ -30,15 +24,10 @@ export class EthansCyndaquil extends PokemonCard {
   ];
 
   public regulationMark = 'I';
-
   public set: string = 'SV9a';
-
-  public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '15';
-
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ethan\'s Cyndaquil';
-
   public fullName: string = 'Ethan\'s Cyndaquil SV9a';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

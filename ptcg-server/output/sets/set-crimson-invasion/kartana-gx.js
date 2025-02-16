@@ -108,9 +108,7 @@ class KartanaGX extends pokemon_card_1.PokemonCard {
         // Blade-GX
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
-            if (player.usedGX === true) {
-                throw new game_1.GameError(game_1.GameMessage.LABEL_GX_USED);
-            }
+            prefabs_1.BLOCK_IF_GX_ATTACK_USED(player);
             // set GX attack as used for game
             player.usedGX = true;
             return prefabs_1.TAKE_X_PRIZES(store, state, player, 1);
