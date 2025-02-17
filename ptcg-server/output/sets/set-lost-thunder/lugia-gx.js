@@ -25,7 +25,7 @@ class LugiaGX extends pokemon_card_1.PokemonCard {
             { name: 'Pelagic Blade', cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS], damage: 170, text: 'This Pokémon can\'t attack during your next turn.' },
             { name: 'Lost Purge-GX', cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS], damage: 0, text: 'Put your opponent\'s Active Pokémon and all cards attached to it in the Lost Zone. (You can\'t use more than 1 GX attack in a game.)' }
         ];
-        this.set = 'SUM';
+        this.set = 'LOT';
         this.setNumber = '159';
         this.cardImage = 'assets/cardback.png';
         this.name = 'Lugia-GX';

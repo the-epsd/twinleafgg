@@ -3,30 +3,31 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 
 export class Rookidee extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.COLORLESS;
+  public cardType: CardType = C;
   public hp: number = 60;
-  public weakness = [{ type: CardType.LIGHTNING }];
-  public resistance = [{ type: CardType.FIGHTING, value: -30 }];
-  public retreat = [CardType.COLORLESS];
+  public weakness = [{ type: L }];
+  public resistance = [{ type: F, value: -30 }];
+  public retreat = [C];
 
   public attacks = [
     {
       name: 'Flap',
-      cost: [CardType.COLORLESS],
+      cost: [C],
       damage: 10,
       text: ''
     },
     {
       name: 'Glide',
-      cost: [CardType.COLORLESS, CardType.COLORLESS],
+      cost: [C, C],
       damage: 30,
       text: ''
     }
   ];
 
-  public set: string = 'SHF';
+  public regulationMark = 'D';
+  public set: string = 'SSH';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '101';
+  public setNumber: string = '150';
   public name: string = 'Rookidee';
-  public fullName: string = 'Rookidee SHF';
+  public fullName: string = 'Rookidee SSH';
 }

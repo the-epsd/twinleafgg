@@ -61,15 +61,15 @@ export class RotoStick extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
 
-  public set: string = 'SV6';
+  public set: string = 'PRE';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '160';
+  public setNumber: string = '127';
 
   public name: string = 'Roto-Stick';
 
-  public fullName: string = 'Roto-Stick SV6';
+  public fullName: string = 'Roto-Stick PRE';
 
   public text: string =
     'Look at the top 4 cards of your deck. You may choose any number of Supporter cards you find there, reveal them, and put them into your hand. Shuffle the other cards back into your deck.';

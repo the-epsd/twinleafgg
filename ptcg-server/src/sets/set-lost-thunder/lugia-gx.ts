@@ -31,7 +31,7 @@ export class LugiaGX extends PokemonCard {
     { name: 'Lost Purge-GX', cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS], damage: 0, text: 'Put your opponent\'s Active Pokémon and all cards attached to it in the Lost Zone. (You can\'t use more than 1 GX attack in a game.)' }
   ];
 
-  public set: string = 'SUM';
+  public set: string = 'LOT';
 
   public setNumber = '159';
 

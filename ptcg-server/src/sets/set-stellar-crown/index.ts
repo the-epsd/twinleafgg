@@ -32,8 +32,9 @@ import { Lacey } from './lacey';
 import { Laprasex } from './lapras-ex';
 import { Medichamex } from './medicham-ex';
 import { Meditite } from './meditite';
-import {Milcery} from './milcery';
+import { Milcery } from './milcery';
 import { Noctowl } from './noctowl';
+import { ArchaludonIR, AreaZeroUnderdepthsHR, BraveryCharmHR, BriarFA, BriarSIR, BulbasaurIR, CinderaceexFA, CrispinFA, GalvantulaexFA, GalvantulaexSIR, HydrappleexFA, HydrappleexSIR, JoltikIR, KofuFA, LaceyFA, LaceySIR, LaprasexFA, MedichamexFA, MedititeIR, MilceryIR, OrthwormexFA, RabootIR, SquirtleIR, TerapagosexHR, TerapagosexSIR, ZeraoraIR } from './other-prints';
 import { Raboot } from './raboot';
 import { RagingBolt } from './raging-bolt';
 import { Scorbunny } from './scorbunny';
@@ -86,5 +87,33 @@ export const setStellarCrown: Card[] = [
   new Veluza(),
   new Zeraora(),
   new Milcery(),
+
+  //FA
+  new BulbasaurIR(),
+  new RabootIR(),
+  new SquirtleIR(),
+  new JoltikIR(),
+  new ZeraoraIR(),
+  new MilceryIR(),
+  new MedititeIR(),
+  new ArchaludonIR(),
+  new HydrappleexFA(),
+  new CinderaceexFA(),
+  new LaprasexFA(),
+  new GalvantulaexFA(),
+  new MedichamexFA(),
+  new OrthwormexFA(),
+  new BriarFA(),
+  new CrispinFA(),
+  new KofuFA(),
+  new LaceyFA(),
+  new HydrappleexSIR(),
+  new GalvantulaexSIR(),
+  new TerapagosexSIR(),
+  new BriarSIR(),
+  new LaceySIR(),
+  new TerapagosexHR(),
+  new AreaZeroUnderdepthsHR(),
+  new BraveryCharmHR(),
 
 ];

@@ -1,4 +1,11 @@
+export const setCodeReplacements = [
+  { from: 'PR-SH', to: 'SWSH' },
+  { from: 'SP', to: 'SWSH' },
+  { from: 'PR-SW', to: 'SWSH' }
+];
+
 export const cardReplacements = [
+
   //Energy
   { from: 'Grass Energy 1', to: 'Grass Energy SVE 1' },
   { from: 'Basic Grass Energy 1', to: 'Grass Energy SVE 1' },
@@ -103,15 +110,6 @@ export const cardReplacements = [
   { from: 'Basic {M} Energy EVO 98', to: 'Metal Energy EVO 98' },
   { from: 'Basic {M} Energy HS 122', to: 'Metal Energy HS 122' },
   { from: 'Basic {M} Energy SFA 99', to: 'Metal Energy SFA 99' },
-
-  // { from: 'Grass Energy SVE 1', to: 'Grass Energy 1' },
-  // { from: 'Fire Energy SVE 2', to: 'Fire Energy 2' },
-  // { from: 'Water Energy SVE 3', to: 'Water Energy 3' },
-  // { from: 'Lightning Energy SVE 4', to: 'Lightning Energy 4' },
-  // { from: 'Psychic Energy SVE 5', to: 'Psychic Energy 5' },
-  // { from: 'Fighting Energy SVE 6', to: 'Fighting Energy 6' },
-  // { from: 'Darkness Energy SVE 7', to: 'Darkness Energy 7' },
-  // { from: 'Metal Energy SVE 8', to: 'Metal Energy 8' },
 
   //BS
   { from: 'Pokemon Breeder BS 76', to: 'Pokémon Breeder BS 76' },
@@ -369,6 +367,55 @@ export const cardReplacements = [
   { from: 'Applin TWM 126', to: 'Applin TWM2 126' },
   { from: 'Dipplin TWM 18', to: 'Dipplin TWM1 18' },
   { from: 'Dipplin TWM 127', to: 'Dipplin TWM2 127' },
+  //TWM FA
+  { from: 'Dipplin TWM 170', to: 'DipplinIR TWM 170' },
+  { from: 'Poltchageist TWM 171', to: 'PoltchageistIR TWM 171' },
+  { from: 'Infernape TWM 173', to: 'InfernapeIR TWM 173' },
+  { from: 'Froslass TWM 174', to: 'FroslassIR TWM 174' },
+  { from: 'Phione TWM 175', to: 'PhioneIR TWM 175' },
+  { from: 'Hisuian Growlithe TWM 181', to: 'HisuianGrowlitheIR TWM 181' },
+  { from: 'Timburr TWM 183', to: 'TimburrIR TWM 183' },
+  { from: 'Lairon TWM 184', to: 'LaironIR TWM 184' },
+  { from: 'Applin TWM 185', to: 'ApplinIR TWM 185' },
+  { from: 'Tatsugiri TWM 186', to: 'TatsugiriIR TWM 186' },
+  { from: 'Chansey TWM 187', to: 'ChanseyIR TWM 187' },
+  { from: 'Eevee TWM 188', to: 'EeveeIR TWM 188' },
+  { from: 'Sinistcha ex TWM 189', to: 'Sinistcha exFA TWM 189' },
+  { from: 'Teal Mask Ogerpon ex TWM 190', to: 'Teal Mask Ogerpon exFA TWM 190' },
+  { from: 'Magcargo ex TWM 191', to: 'Magcargo exFA TWM 191' },
+  { from: 'Hearthflame Mask Ogerpon ex TWM 192', to: 'Hearthflame Mask Ogerpon exFA TWM 192' },
+  { from: 'Palafin ex TWM 193', to: 'Palafin exFA TWM 193' },
+  { from: 'Wellspring Mask Ogerpon ex TWM 194', to: 'Wellspring Mask Ogerpon exFA TWM 194' },
+  { from: 'Luxray ex TWM 195', to: 'Luxray exFA TWM 195' },
+  { from: 'Iron Thorns ex TWM 196', to: 'Iron Thorns exFA TWM 196' },
+  { from: 'Scream Tail ex TWM 197', to: 'Scream Tail exFA TWM 197' },
+  { from: 'Greninja ex TWM 198', to: 'Greninja exFA TWM 198' },
+  { from: 'Cornerstone Mask Ogerpon ex TWM 199', to: 'Cornerstone Mask Ogerpon exFA TWM 199' },
+  { from: 'Dragapult ex TWM 200', to: 'Dragapult exFA TWM 200' },
+  { from: 'Blissey ex TWM 201', to: 'Blissey exFA TWM 201' },
+  { from: 'Bloodmoon Ursaluna ex TWM 202', to: 'Bloodmoon Ursaluna exFA TWM 202' },
+  { from: 'Caretaker TWM 203', to: 'CaretakerFA TWM 203' },
+  { from: 'Carmine TWM 204', to: 'CarmineFA TWM 204' },
+  { from: 'Hassel TWM 205', to: 'HasselFA TWM 205' },
+  { from: 'Kieran TWM 206', to: 'KieranFA TWM 206' },
+  { from: 'Lana\'s Aid TWM 207', to: 'Lana\'s AidFA TWM 207' },
+  { from: 'Perrin TWM 209', to: 'PerrinFA TWM 209' },
+  { from: 'Sinistcha ex TWM 210', to: 'Sinistcha exSIR TWM 210' },
+  { from: 'Teal Mask Ogerpon ex TWM 211', to: 'Teal Mask Ogerpon exSIR TWM 211' },
+  { from: 'Hearthflame Mask Ogerpon ex TWM 212', to: 'Hearthflame Mask Ogerpon exSIR TWM 212' },
+  { from: 'Wellspring Mask Ogerpon ex TWM 213', to: 'Wellspring Mask Ogerpon exSIR TWM 213' },
+  { from: 'Greninja ex TWM 214', to: 'Greninja exSIR TWM 214' },
+  { from: 'Cornerstone Mask Ogerpon ex TWM 215', to: 'Cornerstone Mask Ogerpon exSIR TWM 215' },
+  { from: 'Bloodmoon Ursaluna ex TWM 216', to: 'Bloodmoon Ursaluna exSIR TWM 216' },
+  { from: 'Carmine TWM 217', to: 'CarmineSIR TWM 217' },
+  { from: 'Kieran TWM 218', to: 'KieranSIR TWM 218' },
+  { from: 'Lana\'s Aid TWM 219', to: 'Lana\'s AidSIR TWM 219' },
+  { from: 'Perrin TWM 220', to: 'PerrinSIR TWM 220' },
+  { from: 'Teal Mask Ogerpon ex TWM 221', to: 'Teal Mask Ogerpon exHR TWM 221' },
+  { from: 'Bloodmoon Ursaluna ex TWM 222', to: 'Bloodmoon Ursaluna exHR TWM 222' },
+  { from: 'Buddy-Buddy Poffin TWM 223', to: 'Buddy-Buddy PoffinHR TWM 223' },
+  { from: 'Enhanced Hammer TWM 224', to: 'Enhanced HammerHR TWM 224' },
+  { from: 'Rescue Board TWM 225', to: 'Rescue BoardHR TWM 225' },
 
   //SFA
   { from: 'Janine\'s Secret Art SFA 59', to: 'Janine\'s Secret Technique SFA 59' },
@@ -399,6 +446,33 @@ export const cardReplacements = [
   { from: 'Cassiopeia SFA 94', to: 'CassiopeiaSIR SFA 94' },
   { from: 'Pecharunt ex SFA 95', to: 'Pecharunt exUR SFA 95' },
   { from: 'Powerglass SFA 97', to: 'PowerglassUR SFA 97' },
+
+  //SCR FA
+  { from: 'Bulbasaur SCR 143', to: 'BulbasaurIR SCR 143' },
+  { from: 'Raboot SCR 147', to: 'RabootIR SCR 147' },
+  { from: 'Squirtle SCR 148', to: 'SquirtleIR SCR 148' },
+  { from: 'Joltik SCR 150', to: 'JoltikIR SCR 150' },
+  { from: 'Zeraora SCR 151', to: 'ZeraoraIR SCR 151' },
+  { from: 'Milcery SCR 152', to: 'MilceryIR SCR 152' },
+  { from: 'Meditite SCR 153', to: 'MedititeIR SCR 153' },
+  { from: 'Archaludon SCR 155', to: 'ArchaludonIR SCR 155' },
+  { from: 'Hydrapple ex SCR 156', to: 'Hydrapple exFA SCR 156' },
+  { from: 'Cinderace ex SCR 157', to: 'Cinderace exFA SCR 157' },
+  { from: 'Lapras ex SCR 158', to: 'Lapras exFA SCR 158' },
+  { from: 'Galvantula ex SCR 159', to: 'Galvantula exFA SCR 159' },
+  { from: 'Medicham ex SCR 161', to: 'Medicham exFA SCR 161' },
+  { from: 'Orthworm ex SCR 162', to: 'Orthworm exFA SCR 162' },
+  { from: 'Briar SCR 163', to: 'BriarFA SCR 163' },
+  { from: 'Crispin SCR 164', to: 'CrispinFA SCR 164' },
+  { from: 'Kofu SCR 165', to: 'KofuFA SCR 165' },
+  { from: 'Lacey SCR 166', to: 'LaceyFA SCR 166' },
+  { from: 'Hydrapple ex SCR 167', to: 'Hydrapple exSIR SCR 167' },
+  { from: 'Galvantula ex SCR 168', to: 'Galvantula exSIR SCR 168' },
+  { from: 'Terapagos ex SCR 170', to: 'Terapagos exSIR SCR 170' },
+  { from: 'Briar SCR 171', to: 'BriarSIR SCR 171' },
+  { from: 'Lacey SCR 172', to: 'LaceySIR SCR 172' },
+  { from: 'Terapagos ex SCR 173', to: 'Terapagos exHR SCR 173' },
+  { from: 'Area Zero Underdepths SCR 174', to: 'Area Zero UnderdepthsHR SCR 174' },
 
   //SSP FA
   { from: 'Larvesta SSP 196', to: 'LarvestaIR SSP 196' },
@@ -468,9 +542,20 @@ export const cardReplacements = [
   { from: 'Walking Wake ex PRE 178', to: 'Walking Wake exUR PRE 178' },
   { from: 'Pikachu ex PRE 179', to: 'Pikachu exUR PRE 179' },
   { from: 'Terapagos ex PRE 180', to: 'Terapagos exUR PRE 180' },
+
+  //SVOM
+  { from: 'Marnie\'s Morpeko SVOM 20', to: 'Marnie\'s MorpekoIR SVOM 20' },
+
+  //SVOD
+  { from: 'Steven\'s Beldum SVOD 19', to: 'Steven\'s BeldumIR SVOD 19' },
+
+  //SV9a
+  { from: 'Ethan\'s Ho-Oh ex SV9a 86', to: 'Ethan\'s Ho-Oh exSIR SV9a 86' },
+  { from: 'Cynthia\'s Roserade SV9a 65', to: 'Cynthia\'s RoseradeIR SV9a 65' },
 ];
 
 export const exportReplacements = [
+
   //BS
   { from: 'Pokémon Breeder BS 76', to: 'Pokemon Breeder BS 76' },
   { from: 'Pokémon Trader BS 77', to: 'Pokemon Trader BS 77' },
@@ -726,6 +811,55 @@ export const exportReplacements = [
   { from: 'Applin TWM2 126', to: 'Applin TWM 126' },
   { from: 'Dipplin TWM1 18', to: 'Dipplin TWM 18' },
   { from: 'Dipplin TWM2 127', to: 'Dipplin TWM 127' },
+  //TWM FA
+  { from: 'DipplinIR TWM 170', to: 'Dipplin TWM 170' },
+  { from: 'PoltchageistIR TWM 171', to: 'Poltchageist TWM 171' },
+  { from: 'InfernapeIR TWM 173', to: 'Infernape TWM 173' },
+  { from: 'FroslassIR TWM 174', to: 'Froslass TWM 174' },
+  { from: 'PhioneIR TWM 175', to: 'Phione TWM 175' },
+  { from: 'HisuianGrowlitheIR TWM 181', to: 'Hisuian Growlithe TWM 181' },
+  { from: 'TimburrIR TWM 183', to: 'Timburr TWM 183' },
+  { from: 'LaironIR TWM 184', to: 'Lairon TWM 184' },
+  { from: 'ApplinIR TWM 185', to: 'Applin TWM 185' },
+  { from: 'TatsugiriIR TWM 186', to: 'Tatsugiri TWM 186' },
+  { from: 'ChanseyIR TWM 187', to: 'Chansey TWM 187' },
+  { from: 'EeveeIR TWM 188', to: 'Eevee TWM 188' },
+  { from: 'Sinistcha exFA TWM 189', to: 'Sinistcha ex TWM 189' },
+  { from: 'Teal Mask Ogerpon exFA TWM 190', to: 'Teal Mask Ogerpon ex TWM 190' },
+  { from: 'Magcargo exFA TWM 191', to: 'Magcargo ex TWM 191' },
+  { from: 'Hearthflame Mask Ogerpon exFA TWM 192', to: 'Hearthflame Mask Ogerpon ex TWM 192' },
+  { from: 'Palafin exFA TWM 193', to: 'Palafin ex TWM 193' },
+  { from: 'Wellspring Mask Ogerpon exFA TWM 194', to: 'Wellspring Mask Ogerpon ex TWM 194' },
+  { from: 'Luxray exFA TWM 195', to: 'Luxray ex TWM 195' },
+  { from: 'Iron Thorns exFA TWM 196', to: 'Iron Thorns ex TWM 196' },
+  { from: 'Scream Tail exFA TWM 197', to: 'Scream Tail ex TWM 197' },
+  { from: 'Greninja exFA TWM 198', to: 'Greninja ex TWM 198' },
+  { from: 'Cornerstone Mask Ogerpon exFA TWM 199', to: 'Cornerstone Mask Ogerpon ex TWM 199' },
+  { from: 'Dragapult exFA TWM 200', to: 'Dragapult ex TWM 200' },
+  { from: 'Blissey exFA TWM 201', to: 'Blissey ex TWM 201' },
+  { from: 'Bloodmoon Ursaluna exFA TWM 202', to: 'Bloodmoon Ursaluna ex TWM 202' },
+  { from: 'CaretakerFA TWM 203', to: 'Caretaker TWM 203' },
+  { from: 'CarmineFA TWM 204', to: 'Carmine TWM 204' },
+  { from: 'HasselFA TWM 205', to: 'Hassel TWM 205' },
+  { from: 'KieranFA TWM 206', to: 'Kieran TWM 206' },
+  { from: 'Lana\'s AidFA TWM 207', to: 'Lana\'s Aid TWM 207' },
+  { from: 'PerrinFA TWM 209', to: 'Perrin TWM 209' },
+  { from: 'Sinistcha exSIR TWM 210', to: 'Sinistcha ex TWM 210' },
+  { from: 'Teal Mask Ogerpon exSIR TWM 211', to: 'Teal Mask Ogerpon ex TWM 211' },
+  { from: 'Hearthflame Mask Ogerpon exSIR TWM 212', to: 'Hearthflame Mask Ogerpon ex TWM 212' },
+  { from: 'Wellspring Mask Ogerpon exSIR TWM 213', to: 'Wellspring Mask Ogerpon ex TWM 213' },
+  { from: 'Greninja exSIR TWM 214', to: 'Greninja ex TWM 214' },
+  { from: 'Cornerstone Mask Ogerpon exSIR TWM 215', to: 'Cornerstone Mask Ogerpon ex TWM 215' },
+  { from: 'Bloodmoon Ursaluna exSIR TWM 216', to: 'Bloodmoon Ursaluna ex TWM 216' },
+  { from: 'CarmineSIR TWM 217', to: 'Carmine TWM 217' },
+  { from: 'KieranSIR TWM 218', to: 'Kieran TWM 218' },
+  { from: 'Lana\'s AidSIR TWM 219', to: 'Lana\'s Aid TWM 219' },
+  { from: 'PerrinSIR TWM 220', to: 'Perrin TWM 220' },
+  { from: 'Teal Mask Ogerpon exHR TWM 221', to: 'Teal Mask Ogerpon ex TWM 221' },
+  { from: 'Bloodmoon Ursaluna exHR TWM 222', to: 'Bloodmoon Ursaluna ex TWM 222' },
+  { from: 'Buddy-Buddy PoffinHR TWM 223', to: 'Buddy-Buddy Poffin TWM 223' },
+  { from: 'Enhanced HammerHR TWM 224', to: 'Enhanced Hammer TWM 224' },
+  { from: 'Rescue BoardHR TWM 225', to: 'Rescue Board TWM 225' },
 
   //SFA
   { from: 'Bloodmoon Ursaluna SV6a 25', to: 'Bloodmoon Ursaluna SFA 25' },
@@ -757,6 +891,33 @@ export const exportReplacements = [
   { from: 'CassiopeiaSIR SFA 94', to: 'Cassiopeia SFA 94' },
   { from: 'Pecharunt exUR SFA 95', to: 'Pecharunt ex SFA 95' },
   { from: 'PowerglassUR SFA 97', to: 'Powerglass SFA 97' },
+
+  //SCR FA
+  { from: 'BulbasaurIR SCR 143', to: 'Bulbasaur SCR 143' },
+  { from: 'RabootIR SCR 147', to: 'Raboot SCR 147' },
+  { from: 'SquirtleIR SCR 148', to: 'Squirtle SCR 148' },
+  { from: 'JoltikIR SCR 150', to: 'Joltik SCR 150' },
+  { from: 'ZeraoraIR SCR 151', to: 'Zeraora SCR 151' },
+  { from: 'MilceryIR SCR 152', to: 'Milcery SCR 152' },
+  { from: 'MedititeIR SCR 153', to: 'Meditite SCR 153' },
+  { from: 'ArchaludonIR SCR 155', to: 'Archaludon SCR 155' },
+  { from: 'Hydrapple exFA SCR 156', to: 'Hydrapple ex SCR 156' },
+  { from: 'Cinderace exFA SCR 157', to: 'Cinderace ex SCR 157' },
+  { from: 'Lapras exFA SCR 158', to: 'Lapras ex SCR 158' },
+  { from: 'Galvantula exFA SCR 159', to: 'Galvantula ex SCR 159' },
+  { from: 'Medicham exFA SCR 161', to: 'Medicham ex SCR 161' },
+  { from: 'Orthworm exFA SCR 162', to: 'Orthworm ex SCR 162' },
+  { from: 'BriarFA SCR 163', to: 'Briar SCR 163' },
+  { from: 'CrispinFA SCR 164', to: 'Crispin SCR 164' },
+  { from: 'KofuFA SCR 165', to: 'Kofu SCR 165' },
+  { from: 'LaceyFA SCR 166', to: 'Lacey SCR 166' },
+  { from: 'Hydrapple exSIR SCR 167', to: 'Hydrapple ex SCR 167' },
+  { from: 'Galvantula exSIR SCR 168', to: 'Galvantula ex SCR 168' },
+  { from: 'Terapagos exSIR SCR 170', to: 'Terapagos ex SCR 170' },
+  { from: 'BriarSIR SCR 171', to: 'Briar SCR 171' },
+  { from: 'LaceySIR SCR 172', to: 'Lacey SCR 172' },
+  { from: 'Terapagos exHR SCR 173', to: 'Terapagos ex SCR 173' },
+  { from: 'Area Zero UnderdepthsHR SCR 174', to: 'Area Zero Underdepths SCR 174' },
 
   //SSP FA
   { from: 'LarvestaIR SSP 196', to: 'Larvesta SSP 196' },
@@ -826,4 +987,14 @@ export const exportReplacements = [
   { from: 'Walking Wake exUR PRE 178', to: 'Walking Wake ex PRE 178' },
   { from: 'Pikachu exUR PRE 179', to: 'Pikachu ex PRE 179' },
   { from: 'Terapagos exUR PRE 180', to: 'Terapagos ex PRE 180' },
+
+  //SVOM
+  { from: 'Marnie\'s MorpekoIR SVOM 20', to: 'Marnie\'s Morpeko SVOM 20' },
+
+  //SVOD
+  { from: 'Steven\'s BeldumIR SVOD 19', to: 'Steven\'s Beldum SVOD 19' },
+
+  //SV9a
+  { from: 'Ethan\'s Ho-Oh exSIR SV9a 86', to: 'Ethan\'s Ho-Oh ex SV9a 86' },
+  { from: 'Cynthia\'s RoseradeIR SV9a 65', to: 'Cynthia\'s Roserade SV9a 65' },
 ];

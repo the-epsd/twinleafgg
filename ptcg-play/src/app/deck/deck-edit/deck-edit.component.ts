@@ -14,7 +14,7 @@ import { DeckEditToolbarFilter } from '../deck-edit-toolbar/deck-edit-toolbar-fi
 import { DeckService } from '../../api/services/deck.service';
 // import { FileDownloadService } from '../../shared/file-download/file-download.service';
 import { Card, EnergyCard, EnergyType, PokemonCard, SuperType, TrainerCard, TrainerType } from 'ptcg-server';
-import { cardReplacements, exportReplacements } from './card-replacements';
+import { cardReplacements, exportReplacements, setCodeReplacements } from './card-replacements';
 // import { interval, Subject, Subscription } from 'rxjs';
 // import { takeUntil } from 'rxjs/operators';
 
@@ -197,9 +197,16 @@ export class DeckEditComponent implements OnInit {
             const cardDetails = parts.slice(1);
             const cardName = cardDetails.slice(0, -1).join(' ');
             const setNumber = cardDetails.slice(-1)[0];
-            const fullCardName = `${cardName} ${setNumber}`;
+            let fullCardName = `${cardName} ${setNumber}`;
 
-            // Apply card replacements
+            // First apply set code replacements
+            for (const setReplacement of setCodeReplacements) {
+              if (fullCardName.includes(setReplacement.from)) {
+                fullCardName = fullCardName.replace(setReplacement.from, setReplacement.to);
+              }
+            }
+
+            // Then apply specific card replacements
             const replacement = cardReplacements.find(r => r.from === fullCardName);
             const finalCardName = replacement ? replacement.to : fullCardName;
 

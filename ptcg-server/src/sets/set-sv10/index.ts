@@ -8,7 +8,7 @@ import { MarniesMorpeko } from './marnies-morpeko';
 import { MarniesPurrloin } from './marnies-purrloin';
 import { MarniesScrafty } from './marnies-scrafty';
 import { MarniesScraggy } from './marnies-scraggy';
-import { EnergyRecyclerSV10 } from './other-prints';
+import { EnergyRecyclerSV10, MarniesMorpekoIR, StevensBeldumIR } from './other-prints';
 import { SpikemuthGym } from './spikemuth-gym';
 import { StevensBaltoy } from './stevens-baltoy';
 import { StevensBeldum } from './stevens-beldum';
@@ -19,6 +19,7 @@ import { StevensMetang } from './stevens-metang';
 import { StevensSkarmory } from './stevens-skarmory';
 
 export const setSV10: Card[] = [
+  new MarniesMorpekoIR(),
   new MarniesImpidimp(),
   new MarniesMorgrem(),
   new MarniesGrimmsnarlex(),
@@ -29,6 +30,7 @@ export const setSV10: Card[] = [
   new MarniesScraggy(),
   new SpikemuthGym(),
 
+  new StevensBeldumIR(),
   new StevensBeldum(),
   new StevensMetang(),
   new StevensMetagrossex(),

@@ -20,16 +20,11 @@ import { ReplaysModule } from './replays/replays.module';
 import { SharedModule } from './shared/shared.module';
 import { TableModule } from './table/table.module';
 import { MatchmakingLobbyComponent } from './games/matchmaking-lobby/matchmaking-lobby.component';
-import { TournamentJoiningComponent } from './tournaments/tournament-join/tournament-join.component';
-import { TournamentListComponent } from './tournaments/tournament-list/tournament-list.component';
-import { NewsModule } from './news/news.module';
 import { TermsModule } from './terms/terms.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TournamentJoiningComponent,
-    TournamentListComponent,
   ],
   imports: [
     ApiModule,
@@ -39,7 +34,6 @@ import { TermsModule } from './terms/terms.module';
     LoginModule,
     MainModule,
     MessagesModule,
-    NewsModule,
     ProfileModule,
     RankingModule,
     ReplaysModule,

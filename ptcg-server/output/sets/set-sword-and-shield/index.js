@@ -26,6 +26,7 @@ const oranguru_1 = require("./oranguru");
 const ordinary_rod_1 = require("./ordinary-rod");
 const quick_ball_1 = require("./quick-ball");
 const raboot_1 = require("./raboot");
+const rookidee_1 = require("./rookidee");
 const sizzlipede_1 = require("./sizzlipede");
 const snom_1 = require("./snom");
 const sobble_1 = require("./sobble");
@@ -58,6 +59,7 @@ exports.setSwordAndShield = [
     new ordinary_rod_1.OrdinaryRod(),
     new quick_ball_1.QuickBall(),
     new raboot_1.Raboot(),
+    new rookidee_1.Rookidee(),
     new toxicroak_1.Toxicroak(),
     new welder_1.Welder(),
     new zacian_v_1.ZacianV(),
