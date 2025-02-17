@@ -24,7 +24,7 @@ exports.setXY = [
     new double_colorless_energy_1.DoubleColorlessEnergy(),
     new evosoda_1.Evosoda(),
     new fairy_energy_1.FairyEnergy(),
-    new greninja_1.GreninjaXY(),
+    new greninja_1.Greninja(),
     new muscle_band_1.MuscleBand(),
     new pikachu_1.Pikachu(),
     new professors_letter_1.ProfessorsLetter(),

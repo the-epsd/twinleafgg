@@ -4,7 +4,7 @@ import { EnergyPouch } from './energy-pouch';
 import { Fennekin } from './fennekin';
 import { Lucario } from './lucario';
 import { Mew } from './mew';
-import { N_Supporter } from './n';
+import { N } from './n';
 import { Riolu } from './riolu';
 import { TeamRocketsHandiwork } from './team-rockets-handiwork';
 import { Whismur } from './whismur';
@@ -15,7 +15,7 @@ export const setFatesCollide: Card[] = [
   new Fennekin(),
   new Lucario(),
   new Mew(),
-  new N_Supporter(),
+  new N(),
   new Riolu(),
   new TeamRocketsHandiwork(),
   new Whismur(),

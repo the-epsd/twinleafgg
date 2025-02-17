@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SkeledirgeEX = void 0;
+exports.Skeledirgeex = void 0;
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
@@ -8,7 +8,7 @@ const game_effects_1 = require("../../game/store/effects/game-effects");
 const choose_cards_prompt_1 = require("../../game/store/prompts/choose-cards-prompt");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const prefabs_1 = require("../../game/store/prefabs/prefabs");
-class SkeledirgeEX extends pokemon_card_1.PokemonCard {
+class Skeledirgeex extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.STAGE_2;
@@ -96,4 +96,4 @@ class SkeledirgeEX extends pokemon_card_1.PokemonCard {
         return state;
     }
 }
-exports.SkeledirgeEX = SkeledirgeEX;
+exports.Skeledirgeex = Skeledirgeex;

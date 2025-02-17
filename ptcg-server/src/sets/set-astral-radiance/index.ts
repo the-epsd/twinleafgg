@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import {Absol} from './absol';
+import { Absol } from './absol';
 import { Adaman } from './adaman';
 import { Bronzor } from './bronzor';
 import { CancelingCologne } from './canceling-cologne';
@@ -35,7 +35,7 @@ import { Kricketune } from './kricketune';
 import { LucarioV } from './lucario-v';
 import { LuxrayV } from './luxray-v';
 import { Magneton } from './magneton';
-import {Magnezone} from './magnezone';
+import { Magnezone } from './magnezone';
 import { Mantine } from './mantine';
 import { Mightyena } from './mightyena';
 import { Miltank } from './miltank';

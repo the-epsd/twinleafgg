@@ -71,11 +71,11 @@ import { Skeledirgeex } from './skeledirge-ex';
 import { Quaquavalex } from './quaquaval-ex';
 import { Copperajahex } from './copperajah-ex';
 import { Dunsparce } from './dunsparce';
-import {Glimmet} from './glimmet';
-import {Glimmet2} from './glimmet-2';
-import {Glimmora} from './glimmora';
+import { Glimmet } from './glimmet';
+import { Glimmet2 } from './glimmet-2';
+import { Glimmora } from './glimmora';
 import { Tinkatuff2 } from './tinkatuff-2';
-import {Belliboltex} from './bellibolt-ex';
+import { Belliboltex } from './bellibolt-ex';
 //import { CalamitousSnowyMountain } from './new calamitous-snowy-mountain';
 
 export const setPaldeaEvolved: Card[] = [

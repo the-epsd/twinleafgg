@@ -36,7 +36,7 @@ exports.setSunAndMoon = [
     new herdier_1.Herdier(),
     new lurantis_gx_1.LurantisGX(),
     new oranguru_1.Oranguru(),
-    new passimian_1.PassimianSUM(),
+    new passimian_1.Passimian(),
     new professor_kukui_1.ProfessorKukui(),
     new rainbow_energy_1.RainbowEnergy(),
     new rotom_dex_1.RotomDex(),

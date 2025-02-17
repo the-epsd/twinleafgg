@@ -15,12 +15,12 @@ const virizion_ex_1 = require("./virizion-ex");
 const wartortle_1 = require("./wartortle");
 exports.setPlasmaBlast = [
     new archen_1.Archen(),
-    new jirachi_ex_1.JirachiEx(),
+    new jirachi_ex_1.JirachiEX(),
     new sawk_1.Sawk(),
     new silver_bangle_1.SilverBangle(),
     new silver_mirror_1.SilverMirror(),
     new suicune_1.Suicune(),
-    new virizion_ex_1.VirizionEx(),
+    new virizion_ex_1.VirizionEX(),
     new wartortle_1.Wartortle(),
     new genesect_ex_1.GenesectEX(),
     new g_booster_1.GBooster(),

@@ -56,7 +56,7 @@ function* useEmeraldSlash(next: Function, store: StoreLike, state: State,
   });
 }
 
-export class VirizionEx extends PokemonCard {
+export class VirizionEX extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public tags = [CardTag.POKEMON_EX];
   public cardType: CardType = G;

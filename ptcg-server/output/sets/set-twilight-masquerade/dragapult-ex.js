@@ -9,6 +9,7 @@ const play_card_action_1 = require("../../game/store/actions/play-card-action");
 const game_message_1 = require("../../game/game-message");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const __1 = require("../..");
+const check_effects_1 = require("../../game/store/effects/check-effects");
 function* usePhantomDive(next, store, state, effect) {
     const player = effect.player;
     const opponent = state_utils_1.StateUtils.getOpponent(state, player);
@@ -18,7 +19,9 @@ function* usePhantomDive(next, store, state, effect) {
     }
     const maxAllowedDamage = [];
     opponent.forEachPokemon(play_card_action_1.PlayerType.TOP_PLAYER, (cardList, card, target) => {
-        maxAllowedDamage.push({ target, damage: card.hp + 60 });
+        const checkHpEffect = new check_effects_1.CheckHpEffect(player, cardList);
+        store.reduceEffect(state, checkHpEffect);
+        maxAllowedDamage.push({ target, damage: checkHpEffect.hp + 60 });
     });
     const damage = 60;
     return store.prompt(state, new __1.PutDamagePrompt(effect.player.id, game_message_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, play_card_action_1.PlayerType.TOP_PLAYER, [play_card_action_1.SlotType.BENCH], damage, maxAllowedDamage, { allowCancel: false }), targets => {

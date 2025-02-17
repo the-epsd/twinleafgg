@@ -3,7 +3,7 @@ import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 
-export class WeedleTEU extends PokemonCard {
+export class Weedle extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 

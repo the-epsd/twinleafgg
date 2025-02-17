@@ -71,7 +71,7 @@ export class Latiasex extends PokemonCard {
       const owner = StateUtils.findOwner(state, cardList);
       const active = effect.player.active.getPokemonCard();
 
-      if (owner !== player || active === undefined || !StateUtils.isPokemonInPlay(player, this)) {
+      if (owner !== player || active === undefined) {
         return state;
       }
 

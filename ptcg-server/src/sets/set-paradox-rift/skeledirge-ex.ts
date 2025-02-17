@@ -7,7 +7,7 @@ import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt'
 import { AfterDamageEffect, ApplyWeaknessEffect, DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { ABILITY_USED, HAS_MARKER, REMOVE_MARKER_AT_END_OF_TURN } from '../../game/store/prefabs/prefabs';
 
-export class SkeledirgeEX extends PokemonCard {
+export class Skeledirgeex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Crocalor';
   public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];

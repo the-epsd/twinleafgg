@@ -6,7 +6,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { PlayerType } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 
-export class DonphanVIV extends PokemonCard {
+export class Donphan extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_1;
 
@@ -18,19 +18,21 @@ export class DonphanVIV extends PokemonCard {
 
   public weakness = [{ type: CardType.GRASS }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
-    { 
-      name: 'Earthquake', 
-      cost: [CardType.FIGHTING], 
+    {
+      name: 'Earthquake',
+      cost: [CardType.FIGHTING],
       damage: 120,
-      text: 'This attack also does 20 damage to each of your Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)' },
-    { 
-      name: 'Heavy Impact', 
-      cost: [CardType.FIGHTING, CardType.COLORLESS, CardType.COLORLESS], 
-      damage: 90, 
-      text: '' }
+      text: 'This attack also does 20 damage to each of your Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+    },
+    {
+      name: 'Heavy Impact',
+      cost: [CardType.FIGHTING, CardType.COLORLESS, CardType.COLORLESS],
+      damage: 90,
+      text: ''
+    }
   ];
 
   public set: string = 'VIV';
@@ -47,11 +49,11 @@ export class DonphanVIV extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Earthquake
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]){
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
-  
+
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-        if (cardList !== player.active){
+        if (cardList !== player.active) {
           const damageEffect = new PutDamageEffect(effect, 20);
           damageEffect.target = cardList;
           store.reduceEffect(state, damageEffect);

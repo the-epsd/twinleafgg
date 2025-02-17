@@ -54,11 +54,11 @@ class DeoxysEX extends game_1.PokemonCard {
                 effect.damage += opponentEnergyCount * 30;
             }
         }
-        if (effect instanceof attack_effects_1.DealDamageEffect) {
+        if (effect instanceof attack_effects_1.DealDamageEffect && game_1.StateUtils.isPokemonInPlay(effect.player, this)) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, effect.player);
             const source = effect.source.getPokemonCard();
-            if (state.phase === game_1.GamePhase.ATTACK && game_1.StateUtils.isPokemonInPlay(player, this) &&
+            if (state.phase === game_1.GamePhase.ATTACK &&
                 source.tags.includes(game_1.CardTag.TEAM_PLASMA) && source.name !== 'Deoxys EX' &&
                 effect.target === opponent.active && effect.damage > 0 && !prefabs_1.IS_ABILITY_BLOCKED(store, state, player, this)) {
                 effect.damage += 10;

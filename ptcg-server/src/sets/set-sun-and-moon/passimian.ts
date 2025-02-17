@@ -10,7 +10,7 @@ import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { ChoosePokemonPrompt, GameMessage, SlotType } from '../../game';
 
 
-export class PassimianSUM extends PokemonCard {
+export class Passimian extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
@@ -20,16 +20,16 @@ export class PassimianSUM extends PokemonCard {
 
   public weakness = [{ type: CardType.PSYCHIC }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [{
     name: 'Fling',
-    cost: [ CardType.FIGHTING ],
+    cost: [CardType.FIGHTING],
     damage: 0,
     text: 'This attack does 30 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
   }, {
     name: 'Team Play',
-    cost: [ CardType.COLORLESS, CardType.COLORLESS ],
+    cost: [CardType.COLORLESS, CardType.COLORLESS],
     damage: 10,
     text: 'This attack does 30 more damage for each of your Benched Passimian.'
   }];
@@ -49,17 +49,17 @@ export class PassimianSUM extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-    
+
       const hasBenched = opponent.bench.some(b => b.cards.length > 0);
       if (!hasBenched) {
         return state;
       }
-    
+
       return store.prompt(state, new ChoosePokemonPrompt(
         player.id,
         GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
         PlayerType.TOP_PLAYER,
-        [ SlotType.BENCH ],
+        [SlotType.BENCH],
         { allowCancel: false }
       ), targets => {
         const damageEffect = new PutDamageEffect(effect, 30);

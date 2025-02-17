@@ -6,7 +6,7 @@ import { AttackEffect, HealEffect } from '../../game/store/effects/game-effects'
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { CheckRetreatCostEffect } from '../../game/store/effects/check-effects';
 
-export class SlakothSSP extends PokemonCard {
+export class Slakoth extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 

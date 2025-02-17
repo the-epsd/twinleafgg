@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WeedleTEU = void 0;
+exports.Weedle = void 0;
 const game_1 = require("../../game");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
-class WeedleTEU extends game_1.PokemonCard {
+class Weedle extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = game_1.Stage.BASIC;
@@ -37,4 +37,4 @@ class WeedleTEU extends game_1.PokemonCard {
         return state;
     }
 }
-exports.WeedleTEU = WeedleTEU;
+exports.Weedle = Weedle;

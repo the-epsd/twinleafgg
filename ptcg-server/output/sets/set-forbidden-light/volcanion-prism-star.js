@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.VolcanionPS = void 0;
+exports.VolcanionPrismStar = void 0;
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
@@ -8,7 +8,7 @@ const game_effects_1 = require("../../game/store/effects/game-effects");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
-class VolcanionPS extends pokemon_card_1.PokemonCard {
+class VolcanionPrismStar extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.tags = [card_types_1.CardTag.PRISM_STAR];
@@ -80,4 +80,4 @@ class VolcanionPS extends pokemon_card_1.PokemonCard {
         return state;
     }
 }
-exports.VolcanionPS = VolcanionPS;
+exports.VolcanionPrismStar = VolcanionPrismStar;

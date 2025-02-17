@@ -2,7 +2,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-export declare class SolgaleoPS extends PokemonCard {
+export declare class SolgaleoPrismStar extends PokemonCard {
     tags: CardTag[];
     stage: Stage;
     cardType: CardType;

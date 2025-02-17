@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SolgaleoPS = void 0;
+exports.SolgaleoPrismStar = void 0;
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
-class SolgaleoPS extends pokemon_card_1.PokemonCard {
+class SolgaleoPrismStar extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.tags = [card_types_1.CardTag.PRISM_STAR];
@@ -85,4 +85,4 @@ class SolgaleoPS extends pokemon_card_1.PokemonCard {
         return state;
     }
 }
-exports.SolgaleoPS = SolgaleoPS;
+exports.SolgaleoPrismStar = SolgaleoPrismStar;

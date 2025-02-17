@@ -1,6 +1,6 @@
 import { Card } from '../../game/store/card/card';
 import { FirefighterPikachu } from './firefighter-pikachu';
-import { GreninjaGXSMP } from './greninja-gx';
+import { GreninjaGX } from './greninja-gx';
 import { JolteonGX } from './jolteon-gx';
 import { LucarioGX } from './lucario-gx';
 import { Lurantis } from './lurantis';
@@ -14,7 +14,7 @@ import { TrevenantDusknoirGX } from './trevenant-dusknoir-gx';
 
 export const setSunAndMoonPromos: Card[] = [
   new FirefighterPikachu(),
-  new GreninjaGXSMP(),
+  new GreninjaGX(),
   new JolteonGX(),
   new LucarioGX(),
   new Lurantis(),

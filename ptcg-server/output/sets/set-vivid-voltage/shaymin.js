@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ShayminVIV = void 0;
+exports.Shaymin = void 0;
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
-class ShayminVIV extends pokemon_card_1.PokemonCard {
+class Shaymin extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.BASIC;
@@ -59,4 +59,4 @@ class ShayminVIV extends pokemon_card_1.PokemonCard {
         return state;
     }
 }
-exports.ShayminVIV = ShayminVIV;
+exports.Shaymin = Shaymin;

@@ -21,7 +21,7 @@ exports.setBreakpoint = [
     new delinquent_1.Delinquent(),
     new fighting_fury_belt_1.FightingFuryBelt(),
     new froakie_1.Froakie(),
-    new greninja_1.GreninjaBKP(),
+    new greninja_1.Greninja(),
     new kricketot_1.Kricketot(),
     new max_elixir_1.MaxElixir(),
     new phantump_1.Phantump(),

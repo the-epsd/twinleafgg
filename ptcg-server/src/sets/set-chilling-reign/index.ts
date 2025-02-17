@@ -22,7 +22,7 @@ import { GalarianMoltresV } from './galarian-moltres-v';
 import { GalarianZapdosV } from './galarian-zapdos-v';
 import { Gallade } from './gallade';
 import { Gardevoir } from './gardevoir';
-import {Gengar} from './gengar';
+import { Gengar } from './gengar';
 import { Golett } from './golett';
 import { Golurk } from './golurk';
 import { IceRiderCalyrexV } from './ice-rider-calyrex-v';

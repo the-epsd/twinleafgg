@@ -2,7 +2,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, PowerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-export declare class SkeledirgeEX extends PokemonCard {
+export declare class Skeledirgeex extends PokemonCard {
     stage: Stage;
     evolvesFrom: string;
     tags: CardTag[];

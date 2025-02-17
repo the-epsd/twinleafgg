@@ -1,6 +1,6 @@
 import { CardTag, CardType, PokemonCard, Stage, State, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-export declare class BlacephalonUNB extends PokemonCard {
+export declare class Blacephalon extends PokemonCard {
     tags: CardTag[];
     stage: Stage;
     cardType: CardType;

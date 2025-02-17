@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.JirachiEx = void 0;
+exports.JirachiEX = void 0;
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
@@ -33,7 +33,7 @@ function* useStellarGuidance(next, store, state, self, effect) {
         player.deck.applyOrder(order);
     });
 }
-class JirachiEx extends pokemon_card_1.PokemonCard {
+class JirachiEX extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.tags = [card_types_1.CardTag.POKEMON_EX];
@@ -80,4 +80,4 @@ class JirachiEx extends pokemon_card_1.PokemonCard {
         return state;
     }
 }
-exports.JirachiEx = JirachiEx;
+exports.JirachiEX = JirachiEX;

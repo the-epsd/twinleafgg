@@ -6,7 +6,7 @@ import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 
-export class ArmarougeEX extends PokemonCard {
+export class Armarougeex extends PokemonCard {
 
   public tags = [CardTag.POKEMON_ex];
 

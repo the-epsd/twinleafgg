@@ -16,7 +16,7 @@ exports.setFatesCollide = [
     new fennekin_1.Fennekin(),
     new lucario_1.Lucario(),
     new mew_1.Mew(),
-    new n_1.N_Supporter(),
+    new n_1.N(),
     new riolu_1.Riolu(),
     new team_rockets_handiwork_1.TeamRocketsHandiwork(),
     new whismur_1.Whismur(),

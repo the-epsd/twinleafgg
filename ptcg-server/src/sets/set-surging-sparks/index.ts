@@ -77,12 +77,12 @@ import { Rabsca } from './rabsca';
 import { Rellor } from './rellor';
 import { RichEnergy } from './rich-energy';
 import { Sandygast } from './sandygast';
-import { ScovillainEXSSP } from './scovillain-ex';
+import { Scovillainex } from './scovillain-ex';
 import { Shroodle } from './shroodle';
 import { Sizzlipede } from './sizzlipede';
 import { Skeledirge } from './skeledirge';
 import { Slakingex } from './slaking-ex';
-import { SlakothSSP } from './slakoth';
+import { Slakoth } from './slakoth';
 import { Smoochum } from './smoochum';
 import { Surfer } from './surfer';
 import { Sylveonex } from './sylveon-ex';
@@ -94,10 +94,10 @@ import { Togekiss } from './togekiss';
 import { Togepi } from './togepi';
 import { Togetic } from './togetic';
 import { Trapinch } from './trapinch';
-import {Tyme} from './tyme';
+import { Tyme } from './tyme';
 import { Uxie } from './uxie';
 import { Vibrava } from './vibrava';
-import { VigorothSSP } from './vigoroth';
+import { Vigoroth } from './vigoroth';
 import { Vivillion } from './vivillion';
 import { Vulpix } from './vulpix';
 import { Wochien } from './wo-chien';
@@ -191,10 +191,10 @@ export const setSurgingSparks: Card[] = [
   new IronCrown(),
   new JasminesGaze(),
   new Meowstic(),
-  new ScovillainEXSSP(),
+  new Scovillainex(),
   new Slakingex(),
-  new SlakothSSP(),
-  new VigorothSSP(),
+  new Slakoth(),
+  new Vigoroth(),
   new Zarude(),
   new Durantex(),
   new Sizzlipede(),

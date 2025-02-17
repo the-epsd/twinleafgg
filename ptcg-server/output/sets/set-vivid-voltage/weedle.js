@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WeedleVIV = void 0;
+exports.Weedle = void 0;
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 function* useBugHunch(next, store, state, effect) {
@@ -19,7 +19,7 @@ function* useBugHunch(next, store, state, effect) {
         player.deck.applyOrder(order);
     });
 }
-class WeedleVIV extends game_1.PokemonCard {
+class Weedle extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = game_1.Stage.BASIC;
@@ -51,4 +51,4 @@ class WeedleVIV extends game_1.PokemonCard {
         return state;
     }
 }
-exports.WeedleVIV = WeedleVIV;
+exports.Weedle = Weedle;

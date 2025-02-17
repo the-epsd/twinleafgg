@@ -61,19 +61,18 @@ export class DeoxysEX extends PokemonCard {
       }
     }
 
-    if (effect instanceof DealDamageEffect) {
+    if (effect instanceof DealDamageEffect && StateUtils.isPokemonInPlay(effect.player, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, effect.player);
       const source = effect.source.getPokemonCard() as PokemonCard;
 
-      if (state.phase === GamePhase.ATTACK && StateUtils.isPokemonInPlay(player, this) &&
+      if (state.phase === GamePhase.ATTACK &&
         source.tags.includes(CardTag.TEAM_PLASMA) && source.name !== 'Deoxys EX' &&
         effect.target === opponent.active && effect.damage > 0 && !IS_ABILITY_BLOCKED(store, state, player, this)
       ) {
         effect.damage += 10;
       }
     }
-
     return state;
   }
 }

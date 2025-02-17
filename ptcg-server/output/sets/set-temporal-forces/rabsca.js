@@ -45,20 +45,11 @@ class Rabsca extends pokemon_card_1.PokemonCard {
                 .reduce((left, p) => left + p.provides.length, 0);
             effect.damage += energyCount * 30;
         }
-        if (effect instanceof attack_effects_1.PutDamageEffect) {
+        if ((effect instanceof attack_effects_1.PutDamageEffect || effect instanceof attack_effects_1.PutCountersEffect)
+            && __1.StateUtils.isPokemonInPlay(effect.player, this)) {
             const player = effect.player;
             const opponent = __1.StateUtils.getOpponent(state, player);
             if (effect.target === player.active || effect.target === opponent.active) {
-                return state;
-            }
-            const targetPlayer = __1.StateUtils.findOwner(state, effect.target);
-            let isRabsca1InPlay = false;
-            targetPlayer.forEachPokemon(__1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-                if (card === this) {
-                    isRabsca1InPlay = true;
-                }
-            });
-            if (!isRabsca1InPlay) {
                 return state;
             }
             // Try to reduce PowerEffect, to check if something is blocking our ability
@@ -74,39 +65,6 @@ class Rabsca extends pokemon_card_1.PokemonCard {
                 return state;
             }
             effect.preventDefault = true;
-        }
-        if (effect instanceof attack_effects_1.PutCountersEffect) {
-            const player = effect.player;
-            const opponent = __1.StateUtils.getOpponent(state, player);
-            if (effect.target === player.active || effect.target === opponent.active) {
-                return state;
-            }
-            const targetPlayer = __1.StateUtils.findOwner(state, effect.target);
-            if (opponent.active) {
-                let isRabsca2InPlay = false;
-                targetPlayer.forEachPokemon(__1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-                    if (card === this) {
-                        isRabsca2InPlay = true;
-                    }
-                });
-                if (!isRabsca2InPlay) {
-                    return state;
-                }
-                // Try to reduce PowerEffect, to check if something is blocking our ability
-                try {
-                    const stub = new game_effects_1.PowerEffect(player, {
-                        name: 'test',
-                        powerType: __1.PowerType.ABILITY,
-                        text: ''
-                    }, this);
-                    store.reduceEffect(state, stub);
-                }
-                catch (_b) {
-                    return state;
-                }
-                effect.preventDefault = true;
-            }
-            return state;
         }
         return state;
     }

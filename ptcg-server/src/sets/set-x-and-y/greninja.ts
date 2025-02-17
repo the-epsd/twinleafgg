@@ -8,7 +8,7 @@ import { PowerEffect, AttackEffect } from '../../game/store/effects/game-effects
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { AfterDamageEffect } from '../../game/store/effects/attack-effects';
 
-export class GreninjaXY extends PokemonCard {
+export class Greninja extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_2;
 

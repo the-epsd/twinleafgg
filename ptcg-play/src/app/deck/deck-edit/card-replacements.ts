@@ -130,6 +130,9 @@ export const cardReplacements = [
   //PGO
   { from: 'PokéStop PGO 68', to: 'PokeStop PGO 68' },
 
+  //BRS
+  { from: 'Ultra Ball BRS 186', to: 'Ultra BallHR BRS 186' },
+
   //ASR
   { from: 'Hisuian Qwilfish ASR 89', to: 'Hisuian Qwilfish2 ASR 89' },
 
@@ -574,6 +577,9 @@ export const exportReplacements = [
 
   //PGO
   { from: 'PokeStop PGO 68', to: 'PokéStop PGO 68' },
+
+  //BRS
+  { from: 'Ultra BallHR BRS 186', to: 'Ultra Ball BRS 186' },
 
   //ASR
   { from: 'Hisuian Qwilfish2 ASR 89', to: 'Hisuian Qwilfish ASR 89' },
