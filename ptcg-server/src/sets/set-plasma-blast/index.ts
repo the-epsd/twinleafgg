@@ -5,6 +5,7 @@ import { GBooster } from './g-booster';
 import { GScope } from './g-scope';
 import { GenesectEX } from './genesect-ex';
 import { JirachiEX } from './jirachi-ex';
+import { PalkiaEX } from './palkia-ex';
 import { Sawk } from './sawk';
 import { SilverBangle } from './silver-bangle';
 import { SilverMirror } from './silver-mirror';
@@ -15,6 +16,7 @@ import { Wartortle } from './wartortle';
 export const setPlasmaBlast: Card[] = [
   new Archen(),
   new JirachiEX(),
+  new PalkiaEX(),
   new Sawk(),
   new SilverBangle(),
   new SilverMirror(),

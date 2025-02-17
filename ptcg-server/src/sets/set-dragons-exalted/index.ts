@@ -11,12 +11,15 @@ import { Gabite } from './gabite';
 import { Garbodor } from './garbodor';
 import { HoOhEx } from './ho-oh-ex';
 import { Hydreigon } from './hydreigon';
+import { Ninetales } from './ninetales';
 import { RayquazaEx } from './rayquaza-ex';
 import { RescueScarf } from './rescue-scarf';
 import { Roselia } from './roselia';
 import { Roserade } from './roserade';
 import { Sigilyph } from './sigilyph';
+import { Swablu } from './swablu';
 import { ToolScrapper } from './tool-scrapper';
+import { Vulpix } from './vulpix';
 import { Zweilous } from './zweilous';
 
 export const setDragonsExalted: Card[] = [
@@ -32,11 +35,14 @@ export const setDragonsExalted: Card[] = [
   new Garbodor(),
   new HoOhEx(),
   new Hydreigon(),
+  new Ninetales(),
   new RayquazaEx(),
   new RescueScarf(),
   new Roselia(),
   new Roserade(),
   new Sigilyph(),
+  new Swablu(),
   new ToolScrapper(),
+  new Vulpix(),
   new Zweilous(),
 ];
