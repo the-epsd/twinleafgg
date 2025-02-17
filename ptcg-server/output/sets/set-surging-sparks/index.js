@@ -17,6 +17,8 @@ const celebration_fanfare_1 = require("./celebration-fanfare");
 const centiskorch_1 = require("./centiskorch");
 const ceruledge_1 = require("./ceruledge");
 const ceruledge_ex_1 = require("./ceruledge-ex");
+const cetitan_1 = require("./cetitan");
+const cetoddle_1 = require("./cetoddle");
 const charcadet_1 = require("./charcadet");
 const cherish_carrier_1 = require("./cherish-carrier");
 const chien_pao_1 = require("./chien-pao");
@@ -208,6 +210,8 @@ exports.setSurgingSparks = [
     new meddling_memo_1.MeddlingMemo(),
     new annihilape_1.Annihilape(),
     new tyme_1.Tyme(),
+    new cetoddle_1.Cetoddle(),
+    new cetitan_1.Cetitan(),
     // Reprints
     new card_images_1.ScrambleSwitchSSP(),
     new card_images_1.CounterGainSSP(),

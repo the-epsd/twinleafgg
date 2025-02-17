@@ -3,6 +3,7 @@ import { Bayleef } from './bayleef';
 import { Delinquent } from './delinquent';
 import { FightingFuryBelt } from './fighting-fury-belt';
 import { Froakie } from './froakie';
+import {Garbodor} from './garbodor';
 import { Greninja } from './greninja';
 import { Kricketot } from './kricketot';
 import { ManaphyEX } from './manaphy-ex';
@@ -31,4 +32,5 @@ export const setBreakpoint: Card[] = [
   new Tympole(),
   new Zoroark(),
   new ManaphyEX(),
+  new Garbodor(),
 ];

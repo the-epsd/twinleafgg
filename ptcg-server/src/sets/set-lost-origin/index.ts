@@ -33,6 +33,7 @@ import { Kingdra } from './kingdra';
 import { KyuremV } from './kyurem-v';
 import { KyuremVMAX } from './kyurem-vmax';
 import { Lady } from './lady';
+import {LakeAcuity} from './lake-acuity';
 import { LostCity } from './lost-city';
 import { LostVacuum } from './lost-vacuum';
 import { Machamp } from './machamp';
@@ -119,4 +120,5 @@ export const setLostOrigin: Card[] = [
   new Thorton(),
   new Tynamo(),
   new Wurmple(),
+  new LakeAcuity(),
 ];

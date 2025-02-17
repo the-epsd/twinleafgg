@@ -15,6 +15,8 @@ import { CelebrationFanfare } from './celebration-fanfare';
 import { Centiskorch } from './centiskorch';
 import { Ceruledge } from './ceruledge';
 import { Ceruledgeex } from './ceruledge-ex';
+import {Cetitan} from './cetitan';
+import {Cetoddle} from './cetoddle';
 import { Charcadet } from './charcadet';
 import { CherishCarrier } from './cherish-carrier';
 import { ChienPao } from './chien-pao';
@@ -207,6 +209,8 @@ export const setSurgingSparks: Card[] = [
   new MeddlingMemo(),
   new Annihilape(),
   new Tyme(),
+  new Cetoddle(),
+  new Cetitan(),
 
   // Reprints
   new ScrambleSwitchSSP(),
