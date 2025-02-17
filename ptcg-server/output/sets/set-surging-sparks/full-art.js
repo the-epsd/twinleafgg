@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.JetEnergyUR = exports.NightStretcherUR = exports.CounterGainUR = exports.PikachuexUR = exports.LisiasAppealSIR = exports.ArchaludonexSIR = exports.HydreigonexSIR = exports.LatiasexSIR = exports.PikachuexSIR = exports.MiloticexSIR = exports.SurferFA = exports.LisiasAppealFA = exports.CyranoFA = exports.ArchaludonexFA = exports.HydreigonexFA = exports.LatiasexFA = exports.PikachuexFA = exports.MiloticexFA = exports.FeebasIR = exports.LarvestaIR = void 0;
-const counter_gain_1 = require("../set-lost-thunder/counter-gain");
 const jet_energy_1 = require("../set-paldea-evolved/jet-energy");
 const nightly_stretcher_1 = require("../set-shrouded-fable/nightly-stretcher");
 const archaludon_ex_1 = require("./archaludon-ex");
+const card_images_1 = require("./card-images");
 const cyrano_1 = require("./cyrano");
 const feebas_1 = require("./feebas");
 const hydreigon_ex_1 = require("./hydreigon-ex");
@@ -150,7 +150,7 @@ class PikachuexUR extends pikachu_ex_1.Pikachuex {
     }
 }
 exports.PikachuexUR = PikachuexUR;
-class CounterGainUR extends counter_gain_1.CounterGain {
+class CounterGainUR extends card_images_1.CounterGainSSP {
     constructor() {
         super(...arguments);
         this.set = 'SSP';

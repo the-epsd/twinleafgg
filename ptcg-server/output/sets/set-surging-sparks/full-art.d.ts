@@ -1,7 +1,7 @@
-import { CounterGain } from '../set-lost-thunder/counter-gain';
 import { JetEnergy } from '../set-paldea-evolved/jet-energy';
 import { NightlyStretcher } from '../set-shrouded-fable/nightly-stretcher';
 import { Archaludonex } from './archaludon-ex';
+import { CounterGainSSP } from './card-images';
 import { Cyrano } from './cyrano';
 import { Feebas } from './feebas';
 import { Hydreigonex } from './hydreigon-ex';
@@ -79,7 +79,7 @@ export declare class PikachuexUR extends Pikachuex {
     setNumber: string;
     fullName: string;
 }
-export declare class CounterGainUR extends CounterGain {
+export declare class CounterGainUR extends CounterGainSSP {
     set: string;
     setNumber: string;
     fullName: string;

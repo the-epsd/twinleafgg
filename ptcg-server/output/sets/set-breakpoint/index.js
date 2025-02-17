@@ -14,6 +14,7 @@ const reverse_valley_1 = require("./reverse-valley");
 const splash_energy_1 = require("./splash-energy");
 const staryu_1 = require("./staryu");
 const sudowoodo_1 = require("./sudowoodo");
+const tympole_1 = require("./tympole");
 const zoroark_1 = require("./zoroark");
 exports.setBreakpoint = [
     new bayleef_1.Bayleef(),
@@ -28,6 +29,7 @@ exports.setBreakpoint = [
     new splash_energy_1.SplashEnergy(),
     new staryu_1.Staryu(),
     new sudowoodo_1.Sudowoodo(),
+    new tympole_1.Tympole(),
     new zoroark_1.Zoroark(),
     new manaphy_ex_1.ManaphyEX(),
 ];
