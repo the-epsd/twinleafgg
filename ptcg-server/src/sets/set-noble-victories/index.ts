@@ -9,9 +9,12 @@ import { Eelektrik } from './eelektrik';
 import { Eviolite } from './eviolite';
 import { Kyurem } from './kyurem';
 import { Lampent } from './lampent';
+import { Palpitoad } from './palpitoad';
 import { PlumeFossil } from './plume-fossil';
+import { Seismitoad } from './seismitoad';
 import { Terrakion } from './terrakion';
 import { Trubbish } from './trubbish';
+import { Tympole } from './tympole';
 import { Tynamo } from './tynamo';
 import { Tynamo2 } from './tynamo-2';
 import { Vanillish } from './vanillish';
@@ -30,10 +33,13 @@ export const setNobleVictories: Card[] = [
   new Eviolite(),
   new Kyurem(),
   new Lampent(),
+  new Palpitoad(),
   new PlumeFossil(),
+  new Seismitoad(),
   new SuperRodNVI(),
   new Terrakion(),
   new Trubbish(),
+  new Tympole(),
   new Tynamo(),
   new Tynamo2(),
   new Vanillish(),

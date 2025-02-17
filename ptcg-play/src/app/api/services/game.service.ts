@@ -24,7 +24,6 @@ import { ApiError } from '../api.error';
 import { ApiService } from '../api.service';
 import { PlayerStatsResponse } from '../interfaces/game.interface';
 import { SocketService } from '../socket.service';
-import { TournamentService } from './tournament.service';
 
 export interface GameUserInfo {
   gameId: number;
@@ -44,7 +43,6 @@ export class GameService {
     private sessionService: SessionService,
     private socketService: SocketService,
     private translate: TranslateService,
-    private tournamentService: TournamentService
   ) { }
 
   public getPlayerStats(gameId: number) {

@@ -9,6 +9,7 @@ const mew_1 = require("./mew");
 const n_1 = require("./n");
 const riolu_1 = require("./riolu");
 const team_rockets_handiwork_1 = require("./team-rockets-handiwork");
+const whismur_1 = require("./whismur");
 exports.setFatesCollide = [
     new deerling_1.Deerling(),
     new energy_pouch_1.EnergyPouch(),
@@ -18,4 +19,5 @@ exports.setFatesCollide = [
     new n_1.N_Supporter(),
     new riolu_1.Riolu(),
     new team_rockets_handiwork_1.TeamRocketsHandiwork(),
+    new whismur_1.Whismur(),
 ];

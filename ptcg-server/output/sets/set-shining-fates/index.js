@@ -12,7 +12,6 @@ const kyogre_1 = require("./kyogre");
 const other_prints_1 = require("./other-prints");
 const reshiram_1 = require("./reshiram");
 const rillaboom_1 = require("./rillaboom");
-const rookidee_1 = require("./rookidee");
 const snom_1 = require("./snom");
 const thwackey_1 = require("./thwackey");
 exports.setShiningFates = [
@@ -24,7 +23,6 @@ exports.setShiningFates = [
     new horsea_1.Horsea(),
     new koffing_1.Koffing(),
     new rillaboom_1.Rillaboom(),
-    new rookidee_1.Rookidee(),
     new snom_1.Snom(),
     new thwackey_1.Thwackey(),
     new reshiram_1.Reshiram(),

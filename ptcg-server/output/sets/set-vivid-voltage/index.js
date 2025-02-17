@@ -12,9 +12,11 @@ const coating_metal_energy_1 = require("./coating-metal-energy");
 const dhelmise_1 = require("./dhelmise");
 const donphan_1 = require("./donphan");
 const duraludon_1 = require("./duraludon");
+const exploud_1 = require("./exploud");
 const full_art_1 = require("./full-art");
 const jirachi_1 = require("./jirachi");
 const leon_1 = require("./leon");
+const loudred_1 = require("./loudred");
 const magearna_1 = require("./magearna");
 const nessa_1 = require("./nessa");
 const phanpy_1 = require("./phanpy");
@@ -42,8 +44,10 @@ exports.setVividVoltage = [
     new dhelmise_1.Dhelmise(),
     new donphan_1.DonphanVIV(),
     new duraludon_1.Duraludon(),
+    new exploud_1.Exploud(),
     new jirachi_1.Jirachi(),
     new leon_1.Leon(),
+    new loudred_1.Loudred(),
     new magearna_1.Magearna(),
     new nessa_1.Nessa(),
     new phanpy_1.PhanpyVIV(),

@@ -3,6 +3,7 @@ import { AspertiaCityGym } from './aspertia-city-gym';
 import { Blastoise } from './blastoise';
 import { RockyHelmetBCR } from './card-images';
 import { ComputerSearch } from './computer-search';
+import { Ditto } from './ditto';
 import { Dusclops } from './dusclops';
 import { Dusknoir } from './dusknoir';
 import { Duskull } from './duskull';
@@ -20,6 +21,7 @@ export const setBoundariesCrossed: Card[] = [
   new AspertiaCityGym(),
   new Blastoise(),
   new ComputerSearch(),
+  new Ditto(),
   new Dusclops(),
   new Dusknoir(),
   new Duskull(),

@@ -33,7 +33,7 @@ export class LugiaEx extends PokemonCard {
   }];
 
   public attacks = [{
-    name: 'Chilling Sigh',
+    name: 'Plasma Gale',
     cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
     damage: 120,
     text: 'Discard a Plasma Energy attached to this Pokémon. If you can\'t discard a Plasma Energy, this attack does nothing.'

@@ -15,6 +15,7 @@ import { Leafeonex } from './leafeon-ex';
 import { MaxRod } from './max-rod';
 import { Pupitar } from './pupitar';
 import { Regigigas } from './regigigas';
+import { RotoStick } from './roto-stick';
 import { Seaking } from './seaking';
 import { Sylveon } from './sylveon';
 import { TreasureTracker } from './treasure-tracker';
@@ -38,6 +39,7 @@ export const setPrismaticEvolution: Card[] = [
   new Seaking(),
   new Regigigas(),
   new MaxRod(),
+  new RotoStick(),
   new TreasureTracker(),
   new Larvitar(),
   new Pupitar(),

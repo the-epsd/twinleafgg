@@ -18,8 +18,9 @@ class SilverMirror extends trainer_card_1.TrainerCard {
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof attack_effects_1.AbstractAttackEffect && effect.target.cards.includes(this)) {
+            const targetCard = effect.target.getPokemonCard();
             const sourceCard = effect.source.getPokemonCard();
-            if (sourceCard.tags.includes(card_types_1.CardTag.TEAM_PLASMA)) {
+            if (targetCard && !targetCard.tags.includes(card_types_1.CardTag.POKEMON_EX) && sourceCard && sourceCard.tags.includes(card_types_1.CardTag.TEAM_PLASMA)) {
                 effect.preventDefault = true;
             }
         }

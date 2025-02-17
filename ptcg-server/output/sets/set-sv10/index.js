@@ -20,6 +20,7 @@ const stevens_metagross_ex_1 = require("./stevens-metagross-ex");
 const stevens_metang_1 = require("./stevens-metang");
 const stevens_skarmory_1 = require("./stevens-skarmory");
 exports.setSV10 = [
+    new other_prints_1.MarniesMorpekoIR(),
     new marnies_impidimp_1.MarniesImpidimp(),
     new marnies_morgrem_1.MarniesMorgrem(),
     new marnies_grimmsnarl_ex_1.MarniesGrimmsnarlex(),
@@ -29,6 +30,7 @@ exports.setSV10 = [
     new marnies_scrafty_1.MarniesScrafty(),
     new marnies_scraggy_1.MarniesScraggy(),
     new spikemuth_gym_1.SpikemuthGym(),
+    new other_prints_1.StevensBeldumIR(),
     new stevens_beldum_1.StevensBeldum(),
     new stevens_metang_1.StevensMetang(),
     new stevens_metagross_ex_1.StevensMetagrossex(),

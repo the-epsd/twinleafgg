@@ -69,16 +69,13 @@ export class Latiasex extends PokemonCard {
       const player = effect.player;
       const cardList = StateUtils.findCardList(state, this);
       const owner = StateUtils.findOwner(state, cardList);
+      const active = effect.player.active.getPokemonCard();
 
-      if (owner !== player) {
+      if (owner !== player || active === undefined || !StateUtils.isPokemonInPlay(player, this)) {
         return state;
       }
 
-      IS_ABILITY_BLOCKED(store, state, player, this);
-
-      const pokemonCard = player.active.getPokemonCard();
-
-      if (pokemonCard && pokemonCard.stage == Stage.BASIC) {
+      if (!IS_ABILITY_BLOCKED(store, state, player, this) && active.stage === Stage.BASIC) {
         effect.cost = [];
       }
       return state;

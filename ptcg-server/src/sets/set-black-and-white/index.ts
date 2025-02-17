@@ -1,4 +1,5 @@
 import { Card } from '../../game/store/card/card';
+import { Herdier } from './herdier';
 import { Lillipup } from './lillipup';
 import { Pignite } from './pignite';
 import { PlusPower } from './plus-power';
@@ -12,6 +13,7 @@ import { Zoroark } from './zoroark';
 import { Zorua } from './zorua';
 
 export const setBlackAndWhite: Card[] = [
+  new Herdier(),
   new Lillipup(),
   new Pignite(),
   new PlusPower(),
