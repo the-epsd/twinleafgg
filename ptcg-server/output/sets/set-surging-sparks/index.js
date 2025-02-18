@@ -7,6 +7,7 @@ const alolan_dugtrio_1 = require("./alolan-dugtrio");
 const alolan_exeggutor_ex_1 = require("./alolan-exeggutor-ex");
 const amulet_of_hope_1 = require("./amulet-of-hope");
 const archaludon_ex_1 = require("./archaludon-ex");
+const armarouge_1 = require("./armarouge");
 const azelf_1 = require("./azelf");
 const azulmarill_1 = require("./azulmarill");
 const black_kyurem_ex_1 = require("./black-kyurem-ex");
@@ -80,6 +81,7 @@ const quaxwell_1 = require("./quaxwell");
 const rabsca_1 = require("./rabsca");
 const rellor_1 = require("./rellor");
 const rich_energy_1 = require("./rich-energy");
+const rotom_1 = require("./rotom");
 const sandygast_1 = require("./sandygast");
 const scovillain_ex_1 = require("./scovillain-ex");
 const shroodle_1 = require("./shroodle");
@@ -212,6 +214,8 @@ exports.setSurgingSparks = [
     new tyme_1.Tyme(),
     new cetoddle_1.Cetoddle(),
     new cetitan_1.Cetitan(),
+    new armarouge_1.Armarouge(),
+    new rotom_1.Rotom(),
     // Reprints
     new card_images_1.ScrambleSwitchSSP(),
     new card_images_1.CounterGainSSP(),

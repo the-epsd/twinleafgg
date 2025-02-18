@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.setPrismaticEvolution = void 0;
 const alt_arts_1 = require("./alt-arts");
 const amarys_1 = require("./amarys");
+const applin_1 = require("./applin");
 const black_belts_training_1 = require("./black-belts-training");
 const bronzor_1 = require("./bronzor");
 const budew_1 = require("./budew");
@@ -46,6 +47,7 @@ exports.setPrismaticEvolution = [
     new pupitar_1.Pupitar(),
     new tyranitar_ex_1.Tyranitarex(),
     new bronzor_1.Bronzor(),
+    new applin_1.Applin(),
     // Reprints
     new alt_arts_1.ProfessorsResearchO(),
     new alt_arts_1.ProfessorsResearchE(),

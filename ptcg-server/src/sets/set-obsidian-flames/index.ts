@@ -18,6 +18,7 @@ import { Entei } from './entei';
 import { Finizen } from './finizen';
 import { Froakie } from './froakie';
 import { BelliboltIR, CleffaIR, PidgeyIR, PidgeottoIR, ScizorIR, CharizardexFA, PidgeotexFA, PoppyFA, CharizardexSIR, PidgeotexSIR, PoppySIR, CharizardexHR, FireEnergyHR, VaroomIR, ArtazonHR } from './full-art';
+import {Geeta} from './geeta';
 import { Glimmet } from './glimmet';
 import { Glimmoraex } from './glimmora-ex';
 import { Greavard } from './greavard';
@@ -108,6 +109,7 @@ export const setObsidianFlames: Card[] = [
   new Houndstoneex(),
   new Glimmet(),
   new Glimmoraex(),
+  new Geeta(),
 
   //Alt-s
 
