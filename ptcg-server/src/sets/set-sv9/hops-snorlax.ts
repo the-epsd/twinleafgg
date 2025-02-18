@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { PlayerType, PowerType, State, StateUtils, StoreLike } from '../../game';
+import { PowerType, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
@@ -56,10 +56,11 @@ export class HopsSnorlax extends PokemonCard {
       return store.reduceEffect(state, dealDamage);
     }
 
-    if (effect instanceof DealDamageEffect) {
+    if (effect instanceof DealDamageEffect && StateUtils.isPokemonInPlay(effect.player, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-
+      const hopsPokemon = player.active.getPokemonCard();
+      
       try {
         const stub = new PowerEffect(player, {
           name: 'test',
@@ -71,20 +72,7 @@ export class HopsSnorlax extends PokemonCard {
         return state;
       }
 
-      const hasSnorlaxInPlay = player.bench.some(b => b.cards.includes(this)) || player.active.cards.includes(this);
-      let isSnorlaxInPlay = false;
-
-      if (hasSnorlaxInPlay) {
-        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-          if (cardList.cards.includes(this)) {
-            isSnorlaxInPlay = true;
-          }
-        });
-      }
-
-      const hopsPokemon = player.active.getPokemonCard();
-
-      if (isSnorlaxInPlay && hopsPokemon && hopsPokemon.tags.includes(CardTag.HOPS) && effect.target === opponent.active) {
+      if (hopsPokemon && hopsPokemon.tags.includes(CardTag.HOPS) && effect.target === opponent.active) {
         effect.damage += 30;
       }
     }

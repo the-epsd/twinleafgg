@@ -25,6 +25,8 @@ export class PokemonCardList extends CardList {
 
   public boardEffect: BoardEffect[] = [];
 
+  public hpBonus: number = 0;
+
   public static readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
   public static readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
   public static readonly CLEAR_KNOCKOUT_MARKER = 'CLEAR_KNOCKOUT_MARKER';

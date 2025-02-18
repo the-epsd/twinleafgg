@@ -18,7 +18,7 @@ import { Kofu } from './kofu';
 import { Lacey } from './lacey';
 import { Terapagosex } from './terapagos-ex';
 import { AreaZeroUnderdepths } from './area-zero-underdepths';
-import { BraveyCharm } from '../set-paldea-evolved/bravery-charm';
+import { BraveryCharm } from '../set-paldea-evolved/bravery-charm';
 
 // Illustration Rares
 export class BulbasaurIR extends Bulbasaur {
@@ -164,7 +164,7 @@ export class AreaZeroUnderdepthsHR extends AreaZeroUnderdepths {
   public fullName = 'Area Zero UnderdepthsHR SCR';
 }
 
-export class BraveryCharmHR extends BraveyCharm {
+export class BraveryCharmHR extends BraveryCharm {
   public set = 'SCR';
   public setNumber = '175';
   public fullName = 'Bravery Charm SCR';

@@ -14,6 +14,7 @@ export declare class PokemonCardList extends CardList {
     pokemonPlayedTurn: number;
     sleepFlips: number;
     boardEffect: BoardEffect[];
+    hpBonus: number;
     static readonly ATTACK_USED_MARKER = "ATTACK_USED_MARKER";
     static readonly ATTACK_USED_2_MARKER = "ATTACK_USED_2_MARKER";
     static readonly CLEAR_KNOCKOUT_MARKER = "CLEAR_KNOCKOUT_MARKER";

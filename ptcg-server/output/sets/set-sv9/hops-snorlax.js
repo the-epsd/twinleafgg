@@ -42,9 +42,10 @@ class HopsSnorlax extends pokemon_card_1.PokemonCard {
             dealDamage.target = player.active;
             return store.reduceEffect(state, dealDamage);
         }
-        if (effect instanceof attack_effects_1.DealDamageEffect) {
+        if (effect instanceof attack_effects_1.DealDamageEffect && game_1.StateUtils.isPokemonInPlay(effect.player, this)) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
+            const hopsPokemon = player.active.getPokemonCard();
             try {
                 const stub = new game_effects_1.PowerEffect(player, {
                     name: 'test',
@@ -56,17 +57,7 @@ class HopsSnorlax extends pokemon_card_1.PokemonCard {
             catch (_a) {
                 return state;
             }
-            const hasSnorlaxInPlay = player.bench.some(b => b.cards.includes(this)) || player.active.cards.includes(this);
-            let isSnorlaxInPlay = false;
-            if (hasSnorlaxInPlay) {
-                player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-                    if (cardList.cards.includes(this)) {
-                        isSnorlaxInPlay = true;
-                    }
-                });
-            }
-            const hopsPokemon = player.active.getPokemonCard();
-            if (isSnorlaxInPlay && hopsPokemon && hopsPokemon.tags.includes(card_types_1.CardTag.HOPS) && effect.target === opponent.active) {
+            if (hopsPokemon && hopsPokemon.tags.includes(card_types_1.CardTag.HOPS) && effect.target === opponent.active) {
                 effect.damage += 30;
             }
         }

@@ -21,6 +21,7 @@ import { SharedModule } from './shared/shared.module';
 import { TableModule } from './table/table.module';
 import { MatchmakingLobbyComponent } from './games/matchmaking-lobby/matchmaking-lobby.component';
 import { TermsModule } from './terms/terms.module';
+import { CardInfoDialogComponent } from './table/board/board-card/board-card.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,10 @@ import { TermsModule } from './terms/terms.module';
     })
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    CardInfoDialogComponent
+  ]
 })
 export class AppModule {
   constructor(languageService: LanguageService) {

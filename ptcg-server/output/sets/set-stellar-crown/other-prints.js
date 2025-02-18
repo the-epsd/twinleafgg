@@ -239,7 +239,7 @@ class AreaZeroUnderdepthsHR extends area_zero_underdepths_1.AreaZeroUnderdepths 
     }
 }
 exports.AreaZeroUnderdepthsHR = AreaZeroUnderdepthsHR;
-class BraveryCharmHR extends bravery_charm_1.BraveyCharm {
+class BraveryCharmHR extends bravery_charm_1.BraveryCharm {
     constructor() {
         super(...arguments);
         this.set = 'SCR';

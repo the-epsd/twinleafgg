@@ -6,7 +6,6 @@ const artazon_1 = require("./artazon");
 const baxcalibur_1 = require("./baxcalibur");
 const boss_orders_1 = require("./boss-orders");
 const bramblin_1 = require("./bramblin");
-const bravery_charm_1 = require("./bravery-charm");
 const cetitan_1 = require("./cetitan");
 const cetoddle_1 = require("./cetoddle");
 const chi_yu_ex_1 = require("./chi-yu-ex");
@@ -78,6 +77,7 @@ const glimmet_2_1 = require("./glimmet-2");
 const glimmora_1 = require("./glimmora");
 const tinkatuff_2_1 = require("./tinkatuff-2");
 const bellibolt_ex_1 = require("./bellibolt-ex");
+const bravery_charm_1 = require("./bravery-charm");
 //import { CalamitousSnowyMountain } from './new calamitous-snowy-mountain';
 exports.setPaldeaEvolved = [
     new arctibax_1.Arctibax(),
@@ -85,7 +85,7 @@ exports.setPaldeaEvolved = [
     new baxcalibur_1.Baxcalibur(),
     new boss_orders_1.BossOrders(),
     new bramblin_1.Bramblin(),
-    new bravery_charm_1.BraveyCharm(),
+    new bravery_charm_1.BraveryCharm(),
     new cetitan_1.Cetitan(),
     new cetoddle_1.Cetoddle(),
     new chi_yu_ex_1.ChiYuex(),
