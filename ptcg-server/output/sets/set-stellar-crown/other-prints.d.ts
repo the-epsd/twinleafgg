@@ -18,7 +18,7 @@ import { Kofu } from './kofu';
 import { Lacey } from './lacey';
 import { Terapagosex } from './terapagos-ex';
 import { AreaZeroUnderdepths } from './area-zero-underdepths';
-import { BraveyCharm } from '../set-paldea-evolved/bravery-charm';
+import { BraveryCharm } from '../set-paldea-evolved/bravery-charm';
 export declare class BulbasaurIR extends Bulbasaur {
     set: string;
     setNumber: string;
@@ -123,7 +123,7 @@ export declare class AreaZeroUnderdepthsHR extends AreaZeroUnderdepths {
     setNumber: string;
     fullName: string;
 }
-export declare class BraveryCharmHR extends BraveyCharm {
+export declare class BraveryCharmHR extends BraveryCharm {
     set: string;
     setNumber: string;
     fullName: string;

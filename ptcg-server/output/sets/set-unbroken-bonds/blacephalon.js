@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BlacephalonUNB = void 0;
+exports.Blacephalon = void 0;
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
-class BlacephalonUNB extends game_1.PokemonCard {
+class Blacephalon extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.tags = [game_1.CardTag.ULTRA_BEAST];
@@ -61,4 +61,4 @@ class BlacephalonUNB extends game_1.PokemonCard {
         return state;
     }
 }
-exports.BlacephalonUNB = BlacephalonUNB;
+exports.Blacephalon = Blacephalon;

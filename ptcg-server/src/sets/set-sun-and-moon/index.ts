@@ -13,7 +13,7 @@ import { Golduck } from './golduck';
 import { Herdier } from './herdier';
 import { LurantisGX } from './lurantis-gx';
 import { Oranguru } from './oranguru';
-import { PassimianSUM } from './passimian';
+import { Passimian } from './passimian';
 import { ProfessorKukui } from './professor-kukui';
 import { RainbowEnergy } from './rainbow-energy';
 import { Repel } from './repel';
@@ -35,7 +35,7 @@ export const setSunAndMoon: Card[] = [
   new Herdier(),
   new LurantisGX(),
   new Oranguru(),
-  new PassimianSUM(),
+  new Passimian(),
   new ProfessorKukui(),
   new RainbowEnergy(),
   new RotomDex(),

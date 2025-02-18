@@ -15,7 +15,7 @@ const tapu_lele_1 = require("./tapu-lele");
 const trevenant_dusknoir_gx_1 = require("./trevenant-dusknoir-gx");
 exports.setSunAndMoonPromos = [
     new firefighter_pikachu_1.FirefighterPikachu(),
-    new greninja_gx_1.GreninjaGXSMP(),
+    new greninja_gx_1.GreninjaGX(),
     new jolteon_gx_1.JolteonGX(),
     new lucario_gx_1.LucarioGX(),
     new lurantis_1.Lurantis(),

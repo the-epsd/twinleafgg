@@ -35,6 +35,7 @@ const kingdra_1 = require("./kingdra");
 const kyurem_v_1 = require("./kyurem-v");
 const kyurem_vmax_1 = require("./kyurem-vmax");
 const lady_1 = require("./lady");
+const lake_acuity_1 = require("./lake-acuity");
 const lost_city_1 = require("./lost-city");
 const lost_vacuum_1 = require("./lost-vacuum");
 const machamp_1 = require("./machamp");
@@ -118,4 +119,5 @@ exports.setLostOrigin = [
     new thorton_1.Thorton(),
     new tynamo_1.Tynamo(),
     new wurmple_1.Wurmple(),
+    new lake_acuity_1.LakeAcuity(),
 ];

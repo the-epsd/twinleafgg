@@ -28,6 +28,7 @@ const riolu_1 = require("./riolu");
 const roselia_1 = require("./roselia");
 const shiinotic_1 = require("./shiinotic");
 const sneasel_1 = require("./sneasel");
+const solgaleo_prism_star_1 = require("./solgaleo-prism-star");
 const spiritomb_1 = require("./spiritomb");
 const tapu_lele_1 = require("./tapu-lele");
 const turtwig_1 = require("./turtwig");
@@ -47,8 +48,8 @@ exports.setUltraPrism = [
     new glaceon_gx_1.GlaceonGX(),
     new honchkrow_1.Honchkrow(),
     new lillie_1.Lillie(),
-    new lucario_1.LucarioUPR(),
-    new lunala_prism_star_1.LunalaPS(),
+    new lucario_1.Lucario(),
+    new lunala_prism_star_1.LunalaPrismStar(),
     new magnemite_1.Magnemite(),
     new magnezone_1.Magnezone(),
     new mars_1.Mars(),
@@ -57,7 +58,7 @@ exports.setUltraPrism = [
     new mt_coronet_1.MtCoronet(),
     new oranguru_1.Oranguru(),
     new order_pad_1.OrderPad(),
-    new passimian_1.PassimianUPR(),
+    new passimian_1.Passimian(),
     new pokemon_fan_club_1.PokemonFanClub(),
     new riolu_1.Riolu(),
     new roselia_1.Roselia(),
@@ -70,4 +71,5 @@ exports.setUltraPrism = [
     new volkner_1.Volkner(),
     new weavile_1.Weavile(),
     new spiritomb_1.Spiritomb(),
+    new solgaleo_prism_star_1.SolgaleoPrismStar(),
 ];

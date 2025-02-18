@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import {Gastly} from './gastly';
+import { Gastly } from './gastly';
 import { LuxuryBall } from './luxury-ball';
 import { PokeBlower } from './poke-blower';
 import { PokeDrawer } from './poke-drawer';

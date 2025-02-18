@@ -41,9 +41,10 @@ import { BlastoisePiplupGX } from './blastoise-piplup-gx';
 import { CharizardBraixenGX } from './charizard-braixen-gx';
 import { TogepiCleffaIgglybuffGX } from './togepi-cleffa-igglybuff-gx';
 import { Carvanha } from './carvanha';
-import {NaganadelGuzzlordGX} from './naganadel-guzzlord-gx';
-import {Woobat} from './woobat';
-import {Swoobat} from './swoobat';
+import { NaganadelGuzzlordGX } from './naganadel-guzzlord-gx';
+import { Woobat } from './woobat';
+import { Swoobat } from './swoobat';
+import { Mimikyu } from './mimikyu';
 
 
 export const setCosmicEclipse: Card[] = [
@@ -92,4 +93,5 @@ export const setCosmicEclipse: Card[] = [
   new NaganadelGuzzlordGX(),
   new Woobat(),
   new Swoobat(),
+  new Mimikyu(),
 ];

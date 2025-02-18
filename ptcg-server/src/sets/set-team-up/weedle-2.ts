@@ -2,7 +2,7 @@ import { CardType, ChoosePokemonPrompt, GameError, GameMessage, PlayerType, Poke
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 
-export class WeedleTEU2 extends PokemonCard {
+export class Weedle2 extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 

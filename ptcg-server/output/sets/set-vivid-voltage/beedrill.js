@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BeedrillVIV = void 0;
+exports.Beedrill = void 0;
 const game_1 = require("../../game");
 const prefabs_1 = require("../../game/store/prefabs/prefabs");
-class BeedrillVIV extends game_1.PokemonCard {
+class Beedrill extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = game_1.Stage.STAGE_2;
@@ -40,4 +40,4 @@ class BeedrillVIV extends game_1.PokemonCard {
         return state;
     }
 }
-exports.BeedrillVIV = BeedrillVIV;
+exports.Beedrill = Beedrill;

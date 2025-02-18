@@ -5,7 +5,7 @@ import { BanetteGX } from './banette-gx';
 import { Copycat } from './copycat';
 import { Delcatty } from './delcatty';
 import { Dhelmise } from './dhelmise';
-import {Dunsparce} from './dunsparce';
+import { Dunsparce } from './dunsparce';
 import { ElectrodeGX } from './electrode-gx';
 import { Fisherman } from './fisherman';
 import { HustleBelt } from './hustle-belt';

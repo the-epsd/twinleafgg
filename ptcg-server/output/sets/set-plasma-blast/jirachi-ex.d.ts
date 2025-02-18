@@ -2,7 +2,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { PowerType, StoreLike, State } from '../../game';
-export declare class JirachiEx extends PokemonCard {
+export declare class JirachiEX extends PokemonCard {
     tags: CardTag[];
     stage: Stage;
     cardType: CardType;

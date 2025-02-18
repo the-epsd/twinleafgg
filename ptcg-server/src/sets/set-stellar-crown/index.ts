@@ -13,7 +13,7 @@ import { Diancie } from './diancie';
 import { Drednaw } from './drednaw';
 import { Drifblim } from './drifblim';
 import { Duraludon } from './duraludon';
-import { EeveeSCR } from './eevee';
+import { Eevee } from './eevee';
 import { Electabuzz } from './electabuzz';
 import { FanRotom } from './fan-rotom';
 import { Galvantulaex } from './galvantula-ex';
@@ -58,7 +58,7 @@ export const setStellarCrown: Card[] = [
   new Drednaw(),
   new Drifblim(),
   new Duraludon(),
-  new EeveeSCR(),
+  new Eevee(),
   new Electabuzz(),
   new FanRotom(),
   new Galvantulaex(),

@@ -6,7 +6,7 @@ import { AfterDamageEffect } from '../../game/store/effects/attack-effects';
 import { StateUtils } from '../../game/store/state-utils';
 import { BLOCK_IF_GX_ATTACK_USED, PLAY_POKEMON_FROM_HAND_TO_BENCH, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
-export class GreninjaGXSMP extends PokemonCard {
+export class GreninjaGX extends PokemonCard {
 
   public tags = [CardTag.POKEMON_GX];
 
@@ -49,7 +49,7 @@ export class GreninjaGXSMP extends PokemonCard {
 
   public setNumber = 'SM197';
 
-  public cardImage = 'assets/cardback.png';
+  public cardImage: string = 'assets/cardback.png';
 
   public name: string = 'Greninja-GX';
 

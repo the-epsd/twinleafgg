@@ -158,10 +158,10 @@ export declare function REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN(effect: Effect,
 export declare function REPLACE_MARKER_AT_END_OF_TURN(effect: Effect, oldMarker: string, newMarker: string, source: Card): void;
 /**
  * If an EndTurnEffect is given, will check for `clearerMarker` on the player whose turn it is,
- * and clear all of their opponent's `oppMarker`s.
+ * and clear all of the player or opponent's `pokemonMarker`s.
  * Useful for "During your opponent's next turn" effects.
  */
-export declare function CLEAR_MARKER_AND_OPPONENTS_POKEMON_MARKER_AT_END_OF_TURN(state: State, effect: Effect, clearerMarker: string, oppMarker: string, source: Card): void;
+export declare function CLEAR_MARKER_AND_OPPONENTS_POKEMON_MARKER_AT_END_OF_TURN(state: State, effect: Effect, clearerMarker: string, pokemonMarker: string, source: Card): void;
 export declare function BLOCK_RETREAT_IF_MARKER(effect: Effect, marker: string, source: Card): void;
 export declare function MOVE_CARDS(store: StoreLike, state: State, source: CardList | PokemonCardList, destination: CardList | PokemonCardList, options?: {
     cards?: Card[];

@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Manaphy = void 0;
-const play_card_action_1 = require("../../game/store/actions/play-card-action");
 const card_types_1 = require("../../game/store/card/card-types");
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const pokemon_types_1 = require("../../game/store/card/pokemon-types");
@@ -36,34 +35,21 @@ class Manaphy extends pokemon_card_1.PokemonCard {
         this.fullName = 'Manaphy BRS';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof attack_effects_1.PutDamageEffect) {
+        if (effect instanceof attack_effects_1.PutDamageEffect && state_utils_1.StateUtils.isPokemonInPlay(effect.player, this)) {
             const player = effect.player;
-            const opponent = state_utils_1.StateUtils.getOpponent(state, player);
-            const targetPlayer = state_utils_1.StateUtils.findOwner(state, effect.target);
-            // Only check benched Pokemon
-            if (effect.target !== player.active && effect.target !== opponent.active) {
-                let isManaphyInPlay = false;
-                targetPlayer.forEachPokemon(play_card_action_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-                    if (card === this) {
-                        isManaphyInPlay = true;
-                    }
-                });
-                if (isManaphyInPlay) {
-                    // Try to reduce PowerEffect, to check if something is blocking our ability
-                    try {
-                        const stub = new game_effects_1.PowerEffect(player, {
-                            name: 'test',
-                            powerType: pokemon_types_1.PowerType.ABILITY,
-                            text: ''
-                        }, this);
-                        store.reduceEffect(state, stub);
-                        // Prevent damage only to benched Pokemon
-                        effect.preventDefault = true;
-                    }
-                    catch (_a) {
-                        return state;
-                    }
-                }
+            // Try to reduce PowerEffect, to check if something is blocking our ability
+            try {
+                const stub = new game_effects_1.PowerEffect(player, {
+                    name: 'test',
+                    powerType: pokemon_types_1.PowerType.ABILITY,
+                    text: ''
+                }, this);
+                store.reduceEffect(state, stub);
+                // Prevent damage only to benched Pokemon
+                effect.preventDefault = true;
+            }
+            catch (_a) {
+                return state;
             }
         }
         return state;

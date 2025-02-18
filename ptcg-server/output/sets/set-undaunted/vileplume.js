@@ -7,7 +7,6 @@ const game_effects_1 = require("../../game/store/effects/game-effects");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const pokemon_types_1 = require("../../game/store/card/pokemon-types");
 const state_utils_1 = require("../../game/store/state-utils");
-const play_card_action_1 = require("../../game/store/actions/play-card-action");
 const game_error_1 = require("../../game/game-error");
 const game_message_1 = require("../../game/game-message");
 const coin_flip_prompt_1 = require("../../game/store/prompts/coin-flip-prompt");
@@ -55,23 +54,8 @@ class Vileplume extends pokemon_card_1.PokemonCard {
             });
         }
         // Block trainer cards
-        if (effect instanceof play_card_effects_1.PlayItemEffect) {
+        if (effect instanceof play_card_effects_1.PlayItemEffect && state_utils_1.StateUtils.isPokemonInPlay(effect.player, this)) {
             const player = effect.player;
-            const opponent = state_utils_1.StateUtils.getOpponent(state, player);
-            let isVileplumeInPlay = false;
-            player.forEachPokemon(play_card_action_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-                if (card === this) {
-                    isVileplumeInPlay = true;
-                }
-            });
-            opponent.forEachPokemon(play_card_action_1.PlayerType.TOP_PLAYER, (cardList, card) => {
-                if (card === this) {
-                    isVileplumeInPlay = true;
-                }
-            });
-            if (!isVileplumeInPlay) {
-                return state;
-            }
             // Try to reduce PowerEffect, to check if something is blocking our ability
             try {
                 const stub = new game_effects_1.PowerEffect(player, {

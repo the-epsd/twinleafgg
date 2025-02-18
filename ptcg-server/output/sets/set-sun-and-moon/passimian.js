@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PassimianSUM = void 0;
+exports.Passimian = void 0;
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const game_effects_1 = require("../../game/store/effects/game-effects");
@@ -8,7 +8,7 @@ const state_utils_1 = require("../../game/store/state-utils");
 const play_card_action_1 = require("../../game/store/actions/play-card-action");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const game_1 = require("../../game");
-class PassimianSUM extends pokemon_card_1.PokemonCard {
+class Passimian extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.BASIC;
@@ -63,4 +63,4 @@ class PassimianSUM extends pokemon_card_1.PokemonCard {
         return state;
     }
 }
-exports.PassimianSUM = PassimianSUM;
+exports.Passimian = Passimian;

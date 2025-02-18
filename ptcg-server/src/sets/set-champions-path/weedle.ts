@@ -34,7 +34,7 @@ function* useCallForFamily(next: Function, store: StoreLike, state: State, effec
   });
 }
 
-export class WeedleCPA extends PokemonCard {
+export class Weedle extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 

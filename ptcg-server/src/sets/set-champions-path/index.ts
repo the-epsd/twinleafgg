@@ -5,7 +5,7 @@ import { Piers } from './piers';
 import { RotomPhone } from './rotom-phone';
 import { Sonia } from './sonia';
 import { TurffieldStadium } from './turffield-stadium';
-import { WeedleCPA } from './weedle';
+import { Weedle } from './weedle';
 
 export const setChampionsPath: Card[] = [
   new EldegossV(),
@@ -14,5 +14,5 @@ export const setChampionsPath: Card[] = [
   new RotomPhone(),
   new Sonia(),
   new TurffieldStadium(),
-  new WeedleCPA(),
+  new Weedle(),
 ];

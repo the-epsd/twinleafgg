@@ -3,7 +3,7 @@ import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 
-export class BeedrillTEU extends PokemonCard {
+export class Beedrill extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_2;
 

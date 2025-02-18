@@ -8,6 +8,7 @@ import { Applin2 } from './applin-2';
 import { Aron } from './aron';
 import { Blisseyex } from './blissey-ex';
 import { BloodmoonUrsalunaex } from './bloodmoon-ursaluna-ex';
+import {BoomerangEnergy} from './boomerang-energy-1';
 import { BruteBonnet } from './brute-bonnet';
 import { BugCatchingSet } from './bug-catching-set';
 import { Caretaker } from './caretaker';
@@ -186,6 +187,7 @@ export const setTwilightMasquerade: Card[] = [
   new Poliwag(),
   new Poliwhirl(),
   new Poliwrath(),
+  new BoomerangEnergy(),
 
   // TWM Full Arts
   new DipplinIR(),

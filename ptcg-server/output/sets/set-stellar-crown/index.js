@@ -59,7 +59,7 @@ exports.setStellarCrown = [
     new drednaw_1.Drednaw(),
     new drifblim_1.Drifblim(),
     new duraludon_1.Duraludon(),
-    new eevee_1.EeveeSCR(),
+    new eevee_1.Eevee(),
     new electabuzz_1.Electabuzz(),
     new fan_rotom_1.FanRotom(),
     new galvantula_ex_1.Galvantulaex(),

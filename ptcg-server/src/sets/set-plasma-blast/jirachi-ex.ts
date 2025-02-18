@@ -11,7 +11,7 @@ import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effe
 
 
 function* useStellarGuidance(next: Function, store: StoreLike, state: State,
-  self: JirachiEx, effect: PlayPokemonEffect): IterableIterator<State> {
+  self: JirachiEX, effect: PlayPokemonEffect): IterableIterator<State> {
   const player = effect.player;
 
   if (player.deck.cards.length === 0) {
@@ -47,7 +47,7 @@ function* useStellarGuidance(next: Function, store: StoreLike, state: State,
   });
 }
 
-export class JirachiEx extends PokemonCard {
+export class JirachiEX extends PokemonCard {
 
   public tags = [CardTag.POKEMON_EX];
 

@@ -30,7 +30,7 @@ import { RayquazaVMAX } from './rayquaza-vmax';
 import { Regidrago } from './regidrago';
 import { Regieleki } from './regieleki';
 import { RescueCarrier } from './rescue-carrier';
-import {ShoppingCenter} from './shopping-center';
+import { ShoppingCenter } from './shopping-center';
 import { Skiploom } from './skiploom';
 import { StormyMountains } from './stormy-mountains';
 import { SuicuneV } from './suicune-v';

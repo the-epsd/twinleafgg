@@ -1,9 +1,6 @@
-import { TrainerCard } from '../../game/store/card/trainer-card';
-import { TrainerType } from '../../game/store/card/card-types';
-import { StoreLike } from '../../game/store/store-like';
-import { State } from '../../game/store/state/state';
-import { Effect } from '../../game/store/effects/effect';
-export declare class BraveyCharm extends TrainerCard {
+import { TrainerCard, TrainerType, State, StoreLike } from "../../game";
+import { Effect } from "../../game/store/effects/effect";
+export declare class BraveryCharm extends TrainerCard {
     trainerType: TrainerType;
     regulationMark: string;
     set: string;
@@ -12,5 +9,6 @@ export declare class BraveyCharm extends TrainerCard {
     name: string;
     fullName: string;
     text: string;
+    private readonly HP_BONUS;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

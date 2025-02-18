@@ -20,6 +20,10 @@ class EthansAdventure extends game_1.TrainerCard {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
+            const supporterTurn = player.supporterTurn;
+            if (supporterTurn > 0) {
+                throw new game_1.GameError(game_1.GameMessage.SUPPORTER_ALREADY_PLAYED);
+            }
             prefabs_1.BLOCK_IF_DECK_EMPTY(player);
             let ethansPokemonOrFireEnergy = 0;
             const blocked = [];

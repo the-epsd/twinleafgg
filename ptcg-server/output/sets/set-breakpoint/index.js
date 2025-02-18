@@ -5,6 +5,7 @@ const bayleef_1 = require("./bayleef");
 const delinquent_1 = require("./delinquent");
 const fighting_fury_belt_1 = require("./fighting-fury-belt");
 const froakie_1 = require("./froakie");
+const garbodor_1 = require("./garbodor");
 const greninja_1 = require("./greninja");
 const kricketot_1 = require("./kricketot");
 const manaphy_ex_1 = require("./manaphy-ex");
@@ -21,7 +22,7 @@ exports.setBreakpoint = [
     new delinquent_1.Delinquent(),
     new fighting_fury_belt_1.FightingFuryBelt(),
     new froakie_1.Froakie(),
-    new greninja_1.GreninjaBKP(),
+    new greninja_1.Greninja(),
     new kricketot_1.Kricketot(),
     new max_elixir_1.MaxElixir(),
     new phantump_1.Phantump(),
@@ -32,4 +33,5 @@ exports.setBreakpoint = [
     new tympole_1.Tympole(),
     new zoroark_1.Zoroark(),
     new manaphy_ex_1.ManaphyEX(),
+    new garbodor_1.Garbodor(),
 ];

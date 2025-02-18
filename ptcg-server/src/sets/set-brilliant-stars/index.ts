@@ -36,6 +36,7 @@ import { Manaphy } from './manaphy';
 import { MarniesPride } from './marnies-pride';
 import { Minccino } from './minccino';
 import { Moltres } from './moltres';
+import { UltraBallHR } from './other-prints';
 import { PotHelmet } from './pot-helmet';
 import { Purrloin } from './purrloin';
 import { RaichuV } from './raichu-v';
@@ -98,4 +99,7 @@ export const setBrilliantStars: Card[] = [
   new Riolu(),
   new Lucario(),
 
+
+  //FA
+  new UltraBallHR(),
 ];

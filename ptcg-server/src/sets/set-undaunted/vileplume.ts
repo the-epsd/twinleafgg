@@ -7,7 +7,6 @@ import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { StateUtils } from '../../game/store/state-utils';
-import { PlayerType } from '../../game/store/actions/play-card-action';
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
 import { CoinFlipPrompt } from '../../game/store/prompts/coin-flip-prompt';
@@ -25,7 +24,7 @@ export class Vileplume extends PokemonCard {
 
   public weakness = [{ type: CardType.PSYCHIC }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Allergy Flower',
@@ -35,7 +34,7 @@ export class Vileplume extends PokemonCard {
 
   public attacks = [{
     name: 'Dazzling Pollen',
-    cost: [ CardType.GRASS, CardType.GRASS, CardType.COLORLESS ],
+    cost: [CardType.GRASS, CardType.GRASS, CardType.COLORLESS],
     damage: 50,
     text: 'Flip a coin. If heads, this attack does 50 damage plus 20 more ' +
       'damage. If tails, the Defending Pokemon is now Confused.'
@@ -68,25 +67,8 @@ export class Vileplume extends PokemonCard {
     }
 
     // Block trainer cards
-    if (effect instanceof PlayItemEffect) {
+    if (effect instanceof PlayItemEffect && StateUtils.isPokemonInPlay(effect.player, this)) {
       const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      let isVileplumeInPlay = false;
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-        if (card === this) {
-          isVileplumeInPlay = true;
-        }
-      });
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
-        if (card === this) {
-          isVileplumeInPlay = true;
-        }
-      });
-
-      if (!isVileplumeInPlay) {
-        return state;
-      }
 
       // Try to reduce PowerEffect, to check if something is blocking our ability
       try {

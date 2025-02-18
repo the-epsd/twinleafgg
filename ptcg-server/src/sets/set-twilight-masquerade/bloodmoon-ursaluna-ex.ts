@@ -25,7 +25,7 @@ export class BloodmoonUrsalunaex extends PokemonCard {
   public powers = [{
     name: 'Seasoned Skill',
     powerType: PowerType.ABILITY,
-    text: 'This Pokémon\'s Blood Moon attacks costs 1 Colorless less to use for each Prize card your opponent has already taken.'
+    text: 'Blood Moon used by this Pokémon costs [C] less for each Prize card your opponent has taken.'
   }];
 
   public attacks = [

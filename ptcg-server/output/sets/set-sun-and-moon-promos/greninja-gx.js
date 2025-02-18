@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.GreninjaGXSMP = void 0;
+exports.GreninjaGX = void 0;
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const state_utils_1 = require("../../game/store/state-utils");
 const prefabs_1 = require("../../game/store/prefabs/prefabs");
-class GreninjaGXSMP extends pokemon_card_1.PokemonCard {
+class GreninjaGX extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.tags = [card_types_1.CardTag.POKEMON_GX];
@@ -84,4 +84,4 @@ class GreninjaGXSMP extends pokemon_card_1.PokemonCard {
         return state;
     }
 }
-exports.GreninjaGXSMP = GreninjaGXSMP;
+exports.GreninjaGX = GreninjaGX;

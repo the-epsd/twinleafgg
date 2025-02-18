@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.VirizionEx = void 0;
+exports.VirizionEX = void 0;
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
@@ -34,7 +34,7 @@ function* useEmeraldSlash(next, store, state, effect) {
         player.deck.applyOrder(order);
     });
 }
-class VirizionEx extends pokemon_card_1.PokemonCard {
+class VirizionEX extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.BASIC;
@@ -109,4 +109,4 @@ class VirizionEx extends pokemon_card_1.PokemonCard {
         return state;
     }
 }
-exports.VirizionEx = VirizionEx;
+exports.VirizionEX = VirizionEX;

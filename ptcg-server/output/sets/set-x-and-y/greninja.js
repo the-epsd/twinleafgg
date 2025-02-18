@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.GreninjaXY = void 0;
+exports.Greninja = void 0;
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 const choose_cards_prompt_1 = require("../../game/store/prompts/choose-cards-prompt");
@@ -9,7 +9,7 @@ const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
-class GreninjaXY extends pokemon_card_1.PokemonCard {
+class Greninja extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.STAGE_2;
@@ -88,4 +88,4 @@ class GreninjaXY extends pokemon_card_1.PokemonCard {
         return state;
     }
 }
-exports.GreninjaXY = GreninjaXY;
+exports.Greninja = Greninja;

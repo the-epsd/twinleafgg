@@ -4,7 +4,7 @@ import { StoreLike, State } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 
-export class PhanpyVIV extends PokemonCard {
+export class Phanpy extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 

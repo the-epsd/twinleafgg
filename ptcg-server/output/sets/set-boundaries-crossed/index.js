@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setBoundariesCrossed = void 0;
 const aspertia_city_gym_1 = require("./aspertia-city-gym");
+const black_kyurem_1 = require("./black-kyurem");
 const blastoise_1 = require("./blastoise");
 const card_images_1 = require("./card-images");
 const computer_search_1 = require("./computer-search");
@@ -20,6 +21,7 @@ const stoutland_1 = require("./stoutland");
 const wartortle_1 = require("./wartortle");
 exports.setBoundariesCrossed = [
     new aspertia_city_gym_1.AspertiaCityGym(),
+    new black_kyurem_1.BlackKyurem(),
     new blastoise_1.Blastoise(),
     new computer_search_1.ComputerSearch(),
     new ditto_1.Ditto(),

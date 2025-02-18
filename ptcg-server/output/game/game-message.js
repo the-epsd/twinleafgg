@@ -64,6 +64,9 @@ var GameStoreMessage;
     GameStoreMessage["UNKNOWN_CARD"] = "UNKNOWN_CARD";
     GameStoreMessage["UNKNOWN_POWER"] = "UNKNOWN_POWER";
     GameStoreMessage["CAN_ONLY_ATTACH_TO_PSYCHIC"] = "CAN_ONLY_ATTACH_TO_PSYCHIC";
+    GameStoreMessage["SETUP_CARDS_AVAILABLE"] = "SETUP_CARDS_AVAILABLE";
+    GameStoreMessage["USE_SETUP_CARDS"] = "USE_SETUP_CARDS";
+    GameStoreMessage["MULLIGAN"] = "MULLIGAN";
 })(GameStoreMessage = exports.GameStoreMessage || (exports.GameStoreMessage = {}));
 var GameCardMessage;
 (function (GameCardMessage) {

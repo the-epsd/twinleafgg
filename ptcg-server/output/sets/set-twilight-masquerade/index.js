@@ -10,6 +10,7 @@ const applin_2_1 = require("./applin-2");
 const aron_1 = require("./aron");
 const blissey_ex_1 = require("./blissey-ex");
 const bloodmoon_ursaluna_ex_1 = require("./bloodmoon-ursaluna-ex");
+const boomerang_energy_1_1 = require("./boomerang-energy-1");
 const brute_bonnet_1 = require("./brute-bonnet");
 const bug_catching_set_1 = require("./bug-catching-set");
 const caretaker_1 = require("./caretaker");
@@ -186,6 +187,7 @@ exports.setTwilightMasquerade = [
     new poliwag_1.Poliwag(),
     new poliwhirl_1.Poliwhirl(),
     new poliwrath_1.Poliwrath(),
+    new boomerang_energy_1_1.BoomerangEnergy(),
     // TWM Full Arts
     new other_prints_1.DipplinIR(),
     new other_prints_1.PoltchageistIR(),

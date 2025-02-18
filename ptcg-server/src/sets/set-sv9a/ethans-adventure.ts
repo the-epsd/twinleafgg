@@ -25,6 +25,11 @@ export class EthansAdventure extends TrainerCard {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
+      const supporterTurn = player.supporterTurn;
+
+      if (supporterTurn > 0) {
+        throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
+      }
 
       BLOCK_IF_DECK_EMPTY(player);
 

@@ -5,7 +5,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 
-export class LunalaPS extends PokemonCard {
+export class LunalaPrismStar extends PokemonCard {
 
   public tags = [CardTag.PRISM_STAR];
 

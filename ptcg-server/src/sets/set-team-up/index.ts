@@ -1,7 +1,7 @@
 import { Card } from '../../game/store/card/card';
 import { AlolanMuk } from './alolan-muk';
 import { Articuno } from './articuno';
-import { BeedrillTEU } from './beedrill';
+import { Beedrill } from './beedrill';
 import { BillsAnalysis } from './bills-analysis';
 import { Bisharp } from './bisharp';
 import { Bronzor } from './bronzor';
@@ -24,8 +24,8 @@ import { Pidgeotto } from './pidgeotto';
 import { PokemonCommunication } from './pokemon-communication';
 import { TapuKokoPrismStar } from './tapu-koko-prism-star';
 import { ViridianForest } from './viridian-forest';
-import { WeedleTEU } from './weedle';
-import { WeedleTEU2 } from './weedle-2';
+import { Weedle } from './weedle';
+import { Weedle2 } from './weedle-2';
 import { Yveltal } from './yveltal';
 import { Zapdos } from './zapdos';
 
@@ -33,7 +33,7 @@ export const setTeamUp: Card[] = [
   // new Absol(), something weird is going on with checking retreat cost and adding retreat cost; attack works though
   new AlolanMuk(),
   new Articuno(),
-  new BeedrillTEU(),
+  new Beedrill(),
   new BillsAnalysis(),
   new Bisharp(),
   new Bronzor(),
@@ -55,8 +55,8 @@ export const setTeamUp: Card[] = [
   new PokemonCommunication(),
   new TapuKokoPrismStar(),
   new ViridianForest(),
-  new WeedleTEU(),
-  new WeedleTEU2(),
+  new Weedle(),
+  new Weedle2(),
   new Yveltal(),
   new Zapdos(),
   new JudgeWhistle(),

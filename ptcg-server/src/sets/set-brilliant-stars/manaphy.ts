@@ -1,4 +1,3 @@
-import { PlayerType } from '../../game/store/actions/play-card-action';
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { PowerType } from '../../game/store/card/pokemon-types';
@@ -49,38 +48,25 @@ export class Manaphy extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PutDamageEffect) {
+    if (effect instanceof PutDamageEffect && StateUtils.isPokemonInPlay(effect.player, this)) {
       const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      const targetPlayer = StateUtils.findOwner(state, effect.target);
 
-      // Only check benched Pokemon
-      if (effect.target !== player.active && effect.target !== opponent.active) {
-        let isManaphyInPlay = false;
-        targetPlayer.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-          if (card === this) {
-            isManaphyInPlay = true;
-          }
-        });
+      // Try to reduce PowerEffect, to check if something is blocking our ability
+      try {
+        const stub = new PowerEffect(player, {
+          name: 'test',
+          powerType: PowerType.ABILITY,
+          text: ''
+        }, this);
+        store.reduceEffect(state, stub);
 
-        if (isManaphyInPlay) {
-          // Try to reduce PowerEffect, to check if something is blocking our ability
-          try {
-            const stub = new PowerEffect(player, {
-              name: 'test',
-              powerType: PowerType.ABILITY,
-              text: ''
-            }, this);
-            store.reduceEffect(state, stub);
-
-            // Prevent damage only to benched Pokemon
-            effect.preventDefault = true;
-          } catch {
-            return state;
-          }
-        }
+        // Prevent damage only to benched Pokemon
+        effect.preventDefault = true;
+      } catch {
+        return state;
       }
     }
+
     return state;
   }
 }

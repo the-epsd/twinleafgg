@@ -61,6 +61,9 @@ export var GameStoreMessage;
     GameStoreMessage["UNKNOWN_CARD"] = "UNKNOWN_CARD";
     GameStoreMessage["UNKNOWN_POWER"] = "UNKNOWN_POWER";
     GameStoreMessage["CAN_ONLY_ATTACH_TO_PSYCHIC"] = "CAN_ONLY_ATTACH_TO_PSYCHIC";
+    GameStoreMessage["SETUP_CARDS_AVAILABLE"] = "SETUP_CARDS_AVAILABLE";
+    GameStoreMessage["USE_SETUP_CARDS"] = "USE_SETUP_CARDS";
+    GameStoreMessage["MULLIGAN"] = "MULLIGAN";
 })(GameStoreMessage || (GameStoreMessage = {}));
 export var GameCardMessage;
 (function (GameCardMessage) {
@@ -217,6 +220,7 @@ export var GameLog;
     GameLog["LOG_PLAYER_DRAWS_CARD"] = "LOG_PLAYER_DRAWS_CARD";
     GameLog["LOG_PLAYER_ENDS_TURN"] = "LOG_PLAYER_ENDS_TURN";
     GameLog["LOG_PLAYER_EVOLVES_POKEMON"] = "LOG_PLAYER_EVOLVES_POKEMON";
+    GameLog["LOG_PLAYER_TRANSFORMS_INTO_POKEMON"] = "LOG_PLAYER_TRANSFORMS_INTO_POKEMON";
     GameLog["LOG_PLAYER_FLIPS_HEADS"] = "LOG_PLAYER_FLIPS_HEADS";
     GameLog["LOG_PLAYER_FLIPS_TAILS"] = "LOG_PLAYER_FLIPS_TAILS";
     GameLog["LOG_PLAYER_LEFT_THE_GAME"] = "LOG_PLAYER_LEFT_THE_GAME";

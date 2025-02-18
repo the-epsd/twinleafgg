@@ -55,7 +55,7 @@ class Latiasex extends pokemon_card_1.PokemonCard {
             const cardList = game_1.StateUtils.findCardList(state, this);
             const owner = game_1.StateUtils.findOwner(state, cardList);
             const active = effect.player.active.getPokemonCard();
-            if (owner !== player || active === undefined || !game_1.StateUtils.isPokemonInPlay(player, this)) {
+            if (owner !== player || active === undefined) {
                 return state;
             }
             if (!prefabs_1.IS_ABILITY_BLOCKED(store, state, player, this) && active.stage === card_types_1.Stage.BASIC) {

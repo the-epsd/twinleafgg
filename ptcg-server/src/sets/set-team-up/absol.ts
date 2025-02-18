@@ -35,11 +35,11 @@ export class Absol extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof CheckRetreatCostEffect) {
+    if (effect instanceof CheckRetreatCostEffect && StateUtils.isPokemonInPlay(effect.player, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      if (!StateUtils.isPokemonInPlay(player, this) || IS_ABILITY_BLOCKED(store, state, player, this) || !opponent.active.isStage(Stage.BASIC)) {
+      if (IS_ABILITY_BLOCKED(store, state, player, this) || !opponent.active.isStage(Stage.BASIC)) {
         return state;
       }
 

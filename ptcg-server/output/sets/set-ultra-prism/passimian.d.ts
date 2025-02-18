@@ -4,7 +4,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerType } from '../../game';
-export declare class PassimianUPR extends PokemonCard {
+export declare class Passimian extends PokemonCard {
     stage: Stage;
     cardType: CardType;
     hp: number;

@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.setPlasmaStorm = void 0;
 const bicycle_1 = require("./bicycle");
 const black_kyurem_ex_1 = require("./black-kyurem-ex");
-const card_images_1 = require("./card-images");
+const other_prints_1 = require("./other-prints");
 const colress_1 = require("./colress");
 const colress_machine_1 = require("./colress-machine");
 const donphan_1 = require("./donphan");
@@ -40,5 +40,5 @@ exports.setPlasmaStorm = [
     new zubat_1.Zubat(),
     new victini_ex_1.VictiniEX(),
     //Reprints
-    new card_images_1.EscapeRopePLS(),
+    new other_prints_1.EscapeRopePLS(),
 ];
