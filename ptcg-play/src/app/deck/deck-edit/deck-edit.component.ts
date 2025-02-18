@@ -201,7 +201,7 @@ export class DeckEditComponent implements OnInit {
 
             // First apply set code replacements
             for (const setReplacement of setCodeReplacements) {
-              if (fullCardName.includes(setReplacement.from)) {
+              if (fullCardName.includes(` ${setReplacement.from} `)) {
                 fullCardName = fullCardName.replace(setReplacement.from, setReplacement.to);
               }
             }
