@@ -4,7 +4,7 @@ import { StoreLike, State, CoinFlipPrompt, TrainerCard, ChooseCardsPrompt } from
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
-import { GameMessage } from '../../game/game-message';
+import { GameLog, GameMessage } from '../../game/game-message';
 
 export class Sableye extends PokemonCard {
 
@@ -81,6 +81,11 @@ export class Sableye extends PokemonCard {
         )], selected => {
         const cards = selected || [];
         player.discard.moveCardsTo(cards, player.hand);
+        
+        cards.forEach((card, index) => {
+          player.deck.moveCardTo(card, player.hand);
+          store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
+        });
       });
     }
 
