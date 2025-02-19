@@ -39,7 +39,7 @@ function* useBurningCharge(next: Function, store: StoreLike, state: State,
       player.id,
       GameMessage.CHOOSE_POKEMON_TO_ATTACH_CARDS,
       PlayerType.BOTTOM_PLAYER,
-      [SlotType.BENCH],
+      [SlotType.ACTIVE, SlotType.BENCH],
       { allowCancel: false }
     ), targets => {
       if (!targets || targets.length === 0) {

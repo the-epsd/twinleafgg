@@ -61,6 +61,7 @@ const piloswine_1 = require("./piloswine");
 const postwick_1 = require("./postwick");
 const pupitar_1 = require("./pupitar");
 const regirock_1 = require("./regirock");
+const ruffian_1 = require("./ruffian");
 const salamence_ex_1 = require("./salamence-ex");
 const shelgon_1 = require("./shelgon");
 const shelmet_1 = require("./shelmet");
@@ -110,6 +111,7 @@ exports.setSV9 = [
     new spike_energy_1.SpikeEnergy(),
     new regirock_1.Regirock(),
     new maractus_1.Maractus(),
+    new ruffian_1.Ruffian(),
     new lillies_clefairy_ex_1.LilliesClefairyex(),
     new lillies_comfey_1.LilliesComfey(),
     new lillies_pearl_1.LilliesPearl(),

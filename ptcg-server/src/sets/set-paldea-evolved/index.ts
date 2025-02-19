@@ -76,6 +76,7 @@ import { Glimmora } from './glimmora';
 import { Tinkatuff2 } from './tinkatuff-2';
 import { Belliboltex } from './bellibolt-ex';
 import { BraveryCharm } from './bravery-charm';
+import {Girafarig} from './girafarig';
 //import { CalamitousSnowyMountain } from './new calamitous-snowy-mountain';
 
 export const setPaldeaEvolved: Card[] = [
@@ -156,6 +157,7 @@ export const setPaldeaEvolved: Card[] = [
   new Glimmet2(),
   new Glimmora(),
   new Belliboltex(),
+  new Girafarig(),
 
   // Full 
   new ArctibaxIR(),

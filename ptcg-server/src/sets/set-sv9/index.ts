@@ -59,6 +59,7 @@ import { Piloswine } from './piloswine';
 import { Postwick } from './postwick';
 import { Pupitar } from './pupitar';
 import { Regirock } from './regirock';
+import {Ruffian} from './ruffian';
 import { Salamenceex } from './salamence-ex';
 import { Shelgon } from './shelgon';
 import { Shelmet } from './shelmet';
@@ -110,6 +111,7 @@ export const setSV9: Card[] = [
   new SpikeEnergy(),
   new Regirock(),
   new Maractus(),
+  new Ruffian(),
 
   new LilliesClefairyex(),
   new LilliesComfey(),

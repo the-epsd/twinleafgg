@@ -27,6 +27,7 @@ import { Dreepy } from './dreepy';
 import { Emolga } from './emolga';
 import { EnhancedHammer } from './enhanced-hammer';
 import { Farfetchd } from './farfetchd';
+import {Feebas} from './feebas';
 import { FestivalGrounds } from './festival-plaza';
 import { Fezandipiti } from './fezandipiti';
 import { Finizen } from './finizen';
@@ -188,6 +189,7 @@ export const setTwilightMasquerade: Card[] = [
   new Poliwhirl(),
   new Poliwrath(),
   new BoomerangEnergy(),
+  new Feebas(),
 
   // TWM Full Arts
   new DipplinIR(),
