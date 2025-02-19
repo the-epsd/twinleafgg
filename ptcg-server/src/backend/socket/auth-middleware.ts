@@ -25,6 +25,7 @@ export async function authMiddleware(socket: Socket, next: (err?: any) => void):
     rateLimit.increment(ipAddress);
     return next(new Error(ApiErrorEnum.AUTH_TOKEN_INVALID));
   }
+
   (socket as any).user = user;
   next();
 }

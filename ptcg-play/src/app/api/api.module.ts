@@ -18,9 +18,6 @@ import { ReplayService } from './services/replay.service';
 import { ResetPasswordService } from './services/reset-password.service';
 import { SharedModule } from '../shared/shared.module';
 import { SocketService } from './socket.service';
-import { Subscription } from 'rxjs';
-import { TournamentService } from '../tournaments/service/tournament.service';
-
 
 @NgModule({
   imports: [
@@ -42,19 +39,17 @@ import { TournamentService } from '../tournaments/service/tournament.service';
     RankingService,
     ReplayService,
     ResetPasswordService,
-    SocketService,
-    TournamentService
+    SocketService
   ]
 })
 export class ApiModule {
-  private subscription: Subscription;
-
   constructor(
     mainService: MainService,
     messageService: MessageService,
     socketService: SocketService
   ) {
-    this.subscription = socketService.connection
+
+    socketService.connection
       .pipe(
         filter(connected => connected),
         switchMap(() => mainService.getCoreInfo())
@@ -63,11 +58,6 @@ export class ApiModule {
         mainService.init(coreInfo);
         messageService.init();
       });
-  }
 
-  ngOnDestroy() {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
   }
 }

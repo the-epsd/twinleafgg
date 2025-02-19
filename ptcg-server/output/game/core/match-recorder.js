@@ -62,7 +62,7 @@ class MatchRecorder {
         match.replayData = this.replay.serialize();
         try {
             // Update ranking
-            const users = this.ranking.calculateMatch(match, state);
+            const users = this.ranking.calculateMatch(match);
             // Update match's ranking
             if (users.length >= 2) {
                 match.rankingStake1 = users[0].ranking - match.ranking1;

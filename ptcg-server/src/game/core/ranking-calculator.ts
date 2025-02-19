@@ -1,18 +1,14 @@
 import { User, Match } from '../../storage';
 import { MoreThan, LessThan } from 'typeorm';
-import { GameWinner, State } from '../store/state/state';
-import { Rank, rankLevels } from '../../backend';
+import { GameWinner } from '../store/state/state';
+import { Rank } from '../../backend';
 import { config } from '../../config';
 
 export class RankingCalculator {
+
   constructor() { }
 
-  public calculateMatch(match: Match, state: State): User[] {
-    // Add state parameter and check turns
-    if (state.turn < 2) {
-      return [];
-    }
-
+  public calculateMatch(match: Match): User[] {
     const player1 = match.player1;
     const player2 = match.player2;
 
@@ -23,17 +19,21 @@ export class RankingCalculator {
     const rank1 = player1.getRank();
     const rank2 = player2.getRank();
 
-    const rankDifference = Math.abs(player2.ranking - player1.ranking);
-    const kValue = rankDifference > 400 ? 75 : 50;
-    const diff = Math.max(-400, Math.min(400, player2.ranking - player1.ranking));
-    const winExp = 1.0 / (1 + Math.pow(10.0, diff / 500.0));
+    const kValue = 50;
+    const totalDiff = player2.ranking - player1.ranking;
+    const diff = Math.max(-400, Math.min(400, totalDiff));
+    const winExp = 1.0 / (1 + Math.pow(10.0, diff / 400.0));
     let outcome: number;
+    let rankMultipier1: number = 1;
+    let rankMultipier2: number = 1;
 
     switch (match.winner) {
       case GameWinner.PLAYER_1:
         outcome = 1;
+        rankMultipier1 = this.getRankMultipier(rank1);
         break;
       case GameWinner.PLAYER_2:
+        rankMultipier2 = this.getRankMultipier(rank2);
         outcome = 0;
         break;
       default:
@@ -43,11 +43,8 @@ export class RankingCalculator {
     }
 
     const stake = kValue * (outcome - winExp);
-    const rankMultiplier1 = this.getRankMultiplier(player1.ranking);
-    const rankMultiplier2 = this.getRankMultiplier(player2.ranking);
-
-    const diff1 = this.getRankingDiff(rank1, rank2, Math.round(stake * rankMultiplier1));
-    const diff2 = this.getRankingDiff(rank1, rank2, Math.round(stake * rankMultiplier2));
+    const diff1 = this.getRankingDiff(rank1, rank2, Math.round(stake * rankMultipier1));
+    const diff2 = this.getRankingDiff(rank1, rank2, Math.round(stake * rankMultipier2));
 
     player1.ranking = Math.max(0, player1.ranking + diff1);
     player2.ranking = Math.max(0, player2.ranking - diff2);
@@ -60,40 +57,39 @@ export class RankingCalculator {
   }
 
   private getRankingDiff(rank1: Rank, rank2: Rank, diff: number): number {
-    const rankGap = Math.abs(this.getRankPoints(rank2) - this.getRankPoints(rank1));
-    const sign = diff >= 0 ? 1 : -1;
+    const sign = diff >= 0;
+    let value = Math.abs(diff);
 
-    let scaleFactor = 1;
-    if (rankGap >= 2000) scaleFactor = 2.75;
-    else if (rankGap >= 1000) scaleFactor = 2.25;
-    else if (rankGap >= 500) scaleFactor = 1.8;
+    // Maximum ranking change for different ranks = 10
+    if (rank1 !== rank2 && value > 10) {
+      value = 10;
+    }
 
-    // Increased base minimum points
-    const minPoints = 10;
-    const maxPoints = 40;
+    // Minimum ranking change = 5
+    if (value < 5) {
+      value = 5;
+    }
 
-    const adjustedDiff = Math.max(minPoints, Math.min(maxPoints * scaleFactor, Math.abs(diff)));
-    return sign * adjustedDiff;
+    return sign ? value : -value;
   }
 
-  private getRankMultiplier(rankPoints: number): number {
-    if (rankPoints <= 250) return 2.0;
-    if (rankPoints <= 1000) return 1.5;
-    if (rankPoints <= 2500) return 1.0;
-    return 0.5;
-  }
-
-  private getRankPoints(rank: Rank): number {
-    const rankLevel = rankLevels.find(level => level.rank === rank);
-    return rankLevel ? rankLevel.points : 0;
+  private getRankMultipier(rank: Rank): number {
+    switch (rank) {
+      case Rank.JUNIOR:
+        return 2.0;
+      case Rank.SENIOR:
+        return 0.9;
+      case Rank.MASTER:
+        return 0.8;
+    }
+    return 1;
   }
 
   public async decreaseRanking(): Promise<User[]> {
-    const rankingDecreaseRate = config.core.rankingDecraseRate;
+    const rankingDecraseRate = config.core.rankingDecraseRate;
     const oneDay = config.core.rankingDecraseTime;
     const today = Date.now();
     const yesterday = today - oneDay;
-
     const users = await User.find({
       where: {
         lastRankingChange: LessThan(yesterday),
@@ -101,19 +97,24 @@ export class RankingCalculator {
       }
     });
 
+    // calculate new ranking in the server
     users.forEach(user => {
       user.lastRankingChange = today;
-      user.ranking = Math.floor(user.ranking * rankingDecreaseRate);
+      user.ranking = Math.floor(user.ranking * rankingDecraseRate);
     });
 
+    // execute update query in the database
+    // sqlite doesn't support FLOOR, so we use ROUND(x - 0.5)
     await User.update({
       lastRankingChange: LessThan(yesterday),
       ranking: MoreThan(0)
     }, {
       lastRankingChange: today,
-      ranking: () => `ROUND(${rankingDecreaseRate} * ranking - 0.5)`
+      ranking: () => `ROUND(${rankingDecraseRate} * ranking - 0.5)`
     });
 
+    // is it wise to emit all users to all connected clients by websockets?
     return users;
   }
+
 }

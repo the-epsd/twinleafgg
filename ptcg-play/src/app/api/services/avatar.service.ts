@@ -10,7 +10,7 @@ export class AvatarService {
 
   constructor(
     private api: ApiService,
-  ) {}
+  ) { }
 
   public getList(userId?: number) {
     if (userId !== undefined) {
