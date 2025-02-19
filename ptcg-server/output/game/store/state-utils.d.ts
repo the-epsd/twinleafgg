@@ -10,6 +10,7 @@ import { State } from './state/state';
 export declare class StateUtils {
     static getStadium(state: State): void;
     static checkEnoughEnergy(energy: EnergyMap[], cost: CardType[]): boolean;
+    static getCombinations(arr: CardType[][], n: number): CardType[][];
     static checkExactEnergy(energy: EnergyMap[], cost: CardType[]): boolean;
     static getPlayerById(state: State, playerId: number): Player;
     static getOpponent(state: State, player: Player): Player;

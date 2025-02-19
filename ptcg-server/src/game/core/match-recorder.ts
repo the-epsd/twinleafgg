@@ -66,7 +66,7 @@ export class MatchRecorder {
 
     try {
       // Update ranking
-      const users = this.ranking.calculateMatch(match);
+      const users = this.ranking.calculateMatch(match, state);
 
       // Update match's ranking
       if (users.length >= 2) {
