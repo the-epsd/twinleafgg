@@ -19,6 +19,8 @@ import { ResetPasswordService } from './services/reset-password.service';
 import { SharedModule } from '../shared/shared.module';
 import { SocketService } from './socket.service';
 import { Subscription } from 'rxjs';
+import { TournamentService } from '../tournaments/service/tournament.service';
+
 
 @NgModule({
   imports: [
@@ -27,7 +29,7 @@ import { Subscription } from 'rxjs';
     SharedModule,
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true},
+    { provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true },
     ApiService,
     AvatarService,
     CardsService,
@@ -40,12 +42,13 @@ import { Subscription } from 'rxjs';
     RankingService,
     ReplayService,
     ResetPasswordService,
-    SocketService
+    SocketService,
+    TournamentService
   ]
 })
 export class ApiModule {
   private subscription: Subscription;
-  
+
   constructor(
     mainService: MainService,
     messageService: MessageService,

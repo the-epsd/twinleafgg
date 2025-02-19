@@ -225,8 +225,6 @@ export class BoardCardComponent {
     //     }
     //   });
     // } else {
-    //   this.cardClick.emit(card);
-    // }
     this.cardClick.emit(card);
   }
 }

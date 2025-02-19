@@ -19,6 +19,7 @@ export const cardReplacements = [
   { from: 'Basic {G} Energy EVO 91', to: 'Grass Energy BS 99' },
   { from: 'Basic {G} Energy HS 115', to: 'Grass Energy HS 115' },
   { from: 'Basic {G} Energy SVI 257', to: 'Grass Energy PAL 278' },
+  { from: 'Grass Energy2 SVE 9', to: 'Grass Energy SVE 9' },
 
   { from: 'Fire Energy 2', to: 'Fire Energy SVE 2' },
   { from: 'Basic Fire Energy 2', to: 'Fire Energy SVE 2' },
@@ -32,6 +33,7 @@ export const cardReplacements = [
   { from: 'Basic {R} Energy EVO 92', to: 'Fire Energy BS 98' },
   { from: 'Basic {R} Energy HS 116', to: 'Fire Energy HS 116' },
   { from: 'Basic {R} Energy OBF 230', to: 'Fire Energy OBF 230' },
+  { from: 'Fire Energy2 SVE 10', to: 'Fire Energy SVE 10' },
 
   { from: 'Water Energy 3', to: 'Water Energy SVE 3' },
   { from: 'Basic Water Energy 3', to: 'Water Energy SVE 3' },
@@ -45,6 +47,7 @@ export const cardReplacements = [
   { from: 'Basic {W} Energy EVO 93', to: 'Water Energy BS 102' },
   { from: 'Basic {W} Energy HS 117', to: 'Water Energy HS 117' },
   { from: 'Basic {W} Energy PAL 279', to: 'Water Energy PAL 279' },
+  { from: 'Water Energy2 SVE 11', to: 'Water Energy SVE 11' },
 
   { from: 'Lightning Energy 4', to: 'Lightning Energy SVE 4' },
   { from: 'Basic Lightning Energy 4', to: 'Lightning Energy SVE 4' },
@@ -58,6 +61,7 @@ export const cardReplacements = [
   { from: 'Basic {L} Energy EVO 94', to: 'Lightning Energy BS 100' },
   { from: 'Basic {L} Energy HS 118', to: 'Lightning Energy HS 118' },
   { from: 'Basic {L} Energy SVI 257', to: 'Lightning Energy SVI 257' },
+  { from: 'Lightning Energy2 SVE 12', to: 'Lightning Energy SVE 12' },
 
   { from: 'Psychic Energy 5', to: 'Psychic Energy SVE 5' },
   { from: 'Basic Psychic Energy 5', to: 'Psychic Energy SVE 5' },
@@ -71,6 +75,7 @@ export const cardReplacements = [
   { from: 'Basic {P} Energy EVO 95', to: 'Psychic Energy BS 101' },
   { from: 'Basic {P} Energy HS 119', to: 'Psychic Energy HS 119' },
   { from: 'Basic {P} Energy MEW 207', to: 'Psychic Energy MEW 207' },
+  { from: 'Psychic Energy2 SVE 13', to: 'Psychic Energy SVE 13' },
 
   { from: 'Fighting Energy 6', to: 'Fighting Energy SVE 6' },
   { from: 'Basic Fighting Energy 6', to: 'Fighting Energy SVE 6' },
@@ -84,6 +89,7 @@ export const cardReplacements = [
   { from: 'Basic {F} Energy EVO 96', to: 'Fighting Energy BS 97' },
   { from: 'Basic {F} Energy HS 120', to: 'Fighting Energy HS 120' },
   { from: 'Basic {F} Energy SVI 258', to: 'Fighting Energy SVI 258' },
+  { from: 'Fighting Energy2 SVE 14', to: 'Fighting Energy SVE 14' },
 
   { from: 'Darkness Energy 7', to: 'Darkness Energy SVE 7' },
   { from: 'Basic Darkness Energy 7', to: 'Darkness Energy SVE 7' },
@@ -97,6 +103,7 @@ export const cardReplacements = [
   { from: 'Basic {D} Energy EVO 97', to: 'Darkness Energy EVO 97' },
   { from: 'Basic {D} Energy HS 121', to: 'Darkness Energy HS 121' },
   { from: 'Basic {D} Energy SFA 98', to: 'Darkness Energy SFA 98' },
+  { from: 'Darkness Energy2 SVE 15', to: 'Darkness Energy SVE 15' },
 
   { from: 'Metal Energy 8', to: 'Metal Energy SVE 8' },
   { from: 'Basic Metal Energy 8', to: 'Metal Energy SVE 8' },
@@ -110,6 +117,7 @@ export const cardReplacements = [
   { from: 'Basic {M} Energy EVO 98', to: 'Metal Energy EVO 98' },
   { from: 'Basic {M} Energy HS 122', to: 'Metal Energy HS 122' },
   { from: 'Basic {M} Energy SFA 99', to: 'Metal Energy SFA 99' },
+  { from: 'Metal Energy2 SVE 16', to: 'Metal Energy SVE 16' },
 
   //BS
   { from: 'Pokemon Breeder BS 76', to: 'Pokémon Breeder BS 76' },
@@ -173,6 +181,17 @@ export const cardReplacements = [
   { from: 'Rare Candy SVI 256', to: 'Rare CandyHR SVI 256' },
   { from: 'Skwovet SVI 222', to: 'SkwovetIR SVI 222' },
   { from: 'Team Star Grunt SVI 242', to: 'Team Star GruntFA SVI 242' },
+
+  //SVP
+  { from: 'Charmander SVP 44', to: 'CharmanderIR SVP 44' },
+  { from: 'Iron Bundle SVP 66', to: 'Iron Bundle SVP 66' },
+  { from: 'Charizard ex SVP 74', to: 'Charizard ex2 SVP 74' },
+  { from: 'Meowscarada ex SVP 78', to: 'Meowscarada exFA SVP 78' },
+  { from: 'Skeledirge ex SVP 81', to: 'Skeledirge exFA SVP 81' },
+  { from: 'Quaquaval ex SVP 84', to: 'Quaquaval exFA SVP 84' },
+  { from: 'Pecharunt SVP 129', to: 'PecharuntIR SVP 129' },
+  { from: 'Miraidon ex SVP 142', to: 'Miraidon ex2 SVP 142' },
+  { from: 'Charizard ex SVP 161', to: 'Charizard ex3 SVP 161' },
 
   //PAL
   { from: 'Frigibax PAL 57', to: 'Frigibax PAL1 57' },
@@ -559,6 +578,16 @@ export const cardReplacements = [
 
 export const exportReplacements = [
 
+  //Energy
+  { from: 'Grass Energy2 SVE 9', to: 'Grass Energy SVE 9' },
+  { from: 'Fire Energy2 SVE 10', to: 'Fire Energy SVE 10' },
+  { from: 'Water Energy2 SVE 11', to: 'Water Energy SVE 11' },
+  { from: 'Lightning Energy2 SVE 12', to: 'Lightning Energy SVE 12' },
+  { from: 'Psychic Energy2 SVE 13', to: 'Psychic Energy SVE 13' },
+  { from: 'Fighting Energy2 SVE 14', to: 'Fighting Energy SVE 14' },
+  { from: 'Darkness Energy2 SVE 15', to: 'Darkness Energy SVE 15' },
+  { from: 'Metal Energy2 SVE 16', to: 'Metal Energy SVE 16' },
+
   //BS
   { from: 'Pokémon Breeder BS 76', to: 'Pokemon Breeder BS 76' },
   { from: 'Pokémon Trader BS 77', to: 'Pokemon Trader BS 77' },
@@ -621,6 +650,16 @@ export const exportReplacements = [
   { from: 'Rare CandyHR SVI 256', to: 'Rare Candy SVI 256' },
   { from: 'SkwovetIR SVI 222', to: 'Skwovet SVI 222' },
   { from: 'Team Star GruntFA SVI 242', to: 'Team Star Grunt SVI 242' },
+
+  //SVP
+  { from: 'CharmanderIR SVP 44', to: 'Charmander SVP 44' },
+  { from: 'Iron BundleIR SVP 66', to: 'Iron Bundle SVP 66' },
+  { from: 'Charizard ex2 SVP 74', to: 'Charizard ex SVP 74' },
+  { from: 'Meowscarada exFA SVP 78', to: 'Meowscarada ex SVP 78' },
+  { from: 'Skeledirge exFA SVP 81', to: 'Skeledirge ex SVP 81' },
+  { from: 'PecharuntIR SVP 129', to: 'Pecharunt SVP 129' },
+  { from: 'Miraidon ex2 SVP 142', to: 'Miraidon ex SVP 142' },
+  { from: 'Charizard ex3 SVP 161', to: 'Charizard ex SVP 161' },
 
   //PAL
   { from: 'Frigibax PAL1 57 ', to: 'Frigibax PAL 57' },

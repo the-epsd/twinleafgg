@@ -5,6 +5,7 @@ import { AlolanDugtrio } from './alolan-dugtrio';
 import { AlolanExeggutorex } from './alolan-exeggutor-ex';
 import { AmuletofHope } from './amulet-of-hope';
 import { Archaludonex } from './archaludon-ex';
+import {Armarouge} from './armarouge';
 import { Azelf } from './azelf';
 import { Azumarill } from './azulmarill';
 import { BlackKyuremex } from './black-kyurem-ex';
@@ -78,6 +79,7 @@ import { Quaxwell } from './quaxwell';
 import { Rabsca } from './rabsca';
 import { Rellor } from './rellor';
 import { RichEnergy } from './rich-energy';
+import {Rotom} from './rotom';
 import { Sandygast } from './sandygast';
 import { Scovillainex } from './scovillain-ex';
 import { Shroodle } from './shroodle';
@@ -211,6 +213,8 @@ export const setSurgingSparks: Card[] = [
   new Tyme(),
   new Cetoddle(),
   new Cetitan(),
+  new Armarouge(),
+  new Rotom(),
 
   // Reprints
   new ScrambleSwitchSSP(),
