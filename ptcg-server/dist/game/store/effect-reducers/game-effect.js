@@ -15,6 +15,7 @@ import { GamePhase } from '../state/state';
 import { checkState } from './check-effect';
 import { MoveCardsEffect } from '../effects/game-effects';
 import { PokemonCardList } from '../state/pokemon-card-list';
+import { MOVE_CARDS } from '../prefabs/prefabs';
 function applyWeaknessAndResistance(damage, cardTypes, additionalCardTypes, weakness, resistance) {
     let multiply = 1;
     let modifier = 0;
@@ -174,8 +175,8 @@ export function gameReducer(store, state, effect) {
                 for (let i = pokemonIndices.length - 1; i >= 0; i--) {
                     const removedCard = effect.target.cards.splice(pokemonIndices[i], 1)[0];
                     if (removedCard.cards) {
-                        const attachedCards = removedCard.cards.cards.splice(0, removedCard.cards.cards.length);
-                        effect.player.discard.cards.push(...attachedCards);
+                        // Move attached cards to discard
+                        MOVE_CARDS(store, state, removedCard.cards, effect.player.discard);
                     }
                     if (removedCard.superType === SuperType.POKEMON || removedCard.stage === Stage.BASIC) {
                         lostZoned.cards.push(removedCard);
@@ -184,11 +185,13 @@ export function gameReducer(store, state, effect) {
                         effect.player.discard.cards.push(removedCard);
                     }
                 }
-                lostZoned.moveTo(effect.player.lostzone);
+                // Move cards to lost zone
+                MOVE_CARDS(store, state, lostZoned, effect.player.lostzone);
                 effect.target.clearEffects();
             }
             else {
-                effect.target.moveTo(effect.player.discard);
+                // Move cards to discard
+                MOVE_CARDS(store, state, effect.target, effect.player.discard);
                 effect.target.clearEffects();
             }
             // const stadiumCard = StateUtils.getStadiumCard(state);

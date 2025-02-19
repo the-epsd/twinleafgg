@@ -5,6 +5,7 @@ import { DndModule } from '@ng-dnd/core';
 import { DndMultiBackendModule, MultiBackend, HTML5ToTouch } from '@ng-dnd/multi-backend';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { io, Socket } from 'socket.io-client';
 
 import { ApiModule } from './api/api.module';
 import { AppComponent } from './app.component';
@@ -22,6 +23,9 @@ import { TableModule } from './table/table.module';
 import { MatchmakingLobbyComponent } from './games/matchmaking-lobby/matchmaking-lobby.component';
 import { TermsModule } from './terms/terms.module';
 import { CardInfoDialogComponent } from './table/board/board-card/board-card.component';
+import { TournamentModule } from './tournaments/tournament.module';
+import { TournamentSocket } from './tournaments/tournament.socket';
+import { TournamentService } from './tournaments/service/tournament.service';
 
 @NgModule({
   declarations: [
@@ -49,9 +53,19 @@ import { CardInfoDialogComponent } from './table/board/board-card/board-card.com
         useFactory: (createTranslateLoader),
         deps: [HttpClient]
       }
-    })
+    }),
+    TournamentModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: TournamentSocket,
+      useFactory: (tournamentService: TournamentService) => {
+        const socket = io('/api'); // adjust the URL based on your setup
+        return new TournamentSocket(socket, tournamentService);
+      },
+      deps: [TournamentService]
+    }
+  ],
   bootstrap: [AppComponent],
   entryComponents: [
     CardInfoDialogComponent

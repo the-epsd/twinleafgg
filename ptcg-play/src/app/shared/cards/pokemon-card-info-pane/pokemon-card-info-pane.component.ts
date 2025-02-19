@@ -1,5 +1,5 @@
 import { Component, OnChanges, Input, Output, EventEmitter } from '@angular/core';
-import { Card, SuperType, Stage, PowerType, EnergyType, PokemonCard, PokemonCardList } from 'ptcg-server';
+import { Card, SuperType, Stage, PowerType, EnergyType, PokemonCard, PokemonCardList, Attack, Power } from 'ptcg-server';
 import { MatDialog } from '@angular/material/dialog';
 import { CardImagePopupComponent } from '../card-image-popup/card-image-popup.component';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
@@ -42,64 +42,90 @@ export class PokemonCardInfoPaneComponent implements OnChanges {
     private sanitizer: DomSanitizer
   ) { }
 
-  public getMainCard(): PokemonCard {
-    return this.cardList?.cards[0] as PokemonCard;
+  public getMainCard(): Card {
+    if (!this.cardList || this.cardList.cards.length === 0) {
+      return null;
+    }
+
+    // Find the last Pokémon card in the list
+    for (let i = this.cardList.cards.length - 1; i >= 0; i--) {
+      const card = this.cardList.cards[i];
+      if (card.superType === SuperType.POKEMON) {
+        return card;
+      }
+    }
+
+    return null;
   }
 
   public getAllAttachedCards(): Card[] {
     return this.cardList?.cards.slice(1) || [];
   }
 
-  public getDisplayPowers(): any[] {
-    if (!this.cardList) {
+  public getDisplayPowers(): Power[] {
+    const mainCard = this.getMainCard() as PokemonCard;
+    if (!mainCard) {
       return [];
     }
 
-    let powers: any[] = [];
+    let powers = [...(mainCard.powers || [])];
 
-    // Get powers from all cards in the list
-    this.cardList.cards.forEach(card => {
-      if (card.powers) {
-        powers = powers.concat(card.powers);
+    // Add powers from tools and other cards that modify the Pokémon
+    if (this.cardList) {
+      for (const card of this.cardList.cards) {
+        if (card.superType === SuperType.TRAINER && card !== mainCard) {
+          powers = [...powers, ...(card.powers || [])];
+        }
       }
-    });
+    }
 
     return powers;
   }
 
-  public getDisplayAttacks(): any[] {
-    if (!this.cardList) {
+  public getDisplayAttacks(): Attack[] {
+    const mainCard = this.getMainCard() as PokemonCard;
+    if (!mainCard) {
       return [];
     }
 
-    let attacks: any[] = [];
+    let attacks = [...(mainCard.attacks || [])];
 
-    // Get attacks from all cards in the list
-    this.cardList.cards.forEach(card => {
-      if (card.attacks) {
-        attacks = attacks.concat(card.attacks);
+    // Add attacks from tools and other cards that modify the Pokémon
+    if (this.cardList) {
+      for (const card of this.cardList.cards) {
+        if (card.superType === SuperType.TRAINER && card !== mainCard) {
+          attacks = [...attacks, ...(card.attacks || [])];
+        }
       }
-    });
+    }
 
     return attacks;
   }
 
-  public getCurrentHp(): number {
-    if (!this.cardList) {
+  getHpBonus(): number {
+    if (!this.cardList || !(this.cardList instanceof PokemonCardList)) {
       return 0;
     }
-    // Current HP is max HP minus damage
-    return this.getMaxHp() - (this.cardList.damage || 0);
+    return this.cardList.hpBonus;
   }
 
-  public getMaxHp(): number {
-    if (!this.cardList) {
+  getCurrentHp(): number {
+    if (!this.cardList || !(this.cardList instanceof PokemonCardList)) {
       return 0;
     }
-    // Base HP plus any modifiers from tools/effects
-    const baseHp = this.getMainCard()?.hp || 0;
-    const hpBonus = this.cardList.hpBonus || 0;
-    return baseHp + hpBonus;
+    const mainCard = this.getMainCard() as PokemonCard;
+    if (!mainCard) {
+      return 0;
+    }
+    return mainCard.hp + this.getHpBonus() - this.cardList.damage;
+  }
+
+  getMaxHp(): number {
+    const mainCard = this.getMainCard() as PokemonCard;
+    if (!mainCard) {
+      return 0;
+    }
+    return mainCard.hp + this.getHpBonus();
   }
 
   public clickAction(action: any) {

@@ -35,6 +35,8 @@ import { StoreLike } from '../store-like';
 import { checkState } from './check-effect';
 import { MoveCardsEffect } from '../effects/game-effects';
 import { PokemonCardList } from '../state/pokemon-card-list';
+import { MOVE_CARDS } from '../prefabs/prefabs';
+
 
 function applyWeaknessAndResistance(
   damage: number,
@@ -259,8 +261,8 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
           const removedCard = effect.target.cards.splice(pokemonIndices[i], 1)[0];
 
           if (removedCard.cards) {
-            const attachedCards = removedCard.cards.cards.splice(0, removedCard.cards.cards.length);
-            effect.player.discard.cards.push(...attachedCards);
+            // Move attached cards to discard
+            MOVE_CARDS(store, state, removedCard.cards, effect.player.discard);
           }
 
           if (removedCard.superType === SuperType.POKEMON || (<any>removedCard).stage === Stage.BASIC) {
@@ -269,10 +271,13 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
             effect.player.discard.cards.push(removedCard);
           }
         }
-        lostZoned.moveTo(effect.player.lostzone);
+
+        // Move cards to lost zone
+        MOVE_CARDS(store, state, lostZoned, effect.player.lostzone);
         effect.target.clearEffects();
       } else {
-        effect.target.moveTo(effect.player.discard);
+        // Move cards to discard
+        MOVE_CARDS(store, state, effect.target, effect.player.discard);
         effect.target.clearEffects();
       }
 

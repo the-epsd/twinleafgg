@@ -18,6 +18,7 @@ const state_1 = require("../state/state");
 const check_effect_1 = require("./check-effect");
 const game_effects_2 = require("../effects/game-effects");
 const pokemon_card_list_1 = require("../state/pokemon-card-list");
+const prefabs_1 = require("../prefabs/prefabs");
 function applyWeaknessAndResistance(damage, cardTypes, additionalCardTypes, weakness, resistance) {
     let multiply = 1;
     let modifier = 0;
@@ -177,8 +178,8 @@ function gameReducer(store, state, effect) {
                 for (let i = pokemonIndices.length - 1; i >= 0; i--) {
                     const removedCard = effect.target.cards.splice(pokemonIndices[i], 1)[0];
                     if (removedCard.cards) {
-                        const attachedCards = removedCard.cards.cards.splice(0, removedCard.cards.cards.length);
-                        effect.player.discard.cards.push(...attachedCards);
+                        // Move attached cards to discard
+                        prefabs_1.MOVE_CARDS(store, state, removedCard.cards, effect.player.discard);
                     }
                     if (removedCard.superType === card_types_1.SuperType.POKEMON || removedCard.stage === card_types_1.Stage.BASIC) {
                         lostZoned.cards.push(removedCard);
@@ -187,11 +188,13 @@ function gameReducer(store, state, effect) {
                         effect.player.discard.cards.push(removedCard);
                     }
                 }
-                lostZoned.moveTo(effect.player.lostzone);
+                // Move cards to lost zone
+                prefabs_1.MOVE_CARDS(store, state, lostZoned, effect.player.lostzone);
                 effect.target.clearEffects();
             }
             else {
-                effect.target.moveTo(effect.player.discard);
+                // Move cards to discard
+                prefabs_1.MOVE_CARDS(store, state, effect.target, effect.player.discard);
                 effect.target.clearEffects();
             }
             // const stadiumCard = StateUtils.getStadiumCard(state);

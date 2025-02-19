@@ -152,27 +152,30 @@ export class DeckEditComponent implements OnInit {
   }
 
   sortByPokemonEvolution(cards: DeckItem[]): DeckItem[] {
-    const firstTrainerIndex = cards.findIndex((d) => d.card.superType === SuperType.TRAINER);
+    // First, separate cards by type
+    const pokemonCards = cards.filter(d => d.card.superType === SuperType.POKEMON);
+    const nonPokemonCards = cards.filter(d => d.card.superType !== SuperType.POKEMON);
 
-    for (let i = firstTrainerIndex - 1; i >= 0; i--) {
-      if ((<PokemonCard>cards[i].card).evolvesFrom) {
-        const indexOfPrevolution = this.findLastIndex(cards, c => c.card.name === (<PokemonCard>cards[i].card).evolvesFrom);
+    // Sort Pokemon by evolution
+    for (let i = pokemonCards.length - 1; i >= 0; i--) {
+      if ((<PokemonCard>pokemonCards[i].card).evolvesFrom) {
+        const indexOfPrevolution = this.findLastIndex(
+          pokemonCards,
+          c => c.card.name === (<PokemonCard>pokemonCards[i].card).evolvesFrom
+        );
 
-        if (cards[indexOfPrevolution]?.card.superType !== SuperType.POKEMON) {
+        if (indexOfPrevolution === -1) {
           continue;
         }
 
-        const currentPokemon = { ...cards.splice(i, 1)[0] };
+        const currentPokemon = { ...pokemonCards.splice(i, 1)[0] };
 
-        cards = [
-          ...cards.slice(0, indexOfPrevolution + 1),
-          { ...currentPokemon },
-          ...cards.slice(indexOfPrevolution + 1),
-        ];
+        pokemonCards.splice(indexOfPrevolution + 1, 0, currentPokemon);
       }
     }
 
-    return cards;
+    // Recombine the cards in the correct order
+    return [...pokemonCards, ...nonPokemonCards];
   }
 
   findLastIndex<T>(array: Array<T>, predicate: (value: T, index: number, obj: T[]) => boolean): number {

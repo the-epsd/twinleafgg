@@ -24,13 +24,11 @@ class CoreSocket {
         this.socket.emit('core:leave', client.id);
     }
     onGameAdd(game) {
-        console.log(`New game created. Total active games: ${this.core.games.length}`);
         this.cache.lastLogIdCache[game.id] = 0;
         this.cache.gameInfoCache[game.id] = CoreSocket.buildGameInfo(game);
         this.socket.emit('core:createGame', this.cache.gameInfoCache[game.id]);
     }
     onGameDelete(game) {
-        console.log(`Game deleted. Total active games: ${this.core.games.length - 1}`);
         delete this.cache.gameInfoCache[game.id];
         delete this.cache.lastLogIdCache[game.id];
         this.socket.emit('core:deleteGame', game.id);
