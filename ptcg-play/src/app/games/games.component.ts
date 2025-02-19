@@ -16,7 +16,7 @@ import { SelectPopupOption } from '../shared/alert/select-popup/select-popup.com
 import { SessionService } from '../shared/session/session.service';
 import { UserInfoMap } from '../shared/session/session.interface';
 import { Deck, DeckListEntry } from '../api/interfaces/deck.interface';
-import { MatchmakingLobbyComponent } from './matchmaking-lobby/matchmaking-lobby.component';
+// import { MatchmakingLobbyComponent } from './matchmaking-lobby/matchmaking-lobby.component';
 
 
 @UntilDestroy()
@@ -24,10 +24,10 @@ import { MatchmakingLobbyComponent } from './matchmaking-lobby/matchmaking-lobby
   selector: 'ptcg-games',
   templateUrl: './games.component.html',
   styleUrls: ['./games.component.scss'],
-  providers: [MatchmakingLobbyComponent]
+  providers: []
 })
 export class GamesComponent implements OnInit {
-  @ViewChild(MatchmakingLobbyComponent) matchmakingLobby: MatchmakingLobbyComponent;
+  // @ViewChild(MatchmakingLobbyComponent) matchmakingLobby: MatchmakingLobbyComponent;
   title = 'ptcg-play';
 
   displayedColumns: string[] = ['id', 'turn', 'player1', 'player2', 'actions'];
@@ -36,7 +36,7 @@ export class GamesComponent implements OnInit {
   public loading = false;
   public clientId: number;
   public loggedUserId: number;
-  public lobbyComponent = MatchmakingLobbyComponent;
+  // public lobbyComponent = MatchmakingLobbyComponent;
 
   constructor(
     private alertService: AlertService,

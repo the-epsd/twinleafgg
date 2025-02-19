@@ -20,12 +20,9 @@ import { RankingModule } from './ranking/ranking.module';
 import { ReplaysModule } from './replays/replays.module';
 import { SharedModule } from './shared/shared.module';
 import { TableModule } from './table/table.module';
-import { MatchmakingLobbyComponent } from './games/matchmaking-lobby/matchmaking-lobby.component';
+// import { MatchmakingLobbyComponent } from './games/matchmaking-lobby/matchmaking-lobby.component';
 import { TermsModule } from './terms/terms.module';
 import { CardInfoDialogComponent } from './table/board/board-card/board-card.component';
-import { TournamentModule } from './tournaments/tournament.module';
-import { TournamentSocket } from './tournaments/tournament.socket';
-import { TournamentService } from './tournaments/service/tournament.service';
 
 @NgModule({
   declarations: [
@@ -54,17 +51,6 @@ import { TournamentService } from './tournaments/service/tournament.service';
         deps: [HttpClient]
       }
     }),
-    TournamentModule
-  ],
-  providers: [
-    {
-      provide: TournamentSocket,
-      useFactory: (tournamentService: TournamentService) => {
-        const socket = io('/api'); // adjust the URL based on your setup
-        return new TournamentSocket(socket, tournamentService);
-      },
-      deps: [TournamentService]
-    }
   ],
   bootstrap: [AppComponent],
   entryComponents: [

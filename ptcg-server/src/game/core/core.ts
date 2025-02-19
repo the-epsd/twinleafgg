@@ -142,10 +142,6 @@ export class Core {
       this.emit(c => c.onGameLeave(game, client));
       game.handleClientLeave(client);
     }
-    // Delete game, if there are no more clients left in the game
-    if (game.clients.length === 1) {
-      this.deleteGame(game);
-    }
     if (game.clients.length === 0) {
       this.deleteGame(game);
     }

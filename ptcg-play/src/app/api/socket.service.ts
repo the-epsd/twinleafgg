@@ -44,20 +44,20 @@ export class SocketService {
     this.socket.on('disconnect', () => this.connectionSubject.next(false));
   }
 
-  joinLobby(format: string): Observable<any> {
-    return this.emit('joinLobby', { format });
-  }
+  // joinLobby(format: string): Observable<any> {
+  //   return this.emit('joinLobby', { format });
+  // }
 
-  joinMatchmakingQueue(format: Format, deck: string[]): Observable<any> {
-    return this.emit('matchmaking:joinQueue', { format: Format[format], deck }).pipe(
-      timeout(5000),
-      catchError((error) => {
-        const apiError = ApiError.fromError(error);
-        console.log('Failed - Could not Join Queue.', error);
-        return throwError(apiError);
-      })
-    );
-  }
+  // joinMatchmakingQueue(format: Format, deck: string[]): Observable<any> {
+  //   return this.emit('matchmaking:joinQueue', { format: Format[format], deck }).pipe(
+  //     timeout(5000),
+  //     catchError((error) => {
+  //       const apiError = ApiError.fromError(error);
+  //       console.log('Failed - Could not Join Queue.', error);
+  //       return throwError(apiError);
+  //     })
+  //   );
+  // }
 
   public enable(authToken: string) {
     if (this.enabled) {
