@@ -182,6 +182,17 @@ export const cardReplacements = [
   { from: 'Skwovet SVI 222', to: 'SkwovetIR SVI 222' },
   { from: 'Team Star Grunt SVI 242', to: 'Team Star GruntFA SVI 242' },
 
+  //SVP
+  { from: 'Charmander SVP 44', to: 'CharmanderIR SVP 44' },
+  { from: 'Iron Bundle SVP 66', to: 'Iron Bundle SVP 66' },
+  { from: 'Charizard ex SVP 74', to: 'Charizard ex2 SVP 74' },
+  { from: 'Meowscarada ex SVP 78', to: 'Meowscarada exFA SVP 78' },
+  { from: 'Skeledirge ex SVP 81', to: 'Skeledirge exFA SVP 81' },
+  { from: 'Quaquaval ex SVP 84', to: 'Quaquaval exFA SVP 84' },
+  { from: 'Pecharunt SVP 129', to: 'PecharuntIR SVP 129' },
+  { from: 'Miraidon ex SVP 142', to: 'Miraidon ex2 SVP 142' },
+  { from: 'Charizard ex SVP 161', to: 'Charizard ex3 SVP 161' },
+
   //PAL
   { from: 'Frigibax PAL 57', to: 'Frigibax PAL1 57' },
   { from: 'Frigibax PAL 58', to: 'Frigibax PAL2 58' },
@@ -639,6 +650,16 @@ export const exportReplacements = [
   { from: 'Rare CandyHR SVI 256', to: 'Rare Candy SVI 256' },
   { from: 'SkwovetIR SVI 222', to: 'Skwovet SVI 222' },
   { from: 'Team Star GruntFA SVI 242', to: 'Team Star Grunt SVI 242' },
+
+  //SVP
+  { from: 'CharmanderIR SVP 44', to: 'Charmander SVP 44' },
+  { from: 'Iron BundleIR SVP 66', to: 'Iron Bundle SVP 66' },
+  { from: 'Charizard ex2 SVP 74', to: 'Charizard ex SVP 74' },
+  { from: 'Meowscarada exFA SVP 78', to: 'Meowscarada ex SVP 78' },
+  { from: 'Skeledirge exFA SVP 81', to: 'Skeledirge ex SVP 81' },
+  { from: 'PecharuntIR SVP 129', to: 'Pecharunt SVP 129' },
+  { from: 'Miraidon ex2 SVP 142', to: 'Miraidon ex SVP 142' },
+  { from: 'Charizard ex3 SVP 161', to: 'Charizard ex SVP 161' },
 
   //PAL
   { from: 'Frigibax PAL1 57 ', to: 'Frigibax PAL 57' },

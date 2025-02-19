@@ -42,7 +42,7 @@ class BellelbaAndBrycenMan extends trainer_card_1.TrainerCard {
             const deckTop = new game_1.CardList();
             player.deck.moveTo(deckTop, cardsToDiscard);
             deckTop.cards.forEach((card, index) => {
-                store.log(state, game_message_1.GameLog.LOG_PLAYER_DISCARDS_CARD, { name: player.name, card: card.name });
+                store.log(state, game_message_1.GameLog.LOG_PLAYER_DISCARDS_CARD, { name: player.name, card: card.name, effectName: this.name });
             });
             deckTop.moveTo(player.discard, deckTop.cards.length);
             // discard opponent cards
@@ -50,7 +50,7 @@ class BellelbaAndBrycenMan extends trainer_card_1.TrainerCard {
             const opponentDeckTop = new game_1.CardList();
             opponent.deck.moveTo(opponentDeckTop, opponentCardsToDiscard);
             opponentDeckTop.cards.forEach((card, index) => {
-                store.log(state, game_message_1.GameLog.LOG_PLAYER_DISCARDS_CARD, { name: opponent.name, card: card.name });
+                store.log(state, game_message_1.GameLog.LOG_PLAYER_DISCARDS_CARD, { name: opponent.name, card: card.name, effectName: this.name });
             });
             opponentDeckTop.moveTo(opponent.discard, opponentDeckTop.cards.length);
             if (cannotDiscardFromHand) {
@@ -63,7 +63,7 @@ class BellelbaAndBrycenMan extends trainer_card_1.TrainerCard {
                         cards = cards || [];
                         player.hand.moveCardsTo(cards, player.discard);
                         cards.forEach((card, index) => {
-                            store.log(state, game_message_1.GameLog.LOG_PLAYER_DISCARDS_CARD_FROM_HAND, { name: player.name, card: card.name });
+                            store.log(state, game_message_1.GameLog.LOG_PLAYER_DISCARDS_CARD_FROM_HAND, { name: player.name, card: card.name, effectName: this.name });
                         });
                         const oppoonentBenchDifference = opponentsBenchedPokemon - 3;
                         const benchDifference = benchedPokemon - 3;
@@ -108,6 +108,7 @@ class BellelbaAndBrycenMan extends trainer_card_1.TrainerCard {
                     });
                 }
             });
+            player.supporter.moveCardTo(effect.trainerCard, player.discard);
             return state;
         }
         return state;

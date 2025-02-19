@@ -105,7 +105,7 @@ export class CardsBaseService {
       map((json: any) => {
         this.customImages = json;
         localStorage.setItem('customCardImages', JSON.stringify(this.customImages));
-      })
+      }),
     );
   }
 
