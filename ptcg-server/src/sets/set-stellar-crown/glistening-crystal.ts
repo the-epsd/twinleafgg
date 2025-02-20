@@ -28,7 +28,7 @@ export class GlisteningCrystal extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof CheckAttackCostEffect && effect.player.active.tool === this) {
+    if (effect instanceof CheckAttackCostEffect && effect.player.active.tools.includes(this)) {
       const pokemonCard = effect.player.active.getPokemonCard();
       if (pokemonCard && pokemonCard.tags.includes(CardTag.POKEMON_TERA)) {
         const checkEnergy = new CheckProvidedEnergyEffect(effect.player);

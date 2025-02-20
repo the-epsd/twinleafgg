@@ -7,6 +7,7 @@ const trainer_card_1 = require("../../game/store/card/trainer-card");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const check_effects_1 = require("../../game/store/effects/check-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 const state_utils_1 = require("../../game/store/state-utils");
 const state_1 = require("../../game/store/state/state");
 class MetalCoreBarrier extends trainer_card_1.TrainerCard {
@@ -29,8 +30,7 @@ class MetalCoreBarrier extends trainer_card_1.TrainerCard {
             }
             player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card, index) => {
                 if (cardList.cards.includes(this)) {
-                    cardList.moveCardTo(this, player.discard);
-                    cardList.tool = undefined;
+                    prefabs_1.DISCARD_TOOL(store, state, cardList, this);
                 }
             });
             return state;

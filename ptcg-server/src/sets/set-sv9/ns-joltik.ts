@@ -4,6 +4,7 @@ import { StoreLike, State, StateUtils } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
+import { DISCARD_TOOL } from '../../game/store/prefabs/prefabs';
 
 export class NsJoltik extends PokemonCard {
   public tags = [CardTag.NS];
@@ -36,8 +37,10 @@ export class NsJoltik extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      if (opponent.active.tool && opponent.active.tool !== undefined) {
-        opponent.active.moveCardTo(opponent.active.tool, opponent.discard);
+      if (opponent.active.tools.length !== 0) {
+        for (const tool of opponent.active.tools) {
+          DISCARD_TOOL(store, state, opponent.active, tool);
+        }
 
         const specialCondition = new AddSpecialConditionsEffect(effect, [SpecialCondition.PARALYZED]);
         return store.reduceEffect(state, specialCondition);

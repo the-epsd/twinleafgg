@@ -5,6 +5,7 @@ const game_1 = require("../../game");
 const card_types_1 = require("../../game/store/card/card-types");
 const trainer_card_1 = require("../../game/store/card/trainer-card");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class Faba extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -26,7 +27,7 @@ class Faba extends trainer_card_1.TrainerCard {
             let pokemonsWithTool = 0;
             const blocked = [];
             opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList, card, target) => {
-                if (cardList.tool !== undefined) {
+                if (cardList.tools.length !== 0) {
                     pokemonsWithTool += 1;
                 }
                 else {
@@ -49,14 +50,21 @@ class Faba extends trainer_card_1.TrainerCard {
             const toolOption = {
                 message: game_1.GameMessage.CHOICE_TOOL,
                 action: () => {
-                    let targets = [];
-                    return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DISCARD_CARDS, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { min: 1, max: 1, allowCancel: false, blocked }), results => {
-                        targets = results || [];
-                        if (targets.length === 0) {
+                    let selectedTools = [];
+                    let allTools = [];
+                    opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, cardList => {
+                        allTools.push(...cardList.tools);
+                    });
+                    return store.prompt(state, new game_1.ChooseToolPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DISCARD_CARDS, allTools, { min: 1, max: 1, allowCancel: false }), results => {
+                        selectedTools = results || [];
+                        if (selectedTools.length === 0) {
                             return state;
                         }
-                        const cardList = targets[0];
-                        if (cardList.isStage(card_types_1.Stage.BASIC)) {
+                        const source = game_1.StateUtils.findCardList(state, selectedTools[0]);
+                        if (!(source instanceof game_1.PokemonCardList)) {
+                            return state;
+                        }
+                        if (source.isStage(card_types_1.Stage.BASIC)) {
                             try {
                                 const supporterEffect = new play_card_effects_1.SupporterEffect(player, effect.trainerCard);
                                 store.reduceEffect(state, supporterEffect);
@@ -66,15 +74,7 @@ class Faba extends trainer_card_1.TrainerCard {
                                 return state;
                             }
                         }
-                        targets.forEach(target => {
-                            const owner = game_1.StateUtils.findOwner(state, target);
-                            if (target.tool !== undefined) {
-                                target.moveCardTo(target.tool, owner.lostzone);
-                                target.tool = undefined;
-                            }
-                            player.supporter.moveCardTo(this, player.discard);
-                            return state;
-                        });
+                        selectedTools.forEach(tool => prefabs_1.LOST_ZONE_TOOL(store, state, source, tool));
                         player.supporter.moveCardTo(this, player.discard);
                         return state;
                     });

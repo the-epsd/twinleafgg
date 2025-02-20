@@ -1,4 +1,4 @@
-import { AttachEnergyOptions, AttachEnergyPrompt, Card, CardList, ChooseCardsOptions, ChooseCardsPrompt, ChoosePokemonPrompt, ChoosePrizePrompt, CoinFlipPrompt, ConfirmPrompt, EnergyCard, FilterType, GameError, GameLog, GameMessage, Player, PlayerType, PokemonCardList, PowerType, SelectPrompt, ShowCardsPrompt, ShuffleDeckPrompt, SlotType, State, StateUtils, StoreLike } from '../..';
+import { AttachEnergyOptions, AttachEnergyPrompt, Card, CardList, ChooseCardsOptions, ChooseCardsPrompt, ChoosePokemonPrompt, ChoosePrizePrompt, ChooseToolPrompt, CoinFlipPrompt, ConfirmPrompt, EnergyCard, FilterType, GameError, GameLog, GameMessage, Player, PlayerType, PokemonCardList, PowerType, SelectPrompt, ShowCardsPrompt, ShuffleDeckPrompt, SlotType, State, StateUtils, StoreLike } from '../..';
 import { BoardEffect, CardTag, SpecialCondition, SuperType } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
 import { DealDamageEffect, DiscardCardsEffect, HealTargetEffect, PutDamageEffect } from '../effects/attack-effects';
@@ -565,9 +565,9 @@ export function SELECT_PROMPT(store: StoreLike, state: State, player: Player, va
   return store.prompt(state, new SelectPrompt(player.id, GameMessage.CHOOSE_OPTION, values, { allowCancel: false }), callback);
 }
 
-export function SELECT_PROMPT_WITH_OPTIONS(store: StoreLike, state: State, player: Player, options: { message: GameMessage, action: () => void }[]) {
+export function SELECT_PROMPT_WITH_OPTIONS(store: StoreLike, state: State, player: Player, options: { message: GameMessage, action: () => void }[], message: GameMessage = GameMessage.CHOOSE_OPTION) {
   return store.prompt(state, new SelectPrompt(
-    player.id, GameMessage.CHOOSE_OPTION, options.map(opt => opt.message), { allowCancel: false }
+    player.id, message, options.map(opt => opt.message), { allowCancel: false }
   ), choice => {
     const option = options[choice];
     option.action();
@@ -731,4 +731,71 @@ export function MOVE_CARDS(
   } = {}
 ): State {
   return store.reduceEffect(state, new MoveCardsEffect(source, destination, options));
+}
+
+export function DISCARD_TOOL(store: StoreLike, state: State, source: PokemonCardList, tool: Card): State {
+  if (!source.cards.includes(tool)) {
+    return state;
+  }
+  const owner: Player = StateUtils.findOwner(state, source);
+  state = MOVE_CARDS(store, state, source, owner.discard, { cards: [tool] });
+  source.removeTool(tool);
+  return state;
+}
+
+export function LOST_ZONE_TOOL(store: StoreLike, state: State, source: PokemonCardList, tool: Card): State {
+  if (!source.cards.includes(tool)) {
+    return state;
+  }
+  const owner: Player = StateUtils.findOwner(state, source);
+  state = MOVE_CARDS(store, state, source, owner.lostzone, { cards: [tool] });
+  source.removeTool(tool);
+  return state;
+}
+
+export function DISCARD_TOOLS_PROMPT(store: StoreLike, state: State, player: Player, tools: Card[], min: number, max: number): State {
+  if (tools.length === 0) {
+    return state;
+  }
+
+  return store.prompt(state, new ChooseToolPrompt(
+    player.id,
+    GameMessage.CHOOSE_POKEMON_TO_DISCARD_CARDS,
+    tools,
+    { min, max: Math.min(max, tools.length), allowCancel: false }
+  ), results => {
+    const tools = results || [];
+
+    if (tools.length === 0) {
+      return state;
+    }
+
+    tools.forEach(tool => {
+      const owner = StateUtils.findCardList(state, tool);
+      if (owner instanceof PokemonCardList && owner.tools.length !== 0) {
+        DISCARD_TOOL(store, state, owner, tool);
+      }
+    });
+  });
+}
+
+export function DISCARD_TOOLS_FROM_ALL_POKEMON(store: StoreLike, state: State, player: Player, min: number, max: number): State {
+  const opponent = StateUtils.getOpponent(state, player);
+  let allTools: Card[] = [];
+  player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
+    allTools.push(...cardList.tools);
+  });
+  opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
+    allTools.push(...cardList.tools);
+  });
+  return DISCARD_TOOLS_PROMPT(store, state, player, allTools, min, max);
+}
+
+export function DISCARD_TOOLS_FROM_OPPONENTS_POKEMON(store: StoreLike, state: State, player: Player, min: number, max: number): State {
+  const opponent = StateUtils.getOpponent(state, player);
+  let allTools: Card[] = [];
+  opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
+    allTools.push(...cardList.tools);
+  });
+  return DISCARD_TOOLS_PROMPT(store, state, player, allTools, min, max);
 }

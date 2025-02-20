@@ -8,6 +8,7 @@ const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const check_effects_1 = require("../../game/store/effects/check-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class TechnicalMachineBlindside extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -49,8 +50,7 @@ class TechnicalMachineBlindside extends trainer_card_1.TrainerCard {
             const player = effect.player;
             player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card, index) => {
                 if (cardList.cards.includes(this)) {
-                    cardList.moveCardTo(this, player.discard);
-                    cardList.tool = undefined;
+                    prefabs_1.DISCARD_TOOL(store, state, cardList, this);
                 }
             });
             return state;

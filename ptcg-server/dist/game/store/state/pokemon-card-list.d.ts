@@ -41,7 +41,7 @@ export declare class PokemonCardList extends CardList {
     static readonly CLEAR_PREVENT_ALL_DAMAGE_DONE_BY_OPPONENTS_BASIC_POKEMON_MARKER = "CLEAR_PREVENT_ALL_DAMAGE_DONE_BY_OPPONENTS_BASIC_POKEMON_MARKER";
     static readonly UNRELENTING_ONSLAUGHT_MARKER = "UNRELENTING_ONSLAUGHT_MARKER";
     static readonly UNRELENTING_ONSLAUGHT_2_MARKER = "UNRELENTING_ONSLAUGHT_2_MARKER";
-    tool: Card | undefined;
+    tools: Card[] | undefined;
     stadium: Card | undefined;
     isActivatingCard: boolean;
     getPokemons(): PokemonCard[];

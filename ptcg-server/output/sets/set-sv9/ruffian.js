@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Ruffian = void 0;
 const game_1 = require("../../game");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class Ruffian extends game_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -44,14 +45,8 @@ class Ruffian extends game_1.TrainerCard {
                 }
                 const target = targets[0];
                 // removing the tool
-                if (target.tool !== undefined) {
-                    target.cards.forEach(card => {
-                        if (card instanceof game_1.TrainerCard && card.trainerType === game_1.TrainerType.TOOL) {
-                            target.moveCardTo(card, opponent.discard);
-                            target.tool = undefined;
-                            return;
-                        }
-                    });
+                if (target.tools.length !== 0) {
+                    prefabs_1.DISCARD_TOOLS_PROMPT(store, state, player, target.tools, 1, 1);
                 }
                 // removing special energies
                 let specialEnergies = 0;

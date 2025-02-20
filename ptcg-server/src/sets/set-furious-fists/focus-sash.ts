@@ -4,6 +4,7 @@ import { TrainerCard } from '../../game/store/card/trainer-card';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { CheckHpEffect, CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
+import { DISCARD_TOOL } from '../../game/store/prefabs/prefabs';
 
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
@@ -30,7 +31,7 @@ export class FocusSash extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof DealDamageEffect && effect.target.tool === this && effect.player.marker.hasMarker(effect.player.DAMAGE_DEALT_MARKER)) {
+    if (effect instanceof DealDamageEffect && effect.target.tools.includes(this) && effect.player.marker.hasMarker(effect.player.DAMAGE_DEALT_MARKER)) {
       const player = effect.player;
       const targetPlayer = StateUtils.findOwner(state, effect.target);
 
@@ -56,8 +57,7 @@ export class FocusSash extends TrainerCard {
 
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, index) => {
           if (cardList.cards.includes(this)) {
-            cardList.moveCardTo(this, player.discard);
-            cardList.tool = undefined;
+            DISCARD_TOOL(store, state, cardList, this);
           }
         });
       }

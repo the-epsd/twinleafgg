@@ -78,13 +78,6 @@ export declare class UseStadiumEffect implements Effect {
     stadium: Card;
     constructor(player: Player, stadium: Card);
 }
-export declare class useToolEffect implements Effect {
-    readonly type: string;
-    preventDefault: boolean;
-    player: Player;
-    tool: Card;
-    constructor(player: Player, tool: Card);
-}
 export declare class AttackEffect implements Effect {
     readonly type: string;
     preventDefault: boolean;

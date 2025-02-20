@@ -39,6 +39,7 @@ __exportStar(require("./store/prompts/attach-energy-prompt"), exports);
 __exportStar(require("./store/prompts/choose-attack-prompt"), exports);
 __exportStar(require("./store/prompts/choose-cards-prompt"), exports);
 __exportStar(require("./store/prompts/choose-energy-prompt"), exports);
+__exportStar(require("./store/prompts/choose-tool-prompt"), exports);
 __exportStar(require("./store/prompts/choose-pokemon-prompt"), exports);
 __exportStar(require("./store/prompts/choose-prize-prompt"), exports);
 __exportStar(require("./store/prompts/coin-flip-prompt"), exports);

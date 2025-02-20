@@ -9,7 +9,7 @@ import { StateUtils } from '../../game/store/state-utils';
 import { PlayerType } from '../../game/store/actions/play-card-action';
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
-import {ADD_CONFUSION_TO_PLAYER_ACTIVE, ADD_POISON_TO_PLAYER_ACTIVE, WAS_ATTACK_USED} from '../../game/store/prefabs/prefabs';
+import { ADD_CONFUSION_TO_PLAYER_ACTIVE, ADD_POISON_TO_PLAYER_ACTIVE, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Garbodor extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -48,12 +48,12 @@ export class Garbodor extends PokemonCard {
 
       let isGarbodorWithToolInPlay = false;
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-        if (card === this && cardList.tool !== undefined) {
+        if (card === this && cardList.tools.length !== 0) {
           isGarbodorWithToolInPlay = true;
         }
       });
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
-        if (card === this && cardList.tool !== undefined) {
+        if (card === this && cardList.tools.length !== 0) {
           isGarbodorWithToolInPlay = true;
         }
       });
@@ -75,7 +75,7 @@ export class Garbodor extends PokemonCard {
     }
 
     // Offensive Bomb
-    if (WAS_ATTACK_USED(effect, 0, this)){
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       ADD_CONFUSION_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);
       ADD_POISON_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);
     }

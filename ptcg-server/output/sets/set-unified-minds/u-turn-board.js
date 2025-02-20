@@ -32,7 +32,7 @@ class UTurnBoard extends trainer_card_1.TrainerCard {
             const player = effect.player;
             player.marker.addMarker(this.U_TURN_BOARD_MARKER, this);
         }
-        if (effect instanceof check_effects_1.CheckRetreatCostEffect && effect.player.active.tool === this) {
+        if (effect instanceof check_effects_1.CheckRetreatCostEffect && effect.player.active.tools.includes(this)) {
             if (effect.cost.length === 0) {
                 effect.cost = [];
             }
@@ -56,7 +56,7 @@ class UTurnBoard extends trainer_card_1.TrainerCard {
     }
 }
 exports.UTurnBoard = UTurnBoard;
-// if (effect instanceof ToolEffect && effect.player.active.tool === this) {
+// if (effect instanceof ToolEffect && effect.player.active.tools.includes(this)) {
 //   const player = effect.player;
 //   player.marker.addMarker(this.U_TURN_BOARD_MARKER, this);
 // }

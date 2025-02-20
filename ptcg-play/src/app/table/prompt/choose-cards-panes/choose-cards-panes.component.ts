@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnChanges, ElementRef, ViewChild } from '@angular/core';
-import { Card, ChooseCardsPrompt, ChooseEnergyPrompt, ChoosePrizePrompt, DiscardEnergyPrompt, EnergyCard } from 'ptcg-server';
+import { Card, ChooseCardsPrompt, ChooseEnergyPrompt, ChooseToolPrompt, ChoosePrizePrompt, DiscardEnergyPrompt, EnergyCard } from 'ptcg-server';
 import { DraggedItem } from '@ng-dnd/sortable';
 
 import { CardsBaseService } from '../../../shared/cards/cards-base.service';
@@ -165,6 +165,7 @@ export class ChooseCardsPanesComponent implements OnChanges {
 
   private buildFilterMap(cards: Card[], filter: Partial<Card>, blocked: number[]) {
     const filterMap: { [fullName: string]: boolean } = {};
+
     for (let i = 0; i < cards.length; i++) {
       const card = cards[i];
       let isBlocked = blocked.includes(i);

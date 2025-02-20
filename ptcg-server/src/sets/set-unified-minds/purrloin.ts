@@ -1,59 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, CardTarget, PlayerType, GameMessage, PokemonCardList, ChoosePokemonPrompt, SlotType } from '../../game';
+import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-
-function* useCleaningUp(next: Function, store: StoreLike, state: State, effect: AttackEffect): IterableIterator<State> {
-  const player = effect.player;
-  const opponent = StateUtils.getOpponent(state, player);
-
-  let pokemonsWithTool = 0;
-  const blocked: CardTarget[] = [];
-  player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-    if (cardList.tool !== undefined) {
-      pokemonsWithTool += 1;
-    } else {
-      blocked.push(target);
-    }
-  });
-  opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-    if (cardList.tool !== undefined) {
-      pokemonsWithTool += 1;
-    } else {
-      blocked.push(target);
-    }
-  });
-  // We will discard this card after prompt confirmation
-  effect.preventDefault = true;
-
-  const max = Math.min(1, pokemonsWithTool);
-  let targets: PokemonCardList[] = [];
-  yield store.prompt(state, new ChoosePokemonPrompt(
-    player.id,
-    GameMessage.CHOOSE_POKEMON_TO_DISCARD_CARDS,
-    PlayerType.ANY,
-    [ SlotType.ACTIVE, SlotType.BENCH ],
-    { min: 1, max: max, allowCancel: true, blocked }
-  ), results => {
-    targets = results || [];
-    next();
-  });
-
-  if (targets.length === 0) {
-    return state;
-  }
-
-  targets.forEach(target => {
-    const owner = StateUtils.findOwner(state, target);
-    if (target.tool !== undefined) {
-      target.moveCardTo(target.tool, owner.discard);
-      target.tool = undefined;
-    }
-  });
-
-  return state;
-}
+import { DISCARD_TOOLS_FROM_OPPONENTS_POKEMON } from '../../game/store/prefabs/prefabs';
 
 export class Purrloin extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -77,10 +27,10 @@ export class Purrloin extends PokemonCard {
   public fullName: string = 'Purrloin UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    
-    if(effect instanceof AttackEffect && effect.attack === this.attacks[0]) { 
-      const generator = useCleaningUp(() => generator.next(), store, state, effect);
-      return generator.next().value;
+
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+      const player = effect.player;
+      return DISCARD_TOOLS_FROM_OPPONENTS_POKEMON(store, state, player, 0, 2);
     }
 
     return state;

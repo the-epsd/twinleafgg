@@ -15,9 +15,7 @@ class CardListSerializer {
         let constructorName = 'CardList';
         if (cardList instanceof pokemon_card_list_1.PokemonCardList) {
             constructorName = 'PokemonCardList';
-            if (cardList.tool !== undefined) {
-                data.tool = cardList.tool.id;
-            }
+            data.tools = cardList.tools.map(tool => tool.id);
         }
         return Object.assign(Object.assign({}, data), { _type: constructorName, cards: cardList.cards.map(card => card.id) });
     }
@@ -26,9 +24,8 @@ class CardListSerializer {
             ? new pokemon_card_list_1.PokemonCardList()
             : new card_list_1.CardList();
         delete data._type;
-        if (data.tool !== undefined) {
-            data.tool = this.fromIndex(data.tool, context);
-        }
+        const toolIds = data.tools;
+        data.tools = toolIds.map(index => this.fromIndex(index, context));
         const indexes = data.cards;
         data.cards = indexes.map(index => this.fromIndex(index, context));
         return Object.assign(instance, data);

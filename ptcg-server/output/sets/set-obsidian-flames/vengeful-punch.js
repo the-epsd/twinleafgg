@@ -20,7 +20,7 @@ class VengefulPunch extends trainer_card_1.TrainerCard {
         this.damageDealt = false;
     }
     reduceEffect(store, state, effect) {
-        /*if (effect instanceof AfterDamageEffect && effect.target.tool === this) {
+        /*if (effect instanceof AfterDamageEffect && effect.target.tools.includes(this)) {
           const player = effect.player;
           const targetPlayer = StateUtils.findOwner(state, effect.target);
       
@@ -40,9 +40,9 @@ class VengefulPunch extends trainer_card_1.TrainerCard {
           }
         }*/
         if ((effect instanceof attack_effects_1.DealDamageEffect || effect instanceof attack_effects_1.PutDamageEffect) &&
-            effect.target.tool === this) {
+            effect.target.tools.includes(this)) {
             const player = game_1.StateUtils.getOpponent(state, effect.player);
-            if (player.active.tool === this) {
+            if (player.active.tools.includes(this)) {
                 this.damageDealt = true;
             }
         }

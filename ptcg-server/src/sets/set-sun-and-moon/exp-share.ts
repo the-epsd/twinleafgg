@@ -50,15 +50,13 @@ export class ExpShare extends TrainerCard {
         return state;
       }
 
-
-
       let expShareCount = 0;
       const blockedTo: CardTarget[] = [];
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
         if (cardList === effect.target) {
           return;
         }
-        if (cardList.tool instanceof ExpShare) {
+        if (cardList.tools.some(tool => tool instanceof ExpShare)) {
           expShareCount++;
         } else {
           blockedTo.push(target);

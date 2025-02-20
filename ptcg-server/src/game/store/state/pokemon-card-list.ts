@@ -1,7 +1,9 @@
+import { Shedinja } from '../../../sets/set-lost-thunder/shedinja';
+import { UnownQ } from '../../../sets/set-majestic-dawn/unown-q';
 import { Card } from '../card/card';
 import { BoardEffect, CardTag, SpecialCondition, Stage, SuperType } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
-import { Attack, Power } from '../card/pokemon-types';
+import { TrainerCard } from '../card/trainer-card';
 import { CardList } from './card-list';
 import { Marker } from './card-marker';
 
@@ -57,14 +59,15 @@ export class PokemonCardList extends CardList {
 
   // Some pokemon cards can be attached as a tool and stadium,
   // we must remember, which card acts as a pokemon tool.
-  public tool: Card | undefined;
+  public tools: Card[] = [];
+  public maxTools: number = 1;
   public stadium: Card | undefined;
   isActivatingCard: boolean = false;
 
   public getPokemons(): PokemonCard[] {
     const result: PokemonCard[] = [];
     for (const card of this.cards) {
-      if (card.superType === SuperType.POKEMON && card !== this.tool) {
+      if (card.superType === SuperType.POKEMON && !(this.tools.includes(card))) {
         result.push(card as PokemonCard);
       } else if (card.name === 'Lillie\'s Poké Doll') {
         result.push(card as PokemonCard);
@@ -140,8 +143,8 @@ export class PokemonCardList extends CardList {
     if (this.cards.length === 0) {
       this.damage = 0;
     }
-    if (this.tool && !this.cards.includes(this.tool)) {
-      this.tool = undefined;
+    if (!this.cards.some(card => this.tools.includes(card))) {
+      this.tools = [];
     }
   }
 
@@ -269,18 +272,16 @@ export class PokemonCardList extends CardList {
     return this.cards.some(c => c.tags.includes(CardTag.ETHANS));
   }
 
-  getToolEffect(): Power | Attack | undefined {
-    if (!this.tool) {
-      return;
+  removeTool(tool: Card): void {
+    const index = this.tools.indexOf(tool);
+    if (index !== -1) {
+      this.tools.splice(index, 1);
     }
-
-    const toolCard = this.tool.cards;
-
-    if (toolCard instanceof PokemonCard) {
-      return toolCard.powers[0] || toolCard.attacks[0];
+    if (!(tool instanceof TrainerCard)) {
+      if (tool instanceof Shedinja || tool instanceof UnownQ) {
+        tool.trainerType = undefined;
+      }
     }
-
-    return;
   }
 
 }

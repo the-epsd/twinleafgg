@@ -27,7 +27,7 @@ export class Leftovers extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof EndTurnEffect && effect.player.active.tool === this) {
+    if (effect instanceof EndTurnEffect && effect.player.active.tools.includes(this)) {
       const player = effect.player;
       const healEffect = new HealEffect(player, player.active, 20);
       store.reduceEffect(state, healEffect);

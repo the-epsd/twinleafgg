@@ -18,7 +18,7 @@ class LuckyHelmet extends trainer_card_1.TrainerCard {
         this.text = 'If the Pokémon this card is attached to is in the Active Spot and is damaged by an attack from your opponent\'s Pokémon (even if it is Knocked Out), draw 2 cards.';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof attack_effects_1.AfterDamageEffect && effect.target.tool === this) {
+        if (effect instanceof attack_effects_1.AfterDamageEffect && effect.target.tools.includes(this)) {
             const player = effect.player;
             const opponent = state_utils_1.StateUtils.getOpponent(state, player);
             const targetPlayer = state_utils_1.StateUtils.findOwner(state, effect.target);

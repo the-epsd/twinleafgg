@@ -132,7 +132,7 @@ export declare function SELECT_PROMPT(store: StoreLike, state: State, player: Pl
 export declare function SELECT_PROMPT_WITH_OPTIONS(store: StoreLike, state: State, player: Player, options: {
     message: GameMessage;
     action: () => void;
-}[]): State;
+}[], message?: GameMessage): State;
 export declare function CONFIRMATION_PROMPT(store: StoreLike, state: State, player: Player, callback: (result: boolean) => void, message?: GameMessage): State;
 export declare function COIN_FLIP_PROMPT(store: StoreLike, state: State, player: Player, callback: (result: boolean) => void): State;
 export declare function MULTIPLE_COIN_FLIPS_PROMPT(store: StoreLike, state: State, player: Player, amount: number, callback: (results: boolean[]) => void): State;
@@ -171,3 +171,8 @@ export declare function MOVE_CARDS(store: StoreLike, state: State, source: CardL
     toBottom?: boolean;
     skipCleanup?: boolean;
 }): State;
+export declare function DISCARD_TOOL(store: StoreLike, state: State, source: PokemonCardList, tool: Card): State;
+export declare function LOST_ZONE_TOOL(store: StoreLike, state: State, source: PokemonCardList, tool: Card): State;
+export declare function DISCARD_TOOLS_PROMPT(store: StoreLike, state: State, player: Player, tools: Card[], min: number, max: number): State;
+export declare function DISCARD_TOOLS_FROM_ALL_POKEMON(store: StoreLike, state: State, player: Player, min: number, max: number): State;
+export declare function DISCARD_TOOLS_FROM_OPPONENTS_POKEMON(store: StoreLike, state: State, player: Player, min: number, max: number): State;

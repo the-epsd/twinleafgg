@@ -6,6 +6,7 @@ const card_types_1 = require("../../game/store/card/card-types");
 const trainer_card_1 = require("../../game/store/card/trainer-card");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const check_effects_1 = require("../../game/store/effects/check-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class FocusSash extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -19,7 +20,7 @@ class FocusSash extends trainer_card_1.TrainerCard {
         this.canDiscard = false;
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof attack_effects_1.DealDamageEffect && effect.target.tool === this && effect.player.marker.hasMarker(effect.player.DAMAGE_DEALT_MARKER)) {
+        if (effect instanceof attack_effects_1.DealDamageEffect && effect.target.tools.includes(this) && effect.player.marker.hasMarker(effect.player.DAMAGE_DEALT_MARKER)) {
             const player = effect.player;
             const targetPlayer = game_1.StateUtils.findOwner(state, effect.target);
             const cardList = game_1.StateUtils.findCardList(state, this);
@@ -38,8 +39,7 @@ class FocusSash extends trainer_card_1.TrainerCard {
             if (this.canDiscard) {
                 player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card, index) => {
                     if (cardList.cards.includes(this)) {
-                        cardList.moveCardTo(this, player.discard);
-                        cardList.tool = undefined;
+                        prefabs_1.DISCARD_TOOL(store, state, cardList, this);
                     }
                 });
             }

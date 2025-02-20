@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
+import { Stage, CardType, TrainerType } from '../../game/store/card/card-types';
 import {
   PowerType, StoreLike, State, GameError, GameMessage, StateUtils,
   PokemonCardList, CardTarget, PlayerType, ChoosePokemonPrompt, SlotType
@@ -26,7 +26,7 @@ function* usePower(next: Function, store: StoreLike, state: State, self: UnownQ,
   let hasPokemonWithoutTool = false;
   const blocked: CardTarget[] = [];
   player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-    if (cardList.tool === undefined && card !== self) {
+    if (cardList.tools.length === 0 && card !== self) {
       hasPokemonWithoutTool = true;
     } else {
       blocked.push(target);
@@ -48,7 +48,8 @@ function* usePower(next: Function, store: StoreLike, state: State, self: UnownQ,
     if (targets && targets.length > 0) {
       // Attach Unown Q as a Pokemon Tool
       player.bench[benchIndex].moveCardTo(pokemonCard, targets[0]);
-      targets[0].tool = pokemonCard;
+      targets[0].tools.push(pokemonCard);
+      self.trainerType = TrainerType.TOOL;
 
       // Discard other cards
       player.bench[benchIndex].moveTo(player.discard);
@@ -98,13 +99,15 @@ export class UnownQ extends PokemonCard {
 
   public setNumber: string = '49';
 
+  public trainerType: TrainerType | undefined;
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const generator = usePower(() => generator.next(), store, state, this, effect);
       return generator.next().value;
     }
 
-    if (effect instanceof CheckRetreatCostEffect && effect.player.active.tool === this) {
+    if (effect instanceof CheckRetreatCostEffect && effect.player.active.tools.includes(this)) {
       const index = effect.cost.indexOf(CardType.COLORLESS);
       if (index !== -1) {
         effect.cost.splice(index, 1);

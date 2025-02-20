@@ -1,6 +1,7 @@
 import { CardTarget, ChooseCardsPrompt, ChoosePokemonPrompt, EnergyCard, EnergyType, GameError, GameMessage, PlayerType, SlotType, State, StateUtils, StoreLike, SuperType, TrainerCard, TrainerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { DISCARD_TOOLS_PROMPT } from '../../game/store/prefabs/prefabs';
 
 export class Ruffian extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -48,27 +49,21 @@ export class Ruffian extends TrainerCard {
         if (!targets || targets.length === 0) {
           return;
         }
-        
+
         const target = targets[0];
 
         // removing the tool
-        if (target.tool !== undefined){
-          target.cards.forEach(card => {
-            if (card instanceof TrainerCard && card.trainerType === TrainerType.TOOL){
-              target.moveCardTo(card, opponent.discard);
-              target.tool = undefined;
-              return;
-            }
-          });
+        if (target.tools.length !== 0) {
+          DISCARD_TOOLS_PROMPT(store, state, player, target.tools, 1, 1);
         }
 
         // removing special energies
         let specialEnergies = 0;
         target.cards.forEach(card => {
-          if (card instanceof EnergyCard && card.energyType === EnergyType.SPECIAL){ specialEnergies++; }
+          if (card instanceof EnergyCard && card.energyType === EnergyType.SPECIAL) { specialEnergies++; }
         });
 
-        if (specialEnergies > 0){
+        if (specialEnergies > 0) {
           store.prompt(state, new ChooseCardsPrompt(
             player,
             GameMessage.CHOOSE_CARD_TO_DISCARD,

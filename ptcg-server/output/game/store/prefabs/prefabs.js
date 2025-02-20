@@ -12,7 +12,7 @@ var __rest = (this && this.__rest) || function (s, e) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SIMULATE_COIN_FLIP = exports.MULTIPLE_COIN_FLIPS_PROMPT = exports.COIN_FLIP_PROMPT = exports.CONFIRMATION_PROMPT = exports.SELECT_PROMPT_WITH_OPTIONS = exports.SELECT_PROMPT = exports.SHOW_CARDS_TO_PLAYER = exports.MOVE_CARDS_TO_HAND = exports.LOOK_AT_TOPDECK_AND_DISCARD_OR_RETURN = exports.SWITCH_ACTIVE_WITH_BENCHED = exports.MOVE_CARD_TO = exports.CAN_EVOLVE_ON_FIRST_TURN_GOING_SECOND = exports.IS_ABILITY_BLOCKED = exports.GET_CARDS_ON_BOTTOM_OF_DECK = exports.SEARCH_DECK_FOR_CARDS_TO_HAND = exports.DRAW_CARDS_AS_FACE_DOWN_PRIZES = exports.DRAW_CARDS_UNTIL_CARDS_IN_HAND = exports.DRAW_CARDS = exports.SHUFFLE_PRIZES_INTO_DECK = exports.SHUFFLE_CARDS_INTO_DECK = exports.SHUFFLE_DECK = exports.GET_PRIZES_AS_CARD_ARRAY = exports.GET_PLAYER_PRIZES = exports.DISCARD_ALL_ENERGY_FROM_POKEMON = exports.DISCARD_X_ENERGY_FROM_YOUR_HAND = exports.ATTACH_ENERGY_FROM_DISCARD = exports.ATTACH_ENERGY_FROM_DECK = exports.THIS_POKEMON_DOES_DAMAGE_TO_ITSELF = exports.THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_BENCHED_POKEMON = exports.PLAY_POKEMON_FROM_HAND_TO_BENCH = exports.TAKE_X_MORE_PRIZE_CARDS = exports.TAKE_X_PRIZES = exports.TAKE_SPECIFIC_PRIZES = exports.YOUR_OPPONENTS_POKEMON_IS_KNOCKED_OUT_BY_DAMAGE_FROM_THIS_ATTACK = exports.THIS_POKEMON_HAS_ANY_DAMAGE_COUNTERS_ON_IT = exports.HEAL_X_DAMAGE_FROM_THIS_POKEMON = exports.DEAL_MORE_DAMAGE_FOR_EACH_PRIZE_CARD_TAKEN = exports.DEAL_MORE_DAMAGE_IF_OPPONENT_ACTIVE_HAS_CARD_TAG = exports.THIS_ATTACK_DOES_X_MORE_DAMAGE = exports.SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND = exports.SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH = exports.DISCARD_A_STADIUM_CARD_IN_PLAY = exports.PASSIVE_ABILITY_ACTIVATED = exports.ABILITY_USED = exports.JUST_EVOLVED = exports.AFTER_ATTACK = exports.WAS_POWER_USED = exports.PUT_DAMAGE = exports.DEAL_DAMAGE = exports.WAS_ATTACK_USED = void 0;
-exports.MOVE_CARDS = exports.BLOCK_RETREAT_IF_MARKER = exports.CLEAR_MARKER_AND_OPPONENTS_POKEMON_MARKER_AT_END_OF_TURN = exports.REPLACE_MARKER_AT_END_OF_TURN = exports.REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN = exports.REMOVE_MARKER_AT_END_OF_TURN = exports.PREVENT_DAMAGE_IF_TARGET_HAS_MARKER = exports.BLOCK_EFFECT_IF_MARKER = exports.HAS_MARKER = exports.REMOVE_MARKER = exports.ADD_MARKER = exports.ADD_CONFUSION_TO_PLAYER_ACTIVE = exports.ADD_PARALYZED_TO_PLAYER_ACTIVE = exports.ADD_BURN_TO_PLAYER_ACTIVE = exports.ADD_POISON_TO_PLAYER_ACTIVE = exports.ADD_SLEEP_TO_PLAYER_ACTIVE = exports.ADD_SPECIAL_CONDITIONS_TO_PLAYER_ACTIVE = exports.BLOCK_IF_GX_ATTACK_USED = exports.BLOCK_IF_DISCARD_EMPTY = exports.BLOCK_IF_DECK_EMPTY = exports.BLOCK_IF_NO_SLOTS = exports.GET_PLAYER_BENCH_SLOTS = exports.GET_FIRST_PLAYER_BENCH_SLOT = void 0;
+exports.DISCARD_TOOLS_FROM_OPPONENTS_POKEMON = exports.DISCARD_TOOLS_FROM_ALL_POKEMON = exports.DISCARD_TOOLS_PROMPT = exports.LOST_ZONE_TOOL = exports.DISCARD_TOOL = exports.MOVE_CARDS = exports.BLOCK_RETREAT_IF_MARKER = exports.CLEAR_MARKER_AND_OPPONENTS_POKEMON_MARKER_AT_END_OF_TURN = exports.REPLACE_MARKER_AT_END_OF_TURN = exports.REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN = exports.REMOVE_MARKER_AT_END_OF_TURN = exports.PREVENT_DAMAGE_IF_TARGET_HAS_MARKER = exports.BLOCK_EFFECT_IF_MARKER = exports.HAS_MARKER = exports.REMOVE_MARKER = exports.ADD_MARKER = exports.ADD_CONFUSION_TO_PLAYER_ACTIVE = exports.ADD_PARALYZED_TO_PLAYER_ACTIVE = exports.ADD_BURN_TO_PLAYER_ACTIVE = exports.ADD_POISON_TO_PLAYER_ACTIVE = exports.ADD_SLEEP_TO_PLAYER_ACTIVE = exports.ADD_SPECIAL_CONDITIONS_TO_PLAYER_ACTIVE = exports.BLOCK_IF_GX_ATTACK_USED = exports.BLOCK_IF_DISCARD_EMPTY = exports.BLOCK_IF_DECK_EMPTY = exports.BLOCK_IF_NO_SLOTS = exports.GET_PLAYER_BENCH_SLOTS = exports.GET_FIRST_PLAYER_BENCH_SLOT = void 0;
 const __1 = require("../..");
 const card_types_1 = require("../card/card-types");
 const attack_effects_1 = require("../effects/attack-effects");
@@ -485,8 +485,8 @@ function SELECT_PROMPT(store, state, player, values, callback) {
     return store.prompt(state, new __1.SelectPrompt(player.id, __1.GameMessage.CHOOSE_OPTION, values, { allowCancel: false }), callback);
 }
 exports.SELECT_PROMPT = SELECT_PROMPT;
-function SELECT_PROMPT_WITH_OPTIONS(store, state, player, options) {
-    return store.prompt(state, new __1.SelectPrompt(player.id, __1.GameMessage.CHOOSE_OPTION, options.map(opt => opt.message), { allowCancel: false }), choice => {
+function SELECT_PROMPT_WITH_OPTIONS(store, state, player, options, message = __1.GameMessage.CHOOSE_OPTION) {
+    return store.prompt(state, new __1.SelectPrompt(player.id, message, options.map(opt => opt.message), { allowCancel: false }), choice => {
         const option = options[choice];
         option.action();
     });
@@ -632,3 +632,62 @@ function MOVE_CARDS(store, state, source, destination, options = {}) {
     return store.reduceEffect(state, new game_effects_2.MoveCardsEffect(source, destination, options));
 }
 exports.MOVE_CARDS = MOVE_CARDS;
+function DISCARD_TOOL(store, state, source, tool) {
+    if (!source.cards.includes(tool)) {
+        return state;
+    }
+    const owner = __1.StateUtils.findOwner(state, source);
+    state = MOVE_CARDS(store, state, source, owner.discard, { cards: [tool] });
+    source.removeTool(tool);
+    return state;
+}
+exports.DISCARD_TOOL = DISCARD_TOOL;
+function LOST_ZONE_TOOL(store, state, source, tool) {
+    if (!source.cards.includes(tool)) {
+        return state;
+    }
+    const owner = __1.StateUtils.findOwner(state, source);
+    state = MOVE_CARDS(store, state, source, owner.lostzone, { cards: [tool] });
+    source.removeTool(tool);
+    return state;
+}
+exports.LOST_ZONE_TOOL = LOST_ZONE_TOOL;
+function DISCARD_TOOLS_PROMPT(store, state, player, tools, min, max) {
+    if (tools.length === 0) {
+        return state;
+    }
+    return store.prompt(state, new __1.ChooseToolPrompt(player.id, __1.GameMessage.CHOOSE_POKEMON_TO_DISCARD_CARDS, tools, { min, max: Math.min(max, tools.length), allowCancel: false }), results => {
+        const tools = results || [];
+        if (tools.length === 0) {
+            return state;
+        }
+        tools.forEach(tool => {
+            const owner = __1.StateUtils.findCardList(state, tool);
+            if (owner instanceof __1.PokemonCardList && owner.tools.length !== 0) {
+                DISCARD_TOOL(store, state, owner, tool);
+            }
+        });
+    });
+}
+exports.DISCARD_TOOLS_PROMPT = DISCARD_TOOLS_PROMPT;
+function DISCARD_TOOLS_FROM_ALL_POKEMON(store, state, player, min, max) {
+    const opponent = __1.StateUtils.getOpponent(state, player);
+    let allTools = [];
+    player.forEachPokemon(__1.PlayerType.BOTTOM_PLAYER, (cardList) => {
+        allTools.push(...cardList.tools);
+    });
+    opponent.forEachPokemon(__1.PlayerType.TOP_PLAYER, (cardList) => {
+        allTools.push(...cardList.tools);
+    });
+    return DISCARD_TOOLS_PROMPT(store, state, player, allTools, min, max);
+}
+exports.DISCARD_TOOLS_FROM_ALL_POKEMON = DISCARD_TOOLS_FROM_ALL_POKEMON;
+function DISCARD_TOOLS_FROM_OPPONENTS_POKEMON(store, state, player, min, max) {
+    const opponent = __1.StateUtils.getOpponent(state, player);
+    let allTools = [];
+    opponent.forEachPokemon(__1.PlayerType.TOP_PLAYER, (cardList) => {
+        allTools.push(...cardList.tools);
+    });
+    return DISCARD_TOOLS_PROMPT(store, state, player, allTools, min, max);
+}
+exports.DISCARD_TOOLS_FROM_OPPONENTS_POKEMON = DISCARD_TOOLS_FROM_OPPONENTS_POKEMON;
