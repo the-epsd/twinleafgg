@@ -59,8 +59,6 @@ export class WoChienex extends PokemonCard {
         return state;
       }
 
-      const prizesTaken = 6 - opponent.getPrizeLeft();
-
       const damagePerPrize = 60;
 
       return store.prompt(state, new ChoosePokemonPrompt(
@@ -72,7 +70,7 @@ export class WoChienex extends PokemonCard {
       ), selected => {
         const targets = selected || [];
         targets.forEach(target => {
-          const damageEffect = new PutDamageEffect(effect, damagePerPrize * prizesTaken);
+          const damageEffect = new PutDamageEffect(effect, damagePerPrize * opponent.prizesTaken);
           damageEffect.target = target;
           store.reduceEffect(state, damageEffect);
         });

@@ -6,6 +6,7 @@ const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class ZamazentaV extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -22,15 +23,13 @@ class ZamazentaV extends pokemon_card_1.PokemonCard {
                 powerType: game_1.PowerType.ABILITY,
                 text: 'Once during your turn, you may discard your hand and draw 5 cards. If you use this Ability, your turn ends.'
             }];
-        this.attacks = [
-            {
+        this.attacks = [{
                 name: 'Revenge Blast',
                 cost: [card_types_1.CardType.METAL, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
                 damage: 120,
                 damageCalculation: '+',
                 text: 'This attack does 30 more damage for each Prize card your opponent has taken.'
-            },
-        ];
+            }];
         this.set = 'CRZ';
         this.regulationMark = 'F';
         this.cardImage = 'assets/cardback.png';
@@ -50,12 +49,8 @@ class ZamazentaV extends pokemon_card_1.PokemonCard {
             store.reduceEffect(state, endTurnEffect);
             return state;
         }
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
-            const player = effect.player;
-            const opponent = game_1.StateUtils.getOpponent(state, player);
-            const prizesTaken = 6 - opponent.getPrizeLeft();
-            const damagePerPrize = 30;
-            effect.damage += prizesTaken * damagePerPrize;
+        if (prefabs_1.WAS_ATTACK_USED(effect, 0, this)) {
+            prefabs_1.DEAL_MORE_DAMAGE_FOR_EACH_PRIZE_CARD_TAKEN(effect, state, 30);
         }
         return state;
     }

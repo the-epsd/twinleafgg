@@ -100,9 +100,8 @@ class Pecharuntex extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            const prizesTaken = 6 - opponent.getPrizeLeft();
             const damagePerPrize = 60;
-            effect.damage = prizesTaken * damagePerPrize;
+            effect.damage = opponent.prizesTaken * damagePerPrize;
         }
         if (effect instanceof check_effects_1.CheckTableStateEffect) {
             state.players.forEach(player => {

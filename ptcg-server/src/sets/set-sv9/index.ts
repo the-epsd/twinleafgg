@@ -43,7 +43,7 @@ import { Mamoswineex } from './mamoswine-ex';
 import { Maractus } from './maractus';
 import { Meowscarada } from './meowscarada';
 import { NsCastle } from './ns-castle';
-import { NsDarmanitan } from './ns-darmanItan';
+import { NsDarmanitan } from './ns-darmanitan';
 import { NsDarumaka } from './ns-darumaka';
 import { NsJoltik } from './ns-joltik';
 import { NsKlang } from './ns-klang';

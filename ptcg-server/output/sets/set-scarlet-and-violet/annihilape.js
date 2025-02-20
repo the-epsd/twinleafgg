@@ -41,9 +41,8 @@ class Annihilape extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            const prizesTaken = 6 - opponent.getPrizeLeft();
             const damagePerPrize = 70;
-            effect.damage = this.attacks[0].damage + (prizesTaken * damagePerPrize);
+            effect.damage = this.attacks[0].damage + (opponent.prizesTaken * damagePerPrize);
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;

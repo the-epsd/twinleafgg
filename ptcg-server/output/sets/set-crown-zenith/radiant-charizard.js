@@ -7,6 +7,7 @@ const game_1 = require("../../game");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const check_effects_1 = require("../../game/store/effects/check-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class RadiantCharizard extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -48,101 +49,32 @@ class RadiantCharizard extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
             effect.player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
             effect.player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
-            console.log('marker cleared');
         }
         if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
             effect.player.marker.addMarker(this.ATTACK_USED_2_MARKER, this);
-            console.log('second marker added');
         }
         if (effect instanceof check_effects_1.CheckAttackCostEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            // const index = effect.cost.indexOf(CardType.COLORLESS);
-            // // No cost to reduce
-            // if (index === -1) {
-            //   return state;
-            // }
-            try {
-                const stub = new game_effects_1.PowerEffect(player, {
-                    name: 'test',
-                    powerType: game_1.PowerType.ABILITY,
-                    text: ''
-                }, this);
-                store.reduceEffect(state, stub);
-            }
-            catch (_a) {
-                console.log(effect.cost);
-                return state;
-            }
             const index = effect.cost.indexOf(card_types_1.CardType.COLORLESS);
             // No cost to reduce
-            if (index === -1) {
+            if (index === -1 || prefabs_1.IS_ABILITY_BLOCKED(store, state, player, this)) {
                 return state;
             }
-            const remainingPrizes = opponent.getPrizeLeft();
-            const prizeToColorlessReduction = {
-                5: 1,
-                4: 2,
-                3: 3,
-                2: 4,
-                1: 4
-            };
-            const colorlessToRemove = prizeToColorlessReduction[remainingPrizes] || 0;
-            for (let i = 0; i < colorlessToRemove; i++) {
+            for (let i = 0; i < opponent.prizesTaken; i++) {
                 const index = effect.cost.indexOf(card_types_1.CardType.COLORLESS);
                 if (index !== -1) {
                     effect.cost.splice(index, 1);
                 }
             }
-            console.log(effect.cost);
             return state;
         }
-        // if (effect instanceof KnockOutEffect) {
-        //   const player = effect.player;
-        //   const opponent = StateUtils.getOpponent(state, player);
-        //   const duringTurn = [GamePhase.PLAYER_TURN, GamePhase.ATTACK].includes(state.phase);
-        //   // Do not activate between turns, or when it's not opponents turn.
-        //   if (!duringTurn || state.players[state.activePlayer] !== opponent) {
-        //     return state;
-        //   }
-        //   const cardList = StateUtils.findCardList(state, this);
-        //   const owner = StateUtils.findOwner(state, cardList);
-        //   if (owner === player) {
-        //     try {
-        //       const stub = new PowerEffect(player, {
-        //         name: 'test',
-        //         powerType: PowerType.ABILITY,
-        //         text: ''
-        //       }, this);
-        //       store.reduceEffect(state, stub);
-        //     } catch {
-        //       return state;
-        //     }
-        //     const card = effect.target.getPokemonCard();
-        //     if (card !== undefined) {
-        //       let costToReduce = 1;
-        //       if (card.tags.includes(CardTag.POKEMON_EX) || card.tags.includes(CardTag.POKEMON_V) || card.tags.includes(CardTag.POKEMON_VSTAR) || card.tags.includes(CardTag.POKEMON_ex)) {
-        //         costToReduce += 1;
-        //       }
-        //       if (card.tags.includes(CardTag.POKEMON_VMAX)) {
-        //         costToReduce += 2;
-        //       }
-        //       const index = this.attacks[0].cost.indexOf(CardType.COLORLESS);
-        //       if (index !== -1) {
-        //         this.attacks[0].cost.splice(index, costToReduce);
-        //         console.log(this.attacks[0].cost);
-        //       }
-        //     }
-        //   }
-        // }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             // Check marker
             if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-                console.log('attack blocked');
                 throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);
             }
             effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
-            console.log('marker added');
         }
         return state;
     }
