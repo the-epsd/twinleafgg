@@ -188,44 +188,44 @@ export class BoardCardComponent {
 
 
   public onCardClick(card: Card) {
-    console.log('Card clicked:', {
-      card,
-      mainCard: this.mainCard,
-      cardList: this._cardList,
-      superType: this.mainCard?.superType
-    });
+    // console.log('Card clicked:', {
+    //   card,
+    //   mainCard: this.mainCard,
+    //   cardList: this._cardList,
+    //   superType: this.mainCard?.superType
+    // });
 
-    if (this.mainCard && this.mainCard.superType === SuperType.POKEMON) {
-      const pokemonCardList = this._cardList as PokemonCardList;
+    // if (this.mainCard && this.mainCard.superType === SuperType.POKEMON) {
+    //   const pokemonCardList = this._cardList as PokemonCardList;
 
-      const dialogData: CardInfoDialogData = {
-        cardList: pokemonCardList,
-        facedown: this.isFaceDown,
-        options: {
-          enableAbility: {
-            useWhenInPlay: true,
-            useFromHand: false,
-            useFromDiscard: false
-          },
-          enableAttack: true
-        }
-      };
+    //   const dialogData: CardInfoDialogData = {
+    //     cardList: pokemonCardList,
+    //     facedown: this.isFaceDown,
+    //     options: {
+    //       enableAbility: {
+    //         useWhenInPlay: true,
+    //         useFromHand: false,
+    //         useFromDiscard: false
+    //       },
+    //       enableAttack: true
+    //     }
+    //   };
 
-      console.log('Opening dialog with data:', dialogData);
+    //   console.log('Opening dialog with data:', dialogData);
 
-      const dialogRef = this.dialog.open(CardInfoDialogComponent, {
-        data: dialogData,
-        width: '850px',
-      });
+    //   const dialogRef = this.dialog.open(CardInfoDialogComponent, {
+    //     data: dialogData,
+    //     width: '850px',
+    //   });
 
-      dialogRef.afterClosed().subscribe(result => {
-        console.log('Dialog closed with result:', result);
-        if (result) {
-          this.cardClick.emit(card);
-        }
-      });
-    } else {
-      this.cardClick.emit(card);
-    }
+    //   dialogRef.afterClosed().subscribe(result => {
+    //     console.log('Dialog closed with result:', result);
+    //     if (result) {
+    //       this.cardClick.emit(card);
+    //     }
+    //   });
+    // } else {
+    this.cardClick.emit(card);
   }
 }
+
