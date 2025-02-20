@@ -6,6 +6,7 @@ const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
+const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class SolgaleoPrismStar extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -38,11 +39,18 @@ class SolgaleoPrismStar extends pokemon_card_1.PokemonCard {
         this.ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
     }
     reduceEffect(store, state, effect) {
+        // Remove markers when the pokemon is played
+        if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {
+            const player = effect.player;
+            player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
+            player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
+        }
+        // Prevent all attacks, including TMs
+        if (effect instanceof game_effects_1.UseAttackEffect && effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+            throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);
+        }
         // Radiant Star
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
-            if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-                throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);
-            }
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             const hasEnergyInDiscard = player.discard.cards.some(c => {
@@ -70,9 +78,6 @@ class SolgaleoPrismStar extends pokemon_card_1.PokemonCard {
         }
         // Corona Impact
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
-            if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-                throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);
-            }
             effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
         }
         if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {

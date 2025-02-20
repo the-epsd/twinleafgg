@@ -23,15 +23,15 @@ cardManager.defineSet(sets.setVendingSeries);
 cardManager.defineSet(sets.setBaseSetEnergy);
 
 //ex Era shit
-cardManager.defineSet(sets.setDragon);
-cardManager.defineSet(sets.setDragonFrontiers);
-cardManager.defineSet(sets.setDeoxys);
-cardManager.defineSet(sets.setUnseenForces);
-cardManager.defineSet(sets.setTeamRocketReturns);
-cardManager.defineSet(sets.setCrystalGuardians);
-cardManager.defineSet(sets.setPowerKeepers);
-cardManager.defineSet(sets.setFireRedLeafGreen);
-cardManager.defineSet(sets.setDeltaSpecies);
+cardManager.defineSet(sets.setEXDragon);
+cardManager.defineSet(sets.setEXDragonFrontiers);
+cardManager.defineSet(sets.setEXDeoxys);
+cardManager.defineSet(sets.setEXUnseenForces);
+cardManager.defineSet(sets.setEXTeamRocketReturns);
+cardManager.defineSet(sets.setEXCrystalGuardians);
+cardManager.defineSet(sets.setEXPowerKeepers);
+cardManager.defineSet(sets.setEXFireRedLeafGreen);
+cardManager.defineSet(sets.setEXDeltaSpecies);
 
 cardManager.defineSet(sets.setDiamondAndPearl);
 // cardManager.defineSet(sets.setOP9);

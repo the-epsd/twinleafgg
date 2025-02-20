@@ -259,6 +259,7 @@ export var GameLog;
     GameLog["LOG_HISUIAN_HEAVY_BALL"] = "LOG_HISUIAN_HEAVY_BALL";
     GameLog["LOG_SUDDEN_DEATH"] = "LOG_SUDDEN_DEATH";
     GameLog["LOG_PLAYER_CHOOSES"] = "LOG_PLAYER_CHOOSES";
+    GameLog["LOG_CARD_MOVED"] = "LOG_CARD_MOVED";
 })(GameLog || (GameLog = {}));
 // tslint:disable-next-line
 export const GameMessage = Object.assign(Object.assign(Object.assign({}, GameCoreError), GameStoreMessage), GameCardMessage);

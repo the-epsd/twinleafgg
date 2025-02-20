@@ -33,6 +33,7 @@ export class GiftEnergy extends EnergyCard {
     'If the Pokémon this card is attached to is Knocked Out by damage from an attack from your opponent\'s Pokémon, draw cards until you have 7 cards in your hand.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
     if (effect instanceof KnockOutEffect && effect.target.cards.includes(this)) {
       const player = effect.player;
 
@@ -64,8 +65,6 @@ export class GiftEnergy extends EnergyCard {
         player.marker.removeMarker(this.GIFT_ENERGY_MARKER);
       });
     }
-
     return state;
   }
-
 }

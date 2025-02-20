@@ -19,20 +19,17 @@ function* useNightJoker(next, store, state, effect) {
         selected = result;
         next();
     });
-    const attack = selected;
-    if (attack === null) {
-        return state;
-    }
-    if (attack.copycatAttack) {
-        return state;
+    // Validate selected attack
+    if (!selected || selected.copycatAttack) {
+        return state; // Exit if no valid attack is selected
     }
     store.log(state, game_1.GameLog.LOG_PLAYER_COPIES_ATTACK, {
         name: player.name,
-        attack: attack.name
+        attack: selected.name
     });
     // Perform attack
-    const attackEffect = new game_effects_1.AttackEffect(player, opponent, attack);
-    store.reduceEffect(state, attackEffect);
+    const attackEffect = new game_effects_1.AttackEffect(player, opponent, selected);
+    state = store.reduceEffect(state, attackEffect);
     if (store.hasPrompts()) {
         yield store.waitPrompt(state, () => next());
     }

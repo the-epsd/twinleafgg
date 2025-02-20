@@ -1,12 +1,13 @@
 import { GameMessage } from '../../game/game-message';
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { TrainerType, CardTag, BoardEffect } from '../../game/store/card/card-types';
+import { TrainerType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { PlayerType, SlotType } from '../../game';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 
 export class ScoopUpCyclone extends TrainerCard {
@@ -47,11 +48,8 @@ export class ScoopUpCyclone extends TrainerCard {
         const cardList = result.length > 0 ? result[0] : null;
         if (cardList !== null) {
           const pokemons = cardList.getPokemons();
-          cardList.clearEffects();
-          cardList.damage = 0;
-          cardList.moveCardsTo(pokemons, player.hand);
-          cardList.moveTo(player.hand);
-          cardList.removeBoardEffect(BoardEffect.ABILITY_USED);
+          MOVE_CARDS(store, state, cardList, player.hand);
+          MOVE_CARDS(store, state, cardList, player.hand, { cards: pokemons });
           player.supporter.moveCardTo(effect.trainerCard, player.discard);
         }
       });

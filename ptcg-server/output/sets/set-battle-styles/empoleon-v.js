@@ -5,7 +5,6 @@ const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
-const check_effects_1 = require("../../game/store/effects/check-effects");
 const game_message_1 = require("../../game/game-message");
 class EmpoleonV extends pokemon_card_1.PokemonCard {
     constructor() {
@@ -20,9 +19,7 @@ class EmpoleonV extends pokemon_card_1.PokemonCard {
         this.powers = [{
                 name: 'Emperor\'s Eyes',
                 powerType: game_1.PowerType.ABILITY,
-                text: 'As long as this Pokémon is your Active Pokémon, each Pokémon in ' +
-                    'play, in each player\'s hand, and in each player\'s discard pile has ' +
-                    'no Abilities (except for P Pokémon).'
+                text: 'As long as this Pokémon is in the Active Spot, your opponent\'s Basic Pokémon in play have no Abilities, except for Pokémon with a Rule Box(Pokémon V, Pokémon- GX, etc.have Rule Boxes).'
             }];
         this.attacks = [
             {
@@ -53,40 +50,34 @@ class EmpoleonV extends pokemon_card_1.PokemonCard {
                 }
             });
         }
-        if (effect instanceof game_effects_1.PowerEffect && effect.power.powerType === game_1.PowerType.ABILITY) {
+        if (effect instanceof game_effects_1.PowerEffect && effect.power.powerType === game_1.PowerType.ABILITY && effect.power.name !== 'Emperor\'s Eyes') {
             const player = effect.player;
+            const cardList = game_1.StateUtils.findCardList(state, this);
+            const owner = game_1.StateUtils.findOwner(state, cardList);
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            // Empoleon is not active Pokemon
-            if (player.active.getPokemonCard() !== this
-                && opponent.active.getPokemonCard() !== this) {
+            // Only proceed if Empoleon V is in the Active spot
+            if (owner.active.getPokemonCard() !== this) {
                 return state;
             }
-            const cardList = game_1.StateUtils.findCardList(state, effect.card);
-            if (cardList instanceof game_1.PokemonCardList) {
-                const checkPokemonType = new check_effects_1.CheckPokemonTypeEffect(cardList);
-                store.reduceEffect(state, checkPokemonType);
-            }
-            // We are not blocking the Abilities from Non-Basic Pokemon
-            if (effect.card.stage !== card_types_1.Stage.BASIC) {
+            // Only check opponent's Active Pokemon
+            if (player === owner || player.active.getPokemonCard() !== effect.card) {
                 return state;
             }
-            // We are not blocking the Abilities from Pokemon V, VMAX or VSTAR
-            //if (CardTag.POKEMON_V || CardTag.POKEMON_VMAX || CardTag.POKEMON_VSTAR || CardTag.POKEMON_EX || CardTag.POKEMON_GX || CardTag.POKEMON_ex || CardTag.POKEMON_LV_X || CardTag.RADIANT) {
-            //  return state;
-            //}
-            // Try reducing ability for each player  
+            // Check if the opponent's active Pokémon has a rule box
+            if (player.active.hasRuleBox() || opponent.active.hasRuleBox()) {
+                return state; // Return if the opponent's active Pokémon has a rule box
+            }
+            // Try reducing ability
             try {
-                const stub = new game_effects_1.PowerEffect(player, {
-                    name: 'test',
-                    powerType: game_1.PowerType.ABILITY,
-                    text: ''
-                }, this);
-                store.reduceEffect(state, stub);
+                const powerEffect = new game_effects_1.PowerEffect(player, this.powers[0], this);
+                store.reduceEffect(state, powerEffect);
             }
             catch (_a) {
+                return state;
+            }
+            if (!effect.power.exemptFromAbilityLock) {
                 throw new game_1.GameError(game_message_1.GameMessage.BLOCKED_BY_ABILITY);
             }
-            return state;
         }
         return state;
     }

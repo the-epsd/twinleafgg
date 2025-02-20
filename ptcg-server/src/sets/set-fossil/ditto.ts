@@ -2,7 +2,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { PowerType, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { CheckHpEffect, CheckRetreatCostEffect } from '../../game/store/effects/check-effects';
+import { CheckHpEffect, CheckRetreatCostEffect, CheckPokemonAttacksEffect, CheckPokemonPowersEffect } from '../../game/store/effects/check-effects';
 
 export class Ditto extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -28,41 +28,41 @@ export class Ditto extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof CheckHpEffect && effect.player.active.getPokemonCard() === this) {
+    // Handle HP check
+    if (effect instanceof CheckHpEffect && effect.player.active.cards.includes(this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-
       const opponentActiveHP = new CheckHpEffect(opponent, opponent.active);
-
-      effect.hp = opponentActiveHP.hp;
-
+      effect.hp = opponentActiveHP.hp; // Set Ditto's HP to opponent's active HP
     }
 
-    // Royal pain in my ass; coming back to this later
-    /*if (effect instanceof CheckPokemonAttacksEffect && effect.player.active.getPokemonCard() === this) {
+    // Handle Retreat Cost check
+    if (effect instanceof CheckRetreatCostEffect && effect.player.active.cards.includes(this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-
-      const opponentAttacks = new CheckPokemonAttacksEffect(opponent);
-
-      let thisAttackIndex = 0;
-      opponentAttacks.attacks.forEach((attacks, index, attackArray) => {
-        this.attacks.includes(attackArray[index]);
-        console.log(this.attacks[thisAttackIndex]);
-        thisAttackIndex++;
-      });
-    }*/
-
-    if (effect instanceof CheckRetreatCostEffect && effect.player.active.getPokemonCard() === this) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
       const opponentActiveRetreat = new CheckRetreatCostEffect(opponent);
-
-      effect.cost = opponentActiveRetreat.cost;
+      effect.cost = opponentActiveRetreat.cost; // Set Ditto's retreat cost to opponent's
     }
 
-    return state;
+    // Handle Attack checks
+    if (effect instanceof CheckPokemonAttacksEffect && effect.player.active.cards.includes(this)) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+      const opponentAttacks = new CheckPokemonAttacksEffect(opponent);
+      // Copy opponent's attacks to effect.attacks instead of this.attacks
+      effect.attacks = [...opponentAttacks.attacks];
+    }
+
+    // Handle Power checks
+    if (effect instanceof CheckPokemonPowersEffect && effect.player.active.cards.includes(this)) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+      const opponentPowers = new CheckPokemonPowersEffect(player, opponent.active);
+      // Logic to copy opponent's powers to Ditto's powers
+      this.powers = [...opponentPowers.powers]; // Example of copying powers
+    }
+
+    return state; // Return the updated state
   }
 
 }
