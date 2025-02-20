@@ -54,7 +54,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
   return store.prompt(state, new AttachEnergyPrompt(
     player.id,
-    GameMessage.ATTACH_ENERGY_TO_BENCH,
+    GameMessage.ATTACH_ENERGY_CARDS,
     player.discard,
     PlayerType.BOTTOM_PLAYER,
     [SlotType.BENCH, SlotType.ACTIVE],

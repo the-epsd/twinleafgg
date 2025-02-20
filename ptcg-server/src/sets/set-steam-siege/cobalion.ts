@@ -4,8 +4,8 @@ import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { DEAL_MORE_DAMAGE_FOR_EACH_PRIZE_CARD_TAKEN, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Cobalion extends PokemonCard {
 
@@ -16,23 +16,23 @@ export class Cobalion extends PokemonCard {
   public hp: number = 120;
 
   public weakness = [{ type: CardType.FIRE }];
-  
+
   public resistance = [{ type: CardType.PSYCHIC, value: -20 }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Quick Guard',
-      cost: [ CardType.METAL ],
+      cost: [CardType.METAL],
       damage: 0,
       text: 'Prevent all damage done to this Pokémon by attacks from Basic Pokémon during your opponent\'s next turn. This Pokémon can\'t use Quick Guard during your next turn.',
     },
     {
       name: 'Revenge Blast',
-      cost: [ CardType.METAL, CardType.METAL ],
+      cost: [CardType.METAL, CardType.METAL],
       damage: 30,
-      damageCalculation: '+',      
+      damageCalculation: '+',
       text: 'This attack does 30 more damage for each Prize card your opponent has taken.',
     },
   ];
@@ -46,13 +46,13 @@ export class Cobalion extends PokemonCard {
   public name: string = 'Cobalion';
 
   public fullName: string = 'Cobalion STS';
-  
+
   public QUICK_GUARD_MARKER = 'QUICK_GUARD_MARKER';
   public CLEAR_QUICK_GUARD_MARKER = 'CLEAR_QUICK_GUARD_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       player.active.marker.addMarker(this.QUICK_GUARD_MARKER, this);
@@ -80,15 +80,11 @@ export class Cobalion extends PokemonCard {
         });
       }
     }
-    
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      
-      const prizesTaken = 6 - opponent.getPrizeLeft();
-      effect.damage += prizesTaken * 30;
+
+    if (WAS_ATTACK_USED(effect, 1, this)) {
+      DEAL_MORE_DAMAGE_FOR_EACH_PRIZE_CARD_TAKEN(effect, state, 30);
     }
-    
+
     return state;
   }
 }

@@ -130,6 +130,11 @@ export function DEAL_MORE_DAMAGE_IF_OPPONENT_ACTIVE_HAS_CARD_TAG(effect, state, 
         effect.damage += damage;
     }
 }
+export function DEAL_MORE_DAMAGE_FOR_EACH_PRIZE_CARD_TAKEN(effect, state, damage) {
+    const player = effect.player;
+    const opponent = StateUtils.getOpponent(state, player);
+    effect.damage = effect.attack.damage + (opponent.prizesTaken * damage);
+}
 export function HEAL_X_DAMAGE_FROM_THIS_POKEMON(effect, store, state, damage) {
     const player = effect.player;
     const healTargetEffect = new HealTargetEffect(effect, damage);

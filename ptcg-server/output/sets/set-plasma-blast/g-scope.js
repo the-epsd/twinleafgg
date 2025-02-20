@@ -28,7 +28,7 @@ class GScope extends trainer_card_1.TrainerCard {
         this.fullName = 'G Scope PLB';
         this.attacks = [{
                 name: 'G Scope',
-                cost: [ /*G, G, C*/],
+                cost: [G, G, C],
                 damage: 0,
                 text: 'This attack does 100 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.'
             }];

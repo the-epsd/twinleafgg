@@ -3,8 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ShayminV = void 0;
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
-const game_1 = require("../../game");
-const game_effects_1 = require("../../game/store/effects/game-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class ShayminV extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -37,12 +36,8 @@ class ShayminV extends pokemon_card_1.PokemonCard {
         this.fullName = 'Shaymin V BRS';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
-            const player = effect.player;
-            const opponent = game_1.StateUtils.getOpponent(state, player);
-            const prizesTaken = 6 - opponent.getPrizeLeft();
-            const damagePerPrize = 40;
-            effect.damage = 60 + (prizesTaken * damagePerPrize);
+        if (prefabs_1.WAS_ATTACK_USED(effect, 1, this)) {
+            prefabs_1.DEAL_MORE_DAMAGE_FOR_EACH_PRIZE_CARD_TAKEN(effect, state, 40);
         }
         return state;
     }

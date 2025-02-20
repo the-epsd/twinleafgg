@@ -28,24 +28,31 @@ export class Cheryl extends TrainerCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
+      let anyHealed = false;
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
-
         const pokemon = cardList.getPokemonCard();
 
-        if (pokemon?.stage === Stage.BASIC) {
-          return state;
-        }
-
-        if (cardList.damage > 0) {
+        // Only check Evolution Pokémon
+        if (pokemon && pokemon.stage !== Stage.BASIC && cardList.damage > 0) {
+          // Heal the Pokémon
           const healEffect = new HealEffect(player, cardList, cardList.damage);
           state = store.reduceEffect(state, healEffect);
-          const cards = cardList.cards.filter(c => c instanceof EnergyCard);
-          cardList.moveCardsTo(cards, player.discard);
+          anyHealed = true;
         }
-
-
       });
+
+      // If any Pokémon were healed, discard Energy cards from those Pokémon
+      if (anyHealed) {
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
+          const pokemon = cardList.getPokemonCard();
+          if (pokemon && pokemon.stage !== Stage.BASIC) {
+            const energyCards = cardList.cards.filter(c => c instanceof EnergyCard);
+            cardList.moveCardsTo(energyCards, player.discard);
+          }
+        });
+      }
+
       return state;
     }
     return state;

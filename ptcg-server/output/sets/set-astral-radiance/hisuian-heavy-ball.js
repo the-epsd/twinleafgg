@@ -20,72 +20,50 @@ class HisuianHeavyBall extends game_1.TrainerCard {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             const prizes = player.prizes.filter(p => p.isSecret);
-            if (prizes.length === 0) {
-                throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
-            }
-            const cards = [];
-            prizes.forEach(p => { p.cards.forEach(c => cards.push(c)); });
-            // const blocked: number[] = [];
-            // player.prizes.forEach((p, index) => {
-            //   if (p.faceUpPrize) {
-            //     blocked.push(index);
-            //   }
-            //   if (p.isPublic) {
-            //     blocked.push(index);
-            //   }
-            //   if (!p.isSecret) {
-            //     blocked.push(index);
-            //   }
-            // });
             // Keep track of which prizes were originally face down
             const originallyFaceDown = player.prizes.map(p => p.isSecret);
-            // Make prizes no more secret, before displaying prompt
+            // Make prizes no longer secret before displaying prompt
             prizes.forEach(p => { p.isSecret = false; });
-            // We will discard this card after prompt confirmation
+            // Prevent default effect and move the trainer card to the supporter area
             effect.preventDefault = true;
             player.hand.moveCardTo(effect.trainerCard, player.supporter);
-            // state = store.prompt(state, new ChoosePrizePrompt(
-            //   player.id,
-            //   GameMessage.CHOOSE_POKEMON,
-            //   { count: 1, blocked: blocked, allowCancel: true },
-            // ), chosenPrize => {
+            // Gather all prize cards for the prompt
             const allPrizeCards = new game_1.CardList();
             player.prizes.forEach(prizeList => {
                 allPrizeCards.cards.push(...prizeList.cards);
             });
+            // Prompt the player to choose a Pokémon from their prizes
             store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_HAND, allPrizeCards, { superType: game_1.SuperType.POKEMON, stage: game_1.Stage.BASIC }, { min: 0, max: 1, allowCancel: false }), chosenPrize => {
-                if (chosenPrize === null || chosenPrize.length === 0) {
+                // Handle the case where no Pokémon is chosen
+                if (!chosenPrize || chosenPrize.length === 0) {
                     player.prizes.forEach((p, index) => {
                         if (originallyFaceDown[index]) {
                             p.isSecret = true;
                         }
                     });
                     player.supporter.moveCardTo(effect.trainerCard, player.discard);
-                    const faceDownPrizes = player.prizes.filter((p, index) => originallyFaceDown[index]);
-                    this.shuffleFaceDownPrizeCards(faceDownPrizes);
+                    this.shuffleFaceDownPrizeCards(player.prizes.filter((p, index) => originallyFaceDown[index]));
                     return state;
                 }
                 const prizePokemon = chosenPrize[0];
-                const hand = player.hand;
-                const heavyBall = effect.trainerCard;
-                // Find the prize list containing the chosen card
                 const chosenPrizeList = player.prizes.find(prizeList => prizeList.cards.includes(prizePokemon));
+                // Show the chosen Pokémon to the opponent
                 if (chosenPrize.length > 0) {
                     state = store.prompt(state, new game_1.ShowCardsPrompt(opponent.id, game_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, chosenPrize), () => { });
                 }
+                // Move the chosen Pokémon to the player's hand & move the Hisuian Heavy Ball to the prize cards
                 if (chosenPrizeList) {
-                    chosenPrizeList.moveCardTo(prizePokemon, hand);
-                    player.supporter.moveCardTo(heavyBall, chosenPrizeList);
+                    chosenPrizeList.moveCardTo(prizePokemon, player.hand);
+                    player.supporter.moveCardTo(effect.trainerCard, chosenPrizeList);
                 }
-                // At the end, when resetting prize cards:
+                // Reset the face-down prizes
                 player.prizes.forEach((p, index) => {
                     if (originallyFaceDown[index]) {
                         p.isSecret = true;
                     }
                 });
                 // Shuffle only the face-down prize cards
-                const faceDownPrizes = player.prizes.filter((p, index) => originallyFaceDown[index]);
-                this.shuffleFaceDownPrizeCards(faceDownPrizes);
+                this.shuffleFaceDownPrizeCards(player.prizes.filter((p, index) => originallyFaceDown[index]));
                 return state;
             });
         }

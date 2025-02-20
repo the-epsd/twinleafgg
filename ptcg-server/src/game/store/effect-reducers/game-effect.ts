@@ -405,6 +405,10 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
     if (effect.cards) {
       if (source instanceof PokemonCardList) {
         source.moveCardsTo(effect.cards, destination);
+        // Log the card movement
+        effect.cards.forEach(card => {
+          store.log(state, GameLog.LOG_CARD_MOVED, { name: card.name, action: 'put', destination: 'destination' });
+        });
         if (effect.toBottom) {
           destination.cards = [...destination.cards.slice(effect.cards.length), ...effect.cards];
         } else if (effect.toTop) {
@@ -412,6 +416,10 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
         }
       } else {
         source.moveCardsTo(effect.cards, destination);
+        // Log the card movement
+        effect.cards.forEach(card => {
+          store.log(state, GameLog.LOG_CARD_MOVED, { name: card.name, action: 'put', destination: 'destination' });
+        });
         if (effect.toBottom) {
           destination.cards = [...destination.cards.slice(effect.cards.length), ...effect.cards];
         } else if (effect.toTop) {
@@ -423,6 +431,10 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
     else if (effect.count !== undefined) {
       const cards = source.cards.slice(0, effect.count);
       source.moveCardsTo(cards, destination);
+      // Log the card movement
+      cards.forEach(card => {
+        store.log(state, GameLog.LOG_CARD_MOVED, { name: card.name, action: 'put', destination: 'destination' });
+      });
       if (effect.toBottom) {
         destination.cards = [...destination.cards.slice(cards.length), ...cards];
       } else if (effect.toTop) {

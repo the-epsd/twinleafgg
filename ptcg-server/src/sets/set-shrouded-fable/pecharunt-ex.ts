@@ -131,11 +131,9 @@ export class Pecharuntex extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      const prizesTaken = 6 - opponent.getPrizeLeft();
-
       const damagePerPrize = 60;
 
-      effect.damage = prizesTaken * damagePerPrize;
+      effect.damage = opponent.prizesTaken * damagePerPrize;
     }
 
     if (effect instanceof CheckTableStateEffect) {

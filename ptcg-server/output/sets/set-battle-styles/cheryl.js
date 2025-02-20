@@ -21,18 +21,27 @@ class Cheryl extends trainer_card_1.TrainerCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
             const player = effect.player;
+            let anyHealed = false;
             player.forEachPokemon(__1.PlayerType.BOTTOM_PLAYER, (cardList) => {
                 const pokemon = cardList.getPokemonCard();
-                if ((pokemon === null || pokemon === void 0 ? void 0 : pokemon.stage) === card_types_1.Stage.BASIC) {
-                    return state;
-                }
-                if (cardList.damage > 0) {
+                // Only check Evolution Pokémon
+                if (pokemon && pokemon.stage !== card_types_1.Stage.BASIC && cardList.damage > 0) {
+                    // Heal the Pokémon
                     const healEffect = new game_effects_1.HealEffect(player, cardList, cardList.damage);
                     state = store.reduceEffect(state, healEffect);
-                    const cards = cardList.cards.filter(c => c instanceof __1.EnergyCard);
-                    cardList.moveCardsTo(cards, player.discard);
+                    anyHealed = true;
                 }
             });
+            // If any Pokémon were healed, discard Energy cards from those Pokémon
+            if (anyHealed) {
+                player.forEachPokemon(__1.PlayerType.BOTTOM_PLAYER, (cardList) => {
+                    const pokemon = cardList.getPokemonCard();
+                    if (pokemon && pokemon.stage !== card_types_1.Stage.BASIC) {
+                        const energyCards = cardList.cards.filter(c => c instanceof __1.EnergyCard);
+                        cardList.moveCardsTo(energyCards, player.discard);
+                    }
+                });
+            }
             return state;
         }
         return state;

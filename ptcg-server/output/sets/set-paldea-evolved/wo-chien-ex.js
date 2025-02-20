@@ -44,12 +44,11 @@ class WoChienex extends pokemon_card_1.PokemonCard {
             if (!hasBench) {
                 return state;
             }
-            const prizesTaken = 6 - opponent.getPrizeLeft();
             const damagePerPrize = 60;
             return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH], { min: 1, max: 1, allowCancel: false }), selected => {
                 const targets = selected || [];
                 targets.forEach(target => {
-                    const damageEffect = new attack_effects_1.PutDamageEffect(effect, damagePerPrize * prizesTaken);
+                    const damageEffect = new attack_effects_1.PutDamageEffect(effect, damagePerPrize * opponent.prizesTaken);
                     damageEffect.target = target;
                     store.reduceEffect(state, damageEffect);
                 });

@@ -43,7 +43,7 @@ import { Mamoswineex } from './mamoswine-ex';
 import { Maractus } from './maractus';
 import { Meowscarada } from './meowscarada';
 import { NsCastle } from './ns-castle';
-import { NsDarmanitan } from './ns-darmanItan';
+import { NsDarmanitan } from './ns-darmanitan';
 import { NsDarumaka } from './ns-darumaka';
 import { NsJoltik } from './ns-joltik';
 import { NsKlang } from './ns-klang';
@@ -59,6 +59,7 @@ import { Piloswine } from './piloswine';
 import { Postwick } from './postwick';
 import { Pupitar } from './pupitar';
 import { Regirock } from './regirock';
+import {Ruffian} from './ruffian';
 import { Salamenceex } from './salamence-ex';
 import { Shelgon } from './shelgon';
 import { Shelmet } from './shelmet';
@@ -110,6 +111,7 @@ export const setSV9: Card[] = [
   new SpikeEnergy(),
   new Regirock(),
   new Maractus(),
+  new Ruffian(),
 
   new LilliesClefairyex(),
   new LilliesComfey(),

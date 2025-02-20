@@ -24,13 +24,12 @@ class KarensConviction extends trainer_card_1.TrainerCard {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
             const player = effect.player;
             const opponent = __1.StateUtils.getOpponent(state, player);
-            const prizesTaken = 6 - opponent.getPrizeLeft();
             const damagePerPrize = 20;
             player.marker.addMarker(this.KARENS_CONVICTION_MARKER, this);
             if (effect instanceof attack_effects_1.DealDamageEffect) {
                 const marker = effect.player.marker;
                 if (marker.hasMarker(this.KARENS_CONVICTION_MARKER, this) && effect.damage > 0) {
-                    effect.damage += prizesTaken * damagePerPrize;
+                    effect.damage += opponent.prizesTaken * damagePerPrize;
                 }
                 return state;
             }

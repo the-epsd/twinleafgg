@@ -228,3 +228,4 @@ export class BoardCardComponent {
     this.cardClick.emit(card);
   }
 }
+

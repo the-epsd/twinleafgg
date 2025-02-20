@@ -1,9 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
-import { EnergyCard, State, StoreLike } from '../../game';
+import { State, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, } from '../../game/store/effects/game-effects';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
+import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 
 export class HisuianArcanine extends PokemonCard {
 
@@ -48,18 +49,24 @@ export class HisuianArcanine extends PokemonCard {
   public fullName: string = 'Hisuian Arcanine ASR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
       const cardList = player.active;
 
-      const hasAttachedEnergy = cardList.cards.some(c => c instanceof EnergyCard && c.provides.includes(CardType.FIRE || c instanceof EnergyCard && c.provides.includes(CardType.ANY)));
+      const checkEnergyEffect = new CheckProvidedEnergyEffect(player, cardList);
+      state = store.reduceEffect(state, checkEnergyEffect);
 
-      if (hasAttachedEnergy) {
-        effect.damage = effect.damage + 80;
-        const specialConditionEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.BURNED]);
-        store.reduceEffect(state, specialConditionEffect);
+      const hasAttachedEnergy = checkEnergyEffect.totalProvidedTypes.some(
+        energy => energy.provides.includes(CardType.FIRE) || energy.provides.includes(CardType.ANY)
+      );
+
+      if (!hasAttachedEnergy) {
+        return state;
       }
+
+      effect.damage += 80;
+      const specialConditionEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.BURNED]);
+      store.reduceEffect(state, specialConditionEffect);
       return state;
     }
     return state;

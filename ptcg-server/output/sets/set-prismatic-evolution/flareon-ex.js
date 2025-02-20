@@ -24,7 +24,7 @@ function* useBurningCharge(next, store, state, effect) {
         next();
     });
     if (cards.length > 0) {
-        yield store.prompt(state, new game_2.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_ATTACH_CARDS, game_3.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { allowCancel: false }), targets => {
+        yield store.prompt(state, new game_2.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_ATTACH_CARDS, game_3.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { allowCancel: false }), targets => {
             if (!targets || targets.length === 0) {
                 return;
             }

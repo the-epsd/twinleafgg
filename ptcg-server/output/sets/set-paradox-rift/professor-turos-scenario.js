@@ -32,20 +32,12 @@ class ProfessorTurosScenario extends trainer_card_1.TrainerCard {
             });
             effect.preventDefault = true;
             return store.prompt(state, new choose_pokemon_prompt_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_POKEMON_TO_PICK_UP, play_card_action_1.PlayerType.BOTTOM_PLAYER, [play_card_action_1.SlotType.ACTIVE, play_card_action_1.SlotType.BENCH], { allowCancel: false }), result => {
-                if (result.length > 0) {
-                    const cardList = result[0];
+                const cardList = result.length > 0 ? result[0] : null;
+                if (cardList !== null) {
                     const pokemons = cardList.getPokemons();
-                    // Move Pokemon to hand while preserving its state
-                    state = prefabs_1.MOVE_CARDS(store, state, cardList, player.hand, {
-                        cards: pokemons,
-                        skipCleanup: true
-                    });
-                    // Move any remaining cards (energy/tools) to discard
-                    state = prefabs_1.MOVE_CARDS(store, state, cardList, player.discard);
-                    // Discard supporter
-                    state = prefabs_1.MOVE_CARDS(store, state, player.supporter, player.discard, {
-                        cards: [effect.trainerCard]
-                    });
+                    prefabs_1.MOVE_CARDS(store, state, cardList, player.discard);
+                    prefabs_1.MOVE_CARDS(store, state, cardList, player.hand, { cards: pokemons });
+                    player.supporter.moveCardTo(effect.trainerCard, player.discard);
                 }
             });
         }

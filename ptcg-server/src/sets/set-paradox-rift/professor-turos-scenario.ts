@@ -49,23 +49,12 @@ export class ProfessorTurosScenario extends TrainerCard {
         [SlotType.ACTIVE, SlotType.BENCH],
         { allowCancel: false }
       ), result => {
-        if (result.length > 0) {
-          const cardList = result[0];
+        const cardList = result.length > 0 ? result[0] : null;
+        if (cardList !== null) {
           const pokemons = cardList.getPokemons();
-
-          // Move Pokemon to hand while preserving its state
-          state = MOVE_CARDS(store, state, cardList, player.hand, {
-            cards: pokemons,
-            skipCleanup: true
-          });
-
-          // Move any remaining cards (energy/tools) to discard
-          state = MOVE_CARDS(store, state, cardList, player.discard);
-
-          // Discard supporter
-          state = MOVE_CARDS(store, state, player.supporter, player.discard, {
-            cards: [effect.trainerCard]
-          });
+          MOVE_CARDS(store, state, cardList, player.discard);
+          MOVE_CARDS(store, state, cardList, player.hand, { cards: pokemons });
+          player.supporter.moveCardTo(effect.trainerCard, player.discard);
         }
       });
     }

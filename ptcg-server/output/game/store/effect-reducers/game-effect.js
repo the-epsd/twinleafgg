@@ -304,6 +304,10 @@ function gameReducer(store, state, effect) {
         if (effect.cards) {
             if (source instanceof pokemon_card_list_1.PokemonCardList) {
                 source.moveCardsTo(effect.cards, destination);
+                // Log the card movement
+                effect.cards.forEach(card => {
+                    store.log(state, game_message_1.GameLog.LOG_CARD_MOVED, { name: card.name, action: 'put', destination: 'destination' });
+                });
                 if (effect.toBottom) {
                     destination.cards = [...destination.cards.slice(effect.cards.length), ...effect.cards];
                 }
@@ -313,6 +317,10 @@ function gameReducer(store, state, effect) {
             }
             else {
                 source.moveCardsTo(effect.cards, destination);
+                // Log the card movement
+                effect.cards.forEach(card => {
+                    store.log(state, game_message_1.GameLog.LOG_CARD_MOVED, { name: card.name, action: 'put', destination: 'destination' });
+                });
                 if (effect.toBottom) {
                     destination.cards = [...destination.cards.slice(effect.cards.length), ...effect.cards];
                 }
@@ -325,6 +333,10 @@ function gameReducer(store, state, effect) {
         else if (effect.count !== undefined) {
             const cards = source.cards.slice(0, effect.count);
             source.moveCardsTo(cards, destination);
+            // Log the card movement
+            cards.forEach(card => {
+                store.log(state, game_message_1.GameLog.LOG_CARD_MOVED, { name: card.name, action: 'put', destination: 'destination' });
+            });
             if (effect.toBottom) {
                 destination.cards = [...destination.cards.slice(cards.length), ...cards];
             }

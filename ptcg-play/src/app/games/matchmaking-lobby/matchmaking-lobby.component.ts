@@ -6,7 +6,6 @@
 // import { DeckListEntry } from 'src/app/api/interfaces/deck.interface';
 // import { DeckService } from 'src/app/api/services/deck.service';
 // import { GameService } from 'src/app/api/services/game.service';
-// import { ArchetypeService } from 'src/app/deck/deck-archetype-service/archetype.service';
 // import { ArchetypeUtils } from 'src/app/deck/deck-archetype-service/archetype.utils';
 // import { DeckComponent } from 'src/app/deck/deck.component';
 // import { CardsBaseService } from 'src/app/shared/cards/cards-base.service';
