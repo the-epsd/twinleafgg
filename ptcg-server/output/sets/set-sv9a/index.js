@@ -20,7 +20,9 @@ const cynthias_roselia_1 = require("./cynthias-roselia");
 const cynthias_gabite_1 = require("./cynthias-gabite");
 const cynthias_spiritomb_1 = require("./cynthias-spiritomb");
 const cynthias_power_weight_1 = require("./cynthias-power-weight");
+const rotom_1 = require("./rotom");
 exports.setSV9a = [
+    new rotom_1.Rotom(),
     new other_prints_1.CynthiasRoseradeIR(),
     new cynthias_garchomp_ex_1.CynthiasGarchompex(),
     new cynthias_gible_1.CynthiasGible(),
