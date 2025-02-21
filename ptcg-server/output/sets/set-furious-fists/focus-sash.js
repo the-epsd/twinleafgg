@@ -20,16 +20,10 @@ class FocusSash extends trainer_card_1.TrainerCard {
         this.canDiscard = false;
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof attack_effects_1.DealDamageEffect && effect.target.tools.includes(this) && effect.player.marker.hasMarker(effect.player.DAMAGE_DEALT_MARKER)) {
-            const player = effect.player;
-            const targetPlayer = game_1.StateUtils.findOwner(state, effect.target);
-            const cardList = game_1.StateUtils.findCardList(state, this);
-            const checkPokemonTypeEffect = new check_effects_1.CheckPokemonTypeEffect(cardList);
+        if (effect instanceof attack_effects_1.PutDamageEffect && effect.target.tools.includes(this) && effect.target.damage == 0) {
+            const player = game_1.StateUtils.findOwner(state, effect.target);
             const checkHpEffect = new check_effects_1.CheckHpEffect(player, effect.target);
             store.reduceEffect(state, checkHpEffect);
-            if (effect.damage <= 0 || player === targetPlayer || !checkPokemonTypeEffect.cardTypes.includes(card_types_1.CardType.FIGHTING)) {
-                return state;
-            }
             if (effect.target.damage === 0 && effect.damage >= checkHpEffect.hp) {
                 effect.preventDefault = true;
                 effect.target.damage = checkHpEffect.hp - 10;

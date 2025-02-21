@@ -14,6 +14,7 @@ export declare class Sudowoodo extends PokemonCard {
         name: string;
         cost: CardType[];
         damage: number;
+        copycatAttack: boolean;
         text: string;
     }[];
     set: string;

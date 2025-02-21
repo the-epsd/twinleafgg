@@ -20,8 +20,6 @@ class PokemonCardList extends card_list_1.CardList {
         this.sleepFlips = 1;
         this.boardEffect = [];
         this.hpBonus = 0;
-        // Some pokemon cards can be attached as a tool and stadium,
-        // we must remember, which card acts as a pokemon tool.
         this.tools = [];
         this.maxTools = 1;
         this.isActivatingCard = false;
@@ -162,7 +160,7 @@ class PokemonCardList extends card_list_1.CardList {
         ].includes(s) === false);
         this.boardEffect.push(sp);
     }
-    //Rule-Box Pokemon
+    //Rulebox Pokemon
     hasRuleBox() {
         return this.cards.some(c => c.tags.includes(card_types_1.CardTag.POKEMON_ex) || c.tags.includes(card_types_1.CardTag.RADIANT) || c.tags.includes(card_types_1.CardTag.POKEMON_V) || c.tags.includes(card_types_1.CardTag.POKEMON_VMAX) || c.tags.includes(card_types_1.CardTag.POKEMON_VSTAR) || c.tags.includes(card_types_1.CardTag.POKEMON_GX) || c.tags.includes(card_types_1.CardTag.PRISM_STAR) || c.tags.includes(card_types_1.CardTag.BREAK));
     }

@@ -18,6 +18,7 @@ class Sudowoodo extends pokemon_card_1.PokemonCard {
                 name: 'Watch and Learn',
                 cost: [card_types_1.CardType.FIGHTING, card_types_1.CardType.COLORLESS],
                 damage: 0,
+                copycatAttack: true,
                 text: 'If your opponent\'s Pokémon used an attack during his or her last turn, use it as this attack.'
             }];
         this.set = 'BKP';
@@ -27,11 +28,11 @@ class Sudowoodo extends pokemon_card_1.PokemonCard {
         this.fullName = 'Sudowoodo BKP';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             const lastAttack = state.lastAttack;
-            if (!lastAttack || lastAttack.name === 'Copycat' || lastAttack.name === 'Watch and Learn') {
+            if (!lastAttack || lastAttack.copycatAttack === true || lastAttack.gxAttack === true) {
                 return state;
             }
             // Find the original card that used the last attack
@@ -54,7 +55,13 @@ class Sudowoodo extends pokemon_card_1.PokemonCard {
     executeCopiedAttack(store, state, player, opponent, attack) {
         const copiedAttackEffect = new game_effects_1.AttackEffect(player, opponent, attack);
         state = store.reduceEffect(state, copiedAttackEffect);
-        if (copiedAttackEffect.damage > 0) {
+        if (copiedAttackEffect.attack.shredAttack === true && copiedAttackEffect.damage > 0) {
+            // Apply damage and trigger AfterDamageEffect
+            opponent.active.damage += copiedAttackEffect.damage;
+            const afterDamage = new attack_effects_1.AfterDamageEffect(copiedAttackEffect, copiedAttackEffect.damage);
+            state = store.reduceEffect(state, afterDamage);
+        }
+        if (copiedAttackEffect.attack.shredAttack !== true && copiedAttackEffect.damage > 0) {
             const dealDamage = new attack_effects_1.DealDamageEffect(copiedAttackEffect, copiedAttackEffect.damage);
             state = store.reduceEffect(state, dealDamage);
         }

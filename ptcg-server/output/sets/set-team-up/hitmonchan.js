@@ -17,7 +17,6 @@ class Hitmonchan extends pokemon_card_1.PokemonCard {
         this.cardType = card_types_1.CardType.FIGHTING;
         this.weakness = [{ type: card_types_1.CardType.PSYCHIC }];
         this.retreat = [card_types_1.CardType.COLORLESS];
-        this.usedHitAndRun = false;
         this.attacks = [
             {
                 name: 'Hit and Run',
@@ -32,6 +31,7 @@ class Hitmonchan extends pokemon_card_1.PokemonCard {
                 text: ''
             }
         ];
+        this.usedHitAndRun = false;
     }
     reduceEffect(store, state, effect) {
         if (prefabs_1.WAS_ATTACK_USED(effect, 0, this)) {

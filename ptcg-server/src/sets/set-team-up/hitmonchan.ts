@@ -26,8 +26,6 @@ export class Hitmonchan extends PokemonCard {
 
   public retreat = [CardType.COLORLESS];
 
-  public usedHitAndRun: boolean = false;
-
   public attacks = [
     {
       name: 'Hit and Run',
@@ -42,6 +40,8 @@ export class Hitmonchan extends PokemonCard {
       text: ''
     }
   ];
+
+  public usedHitAndRun: boolean = false;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

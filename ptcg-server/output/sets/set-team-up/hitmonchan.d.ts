@@ -15,12 +15,12 @@ export declare class Hitmonchan extends PokemonCard {
         type: CardType;
     }[];
     retreat: CardType[];
-    usedHitAndRun: boolean;
     attacks: {
         name: string;
         cost: CardType[];
         damage: number;
         text: string;
     }[];
+    usedHitAndRun: boolean;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }
