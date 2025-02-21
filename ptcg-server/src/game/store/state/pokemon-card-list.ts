@@ -8,24 +8,18 @@ import { Marker } from './card-marker';
 export class PokemonCardList extends CardList {
 
   public damage: number = 0;
-
   public hp: number = 0;
-
   public specialConditions: SpecialCondition[] = [];
-
   public poisonDamage: number = 10;
-
   public burnDamage: number = 20;
-
   public marker = new Marker();
-
   public pokemonPlayedTurn: number = 0;
-
   public sleepFlips = 1;
-
   public boardEffect: BoardEffect[] = [];
-
   public hpBonus: number = 0;
+  public tool: Card | undefined;
+  public stadium: Card | undefined;
+  public isActivatingCard: boolean = false;
 
   public static readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
   public static readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
@@ -54,12 +48,6 @@ export class PokemonCardList extends CardList {
 
   public static readonly UNRELENTING_ONSLAUGHT_MARKER = 'UNRELENTING_ONSLAUGHT_MARKER';
   public static readonly UNRELENTING_ONSLAUGHT_2_MARKER = 'UNRELENTING_ONSLAUGHT_2_MARKER';
-
-  // Some pokemon cards can be attached as a tool and stadium,
-  // we must remember, which card acts as a pokemon tool.
-  public tool: Card | undefined;
-  public stadium: Card | undefined;
-  isActivatingCard: boolean = false;
 
   public getPokemons(): PokemonCard[] {
     const result: PokemonCard[] = [];
@@ -140,7 +128,7 @@ export class PokemonCardList extends CardList {
     if (this.cards.length === 0) {
       this.damage = 0;
     }
-    if (this.tool && !this.cards.includes(this.tool)) {
+    if (this.tool !== undefined) {
       this.tool = undefined;
     }
   }
@@ -205,7 +193,7 @@ export class PokemonCardList extends CardList {
     this.boardEffect.push(sp);
   }
 
-  //Rule-Box Pokemon
+  //Rulebox Pokemon
 
   hasRuleBox(): boolean {
     return this.cards.some(c => c.tags.includes(CardTag.POKEMON_ex) || c.tags.includes(CardTag.RADIANT) || c.tags.includes(CardTag.POKEMON_V) || c.tags.includes(CardTag.POKEMON_VMAX) || c.tags.includes(CardTag.POKEMON_VSTAR) || c.tags.includes(CardTag.POKEMON_GX) || c.tags.includes(CardTag.PRISM_STAR) || c.tags.includes(CardTag.BREAK));
@@ -269,18 +257,14 @@ export class PokemonCardList extends CardList {
     return this.cards.some(c => c.tags.includes(CardTag.ETHANS));
   }
 
-  getToolEffect(): Power | Attack | undefined {
-    if (!this.tool) {
+  public getToolEffect(): (Power | Attack)[] | undefined {
+    if (this.tool === undefined) {
       return;
     }
 
-    const toolCard = this.tool.cards;
-
-    if (toolCard instanceof PokemonCard) {
-      return toolCard.powers[0] || toolCard.attacks[0];
+    if (this.tool instanceof PokemonCard) {
+      return [this.tool.powers[0] || this.tool.attacks[0]];
     }
-
-    return;
   }
 
 }

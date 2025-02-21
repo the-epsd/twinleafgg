@@ -18,7 +18,7 @@ import { Entei } from './entei';
 import { Finizen } from './finizen';
 import { Froakie } from './froakie';
 import { BelliboltIR, CleffaIR, PidgeyIR, PidgeottoIR, ScizorIR, CharizardexFA, PidgeotexFA, PoppyFA, CharizardexSIR, PidgeotexSIR, PoppySIR, CharizardexHR, FireEnergyHR, VaroomIR, ArtazonHR } from './full-art';
-import {Geeta} from './geeta';
+import { Geeta } from './geeta';
 import { Glimmet } from './glimmet';
 import { Glimmoraex } from './glimmora-ex';
 import { Greavard } from './greavard';
@@ -37,6 +37,7 @@ import { Pidgey } from './pidgey';
 import { PokemonLeagueHeadquarters } from './pokemon-league-headquarters';
 import { Poppy } from './poppy';
 import { Pupitar } from './pupitar';
+import { Revavroomex } from './revavroom-ex';
 import { Rowlet } from './rowlet';
 import { Ryme } from './ryme';
 import { Scizor } from './scizor';
@@ -110,6 +111,8 @@ export const setObsidianFlames: Card[] = [
   new Glimmet(),
   new Glimmoraex(),
   new Geeta(),
+
+  new Revavroomex(),
 
   //Alt-s
 

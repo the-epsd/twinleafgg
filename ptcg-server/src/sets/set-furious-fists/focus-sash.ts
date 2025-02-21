@@ -1,8 +1,8 @@
-import { GameLog, PlayerType, PokemonCardList, StateUtils } from '../../game';
-import { CardType, TrainerType } from '../../game/store/card/card-types';
+import { GameLog, PlayerType, StateUtils } from '../../game';
+import { TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { DealDamageEffect } from '../../game/store/effects/attack-effects';
-import { CheckHpEffect, CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
+import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { CheckHpEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 
 import { State } from '../../game/store/state/state';
@@ -25,27 +25,16 @@ export class FocusSash extends TrainerCard {
   public text: string =
     'If the [F] Pokémon this card is attached to has full HP and would be Knocked Out by damage from an opponent\'s attack, that Pokémon is not Knocked Out and its remaining HP becomes 10 instead. Then, discard this card.';
 
-
   private canDiscard = false;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof DealDamageEffect && effect.target.tool === this && effect.player.marker.hasMarker(effect.player.DAMAGE_DEALT_MARKER)) {
-      const player = effect.player;
-      const targetPlayer = StateUtils.findOwner(state, effect.target);
-
-      const cardList = StateUtils.findCardList(state, this) as PokemonCardList;
-      const checkPokemonTypeEffect = new CheckPokemonTypeEffect(cardList);
-
+    if (effect instanceof PutDamageEffect && effect.target.tool === this && effect.target.damage == 0) {
+      const player = StateUtils.findOwner(state, effect.target);
       const checkHpEffect = new CheckHpEffect(player, effect.target);
       store.reduceEffect(state, checkHpEffect);
 
-      if (effect.damage <= 0 || player === targetPlayer || !checkPokemonTypeEffect.cardTypes.includes(CardType.FIGHTING)) {
-        return state;
-      }
-
       if (effect.target.damage === 0 && effect.damage >= checkHpEffect.hp) {
-
         effect.preventDefault = true;
         effect.target.damage = checkHpEffect.hp - 10;
         store.log(state, GameLog.LOG_PLAYER_PLAYS_TOOL, { card: this.name });
