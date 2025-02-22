@@ -18,6 +18,7 @@ export const setShiningLegends: Card[] = [
   new Latios(),
   new Marshadow(),
   new Plusle(),
+  new Shaymin(),
   new ShiningGenesect(),
   new ShiningMew(),
   new Venusaur(),
