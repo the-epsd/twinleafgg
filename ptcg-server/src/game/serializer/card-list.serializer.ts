@@ -18,7 +18,6 @@ export class CardListSerializer implements Serializer<CardList> {
 
     if (cardList instanceof PokemonCardList) {
       constructorName = 'PokemonCardList';
-      data.tools = cardList.tools.map(tool => tool.id);
     }
 
     return {
@@ -34,10 +33,6 @@ export class CardListSerializer implements Serializer<CardList> {
       : new CardList();
 
     delete (data as any)._type;
-
-    const toolIds: number[] = data.tools;
-    data.tools = toolIds.map(index => this.fromIndex(index, context));
-    console.log(data.tools);
 
     const indexes: number[] = data.cards;
     data.cards = indexes.map(index => this.fromIndex(index, context));
