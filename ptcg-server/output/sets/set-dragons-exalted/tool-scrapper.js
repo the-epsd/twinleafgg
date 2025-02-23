@@ -24,10 +24,10 @@ class ToolScrapper extends trainer_card_1.TrainerCard {
             const opponent = game_1.StateUtils.getOpponent(state, player);
             let allTools = [];
             player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList) => {
-                allTools.push(cardList.tools);
+                allTools.push(...cardList.tools);
             });
             opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList) => {
-                allTools.push(cardList.tools);
+                allTools.push(...cardList.tools);
             });
             if (allTools.length === 0) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
@@ -35,7 +35,7 @@ class ToolScrapper extends trainer_card_1.TrainerCard {
             // We will discard this card after prompt confirmation
             effect.preventDefault = true;
             player.hand.moveCardTo(effect.trainerCard, player.supporter);
-            state = prefabs_1.DISCARD_TOOLS_FROM_ALL_POKEMON(store, state, player, 0, 2);
+            state = prefabs_1.CHOOSE_TOOLS_TO_REMOVE_PROMPT(store, state, player, game_1.PlayerType.ANY, game_1.SlotType.DISCARD, 0, 2);
             player.supporter.moveCardTo(this, player.discard);
             return state;
         }

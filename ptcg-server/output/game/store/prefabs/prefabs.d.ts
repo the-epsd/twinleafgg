@@ -129,10 +129,10 @@ export declare function LOOK_AT_TOPDECK_AND_DISCARD_OR_RETURN(store: StoreLike, 
 export declare function MOVE_CARDS_TO_HAND(store: StoreLike, state: State, player: Player, cards: Card[]): void;
 export declare function SHOW_CARDS_TO_PLAYER(store: StoreLike, state: State, player: Player, cards: Card[]): State;
 export declare function SELECT_PROMPT(store: StoreLike, state: State, player: Player, values: string[], callback: (result: number) => void): State;
-export declare function SELECT_PROMPT_WITH_OPTIONS(store: StoreLike, state: State, player: Player, options: {
+export declare function SELECT_PROMPT_WITH_OPTIONS(store: StoreLike, state: State, player: Player, message: GameMessage, options: {
     message: GameMessage;
     action: () => void;
-}[], message?: GameMessage): State;
+}[]): State;
 export declare function CONFIRMATION_PROMPT(store: StoreLike, state: State, player: Player, callback: (result: boolean) => void, message?: GameMessage): State;
 export declare function COIN_FLIP_PROMPT(store: StoreLike, state: State, player: Player, callback: (result: boolean) => void): State;
 export declare function MULTIPLE_COIN_FLIPS_PROMPT(store: StoreLike, state: State, player: Player, amount: number, callback: (results: boolean[]) => void): State;
@@ -171,8 +171,6 @@ export declare function MOVE_CARDS(store: StoreLike, state: State, source: CardL
     toBottom?: boolean;
     skipCleanup?: boolean;
 }): State;
-export declare function DISCARD_TOOL(store: StoreLike, state: State, source: PokemonCardList, tool: Card): State;
-export declare function LOST_ZONE_TOOL(store: StoreLike, state: State, source: PokemonCardList, tool: Card): State;
-export declare function DISCARD_TOOLS_PROMPT(store: StoreLike, state: State, player: Player, tools: Card[], min: number, max: number): State;
-export declare function DISCARD_TOOLS_FROM_ALL_POKEMON(store: StoreLike, state: State, player: Player, min: number, max: number): State;
-export declare function DISCARD_TOOLS_FROM_OPPONENTS_POKEMON(store: StoreLike, state: State, player: Player, min: number, max: number): State;
+export declare function REMOVE_TOOL(store: StoreLike, state: State, source: PokemonCardList, tool: Card, destinationSlot: SlotType): State;
+export declare function REMOVE_TOOLS_FROM_POKEMON_PROMPT(store: StoreLike, state: State, player: Player, target: PokemonCardList, destinationSlot: SlotType, min: number, max: number): State;
+export declare function CHOOSE_TOOLS_TO_REMOVE_PROMPT(store: StoreLike, state: State, player: Player, playerType: PlayerType, destinationSlot: SlotType, min: number, max: number): State;

@@ -23,7 +23,6 @@ import { ShuffleHandPrompt } from '../store/prompts/shuffle-hand-prompt';
 import { RemoveDamagePrompt } from '../store/prompts/remove-damage-prompt';
 import { DiscardEnergyPrompt } from '../store/prompts/discard-energy-prompt';
 import { ConfirmCardsPrompt } from '../store/prompts/confirm-cards-prompt';
-import { ChooseToolPrompt } from '../store/prompts/choose-tool-prompt';
 
 export class PromptSerializer implements Serializer<Prompt<any>> {
 
@@ -36,7 +35,6 @@ export class PromptSerializer implements Serializer<Prompt<any>> {
     { classValue: ChooseAttackPrompt, type: 'ChooseAttackPrompt' },
     { classValue: ChooseCardsPrompt, type: 'ChooseCardsPrompt' },
     { classValue: ChooseEnergyPrompt, type: 'ChooseEnergyPrompt' },
-    { classValue: ChooseToolPrompt, type: 'ChooseToolPrompt' },
     { classValue: ChoosePokemonPrompt, type: 'ChoosePokemonPrompt' },
     { classValue: ChoosePrizePrompt, type: 'ChoosePrizePrompt' },
     { classValue: CoinFlipPrompt, type: 'CoinFlipPrompt' },

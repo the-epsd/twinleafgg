@@ -37,7 +37,7 @@ class NsJoltik extends pokemon_card_1.PokemonCard {
             const opponent = game_1.StateUtils.getOpponent(state, player);
             if (opponent.active.tools.length !== 0) {
                 for (const tool of opponent.active.tools) {
-                    prefabs_1.DISCARD_TOOL(store, state, opponent.active, tool);
+                    prefabs_1.REMOVE_TOOL(store, state, opponent.active, tool, game_1.SlotType.DISCARD);
                 }
                 const specialCondition = new attack_effects_1.AddSpecialConditionsEffect(effect, [card_types_1.SpecialCondition.PARALYZED]);
                 return store.reduceEffect(state, specialCondition);

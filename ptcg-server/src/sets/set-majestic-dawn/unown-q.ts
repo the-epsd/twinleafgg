@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, TrainerType } from '../../game/store/card/card-types';
+import { Stage, CardType } from '../../game/store/card/card-types';
 import {
   PowerType, StoreLike, State, GameError, GameMessage, StateUtils,
   PokemonCardList, CardTarget, PlayerType, ChoosePokemonPrompt, SlotType
@@ -49,7 +49,6 @@ function* usePower(next: Function, store: StoreLike, state: State, self: UnownQ,
       // Attach Unown Q as a Pokemon Tool
       player.bench[benchIndex].moveCardTo(pokemonCard, targets[0]);
       targets[0].tools.push(pokemonCard);
-      self.trainerType = TrainerType.TOOL;
 
       // Discard other cards
       player.bench[benchIndex].moveTo(player.discard);
@@ -98,8 +97,6 @@ export class UnownQ extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '49';
-
-  public trainerType: TrainerType | undefined;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {

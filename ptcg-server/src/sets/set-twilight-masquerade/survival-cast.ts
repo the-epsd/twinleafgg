@@ -1,11 +1,11 @@
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { CardTag, TrainerType } from '../../game/store/card/card-types';
-import { State, StateUtils, GameLog, PlayerType } from '../../game';
+import { State, StateUtils, GameLog, PlayerType, SlotType } from '../../game';
 import { CheckHpEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
-import { DISCARD_TOOL } from '../../game/store/prefabs/prefabs';
+import { REMOVE_TOOL } from '../../game/store/prefabs/prefabs';
 
 // interface PokemonItem {
 //   playerNum: number;
@@ -54,7 +54,7 @@ export class SurvivalCast extends TrainerCard {
 
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, index) => {
           if (cardList.cards.includes(this)) {
-            DISCARD_TOOL(store, state, cardList, this);
+            REMOVE_TOOL(store, state, cardList, this, SlotType.DISCARD);
           }
         });
       }

@@ -1,10 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SpecialCondition } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils } from '../../game';
+import { StoreLike, State, StateUtils, SlotType } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
-import { DISCARD_TOOL } from '../../game/store/prefabs/prefabs';
+import { REMOVE_TOOL } from '../../game/store/prefabs/prefabs';
 
 export class NsJoltik extends PokemonCard {
   public tags = [CardTag.NS];
@@ -39,7 +39,7 @@ export class NsJoltik extends PokemonCard {
 
       if (opponent.active.tools.length !== 0) {
         for (const tool of opponent.active.tools) {
-          DISCARD_TOOL(store, state, opponent.active, tool);
+          REMOVE_TOOL(store, state, opponent.active, tool, SlotType.DISCARD);
         }
 
         const specialCondition = new AddSpecialConditionsEffect(effect, [SpecialCondition.PARALYZED]);

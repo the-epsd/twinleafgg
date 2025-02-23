@@ -38,7 +38,6 @@ function* usePower(next, store, state, self, effect) {
             // Attach Shedinja as a Pokemon Tool
             player.bench[benchIndex].moveCardTo(pokemonCard, targets[0]);
             targets[0].tools.push(pokemonCard);
-            self.trainerType = card_types_1.TrainerType.TOOL;
             // Discard other cards
             player.bench[benchIndex].moveTo(player.discard);
             player.bench[benchIndex].clearEffects();

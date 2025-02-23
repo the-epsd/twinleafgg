@@ -5,8 +5,10 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import {
-  PlayerType, StateUtils, GameError, GameMessage} from '../../game';
-import { DISCARD_TOOLS_FROM_ALL_POKEMON } from '../../game/store/prefabs/prefabs';
+  PlayerType, StateUtils, GameError, GameMessage,
+  SlotType
+} from '../../game';
+import { CHOOSE_TOOLS_TO_REMOVE_PROMPT } from '../../game/store/prefabs/prefabs';
 
 export class ToolScrapper extends TrainerCard {
 
@@ -33,10 +35,10 @@ export class ToolScrapper extends TrainerCard {
 
       let allTools = [];
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
-        allTools.push(cardList.tools);
+        allTools.push(...cardList.tools);
       });
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-        allTools.push(cardList.tools);
+        allTools.push(...cardList.tools);
       });
 
       if (allTools.length === 0) {
@@ -46,7 +48,7 @@ export class ToolScrapper extends TrainerCard {
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
       player.hand.moveCardTo(effect.trainerCard, player.supporter);
-      state = DISCARD_TOOLS_FROM_ALL_POKEMON(store, state, player, 0, 2);
+      state = CHOOSE_TOOLS_TO_REMOVE_PROMPT(store, state, player, PlayerType.ANY, SlotType.DISCARD, 0, 2);
       player.supporter.moveCardTo(this, player.discard);
 
       return state;

@@ -33,7 +33,7 @@ class StartlingMegaphone extends trainer_card_1.TrainerCard {
             }
             pokemonsWithTool.forEach(target => {
                 for (const tool of target.tools) {
-                    prefabs_1.DISCARD_TOOL(store, state, target, tool);
+                    prefabs_1.REMOVE_TOOL(store, state, target, tool, game_1.SlotType.DISCARD);
                 }
                 player.supporter.moveCardTo(effect.trainerCard, player.discard);
             });

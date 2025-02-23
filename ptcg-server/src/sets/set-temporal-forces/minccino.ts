@@ -1,9 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
+import { StoreLike, State, PlayerType, SlotType } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { DISCARD_TOOLS_FROM_OPPONENTS_POKEMON } from '../../game/store/prefabs/prefabs';
+import { CHOOSE_TOOLS_TO_REMOVE_PROMPT } from '../../game/store/prefabs/prefabs';
 
 export class Minccino extends PokemonCard {
 
@@ -47,7 +47,7 @@ export class Minccino extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
-      return DISCARD_TOOLS_FROM_OPPONENTS_POKEMON(store, state, player, 0, 2);
+      return CHOOSE_TOOLS_TO_REMOVE_PROMPT(store, state, player, PlayerType.TOP_PLAYER, SlotType.DISCARD, 0, 2);
     }
 
     return state;

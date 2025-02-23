@@ -49,7 +49,7 @@ class TechnicalMachineCrisisPunch extends trainer_card_1.TrainerCard {
             const player = effect.player;
             player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList) => {
                 if (cardList.cards.includes(this)) {
-                    prefabs_1.DISCARD_TOOL(store, state, cardList, this);
+                    prefabs_1.REMOVE_TOOL(store, state, cardList, this, game_1.SlotType.DISCARD);
                 }
             });
             return state;

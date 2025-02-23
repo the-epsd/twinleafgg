@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Minccino = void 0;
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
+const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class Minccino extends pokemon_card_1.PokemonCard {
@@ -37,7 +38,7 @@ class Minccino extends pokemon_card_1.PokemonCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
-            return prefabs_1.DISCARD_TOOLS_FROM_OPPONENTS_POKEMON(store, state, player, 0, 2);
+            return prefabs_1.CHOOSE_TOOLS_TO_REMOVE_PROMPT(store, state, player, game_1.PlayerType.TOP_PLAYER, game_1.SlotType.DISCARD, 0, 2);
         }
         return state;
     }

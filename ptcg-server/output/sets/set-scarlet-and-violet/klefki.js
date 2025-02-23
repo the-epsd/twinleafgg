@@ -66,7 +66,7 @@ class Klefki extends pokemon_card_1.PokemonCard {
             // Discard active Pokemon's tool first
             const activePokemon = opponent.active;
             for (const tool of activePokemon.tools) {
-                prefabs_1.DISCARD_TOOL(store, state, activePokemon, tool);
+                prefabs_1.REMOVE_TOOL(store, state, activePokemon, tool, game_1.SlotType.DISCARD);
             }
             // Then deal damage
             effect.damage = 10;

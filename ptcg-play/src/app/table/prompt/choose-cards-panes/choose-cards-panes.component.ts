@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnChanges, ElementRef, ViewChild } from '@angular/core';
-import { Card, ChooseCardsPrompt, ChooseEnergyPrompt, ChooseToolPrompt, ChoosePrizePrompt, DiscardEnergyPrompt, EnergyCard } from 'ptcg-server';
+import { Card, ChooseCardsPrompt, ChooseEnergyPrompt, ChoosePrizePrompt, DiscardEnergyPrompt, EnergyCard } from 'ptcg-server';
 import { DraggedItem } from '@ng-dnd/sortable';
 
 import { CardsBaseService } from '../../../shared/cards/cards-base.service';

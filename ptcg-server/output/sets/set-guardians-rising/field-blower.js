@@ -36,7 +36,7 @@ class FieldBlower extends trainer_card_1.TrainerCard {
             effect.preventDefault = true;
             player.hand.moveCardTo(effect.trainerCard, player.supporter);
             if (stadiumCard !== undefined) {
-                state = prefabs_1.SELECT_PROMPT_WITH_OPTIONS(store, state, player, [
+                state = prefabs_1.SELECT_PROMPT_WITH_OPTIONS(store, state, player, game_1.GameMessage.WANT_TO_DISCARD_STADIUM, [
                     {
                         message: game_1.GameMessage.YES,
                         action: () => {
@@ -45,7 +45,7 @@ class FieldBlower extends trainer_card_1.TrainerCard {
                             cardList.moveTo(stadiumPlayer.discard);
                             store.log(state, game_1.GameLog.LOG_PLAYER_DISCARDS_WITH_FIELD_BLOWER, { name: player.name, card: stadiumCard.name });
                             if (allTools.length > 0) {
-                                state = prefabs_1.DISCARD_TOOLS_FROM_ALL_POKEMON(store, state, player, 0, 1);
+                                state = prefabs_1.CHOOSE_TOOLS_TO_REMOVE_PROMPT(store, state, player, game_1.PlayerType.ANY, game_1.SlotType.DISCARD, 0, 1);
                             }
                         }
                     },
@@ -53,15 +53,15 @@ class FieldBlower extends trainer_card_1.TrainerCard {
                         message: game_1.GameMessage.NO,
                         action: () => {
                             if (allTools.length > 0) {
-                                state = prefabs_1.DISCARD_TOOLS_FROM_ALL_POKEMON(store, state, player, 0, 2);
+                                state = prefabs_1.CHOOSE_TOOLS_TO_REMOVE_PROMPT(store, state, player, game_1.PlayerType.ANY, game_1.SlotType.DISCARD, 0, 2);
                             }
                         }
                     }
-                ], game_1.GameMessage.WANT_TO_DISCARD_STADIUM);
+                ]);
                 player.supporter.moveCardTo(this, player.discard);
             }
             else {
-                state = prefabs_1.DISCARD_TOOLS_FROM_ALL_POKEMON(store, state, player, 0, 2);
+                state = prefabs_1.CHOOSE_TOOLS_TO_REMOVE_PROMPT(store, state, player, game_1.PlayerType.ANY, game_1.SlotType.DISCARD, 0, 2);
             }
             return state;
         }

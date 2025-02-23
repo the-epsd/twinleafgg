@@ -24,15 +24,9 @@ class Faba extends trainer_card_1.TrainerCard {
             if (player.supporterTurn > 0) {
                 throw new game_1.GameError(game_1.GameMessage.SUPPORTER_ALREADY_PLAYED);
             }
-            let pokemonsWithTool = 0;
-            const blocked = [];
+            let tools = 0;
             opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList, card, target) => {
-                if (cardList.tools.length !== 0) {
-                    pokemonsWithTool += 1;
-                }
-                else {
-                    blocked.push(target);
-                }
+                tools += cardList.tools.length;
             });
             let specialEnergy = 0;
             opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList, card, target) => {
@@ -41,7 +35,7 @@ class Faba extends trainer_card_1.TrainerCard {
                 }
             });
             const stadiumCard = game_1.StateUtils.getStadiumCard(state);
-            if (pokemonsWithTool === 0 && stadiumCard == undefined && specialEnergy === 0) {
+            if (tools === 0 && stadiumCard == undefined && specialEnergy === 0) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
             }
             // We will discard this card after prompt confirmation
@@ -50,34 +44,7 @@ class Faba extends trainer_card_1.TrainerCard {
             const toolOption = {
                 message: game_1.GameMessage.CHOICE_TOOL,
                 action: () => {
-                    let selectedTools = [];
-                    let allTools = [];
-                    opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, cardList => {
-                        allTools.push(...cardList.tools);
-                    });
-                    return store.prompt(state, new game_1.ChooseToolPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DISCARD_CARDS, allTools, { min: 1, max: 1, allowCancel: false }), results => {
-                        selectedTools = results || [];
-                        if (selectedTools.length === 0) {
-                            return state;
-                        }
-                        const source = game_1.StateUtils.findCardList(state, selectedTools[0]);
-                        if (!(source instanceof game_1.PokemonCardList)) {
-                            return state;
-                        }
-                        if (source.isStage(card_types_1.Stage.BASIC)) {
-                            try {
-                                const supporterEffect = new play_card_effects_1.SupporterEffect(player, effect.trainerCard);
-                                store.reduceEffect(state, supporterEffect);
-                            }
-                            catch (_a) {
-                                player.supporter.moveCardTo(effect.trainerCard, player.discard);
-                                return state;
-                            }
-                        }
-                        selectedTools.forEach(tool => prefabs_1.LOST_ZONE_TOOL(store, state, source, tool));
-                        player.supporter.moveCardTo(this, player.discard);
-                        return state;
-                    });
+                    return prefabs_1.CHOOSE_TOOLS_TO_REMOVE_PROMPT(store, state, player, game_1.PlayerType.TOP_PLAYER, game_1.SlotType.LOSTZONE, 1, 1);
                 }
             };
             const stadiumOption = {
@@ -125,7 +92,7 @@ class Faba extends trainer_card_1.TrainerCard {
                 }
             };
             const options = [];
-            if (pokemonsWithTool > 0) {
+            if (tools > 0) {
                 options.push(toolOption);
             }
             if (specialEnergy > 0) {

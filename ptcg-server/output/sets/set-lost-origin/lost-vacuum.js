@@ -57,20 +57,7 @@ class LostVacuum extends trainer_card_1.TrainerCard {
                     {
                         message: game_1.GameMessage.CHOICE_TOOL,
                         action: () => {
-                            let selectedTools = [];
-                            return store.prompt(state, new game_1.ChooseToolPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DISCARD_CARDS, allTools, { min: 1, max: 1, allowCancel: false }), results => {
-                                selectedTools = results || [];
-                                if (selectedTools.length === 0) {
-                                    return state;
-                                }
-                                const source = game_1.StateUtils.findCardList(state, selectedTools[0]);
-                                if (!(source instanceof game_1.PokemonCardList)) {
-                                    return state;
-                                }
-                                selectedTools.forEach(tool => prefabs_1.LOST_ZONE_TOOL(store, state, source, tool));
-                                player.supporter.moveCardTo(this, player.discard);
-                                return state;
-                            });
+                            return prefabs_1.CHOOSE_TOOLS_TO_REMOVE_PROMPT(store, state, player, game_1.PlayerType.ANY, game_1.SlotType.LOSTZONE, 1, 1);
                         }
                     },
                     {
@@ -111,20 +98,7 @@ class LostVacuum extends trainer_card_1.TrainerCard {
                 return state;
             }
             if (allTools.length >= 1 && stadiumCard == undefined) {
-                let selectedTools = [];
-                return store.prompt(state, new game_1.ChooseToolPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DISCARD_CARDS, allTools, { min: 1, max: 1, allowCancel: false }), results => {
-                    selectedTools = results || [];
-                    if (selectedTools.length === 0) {
-                        return state;
-                    }
-                    const source = game_1.StateUtils.findCardList(state, selectedTools[0]);
-                    if (!(source instanceof game_1.PokemonCardList)) {
-                        return state;
-                    }
-                    selectedTools.forEach(tool => prefabs_1.LOST_ZONE_TOOL(store, state, source, tool));
-                    player.supporter.moveCardTo(this, player.discard);
-                    return state;
-                });
+                return prefabs_1.CHOOSE_TOOLS_TO_REMOVE_PROMPT(store, state, player, game_1.PlayerType.ANY, game_1.SlotType.LOSTZONE, 1, 1);
             }
             return state;
         }

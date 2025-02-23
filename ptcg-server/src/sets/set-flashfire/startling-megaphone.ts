@@ -4,8 +4,8 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { PlayerType, StateUtils, GameError, GameMessage, PokemonCardList } from '../../game';
-import { DISCARD_TOOL } from '../../game/store/prefabs/prefabs';
+import { PlayerType, StateUtils, GameError, GameMessage, PokemonCardList, SlotType } from '../../game';
+import { REMOVE_TOOL } from '../../game/store/prefabs/prefabs';
 
 
 export class StartlingMegaphone extends TrainerCard {
@@ -44,7 +44,7 @@ export class StartlingMegaphone extends TrainerCard {
 
       pokemonsWithTool.forEach(target => {
         for (const tool of target.tools) {
-          DISCARD_TOOL(store, state, target, tool);
+          REMOVE_TOOL(store, state, target, tool, SlotType.DISCARD);
         }
         player.supporter.moveCardTo(effect.trainerCard, player.discard);
       });

@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, TrainerType } from '../../game/store/card/card-types';
+import { Stage, CardType } from '../../game/store/card/card-types';
 import { PowerType, StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 export declare class Shedinja extends PokemonCard {
@@ -25,6 +25,5 @@ export declare class Shedinja extends PokemonCard {
     cardImage: string;
     name: string;
     fullName: string;
-    trainerType: TrainerType | undefined;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

@@ -1,9 +1,6 @@
-import { Shedinja } from '../../../sets/set-lost-thunder/shedinja';
-import { UnownQ } from '../../../sets/set-majestic-dawn/unown-q';
 import { Card } from '../card/card';
 import { BoardEffect, CardTag, SpecialCondition, Stage, SuperType } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
-import { TrainerCard } from '../card/trainer-card';
 import { CardList } from './card-list';
 import { Marker } from './card-marker';
 
@@ -264,11 +261,6 @@ export class PokemonCardList extends CardList {
     const index = this.tools.indexOf(tool);
     if (index !== -1) {
       this.tools.splice(index, 1);
-    }
-    if (!(tool instanceof TrainerCard)) {
-      if (tool instanceof Shedinja || tool instanceof UnownQ) {
-        tool.trainerType = undefined;
-      }
     }
   }
 

@@ -1,9 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
+import { StoreLike, State, PlayerType, SlotType } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { DISCARD_TOOLS_FROM_OPPONENTS_POKEMON } from '../../game/store/prefabs/prefabs';
+import { CHOOSE_TOOLS_TO_REMOVE_PROMPT } from '../../game/store/prefabs/prefabs';
 import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../game/store/prefabs/costs';
 
 export class HisuianSamurottV extends PokemonCard {
@@ -50,7 +50,7 @@ export class HisuianSamurottV extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      DISCARD_TOOLS_FROM_OPPONENTS_POKEMON(store, state, effect.player, 1, 2);
+      CHOOSE_TOOLS_TO_REMOVE_PROMPT(store, state, effect.player, PlayerType.TOP_PLAYER, SlotType.DISCARD, 0, 1);
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {

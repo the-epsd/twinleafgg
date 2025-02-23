@@ -5,8 +5,8 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { PowerType } from '../../game/store/card/pokemon-types';
-import { GameError, GameMessage, StateUtils } from '../../game';
-import { DISCARD_TOOL } from '../../game/store/prefabs/prefabs';
+import { GameError, GameMessage, SlotType, StateUtils } from '../../game';
+import { REMOVE_TOOL } from '../../game/store/prefabs/prefabs';
 
 export class Klefki extends PokemonCard {
 
@@ -84,7 +84,7 @@ export class Klefki extends PokemonCard {
       // Discard active Pokemon's tool first
       const activePokemon = opponent.active;
       for (const tool of activePokemon.tools) {
-        DISCARD_TOOL(store, state, activePokemon, tool);
+        REMOVE_TOOL(store, state, activePokemon, tool, SlotType.DISCARD);
       }
 
       // Then deal damage

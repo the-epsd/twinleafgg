@@ -1,9 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
+import { StoreLike, State, PlayerType, SlotType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { DISCARD_TOOLS_FROM_OPPONENTS_POKEMON } from '../../game/store/prefabs/prefabs';
+import { CHOOSE_TOOLS_TO_REMOVE_PROMPT } from '../../game/store/prefabs/prefabs';
 
 export class Purrloin extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -30,7 +30,7 @@ export class Purrloin extends PokemonCard {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
-      return DISCARD_TOOLS_FROM_OPPONENTS_POKEMON(store, state, player, 0, 2);
+      return CHOOSE_TOOLS_TO_REMOVE_PROMPT(store, state, player, PlayerType.TOP_PLAYER, SlotType.DISCARD, 1, 1);
     }
 
     return state;

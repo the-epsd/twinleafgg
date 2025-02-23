@@ -1,11 +1,11 @@
-import { PlayerType } from '../../game';
+import { PlayerType, SlotType } from '../../game';
 import { CardType, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { DISCARD_TOOL } from '../../game/store/prefabs/prefabs';
+import { REMOVE_TOOL } from '../../game/store/prefabs/prefabs';
 
 import { StateUtils } from '../../game/store/state-utils';
 import { GamePhase, State } from '../../game/store/state/state';
@@ -40,7 +40,7 @@ export class MetalCoreBarrier extends TrainerCard {
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, index) => {
         if (cardList.cards.includes(this)) {
-          DISCARD_TOOL(store, state, cardList, this);
+          REMOVE_TOOL(store, state, cardList, this, SlotType.DISCARD);
         }
       });
 

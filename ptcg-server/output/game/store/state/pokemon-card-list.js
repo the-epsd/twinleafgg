@@ -1,10 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PokemonCardList = void 0;
-const shedinja_1 = require("../../../sets/set-lost-thunder/shedinja");
-const unown_q_1 = require("../../../sets/set-majestic-dawn/unown-q");
 const card_types_1 = require("../card/card-types");
-const trainer_card_1 = require("../card/trainer-card");
 const card_list_1 = require("./card-list");
 const card_marker_1 = require("./card-marker");
 class PokemonCardList extends card_list_1.CardList {
@@ -210,11 +207,6 @@ class PokemonCardList extends card_list_1.CardList {
         const index = this.tools.indexOf(tool);
         if (index !== -1) {
             this.tools.splice(index, 1);
-        }
-        if (!(tool instanceof trainer_card_1.TrainerCard)) {
-            if (tool instanceof shedinja_1.Shedinja || tool instanceof unown_q_1.UnownQ) {
-                tool.trainerType = undefined;
-            }
         }
     }
 }

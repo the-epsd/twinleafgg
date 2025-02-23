@@ -1,9 +1,9 @@
-import { GameError, GameLog, GameMessage, PlayerType, StateUtils } from '../../game';
+import { GameError, GameLog, GameMessage, PlayerType, SlotType, StateUtils } from '../../game';
 import { TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { DISCARD_TOOLS_FROM_ALL_POKEMON, SELECT_PROMPT_WITH_OPTIONS } from '../../game/store/prefabs/prefabs';
+import { CHOOSE_TOOLS_TO_REMOVE_PROMPT, SELECT_PROMPT_WITH_OPTIONS } from '../../game/store/prefabs/prefabs';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
@@ -49,7 +49,7 @@ export class FieldBlower extends TrainerCard {
       player.hand.moveCardTo(effect.trainerCard, player.supporter);
 
       if (stadiumCard !== undefined) {
-        state = SELECT_PROMPT_WITH_OPTIONS(store, state, player, [
+        state = SELECT_PROMPT_WITH_OPTIONS(store, state, player, GameMessage.WANT_TO_DISCARD_STADIUM, [
           {
             message: GameMessage.YES,
             action: () => {
@@ -59,7 +59,7 @@ export class FieldBlower extends TrainerCard {
               store.log(state, GameLog.LOG_PLAYER_DISCARDS_WITH_FIELD_BLOWER, { name: player.name, card: stadiumCard.name });
 
               if (allTools.length > 0) {
-                state = DISCARD_TOOLS_FROM_ALL_POKEMON(store, state, player, 0, 1);
+                state = CHOOSE_TOOLS_TO_REMOVE_PROMPT(store, state, player, PlayerType.ANY, SlotType.DISCARD, 0, 1);
               }
             }
           },
@@ -67,14 +67,14 @@ export class FieldBlower extends TrainerCard {
             message: GameMessage.NO,
             action: () => {
               if (allTools.length > 0) {
-                state = DISCARD_TOOLS_FROM_ALL_POKEMON(store, state, player, 0, 2);
+                state = CHOOSE_TOOLS_TO_REMOVE_PROMPT(store, state, player, PlayerType.ANY, SlotType.DISCARD, 0, 2);
               }
             }
           }
-        ], GameMessage.WANT_TO_DISCARD_STADIUM)
+        ])
         player.supporter.moveCardTo(this, player.discard);
       } else {
-        state = DISCARD_TOOLS_FROM_ALL_POKEMON(store, state, player, 0, 2);
+        state = CHOOSE_TOOLS_TO_REMOVE_PROMPT(store, state, player, PlayerType.ANY, SlotType.DISCARD, 0, 2);
       }
       return state;
     }

@@ -12,7 +12,7 @@ class LysandreLabs extends trainer_card_1.TrainerCard {
         this.setNumber = '111';
         this.name = 'Lysandre Labs';
         this.fullName = 'Lysandre Labs FLI';
-        this.text = ' Pokémon Tool cards in play (both yours and your opponent\'s) have no effect.';
+        this.text = 'Pokémon Tool cards in play (both yours and your opponent\'s) have no effect.';
     }
     reduceEffect(store, state, effect) {
         return state;

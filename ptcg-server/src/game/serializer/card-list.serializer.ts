@@ -37,6 +37,7 @@ export class CardListSerializer implements Serializer<CardList> {
 
     const toolIds: number[] = data.tools;
     data.tools = toolIds.map(index => this.fromIndex(index, context));
+    console.log(data.tools);
 
     const indexes: number[] = data.cards;
     data.cards = indexes.map(index => this.fromIndex(index, context));

@@ -4,8 +4,8 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { Card, CardList, ChooseCardsPrompt, ChooseToolPrompt, GameError, GameMessage, PlayerType, PokemonCardList, SelectPrompt, StateUtils } from '../../game';
-import { LOST_ZONE_TOOL } from '../../game/store/prefabs/prefabs';
+import { Card, CardList, ChooseCardsPrompt, GameError, GameMessage, PlayerType, SelectPrompt, SlotType, StateUtils } from '../../game';
+import { CHOOSE_TOOLS_TO_REMOVE_PROMPT } from '../../game/store/prefabs/prefabs';
 
 export class LostVacuum extends TrainerCard {
 
@@ -83,29 +83,7 @@ export class LostVacuum extends TrainerCard {
           {
             message: GameMessage.CHOICE_TOOL,
             action: () => {
-              let selectedTools: Card[] = [];
-              return store.prompt(state, new ChooseToolPrompt(
-                player.id,
-                GameMessage.CHOOSE_POKEMON_TO_DISCARD_CARDS,
-                allTools,
-                { min: 1, max: 1, allowCancel: false }
-              ), results => {
-                selectedTools = results || [];
-
-                if (selectedTools.length === 0) {
-                  return state;
-                }
-
-                const source = StateUtils.findCardList(state, selectedTools[0]);
-                if (!(source instanceof PokemonCardList)) {
-                  return state;
-                }
-
-                selectedTools.forEach(tool => LOST_ZONE_TOOL(store, state, source, tool));
-
-                player.supporter.moveCardTo(this, player.discard);
-                return state;
-              });
+              return CHOOSE_TOOLS_TO_REMOVE_PROMPT(store, state, player, PlayerType.ANY, SlotType.LOSTZONE, 1, 1);
             }
           },
           {
@@ -159,29 +137,7 @@ export class LostVacuum extends TrainerCard {
       }
 
       if (allTools.length >= 1 && stadiumCard == undefined) {
-        let selectedTools: Card[] = [];
-        return store.prompt(state, new ChooseToolPrompt(
-          player.id,
-          GameMessage.CHOOSE_POKEMON_TO_DISCARD_CARDS,
-          allTools,
-          { min: 1, max: 1, allowCancel: false }
-        ), results => {
-          selectedTools = results || [];
-
-          if (selectedTools.length === 0) {
-            return state;
-          }
-
-          const source = StateUtils.findCardList(state, selectedTools[0]);
-          if (!(source instanceof PokemonCardList)) {
-            return state;
-          }
-
-          selectedTools.forEach(tool => LOST_ZONE_TOOL(store, state, source, tool));
-
-          player.supporter.moveCardTo(this, player.discard);
-          return state;
-        });
+        return CHOOSE_TOOLS_TO_REMOVE_PROMPT(store, state, player, PlayerType.ANY, SlotType.LOSTZONE, 1, 1);
       }
       return state;
     }

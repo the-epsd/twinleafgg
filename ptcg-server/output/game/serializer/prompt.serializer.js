@@ -24,7 +24,6 @@ const shuffle_hand_prompt_1 = require("../store/prompts/shuffle-hand-prompt");
 const remove_damage_prompt_1 = require("../store/prompts/remove-damage-prompt");
 const discard_energy_prompt_1 = require("../store/prompts/discard-energy-prompt");
 const confirm_cards_prompt_1 = require("../store/prompts/confirm-cards-prompt");
-const choose_tool_prompt_1 = require("../store/prompts/choose-tool-prompt");
 class PromptSerializer {
     constructor() {
         this.rows = [
@@ -33,7 +32,6 @@ class PromptSerializer {
             { classValue: choose_attack_prompt_1.ChooseAttackPrompt, type: 'ChooseAttackPrompt' },
             { classValue: choose_cards_prompt_1.ChooseCardsPrompt, type: 'ChooseCardsPrompt' },
             { classValue: choose_energy_prompt_1.ChooseEnergyPrompt, type: 'ChooseEnergyPrompt' },
-            { classValue: choose_tool_prompt_1.ChooseToolPrompt, type: 'ChooseToolPrompt' },
             { classValue: choose_pokemon_prompt_1.ChoosePokemonPrompt, type: 'ChoosePokemonPrompt' },
             { classValue: choose_prize_prompt_1.ChoosePrizePrompt, type: 'ChoosePrizePrompt' },
             { classValue: coin_flip_prompt_1.CoinFlipPrompt, type: 'CoinFlipPrompt' },
