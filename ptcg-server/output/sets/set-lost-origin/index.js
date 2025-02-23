@@ -45,6 +45,7 @@ const magnezone_vstar_1 = require("./magnezone-vstar");
 const mawile_1 = require("./mawile");
 const mirage_gate_1 = require("./mirage-gate");
 const miss_fortune_sisters_1 = require("./miss-fortune-sisters");
+const mr_mime_1 = require("./mr-mime");
 const panic_mask_1 = require("./panic-mask");
 const pidgeot_v_1 = require("./pidgeot-v");
 const radiant_gardevoir_1 = require("./radiant-gardevoir");
@@ -120,4 +121,5 @@ exports.setLostOrigin = [
     new tynamo_1.Tynamo(),
     new wurmple_1.Wurmple(),
     new lake_acuity_1.LakeAcuity(),
+    new mr_mime_1.MrMime(),
 ];

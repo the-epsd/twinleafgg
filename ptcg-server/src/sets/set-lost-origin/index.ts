@@ -43,6 +43,7 @@ import { MagnezoneVSTAR } from './magnezone-vstar';
 import { Mawile } from './mawile';
 import { MirageGate } from './mirage-gate';
 import { MissFortuneSisters } from './miss-fortune-sisters';
+import {MrMime} from './mr-mime';
 import { PanicMask } from './panic-mask';
 import { PidgeotV } from './pidgeot-v';
 import { RadiantGardevoir } from './radiant-gardevoir';
@@ -121,4 +122,5 @@ export const setLostOrigin: Card[] = [
   new Tynamo(),
   new Wurmple(),
   new LakeAcuity(),
+  new MrMime(),
 ];
