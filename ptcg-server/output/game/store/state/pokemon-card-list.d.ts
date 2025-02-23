@@ -15,9 +15,6 @@ export declare class PokemonCardList extends CardList {
     sleepFlips: number;
     boardEffect: BoardEffect[];
     hpBonus: number;
-    tool: Card | undefined;
-    stadium: Card | undefined;
-    isActivatingCard: boolean;
     static readonly ATTACK_USED_MARKER = "ATTACK_USED_MARKER";
     static readonly ATTACK_USED_2_MARKER = "ATTACK_USED_2_MARKER";
     static readonly CLEAR_KNOCKOUT_MARKER = "CLEAR_KNOCKOUT_MARKER";
@@ -44,6 +41,9 @@ export declare class PokemonCardList extends CardList {
     static readonly CLEAR_PREVENT_ALL_DAMAGE_DONE_BY_OPPONENTS_BASIC_POKEMON_MARKER = "CLEAR_PREVENT_ALL_DAMAGE_DONE_BY_OPPONENTS_BASIC_POKEMON_MARKER";
     static readonly UNRELENTING_ONSLAUGHT_MARKER = "UNRELENTING_ONSLAUGHT_MARKER";
     static readonly UNRELENTING_ONSLAUGHT_2_MARKER = "UNRELENTING_ONSLAUGHT_2_MARKER";
+    tool: Card | undefined;
+    stadium: Card | undefined;
+    isActivatingCard: boolean;
     getPokemons(): PokemonCard[];
     getPokemonCard(): PokemonCard | undefined;
     isStage(stage: Stage): boolean;
@@ -68,5 +68,5 @@ export declare class PokemonCardList extends CardList {
     isIonos(): boolean;
     isHops(): boolean;
     isEthans(): boolean;
-    getToolEffect(): (Power | Attack)[] | undefined;
+    getToolEffect(): Power | Attack | undefined;
 }

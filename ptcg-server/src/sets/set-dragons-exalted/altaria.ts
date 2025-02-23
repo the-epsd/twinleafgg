@@ -15,7 +15,7 @@ export class Altaria extends PokemonCard {
   public powers = [{
     name: 'Fight Song',
     powerType: PowerType.ABILITY,
-    text: 'Your [N] Pokémon\' attacks do 20 more damage to the Active Pokémon (before applying Weakness and Resistance).'
+    text: 'Your [N] Pokémon\'s attacks do 20 more damage to the Active Pokémon (before applying Weakness and Resistance).'
   }];
 
   public attacks = [{
@@ -32,7 +32,7 @@ export class Altaria extends PokemonCard {
   public fullName: string = 'Altaria DRX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof PutDamageEffect) {
+    if (effect instanceof PutDamageEffect && StateUtils.isPokemonInPlay(effect.player, this)) {
       if (state.phase !== GamePhase.ATTACK)
         return state;
 
@@ -62,7 +62,7 @@ export class Altaria extends PokemonCard {
         if (card === this) {
           if (!checkPokemonType.cardTypes.includes(N))
             return state;
-          if (effect.damage > 0 && effect.target === opponent.active)
+          if (effect.damage > 0 && (effect.target === opponent.active || effect.target === effect.player.active))
             effect.damage += 20;
         }
       });

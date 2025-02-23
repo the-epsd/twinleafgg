@@ -50,8 +50,8 @@ class Rotom extends game_1.PokemonCard {
             let toolCount = 0;
             [player.active, ...player.bench].forEach(list => {
                 list.cards.forEach(card => {
-                    if (card instanceof game_1.PokemonCard && card.tools) {
-                        toolCount += 1;
+                    if (card instanceof game_1.PokemonCard && card.tools.length > 0) {
+                        toolCount += card.tools.length;
                     }
                 });
             });

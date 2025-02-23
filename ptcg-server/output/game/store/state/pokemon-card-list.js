@@ -97,7 +97,7 @@ class PokemonCardList extends card_list_1.CardList {
         if (this.cards.length === 0) {
             this.damage = 0;
         }
-        if (this.tool !== undefined) {
+        if (this.tool && !this.cards.includes(this.tool)) {
             this.tool = undefined;
         }
     }
@@ -156,7 +156,7 @@ class PokemonCardList extends card_list_1.CardList {
         ].includes(s) === false);
         this.boardEffect.push(sp);
     }
-    //Rulebox Pokemon
+    //Rule-Box Pokemon
     hasRuleBox() {
         return this.cards.some(c => c.tags.includes(card_types_1.CardTag.POKEMON_ex) || c.tags.includes(card_types_1.CardTag.RADIANT) || c.tags.includes(card_types_1.CardTag.POKEMON_V) || c.tags.includes(card_types_1.CardTag.POKEMON_VMAX) || c.tags.includes(card_types_1.CardTag.POKEMON_VSTAR) || c.tags.includes(card_types_1.CardTag.POKEMON_GX) || c.tags.includes(card_types_1.CardTag.PRISM_STAR) || c.tags.includes(card_types_1.CardTag.BREAK));
     }
@@ -203,12 +203,14 @@ class PokemonCardList extends card_list_1.CardList {
         return this.cards.some(c => c.tags.includes(card_types_1.CardTag.ETHANS));
     }
     getToolEffect() {
-        if (this.tool === undefined) {
+        if (!this.tool) {
             return;
         }
-        if (this.tool instanceof pokemon_card_1.PokemonCard) {
-            return [this.tool.powers[0] || this.tool.attacks[0]];
+        const toolCard = this.tool.cards;
+        if (toolCard instanceof pokemon_card_1.PokemonCard) {
+            return toolCard.powers[0] || toolCard.attacks[0];
         }
+        return;
     }
 }
 exports.PokemonCardList = PokemonCardList;

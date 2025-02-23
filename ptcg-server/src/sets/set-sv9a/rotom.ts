@@ -68,8 +68,8 @@ export class Rotom extends PokemonCard {
 
       [player.active, ...player.bench].forEach(list => {
         list.cards.forEach(card => {
-          if (card instanceof PokemonCard && card.tools) {
-            toolCount += 1;
+          if (card instanceof PokemonCard && card.tools.length > 0) {
+            toolCount += card.tools.length;
           }
         });
       });
