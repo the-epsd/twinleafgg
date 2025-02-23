@@ -58,7 +58,7 @@ export class ExpShare extends TrainerCard {
         if (cardList === effect.target) {
           return;
         }
-        if (cardList.tool instanceof ExpShare) {
+        if (cardList.tools.some(tool => tool instanceof ExpShare)) {
           expShareCount++;
         } else {
           blockedTo.push(target);

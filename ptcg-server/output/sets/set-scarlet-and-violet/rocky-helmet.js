@@ -21,7 +21,7 @@ class RockyHelmet extends trainer_card_1.TrainerCard {
             'put 2 damage counters on the Attacking Pokemon.';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof attack_effects_1.AfterDamageEffect && effect.target.tool === this) {
+        if (effect instanceof attack_effects_1.AfterDamageEffect && effect.target.tools.includes(this)) {
             const player = effect.player;
             const targetPlayer = state_utils_1.StateUtils.findOwner(state, effect.target);
             if (effect.damage <= 0 || player === targetPlayer || targetPlayer.active !== effect.target) {

@@ -1,4 +1,4 @@
-import { AttachEnergyOptions, AttachEnergyPrompt, Card, CardList, ChooseCardsOptions, ChooseCardsPrompt, ChoosePokemonPrompt, ChoosePrizePrompt, CoinFlipPrompt, ConfirmPrompt, EnergyCard, FilterType, GameError, GameLog, GameMessage, Player, PlayerType, PokemonCardList, PowerType, SelectPrompt, ShowCardsPrompt, ShuffleDeckPrompt, SlotType, State, StateUtils, StoreLike } from '../..';
+import { AttachEnergyOptions, AttachEnergyPrompt, Card, CardList, CardTarget, ChooseCardsOptions, ChooseCardsPrompt, ChoosePokemonPrompt, ChoosePrizePrompt, CoinFlipPrompt, ConfirmPrompt, EnergyCard, FilterType, GameError, GameLog, GameMessage, Player, PlayerType, PokemonCardList, PowerType, SelectPrompt, ShowCardsPrompt, ShuffleDeckPrompt, SlotType, State, StateUtils, StoreLike } from '../..';
 import { BoardEffect, CardTag, SpecialCondition, SuperType } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
 import { DealDamageEffect, DiscardCardsEffect, HealTargetEffect, PutDamageEffect } from '../effects/attack-effects';
@@ -533,7 +533,7 @@ export function LOOK_AT_TOPDECK_AND_DISCARD_OR_RETURN(store: StoreLike, state: S
     const deckTop = new CardList();
     deckPlayer.deck.moveTo(deckTop, 1);
     SHOW_CARDS_TO_PLAYER(store, state, choosingPlayer, deckTop.cards);
-    SELECT_PROMPT_WITH_OPTIONS(store, state, choosingPlayer, [{
+    SELECT_PROMPT_WITH_OPTIONS(store, state, choosingPlayer, GameMessage.CHOOSE_OPTION, [{
       message: GameMessage.DISCARD_FROM_TOP_OF_DECK,
       action: () => deckTop.moveToTopOfDestination(deckPlayer.discard),
     },
@@ -565,9 +565,9 @@ export function SELECT_PROMPT(store: StoreLike, state: State, player: Player, va
   return store.prompt(state, new SelectPrompt(player.id, GameMessage.CHOOSE_OPTION, values, { allowCancel: false }), callback);
 }
 
-export function SELECT_PROMPT_WITH_OPTIONS(store: StoreLike, state: State, player: Player, options: { message: GameMessage, action: () => void }[]) {
+export function SELECT_PROMPT_WITH_OPTIONS(store: StoreLike, state: State, player: Player, message: GameMessage, options: { message: GameMessage, action: () => void }[]) {
   return store.prompt(state, new SelectPrompt(
-    player.id, GameMessage.CHOOSE_OPTION, options.map(opt => opt.message), { allowCancel: false }
+    player.id, message, options.map(opt => opt.message), { allowCancel: false }
   ), choice => {
     const option = options[choice];
     option.action();
@@ -731,4 +731,125 @@ export function MOVE_CARDS(
   } = {}
 ): State {
   return store.reduceEffect(state, new MoveCardsEffect(source, destination, options));
+}
+
+export function REMOVE_TOOL(store: StoreLike, state: State, source: PokemonCardList, tool: Card, destinationSlot: SlotType): State {
+  if (!source.cards.includes(tool)) {
+    return state;
+  }
+  const owner = StateUtils.findOwner(state, source);
+  state = MOVE_CARDS(store, state, source, owner.getSlot(destinationSlot), { cards: [tool] });
+  source.removeTool(tool);
+  return state;
+}
+
+export function REMOVE_TOOLS_FROM_POKEMON_PROMPT(store: StoreLike, state: State, player: Player, target: PokemonCardList, destinationSlot: SlotType, min: number, max: number): State {
+  if (target.tools.length === 0) {
+    return state;
+  }
+  if (target.tools.length === 1) {
+    return REMOVE_TOOL(store, state, target, target.tools[0], destinationSlot);
+  } else {
+    let blocked: number[] = [];
+    target.cards.forEach((card, index) => {
+      if (!target.tools.includes(card)) {
+        blocked.push(index);
+      }
+    })
+    let tools: Card[] = [];
+    return store.prompt(state, new ChooseCardsPrompt(
+      player,
+      GameMessage.CHOOSE_CARD_TO_DISCARD,
+      target,
+      {},
+      { min, max, allowCancel: false, blocked }
+    ), selected => {
+      tools = selected || [];
+      for (const tool of tools) {
+        return REMOVE_TOOL(store, state, target, tool, destinationSlot);
+      }
+    });
+  }
+}
+
+export function CHOOSE_TOOLS_TO_REMOVE_PROMPT(store: StoreLike, state: State, player: Player, playerType: PlayerType, destinationSlot: SlotType, min: number, max: number): State {
+  const opponent = StateUtils.getOpponent(state, player);
+
+  let hasPokemonWithTool = false;
+  let players: Player[] = [];
+  switch (playerType) {
+    case PlayerType.TOP_PLAYER:
+      players = [opponent];
+      break;
+    case PlayerType.BOTTOM_PLAYER:
+      players = [player];
+      break;
+    case PlayerType.ANY:
+      players = [player, opponent];
+      break;
+  }
+  const blocked: CardTarget[] = [];
+
+  for (const p of players) {
+    let pt: PlayerType = PlayerType.BOTTOM_PLAYER;
+    if (p === opponent) {
+      pt = PlayerType.TOP_PLAYER;
+    }
+    p.forEachPokemon(pt, (cardList, card, target) => {
+      if (cardList.tools.length > 0) {
+        hasPokemonWithTool = true;
+      } else {
+        blocked.push(target);
+      }
+    });
+  }
+
+  if (!hasPokemonWithTool) {
+    return state;
+  }
+
+  let targets: PokemonCardList[] = [];
+  return store.prompt(state, new ChoosePokemonPrompt(
+    player.id,
+    GameMessage.CHOOSE_POKEMON_TO_DISCARD_CARDS,
+    playerType,
+    [SlotType.ACTIVE, SlotType.BENCH],
+    { min, max, allowCancel: false, blocked }
+  ), results => {
+    targets = results || [];
+    if (targets.length === 0) {
+      return state;
+    }
+    let toolsRemoved = 0;
+    for (const target of targets) {
+      if (target.tools.length === 0 || toolsRemoved >= max) {
+        continue;
+      }
+      if (target.tools.length === 1) {
+        REMOVE_TOOL(store, state, target, target.tools[0], destinationSlot);
+        toolsRemoved += 1;
+      } else {
+        let blocked: number[] = [];
+        target.cards.forEach((card, index) => {
+          if (!target.tools.includes(card)) {
+            blocked.push(index);
+          }
+        })
+        let tools: Card[] = [];
+        return store.prompt(state, new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_DISCARD,
+          target,
+          {},
+          { min: Math.min(min, max - toolsRemoved), max: max - toolsRemoved, allowCancel: false, blocked }
+        ), selected => {
+          tools = selected || [];
+          for (const tool of tools) {
+            REMOVE_TOOL(store, state, target, tool, destinationSlot);
+            toolsRemoved += 1;
+          }
+        });
+      }
+    }
+  });
 }

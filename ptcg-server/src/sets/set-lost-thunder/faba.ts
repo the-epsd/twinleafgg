@@ -1,8 +1,9 @@
-import { Card, CardTarget, ChooseCardsPrompt, ChoosePokemonPrompt, EnergyCard, GameError, GameMessage, PlayerType, PokemonCardList, SelectPrompt, SlotType, StateUtils } from '../../game';
-import { EnergyType, Stage, SuperType, TrainerType } from '../../game/store/card/card-types';
+import { Card, CardTarget, ChooseCardsPrompt, ChoosePokemonPrompt, EnergyCard, GameError, GameMessage, PlayerType, SelectPrompt, SlotType, StateUtils } from '../../game';
+import { EnergyType, SuperType, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
-import { SupporterEffect, TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { CHOOSE_TOOLS_TO_REMOVE_PROMPT } from '../../game/store/prefabs/prefabs';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
@@ -32,14 +33,9 @@ export class Faba extends TrainerCard {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
 
-      let pokemonsWithTool = 0;
-      const blocked: CardTarget[] = [];
+      let tools = 0;
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-        if (cardList.tool !== undefined) {
-          pokemonsWithTool += 1;
-        } else {
-          blocked.push(target);
-        }
+        tools += cardList.tools.length;
       });
 
       let specialEnergy = 0;
@@ -51,7 +47,7 @@ export class Faba extends TrainerCard {
 
       const stadiumCard = StateUtils.getStadiumCard(state);
 
-      if (pokemonsWithTool === 0 && stadiumCard == undefined && specialEnergy === 0) {
+      if (tools === 0 && stadiumCard == undefined && specialEnergy === 0) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
@@ -62,46 +58,7 @@ export class Faba extends TrainerCard {
       const toolOption = {
         message: GameMessage.CHOICE_TOOL,
         action: () => {
-          let targets: PokemonCardList[] = [];
-          return store.prompt(state, new ChoosePokemonPrompt(
-            player.id,
-            GameMessage.CHOOSE_POKEMON_TO_DISCARD_CARDS,
-            PlayerType.TOP_PLAYER,
-            [SlotType.ACTIVE, SlotType.BENCH],
-            { min: 1, max: 1, allowCancel: false, blocked }
-          ), results => {
-            targets = results || [];
-
-            if (targets.length === 0) {
-              return state;
-            }
-
-            const cardList = targets[0];
-
-            if (cardList.isStage(Stage.BASIC)) {
-              try {
-                const supporterEffect = new SupporterEffect(player, effect.trainerCard);
-                store.reduceEffect(state, supporterEffect);
-              } catch {
-                player.supporter.moveCardTo(effect.trainerCard, player.discard);
-                return state;
-              }
-            }
-
-            targets.forEach(target => {
-              const owner = StateUtils.findOwner(state, target);
-              if (target.tool !== undefined) {
-                target.moveCardTo(target.tool, owner.lostzone);
-                target.tool = undefined;
-              }
-
-              player.supporter.moveCardTo(this, player.discard);
-              return state;
-            });
-
-            player.supporter.moveCardTo(this, player.discard);
-            return state;
-          });
+          return CHOOSE_TOOLS_TO_REMOVE_PROMPT(store, state, player, PlayerType.TOP_PLAYER, SlotType.LOSTZONE, 1, 1);
         }
       };
 
@@ -171,7 +128,7 @@ export class Faba extends TrainerCard {
 
       const options: { message: GameMessage, action: () => void }[] = [];
 
-      if (pokemonsWithTool > 0) {
+      if (tools > 0) {
         options.push(toolOption);
       }
 

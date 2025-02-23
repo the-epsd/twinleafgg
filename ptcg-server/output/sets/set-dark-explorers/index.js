@@ -18,6 +18,7 @@ const shelmet_1 = require("./shelmet");
 const tornadus_ex_1 = require("./tornadus-ex");
 const twist_mountain_1 = require("./twist-mountain");
 const tynamo_1 = require("./tynamo");
+const yamask_1 = require("./yamask");
 const zorua_1 = require("./zorua");
 exports.setDarkExplorers = [
     new accelgor_1.Accelgor(),
@@ -38,5 +39,6 @@ exports.setDarkExplorers = [
     new tornadus_ex_1.TornadusEx(),
     new twist_mountain_1.TwistMountain(),
     new tynamo_1.Tynamo(),
+    new yamask_1.Yamask(),
     new zorua_1.Zorua(),
 ];

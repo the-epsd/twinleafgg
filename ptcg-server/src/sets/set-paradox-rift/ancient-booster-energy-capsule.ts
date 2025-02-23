@@ -44,7 +44,7 @@ export class AncientBoosterEnergyCapsule extends TrainerCard {
 
     if (effect instanceof CheckTableStateEffect) {
       const cardList = StateUtils.findCardList(state, this);
-      if (cardList instanceof PokemonCardList && cardList.tool === this) {
+      if (cardList instanceof PokemonCardList && cardList.tools.includes(this)) {
         const card = cardList.getPokemonCard();
         if (card && card.tags.includes(CardTag.ANCIENT)) {
           const hasSpecialCondition = cardList.specialConditions.some(condition => condition !== SpecialCondition.ABILITY_USED);

@@ -60,7 +60,7 @@ class Farfetchd extends pokemon_card_1.PokemonCard {
                 });
                 if (cards[0] instanceof game_1.TrainerCard) {
                     player.deck.moveCardTo(cards[0], player.bench[benchSlot]);
-                    player.bench[benchSlot].tool = cards[0];
+                    player.bench[benchSlot].tools.push(cards[0]);
                     // state = store.reduceEffect(state, new AttachPokemonToolEffect(player, cards[0] as TrainerCard, player.bench[benchSlot]));
                 }
                 state = store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {

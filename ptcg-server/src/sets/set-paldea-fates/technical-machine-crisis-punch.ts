@@ -1,4 +1,4 @@
-import { Attack, GameError, GameMessage, PlayerType, StateUtils } from '../../game';
+import { Attack, GameError, GameMessage, PlayerType, SlotType, StateUtils } from '../../game';
 import { CardType, TrainerType } from '../../game/store/card/card-types';
 import { ColorlessCostReducer } from '../../game/store/card/pokemon-interface';
 import { TrainerCard } from '../../game/store/card/trainer-card';
@@ -6,6 +6,7 @@ import { CheckAttackCostEffect, CheckPokemonAttacksEffect } from '../../game/sto
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { REMOVE_TOOL } from '../../game/store/prefabs/prefabs';
 
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
@@ -61,10 +62,9 @@ export class TechnicalMachineCrisisPunch extends TrainerCard {
     if (effect instanceof EndTurnEffect) {
       const player = effect.player;
 
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, index) => {
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
         if (cardList.cards.includes(this)) {
-          cardList.moveCardTo(this, player.discard);
-          cardList.tool = undefined;
+          REMOVE_TOOL(store, state, cardList, this, SlotType.DISCARD);
         }
       });
 

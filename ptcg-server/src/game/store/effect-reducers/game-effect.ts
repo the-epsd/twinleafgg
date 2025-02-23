@@ -397,7 +397,7 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
       source.damage = 0;
       source.specialConditions = [];
       source.marker.markers = [];
-      source.tool = undefined;
+      source.tools = [];
       source.removeBoardEffect(BoardEffect.ABILITY_USED);
     }
 

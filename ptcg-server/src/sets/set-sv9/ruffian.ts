@@ -1,6 +1,7 @@
 import { CardTarget, ChooseCardsPrompt, ChoosePokemonPrompt, EnergyCard, EnergyType, GameError, GameMessage, PlayerType, SlotType, State, StateUtils, StoreLike, SuperType, TrainerCard, TrainerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { MOVE_CARDS, REMOVE_TOOLS_FROM_POKEMON_PROMPT } from '../../game/store/prefabs/prefabs';
 
 export class Ruffian extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -48,27 +49,21 @@ export class Ruffian extends TrainerCard {
         if (!targets || targets.length === 0) {
           return;
         }
-        
+
         const target = targets[0];
 
         // removing the tool
-        if (target.tool !== undefined){
-          target.cards.forEach(card => {
-            if (card instanceof TrainerCard && card.trainerType === TrainerType.TOOL){
-              target.moveCardTo(card, opponent.discard);
-              target.tool = undefined;
-              return;
-            }
-          });
+        if (target.tools.length !== 0) {
+          REMOVE_TOOLS_FROM_POKEMON_PROMPT(store, state, player, target, SlotType.DISCARD, 1, 1);
         }
 
         // removing special energies
         let specialEnergies = 0;
         target.cards.forEach(card => {
-          if (card instanceof EnergyCard && card.energyType === EnergyType.SPECIAL){ specialEnergies++; }
+          if (card instanceof EnergyCard && card.energyType === EnergyType.SPECIAL) { specialEnergies++; }
         });
 
-        if (specialEnergies > 0){
+        if (specialEnergies > 0) {
           store.prompt(state, new ChooseCardsPrompt(
             player,
             GameMessage.CHOOSE_CARD_TO_DISCARD,
@@ -76,6 +71,7 @@ export class Ruffian extends TrainerCard {
             { superType: SuperType.ENERGY, energyType: EnergyType.SPECIAL },
             { min: 1, max: 1, allowCancel: false }
           ), selected => {
+            MOVE_CARDS(store, state, target, opponent.discard, { cards: selected })
             target.moveCardsTo(selected, opponent.discard);
             player.supporter.moveTo(player.discard);
           });

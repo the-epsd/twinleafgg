@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Ruffian = void 0;
 const game_1 = require("../../game");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class Ruffian extends game_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -44,14 +45,8 @@ class Ruffian extends game_1.TrainerCard {
                 }
                 const target = targets[0];
                 // removing the tool
-                if (target.tool !== undefined) {
-                    target.cards.forEach(card => {
-                        if (card instanceof game_1.TrainerCard && card.trainerType === game_1.TrainerType.TOOL) {
-                            target.moveCardTo(card, opponent.discard);
-                            target.tool = undefined;
-                            return;
-                        }
-                    });
+                if (target.tools.length !== 0) {
+                    prefabs_1.REMOVE_TOOLS_FROM_POKEMON_PROMPT(store, state, player, target, game_1.SlotType.DISCARD, 1, 1);
                 }
                 // removing special energies
                 let specialEnergies = 0;
@@ -62,6 +57,7 @@ class Ruffian extends game_1.TrainerCard {
                 });
                 if (specialEnergies > 0) {
                     store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, target, { superType: game_1.SuperType.ENERGY, energyType: game_1.EnergyType.SPECIAL }, { min: 1, max: 1, allowCancel: false }), selected => {
+                        prefabs_1.MOVE_CARDS(store, state, target, opponent.discard, { cards: selected });
                         target.moveCardsTo(selected, opponent.discard);
                         player.supporter.moveTo(player.discard);
                     });

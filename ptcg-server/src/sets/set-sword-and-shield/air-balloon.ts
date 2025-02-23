@@ -25,7 +25,7 @@ export class AirBalloon extends TrainerCard {
   public text: string = 'The Retreat Cost of the Pokémon this card is attached to is [C][C] less.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof CheckRetreatCostEffect && effect.player.active.tool === this) {
+    if (effect instanceof CheckRetreatCostEffect && effect.player.active.tools.includes(this)) {
       const index = effect.cost.indexOf(CardType.COLORLESS);
 
       if (index !== -1) {

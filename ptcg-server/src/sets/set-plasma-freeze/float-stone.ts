@@ -25,7 +25,7 @@ export class FloatStone extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof CheckRetreatCostEffect && effect.player.active.tool === this) {
+    if (effect instanceof CheckRetreatCostEffect && effect.player.active.tools.includes(this)) {
       effect.cost = [];
     }
 

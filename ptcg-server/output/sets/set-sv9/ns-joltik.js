@@ -6,6 +6,7 @@ const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class NsJoltik extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -34,8 +35,10 @@ class NsJoltik extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            if (opponent.active.tool && opponent.active.tool !== undefined) {
-                opponent.active.moveCardTo(opponent.active.tool, opponent.discard);
+            if (opponent.active.tools.length !== 0) {
+                for (const tool of opponent.active.tools) {
+                    prefabs_1.REMOVE_TOOL(store, state, opponent.active, tool, game_1.SlotType.DISCARD);
+                }
                 const specialCondition = new attack_effects_1.AddSpecialConditionsEffect(effect, [card_types_1.SpecialCondition.PARALYZED]);
                 return store.reduceEffect(state, specialCondition);
             }
