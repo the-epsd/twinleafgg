@@ -5,6 +5,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect, CheckRetreatCostEffect } from '../../game/store/effects/check-effects';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class ZeraoraGX extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -111,16 +112,13 @@ export class ZeraoraGX extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_USE_ATTACK);
       }
 
-      if (player.usedGX === true) {
-        throw new GameError(GameMessage.LABEL_GX_USED);
-      }
-
       // Check marker
       if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
         console.log('attack blocked');
         throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
       }
 
+      BLOCK_IF_GX_ATTACK_USED(player);
       player.usedGX = true;
 
       state = store.prompt(state, new AttachEnergyPrompt(

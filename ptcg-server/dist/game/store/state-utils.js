@@ -237,13 +237,13 @@ export class StateUtils {
         let inPlay = false;
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
             if (card === pokemon) {
-                if (location === 'bench' && cardList === player.active) {
-                    return;
+                if ((location === SlotType.BENCH && cardList === player.active) ||
+                    (location === SlotType.ACTIVE && cardList !== player.active)) {
+                    inPlay = false;
                 }
-                if (location === 'active' && cardList !== player.active) {
-                    return;
+                else {
+                    inPlay = true;
                 }
-                inPlay = true;
             }
         });
         return inPlay;

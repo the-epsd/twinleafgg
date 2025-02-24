@@ -1,7 +1,7 @@
 import { Card } from '../../game/store/card/card';
 import { Bicycle } from './bicycle';
 import { BlackKyuremEX } from './black-kyurem-ex';
-import { EscapeRopePLS } from './card-images';
+import { EscapeRopePLS } from './other-prints';
 import { Colress } from './colress';
 import { ColressMachine } from './colress-machine';
 import { Donphan } from './donphan';
@@ -15,7 +15,7 @@ import { Phanpy } from './phanpy';
 import { PlasmaEnergy } from './plasma-energy';
 import { Ralts } from './ralts';
 import { ScrambleSwitch } from './scramble-switch';
-import {VictiniEX} from './victini-ex';
+import { VictiniEX } from './victini-ex';
 import { VirbankCityGym } from './virbank-city-gym';
 import { Zubat } from './zubat';
 

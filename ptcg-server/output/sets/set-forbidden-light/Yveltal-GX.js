@@ -3,11 +3,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.YveltalGX = void 0;
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
-const game_1 = require("../../game");
-const game_2 = require("../../game");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const state_utils_1 = require("../../game/store/state-utils");
 const game_effects_1 = require("../../game/store/effects/game-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class YveltalGX extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -61,9 +60,7 @@ class YveltalGX extends pokemon_card_1.PokemonCard {
             const player = effect.player;
             const opponent = state_utils_1.StateUtils.getOpponent(state, player);
             // Check if player has used GX attack
-            if (player.usedGX == true) {
-                throw new game_1.GameError(game_2.GameMessage.LABEL_GX_USED);
-            }
+            prefabs_1.BLOCK_IF_GX_ATTACK_USED(player);
             // set GX attack as used for game
             player.usedGX = true;
             // must kill

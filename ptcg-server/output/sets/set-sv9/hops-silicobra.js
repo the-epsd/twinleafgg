@@ -10,7 +10,7 @@ class HopsSilicobra extends pokemon_card_1.PokemonCard {
         super(...arguments);
         this.stage = card_types_1.Stage.BASIC;
         this.tags = [card_types_1.CardTag.HOPS];
-        this.cardType = C;
+        this.cardType = F;
         this.hp = 60;
         this.weakness = [{ type: G }];
         this.retreat = [C, C];

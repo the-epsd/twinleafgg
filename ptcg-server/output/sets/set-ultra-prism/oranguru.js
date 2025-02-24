@@ -7,6 +7,7 @@ const game_1 = require("../../game");
 const card_types_2 = require("../../game/store/card/card-types");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class Oranguru extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -39,9 +40,7 @@ class Oranguru extends pokemon_card_1.PokemonCard {
         // Resource Management
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
-            if (player.discard.cards.length === 0) {
-                return state;
-            }
+            prefabs_1.BLOCK_IF_DISCARD_EMPTY(player);
             let cards = [];
             store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.discard, {}, { min: 0, max: 3, allowCancel: false }), selected => {
                 cards = selected || [];

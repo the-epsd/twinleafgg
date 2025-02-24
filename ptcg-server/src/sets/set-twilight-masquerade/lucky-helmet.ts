@@ -28,7 +28,7 @@ export class LuckyHelmet extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AfterDamageEffect && effect.target.tool === this) {
+    if (effect instanceof AfterDamageEffect && effect.target.tools.includes(this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const targetPlayer = StateUtils.findOwner(state, effect.target);

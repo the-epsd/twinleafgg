@@ -6,10 +6,9 @@ import { Effect } from '../../game/store/effects/effect';
 import { PowerType } from '../../game';
 export declare class Kyurem extends PokemonCard {
     stage: Stage;
-    regulationMark: string;
     cardType: CardType;
     hp: number;
-    retreat: CardType[];
+    retreat: CardType.COLORLESS[];
     powers: {
         name: string;
         powerType: PowerType;
@@ -17,13 +16,14 @@ export declare class Kyurem extends PokemonCard {
     }[];
     attacks: {
         name: string;
-        cost: CardType[];
+        cost: (CardType.WATER | CardType.METAL | CardType.COLORLESS)[];
         damage: number;
         text: string;
     }[];
+    regulationMark: string;
     set: string;
-    cardImage: string;
     setNumber: string;
+    cardImage: string;
     name: string;
     fullName: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;

@@ -57,20 +57,10 @@ class Mew extends pokemon_card_1.PokemonCard {
             const generator = usePsypower(() => generator.next(), store, state, effect);
             return generator.next().value;
         }
-        if (effect instanceof attack_effects_1.PutDamageEffect) {
+        if (effect instanceof attack_effects_1.PutDamageEffect && state_utils_1.StateUtils.isPokemonInPlay(effect.player, this)) {
             const player = effect.player;
             const opponent = state_utils_1.StateUtils.getOpponent(state, player);
             if (effect.target === player.active || effect.target === opponent.active) {
-                return state;
-            }
-            const targetPlayer = state_utils_1.StateUtils.findOwner(state, effect.target);
-            let isMewInPlay = false;
-            targetPlayer.forEachPokemon(play_card_action_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-                if (card === this) {
-                    isMewInPlay = true;
-                }
-            });
-            if (!isMewInPlay) {
                 return state;
             }
             // Try to reduce PowerEffect, to check if something is blocking our ability

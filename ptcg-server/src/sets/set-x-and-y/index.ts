@@ -4,8 +4,8 @@ import { Delphox } from './delphox';
 import { DoubleColorlessEnergy } from './double-colorless-energy';
 import { Evosoda } from './evosoda';
 import { FairyEnergy } from './fairy-energy';
-import {Fennekin} from './fennekin';
-import { GreninjaXY } from './greninja';
+import { Fennekin } from './fennekin';
+import { Greninja } from './greninja';
 import { MuscleBand } from './muscle-band';
 import { Pikachu } from './pikachu';
 import { ProfessorsLetter } from './professors-letter';
@@ -23,7 +23,7 @@ export const setXY: Card[] = [
   new DoubleColorlessEnergy(),
   new Evosoda(),
   new FairyEnergy(),
-  new GreninjaXY(),
+  new Greninja(),
   new MuscleBand(),
   new Pikachu(),
   new ProfessorsLetter(),

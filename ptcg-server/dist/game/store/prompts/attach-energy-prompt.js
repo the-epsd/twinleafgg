@@ -1,3 +1,4 @@
+import { Card } from '../card/card';
 import { GameError } from '../../game-error';
 import { GameMessage } from '../../game-message';
 import { Prompt } from './prompt';
@@ -36,6 +37,10 @@ export class AttachEnergyPrompt extends Prompt {
         result.forEach(t => {
             const cardList = this.cardList;
             const card = cardList.cards[t.index];
+            // Verify this is a card.
+            if (!(card instanceof Card)) {
+                throw new GameError(GameMessage.INVALID_PROMPT_RESULT);
+            }
             // Verify card is an energy card
             if (card.superType !== SuperType.ENERGY) {
                 throw new GameError(GameMessage.INVALID_PROMPT_RESULT);

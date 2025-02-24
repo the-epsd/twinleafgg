@@ -36,6 +36,7 @@ const medicham_ex_1 = require("./medicham-ex");
 const meditite_1 = require("./meditite");
 const milcery_1 = require("./milcery");
 const noctowl_1 = require("./noctowl");
+const other_prints_1 = require("./other-prints");
 const raboot_1 = require("./raboot");
 const raging_bolt_1 = require("./raging-bolt");
 const scorbunny_1 = require("./scorbunny");
@@ -58,7 +59,7 @@ exports.setStellarCrown = [
     new drednaw_1.Drednaw(),
     new drifblim_1.Drifblim(),
     new duraludon_1.Duraludon(),
-    new eevee_1.EeveeSCR(),
+    new eevee_1.Eevee(),
     new electabuzz_1.Electabuzz(),
     new fan_rotom_1.FanRotom(),
     new galvantula_ex_1.Galvantulaex(),
@@ -87,4 +88,31 @@ exports.setStellarCrown = [
     new veluza_1.Veluza(),
     new zeraora_1.Zeraora(),
     new milcery_1.Milcery(),
+    //FA
+    new other_prints_1.BulbasaurIR(),
+    new other_prints_1.RabootIR(),
+    new other_prints_1.SquirtleIR(),
+    new other_prints_1.JoltikIR(),
+    new other_prints_1.ZeraoraIR(),
+    new other_prints_1.MilceryIR(),
+    new other_prints_1.MedititeIR(),
+    new other_prints_1.ArchaludonIR(),
+    new other_prints_1.HydrappleexFA(),
+    new other_prints_1.CinderaceexFA(),
+    new other_prints_1.LaprasexFA(),
+    new other_prints_1.GalvantulaexFA(),
+    new other_prints_1.MedichamexFA(),
+    new other_prints_1.OrthwormexFA(),
+    new other_prints_1.BriarFA(),
+    new other_prints_1.CrispinFA(),
+    new other_prints_1.KofuFA(),
+    new other_prints_1.LaceyFA(),
+    new other_prints_1.HydrappleexSIR(),
+    new other_prints_1.GalvantulaexSIR(),
+    new other_prints_1.TerapagosexSIR(),
+    new other_prints_1.BriarSIR(),
+    new other_prints_1.LaceySIR(),
+    new other_prints_1.TerapagosexHR(),
+    new other_prints_1.AreaZeroUnderdepthsHR(),
+    new other_prints_1.BraveryCharmHR(),
 ];

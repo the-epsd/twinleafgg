@@ -3,6 +3,7 @@ import { KnockOutOpponentEffect } from '../../game/store/effects/attack-effects'
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class DarkraiGX extends PokemonCard {
   public cardType: CardType = CardType.DARK;
@@ -138,9 +139,7 @@ export class DarkraiGX extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      if (player.usedGX === true) {
-        throw new GameError(GameMessage.LABEL_GX_USED);
-      }
+      BLOCK_IF_GX_ATTACK_USED(player);
 
       player.usedGX = true;
 

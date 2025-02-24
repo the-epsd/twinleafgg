@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DrawPrizesEffect = exports.EvolveEffect = exports.HealEffect = exports.KnockOutAttackEffect = exports.KnockOutEffect = exports.AttackEffect = exports.useToolEffect = exports.UseStadiumEffect = exports.UseAttackEffect = exports.TrainerPowerEffect = exports.PowerEffect = exports.UseTrainerPowerEffect = exports.UsePowerEffect = exports.RetreatEffect = exports.GameEffects = void 0;
+exports.MoveCardsEffect = exports.DrawPrizesEffect = exports.EvolveEffect = exports.HealEffect = exports.KnockOutAttackEffect = exports.KnockOutEffect = exports.AttackEffect = exports.UseStadiumEffect = exports.UseAttackEffect = exports.TrainerPowerEffect = exports.PowerEffect = exports.UseTrainerPowerEffect = exports.UsePowerEffect = exports.RetreatEffect = exports.GameEffects = void 0;
 var GameEffects;
 (function (GameEffects) {
     GameEffects["RETREAT_EFFECT"] = "RETREAT_EFFECT";
@@ -13,6 +13,7 @@ var GameEffects;
     GameEffects["HEAL_EFFECT"] = "HEAL_EFFECT";
     GameEffects["EVOLVE_EFFECT"] = "EVOLVE_EFFECT";
     GameEffects["DRAW_PRIZES_EFFECT"] = "DRAW_PRIZES_EFFECT";
+    GameEffects["MOVE_CARDS_EFFECT"] = "MOVE_CARDS_EFFECT";
 })(GameEffects = exports.GameEffects || (exports.GameEffects = {}));
 class RetreatEffect {
     constructor(player, benchIndex) {
@@ -85,15 +86,6 @@ class UseStadiumEffect {
     }
 }
 exports.UseStadiumEffect = UseStadiumEffect;
-class useToolEffect {
-    constructor(player, tool) {
-        this.type = GameEffects.USE_STADIUM_EFFECT;
-        this.preventDefault = false;
-        this.player = player;
-        this.tool = tool;
-    }
-}
-exports.useToolEffect = useToolEffect;
 class AttackEffect {
     constructor(player, opponent, attack) {
         this.type = GameEffects.ATTACK_EFFECT;
@@ -162,3 +154,17 @@ class DrawPrizesEffect {
     }
 }
 exports.DrawPrizesEffect = DrawPrizesEffect;
+class MoveCardsEffect {
+    constructor(source, destination, options = {}) {
+        this.type = GameEffects.MOVE_CARDS_EFFECT;
+        this.preventDefault = false;
+        this.source = source;
+        this.destination = destination;
+        this.cards = options.cards;
+        this.count = options.count;
+        this.toTop = options.toTop;
+        this.toBottom = options.toBottom;
+        this.skipCleanup = options.skipCleanup;
+    }
+}
+exports.MoveCardsEffect = MoveCardsEffect;

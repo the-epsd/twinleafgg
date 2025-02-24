@@ -13,53 +13,58 @@ function* playCard(next, store, state, effect) {
     const player = effect.player;
     const opponent = state_utils_1.StateUtils.getOpponent(state, player);
     const name = effect.trainerCard.name;
+    // Count Cross Switchers in hand
     const count = player.hand.cards.reduce((sum, c) => {
         return sum + (c.name === name ? 1 : 0);
     }, 0);
-    // Don't allow to play both cross switchers when opponen has an empty bench
+    // Must have 2 Cross Switchers to play
+    if (count < 2) {
+        throw new game_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
+    }
+    // Check if opponent has any benched Pokemon
     const benchCount = opponent.bench.reduce((sum, b) => {
         return sum + (b.cards.length > 0 ? 1 : 0);
     }, 0);
-    //let playTwoCards = false;
-    if (benchCount > 0 && count >= 2) {
-        // playTwoCards = true;
-        // Discard second Cross Switcher +
-        const second = player.hand.cards.find(c => {
-            return c.name === name && c !== effect.trainerCard;
-        });
-        if (second !== undefined) {
-            player.hand.moveCardTo(second, player.discard);
-        }
-        const hasBench = player.bench.some(b => b.cards.length > 0);
-        if (hasBench === false) {
-            throw new game_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
-        }
-        // We will discard this card after prompt confirmation
-        effect.preventDefault = true;
-        return store.prompt(state, new choose_pokemon_prompt_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_POKEMON_TO_SWITCH, play_card_action_1.PlayerType.TOP_PLAYER, [play_card_action_1.SlotType.BENCH], { allowCancel: false }), targets => {
-            if (!targets || targets.length === 0) {
-                return;
-            }
-            opponent.active.clearEffects();
-            opponent.switchPokemon(targets[0]);
-            next();
-            // Do not discard the card yet
-            effect.preventDefault = true;
-            let target = [];
-            return store.prompt(state, new choose_pokemon_prompt_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_POKEMON_TO_SWITCH, play_card_action_1.PlayerType.BOTTOM_PLAYER, [play_card_action_1.SlotType.BENCH], { allowCancel: false }), results => {
-                target = results || [];
-                next();
-                if (target.length === 0) {
-                    return state;
-                }
-                // Discard trainer only when user selected a Pokemon
-                player.active.clearEffects();
-                player.switchPokemon(target[0]);
-                player.supporter.moveCardTo(effect.trainerCard, player.discard);
-                return state;
-            });
-        });
+    if (benchCount === 0) {
+        throw new game_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
     }
+    // Check if player has any benched Pokemon
+    const hasBench = player.bench.some(b => b.cards.length > 0);
+    if (!hasBench) {
+        throw new game_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
+    }
+    // Discard second Cross Switcher
+    const second = player.hand.cards.find(c => {
+        return c.name === name && c !== effect.trainerCard;
+    });
+    if (second !== undefined) {
+        player.hand.moveCardTo(second, player.discard);
+    }
+    // We will discard this card after prompt confirmation
+    effect.preventDefault = true;
+    return store.prompt(state, new choose_pokemon_prompt_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_POKEMON_TO_SWITCH, play_card_action_1.PlayerType.TOP_PLAYER, [play_card_action_1.SlotType.BENCH], { allowCancel: false }), targets => {
+        if (!targets || targets.length === 0) {
+            return;
+        }
+        opponent.active.clearEffects();
+        opponent.switchPokemon(targets[0]);
+        next();
+        // Do not discard the card yet
+        effect.preventDefault = true;
+        let target = [];
+        return store.prompt(state, new choose_pokemon_prompt_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_POKEMON_TO_SWITCH, play_card_action_1.PlayerType.BOTTOM_PLAYER, [play_card_action_1.SlotType.BENCH], { allowCancel: false }), results => {
+            target = results || [];
+            next();
+            if (target.length === 0) {
+                return state;
+            }
+            // Discard trainer only when user selected a Pokemon
+            player.active.clearEffects();
+            player.switchPokemon(target[0]);
+            player.supporter.moveCardTo(effect.trainerCard, player.discard);
+            return state;
+        });
+    });
 }
 class CrossSwitcher extends trainer_card_1.TrainerCard {
     constructor() {

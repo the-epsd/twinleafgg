@@ -8,6 +8,7 @@ const game_phase_effects_1 = require("../../game/store/effects/game-phase-effect
 const state_utils_1 = require("../../game/store/state-utils");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const check_effects_1 = require("../../game/store/effects/check-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 // CIN Lugia-GX 57 (https://limitlesstcg.com/cards/CIN/57)
 class LugiaGX extends pokemon_card_1.PokemonCard {
     constructor() {
@@ -24,7 +25,7 @@ class LugiaGX extends pokemon_card_1.PokemonCard {
             { name: 'Pelagic Blade', cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS], damage: 170, text: 'This Pokémon can\'t attack during your next turn.' },
             { name: 'Lost Purge-GX', cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS], damage: 0, text: 'Put your opponent\'s Active Pokémon and all cards attached to it in the Lost Zone. (You can\'t use more than 1 GX attack in a game.)' }
         ];
-        this.set = 'SUM';
+        this.set = 'LOT';
         this.setNumber = '159';
         this.cardImage = 'assets/cardback.png';
         this.name = 'Lugia-GX';
@@ -60,9 +61,7 @@ class LugiaGX extends pokemon_card_1.PokemonCard {
             const player = effect.player;
             const opponent = state_utils_1.StateUtils.getOpponent(state, player);
             // Check if player has used GX attack
-            if (player.usedGX == true) {
-                throw new game_1.GameError(game_1.GameMessage.LABEL_GX_USED);
-            }
+            prefabs_1.BLOCK_IF_GX_ATTACK_USED(player);
             // set GX attack as used for game
             player.usedGX = true;
             opponent.active.moveTo(opponent.lostzone);

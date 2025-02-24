@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 import { DndModule } from '@ng-dnd/core';
 import { DndMultiBackendModule } from '@ng-dnd/multi-backend';
 import { TranslateModule } from '@ngx-translate/core';
-
+import { MatDialogModule } from '@angular/material/dialog';
+import { PokemonCardInfoPaneComponent } from './pokemon-card-info-pane/pokemon-card-info-pane.component';
 import { CardComponent } from './card/card.component';
 import { CardImagePopupComponent } from './card-image-popup/card-image-popup.component';
 import { CardInfoListPopupComponent } from './card-info-list-popup/card-info-list-popup.component';
@@ -27,7 +28,8 @@ import { ArchetypeComponent } from './archetype/archetype.component';
     MaterialModule,
     DndMultiBackendModule,
     DndModule,
-    TranslateModule
+    TranslateModule,
+    MatDialogModule
   ],
   declarations: [
     CardComponent,
@@ -42,7 +44,8 @@ import { ArchetypeComponent } from './archetype/archetype.component';
     DropHighlightDirective,
     TrainerTypeComponent,
     HoverHighlightComponent,
-    CardInfoListPopupComponent
+    CardInfoListPopupComponent,
+    PokemonCardInfoPaneComponent
   ],
   entryComponents: [
     CardImagePopupComponent,
@@ -55,7 +58,8 @@ import { ArchetypeComponent } from './archetype/archetype.component';
     CardPlaceholderDirective,
     EnergyComponent,
     ArchetypeComponent,
-    DropHighlightDirective
+    DropHighlightDirective,
+    PokemonCardInfoPaneComponent
   ]
 })
 export class CardsModule { }

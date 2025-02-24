@@ -7,6 +7,7 @@ const game_1 = require("../../game");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const check_effects_1 = require("../../game/store/effects/check-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 // BUS Tapu Bulu-GX 130 (https://limitlesstcg.com/cards/BUS/130)
 class TapuBuluGX extends pokemon_card_1.PokemonCard {
     constructor() {
@@ -65,9 +66,7 @@ class TapuBuluGX extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[2]) {
             const player = effect.player;
             // Check if player has used GX attack
-            if (player.usedGX == true) {
-                throw new game_1.GameError(game_1.GameMessage.LABEL_GX_USED);
-            }
+            prefabs_1.BLOCK_IF_GX_ATTACK_USED(player);
             // set GX attack as used for game
             player.usedGX = true;
             const healTargetEffect = new attack_effects_1.HealTargetEffect(effect, 990);

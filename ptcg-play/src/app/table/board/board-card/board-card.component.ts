@@ -1,7 +1,57 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, Inject } from '@angular/core';
 import { Card, CardList, PokemonCardList, Power, BoardEffect, SpecialCondition, StadiumDirection, SuperType, EnergyCard, CardType } from 'ptcg-server';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 const MAX_ENERGY_CARDS = 8;
+
+export interface CardInfoDialogData {
+  cardList: PokemonCardList;
+  facedown: boolean;
+  options?: {
+    enableAbility?: {
+      useWhenInPlay?: boolean;
+      useFromHand?: boolean;
+      useFromDiscard?: boolean;
+    };
+    enableAttack?: boolean;
+  };
+}
+
+@Component({
+  selector: 'ptcg-card-info-dialog',
+  template: `
+    <div class="dialog-content">
+      <div *ngIf="!data.cardList">No card list available</div>
+      <div *ngIf="data.cardList">
+        <ptcg-pokemon-card-info-pane
+          [cardList]="data.cardList"
+          [facedown]="data.facedown"
+          [options]="data.options"
+          (action)="onAction($event)">
+        </ptcg-pokemon-card-info-pane>
+      </div>
+    </div>
+  `,
+  styles: [`
+    .dialog-content {
+      min-width: 300px;
+      min-height: 200px;
+      padding: 8px;
+    }
+  `]
+})
+export class CardInfoDialogComponent {
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: CardInfoDialogData,
+    private dialogRef: MatDialogRef<CardInfoDialogComponent>
+  ) {
+    console.log('Dialog Data:', data);
+  }
+
+  onAction(action: any) {
+    this.dialogRef.close(action);
+  }
+}
 
 @Component({
   selector: 'ptcg-board-card',
@@ -9,11 +59,13 @@ const MAX_ENERGY_CARDS = 8;
   styleUrls: ['./board-card.component.scss']
 })
 export class BoardCardComponent {
+  private _cardList: CardList | PokemonCardList;
 
   @Input() showCardCount = false;
   @Output() cardClick = new EventEmitter<Card>();
 
   @Input() set cardList(value: CardList | PokemonCardList) {
+    this._cardList = value;
     this.mainCard = undefined;
     this.energyCards = [];
     this.trainerCard = undefined;
@@ -22,8 +74,8 @@ export class BoardCardComponent {
     this.damage = 0;
     this.specialConditions = [];
     this.isFaceDown = false;
-    this.isUpsideDown = value.stadiumDirection === StadiumDirection.DOWN;
     this.boardEffect = [];
+    this.isUpsideDown = value?.stadiumDirection === StadiumDirection.DOWN;
 
     this.isEmpty = !value || !value.cards.length;
     if (this.isEmpty) {
@@ -42,6 +94,10 @@ export class BoardCardComponent {
     }
 
     this.mainCard = value.cards[value.cards.length - 1];
+  }
+
+  get cardList(): CardList | PokemonCardList {
+    return this._cardList;
   }
 
   @Input() set owner(value: boolean) {
@@ -82,7 +138,9 @@ export class BoardCardComponent {
   private isPublic = false;
   private isOwner = false;
 
-  constructor() { }
+  constructor(
+    private dialog: MatDialog
+  ) { }
 
   private initPokemonCardList(cardList: PokemonCardList) {
     this.damage = cardList.damage;
@@ -90,7 +148,9 @@ export class BoardCardComponent {
     this.boardEffect = cardList.boardEffect;
     this.trainerCard = undefined;
     this.mainCard = cardList.getPokemonCard();
-    this.trainerCard = cardList.tool;
+    if (cardList.tools.length > 0) {
+      this.trainerCard = cardList.tools[0];
+    }
 
     for (const card of cardList.cards) {
       if (card.superType === SuperType.ENERGY) {
@@ -130,6 +190,44 @@ export class BoardCardComponent {
 
 
   public onCardClick(card: Card) {
-    this.cardClick.next(card);
+    // console.log('Card clicked:', {
+    //   card,
+    //   mainCard: this.mainCard,
+    //   cardList: this._cardList,
+    //   superType: this.mainCard?.superType
+    // });
+
+    // if (this.mainCard && this.mainCard.superType === SuperType.POKEMON) {
+    //   const pokemonCardList = this._cardList as PokemonCardList;
+
+    //   const dialogData: CardInfoDialogData = {
+    //     cardList: pokemonCardList,
+    //     facedown: this.isFaceDown,
+    //     options: {
+    //       enableAbility: {
+    //         useWhenInPlay: true,
+    //         useFromHand: false,
+    //         useFromDiscard: false
+    //       },
+    //       enableAttack: true
+    //     }
+    //   };
+
+    //   console.log('Opening dialog with data:', dialogData);
+
+    //   const dialogRef = this.dialog.open(CardInfoDialogComponent, {
+    //     data: dialogData,
+    //     width: '850px',
+    //   });
+
+    //   dialogRef.afterClosed().subscribe(result => {
+    //     console.log('Dialog closed with result:', result);
+    //     if (result) {
+    //       this.cardClick.emit(card);
+    //     }
+    //   });
+    // } else {
+    this.cardClick.emit(card);
   }
 }
+

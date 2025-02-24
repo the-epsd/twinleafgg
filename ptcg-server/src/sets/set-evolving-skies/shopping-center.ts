@@ -17,7 +17,7 @@ export class ShoppingCenter extends TrainerCard {
   public setNumber: string = '157';
   public name: string = 'Shopping Center';
   public fullName: string = 'Shopping Center EVS';
-  
+
   public text: string = 'Once during each player\'s turn, that player may put a Pokémon Tool attached to 1 of their Pokémon into their hand.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -27,7 +27,7 @@ export class ShoppingCenter extends TrainerCard {
 
       const blockedTo: CardTarget[] = [];
 
-      if (player.active.tool !== undefined){
+      if (player.active.tools.length !== 0) {
         pokemonWithTool = true;
       }
 
@@ -36,7 +36,7 @@ export class ShoppingCenter extends TrainerCard {
           return;
         }
 
-        if (bench.tool !== undefined){
+        if (bench.tools.length !== 0) {
           pokemonWithTool = true;
         } else {
           const target: CardTarget = {
@@ -48,7 +48,7 @@ export class ShoppingCenter extends TrainerCard {
         }
       });
 
-      if (!pokemonWithTool){
+      if (!pokemonWithTool) {
         throw new GameError(GameMessage.CANNOT_USE_STADIUM);
       }
 
@@ -62,11 +62,11 @@ export class ShoppingCenter extends TrainerCard {
         if (!targets || targets.length === 0) {
           return;
         }
-        
+
         targets[0].cards.forEach(card => {
-          if (card instanceof TrainerCard && card.trainerType === TrainerType.TOOL){
+          if (card instanceof TrainerCard && card.trainerType === TrainerType.TOOL) {
             targets[0].moveCardTo(card, player.hand);
-            targets[0].tool = undefined;
+            targets[0].removeTool(card);
             return;
           }
         });

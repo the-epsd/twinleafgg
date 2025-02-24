@@ -33,14 +33,13 @@ export class KarensConviction extends TrainerCard {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      const prizesTaken = 6 - opponent.getPrizeLeft();
       const damagePerPrize = 20;
       player.marker.addMarker(this.KARENS_CONVICTION_MARKER, this);
 
       if (effect instanceof DealDamageEffect) {
         const marker = effect.player.marker;
         if (marker.hasMarker(this.KARENS_CONVICTION_MARKER, this) && effect.damage > 0) {
-          effect.damage += prizesTaken * damagePerPrize;
+          effect.damage += opponent.prizesTaken * damagePerPrize;
         }
         return state;
       }

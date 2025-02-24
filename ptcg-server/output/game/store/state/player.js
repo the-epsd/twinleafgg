@@ -1,6 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Player = void 0;
+const game_error_1 = require("../../game-error");
+const game_message_1 = require("../../game-message");
 const play_card_action_1 = require("../actions/play-card-action");
 const card_types_1 = require("../card/card-types");
 const card_list_1 = require("./card-list");
@@ -148,6 +150,18 @@ class Player {
             }
         });
         return result;
+    }
+    getSlot(slotType) {
+        switch (slotType) {
+            case play_card_action_1.SlotType.DISCARD:
+                return this.discard;
+            case play_card_action_1.SlotType.HAND:
+                return this.hand;
+            case play_card_action_1.SlotType.LOSTZONE:
+                return this.lostzone;
+            default:
+                throw new game_error_1.GameError(game_message_1.GameMessage.INVALID_TARGET);
+        }
     }
     switchPokemon(target) {
         const benchIndex = this.bench.indexOf(target);

@@ -7,6 +7,7 @@ const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class DecidueyeGX extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -80,27 +81,18 @@ class DecidueyeGX extends pokemon_card_1.PokemonCard {
         // Hollow Hunt-GX
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
-            // Check if player has used GX attack
-            if (player.usedGX == true) {
-                throw new game_1.GameError(game_1.GameMessage.LABEL_GX_USED);
-            }
+            prefabs_1.BLOCK_IF_DISCARD_EMPTY(player);
+            prefabs_1.BLOCK_IF_GX_ATTACK_USED(player);
             // set GX attack as used for game
             player.usedGX = true;
-            if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
-                const player = effect.player;
-                if (player.discard.cards.length === 0) {
-                    return state;
-                }
-                const max = Math.min(3);
-                const min = max;
-                return store.prompt(state, [
-                    new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.discard, {}, { min, max, allowCancel: false })
-                ], selected => {
-                    const cards = selected || [];
-                    player.discard.moveCardsTo(cards, player.hand);
-                });
-            }
-            return state;
+            const max = Math.min(3);
+            const min = max;
+            return store.prompt(state, [
+                new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_HAND, player.discard, {}, { min, max, allowCancel: false })
+            ], selected => {
+                const cards = selected || [];
+                player.discard.moveCardsTo(cards, player.hand);
+            });
         }
         if (effect instanceof game_phase_effects_1.EndTurnEffect) {
             effect.player.marker.removeMarker(this.FEATHER_ARROW_MARKER, this);

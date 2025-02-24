@@ -45,9 +45,9 @@ class Tropius extends game_1.PokemonCard {
             return state;
         }
         // if ((effect instanceof DealDamageEffect || effect instanceof PutDamageEffect) &&
-        //   effect.target.tool === this) {
+        //   effect.target.tools.includes(this)) {
         //   const player = StateUtils.getOpponent(state, effect.player);
-        //   if (player.active.tool === this) {
+        //   if (player.active.tools.includes(this)) {
         //     this.damageDealt = true;
         //   }
         // }

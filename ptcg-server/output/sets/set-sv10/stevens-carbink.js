@@ -39,7 +39,7 @@ class StevensCarbink extends game_1.PokemonCard {
     }
     reduceEffect(store, state, effect) {
         var _a;
-        if (effect instanceof attack_effects_1.PutDamageEffect && game_1.StateUtils.isPokemonInPlay(effect.player, this, 'bench')) {
+        if (effect instanceof attack_effects_1.PutDamageEffect && game_1.StateUtils.isPokemonInPlay(effect.player, this, game_1.SlotType.BENCH)) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             if (effect.damageReduced || state.phase != state_1.GamePhase.ATTACK) {

@@ -7,7 +7,7 @@ import { PowerEffect, AttackEffect } from '../../game/store/effects/game-effects
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 
-export class GreninjaBKP extends PokemonCard {
+export class Greninja extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_2;
 

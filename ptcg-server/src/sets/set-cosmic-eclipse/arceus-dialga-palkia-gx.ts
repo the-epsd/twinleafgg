@@ -1,10 +1,11 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, EnergyType, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, AttachEnergyPrompt, GameMessage, PlayerType, ShuffleDeckPrompt, SlotType, StateUtils, GameError, GamePhase } from '../../game';
+import { StoreLike, State, AttachEnergyPrompt, GameMessage, PlayerType, ShuffleDeckPrompt, SlotType, StateUtils, GamePhase } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, KnockOutEffect } from '../../game/store/effects/game-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 function* useUltimateRay(next: Function, store: StoreLike, state: State,
   effect: AttackEffect): IterableIterator<State> {
@@ -87,9 +88,7 @@ export class ArceusDialgaPalkiaGX extends PokemonCard {
       const player = effect.player;
 
       // Check if player has used altered creation
-      if (player.usedGX == true) {
-        throw new GameError(GameMessage.LABEL_GX_USED);
-      }
+      BLOCK_IF_GX_ATTACK_USED(player);
 
       player.usedGX = true;
       player.alteredCreationDamage = true;

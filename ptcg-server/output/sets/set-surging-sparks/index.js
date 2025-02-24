@@ -7,6 +7,7 @@ const alolan_dugtrio_1 = require("./alolan-dugtrio");
 const alolan_exeggutor_ex_1 = require("./alolan-exeggutor-ex");
 const amulet_of_hope_1 = require("./amulet-of-hope");
 const archaludon_ex_1 = require("./archaludon-ex");
+const armarouge_1 = require("./armarouge");
 const azelf_1 = require("./azelf");
 const azulmarill_1 = require("./azulmarill");
 const black_kyurem_ex_1 = require("./black-kyurem-ex");
@@ -17,6 +18,8 @@ const celebration_fanfare_1 = require("./celebration-fanfare");
 const centiskorch_1 = require("./centiskorch");
 const ceruledge_1 = require("./ceruledge");
 const ceruledge_ex_1 = require("./ceruledge-ex");
+const cetitan_1 = require("./cetitan");
+const cetoddle_1 = require("./cetoddle");
 const charcadet_1 = require("./charcadet");
 const cherish_carrier_1 = require("./cherish-carrier");
 const chien_pao_1 = require("./chien-pao");
@@ -78,6 +81,7 @@ const quaxwell_1 = require("./quaxwell");
 const rabsca_1 = require("./rabsca");
 const rellor_1 = require("./rellor");
 const rich_energy_1 = require("./rich-energy");
+const rotom_1 = require("./rotom");
 const sandygast_1 = require("./sandygast");
 const scovillain_ex_1 = require("./scovillain-ex");
 const shroodle_1 = require("./shroodle");
@@ -192,10 +196,10 @@ exports.setSurgingSparks = [
     new iron_crown_1.IronCrown(),
     new jasmines_gaze_1.JasminesGaze(),
     new meowstic_1.Meowstic(),
-    new scovillain_ex_1.ScovillainEXSSP(),
+    new scovillain_ex_1.Scovillainex(),
     new slaking_ex_1.Slakingex(),
-    new slakoth_1.SlakothSSP(),
-    new vigoroth_1.VigorothSSP(),
+    new slakoth_1.Slakoth(),
+    new vigoroth_1.Vigoroth(),
     new zarude_1.Zarude(),
     new durant_ex_1.Durantex(),
     new sizzlipede_1.Sizzlipede(),
@@ -208,6 +212,10 @@ exports.setSurgingSparks = [
     new meddling_memo_1.MeddlingMemo(),
     new annihilape_1.Annihilape(),
     new tyme_1.Tyme(),
+    new cetoddle_1.Cetoddle(),
+    new cetitan_1.Cetitan(),
+    new armarouge_1.Armarouge(),
+    new rotom_1.Rotom(),
     // Reprints
     new card_images_1.ScrambleSwitchSSP(),
     new card_images_1.CounterGainSSP(),

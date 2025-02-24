@@ -46,6 +46,7 @@ const carvanha_1 = require("./carvanha");
 const naganadel_guzzlord_gx_1 = require("./naganadel-guzzlord-gx");
 const woobat_1 = require("./woobat");
 const swoobat_1 = require("./swoobat");
+const mimikyu_1 = require("./mimikyu");
 exports.setCosmicEclipse = [
     new arceus_dialga_palkia_gx_1.ArceusDialgaPalkiaGX(),
     new bellelba_and_brycen_man_1.BellelbaAndBrycenMan(),
@@ -92,4 +93,5 @@ exports.setCosmicEclipse = [
     new naganadel_guzzlord_gx_1.NaganadelGuzzlordGX(),
     new woobat_1.Woobat(),
     new swoobat_1.Swoobat(),
+    new mimikyu_1.Mimikyu(),
 ];

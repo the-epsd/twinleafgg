@@ -10,7 +10,6 @@ import { AlertService } from '../shared/alert/alert.service';
 import { CardsBaseService } from '../shared/cards/cards-base.service';
 import { DeckItem } from './deck-card/deck-card.interface';
 import { Archetype, CardType } from 'ptcg-server';
-import { ArchetypeService } from './deck-archetype-service/archetype.service';
 import { ArchetypeUtils } from './deck-archetype-service/archetype.utils';
 
 @UntilDestroy()
@@ -33,7 +32,6 @@ export class DeckComponent implements OnInit {
     private cardsBaseService: CardsBaseService,
     private translate: TranslateService,
     private router: Router,
-    private archetypeService: ArchetypeService,
   ) { }
 
   public ngOnInit() {

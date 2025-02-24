@@ -5,6 +5,7 @@ const game_1 = require("../../game");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 // LOT Alolan Ninetales-GX 132 (https://limitlesstcg.com/cards/LOT/132)
 class AlolanNinetalesGX extends game_1.PokemonCard {
     constructor() {
@@ -100,9 +101,7 @@ class AlolanNinetalesGX extends game_1.PokemonCard {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             // Check if player has used GX attack
-            if (player.usedGX == true) {
-                throw new game_1.GameError(game_1.GameMessage.LABEL_GX_USED);
-            }
+            prefabs_1.BLOCK_IF_GX_ATTACK_USED(player);
             // set GX attack as used for game
             player.usedGX = true;
             const pokemon = opponent.active.getPokemonCard();

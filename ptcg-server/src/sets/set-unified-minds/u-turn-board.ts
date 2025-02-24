@@ -45,7 +45,7 @@ export class UTurnBoard extends TrainerCard {
       player.marker.addMarker(this.U_TURN_BOARD_MARKER, this);
     }
 
-    if (effect instanceof CheckRetreatCostEffect && effect.player.active.tool === this) {
+    if (effect instanceof CheckRetreatCostEffect && effect.player.active.tools.includes(this)) {
 
       if (effect.cost.length === 0) {
         effect.cost = [];
@@ -73,7 +73,7 @@ export class UTurnBoard extends TrainerCard {
   }
 }
 
-// if (effect instanceof ToolEffect && effect.player.active.tool === this) {
+// if (effect instanceof ToolEffect && effect.player.active.tools.includes(this)) {
 //   const player = effect.player;
 //   player.marker.addMarker(this.U_TURN_BOARD_MARKER, this);
 // }

@@ -10,12 +10,32 @@ import { EthansTyphlosion } from './ethans-typhlosion';
 import { MistysGyarados } from './mistys-gyarados';
 import { MistysMagikarp } from './mistys-magikarp';
 import { MistysPsyduck } from './mistys-psyduck';
-import { SacredAshSV9a } from './other-prints';
+import { CynthiasRoseradeIR, EthansHoOhexSIR, SacredAshSV9a } from './other-prints';
+import { CynthiasGarchompex } from './cynthias-garchomp-ex';
+import { CynthiasGible } from './cynthias-gible';
+import { CynthiasRoserade } from './cynthias-roserade';
+import { CynthiasRoselia } from './cynthias-roselia';
+import { CynthiasGabite } from './cynthias-gabite';
+import { CynthiasSpiritomb } from './cynthias-spiritomb';
+import { CynthiasPowerWeight } from './cynthias-power-weight';
+import { Rotom } from './rotom';
 
 export const setSV9a: Card[] = [
+
+  new Rotom(),
+
+  new CynthiasRoseradeIR(),
+  new CynthiasGarchompex(),
+  new CynthiasGible(),
+  new CynthiasRoserade(),
+  new CynthiasRoselia(),
+  new CynthiasGabite(),
+  new CynthiasSpiritomb(),
+  new CynthiasPowerWeight(),
+
+  new EthansHoOhexSIR(),
   new EthansAdventure(),
   new EthansHoOhex(),
-
   new EthansCyndaquil(),
   new EthansQuilava(),
   new EthansTyphlosion(),

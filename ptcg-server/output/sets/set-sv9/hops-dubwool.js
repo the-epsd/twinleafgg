@@ -17,7 +17,7 @@ class HopsDubwool extends pokemon_card_1.PokemonCard {
         this.weakness = [{ type: F }];
         this.retreat = [C, C];
         this.powers = [{
-                name: 'Challenge Horn',
+                name: 'Defiant Horn',
                 powerType: game_1.PowerType.ABILITY,
                 text: 'When you play this Pokémon from your hand to evolve 1 of your Pokémon during your turn, you may switch in 1 of your opponent\'s Benched Pokémon to the Active Spot.'
             }];

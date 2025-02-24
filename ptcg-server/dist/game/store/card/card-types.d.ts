@@ -37,7 +37,8 @@ export declare enum CardTag {
     MARNIES = "MARNIES",
     STEVENS = "STEVENS",
     ETHANS = "ETHANS",
-    MISTYS = "MISTYS"
+    MISTYS = "MISTYS",
+    CYNTHIAS = "CYNTHIAS"
 }
 export declare enum SuperType {
     NONE = 0,
@@ -92,7 +93,31 @@ export declare enum Archetype {
     ROARING_MOON = "Roaring Moon",
     LUGIA = "Lugia",
     CERULEDGE = "Ceruledge",
-    DRAGAPULT = "Dragapult"
+    DRAGAPULT = "Dragapult",
+    ARCHALUDON = "Archaludon",
+    KLAWF = "Klawf",
+    GOUGING_FIRE = "Gouging Fire",
+    GHOLDENGO = "Gholdengo",
+    IRON_CROWN = "Iron Crown",
+    FERALIGATR = "Feraligatr",
+    BLISSEY = "Blissey",
+    MILOTIC = "Milotic",
+    TEAL_MASK_OGERPON = "Teal Mask Ogerpon",
+    ZOROARK = "Zoroark",
+    BELLIBOLT = "Bellibolt",
+    FLAREON = "Flareon",
+    TYRANITAR = "Tyrantiar",
+    SLOWKING = "Slowking",
+    MAMOSWINE = "Mamoswine",
+    CLEFAIRY = "Clefairy",
+    ZACIAN = "Zacian",
+    FROSLASS = "Froslass",
+    DIPPLIN = "Dipplin",
+    ROTOM = "Rotom",
+    HYDRAPPLE = "Hydrapple",
+    GARCHOMP = "Garchomp",
+    HOOH = "Ho-oh",
+    HYDREIGON = "Hydreigon"
 }
 export declare enum CardType {
     ANY = 0,

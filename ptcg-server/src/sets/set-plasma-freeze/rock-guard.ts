@@ -29,7 +29,7 @@ export class RockGuard extends TrainerCard {
     'put 6 damage counters on the Attacking Pokemon.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AfterDamageEffect && effect.target.tool === this) {
+    if (effect instanceof AfterDamageEffect && effect.target.tools.includes(this)) {
       const player = effect.player;
       const targetPlayer = StateUtils.findOwner(state, effect.target);
 

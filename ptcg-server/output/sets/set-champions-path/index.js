@@ -15,5 +15,5 @@ exports.setChampionsPath = [
     new rotom_phone_1.RotomPhone(),
     new sonia_1.Sonia(),
     new turffield_stadium_1.TurffieldStadium(),
-    new weedle_1.WeedleCPA(),
+    new weedle_1.Weedle(),
 ];

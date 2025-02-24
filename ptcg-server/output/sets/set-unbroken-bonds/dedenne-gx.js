@@ -8,6 +8,7 @@ const play_card_effects_1 = require("../../game/store/effects/play-card-effects"
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class DedenneGX extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -79,9 +80,7 @@ class DedenneGX extends pokemon_card_1.PokemonCard {
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
-            if (player.usedGX === true) {
-                throw new game_1.GameError(game_1.GameMessage.LABEL_GX_USED);
-            }
+            prefabs_1.BLOCK_IF_GX_ATTACK_USED(player);
             player.usedGX = true;
             const specialConditionEffect = new attack_effects_1.AddSpecialConditionsEffect(effect, [card_types_1.SpecialCondition.PARALYZED]);
             store.reduceEffect(state, specialConditionEffect);

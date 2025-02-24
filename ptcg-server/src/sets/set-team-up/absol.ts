@@ -1,9 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { PlayerType, PowerType, State, StateUtils, StoreLike } from '../../game';
+import { PowerType, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckRetreatCostEffect } from '../../game/store/effects/check-effects';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect } from '../../game/store/effects/game-effects';
+import { IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 export class Absol extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -16,7 +17,7 @@ export class Absol extends PokemonCard {
   public powers = [{
     name: 'Dark Ambition',
     powerType: PowerType.ABILITY,
-    text: ' If your opponent\'s Active Pokémon is a Basic Pokémon, its Retreat Cost is [C] more.'
+    text: 'If your opponent\'s Active Pokémon is a Basic Pokémon, its Retreat Cost is [C] more.'
   }];
 
   public attacks = [{
@@ -34,46 +35,15 @@ export class Absol extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof CheckRetreatCostEffect) {
+    if (effect instanceof CheckRetreatCostEffect && StateUtils.isPokemonInPlay(effect.player, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      let isAbsolInPlay = false;
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-        if (card === this) {
-          isAbsolInPlay = true;
-        }
-      });
-
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
-        if (card === this) {
-          isAbsolInPlay = true;
-        }
-      });
-
-      if (!isAbsolInPlay) {
+      if (IS_ABILITY_BLOCKED(store, state, player, this) || !opponent.active.isStage(Stage.BASIC)) {
         return state;
       }
 
-      // Try to reduce PowerEffect, to check if something is blocking our ability
-      try {
-        const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
-      } catch {
-        return state;
-      }
-
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, cardList => {
-        if (cardList.getPokemonCard()?.stage === Stage.BASIC) {
-          // Add 1 more Colorless energy to the opponent's Active Pokemon's retreat cost
-          effect.cost.push(CardType.COLORLESS);
-        }
-      });
-
+      effect.cost.push(CardType.COLORLESS);
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ToolJammer = void 0;
 const trainer_card_1 = require("../../game/store/card/trainer-card");
 const card_types_1 = require("../../game/store/card/card-types");
-const __1 = require("../..");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class ToolJammer extends trainer_card_1.TrainerCard {
     constructor() {
@@ -19,12 +18,14 @@ class ToolJammer extends trainer_card_1.TrainerCard {
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
-            const player = effect.player;
-            const opponent = __1.StateUtils.getOpponent(state, player);
-            const opponentActivePokemon = opponent.active;
-            if (opponentActivePokemon && opponentActivePokemon.tool) {
-                opponentActivePokemon.tool.reduceEffect = () => state;
-            }
+            // const player = effect.player;
+            // const opponent = StateUtils.getOpponent(state, player);
+            // const opponentActivePokemon = opponent.active;
+            // if (opponentActivePokemon && opponentActivePokemon.tools.length !== 0) {
+            //   for (const tool of opponentActivePokemon.tools) {
+            //     tool.reduceEffect = () => state;
+            //   }
+            // }
             return state;
         }
         return state;

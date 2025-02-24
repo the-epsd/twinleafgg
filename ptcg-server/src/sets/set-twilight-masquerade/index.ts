@@ -8,6 +8,7 @@ import { Applin2 } from './applin-2';
 import { Aron } from './aron';
 import { Blisseyex } from './blissey-ex';
 import { BloodmoonUrsalunaex } from './bloodmoon-ursaluna-ex';
+import {BoomerangEnergy} from './boomerang-energy-1';
 import { BruteBonnet } from './brute-bonnet';
 import { BugCatchingSet } from './bug-catching-set';
 import { Caretaker } from './caretaker';
@@ -26,6 +27,7 @@ import { Dreepy } from './dreepy';
 import { Emolga } from './emolga';
 import { EnhancedHammer } from './enhanced-hammer';
 import { Farfetchd } from './farfetchd';
+import {Feebas} from './feebas';
 import { FestivalGrounds } from './festival-plaza';
 import { Fezandipiti } from './fezandipiti';
 import { Finizen } from './finizen';
@@ -62,6 +64,7 @@ import { Monferno } from './monferno';
 import { Morpeko } from './morpeko';
 import { Munkidori } from './munkidori';
 import { Okidogi } from './okidogi';
+import { DipplinIR, PoltchageistIR, InfernapeIR, FroslassIR, PhioneIR, HisuianGrowlitheIR, TimburrIR, LaironIR, ApplinIR, TatsugiriIR, ChanseyIR, SinistchaexFA, TealMaskOgerponexFA, MagcargoexFA, HearthflameMaskOgerponexFA, PalafinexFA, WellspringMaskOgerponexFA, LuxrayexFA, IronThornsexFA, ScreamTailexFA, GreninjaexFA, CornerstoneMaskOgerponexFA, DragapultexFA, BlisseyexFA, BloodmoonUrsalunaexFA, CaretakerFA, CarmineFA, HasselFA, KieranFA, LanasAidFA, PerrinFA, SinistchaexSIR, TealMaskOgerponexSIR, HearthflameMaskOgerponexSIR, WellspringMaskOgerponexSIR, GreninjaexSIR, CornerstoneMaskOgerponexSIR, BloodmoonUrsalunaexSIR, CarmineSIR, KieranSIR, LanasAidSIR, PerrinSIR, TealMaskOgerponexHR, BloodmoonUrsalunaexHR, BuddyBuddyPoffinHR, EnhancedHammerHR, RescueBoardHR, LuminousEnergyHR } from './other-prints';
 import { Palafin } from './palafin';
 import { Palafinex } from './palafin-ex';
 import { PerformanceFlute } from './performance-flute';
@@ -73,7 +76,6 @@ import { Poliwrath } from './poliwrath';
 import { Poltchageist } from './poltchageist';
 import { Poochyena } from './poochyena';
 import { Rillaboom } from './rillaboom';
-import { RotoStick } from './roto-stick';
 import { ScoopUpCyclone } from './scoop-up-cyclone';
 import { ScreamTailex } from './scream-tail-ex';
 import { SecretBox } from './secret-box';
@@ -130,7 +132,6 @@ export const setTwilightMasquerade: Card[] = [
   new Morpeko(),
   new PerformanceFlute(),
   new Poochyena(),
-  new RotoStick(),
   new ScoopUpCyclone(),
   new Tatsugiri(),
   new Timburr(),
@@ -187,4 +188,56 @@ export const setTwilightMasquerade: Card[] = [
   new Poliwag(),
   new Poliwhirl(),
   new Poliwrath(),
+  new BoomerangEnergy(),
+  new Feebas(),
+
+  // TWM Full Arts
+  new DipplinIR(),
+  new PoltchageistIR(),
+  new InfernapeIR(),
+  new FroslassIR(),
+  new PhioneIR(),
+  new HisuianGrowlitheIR(),
+  new TimburrIR(),
+  new LaironIR(),
+  new ApplinIR(),
+  new TatsugiriIR(),
+  new ChanseyIR(),
+  new SinistchaexFA(),
+  new TealMaskOgerponexFA(),
+  new MagcargoexFA(),
+  new HearthflameMaskOgerponexFA(),
+  new PalafinexFA(),
+  new WellspringMaskOgerponexFA(),
+  new LuxrayexFA(),
+  new IronThornsexFA(),
+  new ScreamTailexFA(),
+  new GreninjaexFA(),
+  new CornerstoneMaskOgerponexFA(),
+  new DragapultexFA(),
+  new BlisseyexFA(),
+  new BloodmoonUrsalunaexFA(),
+  new CaretakerFA(),
+  new CarmineFA(),
+  new HasselFA(),
+  new KieranFA(),
+  new LanasAidFA(),
+  new PerrinFA(),
+  new SinistchaexSIR(),
+  new TealMaskOgerponexSIR(),
+  new HearthflameMaskOgerponexSIR(),
+  new WellspringMaskOgerponexSIR(),
+  new GreninjaexSIR(),
+  new CornerstoneMaskOgerponexSIR(),
+  new BloodmoonUrsalunaexSIR(),
+  new CarmineSIR(),
+  new KieranSIR(),
+  new LanasAidSIR(),
+  new PerrinSIR(),
+  new TealMaskOgerponexHR(),
+  new BloodmoonUrsalunaexHR(),
+  new BuddyBuddyPoffinHR(),
+  new EnhancedHammerHR(),
+  new RescueBoardHR(),
+  new LuminousEnergyHR(),
 ];

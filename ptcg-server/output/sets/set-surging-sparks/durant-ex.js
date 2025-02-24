@@ -6,6 +6,7 @@ const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class Durantex extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -21,14 +22,12 @@ class Durantex extends pokemon_card_1.PokemonCard {
                 powerType: game_1.PowerType.ABILITY,
                 text: 'When you play this Pokemon from your hand onto your Bench during your turn, you may use this ability. Discard the top card of your opponent\'s deck.'
             }];
-        this.attacks = [
-            {
+        this.attacks = [{
                 name: 'Revenge Crush',
                 cost: [G, C, C],
                 damage: 120,
                 text: 'This attack does 30 more damage for each Prize Card your opponent has taken.'
-            }
-        ];
+            }];
         this.regulationMark = 'H';
         this.set = 'SSP';
         this.setNumber = '4';
@@ -61,10 +60,8 @@ class Durantex extends pokemon_card_1.PokemonCard {
             return state;
         }
         // Revenge Crush
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
-            const player = effect.player;
-            const opponent = game_1.StateUtils.getOpponent(state, player);
-            effect.damage += (6 - opponent.getPrizeLeft()) * 30;
+        if (prefabs_1.WAS_ATTACK_USED(effect, 0, this)) {
+            prefabs_1.DEAL_MORE_DAMAGE_FOR_EACH_PRIZE_CARD_TAKEN(effect, state, 30);
         }
         return state;
     }

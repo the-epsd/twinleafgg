@@ -48,7 +48,7 @@ const zeraora_1 = require("./zeraora");
 exports.setUnbrokenBonds = [
     new arcanine_1.Arcanine(),
     new aron_1.Aron(),
-    new blacephalon_1.BlacephalonUNB(),
+    new blacephalon_1.Blacephalon(),
     new cleffa_1.Cleffa(),
     new dedenne_gx_1.DedenneGX(),
     new dusk_stone_1.DuskStone(),

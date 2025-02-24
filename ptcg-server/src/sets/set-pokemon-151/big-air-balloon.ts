@@ -28,7 +28,7 @@ export class BigAirBalloon extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof CheckRetreatCostEffect && effect.player.active.tool === this) {
+    if (effect instanceof CheckRetreatCostEffect && effect.player.active.tools.includes(this)) {
       const card = effect.player.active.getPokemonCard();
       if (card instanceof PokemonCard && card.stage === Stage.STAGE_2)
         effect.cost = [];

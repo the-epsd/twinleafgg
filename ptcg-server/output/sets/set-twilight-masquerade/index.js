@@ -10,6 +10,7 @@ const applin_2_1 = require("./applin-2");
 const aron_1 = require("./aron");
 const blissey_ex_1 = require("./blissey-ex");
 const bloodmoon_ursaluna_ex_1 = require("./bloodmoon-ursaluna-ex");
+const boomerang_energy_1_1 = require("./boomerang-energy-1");
 const brute_bonnet_1 = require("./brute-bonnet");
 const bug_catching_set_1 = require("./bug-catching-set");
 const caretaker_1 = require("./caretaker");
@@ -28,6 +29,7 @@ const dreepy_1 = require("./dreepy");
 const emolga_1 = require("./emolga");
 const enhanced_hammer_1 = require("./enhanced-hammer");
 const farfetchd_1 = require("./farfetchd");
+const feebas_1 = require("./feebas");
 const festival_plaza_1 = require("./festival-plaza");
 const fezandipiti_1 = require("./fezandipiti");
 const finizen_1 = require("./finizen");
@@ -64,6 +66,7 @@ const monferno_1 = require("./monferno");
 const morpeko_1 = require("./morpeko");
 const munkidori_1 = require("./munkidori");
 const okidogi_1 = require("./okidogi");
+const other_prints_1 = require("./other-prints");
 const palafin_1 = require("./palafin");
 const palafin_ex_1 = require("./palafin-ex");
 const performance_flute_1 = require("./performance-flute");
@@ -75,7 +78,6 @@ const poliwrath_1 = require("./poliwrath");
 const poltchageist_1 = require("./poltchageist");
 const poochyena_1 = require("./poochyena");
 const rillaboom_1 = require("./rillaboom");
-const roto_stick_1 = require("./roto-stick");
 const scoop_up_cyclone_1 = require("./scoop-up-cyclone");
 const scream_tail_ex_1 = require("./scream-tail-ex");
 const secret_box_1 = require("./secret-box");
@@ -130,7 +132,6 @@ exports.setTwilightMasquerade = [
     new morpeko_1.Morpeko(),
     new performance_flute_1.PerformanceFlute(),
     new poochyena_1.Poochyena(),
-    new roto_stick_1.RotoStick(),
     new scoop_up_cyclone_1.ScoopUpCyclone(),
     new tatsugiri_1.Tatsugiri(),
     new timburr_1.Timburr(),
@@ -187,4 +188,55 @@ exports.setTwilightMasquerade = [
     new poliwag_1.Poliwag(),
     new poliwhirl_1.Poliwhirl(),
     new poliwrath_1.Poliwrath(),
+    new boomerang_energy_1_1.BoomerangEnergy(),
+    new feebas_1.Feebas(),
+    // TWM Full Arts
+    new other_prints_1.DipplinIR(),
+    new other_prints_1.PoltchageistIR(),
+    new other_prints_1.InfernapeIR(),
+    new other_prints_1.FroslassIR(),
+    new other_prints_1.PhioneIR(),
+    new other_prints_1.HisuianGrowlitheIR(),
+    new other_prints_1.TimburrIR(),
+    new other_prints_1.LaironIR(),
+    new other_prints_1.ApplinIR(),
+    new other_prints_1.TatsugiriIR(),
+    new other_prints_1.ChanseyIR(),
+    new other_prints_1.SinistchaexFA(),
+    new other_prints_1.TealMaskOgerponexFA(),
+    new other_prints_1.MagcargoexFA(),
+    new other_prints_1.HearthflameMaskOgerponexFA(),
+    new other_prints_1.PalafinexFA(),
+    new other_prints_1.WellspringMaskOgerponexFA(),
+    new other_prints_1.LuxrayexFA(),
+    new other_prints_1.IronThornsexFA(),
+    new other_prints_1.ScreamTailexFA(),
+    new other_prints_1.GreninjaexFA(),
+    new other_prints_1.CornerstoneMaskOgerponexFA(),
+    new other_prints_1.DragapultexFA(),
+    new other_prints_1.BlisseyexFA(),
+    new other_prints_1.BloodmoonUrsalunaexFA(),
+    new other_prints_1.CaretakerFA(),
+    new other_prints_1.CarmineFA(),
+    new other_prints_1.HasselFA(),
+    new other_prints_1.KieranFA(),
+    new other_prints_1.LanasAidFA(),
+    new other_prints_1.PerrinFA(),
+    new other_prints_1.SinistchaexSIR(),
+    new other_prints_1.TealMaskOgerponexSIR(),
+    new other_prints_1.HearthflameMaskOgerponexSIR(),
+    new other_prints_1.WellspringMaskOgerponexSIR(),
+    new other_prints_1.GreninjaexSIR(),
+    new other_prints_1.CornerstoneMaskOgerponexSIR(),
+    new other_prints_1.BloodmoonUrsalunaexSIR(),
+    new other_prints_1.CarmineSIR(),
+    new other_prints_1.KieranSIR(),
+    new other_prints_1.LanasAidSIR(),
+    new other_prints_1.PerrinSIR(),
+    new other_prints_1.TealMaskOgerponexHR(),
+    new other_prints_1.BloodmoonUrsalunaexHR(),
+    new other_prints_1.BuddyBuddyPoffinHR(),
+    new other_prints_1.EnhancedHammerHR(),
+    new other_prints_1.RescueBoardHR(),
+    new other_prints_1.LuminousEnergyHR(),
 ];

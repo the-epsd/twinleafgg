@@ -38,8 +38,9 @@ class CleanerTask {
                 ranking: 0
             });
             for (let i = 0; i < usersToDelete.length; i++) {
+                const user = usersToDelete[i];
                 const userId = usersToDelete[i].id;
-                if (!onlineUserIds.includes(userId)) {
+                if (!onlineUserIds.includes(userId) && user.decks.length === 0) {
                     await this.deleteUserTask.deleteUser(userId);
                 }
             }

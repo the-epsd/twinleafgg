@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.LunalaPS = void 0;
+exports.LunalaPrismStar = void 0;
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const check_effects_1 = require("../../game/store/effects/check-effects");
-class LunalaPS extends pokemon_card_1.PokemonCard {
+class LunalaPrismStar extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.tags = [card_types_1.CardTag.PRISM_STAR];
@@ -88,4 +88,4 @@ class LunalaPS extends pokemon_card_1.PokemonCard {
         return state;
     }
 }
-exports.LunalaPS = LunalaPS;
+exports.LunalaPrismStar = LunalaPrismStar;

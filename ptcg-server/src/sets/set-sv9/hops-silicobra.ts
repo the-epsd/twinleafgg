@@ -9,7 +9,7 @@ export class HopsSilicobra extends PokemonCard {
 
   public tags = [CardTag.HOPS];
 
-  public cardType: CardType = C;
+  public cardType: CardType = F;
 
   public hp: number = 60;
 

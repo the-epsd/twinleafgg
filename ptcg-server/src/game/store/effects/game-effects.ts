@@ -18,7 +18,8 @@ export enum GameEffects {
   KNOCK_OUT_EFFECT = 'KNOCK_OUT_EFFECT',
   HEAL_EFFECT = 'HEAL_EFFECT',
   EVOLVE_EFFECT = 'EVOLVE_EFFECT',
-  DRAW_PRIZES_EFFECT = 'DRAW_PRIZES_EFFECT'
+  DRAW_PRIZES_EFFECT = 'DRAW_PRIZES_EFFECT',
+  MOVE_CARDS_EFFECT = 'MOVE_CARDS_EFFECT'
 }
 
 export class RetreatEffect implements Effect {
@@ -121,18 +122,6 @@ export class UseStadiumEffect implements Effect {
   }
 }
 
-export class useToolEffect implements Effect {
-  readonly type: string = GameEffects.USE_STADIUM_EFFECT;
-  public preventDefault = false;
-  public player: Player;
-  public tool: Card;
-
-  constructor(player: Player, tool: Card) {
-    this.player = player;
-    this.tool = tool;
-  }
-}
-
 export class AttackEffect implements Effect {
   readonly type: string = GameEffects.ATTACK_EFFECT;
   public preventDefault = false;
@@ -227,6 +216,38 @@ export class DrawPrizesEffect implements Effect {
     this.player = player;
     this.prizes = prizes;
     this.destination = destination;
+  }
+}
+
+export class MoveCardsEffect implements Effect {
+  readonly type: string = GameEffects.MOVE_CARDS_EFFECT;
+  public preventDefault = false;
+  public source: CardList | PokemonCardList;
+  public destination: CardList | PokemonCardList;
+  public cards?: Card[];
+  public count?: number;
+  public toTop?: boolean;
+  public toBottom?: boolean;
+  public skipCleanup?: boolean;
+
+  constructor(
+    source: CardList | PokemonCardList,
+    destination: CardList | PokemonCardList,
+    options: {
+      cards?: Card[],
+      count?: number,
+      toTop?: boolean,
+      toBottom?: boolean,
+      skipCleanup?: boolean
+    } = {}
+  ) {
+    this.source = source;
+    this.destination = destination;
+    this.cards = options.cards;
+    this.count = options.count;
+    this.toTop = options.toTop;
+    this.toBottom = options.toBottom;
+    this.skipCleanup = options.skipCleanup;
   }
 }
 

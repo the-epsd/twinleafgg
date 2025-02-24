@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, GameMessage, GameError, PowerType, StateUtils, PlayerType } from '../../game';
+import { StoreLike, State, GameMessage, GameError, PowerType, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
@@ -65,22 +65,20 @@ export class Latiasex extends PokemonCard {
       console.log('second marker added');
     }
 
-    if (effect instanceof CheckRetreatCostEffect) {
+    if (effect instanceof CheckRetreatCostEffect && StateUtils.isPokemonInPlay(effect.player, this)) {
       const player = effect.player;
       const cardList = StateUtils.findCardList(state, this);
       const owner = StateUtils.findOwner(state, cardList);
+      const active = effect.player.active.getPokemonCard();
 
-      if (owner !== player) {
+      if (owner !== player || active === undefined) {
         return state;
       }
 
-      if (StateUtils.isPokemonInPlay(player, this) && !IS_ABILITY_BLOCKED(store, state, player, this)) {
-        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-          if (card.stage === Stage.BASIC) {
-            effect.cost = [];
-          }
-        });
+      if (!IS_ABILITY_BLOCKED(store, state, player, this) && active.stage === Stage.BASIC) {
+        effect.cost = [];
       }
+      return state;
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

@@ -41,7 +41,7 @@ export class Barbaracle extends PokemonCard {
   public fullName: string = 'Barbaracle LOR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof CheckPrizesDestinationEffect) {
+    if (effect instanceof CheckPrizesDestinationEffect && StateUtils.isPokemonInPlay(effect.player, this)) {
       // Ensure that Barbaracle is in play and has an owner.
       const opponent = effect.player; // Since it's the opponent that draws the prizes
       const player = StateUtils.getOpponent(state, opponent);

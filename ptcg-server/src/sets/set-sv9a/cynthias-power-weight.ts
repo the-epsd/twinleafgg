@@ -1,0 +1,38 @@
+import { TrainerCard } from '../../game/store/card/trainer-card';
+import { TrainerType, CardTag } from '../../game/store/card/card-types';
+import { StoreLike } from '../../game/store/store-like';
+import { State } from '../../game/store/state/state';
+import { Effect } from '../../game/store/effects/effect';
+import { CheckHpEffect } from '../../game/store/effects/check-effects';
+
+export class CynthiasPowerWeight extends TrainerCard {
+
+  public trainerType: TrainerType = TrainerType.TOOL;
+  public tags = [CardTag.CYNTHIAS];
+  public regulationMark = 'I';
+  public set: string = 'SV9a';
+  public setNumber: string = '60';
+  public cardImage: string = 'assets/cardback.png';
+  public name: string = 'Cynthia\'s Power Weight';
+  public fullName: string = 'Cynthia\'s Power Weight SV9a';
+
+  public text: string =
+    'The Cynthia\'s Pokémon this card is attached to gets +70 HP.';
+
+  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
+    if (effect instanceof CheckHpEffect && effect.target.cards.includes(this)) {
+      const card = effect.target.getPokemonCard();
+
+      if (card === undefined) {
+        return state;
+      }
+
+      if (card.tags.includes(CardTag.CYNTHIAS)) {
+        effect.hp += 70;
+      }
+    }
+    return state;
+  }
+
+}

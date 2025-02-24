@@ -49,7 +49,7 @@ class Laprasex extends game_1.PokemonCard {
                         }
                     });
                     const damagePerEnergy = 40;
-                    effect.damage = this.attacks[0].damage + (checkProvidedEnergy.energyMap.length * damagePerEnergy);
+                    effect.damage = checkProvidedEnergy.energyMap.length * damagePerEnergy;
                 }
             });
             return state;

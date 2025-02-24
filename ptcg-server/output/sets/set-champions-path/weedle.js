@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WeedleCPA = void 0;
+exports.Weedle = void 0;
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 function* useCallForFamily(next, store, state, effect) {
@@ -26,7 +26,7 @@ function* useCallForFamily(next, store, state, effect) {
         player.deck.applyOrder(order);
     });
 }
-class WeedleCPA extends game_1.PokemonCard {
+class Weedle extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = game_1.Stage.BASIC;
@@ -58,4 +58,4 @@ class WeedleCPA extends game_1.PokemonCard {
         return state;
     }
 }
-exports.WeedleCPA = WeedleCPA;
+exports.Weedle = Weedle;

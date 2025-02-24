@@ -7,7 +7,7 @@ import { StateUtils } from '../../game/store/state-utils';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
-export class N_Supporter extends TrainerCard {
+export class N extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;
 

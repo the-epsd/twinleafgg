@@ -24,7 +24,7 @@ export class HopsZacianex extends PokemonCard {
 
   public attacks = [
     {
-      name: 'Close Cleave',
+      name: 'Insta-Strike',
       cost: [C],
       damage: 30,
       text: 'This attack also does 30 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'

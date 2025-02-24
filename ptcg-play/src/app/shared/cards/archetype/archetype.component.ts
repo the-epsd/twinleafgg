@@ -67,6 +67,78 @@ export class ArchetypeComponent {
       case Archetype.DRAGAPULT:
         this.archetype = 'dragapult';
         break;
+      case Archetype.ARCHALUDON:
+        this.archetype = 'archaludon';
+        break;
+      case Archetype.KLAWF:
+        this.archetype = 'klawf';
+        break;
+      case Archetype.GOUGING_FIRE:
+        this.archetype = 'gouging-fire';
+        break;
+      case Archetype.GHOLDENGO:
+        this.archetype = 'gholdengo';
+        break;
+      case Archetype.IRON_CROWN:
+        this.archetype = 'iron-crown';
+        break;
+      case Archetype.FERALIGATR:
+        this.archetype = 'feraligatr';
+        break;
+      case Archetype.BLISSEY:
+        this.archetype = 'blissey';
+        break;
+      case Archetype.MILOTIC:
+        this.archetype = 'milotic';
+        break;
+      case Archetype.TEAL_MASK_OGERPON:
+        this.archetype = 'teal-mask-ogerpon';
+        break;
+      case Archetype.ZOROARK:
+        this.archetype = 'zorark';
+        break;
+      case Archetype.BELLIBOLT:
+        this.archetype = 'bellibolt';
+        break;
+      case Archetype.FLAREON:
+        this.archetype = 'flareon';
+        break;
+      case Archetype.TYRANITAR:
+        this.archetype = 'tyrantiar';
+        break;
+      case Archetype.SLOWKING:
+        this.archetype = 'slowking';
+        break;
+      case Archetype.MAMOSWINE:
+        this.archetype = 'mamoswine';
+        break;
+      case Archetype.CLEFAIRY:
+        this.archetype = 'clefairy';
+        break;
+      case Archetype.ZACIAN:
+        this.archetype = 'zacian';
+        break;
+      case Archetype.FROSLASS:
+        this.archetype = 'froslass';
+        break;
+      case Archetype.DIPPLIN:
+        this.archetype = 'dipplin';
+        break;
+      case Archetype.ROTOM:
+        this.archetype = 'rotom';
+        break;
+      case Archetype.HYDRAPPLE:
+        this.archetype = 'hydrapple';
+        break;
+      case Archetype.GARCHOMP:
+        this.archetype = 'garchomp';
+        break;
+      case Archetype.HOOH:
+        this.archetype = 'hooh';
+        break;
+      case Archetype.HYDREIGON:
+        this.archetype = 'hydreigon';
+        break;
       default:
         this.archetype = 'unown';
     }

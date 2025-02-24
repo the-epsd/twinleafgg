@@ -5,6 +5,7 @@ import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType } from '../../game/store/card/card-types';
 export declare class Colress extends TrainerCard {
     trainerType: TrainerType;
+    tags: string[];
     set: string;
     name: string;
     fullName: string;

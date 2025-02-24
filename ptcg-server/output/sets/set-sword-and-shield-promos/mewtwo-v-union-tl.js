@@ -63,7 +63,7 @@ class MewtwoVUNIONTopLeft extends pokemon_card_1.PokemonCard {
         this.set = 'SWSH';
         this.regulationMark = 'E';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '308';
+        this.setNumber = '159';
         this.name = 'Mewtwo V-UNION';
         this.fullName = 'Mewtwo V-UNION (Top Left) SWSH';
         this.MEWTWO_ASSEMBLED = 'MEWTWO_ASSEMBLED';

@@ -11,6 +11,7 @@ const game_2 = require("../../game");
 const state_utils_1 = require("../../game/store/state-utils");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 // LOT Magcargo-GX 44 (https://limitlesstcg.com/cards/LOT/44)
 class MagcargoGX extends pokemon_card_1.PokemonCard {
     constructor() {
@@ -102,9 +103,7 @@ class MagcargoGX extends pokemon_card_1.PokemonCard {
             const player = effect.player;
             const opponent = state_utils_1.StateUtils.getOpponent(state, player);
             // Check if player has used GX attack
-            if (player.usedGX == true) {
-                throw new game_1.GameError(game_1.GameMessage.LABEL_GX_USED);
-            }
+            prefabs_1.BLOCK_IF_GX_ATTACK_USED(player);
             // set GX attack as used for game
             player.usedGX = true;
             opponent.deck.moveTo(opponent.discard, 5);

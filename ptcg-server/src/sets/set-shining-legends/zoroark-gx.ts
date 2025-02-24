@@ -12,6 +12,7 @@ import { PowerEffect, AttackEffect } from '../../game/store/effects/game-effects
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 // citing empoleon to help make this (https://github.com/keeshii/ryuu-play/blob/master/ptcg-server/src/sets/set-black-and-white/empoleon.ts)
 
 function* useTricksterGX(next: Function, store: StoreLike, state: State,
@@ -24,9 +25,7 @@ function* useTricksterGX(next: Function, store: StoreLike, state: State,
   const allOpponentPokemon = oppActive ? [oppActive, ...oppBenched.map(b => b.getPokemonCard())].filter((pokemon): pokemon is PokemonCard => pokemon !== undefined) : [];
 
   // Check if player has used GX attack
-  if (player.usedGX == true) {
-    throw new GameError(GameMessage.LABEL_GX_USED);
-  }
+  BLOCK_IF_GX_ATTACK_USED(player);
 
   let selected: any;
   yield store.prompt(state, new ChooseAttackPrompt(

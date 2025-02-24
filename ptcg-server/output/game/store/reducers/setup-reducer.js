@@ -71,8 +71,24 @@ function* setupGame(next, store, state) {
             yield store.prompt(state, new shuffle_prompt_1.ShuffleDeckPrompt(player.id), order => {
                 player.deck.applyOrder(order);
                 player.deck.moveTo(player.hand, 7);
-                playerHasBasic = player.hand.count(basicPokemon) > 0 || player.hand.cards.some(c => c.tags.includes(card_types_1.CardTag.PLAY_DURING_SETUP));
-                next();
+                const hasBasicPokemon = player.hand.count(basicPokemon) > 0;
+                const setupCards = player.hand.cards.filter(c => c.tags.includes(card_types_1.CardTag.PLAY_DURING_SETUP));
+                const hasOnlySetupCards = !hasBasicPokemon && setupCards.length > 0;
+                if (hasBasicPokemon) {
+                    playerHasBasic = true;
+                    next();
+                }
+                else if (hasOnlySetupCards) {
+                    playerHasBasic = false; // Reset this before the prompt
+                    return store.prompt(state, new select_prompt_1.SelectPrompt(player.id, game_message_1.GameMessage.SETUP_CARDS_AVAILABLE, [game_message_1.GameMessage.USE_SETUP_CARDS, game_message_1.GameMessage.MULLIGAN], { allowCancel: false }), choice => {
+                        playerHasBasic = choice === 0;
+                        next();
+                    });
+                }
+                else {
+                    playerHasBasic = false;
+                    next();
+                }
             });
         }
         if (!opponentHasBasic) {
@@ -80,8 +96,24 @@ function* setupGame(next, store, state) {
             yield store.prompt(state, new shuffle_prompt_1.ShuffleDeckPrompt(opponent.id), order => {
                 opponent.deck.applyOrder(order);
                 opponent.deck.moveTo(opponent.hand, 7);
-                opponentHasBasic = opponent.hand.count(basicPokemon) > 0 || opponent.hand.cards.some(c => c.tags.includes(card_types_1.CardTag.PLAY_DURING_SETUP));
-                next();
+                const hasBasicPokemon = opponent.hand.count(basicPokemon) > 0;
+                const setupCards = opponent.hand.cards.filter(c => c.tags.includes(card_types_1.CardTag.PLAY_DURING_SETUP));
+                const hasOnlySetupCards = !hasBasicPokemon && setupCards.length > 0;
+                if (hasBasicPokemon) {
+                    opponentHasBasic = true;
+                    next();
+                }
+                else if (hasOnlySetupCards) {
+                    opponentHasBasic = false; // Reset this before the prompt
+                    return store.prompt(state, new select_prompt_1.SelectPrompt(opponent.id, game_message_1.GameMessage.SETUP_CARDS_AVAILABLE, [game_message_1.GameMessage.USE_SETUP_CARDS, game_message_1.GameMessage.MULLIGAN], { allowCancel: false }), choice => {
+                        opponentHasBasic = choice === 0;
+                        next();
+                    });
+                }
+                else {
+                    opponentHasBasic = false;
+                    next();
+                }
             });
         }
         if (playerHasBasic && !opponentHasBasic) {

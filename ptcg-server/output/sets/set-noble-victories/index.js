@@ -11,9 +11,12 @@ const eelektrik_1 = require("./eelektrik");
 const eviolite_1 = require("./eviolite");
 const kyurem_1 = require("./kyurem");
 const lampent_1 = require("./lampent");
+const palpitoad_1 = require("./palpitoad");
 const plume_fossil_1 = require("./plume-fossil");
+const seismitoad_1 = require("./seismitoad");
 const terrakion_1 = require("./terrakion");
 const trubbish_1 = require("./trubbish");
+const tympole_1 = require("./tympole");
 const tynamo_1 = require("./tynamo");
 const tynamo_2_1 = require("./tynamo-2");
 const vanillish_1 = require("./vanillish");
@@ -31,10 +34,13 @@ exports.setNobleVictories = [
     new eviolite_1.Eviolite(),
     new kyurem_1.Kyurem(),
     new lampent_1.Lampent(),
+    new palpitoad_1.Palpitoad(),
     new plume_fossil_1.PlumeFossil(),
+    new seismitoad_1.Seismitoad(),
     new card_images_1.SuperRodNVI(),
     new terrakion_1.Terrakion(),
     new trubbish_1.Trubbish(),
+    new tympole_1.Tympole(),
     new tynamo_1.Tynamo(),
     new tynamo_2_1.Tynamo2(),
     new vanillish_1.Vanillish(),

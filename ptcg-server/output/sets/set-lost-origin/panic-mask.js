@@ -19,7 +19,7 @@ class PanicMask extends trainer_card_1.TrainerCard {
     }
     reduceEffect(store, state, effect) {
         var _a;
-        if (effect instanceof attack_effects_1.DealDamageEffect && effect.target.tool === this) {
+        if (effect instanceof attack_effects_1.DealDamageEffect && effect.target.tools.includes(this)) {
             const player = effect.player;
             const targetPlayer = state_utils_1.StateUtils.findOwner(state, effect.target);
             if (effect.damage <= 0 || player === targetPlayer || targetPlayer.active !== effect.target) {

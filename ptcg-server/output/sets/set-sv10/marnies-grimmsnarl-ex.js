@@ -55,7 +55,7 @@ class MarniesGrimmsnarlex extends game_1.PokemonCard {
             }
             const blockedTo = [];
             player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-                if (!card.cardTag.includes(game_1.CardTag.MARNIES))
+                if (!card.tags.includes(game_1.CardTag.MARNIES))
                     blockedTo.push(target);
             });
             state = store.prompt(state, new game_1.ConfirmPrompt(effect.player.id, game_1.GameMessage.WANT_TO_USE_ABILITY), wantToUse => {

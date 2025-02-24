@@ -22,7 +22,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   const blocked: number[] = [];
   player.deck.cards.forEach((card, index) => {
     // eslint-disable-next-line no-empty    
-    if ((card instanceof PokemonCard && card.stage === Stage.BASIC && card.cardTag.includes(CardTag.TEAM_MAGMA)) ||
+    if ((card instanceof PokemonCard && card.stage === Stage.BASIC && card.tags.includes(CardTag.TEAM_MAGMA)) ||
       (card instanceof EnergyCard && card.energyType === EnergyType.BASIC && card.name === 'Fighting Energy')) {
       /**/
     } else {

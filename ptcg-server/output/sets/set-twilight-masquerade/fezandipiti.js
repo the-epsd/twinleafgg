@@ -39,33 +39,40 @@ class Fezandipiti extends pokemon_card_1.PokemonCard {
     }
     reduceEffect(store, state, effect) {
         // Adrena-Pheromone
-        if (effect instanceof attack_effects_1.PutDamageEffect) {
+        if (effect instanceof attack_effects_1.PutDamageEffect && effect.target.cards.includes(this)) {
             const player = effect.player;
-            const opponent = effect.opponent;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            const pokemonCard = effect.target.getPokemonCard();
+            const sourceCard = effect.source.getPokemonCard();
             const cardList = game_1.StateUtils.findCardList(state, this);
-            // Only blocks damage from attacks
-            if (effect.target !== cardList || state.phase !== game_1.GamePhase.ATTACK) {
-                return state;
-            }
-            // Try to reduce PowerEffect, to check if something is blocking our ability
-            try {
-                const powerEffect = new game_effects_1.PowerEffect(player, this.powers[0], this);
-                store.reduceEffect(state, powerEffect);
-            }
-            catch (_a) {
+            if (pokemonCard !== this || sourceCard === undefined || state.phase !== game_1.GamePhase.ATTACK) {
                 return state;
             }
             // Check if we have dark energy attached
             const checkProvidedEnergyEffect = new check_effects_1.CheckProvidedEnergyEffect(player, cardList);
             store.reduceEffect(state, checkProvidedEnergyEffect);
             let hasDarkEnergy = false;
-            checkProvidedEnergyEffect.energyMap.forEach(energy => { energy.provides.forEach(e => { if (e == card_types_1.CardType.DARK) {
-                hasDarkEnergy = true;
-            } }); });
+            checkProvidedEnergyEffect.energyMap.forEach(energy => {
+                energy.provides.forEach(e => {
+                    if (e === card_types_1.CardType.DARK) {
+                        hasDarkEnergy = true;
+                    }
+                });
+            });
             if (!hasDarkEnergy) {
                 return state;
             }
-            // Flip a coin, and if heads, prevent damage.
+            try {
+                const stub = new game_effects_1.PowerEffect(player, {
+                    name: 'test',
+                    powerType: game_1.PowerType.ABILITY,
+                    text: ''
+                }, this);
+                store.reduceEffect(state, stub);
+            }
+            catch (_a) {
+                return state;
+            }
             try {
                 const coinFlip = new play_card_effects_1.CoinFlipEffect(player);
                 store.reduceEffect(state, coinFlip);
@@ -74,10 +81,11 @@ class Fezandipiti extends pokemon_card_1.PokemonCard {
                 return state;
             }
             const coinFlipResult = prefabs_1.SIMULATE_COIN_FLIP(store, state, player);
-            if (!coinFlipResult) {
+            if (coinFlipResult) {
                 effect.damage = 0;
                 store.log(state, game_1.GameLog.LOG_ABILITY_BLOCKS_DAMAGE, { name: opponent.name, pokemon: this.name });
             }
+            return state;
         }
         // Energy Feather
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

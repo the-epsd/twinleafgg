@@ -1,12 +1,12 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, GameMessage, GameError, ChooseCardsPrompt, ChooseAttackPrompt, StateUtils, Attack, GameLog } from '../../game';
+import { PowerType, StoreLike, State, GameMessage, GameError, ChooseCardsPrompt, ChooseAttackPrompt, StateUtils, GameLog } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import {ABILITY_USED} from '../../game/store/prefabs/prefabs';
+import { ABILITY_USED } from '../../game/store/prefabs/prefabs';
 
 function* useNightJoker(next: Function, store: StoreLike, state: State,
   effect: AttackEffect): IterableIterator<State> {
@@ -28,23 +28,19 @@ function* useNightJoker(next: Function, store: StoreLike, state: State,
     next();
   });
 
-  const attack: Attack | null = selected;
-  if (attack === null) {
-    return state;
-  }
-
-  if (attack.copycatAttack) {
-    return state;
+  // Validate selected attack
+  if (!selected || selected.copycatAttack) {
+    return state; // Exit if no valid attack is selected
   }
 
   store.log(state, GameLog.LOG_PLAYER_COPIES_ATTACK, {
     name: player.name,
-    attack: attack.name
+    attack: selected.name
   });
 
   // Perform attack
-  const attackEffect = new AttackEffect(player, opponent, attack);
-  store.reduceEffect(state, attackEffect);
+  const attackEffect = new AttackEffect(player, opponent, selected);
+  state = store.reduceEffect(state, attackEffect);
 
   if (store.hasPrompts()) {
     yield store.waitPrompt(state, () => next());
@@ -54,7 +50,6 @@ function* useNightJoker(next: Function, store: StoreLike, state: State,
     const dealDamage = new DealDamageEffect(attackEffect, attackEffect.damage);
     state = store.reduceEffect(state, dealDamage);
   }
-
   return state;
 }
 

@@ -14,6 +14,7 @@ export class PokemonCardList extends CardList {
         this.pokemonPlayedTurn = 0;
         this.sleepFlips = 1;
         this.boardEffect = [];
+        this.hpBonus = 0;
         this.isActivatingCard = false;
     }
     getPokemons() {

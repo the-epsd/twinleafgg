@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PhanpyVIV = void 0;
+exports.Phanpy = void 0;
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const game_effects_1 = require("../../game/store/effects/game-effects");
-class PhanpyVIV extends pokemon_card_1.PokemonCard {
+class Phanpy extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.BASIC;
@@ -42,4 +42,4 @@ class PhanpyVIV extends pokemon_card_1.PokemonCard {
         return state;
     }
 }
-exports.PhanpyVIV = PhanpyVIV;
+exports.Phanpy = Phanpy;

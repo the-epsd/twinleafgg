@@ -1,9 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, PowerType, GameError, GameMessage } from '../../game';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { StoreLike, State, PowerType, GameError, GameMessage } from '../../game';
+import { PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { DEAL_MORE_DAMAGE_FOR_EACH_PRIZE_CARD_TAKEN, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 
 export class ZamazentaV extends PokemonCard {
@@ -29,15 +30,13 @@ export class ZamazentaV extends PokemonCard {
     text: 'Once during your turn, you may discard your hand and draw 5 cards. If you use this Ability, your turn ends.'
   }];
 
-  public attacks = [
-    {
-      name: 'Revenge Blast',
-      cost: [CardType.METAL, CardType.COLORLESS, CardType.COLORLESS],
-      damage: 120,
-      damageCalculation: '+',
-      text: 'This attack does 30 more damage for each Prize card your opponent has taken.'
-    },
-  ];
+  public attacks = [{
+    name: 'Revenge Blast',
+    cost: [CardType.METAL, CardType.COLORLESS, CardType.COLORLESS],
+    damage: 120,
+    damageCalculation: '+',
+    text: 'This attack does 30 more damage for each Prize card your opponent has taken.'
+  }];
 
   public set: string = 'CRZ';
 
@@ -68,17 +67,8 @@ export class ZamazentaV extends PokemonCard {
       return state;
     }
 
-
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      const prizesTaken = 6 - opponent.getPrizeLeft();
-
-      const damagePerPrize = 30;
-
-      effect.damage += prizesTaken * damagePerPrize;
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      DEAL_MORE_DAMAGE_FOR_EACH_PRIZE_CARD_TAKEN(effect, state, 30);
     }
     return state;
   }

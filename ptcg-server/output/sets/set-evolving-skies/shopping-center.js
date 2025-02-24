@@ -25,14 +25,14 @@ class ShoppingCenter extends trainer_card_1.TrainerCard {
             const player = effect.player;
             let pokemonWithTool = false;
             const blockedTo = [];
-            if (player.active.tool !== undefined) {
+            if (player.active.tools.length !== 0) {
                 pokemonWithTool = true;
             }
             player.bench.forEach((bench, index) => {
                 if (bench.cards.length === 0) {
                     return;
                 }
-                if (bench.tool !== undefined) {
+                if (bench.tools.length !== 0) {
                     pokemonWithTool = true;
                 }
                 else {
@@ -54,7 +54,7 @@ class ShoppingCenter extends trainer_card_1.TrainerCard {
                 targets[0].cards.forEach(card => {
                     if (card instanceof trainer_card_1.TrainerCard && card.trainerType === card_types_1.TrainerType.TOOL) {
                         targets[0].moveCardTo(card, player.hand);
-                        targets[0].tool = undefined;
+                        targets[0].removeTool(card);
                         return;
                     }
                 });

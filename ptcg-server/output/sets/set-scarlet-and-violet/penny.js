@@ -8,6 +8,7 @@ const card_types_1 = require("../../game/store/card/card-types");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 const choose_pokemon_prompt_1 = require("../../game/store/prompts/choose-pokemon-prompt");
 const game_1 = require("../../game");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class Penny extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -46,12 +47,8 @@ class Penny extends trainer_card_1.TrainerCard {
                 const cardList = result.length > 0 ? result[0] : null;
                 if (cardList !== null) {
                     const pokemons = cardList.getPokemons();
-                    player.removePokemonEffects(cardList);
-                    cardList.clearEffects();
-                    cardList.damage = 0;
-                    cardList.moveCardsTo(pokemons, player.hand);
-                    cardList.moveTo(player.hand);
-                    cardList.removeBoardEffect(card_types_1.BoardEffect.ABILITY_USED);
+                    prefabs_1.MOVE_CARDS(store, state, cardList, player.hand);
+                    prefabs_1.MOVE_CARDS(store, state, cardList, player.hand, { cards: pokemons });
                     player.supporter.moveCardTo(effect.trainerCard, player.discard);
                 }
             });

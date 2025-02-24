@@ -18,7 +18,7 @@ class BigAirBalloon extends trainer_card_1.TrainerCard {
         this.text = 'The Stage 2 Pokémon this card is attached to has no Retreat Cost.';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof check_effects_1.CheckRetreatCostEffect && effect.player.active.tool === this) {
+        if (effect instanceof check_effects_1.CheckRetreatCostEffect && effect.player.active.tools.includes(this)) {
             const card = effect.player.active.getPokemonCard();
             if (card instanceof game_1.PokemonCard && card.stage === card_types_1.Stage.STAGE_2)
                 effect.cost = [];

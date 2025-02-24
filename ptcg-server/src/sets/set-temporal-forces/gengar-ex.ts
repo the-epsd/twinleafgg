@@ -75,20 +75,8 @@ export class Gengarex extends PokemonCard {
       });
     }
 
-    if (effect instanceof AttachEnergyEffect) {
+    if (effect instanceof AttachEnergyEffect && StateUtils.isPokemonInPlay(effect.player, this)) {
       const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      let isGengarInPlay = false;
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
-        if (card === this) {
-          isGengarInPlay = true;
-        }
-      });
-
-      if (!isGengarInPlay) {
-        return state;
-      }
 
       // Try to reduce PowerEffect, to check if something is blocking our ability
       try {

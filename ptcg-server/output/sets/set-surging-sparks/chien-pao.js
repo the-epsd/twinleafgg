@@ -5,6 +5,8 @@ const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
+const check_effects_1 = require("../../game/store/effects/check-effects");
 class ChienPao extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -15,13 +17,13 @@ class ChienPao extends pokemon_card_1.PokemonCard {
         this.weakness = [{ type: M }];
         this.retreat = [C];
         this.powers = [{
-                name: 'Pumpkin Pit',
+                name: 'Snow Sink',
                 powerType: game_1.PowerType.ABILITY,
                 text: 'When you play this Pokémon from your hand onto your Bench during your turn, you may discard a Stadium in play.'
             }];
         this.attacks = [
             {
-                name: 'Stampede',
+                name: 'Icicle Loop',
                 cost: [W, W, C],
                 damage: 120,
                 text: 'Put an Energy attached to this Pokémon into your hand.'
@@ -35,6 +37,9 @@ class ChienPao extends pokemon_card_1.PokemonCard {
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {
+            if (prefabs_1.IS_ABILITY_BLOCKED(store, state, effect.player, this)) {
+                return state;
+            }
             const stadiumCard = game_1.StateUtils.getStadiumCard(state);
             if (stadiumCard !== undefined) {
                 state = store.prompt(state, new game_1.ConfirmPrompt(effect.player.id, game_1.GameMessage.WANT_TO_USE_ABILITY), wantToUse => {
@@ -48,6 +53,18 @@ class ChienPao extends pokemon_card_1.PokemonCard {
                     return state;
                 });
             }
+        }
+        if (prefabs_1.WAS_ATTACK_USED(effect, 0, this)) {
+            const player = effect.player;
+            if (!player.active.cards.some(c => c instanceof game_1.EnergyCard)) {
+                return state;
+            }
+            const checkProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(player);
+            state = store.reduceEffect(state, checkProvidedEnergy);
+            state = store.prompt(state, new game_1.ChooseEnergyPrompt(player.id, game_1.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, checkProvidedEnergy.energyMap, [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS], { allowCancel: false }), energy => {
+                const cards = (energy || []).map(e => e.card);
+                player.active.moveCardsTo(cards, player.hand);
+            });
         }
         return state;
     }

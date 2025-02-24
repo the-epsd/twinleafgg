@@ -5,7 +5,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { DealDamageEffect, HealTargetEffect } from '../../game/store/effects/attack-effects';
 
-export class DianciePS extends PokemonCard {
+export class DianciePrismStar extends PokemonCard {
 
   public tags = [CardTag.PRISM_STAR];
 

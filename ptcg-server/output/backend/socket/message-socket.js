@@ -22,7 +22,6 @@ class MessageSocket {
         this.socket.emit('message:read', { user: core_socket_1.CoreSocket.buildUserInfo(user) });
     }
     async sendMessage(params, response) {
-        console.log(`Message from user ${this.client.id} to user ${params.userId}`);
         let messageInfo;
         let userInfo;
         const text = (params.text || '').trim();

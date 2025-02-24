@@ -38,6 +38,7 @@ const manaphy_1 = require("./manaphy");
 const marnies_pride_1 = require("./marnies-pride");
 const minccino_1 = require("./minccino");
 const moltres_1 = require("./moltres");
+const other_prints_1 = require("./other-prints");
 const pot_helmet_1 = require("./pot-helmet");
 const purrloin_1 = require("./purrloin");
 const raichu_v_1 = require("./raichu-v");
@@ -96,4 +97,6 @@ exports.setBrilliantStars = [
     new torterra_1.Torterra(),
     new riolu_1.Riolu(),
     new lucario_1.Lucario(),
+    //FA
+    new other_prints_1.UltraBallHR(),
 ];

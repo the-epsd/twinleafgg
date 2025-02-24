@@ -41,7 +41,7 @@ class Dudunsparceex extends game_1.PokemonCard {
             const opponent = game_1.StateUtils.getOpponent(state, player);
             let opponentexPokemon = 0;
             opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList, card) => {
-                if (card.cardTag.includes(game_1.CardTag.POKEMON_ex)) {
+                if (card.tags.includes(game_1.CardTag.POKEMON_ex)) {
                     opponentexPokemon++;
                 }
             });

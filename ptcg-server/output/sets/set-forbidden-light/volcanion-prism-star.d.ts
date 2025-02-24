@@ -2,7 +2,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { PowerType, StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-export declare class VolcanionPS extends PokemonCard {
+export declare class VolcanionPrismStar extends PokemonCard {
     tags: CardTag[];
     stage: Stage;
     cardType: CardType;

@@ -1,6 +1,7 @@
 import { Card } from '../../game/store/card/card';
 import { ProfessorsResearchE, ProfessorsResearchO, ProfessorsResearchR, ProfessorsResearchS } from './alt-arts';
 import { Amarys } from './amarys';
+import {Applin} from './applin';
 import { BlackBeltsTraining } from './black-belts-training';
 import { Bronzor } from './bronzor';
 import { Budew } from './budew';
@@ -15,6 +16,7 @@ import { Leafeonex } from './leafeon-ex';
 import { MaxRod } from './max-rod';
 import { Pupitar } from './pupitar';
 import { Regigigas } from './regigigas';
+import { RotoStick } from './roto-stick';
 import { Seaking } from './seaking';
 import { Sylveon } from './sylveon';
 import { TreasureTracker } from './treasure-tracker';
@@ -38,11 +40,13 @@ export const setPrismaticEvolution: Card[] = [
   new Seaking(),
   new Regigigas(),
   new MaxRod(),
+  new RotoStick(),
   new TreasureTracker(),
   new Larvitar(),
   new Pupitar(),
   new Tyranitarex(),
   new Bronzor(),
+  new Applin(),
 
   // Reprints
   new ProfessorsResearchO(),

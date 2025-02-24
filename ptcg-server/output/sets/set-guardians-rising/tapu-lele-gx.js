@@ -7,6 +7,7 @@ const card_types_1 = require("../../game/store/card/card-types");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 const game_1 = require("../../game");
 const check_effects_1 = require("../../game/store/effects/check-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class TapuLeleGX extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -115,9 +116,7 @@ class TapuLeleGX extends pokemon_card_1.PokemonCard {
             if (!pokemonInPlayWithDamage) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
-            if (player.usedGX === true) {
-                throw new game_1.GameError(game_1.GameMessage.LABEL_GX_USED);
-            }
+            prefabs_1.BLOCK_IF_GX_ATTACK_USED(player);
             let targets = [];
             return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_HEAL, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { min: 1, max: 2, allowCancel: false, blocked }), results => {
                 targets = results || [];

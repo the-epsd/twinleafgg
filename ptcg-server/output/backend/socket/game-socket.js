@@ -10,156 +10,87 @@ const resolve_prompt_action_1 = require("../../game/store/actions/resolve-prompt
 const state_sanitizer_1 = require("./state-sanitizer");
 class GameSocket {
     constructor(client, socket, core, cache) {
-        this.MAX_MESSAGE_LENGTH = 256;
-        this.MIN_MESSAGE_LENGTH = 1;
-        if (!client || !socket || !core || !cache) {
-            throw new Error('Required dependencies missing in GameSocket constructor');
-        }
         this.cache = cache;
         this.client = client;
         this.socket = socket;
         this.core = core;
         this.stateSanitizer = new state_sanitizer_1.StateSanitizer(client, cache);
-        // Bind methods to avoid context issues
-        const boundMethods = {
-            joinGame: this.joinGame.bind(this),
-            leaveGame: this.leaveGame.bind(this),
-            getGameStatus: this.getGameStatus.bind(this),
-            ability: this.ability.bind(this),
-            trainerability: this.trainerability.bind(this),
-            attack: this.attack.bind(this),
-            stadium: this.stadium.bind(this),
-            playGame: this.playGame.bind(this),
-            playCard: this.playCard.bind(this),
-            resolvePrompt: this.resolvePrompt.bind(this),
-            retreat: this.retreat.bind(this),
-            reorderBench: this.reorderBench.bind(this),
-            reorderHand: this.reorderHand.bind(this),
-            passTurn: this.passTurn.bind(this),
-            appendLog: this.appendLog.bind(this),
-            changeAvatar: this.changeAvatar.bind(this)
-        };
-        // Add listeners with error handling
-        try {
-            this.socket.addListener('game:join', boundMethods.joinGame);
-            this.socket.addListener('game:leave', boundMethods.leaveGame);
-            this.socket.addListener('game:getStatus', boundMethods.getGameStatus);
-            this.socket.addListener('game:action:ability', boundMethods.ability);
-            this.socket.addListener('game:action:trainerAbility', boundMethods.trainerability);
-            this.socket.addListener('game:action:attack', boundMethods.attack);
-            this.socket.addListener('game:action:stadium', boundMethods.stadium);
-            this.socket.addListener('game:action:play', boundMethods.playGame);
-            this.socket.addListener('game:action:playCard', boundMethods.playCard);
-            this.socket.addListener('game:action:resolvePrompt', boundMethods.resolvePrompt);
-            this.socket.addListener('game:action:retreat', boundMethods.retreat);
-            this.socket.addListener('game:action:reorderBench', boundMethods.reorderBench);
-            this.socket.addListener('game:action:reorderHand', boundMethods.reorderHand);
-            this.socket.addListener('game:action:passTurn', boundMethods.passTurn);
-            this.socket.addListener('game:action:appendLog', boundMethods.appendLog);
-            this.socket.addListener('game:action:changeAvatar', boundMethods.changeAvatar);
-        }
-        catch (error) {
-            console.error('Failed to initialize game socket listeners:', error);
-            throw error;
-        }
+        // game listeners
+        this.socket.addListener('game:join', this.joinGame.bind(this));
+        this.socket.addListener('game:leave', this.leaveGame.bind(this));
+        this.socket.addListener('game:getStatus', this.getGameStatus.bind(this));
+        this.socket.addListener('game:action:ability', this.ability.bind(this));
+        this.socket.addListener('game:action:ability', this.trainerability.bind(this));
+        this.socket.addListener('game:action:attack', this.attack.bind(this));
+        this.socket.addListener('game:action:stadium', this.stadium.bind(this));
+        this.socket.addListener('game:action:play', this.playGame.bind(this));
+        this.socket.addListener('game:action:playCard', this.playCard.bind(this));
+        this.socket.addListener('game:action:resolvePrompt', this.resolvePrompt.bind(this));
+        this.socket.addListener('game:action:retreat', this.retreat.bind(this));
+        this.socket.addListener('game:action:reorderBench', this.reorderBench.bind(this));
+        this.socket.addListener('game:action:reorderHand', this.reorderHand.bind(this));
+        this.socket.addListener('game:action:passTurn', this.passTurn.bind(this));
+        this.socket.addListener('game:action:appendLog', this.appendLog.bind(this));
+        this.socket.addListener('game:action:changeAvatar', this.changeAvatar.bind(this));
     }
     onGameJoin(game, client) {
-        try {
-            if (!game || !client)
-                return;
-            this.socket.emit(`game[${game.id}]:join`, { clientId: client.id });
-        }
-        catch (error) {
-            console.error('Error in onGameJoin:', error);
-        }
+        this.socket.emit(`game[${game.id}]:join`, { clientId: client.id });
     }
     onGameLeave(game, client) {
-        try {
-            if (!game || !client)
-                return;
-            this.socket.emit(`game[${game.id}]:leave`, { clientId: client.id });
-        }
-        catch (error) {
-            console.error('Error in onGameLeave:', error);
-        }
+        this.socket.emit(`game[${game.id}]:leave`, { clientId: client.id });
     }
     onStateChange(game, state) {
-        try {
-            if (!game || !state || this.core.games.indexOf(game) === -1)
-                return;
-            // Throttle state updates to prevent CPU spikes
-            const sanitizedState = this.stateSanitizer.sanitize(game.state, game.id);
+        if (this.core.games.indexOf(game) !== -1) {
+            state = this.stateSanitizer.sanitize(game.state, game.id);
             const serializer = new game_1.StateSerializer();
-            const serializedState = serializer.serialize(sanitizedState);
+            const serializedState = serializer.serialize(state);
             const base64 = new utils_1.Base64();
             const stateData = base64.encode(serializedState);
             const playerStats = game.playerStats;
             this.socket.emit(`game[${game.id}]:stateChange`, { stateData, playerStats });
         }
-        catch (error) {
-            console.error('Error in onStateChange:', error);
-        }
     }
     joinGame(gameId, response) {
-        try {
-            const game = this.core.games.find(g => g.id === gameId);
-            if (!game) {
-                response('error', errors_1.ApiErrorEnum.GAME_INVALID_ID);
-                return;
-            }
-            this.cache.lastLogIdCache[game.id] = 0;
-            this.core.joinGame(this.client, game);
-            response('ok', core_socket_1.CoreSocket.buildGameState(game));
+        const game = this.core.games.find(g => g.id === gameId);
+        if (game === undefined) {
+            response('error', errors_1.ApiErrorEnum.GAME_INVALID_ID);
+            return;
         }
-        catch (error) {
-            console.error('Error in joinGame:', error);
-            response('error', errors_1.ApiErrorEnum.SOCKET_ERROR);
-        }
+        this.cache.lastLogIdCache[game.id] = 0;
+        this.core.joinGame(this.client, game);
+        response('ok', core_socket_1.CoreSocket.buildGameState(game));
     }
     leaveGame(gameId, response) {
-        try {
-            const game = this.core.games.find(g => g.id === gameId);
-            if (!game) {
-                response('error', errors_1.ApiErrorEnum.GAME_INVALID_ID);
-                return;
-            }
-            delete this.cache.lastLogIdCache[game.id];
-            this.core.leaveGame(this.client, game);
-            response('ok');
+        const game = this.core.games.find(g => g.id === gameId);
+        if (game === undefined) {
+            response('error', errors_1.ApiErrorEnum.GAME_INVALID_ID);
+            return;
         }
-        catch (error) {
-            console.error('Error in leaveGame:', error);
-            response('error', errors_1.ApiErrorEnum.SOCKET_ERROR);
-        }
+        delete this.cache.lastLogIdCache[game.id];
+        this.core.leaveGame(this.client, game);
+        response('ok');
     }
     getGameStatus(gameId, response) {
-        try {
-            const game = this.core.games.find(g => g.id === gameId);
-            if (!game) {
-                response('error', errors_1.ApiErrorEnum.GAME_INVALID_ID);
-                return;
-            }
-            response('ok', core_socket_1.CoreSocket.buildGameState(game));
+        const game = this.core.games.find(g => g.id === gameId);
+        if (game === undefined) {
+            response('error', errors_1.ApiErrorEnum.GAME_INVALID_ID);
+            return;
         }
-        catch (error) {
-            console.error('Error in getGameStatus:', error);
-            response('error', errors_1.ApiErrorEnum.SOCKET_ERROR);
-        }
+        response('ok', core_socket_1.CoreSocket.buildGameState(game));
     }
     dispatch(gameId, action, response) {
+        const game = this.core.games.find(g => g.id === gameId);
+        if (game === undefined) {
+            response('error', errors_1.ApiErrorEnum.GAME_INVALID_ID);
+            return;
+        }
         try {
-            const game = this.core.games.find(g => g.id === gameId);
-            if (!game) {
-                response('error', errors_1.ApiErrorEnum.GAME_INVALID_ID);
-                return;
-            }
             game.dispatch(this.client, action);
-            response('ok');
         }
         catch (error) {
-            console.error('Error in dispatch:', error);
             response('error', error.message);
         }
+        response('ok');
     }
     ability(params, response) {
         const action = new game_1.UseAbilityAction(this.client.id, params.ability, params.target);
@@ -186,47 +117,35 @@ class GameSocket {
         this.dispatch(params.gameId, action, response);
     }
     resolvePrompt(params, response) {
+        const game = this.core.games.find(g => g.id === params.gameId);
+        if (game === undefined) {
+            response('error', errors_1.ApiErrorEnum.GAME_INVALID_ID);
+            return;
+        }
+        const prompt = game.state.prompts.find(p => p.id === params.id);
+        if (prompt === undefined) {
+            response('error', errors_1.ApiErrorEnum.PROMPT_INVALID_ID);
+            return;
+        }
         try {
-            if (!params || !params.gameId || typeof params.id !== 'number') {
-                response('error', errors_1.ApiErrorEnum.INVALID_PARAMETERS);
-                return;
-            }
-            const game = this.core.games.find(g => g.id === params.gameId);
-            if (!game) {
-                response('error', errors_1.ApiErrorEnum.GAME_INVALID_ID);
-                return;
-            }
-            const prompt = game.state.prompts.find(p => p.id === params.id);
-            if (!prompt) {
-                response('error', errors_1.ApiErrorEnum.PROMPT_INVALID_ID);
-                return;
-            }
-            const decodedResult = prompt.decode(params.result, game.state);
-            if (!prompt.validate(decodedResult, game.state)) {
+            params.result = prompt.decode(params.result, game.state);
+            if (prompt.validate(params.result, game.state) === false) {
                 response('error', errors_1.ApiErrorEnum.PROMPT_INVALID_RESULT);
                 return;
             }
-            const action = new resolve_prompt_action_1.ResolvePromptAction(params.id, decodedResult);
-            this.dispatch(params.gameId, action, response);
         }
         catch (error) {
-            console.error('Error in resolvePrompt:', error);
-            response('error', errors_1.ApiErrorEnum.SOCKET_ERROR);
-        }
-    }
-    reorderBench(params, response) {
-        if (!params || !params.gameId || typeof params.from !== 'number' || typeof params.to !== 'number') {
-            response('error', errors_1.ApiErrorEnum.INVALID_PARAMETERS);
+            response('error', error);
             return;
         }
+        const action = new resolve_prompt_action_1.ResolvePromptAction(params.id, params.result);
+        this.dispatch(params.gameId, action, response);
+    }
+    reorderBench(params, response) {
         const action = new game_1.ReorderBenchAction(this.client.id, params.from, params.to);
         this.dispatch(params.gameId, action, response);
     }
     reorderHand(params, response) {
-        if (!params || !params.gameId || !Array.isArray(params.order)) {
-            response('error', errors_1.ApiErrorEnum.INVALID_PARAMETERS);
-            return;
-        }
         const action = new game_1.ReorderHandAction(this.client.id, params.order);
         this.dispatch(params.gameId, action, response);
     }
@@ -239,23 +158,12 @@ class GameSocket {
         this.dispatch(params.gameId, action, response);
     }
     appendLog(params, response) {
-        try {
-            if (!params || !params.gameId) {
-                response('error', errors_1.ApiErrorEnum.INVALID_PARAMETERS);
-                return;
-            }
-            const message = (params.message || '').trim();
-            if (message.length < this.MIN_MESSAGE_LENGTH || message.length > this.MAX_MESSAGE_LENGTH) {
-                response('error', errors_1.ApiErrorEnum.CANNOT_SEND_MESSAGE);
-                return;
-            }
-            const action = new game_1.AppendLogAction(this.client.id, game_1.GameLog.LOG_TEXT, { text: message });
-            this.dispatch(params.gameId, action, response);
+        const message = (params.message || '').trim();
+        if (message.length === 0 || message.length > 256) {
+            response('error', errors_1.ApiErrorEnum.CANNOT_SEND_MESSAGE);
         }
-        catch (error) {
-            console.error('Error in appendLog:', error);
-            response('error', errors_1.ApiErrorEnum.SOCKET_ERROR);
-        }
+        const action = new game_1.AppendLogAction(this.client.id, game_1.GameLog.LOG_TEXT, { text: message });
+        this.dispatch(params.gameId, action, response);
     }
     changeAvatar(params, response) {
         const action = new change_avatar_action_1.ChangeAvatarAction(this.client.id, params.avatarName);

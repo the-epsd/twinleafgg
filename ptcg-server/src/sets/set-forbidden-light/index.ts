@@ -4,7 +4,7 @@ import { BeastEnergy } from './beast-energy-prism-star';
 import { BeastRing } from './beast-ring';
 import { Buzzwole } from './buzzwole';
 import { DialgaGX } from './dialga-gx';
-import { DianciePS } from './diancie-prism-star';
+import { DianciePrismStar } from './diancie-prism-star';
 import { Diantha } from './diantha';
 import { Flabebe } from './flabebe';
 import { Floette } from './floette';
@@ -25,7 +25,7 @@ import { Rockruff } from './rockruff';
 import { UltraNecrozmaGX } from './ultra-necrozma-gx';
 import { UltraSpace } from './ultra-space';
 import { UnitEnergyFDY } from './unit-energy-fdy';
-import { VolcanionPS } from './volcanion-prism-star';
+import { VolcanionPrismStar } from './volcanion-prism-star';
 import { YveltalGX } from './yveltal-gx';
 
 export const setForbiddenLight: Card[] = [
@@ -33,7 +33,7 @@ export const setForbiddenLight: Card[] = [
   new BeastEnergy(),
   new BeastRing(),
   new Buzzwole(),
-  new DianciePS(),
+  new DianciePrismStar(),
   new Diantha(),
   new Flabebe(),
   new Floette(),
@@ -53,7 +53,7 @@ export const setForbiddenLight: Card[] = [
   new UltraNecrozmaGX(),
   new UltraSpace(),
   new UnitEnergyFDY(),
-  new VolcanionPS(),
+  new VolcanionPrismStar(),
   new YveltalGX(),
   new DialgaGX(),
   new LysandrePrismStar(),

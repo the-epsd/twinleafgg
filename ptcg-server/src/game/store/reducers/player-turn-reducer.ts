@@ -198,7 +198,6 @@ export function playerTurnReducer(store: StoreLike, state: State, action: Action
       }
     }
 
-
     if (action instanceof UseStadiumAction) {
       const player = state.players[state.activePlayer];
 
@@ -214,12 +213,9 @@ export function playerTurnReducer(store: StoreLike, state: State, action: Action
       if (stadium === undefined) {
         throw new GameError(GameMessage.NO_STADIUM_IN_PLAY);
       }
-
       state = store.reduceEffect(state, new UseStadiumEffect(player, stadium));
       return state;
     }
-
   }
-
   return state;
 }

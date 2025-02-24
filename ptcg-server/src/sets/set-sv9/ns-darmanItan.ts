@@ -88,7 +88,7 @@ export class NsDarmanitan extends PokemonCard {
       ), selected => {
         const targets = selected || [];
         targets.forEach(target => {
-          const damageEffect = new PutDamageEffect(effect, 120);
+          const damageEffect = new PutDamageEffect(effect, 90);
           damageEffect.target = target;
           store.reduceEffect(state, damageEffect);
         });

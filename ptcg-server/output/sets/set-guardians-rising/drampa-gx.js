@@ -9,6 +9,7 @@ const game_3 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_message_1 = require("../../game/game-message");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 function* useWhirlpool(next, store, state, effect) {
     const player = effect.player;
     const opponent = game_1.StateUtils.getOpponent(state, player);
@@ -83,9 +84,7 @@ class DrampaGX extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[2]) {
             const player = effect.player;
             // Check if player has used GX attack
-            if (player.usedGX == true) {
-                throw new game_1.GameError(game_message_1.GameMessage.LABEL_GX_USED);
-            }
+            prefabs_1.BLOCK_IF_GX_ATTACK_USED(player);
             // set GX attack as used for game
             player.usedGX = true;
             if (player.hand.cards.length > 0) {

@@ -8,6 +8,7 @@ const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const check_effects_1 = require("../../game/store/effects/check-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class FlyiniumZAirSlash extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -37,11 +38,9 @@ class FlyiniumZAirSlash extends trainer_card_1.TrainerCard {
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
-            if (player.usedGX === true) {
-                throw new game_1.GameError(game_1.GameMessage.LABEL_GX_USED);
-            }
             const cardList = game_1.StateUtils.findCardList(state, this);
             cardList.marker.addMarker(this.FLYINIUM_Z_MARKER, this);
+            prefabs_1.BLOCK_IF_GX_ATTACK_USED(player);
             player.usedGX = true;
             return state;
         }

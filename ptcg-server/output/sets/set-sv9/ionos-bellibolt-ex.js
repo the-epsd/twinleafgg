@@ -18,19 +18,17 @@ class IonosBelliboltex extends pokemon_card_1.PokemonCard {
         this.weakness = [{ type: F }];
         this.retreat = [C, C];
         this.powers = [{
-                name: 'Electro Streamer',
+                name: 'Electric Streamer',
                 useWhenInPlay: true,
                 powerType: game_1.PowerType.ABILITY,
-                text: 'As often as you like during your turn, you may attach a basic [L] Energy card from your hand to 1 of your Iono\'s Pokemon.'
+                text: 'As often as you like during your turn, you may attach a Basic [L] Energy card from your hand to 1 of your Iono\'s Pokemon.'
             }];
-        this.attacks = [
-            {
+        this.attacks = [{
                 name: 'Thunderous Bolt',
                 cost: [L, L, L, C],
                 damage: 230,
                 text: 'During your next turn, this Pokemon can\'t attack.'
-            }
-        ];
+            }];
         this.regulationMark = 'I';
         this.cardImage = 'assets/cardback.png';
         this.set = 'SV9';

@@ -27,6 +27,7 @@ export declare class Palafinex extends PokemonCard {
     cardImage: string;
     fullName: string;
     name: string;
+    readonly ATTACK_USED_MARKER = "ATTACK_USED_MARKER";
+    readonly ATTACK_USED_2_MARKER = "ATTACK_USED_2_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
-    private readonly ATTACK_USED_MARKER;
 }

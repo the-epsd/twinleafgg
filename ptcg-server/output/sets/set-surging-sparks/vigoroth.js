@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.VigorothSSP = void 0;
+exports.Vigoroth = void 0;
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
-class VigorothSSP extends pokemon_card_1.PokemonCard {
+class Vigoroth extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.STAGE_1;
@@ -23,4 +23,4 @@ class VigorothSSP extends pokemon_card_1.PokemonCard {
         this.fullName = 'Vigoroth SSP';
     }
 }
-exports.VigorothSSP = VigorothSSP;
+exports.Vigoroth = Vigoroth;

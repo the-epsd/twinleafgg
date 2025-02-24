@@ -39,6 +39,7 @@ export enum CardTag {
   STEVENS = 'STEVENS',
   ETHANS = 'ETHANS',
   MISTYS = 'MISTYS',
+  CYNTHIAS = 'CYNTHIAS',
 }
 
 export enum SuperType {
@@ -100,6 +101,30 @@ export enum Archetype {
   LUGIA = 'Lugia',
   CERULEDGE = 'Ceruledge',
   DRAGAPULT = 'Dragapult',
+  ARCHALUDON = 'Archaludon',
+  KLAWF = 'Klawf',
+  GOUGING_FIRE = 'Gouging Fire',
+  GHOLDENGO = 'Gholdengo',
+  IRON_CROWN = 'Iron Crown',
+  FERALIGATR = 'Feraligatr',
+  BLISSEY = 'Blissey',
+  MILOTIC = 'Milotic',
+  TEAL_MASK_OGERPON = 'Teal Mask Ogerpon',
+  ZOROARK = 'Zoroark',
+  BELLIBOLT = 'Bellibolt',
+  FLAREON = 'Flareon',
+  TYRANITAR = 'Tyrantiar',
+  SLOWKING = 'Slowking',
+  MAMOSWINE = 'Mamoswine',
+  CLEFAIRY = 'Clefairy',
+  ZACIAN = 'Zacian',
+  FROSLASS = 'Froslass',
+  DIPPLIN = 'Dipplin',
+  ROTOM = 'Rotom',
+  HYDRAPPLE = 'Hydrapple',
+  GARCHOMP = 'Garchomp',
+  HOOH = 'Ho-oh',
+  HYDREIGON = 'Hydreigon',
 }
 
 export enum CardType {

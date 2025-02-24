@@ -7,6 +7,7 @@ const trainer_card_1 = require("../../game/store/card/trainer-card");
 const check_effects_1 = require("../../game/store/effects/check-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 function* playCard(next, store, state, effect) {
     const player = effect.player;
     if (player.deck.cards.length === 0) {
@@ -55,7 +56,7 @@ function* playCard(next, store, state, effect) {
             }
         });
         let cards = [];
-        yield store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_EVOLVE, player.deck, { superType: card_types_1.SuperType.POKEMON }, { min: 1, max: 1, allowCancel: true, blocked }), selected => {
+        yield store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_EVOLVE, player.deck, { superType: card_types_1.SuperType.POKEMON }, { min: 0, max: 1, allowCancel: false, blocked }), selected => {
             cards = selected || [];
             next();
         });
@@ -78,7 +79,6 @@ class TechnicalMachineEvolution extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.TOOL;
         this.regulationMark = 'G';
-        this.tags = [];
         this.set = 'PAR';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '178';
@@ -98,8 +98,7 @@ class TechnicalMachineEvolution extends trainer_card_1.TrainerCard {
             const player = effect.player;
             player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card, index) => {
                 if (cardList.cards.includes(this)) {
-                    cardList.moveCardTo(this, player.discard);
-                    cardList.tool = undefined;
+                    prefabs_1.REMOVE_TOOL(store, state, cardList, this, game_1.SlotType.DISCARD);
                 }
             });
             return state;

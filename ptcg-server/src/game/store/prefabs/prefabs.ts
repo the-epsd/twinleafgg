@@ -1,4 +1,4 @@
-import { AttachEnergyOptions, AttachEnergyPrompt, Card, CardList, ChooseCardsOptions, ChooseCardsPrompt, ChoosePokemonPrompt, ChoosePrizePrompt, CoinFlipPrompt, ConfirmPrompt, EnergyCard, FilterType, GameError, GameLog, GameMessage, Player, PlayerType, PokemonCardList, PowerType, SelectPrompt, ShowCardsPrompt, ShuffleDeckPrompt, SlotType, State, StateUtils, StoreLike } from '../..';
+import { AttachEnergyOptions, AttachEnergyPrompt, Card, CardList, CardTarget, ChooseCardsOptions, ChooseCardsPrompt, ChoosePokemonPrompt, ChoosePrizePrompt, CoinFlipPrompt, ConfirmPrompt, EnergyCard, FilterType, GameError, GameLog, GameMessage, Player, PlayerType, PokemonCardList, PowerType, SelectPrompt, ShowCardsPrompt, ShuffleDeckPrompt, SlotType, State, StateUtils, StoreLike } from '../..';
 import { BoardEffect, CardTag, SpecialCondition, SuperType } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
 import { DealDamageEffect, DiscardCardsEffect, HealTargetEffect, PutDamageEffect } from '../effects/attack-effects';
@@ -6,6 +6,7 @@ import { AddSpecialConditionsPowerEffect, CheckPrizesDestinationEffect, CheckPro
 import { Effect } from '../effects/effect';
 import { AttackEffect, DrawPrizesEffect, EvolveEffect, KnockOutEffect, PowerEffect, RetreatEffect } from '../effects/game-effects';
 import { AfterAttackEffect, EndTurnEffect } from '../effects/game-phase-effects';
+import { MoveCardsEffect } from '../effects/game-effects';
 
 /**
  * 
@@ -130,10 +131,10 @@ export function THIS_ATTACK_DOES_X_MORE_DAMAGE(effect: AttackEffect, store: Stor
 
 export function DEAL_MORE_DAMAGE_IF_OPPONENT_ACTIVE_HAS_CARD_TAG(effect: AttackEffect, state: State, damage: number, ...cardTags: CardTag[]) {
   const opponent = StateUtils.getOpponent(state, effect.player);
-  const opponentActive = opponent.active.getPokemonCard() as PokemonCard
+  const opponentActive = opponent.active.getPokemonCard();
   let includesAnyTags = false;
   for (const tag of cardTags) {
-    if (opponentActive.tags.includes(tag)) {
+    if (opponentActive && opponentActive.tags.includes(tag)) {
       includesAnyTags = true;
     }
   }
@@ -141,6 +142,12 @@ export function DEAL_MORE_DAMAGE_IF_OPPONENT_ACTIVE_HAS_CARD_TAG(effect: AttackE
   if (includesAnyTags) {
     effect.damage += damage;
   }
+}
+
+export function DEAL_MORE_DAMAGE_FOR_EACH_PRIZE_CARD_TAKEN(effect: AttackEffect, state: State, damage: number) {
+  const player = effect.player;
+  const opponent = StateUtils.getOpponent(state, player);
+  effect.damage = effect.attack.damage + (opponent.prizesTaken * damage);
 }
 
 export function HEAL_X_DAMAGE_FROM_THIS_POKEMON(effect: AttackEffect, store: StoreLike, state: State, damage: number) {
@@ -526,7 +533,7 @@ export function LOOK_AT_TOPDECK_AND_DISCARD_OR_RETURN(store: StoreLike, state: S
     const deckTop = new CardList();
     deckPlayer.deck.moveTo(deckTop, 1);
     SHOW_CARDS_TO_PLAYER(store, state, choosingPlayer, deckTop.cards);
-    SELECT_PROMPT_WITH_OPTIONS(store, state, choosingPlayer, [{
+    SELECT_PROMPT_WITH_OPTIONS(store, state, choosingPlayer, GameMessage.CHOOSE_OPTION, [{
       message: GameMessage.DISCARD_FROM_TOP_OF_DECK,
       action: () => deckTop.moveToTopOfDestination(deckPlayer.discard),
     },
@@ -535,6 +542,13 @@ export function LOOK_AT_TOPDECK_AND_DISCARD_OR_RETURN(store: StoreLike, state: S
       action: () => deckTop.moveToTopOfDestination(deckPlayer.deck),
     }])
   }
+}
+
+export function MOVE_CARDS_TO_HAND(store: StoreLike, state: State, player: Player, cards: Card[]) {
+  cards.forEach((card, index) => {
+    player.deck.moveCardTo(card, player.hand);
+    store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
+  });
 }
 
 export function SHOW_CARDS_TO_PLAYER(store: StoreLike, state: State, player: Player, cards: Card[]): State {
@@ -551,9 +565,9 @@ export function SELECT_PROMPT(store: StoreLike, state: State, player: Player, va
   return store.prompt(state, new SelectPrompt(player.id, GameMessage.CHOOSE_OPTION, values, { allowCancel: false }), callback);
 }
 
-export function SELECT_PROMPT_WITH_OPTIONS(store: StoreLike, state: State, player: Player, options: { message: GameMessage, action: () => void }[]) {
+export function SELECT_PROMPT_WITH_OPTIONS(store: StoreLike, state: State, player: Player, message: GameMessage, options: { message: GameMessage, action: () => void }[]) {
   return store.prompt(state, new SelectPrompt(
-    player.id, GameMessage.CHOOSE_OPTION, options.map(opt => opt.message), { allowCancel: false }
+    player.id, message, options.map(opt => opt.message), { allowCancel: false }
   ), choice => {
     const option = options[choice];
     option.action();
@@ -598,6 +612,16 @@ export function BLOCK_IF_NO_SLOTS(slots: PokemonCardList[]) {
 export function BLOCK_IF_DECK_EMPTY(player: Player) {
   if (player.deck.cards.length === 0)
     throw new GameError(GameMessage.NO_CARDS_IN_DECK);
+}
+
+export function BLOCK_IF_DISCARD_EMPTY(player: Player) {
+  if (player.discard.cards.length === 0)
+    throw new GameError(GameMessage.NO_CARDS_IN_DISCARD);
+}
+
+export function BLOCK_IF_GX_ATTACK_USED(player: Player) {
+  if (player.usedGX === true)
+    throw new GameError(GameMessage.LABEL_GX_USED);
 }
 
 
@@ -674,15 +698,15 @@ export function REPLACE_MARKER_AT_END_OF_TURN(effect: Effect, oldMarker: string,
 
 /**
  * If an EndTurnEffect is given, will check for `clearerMarker` on the player whose turn it is,
- * and clear all of their opponent's `oppMarker`s.
+ * and clear all of the player or opponent's `pokemonMarker`s.
  * Useful for "During your opponent's next turn" effects.
  */
-export function CLEAR_MARKER_AND_OPPONENTS_POKEMON_MARKER_AT_END_OF_TURN(state: State, effect: Effect, clearerMarker: string, oppMarker: string, source: Card) {
+export function CLEAR_MARKER_AND_OPPONENTS_POKEMON_MARKER_AT_END_OF_TURN(state: State, effect: Effect, clearerMarker: string, pokemonMarker: string, source: Card) {
   if (effect instanceof EndTurnEffect && HAS_MARKER(clearerMarker, effect.player, source)) {
     REMOVE_MARKER(clearerMarker, effect.player, source);
     const opponent = StateUtils.getOpponent(state, effect.player);
-    REMOVE_MARKER(oppMarker, opponent, source);
-    opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => REMOVE_MARKER(oppMarker, cardList, source));
+    REMOVE_MARKER(pokemonMarker, opponent, source);
+    opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => REMOVE_MARKER(pokemonMarker, cardList, source));
   }
 }
 
@@ -692,3 +716,140 @@ export function BLOCK_RETREAT_IF_MARKER(effect: Effect, marker: string, source: 
 }
 
 //#endregion
+
+export function MOVE_CARDS(
+  store: StoreLike,
+  state: State,
+  source: CardList | PokemonCardList,
+  destination: CardList | PokemonCardList,
+  options: {
+    cards?: Card[],
+    count?: number,
+    toTop?: boolean,
+    toBottom?: boolean,
+    skipCleanup?: boolean
+  } = {}
+): State {
+  return store.reduceEffect(state, new MoveCardsEffect(source, destination, options));
+}
+
+export function REMOVE_TOOL(store: StoreLike, state: State, source: PokemonCardList, tool: Card, destinationSlot: SlotType): State {
+  if (!source.cards.includes(tool)) {
+    return state;
+  }
+  const owner = StateUtils.findOwner(state, source);
+  state = MOVE_CARDS(store, state, source, owner.getSlot(destinationSlot), { cards: [tool] });
+  source.removeTool(tool);
+  return state;
+}
+
+export function REMOVE_TOOLS_FROM_POKEMON_PROMPT(store: StoreLike, state: State, player: Player, target: PokemonCardList, destinationSlot: SlotType, min: number, max: number): State {
+  if (target.tools.length === 0) {
+    return state;
+  }
+  if (target.tools.length === 1) {
+    return REMOVE_TOOL(store, state, target, target.tools[0], destinationSlot);
+  } else {
+    let blocked: number[] = [];
+    target.cards.forEach((card, index) => {
+      if (!target.tools.includes(card)) {
+        blocked.push(index);
+      }
+    })
+    let tools: Card[] = [];
+    return store.prompt(state, new ChooseCardsPrompt(
+      player,
+      GameMessage.CHOOSE_CARD_TO_DISCARD,
+      target,
+      {},
+      { min, max, allowCancel: false, blocked }
+    ), selected => {
+      tools = selected || [];
+      for (const tool of tools) {
+        return REMOVE_TOOL(store, state, target, tool, destinationSlot);
+      }
+    });
+  }
+}
+
+export function CHOOSE_TOOLS_TO_REMOVE_PROMPT(store: StoreLike, state: State, player: Player, playerType: PlayerType, destinationSlot: SlotType, min: number, max: number): State {
+  const opponent = StateUtils.getOpponent(state, player);
+
+  let hasPokemonWithTool = false;
+  let players: Player[] = [];
+  switch (playerType) {
+    case PlayerType.TOP_PLAYER:
+      players = [opponent];
+      break;
+    case PlayerType.BOTTOM_PLAYER:
+      players = [player];
+      break;
+    case PlayerType.ANY:
+      players = [player, opponent];
+      break;
+  }
+  const blocked: CardTarget[] = [];
+
+  for (const p of players) {
+    let pt: PlayerType = PlayerType.BOTTOM_PLAYER;
+    if (p === opponent) {
+      pt = PlayerType.TOP_PLAYER;
+    }
+    p.forEachPokemon(pt, (cardList, card, target) => {
+      if (cardList.tools.length > 0) {
+        hasPokemonWithTool = true;
+      } else {
+        blocked.push(target);
+      }
+    });
+  }
+
+  if (!hasPokemonWithTool) {
+    return state;
+  }
+
+  let targets: PokemonCardList[] = [];
+  return store.prompt(state, new ChoosePokemonPrompt(
+    player.id,
+    GameMessage.CHOOSE_POKEMON_TO_DISCARD_CARDS,
+    playerType,
+    [SlotType.ACTIVE, SlotType.BENCH],
+    { min, max, allowCancel: false, blocked }
+  ), results => {
+    targets = results || [];
+    if (targets.length === 0) {
+      return state;
+    }
+    let toolsRemoved = 0;
+    for (const target of targets) {
+      if (target.tools.length === 0 || toolsRemoved >= max) {
+        continue;
+      }
+      if (target.tools.length === 1) {
+        REMOVE_TOOL(store, state, target, target.tools[0], destinationSlot);
+        toolsRemoved += 1;
+      } else {
+        let blocked: number[] = [];
+        target.cards.forEach((card, index) => {
+          if (!target.tools.includes(card)) {
+            blocked.push(index);
+          }
+        })
+        let tools: Card[] = [];
+        return store.prompt(state, new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_DISCARD,
+          target,
+          {},
+          { min: Math.min(min, max - toolsRemoved), max: max - toolsRemoved, allowCancel: false, blocked }
+        ), selected => {
+          tools = selected || [];
+          for (const tool of tools) {
+            REMOVE_TOOL(store, state, target, tool, destinationSlot);
+            toolsRemoved += 1;
+          }
+        });
+      }
+    }
+  });
+}

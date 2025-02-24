@@ -6,6 +6,7 @@ const card_types_1 = require("../../game/store/card/card-types");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const pokemon_types_1 = require("../../game/store/card/pokemon-types");
 const game_1 = require("../../game");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class Klefki extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -64,9 +65,8 @@ class Klefki extends pokemon_card_1.PokemonCard {
             const opponent = game_1.StateUtils.getOpponent(state, player);
             // Discard active Pokemon's tool first
             const activePokemon = opponent.active;
-            if (activePokemon.tool) {
-                activePokemon.moveCardTo(activePokemon.tool, opponent.discard);
-                activePokemon.tool = undefined;
+            for (const tool of activePokemon.tools) {
+                prefabs_1.REMOVE_TOOL(store, state, activePokemon, tool, game_1.SlotType.DISCARD);
             }
             // Then deal damage
             effect.damage = 10;

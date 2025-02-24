@@ -4,11 +4,11 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { PowerType, StateUtils, PlayerType } from '../../game';
+import { PowerType, StateUtils, SlotType } from '../../game';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 
 
-export class PassimianUPR extends PokemonCard {
+export class Passimian extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
@@ -44,33 +44,18 @@ export class PassimianUPR extends PokemonCard {
   public fullName: string = 'Passimian UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof DealDamageEffect) {
+    if (effect instanceof DealDamageEffect && StateUtils.isPokemonInPlay(effect.player, this, SlotType.BENCH)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-
-      // checking if this pokemon is in the active
-      if (player.active.getPokemonCard() === this) {
-        return state;
-      }
-      // checking if this pokemon is in play
-      let isThisInPlay = false;
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-        if (card === this) {
-          isThisInPlay = true;
-        }
-      });
-      if (!isThisInPlay) {
-        return state;
-      }
-
-      // somehow make this so it only affects the active passimian and not the opponent's pokemon
       const oppActive = opponent.active.getPokemonCard();
       const damageSource = effect.source.getPokemonCard();
-      const stage = oppActive !== undefined ? oppActive.stage : undefined;
 
-      if (damageSource && damageSource.name === 'Passimian' && (stage === Stage.STAGE_1 || stage === Stage.STAGE_2) && damageSource !== oppActive) {
+      if (damageSource
+        && damageSource.name === 'Passimian'
+        && effect.target === opponent.active
+        && oppActive
+        && oppActive.stage !== Stage.BASIC) {
         effect.damage += 30;
-        return state;
       }
     }
 

@@ -152,6 +152,10 @@ export class FormatValidator {
 
 export const BanLists: { [key: number]: string[] } = {
   [Format.GLC]: [
+    'Palace Book SMP NAN25',
+    'Miracle Diamond BRP 1',
+    'Mysterious Pearl BRP 2',
+    'Wonder Platinum DPt-P 33',
     'Lysandre\'s Trump Card PHF 99',
     'Lysandre\'s Trump Card PHF 118',
     'Oranguru UPR 114',
@@ -167,6 +171,10 @@ export const BanLists: { [key: number]: string[] } = {
     'Marshadow SM 85'
   ],
   [Format.EXPANDED]: [
+    'Palace Book SMP NAN25',
+    'Miracle Diamond BRP 1',
+    'Mysterious Pearl BRP 2',
+    'Wonder Platinum DPt-P 33',
     'Archeops NVI 67',
     'Archeops DEX 110',
     'Chip-Chip Ice Axe UNB 165',

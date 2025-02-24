@@ -4,7 +4,8 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { PlayerType, StateUtils, GameError, GameMessage, PokemonCardList } from '../../game';
+import { PlayerType, StateUtils, GameError, GameMessage, PokemonCardList, SlotType } from '../../game';
+import { REMOVE_TOOL } from '../../game/store/prefabs/prefabs';
 
 
 export class StartlingMegaphone extends TrainerCard {
@@ -32,7 +33,7 @@ export class StartlingMegaphone extends TrainerCard {
 
       const pokemonsWithTool: PokemonCardList[] = [];
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-        if (cardList.tool !== undefined) {
+        if (cardList.tools.length !== 0) {
           pokemonsWithTool.push(cardList);
         }
       });
@@ -42,9 +43,8 @@ export class StartlingMegaphone extends TrainerCard {
       }
 
       pokemonsWithTool.forEach(target => {
-        if (target.tool !== undefined) {
-          target.moveCardTo(target.tool, opponent.discard);
-          target.tool = undefined;
+        for (const tool of target.tools) {
+          REMOVE_TOOL(store, state, target, tool, SlotType.DISCARD);
         }
         player.supporter.moveCardTo(effect.trainerCard, player.discard);
       });

@@ -8,8 +8,8 @@ const costs_1 = require("../../game/store/prefabs/costs");
 class EthansCyndaquil extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.tags = [card_types_1.CardTag.ETHANS];
         this.stage = card_types_1.Stage.BASIC;
+        this.tags = [card_types_1.CardTag.ETHANS];
         this.cardType = R;
         this.hp = 70;
         this.weakness = [{ type: W }];
@@ -24,8 +24,8 @@ class EthansCyndaquil extends pokemon_card_1.PokemonCard {
         ];
         this.regulationMark = 'I';
         this.set = 'SV9a';
-        this.cardImage = 'assets/cardback.png';
         this.setNumber = '15';
+        this.cardImage = 'assets/cardback.png';
         this.name = 'Ethan\'s Cyndaquil';
         this.fullName = 'Ethan\'s Cyndaquil SV9a';
     }

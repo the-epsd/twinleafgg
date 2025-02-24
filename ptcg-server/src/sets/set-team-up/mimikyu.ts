@@ -1,5 +1,5 @@
 import { Attack, CardType, ChooseAttackPrompt, GameError, GameMessage, Player, PlayerType, PokemonCard, Stage, State, StateUtils, StoreLike } from '../../game';
-import { DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { AfterDamageEffect, DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 
@@ -42,11 +42,6 @@ export class Mimikyu extends PokemonCard {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
-
-      if (player.deck.cards.length === 0) {
-        return state;
-      }
-
       player.deck.moveTo(player.hand, 2);
       return state;
     }
@@ -96,7 +91,14 @@ export class Mimikyu extends PokemonCard {
     const copiedAttackEffect = new AttackEffect(player, opponent, attack);
     state = store.reduceEffect(state, copiedAttackEffect);
 
-    if (copiedAttackEffect.damage > 0) {
+    if (copiedAttackEffect.attack.shredAttack === true && copiedAttackEffect.damage > 0) {
+      // Apply damage and trigger AfterDamageEffect
+      opponent.active.damage += copiedAttackEffect.damage;
+      const afterDamage = new AfterDamageEffect(copiedAttackEffect, copiedAttackEffect.damage);
+      state = store.reduceEffect(state, afterDamage);
+    }
+
+    if (copiedAttackEffect.attack.shredAttack !== true && copiedAttackEffect.damage > 0) {
       const dealDamage = new DealDamageEffect(copiedAttackEffect, copiedAttackEffect.damage);
       state = store.reduceEffect(state, dealDamage);
     }

@@ -20,7 +20,7 @@ export class LysandreLabs extends TrainerCard {
   public fullName: string = 'Lysandre Labs FLI';
 
   public text: string =
-    ' Pokémon Tool cards in play (both yours and your opponent\'s) have no effect.';
+    'Pokémon Tool cards in play (both yours and your opponent\'s) have no effect.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

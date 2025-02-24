@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SlakothSSP = void 0;
+exports.Slakoth = void 0;
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 const check_effects_1 = require("../../game/store/effects/check-effects");
-class SlakothSSP extends pokemon_card_1.PokemonCard {
+class Slakoth extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.BASIC;
@@ -58,4 +58,4 @@ class SlakothSSP extends pokemon_card_1.PokemonCard {
         return state;
     }
 }
-exports.SlakothSSP = SlakothSSP;
+exports.Slakoth = Slakoth;

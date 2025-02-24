@@ -5,6 +5,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { SpecialCondition } from '../../game/store/card/card-types';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 import { AttackEffect } from '../../game/store/effects/game-effects';
+import { BLOCK_IF_DISCARD_EMPTY } from '../../game/store/prefabs/prefabs';
 
 export class Oranguru extends PokemonCard {
 
@@ -48,9 +49,7 @@ export class Oranguru extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
 
-      if (player.discard.cards.length === 0) {
-        return state;
-      }
+      BLOCK_IF_DISCARD_EMPTY(player);
 
       let cards: Card[] = [];
       store.prompt(state, new ChooseCardsPrompt(

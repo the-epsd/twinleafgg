@@ -3,7 +3,7 @@ import { GameMessage } from '../../game/game-message';
 import { BoardEffect, CardTag, CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect, PowerEffect, UseAttackEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { ADD_POISON_TO_PLAYER_ACTIVE } from '../../game/store/prefabs/prefabs';
@@ -62,25 +62,24 @@ export class BruteBonnet extends PokemonCard {
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const player = effect.player;
       player.marker.removeMarker(this.TOXIC_POWDER_MARKER, this);
+      player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
+      player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
     }
 
     if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
       const player = effect.player;
       player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
       player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
-      console.log('marker cleared');
     }
 
     if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
       const player = effect.player;
       player.marker.addMarker(this.ATTACK_USED_2_MARKER, this);
-      console.log('second marker added');
     }
 
-    if (effect instanceof EndTurnEffect) {
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.TOXIC_POWDER_MARKER, this)) {
       const player = effect.player;
       player.marker.removeMarker(this.TOXIC_POWDER_MARKER, this);
-      console.log('toxic powder marker cleared');
     }
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
@@ -90,7 +89,7 @@ export class BruteBonnet extends PokemonCard {
       let isBruteBonnetWithAncientBooster = false;
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-        if (card === this && cardList.tool && cardList.tool.name === 'Ancient Booster Energy Capsule') {
+        if (card === this && cardList.tools.some(tool => tool.name === 'Ancient Booster Energy Capsule')) {
           isBruteBonnetWithAncientBooster = true;
         }
       });
@@ -115,18 +114,13 @@ export class BruteBonnet extends PokemonCard {
       });
     }
 
+    if (effect instanceof UseAttackEffect && effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+      throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+    }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-
-      // Check marker
-      if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-        console.log('attack blocked');
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-      }
       effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
-      console.log('marker added');
     }
     return state;
-
   }
 }

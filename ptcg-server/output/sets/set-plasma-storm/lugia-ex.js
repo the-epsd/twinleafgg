@@ -26,7 +26,7 @@ class LugiaEx extends pokemon_card_1.PokemonCard {
                     'attack of this Pokemon, take 1 more Prize card.'
             }];
         this.attacks = [{
-                name: 'Chilling Sigh',
+                name: 'Plasma Gale',
                 cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
                 damage: 120,
                 text: 'Discard a Plasma Energy attached to this Pokémon. If you can\'t discard a Plasma Energy, this attack does nothing.'

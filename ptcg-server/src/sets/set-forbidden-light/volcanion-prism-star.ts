@@ -7,7 +7,7 @@ import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 
-export class VolcanionPS extends PokemonCard {
+export class VolcanionPrismStar extends PokemonCard {
 
   public tags = [CardTag.PRISM_STAR];
 

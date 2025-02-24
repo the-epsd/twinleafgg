@@ -4,14 +4,14 @@ exports.setHeartGoldAndSoulSilver = void 0;
 const cleffa_1 = require("./cleffa");
 const cyndaquil_1 = require("./cyndaquil");
 const drowzee_1 = require("./drowzee");
-const HS_115_Grass_Energy_1 = require("./HS_115_Grass_Energy");
-const HS_116_Fire_Energy_1 = require("./HS_116_Fire_Energy");
-const HS_117_Water_Energy_1 = require("./HS_117_Water_Energy");
-const HS_118_Lightning_Energy_1 = require("./HS_118_Lightning_Energy");
-const HS_119_Psychic_Energy_1 = require("./HS_119_Psychic_Energy");
-const HS_120_Fighting_Energy_1 = require("./HS_120_Fighting_Energy");
-const HS_121_Darkness_Energy_1 = require("./HS_121_Darkness_Energy");
-const HS_122_Metal_Energy_1 = require("./HS_122_Metal_Energy");
+const grass_energy_1 = require("./grass-energy");
+const fire_energy_1 = require("./fire-energy");
+const water_energy_1 = require("./water-energy");
+const lightning_energy_1 = require("./lightning-energy");
+const psychic_energy_1 = require("./psychic-energy");
+const fighting_energy_1 = require("./fighting-energy");
+const darkness_energy_1 = require("./darkness-energy");
+const metal_energy_1 = require("./metal-energy");
 const hypno_1 = require("./hypno");
 const pichu_1 = require("./pichu");
 const pokemon_collector_1 = require("./pokemon-collector");
@@ -23,21 +23,21 @@ const unown_1 = require("./unown");
 exports.setHeartGoldAndSoulSilver = [
     new cleffa_1.Cleffa(),
     new cyndaquil_1.Cyndaquil(),
-    new HS_121_Darkness_Energy_1.DarknessEnergy(),
+    new darkness_energy_1.DarknessEnergy(),
     new drowzee_1.Drowzee(),
-    new HS_120_Fighting_Energy_1.FightingEnergy(),
-    new HS_116_Fire_Energy_1.FireEnergy(),
-    new HS_115_Grass_Energy_1.GrassEnergy(),
+    new fighting_energy_1.FightingEnergy(),
+    new fire_energy_1.FireEnergy(),
+    new grass_energy_1.GrassEnergy(),
     new hypno_1.Hypno(),
-    new HS_118_Lightning_Energy_1.LightningEnergy(),
-    new HS_122_Metal_Energy_1.MetalEnergy(),
+    new lightning_energy_1.LightningEnergy(),
+    new metal_energy_1.MetalEnergy(),
     new pichu_1.Pichu(),
     new pokemon_collector_1.PokemonCollector(),
     new professor_oaks_new_theory_1.ProfessorOaksNewTheory(),
-    new HS_119_Psychic_Energy_1.PsychicEnergy(),
+    new psychic_energy_1.PsychicEnergy(),
     new quilava_1.Quilava(),
     new typhlosion_1.Typhlosion(),
     new tyrogue_1.Tyrogue(),
     new unown_1.Unown(),
-    new HS_117_Water_Energy_1.WaterEnergy(),
+    new water_energy_1.WaterEnergy(),
 ];

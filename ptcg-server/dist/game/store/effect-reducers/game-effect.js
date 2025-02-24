@@ -1,6 +1,6 @@
 import { GameError } from '../../game-error';
 import { GameLog, GameMessage } from '../../game-message';
-import { CardTag, SpecialCondition, Stage, SuperType, TrainerType } from '../card/card-types';
+import { BoardEffect, CardTag, SpecialCondition, Stage, SuperType, TrainerType } from '../card/card-types';
 import { TrainerCard } from '../card/trainer-card';
 import { ApplyWeaknessEffect, DealDamageEffect } from '../effects/attack-effects';
 import { AddSpecialConditionsPowerEffect, CheckAttackCostEffect, CheckPokemonStatsEffect, CheckPokemonTypeEffect, CheckProvidedEnergyEffect } from '../effects/check-effects';
@@ -13,6 +13,9 @@ import { StateUtils } from '../state-utils';
 import { CardList } from '../state/card-list';
 import { GamePhase } from '../state/state';
 import { checkState } from './check-effect';
+import { MoveCardsEffect } from '../effects/game-effects';
+import { PokemonCardList } from '../state/pokemon-card-list';
+import { MOVE_CARDS } from '../prefabs/prefabs';
 function applyWeaknessAndResistance(damage, cardTypes, additionalCardTypes, weakness, resistance) {
     let multiply = 1;
     let modifier = 0;
@@ -85,7 +88,7 @@ function* useAttack(next, store, state, effect) {
     }
     store.log(state, GameLog.LOG_PLAYER_USES_ATTACK, { name: player.name, attack: attack.name });
     state.phase = GamePhase.ATTACK;
-    const attackEffect = new AttackEffect(player, opponent, attack);
+    const attackEffect = (effect instanceof AttackEffect) ? effect : new AttackEffect(player, opponent, attack);
     state = store.reduceEffect(state, attackEffect);
     if (store.hasPrompts()) {
         yield store.waitPrompt(state, () => next());
@@ -172,8 +175,8 @@ export function gameReducer(store, state, effect) {
                 for (let i = pokemonIndices.length - 1; i >= 0; i--) {
                     const removedCard = effect.target.cards.splice(pokemonIndices[i], 1)[0];
                     if (removedCard.cards) {
-                        const attachedCards = removedCard.cards.cards.splice(0, removedCard.cards.cards.length);
-                        effect.player.discard.cards.push(...attachedCards);
+                        // Move attached cards to discard
+                        MOVE_CARDS(store, state, removedCard.cards, effect.player.discard);
                     }
                     if (removedCard.superType === SuperType.POKEMON || removedCard.stage === Stage.BASIC) {
                         lostZoned.cards.push(removedCard);
@@ -182,11 +185,13 @@ export function gameReducer(store, state, effect) {
                         effect.player.discard.cards.push(removedCard);
                     }
                 }
-                lostZoned.moveTo(effect.player.lostzone);
+                // Move cards to lost zone
+                MOVE_CARDS(store, state, lostZoned, effect.player.lostzone);
                 effect.target.clearEffects();
             }
             else {
-                effect.target.moveTo(effect.player.discard);
+                // Move cards to discard
+                MOVE_CARDS(store, state, effect.target, effect.player.discard);
                 effect.target.clearEffects();
             }
             // const stadiumCard = StateUtils.getStadiumCard(state);
@@ -279,6 +284,78 @@ export function gameReducer(store, state, effect) {
         effect.target.marker.markers = [];
         effect.target.marker.markers = [];
         effect.target.marker.markers = [];
+    }
+    if (effect instanceof MoveCardsEffect) {
+        const source = effect.source;
+        const destination = effect.destination;
+        // If source is a PokemonCardList, always clean up when moving cards
+        if (source instanceof PokemonCardList) {
+            source.clearEffects();
+            source.damage = 0;
+            source.specialConditions = [];
+            source.marker.markers = [];
+            source.tool = undefined;
+            source.removeBoardEffect(BoardEffect.ABILITY_USED);
+        }
+        // If specific cards are specified
+        if (effect.cards) {
+            if (source instanceof PokemonCardList) {
+                source.moveCardsTo(effect.cards, destination);
+                // Log the card movement
+                effect.cards.forEach(card => {
+                    store.log(state, GameLog.LOG_CARD_MOVED, { name: card.name, action: 'put', destination: 'destination' });
+                });
+                if (effect.toBottom) {
+                    destination.cards = [...destination.cards.slice(effect.cards.length), ...effect.cards];
+                }
+                else if (effect.toTop) {
+                    destination.cards = [...effect.cards, ...destination.cards];
+                }
+            }
+            else {
+                source.moveCardsTo(effect.cards, destination);
+                // Log the card movement
+                effect.cards.forEach(card => {
+                    store.log(state, GameLog.LOG_CARD_MOVED, { name: card.name, action: 'put', destination: 'destination' });
+                });
+                if (effect.toBottom) {
+                    destination.cards = [...destination.cards.slice(effect.cards.length), ...effect.cards];
+                }
+                else if (effect.toTop) {
+                    destination.cards = [...effect.cards, ...destination.cards];
+                }
+            }
+        }
+        // If count is specified
+        else if (effect.count !== undefined) {
+            const cards = source.cards.slice(0, effect.count);
+            source.moveCardsTo(cards, destination);
+            // Log the card movement
+            cards.forEach(card => {
+                store.log(state, GameLog.LOG_CARD_MOVED, { name: card.name, action: 'put', destination: 'destination' });
+            });
+            if (effect.toBottom) {
+                destination.cards = [...destination.cards.slice(cards.length), ...cards];
+            }
+            else if (effect.toTop) {
+                destination.cards = [...cards, ...destination.cards];
+            }
+        }
+        // Move all cards
+        else {
+            if (effect.toTop) {
+                source.moveToTopOfDestination(destination);
+            }
+            else {
+                source.moveTo(destination);
+            }
+        }
+        // If source is a PokemonCardList and we moved all cards, discard remaining attached cards
+        if (source instanceof PokemonCardList && source.getPokemons().length === 0) {
+            const player = StateUtils.findOwner(state, source);
+            source.moveTo(player.discard);
+        }
+        return state;
     }
     return state;
 }

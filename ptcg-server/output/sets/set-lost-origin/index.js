@@ -35,6 +35,7 @@ const kingdra_1 = require("./kingdra");
 const kyurem_v_1 = require("./kyurem-v");
 const kyurem_vmax_1 = require("./kyurem-vmax");
 const lady_1 = require("./lady");
+const lake_acuity_1 = require("./lake-acuity");
 const lost_city_1 = require("./lost-city");
 const lost_vacuum_1 = require("./lost-vacuum");
 const machamp_1 = require("./machamp");
@@ -44,6 +45,7 @@ const magnezone_vstar_1 = require("./magnezone-vstar");
 const mawile_1 = require("./mawile");
 const mirage_gate_1 = require("./mirage-gate");
 const miss_fortune_sisters_1 = require("./miss-fortune-sisters");
+const mr_mime_1 = require("./mr-mime");
 const panic_mask_1 = require("./panic-mask");
 const pidgeot_v_1 = require("./pidgeot-v");
 const radiant_gardevoir_1 = require("./radiant-gardevoir");
@@ -118,4 +120,6 @@ exports.setLostOrigin = [
     new thorton_1.Thorton(),
     new tynamo_1.Tynamo(),
     new wurmple_1.Wurmple(),
+    new lake_acuity_1.LakeAcuity(),
+    new mr_mime_1.MrMime(),
 ];

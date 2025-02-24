@@ -67,7 +67,7 @@ export class Laprasex extends PokemonCard {
 
           const damagePerEnergy = 40;
 
-          effect.damage = this.attacks[0].damage + (checkProvidedEnergy.energyMap.length * damagePerEnergy);
+          effect.damage = checkProvidedEnergy.energyMap.length * damagePerEnergy;
         }
       });
 

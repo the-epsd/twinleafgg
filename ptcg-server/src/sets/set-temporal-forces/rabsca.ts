@@ -3,7 +3,7 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { PlayerType, PowerType, StateUtils } from '../..';
+import { PowerType, StateUtils } from '../..';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { PutDamageEffect, PutCountersEffect } from '../../game/store/effects/attack-effects';
@@ -63,24 +63,12 @@ export class Rabsca extends PokemonCard {
       effect.damage += energyCount * 30;
     }
 
-    if (effect instanceof PutDamageEffect) {
+    if ((effect instanceof PutDamageEffect || effect instanceof PutCountersEffect)
+      && StateUtils.isPokemonInPlay(effect.player, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
       if (effect.target === player.active || effect.target === opponent.active) {
-        return state;
-      }
-
-      const targetPlayer = StateUtils.findOwner(state, effect.target);
-
-      let isRabsca1InPlay = false;
-      targetPlayer.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-        if (card === this) {
-          isRabsca1InPlay = true;
-        }
-      });
-
-      if (!isRabsca1InPlay) {
         return state;
       }
 
@@ -95,50 +83,8 @@ export class Rabsca extends PokemonCard {
       } catch {
         return state;
       }
-
       effect.preventDefault = true;
-    }
-    if (effect instanceof PutCountersEffect) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      if (effect.target === player.active || effect.target === opponent.active) {
-        return state;
-      }
-
-      const targetPlayer = StateUtils.findOwner(state, effect.target);
-
-      if (opponent.active) {
-
-        let isRabsca2InPlay = false;
-        targetPlayer.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-          if (card === this) {
-            isRabsca2InPlay = true;
-          }
-        });
-
-        if (!isRabsca2InPlay) {
-          return state;
-        }
-
-        // Try to reduce PowerEffect, to check if something is blocking our ability
-        try {
-          const stub = new PowerEffect(player, {
-            name: 'test',
-            powerType: PowerType.ABILITY,
-            text: ''
-          }, this);
-          store.reduceEffect(state, stub);
-        } catch {
-          return state;
-        }
-
-        effect.preventDefault = true;
-      }
-
-      return state;
     }
     return state;
   }
-
 }

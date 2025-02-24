@@ -93,7 +93,7 @@ exports.setPokemon151 = [
     new gloom_1.Gloom(),
     new golbat_1.Golbat(),
     new grabber_1.Grabber(),
-    new hitmonlee_1.HitmonleeMEW(),
+    new hitmonlee_1.Hitmonlee(),
     new ivysaur_1.Ivysaur(),
     new jolteon_1.Jolteon(),
     new kangaskhan_ex_1.Kangaskhanex(),

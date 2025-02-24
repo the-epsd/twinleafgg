@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BeedrillTEU = void 0;
+exports.Beedrill = void 0;
 const game_1 = require("../../game");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
-class BeedrillTEU extends game_1.PokemonCard {
+class Beedrill extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = game_1.Stage.STAGE_2;
@@ -57,4 +57,4 @@ class BeedrillTEU extends game_1.PokemonCard {
         return state;
     }
 }
-exports.BeedrillTEU = BeedrillTEU;
+exports.Beedrill = Beedrill;

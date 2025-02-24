@@ -5,6 +5,7 @@ const game_1 = require("../../game");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class BuzzwoleGX extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -96,9 +97,7 @@ class BuzzwoleGX extends game_1.PokemonCard {
                 throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);
             }
             // Check if player has used GX attack
-            if (player.usedGX == true) {
-                throw new game_1.GameError(game_1.GameMessage.LABEL_GX_USED);
-            }
+            prefabs_1.BLOCK_IF_GX_ATTACK_USED(player);
             // set GX attack as used for game
             player.usedGX = true;
             effect.damage = 40 * player.getPrizeLeft();

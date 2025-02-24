@@ -1,4 +1,4 @@
-import { CardTarget, PlayerType } from '../actions/play-card-action';
+import { CardTarget, PlayerType, SlotType } from '../actions/play-card-action';
 import { PokemonCard } from '../card/pokemon-card';
 import { CardList } from './card-list';
 import { Marker } from './card-marker';
@@ -69,5 +69,6 @@ export declare class Player {
     singleStrike(): boolean;
     fusionStrike(): boolean;
     rapidStrike(): boolean;
+    getSlot(slotType: SlotType): CardList;
     switchPokemon(target: PokemonCardList): void;
 }

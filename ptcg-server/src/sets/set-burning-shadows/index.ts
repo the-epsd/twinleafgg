@@ -12,15 +12,15 @@ import { Kiawe } from './kiawe';
 import { Marill } from './marill';
 import { MarshadowGX } from './marshadow-gx';
 import { NecrozmaGX } from './necrozma-gx';
-import {Noibat} from './noibat';
-import {NoivernGX} from './noivern-gx';
+import { Noibat } from './noibat';
+import { NoivernGX } from './noivern-gx';
 import { Plumeria } from './plumeria';
 import { Raichu } from './raichu';
 import { Ralts } from './ralts';
 import { SalazzleGX } from './salazzle-gx';
 import { Sophocles } from './sophocles';
 import { TapuBuluGX } from './tapu-bulu-gx';
-import {TapuFiniGX} from './tapu-fini-gx';
+import { TapuFiniGX } from './tapu-fini-gx';
 import { WishfulBaton } from './wishful-baton';
 
 export const setBurningShadows: Card[] = [

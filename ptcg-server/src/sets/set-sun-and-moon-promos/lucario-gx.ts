@@ -1,8 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, GameError, GameMessage } from '../../game';
+import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
+import { BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 // SMP Lucario-GX 100 (https://limitlesstcg.com/cards/SMP/100)
 export class LucarioGX extends PokemonCard {
@@ -67,9 +68,7 @@ export class LucarioGX extends PokemonCard {
       const player = effect.player;
 
       // Check if player has used GX attack
-      if (player.usedGX == true) {
-        throw new GameError(GameMessage.LABEL_GX_USED);
-      }
+      BLOCK_IF_GX_ATTACK_USED(player);
       // set GX attack as used for game
       player.usedGX = true;
 

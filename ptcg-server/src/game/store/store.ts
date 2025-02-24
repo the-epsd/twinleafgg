@@ -282,26 +282,22 @@ export class Store implements StoreLike {
 
   private propagateEffect(state: State, effect: Effect): State {
     const cards: Card[] = [];
-
-    try {
-      for (const player of state.players) {
-        player.stadium.cards.forEach(c => cards.push(c));
-        player.supporter.cards.forEach(c => cards.push(c));
-        player.active.cards.forEach(c => cards.push(c));
-        for (const bench of player.bench) {
-          bench.cards.forEach(c => cards.push(c));
-        }
-        for (const prize of player.prizes) {
-          prize.cards.forEach(c => cards.push(c));
-        }
-        player.hand.cards.forEach(c => cards.push(c));
-        player.deck.cards.forEach(c => cards.push(c));
-        player.discard.cards.forEach(c => cards.push(c));
+    for (const player of state.players) {
+      player.stadium.cards.forEach(c => cards.push(c));
+      player.supporter.cards.forEach(c => cards.push(c));
+      player.active.cards.forEach(c => cards.push(c));
+      for (const bench of player.bench) {
+        bench.cards.forEach(c => cards.push(c));
       }
-      cards.sort(c => c.superType);
-      cards.forEach(c => { state = c.reduceEffect(this, state, effect); });
-      return state;
-    } finally {
+      for (const prize of player.prizes) {
+        prize.cards.forEach(c => cards.push(c));
+      }
+      player.hand.cards.forEach(c => cards.push(c));
+      player.deck.cards.forEach(c => cards.push(c));
+      player.discard.cards.forEach(c => cards.push(c));
     }
+    cards.sort(c => c.superType);
+    cards.forEach(c => { state = c.reduceEffect(this, state, effect); });
+    return state;
   }
 }

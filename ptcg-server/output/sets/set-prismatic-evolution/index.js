@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.setPrismaticEvolution = void 0;
 const alt_arts_1 = require("./alt-arts");
 const amarys_1 = require("./amarys");
+const applin_1 = require("./applin");
 const black_belts_training_1 = require("./black-belts-training");
 const bronzor_1 = require("./bronzor");
 const budew_1 = require("./budew");
@@ -17,6 +18,7 @@ const leafeon_ex_1 = require("./leafeon-ex");
 const max_rod_1 = require("./max-rod");
 const pupitar_1 = require("./pupitar");
 const regigigas_1 = require("./regigigas");
+const roto_stick_1 = require("./roto-stick");
 const seaking_1 = require("./seaking");
 const sylveon_1 = require("./sylveon");
 const treasure_tracker_1 = require("./treasure-tracker");
@@ -39,11 +41,13 @@ exports.setPrismaticEvolution = [
     new seaking_1.Seaking(),
     new regigigas_1.Regigigas(),
     new max_rod_1.MaxRod(),
+    new roto_stick_1.RotoStick(),
     new treasure_tracker_1.TreasureTracker(),
     new larvitar_1.Larvitar(),
     new pupitar_1.Pupitar(),
     new tyranitar_ex_1.Tyranitarex(),
     new bronzor_1.Bronzor(),
+    new applin_1.Applin(),
     // Reprints
     new alt_arts_1.ProfessorsResearchO(),
     new alt_arts_1.ProfessorsResearchE(),

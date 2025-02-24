@@ -1,3 +1,4 @@
+import { Card } from '../card/card';
 import { GameError } from '../../game-error';
 import { GameMessage } from '../../game-message';
 import { Prompt } from './prompt';
@@ -33,6 +34,10 @@ export class MoveEnergyPrompt extends Prompt {
         result.forEach(t => {
             const cardList = StateUtils.getTarget(state, player, t.from);
             const card = cardList.cards[t.index];
+            // Verify this is a card.
+            if (!(card instanceof Card)) {
+                throw new GameError(GameMessage.INVALID_PROMPT_RESULT);
+            }
             transfers.push({ from: t.from, to: t.to, card });
         });
         return transfers;

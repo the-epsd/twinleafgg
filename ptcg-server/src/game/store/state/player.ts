@@ -1,3 +1,5 @@
+import { GameError } from '../../game-error';
+import { GameMessage } from '../../game-message';
 import { CardTarget, PlayerType, SlotType } from '../actions/play-card-action';
 import { CardTag } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
@@ -195,6 +197,19 @@ export class Player {
       }
     });
     return result;
+  }
+
+  getSlot(slotType: SlotType): CardList {
+    switch (slotType) {
+      case SlotType.DISCARD:
+        return this.discard;
+      case SlotType.HAND:
+        return this.hand;
+      case SlotType.LOSTZONE:
+        return this.lostzone;
+      default:
+        throw new GameError(GameMessage.INVALID_TARGET);
+    }
   }
 
   switchPokemon(target: PokemonCardList) {

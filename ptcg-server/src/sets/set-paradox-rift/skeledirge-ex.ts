@@ -5,11 +5,9 @@ import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects
 import { Effect } from '../../game/store/effects/effect';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { AfterDamageEffect, ApplyWeaknessEffect, DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { ABILITY_USED } from '../../game/store/prefabs/prefabs';
+import { ABILITY_USED, HAS_MARKER, REMOVE_MARKER_AT_END_OF_TURN } from '../../game/store/prefabs/prefabs';
 
-export class SkeledirgeEX extends PokemonCard {
+export class Skeledirgeex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Crocalor';
   public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
@@ -45,16 +43,6 @@ export class SkeledirgeEX extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
-      const player = effect.player;
-      player.marker.removeMarker(this.INCENDIARY_SONG_MARKER, this);
-    }
-
-    if (effect instanceof EndTurnEffect) {
-      const player = effect.player;
-      player.marker.removeMarker(this.INCENDIARY_SONG_MARKER, this);
-    }
-
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
       const hasEnergyInHand = player.hand.cards.some(c => {
@@ -87,12 +75,8 @@ export class SkeledirgeEX extends PokemonCard {
       });
     }
 
-    if (effect instanceof AttackEffect) {
-      const player = effect.player;
-
-      if (player.marker.hasMarker(this.INCENDIARY_SONG_MARKER, this)) {
-        effect.damage += 60;
-      }
+    if (effect instanceof AttackEffect && HAS_MARKER(this.INCENDIARY_SONG_MARKER, effect.player, this)) {
+      effect.damage += 60;
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
@@ -129,6 +113,9 @@ export class SkeledirgeEX extends PokemonCard {
         effect.preventDefault = true;
       }
     }
+
+    REMOVE_MARKER_AT_END_OF_TURN(effect, this.INCENDIARY_SONG_MARKER, this);
+
     return state;
   }
 }

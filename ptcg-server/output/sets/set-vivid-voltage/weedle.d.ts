@@ -1,6 +1,6 @@
 import { CardType, PokemonCard, Stage, State, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-export declare class WeedleVIV extends PokemonCard {
+export declare class Weedle extends PokemonCard {
     stage: Stage;
     cardType: CardType;
     hp: number;

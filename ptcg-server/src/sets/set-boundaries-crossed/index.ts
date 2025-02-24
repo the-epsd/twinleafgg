@@ -1,8 +1,10 @@
 import { Card } from '../../game/store/card/card';
 import { AspertiaCityGym } from './aspertia-city-gym';
+import { BlackKyurem } from './black-kyurem';
 import { Blastoise } from './blastoise';
 import { RockyHelmetBCR } from './card-images';
 import { ComputerSearch } from './computer-search';
+import { Ditto } from './ditto';
 import { Dusclops } from './dusclops';
 import { Dusknoir } from './dusknoir';
 import { Duskull } from './duskull';
@@ -18,8 +20,10 @@ import { Wartortle } from './wartortle';
 
 export const setBoundariesCrossed: Card[] = [
   new AspertiaCityGym(),
+  new BlackKyurem(),
   new Blastoise(),
   new ComputerSearch(),
+  new Ditto(),
   new Dusclops(),
   new Dusknoir(),
   new Duskull(),

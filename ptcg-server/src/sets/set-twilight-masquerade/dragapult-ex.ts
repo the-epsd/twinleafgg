@@ -10,6 +10,7 @@ import { DamageMap } from '../../game/store/prompts/move-damage-prompt';
 import { GameMessage } from '../../game/game-message';
 import { PutCountersEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { PutDamagePrompt } from '../..';
+import { CheckHpEffect } from '../../game/store/effects/check-effects';
 
 
 function* usePhantomDive(next: Function, store: StoreLike, state: State, effect: AttackEffect): IterableIterator<State> {
@@ -23,7 +24,9 @@ function* usePhantomDive(next: Function, store: StoreLike, state: State, effect:
 
   const maxAllowedDamage: DamageMap[] = [];
   opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-    maxAllowedDamage.push({ target, damage: card.hp + 60 });
+    const checkHpEffect = new CheckHpEffect(player, cardList);
+    store.reduceEffect(state, checkHpEffect);
+    maxAllowedDamage.push({ target, damage: checkHpEffect.hp + 60 });
   });
 
   const damage = 60;

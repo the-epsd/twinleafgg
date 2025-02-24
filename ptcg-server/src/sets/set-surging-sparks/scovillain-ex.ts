@@ -5,7 +5,7 @@ import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
 
-export class ScovillainEXSSP extends PokemonCard {
+export class Scovillainex extends PokemonCard {
 
   public tags = [CardTag.POKEMON_ex];
 

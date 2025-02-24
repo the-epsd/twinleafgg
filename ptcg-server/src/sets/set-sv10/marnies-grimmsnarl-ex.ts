@@ -56,7 +56,7 @@ export class MarniesGrimmsnarlex extends PokemonCard {
       }
       const blockedTo: CardTarget[] = [];
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-        if (!card.cardTag.includes(CardTag.MARNIES))
+        if (!card.tags.includes(CardTag.MARNIES))
           blockedTo.push(target);
       })
       state = store.prompt(state, new ConfirmPrompt(

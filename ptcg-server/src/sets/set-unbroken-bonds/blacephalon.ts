@@ -3,7 +3,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 
 
-export class BlacephalonUNB extends PokemonCard {
+export class Blacephalon extends PokemonCard {
   public tags = [CardTag.ULTRA_BEAST];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = R;

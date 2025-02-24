@@ -24,7 +24,6 @@ import { ApiError } from '../api.error';
 import { ApiService } from '../api.service';
 import { PlayerStatsResponse } from '../interfaces/game.interface';
 import { SocketService } from '../socket.service';
-import { TournamentService } from './tournament.service';
 
 export interface GameUserInfo {
   gameId: number;
@@ -44,7 +43,6 @@ export class GameService {
     private sessionService: SessionService,
     private socketService: SocketService,
     private translate: TranslateService,
-    private tournamentService: TournamentService
   ) { }
 
   public getPlayerStats(gameId: number) {
@@ -280,52 +278,52 @@ export class GameService {
     this.alertService.toast(this.translate.instant(key));
   }
 
-  joinMatchmakingLobby(format: string): Observable<any> {
-    return this.socketService.joinLobby(format).pipe(
-      switchMap(() => new Observable<any>(observer => {
-        this.socketService.on('matchmaking:lobbyUpdate', (data: any) => observer.next(data));
-      })),
-      takeUntil(new Observable<any>(observer => {
-        this.socketService.on('gameStarted', () => observer.next());
-      }))
-    );
-  }
+  // joinMatchmakingLobby(format: string): Observable<any> {
+  //   return this.socketService.joinLobby(format).pipe(
+  //     switchMap(() => new Observable<any>(observer => {
+  //       this.socketService.on('matchmaking:lobbyUpdate', (data: any) => observer.next(data));
+  //     })),
+  //     takeUntil(new Observable<any>(observer => {
+  //       this.socketService.on('gameStarted', () => observer.next());
+  //     }))
+  //   );
+  // }
 
-  handleGameStart(): Observable<any> {
-    return new Observable<any>(observer => {
-      this.socketService.on('gameStarted', (gameData: any) => {
-        this.join(gameData.gameId).subscribe(
-          result => observer.next(result),
-          error => observer.error(error),
-          () => observer.complete()
-        );
-      });
-    });
-  }
+  // handleGameStart(): Observable<any> {
+  //   return new Observable<any>(observer => {
+  //     this.socketService.on('gameStarted', (gameData: any) => {
+  //       this.join(gameData.gameId).subscribe(
+  //         result => observer.next(result),
+  //         error => observer.error(error),
+  //         () => observer.complete()
+  //       );
+  //     });
+  //   });
+  // }
 
-  joinMatchmakingQueue(format: Format, deck: string[]): Observable<any> {
-    return this.socketService.joinMatchmakingQueue(format, deck);
-  }
+  // joinMatchmakingQueue(format: Format, deck: string[]): Observable<any> {
+  //   return this.socketService.joinMatchmakingQueue(format, deck);
+  // }
 
 
-  leaveMatchmakingQueue(): Observable<any> {
-    return this.socketService.emit('matchmaking:leaveQueue');
-  }
+  // leaveMatchmakingQueue(): Observable<any> {
+  //   return this.socketService.emit('matchmaking:leaveQueue');
+  // }
 
-  checkQueueStatus(format: Format): Observable<any> {
-    return this.socketService.emit('checkQueueStatus', { format });
-  }
+  // checkQueueStatus(format: Format): Observable<any> {
+  //   return this.socketService.emit('checkQueueStatus', { format });
+  // }
 
-  getQueueUpdates(): Observable<any> {
-    return new Observable<any>(observer => {
-      this.socketService.on('queueUpdate', (data) => {
-        observer.next(data);
-      });
-    });
-  }
+  // getQueueUpdates(): Observable<any> {
+  //   return new Observable<any>(observer => {
+  //     this.socketService.on('queueUpdate', (data) => {
+  //       observer.next(data);
+  //     });
+  //   });
+  // }
 
-  updateQueuedPlayers(players: string[]) {
-    this.queueSubject.next(players);
-  }
+  // updateQueuedPlayers(players: string[]) {
+  //   this.queueSubject.next(players);
+  // }
 
 }

@@ -1,10 +1,11 @@
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { CardTag, TrainerType } from '../../game/store/card/card-types';
-import { State, StateUtils, GameLog, PlayerType } from '../../game';
+import { State, StateUtils, GameLog, PlayerType, SlotType } from '../../game';
 import { CheckHpEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { REMOVE_TOOL } from '../../game/store/prefabs/prefabs';
 
 // interface PokemonItem {
 //   playerNum: number;
@@ -37,7 +38,7 @@ export class SurvivalCast extends TrainerCard {
 
   public reduceEffect(store: any, state: State, effect: Effect): State {
 
-    if (effect instanceof PutDamageEffect && effect.target.tool === this && effect.target.damage == 0) {
+    if (effect instanceof PutDamageEffect && effect.target.tools.includes(this) && effect.target.damage == 0) {
       const player = StateUtils.findOwner(state, effect.target);
       const checkHpEffect = new CheckHpEffect(player, effect.target);
       store.reduceEffect(state, checkHpEffect);
@@ -53,8 +54,7 @@ export class SurvivalCast extends TrainerCard {
 
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, index) => {
           if (cardList.cards.includes(this)) {
-            cardList.moveCardTo(this, player.discard);
-            cardList.tool = undefined;
+            REMOVE_TOOL(store, state, cardList, this, SlotType.DISCARD);
           }
         });
       }

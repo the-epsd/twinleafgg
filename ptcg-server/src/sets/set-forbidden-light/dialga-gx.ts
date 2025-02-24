@@ -2,14 +2,13 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import {
   StoreLike, State,
-  GameError,
-  GameMessage,
   StateUtils
 } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { ApplyWeaknessEffect, AfterDamageEffect, DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class DialgaGX extends PokemonCard {
   public tags = [CardTag.POKEMON_GX];
@@ -18,7 +17,7 @@ export class DialgaGX extends PokemonCard {
   public hp: number = 180;
   public weakness = [{ type: R }];
   public resistance = [{ type: P, value: -20 }];
-  public retreat = [ C, C, C ];
+  public retreat = [C, C, C];
 
   public attacks = [
     {
@@ -96,10 +95,7 @@ export class DialgaGX extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[2]) {
       const player = effect.player;
 
-      if (player.usedGX === true) {
-        throw new GameError(GameMessage.LABEL_GX_USED);
-      }
-
+      BLOCK_IF_GX_ATTACK_USED(player);
       player.usedGX = true;
       player.marker.addMarker(this.TIMELESS_GX_MARKER, this);
       effect.player.usedTurnSkip = true;

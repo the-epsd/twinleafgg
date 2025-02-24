@@ -22,7 +22,7 @@ function* usePower(next, store, state, self, effect) {
     let hasPokemonWithoutTool = false;
     const blocked = [];
     player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-        if (cardList.tool === undefined && card !== self) {
+        if (cardList.tools.length === 0 && card !== self) {
             hasPokemonWithoutTool = true;
         }
         else {
@@ -37,7 +37,7 @@ function* usePower(next, store, state, self, effect) {
         if (targets && targets.length > 0) {
             // Attach Unown Q as a Pokemon Tool
             player.bench[benchIndex].moveCardTo(pokemonCard, targets[0]);
-            targets[0].tool = pokemonCard;
+            targets[0].tools.push(pokemonCard);
             // Discard other cards
             player.bench[benchIndex].moveTo(player.discard);
             player.bench[benchIndex].clearEffects();
@@ -80,7 +80,7 @@ class UnownQ extends pokemon_card_1.PokemonCard {
             const generator = usePower(() => generator.next(), store, state, this, effect);
             return generator.next().value;
         }
-        if (effect instanceof check_effects_1.CheckRetreatCostEffect && effect.player.active.tool === this) {
+        if (effect instanceof check_effects_1.CheckRetreatCostEffect && effect.player.active.tools.includes(this)) {
             const index = effect.cost.indexOf(card_types_1.CardType.COLORLESS);
             if (index !== -1) {
                 effect.cost.splice(index, 1);

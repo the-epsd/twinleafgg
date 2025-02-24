@@ -3,9 +3,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.HisuianArcanine = void 0;
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
-const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
+const check_effects_1 = require("../../game/store/effects/check-effects");
 class HisuianArcanine extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -41,12 +41,15 @@ class HisuianArcanine extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
             const cardList = player.active;
-            const hasAttachedEnergy = cardList.cards.some(c => c instanceof game_1.EnergyCard && c.provides.includes(card_types_1.CardType.FIRE || c instanceof game_1.EnergyCard && c.provides.includes(card_types_1.CardType.ANY)));
-            if (hasAttachedEnergy) {
-                effect.damage = effect.damage + 80;
-                const specialConditionEffect = new attack_effects_1.AddSpecialConditionsEffect(effect, [card_types_1.SpecialCondition.BURNED]);
-                store.reduceEffect(state, specialConditionEffect);
+            const checkEnergyEffect = new check_effects_1.CheckProvidedEnergyEffect(player, cardList);
+            state = store.reduceEffect(state, checkEnergyEffect);
+            const hasAttachedEnergy = checkEnergyEffect.totalProvidedTypes.some(energy => energy.provides.includes(card_types_1.CardType.FIRE) || energy.provides.includes(card_types_1.CardType.ANY));
+            if (!hasAttachedEnergy) {
+                return state;
             }
+            effect.damage += 80;
+            const specialConditionEffect = new attack_effects_1.AddSpecialConditionsEffect(effect, [card_types_1.SpecialCondition.BURNED]);
+            store.reduceEffect(state, specialConditionEffect);
             return state;
         }
         return state;
