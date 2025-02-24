@@ -22,7 +22,7 @@ function* usePower(next, store, state, self, effect) {
     let hasPokemonWithoutTool = false;
     const blocked = [];
     player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-        if (cardList.tools.length === 0 && card !== self) {
+        if (cardList.tools.length < cardList.maxTools && card !== self) {
             hasPokemonWithoutTool = true;
         }
         else {

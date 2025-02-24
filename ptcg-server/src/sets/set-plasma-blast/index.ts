@@ -7,6 +7,7 @@ import { GenesectEX } from './genesect-ex';
 import { JirachiEX } from './jirachi-ex';
 import { PalkiaEX } from './palkia-ex';
 import { Sawk } from './sawk';
+import { Sigilyph } from './sigilyph';
 import { SilverBangle } from './silver-bangle';
 import { SilverMirror } from './silver-mirror';
 import { Suicune } from './suicune';
@@ -15,17 +16,18 @@ import { Wartortle } from './wartortle';
 
 export const setPlasmaBlast: Card[] = [
   new Archen(),
+  new GBooster(),
+  new GenesectEX(),
+  new GScope(),
   new JirachiEX(),
   new PalkiaEX(),
   new Sawk(),
+  new Sigilyph(),
   new SilverBangle(),
   new SilverMirror(),
   new Suicune(),
   new VirizionEX(),
   new Wartortle(),
-  new GenesectEX(),
-  new GBooster(),
-  new GScope(),
 
   //Reprints
   new ScoopUpCyclonePLB(),

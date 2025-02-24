@@ -272,8 +272,5 @@ export class PokemonCardList extends CardList {
     if (index !== -1) {
       this.tools.splice(index, 1);
     }
-
-    return;
   }
-
 }

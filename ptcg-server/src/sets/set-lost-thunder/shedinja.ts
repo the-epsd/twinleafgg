@@ -26,7 +26,7 @@ function* usePower(next: Function, store: StoreLike, state: State, self: Shedinj
   let hasPokemonWithoutTool = false;
   const blocked: CardTarget[] = [];
   player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-    if (cardList.tools.length === 0 && card !== self) {
+    if (cardList.tools.length < cardList.maxTools && card !== self) {
       hasPokemonWithoutTool = true;
     } else {
       blocked.push(target);

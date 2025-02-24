@@ -208,7 +208,6 @@ class PokemonCardList extends card_list_1.CardList {
         if (index !== -1) {
             this.tools.splice(index, 1);
         }
-        return;
     }
 }
 exports.PokemonCardList = PokemonCardList;

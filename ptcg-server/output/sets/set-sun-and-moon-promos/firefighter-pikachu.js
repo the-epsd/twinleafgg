@@ -43,7 +43,7 @@ class FirefighterPikachu extends pokemon_card_1.PokemonCard {
             let hasPokemonWithEnergy = false;
             const blocked = [];
             opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList, card, target) => {
-                if (cardList.cards.some(c => c instanceof game_1.EnergyCard && c.provides.includes(card_types_1.CardType.FIRE))) {
+                if (cardList.cards.some(c => c instanceof game_1.EnergyCard && (c.provides.includes(card_types_1.CardType.FIRE) || c.provides.includes(card_types_1.CardType.ANY)))) {
                     hasPokemonWithEnergy = true;
                 }
                 else {

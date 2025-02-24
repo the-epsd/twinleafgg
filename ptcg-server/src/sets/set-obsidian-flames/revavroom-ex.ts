@@ -1,9 +1,9 @@
 import { PokemonCard, Stage, CardType, PowerType, PlayerType, State, StateUtils, StoreLike, CardTag } from '../../game';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { CheckTableStateEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { AttachPokemonToolEffect } from '../../game/store/effects/play-card-effects';
 import { IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 export class Revavroomex extends PokemonCard {
@@ -48,17 +48,22 @@ export class Revavroomex extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttachPokemonToolEffect && StateUtils.isPokemonInPlay(effect.player, this)) {
-      const player = effect.player;
-
-      if (!IS_ABILITY_BLOCKED(store, state, player, this)) {
-
-        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-          if (cardList.getPokemonCard() === this) {
+    if (effect instanceof CheckTableStateEffect) {
+      state.players.forEach(player => {
+        if (!StateUtils.isPokemonInPlay(player, this)) {
+          return;
+        }
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+          if (card !== this) {
+            return;
+          }
+          if (!IS_ABILITY_BLOCKED(store, state, player, this)) {
             cardList.maxTools = 4;
+          } else {
+            cardList.maxTools = 1;
           }
         });
-      }
+      });
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {

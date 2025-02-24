@@ -3,9 +3,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Revavroomex = void 0;
 const game_1 = require("../../game");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
+const check_effects_1 = require("../../game/store/effects/check-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
-const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class Revavroomex extends game_1.PokemonCard {
     constructor() {
@@ -43,15 +43,23 @@ class Revavroomex extends game_1.PokemonCard {
         this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof play_card_effects_1.AttachPokemonToolEffect && game_1.StateUtils.isPokemonInPlay(effect.player, this)) {
-            const player = effect.player;
-            if (!prefabs_1.IS_ABILITY_BLOCKED(store, state, player, this)) {
-                player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
-                    if (cardList.getPokemonCard() === this) {
+        if (effect instanceof check_effects_1.CheckTableStateEffect) {
+            state.players.forEach(player => {
+                if (!game_1.StateUtils.isPokemonInPlay(player, this)) {
+                    return;
+                }
+                player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+                    if (card !== this) {
+                        return;
+                    }
+                    if (!prefabs_1.IS_ABILITY_BLOCKED(store, state, player, this)) {
                         cardList.maxTools = 4;
                     }
+                    else {
+                        cardList.maxTools = 1;
+                    }
                 });
-            }
+            });
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
