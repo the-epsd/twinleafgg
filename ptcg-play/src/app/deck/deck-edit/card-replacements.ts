@@ -498,6 +498,9 @@ export const cardReplacements = [
   { from: 'Terapagos ex SCR 173', to: 'Terapagos exHR SCR 173' },
   { from: 'Area Zero Underdepths SCR 174', to: 'Area Zero UnderdepthsHR SCR 174' },
 
+  //SSP
+  { from: 'Charcadet SSP 33', to: 'Charcadet 2 SSP 33' },
+
   //SSP FA
   { from: 'Larvesta SSP 196', to: 'LarvestaIR SSP 196' },
   { from: 'Feebas SSP 198', to: 'FeebasIR SSP 198' },
