@@ -76,8 +76,9 @@ import { Glimmora } from './glimmora';
 import { Tinkatuff2 } from './tinkatuff-2';
 import { Belliboltex } from './bellibolt-ex';
 import { BraveryCharm } from './bravery-charm';
-import {Girafarig} from './girafarig';
-//import { CalamitousSnowyMountain } from './new calamitous-snowy-mountain';
+import { Girafarig } from './girafarig';
+import { CalamitousWasteland } from './calamitous-wasteland';
+import { CalamitousSnowyMountain } from './calamitous-snowy-mountain';
 
 export const setPaldeaEvolved: Card[] = [
 
@@ -87,6 +88,8 @@ export const setPaldeaEvolved: Card[] = [
   new BossOrders(),
   new Bramblin(),
   new BraveryCharm(),
+  new CalamitousSnowyMountain(),
+  new CalamitousWasteland(),
   new Cetitan(),
   new Cetoddle(),
   new ChiYuex(),

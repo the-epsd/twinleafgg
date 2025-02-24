@@ -441,6 +441,7 @@ export const cardReplacements = [
 
   //SFA
   { from: 'Janine\'s Secret Art SFA 59', to: 'Janine\'s Secret Technique SFA 59' },
+  { from: 'Poké Vital A SFA 62', to: 'PokéVital A SFA 62' },
   { from: 'Tapu Bulu SFA 65', to: 'Tapu BuluIR SFA 65' },
   { from: 'Houndoom SFA 66', to: 'HoundoomIR SFA 66' },
   { from: 'Horsea SFA 67', to: 'HorseaIR SFA 67' },
@@ -909,6 +910,7 @@ export const exportReplacements = [
   //SFA
   { from: 'Bloodmoon Ursaluna SV6a 25', to: 'Bloodmoon Ursaluna SFA 25' },
   { from: 'Janine\'s Secret Technique SFA 59', to: 'Janine\'s Secret Art SFA 59' },
+  { from: 'PokéVital A SFA 62', to: 'Poké Vital A SFA 62' },
   { from: 'Tapu BuluIR SFA 65', to: 'Tapu Bulu SFA 65' },
   { from: 'HoundoomIR SFA 66', to: 'Houndoom SFA 66' },
   { from: 'HorseaIR SFA 67', to: 'Horsea SFA 67' },

@@ -5,36 +5,34 @@ import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType, Stage, CardType } from '../../game/store/card/card-types';
-import { CheckRetreatCostEffect } from '../../game/store/effects/check-effects';
+import { CheckPokemonTypeEffect, CheckRetreatCostEffect } from '../../game/store/effects/check-effects';
 import { StateUtils } from '../../game/store/state-utils';
 import { UseStadiumEffect } from '../../game/store/effects/game-effects';
 
-export class SkyarrowBridge extends TrainerCard {
+export class CalamitousWasteland extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.STADIUM;
-
-  public set: string = 'NXD';
-
-  public name: string = 'Skyarrow Bridge';
-
-  public fullName: string = 'Skyarrow Bridge NXD';
-
+  public set: string = 'PAL';
+  public regulationMark: string = 'G';
+  public name: string = 'Calamitous Wasteland';
+  public fullName: string = 'Calamitous Wasteland PAL';
   public cardImage: string = 'assets/cardback.png';
-
-  public setNumber: string = '91';
+  public setNumber: string = '175';
 
   public text: string =
-    'The Retreat Cost of each Basic Pokemon in play is [C] less.';
+    'The Retreat Cost of each Basic non-[F] Pokémon in play (both yours and your opponent\'s) is [C] more.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof CheckRetreatCostEffect && StateUtils.getStadiumCard(state) === this) {
       const player = effect.player;
-      const pokemonCard = player.active.getPokemonCard();
 
-      if (pokemonCard && pokemonCard.stage == Stage.BASIC) {
-        const index = effect.cost.indexOf(CardType.COLORLESS);
-        if (index !== -1) {
-          effect.cost.splice(index, 1);
+      if (player.active.isStage(Stage.BASIC)) {
+
+        const checkPokemonTypeEffect = new CheckPokemonTypeEffect(player.active);
+        store.reduceEffect(state, checkPokemonTypeEffect);
+
+        if (!checkPokemonTypeEffect.cardTypes.includes(CardType.FIGHTING)) {
+          effect.cost.push(CardType.COLORLESS);
         }
       }
     }

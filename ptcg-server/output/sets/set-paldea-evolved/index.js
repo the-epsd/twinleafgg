@@ -79,7 +79,8 @@ const tinkatuff_2_1 = require("./tinkatuff-2");
 const bellibolt_ex_1 = require("./bellibolt-ex");
 const bravery_charm_1 = require("./bravery-charm");
 const girafarig_1 = require("./girafarig");
-//import { CalamitousSnowyMountain } from './new calamitous-snowy-mountain';
+const calamitous_wasteland_1 = require("./calamitous-wasteland");
+const calamitous_snowy_mountain_1 = require("./calamitous-snowy-mountain");
 exports.setPaldeaEvolved = [
     new arctibax_1.Arctibax(),
     new artazon_1.Artazon(),
@@ -87,6 +88,8 @@ exports.setPaldeaEvolved = [
     new boss_orders_1.BossOrders(),
     new bramblin_1.Bramblin(),
     new bravery_charm_1.BraveryCharm(),
+    new calamitous_snowy_mountain_1.CalamitousSnowyMountain(),
+    new calamitous_wasteland_1.CalamitousWasteland(),
     new cetitan_1.Cetitan(),
     new cetoddle_1.Cetoddle(),
     new chi_yu_ex_1.ChiYuex(),

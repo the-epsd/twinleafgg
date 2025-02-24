@@ -43,6 +43,7 @@ const ralts_1 = require("./ralts");
 const ribombee_1 = require("./ribombee");
 const shedinja_1 = require("./shedinja");
 const shuckle_gx_1 = require("./shuckle-gx");
+const sightseer_1 = require("./sightseer");
 const skiploom_1 = require("./skiploom");
 const slowking_1 = require("./slowking");
 const slowpoke_1 = require("./slowpoke");
@@ -98,6 +99,7 @@ exports.setLostThunder = [
     new ribombee_1.Ribombee(),
     new shedinja_1.Shedinja(),
     new shuckle_gx_1.ShuckleGX(),
+    new sightseer_1.Sightseer(),
     new slowking_1.Slowking(),
     new slowpoke_1.Slowpoke(),
     new skiploom_1.Skiploom(),
