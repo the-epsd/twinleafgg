@@ -24,6 +24,7 @@ export declare class Eldegoss extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
+    readonly COTTON_LIFT_MARKER = "COTTON_LIFT_MARKER";
     readonly DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = "DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER";
     readonly CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = "CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
