@@ -15,6 +15,7 @@ import { Metagross } from './metagross';
 import { Minccino } from './minccino';
 import { MortysConviction } from './mortys-conviction';
 import { RagingBoltex } from './raging-bolt-ex';
+import { Relicanth } from './relicanth';
 import { Reuniclus } from './reuniclus';
 import { Salvatore } from './salvatore';
 import { Torterraex } from './torterra-ex';
@@ -28,6 +29,10 @@ export declare class CharjabugIR extends Charjabug {
     fullName: string;
 }
 export declare class ReuniclusIR extends Reuniclus {
+    setNumber: string;
+    fullName: string;
+}
+export declare class RelicanthIR extends Relicanth {
     setNumber: string;
     fullName: string;
 }

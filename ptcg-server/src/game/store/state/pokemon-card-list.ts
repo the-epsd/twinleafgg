@@ -269,8 +269,9 @@ export class PokemonCardList extends CardList {
 
   removeTool(tool: Card): void {
     const index = this.tools.indexOf(tool);
-    if (index !== -1) {
-      this.tools.splice(index, 1);
+    if (index >= 0) {
+      delete this.tools[index];
     }
+    this.tools = this.tools.filter(c => c instanceof Card);
   }
 }

@@ -22,7 +22,7 @@ import { ExplorersGuidance } from './explorers-guidance';
 import { Farigirafex } from './farigiraf-ex';
 import { Feraligatr } from './feraligatr';
 import { FlutterMane } from './flutter-mane';
-import { GrotleIR, CharjabugIR, ReuniclusIR, GastlyIR, MetagrossIR, ChatotIR, MinccinoIR, CinccinoIR, TorterraexFA, IronLeavesexFA, GougingFireexFA, WalkingWakeexFA, IronCrownexFA, GengarexFA, RagingBoltexFA, BiancasDevotionFA, CryptomaniacsDecipheringFA, EriFA, ExplorersGuidanceFA, MortysConvictionFA, SalvatoreFA, IronLeavesexSIR, GougingFireexSIR, WalkingWakeexSIR, IronCrownexSIR, RagingBoltexSIR, BiancasDevotionSIR, EriSIR, MortysConvictionSIR, SalvatoreSIR, IronLeavesexHR, GougingFireexHR, WalkingWakeexHR, IronCrownexHR, RagingBoltexHR } from './full-art';
+import { GrotleIR, CharjabugIR, ReuniclusIR, GastlyIR, MetagrossIR, ChatotIR, MinccinoIR, CinccinoIR, TorterraexFA, IronLeavesexFA, GougingFireexFA, WalkingWakeexFA, IronCrownexFA, GengarexFA, RagingBoltexFA, BiancasDevotionFA, CryptomaniacsDecipheringFA, EriFA, ExplorersGuidanceFA, MortysConvictionFA, SalvatoreFA, IronLeavesexSIR, GougingFireexSIR, WalkingWakeexSIR, IronCrownexSIR, RagingBoltexSIR, BiancasDevotionSIR, EriSIR, MortysConvictionSIR, SalvatoreSIR, IronLeavesexHR, GougingFireexHR, WalkingWakeexHR, IronCrownexHR, RagingBoltexHR, RelicanthIR } from './full-art';
 import { FullMetalLab } from './full-metal-lab';
 import { Gastly } from './gastly';
 import { Gengarex } from './gengar-ex';
@@ -178,6 +178,7 @@ export const setTemporalForces: Card[] = [
   new GrotleIR(),
   new CharjabugIR(),
   new ReuniclusIR(),
+  new RelicanthIR(),
   new GastlyIR(),
   new MetagrossIR(),
   new ChatotIR(),

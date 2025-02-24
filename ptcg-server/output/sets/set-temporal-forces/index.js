@@ -178,6 +178,7 @@ exports.setTemporalForces = [
     new full_art_1.GrotleIR(),
     new full_art_1.CharjabugIR(),
     new full_art_1.ReuniclusIR(),
+    new full_art_1.RelicanthIR(),
     new full_art_1.GastlyIR(),
     new full_art_1.MetagrossIR(),
     new full_art_1.ChatotIR(),

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.RagingBoltexHR = exports.IronCrownexHR = exports.WalkingWakeexHR = exports.GougingFireexHR = exports.IronLeavesexHR = exports.SalvatoreSIR = exports.MortysConvictionSIR = exports.EriSIR = exports.BiancasDevotionSIR = exports.RagingBoltexSIR = exports.IronCrownexSIR = exports.WalkingWakeexSIR = exports.GougingFireexSIR = exports.IronLeavesexSIR = exports.SalvatoreFA = exports.MortysConvictionFA = exports.ExplorersGuidanceFA = exports.EriFA = exports.CryptomaniacsDecipheringFA = exports.BiancasDevotionFA = exports.RagingBoltexFA = exports.GengarexFA = exports.IronCrownexFA = exports.WalkingWakeexFA = exports.GougingFireexFA = exports.IronLeavesexFA = exports.TorterraexFA = exports.CinccinoIR = exports.MinccinoIR = exports.ChatotIR = exports.MetagrossIR = exports.GastlyIR = exports.ReuniclusIR = exports.CharjabugIR = exports.GrotleIR = void 0;
+exports.RagingBoltexHR = exports.IronCrownexHR = exports.WalkingWakeexHR = exports.GougingFireexHR = exports.IronLeavesexHR = exports.SalvatoreSIR = exports.MortysConvictionSIR = exports.EriSIR = exports.BiancasDevotionSIR = exports.RagingBoltexSIR = exports.IronCrownexSIR = exports.WalkingWakeexSIR = exports.GougingFireexSIR = exports.IronLeavesexSIR = exports.SalvatoreFA = exports.MortysConvictionFA = exports.ExplorersGuidanceFA = exports.EriFA = exports.CryptomaniacsDecipheringFA = exports.BiancasDevotionFA = exports.RagingBoltexFA = exports.GengarexFA = exports.IronCrownexFA = exports.WalkingWakeexFA = exports.GougingFireexFA = exports.IronLeavesexFA = exports.TorterraexFA = exports.CinccinoIR = exports.MinccinoIR = exports.ChatotIR = exports.MetagrossIR = exports.GastlyIR = exports.RelicanthIR = exports.ReuniclusIR = exports.CharjabugIR = exports.GrotleIR = void 0;
 const biancas_devotion_1 = require("./biancas-devotion");
 const charjabug_1 = require("./charjabug");
 const chatot_1 = require("./chatot");
@@ -18,6 +18,7 @@ const metagross_1 = require("./metagross");
 const minccino_1 = require("./minccino");
 const mortys_conviction_1 = require("./mortys-conviction");
 const raging_bolt_ex_1 = require("./raging-bolt-ex");
+const relicanth_1 = require("./relicanth");
 const reuniclus_1 = require("./reuniclus");
 const salvatore_1 = require("./salvatore");
 const torterra_ex_1 = require("./torterra-ex");
@@ -74,10 +75,14 @@ exports.ReuniclusIR = ReuniclusIR;
 //   public setNumber = '172';
 //   public fullName: string = 'CutieflyIR TEF';
 // }
-// export class RelicanthIR extends Relicanth {
-//   public setNumber = '173';
-//   public fullName: string = 'RelicanthIR TEF';
-// }
+class RelicanthIR extends relicanth_1.Relicanth {
+    constructor() {
+        super(...arguments);
+        this.setNumber = '173';
+        this.fullName = 'RelicanthIR TEF';
+    }
+}
+exports.RelicanthIR = RelicanthIR;
 // export class ExcadrillIR extends Excadrill {
 //   public setNumber = '174';
 //   public fullName: string = 'ExcadrillIR TEF';

@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PokemonCardList = void 0;
+const card_1 = require("../card/card");
 const card_types_1 = require("../card/card-types");
 const card_list_1 = require("./card-list");
 const card_marker_1 = require("./card-marker");
@@ -205,9 +206,10 @@ class PokemonCardList extends card_list_1.CardList {
     }
     removeTool(tool) {
         const index = this.tools.indexOf(tool);
-        if (index !== -1) {
-            this.tools.splice(index, 1);
+        if (index >= 0) {
+            delete this.tools[index];
         }
+        this.tools = this.tools.filter(c => c instanceof card_1.Card);
     }
 }
 exports.PokemonCardList = PokemonCardList;
