@@ -1,5 +1,4 @@
 import { BoardEffect, CardTag, SpecialCondition, SuperType } from '../card/card-types';
-import { PokemonCard } from '../card/pokemon-card';
 import { CardList } from './card-list';
 import { Marker } from './card-marker';
 export class PokemonCardList extends CardList {
@@ -15,12 +14,14 @@ export class PokemonCardList extends CardList {
         this.sleepFlips = 1;
         this.boardEffect = [];
         this.hpBonus = 0;
+        this.tools = [];
+        this.maxTools = 1;
         this.isActivatingCard = false;
     }
     getPokemons() {
         const result = [];
         for (const card of this.cards) {
-            if (card.superType === SuperType.POKEMON && card !== this.tool) {
+            if (card.superType === SuperType.POKEMON && !(this.tools.includes(card))) {
                 result.push(card);
             }
             else if (card.name === 'Lillie\'s Poké Doll') {
@@ -94,8 +95,8 @@ export class PokemonCardList extends CardList {
         if (this.cards.length === 0) {
             this.damage = 0;
         }
-        if (this.tool && !this.cards.includes(this.tool)) {
-            this.tool = undefined;
+        for (const tool of this.tools) {
+            this.removeTool(tool);
         }
     }
     clearAllSpecialConditions() {
@@ -199,13 +200,10 @@ export class PokemonCardList extends CardList {
     isEthans() {
         return this.cards.some(c => c.tags.includes(CardTag.ETHANS));
     }
-    getToolEffect() {
-        if (!this.tool) {
-            return;
-        }
-        const toolCard = this.tool.cards;
-        if (toolCard instanceof PokemonCard) {
-            return toolCard.powers[0] || toolCard.attacks[0];
+    removeTool(tool) {
+        const index = this.tools.indexOf(tool);
+        if (index !== -1) {
+            this.tools.splice(index, 1);
         }
         return;
     }

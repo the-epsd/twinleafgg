@@ -19,10 +19,12 @@ import { CynthiasGabite } from './cynthias-gabite';
 import { CynthiasSpiritomb } from './cynthias-spiritomb';
 import { CynthiasPowerWeight } from './cynthias-power-weight';
 import { Rotom } from './rotom';
+import { Zeraora } from './zeraora';
 
 export const setSV9a: Card[] = [
 
   new Rotom(),
+  new Zeraora(),
 
   new CynthiasRoseradeIR(),
   new CynthiasGarchompex(),

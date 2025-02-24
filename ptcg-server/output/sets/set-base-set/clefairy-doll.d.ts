@@ -33,6 +33,5 @@ export declare class ClefairyDoll extends TrainerCard {
         exemptFromAbilityLock: boolean;
         text: string;
     }[];
-    text: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

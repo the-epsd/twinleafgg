@@ -8,6 +8,7 @@ const game_1 = require("../../game");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const costs_1 = require("../../game/store/prefabs/costs");
+const attack_effects_1 = require("../../game/store/effects/attack-effects");
 class Eiscueex extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -52,6 +53,15 @@ class Eiscueex extends pokemon_card_1.PokemonCard {
                     cardList.marker.removeMarker(this.SCALDING_BLOCK_MARKER, this);
                 }
             });
+        }
+        if (effect instanceof attack_effects_1.PutDamageEffect && effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
+            const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            // Target is not Active
+            if (effect.target === player.active || effect.target === opponent.active) {
+                return state;
+            }
+            effect.preventDefault = true;
         }
         return state;
     }

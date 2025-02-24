@@ -26,6 +26,5 @@ export declare class RareFossil extends TrainerCard {
     fullName: string;
     regulationMark: string;
     powers: Power[];
-    text: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

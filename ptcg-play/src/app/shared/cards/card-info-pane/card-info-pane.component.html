@@ -37,6 +37,7 @@
       <div class="power">
         <div class="power-header">
           <div class="power-type" [ngSwitch]="power.powerType">
+            <div class="ability" *ngSwitchCase="PowerType.TRAINER_ABILITY" translate></div>
             <div class="ability" *ngSwitchCase="PowerType.ABILITY" translate>CARDS_ABILITY</div>
             <div class="ability" *ngSwitchCase="PowerType.POKEPOWER" translate>CARDS_POKE_POWER</div>
             <div class="ability" *ngSwitchCase="PowerType.POKEMON_POWER" translate>CARDS_POKEMON_POWER</div>
@@ -171,6 +172,7 @@
       <div class="power">
         <div class="power-header">
           <div class="power-type" [ngSwitch]="power.powerType">
+            <div class="ability" *ngSwitchCase="PowerType.TRAINER_ABILITY" translate></div>
             <div class="ability" *ngSwitchCase="PowerType.ABILITY" translate>CARDS_ABILITY</div>
           </div>
           <div class="power-name">

@@ -1,3 +1,5 @@
+import { GameError } from '../../game-error';
+import { GameMessage } from '../../game-message';
 import { PlayerType, SlotType } from '../actions/play-card-action';
 import { CardTag } from '../card/card-types';
 import { CardList } from './card-list';
@@ -145,6 +147,18 @@ export class Player {
             }
         });
         return result;
+    }
+    getSlot(slotType) {
+        switch (slotType) {
+            case SlotType.DISCARD:
+                return this.discard;
+            case SlotType.HAND:
+                return this.hand;
+            case SlotType.LOSTZONE:
+                return this.lostzone;
+            default:
+                throw new GameError(GameMessage.INVALID_TARGET);
+        }
     }
     switchPokemon(target) {
         const benchIndex = this.bench.indexOf(target);

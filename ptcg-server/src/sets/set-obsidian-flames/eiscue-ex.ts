@@ -4,10 +4,11 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
-import { GameError, GameMessage, PlayerType } from '../../game';
+import { GameError, GameMessage, PlayerType, StateUtils } from '../../game';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../game/store/prefabs/costs';
+import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 
 export class Eiscueex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -60,7 +61,17 @@ export class Eiscueex extends PokemonCard {
       });
     }
 
+    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      // Target is not Active
+      if (effect.target === player.active || effect.target === opponent.active) {
+        return state;
+      }
+
+      effect.preventDefault = true;
+    }
     return state;
   }
-
 }

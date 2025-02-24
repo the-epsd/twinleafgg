@@ -95,17 +95,14 @@ class Flareonex extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
             effect.player.marker.addMarker(this.ATTACK_USED_2_MARKER, this);
         }
-        if (effect instanceof attack_effects_1.PutDamageEffect) {
+        if (effect instanceof attack_effects_1.PutDamageEffect && effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             // Target is not Active
             if (effect.target === player.active || effect.target === opponent.active) {
                 return state;
             }
-            // Target is this Pokemon
-            if (effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
-                effect.preventDefault = true;
-            }
+            effect.preventDefault = true;
         }
         return state;
     }

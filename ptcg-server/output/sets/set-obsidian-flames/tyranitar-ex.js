@@ -5,6 +5,7 @@ const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
+const attack_effects_1 = require("../../game/store/effects/attack-effects");
 class Tyranitarex extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -59,6 +60,15 @@ class Tyranitarex extends pokemon_card_1.PokemonCard {
             if (isThereDamage) {
                 effect.damage += 100;
             }
+        }
+        if (effect instanceof attack_effects_1.PutDamageEffect && effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
+            const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            // Target is not Active
+            if (effect.target === player.active || effect.target === opponent.active) {
+                return state;
+            }
+            effect.preventDefault = true;
         }
         return state;
     }

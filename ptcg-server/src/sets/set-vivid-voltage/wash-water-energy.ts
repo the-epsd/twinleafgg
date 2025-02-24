@@ -25,16 +25,19 @@ export class WashWaterEnergy extends EnergyCard {
   public fullName = 'Wash Water Energy VIV';
 
   public text =
-    'As long as this card is attached to a Pokémon, it provides [W] Energy.' +
-    '' +
-    'Prevent all effects of attacks from your opponent\'s Pokémon done to the [W] Pokémon this card is attached to. (Existing effects are not removed. Damage is not an effect.)';
+    `As long as this card is attached to a Pokémon, it provides [W] Energy.' +
+    
+    Prevent all effects of attacks from your opponent\'s Pokémon done to the [W] Pokémon this card is attached to. (Existing effects are not removed. Damage is not an effect.)`;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
+      const pokemon = effect.source;
 
-      effect.energyMap.push({ card: this, provides: [CardType.WATER] });
-
+      if (pokemon.getPokemonCard()?.cardType === CardType.WATER) {
+        effect.energyMap.push({ card: this, provides: [CardType.WATER] });
+        this.provides = [CardType.WATER];
+      }
       return state;
     }
 

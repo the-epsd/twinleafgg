@@ -31,16 +31,19 @@ class UnidentifiedFossil extends game_1.TrainerCard {
         this.powers = [
             {
                 name: 'Unidentified Fossil',
-                text: 'At any time during your turn (before your attack), you may discard this card from play.',
+                text: `Play this card as if it were a 60-HP [C] Basic Pokémon. At any time during your turn (before your attack), you may discard this card from play.
+
+This card can't retreat.`,
                 useWhenInPlay: true,
                 exemptFromAbilityLock: true,
-                powerType: game_1.PowerType.ABILITY
+                powerType: game_1.PowerType.TRAINER_ABILITY
             }
         ];
-        this.text = 'Play this card as if it were a 60-HP [C] Basic Pokémon.' +
-            '' +
-            'This card can\'t retreat.';
     }
+    // public text =
+    //   'Play this card as if it were a 60-HP [C] Basic Pokémon.' +
+    //   '' +
+    //   'This card can\'t retreat.';
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;

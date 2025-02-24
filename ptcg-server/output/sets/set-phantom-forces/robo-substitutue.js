@@ -35,14 +35,16 @@ class RoboSubstitute extends __1.TrainerCard {
         this.powers = [
             {
                 name: 'Robo Substitute',
-                text: 'At any time during your turn (before your attack), if this Pokémon is your Active Pokémon, you may discard all cards from it and put it on the bottom of your deck.',
+                text: `Play this card as if it were a 30 HP [C] Basic Pokémon. At any time during your turn (before your attack), you may discard this card from play. 
+      
+      This card can't retreat. If this card is Knocked Out, your opponent can't take any Prize cards for it.`,
                 useWhenInPlay: true,
                 exemptFromAbilityLock: true,
-                powerType: __1.PowerType.ABILITY
+                powerType: __1.PowerType.TRAINER_ABILITY
             }
         ];
-        this.text = 'Play this card as if it were a 30 HP [C] Basic Pokémon. At any time during your turn (before your attack), you may discard this card from play. This card can\'t retreat. If this card is Knocked Out, your opponent can\'t take any Prize cards for it.';
     }
+    // public text = 'Play this card as if it were a 30 HP [C] Basic Pokémon. At any time during your turn (before your attack), you may discard this card from play. This card can\'t retreat. If this card is Knocked Out, your opponent can\'t take any Prize cards for it.';
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const cardList = __1.StateUtils.findCardList(state, this);

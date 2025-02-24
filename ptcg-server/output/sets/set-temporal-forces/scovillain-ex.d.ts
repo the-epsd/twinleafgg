@@ -29,6 +29,6 @@ export declare class Scovillainex extends PokemonCard {
     cardImage: string;
     name: string;
     fullName: string;
-    readonly SPICY_BIND_MARKER = "SPICY_BIND_MARKER";
+    readonly DEFENDING_POKEMON_CANNOT_RETREAT_MARKER = "DEFENDING_POKEMON_CANNOT_RETREAT_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

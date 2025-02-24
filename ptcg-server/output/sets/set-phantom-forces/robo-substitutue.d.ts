@@ -27,6 +27,5 @@ export declare class RoboSubstitute extends TrainerCard {
     name: string;
     fullName: string;
     powers: Power[];
-    text: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }
