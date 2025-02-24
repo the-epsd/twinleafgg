@@ -27,7 +27,6 @@ export * from './store/prompts/attach-energy-prompt';
 export * from './store/prompts/choose-attack-prompt';
 export * from './store/prompts/choose-cards-prompt';
 export * from './store/prompts/choose-energy-prompt';
-export * from './store/prompts/choose-tool-prompt';
 export * from './store/prompts/choose-pokemon-prompt';
 export * from './store/prompts/choose-prize-prompt';
 export * from './store/prompts/coin-flip-prompt';

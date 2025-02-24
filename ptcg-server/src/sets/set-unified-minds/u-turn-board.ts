@@ -25,7 +25,9 @@ export class UTurnBoard extends TrainerCard {
   public readonly U_TURN_BOARD_MARKER = 'U_TURN_BOARD_MARKER';
 
   public text: string =
-    'The Retreat Cost of the Pokémon this card is attached to is [C] less. If this card is discarded from play, put it into your hand instead of the discard pile.';
+    `The Retreat Cost of the Pokémon this card is attached to is [C] less. 
+    
+    If this card is discarded from play, put it into your hand instead of the discard pile.`;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -1,4 +1,4 @@
-import { CardType, EnergyType, Format, SuperType, TrainerType } from './card-types';
+import { CardType, EnergyType, Format, SuperType } from './card-types';
 import { Effect } from '../effects/effect';
 import { State } from '../state/state';
 import { StoreLike } from '../store-like';

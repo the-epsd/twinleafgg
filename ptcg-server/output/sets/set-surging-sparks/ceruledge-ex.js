@@ -55,17 +55,14 @@ class Ceruledgeex extends pokemon_card_1.PokemonCard {
                 cardList.cards = cardList.cards.filter(c => c.superType !== card_types_1.SuperType.ENERGY);
             }
         }
-        if (effect instanceof attack_effects_1.PutDamageEffect) {
+        if (effect instanceof attack_effects_1.PutDamageEffect && effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             // Target is not Active
             if (effect.target === player.active || effect.target === opponent.active) {
                 return state;
             }
-            // Target is this Pokemon
-            if (effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
-                effect.preventDefault = true;
-            }
+            effect.preventDefault = true;
         }
         return state;
     }

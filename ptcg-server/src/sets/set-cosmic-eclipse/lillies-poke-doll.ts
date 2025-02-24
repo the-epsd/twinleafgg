@@ -42,23 +42,29 @@ export class LilliesPokeDoll extends TrainerCard {
   public powers: Power[] = [
     {
       name: 'Lillie\'s Poké Doll',
-      text: 'At any time during your turn (before your attack), if this Pokémon is your Active Pokémon, you may discard all cards from it and put it on the bottom of your deck.',
+      text: `Play this card as if it were a 30-HP [C] Basic Pokémon. At any time during your turn (before your attack), if this Pokémon is your Active Pokémon, you may discard all cards from it and put it on the bottom of your deck.
+
+This card can't retreat. If this card is Knocked Out, your opponent can't take any Prize cards for it.`,
       useWhenInPlay: true,
       exemptFromAbilityLock: true,
-      powerType: PowerType.ABILITY
+      powerType: PowerType.TRAINER_ABILITY
     }
   ];
 
-  public text =
-    'Play this card as if it were a 30-HP [C] Basic Pokémon. At any time during your turn (before your attack), if this Pokémon is your Active Pokémon, you may discard all cards from it and put it on the bottom of your deck.' +
-    '' +
-    'This card can\'t retreat. If this card is Knocked Out, your opponent can\'t take any Prize cards for it.';
+  // public text =
+  //   'Play this card as if it were a 30-HP [C] Basic Pokémon. At any time during your turn (before your attack), if this Pokémon is your Active Pokémon, you may discard all cards from it and put it on the bottom of your deck.' +
+  //   '' +
+  //   'This card can\'t retreat. If this card is Knocked Out, your opponent can\'t take any Prize cards for it.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0] && effect.player.active.cards.includes(this)) {
+    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
       const pokeDollCardList = StateUtils.findCardList(state, this);
+
+      if (player.active.cards[0] !== this) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
+      }
 
       store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_ON_BOTTOM_OF_DECK, { name: player.name, card: this.name });
 

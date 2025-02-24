@@ -40,7 +40,7 @@ class Articuno extends pokemon_card_1.PokemonCard {
             if (hasBench === false) {
                 return state;
             }
-            return store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.active, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { superType: card_types_1.SuperType.ENERGY }, { allowCancel: false, min: 2, max: 2, validCardTypes: [W, card_types_1.CardType.ANY, card_types_1.CardType.WLFM, card_types_1.CardType.GRW] }), transfers => {
+            return store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.active, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { superType: card_types_1.SuperType.ENERGY }, { allowCancel: false, min: 2, max: 2, validCardTypes: [card_types_1.CardType.WATER, card_types_1.CardType.ANY, card_types_1.CardType.WLFM, card_types_1.CardType.GRW] }), transfers => {
                 transfers = transfers || [];
                 for (const transfer of transfers) {
                     const target = game_1.StateUtils.getTarget(state, player, transfer.to);

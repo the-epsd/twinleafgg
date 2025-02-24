@@ -85,7 +85,7 @@ export class Galvantulaex extends PokemonCard {
       player.marker.removeMarker(this.OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER, this);
     }
 
-    if (effect instanceof PutDamageEffect) {
+    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -94,12 +94,8 @@ export class Galvantulaex extends PokemonCard {
         return state;
       }
 
-      // Target is this Pokemon
-      if (effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
-        effect.preventDefault = true;
-      }
+      effect.preventDefault = true;
     }
-
     return state;
   }
 }

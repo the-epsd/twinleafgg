@@ -65,17 +65,14 @@ class Leafeonex extends pokemon_card_1.PokemonCard {
                 state = store.reduceEffect(state, healTargetEffect);
             });
         }
-        if (effect instanceof attack_effects_1.PutDamageEffect) {
+        if (effect instanceof attack_effects_1.PutDamageEffect && effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
             const player = effect.player;
             const opponent = state_utils_1.StateUtils.getOpponent(state, player);
             // Target is not Active
             if (effect.target === player.active || effect.target === opponent.active) {
                 return state;
             }
-            // Target is this Pokemon
-            if (effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
-                effect.preventDefault = true;
-            }
+            effect.preventDefault = true;
         }
         return state;
     }

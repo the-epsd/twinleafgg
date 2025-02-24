@@ -2,7 +2,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { StoreLike, State, StateUtils, CardTag, CardType, Stage, EnergyCard, SpecialCondition, CardList } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import {AddSpecialConditionsEffect} from '../../game/store/effects/attack-effects';
+import { AddSpecialConditionsEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 
 export class Magcargoex extends PokemonCard {
   public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
@@ -11,18 +11,18 @@ export class Magcargoex extends PokemonCard {
   public cardType: CardType = R;
   public hp: number = 270;
   public weakness = [{ type: W }];
-  public retreat = [ C, C, C ];
+  public retreat = [C, C, C];
 
   public attacks = [
     {
       name: 'Hot Magma',
-      cost: [ R, C ],
+      cost: [R, C],
       damage: 70,
       text: 'Your opponent\'s Active Pokémon is now Burned.'
     },
     {
       name: 'Ground Burn',
-      cost: [ R, R, C ],
+      cost: [R, R, C],
       damage: 140,
       damageCalculation: '+',
       text: 'Discard the top card of each player\'s deck. This attack does 140 more damage for each Energy card discarded in this way.'
@@ -55,10 +55,10 @@ export class Magcargoex extends PokemonCard {
       player.deck.moveTo(playerTopDeck, 1);
       opponent.deck.moveTo(opponentTopDeck, 1);
 
-      if (playerTopDeck.cards[0] instanceof EnergyCard){
+      if (playerTopDeck.cards[0] instanceof EnergyCard) {
         damageScaling++;
       }
-      if (opponentTopDeck.cards[0] instanceof EnergyCard){
+      if (opponentTopDeck.cards[0] instanceof EnergyCard) {
         damageScaling++;
       }
 
@@ -66,6 +66,18 @@ export class Magcargoex extends PokemonCard {
 
       playerTopDeck.moveTo(player.discard);
       opponentTopDeck.moveTo(opponent.discard);
+    }
+
+    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      // Target is not Active
+      if (effect.target === player.active || effect.target === opponent.active) {
+        return state;
+      }
+
+      effect.preventDefault = true;
     }
     return state;
   }

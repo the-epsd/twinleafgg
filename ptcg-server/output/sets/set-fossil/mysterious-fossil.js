@@ -33,14 +33,15 @@ class MysteriousFossil extends game_1.TrainerCard {
         this.powers = [
             {
                 name: 'Mysterious Fossil',
-                text: 'At any time during your turn before your attack, you may discard Mysterious Fossil from play.',
+                text: `Play Mysterious Fossil as if it were a Basic Pokémon. While in play, Mysterious Fossil counts as a Pokémon (instead of a Trainer card). Mysterious Fossil has no attacks, can't retreat, and can't be Asleep, Confused, Paralyzed, or Poisoned. If Mysterious Fossil is Knocked Out, it doesn't count as a Knocked Out Pokémon. (Discard it anyway.) At any time during your turn before your attack, you may discard Mysterious Fossil from play.`,
                 useWhenInPlay: true,
                 exemptFromAbilityLock: true,
-                powerType: game_1.PowerType.ABILITY
+                powerType: game_1.PowerType.TRAINER_ABILITY
             }
         ];
-        this.text = 'Play Mysterious Fossil as if it were a Basic Pokémon. While in play, Mysterious Fossil counts as a Pokémon (instead of a Trainer card). Mysterious Fossil has no attacks, can\'t retreat, and can\'t be Asleep, Confused, Paralyzed, or Poisoned. If Mysterious Fossil is Knocked Out, it doesn\'t count as a Knocked Out Pokémon. (Discard it anyway.)';
     }
+    // public text =
+    //   'Play Mysterious Fossil as if it were a Basic Pokémon. While in play, Mysterious Fossil counts as a Pokémon (instead of a Trainer card). Mysterious Fossil has no attacks, can\'t retreat, and can\'t be Asleep, Confused, Paralyzed, or Poisoned. If Mysterious Fossil is Knocked Out, it doesn\'t count as a Knocked Out Pokémon. (Discard it anyway.)';
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const cardList = effect.player.active;

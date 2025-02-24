@@ -10,18 +10,18 @@ export class Cyclizarex extends PokemonCard {
   public cardType: CardType = C;
   public hp: number = 210;
   public weakness = [{ type: F }];
-  public retreat = [ C ];
+  public retreat = [C];
 
   public attacks = [
     {
       name: 'Break Through',
-      cost: [ C, C, C ],
+      cost: [C, C, C],
       damage: 130,
       text: 'This attack also does 30 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
     },
     {
       name: 'Zircon Road',
-      cost: [ G, R, P ],
+      cost: [G, R, P],
       damage: 180,
       text: 'You may draw 5 cards.'
     }
@@ -64,7 +64,7 @@ export class Cyclizarex extends PokemonCard {
     // Zircon Road
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
-      
+
       state = store.prompt(state, new ConfirmPrompt(
         player.id,
         GameMessage.WANT_TO_USE_ABILITY,
@@ -73,6 +73,18 @@ export class Cyclizarex extends PokemonCard {
           player.deck.moveTo(player.hand, 5);
         }
       });
+    }
+
+    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      // Target is not Active
+      if (effect.target === player.active || effect.target === opponent.active) {
+        return state;
+      }
+
+      effect.preventDefault = true;
     }
     return state;
   }

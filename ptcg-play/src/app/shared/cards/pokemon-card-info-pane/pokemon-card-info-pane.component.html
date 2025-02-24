@@ -40,6 +40,7 @@
         <div class="power">
           <div class="power-header">
             <div class="power-type" [ngSwitch]="power.powerType">
+              <div class="ability" *ngSwitchCase="PowerType.TRAINER_ABILITY" translate></div>
               <div class="ability" *ngSwitchCase="PowerType.ABILITY" translate>ABILITY</div>
               <div class="ability" *ngSwitchCase="PowerType.POKEPOWER" translate>POKÉ POWER</div>
               <div class="ability" *ngSwitchCase="PowerType.POKEMON_POWER" translate>POKÉMON POWER</div>

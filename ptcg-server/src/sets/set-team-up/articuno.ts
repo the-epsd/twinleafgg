@@ -60,7 +60,7 @@ export class Articuno extends PokemonCard {
         PlayerType.BOTTOM_PLAYER,
         [SlotType.BENCH],
         { superType: SuperType.ENERGY },
-        { allowCancel: false, min: 2, max: 2, validCardTypes: [W, CardType.ANY, CardType.WLFM, CardType.GRW] }
+        { allowCancel: false, min: 2, max: 2, validCardTypes: [CardType.WATER, CardType.ANY, CardType.WLFM, CardType.GRW] }
       ), transfers => {
         transfers = transfers || [];
         for (const transfer of transfers) {

@@ -65,7 +65,7 @@ export class Arcanineex extends PokemonCard {
         player.id,
         GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
         checkProvidedEnergy.energyMap,
-        [ CardType.FIRE, CardType.FIRE ],
+        [CardType.FIRE, CardType.FIRE],
         { allowCancel: false }
       ), energy => {
         const cards: Card[] = (energy || []).map(e => e.card);
@@ -75,7 +75,7 @@ export class Arcanineex extends PokemonCard {
       });
     }
 
-    if (effect instanceof PutDamageEffect) {
+    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -84,10 +84,7 @@ export class Arcanineex extends PokemonCard {
         return state;
       }
 
-      // Target is this Pokemon
-      if (effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
-        effect.preventDefault = true;
-      }
+      effect.preventDefault = true;
     }
     return state;
   }

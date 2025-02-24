@@ -1,16 +1,17 @@
-import { PokemonCard, Stage, CardType, PowerType, State, StoreLike } from '../../game';
+import { PokemonCard, Stage, CardType, PowerType, State, StoreLike, CardTag } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 export declare class Revavroomex extends PokemonCard {
-    regulationMark: string;
     stage: Stage;
+    evolvesFrom: string;
+    tags: CardTag[];
     cardType: CardType;
     hp: number;
     weakness: {
-        type: CardType;
+        type: CardType.FIRE;
     }[];
-    retreat: CardType[];
+    retreat: CardType.COLORLESS[];
     resistance: {
-        type: CardType;
+        type: CardType.GRASS;
         value: number;
     }[];
     powers: {
@@ -20,13 +21,14 @@ export declare class Revavroomex extends PokemonCard {
     }[];
     attacks: {
         name: string;
-        cost: CardType[];
+        cost: (CardType.METAL | CardType.COLORLESS)[];
         damage: number;
         text: string;
     }[];
+    regulationMark: string;
     set: string;
-    cardImage: string;
     setNumber: string;
+    cardImage: string;
     name: string;
     fullName: string;
     readonly DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = "DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER";
