@@ -17,7 +17,7 @@ class ChiYu extends pokemon_card_1.PokemonCard {
         this.retreat = [card_types_1.CardType.COLORLESS];
         this.attacks = [
             {
-                name: 'Flaire Bringer',
+                name: 'Flare Bringer',
                 cost: [card_types_1.CardType.FIRE],
                 damage: 0,
                 text: 'Attach up to 2 Basic [R] Energy cards from your discard pile to 1 of your Pokémon.'

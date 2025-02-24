@@ -12,6 +12,8 @@ export class IronHands extends PokemonCard {
 
   public cardType: CardType = L;
 
+  public tags = [CardTag.FUTURE];
+
   public hp: number = 140;
 
   public weakness = [{ type: F }];

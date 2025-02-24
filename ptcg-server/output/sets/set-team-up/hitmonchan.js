@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Hitmonchan = void 0;
+const game_1 = require("../../game");
 const card_types_1 = require("../../game/store/card/card-types");
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const prefabs_1 = require("../../game/store/prefabs/prefabs");
@@ -39,7 +40,11 @@ class Hitmonchan extends pokemon_card_1.PokemonCard {
         }
         if (prefabs_1.AFTER_ATTACK(effect) && this.usedHitAndRun) {
             const player = effect.player;
-            prefabs_1.SWITCH_ACTIVE_WITH_BENCHED(store, state, player);
+            state = store.prompt(state, new game_1.ConfirmPrompt(effect.player.id, game_1.GameMessage.WANT_TO_USE_ABILITY), wantToUse => {
+                if (wantToUse) {
+                    prefabs_1.SWITCH_ACTIVE_WITH_BENCHED(store, state, player);
+                }
+            });
             this.usedHitAndRun = false;
         }
         return state;
