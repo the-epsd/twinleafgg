@@ -5,6 +5,7 @@ const rockruff_1 = require("../set-forbidden-light/rockruff");
 const accelgor_1 = require("./accelgor");
 const bagon_1 = require("./bagon");
 const banette_1 = require("./banette");
+const beldum_1 = require("./beldum");
 const blaziken_ex_1 = require("./blaziken-ex");
 const brocks_recruitment_1 = require("./brocks-recruitment");
 const combusken_1 = require("./combusken");
@@ -44,6 +45,8 @@ const magmortar_1 = require("./magmortar");
 const mamoswine_ex_1 = require("./mamoswine-ex");
 const maractus_1 = require("./maractus");
 const meowscarada_1 = require("./meowscarada");
+const metagross_1 = require("./metagross");
+const metang_1 = require("./metang");
 const ns_castle_1 = require("./ns-castle");
 const ns_darmanitan_1 = require("./ns-darmanitan");
 const ns_darumaka_1 = require("./ns-darumaka");
@@ -112,6 +115,9 @@ exports.setSV9 = [
     new regirock_1.Regirock(),
     new maractus_1.Maractus(),
     new ruffian_1.Ruffian(),
+    new beldum_1.Beldum(),
+    new metang_1.Metang(),
+    new metagross_1.Metagross(),
     new lillies_clefairy_ex_1.LilliesClefairyex(),
     new lillies_comfey_1.LilliesComfey(),
     new lillies_pearl_1.LilliesPearl(),

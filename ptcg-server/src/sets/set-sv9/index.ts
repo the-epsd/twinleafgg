@@ -3,6 +3,7 @@ import { Rockruff } from '../set-forbidden-light/rockruff';
 import { Accelgor } from './accelgor';
 import { Bagon } from './bagon';
 import { Banette } from './banette';
+import { Beldum } from './beldum';
 import { Blazikenex } from './blaziken-ex';
 import { BrocksRecruitment } from './brocks-recruitment';
 import { Combusken } from './combusken';
@@ -42,6 +43,8 @@ import { Magmortar } from './magmortar';
 import { Mamoswineex } from './mamoswine-ex';
 import { Maractus } from './maractus';
 import { Meowscarada } from './meowscarada';
+import { Metagross } from './metagross';
+import { Metang } from './metang';
 import { NsCastle } from './ns-castle';
 import { NsDarmanitan } from './ns-darmanitan';
 import { NsDarumaka } from './ns-darumaka';
@@ -59,7 +62,7 @@ import { Piloswine } from './piloswine';
 import { Postwick } from './postwick';
 import { Pupitar } from './pupitar';
 import { Regirock } from './regirock';
-import {Ruffian} from './ruffian';
+import { Ruffian } from './ruffian';
 import { Salamenceex } from './salamence-ex';
 import { Shelgon } from './shelgon';
 import { Shelmet } from './shelmet';
@@ -112,6 +115,9 @@ export const setSV9: Card[] = [
   new Regirock(),
   new Maractus(),
   new Ruffian(),
+  new Beldum(),
+  new Metang(),
+  new Metagross(),
 
   new LilliesClefairyex(),
   new LilliesComfey(),
