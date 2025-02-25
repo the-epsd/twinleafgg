@@ -5,7 +5,7 @@ import { GamePhase, State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, HealEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { PlayerType, PowerType, StateUtils } from '../../game';
-import {BetweenTurnsEffect, EndTurnEffect} from '../../game/store/effects/game-phase-effects';
+import { BetweenTurnsEffect, EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class Garganacl extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -15,11 +15,11 @@ export class Garganacl extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C, C, C];
 
-    public powers = [{
-      name: 'Blessed Salt',
-      powerType: PowerType.ABILITY,
-      text: 'During Pokémon Checkup, heal 20 damage from each of your Pokémon.'
-    }];
+  public powers = [{
+    name: 'Blessed Salt',
+    powerType: PowerType.ABILITY,
+    text: 'During Pokémon Checkup, heal 20 damage from each of your Pokémon.'
+  }];
 
   public attacks = [{
     name: 'Knocking Hammer',
@@ -112,13 +112,13 @@ export class Garganacl extends PokemonCard {
     }
 
     // Knocking Hammer
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]){
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
       opponent.deck.moveTo(opponent.discard, 1);
     }
-    
+
     return state;
   }
 }

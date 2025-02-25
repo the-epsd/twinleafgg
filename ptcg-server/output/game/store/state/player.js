@@ -159,6 +159,8 @@ class Player {
                 return this.hand;
             case play_card_action_1.SlotType.LOSTZONE:
                 return this.lostzone;
+            case play_card_action_1.SlotType.DECK:
+                return this.deck;
             default:
                 throw new game_error_1.GameError(game_message_1.GameMessage.INVALID_TARGET);
         }

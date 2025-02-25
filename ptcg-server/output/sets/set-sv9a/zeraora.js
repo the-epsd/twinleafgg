@@ -26,7 +26,7 @@ class Zeraora extends game_1.PokemonCard {
             }];
         this.regulationMark = 'I';
         this.set = 'SV9a';
-        this.setNumber = '123';
+        this.setNumber = '40';
         this.cardImage = 'assets/cardback.png';
         this.name = 'Zeraora';
         this.fullName = 'Zeraora SV9a';

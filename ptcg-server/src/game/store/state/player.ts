@@ -207,6 +207,8 @@ export class Player {
         return this.hand;
       case SlotType.LOSTZONE:
         return this.lostzone;
+      case SlotType.DECK:
+        return this.deck;
       default:
         throw new GameError(GameMessage.INVALID_TARGET);
     }

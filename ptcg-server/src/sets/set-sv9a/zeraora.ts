@@ -26,7 +26,7 @@ export class Zeraora extends PokemonCard {
 
   public regulationMark: string = 'I';
   public set: string = 'SV9a';
-  public setNumber: string = '123';
+  public setNumber: string = '40';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Zeraora';
   public fullName: string = 'Zeraora SV9a';

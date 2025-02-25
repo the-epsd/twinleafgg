@@ -20,11 +20,19 @@ import { CynthiasSpiritomb } from './cynthias-spiritomb';
 import { CynthiasPowerWeight } from './cynthias-power-weight';
 import { Rotom } from './rotom';
 import { Zeraora } from './zeraora';
+import { TealMaskOgerpon } from './teal-mask-ogerpon';
+import { HearthflameMaskOgerpon } from './hearthflame-mask-ogerpon';
+import { WellspringMaskOgerpon } from './wellspring-mask-ogerpon';
+import { CornerstoneMaskOgerpon } from './cornerstone-mask-ogerpon';
 
 export const setSV9a: Card[] = [
 
+  new TealMaskOgerpon(),
+  new HearthflameMaskOgerpon(),
+  new WellspringMaskOgerpon(),
   new Rotom(),
   new Zeraora(),
+  new CornerstoneMaskOgerpon(),
 
   new CynthiasRoseradeIR(),
   new CynthiasGarchompex(),

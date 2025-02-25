@@ -2,7 +2,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, EnergyType } from '../../game/store/card/card-types';
 import { StoreLike, State, PlayerType, Power, PowerType, Attack, StateUtils, SlotType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { ATTACH_ENERGY_FROM_DISCARD, CONFIRMATION_PROMPT, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { ATTACH_ENERGY_PROMPT, CONFIRMATION_PROMPT, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { EvolveEffect } from '../../game/store/effects/game-effects';
 
 export class Lycanroc extends PokemonCard {
@@ -45,11 +45,10 @@ export class Lycanroc extends PokemonCard {
       CONFIRMATION_PROMPT(store, state, effect.player, (result) => {
         if (!result)
           return;
-        ATTACH_ENERGY_FROM_DISCARD(
-          store, state, effect.player, PlayerType.BOTTOM_PLAYER,
-          [SlotType.ACTIVE],
+        ATTACH_ENERGY_PROMPT(
+          store, state, effect.player, PlayerType.BOTTOM_PLAYER, SlotType.DISCARD, [SlotType.ACTIVE, SlotType.BENCH],
           { energyType: EnergyType.SPECIAL, name: 'Spike Energy' },
-          { min: 0, max: 2 },
+          { min: 0, max: 1, allowCancel: false },
         );
       });
     }

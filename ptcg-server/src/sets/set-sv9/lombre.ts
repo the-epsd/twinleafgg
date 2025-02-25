@@ -1,7 +1,7 @@
 import { Attack, CardType, GameError, GameMessage, PokemonCard, Stage, State, StoreLike, Weakness } from "../../game";
 import { Effect } from "../../game/store/effects/effect";
 import { AttackEffect } from "../../game/store/effects/game-effects";
-import { REMOVE_MARKER_AT_END_OF_TURN, REPLACE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED } from "../../game/store/prefabs/prefabs";
+import { ADD_MARKER, HAS_MARKER, REMOVE_MARKER_AT_END_OF_TURN, REPLACE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED } from "../../game/store/prefabs/prefabs";
 
 export class Lombre extends PokemonCard {
 
@@ -28,17 +28,17 @@ export class Lombre extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    REPLACE_MARKER_AT_END_OF_TURN(effect, this.ATTACK_USED_MARKER, this.ATTACK_USED_2_MARKER, this);
     REMOVE_MARKER_AT_END_OF_TURN(effect, this.ATTACK_USED_2_MARKER, this);
+    REPLACE_MARKER_AT_END_OF_TURN(effect, this.ATTACK_USED_MARKER, this.ATTACK_USED_2_MARKER, this);
 
     if (effect instanceof AttackEffect) {
-      if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this) || effect.player.marker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
+      if (HAS_MARKER(this.ATTACK_USED_MARKER, effect.player, this) || HAS_MARKER(this.ATTACK_USED_2_MARKER, effect.player, this)) {
         throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
       }
     }
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
+      ADD_MARKER(this.ATTACK_USED_MARKER, effect.player, this);
     }
 
     return state;

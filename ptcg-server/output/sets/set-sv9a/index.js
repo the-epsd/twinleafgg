@@ -22,9 +22,17 @@ const cynthias_spiritomb_1 = require("./cynthias-spiritomb");
 const cynthias_power_weight_1 = require("./cynthias-power-weight");
 const rotom_1 = require("./rotom");
 const zeraora_1 = require("./zeraora");
+const teal_mask_ogerpon_1 = require("./teal-mask-ogerpon");
+const hearthflame_mask_ogerpon_1 = require("./hearthflame-mask-ogerpon");
+const wellspring_mask_ogerpon_1 = require("./wellspring-mask-ogerpon");
+const cornerstone_mask_ogerpon_1 = require("./cornerstone-mask-ogerpon");
 exports.setSV9a = [
+    new teal_mask_ogerpon_1.TealMaskOgerpon(),
+    new hearthflame_mask_ogerpon_1.HearthflameMaskOgerpon(),
+    new wellspring_mask_ogerpon_1.WellspringMaskOgerpon(),
     new rotom_1.Rotom(),
     new zeraora_1.Zeraora(),
+    new cornerstone_mask_ogerpon_1.CornerstoneMaskOgerpon(),
     new other_prints_1.CynthiasRoseradeIR(),
     new cynthias_garchomp_ex_1.CynthiasGarchompex(),
     new cynthias_gible_1.CynthiasGible(),

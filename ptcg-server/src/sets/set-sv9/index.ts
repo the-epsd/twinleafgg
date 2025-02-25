@@ -61,6 +61,7 @@ import { NsReshiram } from './ns-reshiram';
 import { NsSigilyph } from './ns-sigilyph';
 import { NsZoroarkex } from './ns-zoroark-ex';
 import { NsZorua } from './ns-zorua';
+import { BrocksRecruitmentFA, DudunsparceexFA, HopsWoolooIR, HopsZacianexSIR, IonosBelliboltexFA, IonosBelliboltexSIR, IonosBelliboltexUR, IonosKilowattrelIR, IrisFightingSpiritFA, LilliesClefairyexFA, LilliesClefairyexSIR, LilliesRibombeeIR, LycanrocIR, MamoswineexFA, MaractusIR, NsReshiramIR, NsZoroarkexFA, NsZoroarkexSIR, NsZoroarkexUR, NsZoruaIR, RuffianFA, SalamenceexFA, SalamenceexSIR, SpikeEnergyUR, SwinubIR, VolcanionexFA, VolcanionexSIR, WailordIR } from './other-prints';
 import { Piloswine } from './piloswine';
 import { Postwick } from './postwick';
 import { Pupitar } from './pupitar';
@@ -166,4 +167,34 @@ export const setSV9: Card[] = [
   new NsKlink(),
   new NsKlang(),
   new NsKlinklang(),
+
+  // Other prints
+  new MaractusIR(),
+  new WailordIR(),
+  new IonosKilowattrelIR(),
+  new LilliesRibombeeIR(),
+  new SwinubIR(),
+  new LycanrocIR(),
+  new NsZoruaIR(),
+  new NsReshiramIR(),
+  new HopsWoolooIR(),
+  new VolcanionexFA(),
+  new IonosBelliboltexFA(),
+  new LilliesClefairyexFA(),
+  new MamoswineexFA(),
+  new NsZoroarkexFA(),
+  new SalamenceexFA(),
+  new DudunsparceexFA(),
+  new IrisFightingSpiritFA(),
+  new RuffianFA(),
+  new BrocksRecruitmentFA(),
+  new VolcanionexSIR(),
+  new IonosBelliboltexSIR(),
+  new LilliesClefairyexSIR(),
+  new NsZoroarkexSIR(),
+  new HopsZacianexSIR(),
+  new SalamenceexSIR(),
+  new IonosBelliboltexUR(),
+  new NsZoroarkexUR(),
+  new SpikeEnergyUR(),
 ];

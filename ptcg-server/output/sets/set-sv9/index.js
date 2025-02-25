@@ -63,6 +63,7 @@ const ns_reshiram_1 = require("./ns-reshiram");
 const ns_sigilyph_1 = require("./ns-sigilyph");
 const ns_zoroark_ex_1 = require("./ns-zoroark-ex");
 const ns_zorua_1 = require("./ns-zorua");
+const other_prints_1 = require("./other-prints");
 const piloswine_1 = require("./piloswine");
 const postwick_1 = require("./postwick");
 const pupitar_1 = require("./pupitar");
@@ -162,4 +163,33 @@ exports.setSV9 = [
     new ns_klink_1.NsKlink(),
     new ns_klang_1.NsKlang(),
     new ns_klinklang_1.NsKlinklang(),
+    // Other prints
+    new other_prints_1.MaractusIR(),
+    new other_prints_1.WailordIR(),
+    new other_prints_1.IonosKilowattrelIR(),
+    new other_prints_1.LilliesRibombeeIR(),
+    new other_prints_1.SwinubIR(),
+    new other_prints_1.LycanrocIR(),
+    new other_prints_1.NsZoruaIR(),
+    new other_prints_1.NsReshiramIR(),
+    new other_prints_1.HopsWoolooIR(),
+    new other_prints_1.VolcanionexFA(),
+    new other_prints_1.IonosBelliboltexFA(),
+    new other_prints_1.LilliesClefairyexFA(),
+    new other_prints_1.MamoswineexFA(),
+    new other_prints_1.NsZoroarkexFA(),
+    new other_prints_1.SalamenceexFA(),
+    new other_prints_1.DudunsparceexFA(),
+    new other_prints_1.IrisFightingSpiritFA(),
+    new other_prints_1.RuffianFA(),
+    new other_prints_1.BrocksRecruitmentFA(),
+    new other_prints_1.VolcanionexSIR(),
+    new other_prints_1.IonosBelliboltexSIR(),
+    new other_prints_1.LilliesClefairyexSIR(),
+    new other_prints_1.NsZoroarkexSIR(),
+    new other_prints_1.HopsZacianexSIR(),
+    new other_prints_1.SalamenceexSIR(),
+    new other_prints_1.IonosBelliboltexUR(),
+    new other_prints_1.NsZoroarkexUR(),
+    new other_prints_1.SpikeEnergyUR(),
 ];
