@@ -27,6 +27,7 @@ import { Dreepy } from './dreepy';
 import { Emolga } from './emolga';
 import { EnhancedHammer } from './enhanced-hammer';
 import { Farfetchd } from './farfetchd';
+import {Farigiraf} from './farigiraf';
 import {Feebas} from './feebas';
 import { FestivalGrounds } from './festival-plaza';
 import { Fezandipiti } from './fezandipiti';
@@ -34,6 +35,7 @@ import { Finizen } from './finizen';
 import { Froakie } from './froakie';
 import { Frogadier } from './frogadier';
 import { Froslass } from './froslass';
+import {Girafarig} from './girafarig';
 import { Goldeen } from './goldeen';
 import { Greninjaex } from './greninja-ex';
 import { Grookey } from './grookey';
@@ -190,6 +192,8 @@ export const setTwilightMasquerade: Card[] = [
   new Poliwrath(),
   new BoomerangEnergy(),
   new Feebas(),
+  new Girafarig(),
+  new Farigiraf(),
 
   // TWM Full Arts
   new DipplinIR(),

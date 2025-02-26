@@ -26,6 +26,8 @@ const teal_mask_ogerpon_1 = require("./teal-mask-ogerpon");
 const hearthflame_mask_ogerpon_1 = require("./hearthflame-mask-ogerpon");
 const wellspring_mask_ogerpon_1 = require("./wellspring-mask-ogerpon");
 const cornerstone_mask_ogerpon_1 = require("./cornerstone-mask-ogerpon");
+const ponyta_1 = require("./ponyta");
+const rapidash_1 = require("./rapidash");
 exports.setSV9a = [
     new teal_mask_ogerpon_1.TealMaskOgerpon(),
     new hearthflame_mask_ogerpon_1.HearthflameMaskOgerpon(),
@@ -33,6 +35,8 @@ exports.setSV9a = [
     new rotom_1.Rotom(),
     new zeraora_1.Zeraora(),
     new cornerstone_mask_ogerpon_1.CornerstoneMaskOgerpon(),
+    new ponyta_1.Ponyta(),
+    new rapidash_1.Rapidash(),
     new other_prints_1.CynthiasRoseradeIR(),
     new cynthias_garchomp_ex_1.CynthiasGarchompex(),
     new cynthias_gible_1.CynthiasGible(),

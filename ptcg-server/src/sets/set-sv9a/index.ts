@@ -24,6 +24,8 @@ import { TealMaskOgerpon } from './teal-mask-ogerpon';
 import { HearthflameMaskOgerpon } from './hearthflame-mask-ogerpon';
 import { WellspringMaskOgerpon } from './wellspring-mask-ogerpon';
 import { CornerstoneMaskOgerpon } from './cornerstone-mask-ogerpon';
+import { Ponyta } from './ponyta';
+import { Rapidash } from './rapidash';
 
 export const setSV9a: Card[] = [
 
@@ -33,6 +35,8 @@ export const setSV9a: Card[] = [
   new Rotom(),
   new Zeraora(),
   new CornerstoneMaskOgerpon(),
+  new Ponyta(),
+  new Rapidash(),
 
   new CynthiasRoseradeIR(),
   new CynthiasGarchompex(),

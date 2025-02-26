@@ -29,6 +29,7 @@ const dreepy_1 = require("./dreepy");
 const emolga_1 = require("./emolga");
 const enhanced_hammer_1 = require("./enhanced-hammer");
 const farfetchd_1 = require("./farfetchd");
+const farigiraf_1 = require("./farigiraf");
 const feebas_1 = require("./feebas");
 const festival_plaza_1 = require("./festival-plaza");
 const fezandipiti_1 = require("./fezandipiti");
@@ -36,6 +37,7 @@ const finizen_1 = require("./finizen");
 const froakie_1 = require("./froakie");
 const frogadier_1 = require("./frogadier");
 const froslass_1 = require("./froslass");
+const girafarig_1 = require("./girafarig");
 const goldeen_1 = require("./goldeen");
 const greninja_ex_1 = require("./greninja-ex");
 const grookey_1 = require("./grookey");
@@ -190,6 +192,8 @@ exports.setTwilightMasquerade = [
     new poliwrath_1.Poliwrath(),
     new boomerang_energy_1_1.BoomerangEnergy(),
     new feebas_1.Feebas(),
+    new girafarig_1.Girafarig(),
+    new farigiraf_1.Farigiraf(),
     // TWM Full Arts
     new other_prints_1.DipplinIR(),
     new other_prints_1.PoltchageistIR(),

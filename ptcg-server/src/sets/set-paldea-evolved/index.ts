@@ -79,6 +79,9 @@ import { BraveryCharm } from './bravery-charm';
 import { Girafarig } from './girafarig';
 import { CalamitousWasteland } from './calamitous-wasteland';
 import { CalamitousSnowyMountain } from './calamitous-snowy-mountain';
+import {Gothita} from './gothita';
+import {Gothorita} from './gothorita';
+import {Gothitelle} from './gothitelle';
 
 export const setPaldeaEvolved: Card[] = [
 
@@ -161,6 +164,9 @@ export const setPaldeaEvolved: Card[] = [
   new Glimmora(),
   new Belliboltex(),
   new Girafarig(),
+  new Gothita(),
+  new Gothorita(),
+  new Gothitelle(),
 
   // Full 
   new ArctibaxIR(),

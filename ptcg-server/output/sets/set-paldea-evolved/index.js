@@ -81,6 +81,9 @@ const bravery_charm_1 = require("./bravery-charm");
 const girafarig_1 = require("./girafarig");
 const calamitous_wasteland_1 = require("./calamitous-wasteland");
 const calamitous_snowy_mountain_1 = require("./calamitous-snowy-mountain");
+const gothita_1 = require("./gothita");
+const gothorita_1 = require("./gothorita");
+const gothitelle_1 = require("./gothitelle");
 exports.setPaldeaEvolved = [
     new arctibax_1.Arctibax(),
     new artazon_1.Artazon(),
@@ -161,6 +164,9 @@ exports.setPaldeaEvolved = [
     new glimmora_1.Glimmora(),
     new bellibolt_ex_1.Belliboltex(),
     new girafarig_1.Girafarig(),
+    new gothita_1.Gothita(),
+    new gothorita_1.Gothorita(),
+    new gothitelle_1.Gothitelle(),
     // Full 
     new full_art_1.ArctibaxIR(),
     new full_art_1.BaxcaliburIR(),
