@@ -14,7 +14,7 @@ export class MarniesLiepard extends PokemonCard {
   public retreat = [C];
 
   public attacks = [{
-    name: 'Sharp Claw',
+    name: 'Pointy Claws',
     cost: [D, D],
     damage: 70,
     text: 'If your opponent\'s Active Pokémon is a Pokémon ex, this attack does 70 more damage.'

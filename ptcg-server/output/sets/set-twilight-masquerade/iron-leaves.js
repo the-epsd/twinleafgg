@@ -39,7 +39,6 @@ class IronLeaves extends pokemon_card_1.PokemonCard {
         this.setNumber = '19';
         this.RETALIATE_MARKER = 'RETALIATE_MARKER';
     }
-    // public damageDealt = false;
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
@@ -58,26 +57,10 @@ class IronLeaves extends pokemon_card_1.PokemonCard {
             });
         }
         if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.RETALIATE_MARKER, this)) {
-            effect.player.marker.removeMarker(this.RETALIATE_MARKER);
+            effect.player.marker.removeMarker(this.RETALIATE_MARKER, this);
         }
-        // if (effect instanceof DealDamageEffect || effect instanceof PutDamageEffect) {
-        //   const player = StateUtils.getOpponent(state, effect.player);
-        //   const cardList = StateUtils.findCardList(state, this);
-        //   const owner = StateUtils.findOwner(state, cardList);
-        //   if (player !== owner) {
-        //     this.damageDealt = true;
-        //   }
-        // }
-        // if (effect instanceof EndTurnEffect && effect.player === StateUtils.getOpponent(state, effect.player)) {
-        //   const cardList = StateUtils.findCardList(state, this);
-        //   const owner = StateUtils.findOwner(state, cardList);
-        //   if (owner === effect.player) {
-        //     this.damageDealt = false;
-        //   }
-        // }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
-            const player = effect.player;
-            if (player.marker.hasMarker(this.RETALIATE_MARKER)) {
+            if (effect.player.marker.hasMarker(this.RETALIATE_MARKER, this)) {
                 effect.damage += 60;
             }
         }
@@ -91,7 +74,7 @@ class IronLeaves extends pokemon_card_1.PokemonCard {
             const cardList = game_1.StateUtils.findCardList(state, this);
             const owner = game_1.StateUtils.findOwner(state, cardList);
             if (owner === player) {
-                effect.player.marker.addMarkerToState(this.RETALIATE_MARKER);
+                effect.player.marker.addMarker(this.RETALIATE_MARKER, this);
             }
             return state;
         }

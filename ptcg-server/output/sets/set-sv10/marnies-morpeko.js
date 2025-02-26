@@ -14,7 +14,7 @@ class MarniesMorpeko extends game_1.PokemonCard {
         this.weakness = [{ type: G }];
         this.retreat = [C];
         this.attacks = [{
-                name: 'Spike Wheel',
+                name: 'Spiky Wheel',
                 cost: [C, C, C],
                 damage: 20,
                 damageCalculation: '+',

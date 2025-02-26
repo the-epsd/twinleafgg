@@ -51,14 +51,14 @@ class StevensMetagrossex extends game_1.PokemonCard {
         this.resistance = [{ type: G, value: -30 }];
         this.retreat = [C, C, C];
         this.powers = [{
-                name: 'Exboot',
+                name: 'X-Boot',
                 useWhenInPlay: true,
                 powerType: game_1.PowerType.ABILITY,
-                text: ' Once during your turn, you may search your deck for a Basic [P] Energy card ' +
-                    'and a Basic [M] Energy card and attach them to your [P] Pokémon or [M] Pokémon ' +
+                text: 'Once during your turn, you may search your deck for a Basic [P] Energy card, ' +
+                    'a Basic [M] Energy card, or 1 of each and attach them to your [P] Pokémon and [M] Pokémon ' +
                     'in any way you like. Then, shuffle your deck.'
             }];
-        this.attacks = [{ name: 'Metal Stop', cost: [M, C, C], damage: 200, text: '' }];
+        this.attacks = [{ name: 'Metal Stomp', cost: [M, C, C], damage: 200, text: '' }];
         this.regulationMark = 'I';
         this.set = 'SVOD';
         this.setNumber = '7';
