@@ -68,11 +68,13 @@ class MegaGardevoirex extends game_1.PokemonCard {
             const checkProvidedEnergyEffect = new check_effects_1.CheckProvidedEnergyEffect(player);
             store.reduceEffect(state, checkProvidedEnergyEffect);
             let energies = 0;
-            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
                 const checkProvidedEnergyEffect = new check_effects_1.CheckProvidedEnergyEffect(player, cardList);
                 store.reduceEffect(state, checkProvidedEnergyEffect);
                 checkProvidedEnergyEffect.energyMap.forEach(energy => {
-                    energies++;
+                    if (energy.provides.includes(game_1.CardType.PSYCHIC) || energy.provides.includes(game_1.CardType.ANY)) {
+                        energies++;
+                    }
                 });
             });
             effect.damage = energies * 50;

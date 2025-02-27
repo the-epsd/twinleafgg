@@ -28,11 +28,11 @@ export class MegaLucarioex extends PokemonCard {
   ];
 
   public regulationMark: string = 'I';
-  public set: string = 'M1S';
+  public set: string = 'M1L';
   public setNumber: string = '29';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mega Lucario ex';
-  public fullName: string = 'Mega Lucario ex M1S';
+  public fullName: string = 'Mega Lucario ex M1L';
 
   public readonly MEGA_BRAVE_MARKER = 'MEGA_BRAVE_MARKER';
   public readonly CLEAR_MEGA_BRAVE_MARKER = 'CLEAR_MEGA_BRAVE_MARKER';

@@ -29,11 +29,11 @@ class MegaLucarioex extends game_1.PokemonCard {
             }
         ];
         this.regulationMark = 'I';
-        this.set = 'M1S';
+        this.set = 'M1L';
         this.setNumber = '29';
         this.cardImage = 'assets/cardback.png';
         this.name = 'Mega Lucario ex';
-        this.fullName = 'Mega Lucario ex M1S';
+        this.fullName = 'Mega Lucario ex M1L';
         this.MEGA_BRAVE_MARKER = 'MEGA_BRAVE_MARKER';
         this.CLEAR_MEGA_BRAVE_MARKER = 'CLEAR_MEGA_BRAVE_MARKER';
     }

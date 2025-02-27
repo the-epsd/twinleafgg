@@ -81,11 +81,13 @@ export class MegaGardevoirex extends PokemonCard {
       store.reduceEffect(state, checkProvidedEnergyEffect);
 
       let energies = 0;
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
         const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player, cardList);
         store.reduceEffect(state, checkProvidedEnergyEffect);
         checkProvidedEnergyEffect.energyMap.forEach(energy => {
-          energies++;
+          if (energy.provides.includes(CardType.PSYCHIC) || energy.provides.includes(CardType.ANY)){
+            energies++;
+          }
         });
       });
 
