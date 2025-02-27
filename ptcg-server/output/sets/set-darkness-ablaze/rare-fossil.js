@@ -35,14 +35,17 @@ class RareFossil extends game_1.TrainerCard {
         this.powers = [
             {
                 name: 'Rare Fossil',
-                text: 'At any time during your turn, you may discard this card from play.',
+                text: `Play this card as if it were a 70-HP Basic [C] Pokémon. At any time during your turn, you may discard this card from play.
+
+This card can't be affected by any Special Conditions, and it can't retreat.`,
                 useWhenInPlay: true,
                 exemptFromAbilityLock: true,
-                powerType: game_1.PowerType.ABILITY
+                powerType: game_1.PowerType.TRAINER_ABILITY
             }
         ];
-        this.text = 'Play this card as if it were a 70-HP Basic [C] Pokémon. At any time during your turn, you may discard this card from play. This card can\'t be affected by any Special Conditions, and it can\'t retreat.';
     }
+    // public text =
+    //   'Play this card as if it were a 70-HP Basic [C] Pokémon. At any time during your turn, you may discard this card from play. This card can\'t be affected by any Special Conditions, and it can\'t retreat.';
     reduceEffect(store, state, effect) {
         if (effect instanceof attack_effects_1.AddSpecialConditionsEffect && effect.player.active.cards.includes(this)) {
             effect.preventDefault = true;

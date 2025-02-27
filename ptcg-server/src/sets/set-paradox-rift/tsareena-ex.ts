@@ -4,8 +4,8 @@ import { State } from '../../game/store/state/state';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { StoreLike } from '../../game/store/store-like';
 import { Effect } from '../../game/store/effects/effect';
-import { ChoosePokemonPrompt, GameMessage, PlayerType, SlotType } from '../../game';
-import { HealTargetEffect, PutCountersEffect, RemoveSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
+import { ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, StateUtils } from '../../game';
+import { HealTargetEffect, PutCountersEffect, PutDamageEffect, RemoveSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 import { CheckHpEffect } from '../../game/store/effects/check-effects';
 
 export class Tsareenaex extends PokemonCard {
@@ -89,7 +89,6 @@ export class Tsareenaex extends PokemonCard {
           store.reduceEffect(state, damageEffect);
         }
       });
-
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
@@ -103,9 +102,20 @@ export class Tsareenaex extends PokemonCard {
       removeSpecialCondition.target = player.active;
       state = store.reduceEffect(state, removeSpecialCondition);
     }
+
+    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      // Target is not Active
+      if (effect.target === player.active || effect.target === opponent.active) {
+        return state;
+      }
+
+      effect.preventDefault = true;
+    }
     return state;
   }
-
 }
 
 

@@ -32,7 +32,7 @@ export class ChiYu extends PokemonCard {
 
   public attacks = [
     {
-      name: 'Flaire Bringer',
+      name: 'Flare Bringer',
       cost: [CardType.FIRE],
       damage: 0,
       text: 'Attach up to 2 Basic [R] Energy cards from your discard pile to 1 of your Pokémon.'

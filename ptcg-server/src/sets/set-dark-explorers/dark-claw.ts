@@ -29,7 +29,7 @@ export class DarkClaw extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PutDamageEffect && effect.source.tool === this) {
+    if (effect instanceof PutDamageEffect && effect.source.tools.includes(this)) {
       const opponent = StateUtils.findOwner(state, effect.target);
 
       // Not active Pokemon

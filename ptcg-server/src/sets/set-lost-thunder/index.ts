@@ -41,6 +41,7 @@ import { Ralts } from './ralts';
 import { Ribombee } from './ribombee';
 import { Shedinja } from './shedinja';
 import { ShuckleGX } from './shuckle-gx';
+import { Sightseer } from './sightseer';
 import { Skiploom } from './skiploom';
 import { Slowking } from './slowking';
 import { Slowpoke } from './slowpoke';
@@ -97,6 +98,7 @@ export const setLostThunder: Card[] = [
   new Ribombee(),
   new Shedinja(),
   new ShuckleGX(),
+  new Sightseer(),
   new Slowking(),
   new Slowpoke(),
   new Skiploom(),

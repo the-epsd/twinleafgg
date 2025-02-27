@@ -12,7 +12,7 @@ export class MarniesMorpeko extends PokemonCard {
   public retreat = [C];
 
   public attacks = [{
-    name: 'Spike Wheel',
+    name: 'Spiky Wheel',
     cost: [C, C, C],
     damage: 20,
     damageCalculation: '+',

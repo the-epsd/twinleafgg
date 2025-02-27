@@ -24,7 +24,7 @@ export class SupereffectiveGlasses extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof ApplyWeaknessEffect && effect.target.tool === this) {
+    if (effect instanceof ApplyWeaknessEffect && effect.target.tools.includes(this)) {
       effect.damage = effect.damage * 1.5;
     }
 

@@ -24,7 +24,7 @@ export class CynthiasSpiritomb extends PokemonCard {
 
   public regulationMark = 'I';
   public set: string = 'SV9a';
-  public setNumber: string = '31';
+  public setNumber: string = '50';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cynthia\'s Spiritomb';
   public fullName: string = 'Cynthia\'s Spiritomb SV9a';

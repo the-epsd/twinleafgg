@@ -24,13 +24,13 @@ class RescueScarf extends trainer_card_1.TrainerCard {
         this.damageDealt = false;
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_effects_1.AttackEffect && effect.player.active.tool === this) {
+        if (effect instanceof game_effects_1.AttackEffect && effect.player.active.tools.includes(this)) {
             this.damageDealt = false;
         }
         if ((effect instanceof attack_effects_1.DealDamageEffect || effect instanceof attack_effects_1.PutDamageEffect) &&
-            effect.target.tool === this) {
+            effect.target.tools.includes(this)) {
             const player = game_1.StateUtils.getOpponent(state, effect.player);
-            if (player.active.tool === this) {
+            if (player.active.tools.includes(this)) {
                 this.damageDealt = true;
             }
         }

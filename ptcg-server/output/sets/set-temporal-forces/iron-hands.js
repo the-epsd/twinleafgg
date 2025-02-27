@@ -12,6 +12,7 @@ class IronHands extends pokemon_card_1.PokemonCard {
         super(...arguments);
         this.stage = card_types_1.Stage.BASIC;
         this.cardType = L;
+        this.tags = [card_types_1.CardTag.FUTURE];
         this.hp = 140;
         this.weakness = [{ type: F }];
         this.resistance = [];

@@ -6,7 +6,6 @@ const card_types_1 = require("../../game/store/card/card-types");
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const check_effects_1 = require("../../game/store/effects/check-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
-const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class Archaludon extends pokemon_card_1.PokemonCard {
     constructor() {
@@ -75,19 +74,15 @@ class Archaludon extends pokemon_card_1.PokemonCard {
                 effect.cost = [];
             }
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
-            effect.player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
-            effect.player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
-        }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-            effect.player.marker.addMarker(this.ATTACK_USED_2_MARKER, this);
-        }
-        if (prefabs_1.WAS_ATTACK_USED(effect, 0, this)) {
-            if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)
-                || effect.player.marker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
+        prefabs_1.REMOVE_MARKER_AT_END_OF_TURN(effect, this.ATTACK_USED_2_MARKER, this);
+        prefabs_1.REPLACE_MARKER_AT_END_OF_TURN(effect, this.ATTACK_USED_MARKER, this.ATTACK_USED_2_MARKER, this);
+        if (effect instanceof game_effects_1.AttackEffect) {
+            if (prefabs_1.HAS_MARKER(this.ATTACK_USED_MARKER, effect.player, this) || prefabs_1.HAS_MARKER(this.ATTACK_USED_2_MARKER, effect.player, this)) {
                 throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);
             }
-            effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
+        }
+        if (prefabs_1.WAS_ATTACK_USED(effect, 0, this)) {
+            prefabs_1.ADD_MARKER(this.ATTACK_USED_MARKER, effect.player, this);
         }
         return state;
     }

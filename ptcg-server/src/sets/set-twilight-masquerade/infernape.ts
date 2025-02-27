@@ -109,7 +109,7 @@ export class Infernape extends PokemonCard {
         [SlotType.BENCH, SlotType.ACTIVE],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
         {
-          allowCancel: true,
+          allowCancel: false,
           min: 1,
           max: 2,
           blocked,

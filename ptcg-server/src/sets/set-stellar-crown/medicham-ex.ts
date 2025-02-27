@@ -12,7 +12,7 @@ export class Medichamex extends PokemonCard {
 
   public regulationMark = 'G';
 
-  public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
+  public tags = [CardTag.POKEMON_ex];
 
   public stage = Stage.STAGE_1;
 

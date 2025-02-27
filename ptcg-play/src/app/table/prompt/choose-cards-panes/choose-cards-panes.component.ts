@@ -165,6 +165,7 @@ export class ChooseCardsPanesComponent implements OnChanges {
 
   private buildFilterMap(cards: Card[], filter: Partial<Card>, blocked: number[]) {
     const filterMap: { [fullName: string]: boolean } = {};
+
     for (let i = 0; i < cards.length; i++) {
       const card = cards[i];
       let isBlocked = blocked.includes(i);

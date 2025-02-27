@@ -27,8 +27,7 @@ class Cloyster extends pokemon_card_1.PokemonCard {
         this.attacks = [{
                 name: 'Aqua Split',
                 cost: [card_types_1.CardType.WATER, card_types_1.CardType.COLORLESS],
-                damage: 120,
-                damageCalculation: '+',
+                damage: 60,
                 text: 'This attack also does 30 damage to 2 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
             }];
         this.set = 'FST';

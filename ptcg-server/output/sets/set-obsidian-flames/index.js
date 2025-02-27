@@ -39,6 +39,7 @@ const pidgey_1 = require("./pidgey");
 const pokemon_league_headquarters_1 = require("./pokemon-league-headquarters");
 const poppy_1 = require("./poppy");
 const pupitar_1 = require("./pupitar");
+const revavroom_ex_1 = require("./revavroom-ex");
 const rowlet_1 = require("./rowlet");
 const ryme_1 = require("./ryme");
 const scizor_1 = require("./scizor");
@@ -109,6 +110,7 @@ exports.setObsidianFlames = [
     new glimmet_1.Glimmet(),
     new glimmora_ex_1.Glimmoraex(),
     new geeta_1.Geeta(),
+    new revavroom_ex_1.Revavroomex(),
     //Alt-s
     new full_art_1.BelliboltIR(),
     new full_art_1.CleffaIR(),

@@ -9,6 +9,7 @@ const drampa_1 = require("./drampa");
 const dream_ball_1 = require("./dream-ball");
 const duraludon_v_1 = require("./duraludon-v");
 const duraludon_vmax_1 = require("./duraludon-vmax");
+const eldegoss_1 = require("./eldegoss");
 const espeon_v_1 = require("./espeon-v");
 const espeon_vmax_1 = require("./espeon-vmax");
 const flaaffy_1 = require("./flaaffy");
@@ -56,6 +57,7 @@ exports.setEvolvingSkies = [
     new dream_ball_1.DreamBall(),
     new duraludon_v_1.DuraludonV(),
     new duraludon_vmax_1.DuraludonVMAX(),
+    new eldegoss_1.Eldegoss(),
     new espeon_v_1.EspeonV(),
     new espeon_vmax_1.EspeonVMAX(),
     new flaaffy_1.Flaaffy(),

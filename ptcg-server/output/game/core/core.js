@@ -49,6 +49,7 @@ class Core {
         }
         if (gameSettings.format === card_types_1.Format.RETRO) {
             gameSettings.rules.attackFirstTurn = true;
+            gameSettings.rules.firstTurnDrawCard = false;
         }
         const game = new game_1.Game(this, utils_1.generateId(this.games), gameSettings);
         game.dispatch(client, new add_player_action_1.AddPlayerAction(client.id, client.name, deck));

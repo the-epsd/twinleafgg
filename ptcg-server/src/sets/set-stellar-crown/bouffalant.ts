@@ -14,7 +14,7 @@ export class Bouffalant extends PokemonCard {
   public powers = [{
     name: 'Curly Wall',
     powerType: PowerType.ABILITY,
-    text: 'If you have any other Bouffalant in play, each of your Basic [C] Pokémon take 60 less damage from your opponent\'s attacks(after applying Weakness and Resistance).You can\'t apply more than 1 Curly Wall Ability at a time.'
+    text: 'If you have any other Bouffalant in play, each of your Basic [C] Pokémon take 60 less damage from your opponent\'s attacks (after applying Weakness and Resistance). You can\'t apply more than 1 Curly Wall Ability at a time.'
   }];
   public attacks = [{
     name: 'Boundless Power',

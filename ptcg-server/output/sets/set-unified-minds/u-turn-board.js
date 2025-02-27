@@ -16,7 +16,9 @@ class UTurnBoard extends trainer_card_1.TrainerCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '211';
         this.U_TURN_BOARD_MARKER = 'U_TURN_BOARD_MARKER';
-        this.text = 'The Retreat Cost of the Pokémon this card is attached to is [C] less. If this card is discarded from play, put it into your hand instead of the discard pile.';
+        this.text = `The Retreat Cost of the Pokémon this card is attached to is [C] less. 
+    
+    If this card is discarded from play, put it into your hand instead of the discard pile.`;
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof attack_effects_1.DiscardCardsEffect && effect.target.cards.includes(this)) {
@@ -32,7 +34,7 @@ class UTurnBoard extends trainer_card_1.TrainerCard {
             const player = effect.player;
             player.marker.addMarker(this.U_TURN_BOARD_MARKER, this);
         }
-        if (effect instanceof check_effects_1.CheckRetreatCostEffect && effect.player.active.tool === this) {
+        if (effect instanceof check_effects_1.CheckRetreatCostEffect && effect.player.active.tools.includes(this)) {
             if (effect.cost.length === 0) {
                 effect.cost = [];
             }
@@ -56,7 +58,7 @@ class UTurnBoard extends trainer_card_1.TrainerCard {
     }
 }
 exports.UTurnBoard = UTurnBoard;
-// if (effect instanceof ToolEffect && effect.player.active.tool === this) {
+// if (effect instanceof ToolEffect && effect.player.active.tools.includes(this)) {
 //   const player = effect.player;
 //   player.marker.addMarker(this.U_TURN_BOARD_MARKER, this);
 // }

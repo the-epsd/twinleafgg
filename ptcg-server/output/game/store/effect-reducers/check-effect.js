@@ -42,6 +42,17 @@ function findKoPokemons(store, state) {
 //     return koPokemons;
 //   }, []);
 // }
+function handleMaxToolsChange(store, state) {
+    state.players.forEach((player, index) => {
+        player.forEachPokemon(play_card_action_1.PlayerType.ANY, (cardList) => {
+            if (cardList.tools.length > cardList.maxTools) {
+                const amount = cardList.tools.length - cardList.maxTools;
+                prefabs_1.REMOVE_TOOLS_FROM_POKEMON_PROMPT(store, state, player, cardList, play_card_action_1.SlotType.DISCARD, amount, amount);
+            }
+        });
+    });
+    return state;
+}
 function handleBenchSizeChange(store, state, benchSizes) {
     state.players.forEach((player, index) => {
         const benchSize = benchSizes[index];
@@ -277,6 +288,7 @@ function* executeCheckState(next, store, state, onComplete) {
     // Check table state and handle bench size first
     const checkTableStateEffect = new check_effects_1.CheckTableStateEffect([5, 5]);
     store.reduceEffect(state, checkTableStateEffect);
+    handleMaxToolsChange(store, state);
     handleBenchSizeChange(store, state, checkTableStateEffect.benchSizes);
     if (store.hasPrompts()) {
         yield store.waitPrompt(state, () => next());

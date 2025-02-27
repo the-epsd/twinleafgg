@@ -213,6 +213,7 @@
   "PROMPT_CHOOSE_ATTACK_TITLE": "Choose attack",
   "PROMPT_CHOOSE_CARDS_TITLE": "Choose cards",
   "PROMPT_CHOOSE_ENERGY_TITLE": "Select Energy",
+  "PROMPT_CHOOSE_TOOL_TITLE": "Select Tools",
   "PROMPT_CHOOSE_POKEMON_TITLE": "Choose Pokémon",
   "PROMPT_CHOOSE_PRIZE_TITLE": "Choose prize",
   "PROMPT_CONFIRM_TITLE": "Confirm",
@@ -501,7 +502,8 @@
     "PLAYER_CARDS_REVEALED_BY_EFFECT": "{{name}} cards revealed by effect.",
     "CHOOSE_CARDS": "Choose cards",
     "CHOOSE_ENERGY_FROM_DECK": "Choose energies from deck",
-    "CHOOSE_ENERGY_FROM_DISCARD": "Choose energies from discard"
+    "CHOOSE_ENERGY_FROM_DISCARD": "Choose energies from discard",
+    "CHOOSE_CARD_TO_PUT_ON_BOTTOM": "Choose the card to put on the bottom of the deck."
   },
   "GAME_LOGS": {
     "LOG_BANNED_BY_ARBITER": "{{name}} made an invalid move multiple times and was banned by the arbiter.",

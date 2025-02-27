@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setDragonsExalted = void 0;
+const altaria_1 = require("./altaria");
 const blend_energy_grpd_1 = require("./blend-energy-grpd");
 const blend_energy_wlfm_1 = require("./blend-energy-wlfm");
 const bouffalant_1 = require("./bouffalant");
@@ -24,6 +25,7 @@ const tool_scrapper_1 = require("./tool-scrapper");
 const vulpix_1 = require("./vulpix");
 const zweilous_1 = require("./zweilous");
 exports.setDragonsExalted = [
+    new altaria_1.Altaria(),
     new blend_energy_wlfm_1.BlendEnergyWLFM(),
     new blend_energy_grpd_1.BlendEnergyGRPD(),
     new bouffalant_1.Bouffalant(),

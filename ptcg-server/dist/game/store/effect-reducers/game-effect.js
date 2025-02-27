@@ -294,7 +294,7 @@ export function gameReducer(store, state, effect) {
             source.damage = 0;
             source.specialConditions = [];
             source.marker.markers = [];
-            source.tool = undefined;
+            source.tools = [];
             source.removeBoardEffect(BoardEffect.ABILITY_USED);
         }
         // If specific cards are specified

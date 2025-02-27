@@ -5,7 +5,7 @@ import { EnergyCard } from '../card/energy-card';
 import { CheckHpEffect, CheckProvidedEnergyEffect, CheckTableStateEffect } from '../effects/check-effects';
 import { Effect } from '../effects/effect';
 import { KnockOutEffect } from '../effects/game-effects';
-import { TAKE_SPECIFIC_PRIZES } from '../prefabs/prefabs';
+import { REMOVE_TOOLS_FROM_POKEMON_PROMPT, TAKE_SPECIFIC_PRIZES } from '../prefabs/prefabs';
 import { ChoosePokemonPrompt } from '../prompts/choose-pokemon-prompt';
 import { ChoosePrizePrompt } from '../prompts/choose-prize-prompt';
 import { CoinFlipPrompt } from '../prompts/coin-flip-prompt';
@@ -58,6 +58,18 @@ function findKoPokemons(store: StoreLike, state: State): PokemonItem[] {
 //     return koPokemons;
 //   }, []);
 // }
+
+function handleMaxToolsChange(store: StoreLike, state: State): State {
+  state.players.forEach((player, index) => {
+    player.forEachPokemon(PlayerType.ANY, (cardList) => {
+      if (cardList.tools.length > cardList.maxTools) {
+        const amount = cardList.tools.length - cardList.maxTools;
+        REMOVE_TOOLS_FROM_POKEMON_PROMPT(store, state, player, cardList, SlotType.DISCARD, amount, amount);
+      }
+    })
+  })
+  return state;
+}
 
 function handleBenchSizeChange(store: StoreLike, state: State, benchSizes: number[]): State {
   state.players.forEach((player, index) => {
@@ -355,6 +367,7 @@ export function* executeCheckState(next: Function, store: StoreLike, state: Stat
   const checkTableStateEffect = new CheckTableStateEffect([5, 5]);
   store.reduceEffect(state, checkTableStateEffect);
 
+  handleMaxToolsChange(store, state);
   handleBenchSizeChange(store, state, checkTableStateEffect.benchSizes);
   if (store.hasPrompts()) {
     yield store.waitPrompt(state, () => next());

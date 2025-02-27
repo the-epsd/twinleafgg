@@ -69,6 +69,15 @@ class Farigirafex extends pokemon_card_1.PokemonCard {
                 store.reduceEffect(state, damageEffect);
             });
         }
+        if (effect instanceof attack_effects_1.PutDamageEffect && effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
+            const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            // Target is not Active
+            if (effect.target === player.active || effect.target === opponent.active) {
+                return state;
+            }
+            effect.preventDefault = true;
+        }
         return state;
     }
 }

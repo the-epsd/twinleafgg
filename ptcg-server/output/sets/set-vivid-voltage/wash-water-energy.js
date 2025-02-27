@@ -16,18 +16,22 @@ class WashWaterEnergy extends energy_card_1.EnergyCard {
         this.setNumber = '165';
         this.name = 'Wash Water Energy';
         this.fullName = 'Wash Water Energy VIV';
-        this.text = 'As long as this card is attached to a Pokémon, it provides [W] Energy.' +
-            '' +
-            'Prevent all effects of attacks from your opponent\'s Pokémon done to the [W] Pokémon this card is attached to. (Existing effects are not removed. Damage is not an effect.)';
+        this.text = `As long as this card is attached to a Pokémon, it provides [W] Energy.' +
+    
+    Prevent all effects of attacks from your opponent\'s Pokémon done to the [W] Pokémon this card is attached to. (Existing effects are not removed. Damage is not an effect.)`;
     }
     reduceEffect(store, state, effect) {
-        var _a, _b;
+        var _a, _b, _c;
         if (effect instanceof check_effects_1.CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
-            effect.energyMap.push({ card: this, provides: [card_types_1.CardType.WATER] });
+            const pokemon = effect.source;
+            if (((_a = pokemon.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.cardType) === card_types_1.CardType.WATER) {
+                effect.energyMap.push({ card: this, provides: [card_types_1.CardType.WATER] });
+                this.provides = [card_types_1.CardType.WATER];
+            }
             return state;
         }
         // Prevent effects of attacks
-        if (effect instanceof attack_effects_1.AbstractAttackEffect && ((_b = (_a = effect.target) === null || _a === void 0 ? void 0 : _a.cards) === null || _b === void 0 ? void 0 : _b.includes(this))) {
+        if (effect instanceof attack_effects_1.AbstractAttackEffect && ((_c = (_b = effect.target) === null || _b === void 0 ? void 0 : _b.cards) === null || _c === void 0 ? void 0 : _c.includes(this))) {
             const checkPokemonType = new check_effects_1.CheckPokemonTypeEffect(effect.target);
             store.reduceEffect(state, checkPokemonType);
             if (checkPokemonType.cardTypes.includes(card_types_1.CardType.WATER)) {

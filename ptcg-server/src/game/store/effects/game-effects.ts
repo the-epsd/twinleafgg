@@ -122,18 +122,6 @@ export class UseStadiumEffect implements Effect {
   }
 }
 
-export class useToolEffect implements Effect {
-  readonly type: string = GameEffects.USE_STADIUM_EFFECT;
-  public preventDefault = false;
-  public player: Player;
-  public tool: Card;
-
-  constructor(player: Player, tool: Card) {
-    this.player = player;
-    this.tool = tool;
-  }
-}
-
 export class AttackEffect implements Effect {
   readonly type: string = GameEffects.ATTACK_EFFECT;
   public preventDefault = false;

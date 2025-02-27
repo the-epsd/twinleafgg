@@ -17,7 +17,7 @@ class EscapeBoard extends trainer_card_1.TrainerCard {
         this.text = 'The Retreat Cost of the Pokémon this card is attached to is [C] less, and it can retreat even if it\'s Asleep or Paralyzed.';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof check_effects_1.CheckRetreatCostEffect && effect.player.active.tool === this) {
+        if (effect instanceof check_effects_1.CheckRetreatCostEffect && effect.player.active.tools.includes(this)) {
             if (effect.cost.length === 0) {
                 effect.cost = [];
             }
@@ -25,7 +25,7 @@ class EscapeBoard extends trainer_card_1.TrainerCard {
                 effect.cost.splice(0, 1);
             }
         }
-        if (effect instanceof game_effects_1.RetreatEffect && effect.player.active.tool === this) {
+        if (effect instanceof game_effects_1.RetreatEffect && effect.player.active.tools.includes(this)) {
             effect.ignoreStatusConditions = true;
             effect.player.active.clearEffects();
         }

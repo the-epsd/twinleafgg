@@ -24,7 +24,7 @@ class CynthiasSpiritomb extends pokemon_card_1.PokemonCard {
         ];
         this.regulationMark = 'I';
         this.set = 'SV9a';
-        this.setNumber = '31';
+        this.setNumber = '50';
         this.cardImage = 'assets/cardback.png';
         this.name = 'Cynthia\'s Spiritomb';
         this.fullName = 'Cynthia\'s Spiritomb SV9a';

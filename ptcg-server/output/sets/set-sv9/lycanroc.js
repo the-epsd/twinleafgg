@@ -43,7 +43,7 @@ class Lycanroc extends pokemon_card_1.PokemonCard {
             prefabs_1.CONFIRMATION_PROMPT(store, state, effect.player, (result) => {
                 if (!result)
                     return;
-                prefabs_1.ATTACH_ENERGY_FROM_DISCARD(store, state, effect.player, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE], { energyType: card_types_1.EnergyType.SPECIAL, name: 'Spike Energy' }, { min: 0, max: 2 });
+                prefabs_1.ATTACH_ENERGY_PROMPT(store, state, effect.player, game_1.PlayerType.BOTTOM_PLAYER, game_1.SlotType.DISCARD, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { energyType: card_types_1.EnergyType.SPECIAL, name: 'Spike Energy' }, { min: 0, max: 1, allowCancel: false });
             });
         }
         if (prefabs_1.WAS_ATTACK_USED(effect, 0, this)) {

@@ -17,7 +17,7 @@ class SkyarrowBridge extends trainer_card_1.TrainerCard {
         this.fullName = 'Skyarrow Bridge NXD';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '91';
-        this.text = 'The Retreat Cost of each Basic Pokemon in play is C less.';
+        this.text = 'The Retreat Cost of each Basic Pokemon in play is [C] less.';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof check_effects_1.CheckRetreatCostEffect && state_utils_1.StateUtils.getStadiumCard(state) === this) {

@@ -9,6 +9,7 @@ import { Comfey } from './comfey';
 import { Crabominable } from './crabominable';
 import { Crabrawler } from './crabrawler';
 import { Crispin } from './crispin';
+import {DeluxeBomb} from './deluxe-bomb';
 import { Diancie } from './diancie';
 import { Drednaw } from './drednaw';
 import { Drifblim } from './drifblim';
@@ -87,6 +88,7 @@ export const setStellarCrown: Card[] = [
   new Veluza(),
   new Zeraora(),
   new Milcery(),
+  new DeluxeBomb(),
 
   //FA
   new BulbasaurIR(),

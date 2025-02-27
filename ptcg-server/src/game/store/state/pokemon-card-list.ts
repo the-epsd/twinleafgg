@@ -1,7 +1,6 @@
 import { Card } from '../card/card';
 import { BoardEffect, CardTag, SpecialCondition, Stage, SuperType } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
-import { Attack, Power } from '../card/pokemon-types';
 import { CardList } from './card-list';
 import { Marker } from './card-marker';
 
@@ -26,6 +25,10 @@ export class PokemonCardList extends CardList {
   public boardEffect: BoardEffect[] = [];
 
   public hpBonus: number = 0;
+  public tools: Card[] = [];
+  public maxTools: number = 1;
+  public stadium: Card | undefined;
+  isActivatingCard: boolean = false;
 
   public static readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
   public static readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
@@ -55,16 +58,10 @@ export class PokemonCardList extends CardList {
   public static readonly UNRELENTING_ONSLAUGHT_MARKER = 'UNRELENTING_ONSLAUGHT_MARKER';
   public static readonly UNRELENTING_ONSLAUGHT_2_MARKER = 'UNRELENTING_ONSLAUGHT_2_MARKER';
 
-  // Some pokemon cards can be attached as a tool and stadium,
-  // we must remember, which card acts as a pokemon tool.
-  public tool: Card | undefined;
-  public stadium: Card | undefined;
-  isActivatingCard: boolean = false;
-
   public getPokemons(): PokemonCard[] {
     const result: PokemonCard[] = [];
     for (const card of this.cards) {
-      if (card.superType === SuperType.POKEMON && card !== this.tool) {
+      if (card.superType === SuperType.POKEMON && !(this.tools.includes(card))) {
         result.push(card as PokemonCard);
       } else if (card.name === 'Lillie\'s Poké Doll') {
         result.push(card as PokemonCard);
@@ -140,9 +137,10 @@ export class PokemonCardList extends CardList {
     if (this.cards.length === 0) {
       this.damage = 0;
     }
-    if (this.tool && !this.cards.includes(this.tool)) {
-      this.tool = undefined;
+    for (const tool of this.tools) {
+      this.removeTool(tool);
     }
+
   }
 
   clearAllSpecialConditions(): void {
@@ -269,18 +267,11 @@ export class PokemonCardList extends CardList {
     return this.cards.some(c => c.tags.includes(CardTag.ETHANS));
   }
 
-  getToolEffect(): Power | Attack | undefined {
-    if (!this.tool) {
-      return;
+  removeTool(tool: Card): void {
+    const index = this.tools.indexOf(tool);
+    if (index >= 0) {
+      delete this.tools[index];
     }
-
-    const toolCard = this.tool.cards;
-
-    if (toolCard instanceof PokemonCard) {
-      return toolCard.powers[0] || toolCard.attacks[0];
-    }
-
-    return;
+    this.tools = this.tools.filter(c => c instanceof Card);
   }
-
 }

@@ -69,7 +69,7 @@ class BruteBonnet extends pokemon_card_1.PokemonCard {
             const opponent = game_1.StateUtils.getOpponent(state, player);
             let isBruteBonnetWithAncientBooster = false;
             player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-                if (card === this && cardList.tool && cardList.tool.name === 'Ancient Booster Energy Capsule') {
+                if (card === this && cardList.tools.some(tool => tool.name === 'Ancient Booster Energy Capsule')) {
                     isBruteBonnetWithAncientBooster = true;
                 }
             });

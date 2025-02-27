@@ -82,30 +82,45 @@ export class FilterCardsPipe implements PipeTransform {
   }
 
   private matchCardText(card: Card, searchValue: string) {
-    const lowerCaseSearchValue = searchValue.toLocaleLowerCase();
-    if (card.name.toLocaleLowerCase().includes(lowerCaseSearchValue))
-      return true;
 
-    if (card.setNumber.toLocaleLowerCase().includes(lowerCaseSearchValue))
-      return true;
+    function searchCleanse(value: string): string {
+      return value.toLocaleLowerCase().replace('é', 'e');
+    }
 
-    if (card.set.toLocaleLowerCase().includes(lowerCaseSearchValue))
-      return true;
+    const search = searchCleanse(searchValue);
+    const cardName = searchCleanse(card.name);
+    const setNumber = searchCleanse(card.setNumber);
+    const set = searchCleanse(card.set);
 
-    const pokemonCard = card as PokemonCard;
-    if (pokemonCard.attacks?.some(a => a.name.toLocaleLowerCase().includes(lowerCaseSearchValue)))
-      return true;
-
-    if (pokemonCard.attacks?.some(a => a.text.toLocaleLowerCase().includes(lowerCaseSearchValue)))
+    if (cardName.includes(search) || setNumber.includes(search) || set.includes(search))
       return true;
 
     const trainerCard = card as TrainerCard;
-    if (trainerCard.text?.toLocaleLowerCase().includes(lowerCaseSearchValue))
-      return true;
+    if (trainerCard.text !== undefined) {
+      const trainerText = searchCleanse(trainerCard.text);
+      if (trainerText.includes(search))
+        return true;
+    }
 
     const energyCard = card as EnergyCard;
-    if (energyCard.text?.toLocaleLowerCase().includes(lowerCaseSearchValue))
-      return true;
+    if (energyCard.text !== undefined) {
+      const energyText = searchCleanse(energyCard.text);
+      if (energyText.includes(search))
+        return true;
+    }
+
+    if (card.attacks.length > 0) {
+      const attackNames = card.attacks.map(attack => searchCleanse(attack.name));
+      const attackTexts = card.attacks.map(attack => searchCleanse(attack.text));
+      if (attackNames.some(n => (n.includes(search))) || attackTexts.some(n => (n.includes(search))))
+        return true;
+    }
+    if (card.powers.length > 0) {
+      const powerNames = card.powers.map(power => searchCleanse(power.name));
+      const powerTexts = card.powers.map(power => searchCleanse(power.text));
+      if (powerNames.some(n => (n.includes(search))) || powerTexts.some(n => (n.includes(search))))
+        return true;
+    }
   }
 
   private matchRetreatCosts(retreatCosts: number[], card: Card): boolean {

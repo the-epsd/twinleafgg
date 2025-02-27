@@ -20,7 +20,7 @@ class DarkClaw extends trainer_card_1.TrainerCard {
             '(before applying Weakness and Resistance).';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof attack_effects_1.PutDamageEffect && effect.source.tool === this) {
+        if (effect instanceof attack_effects_1.PutDamageEffect && effect.source.tools.includes(this)) {
             const opponent = state_utils_1.StateUtils.findOwner(state, effect.target);
             // Not active Pokemon
             if (opponent.active !== effect.target) {

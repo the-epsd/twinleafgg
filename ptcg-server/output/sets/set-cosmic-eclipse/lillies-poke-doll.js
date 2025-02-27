@@ -36,20 +36,26 @@ class LilliesPokeDoll extends __1.TrainerCard {
         this.powers = [
             {
                 name: 'Lillie\'s Poké Doll',
-                text: 'At any time during your turn (before your attack), if this Pokémon is your Active Pokémon, you may discard all cards from it and put it on the bottom of your deck.',
+                text: `Play this card as if it were a 30-HP [C] Basic Pokémon. At any time during your turn (before your attack), if this Pokémon is your Active Pokémon, you may discard all cards from it and put it on the bottom of your deck.
+
+This card can't retreat. If this card is Knocked Out, your opponent can't take any Prize cards for it.`,
                 useWhenInPlay: true,
                 exemptFromAbilityLock: true,
-                powerType: __1.PowerType.ABILITY
+                powerType: __1.PowerType.TRAINER_ABILITY
             }
         ];
-        this.text = 'Play this card as if it were a 30-HP [C] Basic Pokémon. At any time during your turn (before your attack), if this Pokémon is your Active Pokémon, you may discard all cards from it and put it on the bottom of your deck.' +
-            '' +
-            'This card can\'t retreat. If this card is Knocked Out, your opponent can\'t take any Prize cards for it.';
     }
+    // public text =
+    //   'Play this card as if it were a 30-HP [C] Basic Pokémon. At any time during your turn (before your attack), if this Pokémon is your Active Pokémon, you may discard all cards from it and put it on the bottom of your deck.' +
+    //   '' +
+    //   'This card can\'t retreat. If this card is Knocked Out, your opponent can\'t take any Prize cards for it.';
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0] && effect.player.active.cards.includes(this)) {
+        if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
             const pokeDollCardList = __1.StateUtils.findCardList(state, this);
+            if (player.active.cards[0] !== this) {
+                throw new __1.GameError(__1.GameMessage.CANNOT_USE_POWER);
+            }
             store.log(state, __1.GameLog.LOG_PLAYER_PUTS_CARD_ON_BOTTOM_OF_DECK, { name: player.name, card: this.name });
             // Move Lillie's Poke Doll to bottom of deck
             state = prefabs_1.MOVE_CARDS(store, state, pokeDollCardList, player.deck, {

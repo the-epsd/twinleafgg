@@ -34,14 +34,14 @@ class ClefairyDoll extends game_1.TrainerCard {
         this.powers = [
             {
                 name: 'Clefairy Doll',
-                powerType: game_1.PowerType.ABILITY,
+                powerType: game_1.PowerType.TRAINER_ABILITY,
                 useWhenInPlay: true,
                 exemptFromAbilityLock: true,
-                text: 'At any time during your turn before your attack, you may discard Clefairy Doll.'
+                text: 'Play Clefairy Doll as if it were a Basic Pokémon. While in play, Clefairy Doll counts a a Pokémon (instead of a Trainer card). Clefairy Doll has no attacks, can\'t retreat, and can\'t be Asleep, Confused, Paralyzed, or Poisoned. If Clefairy Doll is Knocked Out, it doesn\'t count as a Knocked Out Pokémon. At any time during your turn before your attack, you may discard Clefairy Doll.'
             }
         ];
-        this.text = 'Play Clefairy Doll as if it were a Basic Pokémon. While in play, Clefairy Doll counts a a Pokémon (instead of a Trainer card). Clefairy Doll has no attacks, can\'t retreat, and can\'t be Asleep, Confused, Paralyzed, or Poisoned. If Clefairy Doll is Knocked Out, it doesn\'t count as a Knocked Out Pokémon.';
     }
+    // public text = 'Play Clefairy Doll as if it were a Basic Pokémon. While in play, Clefairy Doll counts a a Pokémon (instead of a Trainer card). Clefairy Doll has no attacks, can\'t retreat, and can\'t be Asleep, Confused, Paralyzed, or Poisoned. If Clefairy Doll is Knocked Out, it doesn\'t count as a Knocked Out Pokémon.';
     reduceEffect(store, state, effect) {
         // Clefairy Doll can't be affected by special conditions
         if (effect instanceof attack_effects_1.AddSpecialConditionsEffect && effect.player.active.cards.includes(this)) {

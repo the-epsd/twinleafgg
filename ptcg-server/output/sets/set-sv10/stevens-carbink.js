@@ -18,7 +18,7 @@ class StevensCarbink extends game_1.PokemonCard {
         this.powers = [{
                 name: 'Stone Palace',
                 powerType: game_1.PowerType.ABILITY,
-                text: 'As long as this Pokémon is on the Bench, each of your Steven\'s Pokémon takes 30 less damage ' +
+                text: 'As long as this Pokémon is on the Bench, all of your Steven\'s Pokémon take 30 less damage ' +
                     'from attacks from your opponent\'s Pokémon (after applying Weakness and Resistance). ' +
                     'The effect of Stone Palace doesn\'t stack.'
             }];

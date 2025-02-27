@@ -65,14 +65,14 @@ export class StevensMetagrossex extends PokemonCard {
   public retreat = [C, C, C];
 
   public powers = [{
-    name: 'Exboot',
+    name: 'X-Boot',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
-    text: ' Once during your turn, you may search your deck for a Basic [P] Energy card ' +
-      'and a Basic [M] Energy card and attach them to your [P] Pokémon or [M] Pokémon ' +
+    text: 'Once during your turn, you may search your deck for a Basic [P] Energy card, ' +
+      'a Basic [M] Energy card, or 1 of each and attach them to your [P] Pokémon and [M] Pokémon ' +
       'in any way you like. Then, shuffle your deck.'
   }]
-  public attacks = [{ name: 'Metal Stop', cost: [M, C, C], damage: 200, text: '' }];
+  public attacks = [{ name: 'Metal Stomp', cost: [M, C, C], damage: 200, text: '' }];
 
   public regulationMark: string = 'I';
   public set: string = 'SVOD';

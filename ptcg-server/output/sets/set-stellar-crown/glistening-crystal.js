@@ -18,7 +18,7 @@ class GlisteningCrystal extends trainer_card_1.TrainerCard {
         this.text = 'When the Tera Pokémon this card is attached to uses an attack, that attack costs 1 Energy less. (The Energy can be of any type.)';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof check_effects_1.CheckAttackCostEffect && effect.player.active.tool === this) {
+        if (effect instanceof check_effects_1.CheckAttackCostEffect && effect.player.active.tools.includes(this)) {
             const pokemonCard = effect.player.active.getPokemonCard();
             if (pokemonCard && pokemonCard.tags.includes(card_types_1.CardTag.POKEMON_TERA)) {
                 const checkEnergy = new check_effects_1.CheckProvidedEnergyEffect(effect.player);

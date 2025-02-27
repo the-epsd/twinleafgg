@@ -33,9 +33,6 @@ class Mimikyu extends game_1.PokemonCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
-            if (player.deck.cards.length === 0) {
-                return state;
-            }
             player.deck.moveTo(player.hand, 2);
             return state;
         }
@@ -66,7 +63,13 @@ class Mimikyu extends game_1.PokemonCard {
     executeCopiedAttack(store, state, player, opponent, attack) {
         const copiedAttackEffect = new game_effects_1.AttackEffect(player, opponent, attack);
         state = store.reduceEffect(state, copiedAttackEffect);
-        if (copiedAttackEffect.damage > 0) {
+        if (copiedAttackEffect.attack.shredAttack === true && copiedAttackEffect.damage > 0) {
+            // Apply damage and trigger AfterDamageEffect
+            opponent.active.damage += copiedAttackEffect.damage;
+            const afterDamage = new attack_effects_1.AfterDamageEffect(copiedAttackEffect, copiedAttackEffect.damage);
+            state = store.reduceEffect(state, afterDamage);
+        }
+        if (copiedAttackEffect.attack.shredAttack !== true && copiedAttackEffect.damage > 0) {
             const dealDamage = new attack_effects_1.DealDamageEffect(copiedAttackEffect, copiedAttackEffect.damage);
             state = store.reduceEffect(state, dealDamage);
         }

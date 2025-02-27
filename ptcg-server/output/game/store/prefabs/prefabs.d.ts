@@ -1,4 +1,4 @@
-import { AttachEnergyOptions, Card, CardList, ChooseCardsOptions, EnergyCard, FilterType, GameMessage, Player, PlayerType, PokemonCardList, SlotType, State, StoreLike } from '../..';
+import { AttachEnergyOptions, Card, CardList, ChooseCardsOptions, EnergyCard, GameMessage, Player, PlayerType, PokemonCardList, SlotType, State, StoreLike } from '../..';
 import { CardTag, SpecialCondition } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
 import { DealDamageEffect, PutDamageEffect } from '../effects/attack-effects';
@@ -74,8 +74,7 @@ export declare function TAKE_X_MORE_PRIZE_CARDS(effect: KnockOutEffect, state: S
 export declare function PLAY_POKEMON_FROM_HAND_TO_BENCH(state: State, player: Player, card: Card): void;
 export declare function THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_BENCHED_POKEMON(damage: number, effect: AttackEffect, store: StoreLike, state: State, min: number, max: number): State;
 export declare function THIS_POKEMON_DOES_DAMAGE_TO_ITSELF(store: StoreLike, state: State, effect: AttackEffect, amount: number): State;
-export declare function ATTACH_ENERGY_FROM_DECK(store: StoreLike, state: State, player: Player, playerType: PlayerType, slots: SlotType[], filter?: Partial<EnergyCard>, options?: Partial<AttachEnergyOptions>): void;
-export declare function ATTACH_ENERGY_FROM_DISCARD(store: StoreLike, state: State, player: Player, playerType: PlayerType, slots: SlotType[], filter?: FilterType, options?: Partial<AttachEnergyOptions>): void;
+export declare function ATTACH_ENERGY_PROMPT(store: StoreLike, state: State, player: Player, playerType: PlayerType, sourceSlot: SlotType, destinationSlots: SlotType[], filter?: Partial<EnergyCard>, options?: Partial<AttachEnergyOptions>): State;
 export declare function DISCARD_X_ENERGY_FROM_YOUR_HAND(effect: PowerEffect, store: StoreLike, state: State, minAmount: number, maxAmount: number): State;
 export declare function DISCARD_ALL_ENERGY_FROM_POKEMON(store: StoreLike, state: State, effect: AttackEffect, card: Card): void;
 /**
@@ -129,7 +128,7 @@ export declare function LOOK_AT_TOPDECK_AND_DISCARD_OR_RETURN(store: StoreLike, 
 export declare function MOVE_CARDS_TO_HAND(store: StoreLike, state: State, player: Player, cards: Card[]): void;
 export declare function SHOW_CARDS_TO_PLAYER(store: StoreLike, state: State, player: Player, cards: Card[]): State;
 export declare function SELECT_PROMPT(store: StoreLike, state: State, player: Player, values: string[], callback: (result: number) => void): State;
-export declare function SELECT_PROMPT_WITH_OPTIONS(store: StoreLike, state: State, player: Player, options: {
+export declare function SELECT_PROMPT_WITH_OPTIONS(store: StoreLike, state: State, player: Player, message: GameMessage, options: {
     message: GameMessage;
     action: () => void;
 }[]): State;
@@ -171,3 +170,6 @@ export declare function MOVE_CARDS(store: StoreLike, state: State, source: CardL
     toBottom?: boolean;
     skipCleanup?: boolean;
 }): State;
+export declare function REMOVE_TOOL(store: StoreLike, state: State, source: PokemonCardList, tool: Card, destinationSlot: SlotType): State;
+export declare function REMOVE_TOOLS_FROM_POKEMON_PROMPT(store: StoreLike, state: State, player: Player, target: PokemonCardList, destinationSlot: SlotType, min: number, max: number): State;
+export declare function CHOOSE_TOOLS_TO_REMOVE_PROMPT(store: StoreLike, state: State, player: Player, playerType: PlayerType, destinationSlot: SlotType, min: number, max: number): State;

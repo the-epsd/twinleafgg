@@ -16,7 +16,7 @@ class FloatStone extends trainer_card_1.TrainerCard {
         this.text = 'The Pokemon this card is attached to has no Retreat Cost.';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof check_effects_1.CheckRetreatCostEffect && effect.player.active.tool === this) {
+        if (effect instanceof check_effects_1.CheckRetreatCostEffect && effect.player.active.tools.includes(this)) {
             effect.cost = [];
         }
         return state;

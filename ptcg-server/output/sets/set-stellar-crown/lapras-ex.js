@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Laprasex = void 0;
 const game_1 = require("../../game");
+const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const check_effects_1 = require("../../game/store/effects/check-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 class Laprasex extends game_1.PokemonCard {
@@ -49,7 +50,7 @@ class Laprasex extends game_1.PokemonCard {
                         }
                     });
                     const damagePerEnergy = 40;
-                    effect.damage = this.attacks[0].damage + (checkProvidedEnergy.energyMap.length * damagePerEnergy);
+                    effect.damage = checkProvidedEnergy.energyMap.length * damagePerEnergy;
                 }
             });
             return state;
@@ -106,6 +107,15 @@ class Laprasex extends game_1.PokemonCard {
                 player.deck.applyOrder(order);
                 return state;
             });
+        }
+        if (effect instanceof attack_effects_1.PutDamageEffect && effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
+            const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            // Target is not Active
+            if (effect.target === player.active || effect.target === opponent.active) {
+                return state;
+            }
+            effect.preventDefault = true;
         }
         return state;
     }

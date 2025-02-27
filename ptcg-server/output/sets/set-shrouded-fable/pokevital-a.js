@@ -49,9 +49,9 @@ class PokeVitalA extends trainer_card_1.TrainerCard {
         this.set = 'SFA';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '62';
-        this.name = 'PokéVital A';
+        this.name = 'Poké Vital A';
         this.fullName = 'PokéVital A SFA';
-        this.text = 'Heal 150 damage from 1 of your Pokemon.' +
+        this.text = 'Heal 150 damage from 1 of your Pokémon.' +
             '' +
             'If this card is in your discard pile, it can\'t be put into your deck or hand.';
     }

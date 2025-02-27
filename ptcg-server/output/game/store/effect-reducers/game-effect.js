@@ -167,6 +167,9 @@ function gameReducer(store, state, effect) {
             if (card.tags.includes(card_types_1.CardTag.POKEMON_EX) || card.tags.includes(card_types_1.CardTag.POKEMON_V) || card.tags.includes(card_types_1.CardTag.POKEMON_VSTAR) || card.tags.includes(card_types_1.CardTag.POKEMON_ex) || card.tags.includes(card_types_1.CardTag.POKEMON_GX) || card.tags.includes(card_types_1.CardTag.TAG_TEAM)) {
                 effect.prizeCount += 1;
             }
+            if (card.tags.includes(card_types_1.CardTag.POKEMON_SV_MEGA)) {
+                effect.prizeCount += 1;
+            }
             if (card.tags.includes(card_types_1.CardTag.POKEMON_VMAX) || card.tags.includes(card_types_1.CardTag.POKEMON_VUNION)) {
                 effect.prizeCount += 2;
             }
@@ -297,7 +300,7 @@ function gameReducer(store, state, effect) {
             source.damage = 0;
             source.specialConditions = [];
             source.marker.markers = [];
-            source.tool = undefined;
+            source.tools = [];
             source.removeBoardEffect(card_types_1.BoardEffect.ABILITY_USED);
         }
         // If specific cards are specified

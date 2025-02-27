@@ -3,6 +3,7 @@ import { Rockruff } from '../set-forbidden-light/rockruff';
 import { Accelgor } from './accelgor';
 import { Bagon } from './bagon';
 import { Banette } from './banette';
+import { Beldum } from './beldum';
 import { Blazikenex } from './blaziken-ex';
 import { BrocksRecruitment } from './brocks-recruitment';
 import { Combusken } from './combusken';
@@ -36,12 +37,17 @@ import { LilliesComfey } from './lillies-comfey';
 import { LilliesCutiefly } from './lillies-cutiefly';
 import { LilliesPearl } from './lillies-pearl';
 import { LilliesRibombee } from './lillies-ribombee';
+import { Lombre } from './lombre';
+import { Lotad } from './lotad';
+import { Ludicolo } from './ludicolo';
 import { Lycanroc } from './lycanroc';
 import { Magmar } from './magmar';
 import { Magmortar } from './magmortar';
 import { Mamoswineex } from './mamoswine-ex';
 import { Maractus } from './maractus';
 import { Meowscarada } from './meowscarada';
+import { Metagross } from './metagross';
+import { Metang } from './metang';
 import { NsCastle } from './ns-castle';
 import { NsDarmanitan } from './ns-darmanitan';
 import { NsDarumaka } from './ns-darumaka';
@@ -55,11 +61,12 @@ import { NsReshiram } from './ns-reshiram';
 import { NsSigilyph } from './ns-sigilyph';
 import { NsZoroarkex } from './ns-zoroark-ex';
 import { NsZorua } from './ns-zorua';
+import { BrocksRecruitmentFA, DudunsparceexFA, HopsWoolooIR, HopsZacianexSIR, IonosBelliboltexFA, IonosBelliboltexSIR, IonosBelliboltexUR, IonosKilowattrelIR, IrisFightingSpiritFA, LilliesClefairyexFA, LilliesClefairyexSIR, LilliesRibombeeIR, LycanrocIR, MamoswineexFA, MaractusIR, NsReshiramIR, NsZoroarkexFA, NsZoroarkexSIR, NsZoroarkexUR, NsZoruaIR, RuffianFA, SalamenceexFA, SalamenceexSIR, SpikeEnergyUR, SwinubIR, VolcanionexFA, VolcanionexSIR, WailordIR } from './other-prints';
 import { Piloswine } from './piloswine';
 import { Postwick } from './postwick';
 import { Pupitar } from './pupitar';
 import { Regirock } from './regirock';
-import {Ruffian} from './ruffian';
+import { Ruffian } from './ruffian';
 import { Salamenceex } from './salamence-ex';
 import { Shelgon } from './shelgon';
 import { Shelmet } from './shelmet';
@@ -112,6 +119,12 @@ export const setSV9: Card[] = [
   new Regirock(),
   new Maractus(),
   new Ruffian(),
+  new Beldum(),
+  new Metang(),
+  new Metagross(),
+  new Lotad(),
+  new Lombre(),
+  new Ludicolo(),
 
   new LilliesClefairyex(),
   new LilliesComfey(),
@@ -154,4 +167,34 @@ export const setSV9: Card[] = [
   new NsKlink(),
   new NsKlang(),
   new NsKlinklang(),
+
+  // Other prints
+  new MaractusIR(),
+  new WailordIR(),
+  new IonosKilowattrelIR(),
+  new LilliesRibombeeIR(),
+  new SwinubIR(),
+  new LycanrocIR(),
+  new NsZoruaIR(),
+  new NsReshiramIR(),
+  new HopsWoolooIR(),
+  new VolcanionexFA(),
+  new IonosBelliboltexFA(),
+  new LilliesClefairyexFA(),
+  new MamoswineexFA(),
+  new NsZoroarkexFA(),
+  new SalamenceexFA(),
+  new DudunsparceexFA(),
+  new IrisFightingSpiritFA(),
+  new RuffianFA(),
+  new BrocksRecruitmentFA(),
+  new VolcanionexSIR(),
+  new IonosBelliboltexSIR(),
+  new LilliesClefairyexSIR(),
+  new NsZoroarkexSIR(),
+  new HopsZacianexSIR(),
+  new SalamenceexSIR(),
+  new IonosBelliboltexUR(),
+  new NsZoroarkexUR(),
+  new SpikeEnergyUR(),
 ];

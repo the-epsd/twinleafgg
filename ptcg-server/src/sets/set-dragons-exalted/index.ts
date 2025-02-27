@@ -1,4 +1,5 @@
 import { Card } from '../../game/store/card/card';
+import { Altaria } from './altaria';
 import { BlendEnergyGRPD } from './blend-energy-grpd';
 import { BlendEnergyWLFM } from './blend-energy-wlfm';
 import { Bouffalant } from './bouffalant';
@@ -23,6 +24,7 @@ import { Vulpix } from './vulpix';
 import { Zweilous } from './zweilous';
 
 export const setDragonsExalted: Card[] = [
+  new Altaria(),
   new BlendEnergyWLFM(),
   new BlendEnergyGRPD(),
   new Bouffalant(),

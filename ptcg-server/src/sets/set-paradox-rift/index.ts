@@ -84,6 +84,9 @@ import { Toxtricityex } from './toxtricity-ex';
 import { Trubbish } from './trubbish';
 import { Tsareenaex } from './tsareena-ex';
 import { Tulip } from './tulip';
+import {Vanillish} from './vanillish';
+import {Vanillite} from './vanillite';
+import {Vanilluxe} from './vanilluxe';
 import { Veluza } from './veluza';
 import { Wimpod } from './wimpod';
 import { Xatu } from './xatu';
@@ -179,6 +182,9 @@ export const setParadoxRift: Card[] = [
   new Golisopodex(),
   new Toxel(),
   new Toxtricityex(),
+  new Vanillite(),
+  new Vanillish(),
+  new Vanilluxe(),
 
   //Full s
   new ToedscruelIR(),

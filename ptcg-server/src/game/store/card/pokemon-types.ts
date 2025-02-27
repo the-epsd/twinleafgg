@@ -34,6 +34,7 @@ export enum PowerType {
   ANCIENT_TRAIT,
   POKEMON_POWER,
   VUNION_ASSEMBLY,
+  TRAINER_ABILITY,
 }
 
 export interface Power {

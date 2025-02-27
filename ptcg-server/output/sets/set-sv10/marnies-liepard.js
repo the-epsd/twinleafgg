@@ -16,7 +16,7 @@ class MarniesLiepard extends pokemon_card_1.PokemonCard {
         this.weakness = [{ type: G }];
         this.retreat = [C];
         this.attacks = [{
-                name: 'Sharp Claw',
+                name: 'Pointy Claws',
                 cost: [D, D],
                 damage: 70,
                 text: 'If your opponent\'s Active Pokémon is a Pokémon ex, this attack does 70 more damage.'

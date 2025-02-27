@@ -7,6 +7,7 @@ import { Drampa } from './drampa';
 import { DreamBall } from './dream-ball';
 import { DuraludonV } from './duraludon-v';
 import { DuraludonVMAX } from './duraludon-vmax';
+import { Eldegoss } from './eldegoss';
 import { EspeonV } from './espeon-v';
 import { EspeonVMAX } from './espeon-vmax';
 import { Flaaffy } from './flaaffy';
@@ -57,6 +58,7 @@ export const setEvolvingSkies: Card[] = [
   new DreamBall(),
   new DuraludonV(),
   new DuraludonVMAX(),
+  new Eldegoss(),
   new EspeonV(),
   new EspeonVMAX(),
   new Flaaffy(),
