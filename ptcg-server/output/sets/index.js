@@ -128,6 +128,7 @@ __exportStar(require("./set-prismatic-evolution"), exports);
 __exportStar(require("./set-sv9"), exports);
 __exportStar(require("./set-sv9a"), exports);
 __exportStar(require("./set-sv10"), exports);
+__exportStar(require("./set-m1s"), exports);
 //TEST
 __exportStar(require("./set-test"), exports);
 //Sort Later

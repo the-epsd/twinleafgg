@@ -40,6 +40,7 @@ export enum CardTag {
   ETHANS = 'ETHANS',
   MISTYS = 'MISTYS',
   CYNTHIAS = 'CYNTHIAS',
+  POKEMON_SV_MEGA = 'POKEMON_SV_MEGA',
 }
 
 export enum SuperType {

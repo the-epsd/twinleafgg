@@ -86,6 +86,9 @@ const toxtricity_ex_1 = require("./toxtricity-ex");
 const trubbish_1 = require("./trubbish");
 const tsareena_ex_1 = require("./tsareena-ex");
 const tulip_1 = require("./tulip");
+const vanillish_1 = require("./vanillish");
+const vanillite_1 = require("./vanillite");
+const vanilluxe_1 = require("./vanilluxe");
 const veluza_1 = require("./veluza");
 const wimpod_1 = require("./wimpod");
 const xatu_1 = require("./xatu");
@@ -181,6 +184,9 @@ exports.setParadoxRift = [
     new golisopod_ex_1.Golisopodex(),
     new toxel_1.Toxel(),
     new toxtricity_ex_1.Toxtricityex(),
+    new vanillite_1.Vanillite(),
+    new vanillish_1.Vanillish(),
+    new vanilluxe_1.Vanilluxe(),
     //Full s
     new full_art_1.ToedscruelIR(),
     new full_art_1.MagbyIR(),

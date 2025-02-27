@@ -11,6 +11,7 @@ const comfey_1 = require("./comfey");
 const crabominable_1 = require("./crabominable");
 const crabrawler_1 = require("./crabrawler");
 const crispin_1 = require("./crispin");
+const deluxe_bomb_1 = require("./deluxe-bomb");
 const diancie_1 = require("./diancie");
 const drednaw_1 = require("./drednaw");
 const drifblim_1 = require("./drifblim");
@@ -88,6 +89,7 @@ exports.setStellarCrown = [
     new veluza_1.Veluza(),
     new zeraora_1.Zeraora(),
     new milcery_1.Milcery(),
+    new deluxe_bomb_1.DeluxeBomb(),
     //FA
     new other_prints_1.BulbasaurIR(),
     new other_prints_1.RabootIR(),
