@@ -19,7 +19,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   }
 
   // Get Charizard ex from player's deck
-  let charizard: Card = new Charizardex();
+  const charizard: Card = new Charizardex();
   if (!charizard) {
     throw new GameError(GameMessage.UNKNOWN_CARD);
   }

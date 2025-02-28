@@ -1,6 +1,6 @@
-import { Attack, CardType, PlayerType, PokemonCard, Stage, State, StoreLike, Weakness } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
-import { WAS_ATTACK_USED } from "../../game/store/prefabs/prefabs";
+import { Attack, CardType, PlayerType, PokemonCard, Stage, State, StoreLike, Weakness } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Tympole extends PokemonCard {
 

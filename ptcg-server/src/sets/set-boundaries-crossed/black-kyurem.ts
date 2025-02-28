@@ -1,7 +1,7 @@
-import { Attack, CardType, PokemonCard, Stage, State, StoreLike, Weakness } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
-import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from "../../game/store/prefabs/costs";
-import { MULTIPLE_COIN_FLIPS_PROMPT, WAS_ATTACK_USED } from "../../game/store/prefabs/prefabs";
+import { Attack, CardType, PokemonCard, Stage, State, StoreLike, Weakness } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../game/store/prefabs/costs';
+import { MULTIPLE_COIN_FLIPS_PROMPT, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class BlackKyurem extends PokemonCard {
 

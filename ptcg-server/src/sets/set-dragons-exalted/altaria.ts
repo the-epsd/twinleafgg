@@ -1,8 +1,8 @@
-import { CardType, GamePhase, PlayerType, PokemonCard, PowerType, Stage, State, StateUtils, StoreLike } from "../../game";
-import { PutDamageEffect } from "../../game/store/effects/attack-effects";
-import { CheckPokemonTypeEffect } from "../../game/store/effects/check-effects";
-import { Effect } from "../../game/store/effects/effect";
-import { PowerEffect } from "../../game/store/effects/game-effects";
+import { CardType, GamePhase, PlayerType, PokemonCard, PowerType, Stage, State, StateUtils, StoreLike } from '../../game';
+import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
+import { Effect } from '../../game/store/effects/effect';
+import { PowerEffect } from '../../game/store/effects/game-effects';
 
 export class Altaria extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;

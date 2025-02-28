@@ -48,7 +48,7 @@ class TrevenantDusknoirGX extends pokemon_card_1.PokemonCard {
             if (opponent.hand.cards.length === 0) {
                 return state;
             }
-            let cardsToShuffle = Math.min(2, opponent.hand.cards.length);
+            const cardsToShuffle = Math.min(2, opponent.hand.cards.length);
             state = store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, opponent.hand, {}, { allowCancel: false, min: cardsToShuffle, max: cardsToShuffle, isSecret: true }), cards => {
                 cards = cards || [];
                 store.prompt(state, new game_1.ShowCardsPrompt(player.id, game_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, cards), () => []);

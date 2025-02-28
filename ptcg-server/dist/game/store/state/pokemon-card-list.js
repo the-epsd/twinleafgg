@@ -1,3 +1,4 @@
+import { Card } from '../card/card';
 import { BoardEffect, CardTag, SpecialCondition, SuperType } from '../card/card-types';
 import { CardList } from './card-list';
 import { Marker } from './card-marker';
@@ -17,6 +18,7 @@ export class PokemonCardList extends CardList {
         this.tools = [];
         this.maxTools = 1;
         this.isActivatingCard = false;
+        this.showAllStageAbilities = false;
     }
     getPokemons() {
         const result = [];
@@ -202,10 +204,10 @@ export class PokemonCardList extends CardList {
     }
     removeTool(tool) {
         const index = this.tools.indexOf(tool);
-        if (index !== -1) {
-            this.tools.splice(index, 1);
+        if (index >= 0) {
+            delete this.tools[index];
         }
-        return;
+        this.tools = this.tools.filter(c => c instanceof Card);
     }
 }
 PokemonCardList.ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';

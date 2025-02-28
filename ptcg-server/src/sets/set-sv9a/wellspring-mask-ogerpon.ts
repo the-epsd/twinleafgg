@@ -1,7 +1,7 @@
-import { Attack, CardType, EnergyType, PlayerType, PokemonCard, SlotType, Stage, State, StoreLike, Weakness } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
-import { HEAL_X_DAMAGE_FROM_THIS_POKEMON } from "../../game/store/prefabs/attack-effects";
-import { ATTACH_ENERGY_PROMPT, WAS_ATTACK_USED } from "../../game/store/prefabs/prefabs";
+import { Attack, CardType, EnergyType, PlayerType, PokemonCard, SlotType, Stage, State, StoreLike, Weakness } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { HEAL_X_DAMAGE_FROM_THIS_POKEMON } from '../../game/store/prefabs/attack-effects';
+import { ATTACH_ENERGY_PROMPT, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class WellspringMaskOgerpon extends PokemonCard {
 

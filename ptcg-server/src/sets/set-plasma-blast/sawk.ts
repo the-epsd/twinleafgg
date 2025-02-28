@@ -1,6 +1,6 @@
-import { Attack, CardTag, CardType, PokemonCard, Stage, State, StoreLike, Weakness } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
-import { DEAL_MORE_DAMAGE_IF_OPPONENT_ACTIVE_HAS_CARD_TAG, WAS_ATTACK_USED } from "../../game/store/prefabs/prefabs";
+import { Attack, CardTag, CardType, PokemonCard, Stage, State, StoreLike, Weakness } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { DEAL_MORE_DAMAGE_IF_OPPONENT_ACTIVE_HAS_CARD_TAG, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Sawk extends PokemonCard {
 

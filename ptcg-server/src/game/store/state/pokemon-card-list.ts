@@ -7,28 +7,20 @@ import { Marker } from './card-marker';
 export class PokemonCardList extends CardList {
 
   public damage: number = 0;
-
   public hp: number = 0;
-
   public specialConditions: SpecialCondition[] = [];
-
   public poisonDamage: number = 10;
-
   public burnDamage: number = 20;
-
   public marker = new Marker();
-
   public pokemonPlayedTurn: number = 0;
-
   public sleepFlips = 1;
-
   public boardEffect: BoardEffect[] = [];
-
   public hpBonus: number = 0;
   public tools: Card[] = [];
   public maxTools: number = 1;
   public stadium: Card | undefined;
-  isActivatingCard: boolean = false;
+  public isActivatingCard: boolean = false;
+  public showAllStageAbilities: boolean = false;
 
   public static readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
   public static readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';

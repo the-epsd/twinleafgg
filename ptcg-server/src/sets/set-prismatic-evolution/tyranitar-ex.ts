@@ -48,24 +48,24 @@ export class Tyranitarex extends PokemonCard {
 
     // Tyranical Crush
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]){
-        const player = effect.player;
-        const opponent = StateUtils.getOpponent(state, player);
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
   
-        if (opponent.hand.cards.length === 0){
-          return state;
-        }
+      if (opponent.hand.cards.length === 0){
+        return state;
+      }
   
-        state = store.prompt(state, new ChooseCardsPrompt(
-          player,
-          GameMessage.CHOOSE_CARD_TO_DISCARD,
-          opponent.hand,
-          {},
-          { allowCancel: false, min: 1, max: 1, isSecret: true }
-        ), cards => {
-          cards = cards || [];
+      state = store.prompt(state, new ChooseCardsPrompt(
+        player,
+        GameMessage.CHOOSE_CARD_TO_DISCARD,
+        opponent.hand,
+        {},
+        { allowCancel: false, min: 1, max: 1, isSecret: true }
+      ), cards => {
+        cards = cards || [];
   
-          opponent.hand.moveCardsTo(cards, opponent.discard);
-        });
+        opponent.hand.moveCardsTo(cards, opponent.discard);
+      });
     }
 
     return state;

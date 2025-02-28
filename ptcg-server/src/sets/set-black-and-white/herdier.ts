@@ -1,6 +1,6 @@
-import { Attack, CardType, PokemonCard, Stage, State, StoreLike, Weakness } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
-import { DRAW_CARDS, WAS_ATTACK_USED } from "../../game/store/prefabs/prefabs";
+import { Attack, CardType, PokemonCard, Stage, State, StoreLike, Weakness } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { DRAW_CARDS, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Herdier extends PokemonCard {
 

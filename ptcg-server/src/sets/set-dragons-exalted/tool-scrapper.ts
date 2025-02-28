@@ -33,7 +33,7 @@ export class ToolScrapper extends TrainerCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      let allTools = [];
+      const allTools = [];
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
         allTools.push(...cardList.tools);
       });

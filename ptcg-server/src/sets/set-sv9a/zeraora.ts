@@ -1,8 +1,8 @@
-import { Attack, Card, CardTag, CardTarget, CardType, ChoosePokemonPrompt, GameError, GameMessage, PlayerType, PokemonCard, SlotType, Stage, State, StateUtils, StoreLike, Weakness } from "../../game";
-import { DiscardCardsEffect, PutDamageEffect } from "../../game/store/effects/attack-effects";
-import { CheckProvidedEnergyEffect } from "../../game/store/effects/check-effects";
-import { Effect } from "../../game/store/effects/effect";
-import { AttackEffect } from "../../game/store/effects/game-effects";
+import { Attack, Card, CardTag, CardTarget, CardType, ChoosePokemonPrompt, GameError, GameMessage, PlayerType, PokemonCard, SlotType, Stage, State, StateUtils, StoreLike, Weakness } from '../../game';
+import { DiscardCardsEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { Effect } from '../../game/store/effects/effect';
+import { AttackEffect } from '../../game/store/effects/game-effects';
 
 
 export class Zeraora extends PokemonCard {

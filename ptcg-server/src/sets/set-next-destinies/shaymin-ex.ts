@@ -1,6 +1,6 @@
-import { AttachEnergyPrompt, Attack, CardTag, CardType, EnergyType, GameMessage, PlayerType, PokemonCard, Resistance, SlotType, Stage, State, StateUtils, StoreLike, SuperType, Weakness } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
-import { DEAL_MORE_DAMAGE_FOR_EACH_PRIZE_CARD_TAKEN, SHUFFLE_DECK, WAS_ATTACK_USED } from "../../game/store/prefabs/prefabs";
+import { AttachEnergyPrompt, Attack, CardTag, CardType, EnergyType, GameMessage, PlayerType, PokemonCard, Resistance, SlotType, Stage, State, StateUtils, StoreLike, SuperType, Weakness } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { DEAL_MORE_DAMAGE_FOR_EACH_PRIZE_CARD_TAKEN, SHUFFLE_DECK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class ShayminEX extends PokemonCard {
 

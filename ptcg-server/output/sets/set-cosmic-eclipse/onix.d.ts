@@ -1,5 +1,5 @@
-import { PokemonCard, State, StoreLike } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
+import { PokemonCard, State, StoreLike } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
 export declare class Onix extends PokemonCard {
     cardType: import("../../game").CardType.FIGHTING;
     hp: number;

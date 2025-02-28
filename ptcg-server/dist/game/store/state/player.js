@@ -105,7 +105,7 @@ export class Player {
         target.clearEffects();
     }
     getPokemonInPlay() {
-        let list = [];
+        const list = [];
         this.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, pokemonCard, target) => {
             if (cardList.cards.length !== 0)
                 list.push(cardList);
@@ -156,6 +156,8 @@ export class Player {
                 return this.hand;
             case SlotType.LOSTZONE:
                 return this.lostzone;
+            case SlotType.DECK:
+                return this.deck;
             default:
                 throw new GameError(GameMessage.INVALID_TARGET);
         }

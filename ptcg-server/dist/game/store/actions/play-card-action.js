@@ -12,6 +12,7 @@ export var SlotType;
     SlotType[SlotType["HAND"] = 3] = "HAND";
     SlotType[SlotType["DISCARD"] = 4] = "DISCARD";
     SlotType[SlotType["LOSTZONE"] = 5] = "LOSTZONE";
+    SlotType[SlotType["DECK"] = 6] = "DECK";
 })(SlotType || (SlotType = {}));
 export class PlayCardAction {
     constructor(id, handIndex, target) {

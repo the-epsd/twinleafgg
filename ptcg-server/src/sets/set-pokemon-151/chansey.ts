@@ -83,7 +83,7 @@ export class Chansey extends PokemonCard {
         TAKE_SPECIFIC_PRIZES(store, state, player, [player.prizes[prizeIndex]], { skipReduce: true });
       }
       return;
-    }
+    };
 
     if (!wantToUse) {
       effect.preventDefault = false;
@@ -126,7 +126,7 @@ export class Chansey extends PokemonCard {
       return state;
     }
 
-    let coinResult = SIMULATE_COIN_FLIP(store, state, player);
+    const coinResult = SIMULATE_COIN_FLIP(store, state, player);
 
     if (!coinResult) {
       return state;

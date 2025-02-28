@@ -1,7 +1,7 @@
-import { AttachEnergyPrompt, CardTag, CardTarget, CardType, ChoosePokemonPrompt, ConfirmPrompt, EnergyType, GameMessage, PlayerType, PokemonCard, PowerType, ShuffleDeckPrompt, SlotType, Stage, State, StateUtils, StoreLike, SuperType } from "../../game";
-import { PutDamageEffect } from "../../game/store/effects/attack-effects";
-import { Effect } from "../../game/store/effects/effect";
-import { AttackEffect, EvolveEffect, PowerEffect } from "../../game/store/effects/game-effects";
+import { AttachEnergyPrompt, CardTag, CardTarget, CardType, ChoosePokemonPrompt, ConfirmPrompt, EnergyType, GameMessage, PlayerType, PokemonCard, PowerType, ShuffleDeckPrompt, SlotType, Stage, State, StateUtils, StoreLike, SuperType } from '../../game';
+import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { Effect } from '../../game/store/effects/effect';
+import { AttackEffect, EvolveEffect, PowerEffect } from '../../game/store/effects/game-effects';
 
 export class MarniesGrimmsnarlex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -58,7 +58,7 @@ export class MarniesGrimmsnarlex extends PokemonCard {
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
         if (!card.tags.includes(CardTag.MARNIES))
           blockedTo.push(target);
-      })
+      });
       state = store.prompt(state, new ConfirmPrompt(
         effect.player.id,
         GameMessage.WANT_TO_USE_ABILITY,

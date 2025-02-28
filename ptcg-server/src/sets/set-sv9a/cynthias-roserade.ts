@@ -42,7 +42,7 @@ export class CynthiasRoserade extends PokemonCard {
       const player = effect.player;
       const attackingCard = effect.source.getPokemonCard();
 
-      IS_ABILITY_BLOCKED(store, state, player, this)
+      IS_ABILITY_BLOCKED(store, state, player, this);
 
       if (attackingCard !== undefined && attackingCard.tags.includes(CardTag.CYNTHIAS)) {
         effect.damage += 30;

@@ -1,6 +1,6 @@
-import { Attack, CardType, PokemonCard, Power, PowerType, Stage, State, StateUtils, StoreLike } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
-import { ADD_PARALYZED_TO_PLAYER_ACTIVE, CONFIRMATION_PROMPT, IS_ABILITY_BLOCKED, JUST_EVOLVED, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF, WAS_ATTACK_USED } from "../../game/store/prefabs/prefabs";
+import { Attack, CardType, PokemonCard, Power, PowerType, Stage, State, StateUtils, StoreLike } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { ADD_PARALYZED_TO_PLAYER_ACTIVE, CONFIRMATION_PROMPT, IS_ABILITY_BLOCKED, JUST_EVOLVED, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Raichu extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;

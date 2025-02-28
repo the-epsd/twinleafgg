@@ -1,6 +1,6 @@
-import { PokemonCard, Stage, StoreLike, State, CardTag } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
-import { WAS_ATTACK_USED, DRAW_CARDS } from "../../game/store/prefabs/prefabs";
+import { PokemonCard, Stage, StoreLike, State, CardTag } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { WAS_ATTACK_USED, DRAW_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class EthansPichu extends PokemonCard {
 

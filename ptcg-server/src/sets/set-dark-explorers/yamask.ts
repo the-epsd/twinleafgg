@@ -84,7 +84,7 @@ export class Yamask extends PokemonCard {
         }
         const generator = useAstonish(() => generator.next(), store, state, effect);
         return generator.next().value;
-      })
+      });
     }
 
     return state;

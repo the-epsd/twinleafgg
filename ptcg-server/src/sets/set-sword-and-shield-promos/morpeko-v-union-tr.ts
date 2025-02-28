@@ -43,40 +43,40 @@ export class MorpekoVUNIONTopRight extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // assemblin the v-union
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
-          const player = effect.player;
-          const slots: PokemonCardList[] = player.bench.filter(b => b.cards.length === 0);
+      const player = effect.player;
+      const slots: PokemonCardList[] = player.bench.filter(b => b.cards.length === 0);
     
-          if (player.assembledVUNIONs.includes(this.name)) {
-            throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-          }
-          if (slots.length === 0) {
-            throw new GameError(GameMessage.CANNOT_USE_POWER);
-          }
+      if (player.assembledVUNIONs.includes(this.name)) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      }
+      if (slots.length === 0) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
+      }
     
-          let topLeftPiece = false;
-          let topRightPiece = false;
-          let bottomLeftPiece = false;
-          let bottomRightPiece = false;
-          player.discard.cards.forEach(card => {
-            if (card instanceof MorpekoVUNIONTopLeft) { topLeftPiece = true; }
-            if (card instanceof MorpekoVUNIONTopRight) { topRightPiece = true; }
-            if (card instanceof MorpekoVUNIONBottomLeft) { bottomLeftPiece = true; }
-            if (card instanceof MorpekoVUNIONBottomRight) { bottomRightPiece = true; }
-          });
+      let topLeftPiece = false;
+      let topRightPiece = false;
+      let bottomLeftPiece = false;
+      let bottomRightPiece = false;
+      player.discard.cards.forEach(card => {
+        if (card instanceof MorpekoVUNIONTopLeft) { topLeftPiece = true; }
+        if (card instanceof MorpekoVUNIONTopRight) { topRightPiece = true; }
+        if (card instanceof MorpekoVUNIONBottomLeft) { bottomLeftPiece = true; }
+        if (card instanceof MorpekoVUNIONBottomRight) { bottomRightPiece = true; }
+      });
     
-          if (topLeftPiece && topRightPiece && bottomLeftPiece && bottomRightPiece) {
-            if (slots.length > 0) {
-              player.discard.cards.forEach(card => { if (card instanceof MorpekoVUNIONTopRight) { player.discard.moveCardTo(card, slots[0]); } });
-              player.discard.cards.forEach(card => { if (card instanceof MorpekoVUNIONBottomLeft) { player.discard.moveCardTo(card, slots[0]); } });
-              player.discard.cards.forEach(card => { if (card instanceof MorpekoVUNIONBottomRight) { player.discard.moveCardTo(card, slots[0]); } });
-              // gotta make sure the actual mon ends up on top
-              player.discard.cards.forEach(card => { if (card instanceof MorpekoVUNIONTopLeft) { player.discard.moveCardTo(card, slots[0]); } });
-              player.assembledVUNIONs.push(this.name);
-              slots[0].pokemonPlayedTurn = state.turn;
-            }
-          } else {
-            throw new GameError(GameMessage.CANNOT_USE_POWER);
-          }
+      if (topLeftPiece && topRightPiece && bottomLeftPiece && bottomRightPiece) {
+        if (slots.length > 0) {
+          player.discard.cards.forEach(card => { if (card instanceof MorpekoVUNIONTopRight) { player.discard.moveCardTo(card, slots[0]); } });
+          player.discard.cards.forEach(card => { if (card instanceof MorpekoVUNIONBottomLeft) { player.discard.moveCardTo(card, slots[0]); } });
+          player.discard.cards.forEach(card => { if (card instanceof MorpekoVUNIONBottomRight) { player.discard.moveCardTo(card, slots[0]); } });
+          // gotta make sure the actual mon ends up on top
+          player.discard.cards.forEach(card => { if (card instanceof MorpekoVUNIONTopLeft) { player.discard.moveCardTo(card, slots[0]); } });
+          player.assembledVUNIONs.push(this.name);
+          slots[0].pokemonPlayedTurn = state.turn;
+        }
+      } else {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
+      }
     }
 
     return state;

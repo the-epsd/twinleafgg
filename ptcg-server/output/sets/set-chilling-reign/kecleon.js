@@ -37,7 +37,7 @@ class Kecleon extends pokemon_card_1.PokemonCard {
             const player = game_1.StateUtils.findOwner(state, effect.target);
             player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
                 if (card === this) {
-                    let energies = new game_1.CardList();
+                    const energies = new game_1.CardList();
                     energies.cards = cardList.cards.filter(card => card instanceof game_1.EnergyCard && card.energyType === card_types_1.EnergyType.BASIC);
                     if (energies.cards.length === 0) {
                         effect.cardTypes = [C];

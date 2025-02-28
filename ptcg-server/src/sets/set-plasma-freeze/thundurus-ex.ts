@@ -1,7 +1,7 @@
-import { AttachEnergyPrompt, Attack, CardTag, CardTarget, CardType, ChooseCardsPrompt, EnergyCard, GameMessage, PlayerType, PokemonCard, SlotType, Stage, State, StateUtils, StoreLike, SuperType, Weakness } from "../../game";
-import { CheckProvidedEnergyEffect } from "../../game/store/effects/check-effects";
-import { Effect } from "../../game/store/effects/effect";
-import { WAS_ATTACK_USED } from "../../game/store/prefabs/prefabs";
+import { AttachEnergyPrompt, Attack, CardTag, CardTarget, CardType, ChooseCardsPrompt, EnergyCard, GameMessage, PlayerType, PokemonCard, SlotType, Stage, State, StateUtils, StoreLike, SuperType, Weakness } from '../../game';
+import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { Effect } from '../../game/store/effects/effect';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class ThundurusEX extends PokemonCard {
 
@@ -46,7 +46,7 @@ export class ThundurusEX extends PokemonCard {
         if (bench.cards.length === 0) {
           return;
         }
-        const benchPokemon = bench.getPokemonCard()
+        const benchPokemon = bench.getPokemonCard();
         if (benchPokemon && benchPokemon.tags.includes(CardTag.TEAM_PLASMA)) {
           validTargets = true;
         } else {
@@ -90,7 +90,7 @@ export class ThundurusEX extends PokemonCard {
       store.reduceEffect(state, checkEnergy);
 
       let hasPlasmaEnergy: boolean = false;
-      const defendingPokemonHasEnergy = opponent.active.cards.some(c => c instanceof EnergyCard)
+      const defendingPokemonHasEnergy = opponent.active.cards.some(c => c instanceof EnergyCard);
       checkEnergy.energyMap.forEach(em => {
         const energyCard = em.card;
         if (energyCard instanceof EnergyCard && energyCard.name === 'Plasma Energy') {

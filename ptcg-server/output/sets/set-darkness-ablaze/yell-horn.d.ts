@@ -1,5 +1,5 @@
-import { State, StoreLike, TrainerCard, TrainerType } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
+import { State, StoreLike, TrainerCard, TrainerType } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
 export declare class YellHorn extends TrainerCard {
     name: string;
     trainerType: TrainerType;

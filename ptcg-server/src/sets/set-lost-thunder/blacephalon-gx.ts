@@ -1,4 +1,4 @@
-  import { PokemonCard } from '../../game/store/card/pokemon-card';
+import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SpecialCondition, SuperType, EnergyType } from '../../game/store/card/card-types';
 import { AttachEnergyPrompt, CardList, ChoosePrizePrompt, DiscardEnergyPrompt } from '../../game';
 import { StoreLike, State, GameMessage, PlayerType, SlotType, EnergyCard } from '../../game';

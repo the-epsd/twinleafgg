@@ -66,6 +66,6 @@ export class Absol extends PokemonCard {
       return state;
     }
 
-    return state
+    return state;
   }
 }

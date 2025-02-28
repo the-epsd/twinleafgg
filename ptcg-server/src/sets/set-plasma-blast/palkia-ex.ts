@@ -1,8 +1,8 @@
-import { Attack, CardTag, CardType, EnergyCard, PokemonCard, Stage, State, StoreLike, Weakness } from "../../game";
-import { CheckProvidedEnergyEffect } from "../../game/store/effects/check-effects";
-import { Effect } from "../../game/store/effects/effect";
-import { HealEffect } from "../../game/store/effects/game-effects";
-import { AFTER_ATTACK, SWITCH_ACTIVE_WITH_BENCHED, WAS_ATTACK_USED } from "../../game/store/prefabs/prefabs";
+import { Attack, CardTag, CardType, EnergyCard, PokemonCard, Stage, State, StoreLike, Weakness } from '../../game';
+import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { Effect } from '../../game/store/effects/effect';
+import { HealEffect } from '../../game/store/effects/game-effects';
+import { AFTER_ATTACK, SWITCH_ACTIVE_WITH_BENCHED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class PalkiaEX extends PokemonCard {
 

@@ -49,7 +49,7 @@ export class TrevenantDusknoirGX extends PokemonCard {
       if (opponent.hand.cards.length === 0){
         return state;
       }
-      let cardsToShuffle = Math.min(2, opponent.hand.cards.length);
+      const cardsToShuffle = Math.min(2, opponent.hand.cards.length);
 
       state = store.prompt(state, new ChooseCardsPrompt(
         player,

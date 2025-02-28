@@ -1,7 +1,7 @@
-import { Attack, CardType, PokemonCard, Stage, State, StoreLike } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
-import { AttackEffect } from "../../game/store/effects/game-effects";
-import { DRAW_CARDS } from "../../game/store/prefabs/prefabs";
+import { Attack, CardType, PokemonCard, Stage, State, StoreLike } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { AttackEffect } from '../../game/store/effects/game-effects';
+import { DRAW_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class Blitzle extends PokemonCard {
   public stage: Stage = Stage.BASIC;

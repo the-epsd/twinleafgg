@@ -1,6 +1,6 @@
-import { CardTag, CardType, PokemonCard, Stage, State, StoreLike } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
-import { AttackEffect } from "../../game/store/effects/game-effects";
+import { CardTag, CardType, PokemonCard, Stage, State, StoreLike } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { AttackEffect } from '../../game/store/effects/game-effects';
 
 export class MarniesImpidimp extends PokemonCard {
   public stage: Stage = Stage.BASIC;

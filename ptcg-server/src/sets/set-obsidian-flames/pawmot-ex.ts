@@ -1,8 +1,8 @@
-import { Attack, CardTag, CardType, PokemonCard, Stage, State, StoreLike, Weakness } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
-import { THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_POKEMON } from "../../game/store/prefabs/attack-effects";
-import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from "../../game/store/prefabs/costs";
-import { WAS_ATTACK_USED } from "../../game/store/prefabs/prefabs";
+import { Attack, CardTag, CardType, PokemonCard, Stage, State, StoreLike, Weakness } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_POKEMON } from '../../game/store/prefabs/attack-effects';
+import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../game/store/prefabs/costs';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Pawmotex extends PokemonCard {
 

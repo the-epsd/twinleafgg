@@ -1,6 +1,6 @@
-import { Attack, CardTag, CardType, PokemonCard, Resistance, Stage, State, StateUtils, StoreLike, Weakness } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
-import { SHOW_CARDS_TO_PLAYER, WAS_ATTACK_USED } from "../../game/store/prefabs/prefabs";
+import { Attack, CardTag, CardType, PokemonCard, Resistance, Stage, State, StateUtils, StoreLike, Weakness } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { SHOW_CARDS_TO_PLAYER, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Absol extends PokemonCard {
 

@@ -10,7 +10,8 @@ export declare enum SlotType {
     BENCH = 2,
     HAND = 3,
     DISCARD = 4,
-    LOSTZONE = 5
+    LOSTZONE = 5,
+    DECK = 6
 }
 export interface CardTarget {
     player: PlayerType;

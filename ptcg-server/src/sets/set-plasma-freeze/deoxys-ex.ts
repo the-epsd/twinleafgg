@@ -1,8 +1,8 @@
-import { Attack, CardTag, CardType, EnergyCard, GamePhase, PokemonCard, Power, PowerType, Stage, State, StateUtils, StoreLike, Weakness } from "../../game";
-import { DealDamageEffect } from "../../game/store/effects/attack-effects";
-import { CheckProvidedEnergyEffect } from "../../game/store/effects/check-effects";
-import { Effect } from "../../game/store/effects/effect";
-import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from "../../game/store/prefabs/prefabs";
+import { Attack, CardTag, CardType, EnergyCard, GamePhase, PokemonCard, Power, PowerType, Stage, State, StateUtils, StoreLike, Weakness } from '../../game';
+import { DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { Effect } from '../../game/store/effects/effect';
+import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class DeoxysEX extends PokemonCard {
 

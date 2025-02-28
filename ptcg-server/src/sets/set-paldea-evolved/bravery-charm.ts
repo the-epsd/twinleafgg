@@ -1,6 +1,6 @@
-import { TrainerCard, TrainerType, State, Stage, StoreLike } from "../../game";
-import { CheckHpEffect } from "../../game/store/effects/check-effects";
-import { Effect } from "../../game/store/effects/effect";
+import { TrainerCard, TrainerType, State, Stage, StoreLike } from '../../game';
+import { CheckHpEffect } from '../../game/store/effects/check-effects';
+import { Effect } from '../../game/store/effects/effect';
 
 export class BraveryCharm extends TrainerCard {
   public trainerType = TrainerType.TOOL;

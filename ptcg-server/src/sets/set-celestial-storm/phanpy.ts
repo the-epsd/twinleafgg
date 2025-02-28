@@ -42,7 +42,7 @@ export class Phanpy extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, effect.player);
       COIN_FLIP_PROMPT(store, state, effect.player, result => {
         if (!result)
-          return
+          return;
         ADD_MARKER(this.PREVENT_KNOCKED_OUT_DURING_OPPONENTS_NEXT_TURN_MARKER, effect.player.active, this);
         ADD_MARKER(this.CLEAR_PREVENT_KNOCKED_OUT_DURING_OPPONENTS_NEXT_TURN_MARKER, opponent, this);
       });
@@ -71,7 +71,7 @@ export class Phanpy extends PokemonCard {
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
         REMOVE_MARKER(this.PREVENT_KNOCKED_OUT_DURING_OPPONENTS_NEXT_TURN_MARKER, cardList, this);
       });
-    };
+    }
     return state;
   }
 }

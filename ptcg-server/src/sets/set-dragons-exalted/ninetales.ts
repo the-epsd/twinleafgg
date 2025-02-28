@@ -1,7 +1,7 @@
-import { Attack, CardType, ChoosePokemonPrompt, GameMessage, PlayerType, PokemonCard, Power, PowerType, SlotType, Stage, State, StateUtils, StoreLike, Weakness } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
-import { PlayPokemonEffect } from "../../game/store/effects/play-card-effects";
-import { CONFIRMATION_PROMPT, IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from "../../game/store/prefabs/prefabs";
+import { Attack, CardType, ChoosePokemonPrompt, GameMessage, PlayerType, PokemonCard, Power, PowerType, SlotType, Stage, State, StateUtils, StoreLike, Weakness } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { CONFIRMATION_PROMPT, IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Ninetales extends PokemonCard {
 
@@ -69,7 +69,7 @@ export class Ninetales extends PokemonCard {
 
       oppActive.specialConditions.forEach(c => {
         effect.damage += 50;
-      })
+      });
     }
 
     return state;

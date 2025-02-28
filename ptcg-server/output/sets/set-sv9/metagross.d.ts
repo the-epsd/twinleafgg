@@ -1,5 +1,5 @@
-import { Attack, CardType, PokemonCard, Resistance, Stage, State, StoreLike, Weakness } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
+import { Attack, CardType, PokemonCard, Resistance, Stage, State, StoreLike, Weakness } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
 export declare class Metagross extends PokemonCard {
     stage: Stage;
     evolvesFrom: string;

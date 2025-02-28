@@ -1,4 +1,4 @@
-import { UltraBall } from "../set-scarlet-and-violet/ultra-ball";
+import { UltraBall } from '../set-scarlet-and-violet/ultra-ball';
 
 export class UltraBallHR extends UltraBall {
   public set = 'BRS';

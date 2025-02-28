@@ -96,15 +96,15 @@ export class JudgeWhistle extends TrainerCard {
           }
         ];
 
-      return store.prompt(state, new SelectPrompt(
-        player.id,
-        GameMessage.CHOOSE_OPTION,
-        options.map(opt => opt.message),
-        { allowCancel: false }
-      ), choice => {
-        const option = options[choice];
-        option.action();
-      });
+        return store.prompt(state, new SelectPrompt(
+          player.id,
+          GameMessage.CHOOSE_OPTION,
+          options.map(opt => opt.message),
+          { allowCancel: false }
+        ), choice => {
+          const option = options[choice];
+          option.action();
+        });
       }
     }
 

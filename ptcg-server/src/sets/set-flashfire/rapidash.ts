@@ -15,7 +15,7 @@ import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 export class Rapidash extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_1;
-  public evolvesFrom = "Ponyta";
+  public evolvesFrom = 'Ponyta';
   public cardType: CardType = R;
   public hp: number = 90;
   public weakness = [{ type: W }];
@@ -63,31 +63,31 @@ export class Rapidash extends PokemonCard {
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-          const player = effect.player;
-          const opponent = StateUtils.getOpponent(state, player);
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
 
-          const hasBenched = opponent.bench.some(b => b.cards.length > 0);
-          if (!hasBenched) {
-            return state;
-          }
+      const hasBenched = opponent.bench.some(b => b.cards.length > 0);
+      if (!hasBenched) {
+        return state;
+      }
 
-          state = store.prompt(state, new ChoosePokemonPrompt(
-            player.id,
-            GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-            PlayerType.TOP_PLAYER,
-            [ SlotType.BENCH ],
-            { allowCancel: false }
-          ), targets => {
-            if (!targets || targets.length === 0) {
-              return;
-            }
-            const damageEffect = new PutDamageEffect(effect, 20);
-            damageEffect.target = targets[0];
-            store.reduceEffect(state, damageEffect);
-          });
-
-          return state;
+      state = store.prompt(state, new ChoosePokemonPrompt(
+        player.id,
+        GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+        PlayerType.TOP_PLAYER,
+        [ SlotType.BENCH ],
+        { allowCancel: false }
+      ), targets => {
+        if (!targets || targets.length === 0) {
+          return;
         }
+        const damageEffect = new PutDamageEffect(effect, 20);
+        damageEffect.target = targets[0];
+        store.reduceEffect(state, damageEffect);
+      });
+
+      return state;
+    }
 
     if (effect instanceof AbstractAttackEffect
       && effect.target.marker.hasMarker(this.PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER)) {

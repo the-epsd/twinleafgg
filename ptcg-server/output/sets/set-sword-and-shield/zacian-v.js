@@ -41,7 +41,7 @@ class ZacianV extends pokemon_card_1.PokemonCard {
         // Intrepid Sword
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
-            let topdecks = new game_1.CardList();
+            const topdecks = new game_1.CardList();
             player.deck.moveTo(topdecks, 3);
             let metals = 0;
             topdecks.cards.forEach(card => {

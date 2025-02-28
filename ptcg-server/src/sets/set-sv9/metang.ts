@@ -1,4 +1,4 @@
-import { Attack, CardType, PokemonCard, Resistance, Stage, Weakness } from "../../game";
+import { Attack, CardType, PokemonCard, Resistance, Stage, Weakness } from '../../game';
 
 export class Metang extends PokemonCard {
 

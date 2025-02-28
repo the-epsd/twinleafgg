@@ -73,9 +73,9 @@ export class IronLeaves extends PokemonCard {
           { superType: SuperType.POKEMON },
           { min: 1, max, allowCancel: false }
         )], selected => {
-          const cards = selected || [];
-          player.discard.moveCardsTo(cards, player.hand);
-        });
+        const cards = selected || [];
+        player.discard.moveCardsTo(cards, player.hand);
+      });
     }
 
     if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.RETALIATE_MARKER, this)) {

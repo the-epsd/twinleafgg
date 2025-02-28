@@ -15,7 +15,7 @@ class Rapidash extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.STAGE_1;
-        this.evolvesFrom = "Ponyta";
+        this.evolvesFrom = 'Ponyta';
         this.cardType = R;
         this.hp = 90;
         this.weakness = [{ type: W }];

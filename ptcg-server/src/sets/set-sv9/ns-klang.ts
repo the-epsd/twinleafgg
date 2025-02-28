@@ -6,7 +6,7 @@ import { Effect } from '../../game/store/effects/effect';
 
 export class NsKlang extends PokemonCard {
   public tags = [CardTag.NS];
-  public stage: Stage = Stage.STAGE_2;
+  public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'N\'s Klink';
   public cardType: CardType = M;
   public hp: number = 160;
@@ -38,7 +38,7 @@ export class NsKlang extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      opponent.active.addSpecialCondition(SpecialCondition.CONFUSED)
+      opponent.active.addSpecialCondition(SpecialCondition.CONFUSED);
     }
     return state;
   }

@@ -110,7 +110,7 @@ export class MorpekoVUNIONTopLeft extends PokemonCard {
         if (card instanceof EnergyCard && card.energyType === EnergyType.BASIC && card.name === 'Lightning Energy') {
           lightningsInDiscard++;
         }
-      })
+      });
 
       if (lightningsInDiscard > 0) {
         const blocked: CardTarget[] = [];

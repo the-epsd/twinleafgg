@@ -38,7 +38,7 @@ export class Amarys extends TrainerCard {
       const discard = effect.player.discard;
 
       if (hand.cards.length >= 5)
-        hand.moveCardsTo(hand.cards, discard)
+        hand.moveCardsTo(hand.cards, discard);
     }
 
     REMOVE_MARKER_AT_END_OF_TURN(effect, this.AMARYS_USED_MARKER, this);

@@ -21,6 +21,7 @@ class PokemonCardList extends card_list_1.CardList {
         this.tools = [];
         this.maxTools = 1;
         this.isActivatingCard = false;
+        this.showAllStageAbilities = false;
     }
     getPokemons() {
         const result = [];

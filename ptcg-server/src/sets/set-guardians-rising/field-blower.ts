@@ -30,7 +30,7 @@ export class FieldBlower extends TrainerCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      let allTools = [];
+      const allTools = [];
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
         allTools.push(...cardList.tools);
       });
@@ -71,7 +71,7 @@ export class FieldBlower extends TrainerCard {
               }
             }
           }
-        ])
+        ]);
         player.supporter.moveCardTo(this, player.discard);
       } else {
         state = CHOOSE_TOOLS_TO_REMOVE_PROMPT(store, state, player, PlayerType.ANY, SlotType.DISCARD, 0, 2);

@@ -66,8 +66,8 @@ function handleMaxToolsChange(store: StoreLike, state: State): State {
         const amount = cardList.tools.length - cardList.maxTools;
         REMOVE_TOOLS_FROM_POKEMON_PROMPT(store, state, player, cardList, SlotType.DISCARD, amount, amount);
       }
-    })
-  })
+    });
+  });
   return state;
 }
 

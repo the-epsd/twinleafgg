@@ -22,11 +22,11 @@ export class GreatTuskex extends PokemonCard {
   }];
 
   public attacks = [{
-      name: 'Great Bash',
-      cost: [ F, C, C, C ],
-      damage: 260,
-      text: 'This attack\'s damage isn\'t affected by any effects on your opponent\'s Active Pokémon.'
-    }];
+    name: 'Great Bash',
+    cost: [ F, C, C, C ],
+    damage: 260,
+    text: 'This attack\'s damage isn\'t affected by any effects on your opponent\'s Active Pokémon.'
+  }];
 
   public set: string = 'PAF';
   public regulationMark = 'G';

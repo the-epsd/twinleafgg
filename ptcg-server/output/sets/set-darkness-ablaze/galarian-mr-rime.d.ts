@@ -1,5 +1,5 @@
-import { CardType, PokemonCard, Power, Stage, State, StoreLike } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
+import { CardType, PokemonCard, Power, Stage, State, StoreLike } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
 export declare class GalarianMrRime extends PokemonCard {
     stage: Stage;
     evolvesFrom: string;

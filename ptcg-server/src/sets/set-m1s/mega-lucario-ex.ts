@@ -1,7 +1,7 @@
-import { AttachEnergyPrompt, CardTag, CardType, EnergyType, GameError, GameMessage, PlayerType, PokemonCard, SlotType, Stage, State, StateUtils, StoreLike, SuperType } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
-import { EndTurnEffect } from "../../game/store/effects/game-phase-effects";
-import { ADD_MARKER, HAS_MARKER, WAS_ATTACK_USED } from "../../game/store/prefabs/prefabs";
+import { AttachEnergyPrompt, CardTag, CardType, EnergyType, GameError, GameMessage, PlayerType, PokemonCard, SlotType, Stage, State, StateUtils, StoreLike, SuperType } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { ADD_MARKER, HAS_MARKER, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class MegaLucarioex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;

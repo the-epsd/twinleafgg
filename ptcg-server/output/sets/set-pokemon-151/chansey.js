@@ -110,7 +110,7 @@ class Chansey extends pokemon_card_1.PokemonCard {
         catch (_a) {
             return state;
         }
-        let coinResult = prefabs_1.SIMULATE_COIN_FLIP(store, state, player);
+        const coinResult = prefabs_1.SIMULATE_COIN_FLIP(store, state, player);
         if (!coinResult) {
             return state;
         }

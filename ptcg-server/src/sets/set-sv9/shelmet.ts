@@ -39,7 +39,7 @@ export class Shelmet extends PokemonCard {
           return;
         ADD_MARKER(this.SHELL_HIT_MARKER, player.active, this);
         ADD_MARKER(this.CLEAR_SHELL_HIT_MARKER, opponent, this);
-      })
+      });
     }
 
     PREVENT_DAMAGE_IF_TARGET_HAS_MARKER(effect, this.SHELL_HIT_MARKER, this);

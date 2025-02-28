@@ -1,7 +1,7 @@
-import { Attack, CardType, PokemonCard, SpecialCondition, Stage, State, StateUtils, StoreLike, Weakness } from "../../game";
-import { AddSpecialConditionsEffect, HealTargetEffect } from "../../game/store/effects/attack-effects";
-import { Effect } from "../../game/store/effects/effect";
-import { WAS_ATTACK_USED } from "../../game/store/prefabs/prefabs";
+import { Attack, CardType, PokemonCard, SpecialCondition, Stage, State, StateUtils, StoreLike, Weakness } from '../../game';
+import { AddSpecialConditionsEffect, HealTargetEffect } from '../../game/store/effects/attack-effects';
+import { Effect } from '../../game/store/effects/effect';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Slowpoke extends PokemonCard {
 
@@ -36,7 +36,7 @@ export class Slowpoke extends PokemonCard {
         return state;
       }
 
-      const sleepEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.ASLEEP])
+      const sleepEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.ASLEEP]);
       sleepEffect.target = effect.player.active;
 
       const healEffect = new HealTargetEffect(effect, 30);

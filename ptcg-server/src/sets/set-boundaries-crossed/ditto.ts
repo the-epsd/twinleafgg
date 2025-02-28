@@ -1,6 +1,6 @@
-import { Attack, CardType, ChooseCardsPrompt, GameError, GameLog, GameMessage, PokemonCard, PokemonCardList, Power, PowerType, Stage, State, StateUtils, StoreLike, SuperType, Weakness } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
-import { WAS_POWER_USED } from "../../game/store/prefabs/prefabs";
+import { Attack, CardType, ChooseCardsPrompt, GameError, GameLog, GameMessage, PokemonCard, PokemonCardList, Power, PowerType, Stage, State, StateUtils, StoreLike, SuperType, Weakness } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Ditto extends PokemonCard {
 
@@ -57,7 +57,7 @@ export class Ditto extends PokemonCard {
           effect: effect.power.name,
         });
         player.hand.moveCardTo(pokemonCard, targetCardList);
-      })
+      });
     }
 
     return state;

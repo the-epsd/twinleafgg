@@ -129,7 +129,7 @@ export * from './set-prismatic-evolution';
 export * from './set-sv9';
 export * from './set-sv9a';
 export * from './set-sv10';
-export * from './set-m1s'
+export * from './set-m1s';
 
 //TEST
 export * from './set-test';

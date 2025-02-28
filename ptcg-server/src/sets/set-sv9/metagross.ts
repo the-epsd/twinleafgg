@@ -1,6 +1,6 @@
-import { Attack, CardType, PlayerType, PokemonCard, Resistance, Stage, State, StoreLike, Weakness } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
-import { WAS_ATTACK_USED } from "../../game/store/prefabs/prefabs";
+import { Attack, CardType, PlayerType, PokemonCard, Resistance, Stage, State, StoreLike, Weakness } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Metagross extends PokemonCard {
 
@@ -42,7 +42,7 @@ export class Metagross extends PokemonCard {
         } else if (card.name === 'Metang') {
           hasMetang = true;
         }
-      })
+      });
       if (hasBeldum && hasMetang) {
         effect.damage += 150;
       }

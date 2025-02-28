@@ -1,6 +1,6 @@
-import { Attack, CardList, CardTag, CardType, GameError, GameMessage, PokemonCard, PokemonCardList, Power, PowerType, Stage, State, StateUtils, StoreLike, Weakness } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
-import { BLOCK_IF_DECK_EMPTY, GET_CARDS_ON_BOTTOM_OF_DECK, WAS_POWER_USED } from "../../game/store/prefabs/prefabs";
+import { Attack, CardList, CardTag, CardType, GameError, GameMessage, PokemonCard, PokemonCardList, Power, PowerType, Stage, State, StateUtils, StoreLike, Weakness } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { BLOCK_IF_DECK_EMPTY, GET_CARDS_ON_BOTTOM_OF_DECK, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class MistysPsyduck extends PokemonCard {
 

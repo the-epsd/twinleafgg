@@ -24,7 +24,7 @@ function* useExboot(next: Function, store: StoreLike, state: State, effect: Powe
       !checkPokemonTypeEffect.cardTypes.includes(CardType.METAL)) {
       blockedTo.push(target);
     }
-  })
+  });
 
   yield store.prompt(state, new AttachEnergyPrompt(
     player.id,
@@ -71,7 +71,7 @@ export class StevensMetagrossex extends PokemonCard {
     text: 'Once during your turn, you may search your deck for a Basic [P] Energy card, ' +
       'a Basic [M] Energy card, or 1 of each and attach them to your [P] Pokémon and [M] Pokémon ' +
       'in any way you like. Then, shuffle your deck.'
-  }]
+  }];
   public attacks = [{ name: 'Metal Stomp', cost: [M, C, C], damage: 200, text: '' }];
 
   public regulationMark: string = 'I';

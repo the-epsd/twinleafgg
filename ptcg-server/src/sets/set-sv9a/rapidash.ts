@@ -28,7 +28,7 @@ export class Rapidash extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '14';
 
-  public readonly HURRIED_GAIT_MARKER = 'HURRIED_GAIT_MARKER'
+  public readonly HURRIED_GAIT_MARKER = 'HURRIED_GAIT_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Hurried Gait

@@ -1,6 +1,6 @@
-import { EnergyRecycler } from "../set-battle-styles/energy-recycler";
-import { MarniesMorpeko } from "./marnies-morpeko";
-import { StevensBeldum } from "./stevens-beldum";
+import { EnergyRecycler } from '../set-battle-styles/energy-recycler';
+import { MarniesMorpeko } from './marnies-morpeko';
+import { StevensBeldum } from './stevens-beldum';
 export declare class EnergyRecyclerSV10 extends EnergyRecycler {
     regulationMark: string;
     fullName: string;

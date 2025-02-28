@@ -1,7 +1,7 @@
-import { PokemonCard, Stage, StoreLike, State, CardTag } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
-import { THIS_ATTACK_DOES_X_MORE_DAMAGE } from "../../game/store/prefabs/effect-modifiers";
-import { WAS_ATTACK_USED } from "../../game/store/prefabs/prefabs";
+import { PokemonCard, Stage, StoreLike, State, CardTag } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { THIS_ATTACK_DOES_X_MORE_DAMAGE } from '../../game/store/prefabs/effect-modifiers';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class EthansTyphlosion extends PokemonCard {
 

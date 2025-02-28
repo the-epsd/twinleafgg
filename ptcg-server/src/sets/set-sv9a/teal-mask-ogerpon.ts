@@ -1,6 +1,6 @@
-import { Attack, CardType, EnergyType, GameError, GameMessage, PlayerType, PokemonCard, SlotType, Stage, State, StoreLike, Weakness } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
-import { ADD_MARKER, ATTACH_ENERGY_PROMPT, HAS_MARKER, REMOVE_MARKER_AT_END_OF_TURN, REPLACE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED } from "../../game/store/prefabs/prefabs";
+import { Attack, CardType, EnergyType, GameError, GameMessage, PlayerType, PokemonCard, SlotType, Stage, State, StoreLike, Weakness } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { ADD_MARKER, ATTACH_ENERGY_PROMPT, HAS_MARKER, REMOVE_MARKER_AT_END_OF_TURN, REPLACE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class TealMaskOgerpon extends PokemonCard {
 
