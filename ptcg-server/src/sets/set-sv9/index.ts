@@ -49,7 +49,7 @@ import { Meowscarada } from './meowscarada';
 import { Metagross } from './metagross';
 import { Metang } from './metang';
 import { NsCastle } from './ns-castle';
-import { NsDarmanitan } from './ns-darmanitan';
+import { NsDarmanitan } from './ns-darmanitanz';
 import { NsDarumaka } from './ns-darumaka';
 import { NsJoltik } from './ns-joltik';
 import { NsKlang } from './ns-klang';

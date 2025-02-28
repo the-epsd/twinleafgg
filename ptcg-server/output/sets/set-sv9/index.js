@@ -51,7 +51,7 @@ const meowscarada_1 = require("./meowscarada");
 const metagross_1 = require("./metagross");
 const metang_1 = require("./metang");
 const ns_castle_1 = require("./ns-castle");
-const ns_darmanitan_1 = require("./ns-darmanitan");
+const ns_darmanitanz_1 = require("./ns-darmanitanz");
 const ns_darumaka_1 = require("./ns-darumaka");
 const ns_joltik_1 = require("./ns-joltik");
 const ns_klang_1 = require("./ns-klang");
@@ -154,7 +154,7 @@ exports.setSV9 = [
     new ns_zoroark_ex_1.NsZoroarkex(),
     new ns_reshiram_1.NsReshiram(),
     new ns_darumaka_1.NsDarumaka(),
-    new ns_darmanitan_1.NsDarmanitan(),
+    new ns_darmanitanz_1.NsDarmanitan(),
     new ns_pp_up_1.NsPPUp(),
     new ns_sigilyph_1.NsSigilyph(),
     new ns_castle_1.NsCastle(),
