@@ -9,7 +9,7 @@ class NsKlang extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.tags = [card_types_1.CardTag.NS];
-        this.stage = card_types_1.Stage.STAGE_2;
+        this.stage = card_types_1.Stage.STAGE_1;
         this.evolvesFrom = 'N\'s Klink';
         this.cardType = M;
         this.hp = 160;

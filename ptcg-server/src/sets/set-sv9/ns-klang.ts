@@ -6,7 +6,7 @@ import { Effect } from '../../game/store/effects/effect';
 
 export class NsKlang extends PokemonCard {
   public tags = [CardTag.NS];
-  public stage: Stage = Stage.STAGE_2;
+  public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'N\'s Klink';
   public cardType: CardType = M;
   public hp: number = 160;

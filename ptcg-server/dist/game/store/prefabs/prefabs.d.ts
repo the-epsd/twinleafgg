@@ -1,4 +1,4 @@
-import { AttachEnergyOptions, Card, CardList, ChooseCardsOptions, EnergyCard, FilterType, GameMessage, Player, PlayerType, PokemonCardList, SlotType, State, StoreLike } from '../..';
+import { AttachEnergyOptions, Card, CardList, ChooseCardsOptions, EnergyCard, GameMessage, Player, PlayerType, PokemonCardList, SlotType, State, StoreLike } from '../..';
 import { CardTag, SpecialCondition } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
 import { DealDamageEffect, PutDamageEffect } from '../effects/attack-effects';
@@ -74,8 +74,7 @@ export declare function TAKE_X_MORE_PRIZE_CARDS(effect: KnockOutEffect, state: S
 export declare function PLAY_POKEMON_FROM_HAND_TO_BENCH(state: State, player: Player, card: Card): void;
 export declare function THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_BENCHED_POKEMON(damage: number, effect: AttackEffect, store: StoreLike, state: State, min: number, max: number): State;
 export declare function THIS_POKEMON_DOES_DAMAGE_TO_ITSELF(store: StoreLike, state: State, effect: AttackEffect, amount: number): State;
-export declare function ATTACH_ENERGY_FROM_DECK(store: StoreLike, state: State, player: Player, playerType: PlayerType, slots: SlotType[], filter?: Partial<EnergyCard>, options?: Partial<AttachEnergyOptions>): void;
-export declare function ATTACH_ENERGY_FROM_DISCARD(store: StoreLike, state: State, player: Player, playerType: PlayerType, slots: SlotType[], filter?: FilterType, options?: Partial<AttachEnergyOptions>): void;
+export declare function ATTACH_ENERGY_PROMPT(store: StoreLike, state: State, player: Player, playerType: PlayerType, sourceSlot: SlotType, destinationSlots: SlotType[], filter?: Partial<EnergyCard>, options?: Partial<AttachEnergyOptions>): State;
 export declare function DISCARD_X_ENERGY_FROM_YOUR_HAND(effect: PowerEffect, store: StoreLike, state: State, minAmount: number, maxAmount: number): State;
 export declare function DISCARD_ALL_ENERGY_FROM_POKEMON(store: StoreLike, state: State, effect: AttackEffect, card: Card): void;
 /**

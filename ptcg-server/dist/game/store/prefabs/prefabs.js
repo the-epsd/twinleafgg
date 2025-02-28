@@ -16,6 +16,7 @@ import { AddSpecialConditionsPowerEffect, CheckPrizesDestinationEffect, CheckPro
 import { AttackEffect, DrawPrizesEffect, EvolveEffect, KnockOutEffect, PowerEffect, RetreatEffect } from '../effects/game-effects';
 import { AfterAttackEffect, EndTurnEffect } from '../effects/game-phase-effects';
 import { MoveCardsEffect } from '../effects/game-effects';
+import { AttachEnergyEffect } from '../effects/play-card-effects';
 /**
  *
  * A basic effect for checking the use of attacks.
@@ -224,30 +225,19 @@ export function THIS_POKEMON_DOES_DAMAGE_TO_ITSELF(store, state, effect, amount)
     dealDamage.target = effect.source;
     return store.reduceEffect(state, dealDamage);
 }
-export function ATTACH_ENERGY_FROM_DECK(store, state, player, playerType, slots, filter = {}, options = {}) {
+export function ATTACH_ENERGY_PROMPT(store, state, player, playerType, sourceSlot, destinationSlots, filter = {}, options = {}) {
     filter.superType = SuperType.ENERGY;
-    state = store.prompt(state, new AttachEnergyPrompt(player.id, GameMessage.ATTACH_ENERGY_CARDS, player.deck, playerType, slots, filter, options), transfers => {
+    const source = player.getSlot(sourceSlot);
+    return store.prompt(state, new AttachEnergyPrompt(player.id, GameMessage.ATTACH_ENERGY_CARDS, source, playerType, destinationSlots, filter, options), transfers => {
         transfers = transfers || [];
-        // cancelled by user
-        if (transfers.length === 0)
-            return state;
         for (const transfer of transfers) {
             const target = StateUtils.getTarget(state, player, transfer.to);
-            player.discard.moveCardTo(transfer.card, target);
+            const energyCard = transfer.card;
+            const attachEnergyEffect = new AttachEnergyEffect(player, energyCard, target);
+            store.reduceEffect(state, attachEnergyEffect);
         }
-        SHUFFLE_DECK(store, state, player);
-    });
-}
-export function ATTACH_ENERGY_FROM_DISCARD(store, state, player, playerType, slots, filter = {}, options = {}) {
-    filter.superType = SuperType.ENERGY;
-    state = store.prompt(state, new AttachEnergyPrompt(player.id, GameMessage.ATTACH_ENERGY_CARDS, player.discard, playerType, slots, filter, options), transfers => {
-        transfers = transfers || [];
-        // cancelled by user
-        if (transfers.length === 0)
-            return state;
-        for (const transfer of transfers) {
-            const target = StateUtils.getTarget(state, player, transfer.to);
-            player.discard.moveCardTo(transfer.card, target);
+        if (sourceSlot === SlotType.DECK) {
+            SHUFFLE_DECK(store, state, player);
         }
     });
 }
