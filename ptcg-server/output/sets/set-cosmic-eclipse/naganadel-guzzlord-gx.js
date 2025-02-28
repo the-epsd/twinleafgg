@@ -58,7 +58,6 @@ class NaganadelGuzzlordGX extends pokemon_card_1.PokemonCard {
                     if (!hasPokemonInHand) {
                         throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
                     }
-                    ;
                     return store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARDS, player.hand, { superType: card_types_1.SuperType.POKEMON }, { allowCancel: false, min: 1, max: 1 }), cards => {
                         player.hand.moveCardsTo(cards, player.discard);
                         card.marker.addMarker(this.VIOLENT_APPETITE_MARKER, this);

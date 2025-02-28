@@ -1,6 +1,6 @@
-import { Attack, CardType, PokemonCard, Stage, State, StateUtils, StoreLike } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
-import { GET_PLAYER_PRIZES, SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND, WAS_ATTACK_USED } from "../../game/store/prefabs/prefabs";
+import { Attack, CardType, PokemonCard, Stage, State, StateUtils, StoreLike } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { GET_PLAYER_PRIZES, SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class TapuKoko extends PokemonCard {
   public stage: Stage = Stage.BASIC;

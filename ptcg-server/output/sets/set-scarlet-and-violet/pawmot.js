@@ -31,7 +31,7 @@ class Pawmot extends game_1.PokemonCard {
     }
     reduceEffect(store, state, effect) {
         if (prefabs_1.WAS_POWER_USED(effect, 0, this)) {
-            let blocked = [];
+            const blocked = [];
             effect.player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
                 if (card !== this)
                     blocked.push(target.index);

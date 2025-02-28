@@ -38,7 +38,7 @@ export class NsKlang extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      opponent.active.addSpecialCondition(SpecialCondition.CONFUSED)
+      opponent.active.addSpecialCondition(SpecialCondition.CONFUSED);
     }
     return state;
   }

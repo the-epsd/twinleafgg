@@ -1,6 +1,6 @@
-import { SacredAsh } from "../set-flashfire/sacred-ash";
-import { CynthiasRoserade } from "./cynthias-roserade";
-import { EthansHoOhex } from "./ethans-ho-oh-ex";
+import { SacredAsh } from '../set-flashfire/sacred-ash';
+import { CynthiasRoserade } from './cynthias-roserade';
+import { EthansHoOhex } from './ethans-ho-oh-ex';
 export declare class SacredAshSV9a extends SacredAsh {
     regulationMark: string;
     fullName: string;

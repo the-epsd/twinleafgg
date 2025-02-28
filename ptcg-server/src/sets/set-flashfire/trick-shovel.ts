@@ -1,7 +1,7 @@
-import { GameMessage, State, StateUtils, StoreLike, TrainerCard, TrainerType } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
-import { TrainerEffect } from "../../game/store/effects/play-card-effects";
-import { LOOK_AT_TOPDECK_AND_DISCARD_OR_RETURN, SELECT_PROMPT_WITH_OPTIONS } from "../../game/store/prefabs/prefabs";
+import { GameMessage, State, StateUtils, StoreLike, TrainerCard, TrainerType } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { LOOK_AT_TOPDECK_AND_DISCARD_OR_RETURN, SELECT_PROMPT_WITH_OPTIONS } from '../../game/store/prefabs/prefabs';
 
 export class TrickShovel extends TrainerCard {
 
@@ -27,7 +27,7 @@ export class TrickShovel extends TrainerCard {
       {
         message: GameMessage.REVEAL_OPPONENT_TOP_DECK,
         action: () => LOOK_AT_TOPDECK_AND_DISCARD_OR_RETURN(store, state, player, opponent),
-      }])
+      }]);
     }
 
     return state;

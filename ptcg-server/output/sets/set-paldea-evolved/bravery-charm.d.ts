@@ -1,5 +1,5 @@
-import { TrainerCard, TrainerType, State, StoreLike } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
+import { TrainerCard, TrainerType, State, StoreLike } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
 export declare class BraveryCharm extends TrainerCard {
     trainerType: TrainerType;
     regulationMark: string;

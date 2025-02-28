@@ -1,8 +1,8 @@
-import { Attack, CardType, GamePhase, PlayerType, PokemonCard, Stage, State, StateUtils, StoreLike, Weakness } from "../../game";
-import { PutDamageEffect } from "../../game/store/effects/attack-effects";
-import { Effect } from "../../game/store/effects/effect";
-import { EndTurnEffect } from "../../game/store/effects/game-phase-effects";
-import { COIN_FLIP_PROMPT, WAS_ATTACK_USED } from "../../game/store/prefabs/prefabs";
+import { Attack, CardType, GamePhase, PlayerType, PokemonCard, Stage, State, StateUtils, StoreLike, Weakness } from '../../game';
+import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { Effect } from '../../game/store/effects/effect';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Eevee extends PokemonCard {
 

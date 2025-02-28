@@ -1,6 +1,6 @@
-import { CardList, CardType, ChooseCardsPrompt, GameError, GameMessage, PokemonCard, Power, PowerType, Stage, State, StateUtils, StoreLike } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
-import { AttackEffect, PowerEffect } from "../../game/store/effects/game-effects";
+import { CardList, CardType, ChooseCardsPrompt, GameError, GameMessage, PokemonCard, Power, PowerType, Stage, State, StateUtils, StoreLike } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 
 export class GalarianMrRime extends PokemonCard {
 
@@ -22,7 +22,7 @@ export class GalarianMrRime extends PokemonCard {
     powerType: PowerType.ABILITY,
     text: 'Once during your turn, you may switch 1 of your opponent\'s face-down Prize cards ' +
       'with the top card of their deck. (The cards stay face down.)',
-  }]
+  }];
 
   public attacks = [{
     name: 'Mad Party',
@@ -91,7 +91,7 @@ export class GalarianMrRime extends PokemonCard {
 
         if (chosenPrizeList) {
           const temp2 = new CardList();
-          chosenPrizeList.moveCardTo(prizeCard, temp2)
+          chosenPrizeList.moveCardTo(prizeCard, temp2);
           temp2.moveToTopOfDestination(deck);
           temp.moveTo(chosenPrizeList, 1);
         }

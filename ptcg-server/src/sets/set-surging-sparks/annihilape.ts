@@ -1,7 +1,7 @@
-import { Attack, CardType, PokemonCard, SpecialCondition, Stage, State, StateUtils, StoreLike, Weakness } from "../../game";
-import { AddSpecialConditionsEffect } from "../../game/store/effects/attack-effects";
-import { Effect } from "../../game/store/effects/effect";
-import { WAS_ATTACK_USED } from "../../game/store/prefabs/prefabs";
+import { Attack, CardType, PokemonCard, SpecialCondition, Stage, State, StateUtils, StoreLike, Weakness } from '../../game';
+import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
+import { Effect } from '../../game/store/effects/effect';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Annihilape extends PokemonCard {
 

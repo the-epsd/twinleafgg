@@ -490,7 +490,7 @@ function COIN_FLIP_PROMPT(store, state, player, callback) {
 }
 exports.COIN_FLIP_PROMPT = COIN_FLIP_PROMPT;
 function MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, amount, callback) {
-    let prompts = new Array(amount).fill(0).map((_) => new __1.CoinFlipPrompt(player.id, __1.GameMessage.COIN_FLIP));
+    const prompts = new Array(amount).fill(0).map((_) => new __1.CoinFlipPrompt(player.id, __1.GameMessage.COIN_FLIP));
     return store.prompt(state, prompts, callback);
 }
 exports.MULTIPLE_COIN_FLIPS_PROMPT = MULTIPLE_COIN_FLIPS_PROMPT;
@@ -639,7 +639,7 @@ function REMOVE_TOOLS_FROM_POKEMON_PROMPT(store, state, player, target, destinat
         return REMOVE_TOOL(store, state, target, target.tools[0], destinationSlot);
     }
     else {
-        let blocked = [];
+        const blocked = [];
         target.cards.forEach((card, index) => {
             if (!target.tools.includes(card)) {
                 blocked.push(index);
@@ -704,7 +704,7 @@ function CHOOSE_TOOLS_TO_REMOVE_PROMPT(store, state, player, playerType, destina
                 toolsRemoved += 1;
             }
             else {
-                let blocked = [];
+                const blocked = [];
                 target.cards.forEach((card, index) => {
                     if (!target.tools.includes(card)) {
                         blocked.push(index);

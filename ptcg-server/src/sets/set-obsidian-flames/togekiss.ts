@@ -13,18 +13,18 @@ export class Togekiss extends PokemonCard {
   public weakness = [{ type: M }];
   public retreat = [ ];
 
-    public powers = [{
-      name: 'Precious Gift',
-      powerType: PowerType.ABILITY,
-      text: 'Once at the end of your turn (after your attack), you may use this Ability. Draw cards until you have 8 cards in your hand.'
-    }];
+  public powers = [{
+    name: 'Precious Gift',
+    powerType: PowerType.ABILITY,
+    text: 'Once at the end of your turn (after your attack), you may use this Ability. Draw cards until you have 8 cards in your hand.'
+  }];
 
   public attacks = [{
-      name: 'Power Cyclone',
-      cost: [ C, C ],
-      damage: 110,
-      text: 'Move an Energy from this Pokémon to 1 of your Benched Pokémon.'
-    }];
+    name: 'Power Cyclone',
+    cost: [ C, C ],
+    damage: 110,
+    text: 'Move an Energy from this Pokémon to 1 of your Benched Pokémon.'
+  }];
 
   public set: string = 'OBF';
   public regulationMark = 'G';

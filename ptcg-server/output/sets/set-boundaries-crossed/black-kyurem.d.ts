@@ -1,5 +1,5 @@
-import { Attack, CardType, PokemonCard, Stage, State, StoreLike, Weakness } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
+import { Attack, CardType, PokemonCard, Stage, State, StoreLike, Weakness } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
 export declare class BlackKyurem extends PokemonCard {
     stage: Stage;
     cardType: CardType;

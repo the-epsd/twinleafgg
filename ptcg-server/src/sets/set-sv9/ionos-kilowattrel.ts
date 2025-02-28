@@ -67,7 +67,7 @@ export class IonosKilowattrel extends PokemonCard {
       const lightningEnergy = cardList.cards.filter(c =>
         c instanceof EnergyCard && c.superType === SuperType.ENERGY &&
         c.energyType === EnergyType.BASIC && c.name === 'Lightning Energy'
-      )
+      );
 
       if (lightningEnergy.length === 0) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
@@ -78,7 +78,7 @@ export class IonosKilowattrel extends PokemonCard {
         lightningEnergy.forEach(card => cardList.moveCardTo(card, player.discard));
 
         DRAW_CARDS_UNTIL_CARDS_IN_HAND(player, 6);
-        ADD_MARKER(this.RUMBLING_ENGINE_MARKER, player, this)
+        ADD_MARKER(this.RUMBLING_ENGINE_MARKER, player, this);
         ABILITY_USED(player, this);
 
         return state;
@@ -98,7 +98,7 @@ export class IonosKilowattrel extends PokemonCard {
         energy.forEach(card => cardList.moveCardTo(card, player.discard));
 
         DRAW_CARDS_UNTIL_CARDS_IN_HAND(player, 6);
-        ADD_MARKER(this.RUMBLING_ENGINE_MARKER, player, this)
+        ADD_MARKER(this.RUMBLING_ENGINE_MARKER, player, this);
         ABILITY_USED(player, this);
       });
     }

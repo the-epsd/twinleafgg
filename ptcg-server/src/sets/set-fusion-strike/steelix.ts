@@ -1,7 +1,7 @@
-import { CardType, PlayerType, PokemonCard, Stage, State, StoreLike } from "../../game";
-import { PutDamageEffect } from "../../game/store/effects/attack-effects";
-import { Effect } from "../../game/store/effects/effect";
-import { THIS_ATTACK_DOES_X_MORE_DAMAGE, WAS_ATTACK_USED } from "../../game/store/prefabs/prefabs";
+import { CardType, PlayerType, PokemonCard, Stage, State, StoreLike } from '../../game';
+import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { Effect } from '../../game/store/effects/effect';
+import { THIS_ATTACK_DOES_X_MORE_DAMAGE, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Steelix extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;

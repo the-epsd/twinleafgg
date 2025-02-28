@@ -19,7 +19,7 @@ export class Klinklang extends PokemonCard {
     useFromHand: true,
     text: 'Once during your turn, if this Pokémon is in your hand and your opponent has any Stage 2 Pokémon in play, ' +
       'you may put this Pokémon onto your Bench.'
-  }]
+  }];
 
   public attacks = [
     {

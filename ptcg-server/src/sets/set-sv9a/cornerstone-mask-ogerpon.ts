@@ -1,6 +1,6 @@
-import { Attack, CardType, EnergyType, PlayerType, PokemonCard, SlotType, Stage, State, StateUtils, StoreLike, Weakness } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
-import { ATTACH_ENERGY_PROMPT, WAS_ATTACK_USED } from "../../game/store/prefabs/prefabs";
+import { Attack, CardType, EnergyType, PlayerType, PokemonCard, SlotType, Stage, State, StateUtils, StoreLike, Weakness } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { ATTACH_ENERGY_PROMPT, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class CornerstoneMaskOgerpon extends PokemonCard {
 

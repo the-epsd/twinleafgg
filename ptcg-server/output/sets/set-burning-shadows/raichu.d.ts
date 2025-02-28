@@ -1,5 +1,5 @@
-import { Attack, CardType, PokemonCard, Power, Stage, State, StoreLike } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
+import { Attack, CardType, PokemonCard, Power, Stage, State, StoreLike } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
 export declare class Raichu extends PokemonCard {
     stage: Stage;
     evolvesFrom: string;

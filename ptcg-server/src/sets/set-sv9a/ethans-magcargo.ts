@@ -1,8 +1,8 @@
-import { PokemonCard, Stage, PowerType, StoreLike, State, Card, GameMessage, DiscardEnergyPrompt, EnergyType, PlayerType, SlotType, SuperType, CardTag } from "../../game";
-import { DiscardCardsEffect } from "../../game/store/effects/attack-effects";
-import { CheckProvidedEnergyEffect, CheckRetreatCostEffect } from "../../game/store/effects/check-effects";
-import { Effect } from "../../game/store/effects/effect";
-import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from "../../game/store/prefabs/prefabs";
+import { PokemonCard, Stage, PowerType, StoreLike, State, Card, GameMessage, DiscardEnergyPrompt, EnergyType, PlayerType, SlotType, SuperType, CardTag } from '../../game';
+import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
+import { CheckProvidedEnergyEffect, CheckRetreatCostEffect } from '../../game/store/effects/check-effects';
+import { Effect } from '../../game/store/effects/effect';
+import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class EthansMagcargo extends PokemonCard {
 

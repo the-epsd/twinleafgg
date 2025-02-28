@@ -259,7 +259,7 @@ export enum GameLog {
   LOG_HISUIAN_HEAVY_BALL = 'LOG_HISUIAN_HEAVY_BALL', // { name, card }
   LOG_SUDDEN_DEATH = 'LOG_SUDDEN_DEATH', // { name }
   LOG_PLAYER_CHOOSES = 'LOG_PLAYER_CHOOSES', // { name, string }
-  LOG_CARD_MOVED = "LOG_CARD_MOVED", // { name, string }
+  LOG_CARD_MOVED = 'LOG_CARD_MOVED', // { name, string }
 }
 
 // tslint:disable-next-line

@@ -1,7 +1,7 @@
-import { CardTag, CardType, PokemonCard, Stage, State, StoreLike } from "../../game";
-import { CheckProvidedEnergyEffect } from "../../game/store/effects/check-effects";
-import { Effect } from "../../game/store/effects/effect";
-import { AttackEffect } from "../../game/store/effects/game-effects";
+import { CardTag, CardType, PokemonCard, Stage, State, StoreLike } from '../../game';
+import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { Effect } from '../../game/store/effects/effect';
+import { AttackEffect } from '../../game/store/effects/game-effects';
 
 export class MarniesMorpeko extends PokemonCard {
   public stage: Stage = Stage.BASIC;

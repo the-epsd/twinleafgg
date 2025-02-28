@@ -105,7 +105,7 @@ export class Player {
         target.clearEffects();
     }
     getPokemonInPlay() {
-        let list = [];
+        const list = [];
         this.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, pokemonCard, target) => {
             if (cardList.cards.length !== 0)
                 list.push(cardList);

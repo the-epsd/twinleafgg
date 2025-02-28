@@ -114,7 +114,7 @@ export class ZacianVUNIONTopLeft extends PokemonCard {
         if (card instanceof EnergyCard && card.energyType === EnergyType.BASIC && card.name === 'Metal Energy'){
           metalsInDiscard++;
         }
-      })
+      });
 
       if (metalsInDiscard > 0){
         const blocked: CardTarget[] = [];

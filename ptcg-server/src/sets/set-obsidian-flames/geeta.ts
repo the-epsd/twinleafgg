@@ -20,7 +20,7 @@ export class Geeta extends TrainerCard {
   public text: string =
     'Search your deck for up to 2 Basic Energy cards and attach them to 1 of your Pokémon. Then, shuffle your deck. During this turn, your Pokémon can\'t attack. (This includes Pokémon that come into play this turn.)';
 
-  public readonly GEETA_MARKER = 'GEETA_MARKER'
+  public readonly GEETA_MARKER = 'GEETA_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

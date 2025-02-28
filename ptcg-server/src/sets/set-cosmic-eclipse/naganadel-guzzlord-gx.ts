@@ -60,7 +60,7 @@ export class NaganadelGuzzlordGX extends PokemonCard {
           const hasPokemonInHand = player.hand.cards.some(b => b instanceof PokemonCard);
           if (!hasPokemonInHand) {
             throw new GameError(GameMessage.CANNOT_USE_POWER);
-          };
+          }
 
           return store.prompt(state, new ChooseCardsPrompt(
             player,
@@ -79,7 +79,7 @@ export class NaganadelGuzzlordGX extends PokemonCard {
             store.reduceEffect(state, healing);
           });
         }
-      })
+      });
     }
 
     // Chaotic Order-GX

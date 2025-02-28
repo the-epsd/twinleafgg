@@ -80,7 +80,7 @@ export class GreedyDice extends TrainerCard {
         TAKE_SPECIFIC_PRIZES(store, state, player, [player.prizes[prizeIndex]], { skipReduce: true });
       }
       return;
-    }
+    };
 
     if (!wantToUse) {
       effect.preventDefault = false;

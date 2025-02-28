@@ -1,8 +1,8 @@
-import { Attack, CardType, GameMessage, PokemonCard, Stage, State, StoreLike, Weakness } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
-import { AfterAttackEffect } from "../../game/store/effects/game-phase-effects";
-import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP } from "../../game/store/prefabs/attack-effects";
-import { CONFIRMATION_PROMPT, SHUFFLE_DECK, WAS_ATTACK_USED } from "../../game/store/prefabs/prefabs";
+import { Attack, CardType, GameMessage, PokemonCard, Stage, State, StoreLike, Weakness } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { AfterAttackEffect } from '../../game/store/effects/game-phase-effects';
+import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP } from '../../game/store/prefabs/attack-effects';
+import { CONFIRMATION_PROMPT, SHUFFLE_DECK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Poliwrath extends PokemonCard {
 
@@ -51,7 +51,7 @@ export class Poliwrath extends PokemonCard {
         }
         effect.damage += 120;
         this.shuffleIntoDeck = true;
-      }, GameMessage.WANT_TO_DEAL_MORE_DAMAGE)
+      }, GameMessage.WANT_TO_DEAL_MORE_DAMAGE);
     }
 
 

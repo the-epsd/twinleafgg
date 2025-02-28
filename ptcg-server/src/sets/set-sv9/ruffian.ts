@@ -71,7 +71,7 @@ export class Ruffian extends TrainerCard {
             { superType: SuperType.ENERGY, energyType: EnergyType.SPECIAL },
             { min: 1, max: 1, allowCancel: false }
           ), selected => {
-            MOVE_CARDS(store, state, target, opponent.discard, { cards: selected })
+            MOVE_CARDS(store, state, target, opponent.discard, { cards: selected });
             target.moveCardsTo(selected, opponent.discard);
             player.supporter.moveTo(player.discard);
           });

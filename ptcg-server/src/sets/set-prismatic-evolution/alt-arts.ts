@@ -1,4 +1,4 @@
-import { ProfessorsResearch } from "../set-scarlet-and-violet/professors-research";
+import { ProfessorsResearch } from '../set-scarlet-and-violet/professors-research';
 
 export class ProfessorsResearchO extends ProfessorsResearch {
   public set = 'PRE';

@@ -35,7 +35,7 @@ export class LostVacuum extends TrainerCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      let allTools: Card[] = [];
+      const allTools: Card[] = [];
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
         allTools.push(...cardList.tools);
       });

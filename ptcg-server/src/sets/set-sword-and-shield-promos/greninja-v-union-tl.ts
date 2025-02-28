@@ -177,7 +177,7 @@ export class GreninjaVUNIONTopLeft extends PokemonCard {
         if (card instanceof EnergyCard && card.energyType === EnergyType.BASIC && card.name === 'Water Energy') {
           watersInDiscard++;
         }
-      })
+      });
 
       if (watersInDiscard > 0) {
         const blocked: CardTarget[] = [];
@@ -217,7 +217,7 @@ export class GreninjaVUNIONTopLeft extends PokemonCard {
         const damage = new PutDamageEffect(effect, 100);
         damage.target = cardList;
         store.reduceEffect(state, damage);
-      })
+      });
     }
 
     // Waterfall Bind

@@ -138,7 +138,7 @@ export class MewtwoVUNIONTopLeft extends PokemonCard {
         if (card instanceof EnergyCard && card.energyType === EnergyType.BASIC && card.name === 'Psychic Energy') {
           psychicsInDiscard++;
         }
-      })
+      });
 
       if (psychicsInDiscard > 0) {
         const blocked: CardTarget[] = [];

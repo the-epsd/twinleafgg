@@ -1,5 +1,5 @@
-import { CardType, PokemonCard, PowerType, Stage, State, StoreLike } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
+import { CardType, PokemonCard, PowerType, Stage, State, StoreLike } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
 export declare class Weezing extends PokemonCard {
     stage: Stage;
     evolvesFrom: string;

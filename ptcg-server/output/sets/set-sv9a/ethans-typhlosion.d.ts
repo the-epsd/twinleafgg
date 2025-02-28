@@ -1,5 +1,5 @@
-import { PokemonCard, Stage, StoreLike, State, CardTag } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
+import { PokemonCard, Stage, StoreLike, State, CardTag } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
 export declare class EthansTyphlosion extends PokemonCard {
     stage: Stage;
     evolvesFrom: string;

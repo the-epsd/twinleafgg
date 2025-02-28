@@ -162,9 +162,9 @@ export class BanetteGX extends PokemonCard {
           {},
           { min: 1, max: 3, allowCancel: false }
         )], selected => {
-          const cards = selected || [];
-          player.discard.moveCardsTo(cards, player.hand);
-        });
+        const cards = selected || [];
+        player.discard.moveCardsTo(cards, player.hand);
+      });
     }
 
     if (effect instanceof EndTurnEffect) {

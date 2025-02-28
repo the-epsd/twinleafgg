@@ -67,7 +67,6 @@ class Phanpy extends pokemon_card_1.PokemonCard {
                 prefabs_1.REMOVE_MARKER(this.PREVENT_KNOCKED_OUT_DURING_OPPONENTS_NEXT_TURN_MARKER, cardList, this);
             });
         }
-        ;
         return state;
     }
 }

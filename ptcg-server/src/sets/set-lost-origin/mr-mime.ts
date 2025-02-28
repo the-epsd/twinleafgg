@@ -35,7 +35,7 @@ export class MrMime extends PokemonCard {
   public fullName: string = 'Mr. Mime LOR';
 
   public readonly TRICKY_SLAP_MARKER = 'TRICKY_SLAP_MARKER';
-  public readonly CLEAR_TRICKY_SLAP_MARKER = 'CLEAR_TRICKY_SLAP_MARKER'
+  public readonly CLEAR_TRICKY_SLAP_MARKER = 'CLEAR_TRICKY_SLAP_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Tricky Slap
@@ -75,9 +75,9 @@ export class MrMime extends PokemonCard {
         if ((playerChosenValue === 1 && opponentChosenValue === 0) 
           || (playerChosenValue === 2 && opponentChosenValue === 1) 
           || (playerChosenValue === 0 && opponentChosenValue === 2)){
-            player.active.marker.addMarker(this.TRICKY_SLAP_MARKER, this);
-            opponent.marker.addMarker(this.CLEAR_TRICKY_SLAP_MARKER, this);
-          }
+          player.active.marker.addMarker(this.TRICKY_SLAP_MARKER, this);
+          opponent.marker.addMarker(this.CLEAR_TRICKY_SLAP_MARKER, this);
+        }
       });
     }
 

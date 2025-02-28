@@ -15,7 +15,7 @@ function* playCard(next, store, state, effect) {
         throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
     }
     // Get Charizard ex from player's deck
-    let charizard = new charizard_ex_1.Charizardex();
+    const charizard = new charizard_ex_1.Charizardex();
     if (!charizard) {
         throw new game_error_1.GameError(game_message_1.GameMessage.UNKNOWN_CARD);
     }

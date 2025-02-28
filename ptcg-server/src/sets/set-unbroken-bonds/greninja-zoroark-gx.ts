@@ -70,8 +70,8 @@ export class GreninjaZoroarkGX extends PokemonCard {
         if (card instanceof PokemonCard 
           && (!card.tags.includes(CardTag.POKEMON_GX) && !card.tags.includes(CardTag.POKEMON_EX))
           && card.cardType !== D) { 
-            unionBlocked.push(index); 
-          }
+          unionBlocked.push(index); 
+        }
       });
 
       let cards: Card[] = [];

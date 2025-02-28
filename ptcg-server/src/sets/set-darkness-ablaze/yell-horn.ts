@@ -1,6 +1,6 @@
-import { SpecialCondition, State, StateUtils, StoreLike, TrainerCard, TrainerType } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
-import { TrainerEffect } from "../../game/store/effects/play-card-effects";
+import { SpecialCondition, State, StateUtils, StoreLike, TrainerCard, TrainerType } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 
 export class YellHorn extends TrainerCard {
   public name: string = 'Yell Horn';

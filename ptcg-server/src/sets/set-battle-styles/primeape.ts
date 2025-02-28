@@ -54,7 +54,7 @@ export class Primeape extends PokemonCard {
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
       //I check how many Pokémon are on the bench to know how much damage the attack will cause.
-      const player = effect.player
+      const player = effect.player;
       const hasBenched = player.bench.some(b => b.cards.length > 0);
       if (!hasBenched) {
         throw new GameError(GameMessage.CANNOT_USE_ATTACK);

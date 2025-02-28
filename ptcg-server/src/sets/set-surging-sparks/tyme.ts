@@ -32,7 +32,7 @@ function* playCard(next: Function, store: StoreLike, state: State, self: Tyme, e
     { value: 10, message: '10' }
   ];
   for (let i = 2; i <= 50; i++){
-    options.push( { value: 10 * i, message: '' + 10 * i } )
+    options.push( { value: 10 * i, message: '' + 10 * i } );
   }
 
   const selectedPokemon = new CardList();
@@ -66,7 +66,7 @@ function* playCard(next: Function, store: StoreLike, state: State, self: Tyme, e
     ), choice => {
       const option = options[choice];
 
-      store.log(state, GameLog.LOG_PLAYER_CHOOSES, { name: opponent.name, string: '' + option.value })
+      store.log(state, GameLog.LOG_PLAYER_CHOOSES, { name: opponent.name, string: '' + option.value });
 
       store.prompt(state, new ShowCardsPrompt(
         opponent.id,

@@ -1,7 +1,7 @@
-import { TrainerCard, TrainerType, StoreLike, State, StateUtils, ChooseCardsPrompt, GameMessage, CardTag, EnergyCard, EnergyType, GameError, PokemonCard } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
-import { TrainerEffect } from "../../game/store/effects/play-card-effects";
-import { BLOCK_IF_DECK_EMPTY, SHOW_CARDS_TO_PLAYER, MOVE_CARD_TO, SHUFFLE_DECK } from "../../game/store/prefabs/prefabs";
+import { TrainerCard, TrainerType, StoreLike, State, StateUtils, ChooseCardsPrompt, GameMessage, CardTag, EnergyCard, EnergyType, GameError, PokemonCard } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { BLOCK_IF_DECK_EMPTY, SHOW_CARDS_TO_PLAYER, MOVE_CARD_TO, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 
 export class EthansAdventure extends TrainerCard {
 

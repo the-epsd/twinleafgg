@@ -1,5 +1,5 @@
-import { TrainerCard, TrainerType, StoreLike, State } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
+import { TrainerCard, TrainerType, StoreLike, State } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
 export declare class EthansAdventure extends TrainerCard {
     trainerType: TrainerType;
     regulationMark: string;

@@ -102,7 +102,7 @@ export function SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH(store: StoreLike
       player.deck.moveCardTo(card, slots[index]);
       slots[index].pokemonPlayedTurn = state.turn;
     });
-    SHUFFLE_DECK(store, state, player)
+    SHUFFLE_DECK(store, state, player);
   });
 }
 
@@ -121,7 +121,7 @@ export function SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND(store: StoreLike,
     const cards = selected || [];
     SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
     cards.forEach(card => MOVE_CARD_TO(state, card, player.hand));
-    SHUFFLE_DECK(store, state, player)
+    SHUFFLE_DECK(store, state, player);
   });
 }
 
@@ -414,7 +414,7 @@ export function DRAW_CARDS(player: Player, count: number) {
  * Draws cards until you have `count` cards in hand.
  */
 export function DRAW_CARDS_UNTIL_CARDS_IN_HAND(player: Player, count: number) {
-  player.deck.moveTo(player.hand, Math.max(count - player.hand.cards.length, 0))
+  player.deck.moveTo(player.hand, Math.max(count - player.hand.cards.length, 0));
 }
 
 /**
@@ -526,7 +526,7 @@ export function LOOK_AT_TOPDECK_AND_DISCARD_OR_RETURN(store: StoreLike, state: S
     {
       message: GameMessage.RETURN_TO_TOP_OF_DECK,
       action: () => deckTop.moveToTopOfDestination(deckPlayer.deck),
-    }])
+    }]);
   }
 }
 
@@ -569,8 +569,8 @@ export function COIN_FLIP_PROMPT(store: StoreLike, state: State, player: Player,
 }
 
 export function MULTIPLE_COIN_FLIPS_PROMPT(store: StoreLike, state: State, player: Player, amount: number, callback: (results: boolean[]) => void): State {
-  let prompts: CoinFlipPrompt[] = new Array(amount).fill(0).map((_) => new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP));
-  return store.prompt(state, prompts, callback)
+  const prompts: CoinFlipPrompt[] = new Array(amount).fill(0).map((_) => new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP));
+  return store.prompt(state, prompts, callback);
 }
 
 export function SIMULATE_COIN_FLIP(store: StoreLike, state: State, player: Player): boolean {
@@ -736,12 +736,12 @@ export function REMOVE_TOOLS_FROM_POKEMON_PROMPT(store: StoreLike, state: State,
   if (target.tools.length === 1) {
     return REMOVE_TOOL(store, state, target, target.tools[0], destinationSlot);
   } else {
-    let blocked: number[] = [];
+    const blocked: number[] = [];
     target.cards.forEach((card, index) => {
       if (!target.tools.includes(card)) {
         blocked.push(index);
       }
-    })
+    });
     let tools: Card[] = [];
     return store.prompt(state, new ChooseCardsPrompt(
       player,
@@ -815,12 +815,12 @@ export function CHOOSE_TOOLS_TO_REMOVE_PROMPT(store: StoreLike, state: State, pl
         REMOVE_TOOL(store, state, target, target.tools[0], destinationSlot);
         toolsRemoved += 1;
       } else {
-        let blocked: number[] = [];
+        const blocked: number[] = [];
         target.cards.forEach((card, index) => {
           if (!target.tools.includes(card)) {
             blocked.push(index);
           }
-        })
+        });
         let tools: Card[] = [];
         return store.prompt(state, new ChooseCardsPrompt(
           player,
