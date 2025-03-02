@@ -10,7 +10,7 @@ export class Charcadet extends PokemonCard {
 
   public attacks = [
     {
-      name: 'Phantom Fire',
+      name: 'Will-O-Wisp',
       cost: [CardType.FIRE],
       damage: 20,
       text: ''
