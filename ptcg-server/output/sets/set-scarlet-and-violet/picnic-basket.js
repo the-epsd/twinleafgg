@@ -22,6 +22,24 @@ class PicnicBasket extends game_1.TrainerCard {
             const opponent = game_1.StateUtils.getOpponent(state, player);
             // We will discard this card after prompt confirmation
             effect.preventDefault = true;
+            // Check if any Pokémon have damage
+            let hasDamagedPokemon = false;
+            const damagedPokemon = [];
+            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
+                if (cardList.damage > 0) {
+                    hasDamagedPokemon = true;
+                    damagedPokemon.push({ target, damage: cardList.damage });
+                }
+            });
+            opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList, card, target) => {
+                if (cardList.damage > 0) {
+                    hasDamagedPokemon = true;
+                    damagedPokemon.push({ target, damage: cardList.damage });
+                }
+            });
+            if (!hasDamagedPokemon) {
+                throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
+            }
             // Heal each Pokemon by 30 damage
             player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList) => {
                 const healEffect = new game_effects_1.HealEffect(player, cardList, 30);

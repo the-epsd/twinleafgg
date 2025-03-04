@@ -38,8 +38,28 @@ class RocketsAdmin extends trainer_card_1.TrainerCard {
             store.prompt(state, new game_1.ShuffleDeckPrompt(opponent.id), order => {
                 opponent.deck.applyOrder(order);
             });
-            player.deck.moveTo(player.hand, Math.min(player.getPrizeLeft(), player.deck.cards.length));
-            opponent.deck.moveTo(opponent.hand, Math.min(opponent.getPrizeLeft(), opponent.deck.cards.length));
+            const maxPlayerDraw = player.getPrizeLeft();
+            const maxOpponentDraw = opponent.getPrizeLeft();
+            if (maxPlayerDraw > 0) {
+                const options = [];
+                for (let i = maxPlayerDraw; i >= 0; i--) {
+                    options.push({ message: `Draw ${i} card(s)`, value: i });
+                }
+                store.prompt(state, new game_1.SelectPrompt(player.id, game_1.GameMessage.WANT_TO_DRAW_CARDS, options.map(c => c.message), { allowCancel: false }), choice => {
+                    const numCardsToDraw = options[choice].value;
+                    player.deck.moveTo(player.hand, numCardsToDraw);
+                    if (maxOpponentDraw > 0) {
+                        const opponentOptions = [];
+                        for (let i = maxOpponentDraw; i >= 0; i--) {
+                            opponentOptions.push({ message: `Draw ${i} card(s)`, value: i });
+                        }
+                        store.prompt(state, new game_1.SelectPrompt(opponent.id, game_1.GameMessage.WANT_TO_DRAW_CARDS, opponentOptions.map(c => c.message), { allowCancel: false }), opponentChoice => {
+                            const opponentNumCardsToDraw = opponentOptions[opponentChoice].value;
+                            opponent.deck.moveTo(opponent.hand, opponentNumCardsToDraw);
+                        });
+                    }
+                });
+            }
             player.supporter.moveCardTo(effect.trainerCard, player.discard);
         }
         return state;

@@ -6,8 +6,8 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { PlayerType, SlotType } from '../../game';
-import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { PlayerType, PokemonCard, SlotType } from '../../game';
+import { MOVE_CARD_TO, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 
 export class ScoopUpCyclone extends TrainerCard {
@@ -48,9 +48,18 @@ export class ScoopUpCyclone extends TrainerCard {
         const cardList = result.length > 0 ? result[0] : null;
         if (cardList !== null) {
           const pokemons = cardList.getPokemons();
-          MOVE_CARDS(store, state, cardList, player.hand);
-          MOVE_CARDS(store, state, cardList, player.hand, { cards: pokemons });
-          player.supporter.moveCardTo(effect.trainerCard, player.discard);
+          const otherCards = cardList.cards.filter(card => !(card instanceof PokemonCard)); // Ensure only non-PokemonCard types
+
+          // Move other cards to hand
+          if (otherCards.length > 0) {
+            MOVE_CARDS(store, state, cardList, player.hand, { cards: otherCards });
+          }
+
+          // Move Pokémon to hand
+          if (pokemons.length > 0) {
+            MOVE_CARDS(store, state, cardList, player.hand, { cards: pokemons });
+          }
+          MOVE_CARD_TO(state, effect.trainerCard, player.discard);
         }
       });
     }

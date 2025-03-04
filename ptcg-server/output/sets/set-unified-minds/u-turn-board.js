@@ -35,11 +35,9 @@ class UTurnBoard extends trainer_card_1.TrainerCard {
             player.marker.addMarker(this.U_TURN_BOARD_MARKER, this);
         }
         if (effect instanceof check_effects_1.CheckRetreatCostEffect && effect.player.active.tools.includes(this)) {
-            if (effect.cost.length === 0) {
-                effect.cost = [];
-            }
-            else {
-                effect.cost.splice(0, 1);
+            const index = effect.cost.indexOf(card_types_1.CardType.COLORLESS);
+            if (index !== -1) {
+                effect.cost.splice(index, 1);
             }
         }
         if (effect instanceof check_effects_1.CheckTableStateEffect && state.players.some(p => p.discard.cards.includes(this))) {

@@ -4,7 +4,7 @@ import { PowerType, StoreLike, State, GameMessage, PlayerType, SlotType, GameErr
 import { Effect } from '../../game/store/effects/effect';
 import { AfterDamageEffect } from '../../game/store/effects/attack-effects';
 import { StateUtils } from '../../game/store/state-utils';
-import { BLOCK_IF_GX_ATTACK_USED, PLAY_POKEMON_FROM_HAND_TO_BENCH, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { BLOCK_IF_GX_ATTACK_USED, MOVE_CARDS, PLAY_POKEMON_FROM_HAND_TO_BENCH, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class GreninjaGX extends PokemonCard {
 
@@ -99,11 +99,22 @@ export class GreninjaGX extends PokemonCard {
         PlayerType.TOP_PLAYER,
         [SlotType.BENCH],
         { min: 1, max: 1, allowCancel: false }
-      ), selection => {
-        selection.forEach(r => {
-          r.moveTo(opponent.hand);
-          r.clearEffects();
-        });
+      ), result => {
+        const cardList = result.length > 0 ? result[0] : null;
+        if (cardList !== null) {
+          const pokemons = cardList.getPokemons();
+          const otherCards = cardList.cards.filter(card => !(card instanceof PokemonCard)); // Ensure only non-PokemonCard types
+
+          // Move other cards to hand
+          if (otherCards.length > 0) {
+            MOVE_CARDS(store, state, cardList, opponent.hand, { cards: otherCards });
+          }
+
+          // Move Pokémon to hand
+          if (pokemons.length > 0) {
+            MOVE_CARDS(store, state, cardList, opponent.hand, { cards: pokemons });
+          }
+        }
       });
     }
     return state;

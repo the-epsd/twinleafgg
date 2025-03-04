@@ -70,6 +70,15 @@ export class PokemonCardInfoPaneComponent implements OnChanges {
 
     let powers = [...(mainCard.powers || [])];
 
+    if (this.cardList instanceof PokemonCardList && this.cardList.showAllStageAbilities) {
+      // Show powers from all evolution stages
+      for (const card of this.cardList.cards) {
+        if (card.superType === SuperType.POKEMON && card !== mainCard) {
+          powers = [...powers, ...(card.powers || [])];
+        }
+      }
+    }
+
     // Add powers from tools and other cards that modify the Pokémon
     if (this.cardList) {
       for (const card of this.cardList.cards) {
@@ -89,6 +98,15 @@ export class PokemonCardInfoPaneComponent implements OnChanges {
     }
 
     let attacks = [...(mainCard.attacks || [])];
+
+    if (this.cardList instanceof PokemonCardList && this.cardList.showAllStageAbilities) {
+      // Show attacks from all evolution stages
+      for (const card of this.cardList.cards) {
+        if (card.superType === SuperType.POKEMON && card !== mainCard) {
+          attacks = [...attacks, ...(card.attacks || [])];
+        }
+      }
+    }
 
     // Add attacks from tools and other cards that modify the Pokémon
     if (this.cardList) {

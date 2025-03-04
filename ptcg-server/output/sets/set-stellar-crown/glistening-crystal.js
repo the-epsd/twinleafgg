@@ -24,7 +24,19 @@ class GlisteningCrystal extends trainer_card_1.TrainerCard {
                 const checkEnergy = new check_effects_1.CheckProvidedEnergyEffect(effect.player);
                 store.reduceEffect(state, checkEnergy);
                 const availableEnergy = checkEnergy.energyMap.flatMap(e => e.provides);
-                effect.cost = effect.cost.filter(costType => costType === card_types_1.CardType.NONE || availableEnergy.includes(costType));
+                if (effect.cost.length > 0) {
+                    let removed = false;
+                    for (const costType of effect.cost) {
+                        if (availableEnergy.includes(costType)) {
+                            effect.cost = effect.cost.filter((type, index) => type !== costType || (type === costType && effect.cost.indexOf(type) !== index));
+                            removed = true;
+                            break;
+                        }
+                    }
+                    if (!removed) {
+                        effect.cost = effect.cost.filter((type, index) => type !== effect.cost[0] || (type === effect.cost[0] && effect.cost.indexOf(type) !== index));
+                    }
+                }
             }
         }
         return state;

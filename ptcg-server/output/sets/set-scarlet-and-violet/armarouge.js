@@ -8,47 +8,6 @@ const game_message_1 = require("../../game/game-message");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const check_effects_1 = require("../../game/store/effects/check-effects");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
-function* useFireOff(next, store, state, effect) {
-    const player = effect.player;
-    const blockedMap = [];
-    player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-        const checkProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(player, cardList);
-        store.reduceEffect(state, checkProvidedEnergy);
-        const blockedCards = [];
-        checkProvidedEnergy.energyMap.forEach(em => {
-            if (!em.provides.includes(card_types_1.CardType.FIRE) && !em.provides.includes(card_types_1.CardType.ANY)) {
-                blockedCards.push(em.card);
-            }
-        });
-        const blocked = [];
-        blockedCards.forEach(bc => {
-            const index = cardList.cards.indexOf(bc);
-            if (index !== -1 && !blocked.includes(index)) {
-                blocked.push(index);
-            }
-        });
-        if (blocked.length !== 0 || target.slot === game_1.SlotType.ACTIVE) {
-            blockedMap.push({ source: target, blocked: target.slot === game_1.SlotType.ACTIVE ? cardList.cards.map((_, i) => i) : blocked });
-        }
-    });
-    const blocked2 = [];
-    player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (list, card, target) => {
-        if (player.active.cards[0] !== card) {
-            blocked2.push(target);
-        }
-    });
-    return store.prompt(state, new game_1.MoveEnergyPrompt(effect.player.id, game_message_1.GameMessage.MOVE_ENERGY_CARDS, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], // Only allow moving from bench
-    { superType: card_types_1.SuperType.ENERGY }, { allowCancel: false, min: 0, blockedMap, blockedTo: blocked2 }), transfers => {
-        if (transfers === null) {
-            return;
-        }
-        for (const transfer of transfers) {
-            const source = game_1.StateUtils.getTarget(state, player, transfer.from);
-            const target = player.active; // Always move to active Pokémon
-            source.moveCardTo(transfer.card, target);
-        }
-    });
-}
 class Armarouge extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -81,8 +40,41 @@ class Armarouge extends pokemon_card_1.PokemonCard {
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
-            const generator = useFireOff(() => generator.next(), store, state, effect);
-            return generator.next().value;
+            const player = effect.player;
+            const blockedMap = [];
+            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
+                const checkProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(player, cardList);
+                store.reduceEffect(state, checkProvidedEnergy);
+                const blockedIndices = new Set();
+                checkProvidedEnergy.energyMap.forEach(em => {
+                    if (!em.provides.includes(card_types_1.CardType.FIRE) && !em.provides.includes(card_types_1.CardType.ANY)) {
+                        const index = cardList.cards.indexOf(em.card);
+                        if (index !== -1) {
+                            blockedIndices.add(index);
+                        }
+                    }
+                });
+                if (blockedIndices.size > 0 || target.slot === game_1.SlotType.ACTIVE) {
+                    blockedMap.push({ source: target, blocked: target.slot === game_1.SlotType.ACTIVE ? Array.from({ length: cardList.cards.length }, (_, i) => i) : Array.from(blockedIndices) });
+                }
+            });
+            const blockedTargets = [];
+            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (list, card, target) => {
+                if (player.active.cards[0] !== card) {
+                    blockedTargets.push(target);
+                }
+            });
+            return store.prompt(state, new game_1.MoveEnergyPrompt(effect.player.id, game_message_1.GameMessage.MOVE_ENERGY_CARDS, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { superType: card_types_1.SuperType.ENERGY }, { allowCancel: false, min: 0, blockedMap, blockedTo: blockedTargets }), transfers => {
+                if (transfers && transfers.length > 0) {
+                    for (const transfer of transfers) {
+                        const source = game_1.StateUtils.getTarget(state, player, transfer.from);
+                        if (source) {
+                            const target = player.active; // Always move to active Pokémon
+                            source.moveCardTo(transfer.card, target);
+                        }
+                    }
+                }
+            });
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const specialConditionEffect = new attack_effects_1.AddSpecialConditionsEffect(effect, [card_types_1.SpecialCondition.BURNED]);

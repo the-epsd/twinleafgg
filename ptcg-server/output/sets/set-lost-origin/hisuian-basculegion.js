@@ -51,7 +51,7 @@ class HisuianBasculegion extends pokemon_card_1.PokemonCard {
                     blocked.push(index);
                 }
             });
-            effect.damage = energyInDiscard * 20;
+            effect.damage = 20 + (energyInDiscard * 20);
             player.discard.cards.forEach(cards => {
                 if (cards instanceof game_1.EnergyCard && cards.energyType === card_types_1.EnergyType.BASIC) {
                     player.discard.moveCardsTo(basicEnergyCards, player.deck);

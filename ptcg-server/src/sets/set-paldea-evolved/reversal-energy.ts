@@ -40,11 +40,22 @@ export class ReversalEnergy extends EnergyCard {
       const isValidPokemon = attachedTo instanceof PokemonCard
         && attachedTo.stage !== Stage.BASIC
         && attachedTo.stage !== Stage.RESTORED
-        && !attachedTo.tags.includes(CardTag.POKEMON_V
-          || CardTag.POKEMON_ex
-          || CardTag.POKEMON_VSTAR
-          || CardTag.POKEMON_VMAX
-          || CardTag.RADIANT);
+        && !attachedTo.tags.includes(CardTag.POKEMON_V)
+        && !attachedTo.tags.includes(CardTag.POKEMON_VSTAR)
+        && !attachedTo.tags.includes(CardTag.POKEMON_VMAX)
+        && !attachedTo.tags.includes(CardTag.POKEMON_VUNION)
+        && !attachedTo.tags.includes(CardTag.POKEMON_ex)
+        && !attachedTo.tags.includes(CardTag.POKEMON_EX)
+        && !attachedTo.tags.includes(CardTag.POKEMON_GX)
+        && !attachedTo.tags.includes(CardTag.TAG_TEAM)
+        && !attachedTo.tags.includes(CardTag.POKEMON_LV_X)
+        && !attachedTo.tags.includes(CardTag.BREAK)
+        && !attachedTo.tags.includes(CardTag.PRISM_STAR)
+        && !attachedTo.tags.includes(CardTag.MEGA)
+        && !attachedTo.tags.includes(CardTag.POKEMON_SV_MEGA)
+        && !attachedTo.tags.includes(CardTag.POKEMON_VUNION)
+        && !attachedTo.tags.includes(CardTag.LEGEND)
+        && !attachedTo.tags.includes(CardTag.RADIANT);
 
       const provides = player.getPrizeLeft() > opponent.getPrizeLeft() && isValidPokemon
         ? [CardType.ANY, CardType.ANY, CardType.ANY]

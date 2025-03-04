@@ -1,5 +1,5 @@
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { TrainerType, CardTag, CardType } from '../../game/store/card/card-types';
+import { TrainerType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
@@ -36,8 +36,19 @@ export class GlisteningCrystal extends TrainerCard {
 
         const availableEnergy = checkEnergy.energyMap.flatMap(e => e.provides);
 
-        effect.cost = effect.cost.filter(costType =>
-          costType === CardType.NONE || availableEnergy.includes(costType as CardType));
+        if (effect.cost.length > 0) {
+          let removed = false;
+          for (const costType of effect.cost) {
+            if (availableEnergy.includes(costType)) {
+              effect.cost = effect.cost.filter((type, index) => type !== costType || (type === costType && effect.cost.indexOf(type) !== index));
+              removed = true;
+              break;
+            }
+          }
+          if (!removed) {
+            effect.cost = effect.cost.filter((type, index) => type !== effect.cost[0] || (type === effect.cost[0] && effect.cost.indexOf(type) !== index));
+          }
+        }
       }
     }
     return state;

@@ -8,6 +8,7 @@ const play_card_effects_1 = require("../../game/store/effects/play-card-effects"
 const choose_pokemon_prompt_1 = require("../../game/store/prompts/choose-pokemon-prompt");
 const game_1 = require("../../game");
 const prefabs_1 = require("../../game/store/prefabs/prefabs");
+const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 class ProfessorTurosScenario extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -35,9 +36,16 @@ class ProfessorTurosScenario extends trainer_card_1.TrainerCard {
                 const cardList = result.length > 0 ? result[0] : null;
                 if (cardList !== null) {
                     const pokemons = cardList.getPokemons();
-                    prefabs_1.MOVE_CARDS(store, state, cardList, player.discard);
-                    prefabs_1.MOVE_CARDS(store, state, cardList, player.hand, { cards: pokemons });
-                    player.supporter.moveCardTo(effect.trainerCard, player.discard);
+                    const otherCards = cardList.cards.filter(card => !(card instanceof pokemon_card_1.PokemonCard)); // Ensure only non-PokemonCard types
+                    // Move other cards to discard
+                    if (otherCards.length > 0) {
+                        prefabs_1.MOVE_CARDS(store, state, cardList, player.discard, { cards: otherCards });
+                    }
+                    // Move Pokémon to hand
+                    if (pokemons.length > 0) {
+                        prefabs_1.MOVE_CARDS(store, state, cardList, player.hand, { cards: pokemons });
+                    }
+                    prefabs_1.MOVE_CARD_TO(state, effect.trainerCard, player.discard);
                 }
             });
         }

@@ -34,7 +34,7 @@ export class MaxElixir extends TrainerCard {
 
       const temp = new CardList();
 
-      player.deck.moveTo(temp, 6); 
+      player.deck.moveTo(temp, 6);
 
       // Prompt to attach energy if any were drawn
       return store.prompt(state, new AttachEnergyPrompt(
@@ -60,14 +60,14 @@ export class MaxElixir extends TrainerCard {
         temp.moveToTopOfDestination(player.deck);
 
         player.supporter.moveCardTo(effect.trainerCard, player.discard);
-        
+
         return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
           player.deck.applyOrder(order);
           return state;
         });
       });
     }
-    
+
     return state;
   }
 }

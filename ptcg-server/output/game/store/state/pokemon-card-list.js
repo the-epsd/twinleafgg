@@ -100,9 +100,6 @@ class PokemonCardList extends card_list_1.CardList {
         if (this.cards.length === 0) {
             this.damage = 0;
         }
-        for (const tool of this.tools) {
-            this.removeTool(tool);
-        }
     }
     clearAllSpecialConditions() {
         this.removeSpecialCondition(card_types_1.SpecialCondition.POISONED);

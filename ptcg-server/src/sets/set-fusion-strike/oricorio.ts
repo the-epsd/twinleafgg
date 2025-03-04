@@ -86,28 +86,31 @@ export class Oricorio extends PokemonCard {
       });
     }
 
-    if (effect instanceof PutDamageEffect) {
+    if (effect instanceof PutDamageEffect && StateUtils.isPokemonInPlay(effect.player, this)) {
       const player = effect.player;
 
-      const activePokemon = player.active.getPokemonCard();
-      const activeFusion = activePokemon && activePokemon.tags.includes(CardTag.FUSION_STRIKE);
-      const benchPokemon = player.bench.map(b => b.getPokemonCard()).filter(card => card !== undefined) as PokemonCard[];
-      const benchFusion = benchPokemon.filter(card => card.tags.includes(CardTag.FUSION_STRIKE));
+      const target = effect.target.getPokemonCard();
+      const isTargetFusionStrike = target && target.tags.includes(CardTag.FUSION_STRIKE);
 
-      // Try to reduce PowerEffect, to check if something is blocking our ability
-      try {
-        const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
-      } catch {
-        return state;
-      }
+      if (isTargetFusionStrike) {
 
-      if (activeFusion || benchFusion) {
+        if (effect.damageReduced) {
+          return state;
+        }
+
+        // Try to reduce PowerEffect, to check if something is blocking our ability
+        try {
+          const stub = new PowerEffect(player, {
+            name: 'test',
+            powerType: PowerType.ABILITY,
+            text: ''
+          }, this);
+          store.reduceEffect(state, stub);
+        } catch {
+          return state;
+        }
         effect.damage -= 20;
+        effect.damageReduced = true;
       }
       return state;
     }

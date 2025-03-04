@@ -46,10 +46,17 @@ export class ScoopUpNet extends TrainerCard {
         const cardList = result.length > 0 ? result[0] : null;
         if (cardList !== null) {
           const pokemons = cardList.getPokemons();
-          cardList.clearEffects();
-          cardList.damage = 0;
-          MOVE_CARDS(store, state, cardList, player.hand);
-          MOVE_CARDS(store, state, cardList, player.hand, { cards: pokemons });
+          const otherCards = cardList.cards.filter(card => !(card instanceof PokemonCard)); // Ensure only non-PokemonCard types
+
+          // Move other cards to hand
+          if (otherCards.length > 0) {
+            MOVE_CARDS(store, state, cardList, player.hand, { cards: otherCards });
+          }
+
+          // Move Pokémon to hand
+          if (pokemons.length > 0) {
+            MOVE_CARDS(store, state, cardList, player.hand, { cards: pokemons });
+          }
           MOVE_CARD_TO(state, effect.trainerCard, player.discard);
         }
       });

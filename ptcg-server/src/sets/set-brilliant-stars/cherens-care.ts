@@ -8,6 +8,8 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
+import { PokemonCard } from '../../game';
+import { MOVE_CARD_TO, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -44,13 +46,22 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     PlayerType.BOTTOM_PLAYER,
     [SlotType.ACTIVE, SlotType.BENCH],
     { min: 1, max: 1, allowCancel: true, blocked }
-  ), targets => {
-    if (targets && targets.length > 0) {
-      targets[0].clearEffects();
-      targets[0].damage = 0;
-      targets[0].moveTo(player.hand);
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+  ), result => {
+    const cardList = result.length > 0 ? result[0] : null;
+    if (cardList !== null) {
+      const pokemons = cardList.getPokemons();
+      const otherCards = cardList.cards.filter(card => !(card instanceof PokemonCard)); // Ensure only non-PokemonCard types
 
+      // Move other cards to hand
+      if (otherCards.length > 0) {
+        MOVE_CARDS(store, state, cardList, player.hand, { cards: otherCards });
+      }
+
+      // Move Pokémon to hand
+      if (pokemons.length > 0) {
+        MOVE_CARDS(store, state, cardList, player.hand, { cards: pokemons });
+      }
+      MOVE_CARD_TO(state, effect.trainerCard, player.discard);
     }
   });
 }
