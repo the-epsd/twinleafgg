@@ -2,7 +2,6 @@
 
 :host {
   display: block;
-  min-height: 100%;
-  padding-right: map-get($ptcg-size, sidebar);
-  width: 100%;
+  height: 100%;
+  margin-right: map-get($ptcg-size, sidebar);
 }
