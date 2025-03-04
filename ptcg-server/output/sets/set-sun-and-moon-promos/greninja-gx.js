@@ -74,11 +74,20 @@ class GreninjaGX extends pokemon_card_1.PokemonCard {
             prefabs_1.BLOCK_IF_GX_ATTACK_USED(player);
             // set GX attack as used for game
             player.usedGX = true;
-            return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_PICK_UP, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH], { min: 1, max: 1, allowCancel: false }), selection => {
-                selection.forEach(r => {
-                    r.moveTo(opponent.hand);
-                    r.clearEffects();
-                });
+            return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_PICK_UP, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH], { min: 1, max: 1, allowCancel: false }), result => {
+                const cardList = result.length > 0 ? result[0] : null;
+                if (cardList !== null) {
+                    const pokemons = cardList.getPokemons();
+                    const otherCards = cardList.cards.filter(card => !(card instanceof pokemon_card_1.PokemonCard)); // Ensure only non-PokemonCard types
+                    // Move other cards to hand
+                    if (otherCards.length > 0) {
+                        prefabs_1.MOVE_CARDS(store, state, cardList, opponent.hand, { cards: otherCards });
+                    }
+                    // Move Pokémon to hand
+                    if (pokemons.length > 0) {
+                        prefabs_1.MOVE_CARDS(store, state, cardList, opponent.hand, { cards: pokemons });
+                    }
+                }
             });
         }
         return state;

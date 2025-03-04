@@ -11,7 +11,6 @@ export declare class BlisseyV extends PokemonCard {
     retreat: CardType[];
     powers: {
         name: string;
-        useWhenInPlay: boolean;
         powerType: PowerType;
         text: string;
     }[];
@@ -19,6 +18,7 @@ export declare class BlisseyV extends PokemonCard {
         name: string;
         cost: CardType[];
         damage: number;
+        damageCalculation: string;
         text: string;
     }[];
     set: string;
@@ -27,5 +27,6 @@ export declare class BlisseyV extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
+    usedBlissfulBlast: boolean;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

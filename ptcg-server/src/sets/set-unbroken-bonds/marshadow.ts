@@ -4,7 +4,7 @@ import { StoreLike, State, PowerType, StateUtils, GameError, PokemonCardList } f
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { GameMessage } from '../../game/game-message';
-import { DEAL_MORE_DAMAGE_IF_OPPONENT_ACTIVE_HAS_CARD_TAG, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { DEAL_MORE_DAMAGE_IF_OPPONENT_ACTIVE_HAS_CARD_TAG, MOVE_CARDS, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Marshadow extends PokemonCard {
 
@@ -54,26 +54,32 @@ export class Marshadow extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
-
       const stadiumCard = StateUtils.getStadiumCard(state);
-      if (stadiumCard !== undefined) {
+      const player = effect.player;
 
-        const cardList = StateUtils.findCardList(state, stadiumCard);
-        const player = StateUtils.findOwner(state, cardList);
-
-        if (player.active.cards[0] == this) {
-          throw new GameError(GameMessage.CANNOT_USE_POWER);
-        }
-
-        const benchIndex = player.bench.indexOf(cardList as PokemonCardList);
-        if (benchIndex === -1) {
-          throw new GameError(GameMessage.CANNOT_USE_POWER);
-        }
-
-        // Discard Stadium
-        cardList.moveTo(player.discard);
-        return state;
+      if (stadiumCard === undefined) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
+
+      const cardList = StateUtils.findCardList(state, stadiumCard);
+      const owner = StateUtils.findOwner(state, cardList);
+
+      if (player.active.cards[0] == this) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
+      }
+
+      const marshadowCards = StateUtils.findCardList(state, this);
+
+      // Check if this card is on bench
+      const benchIndex = player.bench.indexOf(marshadowCards as PokemonCardList);
+      if (benchIndex === -1) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
+      }
+
+      // Discard Stadium
+      MOVE_CARDS(store, state, cardList, owner.discard);
+      player.bench[benchIndex].moveTo(player.discard);
+      return state;
     }
 
     if (WAS_ATTACK_USED(effect, 0, this)) {

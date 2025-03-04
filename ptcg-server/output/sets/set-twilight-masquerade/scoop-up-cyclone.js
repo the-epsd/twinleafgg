@@ -30,9 +30,16 @@ class ScoopUpCyclone extends trainer_card_1.TrainerCard {
                 const cardList = result.length > 0 ? result[0] : null;
                 if (cardList !== null) {
                     const pokemons = cardList.getPokemons();
-                    prefabs_1.MOVE_CARDS(store, state, cardList, player.hand);
-                    prefabs_1.MOVE_CARDS(store, state, cardList, player.hand, { cards: pokemons });
-                    player.supporter.moveCardTo(effect.trainerCard, player.discard);
+                    const otherCards = cardList.cards.filter(card => !(card instanceof game_1.PokemonCard)); // Ensure only non-PokemonCard types
+                    // Move other cards to hand
+                    if (otherCards.length > 0) {
+                        prefabs_1.MOVE_CARDS(store, state, cardList, player.hand, { cards: otherCards });
+                    }
+                    // Move Pokémon to hand
+                    if (pokemons.length > 0) {
+                        prefabs_1.MOVE_CARDS(store, state, cardList, player.hand, { cards: pokemons });
+                    }
+                    prefabs_1.MOVE_CARD_TO(state, effect.trainerCard, player.discard);
                 }
             });
         }

@@ -16,6 +16,7 @@ import { Marshtomp } from './marshtomp';
 import { Mudkip } from './mudkip';
 import { Nuzleaf } from './nuzleaf';
 import { Oricorio } from './oricorio';
+import { SuperScoopUpCES } from './other-prints';
 import { Phanpy } from './phanpy';
 import { RayquazaGX } from './rayquaza-gx';
 import { Sableye } from './sableye';
@@ -55,6 +56,7 @@ export const setCelestialStorm: Card[] = [
   new Slakoth(),
   new StevensResolve(),
   new Swampert(),
+  new SuperScoopUpCES(),
   new TateAndLiza(),
   new Whismur(),
   new ArticunoGX(),

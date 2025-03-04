@@ -7,7 +7,7 @@ import { AttackEffect } from '../../game/store/effects/game-effects';
 export class Drampa extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = N;
-  public hp: number = 130;
+  public hp: number = 120;
   public weakness = [{ type: Y }];
   public retreat = [C, C];
 

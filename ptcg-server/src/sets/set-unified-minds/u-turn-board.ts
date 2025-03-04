@@ -1,5 +1,5 @@
 import { Card } from '../../game';
-import { TrainerType } from '../../game/store/card/card-types';
+import { CardType, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 import { CheckRetreatCostEffect, CheckTableStateEffect } from '../../game/store/effects/check-effects';
@@ -48,11 +48,9 @@ export class UTurnBoard extends TrainerCard {
     }
 
     if (effect instanceof CheckRetreatCostEffect && effect.player.active.tools.includes(this)) {
-
-      if (effect.cost.length === 0) {
-        effect.cost = [];
-      } else {
-        effect.cost.splice(0, 1);
+      const index = effect.cost.indexOf(CardType.COLORLESS);
+      if (index !== -1) {
+        effect.cost.splice(index, 1);
       }
     }
 

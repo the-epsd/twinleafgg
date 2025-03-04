@@ -1,3 +1,4 @@
+import { PlayerType } from '../../game';
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { PowerType } from '../../game/store/card/pokemon-types';
@@ -48,8 +49,26 @@ export class Manaphy extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PutDamageEffect && StateUtils.isPokemonInPlay(effect.player, this)) {
+    if (effect instanceof PutDamageEffect) {
       const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      if (effect.target === player.active || effect.target === opponent.active) {
+        return state;
+      }
+
+      const targetPlayer = StateUtils.findOwner(state, effect.target);
+
+      let isManaphyInPlay = false;
+      targetPlayer.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+        if (card === this) {
+          isManaphyInPlay = true;
+        }
+      });
+
+      if (!isManaphyInPlay) {
+        return state;
+      }
 
       // Try to reduce PowerEffect, to check if something is blocking our ability
       try {
@@ -59,14 +78,12 @@ export class Manaphy extends PokemonCard {
           text: ''
         }, this);
         store.reduceEffect(state, stub);
-
-        // Prevent damage only to benched Pokemon
-        effect.preventDefault = true;
       } catch {
         return state;
       }
-    }
 
+      effect.preventDefault = true;
+    }
     return state;
   }
 }

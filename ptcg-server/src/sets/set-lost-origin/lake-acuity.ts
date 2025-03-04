@@ -1,8 +1,8 @@
-import {StoreLike,State, EnergyCard, StateUtils} from '../../game';
-import { TrainerType } from '../../game/store/card/card-types';
+import { StoreLike, State, EnergyCard, StateUtils } from '../../game';
+import { CardType, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import {PutDamageEffect} from '../../game/store/effects/attack-effects';
-import {Effect} from '../../game/store/effects/effect';
+import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { Effect } from '../../game/store/effects/effect';
 
 export class LakeAcuity extends TrainerCard {
   public trainerType: TrainerType = TrainerType.STADIUM;
@@ -14,20 +14,20 @@ export class LakeAcuity extends TrainerCard {
   public fullName: string = 'Lake Acuity LOR';
 
   public text: string = 'All Pokémon that have any [W] or [F] Energy attached (both yours and your opponent\'s) take 20 less damage from attacks from the opponent\'s Pokémon (after applying Weakness and Resistance).';
-  
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof PutDamageEffect && StateUtils.getStadiumCard(state) === this){
+    if (effect instanceof PutDamageEffect && StateUtils.getStadiumCard(state) === this) {
       const pokemon = effect.target;
 
       const waterFightingEnergies = pokemon.cards.filter(card =>
-        card instanceof EnergyCard && (card.name === 'Water Energy' || card.name === 'Fighting Energy')
+        card instanceof EnergyCard && (card.provides.includes(CardType.WATER) || card.provides.includes(CardType.FIGHTING))
       );
 
-      if (waterFightingEnergies.length > 0){
-        effect.damage -= 30;
+      if (waterFightingEnergies.length > 0) {
+        effect.damage -= 20;
       }
     }
-    
+
     return state;
   }
 }

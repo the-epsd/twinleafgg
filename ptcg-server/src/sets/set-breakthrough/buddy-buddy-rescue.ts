@@ -66,6 +66,10 @@ export class BuddyBuddyRescue extends TrainerCard {
         return state;
       }
 
+      if (!pokemonInOpponentsDiscard) {
+        return state;
+      }
+
       if (pokemonInOpponentsDiscard > 0) {
         let cards: Card[] = [];
 
@@ -85,6 +89,10 @@ export class BuddyBuddyRescue extends TrainerCard {
           opponent.discard.moveCardsTo(cards, opponent.hand);
           opponent.supporter.moveCardTo(effect.trainerCard, opponent.discard);
         });
+      }
+
+      if (!pokemonInPlayersDiscard) {
+        return state;
       }
 
       if (pokemonInPlayersDiscard > 0) {

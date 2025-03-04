@@ -10,7 +10,7 @@ class Drampa extends pokemon_card_1.PokemonCard {
         super(...arguments);
         this.stage = card_types_1.Stage.BASIC;
         this.cardType = N;
-        this.hp = 130;
+        this.hp = 120;
         this.weakness = [{ type: Y }];
         this.retreat = [C, C];
         this.attacks = [

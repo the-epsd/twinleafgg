@@ -52,7 +52,7 @@ export class HisuianBasculegion extends PokemonCard {
         }
       });
 
-      effect.damage = energyInDiscard * 20;
+      effect.damage = 20 + (energyInDiscard * 20);
 
       player.discard.cards.forEach(cards => {
         if (cards instanceof EnergyCard && cards.energyType === EnergyType.BASIC) {

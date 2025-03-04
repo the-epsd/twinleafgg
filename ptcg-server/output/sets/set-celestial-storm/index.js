@@ -18,6 +18,7 @@ const marshtomp_1 = require("./marshtomp");
 const mudkip_1 = require("./mudkip");
 const nuzleaf_1 = require("./nuzleaf");
 const oricorio_1 = require("./oricorio");
+const other_prints_1 = require("./other-prints");
 const phanpy_1 = require("./phanpy");
 const rayquaza_gx_1 = require("./rayquaza-gx");
 const sableye_1 = require("./sableye");
@@ -56,6 +57,7 @@ exports.setCelestialStorm = [
     new slakoth_1.Slakoth(),
     new stevens_resolve_1.StevensResolve(),
     new swampert_1.Swampert(),
+    new other_prints_1.SuperScoopUpCES(),
     new tate_and_liza_1.TateAndLiza(),
     new whismur_1.Whismur(),
     new articuno_gx_1.ArticunoGX(),

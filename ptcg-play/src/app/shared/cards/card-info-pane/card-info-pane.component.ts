@@ -1,5 +1,5 @@
 import { Component, OnChanges, Input, Output, EventEmitter } from '@angular/core';
-import { Card, SuperType, Stage, PowerType, EnergyType, TrainerType, PokemonCard, TrainerCard } from 'ptcg-server';
+import { Card, SuperType, Stage, PowerType, EnergyType, TrainerType, PokemonCard, TrainerCard, PokemonCardList } from 'ptcg-server';
 import { MatDialog } from '@angular/material/dialog';
 
 import { CardImagePopupComponent } from '../card-image-popup/card-image-popup.component';
@@ -20,6 +20,7 @@ export interface CardInfoPaneAction {
   attack?: string;
   ability?: string;
   trainer?: boolean;
+  cardList?: PokemonCardList;
 }
 
 @Component({
@@ -31,8 +32,9 @@ export class CardInfoPaneComponent implements OnChanges {
 
   @Input() card: Card;
   @Input() facedown: boolean;
+  @Input() cardList: PokemonCardList;
   @Input() options: CardInfoPaneOptions = {};
-  @Output() action = new EventEmitter<any>();
+  @Output() action = new EventEmitter<CardInfoPaneAction>();
 
   public enabledAbilities: { [name: string]: boolean } = {};
   public SuperType = SuperType;
@@ -49,7 +51,20 @@ export class CardInfoPaneComponent implements OnChanges {
 
   public clickAction(action: CardInfoPaneAction) {
     action.card = this.card;
+    if (action.trainer) {
+      console.log('Trainer action detected:', action);
+    }
     this.action.next(action);
+  }
+
+  private handleAbility(abilityName: string, cardList: PokemonCardList) {
+    // Implement the logic to execute the ability here
+    console.log(`Executing ability: ${abilityName} with cardList:`, cardList);
+  }
+
+  private handleAttack(attackName: string, cardList: PokemonCardList) {
+    // Implement the logic to execute the attack here
+    console.log(`Executing attack: ${attackName} with cardList:`, cardList);
   }
 
   ngOnChanges() {
@@ -117,7 +132,7 @@ export class CardInfoPaneComponent implements OnChanges {
   public showCardImage(card: Card, facedown: boolean): Promise<void> {
     const dialog = this.dialog.open(CardImagePopupComponent, {
       maxWidth: '100%',
-      data: { card, facedown }
+      data: { card, facedown, cardList: this.cardList }
     });
 
     return dialog.afterClosed().toPromise()

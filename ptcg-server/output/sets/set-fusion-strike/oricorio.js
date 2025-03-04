@@ -60,26 +60,28 @@ class Oricorio extends pokemon_card_1.PokemonCard {
                 }
             });
         }
-        if (effect instanceof attack_effects_1.PutDamageEffect) {
+        if (effect instanceof attack_effects_1.PutDamageEffect && state_utils_1.StateUtils.isPokemonInPlay(effect.player, this)) {
             const player = effect.player;
-            const activePokemon = player.active.getPokemonCard();
-            const activeFusion = activePokemon && activePokemon.tags.includes(card_types_1.CardTag.FUSION_STRIKE);
-            const benchPokemon = player.bench.map(b => b.getPokemonCard()).filter(card => card !== undefined);
-            const benchFusion = benchPokemon.filter(card => card.tags.includes(card_types_1.CardTag.FUSION_STRIKE));
-            // Try to reduce PowerEffect, to check if something is blocking our ability
-            try {
-                const stub = new game_effects_1.PowerEffect(player, {
-                    name: 'test',
-                    powerType: pokemon_types_1.PowerType.ABILITY,
-                    text: ''
-                }, this);
-                store.reduceEffect(state, stub);
-            }
-            catch (_a) {
-                return state;
-            }
-            if (activeFusion || benchFusion) {
+            const target = effect.target.getPokemonCard();
+            const isTargetFusionStrike = target && target.tags.includes(card_types_1.CardTag.FUSION_STRIKE);
+            if (isTargetFusionStrike) {
+                if (effect.damageReduced) {
+                    return state;
+                }
+                // Try to reduce PowerEffect, to check if something is blocking our ability
+                try {
+                    const stub = new game_effects_1.PowerEffect(player, {
+                        name: 'test',
+                        powerType: pokemon_types_1.PowerType.ABILITY,
+                        text: ''
+                    }, this);
+                    store.reduceEffect(state, stub);
+                }
+                catch (_a) {
+                    return state;
+                }
                 effect.damage -= 20;
+                effect.damageReduced = true;
             }
             return state;
         }
