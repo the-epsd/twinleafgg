@@ -26,6 +26,15 @@ import { WellspringMaskOgerpon } from './wellspring-mask-ogerpon';
 import { CornerstoneMaskOgerpon } from './cornerstone-mask-ogerpon';
 import { Ponyta } from './ponyta';
 import { Rapidash } from './rapidash';
+import {Shaymin} from './shaymin';
+import {MistysStaryu} from './mistys-staryu';
+import {Applin} from './applin';
+import {Dipplin} from './dipplin';
+import {Hydrapple} from './hydrapple';
+import {Dwebble} from './dwebble';
+import {Crustle} from './crustle';
+import {MCsHypeUp} from './mcs-hype-up';
+import {MistysStarmie} from './mistys-starmie';
 
 export const setSV9a: Card[] = [
 
@@ -37,6 +46,13 @@ export const setSV9a: Card[] = [
   new CornerstoneMaskOgerpon(),
   new Ponyta(),
   new Rapidash(),
+  new Shaymin(),
+  new Applin(),
+  new Dipplin(),
+  new Hydrapple(),
+  new Dwebble(),
+  new Crustle(),
+  new MCsHypeUp(),
 
   new CynthiasRoseradeIR(),
   new CynthiasGarchompex(),
@@ -56,10 +72,12 @@ export const setSV9a: Card[] = [
   new EthansSlugma(),
   new EthansMagcargo(),
   new EthansPichu(),
-
+  
   new MistysPsyduck(),
   new MistysMagikarp(),
   new MistysGyarados(),
+  new MistysStaryu(),
+  new MistysStarmie(),
 
   // Reprints
   new SacredAshSV9a(),

@@ -28,6 +28,15 @@ const wellspring_mask_ogerpon_1 = require("./wellspring-mask-ogerpon");
 const cornerstone_mask_ogerpon_1 = require("./cornerstone-mask-ogerpon");
 const ponyta_1 = require("./ponyta");
 const rapidash_1 = require("./rapidash");
+const shaymin_1 = require("./shaymin");
+const mistys_staryu_1 = require("./mistys-staryu");
+const applin_1 = require("./applin");
+const dipplin_1 = require("./dipplin");
+const hydrapple_1 = require("./hydrapple");
+const dwebble_1 = require("./dwebble");
+const crustle_1 = require("./crustle");
+const mcs_hype_up_1 = require("./mcs-hype-up");
+const mistys_starmie_1 = require("./mistys-starmie");
 exports.setSV9a = [
     new teal_mask_ogerpon_1.TealMaskOgerpon(),
     new hearthflame_mask_ogerpon_1.HearthflameMaskOgerpon(),
@@ -37,6 +46,13 @@ exports.setSV9a = [
     new cornerstone_mask_ogerpon_1.CornerstoneMaskOgerpon(),
     new ponyta_1.Ponyta(),
     new rapidash_1.Rapidash(),
+    new shaymin_1.Shaymin(),
+    new applin_1.Applin(),
+    new dipplin_1.Dipplin(),
+    new hydrapple_1.Hydrapple(),
+    new dwebble_1.Dwebble(),
+    new crustle_1.Crustle(),
+    new mcs_hype_up_1.MCsHypeUp(),
     new other_prints_1.CynthiasRoseradeIR(),
     new cynthias_garchomp_ex_1.CynthiasGarchompex(),
     new cynthias_gible_1.CynthiasGible(),
@@ -57,6 +73,8 @@ exports.setSV9a = [
     new mistys_psyduck_1.MistysPsyduck(),
     new mistys_magikarp_1.MistysMagikarp(),
     new mistys_gyarados_1.MistysGyarados(),
+    new mistys_staryu_1.MistysStaryu(),
+    new mistys_starmie_1.MistysStarmie(),
     // Reprints
     new other_prints_1.SacredAshSV9a(),
 ];
