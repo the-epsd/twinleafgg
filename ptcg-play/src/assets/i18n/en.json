@@ -331,10 +331,13 @@
   "BUTTON_FIND_MATCH": "Begin Matchmaking",
   "BUTTON_SETTINGS": "Settings",
   "BUTTON_LEAVE_QUEUE": "Leave Queue",
+  "BUTTON_COOLDOWN": "Cooldown",
+  "BUTTON_MATCHMAKING_COOLDOWN": "Cooldown",
   "LABEL_SELECT_FORMAT": "Select format",
   "LABEL_PLAYERS_IN_QUEUE": "Now in Queue",
   "BUTTON_EXPORT_DECKLIST": "Export Decklist",
   "NEWS_AND_UPDATES": "News & Updates",
+  "DECK_SET_AS_DEFAULT": "Set Default",
   "GAME_MESSAGES": {
     "ACTION_IN_PROGRESS": "Action in progress",
     "ALL_FIRE_ENERGIES": "All fire energies",

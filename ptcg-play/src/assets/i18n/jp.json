@@ -310,6 +310,7 @@
   "VALIDATION_MAX_FILE_SIZE": "最大ファイルサイズを超えました。",
   "VALIDATION_NAME_ALREADY_IN_USE": "この名前は既に使用されています。",
   "VALIDATION_PASSWORD_MATCH": "パスワードが一致しません。",
+  "DECK_SET_AS_DEFAULT": "デフォルトに設定",
   "GAME_MESSAGES": {
     "ACTION_IN_PROGRESS": "アクション進行中",
     "ALL_FIRE_ENERGIES": "すべての火エネルギー",

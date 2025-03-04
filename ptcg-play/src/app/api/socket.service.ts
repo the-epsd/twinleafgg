@@ -48,16 +48,28 @@ export class SocketService {
   //   return this.emit('joinLobby', { format });
   // }
 
-  // joinMatchmakingQueue(format: Format, deck: string[]): Observable<any> {
-  //   return this.emit('matchmaking:joinQueue', { format: Format[format], deck }).pipe(
-  //     timeout(5000),
-  //     catchError((error) => {
-  //       const apiError = ApiError.fromError(error);
-  //       console.log('Failed - Could not Join Queue.', error);
-  //       return throwError(apiError);
-  //     })
-  //   );
-  // }
+  public joinMatchmakingQueue(format: Format, deck: string[]): Observable<any> {
+    return this.emit('matchmaking:join', { format, deck }).pipe(
+      timeout(5000),
+      retry(1),
+      catchError((error) => {
+        const apiError = ApiError.fromError(error);
+        console.error('Failed to join matchmaking queue:', error);
+        return throwError(apiError);
+      })
+    );
+  }
+
+  public leaveMatchmakingQueue(): Observable<any> {
+    return this.emit('matchmaking:leave').pipe(
+      timeout(5000),
+      catchError((error) => {
+        const apiError = ApiError.fromError(error);
+        console.error('Failed to leave matchmaking queue:', error);
+        return throwError(apiError);
+      })
+    );
+  }
 
   public enable(authToken: string) {
     if (this.enabled) {

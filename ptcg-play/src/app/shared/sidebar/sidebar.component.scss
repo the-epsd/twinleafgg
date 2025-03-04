@@ -1,12 +1,18 @@
 @import '../../../theme/variables.scss';
 
 :host {
-  box-sizing: content-box;
+  box-sizing: border-box;
   display: block;
-  height: 100%;
-  overflow: auto;
-  position: absolute;
+  height: calc(100vh - #{$ptcg-toolbar-height-desktop});
+  overflow-y: auto;
+  position: fixed;
   right: 0;
+  top: $ptcg-toolbar-height-desktop;
   width: map-get($ptcg-size, sidebar);
   z-index: 1;
+
+  @media (max-width: 599px) {
+    height: calc(100vh - #{$ptcg-toolbar-height-mobile});
+    top: $ptcg-toolbar-height-mobile;
+  }
 }

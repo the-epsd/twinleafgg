@@ -1,60 +1,75 @@
-// import { Client } from '../../game/client/client.interface';
-// import { Core } from '../../game/core/core';
-// import { Message } from '../../storage';
-// import { ApiErrorEnum } from '../common/errors';
-// import { MessageInfo } from '../interfaces/message.interface';
-// import MatchmakingService from '../services/matchmaking.service';
-// import { CoreSocket } from './core-socket';
-// import { Response, SocketWrapper } from './socket-wrapper';
+import { Client } from '../../game/client/client.interface';
+import { Core } from '../../game/core/core';
+import { Format } from '../../game';
+import { ApiErrorEnum } from '../common/errors';
+import { MatchmakingService } from '../services/matchmaking.service';
+import { SocketWrapper, Response } from './socket-wrapper';
+import { Message } from '../../storage';
 
-// export class MatchmakingSocket {
+export class MatchmakingSocket {
+  private matchmakingService: MatchmakingService;
 
-//   private client: Client;
-//   private matchmakingService: MatchmakingService;
+  constructor(
+    private client: Client,
+    private socket: SocketWrapper,
+    private core: Core
+  ) {
+    this.matchmakingService = MatchmakingService.getInstance(this.core);
 
-//   constructor(client: Client, private socket: SocketWrapper, private core: Core) {
-//     this.client = client;
-//     this.matchmakingService = MatchmakingService.getInstance(this.core);
+    // Set up socket listeners
+    this.socket.addListener('matchmaking:join', this.joinQueue.bind(this));
+    this.socket.addListener('matchmaking:leave', this.leaveQueue.bind(this));
+  }
 
-//     // message socket listeners
-//     this.socket.addListener('matchmaking:joinQueue', this.joinQueue.bind(this));
-//     this.socket.addListener('matchmaking:leaveQueue', this.leaveQueue.bind(this));
-//   }
+  // Add these methods to match the Client interface expectations
+  public onJoinQueue(from: Client, message: Message): void {
+    // This method is called when another client joins the queue
+    // You might want to update the UI or handle other logic
+    this.socket.emit('matchmaking:playerJoined', {
+      player: from.user.name
+    });
+  }
 
-//   public onJoinQueue(from: Client, message: Message): void {
-//     const messageInfo: MessageInfo = this.buildMessageInfo(message);
-//     const user = CoreSocket.buildUserInfo(from.user);
-//     this.socket.emit('message:received', { message: messageInfo, user });
-//   }
+  public onLeaveQueue(): void {
+    // This method is called when another client leaves the queue
+    // You might want to update the UI or handle other logic
+    this.socket.emit('matchmaking:queueUpdate', {
+      players: this.matchmakingService.getQueuedPlayers()
+    });
+  }
 
-//   public onLeaveQueue(): void {
-//     // this.socket.emit('message:read', { user: CoreSocket.buildUserInfo(user) });
-//   }
+  private joinQueue(params: { format: Format, deck: string[] }, response: Response<void>): void {
+    if (!params.format || !Array.isArray(params.deck)) {
+      response('error', ApiErrorEnum.INVALID_FORMAT);
+      return;
+    }
 
-//   private joinQueue(params: { format: string, deck: string[] }, response: Response<void>): void {
-//     if (!params.format) {
-//       response('error', ApiErrorEnum.INVALID_FORMAT);
-//       return;
-//     }
-//     this.matchmakingService.addToQueue(this.client.id, params.format, params.deck);
-//     response('ok');
-//   }
+    try {
+      this.matchmakingService.addToQueue(
+        this.client,
+        this.socket,
+        params.format,
+        params.deck
+      );
+      response('ok');
+    } catch (error) {
+      console.error('Error joining queue:', error);
+      response('error', ApiErrorEnum.SOCKET_ERROR);
+    }
+  }
 
-//   private leaveQueue(params: {}, response: Response<void>): void {
-//     this.matchmakingService.removeFromQueue(this.client.id);
+  private leaveQueue(_params: void, response: Response<void>): void {
+    try {
+      this.matchmakingService.removeFromQueue(this.client);
+      response('ok');
+    } catch (error) {
+      console.error('Error leaving queue:', error);
+      response('error', ApiErrorEnum.SOCKET_ERROR);
+    }
+  }
 
-//     response('ok');
-//   }
-
-//   private buildMessageInfo(message: Message): MessageInfo {
-//     const messageInfo: MessageInfo = {
-//       messageId: message.id,
-//       senderId: message.sender.id,
-//       created: message.created,
-//       text: message.text,
-//       isRead: message.isRead
-//     };
-//     return messageInfo;
-//   }
-
-// }
+  public dispose(): void {
+    // Clean up when socket disconnects
+    this.matchmakingService.removeFromQueue(this.client);
+  }
+}
