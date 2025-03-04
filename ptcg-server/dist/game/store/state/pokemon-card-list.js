@@ -84,8 +84,6 @@ export class PokemonCardList extends CardList {
         this.marker.removeMarker(PokemonCardList.OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER);
         this.marker.removeMarker(PokemonCardList.PREVENT_ALL_DAMAGE_DONE_BY_OPPONENTS_BASIC_POKEMON_MARKER);
         this.marker.removeMarker(PokemonCardList.CLEAR_PREVENT_ALL_DAMAGE_DONE_BY_OPPONENTS_BASIC_POKEMON_MARKER);
-        this.marker.removeMarker(PokemonCardList.UNRELENTING_ONSLAUGHT_MARKER);
-        this.marker.removeMarker(PokemonCardList.UNRELENTING_ONSLAUGHT_2_MARKER);
         this.marker.markers = [];
         this.removeSpecialCondition(SpecialCondition.POISONED);
         this.removeSpecialCondition(SpecialCondition.ASLEEP);
@@ -96,9 +94,6 @@ export class PokemonCardList extends CardList {
         this.burnDamage = 20;
         if (this.cards.length === 0) {
             this.damage = 0;
-        }
-        for (const tool of this.tools) {
-            this.removeTool(tool);
         }
     }
     clearAllSpecialConditions() {

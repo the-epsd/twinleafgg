@@ -1,189 +1,233 @@
-// import { Component, OnDestroy, OnInit } from '@angular/core';
-// import { Router } from '@angular/router';
-// import { Archetype, Format, RankLevel, UserInfo } from 'ptcg-server';
-// import { Subscription, throwError } from 'rxjs';
-// import { catchError, map, retry, switchMap } from 'rxjs/operators';
-// import { DeckListEntry } from 'src/app/api/interfaces/deck.interface';
-// import { DeckService } from 'src/app/api/services/deck.service';
-// import { GameService } from 'src/app/api/services/game.service';
-// import { ArchetypeUtils } from 'src/app/deck/deck-archetype-service/archetype.utils';
-// import { DeckComponent } from 'src/app/deck/deck.component';
-// import { CardsBaseService } from 'src/app/shared/cards/cards-base.service';
-
-// interface QueueUpdate {
-//   format: string;
-//   players: string[];
-// }
-
-// interface GameStartedUpdate {
-//   format: string;
-//   gameId: string;
-//   players: string[];
-// }
-
-// @Component({
-//   selector: 'ptcg-matchmaking-lobby',
-//   templateUrl: './matchmaking-lobby.component.html',
-//   styleUrls: ['./matchmaking-lobby.component.scss']
-// })
-// export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
-//   formats = [
-//     { value: Format.STANDARD, label: 'LABEL_STANDARD' },
-//     { value: Format.STANDARD_NIGHTLY, label: 'LABEL_STANDARD_NIGHTLY' },
-//     { value: Format.GLC, label: 'LABEL_GLC' },
-//     { value: Format.EXPANDED, label: 'LABEL_EXPANDED' },
-//     { value: Format.RETRO, label: 'LABEL_RETRO' },
-//     { value: Format.UNLIMITED, label: 'LABEL_UNLIMITED' }
-//   ];
-
-//   selectedFormat: Format = Format.STANDARD;
-//   inQueue: boolean = false;
-//   queuedPlayers: string[] = [];
-//   decks: DeckListEntry[];
-//   deckId: number;
-//   private subscription: Subscription;
-//   private pollingInterval: any;
-//   decksByFormat = [];
-//   public playerRank: RankLevel;
-//   defaultDeck: DeckListEntry;
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Archetype, Format } from 'ptcg-server';
+import { Subscription } from 'rxjs';
+import { SocketService } from '../../api/socket.service';
+import { DeckService } from '../../api/services/deck.service';
+import { DeckListEntry } from '../../api/interfaces/deck.interface';
+import { ArchetypeUtils } from '../../deck/deck-archetype-service/archetype.utils';
+import { CardsBaseService } from '../../shared/cards/cards-base.service';
+import { DeckItem } from '../../deck/deck-card/deck-card.interface';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
-//   constructor(
-//     private gameService: GameService,
-//     private router: Router,
-//     private deckService: DeckService,
-//     private cardsBaseService: CardsBaseService,
-//   ) {
-//     this.playerRank = this.playerRank;
-//   }
+@Component({
+  selector: 'ptcg-matchmaking-lobby',
+  templateUrl: './matchmaking-lobby.component.html',
+  styleUrls: ['./matchmaking-lobby.component.scss']
+})
+export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
+  public formats = [
+    { value: Format.STANDARD, label: 'Standard' },
+    { value: Format.EXPANDED, label: 'Expanded' },
+    { value: Format.GLC, label: 'GLC' },
+    { value: Format.RETRO, label: 'Retro' },
+    { value: Format.UNLIMITED, label: 'Unlimited' },
+  ];
 
-//   getArchetype(deckItems: any[]): Archetype {
-//     return ArchetypeUtils.getArchetype(deckItems);
-//   }
+  public selectedFormat: Format = Format.STANDARD;
+  public deckId: number | null = null;
+  public decksByFormat: DeckListEntry[] = [];
+  public inQueue = false;
+  public queuedPlayers: string[] = [];
+  public loading = false;
+  private queueTimeout: any;
+  private cooldownInterval: any;
+  public onCooldown = false;
+  public cooldownSeconds = 0;
+  private readonly COOLDOWN_DURATION = 3; // 3 seconds cooldown
 
-//   getCurrentDeckName(): string {
-//     return this.decksByFormat.find(deck => deck.id === this.deckId)?.name || '';
-//   }
+  private subscriptions: Subscription[] = [];
 
-//   ngOnInit() {
-//     const defaultDeckId = localStorage.getItem('defaultDeckId');
-//     if (defaultDeckId) {
-//       this.deckService.getDeck(parseInt(defaultDeckId, 10)).subscribe(
-//         response => {
-//           this.defaultDeck = {
-//             ...response.deck,
-//             deckItems: response.deck.cards.map(cardName => ({
-//               card: this.cardsBaseService.getCardByName(cardName),
-//               count: 1,
-//               pane: null,
-//               scanUrl: null
-//             }))
-//           };
-//           this.deckId = response.deck.id;
-//         }
-//       );
-//     } else {
-//       // If no default deck, get regular deck list
-//       this.deckService.getListByFormat(Format.STANDARD).pipe(
-//         map(d => d.filter(deck => deck.isValid))
-//       ).subscribe(decks => {
-//         this.decksByFormat = decks;
-//         if (decks.length > 0) {
-//           this.deckId = decks[0].id;
-//         }
-//       });
-//     }
+  constructor(
+    private deckService: DeckService,
+    private socketService: SocketService,
+    private router: Router,
+    private cardsBaseService: CardsBaseService,
+    private snackBar: MatSnackBar
+  ) { }
 
-//     this.deckService.getListByFormat(Format.STANDARD).pipe(
-//       map(d => d.filter(deck => deck.isValid))
-//     ).subscribe(decks => {
-//       this.decksByFormat = decks;
-//       if (decks.length > 0) {
-//         this.deckId = decks[0].id;
-//       }
-//     });
-//   }
-//   // private isQueueUpdate(update: any): update is QueueUpdate {
-//   //   return 'players' in update && Array.isArray(update.players);
-//   // }
+  ngOnInit(): void {
+    // Load last selected format from localStorage
+    const lastFormat = localStorage.getItem('lastSelectedFormat');
+    if (lastFormat) {
+      this.selectedFormat = parseInt(lastFormat, 10);
+    }
 
-//   // private isGameStartedUpdate(update: any): update is GameStartedUpdate {
-//   //   return 'gameId' in update && typeof update.gameId === 'string';
-//   // }
+    // Then load decks with the selected format
+    this.onFormatSelected(this.selectedFormat);
+    this.setupSocketListeners();
+  }
 
-//   joinQueue() {
-//     this.inQueue = true;
-//     this.deckService.getDeck(this.deckId).pipe(
-//       map(response => response.deck.cards),
-//       switchMap(cards =>
-//         this.gameService.joinMatchmakingQueue(this.selectedFormat, cards)
-//           .pipe(
-//             retry(3),
-//             catchError(error => {
-//               this.inQueue = false;
-//               console.error('Failed to join queue:', error);
-//               return throwError(() => error);
-//             })
-//           )
-//       )
-//     ).subscribe({
-//       next: () => {
-//         console.log('Joined queue successfully');
-//         // this.startPolling();
-//       },
-//       error: (error) => console.error('Error joining queue:', error)
-//     });
-//   }
+  ngOnDestroy(): void {
+    if (this.queueTimeout) {
+      clearTimeout(this.queueTimeout);
+    }
+    if (this.cooldownInterval) {
+      clearInterval(this.cooldownInterval);
+    }
+    if (this.inQueue) {
+      this.leaveQueue();
+    }
+    this.subscriptions.forEach(sub => sub.unsubscribe());
+  }
 
-//   startPolling() {
-//     this.pollingInterval = setInterval(() => {
-//       this.gameService.checkQueueStatus(this.selectedFormat).subscribe(
-//         status => {
-//           console.log('Queue status:', status);
-//           this.queuedPlayers = status.players;
-//           if (status.gameCreated) {
-//             this.stopPolling();
-//             this.router.navigate(['/game', status.gameId]);
-//           }
-//         },
-//         error => console.error('Error checking queue status:', error)
-//       );
-//     }, 1000);
-//   }
+  private setupSocketListeners(): void {
+    // Setup queue update listener
+    this.socketService.on('matchmaking:queueUpdate', (data: { players: string[] }) => {
+      this.queuedPlayers = data.players;
+    });
 
-//   stopPolling() {
-//     if (this.pollingInterval) {
-//       clearInterval(this.pollingInterval);
-//     }
-//   }
+    // Listen for game creation
+    this.socketService.on('matchmaking:gameCreated', (data: { gameId: number }) => {
+      if (this.inQueue) {
+        this.inQueue = false;
+        this.router.navigate(['/table', data.gameId]);
+      }
+    });
+  }
 
-//   ngOnDestroy() {
-//     this.stopPolling();
-//     if (this.subscription) {
-//       this.subscription.unsubscribe();
-//     }
+  private loadDefaultDeck(): void {
+    const savedDefaultDeckId = localStorage.getItem('defaultDeckId');
+    if (savedDefaultDeckId) {
+      const defaultId = parseInt(savedDefaultDeckId, 10);
+      // Only set the deck if it exists in the current format's deck list
+      const deck = this.decksByFormat.find(d => d.id === defaultId);
+      if (deck) {
+        this.deckId = defaultId;
+      } else {
+        this.deckId = null;
+      }
+    }
+  }
 
-//     this.leaveQueue();
-//   }
+  public onFormatSelected(format: Format): void {
+    this.selectedFormat = format;
+    // Save selected format to localStorage
+    localStorage.setItem('lastSelectedFormat', format.toString());
 
-//   leaveQueue() {
-//     this.inQueue = false;
-//     this.gameService.leaveMatchmakingQueue().subscribe(
-//       () => console.log('Left queue successfully'),
-//       error => console.error('Error leaving queue:', error)
-//     );
-//   }
+    this.loading = true;
 
-//   onFormatSelected(format: Format) {
-//     this.deckService.getListByFormat(format).pipe(
-//       map(d => d.filter(deck => deck.isValid))
-//     ).subscribe(decks => {
-//       this.decksByFormat = decks;
+    this.deckService.getListByFormat(this.selectedFormat).subscribe(
+      decks => {
+        // Process deck items like in deck component
+        decks.forEach(deck => {
+          const deckCards: DeckItem[] = [];
+          deck.cards.forEach(card => {
+            deckCards.push({
+              card: this.cardsBaseService.getCardByName(card),
+              count: 0,
+              pane: null,
+              scanUrl: null
+            });
+          });
+          deck.deckItems = deckCards;
+        });
 
-//       if (decks.length > 0) {
-//         this.deckId = decks[0].id;
-//       }
-//     });
+        this.decksByFormat = decks;
+        const savedDefaultDeckId = localStorage.getItem('defaultDeckId');
+        if (savedDefaultDeckId) {
+          const defaultId = parseInt(savedDefaultDeckId, 10);
+          if (this.decksByFormat.some(d => d.id === defaultId)) {
+            this.deckId = defaultId;
+          } else {
+            this.deckId = null;
+          }
+        }
+        this.loading = false;
+      },
+      error => {
+        console.error('Failed to load decks:', error);
+        this.loading = false;
+      }
+    );
+  }
 
-//   }
-// }
+  private loadDecks(): void {
+    this.deckService.getListByFormat(this.selectedFormat).subscribe(
+      decks => {
+        this.decksByFormat = decks;
+        if (!this.decksByFormat.find(d => d.id === this.deckId)) {
+          this.deckId = null;
+        }
+      }
+    );
+  }
+
+  public joinQueue(): void {
+    if (!this.deckId || this.onCooldown) return;
+
+    const deck = this.decksByFormat.find(d => d.id === this.deckId);
+    if (!deck) return;
+
+    this.socketService.joinMatchmakingQueue(this.selectedFormat, deck.cards)
+      .subscribe(
+        () => {
+          this.inQueue = true;
+          this.queueTimeout = setTimeout(() => {
+            if (this.inQueue) {
+              this.leaveQueue();
+              this.snackBar.open('No match found', '', {
+                duration: 5000,
+                horizontalPosition: 'center',
+                verticalPosition: 'top',
+                panelClass: ['error-snackbar']
+              });
+            }
+          }, 15000);
+        },
+        (error) => {
+          console.error('Failed to join queue:', error);
+          this.inQueue = false;
+        }
+      );
+  }
+
+  public leaveQueue(): void {
+    if (this.queueTimeout) {
+      clearTimeout(this.queueTimeout);
+      this.queueTimeout = null;
+    }
+
+    this.socketService.leaveMatchmakingQueue()
+      .subscribe(
+        () => {
+          this.inQueue = false;
+          this.queuedPlayers = [];
+          // Start cooldown countdown
+          this.startCooldown();
+        },
+        (error) => {
+          console.error('Failed to leave queue:', error);
+        }
+      );
+  }
+
+  private startCooldown(): void {
+    this.onCooldown = true;
+    this.cooldownSeconds = this.COOLDOWN_DURATION;
+
+    if (this.cooldownInterval) {
+      clearInterval(this.cooldownInterval);
+    }
+
+    this.cooldownInterval = setInterval(() => {
+      this.cooldownSeconds--;
+      if (this.cooldownSeconds <= 0) {
+        clearInterval(this.cooldownInterval);
+        this.onCooldown = false;
+      }
+    }, 1000);
+  }
+
+  // Add getter for selected deck
+  get selectedDeck(): DeckListEntry | undefined {
+    return this.decksByFormat.find(d => d.id === this.deckId);
+  }
+
+  // Add the getArchetype method
+  getArchetype(deckItems: any[]): Archetype {
+    if (!deckItems) return Archetype.UNOWN;
+    return ArchetypeUtils.getArchetype(deckItems);
+  }
+}

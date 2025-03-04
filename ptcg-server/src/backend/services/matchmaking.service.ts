@@ -1,102 +1,117 @@
-// import { EventEmitter } from 'events';
-// import { Format, GameSettings } from '../../game';
-// import { Core } from '../../game/core/core';
+import { Format, GameSettings, Rules } from '../../game';
+import { Core } from '../../game/core/core';
+import { Client } from '../../game/client/client.interface';
+import { SocketWrapper } from '../socket/socket-wrapper';
 
-// class MatchmakingService {
-//   private static instance: MatchmakingService;
-//   private lobbies: Map<string, [number, string[]][]> = new Map();
-//   private playerFormat: Map<number, string> = new Map();
-//   public queueUpdates: EventEmitter = new EventEmitter();
-//   private lobbyCache: Map<string, [number, string[]][]> = new Map();
-//   private core: Core;
+interface QueuedPlayer {
+  client: Client;
+  socketWrapper: SocketWrapper;
+  format: Format;
+  deck: string[];
+  joinedAt: number;
+}
 
-//   private constructor(core: Core) {
-//     this.core = core;
-//   }
+export class MatchmakingService {
+  private static instance: MatchmakingService;
+  private queue: QueuedPlayer[] = [];
+  private matchCheckInterval: NodeJS.Timeout;
 
-//   public static getInstance(core: Core): MatchmakingService {
-//     if (!MatchmakingService.instance) {
-//       MatchmakingService.instance = new MatchmakingService(core);
-//     }
-//     return MatchmakingService.instance;
-//   }
+  private constructor(private core: Core) {
+    this.matchCheckInterval = setInterval(() => this.checkMatches(), 2000);
+  }
 
-//   getLobby(format: string): [number, string[]][] {
-//     if (!this.lobbyCache.has(format)) {
-//       this.lobbyCache.set(format, this.lobbies.get(format) || []);
-//     }
-//     return this.lobbyCache.get(format) || [];
-//   }
+  public static getInstance(core: Core): MatchmakingService {
+    if (!MatchmakingService.instance) {
+      MatchmakingService.instance = new MatchmakingService(core);
+    }
+    return MatchmakingService.instance;
+  }
 
-//   async addToQueue(userId: number, format: string, deck: string[]): Promise<void> {
-//     if (!this.lobbies.has(format)) {
-//       this.lobbies.set(format, []);
-//     }
-//     this.lobbies.get(format)?.push([userId, deck]);
-//     this.playerFormat.set(userId, format);
-//     await this.emitLobbyUpdate(format);
-//     await this.checkForMatch(format);
-//   }
+  public addToQueue(client: Client, socketWrapper: SocketWrapper, format: Format, deck: string[]): void {
+    // Remove if already in queue
+    this.removeFromQueue(client);
 
-//   removeFromQueue(userId: number) {
-//     const format = this.playerFormat.get(userId);
-//     if (format) {
-//       const lobby = this.lobbies.get(format);
-//       if (lobby) {
-//         const index = lobby.findIndex(l => l[0] === userId);
-//         if (index > -1) {
-//           lobby.splice(index, 1);
-//         }
-//       }
-//       this.playerFormat.delete(userId);
-//       this.emitLobbyUpdate(format);
-//     }
-//   }
+    this.queue.push({
+      client,
+      socketWrapper,
+      format,
+      deck,
+      joinedAt: Date.now()
+    });
 
-//   private checkForMatch(format: string) {
-//     console.log(`Checking for match in format: ${format}`);
-//     const lobby = this.lobbies.get(format);
-//     if (lobby && lobby.length >= 2) {
-//       console.log(`Found ${lobby.length} players in lobby for ${format}`);
-//       const player1 = lobby.shift();
-//       const player2 = lobby.shift();
-//       if (player1 && player2) {
-//         console.log('Attempting to create match for Player 1 & Player 2');
-//         this.createMatch(player1, player2, format);
-//       }
-//     } else {
-//       console.log(`Not enough players in lobby for ${format}`);
-//     }
-//     this.emitLobbyUpdate(format);
-//   }
+    this.broadcastQueueUpdate();
+  }
 
-//   private emitLobbyUpdate(format: string) {
-//     const lobby = this.lobbies.get(format) || [];
-//     this.queueUpdates.emit('matchmaking:lobbyUpdate', { format, players: lobby });
-//   }
+  public removeFromQueue(client: Client): void {
+    this.queue = this.queue.filter(p => p.client !== client);
+    this.broadcastQueueUpdate();
+  }
 
-//   private createMatch(player1: [number, string[]], player2: [number, string[]], format: string) {
-//     const player1Client = this.core.clients.find(client => client.id === player1[0]);
-//     const player2Client = this.core.clients.find(client => client.id === player2[0]);
+  public getQueuedPlayers(): string[] {
+    return this.queue.map(p => p.client.name);
+  }
 
-//     if (player1Client && player2Client) {
-//       const gameSettings = new GameSettings();
-//       gameSettings.format = format as unknown as Format;
+  private broadcastQueueUpdate(): void {
+    const players = this.getQueuedPlayers();
+    this.queue.forEach(p => {
+      p.socketWrapper.emit('matchmaking:queueUpdate', { players });
+    });
+  }
 
-//       if (gameSettings.format.toString() === 'GLC') {
-//         gameSettings.timeLimit = 1200;
-//       }
-//       const game = this.core.createGameWithDecks(player1Client, player1[1], gameSettings, player2Client, player2[1]);
+  private checkMatches(): void {
+    if (this.queue.length < 2) return;
 
-//       // // Use InvitePlayerAction to add the second player
-//       // game.dispatch(player1Client, new InvitePlayerAction(player2Client.id, player2Client.name));
-//       this.queueUpdates.emit('gameStarted', { format, gameId: game.id, players: [player1, player2] });
-//     } else {
-//       console.error('Error creating match: Player not found');
-//       this.addToQueue(player1[0], format, player1[1]);
-//       this.addToQueue(player2[0], format, player2[1]);
-//     }
-//   }
-// }
+    // Group players by format
+    const formatGroups = new Map<Format, QueuedPlayer[]>();
+    this.queue.forEach(player => {
+      const players = formatGroups.get(player.format) || [];
+      players.push(player);
+      formatGroups.set(player.format, players);
+    });
 
-// export default MatchmakingService;
+    // Check each format group for potential matches
+    formatGroups.forEach(players => {
+      if (players.length < 2) return;
+
+      // Sort by time in queue
+      players.sort((a, b) => a.joinedAt - b.joinedAt);
+
+      // Match first two players
+      const player1 = players[0];
+      const player2 = players[1];
+
+      // Create game settings
+      const gameSettings: GameSettings = {
+        format: player1.format,
+        timeLimit: 1800,
+        rules: new Rules(),
+        recordingEnabled: false
+      };
+
+      // Use createGameWithDecks instead of createGame
+      const game = this.core.createGameWithDecks(
+        player1.client,
+        player1.deck,
+        gameSettings,
+        player2.client,
+        player2.deck
+      );
+
+      if (game) {
+        // Notify players
+        player1.socketWrapper.emit('matchmaking:gameCreated', { gameId: game.id });
+        player2.socketWrapper.emit('matchmaking:gameCreated', { gameId: game.id });
+
+        // Remove matched players from queue
+        this.removeFromQueue(player1.client);
+        this.removeFromQueue(player2.client);
+      }
+    });
+  }
+
+  public dispose(): void {
+    if (this.matchCheckInterval) {
+      clearInterval(this.matchCheckInterval);
+    }
+  }
+}

@@ -87,8 +87,6 @@ class PokemonCardList extends card_list_1.CardList {
         this.marker.removeMarker(PokemonCardList.OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER);
         this.marker.removeMarker(PokemonCardList.PREVENT_ALL_DAMAGE_DONE_BY_OPPONENTS_BASIC_POKEMON_MARKER);
         this.marker.removeMarker(PokemonCardList.CLEAR_PREVENT_ALL_DAMAGE_DONE_BY_OPPONENTS_BASIC_POKEMON_MARKER);
-        this.marker.removeMarker(PokemonCardList.UNRELENTING_ONSLAUGHT_MARKER);
-        this.marker.removeMarker(PokemonCardList.UNRELENTING_ONSLAUGHT_2_MARKER);
         this.marker.markers = [];
         this.removeSpecialCondition(card_types_1.SpecialCondition.POISONED);
         this.removeSpecialCondition(card_types_1.SpecialCondition.ASLEEP);
