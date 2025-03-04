@@ -19,6 +19,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
   public formats = [
     { value: Format.STANDARD, label: 'Standard' },
+    { value: Format.STANDARD_NIGHTLY, label: 'Standard Nightly' },
     { value: Format.EXPANDED, label: 'Expanded' },
     { value: Format.GLC, label: 'GLC' },
     { value: Format.RETRO, label: 'Retro' },

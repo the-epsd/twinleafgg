@@ -26,17 +26,16 @@ class Annihilape extends game_1.PokemonCard {
     }
     reduceEffect(store, state, effect) {
         if (prefabs_1.WAS_ATTACK_USED(effect, 0, this)) {
-            const player = effect.player;
-            const specialCondition = new attack_effects_1.AddSpecialConditionsEffect(effect, [game_1.SpecialCondition.CONFUSED]);
-            specialCondition.target = player.active;
-            return store.reduceEffect(state, specialCondition);
+            prefabs_1.ADD_CONFUSION_TO_PLAYER_ACTIVE(store, state, effect.player, this);
         }
         if (prefabs_1.WAS_ATTACK_USED(effect, 1, this)) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            // Knock out both active Pokemon, the dumb way.
+            // Knock out both active Pokemon
             player.active.damage += 999;
-            opponent.active.damage += 999;
+            const dealDamage = new attack_effects_1.KnockOutOpponentEffect(effect, 999);
+            dealDamage.target = opponent.active;
+            store.reduceEffect(state, dealDamage);
         }
         return state;
     }
