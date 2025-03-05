@@ -1,5 +1,5 @@
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { TrainerType, CardTag } from '../../game/store/card/card-types';
+import { TrainerType, CardTag, CardType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
@@ -34,19 +34,25 @@ export class GlisteningCrystal extends TrainerCard {
         const checkEnergy = new CheckProvidedEnergyEffect(effect.player);
         store.reduceEffect(state, checkEnergy);
 
-        const availableEnergy = checkEnergy.energyMap.flatMap(e => e.provides);
+        const availableEnergy = [...checkEnergy.energyMap.flatMap(e => e.provides)];
 
         if (effect.cost.length > 0) {
-          let removed = false;
+          // A list of matched energies.
+          let contained: CardType[] = [];
           for (const costType of effect.cost) {
-            if (availableEnergy.includes(costType)) {
-              effect.cost = effect.cost.filter((type, index) => type !== costType || (type === costType && effect.cost.indexOf(type) !== index));
-              removed = true;
-              break;
+            if (costType == 9 && availableEnergy.length > 0) {
+              contained.push(availableEnergy.splice(0, 1)[0]);
+            } else {
+              let i = availableEnergy.indexOf(costType);
+              if (i > -1) {
+                //Remove from the available pool and add to the contained energy pool
+                contained.push(availableEnergy.splice(i, 1)[0]);
+              }
             }
           }
-          if (!removed) {
-            effect.cost = effect.cost.filter((type, index) => type !== effect.cost[0] || (type === effect.cost[0] && effect.cost.indexOf(type) !== index));
+          //If the contained pool is met or one less than the cost, then it's good.
+          if (contained.length >= effect.cost.length - 1) {
+            effect.cost = contained;
           }
         }
       }
