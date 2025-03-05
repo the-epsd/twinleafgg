@@ -19,6 +19,7 @@ import { GalarianMoltres } from './galarian-moltres';
 import { GalarianZapdos } from './galarian_zapdos';
 import { GyaradosV } from './gyarados-v';
 import { GyaradosVMAX } from './gyarados-vmax';
+import { Hoppip } from './hoppip';
 import { Jumpluff } from './jumpluff';
 import { LeafeonV } from './leafeon-v';
 import { LeafeonVMAX } from './leafeon-vmax';

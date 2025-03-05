@@ -8,6 +8,7 @@ import { Axew } from './axew';
 import { Bibarel } from './bibarel';
 import { Bidoof } from './bidoof';
 import { CherensCare } from './cherens-care';
+import { Cherubi } from './cherubi';
 import { CleansingGloves } from './cleansing-gloves';
 import { CollapsedStadium } from './collapsed-stadium';
 import { CynthiasAmbition } from './cynthias-ambition';
@@ -60,6 +61,7 @@ export const setBrilliantStars: Card[] = [
   new Bibarel(),
   new Bidoof(),
   new CherensCare(),
+  new Cherubi(),
   new CleansingGloves(),
   new CollapsedStadium(),
   new CynthiasAmbition(),

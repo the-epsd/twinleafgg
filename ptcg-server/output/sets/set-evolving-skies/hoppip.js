@@ -4,7 +4,7 @@ exports.Hoppip = void 0;
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
-const game_effects_1 = require("../../game/store/effects/game-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class Hoppip extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -16,7 +16,7 @@ class Hoppip extends pokemon_card_1.PokemonCard {
                 name: 'Continuous Spin',
                 cost: [card_types_1.CardType.GRASS],
                 damage: 20,
-                text: 'Flip a coin until you get tails. This attack does 20 damage for each heads. '
+                text: 'Flip a coin until you get tails. This attack does 20 damage for each heads.'
             }];
         this.set = 'EVS';
         this.regulationMark = 'E';
@@ -26,21 +26,30 @@ class Hoppip extends pokemon_card_1.PokemonCard {
         this.fullName = 'Hoppip EVS';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_effects_1.AttackEffect) {
-            const player = effect.player;
+        if (prefabs_1.WAS_ATTACK_USED(effect, 0, this)) {
             let numHeads = 0;
-            return store.prompt(state, [
-                new game_1.CoinFlipPrompt(player.id, game_1.GameMessage.COIN_FLIP)
-            ], result => {
-                if (result === true) {
+            let result = true;
+            while (result) {
+                const generator = flipGenerator(store, state, effect);
+                let flipResult = generator.next().value;
+                if (flipResult[1]) {
                     numHeads++;
-                    return this.reduceEffect(store, state, effect);
                 }
-                effect.damage = numHeads * 20;
-                return state;
-            });
+                else {
+                    result = false;
+                }
+                state = flipResult[0];
+            }
+            effect.damage = numHeads * 20;
         }
         return state;
     }
 }
 exports.Hoppip = Hoppip;
+function* flipGenerator(store, state, effect) {
+    return store.prompt(state, [
+        new game_1.CoinFlipPrompt(effect.player.id, game_1.GameMessage.COIN_FLIP)
+    ], result => {
+        yield [state, result];
+    });
+}

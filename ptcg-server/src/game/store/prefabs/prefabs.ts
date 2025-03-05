@@ -130,6 +130,19 @@ export function THIS_ATTACK_DOES_X_MORE_DAMAGE(effect: AttackEffect, store: Stor
   return state;
 }
 
+export function GET_TOTAL_ENERGY_ATTACHED_TO_PLAYERS_POKEMON(player: Player, store: StoreLike, state: State) {
+  let totalEnergy = 0;
+  player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+    const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player, cardList);
+    store.reduceEffect(state, checkProvidedEnergyEffect);
+    checkProvidedEnergyEffect.energyMap.forEach(energy => {
+      totalEnergy += 1;
+    });
+  });
+  
+  return totalEnergy;
+}
+
 export function DEAL_MORE_DAMAGE_IF_OPPONENT_ACTIVE_HAS_CARD_TAG(effect: AttackEffect, state: State, damage: number, ...cardTags: CardTag[]) {
   const opponent = StateUtils.getOpponent(state, effect.player);
   const opponentActive = opponent.active.getPokemonCard();
@@ -663,6 +676,15 @@ export function BLOCK_EFFECT_IF_MARKER(marker: string, owner: Player | Card | Po
 export function PREVENT_DAMAGE_IF_TARGET_HAS_MARKER(effect: Effect, marker: string, source?: Card) {
   if (effect instanceof PutDamageEffect && HAS_MARKER(marker, effect.target, source))
     effect.preventDefault = true;
+}
+
+export function PREVENT_DAMAGE_IF_SOURCE_HAS_TAG(effect: Effect, tag: string, source: Card) {
+  if (effect instanceof PutDamageEffect && HAS_TAG(tag, source))
+    effect.preventDefault = true;
+}
+
+export function HAS_TAG(tag: string, source: Card): boolean {
+  return source.tags.includes(tag);
 }
 
 export function REMOVE_MARKER_AT_END_OF_TURN(effect: Effect, marker: string, source: Card) {
