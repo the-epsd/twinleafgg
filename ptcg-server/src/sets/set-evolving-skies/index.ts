@@ -70,7 +70,7 @@ export const setEvolvingSkies: Card[] = [
   new GalarianZapdos(),
   new GyaradosV(),
   new GyaradosVMAX(),
-  // new Hoppip(),
+  new Hoppip(),
   new Jumpluff(),
   new LeafeonV(),
   new LeafeonVMAX(),
