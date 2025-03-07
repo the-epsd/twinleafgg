@@ -1,22 +1,31 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
+import { StoreLike, State, PowerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-export declare class TapuKokoex extends PokemonCard {
+export declare class Yanmegaex extends PokemonCard {
     tags: CardTag[];
     regulationMark: string;
     stage: Stage;
+    evovlesFrom: string;
     cardType: CardType;
     hp: number;
     weakness: {
-        type: CardType.FIGHTING;
+        type: CardType.LIGHTNING;
     }[];
-    retreat: never[];
+    resistance: {
+        type: CardType.FIGHTING;
+        value: number;
+    }[];
+    retreat: CardType.COLORLESS[];
+    powers: {
+        name: string;
+        powerType: PowerType;
+        text: string;
+    }[];
     attacks: {
         name: string;
-        cost: (CardType.LIGHTNING | CardType.COLORLESS)[];
+        cost: (CardType.GRASS | CardType.COLORLESS)[];
         damage: number;
-        damageCalculation: string;
         text: string;
     }[];
     set: string;
@@ -24,5 +33,7 @@ export declare class TapuKokoex extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
+    buzzboost: number;
+    readonly BUZZ_BOOST_MARKER = "BUZZ_BOOST_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

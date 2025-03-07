@@ -1,22 +1,22 @@
+import { CardTag, CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-export declare class TapuKokoex extends PokemonCard {
+import { State } from '../../game/store/state/state';
+import { StoreLike } from '../../game/store/store-like';
+export declare class MistysLapras extends PokemonCard {
     tags: CardTag[];
-    regulationMark: string;
     stage: Stage;
+    regulationMark: string;
     cardType: CardType;
     hp: number;
     weakness: {
-        type: CardType.FIGHTING;
+        type: CardType.LIGHTNING;
     }[];
-    retreat: never[];
+    retreat: CardType.COLORLESS[];
     attacks: {
         name: string;
-        cost: (CardType.LIGHTNING | CardType.COLORLESS)[];
+        cost: (CardType.WATER | CardType.COLORLESS)[];
         damage: number;
-        damageCalculation: string;
         text: string;
     }[];
     set: string;

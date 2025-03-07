@@ -2,21 +2,20 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-export declare class TapuKokoex extends PokemonCard {
-    tags: CardTag[];
+export declare class ArvensToedscool extends PokemonCard {
     regulationMark: string;
+    tags: CardTag[];
     stage: Stage;
     cardType: CardType;
     hp: number;
     weakness: {
-        type: CardType.FIGHTING;
+        type: CardType.GRASS;
     }[];
-    retreat: never[];
+    retreat: CardType.COLORLESS[];
     attacks: {
         name: string;
-        cost: (CardType.LIGHTNING | CardType.COLORLESS)[];
+        cost: CardType.COLORLESS[];
         damage: number;
-        damageCalculation: string;
         text: string;
     }[];
     set: string;

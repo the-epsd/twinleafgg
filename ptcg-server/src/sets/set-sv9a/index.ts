@@ -10,7 +10,7 @@ import { EthansTyphlosion } from './ethans-typhlosion';
 import { MistysGyarados } from './mistys-gyarados';
 import { MistysMagikarp } from './mistys-magikarp';
 import { MistysPsyduck } from './mistys-psyduck';
-import { CynthiasRoseradeIR, EthansHoOhexSIR, SacredAshSV9a } from './other-prints';
+import { CynthiasRoseradeIR, EthansHoOhexSIR } from './other-prints';
 import { CynthiasGarchompex } from './cynthias-garchomp-ex';
 import { CynthiasGible } from './cynthias-gible';
 import { CynthiasRoserade } from './cynthias-roserade';
@@ -35,6 +35,23 @@ import {Dwebble} from './dwebble';
 import {Crustle} from './crustle';
 import {MCsHypeUp} from './mcs-hype-up';
 import {MistysStarmie} from './mistys-starmie';
+import {CynthiasFeebas} from './cynthias-feebas';
+import {CynthiasMilotic} from './cynthas-milotic';
+import {MistysLapras} from './mistys-lapras';
+import {Yanma} from './yanma';
+import {Yanmegaex} from './yanmega-ex';
+import {Dondozoex} from './dondozo-ex';
+import {Electabuzz} from './electabuzz';
+import {Electivireex} from './electivire-ex';
+import {SacredAsh} from './sacred-ash';
+import {EthansPinsir} from './ethans-pinsir';
+import {ArvensToedscool} from './arvens-toedscool';
+import {ArvensToedscruel} from './arvens-toedscruel';
+import {ArvensMaschiff} from './arvens-maschiff';
+import {ArvensMabosstiffex} from './arvens-mabosstiff-ex';
+import {ArvensSkwovet} from './arvens-skwovet';
+import {ArvensGreedent} from './arvens-greedent';
+import {ArvensSandwich} from './arvens-sandwich';
 
 export const setSV9a: Card[] = [
 
@@ -53,6 +70,20 @@ export const setSV9a: Card[] = [
   new Dwebble(),
   new Crustle(),
   new MCsHypeUp(),
+  new Yanma(),
+  new Yanmegaex(),
+  new Dondozoex(),
+  new Electabuzz(),
+  new Electivireex(),
+  new SacredAsh(),
+
+  new ArvensToedscool(),
+  new ArvensToedscruel(),
+  new ArvensMaschiff(),
+  new ArvensMabosstiffex(),
+  new ArvensSkwovet(),
+  new ArvensGreedent(),
+  new ArvensSandwich(),
 
   new CynthiasRoseradeIR(),
   new CynthiasGarchompex(),
@@ -62,6 +93,8 @@ export const setSV9a: Card[] = [
   new CynthiasGabite(),
   new CynthiasSpiritomb(),
   new CynthiasPowerWeight(),
+  new CynthiasFeebas(),
+  new CynthiasMilotic(),
 
   new EthansHoOhexSIR(),
   new EthansAdventure(),
@@ -72,13 +105,12 @@ export const setSV9a: Card[] = [
   new EthansSlugma(),
   new EthansMagcargo(),
   new EthansPichu(),
+  new EthansPinsir(),
   
   new MistysPsyduck(),
   new MistysMagikarp(),
   new MistysGyarados(),
   new MistysStaryu(),
   new MistysStarmie(),
-
-  // Reprints
-  new SacredAshSV9a(),
+  new MistysLapras(),
 ];

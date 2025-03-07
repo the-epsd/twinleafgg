@@ -2,27 +2,27 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-export declare class TapuKokoex extends PokemonCard {
-    tags: CardTag[];
-    regulationMark: string;
+export declare class CynthiasFeebas extends PokemonCard {
     stage: Stage;
+    tags: CardTag[];
     cardType: CardType;
     hp: number;
     weakness: {
-        type: CardType.FIGHTING;
+        type: CardType.LIGHTNING;
     }[];
-    retreat: never[];
+    retreat: CardType.COLORLESS[];
     attacks: {
         name: string;
-        cost: (CardType.LIGHTNING | CardType.COLORLESS)[];
+        cost: CardType.COLORLESS[];
         damage: number;
-        damageCalculation: string;
         text: string;
     }[];
+    regulationMark: string;
     set: string;
-    cardImage: string;
     setNumber: string;
+    cardImage: string;
     name: string;
     fullName: string;
+    readonly UNDULATE_MARKER = "UNDULATE_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

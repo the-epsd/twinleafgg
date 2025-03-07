@@ -1,9 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
-import { Effect } from '../../game/store/effects/effect';
-export declare class TapuKokoex extends PokemonCard {
-    tags: CardTag[];
+import { Stage, CardType } from '../../game/store/card/card-types';
+export declare class Electabuzz extends PokemonCard {
     regulationMark: string;
     stage: Stage;
     cardType: CardType;
@@ -11,12 +8,11 @@ export declare class TapuKokoex extends PokemonCard {
     weakness: {
         type: CardType.FIGHTING;
     }[];
-    retreat: never[];
+    retreat: CardType.COLORLESS[];
     attacks: {
         name: string;
         cost: (CardType.LIGHTNING | CardType.COLORLESS)[];
         damage: number;
-        damageCalculation: string;
         text: string;
     }[];
     set: string;
@@ -24,5 +20,4 @@ export declare class TapuKokoex extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
-    reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }
