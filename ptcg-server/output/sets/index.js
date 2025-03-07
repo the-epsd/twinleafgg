@@ -34,6 +34,7 @@ __exportStar(require("./set-diamond-and-pearl"), exports);
 __exportStar(require("./set-great-encounters"), exports);
 __exportStar(require("./set-op9"), exports);
 __exportStar(require("./set-platinum"), exports);
+__exportStar(require("./set-rising-rivals"), exports);
 //HGSS Era
 __exportStar(require("./set-battle-road-promos"), exports);
 __exportStar(require("./set-heartgold-and-soulsilver"), exports);
