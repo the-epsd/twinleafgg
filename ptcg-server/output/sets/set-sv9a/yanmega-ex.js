@@ -15,7 +15,7 @@ class Yanmegaex extends pokemon_card_1.PokemonCard {
         this.tags = [card_types_1.CardTag.POKEMON_ex];
         this.regulationMark = 'I';
         this.stage = card_types_1.Stage.STAGE_1;
-        this.evovlesFrom = 'Yanma';
+        this.evolvesFrom = 'Yanma';
         this.cardType = G;
         this.hp = 280;
         this.weakness = [{ type: L }];
@@ -41,29 +41,26 @@ class Yanmegaex extends pokemon_card_1.PokemonCard {
         this.setNumber = '3';
         this.name = 'Yanmega ex';
         this.fullName = 'Yanmega ex SV9a';
-        this.buzzboost = 0;
+        this.tachyonBits = 0;
         this.BUZZ_BOOST_MARKER = 'BUZZ_BOOST_MARKER';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {
             this.movedToActiveThisTurn = false;
-            this.buzzboost = 0;
+            this.tachyonBits = 0;
         }
         if (effect instanceof game_phase_effects_1.EndTurnEffect) {
-            this.buzzboost = 0;
+            this.tachyonBits = 0;
             this.movedToActiveThisTurn = false;
-            console.log('movedToActiveThisTurn = false');
         }
         if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.BUZZ_BOOST_MARKER, this)) {
-            this.buzzboost = 0;
+            this.tachyonBits = 0;
             effect.player.marker.removeMarker(this.BUZZ_BOOST_MARKER, this);
-            console.log('marker cleared');
         }
         const player = state.players[state.activePlayer];
-        // Buzz Boost
-        if (this.movedToActiveThisTurn == true && player.active.cards[0] == this) {
-            this.buzzboost++;
-            if (this.buzzboost === 1) {
+        if (this.movedToActiveThisTurn == true && player.active.getPokemonCard() == this) {
+            this.tachyonBits++;
+            if (this.tachyonBits === 1) {
                 if (player.marker.hasMarker(this.BUZZ_BOOST_MARKER, this)) {
                     throw new game_1.GameError(game_message_1.GameMessage.BLOCKED_BY_EFFECT);
                 }

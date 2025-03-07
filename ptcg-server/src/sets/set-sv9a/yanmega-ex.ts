@@ -12,7 +12,7 @@ export class Yanmegaex extends PokemonCard {
   public tags = [CardTag.POKEMON_ex];
   public regulationMark = 'I';
   public stage: Stage = Stage.STAGE_1;
-  public evovlesFrom = 'Yanma';
+  public evolvesFrom = 'Yanma';
   public cardType: CardType = G;
   public hp: number = 280;
   public weakness = [{ type: L }];
@@ -41,8 +41,7 @@ export class Yanmegaex extends PokemonCard {
   public setNumber: string = '3';
   public name: string = 'Yanmega ex';
   public fullName: string = 'Yanmega ex SV9a';
-
-  public buzzboost: number = 0;
+  public tachyonBits: number = 0;
 
   public readonly BUZZ_BOOST_MARKER = 'BUZZ_BOOST_MARKER';
 
@@ -50,28 +49,25 @@ export class Yanmegaex extends PokemonCard {
 
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       this.movedToActiveThisTurn = false;
-      this.buzzboost = 0;
+      this.tachyonBits = 0;
     }
 
     if (effect instanceof EndTurnEffect) {
-      this.buzzboost = 0;
+      this.tachyonBits = 0;
       this.movedToActiveThisTurn = false;
-      console.log('movedToActiveThisTurn = false');
     }
 
     if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.BUZZ_BOOST_MARKER, this)) {
-      this.buzzboost = 0;
+      this.tachyonBits = 0;
       effect.player.marker.removeMarker(this.BUZZ_BOOST_MARKER, this);
-      console.log('marker cleared');
     }
 
     const player = state.players[state.activePlayer];
 
-    // Buzz Boost
-    if (this.movedToActiveThisTurn == true && player.active.cards[0] == this) {
-      this.buzzboost++;
+    if (this.movedToActiveThisTurn == true && player.active.getPokemonCard() == this) {
+      this.tachyonBits++;
 
-      if (this.buzzboost === 1) {
+      if (this.tachyonBits === 1) {
         if (player.marker.hasMarker(this.BUZZ_BOOST_MARKER, this)) {
           throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
         }
@@ -93,7 +89,7 @@ export class Yanmegaex extends PokemonCard {
             } catch {
               return state;
             }
-            
+
             state = store.prompt(state, new AttachEnergyPrompt(
               player.id,
               GameMessage.ATTACH_ENERGY_TO_BENCH,
@@ -137,7 +133,6 @@ export class Yanmegaex extends PokemonCard {
         }
       });
     }
-
     return state;
   }
 }

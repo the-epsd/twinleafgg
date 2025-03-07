@@ -6,7 +6,7 @@ export declare class Yanmegaex extends PokemonCard {
     tags: CardTag[];
     regulationMark: string;
     stage: Stage;
-    evovlesFrom: string;
+    evolvesFrom: string;
     cardType: CardType;
     hp: number;
     weakness: {
@@ -33,7 +33,7 @@ export declare class Yanmegaex extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
-    buzzboost: number;
+    tachyonBits: number;
     readonly BUZZ_BOOST_MARKER = "BUZZ_BOOST_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }
