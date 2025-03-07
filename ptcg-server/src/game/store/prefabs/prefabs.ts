@@ -480,6 +480,24 @@ export function IS_ABILITY_BLOCKED(store: StoreLike, state: State, player: Playe
   return false;
 }
 
+/**
+ * Checks if Poké-Bodies are blocked on `card` for `player`.
+ * @returns `true` if the ability is blocked, `false` if the ability is able to go thru.
+ */
+export function IS_POKEBODY_LOCKED(store: StoreLike, state: State, player: Player, card: PokemonCard): boolean {
+  // Try to reduce PowerEffect, to check if something is blocking our Poké-Body
+  try {
+    store.reduceEffect(state, new PowerEffect(player, {
+      name: 'test',
+      powerType: PowerType.POKEBODY,
+      text: ''
+    }, card));
+  } catch {
+    return true;
+  }
+  return false;
+}
+
 export function CAN_EVOLVE_ON_FIRST_TURN_GOING_SECOND(state: State, player: Player, pokemon: PokemonCardList) {
   if (state.turn === 2) {
     player.canEvolve = true;
