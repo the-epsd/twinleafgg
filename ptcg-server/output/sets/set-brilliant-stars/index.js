@@ -10,6 +10,7 @@ const axew_1 = require("./axew");
 const bibarel_1 = require("./bibarel");
 const bidoof_1 = require("./bidoof");
 const cherens_care_1 = require("./cherens-care");
+const cherubi_1 = require("./cherubi");
 const cleansing_gloves_1 = require("./cleansing-gloves");
 const collapsed_stadium_1 = require("./collapsed-stadium");
 const cynthias_ambition_1 = require("./cynthias-ambition");
@@ -59,6 +60,7 @@ exports.setBrilliantStars = [
     new bibarel_1.Bibarel(),
     new bidoof_1.Bidoof(),
     new cherens_care_1.CherensCare(),
+    new cherubi_1.Cherubi(),
     new cleansing_gloves_1.CleansingGloves(),
     new collapsed_stadium_1.CollapsedStadium(),
     new cynthias_ambition_1.CynthiasAmbition(),

@@ -20,6 +20,7 @@ import { SuperScoopUpCES } from './other-prints';
 import { Phanpy } from './phanpy';
 import { RayquazaGX } from './rayquaza-gx';
 import { Sableye } from './sableye';
+import { Sceptile } from './sceptile';
 import { ShrineOfPunishment } from './shrine-of-punishment';
 import { Shuppet } from './shuppet';
 import { SkyPillar } from './sky-pillar';
@@ -49,6 +50,7 @@ export const setCelestialStorm: Card[] = [
   new Phanpy(),
   new RayquazaGX(),
   new Sableye(),
+  new Sceptile(),
   new ShrineOfPunishment(),
   new Shuppet(),
   new SkyPillar(),

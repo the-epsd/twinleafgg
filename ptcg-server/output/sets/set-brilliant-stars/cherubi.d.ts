@@ -1,26 +1,24 @@
-import { State, StoreLike } from '../../game';
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Effect } from '../../game/store/effects/effect';
-export declare class Hoppip extends PokemonCard {
+export declare class Cherubi extends PokemonCard {
     stage: Stage;
+    regulationMark: string;
     cardType: CardType;
     hp: number;
     weakness: {
-        type: CardType.FIRE;
+        type: CardType;
     }[];
+    resistance: never[];
+    retreat: CardType[];
     attacks: {
         name: string;
-        cost: CardType.GRASS[];
+        cost: CardType[];
         damage: number;
-        damageCalculationn: string;
         text: string;
     }[];
-    regulationMark: string;
     set: string;
-    setNumber: string;
     cardImage: string;
+    setNumber: string;
     name: string;
     fullName: string;
-    reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

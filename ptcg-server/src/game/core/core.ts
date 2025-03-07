@@ -85,6 +85,8 @@ export class Core {
       throw new GameError(GameMessage.ERROR_CLIENT_NOT_CONNECTED);
     }
 
+    console.log(`[Matchmaking] Match created between ${client.name} and ${client2.name} (Format: ${gameSettings.format})`);
+
     if (gameSettings.format === Format.RETRO) {
       gameSettings.rules.attackFirstTurn = true;
     }

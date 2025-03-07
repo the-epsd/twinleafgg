@@ -21,6 +21,7 @@ const galarian_moltres_1 = require("./galarian-moltres");
 const galarian_zapdos_1 = require("./galarian_zapdos");
 const gyarados_v_1 = require("./gyarados-v");
 const gyarados_vmax_1 = require("./gyarados-vmax");
+const hoppip_1 = require("./hoppip");
 const jumpluff_1 = require("./jumpluff");
 const leafeon_v_1 = require("./leafeon-v");
 const leafeon_vmax_1 = require("./leafeon-vmax");
@@ -68,7 +69,7 @@ exports.setEvolvingSkies = [
     new galarian_zapdos_1.GalarianZapdos(),
     new gyarados_v_1.GyaradosV(),
     new gyarados_vmax_1.GyaradosVMAX(),
-    // new Hoppip(),
+    new hoppip_1.Hoppip(),
     new jumpluff_1.Jumpluff(),
     new leafeon_v_1.LeafeonV(),
     new leafeon_vmax_1.LeafeonVMAX(),

@@ -4,14 +4,13 @@ import { PowerType, StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 export declare class BloodmoonUrsalunaex extends PokemonCard {
     tags: CardTag[];
-    regulationMark: string;
     stage: Stage;
     cardType: CardType;
     hp: number;
     weakness: {
-        type: CardType;
+        type: CardType.FIGHTING;
     }[];
-    retreat: CardType[];
+    retreat: CardType.COLORLESS[];
     powers: {
         name: string;
         powerType: PowerType;
@@ -19,13 +18,14 @@ export declare class BloodmoonUrsalunaex extends PokemonCard {
     }[];
     attacks: {
         name: string;
-        cost: CardType[];
+        cost: CardType.COLORLESS[];
         damage: number;
         text: string;
     }[];
+    regulationMark: string;
     set: string;
-    cardImage: string;
     setNumber: string;
+    cardImage: string;
     name: string;
     fullName: string;
     readonly ATTACK_USED_MARKER = "ATTACK_USED_MARKER";

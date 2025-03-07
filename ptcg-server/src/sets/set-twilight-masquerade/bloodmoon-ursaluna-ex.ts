@@ -9,18 +9,11 @@ import { CheckAttackCostEffect } from '../../game/store/effects/check-effects';
 export class BloodmoonUrsalunaex extends PokemonCard {
 
   public tags = [CardTag.POKEMON_ex];
-
-  public regulationMark = 'H';
-
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.COLORLESS;
-
+  public cardType: CardType = C;
   public hp: number = 260;
-
-  public weakness = [{ type: CardType.FIGHTING }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: F }];
+  public retreat = [C, C, C];
 
   public powers = [{
     name: 'Seasoned Skill',
@@ -31,20 +24,17 @@ export class BloodmoonUrsalunaex extends PokemonCard {
   public attacks = [
     {
       name: 'Blood Moon',
-      cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
+      cost: [C, C, C, C, C],
       damage: 240,
       text: 'This Pokémon can\'t attack during your next turn.'
     }
   ];
 
+  public regulationMark = 'H';
   public set: string = 'TWM';
-
-  public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '141';
-
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Bloodmoon Ursaluna ex';
-
   public fullName: string = 'Bloodmoon Ursaluna ex TWM';
 
   // public getColorlessReduction(state: State): number {
@@ -71,12 +61,6 @@ export class BloodmoonUrsalunaex extends PokemonCard {
     if (effect instanceof CheckAttackCostEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      // const index = effect.cost.indexOf(CardType.COLORLESS);
-
-      // // No cost to reduce
-      // if (index === -1) {
-      //   return state;
-      // }
 
       try {
         const stub = new PowerEffect(player, {
@@ -92,7 +76,6 @@ export class BloodmoonUrsalunaex extends PokemonCard {
 
       const index = effect.cost.indexOf(CardType.COLORLESS);
 
-      // No cost to reduce
       if (index === -1) {
         return state;
       }
@@ -115,16 +98,11 @@ export class BloodmoonUrsalunaex extends PokemonCard {
           effect.cost.splice(index, 1);
         }
       }
-
-      console.log(effect.cost);
-
       return state;
-
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
 
-      // Check marker
       if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
         throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
       }

@@ -3,7 +3,6 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 export declare class Gimmighoul2 extends PokemonCard {
-    regulationMark: string;
     stage: Stage;
     cardType: CardType;
     hp: number;
@@ -22,9 +21,10 @@ export declare class Gimmighoul2 extends PokemonCard {
         damageCalculation: string;
         text: string;
     }[];
+    regulationMark: string;
     set: string;
-    cardImage: string;
     setNumber: string;
+    cardImage: string;
     name: string;
     fullName: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;

@@ -9,21 +9,15 @@ class MatchmakingSocket {
         this.socket = socket;
         this.core = core;
         this.matchmakingService = matchmaking_service_1.MatchmakingService.getInstance(this.core);
-        // Set up socket listeners
         this.socket.addListener('matchmaking:join', this.joinQueue.bind(this));
         this.socket.addListener('matchmaking:leave', this.leaveQueue.bind(this));
     }
-    // Add these methods to match the Client interface expectations
     onJoinQueue(from, message) {
-        // This method is called when another client joins the queue
-        // You might want to update the UI or handle other logic
         this.socket.emit('matchmaking:playerJoined', {
             player: from.user.name
         });
     }
     onLeaveQueue() {
-        // This method is called when another client leaves the queue
-        // You might want to update the UI or handle other logic
         this.socket.emit('matchmaking:queueUpdate', {
             players: this.matchmakingService.getQueuedPlayers()
         });
@@ -34,6 +28,7 @@ class MatchmakingSocket {
             return;
         }
         try {
+            console.log(`[Matchmaking] Player ${this.client.user.name} joined queue for format: ${params.format}`);
             this.matchmakingService.addToQueue(this.client, this.socket, params.format, params.deck);
             response('ok');
         }
@@ -53,7 +48,6 @@ class MatchmakingSocket {
         }
     }
     dispose() {
-        // Clean up when socket disconnects
         this.matchmakingService.removeFromQueue(this.client);
     }
 }

@@ -7,9 +7,9 @@ export declare class Geodude extends PokemonCard {
     cardType: CardType;
     hp: number;
     weakness: {
-        type: CardType;
+        type: CardType.GRASS;
     }[];
-    retreat: CardType[];
+    retreat: CardType.COLORLESS[];
     attacks: {
         name: string;
         cost: (CardType.FIGHTING | CardType.COLORLESS)[];
@@ -18,8 +18,8 @@ export declare class Geodude extends PokemonCard {
         text: string;
     }[];
     set: string;
-    cardImage: string;
     setNumber: string;
+    cardImage: string;
     name: string;
     fullName: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
