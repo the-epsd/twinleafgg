@@ -175,7 +175,7 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
                 panelClass: ['error-snackbar']
               });
             }
-          }, 15000);
+          }, 300000);
         },
         (error) => {
           console.error('Failed to join queue:', error);

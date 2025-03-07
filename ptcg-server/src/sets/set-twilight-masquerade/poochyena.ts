@@ -7,17 +7,10 @@ import { Effect } from '../../game/store/effects/effect';
 export class Poochyena extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
-
-  public regulationMark = 'H';
-
   public cardType: CardType = CardType.DARK;
-
   public hp: number = 70;
-
   public weakness = [{ type: CardType.GRASS }];
-
   public resistance = [];
-
   public retreat = [CardType.COLORLESS];
 
   public attacks = [
@@ -36,31 +29,30 @@ export class Poochyena extends PokemonCard {
     },
   ];
 
+  public regulationMark = 'H';
   public set: string = 'TWM';
-
-  public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '113';
-
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Poochyena';
-
   public fullName: string = 'Poochyena TWM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
 
-      let damage = 0;
-
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], result => {
-        if (result === true) {
-          damage++;
-          return this.reduceEffect(store, state, effect);
-        }
-        effect.damage = damage;
-      });
+      const flipCoin = (heads: number = 0): State => {
+        return store.prompt(state, [
+          new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
+        ], result => {
+          if (result === true) {
+            return flipCoin(heads + 1);
+          }
+          effect.damage = 10 * heads;
+          return state;
+        });
+      };
+      return flipCoin();
     }
     return state;
   }

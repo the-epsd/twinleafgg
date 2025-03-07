@@ -11,12 +11,11 @@ class BloodmoonUrsalunaex extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.tags = [card_types_1.CardTag.POKEMON_ex];
-        this.regulationMark = 'H';
         this.stage = card_types_1.Stage.BASIC;
-        this.cardType = card_types_1.CardType.COLORLESS;
+        this.cardType = C;
         this.hp = 260;
-        this.weakness = [{ type: card_types_1.CardType.FIGHTING }];
-        this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
+        this.weakness = [{ type: F }];
+        this.retreat = [C, C, C];
         this.powers = [{
                 name: 'Seasoned Skill',
                 powerType: game_1.PowerType.ABILITY,
@@ -25,14 +24,15 @@ class BloodmoonUrsalunaex extends pokemon_card_1.PokemonCard {
         this.attacks = [
             {
                 name: 'Blood Moon',
-                cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
+                cost: [C, C, C, C, C],
                 damage: 240,
                 text: 'This Pokémon can\'t attack during your next turn.'
             }
         ];
+        this.regulationMark = 'H';
         this.set = 'TWM';
-        this.cardImage = 'assets/cardback.png';
         this.setNumber = '141';
+        this.cardImage = 'assets/cardback.png';
         this.name = 'Bloodmoon Ursaluna ex';
         this.fullName = 'Bloodmoon Ursaluna ex TWM';
         // public getColorlessReduction(state: State): number {
@@ -55,11 +55,6 @@ class BloodmoonUrsalunaex extends pokemon_card_1.PokemonCard {
         if (effect instanceof check_effects_1.CheckAttackCostEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            // const index = effect.cost.indexOf(CardType.COLORLESS);
-            // // No cost to reduce
-            // if (index === -1) {
-            //   return state;
-            // }
             try {
                 const stub = new game_effects_1.PowerEffect(player, {
                     name: 'test',
@@ -73,7 +68,6 @@ class BloodmoonUrsalunaex extends pokemon_card_1.PokemonCard {
                 return state;
             }
             const index = effect.cost.indexOf(card_types_1.CardType.COLORLESS);
-            // No cost to reduce
             if (index === -1) {
                 return state;
             }
@@ -92,11 +86,9 @@ class BloodmoonUrsalunaex extends pokemon_card_1.PokemonCard {
                     effect.cost.splice(index, 1);
                 }
             }
-            console.log(effect.cost);
             return state;
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
-            // Check marker
             if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
                 throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);
             }

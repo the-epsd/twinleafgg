@@ -6,10 +6,10 @@ import { AttackEffect } from '../../game/store/effects/game-effects';
 
 export class Geodude extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.FIGHTING;
+  public cardType: CardType = F;
   public hp: number = 50;
-  public weakness = [{ type: CardType.GRASS }];
-  public retreat = [CardType.COLORLESS];
+  public weakness = [{ type: G }];
+  public retreat = [C];
 
   public attacks = [{
     name: 'Stone Barrage',
@@ -20,8 +20,8 @@ export class Geodude extends PokemonCard {
   }];
 
   public set: string = 'FO';
-  public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '47';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Geodude';
   public fullName: string = 'Geodude FO';
 
@@ -30,19 +30,19 @@ export class Geodude extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
 
-      let damage = 0;
-
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], result => {
-        if (result === true) {
-          damage++;
-          return this.reduceEffect(store, state, effect);
-        }
-        effect.damage = damage;
-      });
+      const flipCoin = (heads: number = 0): State => {
+        return store.prompt(state, [
+          new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
+        ], result => {
+          if (result === true) {
+            return flipCoin(heads + 1);
+          }
+          effect.damage = 10 * heads;
+          return state;
+        });
+      };
+      return flipCoin();
     }
-
     return state;
   }
 }

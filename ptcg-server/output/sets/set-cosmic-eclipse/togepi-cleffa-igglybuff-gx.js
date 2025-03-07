@@ -55,16 +55,18 @@ class TogepiCleffaIgglybuffGX extends pokemon_card_1.PokemonCard {
         // Rolling Panic
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
-            let heads = 0;
-            store.prompt(state, [
-                new game_1.CoinFlipPrompt(player.id, game_1.GameMessage.COIN_FLIP)
-            ], result => {
-                if (result === true) {
-                    heads++;
-                    return this.reduceEffect(store, state, effect);
-                }
-            });
-            effect.damage += heads * 30;
+            const flipCoin = (heads = 0) => {
+                return store.prompt(state, [
+                    new game_1.CoinFlipPrompt(player.id, game_1.GameMessage.COIN_FLIP)
+                ], result => {
+                    if (result === true) {
+                        return flipCoin(heads + 1);
+                    }
+                    effect.damage += 30 * heads;
+                    return state;
+                });
+            };
+            return flipCoin();
         }
         // Supreme Puff-GX
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {

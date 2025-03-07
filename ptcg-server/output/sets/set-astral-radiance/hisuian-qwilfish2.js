@@ -9,19 +9,19 @@ class HisuianQwilfish2 extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.BASIC;
-        this.cardType = card_types_1.CardType.DARK;
+        this.cardType = D;
         this.hp = 80;
-        this.weakness = [{ type: card_types_1.CardType.FIGHTING }];
-        this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
+        this.weakness = [{ type: F }];
+        this.retreat = [C, C];
         this.attacks = [{
                 name: 'Spiny Rush',
                 cost: [],
                 damage: 10,
                 text: 'Flip a coin until you get tails. This attack does 10 damage for each heads. '
             }];
+        this.regulationMark = 'F';
         this.set = 'ASR';
         this.setNumber = '89';
-        this.regulationMark = 'F';
         this.cardImage = 'assets/cardback.png';
         this.name = 'Hisuian Qwilfish';
         this.fullName = 'Hisuian Qwilfish2 ASR';
@@ -30,14 +30,18 @@ class HisuianQwilfish2 extends pokemon_card_1.PokemonCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
-            return store.prompt(state, [
-                new game_1.CoinFlipPrompt(player.id, game_1.GameMessage.COIN_FLIP)
-            ], result => {
-                if (result === true) {
-                    effect.damage += 10;
-                    return this.reduceEffect(store, state, effect);
-                }
-            });
+            const flipCoin = (heads = 0) => {
+                return store.prompt(state, [
+                    new game_1.CoinFlipPrompt(player.id, game_1.GameMessage.COIN_FLIP)
+                ], result => {
+                    if (result === true) {
+                        return flipCoin(heads + 1);
+                    }
+                    effect.damage = 10 * heads;
+                    return state;
+                });
+            };
+            return flipCoin();
         }
         return state;
     }

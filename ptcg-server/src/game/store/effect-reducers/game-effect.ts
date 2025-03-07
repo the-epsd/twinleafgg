@@ -122,10 +122,10 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
     yield store.prompt(state, new CoinFlipPrompt(
       player.id,
       GameMessage.FLIP_CONFUSION),
-    result => {
-      flip = result;
-      next();
-    });
+      result => {
+        flip = result;
+        next();
+      });
 
     if (flip === false) {
       store.log(state, GameLog.LOG_HURTS_ITSELF);
@@ -244,7 +244,7 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
       if (card.tags.includes(CardTag.POKEMON_EX) || card.tags.includes(CardTag.POKEMON_V) || card.tags.includes(CardTag.POKEMON_VSTAR) || card.tags.includes(CardTag.POKEMON_ex) || card.tags.includes(CardTag.POKEMON_GX) || card.tags.includes(CardTag.TAG_TEAM)) {
         effect.prizeCount += 1;
       }
-      if (card.tags.includes(CardTag.POKEMON_SV_MEGA)){
+      if (card.tags.includes(CardTag.POKEMON_SV_MEGA)) {
         effect.prizeCount += 1;
       }
 
@@ -264,7 +264,6 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
           const removedCard = effect.target.cards.splice(pokemonIndices[i], 1)[0];
 
           if (removedCard.cards) {
-            // Move attached cards to discard
             MOVE_CARDS(store, state, removedCard.cards, effect.player.discard);
           }
 
@@ -276,12 +275,12 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
         }
 
         // Move cards to lost zone
-        MOVE_CARDS(store, state, lostZoned, effect.player.lostzone);
         effect.target.clearEffects();
+        MOVE_CARDS(store, state, lostZoned, effect.player.lostzone);
       } else {
         // Move cards to discard
-        MOVE_CARDS(store, state, effect.target, effect.player.discard);
         effect.target.clearEffects();
+        MOVE_CARDS(store, state, effect.target, effect.player.discard);
       }
 
       // const stadiumCard = StateUtils.getStadiumCard(state);

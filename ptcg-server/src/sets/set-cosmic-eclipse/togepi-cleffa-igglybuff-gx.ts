@@ -4,7 +4,7 @@ import { StoreLike, State, GameMessage, StateUtils, CoinFlipPrompt, PlayerType, 
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import {CheckProvidedEnergyEffect} from '../../game/store/effects/check-effects';
+import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class TogepiCleffaIgglybuffGX extends PokemonCard {
@@ -57,18 +57,19 @@ export class TogepiCleffaIgglybuffGX extends PokemonCard {
     // Rolling Panic
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
-      let heads = 0;
 
-      store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], result => {
-        if (result === true) {
-          heads++;
-          return this.reduceEffect(store, state, effect);
-        }
-      });
-
-      effect.damage += heads * 30;
+      const flipCoin = (heads: number = 0): State => {
+        return store.prompt(state, [
+          new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
+        ], result => {
+          if (result === true) {
+            return flipCoin(heads + 1);
+          }
+          effect.damage += 30 * heads;
+          return state;
+        });
+      };
+      return flipCoin();
     }
 
     // Supreme Puff-GX
@@ -91,7 +92,7 @@ export class TogepiCleffaIgglybuffGX extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       opponent.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-        if (card !== opponent.active.getPokemonCard()){
+        if (card !== opponent.active.getPokemonCard()) {
           cardList.moveTo(opponent.deck);
         }
       });

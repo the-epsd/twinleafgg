@@ -178,7 +178,6 @@ export function gameReducer(store, state, effect) {
                 for (let i = pokemonIndices.length - 1; i >= 0; i--) {
                     const removedCard = effect.target.cards.splice(pokemonIndices[i], 1)[0];
                     if (removedCard.cards) {
-                        // Move attached cards to discard
                         MOVE_CARDS(store, state, removedCard.cards, effect.player.discard);
                     }
                     if (removedCard.superType === SuperType.POKEMON || removedCard.stage === Stage.BASIC) {
@@ -189,13 +188,13 @@ export function gameReducer(store, state, effect) {
                     }
                 }
                 // Move cards to lost zone
-                MOVE_CARDS(store, state, lostZoned, effect.player.lostzone);
                 effect.target.clearEffects();
+                MOVE_CARDS(store, state, lostZoned, effect.player.lostzone);
             }
             else {
                 // Move cards to discard
-                MOVE_CARDS(store, state, effect.target, effect.player.discard);
                 effect.target.clearEffects();
+                MOVE_CARDS(store, state, effect.target, effect.player.discard);
             }
             // const stadiumCard = StateUtils.getStadiumCard(state);
             // if (card.tags.includes(CardTag.PRISM_STAR) || stadiumCard && stadiumCard.name === 'Lost City') {

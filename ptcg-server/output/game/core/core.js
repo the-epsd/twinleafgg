@@ -68,6 +68,7 @@ class Core {
         if (this.clients.indexOf(client) === -1) {
             throw new game_error_1.GameError(game_message_1.GameMessage.ERROR_CLIENT_NOT_CONNECTED);
         }
+        console.log(`[Matchmaking] Match created between ${client.name} and ${client2.name} (Format: ${gameSettings.format})`);
         if (gameSettings.format === card_types_1.Format.RETRO) {
             gameSettings.rules.attackFirstTurn = true;
         }
