@@ -22,6 +22,7 @@ export * from './set-ex-firered-leafgreen';
 
 //DP Era
 export * from './set-diamond-and-pearl';
+export * from './set-secret-wonders'
 export * from './set-great-encounters';
 export * from './set-op9';
 export * from './set-platinum';

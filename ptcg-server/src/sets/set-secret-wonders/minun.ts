@@ -1,0 +1,139 @@
+import { PokemonCard } from '../../game/store/card/pokemon-card';
+import { Stage, CardType, BoardEffect, SuperType } from '../../game/store/card/card-types';
+import { StoreLike } from '../../game/store/store-like';
+import { GamePhase, State } from '../../game/store/state/state';
+import { Effect } from '../../game/store/effects/effect';
+import { AttachEnergyPrompt, GameError, GameMessage, PlayerType, PowerType, SlotType, StateUtils } from '../../game';
+import { AttackEffect, KnockOutEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+
+export class Minun extends PokemonCard {
+
+  public stage: Stage = Stage.BASIC;
+  public tags = [];
+  public cardType: CardType = CardType.LIGHTNING;
+  public weakness = [{ type: CardType.FIGHTING, value: +10 }];
+  public resistance = [{ type: CardType.METAL, value: -20 }];
+  public hp: number = 60;
+  public retreat = [CardType.COLORLESS];
+
+  public powers = [{
+    name: 'Minus Charge',
+    powerType: PowerType.POKEPOWER,
+    useWhenInPlay: true,
+    text: 'Once during your turn (before your attack), if any Pokémon were Knocked Out during your opponent\’s last turn, you may draw 2 cards. You can\’t use more than 1 Minus Charge Poké-Power each turn. This power can\’t be used if Minun is affected by a Special Condition.'
+  }];
+
+  public attacks = [{
+    name: 'Tag Play',
+    cost: [CardType.LIGHTNING],
+    damage: 20,
+    text: 'If you have Plusle on your Bench, you may move an Energy card attached to Minun to 1 of your Benched Pokémon.'
+  }];
+
+  public set: string = 'SW';
+  public setNumber: string = '32';
+  public cardImage: string = 'assets/cardback.png';
+  public name: string = 'Minun';
+  public fullName: string = 'Minun SW';
+
+  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
+    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+      const player = effect.player;
+
+      if (!player.marker.hasMarker('OPPONENT_KNOCKOUT_MARKER')) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
+      }
+
+      if (player.active.cards[0] === this && player.active.specialConditions.length > 0) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
+      }
+
+      if (player.usedMinusCharge == true) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
+      }
+
+      if (player.deck.cards.length === 0) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
+      }
+
+      player.deck.moveTo(player.hand, 2);
+      player.usedMinusCharge = true;
+
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+        if (cardList.getPokemonCard() === this) {
+          cardList.addBoardEffect(BoardEffect.ABILITY_USED);
+        }
+      });
+    }
+
+    if (effect instanceof KnockOutEffect) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      // Do not activate between turns, or when it's not opponents turn.
+      if (state.phase !== GamePhase.ATTACK || state.players[state.activePlayer] !== opponent) {
+        return state;
+      }
+
+      const cardList = StateUtils.findCardList(state, this);
+      const owner = StateUtils.findOwner(state, cardList);
+      if (owner === player) {
+        effect.player.marker.addMarkerToState('OPPONENT_KNOCKOUT_MARKER');
+      }
+      return state;
+    }
+
+    if (effect instanceof EndTurnEffect) {
+      const player = effect.player;
+      const cardList = StateUtils.findCardList(state, this);
+      const owner = StateUtils.findOwner(state, cardList);
+
+      if (owner === player) {
+        effect.player.marker.removeMarker('OPPONENT_KNOCKOUT_MARKER');
+      }
+      player.usedMinusCharge = false;
+    }
+
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+      const player = effect.player;
+
+      let isPlusleInPlay = false;
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+        if (card.name === 'Plusle') {
+          isPlusleInPlay = true;
+        }
+      });
+
+      if (isPlusleInPlay) {
+        const player = effect.player;
+        const hasBench = player.bench.some(b => b.cards.length > 0);
+
+        if (hasBench === false) {
+          return state;
+        }
+
+        // Then prompt for energy movement
+        return store.prompt(state, new AttachEnergyPrompt(
+          player.id,
+          GameMessage.ATTACH_ENERGY_TO_BENCH,
+          player.active,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.BENCH],
+          { superType: SuperType.ENERGY },
+          { allowCancel: false, min: 0, max: 1 }
+        ), transfers => {
+          transfers = transfers || [];
+          for (const transfer of transfers) {
+            const target = StateUtils.getTarget(state, player, transfer.to);
+            player.active.moveCardTo(transfer.card, target);
+          }
+        });
+      }
+      return state;
+    }
+
+    return state;
+  }
+}
