@@ -25,7 +25,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
   const blocked: number[] = [];
   player.deck.cards.forEach((card, index) => {
-    if (card.tags.includes(CardTag.POKEMON_V) || card.tags.includes(CardTag.POKEMON_VSTAR) || card.tags.includes(CardTag.POKEMON_VMAX)) {
+    if (!card.tags.includes(CardTag.POKEMON_V) && !card.tags.includes(CardTag.POKEMON_VSTAR) && !card.tags.includes(CardTag.POKEMON_VMAX)) {
       blocked.push(index);
     }
   });

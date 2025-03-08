@@ -40,12 +40,21 @@ class Eldegoss extends pokemon_card_1.PokemonCard {
         this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';
     }
     reduceEffect(store, state, effect) {
-        if (prefabs_1.WAS_POWER_USED(effect, 0, this) && !prefabs_1.HAS_MARKER) {
+        // Cotton Lift
+        if (prefabs_1.WAS_POWER_USED(effect, 0, this)) {
             const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            if (prefabs_1.HAS_MARKER(this.COTTON_LIFT_MARKER, this, this)) {
+                throw new game_1.GameError(game_1.GameMessage.POWER_ALREADY_USED);
+            }
+            if (player.deck.cards.length === 0) {
+                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
+            }
             return store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_ENERGY_FROM_DECK, player.deck, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC }, { min: 0, max: 2, allowCancel: true }), (selections) => {
                 if (selections.length === 0) {
                     return prefabs_1.SHUFFLE_DECK(store, state, player);
                 }
+                prefabs_1.SHOW_CARDS_TO_PLAYER(store, state, opponent, selections);
                 prefabs_1.MOVE_CARDS(store, state, player.deck, player.hand, { cards: selections });
                 prefabs_1.SHUFFLE_DECK(store, state, player);
                 prefabs_1.ADD_MARKER(this.COTTON_LIFT_MARKER, this, this);
