@@ -60,7 +60,7 @@ class Armarouge extends pokemon_card_1.PokemonCard {
             });
             const blockedTargets = [];
             player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (list, card, target) => {
-                if (player.active.cards[0] !== card) {
+                if (player.active.getPokemonCard() !== card) {
                     blockedTargets.push(target);
                 }
             });
