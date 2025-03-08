@@ -1,6 +1,5 @@
 import { PokemonCard, Stage, StoreLike, State, CardTag } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { THIS_ATTACK_DOES_X_MORE_DAMAGE } from '../../game/store/prefabs/effect-modifiers';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class EthansTyphlosion extends PokemonCard {
@@ -49,7 +48,7 @@ export class EthansTyphlosion extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const adventureCount = player.discard.cards.filter(c => c.name === 'Ethan\'s Adventure').length;
-      THIS_ATTACK_DOES_X_MORE_DAMAGE(effect, store, state, 60 * adventureCount);
+      effect.damage += 60 * adventureCount;
     }
 
     return state;

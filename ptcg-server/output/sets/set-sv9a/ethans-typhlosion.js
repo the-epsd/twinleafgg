@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.EthansTyphlosion = void 0;
 const game_1 = require("../../game");
-const effect_modifiers_1 = require("../../game/store/prefabs/effect-modifiers");
 const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class EthansTyphlosion extends game_1.PokemonCard {
     constructor() {
@@ -37,7 +36,7 @@ class EthansTyphlosion extends game_1.PokemonCard {
         if (prefabs_1.WAS_ATTACK_USED(effect, 0, this)) {
             const player = effect.player;
             const adventureCount = player.discard.cards.filter(c => c.name === 'Ethan\'s Adventure').length;
-            effect_modifiers_1.THIS_ATTACK_DOES_X_MORE_DAMAGE(effect, store, state, 60 * adventureCount);
+            effect.damage += 60 * adventureCount;
         }
         return state;
     }

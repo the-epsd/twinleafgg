@@ -21,6 +21,7 @@ export class EthansQuilava extends PokemonCard {
   public powers = [{
     name: 'Adventure Bound',
     powerType: PowerType.ABILITY,
+    useWhenInPlay: true,
     text: 'Once during your turn, you may search your deck for a Ethan\'s Adventure, reveal it, and put it into your hand. Then, shuffle your deck.'
   }];
 
