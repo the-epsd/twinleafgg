@@ -53,6 +53,7 @@ const spiral_energy_1 = require("./spiral-energy");
 const tauros_1 = require("./tauros");
 const weedle_1 = require("./weedle");
 const zarude_1 = require("./zarude");
+const brawly_1 = require("./brawly");
 exports.setChillingReign = [
     new agatha_1.Agatha(),
     new avery_1.Avery(),
@@ -106,4 +107,5 @@ exports.setChillingReign = [
     new zarude_1.Zarude(),
     new kecleon_1.Kecleon(),
     new gengar_1.Gengar(),
+    new brawly_1.Brawly()
 ];
