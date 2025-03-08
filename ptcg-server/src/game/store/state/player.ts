@@ -82,6 +82,7 @@ export class Player {
   usedSquawkAndSeizeThisTurn: any;
   usedTurnSkip: any;
   usedTableTurner: any;
+  usedTributeDance: any;
   chainsOfControlUsed: any;
   usedDragonsWish = false;
   pecharuntexIsInPlay = false;
