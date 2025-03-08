@@ -77,7 +77,7 @@ export class Armarouge extends PokemonCard {
 
       const blockedTargets: CardTarget[] = [];
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
-        if (player.active.cards[0] !== card) {
+        if (player.active.getPokemonCard() !== card) {
           blockedTargets.push(target);
         }
       });
