@@ -8,7 +8,7 @@ import { BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class GarchompGiratinaGX extends PokemonCard {
 
-  public tags = [CardTag.TAG_TEAM];
+  public tags = [CardTag.POKEMON_GX, CardTag.TAG_TEAM];
 
   public stage: Stage = Stage.BASIC;
 

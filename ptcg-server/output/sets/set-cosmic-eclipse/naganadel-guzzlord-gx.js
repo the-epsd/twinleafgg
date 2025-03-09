@@ -11,7 +11,7 @@ const game_phase_effects_1 = require("../../game/store/effects/game-phase-effect
 class NaganadelGuzzlordGX extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.tags = [card_types_1.CardTag.TAG_TEAM, card_types_1.CardTag.ULTRA_BEAST];
+        this.tags = [card_types_1.CardTag.POKEMON_GX, card_types_1.CardTag.TAG_TEAM, card_types_1.CardTag.ULTRA_BEAST];
         this.stage = card_types_1.Stage.BASIC;
         this.cardType = N;
         this.hp = 280;

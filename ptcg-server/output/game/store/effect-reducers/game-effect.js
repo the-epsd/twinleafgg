@@ -164,10 +164,10 @@ function gameReducer(store, state, effect) {
             //   effect.prizeCount += 1;
             // }
             // Pokemon ex rule
-            if (card.tags.includes(card_types_1.CardTag.POKEMON_EX) || card.tags.includes(card_types_1.CardTag.POKEMON_V) || card.tags.includes(card_types_1.CardTag.POKEMON_VSTAR) || card.tags.includes(card_types_1.CardTag.POKEMON_ex) || card.tags.includes(card_types_1.CardTag.POKEMON_GX) || card.tags.includes(card_types_1.CardTag.TAG_TEAM)) {
+            if (card.tags.includes(card_types_1.CardTag.POKEMON_EX) || card.tags.includes(card_types_1.CardTag.POKEMON_V) || card.tags.includes(card_types_1.CardTag.POKEMON_VSTAR) || card.tags.includes(card_types_1.CardTag.POKEMON_ex) || card.tags.includes(card_types_1.CardTag.POKEMON_GX)) {
                 effect.prizeCount += 1;
             }
-            if (card.tags.includes(card_types_1.CardTag.POKEMON_SV_MEGA)) {
+            if (card.tags.includes(card_types_1.CardTag.POKEMON_SV_MEGA) || card.tags.includes(card_types_1.CardTag.TAG_TEAM)) {
                 effect.prizeCount += 1;
             }
             if (card.tags.includes(card_types_1.CardTag.POKEMON_VMAX) || card.tags.includes(card_types_1.CardTag.POKEMON_VUNION)) {

@@ -10,7 +10,7 @@ const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class PheromosaBuzzwoleGX extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.tags = [game_1.CardTag.TAG_TEAM, game_1.CardTag.ULTRA_BEAST];
+        this.tags = [game_1.CardTag.POKEMON_GX, game_1.CardTag.TAG_TEAM, game_1.CardTag.ULTRA_BEAST];
         this.stage = game_1.Stage.BASIC;
         this.cardType = G;
         this.hp = 260;

@@ -8,7 +8,7 @@ import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effect
 import { BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class TogepiCleffaIgglybuffGX extends PokemonCard {
-  public tags = [CardTag.TAG_TEAM];
+  public tags = [CardTag.POKEMON_GX, CardTag.TAG_TEAM];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = Y;
   public hp: number = 240;

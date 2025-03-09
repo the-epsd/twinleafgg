@@ -7,7 +7,7 @@ import {CheckProvidedEnergyEffect} from '../../game/store/effects/check-effects'
 
 export class GreninjaZoroarkGX extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.TAG_TEAM];
+  public tags = [CardTag.POKEMON_GX, CardTag.TAG_TEAM];
   public cardType: CardType = D;
   public hp: number = 250;
   public weakness = [{ type: F }];

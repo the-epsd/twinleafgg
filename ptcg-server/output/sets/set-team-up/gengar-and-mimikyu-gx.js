@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.GengarMimikyuGX = void 0;
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
+const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class GengarMimikyuGX extends game_1.PokemonCard {
     constructor() {
@@ -56,6 +57,9 @@ class GengarMimikyuGX extends game_1.PokemonCard {
                     }
                 });
             }
+        }
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.CANNOT_PLAY_CARDS_FROM_HAND_MARKER)) {
+            effect.player.marker.removeMarker(this.CANNOT_PLAY_CARDS_FROM_HAND_MARKER);
         }
         if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.player.marker.hasMarker(this.CANNOT_PLAY_CARDS_FROM_HAND_MARKER)) {
             throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);

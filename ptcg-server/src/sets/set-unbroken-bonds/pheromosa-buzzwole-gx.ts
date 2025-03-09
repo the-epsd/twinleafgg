@@ -8,7 +8,7 @@ import { BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 
 export class PheromosaBuzzwoleGX extends PokemonCard {
-  public tags = [CardTag.TAG_TEAM, CardTag.ULTRA_BEAST];
+  public tags = [CardTag.POKEMON_GX, CardTag.TAG_TEAM, CardTag.ULTRA_BEAST];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = G;
   public hp: number = 260;

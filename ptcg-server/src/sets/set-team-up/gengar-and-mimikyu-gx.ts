@@ -1,6 +1,7 @@
 import { PokemonCard, Stage, CardType, CardTag, StoreLike, State, StateUtils, TrainerCard, EnergyCard, GameError, GameMessage } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
+import {EndTurnEffect} from '../../game/store/effects/game-phase-effects';
 import { AttachEnergyEffect, AttachPokemonToolEffect, PlayItemEffect, PlayPokemonEffect, PlayStadiumEffect, PlaySupporterEffect } from '../../game/store/effects/play-card-effects';
 
 export class GengarMimikyuGX extends PokemonCard {
@@ -61,6 +62,10 @@ export class GengarMimikyuGX extends PokemonCard {
           }
         });
       }
+    }
+
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.CANNOT_PLAY_CARDS_FROM_HAND_MARKER)){
+      effect.player.marker.removeMarker(this.CANNOT_PLAY_CARDS_FROM_HAND_MARKER);
     }
 
     if (effect instanceof PlayPokemonEffect && effect.player.marker.hasMarker(this.CANNOT_PLAY_CARDS_FROM_HAND_MARKER)) {
