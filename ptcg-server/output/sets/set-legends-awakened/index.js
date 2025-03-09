@@ -4,10 +4,8 @@ exports.setLegendsAwakened = void 0;
 const unown_r_1 = require("./unown-r");
 const uxie_1 = require("./uxie");
 const azelf_1 = require("./azelf");
-const azelf_lv_x_1 = require("./azelf-lv-x");
 exports.setLegendsAwakened = [
     new unown_r_1.UnownR(),
     new uxie_1.Uxie(),
     new azelf_1.Azelf(),
-    new azelf_lv_x_1.AzelfLvX()
 ];
