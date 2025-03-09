@@ -36,6 +36,7 @@ export * from './set-l-p-promos';
 export * from './set-triumphant';
 export * from './set-undaunted';
 export * from './set-unleashed';
+export * from './set-call-of-legends';
 
 //BW Era
 export * from './set-black-and-white-promos';

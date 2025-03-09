@@ -46,6 +46,7 @@ cardManager.defineSet(sets.setLPPromos);
 cardManager.defineSet(sets.setTriumphant);
 cardManager.defineSet(sets.setUndaunted);
 cardManager.defineSet(sets.setUnleashed);
+cardManager.defineSet(sets.setCallOfLegends);
 
 cardManager.defineSet(sets.setBlackAndWhitePromos);
 cardManager.defineSet(sets.setBlackAndWhite);

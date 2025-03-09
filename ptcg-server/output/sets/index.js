@@ -42,6 +42,7 @@ __exportStar(require("./set-l-p-promos"), exports);
 __exportStar(require("./set-triumphant"), exports);
 __exportStar(require("./set-undaunted"), exports);
 __exportStar(require("./set-unleashed"), exports);
+__exportStar(require("./set-call-of-legends"), exports);
 //BW Era
 __exportStar(require("./set-black-and-white-promos"), exports);
 __exportStar(require("./set-black-and-white"), exports);
