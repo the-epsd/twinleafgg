@@ -32,6 +32,7 @@ cardManager.defineSet(sets.setEXCrystalGuardians);
 cardManager.defineSet(sets.setEXPowerKeepers);
 cardManager.defineSet(sets.setEXFireRedLeafGreen);
 cardManager.defineSet(sets.setEXDeltaSpecies);
+cardManager.defineSet(sets.setEXLegendMaker);
 
 cardManager.defineSet(sets.setDiamondAndPearl);
 // cardManager.defineSet(sets.setOP9);
