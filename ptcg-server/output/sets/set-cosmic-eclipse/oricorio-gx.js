@@ -47,7 +47,7 @@ class OricorioGX extends pokemon_card_1.PokemonCard {
         //Dance of Tribute
         if (prefabs_1.WAS_POWER_USED(effect, 0, this)) {
             const player = effect.player;
-            if (!player.marker.hasMarker('OPPONENT_KNOCKOUT_MARKER')) {
+            if (!prefabs_1.HAS_MARKER('OPPONENT_KNOCKOUT_MARKER', player, this)) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
             //Once per turn only
@@ -59,11 +59,7 @@ class OricorioGX extends pokemon_card_1.PokemonCard {
             }
             player.deck.moveTo(player.hand, 3);
             player.usedTributeDance = true;
-            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
-                if (cardList.getPokemonCard() === this) {
-                    cardList.addBoardEffect(card_types_1.BoardEffect.ABILITY_USED);
-                }
-            });
+            prefabs_1.ABILITY_USED(player, this);
         }
         if (effect instanceof game_effects_1.KnockOutEffect) {
             const player = effect.player;

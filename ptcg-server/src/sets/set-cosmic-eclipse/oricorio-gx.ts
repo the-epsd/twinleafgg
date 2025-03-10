@@ -1,12 +1,12 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, BoardEffect } from '../../game/store/card/card-types';
+import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { GamePhase, State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { GameError, GameMessage, PlayerType, PowerType, StateUtils } from '../../game';
+import { GameError, GameMessage, PowerType, StateUtils } from '../../game';
 import { KnockOutEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { ADD_MARKER, BLOCK_IF_GX_ATTACK_USED, REMOVE_MARKER, SWITCH_ACTIVE_WITH_BENCHED, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { ABILITY_USED, ADD_MARKER, BLOCK_IF_GX_ATTACK_USED, HAS_MARKER, REMOVE_MARKER, SWITCH_ACTIVE_WITH_BENCHED, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class OricorioGX extends PokemonCard {
 
@@ -50,7 +50,7 @@ export class OricorioGX extends PokemonCard {
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
-      if (!player.marker.hasMarker('OPPONENT_KNOCKOUT_MARKER')) {
+      if (!HAS_MARKER('OPPONENT_KNOCKOUT_MARKER', player, this)) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
@@ -66,11 +66,7 @@ export class OricorioGX extends PokemonCard {
       player.deck.moveTo(player.hand, 3);
       player.usedTributeDance = true;
 
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-        if (cardList.getPokemonCard() === this) {
-          cardList.addBoardEffect(BoardEffect.ABILITY_USED);
-        }
-      });
+      ABILITY_USED(player, this);
     }
 
     if (effect instanceof KnockOutEffect) {
