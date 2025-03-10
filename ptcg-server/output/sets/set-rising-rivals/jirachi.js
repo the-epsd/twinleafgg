@@ -9,6 +9,7 @@ const game_phase_effects_1 = require("../../game/store/effects/game-phase-effect
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class Jirachi extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -48,15 +49,7 @@ class Jirachi extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.KnockOutEffect && effect.target.cards.includes(this) && effect.player.marker.hasMarker(effect.player.DAMAGE_DEALT_MARKER)) {
             // This Pokemon was knocked out
             const player = effect.player;
-            try {
-                const stub = new game_effects_1.PowerEffect(player, {
-                    name: 'test',
-                    powerType: pokemon_types_1.PowerType.POKEPOWER,
-                    text: ''
-                }, this);
-                store.reduceEffect(state, stub);
-            }
-            catch (_a) {
+            if (prefabs_1.IS_POKEPOWER_BLOCKED(store, state, player, this)) {
                 return state;
             }
             return store.prompt(state, new game_1.ConfirmPrompt(effect.player.id, game_1.GameMessage.WANT_TO_USE_ABILITY), wantToUse => {
@@ -67,10 +60,7 @@ class Jirachi extends pokemon_card_1.PokemonCard {
                         if (cards.length > 0) {
                             player.deck.moveCardsTo(cards, player.hand);
                         }
-                        return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), (order) => {
-                            player.deck.applyOrder(order);
-                            return state;
-                        });
+                        prefabs_1.SHUFFLE_DECK(store, state, player);
                     });
                 }
             });
@@ -81,19 +71,19 @@ class Jirachi extends pokemon_card_1.PokemonCard {
                 player.supportersForDetour.cards.push(effect.trainerCard);
             }
         }
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+        if (prefabs_1.WAS_ATTACK_USED(effect, 0, this)) {
             const player = effect.player;
+            if (player.supportersForDetour.cards.length == 0) {
+                return state;
+            }
             return store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_COPY_EFFECT, player.supportersForDetour, { superType: card_types_1.SuperType.TRAINER, trainerType: card_types_1.TrainerType.SUPPORTER }, { allowCancel: false, min: 1, max: 1 }), cards => {
-                if (cards === null || cards.length === 0) {
-                    return;
-                }
                 const trainerCard = cards[0];
                 player.supporterTurn -= 1;
                 const playTrainerEffect = new play_card_effects_1.TrainerEffect(player, trainerCard);
                 store.reduceEffect(state, playTrainerEffect);
             });
         }
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
+        if (prefabs_1.WAS_ATTACK_USED(effect, 1, this)) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             const damage = 20; // Direct damage without weakness

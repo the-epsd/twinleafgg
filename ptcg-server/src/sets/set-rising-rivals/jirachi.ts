@@ -1,12 +1,13 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, TrainerType, SuperType } from '../../game/store/card/card-types';
 import { PowerType } from '../../game/store/card/pokemon-types';
-import { StoreLike, State, ChooseCardsPrompt, GameMessage, TrainerCard, ShuffleDeckPrompt, ConfirmPrompt, StateUtils } from '../../game';
+import { StoreLike, State, ChooseCardsPrompt, GameMessage, TrainerCard, ConfirmPrompt, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { AttackEffect, KnockOutEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { KnockOutEffect } from '../../game/store/effects/game-effects';
 import { PlaySupporterEffect, TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { AfterDamageEffect } from '../../game/store/effects/attack-effects';
+import { IS_POKEPOWER_BLOCKED, SHUFFLE_DECK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Jirachi extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -50,16 +51,10 @@ export class Jirachi extends PokemonCard {
       // This Pokemon was knocked out
       const player = effect.player;
 
-      try {
-        const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.POKEPOWER,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
-      } catch {
+      if (IS_POKEPOWER_BLOCKED(store, state, player, this)) {
         return state;
       }
+
       return store.prompt(state, new ConfirmPrompt(
         effect.player.id,
         GameMessage.WANT_TO_USE_ABILITY,
@@ -77,10 +72,7 @@ export class Jirachi extends PokemonCard {
               if (cards.length > 0) {
                 player.deck.moveCardsTo(cards, player.hand);
               }
-              return store.prompt(state, new ShuffleDeckPrompt(player.id), (order: any[]) => {
-                player.deck.applyOrder(order);
-                return state;
-              });
+              SHUFFLE_DECK(store, state, player);
             });
         }
       })
@@ -93,9 +85,12 @@ export class Jirachi extends PokemonCard {
       }
     }
 
-
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
+
+      if (player.supportersForDetour.cards.length == 0) {
+        return state;
+      }
       
       return store.prompt(state, new ChooseCardsPrompt(
         player,
@@ -104,9 +99,6 @@ export class Jirachi extends PokemonCard {
         { superType: SuperType.TRAINER, trainerType: TrainerType.SUPPORTER },
         { allowCancel: false, min: 1, max: 1 }
       ), cards => {
-        if (cards === null || cards.length === 0) {
-          return;
-        }
         const trainerCard = cards[0] as TrainerCard;
         player.supporterTurn -= 1;
         const playTrainerEffect = new TrainerEffect(player, trainerCard);
@@ -114,7 +106,7 @@ export class Jirachi extends PokemonCard {
       })
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
