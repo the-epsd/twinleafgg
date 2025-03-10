@@ -7,6 +7,7 @@ const state_1 = require("../../game/store/state/state");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class Minun extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -36,9 +37,9 @@ class Minun extends pokemon_card_1.PokemonCard {
         this.fullName = 'Minun SW';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
+        if (prefabs_1.WAS_POWER_USED(effect, 0, this)) {
             const player = effect.player;
-            if (!player.marker.hasMarker('OPPONENT_KNOCKOUT_MARKER')) {
+            if (!prefabs_1.HAS_MARKER('OPPONENT_KNOCKOUT_MARKER', player, this)) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
             if (player.active.cards[0] === this && player.active.specialConditions.length > 0) {
@@ -52,11 +53,7 @@ class Minun extends pokemon_card_1.PokemonCard {
             }
             player.deck.moveTo(player.hand, 2);
             player.usedMinusCharge = true;
-            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
-                if (cardList.getPokemonCard() === this) {
-                    cardList.addBoardEffect(card_types_1.BoardEffect.ABILITY_USED);
-                }
-            });
+            prefabs_1.ABILITY_USED(player, this);
         }
         if (effect instanceof game_effects_1.KnockOutEffect) {
             const player = effect.player;
@@ -68,7 +65,7 @@ class Minun extends pokemon_card_1.PokemonCard {
             const cardList = game_1.StateUtils.findCardList(state, this);
             const owner = game_1.StateUtils.findOwner(state, cardList);
             if (owner === player) {
-                effect.player.marker.addMarkerToState('OPPONENT_KNOCKOUT_MARKER');
+                prefabs_1.ADD_MARKER('OPPONENT_KNOCKOUT_MARKER', player, this);
             }
             return state;
         }
@@ -77,11 +74,11 @@ class Minun extends pokemon_card_1.PokemonCard {
             const cardList = game_1.StateUtils.findCardList(state, this);
             const owner = game_1.StateUtils.findOwner(state, cardList);
             if (owner === player) {
-                effect.player.marker.removeMarker('OPPONENT_KNOCKOUT_MARKER');
+                prefabs_1.REMOVE_MARKER('OPPONENT_KNOCKOUT_MARKER', player, this);
             }
             player.usedMinusCharge = false;
         }
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+        if (prefabs_1.WAS_ATTACK_USED(effect, 0, this)) {
             const player = effect.player;
             let isPlusleInPlay = false;
             player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
