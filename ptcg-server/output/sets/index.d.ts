@@ -15,6 +15,7 @@ export * from './set-ex-crystal-guardians';
 export * from './set-ex-power-keepers';
 export * from './set-ex-firered-leafgreen';
 export * from './set-diamond-and-pearl';
+export * from './set-secret-wonders';
 export * from './set-great-encounters';
 export * from './set-op9';
 export * from './set-platinum';
