@@ -45,7 +45,7 @@ class OricorioGX extends pokemon_card_1.PokemonCard {
     }
     reduceEffect(store, state, effect) {
         //Dance of Tribute
-        if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
+        if (prefabs_1.WAS_POWER_USED(effect, 0, this)) {
             const player = effect.player;
             if (!player.marker.hasMarker('OPPONENT_KNOCKOUT_MARKER')) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
@@ -75,7 +75,7 @@ class OricorioGX extends pokemon_card_1.PokemonCard {
             const cardList = game_1.StateUtils.findCardList(state, this);
             const owner = game_1.StateUtils.findOwner(state, cardList);
             if (owner === player) {
-                effect.player.marker.addMarkerToState('OPPONENT_KNOCKOUT_MARKER');
+                prefabs_1.ADD_MARKER('OPPONENT_KNOCKOUT_MARKER', player, this);
             }
             return state;
         }
@@ -84,26 +84,16 @@ class OricorioGX extends pokemon_card_1.PokemonCard {
             const cardList = game_1.StateUtils.findCardList(state, this);
             const owner = game_1.StateUtils.findOwner(state, cardList);
             if (owner === player) {
-                effect.player.marker.removeMarker('OPPONENT_KNOCKOUT_MARKER');
+                prefabs_1.REMOVE_MARKER('OPPONENT_KNOCKOUT_MARKER', player, this);
             }
             player.usedTributeDance = false;
         }
         //Strafe GX
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
+        if (prefabs_1.WAS_ATTACK_USED(effect, 1, this)) {
             const player = effect.player;
             prefabs_1.BLOCK_IF_GX_ATTACK_USED(player);
             player.usedGX = true;
-            const hasBenched = player.bench.some(b => b.cards.length > 0);
-            if (!hasBenched) {
-                return state;
-            }
-            return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_NEW_ACTIVE_POKEMON, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { allowCancel: true }), selected => {
-                if (!selected || selected.length === 0) {
-                    return state;
-                }
-                const target = selected[0];
-                player.switchPokemon(target);
-            });
+            prefabs_1.SWITCH_ACTIVE_WITH_BENCHED(store, state, player);
         }
         return state;
     }

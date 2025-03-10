@@ -3,10 +3,10 @@ import { Stage, CardType, CardTag, BoardEffect } from '../../game/store/card/car
 import { StoreLike } from '../../game/store/store-like';
 import { GamePhase, State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { ChoosePokemonPrompt, GameError, GameMessage, PlayerType, PowerType, SlotType, StateUtils } from '../../game';
-import { AttackEffect, KnockOutEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { GameError, GameMessage, PlayerType, PowerType, StateUtils } from '../../game';
+import { KnockOutEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { ADD_MARKER, BLOCK_IF_GX_ATTACK_USED, REMOVE_MARKER, SWITCH_ACTIVE_WITH_BENCHED, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class OricorioGX extends PokemonCard {
 
@@ -46,9 +46,8 @@ export class OricorioGX extends PokemonCard {
   public fullName = 'Oricorio GX CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     //Dance of Tribute
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
       if (!player.marker.hasMarker('OPPONENT_KNOCKOUT_MARKER')) {
@@ -86,7 +85,7 @@ export class OricorioGX extends PokemonCard {
       const cardList = StateUtils.findCardList(state, this);
       const owner = StateUtils.findOwner(state, cardList);
       if (owner === player) {
-        effect.player.marker.addMarkerToState('OPPONENT_KNOCKOUT_MARKER');
+        ADD_MARKER('OPPONENT_KNOCKOUT_MARKER', player, this);
       }
       return state;
     }
@@ -97,36 +96,19 @@ export class OricorioGX extends PokemonCard {
       const owner = StateUtils.findOwner(state, cardList);
 
       if (owner === player) {
-        effect.player.marker.removeMarker('OPPONENT_KNOCKOUT_MARKER');
+        REMOVE_MARKER('OPPONENT_KNOCKOUT_MARKER', player, this);
       }
       player.usedTributeDance = false;
     }
 
     //Strafe GX
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
       BLOCK_IF_GX_ATTACK_USED(player);
       player.usedGX = true;
 
-      const hasBenched = player.bench.some(b => b.cards.length > 0);
-      if (!hasBenched) {
-        return state;
-      }
-
-      return store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_NEW_ACTIVE_POKEMON,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.BENCH],
-        { allowCancel: true },
-      ), selected => {
-        if (!selected || selected.length === 0) {
-          return state;
-        }
-        const target = selected[0];
-        player.switchPokemon(target);
-      });
+      SWITCH_ACTIVE_WITH_BENCHED(store, state, player);
     }
 
     return state;
