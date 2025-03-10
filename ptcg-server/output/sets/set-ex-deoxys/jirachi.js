@@ -6,8 +6,6 @@ const card_types_1 = require("../../game/store/card/card-types");
 const pokemon_types_1 = require("../../game/store/card/pokemon-types");
 const game_1 = require("../../game");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
-const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
-const game_effects_1 = require("../../game/store/effects/game-effects");
 const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class Jirachi extends pokemon_card_1.PokemonCard {
     constructor() {
@@ -38,7 +36,7 @@ class Jirachi extends pokemon_card_1.PokemonCard {
         this.WISHING_STAR_MARKER = 'WISHING_STAR_MARKER';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+        if (prefabs_1.WAS_ATTACK_USED(effect, 0, this)) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             const target = opponent.active.getPokemonCard();
@@ -50,18 +48,16 @@ class Jirachi extends pokemon_card_1.PokemonCard {
         }
         if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {
             const player = effect.player;
-            player.marker.removeMarker(this.WISHING_STAR_MARKER, this);
+            prefabs_1.REMOVE_MARKER(this.WISHING_STAR_MARKER, player, this);
             return state;
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.WISHING_STAR_MARKER, this)) {
-            effect.player.marker.removeMarker(this.WISHING_STAR_MARKER, this);
-        }
-        if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
+        prefabs_1.REMOVE_MARKER_AT_END_OF_TURN(effect, this.WISHING_STAR_MARKER, this);
+        if (prefabs_1.WAS_POWER_USED(effect, 0, this)) {
             const player = effect.player;
             if (player.deck.cards.length === 0) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
-            if (player.marker.hasMarker(this.WISHING_STAR_MARKER, this)) {
+            if (prefabs_1.HAS_MARKER(this.WISHING_STAR_MARKER, player, this)) {
                 throw new game_1.GameError(game_1.GameMessage.POWER_ALREADY_USED);
             }
             if (player.active.cards[0] !== this) {
@@ -74,22 +70,15 @@ class Jirachi extends pokemon_card_1.PokemonCard {
             player.deck.moveTo(deckTop, 5);
             const opponent = game_1.StateUtils.getOpponent(state, player);
             return store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_HAND, deckTop, {}, { min: 1, max: 1, allowCancel: false }), selected => {
-                player.marker.addMarker(this.WISHING_STAR_MARKER, this);
+                prefabs_1.ADD_MARKER(this.WISHING_STAR_MARKER, player, this);
                 deckTop.moveCardsTo(selected, player.hand);
                 deckTop.moveTo(player.deck);
-                player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
-                    if (cardList.getPokemonCard() === this) {
-                        cardList.addBoardEffect(card_types_1.BoardEffect.ABILITY_USED);
-                        cardList.addSpecialCondition(card_types_1.SpecialCondition.ASLEEP);
-                    }
-                });
+                prefabs_1.ABILITY_USED(player, this);
                 if (selected.length > 0) {
                     return store.prompt(state, new game_1.ShowCardsPrompt(opponent.id, game_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, selected), () => {
                     });
                 }
-                return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
-                    player.deck.applyOrder(order);
-                });
+                prefabs_1.SHUFFLE_DECK(store, state, player);
             });
         }
         return state;

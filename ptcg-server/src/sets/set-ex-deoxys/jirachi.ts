@@ -1,12 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SpecialCondition, BoardEffect } from '../../game/store/card/card-types';
+import { Stage, CardType } from '../../game/store/card/card-types';
 import { PowerType } from '../../game/store/card/pokemon-types';
-import { StoreLike, State, GameError, GameMessage, StateUtils, CardList, ChooseCardsPrompt, ShowCardsPrompt, ShuffleDeckPrompt, PlayerType } from '../../game';
+import { StoreLike, State, GameError, GameMessage, StateUtils, CardList, ChooseCardsPrompt, ShowCardsPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
-import { IS_POKEBODY_LOCKED } from '../../game/store/prefabs/prefabs';
+import { ABILITY_USED, ADD_MARKER, HAS_MARKER, IS_POKEBODY_LOCKED, REMOVE_MARKER, REMOVE_MARKER_AT_END_OF_TURN, SHUFFLE_DECK, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Jirachi extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -40,7 +38,7 @@ export class Jirachi extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const target = opponent.active.getPokemonCard();
@@ -54,22 +52,20 @@ export class Jirachi extends PokemonCard {
 
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const player = effect.player;
-      player.marker.removeMarker(this.WISHING_STAR_MARKER, this);
+      REMOVE_MARKER(this.WISHING_STAR_MARKER, player, this);
       return state;
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.WISHING_STAR_MARKER, this)) {
-      effect.player.marker.removeMarker(this.WISHING_STAR_MARKER, this);
-    }
+    REMOVE_MARKER_AT_END_OF_TURN(effect, this.WISHING_STAR_MARKER, this);
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
       if (player.deck.cards.length === 0) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      if (player.marker.hasMarker(this.WISHING_STAR_MARKER, this)) {
+      if (HAS_MARKER(this.WISHING_STAR_MARKER, player, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
 
@@ -92,16 +88,11 @@ export class Jirachi extends PokemonCard {
         { },
         { min: 1, max: 1, allowCancel: false }
       ), selected => {
-        player.marker.addMarker(this.WISHING_STAR_MARKER, this);
+        ADD_MARKER(this.WISHING_STAR_MARKER, player, this);
         deckTop.moveCardsTo(selected, player.hand);
         deckTop.moveTo(player.deck);
 
-        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-          if (cardList.getPokemonCard() === this) {
-            cardList.addBoardEffect(BoardEffect.ABILITY_USED);
-            cardList.addSpecialCondition(SpecialCondition.ASLEEP);
-          }
-        });
+        ABILITY_USED(player, this);
 
         if (selected.length > 0) {
           return store.prompt(state, new ShowCardsPrompt(
@@ -111,9 +102,7 @@ export class Jirachi extends PokemonCard {
           ), () => {
           });
         }
-        return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-          player.deck.applyOrder(order);
-        });
+        SHUFFLE_DECK(store, state, player);
       });
     }
     return state;
