@@ -51,6 +51,7 @@ import { SpiralEnergy } from './spiral-energy';
 import { Tauros } from './tauros';
 import { WeedleCRE } from './weedle';
 import { Zarude } from './zarude';
+import { Brawly } from './brawly';
 
 export const setChillingReign: Card[] = [
 
@@ -106,4 +107,5 @@ export const setChillingReign: Card[] = [
   new Zarude(),
   new Kecleon(),
   new Gengar(),
+  new Brawly()
 ];
