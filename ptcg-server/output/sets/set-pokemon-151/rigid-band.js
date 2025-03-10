@@ -4,6 +4,7 @@ exports.RigidBand = void 0;
 const card_types_1 = require("../../game/store/card/card-types");
 const trainer_card_1 = require("../../game/store/card/trainer-card");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
+const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 const state_utils_1 = require("../../game/store/state-utils");
 const state_1 = require("../../game/store/state/state");
 class RigidBand extends trainer_card_1.TrainerCard {
@@ -21,6 +22,14 @@ class RigidBand extends trainer_card_1.TrainerCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof attack_effects_1.PutDamageEffect && effect.target.cards.includes(this)) {
             const sourceCard = effect.target.getPokemonCard();
+            // Try to reduce ToolEffect, to check if something is blocking the tool from working
+            try {
+                const stub = new play_card_effects_1.ToolEffect(effect.player, this);
+                store.reduceEffect(state, stub);
+            }
+            catch (_a) {
+                return state;
+            }
             if ((sourceCard === null || sourceCard === void 0 ? void 0 : sourceCard.stage) !== card_types_1.Stage.STAGE_1) {
                 return state;
             }

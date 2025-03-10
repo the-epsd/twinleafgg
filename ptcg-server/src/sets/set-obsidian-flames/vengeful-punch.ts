@@ -6,6 +6,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { StateUtils } from '../../game';
 import { DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { KnockOutEffect } from '../../game/store/effects/game-effects';
+import {ToolEffect} from '../../game/store/effects/play-card-effects';
 
 export class VengefulPunch extends TrainerCard {
 
@@ -52,6 +53,14 @@ export class VengefulPunch extends TrainerCard {
     if ((effect instanceof DealDamageEffect || effect instanceof PutDamageEffect) &&
       effect.target.tools.includes(this)) {
       const player = StateUtils.getOpponent(state, effect.player);
+
+      // Try to reduce ToolEffect, to check if something is blocking the tool from working
+      try {
+        const stub = new ToolEffect(effect.player, this);
+        store.reduceEffect(state, stub);
+      } catch {
+        return state;
+      }
 
       if (player.active.tools.includes(this)) {
         this.damageDealt = true;

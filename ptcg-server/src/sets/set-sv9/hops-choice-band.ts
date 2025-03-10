@@ -7,6 +7,7 @@ import { StateUtils } from '../../game/store/state-utils';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 
 import { CheckAttackCostEffect } from '../../game/store/effects/check-effects';
+import {ToolEffect} from '../../game/store/effects/play-card-effects';
 
 export class HopsChoiceBand extends TrainerCard {
 
@@ -34,6 +35,14 @@ export class HopsChoiceBand extends TrainerCard {
     if (effect instanceof CheckAttackCostEffect && effect.player.active.cards.includes(this)) {
       const index = effect.cost.indexOf(CardType.COLORLESS);
 
+      // Try to reduce ToolEffect, to check if something is blocking the tool from working
+      try {
+        const stub = new ToolEffect(effect.player, this);
+        store.reduceEffect(state, stub);
+      } catch {
+        return state;
+      }
+
       // No cost to reduce
       if (index === -1) {
         return state;
@@ -51,6 +60,14 @@ export class HopsChoiceBand extends TrainerCard {
     if (effect instanceof DealDamageEffect && effect.source.cards.includes(this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
+
+      // Try to reduce ToolEffect, to check if something is blocking the tool from working
+      try {
+        const stub = new ToolEffect(effect.player, this);
+        store.reduceEffect(state, stub);
+      } catch {
+        return state;
+      }
 
       if (effect.target !== opponent.active)
         return state;

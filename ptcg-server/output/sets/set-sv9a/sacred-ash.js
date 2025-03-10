@@ -45,6 +45,7 @@ class SacredAsh extends trainer_card_1.TrainerCard {
         super(...arguments);
         this.trainerType = card_types_1.TrainerType.ITEM;
         this.set = 'SV9a';
+        this.regulationMark = 'I';
         this.name = 'Sacred Ash';
         this.fullName = 'Sacred Ash SV9a';
         this.cardImage = 'assets/cardback.png';

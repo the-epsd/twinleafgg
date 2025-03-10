@@ -5,6 +5,7 @@ const trainer_card_1 = require("../../game/store/card/trainer-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
+const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class EmergencyJelly extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -21,6 +22,14 @@ class EmergencyJelly extends trainer_card_1.TrainerCard {
         if (effect instanceof attack_effects_1.AfterDamageEffect && effect.target.tools.includes(this)) {
             if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.target.tools.includes(this)) {
                 const targetPokemon = effect.target.getPokemonCard();
+                // Try to reduce ToolEffect, to check if something is blocking the tool from working
+                try {
+                    const stub = new play_card_effects_1.ToolEffect(effect.player, this);
+                    store.reduceEffect(state, stub);
+                }
+                catch (_a) {
+                    return state;
+                }
                 if (targetPokemon && targetPokemon.hp <= 30) {
                     const healTargetEffect = new attack_effects_1.HealTargetEffect(effect, 30);
                     healTargetEffect.target = targetPokemon;

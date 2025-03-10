@@ -4,6 +4,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckRetreatCostEffect } from '../../game/store/effects/check-effects';
+import {ToolEffect} from '../../game/store/effects/play-card-effects';
 
 
 export class AirBalloon extends TrainerCard {
@@ -27,6 +28,14 @@ export class AirBalloon extends TrainerCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof CheckRetreatCostEffect && effect.player.active.tools.includes(this)) {
       const index = effect.cost.indexOf(CardType.COLORLESS);
+
+      // Try to reduce ToolEffect, to check if something is blocking the tool from working
+      try {
+        const stub = new ToolEffect(effect.player, this);
+        store.reduceEffect(state, stub);
+      } catch {
+        return state;
+      }
 
       if (index !== -1) {
         effect.cost.splice(index, 2);

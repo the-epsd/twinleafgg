@@ -6,6 +6,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { AfterDamageEffect } from '../../game/store/effects/attack-effects';
 import { StateUtils } from '../../game/store/state-utils';
 import { AttachEnergyPrompt, GameMessage, PlayerType, SlotType } from '../../game';
+import {ToolEffect} from '../../game/store/effects/play-card-effects';
 
 
 export class HandyFan extends TrainerCard {
@@ -36,7 +37,13 @@ export class HandyFan extends TrainerCard {
         return state;
       }
 
-
+      // Try to reduce ToolEffect, to check if something is blocking the tool from working
+      try {
+        const stub = new ToolEffect(effect.player, this);
+        store.reduceEffect(state, stub);
+      } catch {
+        return state;
+      }
 
       if (state.phase === GamePhase.ATTACK) {
         const player = effect.player;

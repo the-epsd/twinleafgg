@@ -4,6 +4,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckRetreatCostEffect } from '../../game/store/effects/check-effects';
+import {ToolEffect} from '../../game/store/effects/play-card-effects';
 
 
 export class EmergencyBoard extends TrainerCard {
@@ -28,6 +29,14 @@ export class EmergencyBoard extends TrainerCard {
     if (effect instanceof CheckRetreatCostEffect && effect.player.active.tools.includes(this)) {
       const player = effect.player;
       const pokemonCard = player.active.getPokemonCard();
+
+      // Try to reduce ToolEffect, to check if something is blocking the tool from working
+      try {
+        const stub = new ToolEffect(effect.player, this);
+        store.reduceEffect(state, stub);
+      } catch {
+        return state;
+      }
 
       if (pokemonCard) {
         const remainingHp = pokemonCard.hp - player.active.damage;

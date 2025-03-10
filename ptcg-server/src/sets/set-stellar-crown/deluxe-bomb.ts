@@ -5,6 +5,7 @@ import { State, GamePhase } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { AfterDamageEffect } from '../../game/store/effects/attack-effects';
 import { StateUtils } from '../../game/store/state-utils';
+import {ToolEffect} from '../../game/store/effects/play-card-effects';
 
 
 export class DeluxeBomb extends TrainerCard {
@@ -24,6 +25,14 @@ export class DeluxeBomb extends TrainerCard {
     if (effect instanceof AfterDamageEffect && effect.target.tools.includes(this)) {
       const player = effect.player;
       const targetPlayer = StateUtils.findOwner(state, effect.target);
+
+      // Try to reduce ToolEffect, to check if something is blocking the tool from working
+      try {
+        const stub = new ToolEffect(effect.player, this);
+        store.reduceEffect(state, stub);
+      } catch {
+        return state;
+      }
 
       if (effect.damage <= 0 || player === targetPlayer || targetPlayer.active !== effect.target) {
         return state;

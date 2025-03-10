@@ -4,6 +4,7 @@ exports.CounterGain = void 0;
 const card_types_1 = require("../../game/store/card/card-types");
 const trainer_card_1 = require("../../game/store/card/trainer-card");
 const check_effects_1 = require("../../game/store/effects/check-effects");
+const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 const state_utils_1 = require("../../game/store/state-utils");
 class CounterGain extends trainer_card_1.TrainerCard {
     constructor() {
@@ -21,6 +22,14 @@ class CounterGain extends trainer_card_1.TrainerCard {
             const player = effect.player;
             const opponent = state_utils_1.StateUtils.getOpponent(state, player);
             const index = effect.cost.indexOf(card_types_1.CardType.COLORLESS);
+            // Try to reduce ToolEffect, to check if something is blocking the tool from working
+            try {
+                const stub = new play_card_effects_1.ToolEffect(effect.player, this);
+                store.reduceEffect(state, stub);
+            }
+            catch (_a) {
+                return state;
+            }
             // No cost to reduce
             if (index === -1) {
                 return state;

@@ -5,6 +5,7 @@ const trainer_card_1 = require("../../game/store/card/trainer-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const state_utils_1 = require("../../game/store/state-utils");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
+const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class ChoiceBand extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -20,6 +21,14 @@ class ChoiceBand extends trainer_card_1.TrainerCard {
         if (effect instanceof attack_effects_1.DealDamageEffect && effect.source.cards.includes(this)) {
             const opponent = state_utils_1.StateUtils.getOpponent(state, effect.player);
             const defending = opponent.active.getPokemonCard();
+            // Try to reduce ToolEffect, to check if something is blocking the tool from working
+            try {
+                const stub = new play_card_effects_1.ToolEffect(effect.player, this);
+                store.reduceEffect(state, stub);
+            }
+            catch (_a) {
+                return state;
+            }
             if (effect.damage > 0 && effect.target === opponent.active && defending
                 && (defending.tags.includes(card_types_1.CardTag.POKEMON_GX) || defending.tags.includes(card_types_1.CardTag.POKEMON_EX))) {
                 effect.damage += 30;

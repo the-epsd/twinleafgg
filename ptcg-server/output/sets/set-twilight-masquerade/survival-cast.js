@@ -7,6 +7,7 @@ const game_1 = require("../../game");
 const check_effects_1 = require("../../game/store/effects/check-effects");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const prefabs_1 = require("../../game/store/prefabs/prefabs");
+const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 // interface PokemonItem {
 //   playerNum: number;
 //   cardList: PokemonCardList;
@@ -30,6 +31,14 @@ class SurvivalCast extends trainer_card_1.TrainerCard {
             const player = game_1.StateUtils.findOwner(state, effect.target);
             const checkHpEffect = new check_effects_1.CheckHpEffect(player, effect.target);
             store.reduceEffect(state, checkHpEffect);
+            // Try to reduce ToolEffect, to check if something is blocking the tool from working
+            try {
+                const stub = new play_card_effects_1.ToolEffect(effect.player, this);
+                store.reduceEffect(state, stub);
+            }
+            catch (_a) {
+                return state;
+            }
             if (effect.target.damage === 0 && effect.damage >= checkHpEffect.hp) {
                 effect.preventDefault = true;
                 effect.target.damage = checkHpEffect.hp - 10;

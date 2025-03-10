@@ -2,6 +2,7 @@ import { Stage, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
+import {ToolEffect} from '../../game/store/effects/play-card-effects';
 
 import { StateUtils } from '../../game/store/state-utils';
 import { GamePhase, State } from '../../game/store/state/state';
@@ -28,6 +29,14 @@ export class RigidBand extends TrainerCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {
       const sourceCard = effect.target.getPokemonCard();
+
+      // Try to reduce ToolEffect, to check if something is blocking the tool from working
+      try {
+        const stub = new ToolEffect(effect.player, this);
+        store.reduceEffect(state, stub);
+      } catch {
+        return state;
+      }
 
       if (sourceCard?.stage !== Stage.STAGE_1) {
         return state;

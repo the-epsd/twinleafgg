@@ -7,6 +7,7 @@ import { AfterDamageEffect, HealTargetEffect } from '../../game/store/effects/at
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { PokemonCard, PokemonCardList } from '../../game';
+import {ToolEffect} from '../../game/store/effects/play-card-effects';
 
 
 export class EmergencyJelly extends TrainerCard {
@@ -33,6 +34,14 @@ export class EmergencyJelly extends TrainerCard {
 
       if (effect instanceof EndTurnEffect && effect.target.tools.includes(this)) {
         const targetPokemon = effect.target.getPokemonCard();
+
+        // Try to reduce ToolEffect, to check if something is blocking the tool from working
+        try {
+          const stub = new ToolEffect(effect.player, this);
+          store.reduceEffect(state, stub);
+        } catch {
+          return state;
+        }
 
         if (targetPokemon && (targetPokemon as PokemonCard).hp <= 30) {
           const healTargetEffect = new HealTargetEffect(effect as unknown as AttackEffect, 30);
