@@ -45,6 +45,7 @@ import { NaganadelGuzzlordGX } from './naganadel-guzzlord-gx';
 import { Woobat } from './woobat';
 import { Swoobat } from './swoobat';
 import { Mimikyu } from './mimikyu';
+import { OricorioGX } from './oricorio-gx';
 
 
 export const setCosmicEclipse: Card[] = [
@@ -94,4 +95,5 @@ export const setCosmicEclipse: Card[] = [
   new Woobat(),
   new Swoobat(),
   new Mimikyu(),
+  new OricorioGX()
 ];
