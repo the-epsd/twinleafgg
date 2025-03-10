@@ -5,7 +5,7 @@ const game_1 = require("../../game");
 const game_message_1 = require("../../game/game-message");
 const card_types_1 = require("../../game/store/card/card-types");
 const trainer_card_1 = require("../../game/store/card/trainer-card");
-const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
+const trainer_prefabs_1 = require("../../game/store/prefabs/trainer-prefabs");
 const choose_cards_prompt_1 = require("../../game/store/prompts/choose-cards-prompt");
 function* useKeepCalling(next, store, state, self, effect) {
     const player = effect.player;
@@ -49,7 +49,7 @@ class Brawly extends trainer_card_1.TrainerCard {
         this.text = 'Search your deck for up to 3 Basic Rapid Strike Pokémon and put them onto your Bench. Then, shuffle your deck.';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
+        if (trainer_prefabs_1.WAS_TRAINER_USED(effect, this)) {
             const generator = useKeepCalling(() => generator.next(), store, state, this, effect);
             return generator.next().value;
         }

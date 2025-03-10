@@ -4,6 +4,7 @@ import { CardTag, Stage, SuperType, TrainerType } from '../../game/store/card/ca
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { WAS_TRAINER_USED } from '../../game/store/prefabs/trainer-prefabs';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
@@ -64,7 +65,7 @@ export class Brawly extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
+    if (WAS_TRAINER_USED(effect, this)) {
       const generator = useKeepCalling(() => generator.next(), store, state, this, effect);
       return generator.next().value;
     }
