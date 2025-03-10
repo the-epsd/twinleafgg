@@ -6,7 +6,6 @@ const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_message_1 = require("../../game/game-message");
-const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class Pidgeotex extends pokemon_card_1.PokemonCard {
@@ -45,10 +44,6 @@ class Pidgeotex extends pokemon_card_1.PokemonCard {
         this.QUICK_SEARCH_MARKER = 'QUICK_SEARCH_MARKER';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {
-            const player = effect.player;
-            player.marker.removeMarker(this.QUICK_SEARCH_MARKER, this);
-        }
         if (effect instanceof game_phase_effects_1.EndTurnEffect) {
             const player = effect.player;
             player.marker.removeMarker(this.QUICK_SEARCH_MARKER, this);

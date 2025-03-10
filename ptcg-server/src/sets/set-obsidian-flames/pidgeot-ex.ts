@@ -4,7 +4,6 @@ import { StoreLike, State, StateUtils, ConfirmPrompt, PowerType, ChooseCardsProm
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { GameMessage } from '../../game/game-message';
-import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { DISCARD_A_STADIUM_CARD_IN_PLAY } from '../../game/store/prefabs/prefabs';
 
@@ -61,11 +60,6 @@ export class Pidgeotex extends PokemonCard {
   public readonly QUICK_SEARCH_MARKER = 'QUICK_SEARCH_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
-      const player = effect.player;
-      player.marker.removeMarker(this.QUICK_SEARCH_MARKER, this);
-    }
-
     if (effect instanceof EndTurnEffect) {
       const player = effect.player;
       player.marker.removeMarker(this.QUICK_SEARCH_MARKER, this);
