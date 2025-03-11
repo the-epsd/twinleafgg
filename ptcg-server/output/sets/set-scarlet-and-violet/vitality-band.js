@@ -5,7 +5,7 @@ const trainer_card_1 = require("../../game/store/card/trainer-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const state_utils_1 = require("../../game/store/state-utils");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
-const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class VitalityBand extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -22,12 +22,7 @@ class VitalityBand extends trainer_card_1.TrainerCard {
         if (effect instanceof attack_effects_1.DealDamageEffect && effect.source.cards.includes(this)) {
             const player = effect.player;
             const opponent = state_utils_1.StateUtils.getOpponent(state, effect.player);
-            // Try to reduce ToolEffect, to check if something is blocking the tool from working
-            try {
-                const stub = new play_card_effects_1.ToolEffect(effect.player, this);
-                store.reduceEffect(state, stub);
-            }
-            catch (_a) {
+            if (prefabs_1.IS_TOOL_BLOCKED(store, state, effect.player, this)) {
                 return state;
             }
             if (effect.target !== player.active && effect.target !== opponent.active) {

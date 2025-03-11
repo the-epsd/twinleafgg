@@ -4,7 +4,7 @@ exports.LilliesPearl = void 0;
 const trainer_card_1 = require("../../game/store/card/trainer-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const game_effects_1 = require("../../game/store/effects/game-effects");
-const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class LilliesPearl extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -20,12 +20,7 @@ class LilliesPearl extends trainer_card_1.TrainerCard {
     // public damageDealt = false;
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.KnockOutEffect && effect.target.cards.includes(this) && effect.player.marker.hasMarker(effect.player.DAMAGE_DEALT_MARKER)) {
-            // Try to reduce ToolEffect, to check if something is blocking the tool from working
-            try {
-                const stub = new play_card_effects_1.ToolEffect(effect.player, this);
-                store.reduceEffect(state, stub);
-            }
-            catch (_a) {
+            if (prefabs_1.IS_TOOL_BLOCKED(store, state, effect.player, this)) {
                 return state;
             }
             if (effect.target.isLillies()) {

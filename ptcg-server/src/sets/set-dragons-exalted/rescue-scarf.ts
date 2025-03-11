@@ -9,6 +9,7 @@ import { Card } from '../../game/store/card/card';
 
 import { StateUtils } from '../../game';
 import { DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
+import {IS_TOOL_BLOCKED} from '../../game/store/prefabs/prefabs';
 
 export class RescueScarf extends TrainerCard {
 
@@ -42,6 +43,8 @@ export class RescueScarf extends TrainerCard {
     if ((effect instanceof DealDamageEffect || effect instanceof PutDamageEffect) &&
       effect.target.tools.includes(this)) {
       const player = StateUtils.getOpponent(state, effect.player);
+
+      if (IS_TOOL_BLOCKED(store, state, effect.player, this)){ return state; }
 
       if (player.active.tools.includes(this)) {
         this.damageDealt = true;

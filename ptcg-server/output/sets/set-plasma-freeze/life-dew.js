@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.LifeDew = void 0;
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class LifeDew extends game_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -17,6 +18,9 @@ class LifeDew extends game_1.TrainerCard {
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.KnockOutEffect && effect.target.cards.includes(this)) {
+            if (prefabs_1.IS_TOOL_BLOCKED(store, state, effect.player, this)) {
+                return state;
+            }
             effect.prizeCount -= 1;
         }
         return state;

@@ -7,6 +7,7 @@ import { DealDamageEffect, PutDamageEffect } from '../../game/store/effects/atta
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, KnockOutEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import {IS_TOOL_BLOCKED} from '../../game/store/prefabs/prefabs';
 
 import { StateUtils } from '../../game/store/state-utils';
 import { State } from '../../game/store/state/state';
@@ -50,6 +51,8 @@ export class SpellTag extends TrainerCard {
       const cardList = StateUtils.findCardList(state, this);
       const owner = StateUtils.findOwner(state, cardList);
 
+      if (IS_TOOL_BLOCKED(store, state, effect.player, this)){ return state; }
+
       if (owner === effect.player) {
         this.damageDealt = false;
       }
@@ -61,7 +64,7 @@ export class SpellTag extends TrainerCard {
 
       // const target = effect.target;
 
-
+      if (IS_TOOL_BLOCKED(store, state, effect.player, this)){ return state; }
 
       if (this.damageDealt) {
 

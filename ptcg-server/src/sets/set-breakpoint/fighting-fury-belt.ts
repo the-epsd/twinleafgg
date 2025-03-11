@@ -3,6 +3,7 @@ import { TrainerCard } from '../../game/store/card/trainer-card';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { CheckHpEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
+import {IS_TOOL_BLOCKED} from '../../game/store/prefabs/prefabs';
 
 import { StateUtils } from '../../game/store/state-utils';
 import { State } from '../../game/store/state/state';
@@ -30,6 +31,8 @@ export class FightingFuryBelt extends TrainerCard {
     if (effect instanceof PutDamageEffect && effect.source.cards.includes(this)) {
       const opponent = StateUtils.getOpponent(state, effect.player);
 
+      if (IS_TOOL_BLOCKED(store, state, effect.player, this)){ return state; }
+
       if (effect.damage > 0 && effect.target === opponent.active) {
         effect.damage += 10;
       }
@@ -37,6 +40,8 @@ export class FightingFuryBelt extends TrainerCard {
 
     if (effect instanceof CheckHpEffect && effect.target.cards.includes(this)) {
       const card = effect.target.getPokemonCard();
+
+      if (IS_TOOL_BLOCKED(store, state, effect.player, this)){ return state; }
 
       if (card === undefined) {
         return state;

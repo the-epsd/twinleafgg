@@ -4,7 +4,7 @@ import { TrainerCard } from '../../game/store/card/trainer-card';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { CheckHpEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { REMOVE_TOOL } from '../../game/store/prefabs/prefabs';
+import { IS_TOOL_BLOCKED, REMOVE_TOOL } from '../../game/store/prefabs/prefabs';
 
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
@@ -32,6 +32,9 @@ export class FocusSash extends TrainerCard {
 
     if (effect instanceof PutDamageEffect && effect.target.tools.includes(this) && effect.target.damage == 0) {
       const player = StateUtils.findOwner(state, effect.target);
+
+      if (IS_TOOL_BLOCKED(store, state, effect.player, this)){ return state; }
+
       const checkHpEffect = new CheckHpEffect(player, effect.target);
       store.reduceEffect(state, checkHpEffect);
 

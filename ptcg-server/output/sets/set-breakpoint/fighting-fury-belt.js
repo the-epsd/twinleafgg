@@ -5,6 +5,7 @@ const card_types_1 = require("../../game/store/card/card-types");
 const trainer_card_1 = require("../../game/store/card/trainer-card");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const check_effects_1 = require("../../game/store/effects/check-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 const state_utils_1 = require("../../game/store/state-utils");
 class FightingFuryBelt extends trainer_card_1.TrainerCard {
     constructor() {
@@ -20,12 +21,18 @@ class FightingFuryBelt extends trainer_card_1.TrainerCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof attack_effects_1.PutDamageEffect && effect.source.cards.includes(this)) {
             const opponent = state_utils_1.StateUtils.getOpponent(state, effect.player);
+            if (prefabs_1.IS_TOOL_BLOCKED(store, state, effect.player, this)) {
+                return state;
+            }
             if (effect.damage > 0 && effect.target === opponent.active) {
                 effect.damage += 10;
             }
         }
         if (effect instanceof check_effects_1.CheckHpEffect && effect.target.cards.includes(this)) {
             const card = effect.target.getPokemonCard();
+            if (prefabs_1.IS_TOOL_BLOCKED(store, state, effect.player, this)) {
+                return state;
+            }
             if (card === undefined) {
                 return state;
             }

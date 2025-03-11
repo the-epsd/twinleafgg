@@ -6,6 +6,7 @@ const card_types_1 = require("../../game/store/card/card-types");
 const state_1 = require("../../game/store/state/state");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const state_utils_1 = require("../../game/store/state-utils");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class RockGuard extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -25,6 +26,9 @@ class RockGuard extends trainer_card_1.TrainerCard {
             const player = effect.player;
             const targetPlayer = state_utils_1.StateUtils.findOwner(state, effect.target);
             if (effect.damage <= 0 || player === targetPlayer || targetPlayer.active !== effect.target) {
+                return state;
+            }
+            if (prefabs_1.IS_TOOL_BLOCKED(store, state, effect.player, this)) {
                 return state;
             }
             if (state.phase === state_1.GamePhase.ATTACK) {

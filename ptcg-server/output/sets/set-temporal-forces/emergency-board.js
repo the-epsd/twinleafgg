@@ -4,7 +4,7 @@ exports.EmergencyBoard = void 0;
 const trainer_card_1 = require("../../game/store/card/trainer-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const check_effects_1 = require("../../game/store/effects/check-effects");
-const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class EmergencyBoard extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -21,12 +21,7 @@ class EmergencyBoard extends trainer_card_1.TrainerCard {
         if (effect instanceof check_effects_1.CheckRetreatCostEffect && effect.player.active.tools.includes(this)) {
             const player = effect.player;
             const pokemonCard = player.active.getPokemonCard();
-            // Try to reduce ToolEffect, to check if something is blocking the tool from working
-            try {
-                const stub = new play_card_effects_1.ToolEffect(effect.player, this);
-                store.reduceEffect(state, stub);
-            }
-            catch (_a) {
+            if (prefabs_1.IS_TOOL_BLOCKED(store, state, effect.player, this)) {
                 return state;
             }
             if (pokemonCard) {

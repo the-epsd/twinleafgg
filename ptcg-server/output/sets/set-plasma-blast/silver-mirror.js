@@ -4,6 +4,7 @@ exports.SilverMirror = void 0;
 const trainer_card_1 = require("../../game/store/card/trainer-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class SilverMirror extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -20,6 +21,9 @@ class SilverMirror extends trainer_card_1.TrainerCard {
         if (effect instanceof attack_effects_1.AbstractAttackEffect && effect.target.cards.includes(this)) {
             const targetCard = effect.target.getPokemonCard();
             const sourceCard = effect.source.getPokemonCard();
+            if (prefabs_1.IS_TOOL_BLOCKED(store, state, effect.player, this)) {
+                return state;
+            }
             if (targetCard && !targetCard.tags.includes(card_types_1.CardTag.POKEMON_EX) && sourceCard && sourceCard.tags.includes(card_types_1.CardTag.TEAM_PLASMA)) {
                 effect.preventDefault = true;
             }

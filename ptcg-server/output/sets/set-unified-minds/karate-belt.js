@@ -4,6 +4,7 @@ exports.KarateBelt = void 0;
 const card_types_1 = require("../../game/store/card/card-types");
 const trainer_card_1 = require("../../game/store/card/trainer-card");
 const check_effects_1 = require("../../game/store/effects/check-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 const state_utils_1 = require("../../game/store/state-utils");
 class KarateBelt extends trainer_card_1.TrainerCard {
     constructor() {
@@ -21,6 +22,9 @@ class KarateBelt extends trainer_card_1.TrainerCard {
             const player = effect.player;
             const opponent = state_utils_1.StateUtils.getOpponent(state, player);
             const index = effect.cost.indexOf(card_types_1.CardType.FIGHTING);
+            if (prefabs_1.IS_TOOL_BLOCKED(store, state, effect.player, this)) {
+                return state;
+            }
             // No cost to reduce
             if (index === -1) {
                 return state;

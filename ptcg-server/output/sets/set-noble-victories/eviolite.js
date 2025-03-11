@@ -4,7 +4,7 @@ exports.Eviolite = void 0;
 const trainer_card_1 = require("../../game/store/card/trainer-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
-const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class Eviolite extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -21,11 +21,7 @@ class Eviolite extends trainer_card_1.TrainerCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof attack_effects_1.PutDamageEffect && effect.target.cards.includes(this)) {
             // Try to reduce ToolEffect, to check if something is blocking the tool from working
-            try {
-                const stub = new play_card_effects_1.ToolEffect(effect.player, this);
-                store.reduceEffect(state, stub);
-            }
-            catch (_a) {
+            if (prefabs_1.IS_TOOL_BLOCKED(store, state, effect.player, this)) {
                 return state;
             }
             if (effect.target.tools.includes(this) && effect.target.isStage(card_types_1.Stage.BASIC)) {

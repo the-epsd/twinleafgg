@@ -40,7 +40,7 @@ class Leafeonex extends pokemon_card_1.PokemonCard {
         this.fullName = 'Leafeon ex PRE';
     }
     reduceEffect(store, state, effect) {
-        // Psybeam
+        // Leaf Typhoon
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const opponent = state_utils_1.StateUtils.getOpponent(state, player);
@@ -56,10 +56,13 @@ class Leafeonex extends pokemon_card_1.PokemonCard {
             });
             effect.damage = energies * 60;
         }
-        // Psychic
+        // Moss Agate
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
             player.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList, card) => {
+                if (cardList === player.active) {
+                    return;
+                }
                 const healTargetEffect = new attack_effects_1.HealTargetEffect(effect, 100);
                 healTargetEffect.target = cardList;
                 state = store.reduceEffect(state, healTargetEffect);

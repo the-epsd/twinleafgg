@@ -5,6 +5,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { GamePhase, State } from '../../game/store/state/state';
 import { StateUtils } from '../../game';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import {IS_TOOL_BLOCKED} from '../../game/store/prefabs/prefabs';
 
 export class FullFaceGuard extends TrainerCard {
 
@@ -30,6 +31,8 @@ export class FullFaceGuard extends TrainerCard {
     // Reduce damage by 20
     if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {
       const sourceCard = effect.source.getPokemonCard();
+
+      if (IS_TOOL_BLOCKED(store, state, effect.player, this)){ return state; }
 
       // It's not an attack
       if (state.phase !== GamePhase.ATTACK) {

@@ -5,7 +5,7 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { StateUtils } from '../../game/store/state-utils';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
-import {ToolEffect} from '../../game/store/effects/play-card-effects';
+import {IS_TOOL_BLOCKED} from '../../game/store/prefabs/prefabs';
 
 
 export class JustifiedGloves extends TrainerCard {
@@ -32,13 +32,7 @@ export class JustifiedGloves extends TrainerCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, effect.player);
 
-      // Try to reduce ToolEffect, to check if something is blocking the tool from working
-      try {
-        const stub = new ToolEffect(effect.player, this);
-        store.reduceEffect(state, stub);
-      } catch {
-        return state;
-      }
+      if (IS_TOOL_BLOCKED(store, state, effect.player, this)){ return state; }
 
       if (effect.target !== player.active && effect.target !== opponent.active) {
         return state;
