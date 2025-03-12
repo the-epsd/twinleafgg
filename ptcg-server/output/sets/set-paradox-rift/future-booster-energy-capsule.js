@@ -7,6 +7,7 @@ const check_effects_1 = require("../../game/store/effects/check-effects");
 const game_1 = require("../../game");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class FutureBoosterEnergyCapsule extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -24,12 +25,7 @@ class FutureBoosterEnergyCapsule extends trainer_card_1.TrainerCard {
         if (effect instanceof attack_effects_1.DealDamageEffect && effect.player.active.tools.includes(this)) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, effect.player);
-            // Try to reduce ToolEffect, to check if something is blocking the tool from working
-            try {
-                const stub = new play_card_effects_1.ToolEffect(effect.player, this);
-                store.reduceEffect(state, stub);
-            }
-            catch (_a) {
+            if (prefabs_1.IS_TOOL_BLOCKED(store, state, player, this)) {
                 return state;
             }
             if (effect.target !== player.active && effect.target !== opponent.active) {
@@ -45,7 +41,7 @@ class FutureBoosterEnergyCapsule extends trainer_card_1.TrainerCard {
                 const stub = new play_card_effects_1.ToolEffect(effect.player, this);
                 store.reduceEffect(state, stub);
             }
-            catch (_b) {
+            catch (_a) {
                 return state;
             }
             if (effect.player.active.futurePokemon()) {

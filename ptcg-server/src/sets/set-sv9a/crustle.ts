@@ -78,8 +78,10 @@ export class Crustle extends PokemonCard {
 
     // Great Scissors
     if (WAS_ATTACK_USED(effect, 0, this)){
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
+      //const player = effect.player;
+      //const opponent = StateUtils.getOpponent(state, player);
+
+      effect.damage = 0;
 
       const dealDamage = new DealDamageEffect(effect, 120);
       store.reduceEffect(state, dealDamage);
@@ -88,10 +90,8 @@ export class Crustle extends PokemonCard {
       store.reduceEffect(state, applyWeakness);
       const damage = applyWeakness.damage;
 
-      effect.damage = 0;
-
       if (damage > 0) {
-        opponent.active.damage += damage;
+        //opponent.active.damage += damage;
         const afterDamage = new AfterDamageEffect(effect, damage);
         state = store.reduceEffect(state, afterDamage);
       }

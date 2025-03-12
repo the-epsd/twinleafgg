@@ -10,7 +10,7 @@ const attach_energy_prompt_1 = require("../../game/store/prompts/attach-energy-p
 const play_card_action_1 = require("../../game/store/actions/play-card-action");
 const state_utils_1 = require("../../game/store/state-utils");
 const pokemon_card_list_1 = require("../../game/store/state/pokemon-card-list");
-const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class ExpShare extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -31,12 +31,7 @@ class ExpShare extends trainer_card_1.TrainerCard {
             const player = effect.player;
             const opponent = state_utils_1.StateUtils.getOpponent(state, player);
             const active = effect.target;
-            // Try to reduce ToolEffect, to check if something is blocking the tool from working
-            try {
-                const stub = new play_card_effects_1.ToolEffect(effect.player, this);
-                store.reduceEffect(state, stub);
-            }
-            catch (_a) {
+            if (prefabs_1.IS_TOOL_BLOCKED(store, state, player, this)) {
                 return state;
             }
             // Do not activate between turns, or when it's not opponents turn.

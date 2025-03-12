@@ -9,7 +9,7 @@ import { AttachEnergyPrompt } from '../../game/store/prompts/attach-energy-promp
 import { PlayerType, SlotType, CardTarget } from '../../game/store/actions/play-card-action';
 import { StateUtils } from '../../game/store/state-utils';
 import { PokemonCardList } from '../../game/store/state/pokemon-card-list';
-import {ToolEffect} from '../../game/store/effects/play-card-effects';
+import {IS_TOOL_BLOCKED} from '../../game/store/prefabs/prefabs';
 
 
 export class ExpShare extends TrainerCard {
@@ -42,13 +42,7 @@ export class ExpShare extends TrainerCard {
       const opponent = StateUtils.getOpponent(state, player);
       const active = effect.target;
 
-      // Try to reduce ToolEffect, to check if something is blocking the tool from working
-      try {
-        const stub = new ToolEffect(effect.player, this);
-        store.reduceEffect(state, stub);
-      } catch {
-        return state;
-      }
+      if (IS_TOOL_BLOCKED(store, state, player, this)){ return state; }
 
       // Do not activate between turns, or when it's not opponents turn.
       if (state.phase !== GamePhase.ATTACK || state.players[state.activePlayer] !== opponent) {
