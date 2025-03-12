@@ -4,6 +4,7 @@ exports.HustleBelt = void 0;
 const card_types_1 = require("../../game/store/card/card-types");
 const trainer_card_1 = require("../../game/store/card/trainer-card");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 const state_utils_1 = require("../../game/store/state-utils");
 class HustleBelt extends trainer_card_1.TrainerCard {
     constructor() {
@@ -19,6 +20,9 @@ class HustleBelt extends trainer_card_1.TrainerCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof attack_effects_1.DealDamageEffect && effect.source.cards.includes(this)) {
             const opponent = state_utils_1.StateUtils.getOpponent(state, effect.player);
+            if (prefabs_1.IS_TOOL_BLOCKED(store, state, effect.player, this)) {
+                return state;
+            }
             if (effect.damage > 0 && effect.target === opponent.active && effect.source.damage !== 0 && effect.source.hp - effect.source.damage <= 30) {
                 effect.damage += 60;
             }

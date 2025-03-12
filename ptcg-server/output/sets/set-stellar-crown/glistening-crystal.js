@@ -4,6 +4,7 @@ exports.GlisteningCrystal = void 0;
 const trainer_card_1 = require("../../game/store/card/trainer-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const check_effects_1 = require("../../game/store/effects/check-effects");
+const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class GlisteningCrystal extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -20,6 +21,14 @@ class GlisteningCrystal extends trainer_card_1.TrainerCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof check_effects_1.CheckAttackCostEffect && effect.player.active.tools.includes(this)) {
             const pokemonCard = effect.player.active.getPokemonCard();
+            // Try to reduce ToolEffect, to check if something is blocking the tool from working
+            try {
+                const stub = new play_card_effects_1.ToolEffect(effect.player, this);
+                store.reduceEffect(state, stub);
+            }
+            catch (_a) {
+                return state;
+            }
             if (pokemonCard && pokemonCard.tags.includes(card_types_1.CardTag.POKEMON_TERA)) {
                 const checkEnergy = new check_effects_1.CheckProvidedEnergyEffect(effect.player);
                 store.reduceEffect(state, checkEnergy);

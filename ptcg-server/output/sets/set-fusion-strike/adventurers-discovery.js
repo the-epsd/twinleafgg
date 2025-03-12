@@ -19,7 +19,7 @@ function* playCard(next, store, state, self, effect) {
     }
     const blocked = [];
     player.deck.cards.forEach((card, index) => {
-        if (card.tags.includes(card_types_1.CardTag.POKEMON_V) || card.tags.includes(card_types_1.CardTag.POKEMON_VSTAR) || card.tags.includes(card_types_1.CardTag.POKEMON_VMAX)) {
+        if (!card.tags.includes(card_types_1.CardTag.POKEMON_V) && !card.tags.includes(card_types_1.CardTag.POKEMON_VSTAR) && !card.tags.includes(card_types_1.CardTag.POKEMON_VMAX)) {
             blocked.push(index);
         }
     });

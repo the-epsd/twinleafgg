@@ -1,4 +1,4 @@
-import { AttachEnergyOptions, AttachEnergyPrompt, Card, CardList, CardTarget, ChooseCardsOptions, ChooseCardsPrompt, ChoosePokemonPrompt, ChoosePrizePrompt, CoinFlipPrompt, ConfirmPrompt, EnergyCard, GameError, GameLog, GameMessage, Player, PlayerType, PokemonCardList, PowerType, SelectPrompt, ShowCardsPrompt, ShuffleDeckPrompt, SlotType, State, StateUtils, StoreLike } from '../..';
+import { AttachEnergyOptions, AttachEnergyPrompt, Card, CardList, CardTarget, ChooseCardsOptions, ChooseCardsPrompt, ChoosePokemonPrompt, ChoosePrizePrompt, CoinFlipPrompt, ConfirmPrompt, EnergyCard, GameError, GameLog, GameMessage, Player, PlayerType, PokemonCardList, PowerType, SelectPrompt, ShowCardsPrompt, ShuffleDeckPrompt, SlotType, State, StateUtils, StoreLike, TrainerCard } from '../..';
 import { BoardEffect, CardTag, SpecialCondition, SuperType } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
 import { DealDamageEffect, DiscardCardsEffect, HealTargetEffect, PutDamageEffect } from '../effects/attack-effects';
@@ -7,7 +7,7 @@ import { Effect } from '../effects/effect';
 import { AttackEffect, DrawPrizesEffect, EvolveEffect, KnockOutEffect, PowerEffect, RetreatEffect } from '../effects/game-effects';
 import { AfterAttackEffect, EndTurnEffect } from '../effects/game-phase-effects';
 import { MoveCardsEffect } from '../effects/game-effects';
-import { AttachEnergyEffect } from '../effects/play-card-effects';
+import { AttachEnergyEffect, ToolEffect } from '../effects/play-card-effects';
 
 /**
  * 
@@ -487,6 +487,21 @@ export function IS_ABILITY_BLOCKED(store: StoreLike, state: State, player: Playe
       powerType: PowerType.ABILITY,
       text: ''
     }, card));
+  } catch {
+    return true;
+  }
+  return false;
+}
+
+/**
+ * Checks if a tool's effect is being blocked 
+ * @returns `true` if the tool's effect is blocked, `false` if the tool's effect is able to activate.
+ */
+export function IS_TOOL_BLOCKED(store: StoreLike, state: State, player: Player, card: TrainerCard): boolean {
+  // Try to reduce ToolEffect, to check if something is blocking the tool from working
+  try {
+    const stub = new ToolEffect(player, card);
+    store.reduceEffect(state, stub);
   } catch {
     return true;
   }

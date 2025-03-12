@@ -89,9 +89,9 @@ export class EthansHoOhex extends PokemonCard {
         GameMessage.ATTACH_ENERGY_TO_ACTIVE,
         player.hand,
         PlayerType.BOTTOM_PLAYER,
-        [SlotType.BENCH, SlotType.ACTIVE],
+        [SlotType.BENCH],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fire Energy' },
-        { allowCancel: false, min: 0, max: 2, blockedTo: blocked2 }
+        { allowCancel: false, sameTarget: true, min: 0, max: 2, blockedTo: blocked2 }
       ), transfers => {
         transfers = transfers || [];
 

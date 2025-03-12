@@ -6,6 +6,7 @@ const card_types_1 = require("../../game/store/card/card-types");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const state_utils_1 = require("../../game/store/state-utils");
 const check_effects_1 = require("../../game/store/effects/check-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class DarkClaw extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -22,6 +23,9 @@ class DarkClaw extends trainer_card_1.TrainerCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof attack_effects_1.PutDamageEffect && effect.source.tools.includes(this)) {
             const opponent = state_utils_1.StateUtils.findOwner(state, effect.target);
+            if (prefabs_1.IS_TOOL_BLOCKED(store, state, effect.player, this)) {
+                return state;
+            }
             // Not active Pokemon
             if (opponent.active !== effect.target) {
                 return state;

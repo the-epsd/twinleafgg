@@ -5,6 +5,7 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { EnergyCard, GameMessage, PlayerType, SlotType, AttachEnergyPrompt, StateUtils } from '../../game';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import {ToolEffect} from '../../game/store/effects/play-card-effects';
 
 
 export class PowerHourglass extends TrainerCard {
@@ -30,6 +31,14 @@ export class PowerHourglass extends TrainerCard {
     if (effect instanceof EndTurnEffect && effect.player.active.tools.includes(this)) {
 
       const player = effect.player;
+
+      // Try to reduce ToolEffect, to check if something is blocking the tool from working
+      try {
+        const stub = new ToolEffect(player, this);
+        store.reduceEffect(state, stub);
+      } catch {
+        return state;
+      }
 
       const hasEnergyInDiscard = player.discard.cards.some(c => {
         return c instanceof EnergyCard

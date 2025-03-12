@@ -25,6 +25,9 @@ class MetalCoreBarrier extends trainer_card_1.TrainerCard {
         if (effect instanceof game_phase_effects_1.EndTurnEffect) {
             const cardList = state_utils_1.StateUtils.findCardList(state, this);
             const player = state_utils_1.StateUtils.findOwner(state, cardList);
+            if (prefabs_1.IS_TOOL_BLOCKED(store, state, effect.player, this)) {
+                return state;
+            }
             if (effect.player === player) {
                 return state;
             }
@@ -36,6 +39,9 @@ class MetalCoreBarrier extends trainer_card_1.TrainerCard {
             return state;
         }
         if (effect instanceof attack_effects_1.PutDamageEffect && effect.target.cards.includes(this)) {
+            if (prefabs_1.IS_TOOL_BLOCKED(store, state, effect.player, this)) {
+                return state;
+            }
             const checkPokemonType = new check_effects_1.CheckPokemonTypeEffect(effect.target);
             store.reduceEffect(state, checkPokemonType);
             if (!checkPokemonType.cardTypes.includes(card_types_1.CardType.METAL)) {

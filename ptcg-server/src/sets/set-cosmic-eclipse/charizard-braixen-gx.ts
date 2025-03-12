@@ -8,7 +8,7 @@ import { BLOCK_IF_GX_ATTACK_USED, SEARCH_DECK_FOR_CARDS_TO_HAND } from '../../ga
 
 export class CharizardBraixenGX extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.TAG_TEAM];
+  public tags = [CardTag.POKEMON_GX, CardTag.TAG_TEAM];
   public cardType: CardType = R;
   public hp: number = 270;
   public weakness = [{ type: W }];

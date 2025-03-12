@@ -3,6 +3,7 @@ import { CardTag, EnergyType, SuperType, TrainerType } from '../../game/store/ca
 import { StoreLike, State, CardList, EnergyCard, AttachEnergyPrompt, GameMessage, PlayerType, SlotType, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { KnockOutEffect } from '../../game/store/effects/game-effects';
+import {ToolEffect} from '../../game/store/effects/play-card-effects';
 
 
 export class HeavyBaton extends TrainerCard {
@@ -41,7 +42,13 @@ export class HeavyBaton extends TrainerCard {
 
       const retreatCost = effect.target.getPokemonCard()?.retreat.length;
 
-
+      // Try to reduce ToolEffect, to check if something is blocking the tool from working
+      try {
+        const stub = new ToolEffect(effect.player, this);
+        store.reduceEffect(state, stub);
+      } catch {
+        return state;
+      }
 
       if (retreatCost !== undefined && retreatCost == 4) {
 

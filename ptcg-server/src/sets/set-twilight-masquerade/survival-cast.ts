@@ -5,7 +5,7 @@ import { CheckHpEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
-import { REMOVE_TOOL } from '../../game/store/prefabs/prefabs';
+import { IS_TOOL_BLOCKED, REMOVE_TOOL } from '../../game/store/prefabs/prefabs';
 
 // interface PokemonItem {
 //   playerNum: number;
@@ -42,6 +42,8 @@ export class SurvivalCast extends TrainerCard {
       const player = StateUtils.findOwner(state, effect.target);
       const checkHpEffect = new CheckHpEffect(player, effect.target);
       store.reduceEffect(state, checkHpEffect);
+
+      if (IS_TOOL_BLOCKED(store, state, effect.player, this)){ return state; }
 
       if (effect.target.damage === 0 && effect.damage >= checkHpEffect.hp) {
         effect.preventDefault = true;

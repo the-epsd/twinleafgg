@@ -12,7 +12,7 @@ class RaichuAlolanRaichuGX extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.BASIC;
-        this.tags = [card_types_1.CardTag.TAG_TEAM];
+        this.tags = [card_types_1.CardTag.POKEMON_GX, card_types_1.CardTag.TAG_TEAM];
         this.cardType = card_types_1.CardType.LIGHTNING;
         this.hp = 260;
         this.weakness = [{ type: card_types_1.CardType.FIGHTING }];

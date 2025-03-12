@@ -16,10 +16,12 @@ function* useSeekInspiration(next: Function, store: StoreLike, state: State, eff
   const topdeck: Card = deckTop.cards[0];  // This is the card we're looking at.
   deckTop.moveTo(player.discard);
 
-  if (!(topdeck instanceof PokemonCard) || (topdeck.tags.includes(
-    CardTag.POKEMON_EX || CardTag.POKEMON_GX || CardTag.POKEMON_LV_X || CardTag.POKEMON_V ||
-    CardTag.POKEMON_ex || CardTag.PRISM_STAR || CardTag.RADIANT || CardTag.POKEMON_VMAX || CardTag.POKEMON_VSTAR
-  ))) {
+  if (!(topdeck instanceof PokemonCard)) {
+    return state;
+  }
+
+  // this looks disgusting but the previous method didn't work (if only hasRuleBox() worked on topdeck, although that might not work either who knows)
+  if (topdeck.tags.includes(CardTag.POKEMON_EX) || topdeck.tags.includes(CardTag.POKEMON_GX) || topdeck.tags.includes(CardTag.POKEMON_LV_X) || topdeck.tags.includes(CardTag.POKEMON_V) || topdeck.tags.includes(CardTag.PRISM_STAR) || topdeck.tags.includes(CardTag.RADIANT) || topdeck.tags.includes(CardTag.POKEMON_VMAX) || topdeck.tags.includes(CardTag.POKEMON_VSTAR) || topdeck.tags.includes(CardTag.POKEMON_ex) || topdeck.tags.includes(CardTag.BREAK)){
     return state;
   }
 

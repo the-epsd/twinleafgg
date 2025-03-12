@@ -71,6 +71,7 @@ export const setFossil: Card[] = [
   new Krabby(),
   new Lapras(),
   new Magmar(),
+  // new Moltres(),
   new MrFuji(),
   new Muk(),
   new MysteriousFossil(),

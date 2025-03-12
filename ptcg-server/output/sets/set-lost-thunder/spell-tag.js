@@ -9,6 +9,7 @@ const trainer_card_1 = require("../../game/store/card/trainer-card");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 const state_utils_1 = require("../../game/store/state-utils");
 class SpellTag extends trainer_card_1.TrainerCard {
     constructor() {
@@ -36,6 +37,9 @@ class SpellTag extends trainer_card_1.TrainerCard {
         if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player === state_utils_1.StateUtils.getOpponent(state, effect.player)) {
             const cardList = state_utils_1.StateUtils.findCardList(state, this);
             const owner = state_utils_1.StateUtils.findOwner(state, cardList);
+            if (prefabs_1.IS_TOOL_BLOCKED(store, state, effect.player, this)) {
+                return state;
+            }
             if (owner === effect.player) {
                 this.damageDealt = false;
             }
@@ -43,6 +47,9 @@ class SpellTag extends trainer_card_1.TrainerCard {
         if (effect instanceof game_effects_1.KnockOutEffect && effect.target.cards.includes(this)) {
             const player = effect.player;
             // const target = effect.target;
+            if (prefabs_1.IS_TOOL_BLOCKED(store, state, effect.player, this)) {
+                return state;
+            }
             if (this.damageDealt) {
                 const opponent = state_utils_1.StateUtils.getOpponent(state, player);
                 const maxAllowedDamage = [];

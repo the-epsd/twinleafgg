@@ -4,6 +4,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckRetreatCostEffect } from '../../game/store/effects/check-effects';
+import { IS_TOOL_BLOCKED} from '../../game/store/prefabs/prefabs';
 
 
 export class EmergencyBoard extends TrainerCard {
@@ -28,6 +29,8 @@ export class EmergencyBoard extends TrainerCard {
     if (effect instanceof CheckRetreatCostEffect && effect.player.active.tools.includes(this)) {
       const player = effect.player;
       const pokemonCard = player.active.getPokemonCard();
+
+      if (IS_TOOL_BLOCKED(store, state, effect.player, this)){ return state; }
 
       if (pokemonCard) {
         const remainingHp = pokemonCard.hp - player.active.damage;

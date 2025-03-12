@@ -6,6 +6,7 @@ const card_types_1 = require("../../game/store/card/card-types");
 const state_1 = require("../../game/store/state/state");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const state_utils_1 = require("../../game/store/state-utils");
+const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class DeluxeBomb extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -23,6 +24,14 @@ class DeluxeBomb extends trainer_card_1.TrainerCard {
         if (effect instanceof attack_effects_1.AfterDamageEffect && effect.target.tools.includes(this)) {
             const player = effect.player;
             const targetPlayer = state_utils_1.StateUtils.findOwner(state, effect.target);
+            // Try to reduce ToolEffect, to check if something is blocking the tool from working
+            try {
+                const stub = new play_card_effects_1.ToolEffect(effect.player, this);
+                store.reduceEffect(state, stub);
+            }
+            catch (_a) {
+                return state;
+            }
             if (effect.damage <= 0 || player === targetPlayer || targetPlayer.active !== effect.target) {
                 return state;
             }

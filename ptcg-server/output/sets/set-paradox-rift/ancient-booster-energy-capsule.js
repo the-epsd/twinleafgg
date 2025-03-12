@@ -5,6 +5,7 @@ const trainer_card_1 = require("../../game/store/card/trainer-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const check_effects_1 = require("../../game/store/effects/check-effects");
 const game_1 = require("../../game");
+const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class AncientBoosterEnergyCapsule extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -24,12 +25,28 @@ class AncientBoosterEnergyCapsule extends trainer_card_1.TrainerCard {
             if (card === undefined) {
                 return state;
             }
+            // Try to reduce ToolEffect, to check if something is blocking the tool from working
+            try {
+                const stub = new play_card_effects_1.ToolEffect(effect.player, this);
+                store.reduceEffect(state, stub);
+            }
+            catch (_a) {
+                return state;
+            }
             if (card.tags.includes(card_types_1.CardTag.ANCIENT)) {
                 effect.hp += 60;
             }
         }
         if (effect instanceof check_effects_1.CheckTableStateEffect) {
             const cardList = game_1.StateUtils.findCardList(state, this);
+            // Try to reduce ToolEffect, to check if something is blocking the tool from working
+            try {
+                const stub = new play_card_effects_1.ToolEffect(effect.player, this);
+                store.reduceEffect(state, stub);
+            }
+            catch (_b) {
+                return state;
+            }
             if (cardList instanceof game_1.PokemonCardList && cardList.tools.includes(this)) {
                 const card = cardList.getPokemonCard();
                 if (card && card.tags.includes(card_types_1.CardTag.ANCIENT)) {

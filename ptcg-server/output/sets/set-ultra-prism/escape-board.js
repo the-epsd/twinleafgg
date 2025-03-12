@@ -5,6 +5,7 @@ const card_types_1 = require("../../game/store/card/card-types");
 const trainer_card_1 = require("../../game/store/card/trainer-card");
 const check_effects_1 = require("../../game/store/effects/check-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class EscapeBoard extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -18,6 +19,9 @@ class EscapeBoard extends trainer_card_1.TrainerCard {
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof check_effects_1.CheckRetreatCostEffect && effect.player.active.tools.includes(this)) {
+            if (prefabs_1.IS_TOOL_BLOCKED(store, state, effect.player, this)) {
+                return state;
+            }
             if (effect.cost.length === 0) {
                 effect.cost = [];
             }
@@ -26,6 +30,9 @@ class EscapeBoard extends trainer_card_1.TrainerCard {
             }
         }
         if (effect instanceof game_effects_1.RetreatEffect && effect.player.active.tools.includes(this)) {
+            if (prefabs_1.IS_TOOL_BLOCKED(store, state, effect.player, this)) {
+                return state;
+            }
             effect.ignoreStatusConditions = true;
             effect.player.active.clearEffects();
         }

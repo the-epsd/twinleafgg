@@ -59,7 +59,7 @@ export class ArchetypeUtils {
       'Archaludon': Archetype.ARCHALUDON,
       'Klawf': Archetype.KLAWF,
       'Gouging Fire': Archetype.GOUGING_FIRE,
-      'Gholdengo': Archetype.GHOLDENGO,
+      'Gholdengo ex': Archetype.GHOLDENGO,
       'Iron Crown': Archetype.IRON_CROWN,
       'Feraligatr': Archetype.FERALIGATR,
       'Blissey': Archetype.BLISSEY,

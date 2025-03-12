@@ -8,6 +8,7 @@ const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 const game_1 = require("../../game");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class RescueScarf extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -30,6 +31,9 @@ class RescueScarf extends trainer_card_1.TrainerCard {
         if ((effect instanceof attack_effects_1.DealDamageEffect || effect instanceof attack_effects_1.PutDamageEffect) &&
             effect.target.tools.includes(this)) {
             const player = game_1.StateUtils.getOpponent(state, effect.player);
+            if (prefabs_1.IS_TOOL_BLOCKED(store, state, effect.player, this)) {
+                return state;
+            }
             if (player.active.tools.includes(this)) {
                 this.damageDealt = true;
             }

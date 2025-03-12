@@ -31,6 +31,7 @@ export class EthansAdventure extends TrainerCard {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
 
+      player.hand.moveCardTo(this, player.supporter);
       BLOCK_IF_DECK_EMPTY(player);
 
       let ethansPokemonOrFireEnergy: number = 0;

@@ -23,4 +23,5 @@ export var ApiErrorEnum;
     ApiErrorEnum["SOCKET_ERROR"] = "SOCKET_ERROR";
     ApiErrorEnum["INVALID_FORMAT"] = "INVALID_FORMAT";
     ApiErrorEnum["INVALID_USER"] = "INVALID_USER";
+    ApiErrorEnum["USER_BANNED"] = "USER_BANNED";
 })(ApiErrorEnum || (ApiErrorEnum = {}));

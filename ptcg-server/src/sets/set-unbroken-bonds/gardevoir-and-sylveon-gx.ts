@@ -6,7 +6,7 @@ import { BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 
 export class GardevoirSylveonGX extends PokemonCard {
-  public tags = [CardTag.TAG_TEAM];
+  public tags = [CardTag.POKEMON_GX, CardTag.TAG_TEAM];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = CardType.FAIRY;
   public hp: number = 260;

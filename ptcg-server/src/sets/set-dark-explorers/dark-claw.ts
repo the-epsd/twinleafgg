@@ -6,6 +6,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { StateUtils } from '../../game/store/state-utils';
 import { CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
+import {IS_TOOL_BLOCKED} from '../../game/store/prefabs/prefabs';
 
 
 export class DarkClaw extends TrainerCard {
@@ -31,6 +32,10 @@ export class DarkClaw extends TrainerCard {
 
     if (effect instanceof PutDamageEffect && effect.source.tools.includes(this)) {
       const opponent = StateUtils.findOwner(state, effect.target);
+
+      if (IS_TOOL_BLOCKED(store, state, effect.player, this)){
+        return state;
+      }
 
       // Not active Pokemon
       if (opponent.active !== effect.target) {

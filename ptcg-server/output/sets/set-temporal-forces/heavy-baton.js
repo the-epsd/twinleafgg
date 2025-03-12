@@ -5,6 +5,7 @@ const trainer_card_1 = require("../../game/store/card/trainer-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
+const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class HeavyBaton extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -27,6 +28,14 @@ class HeavyBaton extends trainer_card_1.TrainerCard {
             const removedCards = [];
             const pokemonIndices = effect.target.cards.map((card, index) => index);
             const retreatCost = (_a = effect.target.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.retreat.length;
+            // Try to reduce ToolEffect, to check if something is blocking the tool from working
+            try {
+                const stub = new play_card_effects_1.ToolEffect(effect.player, this);
+                store.reduceEffect(state, stub);
+            }
+            catch (_b) {
+                return state;
+            }
             if (retreatCost !== undefined && retreatCost == 4) {
                 for (let i = pokemonIndices.length - 1; i >= 0; i--) {
                     const removedCard = target.cards.splice(pokemonIndices[i], 1)[0];

@@ -16,8 +16,11 @@ function* useSeekInspiration(next, store, state, effect) {
     player.deck.moveTo(deckTop, 1);
     const topdeck = deckTop.cards[0]; // This is the card we're looking at.
     deckTop.moveTo(player.discard);
-    if (!(topdeck instanceof pokemon_card_1.PokemonCard) || (topdeck.tags.includes(card_types_1.CardTag.POKEMON_EX || card_types_1.CardTag.POKEMON_GX || card_types_1.CardTag.POKEMON_LV_X || card_types_1.CardTag.POKEMON_V ||
-        card_types_1.CardTag.POKEMON_ex || card_types_1.CardTag.PRISM_STAR || card_types_1.CardTag.RADIANT || card_types_1.CardTag.POKEMON_VMAX || card_types_1.CardTag.POKEMON_VSTAR))) {
+    if (!(topdeck instanceof pokemon_card_1.PokemonCard)) {
+        return state;
+    }
+    // this looks disgusting but the previous method didn't work (if only hasRuleBox() worked on topdeck, although that might not work either who knows)
+    if (topdeck.tags.includes(card_types_1.CardTag.POKEMON_EX) || topdeck.tags.includes(card_types_1.CardTag.POKEMON_GX) || topdeck.tags.includes(card_types_1.CardTag.POKEMON_LV_X) || topdeck.tags.includes(card_types_1.CardTag.POKEMON_V) || topdeck.tags.includes(card_types_1.CardTag.PRISM_STAR) || topdeck.tags.includes(card_types_1.CardTag.RADIANT) || topdeck.tags.includes(card_types_1.CardTag.POKEMON_VMAX) || topdeck.tags.includes(card_types_1.CardTag.POKEMON_VSTAR) || topdeck.tags.includes(card_types_1.CardTag.POKEMON_ex) || topdeck.tags.includes(card_types_1.CardTag.BREAK)) {
         return state;
     }
     const discardPokemon = player.discard.cards.filter(card => card.superType === card_types_1.SuperType.POKEMON);

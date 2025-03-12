@@ -6,6 +6,7 @@ const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class VengefulPunch extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -42,6 +43,9 @@ class VengefulPunch extends trainer_card_1.TrainerCard {
         if ((effect instanceof attack_effects_1.DealDamageEffect || effect instanceof attack_effects_1.PutDamageEffect) &&
             effect.target.tools.includes(this)) {
             const player = game_1.StateUtils.getOpponent(state, effect.player);
+            if (prefabs_1.IS_TOOL_BLOCKED(store, state, effect.player, this)) {
+                return state;
+            }
             if (player.active.tools.includes(this)) {
                 this.damageDealt = true;
             }

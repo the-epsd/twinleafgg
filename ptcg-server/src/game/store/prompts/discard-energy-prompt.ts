@@ -6,14 +6,14 @@ import { PlayerType, SlotType, CardTarget } from '../actions/play-card-action';
 import { State } from '../state/state';
 import { StateUtils } from '../state-utils';
 import { FilterType } from './choose-cards-prompt';
+import { SuperType } from '../card/card-types';
 
 export const DiscardEnergyPromptType = 'Discard energy';
 
-export type DiscardEnergyResultType = { from: CardTarget, to: CardTarget, index: number }[];
+export type DiscardEnergyResultType = { from: CardTarget, index: number }[];
 
 export interface DiscardEnergyTransfer {
   from: CardTarget;
-  to: CardTarget;
   card: Card;
 }
 
@@ -22,7 +22,6 @@ export interface DiscardEnergyOptions {
   min: number;
   max: number | undefined;
   blockedFrom: CardTarget[];
-  blockedTo: CardTarget[];
   blockedMap: { source: CardTarget, blocked: number[] }[];
 }
 
@@ -48,7 +47,6 @@ export class DiscardEnergyPrompt extends Prompt<DiscardEnergyTransfer[]> {
       min: 0,
       max: undefined,
       blockedFrom: [],
-      blockedTo: [],
       blockedMap: [],
     }, options);
   }
@@ -69,7 +67,11 @@ export class DiscardEnergyPrompt extends Prompt<DiscardEnergyTransfer[]> {
       if (!(card instanceof Card)) {
         throw new GameError(GameMessage.INVALID_PROMPT_RESULT);
       }
-      transfers.push({ from: t.from, to: t.to, card });
+      // Verify card is an energy card
+      if (card.superType !== SuperType.ENERGY) {
+        throw new GameError(GameMessage.INVALID_PROMPT_RESULT);
+      }
+      transfers.push({ from: t.from, card });
     });
     return transfers;
   }
@@ -78,7 +80,9 @@ export class DiscardEnergyPrompt extends Prompt<DiscardEnergyTransfer[]> {
     if (result === null) {
       return this.options.allowCancel;  // operation cancelled
     }
+    if (result.length < this.options.min || (this.options.max !== undefined && result.length > this.options.max)) {
+      return false;
+    }
     return result.every(r => r.card !== undefined);
   }
-
 }

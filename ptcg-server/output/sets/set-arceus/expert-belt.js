@@ -7,6 +7,7 @@ const check_effects_1 = require("../../game/store/effects/check-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const state_utils_1 = require("../../game/store/state-utils");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class ExpertBelt extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -23,15 +24,24 @@ class ExpertBelt extends trainer_card_1.TrainerCard {
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof check_effects_1.CheckHpEffect && effect.target.cards.includes(this)) {
+            if (prefabs_1.IS_TOOL_BLOCKED(store, state, effect.player, this)) {
+                return state;
+            }
             effect.hp += 20;
         }
         if (effect instanceof attack_effects_1.DealDamageEffect && effect.source.cards.includes(this)) {
             const opponent = state_utils_1.StateUtils.getOpponent(state, effect.player);
+            if (prefabs_1.IS_TOOL_BLOCKED(store, state, effect.player, this)) {
+                return state;
+            }
             if (effect.damage > 0 && effect.target === opponent.active) {
                 effect.damage += 20;
             }
         }
         if (effect instanceof game_effects_1.KnockOutEffect && effect.target.cards.includes(this)) {
+            if (prefabs_1.IS_TOOL_BLOCKED(store, state, effect.player, this)) {
+                return state;
+            }
             effect.prizeCount += 1;
         }
         return state;

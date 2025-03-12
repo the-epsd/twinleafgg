@@ -31,6 +31,9 @@ class TechnicalMachineTurboEnergize extends trainer_card_1.TrainerCard {
         var _a;
         if (effect instanceof game_phase_effects_1.EndTurnEffect) {
             const player = effect.player;
+            if (prefabs_1.IS_TOOL_BLOCKED(store, state, player, this)) {
+                return state;
+            }
             player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card, index) => {
                 if (cardList.cards.includes(this)) {
                     prefabs_1.REMOVE_TOOL(store, state, cardList, this, game_1.SlotType.DISCARD);
@@ -56,6 +59,9 @@ class TechnicalMachineTurboEnergize extends trainer_card_1.TrainerCard {
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
+            if (prefabs_1.IS_TOOL_BLOCKED(store, state, effect.player, this)) {
+                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_ATTACK);
+            }
             state = store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_CARDS, player.deck, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC }, { min: 0, max: 2, allowCancel: false }), transfers => {
                 transfers = transfers || [];
                 for (const transfer of transfers) {

@@ -7,6 +7,7 @@ const trainer_card_1 = require("../../game/store/card/trainer-card");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const check_effects_1 = require("../../game/store/effects/check-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class RapidStrikeScrollOfSwirls extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -30,6 +31,9 @@ class RapidStrikeScrollOfSwirls extends trainer_card_1.TrainerCard {
         var _a;
         if (effect instanceof check_effects_1.CheckPokemonAttacksEffect && ((_a = effect.player.active.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.tools.includes(this)) &&
             !effect.attacks.includes(this.attacks[0])) {
+            if (prefabs_1.IS_TOOL_BLOCKED(store, state, effect.player, this)) {
+                return state;
+            }
             effect.attacks.push(this.attacks[0]);
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

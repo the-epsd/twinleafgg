@@ -1,4 +1,4 @@
-import { AttachEnergyPrompt, Attack, GameMessage, PlayerType, ShuffleDeckPrompt, SlotType, StateUtils } from '../../game';
+import { AttachEnergyPrompt, Attack, GameError, GameMessage, PlayerType, ShuffleDeckPrompt, SlotType, StateUtils } from '../../game';
 import { CardType, EnergyType, SuperType, TrainerType } from '../../game/store/card/card-types';
 import { ColorlessCostReducer } from '../../game/store/card/pokemon-interface';
 import { TrainerCard } from '../../game/store/card/trainer-card';
@@ -6,7 +6,7 @@ import { CheckAttackCostEffect, CheckPokemonAttacksEffect } from '../../game/sto
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { REMOVE_TOOL } from '../../game/store/prefabs/prefabs';
+import { IS_TOOL_BLOCKED, REMOVE_TOOL } from '../../game/store/prefabs/prefabs';
 
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
@@ -44,6 +44,8 @@ export class TechnicalMachineTurboEnergize extends TrainerCard {
     if (effect instanceof EndTurnEffect) {
       const player = effect.player;
 
+      if (IS_TOOL_BLOCKED(store, state, player, this)){ return state; }
+
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, index) => {
         if (cardList.cards.includes(this)) {
           REMOVE_TOOL(store, state, cardList, this, SlotType.DISCARD);
@@ -75,7 +77,7 @@ export class TechnicalMachineTurboEnergize extends TrainerCard {
 
       const player = effect.player;
 
-
+      if (IS_TOOL_BLOCKED(store, state, effect.player, this)){ throw new GameError(GameMessage.CANNOT_USE_ATTACK); }
 
       state = store.prompt(state, new AttachEnergyPrompt(
         player.id,

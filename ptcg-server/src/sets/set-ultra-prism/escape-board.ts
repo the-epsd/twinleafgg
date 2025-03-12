@@ -3,6 +3,7 @@ import { TrainerCard } from '../../game/store/card/trainer-card';
 import { CheckRetreatCostEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { RetreatEffect } from '../../game/store/effects/game-effects';
+import {IS_TOOL_BLOCKED} from '../../game/store/prefabs/prefabs';
 
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
@@ -28,6 +29,8 @@ export class EscapeBoard extends TrainerCard {
 
     if (effect instanceof CheckRetreatCostEffect && effect.player.active.tools.includes(this)) {
 
+      if (IS_TOOL_BLOCKED(store, state, effect.player, this)){ return state; }
+
       if (effect.cost.length === 0) {
         effect.cost = [];
       } else {
@@ -37,6 +40,9 @@ export class EscapeBoard extends TrainerCard {
     }
 
     if (effect instanceof RetreatEffect && effect.player.active.tools.includes(this)) {
+
+      if (IS_TOOL_BLOCKED(store, state, effect.player, this)){ return state; }
+
       effect.ignoreStatusConditions = true;
       effect.player.active.clearEffects();
     }

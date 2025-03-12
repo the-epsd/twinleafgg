@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.SupereffectiveGlasses = void 0;
 const game_1 = require("../../game");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class SupereffectiveGlasses extends game_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -17,6 +18,9 @@ class SupereffectiveGlasses extends game_1.TrainerCard {
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof attack_effects_1.ApplyWeaknessEffect && effect.target.tools.includes(this)) {
+            if (prefabs_1.IS_TOOL_BLOCKED(store, state, effect.player, this)) {
+                return state;
+            }
             effect.damage = effect.damage * 1.5;
         }
         return state;

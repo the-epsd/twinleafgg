@@ -5,6 +5,7 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { StateUtils } from '../../game/store/state-utils';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
+import {ToolEffect} from '../../game/store/effects/play-card-effects';
 
 export class ChoiceBand extends TrainerCard {
 
@@ -27,6 +28,15 @@ export class ChoiceBand extends TrainerCard {
     if (effect instanceof DealDamageEffect && effect.source.cards.includes(this)) {
       const opponent = StateUtils.getOpponent(state, effect.player);
       const defending = opponent.active.getPokemonCard();
+
+      // Try to reduce ToolEffect, to check if something is blocking the tool from working
+      try {
+        const stub = new ToolEffect(effect.player, this);
+        store.reduceEffect(state, stub);
+      } catch {
+        return state;
+      }
+
       if (effect.damage > 0 && effect.target === opponent.active && defending
         && (defending.tags.includes(CardTag.POKEMON_GX) || defending.tags.includes(CardTag.POKEMON_EX))) {
         effect.damage += 30;

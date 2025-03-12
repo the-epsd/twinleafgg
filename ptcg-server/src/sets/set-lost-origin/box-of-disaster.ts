@@ -7,6 +7,7 @@ import { StateUtils } from '../../game/store/state-utils';
 
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { CheckHpEffect } from '../../game/store/effects/check-effects';
+import {ToolEffect} from '../../game/store/effects/play-card-effects';
 
 export class BoxOfDisaster extends TrainerCard {
 
@@ -42,6 +43,14 @@ export class BoxOfDisaster extends TrainerCard {
       }
 
       this.damageDealt = true;
+
+      // Try to reduce ToolEffect, to check if something is blocking the tool from working
+      try {
+        const stub = new ToolEffect(effect.player, this);
+        store.reduceEffect(state, stub);
+      } catch {
+        return state;
+      }
 
       if (this.damageDealt === true) {
         const checkHpEffect = new CheckHpEffect(player, effect.target);
