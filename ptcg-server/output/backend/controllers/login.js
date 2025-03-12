@@ -75,8 +75,23 @@ class Login extends controller_1.Controller {
             res.send({ error: errors_1.ApiErrorEnum.LOGIN_INVALID });
             return;
         }
+        // Check if user is banned
+        if (user.roleId === 1) {
+            res.status(403);
+            res.send({ error: errors_1.ApiErrorEnum.USER_BANNED });
+            return;
+        }
         const token = services_1.generateToken(user.id);
-        res.send({ ok: true, token, config: this.getServerConfig() });
+        res.send({
+            ok: true,
+            token,
+            config: this.getServerConfig(),
+            user: {
+                id: user.id,
+                name: user.name,
+                roleId: user.roleId
+            }
+        });
     }
     async onRefreshToken(req, res) {
         const userId = req.body.userId;

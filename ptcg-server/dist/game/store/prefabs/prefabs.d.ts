@@ -1,4 +1,4 @@
-import { AttachEnergyOptions, Card, CardList, ChooseCardsOptions, EnergyCard, GameMessage, Player, PlayerType, PokemonCardList, SlotType, State, StoreLike } from '../..';
+import { AttachEnergyOptions, Card, CardList, ChooseCardsOptions, EnergyCard, GameMessage, Player, PlayerType, PokemonCardList, SlotType, State, StoreLike, TrainerCard } from '../..';
 import { CardTag, SpecialCondition } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
 import { DealDamageEffect, PutDamageEffect } from '../effects/attack-effects';
@@ -119,6 +119,11 @@ export declare function GET_CARDS_ON_BOTTOM_OF_DECK(player: Player, amount?: num
  * @returns `true` if the ability is blocked, `false` if the ability is able to go thru.
  */
 export declare function IS_ABILITY_BLOCKED(store: StoreLike, state: State, player: Player, card: PokemonCard): boolean;
+/**
+ * Checks if a tool's effect is being blocked
+ * @returns `true` if the tool's effect is blocked, `false` if the tool's effect is able to activate.
+ */
+export declare function IS_TOOL_BLOCKED(store: StoreLike, state: State, player: Player, card: TrainerCard): boolean;
 export declare function CAN_EVOLVE_ON_FIRST_TURN_GOING_SECOND(state: State, player: Player, pokemon: PokemonCardList): void;
 /**
  * Finds `card` and moves it from its current CardList to `destination`.

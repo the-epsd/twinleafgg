@@ -1,0 +1,30 @@
+// .ptcg-prompt-discard-energy {
+//   display: flex;
+//   flex-direction: column;
+//   height: 100%;
+
+//   .ptcg-prompt-content {
+//     display: flex;
+//     flex: 1;
+//     gap: 16px;
+//     padding: 16px;
+//     overflow: hidden;
+
+//     ptcg-choose-pokemons-pane {
+//       flex: 0 0 auto;
+//       width: 280px;
+//     }
+
+//     ptcg-choose-cards-panes-2 {
+//       flex: 1;
+//       min-width: 0;
+//     }
+//   }
+
+//   .ptcg-prompt-footer {
+//     display: flex;
+//     justify-content: flex-end;
+//     gap: 8px;
+//     padding: 8px 16px;
+//   }
+// }

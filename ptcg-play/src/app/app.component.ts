@@ -25,8 +25,6 @@ export class AppComponent implements OnInit {
   public isLoggedIn = false;
   public loggedUser: UserInfo | undefined;
   private authToken$: Observable<string>;
-  private readonly MAX_RECONNECT_ATTEMPTS = 3;
-  private reconnectAttempts = 0;
 
   constructor(
     private alertService: AlertService,
@@ -64,27 +62,11 @@ export class AppComponent implements OnInit {
     ).subscribe({
       next: async connected => {
         if (!connected && this.isLoggedIn) {
-          // Try to reconnect
-          if (this.reconnectAttempts < this.MAX_RECONNECT_ATTEMPTS) {
-            this.reconnectAttempts++;
-            // Wait 2 seconds before attempting to reconnect
-            await new Promise(resolve => setTimeout(resolve, 2000));
-            this.authToken$.pipe(take(1)).subscribe(authToken => {
-              this.socketService.enable(authToken);
-            });
-            return;
-          }
-
-          // If max reconnection attempts reached, logout user
-          this.reconnectAttempts = 0;
           this.socketService.disable();
           this.dialog.closeAll();
           await this.alertService.alert(this.translate.instant('ERROR_DISCONNECTED_FROM_SERVER'));
           this.sessionService.clear();
           this.router.navigate(['/login']);
-        } else if (connected) {
-          // Reset reconnect attempts when successfully connected
-          this.reconnectAttempts = 0;
         }
       }
     });

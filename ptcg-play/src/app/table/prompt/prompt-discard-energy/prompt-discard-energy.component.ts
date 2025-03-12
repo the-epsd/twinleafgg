@@ -1,14 +1,13 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { Card, CardTarget, DiscardEnergyPrompt, FilterType, SuperType } from 'ptcg-server';
+import { Component, Input, OnInit } from '@angular/core';
+import { Card, DiscardEnergyPrompt, FilterType, SuperType } from 'ptcg-server';
 import { GameService } from '../../../api/services/game.service';
 import { LocalGameState } from '../../../shared/session/session.interface';
 import { PokemonData, PokemonItem } from '../choose-pokemons-pane/pokemon-data';
-import { CardsContainerComponent } from '../cards-container/cards-container.component';
 
-interface DiscardEnergyResult {
-  from: PokemonItem;
+interface SelectedEnergy {
   card: Card;
-  container: CardsContainerComponent;
+  fromPokemon: PokemonItem;
+  originalIndex: number;
 }
 
 @Component({
@@ -19,28 +18,25 @@ interface DiscardEnergyResult {
 export class PromptDiscardEnergyComponent implements OnInit {
   @Input() prompt: DiscardEnergyPrompt;
   @Input() gameState: LocalGameState;
-  @ViewChild('cardsContainer') cardsContainer: CardsContainerComponent;
 
   public pokemonData: PokemonData;
   public selectedItem: PokemonItem | undefined;
-  public currentPokemonCards: Card[] = [];
-  public results: DiscardEnergyResult[] = [];
+  public availableCards: Card[] = [];
+  public selectedCards: Card[] = [];
   public isInvalid = true;
   public blocked: number[] = [];
   public filter: FilterType;
   public max: number | undefined;
   public allowedCancel: boolean;
-  private originalCardState = new Map<PokemonItem, Card[]>();
-  public tempDiscardPile: Card[] = [];
-  private selectedEnergies: DiscardEnergyResult[] = [];
-  private selectedCards = new Set<Card>();
+
+  private selectedEnergies: SelectedEnergy[] = [];
+  private allEnergyCards: Card[] = [];
 
   constructor(private gameService: GameService) { }
 
   ngOnInit() {
     if (this.prompt && this.gameState) {
       this.initializePrompt();
-      this.validateSelection();
     }
   }
 
@@ -57,12 +53,14 @@ export class PromptDiscardEnergyComponent implements OnInit {
     this.max = this.prompt.options.max;
     this.allowedCancel = this.prompt.options.allowCancel;
 
-    // Store initial card states
-    this.pokemonData.getRows().forEach(row => {
-      row.items.forEach(item => {
-        this.originalCardState.set(item, [...item.cardList.cards]);
-      });
-    });
+    // Initialize all energy cards
+    this.allEnergyCards = this.pokemonData.getRows()
+      .flatMap(row => row.items)
+      .flatMap(item => item.cardList.cards)
+      .filter(card => card.superType === SuperType.ENERGY);
+
+    // Initialize available cards with all energy cards
+    this.availableCards = [...this.allEnergyCards];
   }
 
   public onCardClick(item: PokemonItem): void {
@@ -73,80 +71,58 @@ export class PromptDiscardEnergyComponent implements OnInit {
     this.selectedItem = item;
     this.selectedItem.selected = true;
 
-    // Filter out already selected cards from the viewport
-    this.currentPokemonCards = item.cardList.cards.filter(
-      card => card.superType === SuperType.ENERGY &&
-        !this.selectedCards.has(card)
-    );
+    this.updateAvailableCards();
   }
 
-  public onChange(indices: number[]): void {
+  private updateAvailableCards(): void {
+    if (!this.selectedItem) {
+      return;
+    }
+
+    // Show only energy cards from the selected Pokemon
+    this.availableCards = this.selectedItem.cardList.cards.filter(
+      card => card.superType === SuperType.ENERGY &&
+        !this.selectedEnergies.some(e => e.card === card)
+    );
+
+    // Update selected cards to maintain visual state
+    this.selectedCards = this.selectedEnergies.map(e => e.card);
+  }
+
+  public onCardsChange(indices: number[]): void {
     if (!this.selectedItem) return;
 
-    const selectedFromCurrentPokemon = indices.map(i => this.currentPokemonCards[i]);
+    // Clear previous selections from this Pokemon
+    this.selectedEnergies = this.selectedEnergies.filter(
+      e => e.fromPokemon !== this.selectedItem
+    );
 
-    // Update global selection set
-    selectedFromCurrentPokemon.forEach(card => this.selectedCards.add(card));
-
-    // Update results with all selected cards
-    this.results = Array.from(this.selectedCards).map(card => ({
-      from: this.findPokemonForCard(card),
-      card,
-      container: this.cardsContainer
+    // Add newly selected energies
+    const newSelections = indices.map(index => ({
+      card: this.availableCards[index],
+      fromPokemon: this.selectedItem!,
+      originalIndex: this.selectedItem!.cardList.cards.indexOf(this.availableCards[index])
     }));
 
-    this.validateSelection();
-  }
+    this.selectedEnergies = [...this.selectedEnergies, ...newSelections];
+    this.selectedCards = this.selectedEnergies.map(e => e.card);
 
-  private findPokemonForCard(card: Card): PokemonItem {
-    return this.pokemonData.getRows()
-      .flatMap(row => row.items)
-      .find(item => item.cardList.cards.includes(card))!;
-  }
-
-  private validateSelection(): void {
-    const selectedCards = this.results.map(result => ({
-      from: result.from.target,
+    // Validate the selection
+    const selectedCards = this.selectedEnergies.map(e => ({
+      from: e.fromPokemon.target,
       to: null,
-      card: result.card
+      card: e.card
     }));
 
     this.isInvalid = !this.prompt.validate(selectedCards);
   }
 
-  public reset(): void {
-    // Clear all selections
-    this.selectedCards.clear();
-    this.results = [];
-
-    // Restore original card lists for all Pokemon
-    this.pokemonData.getRows().forEach(row => {
-      row.items.forEach(item => {
-        item.selected = false;
-        item.cardList.cards = [...this.originalCardState.get(item)!];
-      });
-    });
-
-    // Update current Pokemon's cards if one is selected
-    if (this.selectedItem) {
-      this.currentPokemonCards = this.selectedItem.cardList.cards.filter(
-        card => card.superType === SuperType.ENERGY
-      );
-    }
-
-    this.validateSelection();
-  }
-
-
   public confirm(): void {
-    // Log 4: Final validation and confirmation
-    console.log('Confirming energy selection:', this.results);
-    const results = this.results.map(result => ({
-      from: result.from.target,
-      index: result.from.cardList.cards.indexOf(result.card),
-      container: result.container
+    const results = this.selectedEnergies.map(energy => ({
+      from: energy.fromPokemon.target,
+      index: energy.originalIndex,
+      container: null
     }));
-    console.log('Final results to be sent:', results);
 
     this.gameService.resolvePrompt(
       this.gameState.gameId,

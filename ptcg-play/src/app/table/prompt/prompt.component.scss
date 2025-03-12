@@ -1,6 +1,7 @@
 @import '../../../theme/variables.scss';
 
 .ptcg-prompt-overlay {
+  will-change: opacity, visibility;
   bottom: 0;
   display: none;
   left: 0;

@@ -70,6 +70,7 @@ exports.setFossil = [
     new krabby_1.Krabby(),
     new lapras_1.Lapras(),
     new magmar_1.Magmar(),
+    // new Moltres(),
     new mr_fuji_1.MrFuji(),
     new muk_1.Muk(),
     new mysterious_fossil_1.MysteriousFossil(),

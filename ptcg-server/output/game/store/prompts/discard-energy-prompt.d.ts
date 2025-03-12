@@ -7,12 +7,10 @@ import { FilterType } from './choose-cards-prompt';
 export declare const DiscardEnergyPromptType = "Discard energy";
 export declare type DiscardEnergyResultType = {
     from: CardTarget;
-    to: CardTarget;
     index: number;
 }[];
 export interface DiscardEnergyTransfer {
     from: CardTarget;
-    to: CardTarget;
     card: Card;
 }
 export interface DiscardEnergyOptions {
@@ -20,7 +18,6 @@ export interface DiscardEnergyOptions {
     min: number;
     max: number | undefined;
     blockedFrom: CardTarget[];
-    blockedTo: CardTarget[];
     blockedMap: {
         source: CardTarget;
         blocked: number[];

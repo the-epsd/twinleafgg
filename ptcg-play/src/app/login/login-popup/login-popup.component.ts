@@ -48,34 +48,19 @@ export class LoginPopupComponent implements OnDestroy {
     )
       .subscribe({
         next: response => {
-          const removedUsernames = [''];
-          const bannedUsernames = ['Joacotaco24', 'leofanax', 'RedditKarmaGold'];
-          if (bannedUsernames.includes(this.name)) {
-            this.alertService.toast(this.translate.instant('User has been removed from the Beta Program for breach of Terms of Service'));
-            this.dialogRef.close();
-            this.loginRememberService.rememberToken();
-            this.loginService.logout(); // Disconnect the user
-            this.router.navigate(['/login']); // Navigate to the login page
+          this.dialogRef.close();
+          if (this.rememberMe) {
+            this.loginRememberService.rememberToken(response.token);
           }
-
-          if (removedUsernames.includes(this.name)) {
-            this.alertService.toast(this.translate.instant('User has been removed from the Beta Program for breach of Terms of Service'));
-            this.dialogRef.close();
-            this.loginRememberService.rememberToken();
-            this.loginService.logout(); // Disconnect the user
-            this.router.navigate(['/login']); // Navigate to the login page
-          } else {
-            this.dialogRef.close();
-            if (this.rememberMe) {
-              this.loginRememberService.rememberToken(response.token);
-            }
-            this.router.navigate([this.data.redirectUrl]);
-          }
+          this.router.navigate([this.data.redirectUrl]);
         },
         error: (error: ApiError) => {
           switch (error.code) {
             case ApiErrorEnum.LOGIN_INVALID:
               this.alertService.toast(this.translate.instant('ERROR_INVALID_NAME_OR_PASSWORD'));
+              break;
+            case ApiErrorEnum.USER_BANNED:
+              this.alertService.toast(this.translate.instant('ERROR_ACCOUNT_BANNED'));
               break;
             case ApiErrorEnum.UNSUPPORTED_VERSION:
               this.alertService.toast(this.translate.instant('ERROR_UNSUPPORTED_VERSION'));

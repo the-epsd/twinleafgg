@@ -100,13 +100,6 @@
     }
   }
 
-  ptcg-replay-controls {
-    .ptcg-replay-controls-header {
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-    }
-  }
-
   ptcg-choose-avatar-popup {
     .ptcg-avatar-items-container {
       background-color: $choose-avatar-background-color;

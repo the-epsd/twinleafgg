@@ -49,14 +49,15 @@ dnd-sortable-list {
 }
 
 .card-slot {
-  width: 90px;
-  height: 125px;
-  border: 2px dotted rgba(255, 255, 255, 0.045);
+  width: 87px;
+  height: 120px;
+  border: 1px solid rgba(255, 255, 255, 0.045);
   border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 0 auto;
+  background: rgb(22, 26, 36);
 
   .card-slot:first-child {
     grid-row: 1;

@@ -22,7 +22,8 @@ class Controller {
             lastSeen: user.lastSeen,
             lastRankingChange: user.lastRankingChange,
             avatarFile: user.avatarFile,
-            connected
+            connected,
+            roleId: user.roleId
         };
     }
     escapeLikeString(raw, escapeChar = '\\') {

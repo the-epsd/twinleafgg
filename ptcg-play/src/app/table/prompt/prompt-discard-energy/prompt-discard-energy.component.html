@@ -1,31 +1,30 @@
-<div class="host">
-  <div class="ptcg-prompt-title">
-    <h2 translate>PROMPT_MOVE_ENERGY_TITLE</h2>
-    <div class="ptcg-u-spacer"></div>
-    <button mat-button mat-icon-button (click)="minimize()">
-      <mat-icon>keyboard_arrow_down</mat-icon>
-    </button>
+<div class="ptcg-prompt-discard-energy">
+  <div class="ptcg-prompt-header">
+    <div class="ptcg-prompt-title">
+      {{ prompt.message }}
+    </div>
+    <div class="ptcg-prompt-controls">
+      <button mat-icon-button (click)="minimize()">
+        <mat-icon>keyboard_arrow_down</mat-icon>
+      </button>
+    </div>
   </div>
 
-  <div class="ptcg-damage-prompt-content">
+  <div class="ptcg-prompt-content">
     <ptcg-choose-pokemons-pane [pokemonData]="pokemonData" (cardClick)="onCardClick($event)">
     </ptcg-choose-pokemons-pane>
 
-    <ptcg-choose-cards-panes [cards]="currentPokemonCards" [filter]="filter" [blocked]="blocked" [maxCards]="max"
-      [promptValue]="{options: {max: max}}" (changeCards)="onChange($event)">
-    </ptcg-choose-cards-panes>
+    <ptcg-choose-cards-panes-2 [cards]="availableCards" [filter]="filter" [blocked]="blocked" [singlePaneMode]="false"
+      (changeCards)="onCardsChange($event)">
+    </ptcg-choose-cards-panes-2>
   </div>
 
-  <div class="ptcg-prompt-actions">
-    <button mat-raised-button [disabled]="results.length === 0" (click)="reset()">
-      {{ 'PROMPT_RESET' | translate }}
+  <div class="ptcg-prompt-footer">
+    <button mat-button *ngIf="allowedCancel" (click)="cancel()">
+      Cancel
     </button>
-    <div class="ptcg-u-spacer"></div>
-    <button mat-raised-button *ngIf="allowedCancel" [disabled]="gameState.deleted" (click)="cancel()">
-      {{ 'BUTTON_CANCEL' | translate }}
-    </button>
-    <button mat-raised-button [disabled]="gameState.deleted || isInvalid" (click)="confirm()">
-      {{ 'BUTTON_OK' | translate }}
+    <button mat-button color="primary" [disabled]="isInvalid" (click)="confirm()">
+      Confirm
     </button>
   </div>
 </div>

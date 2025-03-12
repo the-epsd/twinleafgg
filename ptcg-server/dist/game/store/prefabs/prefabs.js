@@ -16,7 +16,7 @@ import { AddSpecialConditionsPowerEffect, CheckPrizesDestinationEffect, CheckPro
 import { AttackEffect, DrawPrizesEffect, EvolveEffect, KnockOutEffect, PowerEffect, RetreatEffect } from '../effects/game-effects';
 import { AfterAttackEffect, EndTurnEffect } from '../effects/game-phase-effects';
 import { MoveCardsEffect } from '../effects/game-effects';
-import { AttachEnergyEffect } from '../effects/play-card-effects';
+import { AttachEnergyEffect, ToolEffect } from '../effects/play-card-effects';
 /**
  *
  * A basic effect for checking the use of attacks.
@@ -378,6 +378,21 @@ export function IS_ABILITY_BLOCKED(store, state, player, card) {
             powerType: PowerType.ABILITY,
             text: ''
         }, card));
+    }
+    catch (_a) {
+        return true;
+    }
+    return false;
+}
+/**
+ * Checks if a tool's effect is being blocked
+ * @returns `true` if the tool's effect is blocked, `false` if the tool's effect is able to activate.
+ */
+export function IS_TOOL_BLOCKED(store, state, player, card) {
+    // Try to reduce ToolEffect, to check if something is blocking the tool from working
+    try {
+        const stub = new ToolEffect(player, card);
+        store.reduceEffect(state, stub);
     }
     catch (_a) {
         return true;
