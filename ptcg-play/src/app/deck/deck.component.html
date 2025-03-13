@@ -42,7 +42,7 @@
                 <button mat-menu-item [routerLink]="['/deck', deck.id]">
                   {{ 'BUTTON_EDIT' | translate }}
                 </button>
-                <button mat-menu-item (click)="setAsDefault(deck.id)" *ngIf="defaultDeckId !== deck.id">
+                <button mat-menu-item (click)="setAsDefault(deck.id)" *ngIf="defaultDeckId !== deck.id && deck.isValid">
                   {{ 'DECK_SET_AS_DEFAULT' | translate }}
                 </button>
                 <button mat-menu-item (click)="exportDeckList(deck)">

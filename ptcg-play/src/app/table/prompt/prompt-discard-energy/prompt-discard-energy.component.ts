@@ -89,6 +89,14 @@ export class PromptDiscardEnergyComponent implements OnInit {
     this.selectedCards = this.selectedEnergies.map(e => e.card);
   }
 
+  public resetSelection(): void {
+    if (!this.selectedItem) return;
+
+    // Clear selections for the current Pokemon
+    this.selectedEnergies = [];
+    this.updateAvailableCards();
+  }
+
   public onCardsChange(indices: number[]): void {
     if (!this.selectedItem) return;
 

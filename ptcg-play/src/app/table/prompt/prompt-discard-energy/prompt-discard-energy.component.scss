@@ -1,30 +1,28 @@
-// .ptcg-prompt-discard-energy {
-//   display: flex;
-//   flex-direction: column;
-//   height: 100%;
+ @import '../../../../theme/variables.scss';
 
-//   .ptcg-prompt-content {
-//     display: flex;
-//     flex: 1;
-//     gap: 16px;
-//     padding: 16px;
-//     overflow: hidden;
+ $ptcg-selection-container-padding: map-get($padding, small);
+ $ptcg-selection-container-border-radius: map-get($padding, small);
 
-//     ptcg-choose-pokemons-pane {
-//       flex: 0 0 auto;
-//       width: 280px;
-//     }
+ ptcg-board-card {
+   margin: 0 map-get($padding, small);
+   width: calc(0.75 * map-get($ptcg-size, card));
 
-//     ptcg-choose-cards-panes-2 {
-//       flex: 1;
-//       min-width: 0;
-//     }
-//   }
+   &.unavailable {
+     opacity: $ptcg-disabled-opacity;
+   }
+ }
 
-//   .ptcg-prompt-footer {
-//     display: flex;
-//     justify-content: flex-end;
-//     gap: 8px;
-//     padding: 8px 16px;
-//   }
-// }
+ .button-container {
+   display: flex;
+   align-items: center;
+   padding-top: 24px;
+ }
+
+ .button-container button:last-child {
+   margin-left: auto;
+ }
+
+ .ptcg-prompt-content {
+   display: flex;
+   flex-direction: column;
+ }

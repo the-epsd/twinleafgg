@@ -26,17 +26,33 @@ class Arbiter {
             return new resolve_prompt_action_1.ResolvePromptAction(prompt.id, result, log);
         }
     }
+    // private shuffle(cards: CardList): number[] {
+    //   const len = cards.cards.length;
+    //   const order: number[] = [];
+    //   for (let i = 0; i < len; i++) {
+    //     order.push(i);
+    //   }
+    //   for (let i = 0; i < len; i++) {
+    //     const position = Math.min(len - 1, Math.round(Math.random() * len));
+    //     const tmp = order[i];
+    //     order[i] = order[position];
+    //     order[position] = tmp;
+    //   }
+    //   return order;
+    // }
     shuffle(cards) {
         const len = cards.cards.length;
         const order = [];
+        // Initialize the order array with indices 0 to len - 1
         for (let i = 0; i < len; i++) {
             order.push(i);
         }
-        for (let i = 0; i < len; i++) {
-            const position = Math.min(len - 1, Math.round(Math.random() * len));
+        // Fisher-Yates Shuffle
+        for (let i = len - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
             const tmp = order[i];
-            order[i] = order[position];
-            order[position] = tmp;
+            order[i] = order[j];
+            order[j] = tmp;
         }
         return order;
     }

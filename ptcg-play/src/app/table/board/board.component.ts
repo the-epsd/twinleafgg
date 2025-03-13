@@ -127,36 +127,31 @@ export class BoardComponent implements OnDestroy {
     }
   }
 
-  private lastCoinFlipPrompt: CoinFlipPrompt | null = null;
-  private lastProcessedId: number = -1;
+  // private lastCoinFlipPrompt: CoinFlipPrompt | null = null;
+  // private lastProcessedId: number = -1;
 
-  get activeCoinFlipPrompt(): CoinFlipPrompt | undefined {
-    // Find current coin flip prompt
-    const currentPrompt = this.gameState?.state?.prompts?.find(prompt => {
-      return prompt.type === 'Coin flip' &&
-        (prompt as CoinFlipPrompt).message === 'COIN_FLIP';
-    }) as CoinFlipPrompt;
+  // get activeCoinFlipPrompt(): CoinFlipPrompt | undefined {
+  //   const currentPrompt = this.gameState?.state?.prompts?.find(prompt => {
+  //     return prompt.type === 'Coin flip' &&
+  //       (prompt as CoinFlipPrompt).message === 'COIN_FLIP';
+  //   }) as CoinFlipPrompt;
 
-    // Process new prompts
-    if (currentPrompt) {
-      this.lastCoinFlipPrompt = currentPrompt;
-      return currentPrompt;
-    }
+  //   if (currentPrompt) {
+  //     this.lastCoinFlipPrompt = currentPrompt;
+  //     return currentPrompt;
+  //   }
 
-    // Reset when no active prompt
-    if (!this.gameState?.state?.prompts?.length) {
-      this.lastCoinFlipPrompt = null;
-    }
+  //   if (!this.gameState?.state?.prompts?.length) {
+  //     this.lastCoinFlipPrompt = null;
+  //   }
 
-    return undefined;
-  }
+  //   return undefined;
+  // }
 
 
-  handleCoinFlipComplete(result: boolean) {
-    // Now we can process the result after animation
-    console.log('Animation complete, processing result:', result);
-    // This is where we'll trigger the prompt display
-  }
+  // handleCoinFlipComplete(result: boolean) {
+  //   console.log('Animation complete, processing result:', result);
+  // }
 
   createRange(length: number): number[] {
     return Array.from({ length }, (_, i) => i);
