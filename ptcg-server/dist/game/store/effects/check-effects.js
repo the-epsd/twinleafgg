@@ -29,11 +29,12 @@ export class CheckPokemonAttacksEffect {
         this.type = CheckEffects.CHECK_POKEMON_ATTACKS_EFFECT;
         this.preventDefault = false;
         this.player = player;
-        this.attacks = [];
-        for (const tool of player.active.tools) {
-            if (!!tool && tool.attacks.length > 0) {
-                this.attacks = [...tool.attacks];
-            }
+        const tool = player.active.tool;
+        if (!!tool && tool.attacks.length > 0) {
+            this.attacks = [...tool.attacks];
+        }
+        else {
+            this.attacks = [];
         }
     }
 }

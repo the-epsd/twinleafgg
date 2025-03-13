@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PokemonCardList = void 0;
-const card_1 = require("../card/card");
 const card_types_1 = require("../card/card-types");
+const pokemon_card_1 = require("../card/pokemon-card");
 const card_list_1 = require("./card-list");
 const card_marker_1 = require("./card-marker");
 class PokemonCardList extends card_list_1.CardList {
@@ -18,15 +18,13 @@ class PokemonCardList extends card_list_1.CardList {
         this.sleepFlips = 1;
         this.boardEffect = [];
         this.hpBonus = 0;
-        this.tools = [];
-        this.maxTools = 1;
         this.isActivatingCard = false;
         this.showAllStageAbilities = false;
     }
     getPokemons() {
         const result = [];
         for (const card of this.cards) {
-            if (card.superType === card_types_1.SuperType.POKEMON && !(this.tools.includes(card))) {
+            if (card.superType === card_types_1.SuperType.POKEMON && card !== this.tool) {
                 result.push(card);
             }
             else if (card.name === 'Lillie\'s Poké Doll') {
@@ -95,9 +93,12 @@ class PokemonCardList extends card_list_1.CardList {
         this.removeSpecialCondition(card_types_1.SpecialCondition.PARALYZED);
         this.poisonDamage = 10;
         this.burnDamage = 20;
-        if (this.cards.length === 0) {
-            this.damage = 0;
-        }
+        // if (this.cards.length === 0) {
+        //   this.damage = 0;
+        // }
+        // if (this.tool && !this.cards.includes(this.tool)) {
+        //   this.tool = undefined;
+        // }
     }
     clearAllSpecialConditions() {
         this.removeSpecialCondition(card_types_1.SpecialCondition.POISONED);
@@ -200,12 +201,21 @@ class PokemonCardList extends card_list_1.CardList {
     isEthans() {
         return this.cards.some(c => c.tags.includes(card_types_1.CardTag.ETHANS));
     }
-    removeTool(tool) {
-        const index = this.tools.indexOf(tool);
-        if (index >= 0) {
-            delete this.tools[index];
+    getToolEffect() {
+        if (!this.tool) {
+            return;
         }
-        this.tools = this.tools.filter(c => c instanceof card_1.Card);
+        const toolCard = this.tool.cards;
+        if (toolCard instanceof pokemon_card_1.PokemonCard) {
+            return toolCard.powers[0] || toolCard.attacks[0];
+        }
+        // removeTool(tool: Card): void {
+        //   const index = this.tools.indexOf(tool);
+        //   if (index >= 0) {
+        //     delete this.tools[index];
+        //   }
+        //   this.tools = this.tools.filter(c => c instanceof Card);
+        // }
     }
 }
 exports.PokemonCardList = PokemonCardList;

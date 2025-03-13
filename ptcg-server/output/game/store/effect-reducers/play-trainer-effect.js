@@ -43,7 +43,7 @@ function playTrainerReducer(store, state, effect) {
         if (pokemonCard === undefined) {
             throw new game_error_1.GameError(game_message_1.GameMessage.INVALID_TARGET);
         }
-        if (effect.target.tools.length >= effect.target.maxTools) {
+        if (effect.target.tool !== undefined) {
             throw new game_error_1.GameError(game_message_1.GameMessage.POKEMON_TOOL_ALREADY_ATTACHED);
         }
         store.log(state, game_message_1.GameLog.LOG_PLAYER_PLAYS_TOOL, {
@@ -52,7 +52,7 @@ function playTrainerReducer(store, state, effect) {
             pokemon: pokemonCard.name
         });
         effect.player.hand.moveCardTo(effect.trainerCard, effect.target);
-        effect.target.tools.push(effect.trainerCard);
+        effect.target.tool = effect.trainerCard;
         const playTrainer = new play_card_effects_1.TrainerEffect(effect.player, effect.trainerCard, effect.target);
         state = store.reduceEffect(state, playTrainer);
         return state;

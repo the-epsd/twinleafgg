@@ -38,7 +38,7 @@ class MCharizardEX extends pokemon_card_1.PokemonCard {
         if ((effect instanceof game_effects_1.EvolveEffect) && effect.pokemonCard === this) {
             const player = effect.player;
             player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-                if (card === this && cardList.tools.some(tool => tool.name === 'Charizard Spirit Link')) {
+                if (card === this && cardList.tool && cardList.tool.name === 'Charizard Spirit Link') {
                     return state;
                 }
                 else {

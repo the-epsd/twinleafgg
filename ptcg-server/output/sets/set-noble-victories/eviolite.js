@@ -19,12 +19,12 @@ class Eviolite extends trainer_card_1.TrainerCard {
             '(after applying Weakness and Resistance).';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof attack_effects_1.PutDamageEffect && effect.target.cards.includes(this)) {
+        if (effect instanceof attack_effects_1.PutDamageEffect && effect.target.tool === this) {
             // Try to reduce ToolEffect, to check if something is blocking the tool from working
             if (prefabs_1.IS_TOOL_BLOCKED(store, state, effect.player, this)) {
                 return state;
             }
-            if (effect.target.tools.includes(this) && effect.target.isStage(card_types_1.Stage.BASIC)) {
+            if (effect.target.tool === this && effect.target.isStage(card_types_1.Stage.BASIC)) {
                 effect.damage -= 20;
             }
         }

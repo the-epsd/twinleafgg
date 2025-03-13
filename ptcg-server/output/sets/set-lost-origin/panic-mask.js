@@ -20,7 +20,7 @@ class PanicMask extends trainer_card_1.TrainerCard {
     }
     reduceEffect(store, state, effect) {
         var _a;
-        if (effect instanceof attack_effects_1.DealDamageEffect && effect.target.tools.includes(this)) {
+        if (effect instanceof attack_effects_1.DealDamageEffect && effect.target.tool === this) {
             const player = effect.player;
             const targetPlayer = state_utils_1.StateUtils.findOwner(state, effect.target);
             // Try to reduce ToolEffect, to check if something is blocking the tool from working

@@ -3,21 +3,18 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Revavroomex = void 0;
 const game_1 = require("../../game");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
-const check_effects_1 = require("../../game/store/effects/check-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
-const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class Revavroomex extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.stage = game_1.Stage.STAGE_1;
-        this.evolvesFrom = 'Varoom';
-        this.tags = [game_1.CardTag.POKEMON_ex];
-        this.cardType = M;
+        this.regulationMark = 'G';
+        this.stage = game_1.Stage.BASIC;
+        this.cardType = game_1.CardType.METAL;
         this.hp = 280;
-        this.weakness = [{ type: R }];
-        this.retreat = [C];
-        this.resistance = [{ type: G, value: -30 }];
+        this.weakness = [{ type: game_1.CardType.FIRE }];
+        this.retreat = [game_1.CardType.COLORLESS];
+        this.resistance = [{ type: game_1.CardType.GRASS, value: -30 }];
         this.powers = [
             {
                 name: 'Tune-Up',
@@ -28,39 +25,20 @@ class Revavroomex extends game_1.PokemonCard {
         this.attacks = [
             {
                 name: 'Wild Drift',
-                cost: [M, M, C],
+                cost: [game_1.CardType.METAL, game_1.CardType.METAL, game_1.CardType.COLORLESS],
                 damage: 170,
                 text: 'During your opponent\'s next turn, this Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance).'
             }
         ];
-        this.regulationMark = 'G';
         this.set = 'OBF';
-        this.setNumber = '156';
         this.cardImage = 'assets/cardback.png';
+        this.setNumber = '156';
         this.name = 'Revavroom ex';
         this.fullName = 'Revavroom ex OBF';
         this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';
         this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof check_effects_1.CheckTableStateEffect) {
-            state.players.forEach(player => {
-                if (!game_1.StateUtils.isPokemonInPlay(player, this)) {
-                    return;
-                }
-                player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-                    if (card !== this) {
-                        return;
-                    }
-                    if (!prefabs_1.IS_ABILITY_BLOCKED(store, state, player, this)) {
-                        cardList.maxTools = 4;
-                    }
-                    else {
-                        cardList.maxTools = 1;
-                    }
-                });
-            });
-        }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);

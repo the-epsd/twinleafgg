@@ -1,11 +1,11 @@
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { CardTag, TrainerType } from '../../game/store/card/card-types';
-import { State, StateUtils, GameLog, PlayerType, SlotType } from '../../game';
+import { State, StateUtils, GameLog, PlayerType } from '../../game';
 import { CheckHpEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
-import { IS_TOOL_BLOCKED, REMOVE_TOOL } from '../../game/store/prefabs/prefabs';
+import { IS_TOOL_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 // interface PokemonItem {
 //   playerNum: number;
@@ -38,12 +38,12 @@ export class SurvivalCast extends TrainerCard {
 
   public reduceEffect(store: any, state: State, effect: Effect): State {
 
-    if (effect instanceof PutDamageEffect && effect.target.tools.includes(this) && effect.target.damage == 0) {
+    if (effect instanceof PutDamageEffect && effect.target.tool === this && effect.target.damage == 0) {
       const player = StateUtils.findOwner(state, effect.target);
       const checkHpEffect = new CheckHpEffect(player, effect.target);
       store.reduceEffect(state, checkHpEffect);
 
-      if (IS_TOOL_BLOCKED(store, state, effect.player, this)){ return state; }
+      if (IS_TOOL_BLOCKED(store, state, effect.player, this)) { return state; }
 
       if (effect.target.damage === 0 && effect.damage >= checkHpEffect.hp) {
         effect.preventDefault = true;
@@ -56,7 +56,8 @@ export class SurvivalCast extends TrainerCard {
 
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, index) => {
           if (cardList.cards.includes(this)) {
-            REMOVE_TOOL(store, state, cardList, this, SlotType.DISCARD);
+            cardList.moveCardTo(this, player.discard);
+            cardList.tool = undefined;
           }
         });
       }

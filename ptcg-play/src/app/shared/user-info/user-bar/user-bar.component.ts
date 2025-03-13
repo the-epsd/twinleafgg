@@ -12,7 +12,6 @@ export class UserBarComponent {
 
   @Input()
   set user(value: UserInfo) {
-    console.log('User Info:', value);
     this._user = value;
   }
   get user(): UserInfo {

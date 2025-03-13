@@ -1,6 +1,7 @@
 import { Card } from '../card/card';
 import { BoardEffect, SpecialCondition, Stage } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
+import { Power, Attack } from '../card/pokemon-types';
 import { CardList } from './card-list';
 import { Marker } from './card-marker';
 export declare class PokemonCardList extends CardList {
@@ -14,8 +15,7 @@ export declare class PokemonCardList extends CardList {
     sleepFlips: number;
     boardEffect: BoardEffect[];
     hpBonus: number;
-    tools: Card[];
-    maxTools: number;
+    tool: Card | undefined;
     stadium: Card | undefined;
     isActivatingCard: boolean;
     showAllStageAbilities: boolean;
@@ -69,5 +69,5 @@ export declare class PokemonCardList extends CardList {
     isIonos(): boolean;
     isHops(): boolean;
     isEthans(): boolean;
-    removeTool(tool: Card): void;
+    getToolEffect(): Power | Attack | undefined;
 }

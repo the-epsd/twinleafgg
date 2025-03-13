@@ -38,7 +38,7 @@ class UTurnBoard extends trainer_card_1.TrainerCard {
             const player = effect.player;
             player.marker.addMarker(this.U_TURN_BOARD_MARKER, this);
         }
-        if (effect instanceof check_effects_1.CheckRetreatCostEffect && effect.player.active.tools.includes(this)) {
+        if (effect instanceof check_effects_1.CheckRetreatCostEffect && effect.player.active.tool === this) {
             const index = effect.cost.indexOf(card_types_1.CardType.COLORLESS);
             if (prefabs_1.IS_TOOL_BLOCKED(store, state, effect.player, this)) {
                 return state;

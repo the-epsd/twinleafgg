@@ -19,11 +19,14 @@
     </ptcg-choose-cards-panes-2>
   </div>
 
-  <div class="ptcg-prompt-footer">
-    <button mat-button *ngIf="allowedCancel" (click)="cancel()">
+  <div class="ptcg-prompt-footer button-container">
+    <button mat-raised-button (click)="resetSelection()">
+      Reset
+    </button>
+    <button mat-raised-button *ngIf="allowedCancel" (click)="cancel()">
       Cancel
     </button>
-    <button mat-button color="primary" [disabled]="isInvalid" (click)="confirm()">
+    <button mat-raised-button color="primary" [disabled]="isInvalid" (click)="confirm()">
       Confirm
     </button>
   </div>

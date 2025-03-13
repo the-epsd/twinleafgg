@@ -4,7 +4,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckAttackCostEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
-import {ToolEffect} from '../../game/store/effects/play-card-effects';
+import { ToolEffect } from '../../game/store/effects/play-card-effects';
 
 export class GlisteningCrystal extends TrainerCard {
 
@@ -29,7 +29,7 @@ export class GlisteningCrystal extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof CheckAttackCostEffect && effect.player.active.tools.includes(this)) {
+    if (effect instanceof CheckAttackCostEffect && effect.player.active.tool === this) {
       const pokemonCard = effect.player.active.getPokemonCard();
 
       // Try to reduce ToolEffect, to check if something is blocking the tool from working

@@ -5,7 +5,7 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { EnergyCard, GameMessage, PlayerType, SlotType, AttachEnergyPrompt, StateUtils } from '../../game';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import {ToolEffect} from '../../game/store/effects/play-card-effects';
+import { ToolEffect } from '../../game/store/effects/play-card-effects';
 
 
 export class PowerHourglass extends TrainerCard {
@@ -28,7 +28,7 @@ export class PowerHourglass extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof EndTurnEffect && effect.player.active.tools.includes(this)) {
+    if (effect instanceof EndTurnEffect && effect.player.active.tool === this) {
 
       const player = effect.player;
 

@@ -41,12 +41,12 @@ class VengefulPunch extends trainer_card_1.TrainerCard {
           }
         }*/
         if ((effect instanceof attack_effects_1.DealDamageEffect || effect instanceof attack_effects_1.PutDamageEffect) &&
-            effect.target.tools.includes(this)) {
+            effect.target.tool === this) {
             const player = game_1.StateUtils.getOpponent(state, effect.player);
             if (prefabs_1.IS_TOOL_BLOCKED(store, state, effect.player, this)) {
                 return state;
             }
-            if (player.active.tools.includes(this)) {
+            if (player.active.tool === this) {
                 this.damageDealt = true;
             }
         }

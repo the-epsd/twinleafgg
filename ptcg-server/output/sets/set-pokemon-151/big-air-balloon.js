@@ -19,7 +19,7 @@ class BigAirBalloon extends trainer_card_1.TrainerCard {
         this.text = 'The Stage 2 Pokémon this card is attached to has no Retreat Cost.';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof check_effects_1.CheckRetreatCostEffect && effect.player.active.tools.includes(this)) {
+        if (effect instanceof check_effects_1.CheckRetreatCostEffect && effect.player.active.tool === this) {
             const card = effect.player.active.getPokemonCard();
             // Try to reduce ToolEffect, to check if something is blocking the tool from working
             try {

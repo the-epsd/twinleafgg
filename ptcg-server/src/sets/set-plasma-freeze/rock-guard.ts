@@ -5,7 +5,7 @@ import { State, GamePhase } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { AfterDamageEffect } from '../../game/store/effects/attack-effects';
 import { StateUtils } from '../../game/store/state-utils';
-import {IS_TOOL_BLOCKED} from '../../game/store/prefabs/prefabs';
+import { IS_TOOL_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 
 export class RockGuard extends TrainerCard {
@@ -30,7 +30,7 @@ export class RockGuard extends TrainerCard {
     'put 6 damage counters on the Attacking Pokemon.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AfterDamageEffect && effect.target.tools.includes(this)) {
+    if (effect instanceof AfterDamageEffect && effect.target.tool === this) {
       const player = effect.player;
       const targetPlayer = StateUtils.findOwner(state, effect.target);
 
@@ -38,7 +38,7 @@ export class RockGuard extends TrainerCard {
         return state;
       }
 
-      if (IS_TOOL_BLOCKED(store, state, effect.player, this)){ return state; }
+      if (IS_TOOL_BLOCKED(store, state, effect.player, this)) { return state; }
 
       if (state.phase === GamePhase.ATTACK) {
         effect.source.damage += 60;

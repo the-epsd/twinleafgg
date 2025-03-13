@@ -50,9 +50,10 @@ class TechnicalMachineCrisisPunch extends trainer_card_1.TrainerCard {
             if (prefabs_1.IS_TOOL_BLOCKED(store, state, player, this)) {
                 return state;
             }
-            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList) => {
+            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card, index) => {
                 if (cardList.cards.includes(this)) {
-                    prefabs_1.REMOVE_TOOL(store, state, cardList, this, game_1.SlotType.DISCARD);
+                    cardList.moveCardTo(this, player.discard);
+                    cardList.tool = undefined;
                 }
             });
             return state;

@@ -6,7 +6,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { AfterDamageEffect } from '../../game/store/effects/attack-effects';
 import { StateUtils } from '../../game/store/state-utils';
 import { AttachEnergyPrompt, GameMessage, PlayerType, SlotType } from '../../game';
-import {ToolEffect} from '../../game/store/effects/play-card-effects';
+import { ToolEffect } from '../../game/store/effects/play-card-effects';
 
 
 export class HandyFan extends TrainerCard {
@@ -29,7 +29,7 @@ export class HandyFan extends TrainerCard {
     'Whenever the Active Pokémon this card is attached to takes damage from an opponent\'s attack, move an Energy from the attacking Pokémon to 1 of your opponent\'s Benched Pokémon.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AfterDamageEffect && effect.target.tools.includes(this)) {
+    if (effect instanceof AfterDamageEffect && effect.target.tool === this) {
       const player = effect.player;
       const targetPlayer = StateUtils.findOwner(state, effect.target);
 

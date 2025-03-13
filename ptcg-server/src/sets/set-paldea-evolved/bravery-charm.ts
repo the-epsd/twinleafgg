@@ -1,7 +1,7 @@
 import { TrainerCard, TrainerType, State, Stage, StoreLike } from '../../game';
 import { CheckHpEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import {ToolEffect} from '../../game/store/effects/play-card-effects';
+import {IS_TOOL_BLOCKED} from '../../game/store/prefabs/prefabs';
 
 export class BraveryCharm extends TrainerCard {
   public trainerType = TrainerType.TOOL;
@@ -27,13 +27,7 @@ export class BraveryCharm extends TrainerCard {
     if (effect instanceof CheckHpEffect && effect.target.cards.includes(this)) {
       const card = effect.target.getPokemonCard();
 
-      // Try to reduce ToolEffect, to check if something is blocking the tool from working
-      try {
-        const stub = new ToolEffect(effect.player, this);
-        store.reduceEffect(state, stub);
-      } catch {
-        return state;
-      }
+      if (IS_TOOL_BLOCKED(store, state, effect.player, this)){ return state; }
 
       if (card === undefined) {
         return state;

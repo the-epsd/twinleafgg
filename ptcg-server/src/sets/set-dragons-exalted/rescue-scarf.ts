@@ -9,7 +9,7 @@ import { Card } from '../../game/store/card/card';
 
 import { StateUtils } from '../../game';
 import { DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
-import {IS_TOOL_BLOCKED} from '../../game/store/prefabs/prefabs';
+import { IS_TOOL_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 export class RescueScarf extends TrainerCard {
 
@@ -36,17 +36,17 @@ export class RescueScarf extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.player.active.tools.includes(this)) {
+    if (effect instanceof AttackEffect && effect.player.active.tool === this) {
       this.damageDealt = false;
     }
 
     if ((effect instanceof DealDamageEffect || effect instanceof PutDamageEffect) &&
-      effect.target.tools.includes(this)) {
+      effect.target.tool === this) {
       const player = StateUtils.getOpponent(state, effect.player);
 
-      if (IS_TOOL_BLOCKED(store, state, effect.player, this)){ return state; }
+      if (IS_TOOL_BLOCKED(store, state, effect.player, this)) { return state; }
 
-      if (player.active.tools.includes(this)) {
+      if (player.active.tool === this) {
         this.damageDealt = true;
       }
     }

@@ -31,14 +31,24 @@ class Core {
         return client;
     }
     disconnect(client) {
-        const index = this.clients.indexOf(client);
-        if (index === -1) {
-            throw new game_error_1.GameError(game_message_1.GameMessage.ERROR_CLIENT_NOT_CONNECTED);
+        try {
+            const index = this.clients.indexOf(client);
+            if (index === -1) {
+                throw new game_error_1.GameError(game_message_1.GameMessage.ERROR_CLIENT_NOT_CONNECTED);
+            }
+            client.games.forEach(game => this.leaveGame(client, game));
+            this.clients.splice(index, 1);
+            client.core = undefined;
+            this.emit(c => c.onDisconnect(client));
         }
-        client.games.forEach(game => this.leaveGame(client, game));
-        this.clients.splice(index, 1);
-        client.core = undefined;
-        this.emit(c => c.onDisconnect(client));
+        catch (error) {
+            if (error instanceof game_error_1.GameError) {
+                console.error('Error during disconnect:', error.message);
+            }
+            else {
+                throw error; // Re-throw if it's not a GameError
+            }
+        }
     }
     createGame(client, deck, gameSettings = new game_settings_1.GameSettings(), invited) {
         if (this.clients.indexOf(client) === -1) {

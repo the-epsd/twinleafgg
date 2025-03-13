@@ -71,16 +71,16 @@ class Crustle extends pokemon_card_1.PokemonCard {
         }
         // Great Scissors
         if (prefabs_1.WAS_ATTACK_USED(effect, 0, this)) {
-            const player = effect.player;
-            const opponent = game_1.StateUtils.getOpponent(state, player);
+            //const player = effect.player;
+            //const opponent = StateUtils.getOpponent(state, player);
+            effect.damage = 0;
             const dealDamage = new attack_effects_1.DealDamageEffect(effect, 120);
             store.reduceEffect(state, dealDamage);
             const applyWeakness = new attack_effects_1.ApplyWeaknessEffect(effect, dealDamage.damage);
             store.reduceEffect(state, applyWeakness);
             const damage = applyWeakness.damage;
-            effect.damage = 0;
             if (damage > 0) {
-                opponent.active.damage += damage;
+                //opponent.active.damage += damage;
                 const afterDamage = new attack_effects_1.AfterDamageEffect(effect, damage);
                 state = store.reduceEffect(state, afterDamage);
             }

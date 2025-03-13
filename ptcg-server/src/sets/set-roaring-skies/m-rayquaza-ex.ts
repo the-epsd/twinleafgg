@@ -55,7 +55,7 @@ export class MRayquazaEX extends PokemonCard {
       const player = effect.player;
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-        if (card === this && cardList.tools.some(tool => tool.name === 'Rayquaza Spirit Link')) {
+        if (card === this && cardList.tool && cardList.tool.name === 'Rayquaza Spirit Link') {
           return state;
         } else {
           const endTurnEffect = new EndTurnEffect(player);

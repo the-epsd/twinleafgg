@@ -42,12 +42,12 @@ class Genesect extends pokemon_card_1.PokemonCard {
             const opponent = game_1.StateUtils.getOpponent(state, player);
             let isGenesectWithToolInPlay = false;
             // player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-            //   if (card === this && cardList.tools.length !== 0) {
+            //   if (card === this && cardList.tool !== undefined) {
             //     isGenesectWithToolInPlay = true;
             //   }
             // });
             opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList, card) => {
-                if (card === this && cardList.tools.length !== 0) {
+                if (card === this && cardList.tool !== undefined) {
                     isGenesectWithToolInPlay = true;
                 }
             });
@@ -73,12 +73,12 @@ class Genesect extends pokemon_card_1.PokemonCard {
             const opponent = game_1.StateUtils.getOpponent(state, player);
             let isGenesectWithToolInPlay = false;
             // player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-            //   if (card === this && cardList.tools.length !== 0) {
+            //   if (card === this && cardList.tool !== undefined) {
             //     isGenesectWithToolInPlay = true;
             //   }
             // });
             opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList, card) => {
-                if (card === this && cardList.tools.length !== 0) {
+                if (card === this && cardList.tool !== undefined) {
                     isGenesectWithToolInPlay = true;
                 }
             });
@@ -104,12 +104,12 @@ class Genesect extends pokemon_card_1.PokemonCard {
             const opponent = game_1.StateUtils.getOpponent(state, player);
             let isGenesectWithToolInPlay = false;
             // player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-            //   if (card === this && cardList.tools.length !== 0) {
+            //   if (card === this && cardList.tool !== undefined) {
             //     isGenesectWithToolInPlay = true;
             //   }
             // });
             opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList, card) => {
-                if (card === this && cardList.tools.length !== 0) {
+                if (card === this && cardList.tool !== undefined) {
                     isGenesectWithToolInPlay = true;
                 }
             });
@@ -135,12 +135,12 @@ class Genesect extends pokemon_card_1.PokemonCard {
             const opponent = game_1.StateUtils.getOpponent(state, player);
             let isGenesectWithToolInPlay = false;
             // player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-            //   if (card === this && cardList.tools.length !== 0) {
+            //   if (card === this && cardList.tool !== undefined) {
             //     isGenesectWithToolInPlay = true;
             //   }
             // });
             opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList, card) => {
-                if (card === this && cardList.tools.length !== 0) {
+                if (card === this && cardList.tool !== undefined) {
                     isGenesectWithToolInPlay = true;
                 }
             });
