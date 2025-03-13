@@ -19,7 +19,7 @@ class PowerHourglass extends trainer_card_1.TrainerCard {
         this.text = 'At the end of your turn, if the Pokémon this card is attached to is in the Active Spot, you may attach a Basic Energy from your discard pile to that Pokémon.';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.active.tools.includes(this)) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.active.tool === this) {
             const player = effect.player;
             // Try to reduce ToolEffect, to check if something is blocking the tool from working
             try {

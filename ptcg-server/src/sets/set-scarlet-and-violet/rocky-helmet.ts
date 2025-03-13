@@ -5,7 +5,7 @@ import { State, GamePhase } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { AfterDamageEffect } from '../../game/store/effects/attack-effects';
 import { StateUtils } from '../../game/store/state-utils';
-import {ToolEffect} from '../../game/store/effects/play-card-effects';
+import { ToolEffect } from '../../game/store/effects/play-card-effects';
 
 
 export class RockyHelmet extends TrainerCard {
@@ -30,7 +30,7 @@ export class RockyHelmet extends TrainerCard {
     'put 2 damage counters on the Attacking Pokemon.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AfterDamageEffect && effect.target.tools.includes(this)) {
+    if (effect instanceof AfterDamageEffect && effect.target.tool === this) {
       const player = effect.player;
       const targetPlayer = StateUtils.findOwner(state, effect.target);
 

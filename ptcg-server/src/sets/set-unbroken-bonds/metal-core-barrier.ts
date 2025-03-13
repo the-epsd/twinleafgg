@@ -1,11 +1,11 @@
-import { PlayerType, SlotType } from '../../game';
+import { PlayerType } from '../../game';
 import { CardType, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { IS_TOOL_BLOCKED, REMOVE_TOOL } from '../../game/store/prefabs/prefabs';
+import { IS_TOOL_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 import { StateUtils } from '../../game/store/state-utils';
 import { GamePhase, State } from '../../game/store/state/state';
@@ -34,7 +34,7 @@ export class MetalCoreBarrier extends TrainerCard {
       const cardList = StateUtils.findCardList(state, this);
       const player = StateUtils.findOwner(state, cardList);
 
-      if (IS_TOOL_BLOCKED(store, state, effect.player, this)){ return state; }
+      if (IS_TOOL_BLOCKED(store, state, effect.player, this)) { return state; }
 
       if (effect.player === player) {
         return state;
@@ -42,7 +42,8 @@ export class MetalCoreBarrier extends TrainerCard {
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, index) => {
         if (cardList.cards.includes(this)) {
-          REMOVE_TOOL(store, state, cardList, this, SlotType.DISCARD);
+          cardList.moveCardTo(this, player.discard);
+          cardList.tool = undefined;
         }
       });
 
@@ -50,8 +51,8 @@ export class MetalCoreBarrier extends TrainerCard {
     }
 
     if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {
-      
-      if (IS_TOOL_BLOCKED(store, state, effect.player, this)){ return state; }
+
+      if (IS_TOOL_BLOCKED(store, state, effect.player, this)) { return state; }
 
       const checkPokemonType = new CheckPokemonTypeEffect(effect.target);
       store.reduceEffect(state, checkPokemonType);

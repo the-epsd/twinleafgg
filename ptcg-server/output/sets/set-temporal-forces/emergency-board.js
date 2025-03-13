@@ -18,7 +18,7 @@ class EmergencyBoard extends trainer_card_1.TrainerCard {
         this.text = 'The Retreat Cost of the Pokémon this card is attached to is [C] less. If that Pokémon\'s remaining HP is 30 or less, it has no Retreat Cost.';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof check_effects_1.CheckRetreatCostEffect && effect.player.active.tools.includes(this)) {
+        if (effect instanceof check_effects_1.CheckRetreatCostEffect && effect.player.active.tool === this) {
             const player = effect.player;
             const pokemonCard = player.active.getPokemonCard();
             if (prefabs_1.IS_TOOL_BLOCKED(store, state, effect.player, this)) {

@@ -21,7 +21,7 @@ class DeluxeBomb extends trainer_card_1.TrainerCard {
         this.text = 'If the Pokémon this card is attached to is in the Active Spot and is damaged by an attack from your opponent\'s Pokémon (even if this Pokémon is Knocked Out), put 12 damage counters on the Attacking Pokémon. If you placed any damage counters in this way, discard this card.';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof attack_effects_1.AfterDamageEffect && effect.target.tools.includes(this)) {
+        if (effect instanceof attack_effects_1.AfterDamageEffect && effect.target.tool === this) {
             const player = effect.player;
             const targetPlayer = state_utils_1.StateUtils.findOwner(state, effect.target);
             // Try to reduce ToolEffect, to check if something is blocking the tool from working

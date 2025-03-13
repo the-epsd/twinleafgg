@@ -147,12 +147,7 @@ export class BoardCardComponent {
     this.specialConditions = cardList.specialConditions;
     this.boardEffect = cardList.boardEffect;
     this.mainCard = cardList.getPokemonCard();
-
-    if (cardList.tools.length > 0) {
-      this.trainerCard = cardList.tools[0];
-    } else {
-      this.trainerCard = undefined;
-    }
+    this.trainerCard = cardList.tool;
 
     for (const card of cardList.cards) {
       if (card.superType === SuperType.ENERGY) {

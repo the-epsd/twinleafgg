@@ -19,7 +19,7 @@ class WideLens extends trainer_card_1.TrainerCard {
             + ' is affected by Weakness and Resistance for your opponent\'s Benched Pokémon.';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof attack_effects_1.PutDamageEffect && effect.player.active.cards.includes(this)) {
+        if (effect instanceof attack_effects_1.PutDamageEffect && effect.player.active.tool === this) {
             const opponent = game_1.StateUtils.getOpponent(state, effect.player);
             if (prefabs_1.IS_TOOL_BLOCKED(store, state, effect.player, this)) {
                 return state;

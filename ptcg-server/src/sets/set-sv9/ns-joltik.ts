@@ -1,10 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SpecialCondition } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, SlotType } from '../../game';
+import { StoreLike, State, StateUtils } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
-import { REMOVE_TOOL } from '../../game/store/prefabs/prefabs';
 
 export class NsJoltik extends PokemonCard {
   public tags = [CardTag.NS];
@@ -23,31 +22,25 @@ export class NsJoltik extends PokemonCard {
     }
   ];
 
-  public set: string = 'SV9';
   public regulationMark = 'I';
-  public cardImage: string = 'assets/cardback.png';
+  public set: string = 'SV9';
   public setNumber: string = '28';
-
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'N\'s Joltik';
   public fullName: string = 'N\'s Joltik SV9';
-
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      if (opponent.active.tools.length !== 0) {
-        for (const tool of opponent.active.tools) {
-          REMOVE_TOOL(store, state, opponent.active, tool, SlotType.DISCARD);
-        }
+      if (opponent.active.tool && opponent.active.tool !== undefined) {
+        opponent.active.moveCardTo(opponent.active.tool, opponent.discard);
 
         const specialCondition = new AddSpecialConditionsEffect(effect, [SpecialCondition.PARALYZED]);
         return store.reduceEffect(state, specialCondition);
       }
     }
-
     return state;
   }
-
 }

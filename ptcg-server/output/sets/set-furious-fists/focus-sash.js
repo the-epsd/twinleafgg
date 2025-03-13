@@ -20,7 +20,7 @@ class FocusSash extends trainer_card_1.TrainerCard {
         this.canDiscard = false;
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof attack_effects_1.PutDamageEffect && effect.target.tools.includes(this) && effect.target.damage == 0) {
+        if (effect instanceof attack_effects_1.PutDamageEffect && effect.target.tool === this && effect.target.damage == 0) {
             const player = game_1.StateUtils.findOwner(state, effect.target);
             if (prefabs_1.IS_TOOL_BLOCKED(store, state, effect.player, this)) {
                 return state;
@@ -36,7 +36,8 @@ class FocusSash extends trainer_card_1.TrainerCard {
             if (this.canDiscard) {
                 player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card, index) => {
                     if (cardList.cards.includes(this)) {
-                        prefabs_1.REMOVE_TOOL(store, state, cardList, this, game_1.SlotType.DISCARD);
+                        cardList.moveCardTo(this, player.discard);
+                        cardList.tool = undefined;
                     }
                 });
             }

@@ -6,7 +6,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { CheckHpEffect, CheckTableStateEffect } from '../../game/store/effects/check-effects';
 
 import { StateUtils, PokemonCardList } from '../../game';
-import {ToolEffect} from '../../game/store/effects/play-card-effects';
+import { ToolEffect } from '../../game/store/effects/play-card-effects';
 
 export class AncientBoosterEnergyCapsule extends TrainerCard {
 
@@ -62,7 +62,7 @@ export class AncientBoosterEnergyCapsule extends TrainerCard {
         return state;
       }
 
-      if (cardList instanceof PokemonCardList && cardList.tools.includes(this)) {
+      if (cardList instanceof PokemonCardList && cardList.tool === this) {
         const card = cardList.getPokemonCard();
         if (card && card.tags.includes(CardTag.ANCIENT)) {
           const hasSpecialCondition = cardList.specialConditions.some(condition => condition !== SpecialCondition.ABILITY_USED);

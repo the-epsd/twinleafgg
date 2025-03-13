@@ -5,7 +5,6 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckRetreatCostEffect } from '../../game/store/effects/check-effects';
 import { StateUtils } from '../../game';
-import {ToolEffect} from '../../game/store/effects/play-card-effects';
 
 export class GravityGemstone extends TrainerCard {
 
@@ -31,15 +30,7 @@ export class GravityGemstone extends TrainerCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      // Try to reduce ToolEffect, to check if something is blocking the tool from working
-      try {
-        const stub = new ToolEffect(effect.player, this);
-        store.reduceEffect(state, stub);
-      } catch {
-        return state;
-      }
-
-      if (player.active.tools.includes(this) || opponent.active.tools.includes(this)) {
+      if (player.active.tool === this || opponent.active.tool === this) {
         effect.cost.push(CardType.COLORLESS);
       }
     }

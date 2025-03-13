@@ -21,7 +21,7 @@ class DarkClaw extends trainer_card_1.TrainerCard {
             '(before applying Weakness and Resistance).';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof attack_effects_1.PutDamageEffect && effect.source.tools.includes(this)) {
+        if (effect instanceof attack_effects_1.PutDamageEffect && effect.source.tool === this) {
             const opponent = state_utils_1.StateUtils.findOwner(state, effect.target);
             if (prefabs_1.IS_TOOL_BLOCKED(store, state, effect.player, this)) {
                 return state;

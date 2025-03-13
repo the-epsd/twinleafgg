@@ -24,13 +24,13 @@ class SpellTag extends trainer_card_1.TrainerCard {
         this.damageDealt = false;
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_effects_1.AttackEffect && effect.player.active.tools.includes(this)) {
+        if (effect instanceof game_effects_1.AttackEffect && effect.player.active.tool === this) {
             this.damageDealt = false;
         }
         if ((effect instanceof attack_effects_1.DealDamageEffect || effect instanceof attack_effects_1.PutDamageEffect) &&
-            effect.target.tools.includes(this)) {
+            effect.target.tool === this) {
             const player = state_utils_1.StateUtils.getOpponent(state, effect.player);
-            if (player.active.tools.includes(this)) {
+            if (player.active.tool === this) {
                 this.damageDealt = true;
             }
         }

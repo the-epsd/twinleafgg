@@ -21,7 +21,7 @@ class HandyFan extends trainer_card_1.TrainerCard {
         this.text = 'Whenever the Active Pokémon this card is attached to takes damage from an opponent\'s attack, move an Energy from the attacking Pokémon to 1 of your opponent\'s Benched Pokémon.';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof attack_effects_1.AfterDamageEffect && effect.target.tools.includes(this)) {
+        if (effect instanceof attack_effects_1.AfterDamageEffect && effect.target.tool === this) {
             const player = effect.player;
             const targetPlayer = state_utils_1.StateUtils.findOwner(state, effect.target);
             if (effect.damage <= 0 || player === targetPlayer || targetPlayer.active !== effect.target) {

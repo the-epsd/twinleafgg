@@ -4,7 +4,7 @@ import { PlayerType, SlotType } from '../actions/play-card-action';
 import { EnergyCard } from '../card/energy-card';
 import { CheckHpEffect, CheckProvidedEnergyEffect, CheckTableStateEffect } from '../effects/check-effects';
 import { KnockOutEffect } from '../effects/game-effects';
-import { REMOVE_TOOLS_FROM_POKEMON_PROMPT, TAKE_SPECIFIC_PRIZES } from '../prefabs/prefabs';
+import { TAKE_SPECIFIC_PRIZES } from '../prefabs/prefabs';
 import { ChoosePokemonPrompt } from '../prompts/choose-pokemon-prompt';
 import { ChoosePrizePrompt } from '../prompts/choose-prize-prompt';
 import { CoinFlipPrompt } from '../prompts/coin-flip-prompt';
@@ -39,17 +39,17 @@ function findKoPokemons(store, state) {
 //     return koPokemons;
 //   }, []);
 // }
-function handleMaxToolsChange(store, state) {
-    state.players.forEach((player, index) => {
-        player.forEachPokemon(PlayerType.ANY, (cardList) => {
-            if (cardList.tools.length > cardList.maxTools) {
-                const amount = cardList.tools.length - cardList.maxTools;
-                REMOVE_TOOLS_FROM_POKEMON_PROMPT(store, state, player, cardList, SlotType.DISCARD, amount, amount);
-            }
-        });
-    });
-    return state;
-}
+// function handleMaxToolsChange(store: StoreLike, state: State): State {
+//   state.players.forEach((player, index) => {
+//     player.forEachPokemon(PlayerType.ANY, (cardList) => {
+//       if (cardList.tools.length > cardList.maxTools) {
+//         const amount = cardList.tools.length - cardList.maxTools;
+//         REMOVE_TOOLS_FROM_POKEMON_PROMPT(store, state, player, cardList, SlotType.DISCARD, amount, amount);
+//       }
+//     });
+//   });
+//   return state;
+// }
 function handleBenchSizeChange(store, state, benchSizes) {
     state.players.forEach((player, index) => {
         const benchSize = benchSizes[index];
@@ -283,7 +283,7 @@ export function* executeCheckState(next, store, state, onComplete) {
     // Check table state and handle bench size first
     const checkTableStateEffect = new CheckTableStateEffect([5, 5]);
     store.reduceEffect(state, checkTableStateEffect);
-    handleMaxToolsChange(store, state);
+    // handleMaxToolsChange(store, state);
     handleBenchSizeChange(store, state, checkTableStateEffect.benchSizes);
     if (store.hasPrompts()) {
         yield store.waitPrompt(state, () => next());
@@ -308,6 +308,10 @@ export function* executeCheckState(next, store, state, onComplete) {
             }
             group.count += knockOutEffect.prizeCount;
         }
+    }
+    // Check if the game has ended before proceeding with prompts
+    if (state.phase === GamePhase.FINISHED) {
+        return state;
     }
     // Handle prize selection first - opponent then player
     const prizePrompts = choosePrizeCards(store, state, prizeGroups);

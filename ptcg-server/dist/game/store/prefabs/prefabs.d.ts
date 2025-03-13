@@ -178,6 +178,3 @@ export declare function MOVE_CARDS(store: StoreLike, state: State, source: CardL
     toBottom?: boolean;
     skipCleanup?: boolean;
 }): State;
-export declare function REMOVE_TOOL(store: StoreLike, state: State, source: PokemonCardList, tool: Card, destinationSlot: SlotType): State;
-export declare function REMOVE_TOOLS_FROM_POKEMON_PROMPT(store: StoreLike, state: State, player: Player, target: PokemonCardList, destinationSlot: SlotType, min: number, max: number): State;
-export declare function CHOOSE_TOOLS_TO_REMOVE_PROMPT(store: StoreLike, state: State, player: Player, playerType: PlayerType, destinationSlot: SlotType, min: number, max: number): State;

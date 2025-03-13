@@ -1,7 +1,4 @@
-import { PokemonCard, Stage, CardType, PowerType, State, StoreLike, PlayerType, StateUtils } from '../../game';
-import { CheckTableStateEffect } from '../../game/store/effects/check-effects';
-import { Effect } from '../../game/store/effects/effect';
-import { IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
+import { PokemonCard, Stage, CardType, PowerType } from '../../game';
 
 export class Sigilyph extends PokemonCard {
 
@@ -30,25 +27,25 @@ export class Sigilyph extends PokemonCard {
   public name: string = 'Sigilyph';
   public fullName: string = 'Sigilyph PLB';
 
-  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+  // public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof CheckTableStateEffect) {
-      state.players.forEach(player => {
-        if (!StateUtils.isPokemonInPlay(player, this)) {
-          return;
-        }
-        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-          if (card !== this) {
-            return;
-          }
-          if (!IS_ABILITY_BLOCKED(store, state, player, this)) {
-            cardList.maxTools = 4;
-          } else {
-            cardList.maxTools = 1;
-          }
-        });
-      });
-    }
-    return state;
-  }
+  //   if (effect instanceof CheckTableStateEffect) {
+  //     state.players.forEach(player => {
+  //       if (!StateUtils.isPokemonInPlay(player, this)) {
+  //         return;
+  //       }
+  //       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+  //         if (card !== this) {
+  //           return;
+  //         }
+  //         if (!IS_ABILITY_BLOCKED(store, state, player, this)) {
+  //           cardList.maxTools = 4;
+  //         } else {
+  //           cardList.maxTools = 1;
+  //         }
+  //       });
+  //     });
+  //   }
+  //   return state;
+  // }
 }

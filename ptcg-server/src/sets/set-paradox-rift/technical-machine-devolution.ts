@@ -1,4 +1,4 @@
-import { Attack, CardManager, GameError, GameMessage, PlayerType, PokemonCard, SlotType, StateUtils } from '../../game';
+import { Attack, CardManager, GameError, GameMessage, PlayerType, PokemonCard, StateUtils } from '../../game';
 import { CardType, Stage, SuperType, TrainerType } from '../../game/store/card/card-types';
 import { ColorlessCostReducer } from '../../game/store/card/pokemon-interface';
 import { TrainerCard } from '../../game/store/card/trainer-card';
@@ -6,7 +6,7 @@ import { CheckAttackCostEffect, CheckPokemonAttacksEffect } from '../../game/sto
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { IS_TOOL_BLOCKED, REMOVE_TOOL } from '../../game/store/prefabs/prefabs';
+import { IS_TOOL_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
@@ -48,7 +48,8 @@ export class TechnicalMachineDevolution extends TrainerCard {
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, index) => {
         if (cardList.cards.includes(this)) {
-          REMOVE_TOOL(store, state, cardList, this, SlotType.DISCARD);
+          cardList.moveCardTo(this, player.discard);
+          cardList.tool = undefined;
         }
       });
 
