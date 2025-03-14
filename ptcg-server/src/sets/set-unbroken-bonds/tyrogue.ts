@@ -1,4 +1,4 @@
-import { ChoosePokemonPrompt, GameMessage, PlayerType, PowerType, SlotType, State, StoreLike } from '../../game';
+import { ChoosePokemonPrompt, CoinFlipPrompt, GameMessage, PlayerType, PowerType, SlotType, State, StoreLike } from '../../game';
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
@@ -13,7 +13,7 @@ export class Tyrogue extends PokemonCard {
 
   public hp: number = 60;
 
-  public retreat = [ ];
+  public retreat = [];
 
   public powers = [{
     name: 'Bratty Kick',
@@ -33,31 +33,36 @@ export class Tyrogue extends PokemonCard {
   public setNumber: string = '100';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    
+
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
 
-      return store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-        PlayerType.TOP_PLAYER,
-        [SlotType.ACTIVE, SlotType.BENCH],
-        { min: 1, max: 1, allowCancel: false }
-      ), selected => {
-        const targets = selected || [];
-        targets.forEach(target => {
-          target.damage += 30;
-        });
-        
-        const endTurnEffect = new EndTurnEffect(player);
-        store.reduceEffect(state, endTurnEffect);
-        
-        return state;
+      return store.prompt(state, [
+        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
+      ], result => {
+        if (!result) {
+          const endTurnEffect = new EndTurnEffect(player);
+          store.reduceEffect(state, endTurnEffect);
+        } else {
+
+          return store.prompt(state, new ChoosePokemonPrompt(
+            player.id,
+            GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+            PlayerType.TOP_PLAYER,
+            [SlotType.ACTIVE, SlotType.BENCH],
+            { min: 1, max: 1, allowCancel: false }
+          ), selected => {
+            const targets = selected || [];
+            targets.forEach(target => {
+              target.damage += 30;
+            });
+
+            const endTurnEffect = new EndTurnEffect(player);
+            store.reduceEffect(state, endTurnEffect);
+          });
+        }
       });
-    
     }
-    
     return state;
   }
-
 }

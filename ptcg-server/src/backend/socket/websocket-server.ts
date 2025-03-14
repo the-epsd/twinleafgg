@@ -15,7 +15,10 @@ export class WebSocketServer {
   constructor(private core: Core) { }
 
   public async listen(httpServer: http.Server): Promise<void> {
-    const opts: Partial<ServerOptions> = {};
+    const opts: Partial<ServerOptions> = {
+      pingTimeout: 60000,
+      pingInterval: 25000,
+    };
 
     if (config.backend.allowCors) {
       opts.cors = { origin: '*' };

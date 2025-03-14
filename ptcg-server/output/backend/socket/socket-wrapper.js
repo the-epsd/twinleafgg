@@ -6,6 +6,13 @@ class SocketWrapper {
         this.listeners = [];
         this.io = io;
         this.socket = socket;
+        // Add error handling
+        this.socket.on('error', (error) => {
+            console.error('Socket error:', error);
+        });
+        this.socket.on('disconnect', (reason) => {
+            console.log('Socket disconnected:', reason);
+        });
     }
     attachListeners() {
         for (let i = 0; i < this.listeners.length; i++) {

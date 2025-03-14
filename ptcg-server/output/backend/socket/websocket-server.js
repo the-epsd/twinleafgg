@@ -10,7 +10,10 @@ class WebSocketServer {
         this.core = core;
     }
     async listen(httpServer) {
-        const opts = {};
+        const opts = {
+            pingTimeout: 60000,
+            pingInterval: 25000,
+        };
         if (config_1.config.backend.allowCors) {
             opts.cors = { origin: '*' };
         }
