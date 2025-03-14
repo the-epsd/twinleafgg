@@ -127,6 +127,7 @@ export enum Archetype {
   GARCHOMP = 'Garchomp',
   HOOH = 'Ho-oh',
   HYDREIGON = 'Hydreigon',
+  MEGA_GARDEVOIR = 'Mega Gardevoir',
 }
 
 export enum CardType {

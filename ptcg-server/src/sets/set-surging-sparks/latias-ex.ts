@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, GameMessage, GameError, PowerType, StateUtils } from '../../game';
+import { StoreLike, State, GameMessage, GameError, PowerType, StateUtils, PlayerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
@@ -65,13 +65,24 @@ export class Latiasex extends PokemonCard {
       console.log('second marker added');
     }
 
-    if (effect instanceof CheckRetreatCostEffect && StateUtils.isPokemonInPlay(effect.player, this)) {
+    if (effect instanceof CheckRetreatCostEffect) {
       const player = effect.player;
       const cardList = StateUtils.findCardList(state, this);
       const owner = StateUtils.findOwner(state, cardList);
       const active = effect.player.active.getPokemonCard();
 
       if (owner !== player || active === undefined) {
+        return state;
+      }
+
+      let isRabscaInPlay = false;
+      owner.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+        if (card === this) {
+          isRabscaInPlay = true;
+        }
+      });
+
+      if (!isRabscaInPlay) {
         return state;
       }
 

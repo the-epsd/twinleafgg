@@ -8,8 +8,8 @@ class GyaradosV extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.regulationMark = 'E';
-        this.tags = [card_types_1.CardTag.POKEMON_VMAX];
-        this.stage = card_types_1.Stage.VMAX;
+        this.tags = [card_types_1.CardTag.POKEMON_V];
+        this.stage = card_types_1.Stage.BASIC;
         this.evolvesFrom = 'Gyarados V';
         this.cardType = card_types_1.CardType.WATER;
         this.hp = 330;

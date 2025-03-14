@@ -82,11 +82,24 @@ export class Mew extends PokemonCard {
       return generator.next().value;
     }
 
-    if (effect instanceof PutDamageEffect && StateUtils.isPokemonInPlay(effect.player, this)) {
+    if (effect instanceof PutDamageEffect) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
       if (effect.target === player.active || effect.target === opponent.active) {
+        return state;
+      }
+
+      const targetPlayer = StateUtils.findOwner(state, effect.target);
+
+      let isMewInPlay = false;
+      targetPlayer.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+        if (card === this) {
+          isMewInPlay = true;
+        }
+      });
+
+      if (!isMewInPlay) {
         return state;
       }
 
@@ -104,8 +117,6 @@ export class Mew extends PokemonCard {
 
       effect.preventDefault = true;
     }
-
     return state;
   }
-
 }

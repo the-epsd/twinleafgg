@@ -4,6 +4,7 @@ interface RateLimitItem {
   ip: string;
   count: number;
   lastRequest: number;
+  type: 'http' | 'websocket';
 }
 
 export class RateLimit {
@@ -15,31 +16,46 @@ export class RateLimit {
     return RateLimit.instance;
   }
 
-  public isLimitExceeded(ip: string): boolean {
+  public isLimitExceeded(ip: string, type: 'http' | 'websocket' = 'http'): boolean {
     this.deleteExpired();
 
-    const rateLimit = this.items.find(i => i.ip === ip);
+    const rateLimit = this.items.find(i => i.ip === ip && i.type === type);
     if (rateLimit === undefined) {
       return false;
     }
 
-    if (rateLimit.count < config.backend.rateLimitCount) {
-      return false;
-    }
+    const limit = type === 'websocket'
+      ? config.backend.wsRateLimitCount || config.backend.rateLimitCount * 2
+      : config.backend.rateLimitCount;
 
-    return true;
+    return rateLimit.count >= limit;
   }
 
-  public increment(ip: string) {
-    let rateLimit = this.items.find(i => i.ip === ip);
+  public increment(ip: string, type: 'http' | 'websocket' = 'http'): void {
+    let rateLimit = this.items.find(i => i.ip === ip && i.type === type);
 
     if (rateLimit === undefined) {
-      rateLimit = { ip, lastRequest: 0, count: 0 };
+      rateLimit = { ip, type, lastRequest: 0, count: 0 };
       this.items.push(rateLimit);
     }
 
     rateLimit.lastRequest = Date.now();
     rateLimit.count += 1;
+  }
+
+  public getCurrentCount(ip: string, type: 'http' | 'websocket' = 'http'): number {
+    const rateLimit = this.items.find(i => i.ip === ip && i.type === type);
+    return rateLimit?.count || 0;
+  }
+
+  public getRetryAfter(ip: string, type: 'http' | 'websocket' = 'http'): number {
+    const rateLimit = this.items.find(i => i.ip === ip && i.type === type);
+    if (!rateLimit) {
+      return 0;
+    }
+
+    const timeLeft = (rateLimit.lastRequest + config.backend.rateLimitTime) - Date.now();
+    return Math.max(0, timeLeft);
   }
 
   private deleteExpired(): void {

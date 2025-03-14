@@ -70,7 +70,6 @@ export class BloodmoonUrsalunaex extends PokemonCard {
         }, this);
         store.reduceEffect(state, stub);
       } catch {
-        console.log(effect.cost);
         return state;
       }
 

@@ -253,7 +253,6 @@
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/gouging-fire.png);
   }
 
-
   &[archetype="gholdengo"] {
     background-size: contain;
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/gholdengo.png);
@@ -357,5 +356,10 @@
   &[archetype="hydreigon"] {
     background-size: contain;
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/hydreigon.png);
+  }
+
+  &[archetype="mega-gardevoir"] {
+    background-size: contain;
+    background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/gardevoir-mega.png);
   }
 }

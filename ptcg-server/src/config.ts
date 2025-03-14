@@ -1,4 +1,3 @@
-
 export const config = {
   backend: {
     address: 'https://play-server.twinleaf.gg',
@@ -13,8 +12,9 @@ export const config = {
     avatarMinSize: 64,
     avatarMaxSize: 512,
     replayFileSize: 512 * 1024,
-    rateLimitCount: 25, // Ban IP after that many wrong password errors
-    rateLimitTime: 300 // How long the user should be banned
+    rateLimitCount: 100, // HTTP request limit
+    wsRateLimitCount: 200, // WebSocket specific limit
+    rateLimitTime: 60000, // 1 minute in milliseconds
   },
   core: {
     debug: false,

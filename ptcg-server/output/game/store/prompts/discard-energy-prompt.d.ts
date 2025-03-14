@@ -4,6 +4,7 @@ import { Prompt } from './prompt';
 import { PlayerType, SlotType, CardTarget } from '../actions/play-card-action';
 import { State } from '../state/state';
 import { FilterType } from './choose-cards-prompt';
+import { CardList } from '../state/card-list';
 export declare const DiscardEnergyPromptType = "Discard energy";
 export declare type DiscardEnergyResultType = {
     from: CardTarget;
@@ -30,6 +31,7 @@ export declare class DiscardEnergyPrompt extends Prompt<DiscardEnergyTransfer[]>
     filter: FilterType;
     readonly type: string;
     options: DiscardEnergyOptions;
+    cardList: CardList;
     constructor(playerId: number, message: GameMessage, playerType: PlayerType, slots: SlotType[], filter: FilterType, options?: Partial<DiscardEnergyOptions>);
     decode(result: DiscardEnergyResultType | null, state: State): DiscardEnergyTransfer[] | null;
     validate(result: DiscardEnergyTransfer[] | null): boolean;

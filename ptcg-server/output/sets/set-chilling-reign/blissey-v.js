@@ -81,6 +81,7 @@ class BlisseyV extends game_1.PokemonCard {
                     const target = game_1.StateUtils.getTarget(state, player, transfer.to);
                     player.discard.moveCardTo(transfer.card, target);
                 }
+                this.usedBlissfulBlast = false;
             });
         }
         return state;

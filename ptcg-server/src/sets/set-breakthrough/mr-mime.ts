@@ -71,7 +71,7 @@ export class MrMime extends PokemonCard {
       effect.preventDefault = true;
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       state = store.prompt(state, [
         new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP),

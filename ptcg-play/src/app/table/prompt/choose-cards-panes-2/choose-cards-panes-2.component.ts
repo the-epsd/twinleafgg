@@ -31,6 +31,8 @@ export class ChooseCardsPanes2Component implements OnChanges {
   public topSortable: ChooseCardsSortable;
   public bottomSortable: ChooseCardsSortable;
 
+  private previousBottomList: PromptItem[] = [];
+
   constructor(
     private cardsBaseService: CardsBaseService
   ) {
@@ -155,8 +157,17 @@ export class ChooseCardsPanes2Component implements OnChanges {
   ngOnChanges() {
     if (this.cards && this.filter && this.blocked) {
       this.filterMap = this.buildFilterMap(this.cards, this.filter, this.blocked);
-      this.topSortable.tempList = this.buildCardList(this.cards);
-      this.bottomSortable.tempList = [];
+
+      // Build new top list excluding cards that are in the bottom pane
+      const bottomIndices = new Set(this.bottomSortable.tempList.map(item => item.index));
+      this.topSortable.tempList = this.buildCardList(this.cards)
+        .filter(item => !bottomIndices.has(item.index));
+
+      // Maintain the bottom list state
+      this.bottomSortable.tempList = this.bottomSortable.tempList.length > 0
+        ? this.bottomSortable.tempList
+        : [];
+
       this.commitTempLists();
     }
   }

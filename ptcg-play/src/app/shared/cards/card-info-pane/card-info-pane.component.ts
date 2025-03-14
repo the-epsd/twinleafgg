@@ -52,19 +52,8 @@ export class CardInfoPaneComponent implements OnChanges {
   public clickAction(action: CardInfoPaneAction) {
     action.card = this.card;
     if (action.trainer) {
-      console.log('Trainer action detected:', action);
     }
     this.action.next(action);
-  }
-
-  private handleAbility(abilityName: string, cardList: PokemonCardList) {
-    // Implement the logic to execute the ability here
-    console.log(`Executing ability: ${abilityName} with cardList:`, cardList);
-  }
-
-  private handleAttack(attackName: string, cardList: PokemonCardList) {
-    // Implement the logic to execute the attack here
-    console.log(`Executing attack: ${attackName} with cardList:`, cardList);
   }
 
   ngOnChanges() {

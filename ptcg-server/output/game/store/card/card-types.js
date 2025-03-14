@@ -130,6 +130,7 @@ var Archetype;
     Archetype["GARCHOMP"] = "Garchomp";
     Archetype["HOOH"] = "Ho-oh";
     Archetype["HYDREIGON"] = "Hydreigon";
+    Archetype["MEGA_GARDEVOIR"] = "Mega Gardevoir";
 })(Archetype = exports.Archetype || (exports.Archetype = {}));
 var CardType;
 (function (CardType) {
