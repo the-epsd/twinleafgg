@@ -119,7 +119,8 @@ export declare enum Archetype {
     HYDRAPPLE = "Hydrapple",
     GARCHOMP = "Garchomp",
     HOOH = "Ho-oh",
-    HYDREIGON = "Hydreigon"
+    HYDREIGON = "Hydreigon",
+    MEGA_GARDEVOIR = "Mega Gardevoir"
 }
 export declare enum CardType {
     ANY = 0,

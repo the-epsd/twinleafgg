@@ -64,7 +64,6 @@ class BloodmoonUrsalunaex extends pokemon_card_1.PokemonCard {
                 store.reduceEffect(state, stub);
             }
             catch (_a) {
-                console.log(effect.cost);
                 return state;
             }
             const index = effect.cost.indexOf(card_types_1.CardType.COLORLESS);

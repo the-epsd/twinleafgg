@@ -51,7 +51,6 @@ export class DarkraiGX extends PokemonCard {
       const player = effect.player;
       const slots: PokemonCardList[] = player.bench.filter(b => b.cards.length === 0);
 
-      console.log('Number of bench slots open: ' + slots.length);
       // Check if card is in the discard
       if (!player.discard.cards.includes(this)) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
@@ -66,7 +65,7 @@ export class DarkraiGX extends PokemonCard {
       if (slots.length === 0) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
-      
+
       // Add Marker (similar to propagation exeggcute, you can use this as much as you want)
       // source: https://compendium.pokegym.net/category/4-abilities/restoration/
       //player.marker.addMarker(this.NETHERWORLD_GATE_MARKER, this);
