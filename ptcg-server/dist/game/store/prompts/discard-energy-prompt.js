@@ -31,8 +31,15 @@ export class DiscardEnergyPrompt extends Prompt {
             throw new GameError(GameMessage.INVALID_PROMPT_RESULT);
         }
         const transfers = [];
+        const processedCards = new Set();
         result.forEach(t => {
             const cardList = StateUtils.getTarget(state, player, t.from);
+            // Check if we've already processed this card from this source
+            const key = `${t.from}-${t.index}`;
+            if (processedCards.has(key)) {
+                throw new GameError(GameMessage.INVALID_PROMPT_RESULT);
+            }
+            processedCards.add(key);
             const card = cardList.cards[t.index];
             // Verify this is a card.
             if (!(card instanceof Card)) {
