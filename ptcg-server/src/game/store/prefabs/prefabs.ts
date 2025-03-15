@@ -493,20 +493,6 @@ export function IS_ABILITY_BLOCKED(store: StoreLike, state: State, player: Playe
   return false;
 }
 
-export function IS_POKEPOWER_BLOCKED(store: StoreLike, state: State, player: Player, card: PokemonCard): boolean {
-  // Try to reduce PowerEffect, to check if something is blocking our ability
-  try {
-    store.reduceEffect(state, new PowerEffect(player, {
-      name: 'test',
-      powerType: PowerType.POKEPOWER,
-      text: ''
-    }, card));
-  } catch {
-    return true;
-  }
-  return false;
-}
-
 export function CAN_EVOLVE_ON_FIRST_TURN_GOING_SECOND(state: State, player: Player, pokemon: PokemonCardList) {
   if (state.turn === 2) {
     player.canEvolve = true;

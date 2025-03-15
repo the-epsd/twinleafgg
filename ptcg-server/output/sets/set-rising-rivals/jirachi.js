@@ -49,7 +49,15 @@ class Jirachi extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.KnockOutEffect && effect.target.cards.includes(this) && effect.player.marker.hasMarker(effect.player.DAMAGE_DEALT_MARKER)) {
             // This Pokemon was knocked out
             const player = effect.player;
-            if (prefabs_1.IS_POKEPOWER_BLOCKED(store, state, player, this)) {
+            try {
+                const stub = new game_effects_1.PowerEffect(player, {
+                    name: 'test',
+                    powerType: pokemon_types_1.PowerType.POKEPOWER,
+                    text: ''
+                }, this);
+                store.reduceEffect(state, stub);
+            }
+            catch (_a) {
                 return state;
             }
             return store.prompt(state, new game_1.ConfirmPrompt(effect.player.id, game_1.GameMessage.WANT_TO_USE_ABILITY), wantToUse => {
