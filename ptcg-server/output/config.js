@@ -15,8 +15,9 @@ exports.config = {
         avatarMinSize: 64,
         avatarMaxSize: 512,
         replayFileSize: 512 * 1024,
-        rateLimitCount: 25,
-        rateLimitTime: 300 // How long the user should be banned
+        rateLimitCount: 100,
+        wsRateLimitCount: 200,
+        rateLimitTime: 60000, // 1 minute in milliseconds
     },
     core: {
         debug: false,

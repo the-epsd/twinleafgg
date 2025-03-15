@@ -36,6 +36,7 @@
 ehthumbs.db
 Thumbs.db
 *.env
+.vscode
 
 # Python
 /__pycache__
@@ -75,14 +76,8 @@ env/bin/toco
 env/bin/toco_from_protos
 env/bin/wheel
 env/lib/python3.11/
-ptcg-server/database.sq3
 ptcg-server/scans/.DS_Store
-ptcg-server/database.sq3
-.DS_Store
 ptcg-server/node_modules/.cache
-ptcg-server/database.sq3
-ptcg-server/database.sq3
-.DS_Store
 node_modules
 image_translation
 ptcg-server/.nyc_output
@@ -95,4 +90,3 @@ ptcg-server/.nyc_output/processinfo/index.json
 card-images.json
 card-images.py
 card_urls.json
-.vscode/cody.json

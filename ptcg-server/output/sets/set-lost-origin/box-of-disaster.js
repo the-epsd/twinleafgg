@@ -7,6 +7,7 @@ const state_1 = require("../../game/store/state/state");
 const state_utils_1 = require("../../game/store/state-utils");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const check_effects_1 = require("../../game/store/effects/check-effects");
+const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class BoxOfDisaster extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -29,6 +30,14 @@ class BoxOfDisaster extends trainer_card_1.TrainerCard {
                 return state;
             }
             this.damageDealt = true;
+            // Try to reduce ToolEffect, to check if something is blocking the tool from working
+            try {
+                const stub = new play_card_effects_1.ToolEffect(effect.player, this);
+                store.reduceEffect(state, stub);
+            }
+            catch (_a) {
+                return state;
+            }
             if (this.damageDealt === true) {
                 const checkHpEffect = new check_effects_1.CheckHpEffect(player, effect.target);
                 store.reduceEffect(state, checkHpEffect);

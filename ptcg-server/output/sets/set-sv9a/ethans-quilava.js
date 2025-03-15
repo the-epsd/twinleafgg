@@ -16,6 +16,7 @@ class EthansQuilava extends game_1.PokemonCard {
         this.powers = [{
                 name: 'Adventure Bound',
                 powerType: game_1.PowerType.ABILITY,
+                useWhenInPlay: true,
                 text: 'Once during your turn, you may search your deck for a Ethan\'s Adventure, reveal it, and put it into your hand. Then, shuffle your deck.'
             }];
         this.attacks = [{

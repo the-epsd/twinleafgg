@@ -8,7 +8,7 @@ import { ABILITY_USED, BLOCK_IF_GX_ATTACK_USED, TAKE_X_PRIZES } from '../../game
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class NaganadelGuzzlordGX extends PokemonCard {
-  public tags = [CardTag.TAG_TEAM, CardTag.ULTRA_BEAST];
+  public tags = [CardTag.POKEMON_GX, CardTag.TAG_TEAM, CardTag.ULTRA_BEAST];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = N;
   public hp: number = 280;

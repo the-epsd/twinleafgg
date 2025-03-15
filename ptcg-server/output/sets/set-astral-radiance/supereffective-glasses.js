@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.SupereffectiveGlasses = void 0;
 const game_1 = require("../../game");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class SupereffectiveGlasses extends game_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -16,7 +17,10 @@ class SupereffectiveGlasses extends game_1.TrainerCard {
         this.text = 'When applying Weakness to damage from the attacks of the Pokémon this card is attached to done to your opponent\'s Active Pokémon, apply it as ×3.';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof attack_effects_1.ApplyWeaknessEffect && effect.target.tools.includes(this)) {
+        if (effect instanceof attack_effects_1.ApplyWeaknessEffect && effect.target.tool === this) {
+            if (prefabs_1.IS_TOOL_BLOCKED(store, state, effect.player, this)) {
+                return state;
+            }
             effect.damage = effect.damage * 1.5;
         }
         return state;

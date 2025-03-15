@@ -6,10 +6,10 @@ import { AttackEffect } from '../../game/store/effects/game-effects';
 
 export class HisuianQwilfish2 extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.DARK;
+  public cardType: CardType = D;
   public hp: number = 80;
-  public weakness = [{ type: CardType.FIGHTING }];
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: F }];
+  public retreat = [C, C];
 
   public attacks = [{
     name: 'Spiny Rush',
@@ -18,9 +18,9 @@ export class HisuianQwilfish2 extends PokemonCard {
     text: 'Flip a coin until you get tails. This attack does 10 damage for each heads. '
   }];
 
+  public regulationMark: string = 'F';
   public set: string = 'ASR';
   public setNumber: string = '89';
-  public regulationMark: string = 'F';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Hisuian Qwilfish';
   public fullName: string = 'Hisuian Qwilfish2 ASR';
@@ -32,14 +32,18 @@ export class HisuianQwilfish2 extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
 
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], result => {
-        if (result === true) {
-          effect.damage += 10;
-          return this.reduceEffect(store, state, effect);
-        }
-      });
+      const flipCoin = (heads: number = 0): State => {
+        return store.prompt(state, [
+          new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
+        ], result => {
+          if (result === true) {
+            return flipCoin(heads + 1);
+          }
+          effect.damage = 10 * heads;
+          return state;
+        });
+      };
+      return flipCoin();
     }
     return state;
   }

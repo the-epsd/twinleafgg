@@ -1,6 +1,6 @@
 import { Format, GamePhase } from '../../game';
-import { Rank } from './rank.enum';
 import { PlayerStats } from '../../game/core/player-stats';
+import { Rank } from './rank.enum';
 export interface PlayerInfo {
     clientId: number;
     name: string;
@@ -34,14 +34,15 @@ export interface GameState {
     format?: Format;
 }
 export interface UserInfo {
-    connected: boolean;
     userId: number;
     name: string;
     email: string;
-    ranking: number;
-    rank: Rank;
+    connected: boolean;
     registered: number;
     lastSeen: number;
+    ranking: number;
+    rank: Rank;
     lastRankingChange: number;
     avatarFile: string;
+    roleId: number;
 }

@@ -21,7 +21,7 @@ export abstract class Controller {
     protected core: Core
   ) { }
 
-  public init(): void {}
+  public init(): void { }
 
   protected buildUserInfo(user: User): UserInfo {
     const connected = this.core.clients
@@ -37,7 +37,8 @@ export abstract class Controller {
       lastSeen: user.lastSeen,
       lastRankingChange: user.lastRankingChange,
       avatarFile: user.avatarFile,
-      connected
+      connected,
+      roleId: user.roleId
     };
   }
 
@@ -49,7 +50,7 @@ export abstract class Controller {
 export function Get(path: string) {
   return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
     const init = target.init;
-    target.init = function() {
+    target.init = function () {
       init.call(this);
       this.app.get(`${this.path}${path}`, descriptor.value.bind(this));
     };
@@ -59,7 +60,7 @@ export function Get(path: string) {
 export function Post(path: string) {
   return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
     const init = target.init;
-    target.init = function() {
+    target.init = function () {
       init.call(this);
       this.app.post(`${this.path}${path}`, descriptor.value.bind(this));
     };

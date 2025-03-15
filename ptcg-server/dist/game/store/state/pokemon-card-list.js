@@ -1,5 +1,5 @@
-import { Card } from '../card/card';
 import { BoardEffect, CardTag, SpecialCondition, SuperType } from '../card/card-types';
+import { PokemonCard } from '../card/pokemon-card';
 import { CardList } from './card-list';
 import { Marker } from './card-marker';
 export class PokemonCardList extends CardList {
@@ -15,15 +15,13 @@ export class PokemonCardList extends CardList {
         this.sleepFlips = 1;
         this.boardEffect = [];
         this.hpBonus = 0;
-        this.tools = [];
-        this.maxTools = 1;
         this.isActivatingCard = false;
         this.showAllStageAbilities = false;
     }
     getPokemons() {
         const result = [];
         for (const card of this.cards) {
-            if (card.superType === SuperType.POKEMON && !(this.tools.includes(card))) {
+            if (card.superType === SuperType.POKEMON && card !== this.tool) {
                 result.push(card);
             }
             else if (card.name === 'Lillie\'s Poké Doll') {
@@ -92,9 +90,12 @@ export class PokemonCardList extends CardList {
         this.removeSpecialCondition(SpecialCondition.PARALYZED);
         this.poisonDamage = 10;
         this.burnDamage = 20;
-        if (this.cards.length === 0) {
-            this.damage = 0;
-        }
+        // if (this.cards.length === 0) {
+        //   this.damage = 0;
+        // }
+        // if (this.tool && !this.cards.includes(this.tool)) {
+        //   this.tool = undefined;
+        // }
     }
     clearAllSpecialConditions() {
         this.removeSpecialCondition(SpecialCondition.POISONED);
@@ -153,7 +154,7 @@ export class PokemonCardList extends CardList {
     }
     //Rule-Box Pokemon
     hasRuleBox() {
-        return this.cards.some(c => c.tags.includes(CardTag.POKEMON_ex) || c.tags.includes(CardTag.RADIANT) || c.tags.includes(CardTag.POKEMON_V) || c.tags.includes(CardTag.POKEMON_VMAX) || c.tags.includes(CardTag.POKEMON_VSTAR) || c.tags.includes(CardTag.POKEMON_GX) || c.tags.includes(CardTag.PRISM_STAR) || c.tags.includes(CardTag.BREAK));
+        return this.cards.some(c => c.tags.includes(CardTag.POKEMON_ex) || c.tags.includes(CardTag.RADIANT) || c.tags.includes(CardTag.POKEMON_V) || c.tags.includes(CardTag.POKEMON_VMAX) || c.tags.includes(CardTag.POKEMON_VSTAR) || c.tags.includes(CardTag.POKEMON_GX) || c.tags.includes(CardTag.PRISM_STAR) || c.tags.includes(CardTag.BREAK) || c.tags.includes(CardTag.POKEMON_SV_MEGA));
     }
     vPokemon() {
         return this.cards.some(c => c.tags.includes(CardTag.POKEMON_V) || c.tags.includes(CardTag.POKEMON_VMAX) || c.tags.includes(CardTag.POKEMON_VSTAR));
@@ -197,12 +198,21 @@ export class PokemonCardList extends CardList {
     isEthans() {
         return this.cards.some(c => c.tags.includes(CardTag.ETHANS));
     }
-    removeTool(tool) {
-        const index = this.tools.indexOf(tool);
-        if (index >= 0) {
-            delete this.tools[index];
+    getToolEffect() {
+        if (!this.tool) {
+            return;
         }
-        this.tools = this.tools.filter(c => c instanceof Card);
+        const toolCard = this.tool.cards;
+        if (toolCard instanceof PokemonCard) {
+            return toolCard.powers[0] || toolCard.attacks[0];
+        }
+        // removeTool(tool: Card): void {
+        //   const index = this.tools.indexOf(tool);
+        //   if (index >= 0) {
+        //     delete this.tools[index];
+        //   }
+        //   this.tools = this.tools.filter(c => c instanceof Card);
+        // }
     }
 }
 PokemonCardList.ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';

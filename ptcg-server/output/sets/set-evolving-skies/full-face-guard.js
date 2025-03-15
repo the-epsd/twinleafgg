@@ -6,6 +6,7 @@ const card_types_1 = require("../../game/store/card/card-types");
 const state_1 = require("../../game/store/state/state");
 const game_1 = require("../../game");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class FullFaceGuard extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -22,6 +23,9 @@ class FullFaceGuard extends trainer_card_1.TrainerCard {
         // Reduce damage by 20
         if (effect instanceof attack_effects_1.PutDamageEffect && effect.target.cards.includes(this)) {
             const sourceCard = effect.source.getPokemonCard();
+            if (prefabs_1.IS_TOOL_BLOCKED(store, state, effect.player, this)) {
+                return state;
+            }
             // It's not an attack
             if (state.phase !== state_1.GamePhase.ATTACK) {
                 return state;

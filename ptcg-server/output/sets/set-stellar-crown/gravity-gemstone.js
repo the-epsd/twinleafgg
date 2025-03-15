@@ -21,7 +21,7 @@ class GravityGemstone extends trainer_card_1.TrainerCard {
         if (effect instanceof check_effects_1.CheckRetreatCostEffect) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            if (player.active.tools.includes(this) || opponent.active.tools.includes(this)) {
+            if (player.active.tool === this || opponent.active.tool === this) {
                 effect.cost.push(card_types_1.CardType.COLORLESS);
             }
         }

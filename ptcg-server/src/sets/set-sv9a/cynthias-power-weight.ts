@@ -4,6 +4,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckHpEffect } from '../../game/store/effects/check-effects';
+import {ToolEffect} from '../../game/store/effects/play-card-effects';
 
 export class CynthiasPowerWeight extends TrainerCard {
 
@@ -23,6 +24,14 @@ export class CynthiasPowerWeight extends TrainerCard {
 
     if (effect instanceof CheckHpEffect && effect.target.cards.includes(this)) {
       const card = effect.target.getPokemonCard();
+
+      // Try to reduce ToolEffect, to check if something is blocking the tool from working
+      try {
+        const stub = new ToolEffect(effect.player, this);
+        store.reduceEffect(state, stub);
+      } catch {
+        return state;
+      }
 
       if (card === undefined) {
         return state;

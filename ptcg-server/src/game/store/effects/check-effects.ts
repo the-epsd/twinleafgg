@@ -47,15 +47,13 @@ export class CheckPokemonAttacksEffect implements Effect {
 
   constructor(player: Player) {
     this.player = player;
-    this.attacks = [];
+    const tool = player.active.tool;
 
-    for (const tool of player.active.tools) {
-      if (!!tool && (tool as TrainerCard).attacks.length > 0) {
-        this.attacks = [...(tool as TrainerCard).attacks];
-      }
+    if (!!tool && (tool as TrainerCard).attacks.length > 0) {
+      this.attacks = [...(tool as TrainerCard).attacks];
+    } else {
+      this.attacks = [];
     }
-
-    
   }
 }
 

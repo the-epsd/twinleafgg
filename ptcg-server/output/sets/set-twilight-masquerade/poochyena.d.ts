@@ -4,7 +4,6 @@ import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 export declare class Poochyena extends PokemonCard {
     stage: Stage;
-    regulationMark: string;
     cardType: CardType;
     hp: number;
     weakness: {
@@ -25,9 +24,10 @@ export declare class Poochyena extends PokemonCard {
         text: string;
         damageCalculation?: undefined;
     })[];
+    regulationMark: string;
     set: string;
-    cardImage: string;
     setNumber: string;
+    cardImage: string;
     name: string;
     fullName: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;

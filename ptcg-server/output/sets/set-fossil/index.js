@@ -28,6 +28,7 @@ const kingler_1 = require("./kingler");
 const krabby_1 = require("./krabby");
 const lapras_1 = require("./lapras");
 const magmar_1 = require("./magmar");
+const moltres_1 = require("./moltres");
 const mr_fuji_1 = require("./mr-fuji");
 const muk_1 = require("./muk");
 const mysterious_fossil_1 = require("./mysterious-fossil");
@@ -70,6 +71,7 @@ exports.setFossil = [
     new krabby_1.Krabby(),
     new lapras_1.Lapras(),
     new magmar_1.Magmar(),
+    new moltres_1.Moltres(),
     new mr_fuji_1.MrFuji(),
     new muk_1.Muk(),
     new mysterious_fossil_1.MysteriousFossil(),

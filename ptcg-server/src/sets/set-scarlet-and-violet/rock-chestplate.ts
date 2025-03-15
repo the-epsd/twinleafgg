@@ -4,6 +4,7 @@ import { State, GamePhase } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { StateUtils, TrainerCard } from '../../game';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import {ToolEffect} from '../../game/store/effects/play-card-effects';
 
 
 export class RockChestplate extends TrainerCard {
@@ -31,6 +32,14 @@ export class RockChestplate extends TrainerCard {
 
       // It's not an attack
       if (state.phase !== GamePhase.ATTACK) {
+        return state;
+      }
+
+      // Try to reduce ToolEffect, to check if something is blocking the tool from working
+      try {
+        const stub = new ToolEffect(effect.player, this);
+        store.reduceEffect(state, stub);
+      } catch {
         return state;
       }
 

@@ -18,6 +18,7 @@ import { Girafarig } from './girafarig';
 import { Giratina } from './giratina';
 import { Granbull } from './granbull';
 import { Grovyle } from './grovyle';
+import { Heracross } from './heracross';
 import { Hoppip } from './hoppip';
 import { Jumpluff } from './jumpluff';
 import { Kirlia } from './kirlia';
@@ -75,6 +76,7 @@ export const setLostThunder: Card[] = [
   new Giratina(),
   new Granbull(),
   new Grovyle(),
+  new Heracross(),
   new Hoppip(),
   new Jumpluff(),
   new Kirlia(),

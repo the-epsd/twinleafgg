@@ -14,11 +14,11 @@
         color="bot">
         BOT
       </ptcg-badge>
-      <ptcg-badge *ngIf="['TheEPSD', 'OkamiAstra', 'wheatr', 'DanTDM', 'Charlie'].includes(user.name)" color="admin">
+      <ptcg-badge *ngIf="user.roleId === 4" color="admin">
         ADMIN
       </ptcg-badge>
-      <ptcg-badge *ngIf="['Shutterstock'].includes(user.name)" color="mod">
-        MODERATOR
+      <ptcg-badge *ngIf="user.roleId === 3" color="mod">
+        MOD
       </ptcg-badge>
     </div>
     <div class="ptcg-user-ranking">

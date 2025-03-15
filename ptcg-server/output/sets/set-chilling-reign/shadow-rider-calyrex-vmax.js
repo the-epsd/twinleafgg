@@ -8,6 +8,7 @@ const game_phase_effects_1 = require("../../game/store/effects/game-phase-effect
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 const check_effects_1 = require("../../game/store/effects/check-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class ShadowRiderCalyrexVMAX extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -86,28 +87,16 @@ class ShadowRiderCalyrexVMAX extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.UNDERWORLD_DOOR_MARKER, this)) {
             effect.player.marker.removeMarker(this.UNDERWORLD_DOOR_MARKER, this);
         }
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
-            const player = effect.player;
-            const cardList = game_1.StateUtils.findCardList(state, this);
-            if (cardList === undefined) {
-                return state;
-            }
-            return store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_ATTACH, player.discard, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Psychic Energy' }, { min: 0, max: 2, allowCancel: true }), cards => {
-                cards = cards || [];
-                if (cards.length > 0) {
-                    player.discard.moveCardsTo(cards, cardList);
-                }
-                return state;
-            });
-        }
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
+        if (prefabs_1.WAS_ATTACK_USED(effect, 0, this)) {
             const player = effect.player;
             let energies = 0;
             player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
                 const checkProvidedEnergyEffect = new check_effects_1.CheckProvidedEnergyEffect(player, cardList);
                 store.reduceEffect(state, checkProvidedEnergyEffect);
                 checkProvidedEnergyEffect.energyMap.forEach(energy => {
-                    energies += energy.provides.length;
+                    if (energy.provides.includes(card_types_1.CardType.PSYCHIC) || energy.provides.includes(card_types_1.CardType.ANY)) {
+                        energies++;
+                    }
                 });
             });
             effect.damage = 10 + energies * 30;

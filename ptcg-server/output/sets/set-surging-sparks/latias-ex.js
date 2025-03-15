@@ -50,12 +50,21 @@ class Latiasex extends pokemon_card_1.PokemonCard {
             effect.player.marker.addMarker(this.ATTACK_USED_2_MARKER, this);
             console.log('second marker added');
         }
-        if (effect instanceof check_effects_1.CheckRetreatCostEffect && game_1.StateUtils.isPokemonInPlay(effect.player, this)) {
+        if (effect instanceof check_effects_1.CheckRetreatCostEffect) {
             const player = effect.player;
             const cardList = game_1.StateUtils.findCardList(state, this);
             const owner = game_1.StateUtils.findOwner(state, cardList);
             const active = effect.player.active.getPokemonCard();
             if (owner !== player || active === undefined) {
+                return state;
+            }
+            let isRabscaInPlay = false;
+            owner.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+                if (card === this) {
+                    isRabscaInPlay = true;
+                }
+            });
+            if (!isRabscaInPlay) {
                 return state;
             }
             if (!prefabs_1.IS_ABILITY_BLOCKED(store, state, player, this) && active.stage === card_types_1.Stage.BASIC) {

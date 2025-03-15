@@ -24,6 +24,7 @@ class EthansAdventure extends game_1.TrainerCard {
             if (supporterTurn > 0) {
                 throw new game_1.GameError(game_1.GameMessage.SUPPORTER_ALREADY_PLAYED);
             }
+            player.hand.moveCardTo(this, player.supporter);
             prefabs_1.BLOCK_IF_DECK_EMPTY(player);
             let ethansPokemonOrFireEnergy = 0;
             const blocked = [];

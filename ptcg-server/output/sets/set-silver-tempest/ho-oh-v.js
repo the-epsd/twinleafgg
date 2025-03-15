@@ -39,7 +39,6 @@ class HoOhV extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
             const slots = player.bench.filter(b => b.cards.length === 0);
-            console.log('Number of bench slots open: ' + slots.length);
             // Check if card is in the discard
             if (!player.discard.cards.includes(this)) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);

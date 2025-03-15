@@ -11,8 +11,8 @@ var __rest = (this && this.__rest) || function (s, e) {
     return t;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.GET_FIRST_PLAYER_BENCH_SLOT = exports.SIMULATE_COIN_FLIP = exports.MULTIPLE_COIN_FLIPS_PROMPT = exports.COIN_FLIP_PROMPT = exports.CONFIRMATION_PROMPT = exports.SELECT_PROMPT_WITH_OPTIONS = exports.SELECT_PROMPT = exports.SHOW_CARDS_TO_PLAYER = exports.MOVE_CARDS_TO_HAND = exports.LOOK_AT_TOPDECK_AND_DISCARD_OR_RETURN = exports.SWITCH_ACTIVE_WITH_BENCHED = exports.MOVE_CARD_TO = exports.CAN_EVOLVE_ON_FIRST_TURN_GOING_SECOND = exports.IS_ABILITY_BLOCKED = exports.GET_CARDS_ON_BOTTOM_OF_DECK = exports.SEARCH_DECK_FOR_CARDS_TO_HAND = exports.DRAW_CARDS_AS_FACE_DOWN_PRIZES = exports.DRAW_CARDS_UNTIL_CARDS_IN_HAND = exports.DRAW_CARDS = exports.SHUFFLE_PRIZES_INTO_DECK = exports.SHUFFLE_CARDS_INTO_DECK = exports.SHUFFLE_DECK = exports.GET_PRIZES_AS_CARD_ARRAY = exports.GET_PLAYER_PRIZES = exports.DISCARD_ALL_ENERGY_FROM_POKEMON = exports.DISCARD_X_ENERGY_FROM_YOUR_HAND = exports.ATTACH_ENERGY_PROMPT = exports.THIS_POKEMON_DOES_DAMAGE_TO_ITSELF = exports.THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_BENCHED_POKEMON = exports.PLAY_POKEMON_FROM_HAND_TO_BENCH = exports.TAKE_X_MORE_PRIZE_CARDS = exports.TAKE_X_PRIZES = exports.TAKE_SPECIFIC_PRIZES = exports.YOUR_OPPONENTS_POKEMON_IS_KNOCKED_OUT_BY_DAMAGE_FROM_THIS_ATTACK = exports.THIS_POKEMON_HAS_ANY_DAMAGE_COUNTERS_ON_IT = exports.HEAL_X_DAMAGE_FROM_THIS_POKEMON = exports.DEAL_MORE_DAMAGE_FOR_EACH_PRIZE_CARD_TAKEN = exports.DEAL_MORE_DAMAGE_IF_OPPONENT_ACTIVE_HAS_CARD_TAG = exports.THIS_ATTACK_DOES_X_MORE_DAMAGE = exports.SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND = exports.SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH = exports.DISCARD_A_STADIUM_CARD_IN_PLAY = exports.PASSIVE_ABILITY_ACTIVATED = exports.ABILITY_USED = exports.JUST_EVOLVED = exports.AFTER_ATTACK = exports.WAS_POWER_USED = exports.PUT_DAMAGE = exports.DEAL_DAMAGE = exports.WAS_ATTACK_USED = void 0;
-exports.CHOOSE_TOOLS_TO_REMOVE_PROMPT = exports.REMOVE_TOOLS_FROM_POKEMON_PROMPT = exports.REMOVE_TOOL = exports.MOVE_CARDS = exports.BLOCK_RETREAT_IF_MARKER = exports.CLEAR_MARKER_AND_OPPONENTS_POKEMON_MARKER_AT_END_OF_TURN = exports.REPLACE_MARKER_AT_END_OF_TURN = exports.REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN = exports.REMOVE_MARKER_AT_END_OF_TURN = exports.PREVENT_DAMAGE_IF_TARGET_HAS_MARKER = exports.BLOCK_EFFECT_IF_MARKER = exports.HAS_MARKER = exports.REMOVE_MARKER = exports.ADD_MARKER = exports.ADD_CONFUSION_TO_PLAYER_ACTIVE = exports.ADD_PARALYZED_TO_PLAYER_ACTIVE = exports.ADD_BURN_TO_PLAYER_ACTIVE = exports.ADD_POISON_TO_PLAYER_ACTIVE = exports.ADD_SLEEP_TO_PLAYER_ACTIVE = exports.ADD_SPECIAL_CONDITIONS_TO_PLAYER_ACTIVE = exports.BLOCK_IF_GX_ATTACK_USED = exports.BLOCK_IF_DISCARD_EMPTY = exports.BLOCK_IF_DECK_EMPTY = exports.BLOCK_IF_NO_SLOTS = exports.GET_PLAYER_BENCH_SLOTS = void 0;
+exports.MULTIPLE_COIN_FLIPS_PROMPT = exports.COIN_FLIP_PROMPT = exports.CONFIRMATION_PROMPT = exports.SELECT_PROMPT_WITH_OPTIONS = exports.SELECT_PROMPT = exports.SHOW_CARDS_TO_PLAYER = exports.MOVE_CARDS_TO_HAND = exports.LOOK_AT_TOPDECK_AND_DISCARD_OR_RETURN = exports.SWITCH_ACTIVE_WITH_BENCHED = exports.MOVE_CARD_TO = exports.CAN_EVOLVE_ON_FIRST_TURN_GOING_SECOND = exports.IS_TOOL_BLOCKED = exports.IS_ABILITY_BLOCKED = exports.GET_CARDS_ON_BOTTOM_OF_DECK = exports.SEARCH_DECK_FOR_CARDS_TO_HAND = exports.DRAW_CARDS_AS_FACE_DOWN_PRIZES = exports.DRAW_CARDS_UNTIL_CARDS_IN_HAND = exports.DRAW_CARDS = exports.SHUFFLE_PRIZES_INTO_DECK = exports.SHUFFLE_CARDS_INTO_DECK = exports.SHUFFLE_DECK = exports.GET_PRIZES_AS_CARD_ARRAY = exports.GET_PLAYER_PRIZES = exports.DISCARD_ALL_ENERGY_FROM_POKEMON = exports.DISCARD_X_ENERGY_FROM_YOUR_HAND = exports.ATTACH_ENERGY_PROMPT = exports.THIS_POKEMON_DOES_DAMAGE_TO_ITSELF = exports.THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_BENCHED_POKEMON = exports.PLAY_POKEMON_FROM_HAND_TO_BENCH = exports.TAKE_X_MORE_PRIZE_CARDS = exports.TAKE_X_PRIZES = exports.TAKE_SPECIFIC_PRIZES = exports.YOUR_OPPONENTS_POKEMON_IS_KNOCKED_OUT_BY_DAMAGE_FROM_THIS_ATTACK = exports.THIS_POKEMON_HAS_ANY_DAMAGE_COUNTERS_ON_IT = exports.HEAL_X_DAMAGE_FROM_THIS_POKEMON = exports.DEAL_MORE_DAMAGE_FOR_EACH_PRIZE_CARD_TAKEN = exports.DEAL_MORE_DAMAGE_IF_OPPONENT_ACTIVE_HAS_CARD_TAG = exports.GET_TOTAL_ENERGY_ATTACHED_TO_PLAYERS_POKEMON = exports.THIS_ATTACK_DOES_X_MORE_DAMAGE = exports.SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND = exports.SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH = exports.DISCARD_A_STADIUM_CARD_IN_PLAY = exports.PASSIVE_ABILITY_ACTIVATED = exports.ABILITY_USED = exports.JUST_EVOLVED = exports.AFTER_ATTACK = exports.WAS_POWER_USED = exports.PUT_DAMAGE = exports.DEAL_DAMAGE = exports.WAS_ATTACK_USED = void 0;
+exports.MOVE_CARDS = exports.BLOCK_RETREAT_IF_MARKER = exports.CLEAR_MARKER_AND_OPPONENTS_POKEMON_MARKER_AT_END_OF_TURN = exports.REPLACE_MARKER_AT_END_OF_TURN = exports.REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN = exports.REMOVE_MARKER_AT_END_OF_TURN = exports.HAS_TAG = exports.PREVENT_DAMAGE_IF_SOURCE_HAS_TAG = exports.PREVENT_DAMAGE_IF_TARGET_HAS_MARKER = exports.BLOCK_EFFECT_IF_MARKER = exports.HAS_MARKER = exports.REMOVE_MARKER = exports.ADD_MARKER = exports.ADD_CONFUSION_TO_PLAYER_ACTIVE = exports.ADD_PARALYZED_TO_PLAYER_ACTIVE = exports.ADD_BURN_TO_PLAYER_ACTIVE = exports.ADD_POISON_TO_PLAYER_ACTIVE = exports.ADD_SLEEP_TO_PLAYER_ACTIVE = exports.ADD_SPECIAL_CONDITIONS_TO_PLAYER_ACTIVE = exports.BLOCK_IF_GX_ATTACK_USED = exports.BLOCK_IF_DISCARD_EMPTY = exports.BLOCK_IF_DECK_EMPTY = exports.BLOCK_IF_NO_SLOTS = exports.GET_PLAYER_BENCH_SLOTS = exports.GET_FIRST_PLAYER_BENCH_SLOT = exports.SIMULATE_COIN_FLIP = void 0;
 const __1 = require("../..");
 const card_types_1 = require("../card/card-types");
 const attack_effects_1 = require("../effects/attack-effects");
@@ -134,6 +134,18 @@ function THIS_ATTACK_DOES_X_MORE_DAMAGE(effect, store, state, damage) {
     return state;
 }
 exports.THIS_ATTACK_DOES_X_MORE_DAMAGE = THIS_ATTACK_DOES_X_MORE_DAMAGE;
+function GET_TOTAL_ENERGY_ATTACHED_TO_PLAYERS_POKEMON(player, store, state) {
+    let totalEnergy = 0;
+    player.forEachPokemon(__1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+        const checkProvidedEnergyEffect = new check_effects_1.CheckProvidedEnergyEffect(player, cardList);
+        store.reduceEffect(state, checkProvidedEnergyEffect);
+        checkProvidedEnergyEffect.energyMap.forEach(energy => {
+            totalEnergy += 1;
+        });
+    });
+    return totalEnergy;
+}
+exports.GET_TOTAL_ENERGY_ATTACHED_TO_PLAYERS_POKEMON = GET_TOTAL_ENERGY_ATTACHED_TO_PLAYERS_POKEMON;
 function DEAL_MORE_DAMAGE_IF_OPPONENT_ACTIVE_HAS_CARD_TAG(effect, state, damage, ...cardTags) {
     const opponent = __1.StateUtils.getOpponent(state, effect.player);
     const opponentActive = opponent.active.getPokemonCard();
@@ -414,6 +426,22 @@ function IS_ABILITY_BLOCKED(store, state, player, card) {
     return false;
 }
 exports.IS_ABILITY_BLOCKED = IS_ABILITY_BLOCKED;
+/**
+ * Checks if a tool's effect is being blocked
+ * @returns `true` if the tool's effect is blocked, `false` if the tool's effect is able to activate.
+ */
+function IS_TOOL_BLOCKED(store, state, player, card) {
+    // Try to reduce ToolEffect, to check if something is blocking the tool from working
+    try {
+        const stub = new play_card_effects_1.ToolEffect(player, card);
+        store.reduceEffect(state, stub);
+    }
+    catch (_a) {
+        return true;
+    }
+    return false;
+}
+exports.IS_TOOL_BLOCKED = IS_TOOL_BLOCKED;
 function CAN_EVOLVE_ON_FIRST_TURN_GOING_SECOND(state, player, pokemon) {
     if (state.turn === 2) {
         player.canEvolve = true;
@@ -580,6 +608,15 @@ function PREVENT_DAMAGE_IF_TARGET_HAS_MARKER(effect, marker, source) {
         effect.preventDefault = true;
 }
 exports.PREVENT_DAMAGE_IF_TARGET_HAS_MARKER = PREVENT_DAMAGE_IF_TARGET_HAS_MARKER;
+function PREVENT_DAMAGE_IF_SOURCE_HAS_TAG(effect, tag, source) {
+    if (effect instanceof attack_effects_1.PutDamageEffect && HAS_TAG(tag, source))
+        effect.preventDefault = true;
+}
+exports.PREVENT_DAMAGE_IF_SOURCE_HAS_TAG = PREVENT_DAMAGE_IF_SOURCE_HAS_TAG;
+function HAS_TAG(tag, source) {
+    return source.tags.includes(tag);
+}
+exports.HAS_TAG = HAS_TAG;
 function REMOVE_MARKER_AT_END_OF_TURN(effect, marker, source) {
     if (effect instanceof game_phase_effects_1.EndTurnEffect && HAS_MARKER(marker, effect.player, source))
         REMOVE_MARKER(marker, effect.player, source);
@@ -621,105 +658,116 @@ function MOVE_CARDS(store, state, source, destination, options = {}) {
     return store.reduceEffect(state, new game_effects_2.MoveCardsEffect(source, destination, options));
 }
 exports.MOVE_CARDS = MOVE_CARDS;
-function REMOVE_TOOL(store, state, source, tool, destinationSlot) {
-    if (!source.cards.includes(tool)) {
-        return state;
-    }
-    const owner = __1.StateUtils.findOwner(state, source);
-    state = MOVE_CARDS(store, state, source, owner.getSlot(destinationSlot), { cards: [tool] });
-    source.removeTool(tool);
-    return state;
-}
-exports.REMOVE_TOOL = REMOVE_TOOL;
-function REMOVE_TOOLS_FROM_POKEMON_PROMPT(store, state, player, target, destinationSlot, min, max) {
-    if (target.tools.length === 0) {
-        return state;
-    }
-    if (target.tools.length === 1) {
-        return REMOVE_TOOL(store, state, target, target.tools[0], destinationSlot);
-    }
-    else {
-        const blocked = [];
-        target.cards.forEach((card, index) => {
-            if (!target.tools.includes(card)) {
-                blocked.push(index);
-            }
-        });
-        let tools = [];
-        return store.prompt(state, new __1.ChooseCardsPrompt(player, __1.GameMessage.CHOOSE_CARD_TO_DISCARD, target, {}, { min, max, allowCancel: false, blocked }), selected => {
-            tools = selected || [];
-            for (const tool of tools) {
-                return REMOVE_TOOL(store, state, target, tool, destinationSlot);
-            }
-        });
-    }
-}
-exports.REMOVE_TOOLS_FROM_POKEMON_PROMPT = REMOVE_TOOLS_FROM_POKEMON_PROMPT;
-function CHOOSE_TOOLS_TO_REMOVE_PROMPT(store, state, player, playerType, destinationSlot, min, max) {
-    const opponent = __1.StateUtils.getOpponent(state, player);
-    let hasPokemonWithTool = false;
-    let players = [];
-    switch (playerType) {
-        case __1.PlayerType.TOP_PLAYER:
-            players = [opponent];
-            break;
-        case __1.PlayerType.BOTTOM_PLAYER:
-            players = [player];
-            break;
-        case __1.PlayerType.ANY:
-            players = [player, opponent];
-            break;
-    }
-    const blocked = [];
-    for (const p of players) {
-        let pt = __1.PlayerType.BOTTOM_PLAYER;
-        if (p === opponent) {
-            pt = __1.PlayerType.TOP_PLAYER;
-        }
-        p.forEachPokemon(pt, (cardList, card, target) => {
-            if (cardList.tools.length > 0) {
-                hasPokemonWithTool = true;
-            }
-            else {
-                blocked.push(target);
-            }
-        });
-    }
-    if (!hasPokemonWithTool) {
-        return state;
-    }
-    let targets = [];
-    return store.prompt(state, new __1.ChoosePokemonPrompt(player.id, __1.GameMessage.CHOOSE_POKEMON_TO_DISCARD_CARDS, playerType, [__1.SlotType.ACTIVE, __1.SlotType.BENCH], { min, max, allowCancel: false, blocked }), results => {
-        targets = results || [];
-        if (targets.length === 0) {
-            return state;
-        }
-        let toolsRemoved = 0;
-        for (const target of targets) {
-            if (target.tools.length === 0 || toolsRemoved >= max) {
-                continue;
-            }
-            if (target.tools.length === 1) {
-                REMOVE_TOOL(store, state, target, target.tools[0], destinationSlot);
-                toolsRemoved += 1;
-            }
-            else {
-                const blocked = [];
-                target.cards.forEach((card, index) => {
-                    if (!target.tools.includes(card)) {
-                        blocked.push(index);
-                    }
-                });
-                let tools = [];
-                return store.prompt(state, new __1.ChooseCardsPrompt(player, __1.GameMessage.CHOOSE_CARD_TO_DISCARD, target, {}, { min: Math.min(min, max - toolsRemoved), max: max - toolsRemoved, allowCancel: false, blocked }), selected => {
-                    tools = selected || [];
-                    for (const tool of tools) {
-                        REMOVE_TOOL(store, state, target, tool, destinationSlot);
-                        toolsRemoved += 1;
-                    }
-                });
-            }
-        }
-    });
-}
-exports.CHOOSE_TOOLS_TO_REMOVE_PROMPT = CHOOSE_TOOLS_TO_REMOVE_PROMPT;
+// export function REMOVE_TOOL(store: StoreLike, state: State, source: PokemonCardList, tool: Card, destinationSlot: SlotType): State {
+//   if (!source.cards.includes(tool)) {
+//     return state;
+//   }
+//   const owner = StateUtils.findOwner(state, source);
+//   state = MOVE_CARDS(store, state, source, owner.getSlot(destinationSlot), { cards: [tool] });
+//   source.removeTool(tool);
+//   return state;
+// }
+// export function REMOVE_TOOLS_FROM_POKEMON_PROMPT(store: StoreLike, state: State, player: Player, target: PokemonCardList, destinationSlot: SlotType, min: number, max: number): State {
+//   if (target.tools.length === 0) {
+//     return state;
+//   }
+//   if (target.tools.length === 1) {
+//     return REMOVE_TOOL(store, state, target, target.tools[0], destinationSlot);
+//   } else {
+//     const blocked: number[] = [];
+//     target.cards.forEach((card, index) => {
+//       if (!target.tools.includes(card)) {
+//         blocked.push(index);
+//       }
+//     });
+//     let tools: Card[] = [];
+//     return store.prompt(state, new ChooseCardsPrompt(
+//       player,
+//       GameMessage.CHOOSE_CARD_TO_DISCARD,
+//       target,
+//       {},
+//       { min, max, allowCancel: false, blocked }
+//     ), selected => {
+//       tools = selected || [];
+//       for (const tool of tools) {
+//         return REMOVE_TOOL(store, state, target, tool, destinationSlot);
+//       }
+//     });
+//   }
+// }
+// export function CHOOSE_TOOLS_TO_REMOVE_PROMPT(store: StoreLike, state: State, player: Player, playerType: PlayerType, destinationSlot: SlotType, min: number, max: number): State {
+//   const opponent = StateUtils.getOpponent(state, player);
+//   let hasPokemonWithTool = false;
+//   let players: Player[] = [];
+//   switch (playerType) {
+//     case PlayerType.TOP_PLAYER:
+//       players = [opponent];
+//       break;
+//     case PlayerType.BOTTOM_PLAYER:
+//       players = [player];
+//       break;
+//     case PlayerType.ANY:
+//       players = [player, opponent];
+//       break;
+//   }
+//   const blocked: CardTarget[] = [];
+//   for (const p of players) {
+//     let pt: PlayerType = PlayerType.BOTTOM_PLAYER;
+//     if (p === opponent) {
+//       pt = PlayerType.TOP_PLAYER;
+//     }
+//     p.forEachPokemon(pt, (cardList, card, target) => {
+//       if (cardList.tools.length > 0) {
+//         hasPokemonWithTool = true;
+//       } else {
+//         blocked.push(target);
+//       }
+//     });
+//   }
+//   if (!hasPokemonWithTool) {
+//     return state;
+//   }
+//   let targets: PokemonCardList[] = [];
+//   return store.prompt(state, new ChoosePokemonPrompt(
+//     player.id,
+//     GameMessage.CHOOSE_POKEMON_TO_DISCARD_CARDS,
+//     playerType,
+//     [SlotType.ACTIVE, SlotType.BENCH],
+//     { min, max, allowCancel: false, blocked }
+//   ), results => {
+//     targets = results || [];
+//     if (targets.length === 0) {
+//       return state;
+//     }
+//     let toolsRemoved = 0;
+//     for (const target of targets) {
+//       if (target.tools.length === 0 || toolsRemoved >= max) {
+//         continue;
+//       }
+//       if (target.tools.length === 1) {
+//         REMOVE_TOOL(store, state, target, target.tools[0], destinationSlot);
+//         toolsRemoved += 1;
+//       } else {
+//         const blocked: number[] = [];
+//         target.cards.forEach((card, index) => {
+//           if (!target.tools.includes(card)) {
+//             blocked.push(index);
+//           }
+//         });
+//         let tools: Card[] = [];
+//         return store.prompt(state, new ChooseCardsPrompt(
+//           player,
+//           GameMessage.CHOOSE_CARD_TO_DISCARD,
+//           target,
+//           {},
+//           { min: Math.min(min, max - toolsRemoved), max: max - toolsRemoved, allowCancel: false, blocked }
+//         ), selected => {
+//           tools = selected || [];
+//           for (const tool of tools) {
+//             REMOVE_TOOL(store, state, target, tool, destinationSlot);
+//             toolsRemoved += 1;
+//           }
+//         });
+//       }
+//     }
+//   });

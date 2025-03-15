@@ -20,6 +20,7 @@ const girafarig_1 = require("./girafarig");
 const giratina_1 = require("./giratina");
 const granbull_1 = require("./granbull");
 const grovyle_1 = require("./grovyle");
+const heracross_1 = require("./heracross");
 const hoppip_1 = require("./hoppip");
 const jumpluff_1 = require("./jumpluff");
 const kirlia_1 = require("./kirlia");
@@ -76,6 +77,7 @@ exports.setLostThunder = [
     new giratina_1.Giratina(),
     new granbull_1.Granbull(),
     new grovyle_1.Grovyle(),
+    new heracross_1.Heracross(),
     new hoppip_1.Hoppip(),
     new jumpluff_1.Jumpluff(),
     new kirlia_1.Kirlia(),

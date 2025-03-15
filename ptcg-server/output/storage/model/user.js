@@ -24,6 +24,7 @@ let User = User_1 = class User extends typeorm_1.BaseEntity {
         this.email = '';
         this.ranking = 0;
         this.password = '';
+        this.roleId = 0;
         this.registered = 0;
         this.lastSeen = 0;
         this.lastRankingChange = 0;
@@ -65,6 +66,10 @@ __decorate([
     typeorm_1.Column(),
     __metadata("design:type", String)
 ], User.prototype, "password", void 0);
+__decorate([
+    typeorm_1.Column({ type: 'int', default: 0 }),
+    __metadata("design:type", Number)
+], User.prototype, "roleId", void 0);
 __decorate([
     typeorm_1.Column({ type: 'bigint', transformer: [bigint_1.bigint] }),
     __metadata("design:type", Number)

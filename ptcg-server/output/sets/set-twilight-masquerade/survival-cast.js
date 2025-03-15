@@ -26,10 +26,13 @@ class SurvivalCast extends trainer_card_1.TrainerCard {
         this.text = 'If the Pokémon this card is attached to has full HP and would be Knocked Out by damage from an opponent\'s attack, that Pokémon is not Knocked Out and its remaining HP becomes 10 instead. Then, discard this card.';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof attack_effects_1.PutDamageEffect && effect.target.tools.includes(this) && effect.target.damage == 0) {
+        if (effect instanceof attack_effects_1.PutDamageEffect && effect.target.tool === this && effect.target.damage == 0) {
             const player = game_1.StateUtils.findOwner(state, effect.target);
             const checkHpEffect = new check_effects_1.CheckHpEffect(player, effect.target);
             store.reduceEffect(state, checkHpEffect);
+            if (prefabs_1.IS_TOOL_BLOCKED(store, state, effect.player, this)) {
+                return state;
+            }
             if (effect.target.damage === 0 && effect.damage >= checkHpEffect.hp) {
                 effect.preventDefault = true;
                 effect.target.damage = checkHpEffect.hp - 10;
@@ -39,7 +42,8 @@ class SurvivalCast extends trainer_card_1.TrainerCard {
             if (this.canDiscard) {
                 player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card, index) => {
                     if (cardList.cards.includes(this)) {
-                        prefabs_1.REMOVE_TOOL(store, state, cardList, this, game_1.SlotType.DISCARD);
+                        cardList.moveCardTo(this, player.discard);
+                        cardList.tool = undefined;
                     }
                 });
             }

@@ -7,6 +7,7 @@ import { CheckHpEffect } from '../../game/store/effects/check-effects';
 import { KnockOutEffect } from '../../game/store/effects/game-effects';
 import { StateUtils } from '../../game/store/state-utils';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
+import {IS_TOOL_BLOCKED} from '../../game/store/prefabs/prefabs';
 
 
 export class ExpertBelt extends TrainerCard {
@@ -32,11 +33,16 @@ export class ExpertBelt extends TrainerCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof CheckHpEffect && effect.target.cards.includes(this)) {
+
+      if (IS_TOOL_BLOCKED(store, state, effect.player, this)){ return state; }
+
       effect.hp += 20;
     }
 
     if (effect instanceof DealDamageEffect && effect.source.cards.includes(this)) {
       const opponent = StateUtils.getOpponent(state, effect.player);
+
+      if (IS_TOOL_BLOCKED(store, state, effect.player, this)){ return state; }
 
       if (effect.damage > 0 && effect.target === opponent.active) {
         effect.damage += 20;
@@ -44,6 +50,9 @@ export class ExpertBelt extends TrainerCard {
     }
 
     if (effect instanceof KnockOutEffect && effect.target.cards.includes(this)) {
+
+      if (IS_TOOL_BLOCKED(store, state, effect.player, this)){ return state; }
+      
       effect.prizeCount += 1;
     }
 

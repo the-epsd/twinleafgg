@@ -1,11 +1,12 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, EnergyType, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, GameMessage, GameError, PlayerType, SlotType, StateUtils, PowerType, AttachEnergyPrompt, EnergyCard, ChooseCardsPrompt } from '../../game';
+import { StoreLike, State, GameMessage, GameError, PlayerType, SlotType, StateUtils, PowerType, AttachEnergyPrompt, EnergyCard } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { PowerEffect } from '../../game/store/effects/game-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class ShadowRiderCalyrexVMAX extends PokemonCard {
 
@@ -112,30 +113,8 @@ export class ShadowRiderCalyrexVMAX extends PokemonCard {
     if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.UNDERWORLD_DOOR_MARKER, this)) {
       effect.player.marker.removeMarker(this.UNDERWORLD_DOOR_MARKER, this);
     }
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const player = effect.player;
 
-      const cardList = StateUtils.findCardList(state, this);
-      if (cardList === undefined) {
-        return state;
-      }
-
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_ATTACH,
-        player.discard,
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Psychic Energy' },
-        { min: 0, max: 2, allowCancel: true }
-      ), cards => {
-        cards = cards || [];
-        if (cards.length > 0) {
-          player.discard.moveCardsTo(cards, cardList);
-        }
-        return state;
-      });
-    }
-
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       let energies = 0;
@@ -143,7 +122,9 @@ export class ShadowRiderCalyrexVMAX extends PokemonCard {
         const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player, cardList);
         store.reduceEffect(state, checkProvidedEnergyEffect);
         checkProvidedEnergyEffect.energyMap.forEach(energy => {
-          energies += energy.provides.length;
+          if (energy.provides.includes(CardType.PSYCHIC) || energy.provides.includes(CardType.ANY)){
+            energies++;
+          }
         });
       });
 

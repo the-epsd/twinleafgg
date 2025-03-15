@@ -6,6 +6,7 @@ const trainer_card_1 = require("../../game/store/card/trainer-card");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const check_effects_1 = require("../../game/store/effects/check-effects");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class UTurnBoard extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -23,6 +24,9 @@ class UTurnBoard extends trainer_card_1.TrainerCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof attack_effects_1.DiscardCardsEffect && effect.target.cards.includes(this)) {
             const player = effect.player;
+            if (prefabs_1.IS_TOOL_BLOCKED(store, state, effect.player, this)) {
+                return state;
+            }
             effect.target.moveCardTo(this, player.hand);
         }
         // if (effect instanceof TrainerEffect && effect.trainerCard === this) {
@@ -34,8 +38,11 @@ class UTurnBoard extends trainer_card_1.TrainerCard {
             const player = effect.player;
             player.marker.addMarker(this.U_TURN_BOARD_MARKER, this);
         }
-        if (effect instanceof check_effects_1.CheckRetreatCostEffect && effect.player.active.tools.includes(this)) {
+        if (effect instanceof check_effects_1.CheckRetreatCostEffect && effect.player.active.tool === this) {
             const index = effect.cost.indexOf(card_types_1.CardType.COLORLESS);
+            if (prefabs_1.IS_TOOL_BLOCKED(store, state, effect.player, this)) {
+                return state;
+            }
             if (index !== -1) {
                 effect.cost.splice(index, 1);
             }

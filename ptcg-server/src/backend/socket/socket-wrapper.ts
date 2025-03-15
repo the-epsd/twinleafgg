@@ -45,5 +45,4 @@ export class SocketWrapper {
   public emit(event: string, ...args: any[]): boolean {
     return this.socket.emit(event, ...args);
   }
-
 }

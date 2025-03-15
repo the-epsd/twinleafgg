@@ -6,7 +6,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { ChoosePokemonPrompt, GameError, GameMessage, PlayerType, PowerType, SlotType, StateUtils } from '../../game';
 import { AttackEffect, KnockOutEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 
 export class Fezandipitiex extends PokemonCard {
 
@@ -117,7 +117,7 @@ export class Fezandipitiex extends PokemonCard {
       ), selected => {
         const targets = selected || [];
         targets.forEach(target => {
-          const damageEffect = new PutDamageEffect(effect, 100);
+          const damageEffect = new DealDamageEffect(effect, 100);
           damageEffect.target = target;
           store.reduceEffect(state, damageEffect);
         });

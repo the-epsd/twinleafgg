@@ -50,7 +50,7 @@ export class ScoopUpNet extends TrainerCard {
 
           // Move other cards to hand
           if (otherCards.length > 0) {
-            MOVE_CARDS(store, state, cardList, player.hand, { cards: otherCards });
+            MOVE_CARDS(store, state, cardList, player.discard, { cards: otherCards });
           }
 
           // Move Pokémon to hand

@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.BraveryCharm = void 0;
 const game_1 = require("../../game");
 const check_effects_1 = require("../../game/store/effects/check-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class BraveryCharm extends game_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -19,6 +20,9 @@ class BraveryCharm extends game_1.TrainerCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof check_effects_1.CheckHpEffect && effect.target.cards.includes(this)) {
             const card = effect.target.getPokemonCard();
+            if (prefabs_1.IS_TOOL_BLOCKED(store, state, effect.player, this)) {
+                return state;
+            }
             if (card === undefined) {
                 return state;
             }

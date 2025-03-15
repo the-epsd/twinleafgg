@@ -2,6 +2,7 @@ import { CardType, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { CheckAttackCostEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
+import {ToolEffect} from '../../game/store/effects/play-card-effects';
 import { StateUtils } from '../../game/store/state-utils';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
@@ -29,6 +30,14 @@ export class CounterGain extends TrainerCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const index = effect.cost.indexOf(CardType.COLORLESS);
+
+      // Try to reduce ToolEffect, to check if something is blocking the tool from working
+      try {
+        const stub = new ToolEffect(effect.player, this);
+        store.reduceEffect(state, stub);
+      } catch {
+        return state;
+      }
 
       // No cost to reduce
       if (index === -1) {

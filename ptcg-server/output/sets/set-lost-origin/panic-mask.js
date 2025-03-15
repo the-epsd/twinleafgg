@@ -5,6 +5,7 @@ const trainer_card_1 = require("../../game/store/card/trainer-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const state_utils_1 = require("../../game/store/state-utils");
+const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class PanicMask extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -19,9 +20,17 @@ class PanicMask extends trainer_card_1.TrainerCard {
     }
     reduceEffect(store, state, effect) {
         var _a;
-        if (effect instanceof attack_effects_1.DealDamageEffect && effect.target.tools.includes(this)) {
+        if (effect instanceof attack_effects_1.DealDamageEffect && effect.target.tool === this) {
             const player = effect.player;
             const targetPlayer = state_utils_1.StateUtils.findOwner(state, effect.target);
+            // Try to reduce ToolEffect, to check if something is blocking the tool from working
+            try {
+                const stub = new play_card_effects_1.ToolEffect(effect.player, this);
+                store.reduceEffect(state, stub);
+            }
+            catch (_b) {
+                return state;
+            }
             if (effect.damage <= 0 || player === targetPlayer || targetPlayer.active !== effect.target) {
                 return state;
             }

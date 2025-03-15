@@ -5,6 +5,7 @@ const game_1 = require("../../game");
 const card_types_1 = require("../../game/store/card/card-types");
 const trainer_card_1 = require("../../game/store/card/trainer-card");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class WideLens extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -18,8 +19,11 @@ class WideLens extends trainer_card_1.TrainerCard {
             + ' is affected by Weakness and Resistance for your opponent\'s Benched Pokémon.';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof attack_effects_1.PutDamageEffect && effect.player.active.cards.includes(this)) {
+        if (effect instanceof attack_effects_1.PutDamageEffect && effect.player.active.tool === this) {
             const opponent = game_1.StateUtils.getOpponent(state, effect.player);
+            if (prefabs_1.IS_TOOL_BLOCKED(store, state, effect.player, this)) {
+                return state;
+            }
             opponent.bench.forEach(card => {
                 if (effect.damage > 0 && effect.target === card) {
                     const applyWeakness = new attack_effects_1.ApplyWeaknessEffect(effect.attackEffect, effect.damage);

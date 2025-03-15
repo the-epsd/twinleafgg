@@ -1,9 +1,10 @@
+
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerType, StateUtils } from '../..';
+import { PlayerType, PowerType, StateUtils } from '../..';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { PutDamageEffect, PutCountersEffect } from '../../game/store/effects/attack-effects';
@@ -63,12 +64,24 @@ export class Rabsca extends PokemonCard {
       effect.damage += energyCount * 30;
     }
 
-    if ((effect instanceof PutDamageEffect || effect instanceof PutCountersEffect)
-      && StateUtils.isPokemonInPlay(effect.player, this)) {
+    if ((effect instanceof PutDamageEffect) || (effect instanceof PutCountersEffect)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
       if (effect.target === player.active || effect.target === opponent.active) {
+        return state;
+      }
+
+      const targetPlayer = StateUtils.findOwner(state, effect.target);
+
+      let isRabscaInPlay = false;
+      targetPlayer.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+        if (card === this) {
+          isRabscaInPlay = true;
+        }
+      });
+
+      if (!isRabscaInPlay) {
         return state;
       }
 
@@ -83,6 +96,7 @@ export class Rabsca extends PokemonCard {
       } catch {
         return state;
       }
+
       effect.preventDefault = true;
     }
     return state;

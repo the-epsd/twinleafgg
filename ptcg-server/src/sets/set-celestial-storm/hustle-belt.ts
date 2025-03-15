@@ -2,6 +2,7 @@ import { TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
+import {IS_TOOL_BLOCKED} from '../../game/store/prefabs/prefabs';
 
 import { StateUtils } from '../../game/store/state-utils';
 import { State } from '../../game/store/state/state';
@@ -28,6 +29,8 @@ export class HustleBelt extends TrainerCard {
 
     if (effect instanceof DealDamageEffect && effect.source.cards.includes(this)) {
       const opponent = StateUtils.getOpponent(state, effect.player);
+
+      if (IS_TOOL_BLOCKED(store, state, effect.player, this)){ return state; }
 
       if (effect.damage > 0 && effect.target === opponent.active && effect.source.damage !== 0 && effect.source.hp - effect.source.damage <= 30) {
         effect.damage += 60;

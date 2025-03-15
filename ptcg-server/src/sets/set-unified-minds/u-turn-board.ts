@@ -5,6 +5,7 @@ import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 import { CheckRetreatCostEffect, CheckTableStateEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttachPokemonToolEffect } from '../../game/store/effects/play-card-effects';
+import { IS_TOOL_BLOCKED } from '../../game/store/prefabs/prefabs';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
@@ -33,6 +34,9 @@ export class UTurnBoard extends TrainerCard {
 
     if (effect instanceof DiscardCardsEffect && effect.target.cards.includes(this)) {
       const player = effect.player;
+
+      if (IS_TOOL_BLOCKED(store, state, effect.player, this)) { return state; }
+
       effect.target.moveCardTo(this, player.hand);
     }
 
@@ -47,8 +51,10 @@ export class UTurnBoard extends TrainerCard {
       player.marker.addMarker(this.U_TURN_BOARD_MARKER, this);
     }
 
-    if (effect instanceof CheckRetreatCostEffect && effect.player.active.tools.includes(this)) {
+    if (effect instanceof CheckRetreatCostEffect && effect.player.active.tool === this) {
       const index = effect.cost.indexOf(CardType.COLORLESS);
+      if (IS_TOOL_BLOCKED(store, state, effect.player, this)) { return state; }
+
       if (index !== -1) {
         effect.cost.splice(index, 1);
       }

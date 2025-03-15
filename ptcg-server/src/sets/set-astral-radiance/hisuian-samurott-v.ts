@@ -1,9 +1,8 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, PlayerType, SlotType } from '../../game';
+import { StoreLike, State, PlayerType, SlotType, CardTarget, ChoosePokemonPrompt, GameMessage, PokemonCardList, StateUtils } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { CHOOSE_TOOLS_TO_REMOVE_PROMPT } from '../../game/store/prefabs/prefabs';
 import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../game/store/prefabs/costs';
 
 export class HisuianSamurottV extends PokemonCard {
@@ -50,7 +49,46 @@ export class HisuianSamurottV extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      CHOOSE_TOOLS_TO_REMOVE_PROMPT(store, state, effect.player, PlayerType.TOP_PLAYER, SlotType.DISCARD, 0, 1);
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      let pokemonsWithTool = 0;
+      const blocked: CardTarget[] = [];
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
+        if (cardList.tool !== undefined) {
+          pokemonsWithTool += 1;
+        } else {
+          blocked.push(target);
+        }
+      });
+
+      if (pokemonsWithTool === 0) {
+        return state;
+      }
+
+      const max = Math.min(2, pokemonsWithTool);
+      let targets: PokemonCardList[] = [];
+      return store.prompt(state, new ChoosePokemonPrompt(
+        player.id,
+        GameMessage.CHOOSE_POKEMON_TO_DISCARD_CARDS,
+        PlayerType.TOP_PLAYER,
+        [SlotType.ACTIVE, SlotType.BENCH],
+        { min: 1, max: max, allowCancel: false, blocked }
+      ), results => {
+        targets = results || [];
+
+        if (targets.length === 0) {
+          return state;
+        }
+
+        targets.forEach(target => {
+          const owner = StateUtils.findOwner(state, target);
+          if (target.tool !== undefined) {
+            target.moveCardTo(target.tool, owner.discard);
+            target.tool = undefined;
+          }
+        });
+      });
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {

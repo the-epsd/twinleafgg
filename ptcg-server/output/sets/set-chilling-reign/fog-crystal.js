@@ -57,8 +57,7 @@ class FogCrystal extends trainer_card_1.TrainerCard {
         this.regulationMark = 'E';
         this.name = 'Fog Crystal';
         this.fullName = 'Fog Crystal CRE';
-        this.text = 'Search your deck for a Pokemon with 90 HP or less, reveal it, ' +
-            'and put it into your hand. Shuffle your deck afterward.';
+        this.text = 'Search your deck for a [P] Energy card or a Basic [P] Pokémon, reveal it, and put it into your hand. Then, shuffle your deck.';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {

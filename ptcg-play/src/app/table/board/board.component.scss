@@ -23,10 +23,21 @@ $board-min-height: calc(6 * var(--card-size) * #{$card-aspect-ratio} + 2 * #{map
   background-color: #091624;
 }
 
+.perspective-wrapper {
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+}
+
 .ptcg-board-outer-container {
   width: 100%;
   height: 82.5%;
-  // overflow: hidden;
+  perspective: 55em;
+  -webkit-perspective: 55em;
+  -moz-perspective: 55em;
+  min-width: 990px;
 }
 
 .responsive-board {
@@ -36,8 +47,12 @@ $board-min-height: calc(6 * var(--card-size) * #{$card-aspect-ratio} + 2 * #{map
 @media (max-width: 990px) {
   .responsive-board {
     transform-origin: top left;
-    transform: scale(calc(100vw / 990));
+    transform: scale(calc(round(100vw / 990)));
     height: calc(100vh * (990 / 100vw));
+
+    .perspective-wrapper {
+      transform-style: preserve-3d;
+    }
   }
 }
 
@@ -47,18 +62,26 @@ $board-min-height: calc(6 * var(--card-size) * #{$card-aspect-ratio} + 2 * #{map
   margin: 0 auto;
   width: 75%;
   height: 100%;
-  transform: translateY(4%); // Apply transformY by default
+  transform-origin: center center;
+  transform-style: preserve-3d;
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translate3d(0, 4%, 0);
+  transition: transform 0.5s ease;
 
   @media (min-aspect-ratio: 4/3) {
-    transform: perspective(55em) rotateX(18deg);
+    transform: rotateX(18deg) translate3d(0, 4%, 0);
   }
 
-  transform-origin: center center;
-  transition: transform 0.5s ease;
+  & * {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+  }
 }
 
 .upside-down {
-  transform: scale(-1, -1);
+  transform: scale3d(-1, -1, 1) !important;
 }
 
 .ptcg-board-player {
@@ -101,7 +124,6 @@ $board-min-height: calc(6 * var(--card-size) * #{$card-aspect-ratio} + 2 * #{map
   left: -55%;
   right: -55%;
   height: 100%;
-  // background: linear-gradient(0deg, #1a202cb5, #0d1016af), rgba(0, 90, 207, 0.75);
   background: rgba(0, 90, 207, 0.225);
   background-size: 56%;
   background-position: center, top;
@@ -118,7 +140,6 @@ $board-min-height: calc(6 * var(--card-size) * #{$card-aspect-ratio} + 2 * #{map
   left: -40%;
   right: -40%;
   height: 50vh;
-  // background: linear-gradient(0deg, #1a202cb5, #0d1016af), rgba(255, 0, 0, 0.75);
   background: rgba(255, 0, 0, 0.225);
   background-size: 56%;
   background-position: center;
@@ -146,13 +167,11 @@ $board-min-height: calc(6 * var(--card-size) * #{$card-aspect-ratio} + 2 * #{map
 #top_div.active:after {
   --top-opacity: 1;
   border-color: var(--border-color);
-  // animation: glowRed 3s linear infinite;
 }
 
 #bottom_div.active:after {
   --bottom-opacity: 1;
   border-color: var(--border-color);
-  // animation: glowBlue 10s linear infinite;
 }
 
 @keyframes glowRed {
@@ -260,7 +279,6 @@ ptcg-board-prizes {
 
 .ptcg-board-active {
   grid-area: active;
-  // transform: scale(1.25);
   transform-origin: center bottom;
 }
 
@@ -323,20 +341,18 @@ ptcg-board-prizes {
 
 .card-count {
   position: absolute;
-  bottom: -20px;
+  bottom: -22px;
   left: 50%;
   transform: translateX(-50%);
-  background: linear-gradient(90deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.6) 100%);
   color: white;
   padding: 4px 8px;
-  border-radius: 6px;
   font-size: 8px;
   font-weight: 500;
   letter-spacing: 0.3px;
-  backdrop-filter: blur(2px);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   z-index: 1;
   white-space: nowrap;
+  background: rgba(26, 32, 44);
+  border-radius: 6px;
 }
 
 .ptcg-board-bench {
@@ -367,7 +383,6 @@ ptcg-board-prizes {
 }
 
 .lost-zone {
-  // align-self: flex-start;
   transform: rotate(-90deg);
 }
 
@@ -385,15 +400,15 @@ ptcg-board-prizes {
 .ptcg-card-preview {
   border-radius: $card-border-radius;
   position: absolute;
-  width: 91.2px; // Increased from var(--card-size)
-  transform: translate(15%, -55%); // Center on cursor
+  width: 91.2px;
+  transform: translate(15%, -55%);
   pointer-events: none;
 }
 
 .coin-flip-container {
   position: absolute;
   top: 50%;
-  right: 28.5%; // Move it to the right of the bottom markers
+  right: 28.5%;
   transform: translateY(-50%);
   z-index: 1000;
   pointer-events: auto;
@@ -479,5 +494,12 @@ ptcg-board-prizes {
   .vstar-marker,
   .gx-marker {
     transform: rotate(180deg);
+  }
+}
+
+.deck-card,
+.discard-card {
+  &[style*="transform"] {
+    transform: translate3d(var(--x, 0), var(--y, 0), 0) !important;
   }
 }

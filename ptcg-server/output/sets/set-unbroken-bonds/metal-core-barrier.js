@@ -25,17 +25,24 @@ class MetalCoreBarrier extends trainer_card_1.TrainerCard {
         if (effect instanceof game_phase_effects_1.EndTurnEffect) {
             const cardList = state_utils_1.StateUtils.findCardList(state, this);
             const player = state_utils_1.StateUtils.findOwner(state, cardList);
+            if (prefabs_1.IS_TOOL_BLOCKED(store, state, effect.player, this)) {
+                return state;
+            }
             if (effect.player === player) {
                 return state;
             }
             player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card, index) => {
                 if (cardList.cards.includes(this)) {
-                    prefabs_1.REMOVE_TOOL(store, state, cardList, this, game_1.SlotType.DISCARD);
+                    cardList.moveCardTo(this, player.discard);
+                    cardList.tool = undefined;
                 }
             });
             return state;
         }
         if (effect instanceof attack_effects_1.PutDamageEffect && effect.target.cards.includes(this)) {
+            if (prefabs_1.IS_TOOL_BLOCKED(store, state, effect.player, this)) {
+                return state;
+            }
             const checkPokemonType = new check_effects_1.CheckPokemonTypeEffect(effect.target);
             store.reduceEffect(state, checkPokemonType);
             if (!checkPokemonType.cardTypes.includes(card_types_1.CardType.METAL)) {

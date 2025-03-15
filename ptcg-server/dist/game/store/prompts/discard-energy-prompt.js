@@ -3,6 +3,7 @@ import { GameError } from '../../game-error';
 import { GameMessage } from '../../game-message';
 import { Prompt } from './prompt';
 import { StateUtils } from '../state-utils';
+import { SuperType } from '../card/card-types';
 export const DiscardEnergyPromptType = 'Discard energy';
 export class DiscardEnergyPrompt extends Prompt {
     constructor(playerId, message, playerType, slots, filter, options) {
@@ -18,7 +19,6 @@ export class DiscardEnergyPrompt extends Prompt {
             min: 0,
             max: undefined,
             blockedFrom: [],
-            blockedTo: [],
             blockedMap: [],
         }, options);
     }
@@ -31,20 +31,34 @@ export class DiscardEnergyPrompt extends Prompt {
             throw new GameError(GameMessage.INVALID_PROMPT_RESULT);
         }
         const transfers = [];
+        const processedCards = new Set();
         result.forEach(t => {
             const cardList = StateUtils.getTarget(state, player, t.from);
+            // Check if we've already processed this card from this source
+            const key = `${t.from}-${t.index}`;
+            if (processedCards.has(key)) {
+                throw new GameError(GameMessage.INVALID_PROMPT_RESULT);
+            }
+            processedCards.add(key);
             const card = cardList.cards[t.index];
             // Verify this is a card.
             if (!(card instanceof Card)) {
                 throw new GameError(GameMessage.INVALID_PROMPT_RESULT);
             }
-            transfers.push({ from: t.from, to: t.to, card });
+            // Verify card is an energy card
+            if (card.superType !== SuperType.ENERGY) {
+                throw new GameError(GameMessage.INVALID_PROMPT_RESULT);
+            }
+            transfers.push({ from: t.from, card });
         });
         return transfers;
     }
     validate(result) {
         if (result === null) {
             return this.options.allowCancel; // operation cancelled
+        }
+        if (result.length < this.options.min || (this.options.max !== undefined && result.length > this.options.max)) {
+            return false;
         }
         return result.every(r => r.card !== undefined);
     }

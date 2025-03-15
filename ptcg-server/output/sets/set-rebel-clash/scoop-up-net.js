@@ -38,7 +38,7 @@ class ScoopUpNet extends game_1.TrainerCard {
                     const otherCards = cardList.cards.filter(card => !(card instanceof game_1.PokemonCard)); // Ensure only non-PokemonCard types
                     // Move other cards to hand
                     if (otherCards.length > 0) {
-                        prefabs_1.MOVE_CARDS(store, state, cardList, player.hand, { cards: otherCards });
+                        prefabs_1.MOVE_CARDS(store, state, cardList, player.discard, { cards: otherCards });
                     }
                     // Move Pokémon to hand
                     if (pokemons.length > 0) {

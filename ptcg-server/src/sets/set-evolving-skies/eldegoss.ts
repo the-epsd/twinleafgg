@@ -1,11 +1,11 @@
-import { ChooseCardsPrompt, GameMessage, PlayerType, Power, PowerType, State, StateUtils, StoreLike } from '../../game';
+import { ChooseCardsPrompt, GameError, GameMessage, PlayerType, Power, PowerType, State, StateUtils, StoreLike } from '../../game';
 import { CardType, EnergyType, Stage, SuperType } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { ABILITY_USED, ADD_MARKER, HAS_MARKER, MOVE_CARDS, REMOVE_MARKER, SHUFFLE_DECK, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { ABILITY_USED, ADD_MARKER, HAS_MARKER, MOVE_CARDS, REMOVE_MARKER, SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Eldegoss extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -41,9 +41,19 @@ export class Eldegoss extends PokemonCard {
   public readonly CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    if (WAS_POWER_USED(effect, 0, this) && !HAS_MARKER) {
+    // Cotton Lift
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      if (HAS_MARKER(this.COTTON_LIFT_MARKER, this, this)){
+        throw new GameError(GameMessage.POWER_ALREADY_USED);
+      }
+
+      if (player.deck.cards.length === 0){
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
+      }
+
       return store.prompt(state, new ChooseCardsPrompt(
         player,
         GameMessage.CHOOSE_ENERGY_FROM_DECK,
@@ -54,11 +64,14 @@ export class Eldegoss extends PokemonCard {
         if (selections.length === 0) {
           return SHUFFLE_DECK(store, state, player);
         }
+        
+        SHOW_CARDS_TO_PLAYER(store, state, opponent, selections);
         MOVE_CARDS(store, state, player.deck, player.hand, { cards: selections });
         SHUFFLE_DECK(store, state, player);
         ADD_MARKER(this.COTTON_LIFT_MARKER, this, this);
         ABILITY_USED(player, this);
       });
+
     }
 
     if (WAS_ATTACK_USED(effect, 0, this)) {

@@ -62,35 +62,28 @@ class Seismitoad extends pokemon_card_1.PokemonCard {
         }
         if (effect instanceof game_effects_1.AttackEffect) {
             this.usedAttack = true;
-            console.log('attacked');
         }
         if (effect instanceof game_phase_effects_1.BeginTurnEffect) {
             if (this.usedAttack) {
                 this.usedAttack = false;
-                console.log('reset');
             }
         }
         if (effect instanceof game_phase_effects_1.EndTurnEffect) {
             if (!this.usedAttack) {
                 this.usedAttack = false;
-                console.log('did not attack');
                 effect.player.marker.removeMarker(this.NEXT_TURN_MORE_DAMAGE_MARKER, this);
                 effect.player.marker.removeMarker(this.NEXT_TURN_MORE_DAMAGE_MARKER_2, this);
-                console.log('remove all markers');
             }
         }
         if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.NEXT_TURN_MORE_DAMAGE_MARKER, this)) {
             effect.player.marker.addMarker(this.NEXT_TURN_MORE_DAMAGE_MARKER_2, this);
-            console.log('second marker added');
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             // Check marker
             if (effect.player.marker.hasMarker(this.NEXT_TURN_MORE_DAMAGE_MARKER, this)) {
-                console.log('attack added damage');
                 effect.damage += 100;
             }
             effect.player.marker.addMarker(this.NEXT_TURN_MORE_DAMAGE_MARKER, this);
-            console.log('marker added');
         }
         return state;
     }

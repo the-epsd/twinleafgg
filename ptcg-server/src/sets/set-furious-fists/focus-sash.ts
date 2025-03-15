@@ -1,10 +1,10 @@
-import { GameLog, PlayerType, SlotType, StateUtils } from '../../game';
+import { GameLog, PlayerType, StateUtils } from '../../game';
 import { TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { CheckHpEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { REMOVE_TOOL } from '../../game/store/prefabs/prefabs';
+import { IS_TOOL_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
@@ -30,8 +30,11 @@ export class FocusSash extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PutDamageEffect && effect.target.tools.includes(this) && effect.target.damage == 0) {
+    if (effect instanceof PutDamageEffect && effect.target.tool === this && effect.target.damage == 0) {
       const player = StateUtils.findOwner(state, effect.target);
+
+      if (IS_TOOL_BLOCKED(store, state, effect.player, this)) { return state; }
+
       const checkHpEffect = new CheckHpEffect(player, effect.target);
       store.reduceEffect(state, checkHpEffect);
 
@@ -46,7 +49,8 @@ export class FocusSash extends TrainerCard {
 
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, index) => {
           if (cardList.cards.includes(this)) {
-            REMOVE_TOOL(store, state, cardList, this, SlotType.DISCARD);
+            cardList.moveCardTo(this, player.discard);
+            cardList.tool = undefined;
           }
         });
       }

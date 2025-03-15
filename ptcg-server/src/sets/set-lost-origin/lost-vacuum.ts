@@ -4,8 +4,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { Card, CardList, ChooseCardsPrompt, GameError, GameMessage, PlayerType, SelectPrompt, SlotType, StateUtils } from '../../game';
-import { CHOOSE_TOOLS_TO_REMOVE_PROMPT } from '../../game/store/prefabs/prefabs';
+import { Card, CardList, CardTarget, ChooseCardsPrompt, ChoosePokemonPrompt, GameError, GameMessage, PlayerType, PokemonCardList, SelectPrompt, SlotType, StateUtils } from '../../game';
 
 export class LostVacuum extends TrainerCard {
 
@@ -35,17 +34,26 @@ export class LostVacuum extends TrainerCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      const allTools: Card[] = [];
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
-        allTools.push(...cardList.tools);
+      let pokemonsWithTool = 0;
+      const blocked: CardTarget[] = [];
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
+        if (cardList.tool !== undefined) {
+          pokemonsWithTool += 1;
+        } else {
+          blocked.push(target);
+        }
       });
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-        allTools.push(...cardList.tools);
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
+        if (cardList.tool !== undefined) {
+          pokemonsWithTool += 1;
+        } else {
+          blocked.push(target);
+        }
       });
 
       const stadiumCard = StateUtils.getStadiumCard(state);
 
-      if (allTools.length === 0 && stadiumCard === undefined) {
+      if (pokemonsWithTool === 0 && stadiumCard == undefined) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
@@ -77,13 +85,45 @@ export class LostVacuum extends TrainerCard {
         player.hand.moveCardsTo(cards, player.lostzone);
       });
 
-      if (allTools.length > 0 && stadiumCard !== undefined) {
+      if (pokemonsWithTool >= 1 && stadiumCard !== undefined) {
 
         const options: { message: GameMessage, action: () => void }[] = [
           {
             message: GameMessage.CHOICE_TOOL,
             action: () => {
-              return CHOOSE_TOOLS_TO_REMOVE_PROMPT(store, state, player, PlayerType.ANY, SlotType.LOSTZONE, 1, 1);
+
+              // We will discard this card after prompt confirmation
+              effect.preventDefault = true;
+
+              const max = Math.min(1, pokemonsWithTool);
+              let targets: PokemonCardList[] = [];
+              return store.prompt(state, new ChoosePokemonPrompt(
+                player.id,
+                GameMessage.CHOOSE_POKEMON_TO_DISCARD_CARDS,
+                PlayerType.ANY,
+                [SlotType.ACTIVE, SlotType.BENCH],
+                { min: 1, max: max, allowCancel: false, blocked }
+              ), results => {
+                targets = results || [];
+
+                if (targets.length === 0) {
+                  return state;
+                }
+
+                targets.forEach(target => {
+                  const owner = StateUtils.findOwner(state, target);
+                  if (target.tool !== undefined) {
+                    target.moveCardTo(target.tool, owner.lostzone);
+                    target.tool = undefined;
+                  }
+
+                  player.supporter.moveCardTo(this, player.discard);
+                  return state;
+                });
+
+                player.supporter.moveCardTo(this, player.discard);
+                return state;
+              });
             }
           },
           {
@@ -121,7 +161,7 @@ export class LostVacuum extends TrainerCard {
           return state;
         });
       }
-      if (allTools.length === 0 && stadiumCard !== undefined) {
+      if (pokemonsWithTool === 0 && stadiumCard !== undefined) {
         const stadiumCard = StateUtils.getStadiumCard(state);
         if (stadiumCard == undefined) {
           throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
@@ -136,8 +176,38 @@ export class LostVacuum extends TrainerCard {
         return state;
       }
 
-      if (allTools.length >= 1 && stadiumCard == undefined) {
-        return CHOOSE_TOOLS_TO_REMOVE_PROMPT(store, state, player, PlayerType.ANY, SlotType.LOSTZONE, 1, 1);
+      if (pokemonsWithTool >= 1 && stadiumCard == undefined) {
+
+        // We will discard this card after prompt confirmation
+        effect.preventDefault = true;
+
+        const max = Math.min(1, pokemonsWithTool);
+        let targets: PokemonCardList[] = [];
+        return store.prompt(state, new ChoosePokemonPrompt(
+          player.id,
+          GameMessage.CHOOSE_POKEMON_TO_DISCARD_CARDS,
+          PlayerType.ANY,
+          [SlotType.ACTIVE, SlotType.BENCH],
+          { min: 1, max: max, allowCancel: false, blocked }
+        ), results => {
+          targets = results || [];
+
+          if (targets.length === 0) {
+            return state;
+          }
+
+          targets.forEach(target => {
+            const owner = StateUtils.findOwner(state, target);
+            if (target.tool !== undefined) {
+              target.moveCardTo(target.tool, owner.lostzone);
+              target.tool = undefined;
+              player.supporter.moveCardTo(this, player.discard);
+            }
+
+            player.supporter.moveCardTo(this, player.discard);
+            return state;
+          });
+        });
       }
       return state;
     }

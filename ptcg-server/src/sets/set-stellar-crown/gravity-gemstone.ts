@@ -30,7 +30,7 @@ export class GravityGemstone extends TrainerCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      if (player.active.tools.includes(this) || opponent.active.tools.includes(this)) {
+      if (player.active.tool === this || opponent.active.tool === this) {
         effect.cost.push(CardType.COLORLESS);
       }
     }

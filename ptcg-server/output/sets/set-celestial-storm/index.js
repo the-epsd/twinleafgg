@@ -22,6 +22,7 @@ const other_prints_1 = require("./other-prints");
 const phanpy_1 = require("./phanpy");
 const rayquaza_gx_1 = require("./rayquaza-gx");
 const sableye_1 = require("./sableye");
+const sceptile_1 = require("./sceptile");
 const shrine_of_punishment_1 = require("./shrine-of-punishment");
 const shuppet_1 = require("./shuppet");
 const sky_pillar_1 = require("./sky-pillar");
@@ -50,6 +51,7 @@ exports.setCelestialStorm = [
     new phanpy_1.Phanpy(),
     new rayquaza_gx_1.RayquazaGX(),
     new sableye_1.Sableye(),
+    new sceptile_1.Sceptile(),
     new shrine_of_punishment_1.ShrineOfPunishment(),
     new shuppet_1.Shuppet(),
     new sky_pillar_1.SkyPillar(),

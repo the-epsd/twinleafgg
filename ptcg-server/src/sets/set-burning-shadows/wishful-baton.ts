@@ -5,6 +5,7 @@ import { EnergyType, SuperType, TrainerType } from '../../game/store/card/card-t
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { KnockOutEffect } from '../../game/store/effects/game-effects';
+import {IS_TOOL_BLOCKED} from '../../game/store/prefabs/prefabs';
 
 import { AttachEnergyPrompt } from '../../game/store/prompts/attach-energy-prompt';
 import { StateUtils } from '../../game/store/state-utils';
@@ -39,7 +40,7 @@ export class WishfulBaton extends TrainerCard {
 
       const pokemonIndices = effect.target.cards.map((card, index) => index);
 
-
+      if (IS_TOOL_BLOCKED(store, state, effect.player, this)){ return state; }
 
       for (let i = pokemonIndices.length - 1; i >= 0; i--) {
         const removedCard = target.cards.splice(pokemonIndices[i], 1)[0];

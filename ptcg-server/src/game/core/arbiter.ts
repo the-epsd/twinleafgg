@@ -34,44 +34,42 @@ export class Arbiter {
     }
   }
 
-  private shuffle(cards: CardList): number[] {
-    const len = cards.cards.length;
-    const order: number[] = [];
-
-    for (let i = 0; i < len; i++) {
-      order.push(i);
-    }
-
-    for (let i = 0; i < len; i++) {
-      const position = Math.min(len - 1, Math.round(Math.random() * len));
-      const tmp = order[i];
-      order[i] = order[position];
-      order[position] = tmp;
-    }
-
-    return order;
-  }
-
   // private shuffle(cards: CardList): number[] {
   //   const len = cards.cards.length;
   //   const order: number[] = [];
 
-  //   // Initialize the order array with indices 0 to len - 1
   //   for (let i = 0; i < len; i++) {
   //     order.push(i);
   //   }
 
-  //   // Fisher-Yates Shuffle
-  //   for (let i = len - 1; i > 0; i--) {
-  //     // Pick a remaining element randomly
-  //     const j = Math.floor(Math.random() * (i + 1));
-
-  //     // Swap order[i] with the element at random index j
+  //   for (let i = 0; i < len; i++) {
+  //     const position = Math.min(len - 1, Math.round(Math.random() * len));
   //     const tmp = order[i];
-  //     order[i] = order[j];
-  //     order[j] = tmp;
+  //     order[i] = order[position];
+  //     order[position] = tmp;
   //   }
 
   //   return order;
   // }
+
+  private shuffle(cards: CardList): number[] {
+    const len = cards.cards.length;
+    const order: number[] = [];
+
+    // Initialize the order array with indices 0 to len - 1
+    for (let i = 0; i < len; i++) {
+      order.push(i);
+    }
+
+    // Fisher-Yates Shuffle
+    for (let i = len - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+
+      const tmp = order[i];
+      order[i] = order[j];
+      order[j] = tmp;
+    }
+
+    return order;
+  }
 }

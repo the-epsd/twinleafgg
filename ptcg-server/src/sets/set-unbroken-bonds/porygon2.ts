@@ -12,7 +12,7 @@ export class Porygon2 extends PokemonCard {
 
   public cardType: CardType = CardType.COLORLESS;
 
-  public hp: number = 90;
+  public hp: number = 80;
 
   public weakness = [{ type: CardType.FIGHTING }];
 

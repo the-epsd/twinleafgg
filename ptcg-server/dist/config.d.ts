@@ -13,6 +13,7 @@ export declare const config: {
         avatarMaxSize: number;
         replayFileSize: number;
         rateLimitCount: number;
+        wsRateLimitCount: number;
         rateLimitTime: number;
     };
     core: {

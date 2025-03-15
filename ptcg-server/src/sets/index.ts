@@ -10,6 +10,7 @@ export * from './set-wotc-promos';
 export * from './set-base-set-energy';
 
 //ex Era
+export * from './set-ex-holon-phantoms';
 export * from './set-ex-delta-species';
 export * from './set-ex-dragon';
 export * from './set-ex-dragon-frontiers';
@@ -19,6 +20,7 @@ export * from './set-ex-team-rocket-returns';
 export * from './set-ex-crystal-guardians';
 export * from './set-ex-power-keepers';
 export * from './set-ex-firered-leafgreen';
+export * from './set-ex-legend-maker';
 
 //DP Era
 export * from './set-diamond-and-pearl';

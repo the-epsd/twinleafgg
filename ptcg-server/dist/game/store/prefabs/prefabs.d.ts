@@ -1,4 +1,4 @@
-import { AttachEnergyOptions, Card, CardList, ChooseCardsOptions, EnergyCard, GameMessage, Player, PlayerType, PokemonCardList, SlotType, State, StoreLike } from '../..';
+import { AttachEnergyOptions, Card, CardList, ChooseCardsOptions, EnergyCard, GameMessage, Player, PlayerType, PokemonCardList, SlotType, State, StoreLike, TrainerCard } from '../..';
 import { CardTag, SpecialCondition } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
 import { DealDamageEffect, PutDamageEffect } from '../effects/attack-effects';
@@ -53,6 +53,7 @@ export declare function SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH(store: S
  */
 export declare function SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND(store: StoreLike, state: State, player: Player, filter?: Partial<PokemonCard>, options?: Partial<ChooseCardsOptions>): State;
 export declare function THIS_ATTACK_DOES_X_MORE_DAMAGE(effect: AttackEffect, store: StoreLike, state: State, damage: number): State;
+export declare function GET_TOTAL_ENERGY_ATTACHED_TO_PLAYERS_POKEMON(player: Player, store: StoreLike, state: State): number;
 export declare function DEAL_MORE_DAMAGE_IF_OPPONENT_ACTIVE_HAS_CARD_TAG(effect: AttackEffect, state: State, damage: number, ...cardTags: CardTag[]): void;
 export declare function DEAL_MORE_DAMAGE_FOR_EACH_PRIZE_CARD_TAKEN(effect: AttackEffect, state: State, damage: number): void;
 export declare function HEAL_X_DAMAGE_FROM_THIS_POKEMON(effect: AttackEffect, store: StoreLike, state: State, damage: number): State;
@@ -118,6 +119,11 @@ export declare function GET_CARDS_ON_BOTTOM_OF_DECK(player: Player, amount?: num
  * @returns `true` if the ability is blocked, `false` if the ability is able to go thru.
  */
 export declare function IS_ABILITY_BLOCKED(store: StoreLike, state: State, player: Player, card: PokemonCard): boolean;
+/**
+ * Checks if a tool's effect is being blocked
+ * @returns `true` if the tool's effect is blocked, `false` if the tool's effect is able to activate.
+ */
+export declare function IS_TOOL_BLOCKED(store: StoreLike, state: State, player: Player, card: TrainerCard): boolean;
 export declare function CAN_EVOLVE_ON_FIRST_TURN_GOING_SECOND(state: State, player: Player, pokemon: PokemonCardList): void;
 /**
  * Finds `card` and moves it from its current CardList to `destination`.
@@ -153,6 +159,8 @@ export declare function REMOVE_MARKER(marker: string, owner: Player | Card | Pok
 export declare function HAS_MARKER(marker: string, owner: Player | Card | PokemonCard | PokemonCardList, source?: Card): boolean;
 export declare function BLOCK_EFFECT_IF_MARKER(marker: string, owner: Player | Card | PokemonCard | PokemonCardList, source?: Card): void;
 export declare function PREVENT_DAMAGE_IF_TARGET_HAS_MARKER(effect: Effect, marker: string, source?: Card): void;
+export declare function PREVENT_DAMAGE_IF_SOURCE_HAS_TAG(effect: Effect, tag: string, source: Card): void;
+export declare function HAS_TAG(tag: string, source: Card): boolean;
 export declare function REMOVE_MARKER_AT_END_OF_TURN(effect: Effect, marker: string, source: Card): void;
 export declare function REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN(effect: Effect, marker: string, source: Card): void;
 export declare function REPLACE_MARKER_AT_END_OF_TURN(effect: Effect, oldMarker: string, newMarker: string, source: Card): void;
@@ -170,6 +178,3 @@ export declare function MOVE_CARDS(store: StoreLike, state: State, source: CardL
     toBottom?: boolean;
     skipCleanup?: boolean;
 }): State;
-export declare function REMOVE_TOOL(store: StoreLike, state: State, source: PokemonCardList, tool: Card, destinationSlot: SlotType): State;
-export declare function REMOVE_TOOLS_FROM_POKEMON_PROMPT(store: StoreLike, state: State, player: Player, target: PokemonCardList, destinationSlot: SlotType, min: number, max: number): State;
-export declare function CHOOSE_TOOLS_TO_REMOVE_PROMPT(store: StoreLike, state: State, player: Player, playerType: PlayerType, destinationSlot: SlotType, min: number, max: number): State;

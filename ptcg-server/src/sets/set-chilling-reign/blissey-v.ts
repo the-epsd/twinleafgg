@@ -1,4 +1,5 @@
-import { PokemonCard, Stage, CardType, CardTag, State, StoreLike, PowerType, AttachEnergyPrompt, GameMessage, PlayerType, SlotType, StateUtils, SuperType, EnergyCard } from '../../game';
+import { PokemonCard, Stage, CardType, CardTag, State, StoreLike, PowerType, AttachEnergyPrompt, GameMessage, PlayerType, SlotType, StateUtils, SuperType } from '../../game';
+import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { AfterAttackEffect } from '../../game/store/effects/game-phase-effects';
@@ -75,8 +76,17 @@ export class BlisseyV extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
 
-      const energies = player.active.cards.filter(card => card instanceof EnergyCard);
-      effect.damage = 10 + (30 * energies.length);
+      let energies = 0;
+      const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player, player.active);
+      store.reduceEffect(state, checkProvidedEnergyEffect);
+      checkProvidedEnergyEffect.energyMap.forEach(energy => {
+        energies += energy.provides.length;
+      });
+
+      effect.damage = 10 + (30 * energies);
+
+      //const energies = player.active.cards.filter(card => card instanceof EnergyCard);
+
       this.usedBlissfulBlast = true;
     }
 
@@ -103,6 +113,7 @@ export class BlisseyV extends PokemonCard {
           const target = StateUtils.getTarget(state, player, transfer.to);
           player.discard.moveCardTo(transfer.card, target);
         }
+        this.usedBlissfulBlast = false;
       });
     }
     return state;

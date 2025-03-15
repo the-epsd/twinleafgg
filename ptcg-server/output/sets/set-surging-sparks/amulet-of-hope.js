@@ -7,6 +7,7 @@ const state_1 = require("../../game/store/state/state");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 const game_1 = require("../../game");
+const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class AmuletofHope extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -25,6 +26,14 @@ class AmuletofHope extends trainer_card_1.TrainerCard {
         if (effect instanceof game_effects_1.KnockOutEffect && effect.target.cards.includes(this)) {
             const player = effect.player;
             if (state.phase !== state_1.GamePhase.ATTACK) {
+                return state;
+            }
+            // Try to reduce ToolEffect, to check if something is blocking the tool from working
+            try {
+                const stub = new play_card_effects_1.ToolEffect(effect.player, this);
+                store.reduceEffect(state, stub);
+            }
+            catch (_a) {
                 return state;
             }
             const target = effect.target;

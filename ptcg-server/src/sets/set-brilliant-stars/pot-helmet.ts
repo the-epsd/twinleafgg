@@ -2,6 +2,7 @@ import { CardTag, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
+import {IS_TOOL_BLOCKED} from '../../game/store/prefabs/prefabs';
 
 import { StateUtils } from '../../game/store/state-utils';
 import { GamePhase, State } from '../../game/store/state/state';
@@ -29,6 +30,8 @@ export class PotHelmet extends TrainerCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {
       const sourceCard = effect.target.getPokemonCard();
+
+      if (IS_TOOL_BLOCKED(store, state, effect.player, this)){ return state; }
 
       // It's not an attack
       if (state.phase !== GamePhase.ATTACK) {

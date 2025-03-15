@@ -6,6 +6,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { StateUtils } from '../../game';
 import { DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { KnockOutEffect } from '../../game/store/effects/game-effects';
+import { IS_TOOL_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 export class VengefulPunch extends TrainerCard {
 
@@ -50,10 +51,12 @@ export class VengefulPunch extends TrainerCard {
     }*/
 
     if ((effect instanceof DealDamageEffect || effect instanceof PutDamageEffect) &&
-      effect.target.tools.includes(this)) {
+      effect.target.tool === this) {
       const player = StateUtils.getOpponent(state, effect.player);
 
-      if (player.active.tools.includes(this)) {
+      if (IS_TOOL_BLOCKED(store, state, effect.player, this)) { return state; }
+
+      if (player.active.tool === this) {
         this.damageDealt = true;
       }
     }

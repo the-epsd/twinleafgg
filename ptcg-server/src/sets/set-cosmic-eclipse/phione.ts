@@ -4,6 +4,8 @@ import { PowerType } from '../../game/store/card/pokemon-types';
 import { StoreLike, State, StateUtils, GameError, GameMessage, PokemonCardList, ChoosePokemonPrompt, PlayerType, SlotType, CardList } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+
 
 export class Phione extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -62,17 +64,33 @@ export class Phione extends PokemonCard {
         { allowCancel: false }
       ), targets => {
         if (targets && targets.length > 0) {
-
           const deckBottom = new CardList();
+          const phioneList = player.bench[benchIndex];
+          const phioneCard = phioneList.getPokemonCard();
+
+          if (!phioneCard) {
+            return state;
+          }
 
           opponent.active.clearEffects();
           opponent.switchPokemon(targets[0]);
-          player.bench[benchIndex].moveTo(deckBottom);
-          player.bench[benchIndex].cards.forEach((c, index) => {
-            c.cards.moveTo(player.discard);
+
+          // Move all attached cards (energy, tools) to discard
+          MOVE_CARDS(store, state, phioneList, player.discard, {
+            cards: phioneList.cards.filter(c => c !== phioneCard),
+            skipCleanup: false
           });
-          deckBottom.moveTo(player.deck);
-          player.bench[benchIndex].clearEffects();
+
+          // Move Phione to bottom of deck
+          MOVE_CARDS(store, state, phioneList, deckBottom, {
+            cards: [phioneCard],
+            skipCleanup: false
+          });
+          MOVE_CARDS(store, state, deckBottom, player.deck, {
+            toBottom: false
+          });
+
+          phioneList.clearEffects();
           return state;
         }
       });

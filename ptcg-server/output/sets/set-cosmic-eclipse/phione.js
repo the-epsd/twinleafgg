@@ -6,6 +6,7 @@ const card_types_1 = require("../../game/store/card/card-types");
 const pokemon_types_1 = require("../../game/store/card/pokemon-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class Phione extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -51,14 +52,27 @@ class Phione extends pokemon_card_1.PokemonCard {
             return store.prompt(state, new game_1.ChoosePokemonPrompt(opponent.id, game_1.GameMessage.CHOOSE_POKEMON_TO_SWITCH, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { allowCancel: false }), targets => {
                 if (targets && targets.length > 0) {
                     const deckBottom = new game_1.CardList();
+                    const phioneList = player.bench[benchIndex];
+                    const phioneCard = phioneList.getPokemonCard();
+                    if (!phioneCard) {
+                        return state;
+                    }
                     opponent.active.clearEffects();
                     opponent.switchPokemon(targets[0]);
-                    player.bench[benchIndex].moveTo(deckBottom);
-                    player.bench[benchIndex].cards.forEach((c, index) => {
-                        c.cards.moveTo(player.discard);
+                    // Move all attached cards (energy, tools) to discard
+                    prefabs_1.MOVE_CARDS(store, state, phioneList, player.discard, {
+                        cards: phioneList.cards.filter(c => c !== phioneCard),
+                        skipCleanup: false
                     });
-                    deckBottom.moveTo(player.deck);
-                    player.bench[benchIndex].clearEffects();
+                    // Move Phione to bottom of deck
+                    prefabs_1.MOVE_CARDS(store, state, phioneList, deckBottom, {
+                        cards: [phioneCard],
+                        skipCleanup: false
+                    });
+                    prefabs_1.MOVE_CARDS(store, state, deckBottom, player.deck, {
+                        toBottom: false
+                    });
+                    phioneList.clearEffects();
                     return state;
                 }
             });

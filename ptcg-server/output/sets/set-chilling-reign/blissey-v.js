@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BlisseyV = void 0;
 const game_1 = require("../../game");
+const check_effects_1 = require("../../game/store/effects/check-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 class BlisseyV extends game_1.PokemonCard {
@@ -57,8 +58,14 @@ class BlisseyV extends game_1.PokemonCard {
         // }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
-            const energies = player.active.cards.filter(card => card instanceof game_1.EnergyCard);
-            effect.damage = 10 + (30 * energies.length);
+            let energies = 0;
+            const checkProvidedEnergyEffect = new check_effects_1.CheckProvidedEnergyEffect(player, player.active);
+            store.reduceEffect(state, checkProvidedEnergyEffect);
+            checkProvidedEnergyEffect.energyMap.forEach(energy => {
+                energies += energy.provides.length;
+            });
+            effect.damage = 10 + (30 * energies);
+            //const energies = player.active.cards.filter(card => card instanceof EnergyCard);
             this.usedBlissfulBlast = true;
         }
         if (effect instanceof game_phase_effects_1.AfterAttackEffect && this.usedBlissfulBlast === true) {
@@ -74,6 +81,7 @@ class BlisseyV extends game_1.PokemonCard {
                     const target = game_1.StateUtils.getTarget(state, player, transfer.to);
                     player.discard.moveCardTo(transfer.card, target);
                 }
+                this.usedBlissfulBlast = false;
             });
         }
         return state;

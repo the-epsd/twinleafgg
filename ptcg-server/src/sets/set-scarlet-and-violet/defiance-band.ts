@@ -5,6 +5,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { StateUtils } from '../../game/store/state-utils';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
+import {ToolEffect} from '../../game/store/effects/play-card-effects';
 
 
 export class DefianceBand extends TrainerCard {
@@ -32,6 +33,14 @@ export class DefianceBand extends TrainerCard {
 
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
+
+      // Try to reduce ToolEffect, to check if something is blocking the tool from working
+      try {
+        const stub = new ToolEffect(effect.player, this);
+        store.reduceEffect(state, stub);
+      } catch {
+        return state;
+      }
 
       if (player.getPrizeLeft() <= opponent.getPrizeLeft()) {
         return state;

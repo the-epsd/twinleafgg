@@ -40,6 +40,7 @@ export var CardTag;
     CardTag["ETHANS"] = "ETHANS";
     CardTag["MISTYS"] = "MISTYS";
     CardTag["CYNTHIAS"] = "CYNTHIAS";
+    CardTag["ARVENS"] = "ARVENS";
     CardTag["POKEMON_SV_MEGA"] = "POKEMON_SV_MEGA";
 })(CardTag || (CardTag = {}));
 export var SuperType;
@@ -126,6 +127,7 @@ export var Archetype;
     Archetype["GARCHOMP"] = "Garchomp";
     Archetype["HOOH"] = "Ho-oh";
     Archetype["HYDREIGON"] = "Hydreigon";
+    Archetype["MEGA_GARDEVOIR"] = "Mega Gardevoir";
 })(Archetype || (Archetype = {}));
 export var CardType;
 (function (CardType) {

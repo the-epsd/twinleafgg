@@ -5,6 +5,7 @@ const card_types_1 = require("../../game/store/card/card-types");
 const state_1 = require("../../game/store/state/state");
 const game_1 = require("../../game");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
+const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class RockChestplate extends game_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -22,6 +23,14 @@ class RockChestplate extends game_1.TrainerCard {
         if (effect instanceof attack_effects_1.PutDamageEffect && effect.target.cards.includes(this)) {
             // It's not an attack
             if (state.phase !== state_1.GamePhase.ATTACK) {
+                return state;
+            }
+            // Try to reduce ToolEffect, to check if something is blocking the tool from working
+            try {
+                const stub = new play_card_effects_1.ToolEffect(effect.player, this);
+                store.reduceEffect(state, stub);
+            }
+            catch (_a) {
                 return state;
             }
             const player = game_1.StateUtils.findOwner(state, effect.target);

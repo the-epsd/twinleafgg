@@ -111,7 +111,8 @@ export class CoreSocket {
       ranking: user.ranking,
       rank: user.getRank(),
       lastRankingChange: user.lastRankingChange,
-      avatarFile: user.avatarFile
+      avatarFile: user.avatarFile,
+      roleId: user.roleId
     };
   }
 
@@ -147,5 +148,4 @@ export class CoreSocket {
       format: game.format
     };
   }
-
 }

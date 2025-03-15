@@ -22,7 +22,7 @@ class Duraludon extends game_1.PokemonCard {
                 text: ''
             },
             {
-                name: 'Durant Beam',
+                name: 'Duralubeam',
                 cost: [game_1.CardType.METAL, game_1.CardType.METAL, game_1.CardType.METAL],
                 damage: 130,
                 text: 'Discard 2 Energy from this Pokemon.'

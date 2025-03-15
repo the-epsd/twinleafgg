@@ -13,6 +13,10 @@ function* useNightJoker(next, store, state, effect) {
     const player = effect.player;
     const opponent = game_1.StateUtils.getOpponent(state, player);
     const benched = player.bench.filter(b => { var _a, _b; return b.cards.length > 0 && ((_a = b.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.tags.includes(card_types_1.CardTag.NS)) && ((_b = b.getPokemonCard()) === null || _b === void 0 ? void 0 : _b.name) !== 'N\'s Zoroark ex' && player.active !== b; });
+    // Return early if no valid targets
+    if (benched.length === 0) {
+        return state;
+    }
     const allYourPokemon = [...benched.map(b => b.getPokemonCard())];
     let selected;
     yield store.prompt(state, new game_1.ChooseAttackPrompt(player.id, game_1.GameMessage.CHOOSE_ATTACK_TO_COPY, allYourPokemon.filter((card) => card !== undefined), { allowCancel: false }), result => {

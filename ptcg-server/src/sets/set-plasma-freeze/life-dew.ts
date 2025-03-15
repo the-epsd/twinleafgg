@@ -3,6 +3,7 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { CardTag, TrainerCard, TrainerType } from '../../game';
 import { KnockOutEffect } from '../../game/store/effects/game-effects';
+import {IS_TOOL_BLOCKED} from '../../game/store/prefabs/prefabs';
 
 export class LifeDew extends TrainerCard {
 
@@ -19,6 +20,8 @@ export class LifeDew extends TrainerCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof KnockOutEffect && effect.target.cards.includes(this)) {
+      if (IS_TOOL_BLOCKED(store, state, effect.player, this)){ return state; }
+
       effect.prizeCount -= 1;
     }
 

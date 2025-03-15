@@ -96,9 +96,13 @@ class TechnicalMachineEvolution extends trainer_card_1.TrainerCard {
         var _a;
         if (effect instanceof game_phase_effects_1.EndTurnEffect) {
             const player = effect.player;
+            if (prefabs_1.IS_TOOL_BLOCKED(store, state, player, this)) {
+                return state;
+            }
             player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card, index) => {
                 if (cardList.cards.includes(this)) {
-                    prefabs_1.REMOVE_TOOL(store, state, cardList, this, game_1.SlotType.DISCARD);
+                    cardList.moveCardTo(this, player.discard);
+                    cardList.tool = undefined;
                 }
             });
             return state;
@@ -138,6 +142,9 @@ class TechnicalMachineEvolution extends trainer_card_1.TrainerCard {
             effect.attacks.push(this.attacks[0]);
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+            if (prefabs_1.IS_TOOL_BLOCKED(store, state, effect.player, this)) {
+                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_ATTACK);
+            }
             const generator = playCard(() => generator.next(), store, state, effect);
             return generator.next().value;
         }

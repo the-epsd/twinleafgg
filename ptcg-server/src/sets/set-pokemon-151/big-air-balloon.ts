@@ -5,6 +5,7 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckRetreatCostEffect } from '../../game/store/effects/check-effects';
 import { PokemonCard } from '../../game';
+import { ToolEffect } from '../../game/store/effects/play-card-effects';
 
 
 export class BigAirBalloon extends TrainerCard {
@@ -28,8 +29,17 @@ export class BigAirBalloon extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof CheckRetreatCostEffect && effect.player.active.tools.includes(this)) {
+    if (effect instanceof CheckRetreatCostEffect && effect.player.active.tool === this) {
       const card = effect.player.active.getPokemonCard();
+
+      // Try to reduce ToolEffect, to check if something is blocking the tool from working
+      try {
+        const stub = new ToolEffect(effect.player, this);
+        store.reduceEffect(state, stub);
+      } catch {
+        return state;
+      }
+
       if (card instanceof PokemonCard && card.stage === Stage.STAGE_2)
         effect.cost = [];
     }

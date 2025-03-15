@@ -5,6 +5,7 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { HealEffect } from '../../game/store/effects/game-effects';
+import { ToolEffect } from '../../game/store/effects/play-card-effects';
 
 
 export class Leftovers extends TrainerCard {
@@ -27,8 +28,17 @@ export class Leftovers extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof EndTurnEffect && effect.player.active.tools.includes(this)) {
+    if (effect instanceof EndTurnEffect && effect.player.active.tool === this) {
       const player = effect.player;
+
+      // Try to reduce ToolEffect, to check if something is blocking the tool from working
+      try {
+        const stub = new ToolEffect(effect.player, this);
+        store.reduceEffect(state, stub);
+      } catch {
+        return state;
+      }
+
       const healEffect = new HealEffect(player, player.active, 20);
       store.reduceEffect(state, healEffect);
     }

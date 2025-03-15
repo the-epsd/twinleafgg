@@ -1,0 +1,28 @@
+ @import '../../../../theme/variables.scss';
+
+ $ptcg-selection-container-padding: map-get($padding, small);
+ $ptcg-selection-container-border-radius: map-get($padding, small);
+
+ ptcg-board-card {
+   margin: 0 map-get($padding, small);
+   width: calc(0.75 * map-get($ptcg-size, card));
+
+   &.unavailable {
+     opacity: $ptcg-disabled-opacity;
+   }
+ }
+
+ .button-container {
+   display: flex;
+   align-items: center;
+   padding-top: 24px;
+ }
+
+ .button-container button:last-child {
+   margin-left: auto;
+ }
+
+ .ptcg-prompt-content {
+   display: flex;
+   flex-direction: column;
+ }

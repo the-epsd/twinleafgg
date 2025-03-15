@@ -15,12 +15,12 @@ class AttachToolTactic extends simple_tactics_1.SimpleTactic {
         const baseScore = this.getStateScore(state, player.id);
         const targets = [];
         player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, pokemon, target) => {
-            if (cardList.tools.length !== 0) {
+            if (cardList.tool !== undefined) {
                 return;
             }
-            cardList.tools.push(tool);
+            cardList.tool = tool;
             const score = this.getStateScore(state, player.id);
-            cardList.tools.splice(cardList.tools.indexOf(tool), 1);
+            cardList.tool = undefined;
             if (score > baseScore) {
                 targets.push({ target, score });
             }

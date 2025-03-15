@@ -122,10 +122,10 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
     yield store.prompt(state, new CoinFlipPrompt(
       player.id,
       GameMessage.FLIP_CONFUSION),
-    result => {
-      flip = result;
-      next();
-    });
+      result => {
+        flip = result;
+        next();
+      });
 
     if (flip === false) {
       store.log(state, GameLog.LOG_HURTS_ITSELF);
@@ -241,10 +241,10 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
       // }
 
       // Pokemon ex rule
-      if (card.tags.includes(CardTag.POKEMON_EX) || card.tags.includes(CardTag.POKEMON_V) || card.tags.includes(CardTag.POKEMON_VSTAR) || card.tags.includes(CardTag.POKEMON_ex) || card.tags.includes(CardTag.POKEMON_GX) || card.tags.includes(CardTag.TAG_TEAM)) {
+      if (card.tags.includes(CardTag.POKEMON_EX) || card.tags.includes(CardTag.POKEMON_V) || card.tags.includes(CardTag.POKEMON_VSTAR) || card.tags.includes(CardTag.POKEMON_ex) || card.tags.includes(CardTag.POKEMON_GX)) {
         effect.prizeCount += 1;
       }
-      if (card.tags.includes(CardTag.POKEMON_SV_MEGA)){
+      if (card.tags.includes(CardTag.POKEMON_SV_MEGA) || card.tags.includes(CardTag.TAG_TEAM)) {
         effect.prizeCount += 1;
       }
 
@@ -264,7 +264,6 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
           const removedCard = effect.target.cards.splice(pokemonIndices[i], 1)[0];
 
           if (removedCard.cards) {
-            // Move attached cards to discard
             MOVE_CARDS(store, state, removedCard.cards, effect.player.discard);
           }
 
@@ -276,12 +275,12 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
         }
 
         // Move cards to lost zone
-        MOVE_CARDS(store, state, lostZoned, effect.player.lostzone);
         effect.target.clearEffects();
+        MOVE_CARDS(store, state, lostZoned, effect.player.lostzone);
       } else {
         // Move cards to discard
-        MOVE_CARDS(store, state, effect.target, effect.player.discard);
         effect.target.clearEffects();
+        MOVE_CARDS(store, state, effect.target, effect.player.discard);
       }
 
       // const stadiumCard = StateUtils.getStadiumCard(state);
@@ -400,7 +399,7 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
       source.damage = 0;
       source.specialConditions = [];
       source.marker.markers = [];
-      source.tools = [];
+      source.tool = undefined;
       source.removeBoardEffect(BoardEffect.ABILITY_USED);
     }
 
@@ -409,9 +408,9 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
       if (source instanceof PokemonCardList) {
         source.moveCardsTo(effect.cards, destination);
         // Log the card movement
-        effect.cards.forEach(card => {
-          store.log(state, GameLog.LOG_CARD_MOVED, { name: card.name, action: 'put', destination: 'destination' });
-        });
+        // effect.cards.forEach(card => {
+        //   store.log(state, GameLog.LOG_CARD_MOVED, { name: card.name, action: 'put', destination: 'destination' });
+        // });
         if (effect.toBottom) {
           destination.cards = [...destination.cards.slice(effect.cards.length), ...effect.cards];
         } else if (effect.toTop) {
@@ -420,9 +419,9 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
       } else {
         source.moveCardsTo(effect.cards, destination);
         // Log the card movement
-        effect.cards.forEach(card => {
-          store.log(state, GameLog.LOG_CARD_MOVED, { name: card.name, action: 'put', destination: 'destination' });
-        });
+        // effect.cards.forEach(card => {
+        //   store.log(state, GameLog.LOG_CARD_MOVED, { name: card.name, action: 'put', destination: 'destination' });
+        // });
         if (effect.toBottom) {
           destination.cards = [...destination.cards.slice(effect.cards.length), ...effect.cards];
         } else if (effect.toTop) {
@@ -435,9 +434,9 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
       const cards = source.cards.slice(0, effect.count);
       source.moveCardsTo(cards, destination);
       // Log the card movement
-      cards.forEach(card => {
-        store.log(state, GameLog.LOG_CARD_MOVED, { name: card.name, action: 'put', destination: 'destination' });
-      });
+      // cards.forEach(card => {
+      //   store.log(state, GameLog.LOG_CARD_MOVED, { name: card.name, action: 'put', destination: 'destination' });
+      // });
       if (effect.toBottom) {
         destination.cards = [...destination.cards.slice(cards.length), ...cards];
       } else if (effect.toTop) {

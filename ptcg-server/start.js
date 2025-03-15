@@ -23,6 +23,7 @@ cardManager.defineSet(sets.setVendingSeries);
 cardManager.defineSet(sets.setBaseSetEnergy);
 
 //ex Era shit
+cardManager.defineSet(sets.setEXHolonPhantoms);
 cardManager.defineSet(sets.setEXDragon);
 cardManager.defineSet(sets.setEXDragonFrontiers);
 cardManager.defineSet(sets.setEXDeoxys);
@@ -32,6 +33,7 @@ cardManager.defineSet(sets.setEXCrystalGuardians);
 cardManager.defineSet(sets.setEXPowerKeepers);
 cardManager.defineSet(sets.setEXFireRedLeafGreen);
 cardManager.defineSet(sets.setEXDeltaSpecies);
+cardManager.defineSet(sets.setEXLegendMaker);
 
 cardManager.defineSet(sets.setDiamondAndPearl);
 cardManager.defineSet(sets.setSecretWonders);

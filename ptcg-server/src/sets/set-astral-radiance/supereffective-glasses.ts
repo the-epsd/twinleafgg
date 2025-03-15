@@ -1,6 +1,7 @@
 import { State, StoreLike, TrainerCard, TrainerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { ApplyWeaknessEffect } from '../../game/store/effects/attack-effects';
+import { IS_TOOL_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 
 export class SupereffectiveGlasses extends TrainerCard {
@@ -24,7 +25,9 @@ export class SupereffectiveGlasses extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof ApplyWeaknessEffect && effect.target.tools.includes(this)) {
+    if (effect instanceof ApplyWeaknessEffect && effect.target.tool === this) {
+      if (IS_TOOL_BLOCKED(store, state, effect.player, this)) { return state; }
+
       effect.damage = effect.damage * 1.5;
     }
 

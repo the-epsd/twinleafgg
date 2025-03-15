@@ -4,6 +4,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckRetreatCostEffect } from '../../game/store/effects/check-effects';
+import { IS_TOOL_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 
 export class EmergencyBoard extends TrainerCard {
@@ -25,9 +26,11 @@ export class EmergencyBoard extends TrainerCard {
   public text: string = 'The Retreat Cost of the Pokémon this card is attached to is [C] less. If that Pokémon\'s remaining HP is 30 or less, it has no Retreat Cost.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof CheckRetreatCostEffect && effect.player.active.tools.includes(this)) {
+    if (effect instanceof CheckRetreatCostEffect && effect.player.active.tool === this) {
       const player = effect.player;
       const pokemonCard = player.active.getPokemonCard();
+
+      if (IS_TOOL_BLOCKED(store, state, effect.player, this)) { return state; }
 
       if (pokemonCard) {
         const remainingHp = pokemonCard.hp - player.active.damage;

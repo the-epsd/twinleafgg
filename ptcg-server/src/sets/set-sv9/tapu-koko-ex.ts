@@ -1,11 +1,11 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
+import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class TapuKokoex extends PokemonCard {
-
+  public tags = [CardTag.POKEMON_ex];
   public regulationMark = 'H';
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = L;

@@ -8,7 +8,6 @@ const game_effects_1 = require("../../game/store/effects/game-effects");
 class Gimmighoul2 extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.regulationMark = 'G';
         this.stage = card_types_1.Stage.BASIC;
         this.cardType = P;
         this.hp = 70;
@@ -24,25 +23,28 @@ class Gimmighoul2 extends pokemon_card_1.PokemonCard {
                 text: 'Flip a coin until you get tails. This attack does 20 damage for each heads.'
             }
         ];
+        this.regulationMark = 'G';
         this.set = 'PAR';
-        this.cardImage = 'assets/cardback.png';
         this.setNumber = '88';
+        this.cardImage = 'assets/cardback.png';
         this.name = 'Gimmighoul';
         this.fullName = 'Gimmighoul2 PAR';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
-            let heads = 0;
-            return store.prompt(state, [
-                new game_1.CoinFlipPrompt(player.id, game_1.GameMessage.COIN_FLIP)
-            ], result => {
-                if (result === true) {
-                    heads++;
-                    return this.reduceEffect(store, state, effect);
-                }
-                effect.damage = heads * 20;
-            });
+            const flipCoin = (heads = 0) => {
+                return store.prompt(state, [
+                    new game_1.CoinFlipPrompt(player.id, game_1.GameMessage.COIN_FLIP)
+                ], result => {
+                    if (result === true) {
+                        return flipCoin(heads + 1);
+                    }
+                    effect.damage = 20 * heads;
+                    return state;
+                });
+            };
+            return flipCoin();
         }
         return state;
     }

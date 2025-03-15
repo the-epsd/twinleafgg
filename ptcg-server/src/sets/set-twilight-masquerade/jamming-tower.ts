@@ -8,6 +8,7 @@ import { TrainerType } from '../../game/store/card/card-types';
 import { StateUtils } from '../../game/store/state-utils';
 
 import { UseStadiumEffect } from '../../game/store/effects/game-effects';
+import {ToolEffect} from '../../game/store/effects/play-card-effects';
 
 export class JammingTower extends TrainerCard {
 
@@ -33,6 +34,11 @@ export class JammingTower extends TrainerCard {
     if (effect instanceof UseStadiumEffect && StateUtils.getStadiumCard(state) === this) {
       throw new GameError(GameMessage.CANNOT_USE_STADIUM);
     }
+
+    if (effect instanceof ToolEffect && StateUtils.getStadiumCard(state) === this){
+      throw new GameError(GameMessage.CANNOT_USE_POWER);
+    }
+
     return state;
   }
 }

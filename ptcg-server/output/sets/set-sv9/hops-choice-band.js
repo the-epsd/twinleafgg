@@ -6,6 +6,7 @@ const card_types_1 = require("../../game/store/card/card-types");
 const state_utils_1 = require("../../game/store/state-utils");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const check_effects_1 = require("../../game/store/effects/check-effects");
+const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class HopsChoiceBand extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -20,8 +21,16 @@ class HopsChoiceBand extends trainer_card_1.TrainerCard {
         this.text = 'When the Hop\'s Pokémon this card is attached to uses an attack, that attack costs 1 [C] Energy less and does 30 more damage to your opponent\'s Active Pokémon (before applying Weakness and Resistance).';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof check_effects_1.CheckAttackCostEffect && effect.player.active.cards.includes(this)) {
+        if (effect instanceof check_effects_1.CheckAttackCostEffect && effect.player.active.tool === this) {
             const index = effect.cost.indexOf(card_types_1.CardType.COLORLESS);
+            // Try to reduce ToolEffect, to check if something is blocking the tool from working
+            try {
+                const stub = new play_card_effects_1.ToolEffect(effect.player, this);
+                store.reduceEffect(state, stub);
+            }
+            catch (_a) {
+                return state;
+            }
             // No cost to reduce
             if (index === -1) {
                 return state;
@@ -35,6 +44,14 @@ class HopsChoiceBand extends trainer_card_1.TrainerCard {
         if (effect instanceof attack_effects_1.DealDamageEffect && effect.source.cards.includes(this)) {
             const player = effect.player;
             const opponent = state_utils_1.StateUtils.getOpponent(state, player);
+            // Try to reduce ToolEffect, to check if something is blocking the tool from working
+            try {
+                const stub = new play_card_effects_1.ToolEffect(effect.player, this);
+                store.reduceEffect(state, stub);
+            }
+            catch (_b) {
+                return state;
+            }
             if (effect.target !== opponent.active)
                 return state;
             const sourceCard = effect.source.getPokemonCard();

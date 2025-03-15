@@ -10,7 +10,7 @@ class Porygon2 extends pokemon_card_1.PokemonCard {
         this.stage = card_types_1.Stage.STAGE_1;
         this.evolvesFrom = 'Porygon';
         this.cardType = card_types_1.CardType.COLORLESS;
-        this.hp = 90;
+        this.hp = 80;
         this.weakness = [{ type: card_types_1.CardType.FIGHTING }];
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.attacks = [{

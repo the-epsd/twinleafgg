@@ -139,6 +139,9 @@ export class ArchetypeComponent {
       case Archetype.HYDREIGON:
         this.archetype = 'hydreigon';
         break;
+      case Archetype.MEGA_GARDEVOIR:
+        this.archetype = 'mega-gardevoir';
+        break;
       default:
         this.archetype = 'unown';
     }
