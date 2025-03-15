@@ -4,7 +4,7 @@ import { PowerType } from '../../game/store/card/pokemon-types';
 import { StoreLike, State, GameError, GameMessage, StateUtils, CardList, ChooseCardsPrompt, ShowCardsPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { ABILITY_USED, ADD_MARKER, HAS_MARKER, IS_POKEBODY_LOCKED, REMOVE_MARKER, REMOVE_MARKER_AT_END_OF_TURN, SHUFFLE_DECK, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { ABILITY_USED, ADD_MARKER, HAS_MARKER, REMOVE_MARKER, REMOVE_MARKER_AT_END_OF_TURN, SHUFFLE_DECK, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Jirachi extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -44,9 +44,7 @@ export class Jirachi extends PokemonCard {
       const target = opponent.active.getPokemonCard();
 
       if (target !== undefined && target.powers.some(power => power.powerType === PowerType.POKEBODY)) {
-        if (!IS_POKEBODY_LOCKED(store, state, player, target)) {
-          effect.damage += 30;
-        }
+        effect.damage += 30;
       }
     }
 

@@ -41,9 +41,7 @@ class Jirachi extends pokemon_card_1.PokemonCard {
             const opponent = game_1.StateUtils.getOpponent(state, player);
             const target = opponent.active.getPokemonCard();
             if (target !== undefined && target.powers.some(power => power.powerType === pokemon_types_1.PowerType.POKEBODY)) {
-                if (!prefabs_1.IS_POKEBODY_LOCKED(store, state, player, target)) {
-                    effect.damage += 30;
-                }
+                effect.damage += 30;
             }
         }
         if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {

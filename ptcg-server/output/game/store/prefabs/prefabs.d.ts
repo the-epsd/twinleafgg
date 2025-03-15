@@ -118,11 +118,6 @@ export declare function GET_CARDS_ON_BOTTOM_OF_DECK(player: Player, amount?: num
  * @returns `true` if the ability is blocked, `false` if the ability is able to go thru.
  */
 export declare function IS_ABILITY_BLOCKED(store: StoreLike, state: State, player: Player, card: PokemonCard): boolean;
-/**
- * Checks if Poké-Bodies are blocked on `card` for `player`.
- * @returns `true` if the ability is blocked, `false` if the ability is able to go thru.
- */
-export declare function IS_POKEBODY_LOCKED(store: StoreLike, state: State, player: Player, card: PokemonCard): boolean;
 export declare function CAN_EVOLVE_ON_FIRST_TURN_GOING_SECOND(state: State, player: Player, pokemon: PokemonCardList): void;
 /**
  * Finds `card` and moves it from its current CardList to `destination`.
