@@ -19,15 +19,6 @@ export class SocketWrapper {
   constructor(io: Server, socket: Socket) {
     this.io = io;
     this.socket = socket;
-
-    // Add error handling
-    this.socket.on('error', (error) => {
-      console.error('Socket error:', error);
-    });
-
-    this.socket.on('disconnect', (reason) => {
-      console.log('Socket disconnected:', reason);
-    });
   }
 
   public attachListeners(): void {
@@ -54,5 +45,4 @@ export class SocketWrapper {
   public emit(event: string, ...args: any[]): boolean {
     return this.socket.emit(event, ...args);
   }
-
 }

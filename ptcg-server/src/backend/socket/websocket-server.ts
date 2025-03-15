@@ -16,8 +16,8 @@ export class WebSocketServer {
 
   public async listen(httpServer: http.Server): Promise<void> {
     const opts: Partial<ServerOptions> = {
-      pingTimeout: 60000,
-      pingInterval: 25000,
+      pingTimeout: 20000,
+      pingInterval: 10000,
     };
 
     if (config.backend.allowCors) {
@@ -42,5 +42,4 @@ export class WebSocketServer {
       });
     });
   }
-
 }

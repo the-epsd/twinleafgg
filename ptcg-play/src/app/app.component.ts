@@ -25,6 +25,8 @@ export class AppComponent implements OnInit {
   public isLoggedIn = false;
   public loggedUser: UserInfo | undefined;
   private authToken$: Observable<string>;
+  // private readonly MAX_RECONNECT_ATTEMPTS = 3;
+  // private reconnectAttempts = 0;
 
   constructor(
     private alertService: AlertService,
@@ -42,13 +44,10 @@ export class AppComponent implements OnInit {
   }
 
   public ngOnInit() {
-    // Connect to websockets after when logged in
     this.authToken$
       .pipe(untilDestroyed(this))
       .subscribe(authToken => {
         this.isLoggedIn = !!authToken;
-
-        // Connect to websockets
         if (this.isLoggedIn && !this.socketService.isEnabled) {
           this.socketService.enable(authToken);
         }
@@ -62,11 +61,22 @@ export class AppComponent implements OnInit {
     ).subscribe({
       next: async connected => {
         if (!connected && this.isLoggedIn) {
+          // if (this.reconnectAttempts < this.MAX_RECONNECT_ATTEMPTS) {
+          //   this.reconnectAttempts++;
+          //   await new Promise(resolve => setTimeout(resolve, 2000));
+          //   this.authToken$.pipe(take(1)).subscribe(authToken => {
+          //     this.socketService.enable(authToken);
+          //   });
+          //   return;
+          // }
+          // this.reconnectAttempts = 0;
           this.socketService.disable();
           this.dialog.closeAll();
           await this.alertService.alert(this.translate.instant('ERROR_DISCONNECTED_FROM_SERVER'));
           this.sessionService.clear();
           this.router.navigate(['/login']);
+          // } else if (connected) {
+          //   this.reconnectAttempts = 0;
         }
       }
     });
@@ -79,7 +89,6 @@ export class AppComponent implements OnInit {
       }
     });
 
-    // Refresh token with given interval
     interval(environment.refreshTokenInterval).pipe(
       untilDestroyed(this),
       filter(() => !!this.sessionService.session.authToken),

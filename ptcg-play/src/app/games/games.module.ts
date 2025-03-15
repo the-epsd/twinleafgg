@@ -6,7 +6,7 @@ import { SharedModule } from '../shared/shared.module';
 import { GameActionsComponent } from './game-actions/game-actions.component';
 import { CreateGamePopupComponent } from './create-game-popup/create-game-popup.component';
 import { GamesTableComponent } from './games-table/games-table.component';
-import { MatchmakingLobbyComponent } from './matchmaking-lobby/matchmaking-lobby.component';
+// import { MatchmakingLobbyComponent } from './matchmaking-lobby/matchmaking-lobby.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +15,7 @@ import { MatchmakingLobbyComponent } from './matchmaking-lobby/matchmaking-lobby
     MatchTableComponent,
     CreateGamePopupComponent,
     GamesTableComponent,
-    MatchmakingLobbyComponent
+    // MatchmakingLobbyComponent
   ],
   entryComponents: [
     CreateGamePopupComponent
