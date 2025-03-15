@@ -13,7 +13,7 @@ class Charcadet extends pokemon_card_1.PokemonCard {
         this.retreat = [card_types_1.CardType.COLORLESS];
         this.attacks = [
             {
-                name: 'Phantom Fire',
+                name: 'Will-O-Wisp',
                 cost: [card_types_1.CardType.FIRE],
                 damage: 20,
                 text: ''

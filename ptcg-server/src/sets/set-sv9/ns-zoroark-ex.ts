@@ -15,6 +15,11 @@ function* useNightJoker(next: Function, store: StoreLike, state: State,
 
   const benched = player.bench.filter(b => b.cards.length > 0 && b.getPokemonCard()?.tags.includes(CardTag.NS) && b.getPokemonCard()?.name !== 'N\'s Zoroark ex' && player.active !== b);
 
+  // Return early if no valid targets
+  if (benched.length === 0) {
+    return state;
+  }
+
   const allYourPokemon = [...benched.map(b => b.getPokemonCard())];
 
   let selected: any;

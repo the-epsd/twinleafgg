@@ -53,6 +53,7 @@ export declare class Player {
     usedSquawkAndSeizeThisTurn: any;
     usedTurnSkip: any;
     usedTableTurner: any;
+    usedTributeDance: any;
     chainsOfControlUsed: any;
     usedDragonsWish: boolean;
     pecharuntexIsInPlay: boolean;

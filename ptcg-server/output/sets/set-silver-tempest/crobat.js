@@ -74,7 +74,6 @@ class Crobat extends pokemon_card_1.PokemonCard {
                 if (effect.prizeCount > 0) {
                     effect.prizeCount += 2;
                     this.usedCriticalBite = false;
-                    console.log('Reset Critical Bite after taking 2: ' + this.usedCriticalBite);
                 }
             }
             return state;
