@@ -6,7 +6,7 @@ const card_types_1 = require("../../game/store/card/card-types");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_1 = require("../../game");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
-const check_effects_1 = require("../../game/store/effects/check-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class Moltres extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -40,14 +40,17 @@ class Moltres extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            const checkProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(player);
-            state = store.reduceEffect(state, checkProvidedEnergy);
-            state = store.prompt(state, new game_1.ChooseEnergyPrompt(player.id, game_1.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, checkProvidedEnergy.energyMap, [], { allowCancel: false }), energy => {
-                const cards = (energy || []).map(e => e.card);
-                const discardEnergy = new attack_effects_1.DiscardCardsEffect(effect, cards);
+            const active = player.active;
+            // Filter metal energies from the active Pokémon
+            const energies = active.cards.filter(card => card.superType === card_types_1.SuperType.ENERGY).length;
+            const min = 1;
+            const max = energies;
+            state = store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, active, { superType: card_types_1.SuperType.ENERGY }, { min: min, max: max, allowCancel: false }), energy => {
+                const discardEnergy = new attack_effects_1.DiscardCardsEffect(effect, energy);
                 discardEnergy.target = player.active;
                 store.reduceEffect(state, discardEnergy);
-                opponent.deck.moveTo(player.discard, cards.length);
+                state = prefabs_1.MOVE_CARDS(store, state, opponent.deck, opponent.discard, { count: energy.length });
+                // opponent.deck.moveTo(opponent.discard, energy.length);
             });
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {

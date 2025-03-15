@@ -20,6 +20,7 @@ export * from './set-ex-team-rocket-returns';
 export * from './set-ex-crystal-guardians';
 export * from './set-ex-power-keepers';
 export * from './set-ex-firered-leafgreen';
+export * from './set-ex-legend-maker';
 
 //DP Era
 export * from './set-diamond-and-pearl';

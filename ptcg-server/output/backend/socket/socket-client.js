@@ -6,8 +6,9 @@ const game_socket_1 = require("./game-socket");
 const message_socket_1 = require("./message-socket");
 const socket_cache_1 = require("./socket-cache");
 const socket_wrapper_1 = require("./socket-wrapper");
-const matchmaking_socket_1 = require("./matchmaking-socket");
+// import { MatchmakingSocket } from './matchmaking-socket';
 class SocketClient {
+    // private matchmakingSocket: MatchmakingSocket;
     constructor(user, core, io, socket) {
         this.id = 0;
         this.games = [];
@@ -19,7 +20,7 @@ class SocketClient {
         this.coreSocket = new core_socket_1.CoreSocket(this, this.socket, core, this.cache);
         this.gameSocket = new game_socket_1.GameSocket(this, this.socket, core, this.cache);
         this.messageSocket = new message_socket_1.MessageSocket(this, this.socket, core);
-        this.matchmakingSocket = new matchmaking_socket_1.MatchmakingSocket(this, this.socket, core);
+        // this.matchmakingSocket = new MatchmakingSocket(this, this.socket, core);
     }
     onConnect(client) {
         this.coreSocket.onConnect(client);
@@ -46,12 +47,12 @@ class SocketClient {
     onGameLeave(game, client) {
         this.gameSocket.onGameLeave(game, client);
     }
-    onJoinQueue(from, message) {
-        this.matchmakingSocket.onJoinQueue(from, message);
-    }
-    onLeaveQueue() {
-        this.matchmakingSocket.onLeaveQueue();
-    }
+    // public onJoinQueue(from: Client, message: Message): void {
+    //   this.matchmakingSocket.onJoinQueue(from, message);
+    // }
+    // public onLeaveQueue(): void {
+    //   this.matchmakingSocket.onLeaveQueue();
+    // }
     onMessage(from, message) {
         this.messageSocket.onMessage(from, message);
     }
@@ -60,11 +61,6 @@ class SocketClient {
     }
     attachListeners() {
         this.socket.attachListeners();
-    }
-    dispose() {
-        if (this.matchmakingSocket) {
-            this.matchmakingSocket.dispose();
-        }
     }
 }
 exports.SocketClient = SocketClient;

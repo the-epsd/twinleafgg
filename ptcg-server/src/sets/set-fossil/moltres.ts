@@ -1,12 +1,12 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
+import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { Card, ChooseEnergyPrompt, CoinFlipPrompt, GameMessage, StateUtils } from '../../game';
+import { ChooseCardsPrompt, CoinFlipPrompt, GameMessage, StateUtils } from '../../game';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
-import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class Moltres extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -44,22 +44,29 @@ export class Moltres extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
+      const active = player.active;
 
-      const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
-      state = store.reduceEffect(state, checkProvidedEnergy);
+      // Filter metal energies from the active Pokémon
+      const energies = active.cards.filter(card =>
+        card.superType === SuperType.ENERGY
+      ).length;
 
-      state = store.prompt(state, new ChooseEnergyPrompt(
-        player.id,
+      const min = 1;
+      const max = energies;
+
+      state = store.prompt(state, new ChooseCardsPrompt(
+        player,
         GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
-        checkProvidedEnergy.energyMap,
-        [],
-        { allowCancel: false }
+        active,
+        { superType: SuperType.ENERGY },
+        { min: min, max: max, allowCancel: false }
       ), energy => {
-        const cards: Card[] = (energy || []).map(e => e.card);
-        const discardEnergy = new DiscardCardsEffect(effect, cards);
+        const discardEnergy = new DiscardCardsEffect(effect, energy);
         discardEnergy.target = player.active;
         store.reduceEffect(state, discardEnergy);
-        opponent.deck.moveTo(player.discard, cards.length);
+
+        state = MOVE_CARDS(store, state, opponent.deck, opponent.discard, { count: energy.length });
+        // opponent.deck.moveTo(opponent.discard, energy.length);
       });
     }
 

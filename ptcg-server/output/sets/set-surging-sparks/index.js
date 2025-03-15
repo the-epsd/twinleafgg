@@ -21,6 +21,7 @@ const ceruledge_ex_1 = require("./ceruledge-ex");
 const cetitan_1 = require("./cetitan");
 const cetoddle_1 = require("./cetoddle");
 const charcadet_1 = require("./charcadet");
+const charcadet_2_1 = require("./charcadet-2");
 const cherish_carrier_1 = require("./cherish-carrier");
 const chien_pao_1 = require("./chien-pao");
 const chill_teaser_toy_1 = require("./chill-teaser-toy");
@@ -47,6 +48,7 @@ const flygon_ex_1 = require("./flygon-ex");
 const fuecoco_1 = require("./fuecoco");
 const full_art_1 = require("./full-art");
 const gimmighoul_1 = require("./gimmighoul");
+const gholdengo_1 = require("./gholdengo");
 const gouging_fire_1 = require("./gouging-fire");
 const gravity_mountain_1 = require("./gravity-mountain");
 const helper_bell_1 = require("./helper.bell");
@@ -164,6 +166,7 @@ exports.setSurgingSparks = [
     new latias_ex_1.Latiasex(),
     new ceruledge_ex_1.Ceruledgeex(),
     new charcadet_1.Charcadet(),
+    new charcadet_2_1.Charcadet2(),
     new eevee_1.Eevee(),
     new sylveon_ex_1.Sylveonex(),
     new lisias_appeal_1.LisiasAppeal(),
@@ -182,6 +185,7 @@ exports.setSurgingSparks = [
     new chien_pao_1.ChienPao(),
     new dusk_ball_1.DuskBall(),
     new gimmighoul_1.Gimmighoul(),
+    new gholdengo_1.Gholdengo(),
     new energy_search_pro_1.EnergySearchPro(),
     new surfer_1.Surfer(),
     new gouging_fire_1.GougingFire(),

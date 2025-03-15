@@ -30,6 +30,7 @@ __exportStar(require("./set-ex-team-rocket-returns"), exports);
 __exportStar(require("./set-ex-crystal-guardians"), exports);
 __exportStar(require("./set-ex-power-keepers"), exports);
 __exportStar(require("./set-ex-firered-leafgreen"), exports);
+__exportStar(require("./set-ex-legend-maker"), exports);
 //DP Era
 __exportStar(require("./set-diamond-and-pearl"), exports);
 __exportStar(require("./set-great-encounters"), exports);

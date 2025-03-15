@@ -5,7 +5,7 @@ import { AlolanDugtrio } from './alolan-dugtrio';
 import { AlolanExeggutorex } from './alolan-exeggutor-ex';
 import { AmuletofHope } from './amulet-of-hope';
 import { Archaludonex } from './archaludon-ex';
-import {Armarouge} from './armarouge';
+import { Armarouge } from './armarouge';
 import { Azelf } from './azelf';
 import { Azumarill } from './azulmarill';
 import { BlackKyuremex } from './black-kyurem-ex';
@@ -16,9 +16,10 @@ import { CelebrationFanfare } from './celebration-fanfare';
 import { Centiskorch } from './centiskorch';
 import { Ceruledge } from './ceruledge';
 import { Ceruledgeex } from './ceruledge-ex';
-import {Cetitan} from './cetitan';
-import {Cetoddle} from './cetoddle';
+import { Cetitan } from './cetitan';
+import { Cetoddle } from './cetoddle';
 import { Charcadet } from './charcadet';
+import { Charcadet2 } from './charcadet-2';
 import { CherishCarrier } from './cherish-carrier';
 import { ChienPao } from './chien-pao';
 import { ChillTeaserToy } from './chill-teaser-toy';
@@ -45,6 +46,7 @@ import { Flygonex } from './flygon-ex';
 import { Fuecoco } from './fuecoco';
 import { ArchaludonexFA, ArchaludonexSIR, CounterGainUR, CyranoFA, FeebasIR, HydreigonexFA, HydreigonexSIR, JetEnergyUR, LarvestaIR, LatiasexFA, LatiasexSIR, LisiasAppealFA, LisiasAppealSIR, MiloticexFA, MiloticexSIR, NightStretcherUR, PikachuexFA, PikachuexSIR, PikachuexUR, SurferFA } from './full-art';
 import { Gimmighoul } from './gimmighoul';
+import { Gholdengo } from './gholdengo';
 import { GougingFire } from './gouging-fire';
 import { GravityMountain } from './gravity-mountain';
 import { HelperBell } from './helper.bell';
@@ -79,7 +81,7 @@ import { Quaxwell } from './quaxwell';
 import { Rabsca } from './rabsca';
 import { Rellor } from './rellor';
 import { RichEnergy } from './rich-energy';
-import {Rotom} from './rotom';
+import { Rotom } from './rotom';
 import { Sandygast } from './sandygast';
 import { Scovillainex } from './scovillain-ex';
 import { Shroodle } from './shroodle';
@@ -163,6 +165,7 @@ export const setSurgingSparks: Card[] = [
   new Latiasex(),
   new Ceruledgeex(),
   new Charcadet(),
+  new Charcadet2(),
   new Eevee(),
   new Sylveonex(),
   new LisiasAppeal(),
@@ -181,6 +184,7 @@ export const setSurgingSparks: Card[] = [
   new ChienPao(),
   new DuskBall(),
   new Gimmighoul(),
+  new Gholdengo(),
   new EnergySearchPro(),
   new Surfer(),
   new GougingFire(),

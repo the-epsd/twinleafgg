@@ -148,5 +148,4 @@ export class CoreSocket {
       format: game.format
     };
   }
-
 }
