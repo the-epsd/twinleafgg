@@ -33,6 +33,7 @@ __exportStar(require("./set-ex-firered-leafgreen"), exports);
 __exportStar(require("./set-ex-legend-maker"), exports);
 //DP Era
 __exportStar(require("./set-diamond-and-pearl"), exports);
+__exportStar(require("./set-secret-wonders"), exports);
 __exportStar(require("./set-great-encounters"), exports);
 __exportStar(require("./set-op9"), exports);
 __exportStar(require("./set-platinum"), exports);
