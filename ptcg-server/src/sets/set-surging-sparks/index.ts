@@ -19,6 +19,7 @@ import { Ceruledgeex } from './ceruledge-ex';
 import { Cetitan } from './cetitan';
 import { Cetoddle } from './cetoddle';
 import { Charcadet } from './charcadet';
+import { Charcadet2 } from './charcadet-2';
 import { CherishCarrier } from './cherish-carrier';
 import { ChienPao } from './chien-pao';
 import { ChillTeaserToy } from './chill-teaser-toy';
@@ -164,6 +165,7 @@ export const setSurgingSparks: Card[] = [
   new Latiasex(),
   new Ceruledgeex(),
   new Charcadet(),
+  new Charcadet2(),
   new Eevee(),
   new Sylveonex(),
   new LisiasAppeal(),
