@@ -58,6 +58,7 @@ class Player {
         this.pecharuntexIsInPlay = false;
         this.usedFanCall = false;
         this.canEvolve = false;
+        this.supportersForDetour = new card_list_1.CardList();
         //GX-Attack Dedicated Section
         this.usedAlteredCreation = false;
         this.alteredCreationDamage = false;

@@ -20,6 +20,7 @@ export * from './set-diamond-and-pearl';
 export * from './set-great-encounters';
 export * from './set-op9';
 export * from './set-platinum';
+export * from './set-rising-rivals';
 export * from './set-battle-road-promos';
 export * from './set-heartgold-and-soulsilver';
 export * from './set-heartgold-and-soulsilver-promos';

@@ -59,6 +59,7 @@ export declare class Player {
     pecharuntexIsInPlay: boolean;
     usedFanCall: boolean;
     canEvolve: boolean;
+    supportersForDetour: CardList;
     usedAlteredCreation: boolean;
     alteredCreationDamage: boolean;
     prizesTaken: number;
