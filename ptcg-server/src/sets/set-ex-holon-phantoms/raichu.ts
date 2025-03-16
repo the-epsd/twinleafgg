@@ -13,24 +13,24 @@ export class Raichu extends PokemonCard {
 
   public tags = [CardTag.DELTA_SPECIES];
 
-  public cardType: CardType = CardType.METAL;
+  public cardType: CardType = M;
 
   public hp: number = 70;
 
-  public weakness = [{ type: CardType.FIGHTING }];
+  public weakness = [{ type: F }];
 
   public retreat = [];
 
   public attacks = [
     {
       name: 'Zzzap',
-      cost: [CardType.COLORLESS],
+      cost: [C],
       damage: 20,
       text: 'Does 20 damage to each Pokémon that has any Poké-Powers or Poké-Bodies (both yours and your opponent\'s). Don\'t apply Weakness or Resistance.'
     },
     {
       name: 'Metallic Thunder',
-      cost: [CardType.METAL, CardType.METAL, CardType.COLORLESS],
+      cost: [M, M, C],
       damage: 50,
       text: 'You may discard 2 [M] Energy attached to Raichu. If you do, this attack\'s base damage is 90 instead of 50.'
     }

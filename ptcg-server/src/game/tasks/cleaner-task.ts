@@ -40,9 +40,12 @@ export class CleanerTask {
       const yesterday = today - keepMatchTime;
       const onlineUserIds = this.core.clients.map(c => c.user.id);
       const usersToDelete = await User.find({
-        lastSeen: LessThan(yesterday),
-        registered: LessThan(yesterday),
-        ranking: 0
+        where: {
+          lastSeen: LessThan(yesterday),
+          registered: LessThan(yesterday),
+          ranking: 0
+        },
+        relations: ['decks']
       });
       for (let i = 0; i < usersToDelete.length; i++) {
         const user = usersToDelete[i];

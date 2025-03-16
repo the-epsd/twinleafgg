@@ -13,20 +13,20 @@ class Raichu extends pokemon_card_1.PokemonCard {
         this.stage = card_types_1.Stage.STAGE_1;
         this.evolvesFrom = 'Pikachu';
         this.tags = [card_types_1.CardTag.DELTA_SPECIES];
-        this.cardType = card_types_1.CardType.METAL;
+        this.cardType = M;
         this.hp = 70;
-        this.weakness = [{ type: card_types_1.CardType.FIGHTING }];
+        this.weakness = [{ type: F }];
         this.retreat = [];
         this.attacks = [
             {
                 name: 'Zzzap',
-                cost: [card_types_1.CardType.COLORLESS],
+                cost: [C],
                 damage: 20,
                 text: 'Does 20 damage to each Pokémon that has any Poké-Powers or Poké-Bodies (both yours and your opponent\'s). Don\'t apply Weakness or Resistance.'
             },
             {
                 name: 'Metallic Thunder',
-                cost: [card_types_1.CardType.METAL, card_types_1.CardType.METAL, card_types_1.CardType.COLORLESS],
+                cost: [M, M, C],
                 damage: 50,
                 text: 'You may discard 2 [M] Energy attached to Raichu. If you do, this attack\'s base damage is 90 instead of 50.'
             }

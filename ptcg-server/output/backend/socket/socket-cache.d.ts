@@ -1,12 +1,9 @@
-import { CoreInfo, GameInfo } from '../interfaces';
+import { GameInfo } from '../interfaces';
 export declare class SocketCache {
     gameInfoCache: {
-        [key: string]: GameInfo;
+        [id: number]: GameInfo;
     };
     lastLogIdCache: {
-        [key: string]: number;
+        [id: number]: number;
     };
-    lastUserUpdate: number;
-    coreInfo: CoreInfo | null;
-    coreInfoTimestamp: number;
 }

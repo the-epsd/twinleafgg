@@ -11,8 +11,8 @@ class WebSocketServer {
     }
     async listen(httpServer) {
         const opts = {
-            pingTimeout: 20000,
-            pingInterval: 10000,
+            pingInterval: 300000,
+            pingTimeout: 270000, // 4.5 minutes (270 seconds * 1000ms)
         };
         if (config_1.config.backend.allowCors) {
             opts.cors = { origin: '*' };

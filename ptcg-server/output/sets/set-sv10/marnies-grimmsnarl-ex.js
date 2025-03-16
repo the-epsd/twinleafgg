@@ -25,8 +25,7 @@ class MarniesGrimmsnarlex extends game_1.PokemonCard {
                 name: 'Shadow Bullet',
                 cost: [D, D],
                 damage: 180,
-                text: 'This attack also does 120 damage to 1 of your opponent\'s Benched Pokémon. ' +
-                    '(Don\'t apply Weakness and Resistance for Benched Pokémon.)',
+                text: 'This attack also does 30 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)',
             }];
         this.regulationMark = 'I';
         this.set = 'SVOM';
