@@ -76,8 +76,14 @@ export class SkuntankG extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      ADD_POISON_TO_PLAYER_ACTIVE(store, state, player, this);
-      ADD_POISON_TO_PLAYER_ACTIVE(store, state, opponent, this);
+      if (!player.active?.getPokemonCard()?.tags.includes(CardTag.POKEMON_SP)) {
+        ADD_POISON_TO_PLAYER_ACTIVE(store, state, player, this);
+      }
+
+      if (!opponent.active?.getPokemonCard()?.tags.includes(CardTag.POKEMON_SP)) {
+        ADD_POISON_TO_PLAYER_ACTIVE(store, state, opponent, this);
+      }
+
       ADD_MARKER(this.POISON_STRUCTURE_MARKER, player, this);
       ABILITY_USED(player, this);
     }

@@ -39,6 +39,7 @@ class SkuntankG extends pokemon_card_1.PokemonCard {
         this.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER = 'DEFENDING_POKEMON_CANNOT_ATTACK_MARKER';
     }
     reduceEffect(store, state, effect) {
+        var _a, _b, _c, _d;
         //Poke-Power
         if (prefabs_1.WAS_POWER_USED(effect, 0, this)) {
             const player = effect.player;
@@ -58,8 +59,12 @@ class SkuntankG extends pokemon_card_1.PokemonCard {
             if (player.active.cards[0] === this && player.active.specialConditions.length > 0) {
                 throw new game_1.GameError(game_message_1.GameMessage.CANNOT_USE_POWER);
             }
-            prefabs_1.ADD_POISON_TO_PLAYER_ACTIVE(store, state, player, this);
-            prefabs_1.ADD_POISON_TO_PLAYER_ACTIVE(store, state, opponent, this);
+            if (!((_b = (_a = player.active) === null || _a === void 0 ? void 0 : _a.getPokemonCard()) === null || _b === void 0 ? void 0 : _b.tags.includes(card_types_1.CardTag.POKEMON_SP))) {
+                prefabs_1.ADD_POISON_TO_PLAYER_ACTIVE(store, state, player, this);
+            }
+            if (!((_d = (_c = opponent.active) === null || _c === void 0 ? void 0 : _c.getPokemonCard()) === null || _d === void 0 ? void 0 : _d.tags.includes(card_types_1.CardTag.POKEMON_SP))) {
+                prefabs_1.ADD_POISON_TO_PLAYER_ACTIVE(store, state, opponent, this);
+            }
             prefabs_1.ADD_MARKER(this.POISON_STRUCTURE_MARKER, player, this);
             prefabs_1.ABILITY_USED(player, this);
         }
@@ -80,7 +85,7 @@ class SkuntankG extends pokemon_card_1.PokemonCard {
                 const coinFlip = new play_card_effects_1.CoinFlipEffect(player);
                 store.reduceEffect(state, coinFlip);
             }
-            catch (_a) {
+            catch (_e) {
                 return state;
             }
             const coinFlipResult = prefabs_1.SIMULATE_COIN_FLIP(store, state, player);
