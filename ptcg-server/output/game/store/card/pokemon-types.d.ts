@@ -30,7 +30,8 @@ export declare enum PowerType {
     ANCIENT_TRAIT = 3,
     POKEMON_POWER = 4,
     VUNION_ASSEMBLY = 5,
-    TRAINER_ABILITY = 6
+    TRAINER_ABILITY = 6,
+    HOLONS_SPECIAL_ENERGY_EFFECT = 7
 }
 export interface Power {
     name: string;

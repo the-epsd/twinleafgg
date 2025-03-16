@@ -4,7 +4,7 @@ export const config = {
     port: 8080,
     registrationEnabled: true,  // Completly disables/enables registration
     allowCors: true,
-    tokenExpire: 86400,
+    tokenExpire: 21600,
     defaultPageSize: 50,
     avatarsDir: '',
     avatarsUrl: '/avatars/{name}',
@@ -12,9 +12,9 @@ export const config = {
     avatarMinSize: 64,
     avatarMaxSize: 512,
     replayFileSize: 512 * 1024,
-    rateLimitCount: 100, // HTTP request limit
-    wsRateLimitCount: 200, // WebSocket specific limit
-    rateLimitTime: 60000, // 1 minute in milliseconds
+    rateLimitCount: 1000,     // Increased from 100 to 1000 HTTP requests
+    wsRateLimitCount: 2000,   // Increased from 200 to 2000 WebSocket messages
+    rateLimitTime: 60000,     // Keeping this at 1 minute
   },
   core: {
     debug: false,
@@ -29,17 +29,17 @@ export const config = {
     // If you wish to disable this feature set IntervalCount to 0
     rankingDecraseRate: 0.975, // 1 - 0.025 for 2.5% decrease
     rankingDecraseTime: 7 * 24 * 60 * 60 * 1000, // Reduced to 7 days
-    rankingDecreaseIntervalCount: 2, // Check every other scheduler tick
+    rankingDecreaseIntervalCount: 0, // Check every other scheduler tick
 
     // Deletes matches older than `keepMatchTike` from the database, to keep it small.
     // If you wish to disable this feature set IntervalCount to 0
     keepMatchTime: 14 * 24 * 60 * 60 * 1000, // Reduced to 14 days
-    keepMatchIntervalCount: 1,
+    keepMatchIntervalCount: 0,
 
     // Deletes users that doesn't log in in the `keepUserTime` and their ranking is 0
     // If you wish to disable this feature set IntervalCount to 0
     keepUserTime: 14 * 24 * 60 * 60 * 1000, // Increased to 14 days
-    keepUserIntervalCount: 1
+    keepUserIntervalCount: 0
   },
   bots: {
     // Default password for bot user
