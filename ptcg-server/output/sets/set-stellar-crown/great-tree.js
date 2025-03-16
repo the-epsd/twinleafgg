@@ -6,6 +6,7 @@ const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const check_effects_1 = require("../../game/store/effects/check-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 function* useStadium(next, store, state, effect) {
     const player = effect.player;
     if (player.deck.cards.length === 0) {
@@ -47,6 +48,7 @@ function* useStadium(next, store, state, effect) {
         next();
     });
     if (targets.length === 0) {
+        prefabs_1.SHUFFLE_DECK(store, state, player);
         return state; // canceled by user
     }
     const target = targets[0];
@@ -68,6 +70,7 @@ function* useStadium(next, store, state, effect) {
     });
     // Canceled by user, he didn't find the card in the deck
     if (cards.length === 0) {
+        prefabs_1.SHUFFLE_DECK(store, state, player);
         return state;
     }
     const evolution = cards[0];
@@ -97,9 +100,7 @@ function* useStadium(next, store, state, effect) {
             target.pokemonPlayedTurn = state.turn;
         }
     }
-    return store.prompt(state, new game_1.ShuffleDeckPrompt(player.id), order => {
-        player.deck.applyOrder(order);
-    });
+    prefabs_1.SHUFFLE_DECK(store, state, player);
 }
 class GreatTree extends trainer_card_1.TrainerCard {
     constructor() {

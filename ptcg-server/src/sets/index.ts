@@ -24,9 +24,11 @@ export * from './set-ex-legend-maker';
 
 //DP Era
 export * from './set-diamond-and-pearl';
+export * from './set-secret-wonders'
 export * from './set-great-encounters';
 export * from './set-op9';
 export * from './set-platinum';
+export * from './set-rising-rivals'
 
 //HGSS Era
 

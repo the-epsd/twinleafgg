@@ -10,4 +10,5 @@ var PowerType;
     PowerType[PowerType["POKEMON_POWER"] = 4] = "POKEMON_POWER";
     PowerType[PowerType["VUNION_ASSEMBLY"] = 5] = "VUNION_ASSEMBLY";
     PowerType[PowerType["TRAINER_ABILITY"] = 6] = "TRAINER_ABILITY";
+    PowerType[PowerType["HOLONS_SPECIAL_ENERGY_EFFECT"] = 7] = "HOLONS_SPECIAL_ENERGY_EFFECT";
 })(PowerType = exports.PowerType || (exports.PowerType = {}));
