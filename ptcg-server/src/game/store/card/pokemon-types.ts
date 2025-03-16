@@ -35,6 +35,7 @@ export enum PowerType {
   POKEMON_POWER,
   VUNION_ASSEMBLY,
   TRAINER_ABILITY,
+  HOLONS_SPECIAL_ENERGY_EFFECT,
 }
 
 export interface Power {
