@@ -7,6 +7,8 @@ const trainer_card_1 = require("../../game/store/card/trainer-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const choose_pokemon_prompt_1 = require("../../game/store/prompts/choose-pokemon-prompt");
 const play_card_action_1 = require("../../game/store/actions/play-card-action");
+const game_1 = require("../../game");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class ScoopUp extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -25,11 +27,19 @@ class ScoopUp extends trainer_card_1.TrainerCard {
                 const cardList = result.length > 0 ? result[0] : null;
                 if (cardList !== null) {
                     const pokemons = cardList.getPokemons();
-                    const basics = pokemons.filter(p => p.evolvesFrom === null);
-                    cardList.moveCardsTo(basics, player.hand);
-                    cardList.moveTo(player.hand);
-                    cardList.clearEffects();
-                    player.supporter.moveCardTo(effect.trainerCard, player.discard);
+                    const basicPokemons = pokemons.filter(p => p.evolvesFrom === null); // Get only Basic Pokemon
+                    const otherCards = cardList.cards.filter(card => !(card instanceof game_1.PokemonCard) || // Non-Pokemon cards
+                        (card instanceof game_1.PokemonCard && card.evolvesFrom !== null) // Evolution cards
+                    );
+                    // Move other cards (including evolutions) to discard
+                    if (otherCards.length > 0) {
+                        prefabs_1.MOVE_CARDS(store, state, cardList, player.discard, { cards: otherCards });
+                    }
+                    // Move only Basic Pokemon to hand
+                    if (basicPokemons.length > 0) {
+                        prefabs_1.MOVE_CARDS(store, state, cardList, player.hand, { cards: basicPokemons });
+                    }
+                    prefabs_1.MOVE_CARD_TO(state, effect.trainerCard, player.discard);
                 }
             });
         }

@@ -53,24 +53,11 @@ function* moveEnergy(next: Function, store: StoreLike, state: State, effect: Pow
 
 export class Venusaur extends PokemonCard {
 
-  public name = 'Venusaur';
-
-  public set = 'BS';
-
-  public fullName = 'Venusaur BS';
-
   public stage: Stage = Stage.STAGE_2;
-
+  public evolvesFrom = 'Ivysaur';
   public cardType: CardType = CardType.GRASS;
-
-  public cardImage: string = 'assets/cardback.png';
-
-  public setNumber: string = '15';
-
   public hp: number = 100;
-
   public weakness = [{ type: CardType.FIRE }];
-
   public retreat: CardType[] = [CardType.COLORLESS, CardType.COLORLESS];
 
   public powers: Power[] = [{
@@ -86,6 +73,12 @@ export class Venusaur extends PokemonCard {
     damage: 60,
     text: ''
   }];
+
+  public set = 'BS';
+  public setNumber: string = '15';
+  public cardImage: string = 'assets/cardback.png';
+  public name = 'Venusaur';
+  public fullName = 'Venusaur BS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

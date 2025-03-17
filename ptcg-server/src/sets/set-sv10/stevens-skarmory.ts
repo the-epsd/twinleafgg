@@ -31,6 +31,7 @@ export class StevensSkarmory extends PokemonCard {
 
   public regulationMark: string = 'I';
   public set: string = 'SVOD';
+  public setNumber: string = '4';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Steven\'s Skarmory';
   public fullName: string = 'Steven\'s Skarmory SVOD';

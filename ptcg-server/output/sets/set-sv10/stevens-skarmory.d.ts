@@ -23,6 +23,7 @@ export declare class StevensSkarmory extends PokemonCard {
     }[];
     regulationMark: string;
     set: string;
+    setNumber: string;
     cardImage: string;
     name: string;
     fullName: string;

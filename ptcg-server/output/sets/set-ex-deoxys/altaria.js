@@ -35,7 +35,7 @@ class Altaria extends game_1.PokemonCard {
                 text: ''
             }
         ];
-        this.set = 'EX Deoxys';
+        this.set = 'DX';
         this.setNumber = '1';
         this.name = 'Altaria';
         this.fullName = 'Altaria';

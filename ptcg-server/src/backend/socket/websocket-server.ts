@@ -16,8 +16,11 @@ export class WebSocketServer {
 
   public async listen(httpServer: http.Server): Promise<void> {
     const opts: Partial<ServerOptions> = {
-      pingInterval: 300000,  // 5 minutes (300 seconds * 1000ms)
-      pingTimeout: 270000,   // 4.5 minutes (270 seconds * 1000ms)
+      pingInterval: 25000,    // 25 seconds
+      pingTimeout: 20000,     // 20 seconds
+      connectTimeout: 45000,  // 45 seconds
+      transports: ['websocket', 'polling'],  // Allow fallback to polling if websocket fails
+      allowUpgrades: true,
     };
 
     if (config.backend.allowCors) {
@@ -36,9 +39,18 @@ export class WebSocketServer {
       this.core.connect(socketClient);
       socketClient.attachListeners();
 
-      socket.on('disconnect', () => {
+      socket.on('disconnect', (reason: string) => {
+        console.log(`[Disconnect] User ${user.name} (${user.id}) disconnected. Reason: ${reason}`);
         this.core.disconnect(socketClient);
         user.updateLastSeen();
+      });
+
+      socket.on('error', (error: Error) => {
+        console.error(`[Socket Error] User ${user.name} (${user.id}):`, error);
+      });
+
+      socket.on('connect_error', (error: Error) => {
+        console.error(`[Connect Error] User ${user.name} (${user.id}):`, error);
       });
     });
   }

@@ -31,7 +31,9 @@ class SolgaleoPrismStar extends pokemon_card_1.PokemonCard {
                 text: 'This Pokémon can\'t attack during your next turn.'
             },
         ];
-        this.set = 'SSH';
+        this.set = 'UPR';
+        this.setNumber = '89';
+        this.cardImage = 'assets/cardback.png';
         this.name = 'Solgaleo Prism Star';
         this.fullName = 'Solgaleo Prism Star FLI';
         // for preventing the pokemon from attacking on the next turn

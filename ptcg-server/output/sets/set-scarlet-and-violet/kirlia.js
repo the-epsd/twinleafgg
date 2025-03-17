@@ -12,7 +12,7 @@ class Kirlia extends pokemon_card_1.PokemonCard {
         this.stage = card_types_1.Stage.STAGE_1;
         this.evolvesFrom = 'Ralts';
         this.cardType = P;
-        this.hp = 130;
+        this.hp = 90;
         this.weakness = [{ type: D }];
         this.resistance = [{ type: F, value: -30 }];
         this.retreat = [C];

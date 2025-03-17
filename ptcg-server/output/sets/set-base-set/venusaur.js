@@ -39,13 +39,9 @@ function* moveEnergy(next, store, state, effect) {
 class Venusaur extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.name = 'Venusaur';
-        this.set = 'BS';
-        this.fullName = 'Venusaur BS';
         this.stage = card_types_1.Stage.STAGE_2;
+        this.evolvesFrom = 'Ivysaur';
         this.cardType = card_types_1.CardType.GRASS;
-        this.cardImage = 'assets/cardback.png';
-        this.setNumber = '15';
         this.hp = 100;
         this.weakness = [{ type: card_types_1.CardType.FIRE }];
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
@@ -61,6 +57,11 @@ class Venusaur extends pokemon_card_1.PokemonCard {
                 damage: 60,
                 text: ''
             }];
+        this.set = 'BS';
+        this.setNumber = '15';
+        this.cardImage = 'assets/cardback.png';
+        this.name = 'Venusaur';
+        this.fullName = 'Venusaur BS';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {

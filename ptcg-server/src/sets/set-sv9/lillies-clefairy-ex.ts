@@ -4,6 +4,7 @@ import { StoreLike, State, PowerType, StateUtils, PlayerType } from '../../game'
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckPokemonStatsEffect } from '../../game/store/effects/check-effects';
+import { IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 export class LilliesClefairyex extends PokemonCard {
 
@@ -42,8 +43,6 @@ export class LilliesClefairyex extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof CheckPokemonStatsEffect) {
-      // const cardList = StateUtils.findCardList(state, this);
-      // const owner = StateUtils.findOwner(state, cardList);
       const player = state.players[state.activePlayer];
       const opponent = StateUtils.getOpponent(state, player);
       const pokemonCard = effect.target;
@@ -64,19 +63,14 @@ export class LilliesClefairyex extends PokemonCard {
         return state;
       }
 
-      if (isClefairyexInPlay) {
-        player.marker.addMarker(this.DRAGON_VULNERABILITY_MARKER, this);
-        console.log('marker added');
-      }
-
-      if (pokemonCard.getPokemonCard()?.cardType === CardType.DRAGON && player.marker.hasMarker(this.DRAGON_VULNERABILITY_MARKER, this)) {
-        effect.weakness.push({ type: CardType.PSYCHIC });
+      if (!IS_ABILITY_BLOCKED(store, state, player, this)) {
+        if (pokemonCard.getPokemonCard()?.cardType === CardType.DRAGON) {
+          effect.weakness.push({ type: CardType.PSYCHIC });
+        }
       }
     }
 
-
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       //Get number of benched pokemon

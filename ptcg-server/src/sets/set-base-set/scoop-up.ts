@@ -7,6 +7,8 @@ import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType } from '../../game/store/card/card-types';
 import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
 import { PlayerType, SlotType } from '../../game/store/actions/play-card-action';
+import { PokemonCard } from '../../game';
+import { MOVE_CARDS, MOVE_CARD_TO } from '../../game/store/prefabs/prefabs';
 
 export class ScoopUp extends TrainerCard {
 
@@ -24,6 +26,7 @@ export class ScoopUp extends TrainerCard {
 
   public text: string =
     'Choose 1 of your Pokémon in play and return its Basic Pokémon card to your hand. (Discard all cards attached to that card.)';
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
@@ -38,16 +41,25 @@ export class ScoopUp extends TrainerCard {
         const cardList = result.length > 0 ? result[0] : null;
         if (cardList !== null) {
           const pokemons = cardList.getPokemons();
-          const basics = pokemons.filter(p => p.evolvesFrom === null);
-          cardList.moveCardsTo(basics, player.hand);
-          cardList.moveTo(player.hand);
-          cardList.clearEffects();
-          player.supporter.moveCardTo(effect.trainerCard, player.discard);
+          const basicPokemons = pokemons.filter(p => p.evolvesFrom === null);  // Get only Basic Pokemon
+          const otherCards = cardList.cards.filter(card =>
+            !(card instanceof PokemonCard) || // Non-Pokemon cards
+            (card instanceof PokemonCard && card.evolvesFrom !== null) // Evolution cards
+          );
+
+          // Move other cards (including evolutions) to discard
+          if (otherCards.length > 0) {
+            MOVE_CARDS(store, state, cardList, player.discard, { cards: otherCards });
+          }
+
+          // Move only Basic Pokemon to hand
+          if (basicPokemons.length > 0) {
+            MOVE_CARDS(store, state, cardList, player.hand, { cards: basicPokemons });
+          }
+          MOVE_CARD_TO(state, effect.trainerCard, player.discard);
         }
       });
     }
-
     return state;
   }
-
 }

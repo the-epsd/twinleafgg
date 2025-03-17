@@ -55,6 +55,7 @@ class Magmar extends pokemon_card_1.PokemonCard {
             }
             const coinFlipResult = prefabs_1.SIMULATE_COIN_FLIP(store, state, player);
             if (!coinFlipResult) {
+                effect.preventDefault = true;
                 effect.damage = 0;
                 store.log(state, game_1.GameLog.LOG_ABILITY_BLOCKS_DAMAGE, { name: opponent.name, pokemon: this.name });
             }

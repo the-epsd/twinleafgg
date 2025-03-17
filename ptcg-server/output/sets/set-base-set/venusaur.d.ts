@@ -5,13 +5,9 @@ import { Effect } from '../../game/store/effects/effect';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 export declare class Venusaur extends PokemonCard {
-    name: string;
-    set: string;
-    fullName: string;
     stage: Stage;
+    evolvesFrom: string;
     cardType: CardType;
-    cardImage: string;
-    setNumber: string;
     hp: number;
     weakness: {
         type: CardType;
@@ -19,5 +15,10 @@ export declare class Venusaur extends PokemonCard {
     retreat: CardType[];
     powers: Power[];
     attacks: Attack[];
+    set: string;
+    setNumber: string;
+    cardImage: string;
+    name: string;
+    fullName: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

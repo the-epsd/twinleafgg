@@ -59,11 +59,11 @@ export class Magmar extends PokemonCard {
       const coinFlipResult = SIMULATE_COIN_FLIP(store, state, player);
 
       if (!coinFlipResult) {
+        effect.preventDefault = true;
         effect.damage = 0;
         store.log(state, GameLog.LOG_ABILITY_BLOCKS_DAMAGE, { name: opponent.name, pokemon: this.name });
       }
     }
-
 
     if (effect instanceof EndTurnEffect && effect.player.active.marker.hasMarker(this.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER, this)) {
       effect.player.active.marker.removeMarker(this.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER, this);
