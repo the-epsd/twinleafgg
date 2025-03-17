@@ -7,8 +7,8 @@ const trainer_card_1 = require("../../game/store/card/trainer-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const choose_pokemon_prompt_1 = require("../../game/store/prompts/choose-pokemon-prompt");
 const play_card_action_1 = require("../../game/store/actions/play-card-action");
-const game_1 = require("../../game");
 const prefabs_1 = require("../../game/store/prefabs/prefabs");
+const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 class ScoopUp extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -26,19 +26,26 @@ class ScoopUp extends trainer_card_1.TrainerCard {
             return store.prompt(state, new choose_pokemon_prompt_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_POKEMON_TO_PICK_UP, play_card_action_1.PlayerType.BOTTOM_PLAYER, [play_card_action_1.SlotType.ACTIVE, play_card_action_1.SlotType.BENCH], { allowCancel: false }), result => {
                 const cardList = result.length > 0 ? result[0] : null;
                 if (cardList !== null) {
-                    const pokemons = cardList.getPokemons();
-                    const basicPokemons = pokemons.filter(p => p.evolvesFrom === null); // Get only Basic Pokemon
-                    const otherCards = cardList.cards.filter(card => !(card instanceof game_1.PokemonCard) || // Non-Pokemon cards
-                        (card instanceof game_1.PokemonCard && card.evolvesFrom !== null) // Evolution cards
-                    );
-                    // Move other cards (including evolutions) to discard
-                    if (otherCards.length > 0) {
-                        prefabs_1.MOVE_CARDS(store, state, cardList, player.discard, { cards: otherCards });
+                    // Get all Pokémon cards from the cardList
+                    const allPokemonCards = cardList.cards.filter(card => card instanceof pokemon_card_1.PokemonCard);
+                    // Separate basic Pokémon from evolution Pokémon
+                    const basicPokemonCards = allPokemonCards.filter(p => p.stage === card_types_1.Stage.BASIC);
+                    const evolutionPokemonCards = allPokemonCards.filter(p => p.stage !== card_types_1.Stage.BASIC);
+                    // Get non-Pokémon cards
+                    const nonPokemonCards = cardList.cards.filter(card => !(card instanceof pokemon_card_1.PokemonCard));
+                    // First, move evolution Pokémon to discard
+                    if (evolutionPokemonCards.length > 0) {
+                        prefabs_1.MOVE_CARDS(store, state, cardList, player.discard, { cards: evolutionPokemonCards });
                     }
-                    // Move only Basic Pokemon to hand
-                    if (basicPokemons.length > 0) {
-                        prefabs_1.MOVE_CARDS(store, state, cardList, player.hand, { cards: basicPokemons });
+                    // Then, move non-Pokémon cards to discard
+                    if (nonPokemonCards.length > 0) {
+                        prefabs_1.MOVE_CARDS(store, state, cardList, player.discard, { cards: nonPokemonCards });
                     }
+                    // Finally, move basic Pokémon to hand
+                    if (basicPokemonCards.length > 0) {
+                        prefabs_1.MOVE_CARDS(store, state, cardList, player.hand, { cards: basicPokemonCards });
+                    }
+                    // Move the trainer card to discard
                     prefabs_1.MOVE_CARD_TO(state, effect.trainerCard, player.discard);
                 }
             });

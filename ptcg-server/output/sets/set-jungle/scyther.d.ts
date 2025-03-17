@@ -25,7 +25,7 @@ export declare class Scyther extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
-    readonly SWORDS_DANCE_MARKER = "SWORDS_DANCE_MARKER";
-    readonly CLEAR_SWORDS_DANCE_MARKER = "CLEAR_SWORDS_DANCE_MARKER";
+    readonly NEXT_TURN_MORE_DAMAGE_MARKER = "NEXT_TURN_MORE_DAMAGE_MARKER";
+    readonly NEXT_TURN_MORE_DAMAGE_MARKER_2 = "NEXT_TURN_MORE_DAMAGE_MARKER_2";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

@@ -4,11 +4,11 @@ import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { TrainerType } from '../../game/store/card/card-types';
+import { Stage, TrainerType } from '../../game/store/card/card-types';
 import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
 import { PlayerType, SlotType } from '../../game/store/actions/play-card-action';
-import { PokemonCard } from '../../game';
 import { MOVE_CARDS, MOVE_CARD_TO } from '../../game/store/prefabs/prefabs';
+import { PokemonCard } from '../../game/store/card/pokemon-card';
 
 export class ScoopUp extends TrainerCard {
 
@@ -40,22 +40,32 @@ export class ScoopUp extends TrainerCard {
       ), result => {
         const cardList = result.length > 0 ? result[0] : null;
         if (cardList !== null) {
-          const pokemons = cardList.getPokemons();
-          const basicPokemons = pokemons.filter(p => p.evolvesFrom === null);  // Get only Basic Pokemon
-          const otherCards = cardList.cards.filter(card =>
-            !(card instanceof PokemonCard) || // Non-Pokemon cards
-            (card instanceof PokemonCard && card.evolvesFrom !== null) // Evolution cards
-          );
+          // Get all Pokémon cards from the cardList
+          const allPokemonCards = cardList.cards.filter(card => card instanceof PokemonCard) as PokemonCard[];
 
-          // Move other cards (including evolutions) to discard
-          if (otherCards.length > 0) {
-            MOVE_CARDS(store, state, cardList, player.discard, { cards: otherCards });
+          // Separate basic Pokémon from evolution Pokémon
+          const basicPokemonCards = allPokemonCards.filter(p => p.stage === Stage.BASIC);
+          const evolutionPokemonCards = allPokemonCards.filter(p => p.stage !== Stage.BASIC);
+
+          // Get non-Pokémon cards
+          const nonPokemonCards = cardList.cards.filter(card => !(card instanceof PokemonCard));
+
+          // First, move evolution Pokémon to discard
+          if (evolutionPokemonCards.length > 0) {
+            MOVE_CARDS(store, state, cardList, player.discard, { cards: evolutionPokemonCards });
           }
 
-          // Move only Basic Pokemon to hand
-          if (basicPokemons.length > 0) {
-            MOVE_CARDS(store, state, cardList, player.hand, { cards: basicPokemons });
+          // Then, move non-Pokémon cards to discard
+          if (nonPokemonCards.length > 0) {
+            MOVE_CARDS(store, state, cardList, player.discard, { cards: nonPokemonCards });
           }
+
+          // Finally, move basic Pokémon to hand
+          if (basicPokemonCards.length > 0) {
+            MOVE_CARDS(store, state, cardList, player.hand, { cards: basicPokemonCards });
+          }
+
+          // Move the trainer card to discard
           MOVE_CARD_TO(state, effect.trainerCard, player.discard);
         }
       });
