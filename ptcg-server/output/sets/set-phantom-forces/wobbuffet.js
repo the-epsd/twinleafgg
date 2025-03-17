@@ -43,7 +43,7 @@ class Wobbuffet extends pokemon_card_1.PokemonCard {
             effect.damage += effect.opponent.active.damage;
             return state;
         }
-        if (effect instanceof game_effects_1.PowerEffect && effect.power.powerType === pokemon_types_1.PowerType.ABILITY && effect.power.name !== 'Mischievous Lock') {
+        if (effect instanceof game_effects_1.PowerEffect && effect.power.powerType === pokemon_types_1.PowerType.ABILITY) {
             const player = effect.player;
             const opponent = state_utils_1.StateUtils.getOpponent(state, player);
             // Wobbuffet is not active Pokemon
