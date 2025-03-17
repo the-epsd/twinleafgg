@@ -22,6 +22,8 @@ export declare class SolgaleoPrismStar extends PokemonCard {
         text: string;
     }[];
     set: string;
+    setNumber: string;
+    cardImage: string;
     name: string;
     fullName: string;
     readonly ATTACK_USED_MARKER = "ATTACK_USED_MARKER";

@@ -34,7 +34,15 @@ class Core {
         try {
             const index = this.clients.indexOf(client);
             if (index === -1) {
+                console.log(`[Core Disconnect] Client not found for user ${client.user.name} (${client.user.id})`);
                 throw new game_error_1.GameError(game_message_1.GameMessage.ERROR_CLIENT_NOT_CONNECTED);
+            }
+            // Log active games the user is leaving
+            if (client.games.length > 0) {
+                console.log(`[Core Disconnect] User ${client.user.name} (${client.user.id}) disconnected with ${client.games.length} active games`);
+                client.games.forEach(game => {
+                    console.log(`[Game Disconnect] Game ${game.id}: ${game.state.phase} phase`);
+                });
             }
             client.games.forEach(game => this.leaveGame(client, game));
             this.clients.splice(index, 1);
@@ -43,10 +51,11 @@ class Core {
         }
         catch (error) {
             if (error instanceof game_error_1.GameError) {
-                console.error('Error during disconnect:', error.message);
+                console.error('[Core Disconnect Error]:', error.message);
             }
             else {
-                throw error; // Re-throw if it's not a GameError
+                console.error('[Core Disconnect Unknown Error]:', error);
+                throw error;
             }
         }
     }

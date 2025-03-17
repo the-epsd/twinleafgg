@@ -43,7 +43,7 @@ class Bellsprout extends pokemon_card_1.PokemonCard {
                 name: 'Call for Family',
                 cost: [card_types_1.CardType.GRASS],
                 damage: 0,
-                text: 'Search your deck for a Basic Pokemon named Bellsprout and put i tonto your Bench. Shuffle your deck afterward. (You can\'t use this attack if your Bench is full.)'
+                text: 'Search your deck for a Basic Pokémon named Bellsprout and put it onto your Bench. Shuffle your deck afterward. (You can\'t use this attack if your Bench is full.)'
             }];
         this.set = 'JU';
         this.cardImage = 'assets/cardback.png';

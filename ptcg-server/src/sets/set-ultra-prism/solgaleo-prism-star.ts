@@ -38,10 +38,10 @@ export class SolgaleoPrismStar extends PokemonCard {
     },
   ];
 
-  public set: string = 'SSH';
-
+  public set: string = 'UPR';
+  public setNumber: string = '89';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Solgaleo Prism Star';
-
   public fullName: string = 'Solgaleo Prism Star FLI';
 
   // for preventing the pokemon from attacking on the next turn

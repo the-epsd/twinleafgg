@@ -1,8 +1,10 @@
-import { Attack, CardType, GamePhase, PokemonCard, Power, PowerType, Stage, State, StateUtils, StoreLike, Weakness } from '../../game';
+import { Attack, CardType, GameError, GameMessage, GamePhase, PokemonCard, Power, PowerType, Stage, State, StateUtils, StoreLike, Weakness } from '../../game';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { CheckHpEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { ADD_MARKER, BLOCK_RETREAT_IF_MARKER, IS_ABILITY_BLOCKED, REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { AttackEffect, RetreatEffect } from '../../game/store/effects/game-effects';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 export class Maractus extends PokemonCard {
 
@@ -57,12 +59,19 @@ export class Maractus extends PokemonCard {
       }
     }
 
-    if (WAS_ATTACK_USED(effect, 0, this)) {
-      ADD_MARKER(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, effect.target, this);
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+      opponent.active.marker.addMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
     }
 
-    BLOCK_RETREAT_IF_MARKER(effect, this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
-    REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN(effect, this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
+    if (effect instanceof RetreatEffect && effect.player.active.marker.hasMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this)) {
+      throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+    }
+
+    if (effect instanceof EndTurnEffect && effect.player.active.marker.hasMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this)) {
+      effect.player.active.marker.removeMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
+    }
 
     return state;
   }

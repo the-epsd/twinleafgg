@@ -33,7 +33,7 @@ export class Altaria extends PokemonCard {
       text: ''
     }
   ];
-  public set: string = 'EX Deoxys';
+  public set: string = 'DX';
   public setNumber: string = '1';
   public name: string = 'Altaria';
   public fullName: string = 'Altaria';

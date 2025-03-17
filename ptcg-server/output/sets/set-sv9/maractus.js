@@ -4,6 +4,8 @@ exports.Maractus = void 0;
 const game_1 = require("../../game");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const check_effects_1 = require("../../game/store/effects/check-effects");
+const game_effects_1 = require("../../game/store/effects/game-effects");
+const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class Maractus extends game_1.PokemonCard {
     constructor() {
@@ -49,11 +51,17 @@ class Maractus extends game_1.PokemonCard {
                 effect.source.damage += 60;
             }
         }
-        if (prefabs_1.WAS_ATTACK_USED(effect, 0, this)) {
-            prefabs_1.ADD_MARKER(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, effect.target, this);
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+            const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            opponent.active.marker.addMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
         }
-        prefabs_1.BLOCK_RETREAT_IF_MARKER(effect, this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
-        prefabs_1.REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN(effect, this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
+        if (effect instanceof game_effects_1.RetreatEffect && effect.player.active.marker.hasMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this)) {
+            throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);
+        }
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.active.marker.hasMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this)) {
+            effect.player.active.marker.removeMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
+        }
         return state;
     }
 }

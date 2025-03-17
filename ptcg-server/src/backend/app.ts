@@ -64,8 +64,23 @@ export class App {
     app.use('/avatars', express.static(config.backend.avatarsDir));
 
     app.use((err: any, req: any, res: any, next: any) => {
-      console.error(err.stack);
-      res.status(500).send('Something broke!');
+      // Handle request aborted errors
+      if (err && (
+        (err.type === 'request.aborted') ||
+        (err.code === 'ECONNRESET') ||
+        (err.status === 400 && err.message === 'request aborted')
+      )) {
+        console.log(`[HTTP] Request aborted by client: ${req.method} ${req.url}`);
+        return;
+      }
+
+      // Log other errors
+      console.error('[HTTP Error]', err.stack);
+
+      // Only send response if headers haven't been sent yet
+      if (!res.headersSent) {
+        res.status(500).send('Something broke!');
+      }
     });
 
     return app;

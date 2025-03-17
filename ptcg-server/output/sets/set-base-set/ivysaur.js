@@ -8,17 +8,12 @@ const game_effects_1 = require("../../game/store/effects/game-effects");
 class Ivysaur extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.name = 'Ivysaur';
-        this.cardImage = 'assets/cardback.png';
-        this.set = 'BS';
-        this.fullName = 'Ivysaur BS';
-        this.cardType = card_types_1.CardType.GRASS;
         this.stage = card_types_1.Stage.STAGE_1;
         this.evolvesFrom = 'Bulbasaur';
+        this.cardType = card_types_1.CardType.GRASS;
         this.hp = 60;
         this.weakness = [{ type: card_types_1.CardType.FIRE }];
         this.retreat = [card_types_1.CardType.COLORLESS];
-        this.setNumber = '30';
         this.attacks = [
             {
                 name: 'Vine Whip',
@@ -33,6 +28,11 @@ class Ivysaur extends pokemon_card_1.PokemonCard {
                 text: 'The Defending Pokémon is now Poisoned.'
             }
         ];
+        this.set = 'BS';
+        this.setNumber = '30';
+        this.cardImage = 'assets/cardback.png';
+        this.name = 'Ivysaur';
+        this.fullName = 'Ivysaur BS';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {

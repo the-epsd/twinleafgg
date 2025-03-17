@@ -43,8 +43,11 @@ class Pokestop extends trainer_card_1.TrainerCard {
         });
         // Move item cards to hand
         player.discard.moveCardsTo(itemCards, player.hand);
-        const opponent = state_utils_1.StateUtils.getOpponent(state, player);
-        return store.prompt(state, new game_1.ShowCardsPrompt(opponent.id, game_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, itemCards), () => { });
+        if (itemCards.length > 0) {
+            const opponent = state_utils_1.StateUtils.getOpponent(state, player);
+            return store.prompt(state, new game_1.ShowCardsPrompt(opponent.id, game_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, itemCards), () => { });
+        }
+        return state;
     }
 }
 exports.Pokestop = Pokestop;

@@ -36,7 +36,11 @@ export class SocketService {
 
     this.socket = io(apiUrl, {
       autoConnect: false,
-      reconnection: false,
+      reconnection: true,
+      reconnectionAttempts: 5,
+      reconnectionDelay: 1000,
+      reconnectionDelayMax: 5000,
+      timeout: 20000,
       query: {}
     });
 

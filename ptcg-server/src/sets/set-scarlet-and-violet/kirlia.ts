@@ -12,7 +12,7 @@ export class Kirlia extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Ralts';
   public cardType: CardType = P;
-  public hp: number = 130;
+  public hp: number = 90;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C];

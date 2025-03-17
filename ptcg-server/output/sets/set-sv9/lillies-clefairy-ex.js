@@ -6,6 +6,7 @@ const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const check_effects_1 = require("../../game/store/effects/check-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class LilliesClefairyex extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -40,8 +41,6 @@ class LilliesClefairyex extends pokemon_card_1.PokemonCard {
     reduceEffect(store, state, effect) {
         var _a;
         if (effect instanceof check_effects_1.CheckPokemonStatsEffect) {
-            // const cardList = StateUtils.findCardList(state, this);
-            // const owner = StateUtils.findOwner(state, cardList);
             const player = state.players[state.activePlayer];
             const opponent = game_1.StateUtils.getOpponent(state, player);
             const pokemonCard = effect.target;
@@ -59,12 +58,10 @@ class LilliesClefairyex extends pokemon_card_1.PokemonCard {
             if (!isClefairyexInPlay) {
                 return state;
             }
-            if (isClefairyexInPlay) {
-                player.marker.addMarker(this.DRAGON_VULNERABILITY_MARKER, this);
-                console.log('marker added');
-            }
-            if (((_a = pokemonCard.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.cardType) === card_types_1.CardType.DRAGON && player.marker.hasMarker(this.DRAGON_VULNERABILITY_MARKER, this)) {
-                effect.weakness.push({ type: card_types_1.CardType.PSYCHIC });
+            if (!prefabs_1.IS_ABILITY_BLOCKED(store, state, player, this)) {
+                if (((_a = pokemonCard.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.cardType) === card_types_1.CardType.DRAGON) {
+                    effect.weakness.push({ type: card_types_1.CardType.PSYCHIC });
+                }
             }
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

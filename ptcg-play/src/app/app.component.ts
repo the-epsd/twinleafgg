@@ -61,28 +61,22 @@ export class AppComponent implements OnInit {
     ).subscribe({
       next: async connected => {
         if (!connected && this.isLoggedIn) {
-          // if (this.reconnectAttempts < this.MAX_RECONNECT_ATTEMPTS) {
-          //   this.reconnectAttempts++;
-          //   await new Promise(resolve => setTimeout(resolve, 2000));
-          //   this.authToken$.pipe(take(1)).subscribe(authToken => {
-          //     this.socketService.enable(authToken);
-          //   });
-          //   return;
-          // }
-          // this.reconnectAttempts = 0;
+          console.log('[Client Disconnect] Socket connection lost while logged in');
           this.socketService.disable();
           this.dialog.closeAll();
           await this.alertService.alert(this.translate.instant('ERROR_DISCONNECTED_FROM_SERVER'));
           this.sessionService.clear();
           this.router.navigate(['/login']);
-          // } else if (connected) {
-          //   this.reconnectAttempts = 0;
+        } else if (connected) {
+          console.log('[Client Connect] Socket connection established');
         }
       }
     });
 
     document.addEventListener('visibilitychange', () => {
+      console.log('[Visibility Change] Document visibility:', document.visibilityState);
       if (document.visibilityState === 'visible' && this.isLoggedIn && !this.socketService.isEnabled) {
+        console.log('[Visibility Change] Attempting to reconnect socket');
         this.authToken$.pipe(take(1)).subscribe(authToken => {
           this.socketService.enable(authToken);
         });
@@ -120,4 +114,17 @@ export class AppComponent implements OnInit {
     element.style.setProperty('--card-size', cardSize + 'px');
   }
 
+  @HostListener('window:beforeunload', ['$event'])
+  beforeUnloadHandler(event: BeforeUnloadEvent) {
+    // Check if user is in an active game
+    const activeGames = this.sessionService.session.gameStates?.filter(g => !g.deleted && !g.gameOver);
+
+    if (activeGames && activeGames.length > 0) {
+      // Show a warning
+      const message = this.translate.instant('WARNING_ACTIVE_GAMES');
+      event.preventDefault();
+      event.returnValue = message;
+      return message;
+    }
+  }
 }

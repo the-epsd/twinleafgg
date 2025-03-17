@@ -38,23 +38,32 @@ class Scyther extends pokemon_card_1.PokemonCard {
         this.CLEAR_SWORDS_DANCE_MARKER = 'CLEAR_SWORDS_DANCE_MARKER';
     }
     reduceEffect(store, state, effect) {
+        // Handle Swords Dance (first attack)
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
+            // Add markers for Swords Dance
             player.active.marker.addMarker(this.SWORDS_DANCE_MARKER, this);
             opponent.marker.addMarker(this.CLEAR_SWORDS_DANCE_MARKER, this);
-            if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1] && effect.target.marker.hasMarker(this.CLEAR_SWORDS_DANCE_MARKER)) {
-                effect.damage = 60;
-                return state;
+            return state;
+        }
+        // Handle Slash (second attack)
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
+            if (effect.player.active.marker.hasMarker(this.SWORDS_DANCE_MARKER, this)) {
+                effect.damage += 30;
             }
-            if (effect instanceof game_phase_effects_1.EndTurnEffect
-                && effect.player.marker.hasMarker(this.CLEAR_SWORDS_DANCE_MARKER, this)) {
-                effect.player.marker.removeMarker(this.CLEAR_SWORDS_DANCE_MARKER, this);
-                const opponent = game_1.StateUtils.getOpponent(state, effect.player);
-                opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList) => {
-                    cardList.marker.removeMarker(this.SWORDS_DANCE_MARKER, this);
-                });
-            }
+            return state;
+        }
+        // Handle end of opponent's turn
+        if (effect instanceof game_phase_effects_1.EndTurnEffect
+            && effect.player.marker.hasMarker(this.CLEAR_SWORDS_DANCE_MARKER, this)) {
+            // Remove the clear marker from opponent
+            effect.player.marker.removeMarker(this.CLEAR_SWORDS_DANCE_MARKER, this);
+            // Remove Swords Dance marker from all of opponent's opponent's (original player's) Pokemon
+            const opponent = game_1.StateUtils.getOpponent(state, effect.player);
+            opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList) => {
+                cardList.marker.removeMarker(this.SWORDS_DANCE_MARKER, this);
+            });
             return state;
         }
         return state;

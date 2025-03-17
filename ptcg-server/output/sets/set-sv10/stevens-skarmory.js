@@ -32,6 +32,7 @@ class StevensSkarmory extends pokemon_card_1.PokemonCard {
         ];
         this.regulationMark = 'I';
         this.set = 'SVOD';
+        this.setNumber = '4';
         this.cardImage = 'assets/cardback.png';
         this.name = 'Steven\'s Skarmory';
         this.fullName = 'Steven\'s Skarmory SVOD';
