@@ -71,7 +71,7 @@ class Gardevoir extends pokemon_card_1.PokemonCard {
             const opponent = game_1.StateUtils.getOpponent(state, player);
             prefabs_1.ADD_MARKER(this.PSCHIC_LOCK_MARKER, opponent, this);
         }
-        if (effect instanceof game_effects_1.PowerEffect && prefabs_1.HAS_MARKER(this.PSCHIC_LOCK_MARKER, effect.player)) {
+        if (effect instanceof game_effects_1.PowerEffect && effect.power.powerType === game_1.PowerType.POKEPOWER && prefabs_1.HAS_MARKER(this.PSCHIC_LOCK_MARKER, effect.player)) {
             throw new game_1.GameError(game_1.GameMessage.ABILITY_BLOCKED);
         }
         //Remove Markers

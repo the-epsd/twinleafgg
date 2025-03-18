@@ -96,7 +96,7 @@ export class Gardevoir extends PokemonCard {
       ADD_MARKER(this.PSCHIC_LOCK_MARKER, opponent, this);
     }
 
-    if (effect instanceof PowerEffect && HAS_MARKER(this.PSCHIC_LOCK_MARKER, effect.player)) {
+    if (effect instanceof PowerEffect && effect.power.powerType === PowerType.POKEPOWER && HAS_MARKER(this.PSCHIC_LOCK_MARKER, effect.player)) {
       throw new GameError(GameMessage.ABILITY_BLOCKED);
     }
 
