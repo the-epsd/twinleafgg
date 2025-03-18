@@ -22,6 +22,13 @@ export class SocketService {
 
   constructor() {
     this.setServerUrl(environment.apiUrl);
+
+    // Track page visibility
+    document.addEventListener('visibilitychange', () => {
+      if (this.socket && this.socket.connected) {
+        this.socket.emit('visibility', document.visibilityState);
+      }
+    });
   }
 
   public setServerUrl(apiUrl: string) {
