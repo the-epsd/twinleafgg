@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { ApiErrorEnum, Format } from 'ptcg-server';
+import { ApiErrorEnum } from 'ptcg-server';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { Socket, io } from 'socket.io-client';
-import { timeout, catchError, retry } from 'rxjs/operators';
+import { timeout, catchError } from 'rxjs/operators';
 
 import { ApiError } from './api.error';
 import { environment } from '../../environments/environment';
@@ -22,13 +22,6 @@ export class SocketService {
 
   constructor() {
     this.setServerUrl(environment.apiUrl);
-
-    // Track page visibility
-    document.addEventListener('visibilitychange', () => {
-      if (this.socket && this.socket.connected) {
-        this.socket.emit('visibility', document.visibilityState);
-      }
-    });
   }
 
   public setServerUrl(apiUrl: string) {
@@ -144,5 +137,4 @@ export class SocketService {
   get isConnected(): boolean {
     return this.socket.connected;
   }
-
 }
