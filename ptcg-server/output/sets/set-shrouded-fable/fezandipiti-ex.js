@@ -35,12 +35,12 @@ class Fezandipitiex extends pokemon_card_1.PokemonCard {
         this.setNumber = '38';
         this.name = 'Fezandipiti ex';
         this.fullName = 'Fezandipiti ex SFA';
-        this.TABLE_TURNER_MARKER = 'TABLE_TURNER_MARKER';
+        this.OPPONENT_KNOCKOUT_MARKER = 'OPPONENT_KNOCKOUT_MARKER';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
-            if (!player.marker.hasMarker('OPPONENT_KNOCKOUT_MARKER')) {
+            if (!player.marker.hasMarker(this.OPPONENT_KNOCKOUT_MARKER)) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
             if (player.usedTableTurner == true) {
@@ -59,15 +59,18 @@ class Fezandipitiex extends pokemon_card_1.PokemonCard {
         }
         if (effect instanceof game_effects_1.KnockOutEffect) {
             const player = effect.player;
-            const opponent = game_1.StateUtils.getOpponent(state, player);
-            // Do not activate between turns, or when it's not opponents turn.
-            if (state.phase !== state_1.GamePhase.ATTACK || state.players[state.activePlayer] !== opponent) {
+            // Do not activate when it is player's turn
+            if (state.players[state.activePlayer] === player) {
+                return state;
+            }
+            // Do not activate between turns
+            if (state.phase !== state_1.GamePhase.PLAYER_TURN && state.phase !== state_1.GamePhase.ATTACK) {
                 return state;
             }
             const cardList = game_1.StateUtils.findCardList(state, this);
             const owner = game_1.StateUtils.findOwner(state, cardList);
             if (owner === player) {
-                effect.player.marker.addMarkerToState('OPPONENT_KNOCKOUT_MARKER');
+                effect.player.marker.addMarkerToState(this.OPPONENT_KNOCKOUT_MARKER);
             }
             return state;
         }
@@ -76,7 +79,7 @@ class Fezandipitiex extends pokemon_card_1.PokemonCard {
             const cardList = game_1.StateUtils.findCardList(state, this);
             const owner = game_1.StateUtils.findOwner(state, cardList);
             if (owner === player) {
-                effect.player.marker.removeMarker('OPPONENT_KNOCKOUT_MARKER');
+                effect.player.marker.removeMarker(this.OPPONENT_KNOCKOUT_MARKER);
             }
             player.usedTableTurner = false;
         }
