@@ -67,7 +67,7 @@ class Uxie extends pokemon_card_1.PokemonCard {
             try {
                 const stub = new game_effects_1.PowerEffect(player, {
                     name: 'test',
-                    powerType: game_1.PowerType.ABILITY,
+                    powerType: game_1.PowerType.POKEPOWER,
                     text: ''
                 }, this);
                 store.reduceEffect(state, stub);
