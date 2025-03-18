@@ -12,6 +12,7 @@ const radiant_eternatus_1 = require("./radiant-eternatus");
 const regigigas_v_1 = require("./regigigas-v");
 const regigigas_vstar_1 = require("./regigigas-vstar");
 const salandit_1 = require("./salandit");
+const sky_seal_stone_1 = require("./sky-seal-stone");
 const wailmer_1 = require("./wailmer");
 const yanmega_1 = require("./yanmega");
 const zacian_1 = require("./zacian");
@@ -36,6 +37,7 @@ exports.setCrownZenith = [
     new regigigas_v_1.RegigigasV(),
     new regigigas_vstar_1.RegigigasVSTAR(),
     new salandit_1.Salandit(),
+    new sky_seal_stone_1.SkySealStone(),
     new wailmer_1.Wailmer(),
     new yanmega_1.Yanmega(),
     new zacian_1.Zacian(),
