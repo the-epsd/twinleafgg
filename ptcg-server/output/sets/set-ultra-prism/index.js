@@ -30,6 +30,7 @@ const shiinotic_1 = require("./shiinotic");
 const sneasel_1 = require("./sneasel");
 const solgaleo_prism_star_1 = require("./solgaleo-prism-star");
 const spiritomb_1 = require("./spiritomb");
+const super_boost_energy_prism_star_1 = require("./super-boost-energy-prism-star");
 const tapu_lele_1 = require("./tapu-lele");
 const turtwig_1 = require("./turtwig");
 const unit_energy_grw_1 = require("./unit-energy-grw");
@@ -72,4 +73,5 @@ exports.setUltraPrism = [
     new weavile_1.Weavile(),
     new spiritomb_1.Spiritomb(),
     new solgaleo_prism_star_1.SolgaleoPrismStar(),
+    new super_boost_energy_prism_star_1.SuperBoostEnergy()
 ];
