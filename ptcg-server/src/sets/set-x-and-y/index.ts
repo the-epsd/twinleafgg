@@ -1,5 +1,6 @@
 import { Card } from '../../game/store/card/card';
 import { Braixen } from './braixen';
+import { Cassius } from './cassius';
 import { Delphox } from './delphox';
 import { DoubleColorlessEnergy } from './double-colorless-energy';
 import { Evosoda } from './evosoda';
@@ -19,6 +20,7 @@ import { YveltalEx } from './yveltal-ex';
 
 export const setXY: Card[] = [
   new Braixen(),
+  new Cassius(),
   new Delphox(),
   new DoubleColorlessEnergy(),
   new Evosoda(),
