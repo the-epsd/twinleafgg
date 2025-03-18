@@ -52,9 +52,6 @@ class Claydol extends pokemon_card_1.PokemonCard {
             if (player.hand.cards.length == 0) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
-            if (player.deck.cards.length === 0) {
-                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
-            }
             if (player.active.cards[0] === this && player.active.specialConditions.length > 0) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }

@@ -58,10 +58,6 @@ export class Claydol extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      if (player.deck.cards.length === 0) {
-        throw new GameError(GameMessage.CANNOT_USE_POWER);
-      }
-
       if (player.active.cards[0] === this && player.active.specialConditions.length > 0) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
