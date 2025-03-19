@@ -10,4 +10,5 @@ export declare class SocketWrapper {
     attachListeners(): void;
     addListener<T, R>(message: string, handler: Handler<T, R>): void;
     emit(event: string, ...args: any[]): boolean;
+    isConnected(): boolean;
 }
