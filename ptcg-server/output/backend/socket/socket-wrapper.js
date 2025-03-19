@@ -26,7 +26,26 @@ class SocketWrapper {
         this.listeners.push(listener);
     }
     emit(event, ...args) {
-        return this.socket.emit(event, ...args);
+        try {
+            if (!this.socket.connected) {
+                console.warn(`[Socket] Attempting to emit to disconnected socket: ${event}`);
+                return false;
+            }
+            return this.socket.emit(event, ...args);
+        }
+        catch (error) {
+            console.error(`[Socket] Error emitting event ${event}:`, error);
+            return false;
+        }
+    }
+    isConnected() {
+        try {
+            return this.socket && this.socket.connected;
+        }
+        catch (error) {
+            console.error('[Socket] Error checking connection status:', error);
+            return false;
+        }
     }
 }
 exports.SocketWrapper = SocketWrapper;
