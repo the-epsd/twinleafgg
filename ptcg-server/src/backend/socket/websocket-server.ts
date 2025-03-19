@@ -1,27 +1,45 @@
 import * as http from 'http';
 import { Server, Socket, ServerOptions } from 'socket.io';
+import * as os from 'os';
 
 import { Core } from '../../game/core/core';
 import { SocketClient } from './socket-client';
 import { User } from '../../storage';
 import { authMiddleware } from './auth-middleware';
 import { config } from '../../config';
-import { Transport } from 'nodemailer';
 
 export type Middleware = (socket: Socket, next: (err?: any) => void) => void;
 
+interface Packet {
+  type: string;
+  data?: any;
+}
+
+interface Transport {
+  name: string;
+}
+
 export class WebSocketServer {
   public server: Server | undefined;
+  private clients: Map<string, SocketClient> = new Map();
+  private statsInterval: NodeJS.Timeout | null = null;
+  private pingInterval: NodeJS.Timeout | null = null;
+  private readonly STATS_INTERVAL = 60000; // Log stats every minute
+
 
   constructor(private core: Core) { }
 
   public async listen(httpServer: http.Server): Promise<void> {
     const opts: Partial<ServerOptions> = {
-      pingInterval: 45000,   // Increased to 45s to reduce unnecessary pings
-      pingTimeout: 300000,   // 5 minutes (300s)
-      connectTimeout: 10000,   // 10 seconds
-      transports: ['websocket', 'polling'],
+      pingInterval: 25000,    // 25s ping interval for balance between responsiveness and overhead
+      pingTimeout: 30000,     // 30s timeout to detect disconnections
+      connectTimeout: 30000,  // 30s connection timeout
+      transports: ['websocket'],  // WebSocket only for better performance
       allowUpgrades: true,
+      upgradeTimeout: 30000,   // Time to complete transport upgrade
+      perMessageDeflate: true, // Enable WebSocket compression
+      httpCompression: true,   // Enable HTTP compression
+      allowEIO3: true,        // Enable Engine.IO v3 for better compatibility
       maxHttpBufferSize: 1e8,  // 100 MB
     };
 
@@ -29,139 +47,179 @@ export class WebSocketServer {
       opts.cors = { origin: '*' };
     }
 
-    const server = new Server(httpServer, opts);
-    this.server = server;
-    server.use(authMiddleware);
+    try {
+      const server = new Server(httpServer, opts);
+      this.server = server;
+      server.use(authMiddleware);
 
-    server.on('connection', (socket: Socket) => {
+      server.on('connection', this.handleConnection.bind(this));
+
+      // Set up stats monitoring
+      this.statsInterval = setInterval(() => this.logServerStats(), this.STATS_INTERVAL);
+
+      console.log('[Socket] WebSocket server started');
+    } catch (error: any) {
+      console.error('[Socket] Error starting WebSocket server:', error);
+    }
+  }
+
+  private handleConnection(socket: Socket): void {
+    try {
       const user: User = (socket as any).user;
-      let lastActivity = Date.now();
-      let isInGame = false;
+      if (!user) {
+        console.error('[Socket] Connection without user data, rejecting');
+        socket.disconnect();
+        return;
+      }
 
-      // Log initial connection
-      console.log(`[Connect] User ${user.name} (${user.id}) | ` +
-        `Client: ${socket.handshake.headers['user-agent']?.split(' ').pop() || 'unknown'}`);
+      // Generate a unique ID for this connection
+      const connectionId = `${user.id}-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
 
-      // Track activity and game state
-      socket.onAny((eventName: string) => {
-        lastActivity = Date.now();
-        if (eventName.startsWith('game:')) {
-          isInGame = true;
-        }
-      });
+      console.log(`[Socket] User ${user.name} (${user.id}) connected. Transport: ${socket.conn.transport.name}, Connection ID: ${connectionId}`);
 
-      // Monitor disconnects with enhanced context
-      socket.on('disconnect', (reason: string) => {
-        const timeSinceLastActivity = Date.now() - lastActivity;
-        const disconnectContext = {
-          reason,
-          inGame: isInGame,
-          timeSinceLastActivity: Math.floor(timeSinceLastActivity / 1000),
-          wasActive: timeSinceLastActivity < 5000, // Consider "active" if action within last 5 seconds
-          hadVisibilityEvent: socket.handshake.query.lastVisibilityState === 'hidden'
-        };
+      const socketClient = new SocketClient(user, this.core, this.server!, socket);
+      // Store client for monitoring
+      this.clients.set(connectionId, socketClient);
 
-        // Categorize the disconnect
-        let disconnectType = 'Unknown';
-        if (reason === 'transport close') {
-          if (!isInGame && timeSinceLastActivity > 30000) {
-            disconnectType = 'Likely Tab Close (Inactive)';
-          } else if (isInGame && !disconnectContext.wasActive) {
-            disconnectType = 'Possible Tab Close (In Game)';
-          } else if (disconnectContext.wasActive) {
-            disconnectType = 'Unexpected Transport Close (Was Active)';
-          }
-        } else if (reason === 'ping timeout') {
-          disconnectType = 'Connection Issue (Ping Timeout)';
-        } else if (reason === 'client namespace disconnect') {
-          disconnectType = 'Client Initiated Disconnect';
-        }
+      this.core.connect(socketClient);
+      socketClient.attachListeners();
 
-        // Log the enhanced disconnect info
-        console.log(
-          `[Disconnect] User ${user.name} (${user.id}) | ` +
-          `Type: ${disconnectType} | ` +
-          `Last Activity: ${disconnectContext.timeSinceLastActivity}s ago | ` +
-          `In Game: ${disconnectContext.inGame} | ` +
-          `Was Active: ${disconnectContext.wasActive}`
-        );
-
-        // If it was an unexpected disconnect during gameplay, log additional context
-        if (isInGame && disconnectContext.wasActive && reason === 'transport close') {
-          console.log(
-            `[Unexpected Game Disconnect] User ${user.name} (${user.id}) | ` +
-            `Last Activity: ${new Date(lastActivity).toISOString()} | ` +
-            `Session Duration: ${Math.floor((Date.now() - socket.handshake.issued) / 1000)}s`
-          );
-        }
-
-        this.core.disconnect(socketClient);
-        user.updateLastSeen();
-      });
-
-      // Track visibility events from client
-      socket.on('visibility', (state: 'visible' | 'hidden') => {
-        console.log(`[Visibility] User ${user.name} (${user.id}) tab became ${state}`);
-        socket.handshake.query.lastVisibilityState = state;
-      });
-
-      // Monitor transport changes
       socket.conn.on('upgrade', (transport: Transport) => {
-        console.log(`[Transport] User ${user.name} (${user.id}) upgraded to ${transport.name}`);
+        console.log(`[Socket] Transport upgraded for user ${user.name} (${user.id}): ${transport.name}, Connection ID: ${connectionId}`);
       });
 
-      // Monitor packet events
-      socket.conn.on('packet', (packet: { type: string }) => {
-        if (packet.type === 'ping' || packet.type === 'pong') return; // Skip logging heartbeats
-        console.log(`[Packet] User ${user.name} (${user.id}) ${packet.type}`);
-      });
-
-      // Monitor close events with more detail
-      socket.conn.on('close', (reason: string) => {
-        console.log(`[Transport Close] User ${user.name} (${user.id}) | ` +
-          `Reason: ${reason} | ` +
-          `Last Transport: ${socket.conn.transport.name} | ` +
-          `Connected Duration: ${(Date.now() - socket.handshake.issued) / 1000}s`);
-      });
-
-      // Monitor errors
-      socket.on('error', (error: Error) => {
-        console.error(`[Socket Error] User ${user.name} (${user.id}):`, error);
-      });
-
-      socket.conn.on('error', (error: Error) => {
-        console.error(`[Transport Error] User ${user.name} (${user.id}):`, error);
-      });
-
-      // Monitor ping/pong
-      let lastPing = Date.now();
-      socket.conn.on('ping', () => {
-        lastPing = Date.now();
-        console.log(`[Ping] User ${user.name} (${user.id})`);
-      });
-
-      socket.conn.on('pong', () => {
-        const latency = Date.now() - lastPing;
-        if (latency > 1000) { // Log high latency
-          console.log(`[High Latency] User ${user.name} (${user.id}) - ${latency}ms`);
+      socket.conn.on('packet', (packet: Packet) => {
+        if (packet.type === 'ping') {
+          // For performance, only log some pings for monitoring
+          if (Math.random() < 0.1) { // Log roughly 10% of pings
+            console.log(`[Socket] Heartbeat received from user ${user.name} (${user.id}), Connection ID: ${connectionId}`);
+          }
         }
       });
 
-      // WebSocket specific monitoring
-      if (socket.conn.transport.name === 'websocket') {
-        const ws = (socket.conn.transport as any).ws;
-        if (ws) {
-          ws.on('unexpected-response', (req: any, res: any) => {
-            console.error(`[WebSocket Error] User ${user.name} (${user.id}) unexpected response:`,
-              res.statusCode, res.statusMessage);
-          });
+      socket.on('disconnect', (reason) => {
+        try {
+          console.log(`[Socket] User ${user.name} (${user.id}) disconnected. Reason: ${reason}, Connection ID: ${connectionId}`);
+          this.core.disconnect(socketClient);
+          user.updateLastSeen();
+
+          // Remove from clients map
+          this.clients.delete(connectionId);
+
+          // Explicitly dispose
+          socketClient.dispose();
+        } catch (error: any) {
+          console.error(`[Socket] Error handling disconnect for user ${user.name} (${user.id}):`, error);
+        }
+      });
+
+      socket.on('error', (error) => {
+        console.error(`[Socket] Error for user ${user.name} (${user.id}), Connection ID: ${connectionId}:`, error);
+      });
+
+    } catch (error: any) {
+      console.error('[Socket] Error handling new connection:', error);
+      // Attempt to disconnect the problematic socket
+      try {
+        socket.disconnect();
+      } catch (e) {
+        // Ignore errors in disconnect
+      }
+    }
+  }
+
+  private logServerStats(): void {
+    try {
+      const cpuUsage = this.getCpuUsagePercent();
+      const memoryUsage = process.memoryUsage();
+      const clientCount = this.clients.size;
+
+      console.log(`[Stats] Connections: ${clientCount}, CPU: ${cpuUsage.toFixed(1)}%, Memory: ${this.formatMemory(memoryUsage.rss)}`);
+
+      // Log details if there are a lot of connections
+      if (clientCount > 50) {
+        console.log(`[Stats] High connection count: ${clientCount}`);
+      }
+
+      // Warning for high CPU usage
+      if (cpuUsage > 70) {
+        console.warn(`[Stats] High CPU usage: ${cpuUsage.toFixed(1)}%`);
+      }
+
+      // Warning for high memory usage
+      if (memoryUsage.rss > 1024 * 1024 * 1024) { // >1GB
+        console.warn(`[Stats] High memory usage: ${this.formatMemory(memoryUsage.rss)}`);
+      }
+    } catch (error: any) {
+      console.error('[Stats] Error logging server stats:', error);
+    }
+  }
+
+  private getCpuUsagePercent(): number {
+    try {
+      // Simple CPU usage calculation based on OS library
+      const cpus = os.cpus();
+      let totalIdle = 0;
+      let totalTick = 0;
+
+      cpus.forEach(cpu => {
+        for (const type in cpu.times) {
+          totalTick += cpu.times[type as keyof typeof cpu.times];
+        }
+        totalIdle += cpu.times.idle;
+      });
+
+      // Calculate CPU usage as percentage of non-idle time
+      return 100 - (totalIdle / totalTick * 100);
+    } catch (error) {
+      return 0;
+    }
+  }
+
+  private formatMemory(bytes: number): string {
+    const units = ['B', 'KB', 'MB', 'GB'];
+    let size = bytes;
+    let unitIndex = 0;
+
+    while (size >= 1024 && unitIndex < units.length - 1) {
+      size /= 1024;
+      unitIndex++;
+    }
+
+    return `${size.toFixed(1)} ${units[unitIndex]}`;
+  }
+
+  public dispose(): void {
+    try {
+      console.log('[Socket] Disposing WebSocket server');
+
+      // Clear intervals
+      if (this.statsInterval) {
+        clearInterval(this.statsInterval);
+      }
+
+      if (this.pingInterval) {
+        clearInterval(this.pingInterval);
+      }
+
+      // Clean up all clients
+      for (const client of this.clients.values()) {
+        try {
+          client.dispose();
+        } catch (error) {
+          console.error('[Socket] Error disposing client:', error);
         }
       }
 
-      // Create and connect the socket client
-      const socketClient = new SocketClient(user, this.core, server, socket);
-      this.core.connect(socketClient);
-      socketClient.attachListeners();
-    });
+      this.clients.clear();
+
+      // Disconnect all sockets
+      if (this.server) {
+        this.server.disconnectSockets(true);
+        this.server.close();
+      }
+    } catch (error: any) {
+      console.error('[Socket] Error disposing WebSocket server:', error);
+    }
   }
 }

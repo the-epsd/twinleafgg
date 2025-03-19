@@ -1,48 +1,34 @@
 import { Injectable } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
 import {
-  Base64,
-  CardTarget,
-  ClientInfo,
-  Format,
-  GameState,
-  PlayerStats,
-  Replay,
-  State,
-  StateLog,
-  StateSerializer
+  ClientInfo, GameState, State, CardTarget, StateLog, Replay,
+  Base64, StateSerializer, PlayerStats
 } from 'ptcg-server';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { finalize, switchMap, takeUntil } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
+import { finalize } from 'rxjs/operators';
 
-import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
 import { AlertService } from '../../shared/alert/alert.service';
-import { LocalGameState } from '../../shared/session/session.interface';
-import { SessionService } from '../../shared/session/session.service';
 import { ApiError } from '../api.error';
 import { ApiService } from '../api.service';
+import { LocalGameState } from '../../shared/session/session.interface';
 import { PlayerStatsResponse } from '../interfaces/game.interface';
 import { SocketService } from '../socket.service';
+import { SessionService } from '../../shared/session/session.service';
 
 export interface GameUserInfo {
   gameId: number;
   userInfo: ClientInfo;
 }
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class GameService {
-  private apiUrl = environment.apiUrl;
-  private queueSubject = new BehaviorSubject<string[]>([]);
+
   constructor(
-    private http: HttpClient,
     private api: ApiService,
     private alertService: AlertService,
     private sessionService: SessionService,
     private socketService: SocketService,
-    private translate: TranslateService,
+    private translate: TranslateService
   ) { }
 
   public getPlayerStats(gameId: number) {
@@ -277,53 +263,5 @@ export class GameService {
 
     this.alertService.toast(this.translate.instant(key));
   }
-
-  // joinMatchmakingLobby(format: string): Observable<any> {
-  //   return this.socketService.joinLobby(format).pipe(
-  //     switchMap(() => new Observable<any>(observer => {
-  //       this.socketService.on('matchmaking:lobbyUpdate', (data: any) => observer.next(data));
-  //     })),
-  //     takeUntil(new Observable<any>(observer => {
-  //       this.socketService.on('gameStarted', () => observer.next());
-  //     }))
-  //   );
-  // }
-
-  // handleGameStart(): Observable<any> {
-  //   return new Observable<any>(observer => {
-  //     this.socketService.on('gameStarted', (gameData: any) => {
-  //       this.join(gameData.gameId).subscribe(
-  //         result => observer.next(result),
-  //         error => observer.error(error),
-  //         () => observer.complete()
-  //       );
-  //     });
-  //   });
-  // }
-
-  // joinMatchmakingQueue(format: Format, deck: string[]): Observable<any> {
-  //   return this.socketService.joinMatchmakingQueue(format, deck);
-  // }
-
-
-  // leaveMatchmakingQueue(): Observable<any> {
-  //   return this.socketService.emit('matchmaking:leaveQueue');
-  // }
-
-  // checkQueueStatus(format: Format): Observable<any> {
-  //   return this.socketService.emit('checkQueueStatus', { format });
-  // }
-
-  // getQueueUpdates(): Observable<any> {
-  //   return new Observable<any>(observer => {
-  //     this.socketService.on('queueUpdate', (data) => {
-  //       observer.next(data);
-  //     });
-  //   });
-  // }
-
-  // updateQueuedPlayers(players: string[]) {
-  //   this.queueSubject.next(players);
-  // }
 
 }

@@ -22,6 +22,7 @@ class MatchRecorder {
     constructor(core) {
         this.core = core;
         this.finished = false;
+        this.TRANSACTION_TIMEOUT_MS = 30000; // 30 seconds
         this.ranking = new ranking_calculator_1.RankingCalculator();
         this.replay = new replay_1.Replay({ indexEnabled: false });
     }
@@ -40,27 +41,36 @@ class MatchRecorder {
             if (state.winner !== state_1.GameWinner.NONE) {
                 this.saveMatch(state);
             }
+            else {
+                this.cleanup();
+            }
         }
     }
     async saveMatch(state, manager) {
         if (!this.client1 || !this.client2 || manager === undefined) {
+            this.cleanup();
             return;
         }
-        const match = new storage_1.Match();
-        match.player1 = this.client1.user;
-        match.player2 = this.client2.user;
-        match.winner = state.winner;
-        match.created = Date.now();
-        match.ranking1 = match.player1.ranking;
-        match.ranking2 = match.player2.ranking;
-        match.rankingStake1 = 0;
-        match.rankingStake2 = 0;
-        this.replay.setCreated(match.created);
-        this.replay.player1 = this.buildReplayPlayer(match.player1);
-        this.replay.player2 = this.buildReplayPlayer(match.player2);
-        this.replay.winner = match.winner;
-        match.replayData = this.replay.serialize();
         try {
+            // Set transaction timeout
+            this.transactionTimeout = setTimeout(() => {
+                console.error('[MatchRecorder] Transaction timeout after', this.TRANSACTION_TIMEOUT_MS, 'ms');
+                this.cleanup();
+            }, this.TRANSACTION_TIMEOUT_MS);
+            const match = new storage_1.Match();
+            match.player1 = this.client1.user;
+            match.player2 = this.client2.user;
+            match.winner = state.winner;
+            match.created = Date.now();
+            match.ranking1 = match.player1.ranking;
+            match.ranking2 = match.player2.ranking;
+            match.rankingStake1 = 0;
+            match.rankingStake2 = 0;
+            this.replay.setCreated(match.created);
+            this.replay.player1 = this.buildReplayPlayer(match.player1);
+            this.replay.player2 = this.buildReplayPlayer(match.player2);
+            this.replay.winner = match.winner;
+            match.replayData = this.replay.serialize();
             // Update ranking
             const users = this.ranking.calculateMatch(match, state);
             // Update match's ranking
@@ -80,9 +90,25 @@ class MatchRecorder {
             }
         }
         catch (error) {
-            console.error(error);
-            return;
+            console.error('[MatchRecorder] Error saving match:', error);
         }
+        finally {
+            if (this.transactionTimeout) {
+                clearTimeout(this.transactionTimeout);
+            }
+            this.cleanup();
+        }
+    }
+    cleanup() {
+        console.log('[MatchRecorder] Cleaning up resources');
+        this.finished = true;
+        this.client1 = undefined;
+        this.client2 = undefined;
+        if (this.transactionTimeout) {
+            clearTimeout(this.transactionTimeout);
+            this.transactionTimeout = undefined;
+        }
+        this.replay = new replay_1.Replay({ indexEnabled: false });
     }
     updateClients(state) {
         const player1Id = state.players[0].id;

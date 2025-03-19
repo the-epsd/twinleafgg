@@ -15,6 +15,8 @@ export declare class SocketClient implements Client {
     private coreSocket;
     private gameSocket;
     private messageSocket;
+    private matchmakingSocket;
+    private _isDisposed;
     constructor(user: User, core: Core, io: Server, socket: Socket);
     onConnect(client: Client): void;
     onDisconnect(client: Client): void;
@@ -24,7 +26,11 @@ export declare class SocketClient implements Client {
     onStateChange(game: Game, state: State): void;
     onGameJoin(game: Game, client: Client): void;
     onGameLeave(game: Game, client: Client): void;
+    onJoinQueue(from: Client, message: Message): void;
+    onLeaveQueue(): void;
     onMessage(from: Client, message: Message): void;
     onMessageRead(user: User): void;
     attachListeners(): void;
+    dispose(): void;
+    get isDisposed(): boolean;
 }

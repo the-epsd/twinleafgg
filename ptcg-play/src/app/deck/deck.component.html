@@ -20,7 +20,7 @@
               <mat-icon *ngIf="deck.isValid" color="primary">check</mat-icon>
               <mat-icon *ngIf="!deck.isValid">remove</mat-icon>
             </div>
-            <!-- <mat-icon *ngIf="defaultDeckId === deck.id" class="default-star" color="accent">star</mat-icon> -->
+            <mat-icon *ngIf="defaultDeckId === deck.id" class="default-star" color="accent">star</mat-icon>
           </div>
 
 
@@ -42,9 +42,9 @@
                 <button mat-menu-item [routerLink]="['/deck', deck.id]">
                   {{ 'BUTTON_EDIT' | translate }}
                 </button>
-                <!-- <button mat-menu-item (click)="setAsDefault(deck.id)" *ngIf="defaultDeckId !== deck.id && deck.isValid">
+                <button mat-menu-item (click)="setAsDefault(deck.id)" *ngIf="defaultDeckId !== deck.id && deck.isValid">
                   {{ 'DECK_SET_AS_DEFAULT' | translate }}
-                </button> -->
+                </button>
                 <button mat-menu-item (click)="exportDeckList(deck)">
                   {{ 'BUTTON_EXPORT_DECKLIST' | translate }}
                 </button>

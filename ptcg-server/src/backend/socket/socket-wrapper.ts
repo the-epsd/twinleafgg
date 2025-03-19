@@ -43,6 +43,24 @@ export class SocketWrapper {
   }
 
   public emit(event: string, ...args: any[]): boolean {
-    return this.socket.emit(event, ...args);
+    try {
+      if (!this.socket.connected) {
+        console.warn(`[Socket] Attempting to emit to disconnected socket: ${event}`);
+        return false;
+      }
+      return this.socket.emit(event, ...args);
+    } catch (error: any) {
+      console.error(`[Socket] Error emitting event ${event}:`, error);
+      return false;
+    }
+  }
+
+  public isConnected(): boolean {
+    try {
+      return this.socket && this.socket.connected;
+    } catch (error: any) {
+      console.error('[Socket] Error checking connection status:', error);
+      return false;
+    }
   }
 }

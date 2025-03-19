@@ -31,20 +31,25 @@
       </div>
     </div>
 
+    <!-- Connection Status -->
+    <div *ngIf="connectionError" class="connection-error">
+      <mat-icon>error_outline</mat-icon> Connection error
+    </div>
+
+    <!-- Queue Status -->
+    <!-- <div *ngIf="inQueue" class="queue-status">
+      <div class="queue-time">Time in queue: {{ getQueueTimeDisplay() }}</div>
+      <div class="players-count">Players in queue: {{ queuedPlayers.length }}</div>
+    </div> -->
+
     <!-- Queue Button -->
-    <button mat-raised-button [class.in-queue]="inQueue" (click)="inQueue ? leaveQueue() : joinQueue()"
-      [disabled]="!deckId || onCooldown" class="queue-button">
+    <button mat-raised-button [class.in-queue]="inQueue" [class.error]="connectionError"
+      (click)="inQueue ? leaveQueue() : joinQueue()" [disabled]="!deckId || onCooldown || loading || connectionError"
+      class="queue-button">
+      <mat-spinner *ngIf="loading" diameter="20" style="display: inline-block; margin-right: 8px;"></mat-spinner>
       {{ (inQueue ? ('BUTTON_LEAVE_QUEUE' | translate) :
       (onCooldown ? ('BUTTON_COOLDOWN' | translate) + ' (' + cooldownSeconds + ')' :
       'BUTTON_FIND_MATCH' | translate)) }}
     </button>
-
-    <!-- Queue Status -->
-    <!-- <div class="queue-status" *ngIf="inQueue">
-      <h3>{{ 'LABEL_PLAYERS_IN_QUEUE' | translate }}</h3>
-      <ul>
-        <li *ngFor="let player of queuedPlayers">{{ player }}</li>
-      </ul>
-    </div> -->
   </div>
 </div>
