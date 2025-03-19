@@ -39,6 +39,7 @@ const lillies_comfey_1 = require("./lillies-comfey");
 const lillies_cutiefly_1 = require("./lillies-cutiefly");
 const lillies_pearl_1 = require("./lillies-pearl");
 const lillies_ribombee_1 = require("./lillies-ribombee");
+const lilligant_1 = require("./lilligant");
 const lombre_1 = require("./lombre");
 const lotad_1 = require("./lotad");
 const ludicolo_1 = require("./ludicolo");
@@ -122,6 +123,7 @@ exports.setSV9 = [
     new beldum_1.Beldum(),
     new metang_1.Metang(),
     new metagross_1.Metagross(),
+    new lilligant_1.Lilligant(),
     new lotad_1.Lotad(),
     new lombre_1.Lombre(),
     new ludicolo_1.Ludicolo(),

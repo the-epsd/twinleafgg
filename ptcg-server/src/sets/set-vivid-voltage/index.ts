@@ -20,6 +20,7 @@ import { Nessa } from './nessa';
 import { Phanpy } from './phanpy';
 import { Raikou } from './raikou';
 import { Shaymin } from './shaymin';
+import { Shiftry } from './shiftry';
 import { Slugma } from './slugma';
 import { Snorlax } from './snorlax';
 import { StoneFightingEnergy } from './stone-fighting-energy';
@@ -52,6 +53,7 @@ export const setVividVoltage: Card[] = [
   new Phanpy(),
   new Raikou(),
   new Shaymin(),
+  new Shiftry(),
   new Slugma(),
   new Snorlax(),
   new StoneFightingEnergy(),

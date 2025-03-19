@@ -10,6 +10,7 @@ import { Eviolite } from './eviolite';
 import { Kyurem } from './kyurem';
 import { Lampent } from './lampent';
 import { Palpitoad } from './palpitoad';
+import { Petilil } from './petilil';
 import { PlumeFossil } from './plume-fossil';
 import { Seismitoad } from './seismitoad';
 import { Terrakion } from './terrakion';
@@ -34,6 +35,7 @@ export const setNobleVictories: Card[] = [
   new Kyurem(),
   new Lampent(),
   new Palpitoad(),
+  new Petilil(),
   new PlumeFossil(),
   new Seismitoad(),
   new SuperRodNVI(),

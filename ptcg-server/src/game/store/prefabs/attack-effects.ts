@@ -1,12 +1,8 @@
+import { Card, ChooseCardsPrompt, ChoosePokemonPrompt, GameMessage, PlayerType, ShuffleDeckPrompt, SlotType, State, StateUtils, StoreLike } from '../..';
+import { SpecialCondition, SuperType, TrainerType } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
-import { State, StateUtils } from '../..';
+import { AddSpecialConditionsEffect, AfterDamageEffect, ApplyWeaknessEffect, DealDamageEffect, HealTargetEffect, PutCountersEffect, PutDamageEffect } from '../effects/attack-effects';
 import { AttackEffect } from '../effects/game-effects';
-import { HealTargetEffect, PutDamageEffect, PutCountersEffect, DealDamageEffect, ApplyWeaknessEffect, AfterDamageEffect } from '../effects/attack-effects';
-import { StoreLike, Card, ChoosePokemonPrompt, PlayerType, SlotType, GameMessage } from '../..';
-import { SuperType, TrainerType } from '../card/card-types';
-import { AddSpecialConditionsEffect } from '../effects/attack-effects';
-import { SpecialCondition } from '../card/card-types';
-import { ChooseCardsPrompt, ShuffleDeckPrompt } from '../..';
 import { COIN_FLIP_PROMPT } from './prefabs';
 
 
@@ -82,6 +78,28 @@ export function PUT_X_CARDS_FROM_YOUR_DISCARD_PILE_INTO_YOUR_HAND(
     )], selected => {
     const cards = selected || [];
     player.discard.moveCardsTo(cards, player.hand);
+  });
+}
+
+export function PUT_X_DAMAGE_COUNTERS_ON_ALL_YOUR_OPPONENTS_POKEMON(
+  x: number,
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect
+) {
+  const player = effect.player;
+  const opponent = StateUtils.getOpponent(state, player);
+  
+  const activeDamageEffect = new PutCountersEffect(effect, 10 * x);
+  activeDamageEffect.target = opponent.active;
+  store.reduceEffect(state, activeDamageEffect);
+
+  opponent.bench.forEach((bench, index) => {
+    if (bench.cards.length > 0) {
+      const damageEffect = new PutCountersEffect(effect, 10 * x);
+      damageEffect.target = bench;
+      store.reduceEffect(state, damageEffect);
+    }
   });
 }
 

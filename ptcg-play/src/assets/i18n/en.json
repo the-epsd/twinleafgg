@@ -567,6 +567,7 @@
     "LOG_PLAYER_PUTS_CARD_IN_LOST_ZONE": "{{name}} puts {{card}} in the lost zone from their hand.",
     "LOG_PLAYER_HEALS_POKEMON": "{{name}} heals {{pokemon}} for {{healingAmount}}.",
     "LOG_HISUIAN_HEAVY_BALL": "{{name}} has taken {{card}} from their Prize Cards with Hisuian Heavy Ball.",
-    "LOG_PLAYER_CHOOSES": "{{name}} chooses {{string}}."
+    "LOG_PLAYER_CHOOSES": "{{name}} chooses {{string}}.",
+    "LOG_SHUFFLE_POKEMON_INTO_DECK": "{{name}} shuffles {{card}} into their deck with the effect of {{effect}}."
   }
 }

@@ -41,7 +41,7 @@ class TateAndLiza extends trainer_card_1.TrainerCard {
                     }
                 },
                 {
-                    message: game_message_1.GameMessage.SHUFFLE_AND_DRAW_5_CARDS,
+                    message: game_message_1.GameMessage.SHUFFLE_YOUR_HAND,
                     action: () => {
                         if (player.hand.cards.length > 0) {
                             player.hand.moveCardsTo(player.hand.cards.filter(c => c !== this), player.deck);
