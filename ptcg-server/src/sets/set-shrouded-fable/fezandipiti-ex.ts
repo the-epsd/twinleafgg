@@ -48,14 +48,14 @@ export class Fezandipitiex extends PokemonCard {
 
   public fullName: string = 'Fezandipiti ex SFA';
 
-  public readonly TABLE_TURNER_MARKER = 'TABLE_TURNER_MARKER';
+  public readonly OPPONENT_KNOCKOUT_MARKER = 'OPPONENT_KNOCKOUT_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
 
-      if (!player.marker.hasMarker('OPPONENT_KNOCKOUT_MARKER')) {
+      if (!player.marker.hasMarker(this.OPPONENT_KNOCKOUT_MARKER)) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
@@ -79,17 +79,20 @@ export class Fezandipitiex extends PokemonCard {
 
     if (effect instanceof KnockOutEffect) {
       const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
 
-      // Do not activate between turns, or when it's not opponents turn.
-      if (state.phase !== GamePhase.ATTACK || state.players[state.activePlayer] !== opponent) {
+      // Do not activate when it is player's turn
+      if (state.players[state.activePlayer] === player) {
+        return state;
+      }
+      // Do not activate between turns
+      if (state.phase !== GamePhase.PLAYER_TURN && state.phase !== GamePhase.ATTACK) {
         return state;
       }
 
       const cardList = StateUtils.findCardList(state, this);
       const owner = StateUtils.findOwner(state, cardList);
       if (owner === player) {
-        effect.player.marker.addMarkerToState('OPPONENT_KNOCKOUT_MARKER');
+        effect.player.marker.addMarkerToState(this.OPPONENT_KNOCKOUT_MARKER);
       }
       return state;
     }
@@ -100,7 +103,7 @@ export class Fezandipitiex extends PokemonCard {
       const owner = StateUtils.findOwner(state, cardList);
 
       if (owner === player) {
-        effect.player.marker.removeMarker('OPPONENT_KNOCKOUT_MARKER');
+        effect.player.marker.removeMarker(this.OPPONENT_KNOCKOUT_MARKER);
       }
       player.usedTableTurner = false;
     }
