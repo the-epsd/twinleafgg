@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setXY = void 0;
 const braixen_1 = require("./braixen");
+const cassius_1 = require("./cassius");
 const delphox_1 = require("./delphox");
 const double_colorless_energy_1 = require("./double-colorless-energy");
 const evosoda_1 = require("./evosoda");
@@ -20,6 +21,7 @@ const voltorb_1 = require("./voltorb");
 const yveltal_ex_1 = require("./yveltal-ex");
 exports.setXY = [
     new braixen_1.Braixen(),
+    new cassius_1.Cassius(),
     new delphox_1.Delphox(),
     new double_colorless_energy_1.DoubleColorlessEnergy(),
     new evosoda_1.Evosoda(),
