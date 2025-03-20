@@ -5,6 +5,7 @@ const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class Palafinex extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -42,7 +43,9 @@ class Palafinex extends game_1.PokemonCard {
             player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
         }
         if (effect instanceof game_effects_1.EvolveEffect && effect.pokemonCard === this) {
-            throw new game_1.GameError(game_1.GameMessage.CANNOT_EVOLVE);
+            if (!prefabs_1.IS_ABILITY_BLOCKED(store, state, effect.player, this)) {
+                throw new game_1.GameError(game_1.GameMessage.CANNOT_EVOLVE);
+            }
         }
         if (effect instanceof game_effects_1.UseAttackEffect && effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
             throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);

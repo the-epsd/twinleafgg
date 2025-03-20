@@ -56,7 +56,7 @@ export class Wobbuffet extends PokemonCard {
       return state;
     }
 
-    if (effect instanceof PowerEffect && effect.power.powerType === PowerType.ABILITY && effect.power.name !== 'Mischievous Lock') {
+    if (effect instanceof PowerEffect && effect.power.powerType === PowerType.ABILITY) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
