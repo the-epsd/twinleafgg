@@ -44,6 +44,7 @@ export class HolonsCastform extends PokemonCard {
       if (player.energyPlayedTurn === state.turn){
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
+      player.energyPlayedTurn = state.turn;
 
       let isEnergyOnBench = false;
       let isEnergyOnActive = false;

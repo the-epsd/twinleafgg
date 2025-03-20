@@ -1,20 +1,20 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { CardTag, CardType, Stage } from '../../game/store/card/card-types';
+import { CardTag, Stage } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 export declare class LuxrayV extends PokemonCard {
-    cardType: CardType;
+    cardType: import("../../game").CardType.LIGHTNING;
     tags: CardTag[];
     stage: Stage;
     hp: number;
     weakness: {
-        type: CardType;
+        type: import("../../game").CardType.FIGHTING;
     }[];
     resistance: never[];
-    retreat: CardType[];
+    retreat: import("../../game").CardType.COLORLESS[];
     attacks: {
         name: string;
-        cost: CardType[];
+        cost: (import("../../game").CardType.LIGHTNING | import("../../game").CardType.COLORLESS)[];
         damage: number;
         text: string;
     }[];

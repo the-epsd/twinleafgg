@@ -22,6 +22,16 @@ class HisuianHeavyBall extends game_1.TrainerCard {
             const prizes = player.prizes.filter(p => p.isSecret);
             // Keep track of which prizes were originally face down
             const originallyFaceDown = player.prizes.map(p => p.isSecret);
+            // If there is no prizes originally face down, this card can't be played
+            let faceDownCheck = 0;
+            player.prizes.forEach(card => {
+                if (card.isSecret) {
+                    faceDownCheck++;
+                }
+            });
+            if (!faceDownCheck) {
+                throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
+            }
             // Make prizes no longer secret before displaying prompt
             prizes.forEach(p => { p.isSecret = false; });
             // Prevent default effect and move the trainer card to the supporter area
