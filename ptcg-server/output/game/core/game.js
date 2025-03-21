@@ -15,6 +15,7 @@ class Game {
         this.clients = [];
         this.playerStats = [];
         this.arbiter = new arbiter_1.Arbiter();
+        this.lastActivity = Date.now();
         this.format = card_types_1.Format.STANDARD;
         this.id = id;
         this.store = new store_1.Store(this);
@@ -25,7 +26,25 @@ class Game {
     get state() {
         return this.store.state;
     }
+    updateLastActivity() {
+        this.lastActivity = Date.now();
+    }
+    getLastActivity() {
+        return this.lastActivity;
+    }
+    isInactive(timeoutMs = 5 * 60 * 1000) {
+        return Date.now() - this.lastActivity > timeoutMs;
+    }
+    cleanup() {
+        this.stopTimer();
+        if (this.matchRecorder) {
+            this.matchRecorder.cleanup();
+        }
+        this.store.cleanup();
+        this.arbiter.cleanup();
+    }
     onStateChange(state) {
+        this.updateLastActivity();
         if (this.handleArbiterPrompts(state)) {
             return;
         }

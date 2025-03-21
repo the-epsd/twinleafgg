@@ -17,9 +17,14 @@ export declare class Game implements StoreHandler {
     private store;
     private matchRecorder;
     private timeoutRef;
+    private lastActivity;
     format: Format;
     constructor(core: Core, id: number, gameSettings: GameSettings);
     get state(): State;
+    updateLastActivity(): void;
+    getLastActivity(): number;
+    isInactive(timeoutMs?: number): boolean;
+    cleanup(): void;
     onStateChange(state: State): void;
     private handleArbiterPrompts;
     dispatch(client: Client, action: Action): State;

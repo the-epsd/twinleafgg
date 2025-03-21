@@ -13,6 +13,9 @@ const ranking_calculator_1 = require("./ranking-calculator");
 const utils_1 = require("../../utils");
 const config_1 = require("../../config");
 const card_types_1 = require("../store/card/card-types");
+const abort_game_action_1 = require("../store/actions/abort-game-action");
+const abort_game_action_2 = require("../store/actions/abort-game-action");
+const state_1 = require("../store/state/state");
 class Core {
     constructor() {
         this.clients = [];
@@ -21,6 +24,7 @@ class Core {
         const cleanerTask = new cleaner_task_1.CleanerTask(this);
         cleanerTask.startTasks();
         this.startRankingDecrease();
+        this.startInactiveGameCleanup();
     }
     connect(client) {
         client.id = utils_1.generateId(this.clients);
@@ -159,6 +163,31 @@ class Core {
             users = users.filter(u => connectedUserIds.includes(u.id));
             this.emit(c => c.onUsersUpdate(users));
         }, config_1.config.core.rankingDecreaseIntervalCount);
+    }
+    startInactiveGameCleanup() {
+        const scheduler = utils_1.Scheduler.getInstance();
+        // Check for inactive games every 5 minutes
+        scheduler.run(() => {
+            const inactiveTimeout = 5 * 60 * 1000; // 5 minutes
+            this.games.forEach(game => {
+                if (game.isInactive(inactiveTimeout)) {
+                    console.log(`[Game Cleanup] Cleaning up inactive game ${game.id}`);
+                    // Force end the game
+                    const state = game.state;
+                    if (state.phase !== state_1.GamePhase.FINISHED) {
+                        state.players.forEach(player => {
+                            const action = new abort_game_action_1.AbortGameAction(player.id, abort_game_action_2.AbortGameReason.DISCONNECTED);
+                            // Use the first client as the source for the abort action
+                            if (game.clients.length > 0) {
+                                game.dispatch(game.clients[0], action);
+                            }
+                        });
+                    }
+                    game.cleanup();
+                    this.deleteGame(game);
+                }
+            });
+        }, 5 * 60); // Run every 5 minutes
     }
 }
 exports.Core = Core;

@@ -69,7 +69,8 @@ export class DiscardEnergyPrompt extends Prompt<DiscardEnergyTransfer[]> {
       const cardList = StateUtils.getTarget(state, player, t.from);
 
       // Check if we've already processed this card from this source
-      const key = `${t.from}-${t.index}`;
+      // Create a unique key using the card target components and index
+      const key = `${t.from.player}-${t.from.slot}-${t.from.index}-${t.index}`;
       if (processedCards.has(key)) {
         throw new GameError(GameMessage.INVALID_PROMPT_RESULT);
       }

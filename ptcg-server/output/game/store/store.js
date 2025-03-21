@@ -202,6 +202,12 @@ class Store {
     hasPrompts() {
         return this.promptItems.length > 0;
     }
+    cleanup() {
+        this.promptItems = [];
+        this.waitItems = [];
+        this.logId = 0;
+        this.state = new state_1.State();
+    }
     reduce(state, action) {
         const stateBackup = utils_1.deepClone(state, [card_1.Card]);
         this.promptItems.length = 0;

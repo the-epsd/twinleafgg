@@ -16,4 +16,5 @@ export declare class Core {
     leaveGame(client: Client, game: Game): void;
     emit(fn: (client: Client) => void): void;
     private startRankingDecrease;
+    private startInactiveGameCleanup;
 }

@@ -44,7 +44,7 @@ class Eldegoss extends pokemon_card_1.PokemonCard {
         if (prefabs_1.WAS_POWER_USED(effect, 0, this)) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            if (prefabs_1.HAS_MARKER(this.COTTON_LIFT_MARKER, this, this)) {
+            if (prefabs_1.HAS_MARKER(this.COTTON_LIFT_MARKER, effect.player, this)) {
                 throw new game_1.GameError(game_1.GameMessage.POWER_ALREADY_USED);
             }
             if (player.deck.cards.length === 0) {
@@ -57,7 +57,7 @@ class Eldegoss extends pokemon_card_1.PokemonCard {
                 prefabs_1.SHOW_CARDS_TO_PLAYER(store, state, opponent, selections);
                 prefabs_1.MOVE_CARDS(store, state, player.deck, player.hand, { cards: selections });
                 prefabs_1.SHUFFLE_DECK(store, state, player);
-                prefabs_1.ADD_MARKER(this.COTTON_LIFT_MARKER, this, this);
+                prefabs_1.ADD_MARKER(this.COTTON_LIFT_MARKER, effect.player, this);
                 prefabs_1.ABILITY_USED(player, this);
             });
         }
