@@ -24,7 +24,6 @@ export class BlendEnergyWLFM extends EnergyCard {
 
   public text = 'This card provides [C] Energy. When attached to a Pokémon, this card provides [W], [L], [F], or [M] but only 1 Energy at a time.';
 
-  // We won't do the "needed cost logic" here anymore
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
@@ -36,12 +35,12 @@ export class BlendEnergyWLFM extends EnergyCard {
         return state;
       }
 
-      // Instead of guessing whether we provide [W] or [L] or [F] or [M],
-      // just push a placeholder so 'checkEnoughEnergy' can decide the best match.
+      // Explicitly list all the energy types this card can provide
+      // This allows the checkEnoughEnergy function to pick the most appropriate type
+      // based on the attack cost
       effect.energyMap.push({
         card: this,
-        // Put a single "WLFM" token to indicate this card can fulfill one of [W,L,F,M].
-        provides: [CardType.WLFM]
+        provides: [CardType.WATER, CardType.LIGHTNING, CardType.FIGHTING, CardType.METAL]
       });
     }
 

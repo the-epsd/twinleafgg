@@ -17,7 +17,6 @@ class BlendEnergyWLFM extends energy_card_1.EnergyCard {
         this.fullName = 'Blend Energy WLFM DRX';
         this.text = 'This card provides [C] Energy. When attached to a Pokémon, this card provides [W], [L], [F], or [M] but only 1 Energy at a time.';
     }
-    // We won't do the "needed cost logic" here anymore
     reduceEffect(store, state, effect) {
         if (effect instanceof check_effects_1.CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
             try {
@@ -28,12 +27,12 @@ class BlendEnergyWLFM extends energy_card_1.EnergyCard {
             catch (_a) {
                 return state;
             }
-            // Instead of guessing whether we provide [W] or [L] or [F] or [M],
-            // just push a placeholder so 'checkEnoughEnergy' can decide the best match.
+            // Explicitly list all the energy types this card can provide
+            // This allows the checkEnoughEnergy function to pick the most appropriate type
+            // based on the attack cost
             effect.energyMap.push({
                 card: this,
-                // Put a single "WLFM" token to indicate this card can fulfill one of [W,L,F,M].
-                provides: [card_types_1.CardType.WLFM]
+                provides: [card_types_1.CardType.WATER, card_types_1.CardType.LIGHTNING, card_types_1.CardType.FIGHTING, card_types_1.CardType.METAL]
             });
         }
         return state;

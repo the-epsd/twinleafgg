@@ -10,7 +10,7 @@ import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 
 export class HopsDubwool extends PokemonCard {
 
-  public tags = [CardTag.HOPS, CardTag.POKEMON_ex];
+  public tags = [CardTag.HOPS];
 
   public stage: Stage = Stage.STAGE_1;
 

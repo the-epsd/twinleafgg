@@ -19,6 +19,17 @@ const stevens_claydol_1 = require("./stevens-claydol");
 const stevens_metagross_ex_1 = require("./stevens-metagross-ex");
 const stevens_metang_1 = require("./stevens-metang");
 const stevens_skarmory_1 = require("./stevens-skarmory");
+const team_rocket_energy_1 = require("./team-rocket-energy");
+const team_rockets_archer_1 = require("./team-rockets-archer");
+const team_rockets_ariana_1 = require("./team-rockets-ariana");
+const team_rockets_giovanni_1 = require("./team-rockets-giovanni");
+const team_rockets_mewtwo_ex_1 = require("./team-rockets-mewtwo-ex");
+const team_rockets_porygon_1 = require("./team-rockets-porygon");
+const team_rockets_porygon_z_1 = require("./team-rockets-porygon-z");
+const team_rockets_porygon2_1 = require("./team-rockets-porygon2");
+const team_rockets_receiver_1 = require("./team-rockets-receiver");
+const team_rockets_spidops_1 = require("./team-rockets-spidops");
+const team_rockets_tarountula_1 = require("./team-rockets-tarountula");
 exports.setSV10 = [
     new other_prints_1.MarniesMorpekoIR(),
     new marnies_impidimp_1.MarniesImpidimp(),
@@ -39,5 +50,16 @@ exports.setSV10 = [
     new stevens_claydol_1.StevensClaydol(),
     new stevens_skarmory_1.StevensSkarmory(),
     new granite_cave_1.GraniteCave(),
+    new team_rockets_mewtwo_ex_1.TeamRocketsMewtwoex(),
+    new team_rockets_tarountula_1.TeamRocketsTarountula(),
+    new team_rockets_spidops_1.TeamRocketsSpidops(),
+    new team_rockets_porygon_1.TeamRocketsPorygon(),
+    new team_rockets_porygon2_1.TeamRocketsPorygon2(),
+    new team_rockets_porygon_z_1.TeamRocketsPorygonZ(),
+    new team_rockets_receiver_1.TeamRocketsReceiver(),
+    new team_rockets_archer_1.TeamRocketsArcher(),
+    new team_rockets_ariana_1.TeamRocketsAriana(),
+    new team_rocket_energy_1.TeamRocketEnergy(),
+    new team_rockets_giovanni_1.TeamRocketsGiovanni(),
     new other_prints_1.EnergyRecyclerSV10(),
 ];

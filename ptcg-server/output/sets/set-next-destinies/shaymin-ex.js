@@ -29,7 +29,6 @@ class ShayminEX extends game_1.PokemonCard {
             },
         ];
         this.set = 'NXD';
-        this.regulationMark = 'G';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '5';
         this.name = 'Shaymin EX';

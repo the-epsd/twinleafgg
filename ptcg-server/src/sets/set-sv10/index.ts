@@ -17,6 +17,17 @@ import { StevensClaydol } from './stevens-claydol';
 import { StevensMetagrossex } from './stevens-metagross-ex';
 import { StevensMetang } from './stevens-metang';
 import { StevensSkarmory } from './stevens-skarmory';
+import { TeamRocketEnergy } from './team-rocket-energy';
+import { TeamRocketsArcher } from './team-rockets-archer';
+import { TeamRocketsAriana } from './team-rockets-ariana';
+import { TeamRocketsGiovanni } from './team-rockets-giovanni';
+import { TeamRocketsMewtwoex } from './team-rockets-mewtwo-ex';
+import { TeamRocketsPorygon } from './team-rockets-porygon';
+import { TeamRocketsPorygonZ } from './team-rockets-porygon-z';
+import { TeamRocketsPorygon2 } from './team-rockets-porygon2';
+import { TeamRocketsReceiver } from './team-rockets-receiver';
+import { TeamRocketsSpidops } from './team-rockets-spidops';
+import { TeamRocketsTarountula } from './team-rockets-tarountula';
 
 export const setSV10: Card[] = [
   new MarniesMorpekoIR(),
@@ -39,6 +50,18 @@ export const setSV10: Card[] = [
   new StevensClaydol(),
   new StevensSkarmory(),
   new GraniteCave(),
+
+  new TeamRocketsMewtwoex(),
+  new TeamRocketsTarountula(),
+  new TeamRocketsSpidops(),
+  new TeamRocketsPorygon(),
+  new TeamRocketsPorygon2(),
+  new TeamRocketsPorygonZ(),
+  new TeamRocketsReceiver(),
+  new TeamRocketsArcher(),
+  new TeamRocketsAriana(),
+  new TeamRocketEnergy(),
+  new TeamRocketsGiovanni(),
 
   new EnergyRecyclerSV10(),
 ];

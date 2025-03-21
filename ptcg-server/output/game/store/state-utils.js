@@ -13,123 +13,75 @@ class StateUtils {
         if (cost.length === 0) {
             return true;
         }
-        const provides = [];
+        // Group energies by card to handle multi-energy cards correctly
+        const cardEnergies = new Map();
         energy.forEach(e => {
-            e.provides.forEach(cardType => provides.push(cardType));
+            cardEnergies.set(e.card, e.provides);
         });
-        let colorless = 0;
-        let rainbow = 0;
-        const needsProviding = [];
-        // First remove from array cards with specific energy types
-        cost.forEach(costType => {
-            switch (costType) {
-                case card_types_1.CardType.ANY:
-                case card_types_1.CardType.NONE:
+        // Create a working copy of the cost
+        const remainingCost = [...cost];
+        // Count colorless energy required
+        let colorlessCount = 0;
+        for (let i = remainingCost.length - 1; i >= 0; i--) {
+            if (remainingCost[i] === card_types_1.CardType.COLORLESS) {
+                colorlessCount++;
+                remainingCost.splice(i, 1);
+            }
+            else if (remainingCost[i] === card_types_1.CardType.ANY || remainingCost[i] === card_types_1.CardType.NONE) {
+                remainingCost.splice(i, 1);
+            }
+        }
+        // First match specific energy types with cards that provide only that type
+        for (let i = remainingCost.length - 1; i >= 0; i--) {
+            const costType = remainingCost[i];
+            // Look for single-energy cards first
+            let found = false;
+            for (const [card, provides] of cardEnergies.entries()) {
+                if (provides.length === 1 && provides[0] === costType) {
+                    cardEnergies.delete(card);
+                    found = true;
                     break;
-                case card_types_1.CardType.COLORLESS:
-                    colorless += 1;
-                    break;
-                default: {
-                    const index = provides.findIndex(energy => energy === costType);
-                    if (index !== -1) {
-                        provides.splice(index, 1);
-                    }
-                    else {
-                        needsProviding.push(costType);
-                        rainbow += 1;
-                    }
                 }
             }
-        });
-        // BEGIN HANDLING BLEND ENERGIES
-        const blendProvides = [];
-        // Check blend/unit energies
-        provides.forEach((cardType, index) => {
-            switch (cardType) {
-                case card_types_1.CardType.LPM:
-                    blendProvides.push([card_types_1.CardType.LIGHTNING, card_types_1.CardType.PSYCHIC, card_types_1.CardType.METAL]);
-                    break;
-                case card_types_1.CardType.GRW:
-                    blendProvides.push([card_types_1.CardType.GRASS, card_types_1.CardType.FIRE, card_types_1.CardType.WATER]);
-                    break;
-                case card_types_1.CardType.FDY:
-                    blendProvides.push([card_types_1.CardType.FAIRY, card_types_1.CardType.DARK, card_types_1.CardType.FIGHTING]);
-                    break;
-                case card_types_1.CardType.WLFM:
-                    blendProvides.push([card_types_1.CardType.WATER, card_types_1.CardType.LIGHTNING, card_types_1.CardType.FIGHTING, card_types_1.CardType.METAL]);
-                    break;
-                case card_types_1.CardType.GRPD:
-                    blendProvides.push([card_types_1.CardType.GRASS, card_types_1.CardType.FIRE, card_types_1.CardType.PSYCHIC, card_types_1.CardType.DARK]);
-                    break;
-                default:
-                    return;
+            if (found) {
+                remainingCost.splice(i, 1);
             }
-        });
-        const possibleBlendPermutations = this.getCombinations(blendProvides, blendProvides.length);
-        const needsProvidingPermutations = [];
-        if (needsProviding.length === 1) {
-            needsProvidingPermutations.push(needsProviding);
         }
-        else if (needsProviding.length > 1) {
-            permutations(needsProviding, needsProviding.length);
-        }
-        // check needs providing from blendProvides
-        // subtract 1 from rainbow when find is successful
-        let needsProvidingMatchIndex = 0;
-        let maxMatches = 0;
-        possibleBlendPermutations.forEach((energyTypes, index) => {
-            let matches = 0;
-            for (let i = 0; i < needsProvidingPermutations.length; i++) {
-                for (let j = 0; j < needsProvidingPermutations[i].length; j++) {
-                    if (energyTypes[j] === needsProvidingPermutations[i][j]) {
-                        matches++;
+        // Now handle multi-energy cards
+        // Sort the remaining costs by rarity
+        remainingCost.sort();
+        for (let i = 0; i < remainingCost.length; i++) {
+            const costType = remainingCost[i];
+            let satisfied = false;
+            // Look for a multi-energy card that can provide this type
+            for (const [card, provides] of cardEnergies.entries()) {
+                if (provides.includes(costType)) {
+                    cardEnergies.delete(card);
+                    satisfied = true;
+                    break;
+                }
+            }
+            if (!satisfied) {
+                // Check for rainbow energy (ANY)
+                for (const [card, provides] of cardEnergies.entries()) {
+                    if (provides.includes(card_types_1.CardType.ANY)) {
+                        cardEnergies.delete(card);
+                        satisfied = true;
+                        break;
                     }
                 }
-                if (matches > maxMatches) {
-                    maxMatches = matches;
-                    needsProvidingMatchIndex = i;
-                }
-            }
-        });
-        // remove blend matches from rainbow requirement
-        rainbow -= maxMatches;
-        // remove matched energy from provides
-        for (let i = 0; i < maxMatches; i++) {
-            const index = provides.findIndex(energy => energy === needsProvidingPermutations[needsProvidingMatchIndex][i]);
-            provides.splice(index, 1);
-        }
-        // END HANDLING BLEND ENERGIES
-        // Check if we have enough rainbow energies
-        for (let i = 0; i < rainbow; i++) {
-            const index = provides.findIndex(energy => energy === card_types_1.CardType.ANY);
-            if (index !== -1) {
-                provides.splice(index, 1);
-            }
-            else {
-                return false;
-            }
-        }
-        // Rest cards can be used to pay for colorless energies
-        return provides.length >= colorless;
-        // permutations calculation helper function
-        function permutations(array, currentSize) {
-            if (currentSize == 1) { // recursion base-case (end)
-                needsProvidingPermutations.push(array.join('').split('').map(x => parseInt(x)));
-            }
-            for (let i = 0; i < currentSize; i++) {
-                permutations(array, currentSize - 1);
-                if (currentSize % 2 == 1) {
-                    const temp = array[0];
-                    array[0] = array[currentSize - 1];
-                    array[currentSize - 1] = temp;
-                }
-                else {
-                    const temp = array[i];
-                    array[i] = array[currentSize - 1];
-                    array[currentSize - 1] = temp;
+                if (!satisfied) {
+                    return false; // Not enough energy
                 }
             }
         }
+        // Count remaining available energy for colorless
+        let availableForColorless = 0;
+        for (const _ of cardEnergies) {
+            // Each remaining card contributes only 1 energy for colorless
+            availableForColorless++;
+        }
+        return availableForColorless >= colorlessCount;
     }
     static getCombinations(arr, n) {
         let i, j, k, l = arr.length, childperm, ret = [];

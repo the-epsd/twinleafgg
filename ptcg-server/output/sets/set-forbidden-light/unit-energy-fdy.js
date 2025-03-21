@@ -29,10 +29,12 @@ class UnitEnergyFDY extends energy_card_1.EnergyCard {
             catch (_a) {
                 return state;
             }
-            // Just tell the system we can provide F, D, or Y (one at a time).
+            // Explicitly list all the energy types this card can provide
+            // This allows the checkEnoughEnergy function to pick the most appropriate type
+            // based on the attack cost
             effect.energyMap.push({
                 card: this,
-                provides: [card_types_1.CardType.FDY]
+                provides: [card_types_1.CardType.FIGHTING, card_types_1.CardType.DARK, card_types_1.CardType.FAIRY]
             });
         }
         return state;
