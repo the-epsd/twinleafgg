@@ -8,6 +8,7 @@ import { BoardCardComponent } from './board-card/board-card.component';
 import { SharedModule } from '../../shared/shared.module';
 import { CardInfoDialogComponent } from './board-card/board-card.component';
 import { CardsModule } from 'src/app/shared/cards/cards.module';
+import { BoardSelectionOverlayComponent } from './board-selection-overlay/board-selection-overlay.component';
 
 @NgModule({
   imports: [
@@ -21,7 +22,8 @@ import { CardsModule } from 'src/app/shared/cards/cards.module';
     BoardPrizesComponent,
     BoardDeckComponent,
     BoardCardComponent,
-    CardInfoDialogComponent
+    CardInfoDialogComponent,
+    BoardSelectionOverlayComponent
   ],
   exports: [
     BoardComponent,

@@ -1,7 +1,9 @@
 <div class="ptcg-board-card" [ngClass]="{
   empty: isEmpty, 
   'face-down': isFaceDown, 
-  'upside-down': isUpsideDown
+  'upside-down': isUpsideDown,
+  'selectable': isSelectable,
+  'selected': isSelected
   }">
   <div class="ptcg-board-card" [class.asleep-position]="specialConditions.includes(SpecialCondition.ASLEEP)">
     <div class="ptcg-card-container" [class.rotate-180]="specialConditions.includes(SpecialCondition.ASLEEP)">
@@ -85,3 +87,6 @@
           </ptcg-badge>
         </div>
       </div>
+    </div>
+  </div>
+</div>

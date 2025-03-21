@@ -1,5 +1,5 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Player, GamePhase, Card, Format } from 'ptcg-server';
 import { Observable, from, EMPTY } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
@@ -14,6 +14,7 @@ import { LocalGameState } from '../shared/session/session.interface';
 import { SessionService } from '../shared/session/session.service';
 import { CardsBaseService } from '../shared/cards/cards-base.service';
 import { FormatValidator } from '../util/formats-validator';
+import { BoardInteractionService } from '../shared/services/board-interaction.service';
 
 @UntilDestroy()
 @Component({
@@ -21,7 +22,7 @@ import { FormatValidator } from '../util/formats-validator';
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss']
 })
-export class TableComponent implements OnInit {
+export class TableComponent implements OnInit, OnDestroy {
 
   public gameState: LocalGameState;
   public gameStates$: Observable<LocalGameState[]>;
@@ -50,13 +51,17 @@ export class TableComponent implements OnInit {
     private router: Router,
     private sessionService: SessionService,
     private translate: TranslateService,
-    private cardsBaseService: CardsBaseService
+    private cardsBaseService: CardsBaseService,
+    private boardInteractionService: BoardInteractionService
   ) {
     this.gameStates$ = this.sessionService.get(session => session.gameStates);
     this.clientId$ = this.sessionService.get(session => session.clientId);
   }
 
   ngOnInit() {
+    // Ensure any active board selection is cleared when table initializes
+    this.boardInteractionService.endBoardSelection();
+
     this.route.paramMap
       .pipe(
         withLatestFrom(this.gameStates$, this.clientId$),
@@ -77,6 +82,11 @@ export class TableComponent implements OnInit {
         this.gameState = gameStates.find(state => state.localId === this.gameId);
         this.updatePlayers(this.gameState, clientId);
       });
+  }
+
+  ngOnDestroy() {
+    // Make sure selection state is cleared when leaving the table view
+    this.boardInteractionService.endBoardSelection();
   }
 
   public play() {
