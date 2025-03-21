@@ -21,7 +21,9 @@ import { TeamRocketEnergy } from './team-rocket-energy';
 import { TeamRocketsArcher } from './team-rockets-archer';
 import { TeamRocketsAriana } from './team-rockets-ariana';
 import { TeamRocketsGiovanni } from './team-rockets-giovanni';
+import {TeamRocketsMeowth} from './team-rockets-meowth';
 import { TeamRocketsMewtwoex } from './team-rockets-mewtwo-ex';
+import {TeamRocketsPersianex} from './team-rockets-persian-ex';
 import { TeamRocketsPorygon } from './team-rockets-porygon';
 import { TeamRocketsPorygonZ } from './team-rockets-porygon-z';
 import { TeamRocketsPorygon2 } from './team-rockets-porygon2';
@@ -62,6 +64,8 @@ export const setSV10: Card[] = [
   new TeamRocketsAriana(),
   new TeamRocketEnergy(),
   new TeamRocketsGiovanni(),
+  new TeamRocketsMeowth(),
+  new TeamRocketsPersianex(),
 
   new EnergyRecyclerSV10(),
 ];

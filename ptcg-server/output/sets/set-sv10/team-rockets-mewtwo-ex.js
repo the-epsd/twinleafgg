@@ -8,7 +8,7 @@ class TeamRocketsMewtwoex extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = game_1.Stage.BASIC;
-        this.tags = [game_1.CardTag.TEAM_ROCKET];
+        this.tags = [game_1.CardTag.TEAM_ROCKET, game_1.CardTag.POKEMON_ex];
         this.cardType = P;
         this.hp = 280;
         this.weakness = [{ type: D }];

@@ -23,7 +23,9 @@ const team_rocket_energy_1 = require("./team-rocket-energy");
 const team_rockets_archer_1 = require("./team-rockets-archer");
 const team_rockets_ariana_1 = require("./team-rockets-ariana");
 const team_rockets_giovanni_1 = require("./team-rockets-giovanni");
+const team_rockets_meowth_1 = require("./team-rockets-meowth");
 const team_rockets_mewtwo_ex_1 = require("./team-rockets-mewtwo-ex");
+const team_rockets_persian_ex_1 = require("./team-rockets-persian-ex");
 const team_rockets_porygon_1 = require("./team-rockets-porygon");
 const team_rockets_porygon_z_1 = require("./team-rockets-porygon-z");
 const team_rockets_porygon2_1 = require("./team-rockets-porygon2");
@@ -61,5 +63,7 @@ exports.setSV10 = [
     new team_rockets_ariana_1.TeamRocketsAriana(),
     new team_rocket_energy_1.TeamRocketEnergy(),
     new team_rockets_giovanni_1.TeamRocketsGiovanni(),
+    new team_rockets_meowth_1.TeamRocketsMeowth(),
+    new team_rockets_persian_ex_1.TeamRocketsPersianex(),
     new other_prints_1.EnergyRecyclerSV10(),
 ];

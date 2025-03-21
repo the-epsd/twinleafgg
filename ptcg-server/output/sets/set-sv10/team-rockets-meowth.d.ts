@@ -1,34 +1,32 @@
-import { PokemonCard, Stage, CardType, CardTag, StoreLike, State, PowerType } from '../../game';
+import { PokemonCard, Stage, CardType, CardTag, StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-export declare class TeamRocketsSpidops extends PokemonCard {
+export declare class TeamRocketsMeowth extends PokemonCard {
     stage: Stage;
-    evolvesFrom: string;
+    tags: CardTag[];
     cardType: CardType;
     hp: number;
     weakness: {
-        type: CardType;
+        type: CardType.FIGHTING;
     }[];
-    retreat: CardType[];
-    powers: {
+    retreat: CardType.COLORLESS[];
+    attacks: ({
         name: string;
-        powerType: PowerType;
-        useWhenInPlay: boolean;
+        cost: CardType.COLORLESS[];
+        damage: number;
         text: string;
-    }[];
-    attacks: {
+        damageCalculation?: undefined;
+    } | {
         name: string;
-        cost: CardType[];
+        cost: CardType.COLORLESS[];
         damage: number;
         damageCalculation: string;
         text: string;
-    }[];
-    tags: CardTag[];
+    })[];
     set: string;
     regulationMark: string;
     cardImage: string;
     setNumber: string;
     name: string;
     fullName: string;
-    readonly CHARGE_UP_MARKER = "CHARGE_UP_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }
