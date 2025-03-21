@@ -61,7 +61,7 @@ export class TateAndLiza extends TrainerCard {
           }
         },
         {
-          message: GameMessage.SHUFFLE_AND_DRAW_5_CARDS,
+          message: GameMessage.SHUFFLE_YOUR_HAND,
           action: () => {
 
             if (player.hand.cards.length > 0) {

@@ -11,6 +11,9 @@ import { RankingCalculator } from './ranking-calculator';
 import { Scheduler, generateId } from '../../utils';
 import { config } from '../../config';
 import { Format } from '../store/card/card-types';
+import { AbortGameAction } from '../store/actions/abort-game-action';
+import { AbortGameReason } from '../store/actions/abort-game-action';
+import { GamePhase } from '../store/state/state';
 
 export class Core {
   public clients: Client[] = [];
@@ -22,6 +25,7 @@ export class Core {
     const cleanerTask = new CleanerTask(this);
     cleanerTask.startTasks();
     this.startRankingDecrease();
+    this.startInactiveGameCleanup();
   }
 
   public connect(client: Client): Client {
@@ -185,6 +189,33 @@ export class Core {
 
       this.emit(c => c.onUsersUpdate(users));
     }, config.core.rankingDecreaseIntervalCount);
+  }
+
+  private startInactiveGameCleanup(): void {
+    const scheduler = Scheduler.getInstance();
+    // Check for inactive games every 5 minutes
+    scheduler.run(() => {
+      const inactiveTimeout = 5 * 60 * 1000; // 5 minutes
+
+      this.games.forEach(game => {
+        if (game.isInactive(inactiveTimeout)) {
+          console.log(`[Game Cleanup] Cleaning up inactive game ${game.id}`);
+          // Force end the game
+          const state = game.state;
+          if (state.phase !== GamePhase.FINISHED) {
+            state.players.forEach(player => {
+              const action = new AbortGameAction(player.id, AbortGameReason.DISCONNECTED);
+              // Use the first client as the source for the abort action
+              if (game.clients.length > 0) {
+                game.dispatch(game.clients[0], action);
+              }
+            });
+          }
+          game.cleanup();
+          this.deleteGame(game);
+        }
+      });
+    }, 5 * 60); // Run every 5 minutes
   }
 
 }

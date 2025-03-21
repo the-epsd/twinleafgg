@@ -23,6 +23,7 @@ export class Game implements StoreHandler {
   private store: Store;
   private matchRecorder: MatchRecorder;
   private timeoutRef: NodeJS.Timeout | undefined;
+  private lastActivity: number = Date.now();
   public format: Format = Format.STANDARD;
 
   constructor(private core: Core, id: number, public gameSettings: GameSettings) {
@@ -37,7 +38,29 @@ export class Game implements StoreHandler {
     return this.store.state;
   }
 
+  public updateLastActivity(): void {
+    this.lastActivity = Date.now();
+  }
+
+  public getLastActivity(): number {
+    return this.lastActivity;
+  }
+
+  public isInactive(timeoutMs: number = 5 * 60 * 1000): boolean {
+    return Date.now() - this.lastActivity > timeoutMs;
+  }
+
+  public cleanup(): void {
+    this.stopTimer();
+    if (this.matchRecorder) {
+      this.matchRecorder.cleanup();
+    }
+    this.store.cleanup();
+    this.arbiter.cleanup();
+  }
+
   public onStateChange(state: State): void {
+    this.updateLastActivity();
     if (this.handleArbiterPrompts(state)) {
       return;
     }
@@ -61,7 +84,7 @@ export class Game implements StoreHandler {
   }
 
   private handleArbiterPrompts(state: State): boolean {
-    let resolved: {id: number, action: ResolvePromptAction} | undefined;
+    let resolved: { id: number, action: ResolvePromptAction } | undefined;
     const unresolved = state.prompts.filter(item => item.result === undefined);
 
     for (let i = 0; i < unresolved.length; i++) {

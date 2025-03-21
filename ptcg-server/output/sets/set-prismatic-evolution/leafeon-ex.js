@@ -17,7 +17,7 @@ class Leafeonex extends pokemon_card_1.PokemonCard {
         this.cardType = G;
         this.hp = 270;
         this.weakness = [{ type: R }];
-        this.retreat = [C];
+        this.retreat = [C, C];
         this.attacks = [
             {
                 name: 'Leaf Typhoon',

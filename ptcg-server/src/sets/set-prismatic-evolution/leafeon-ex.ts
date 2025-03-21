@@ -22,7 +22,7 @@ export class Leafeonex extends PokemonCard {
 
   public weakness = [{ type: R }];
 
-  public retreat = [C];
+  public retreat = [C, C];
 
   public attacks = [
     {

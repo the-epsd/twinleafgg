@@ -29,3 +29,21 @@ ptcg-board-card {
     transform: rotate(180deg);
   }
 }
+
+.ptcg-interactive-selection-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0.5rem;
+  height: 2rem;
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+
+  .minimize-button {
+    min-width: unset;
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    line-height: 32px;
+  }
+}

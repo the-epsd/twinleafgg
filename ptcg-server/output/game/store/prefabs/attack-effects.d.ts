@@ -1,7 +1,6 @@
+import { Card, State, StoreLike } from '../..';
 import { PokemonCard } from '../card/pokemon-card';
-import { State } from '../..';
 import { AttackEffect } from '../effects/game-effects';
-import { StoreLike, Card } from '../..';
 /**
  * These prefabs are for general attack effects.
  */
@@ -9,6 +8,7 @@ export declare function DISCARD_A_STADIUM_CARD_IN_PLAY(state: State): void;
 export declare function DRAW_CARDS_UNTIL_YOU_HAVE_X_CARDS_IN_HAND(x: number, effect: AttackEffect, state: State): State | undefined;
 export declare function HEAL_X_DAMAGE_FROM_THIS_POKEMON(damage: number, effect: AttackEffect, store: StoreLike, state: State): void;
 export declare function PUT_X_CARDS_FROM_YOUR_DISCARD_PILE_INTO_YOUR_HAND(x: number, filterFn: ((card: Card) => boolean) | undefined, store: StoreLike, state: State, effect: AttackEffect): State;
+export declare function PUT_X_DAMAGE_COUNTERS_ON_ALL_YOUR_OPPONENTS_POKEMON(x: number, store: StoreLike, state: State, effect: AttackEffect): void;
 export declare function PUT_X_DAMAGE_COUNTERS_ON_YOUR_OPPONENTS_ACTIVE_POKEMON(x: number, store: StoreLike, state: State, effect: AttackEffect): State;
 export declare function SHUFFLE_THIS_POKEMON_AND_ALL_ATTACHED_CARDS_INTO_YOUR_DECK(store: StoreLike, state: State, effect: AttackEffect): State;
 export declare function FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE(store: StoreLike, state: State, effect: AttackEffect, amount: number): void;

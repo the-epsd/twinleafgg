@@ -17,7 +17,6 @@ class BlendEnergyGRPD extends energy_card_1.EnergyCard {
         this.fullName = 'Blend Energy GRPD DRX';
         this.text = 'This card provides [C] Energy. When this card is attached to a Pokémon, this card provides [G], [R], [P], or [D] Energy but provides only 1 Energy at a time.';
     }
-    // We won't do the "needed cost logic" here anymore
     reduceEffect(store, state, effect) {
         if (effect instanceof check_effects_1.CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
             try {
@@ -28,12 +27,12 @@ class BlendEnergyGRPD extends energy_card_1.EnergyCard {
             catch (_a) {
                 return state;
             }
-            // Instead of guessing whether we provide [G] or [R] or [P] or [D],
-            // just push a placeholder so 'checkEnoughEnergy' can decide the best match.
+            // Explicitly list all the energy types this card can provide
+            // This allows the checkEnoughEnergy function to pick the most appropriate type
+            // based on the attack cost
             effect.energyMap.push({
                 card: this,
-                // Put a single "GRPD" token to indicate this card can fulfill one of [G,R,P,D].
-                provides: [card_types_1.CardType.GRPD]
+                provides: [card_types_1.CardType.GRASS, card_types_1.CardType.FIRE, card_types_1.CardType.PSYCHIC, card_types_1.CardType.DARK]
             });
         }
         return state;

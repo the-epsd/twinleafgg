@@ -256,6 +256,13 @@ export class Store implements StoreLike {
     return this.promptItems.length > 0;
   }
 
+  public cleanup(): void {
+    this.promptItems = [];
+    this.waitItems = [];
+    this.logId = 0;
+    this.state = new State();
+  }
+
   private reduce(state: State, action: Action): State {
     const stateBackup = deepClone(state, [Card]);
     this.promptItems.length = 0;

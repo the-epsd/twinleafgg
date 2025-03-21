@@ -19,136 +19,86 @@ export class StateUtils {
       return true;
     }
 
-    const provides: CardType[] = [];
+    // Group energies by card to handle multi-energy cards correctly
+    const cardEnergies: Map<Card, CardType[]> = new Map();
     energy.forEach(e => {
-      e.provides.forEach(cardType => provides.push(cardType));
+      cardEnergies.set(e.card, e.provides);
     });
 
-    let colorless = 0;
-    let rainbow = 0;
+    // Create a working copy of the cost
+    const remainingCost = [...cost];
 
-    const needsProviding: CardType[] = [];
-
-    // First remove from array cards with specific energy types
-    cost.forEach(costType => {
-      switch (costType) {
-        case CardType.ANY:
-        case CardType.NONE:
-          break;
-        case CardType.COLORLESS:
-          colorless += 1;
-          break;
-        default: {
-          const index = provides.findIndex(energy => energy === costType);
-          if (index !== -1) {
-            provides.splice(index, 1);
-          } else {
-            needsProviding.push(costType);
-            rainbow += 1;
-          }
-        }
+    // Count colorless energy required
+    let colorlessCount = 0;
+    for (let i = remainingCost.length - 1; i >= 0; i--) {
+      if (remainingCost[i] === CardType.COLORLESS) {
+        colorlessCount++;
+        remainingCost.splice(i, 1);
+      } else if (remainingCost[i] === CardType.ANY || remainingCost[i] === CardType.NONE) {
+        remainingCost.splice(i, 1);
       }
-    });
-
-    // BEGIN HANDLING BLEND ENERGIES
-    const blendProvides: CardType[][] = [];
-
-    // Check blend/unit energies
-    provides.forEach((cardType, index) => {
-      switch (cardType) {
-        case CardType.LPM:
-          blendProvides.push([CardType.LIGHTNING, CardType.PSYCHIC, CardType.METAL]);
-          break;
-        case CardType.GRW:
-          blendProvides.push([CardType.GRASS, CardType.FIRE, CardType.WATER]);
-          break;
-        case CardType.FDY:
-          blendProvides.push([CardType.FAIRY, CardType.DARK, CardType.FIGHTING]);
-          break;
-        case CardType.WLFM:
-          blendProvides.push([CardType.WATER, CardType.LIGHTNING, CardType.FIGHTING, CardType.METAL]);
-          break;
-        case CardType.GRPD:
-          blendProvides.push([CardType.GRASS, CardType.FIRE, CardType.PSYCHIC, CardType.DARK]);
-          break;
-        default:
-          return;
-      }
-    });
-
-    const possibleBlendPermutations = this.getCombinations(blendProvides, blendProvides.length);
-    const needsProvidingPermutations: CardType[][] = [];
-
-    if (needsProviding.length === 1) {
-      needsProvidingPermutations.push(needsProviding);
-    } else if (needsProviding.length > 1) {
-      permutations(needsProviding, needsProviding.length);
     }
 
-    // check needs providing from blendProvides
-    // subtract 1 from rainbow when find is successful
-    let needsProvidingMatchIndex = 0;
-    let maxMatches = 0;
+    // First match specific energy types with cards that provide only that type
+    for (let i = remainingCost.length - 1; i >= 0; i--) {
+      const costType = remainingCost[i];
 
-    possibleBlendPermutations.forEach((energyTypes, index) => {
-      let matches = 0;
-      for (let i = 0; i < needsProvidingPermutations.length; i++) {
-        for (let j = 0; j < needsProvidingPermutations[i].length; j++) {
-          if (energyTypes[j] === needsProvidingPermutations[i][j]) {
-            matches++;
+      // Look for single-energy cards first
+      let found = false;
+      for (const [card, provides] of cardEnergies.entries()) {
+        if (provides.length === 1 && provides[0] === costType) {
+          cardEnergies.delete(card);
+          found = true;
+          break;
+        }
+      }
+
+      if (found) {
+        remainingCost.splice(i, 1);
+      }
+    }
+
+    // Now handle multi-energy cards
+    // Sort the remaining costs by rarity
+    remainingCost.sort();
+
+    for (let i = 0; i < remainingCost.length; i++) {
+      const costType = remainingCost[i];
+      let satisfied = false;
+
+      // Look for a multi-energy card that can provide this type
+      for (const [card, provides] of cardEnergies.entries()) {
+        if (provides.includes(costType)) {
+          cardEnergies.delete(card);
+          satisfied = true;
+          break;
+        }
+      }
+
+      if (!satisfied) {
+        // Check for rainbow energy (ANY)
+        for (const [card, provides] of cardEnergies.entries()) {
+          if (provides.includes(CardType.ANY)) {
+            cardEnergies.delete(card);
+            satisfied = true;
+            break;
           }
         }
 
-        if (matches > maxMatches) {
-          maxMatches = matches;
-          needsProvidingMatchIndex = i;
-        }
-      }
-    });
-
-    // remove blend matches from rainbow requirement
-    rainbow -= maxMatches;
-
-    // remove matched energy from provides
-    for (let i = 0; i < maxMatches; i++) {
-      const index = provides.findIndex(energy => energy === needsProvidingPermutations[needsProvidingMatchIndex][i]);
-      provides.splice(index, 1);
-    }
-    // END HANDLING BLEND ENERGIES
-
-    // Check if we have enough rainbow energies
-    for (let i = 0; i < rainbow; i++) {
-      const index = provides.findIndex(energy => energy === CardType.ANY);
-      if (index !== -1) {
-        provides.splice(index, 1);
-      } else {
-        return false;
-      }
-    }
-
-    // Rest cards can be used to pay for colorless energies
-    return provides.length >= colorless;
-
-
-    // permutations calculation helper function
-    function permutations(array: CardType[], currentSize: number) {
-      if (currentSize == 1) { // recursion base-case (end)
-        needsProvidingPermutations.push(array.join('').split('').map(x => parseInt(x)));
-      }
-
-      for (let i = 0; i < currentSize; i++) {
-        permutations(array, currentSize - 1);
-        if (currentSize % 2 == 1) {
-          const temp = array[0];
-          array[0] = array[currentSize - 1];
-          array[currentSize - 1] = temp;
-        } else {
-          const temp = array[i];
-          array[i] = array[currentSize - 1];
-          array[currentSize - 1] = temp;
+        if (!satisfied) {
+          return false; // Not enough energy
         }
       }
     }
+
+    // Count remaining available energy for colorless
+    let availableForColorless = 0;
+    for (const _ of cardEnergies) {
+      // Each remaining card contributes only 1 energy for colorless
+      availableForColorless++;
+    }
+
+    return availableForColorless >= colorlessCount;
   }
 
   static getCombinations(arr: CardType[][], n: number): CardType[][] {

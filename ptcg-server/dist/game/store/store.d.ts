@@ -22,6 +22,7 @@ export declare class Store implements StoreLike {
     private reducePrompt;
     private resolveWaitItems;
     hasPrompts(): boolean;
+    cleanup(): void;
     private reduce;
     private propagateEffect;
 }

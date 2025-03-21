@@ -12,6 +12,7 @@ const eviolite_1 = require("./eviolite");
 const kyurem_1 = require("./kyurem");
 const lampent_1 = require("./lampent");
 const palpitoad_1 = require("./palpitoad");
+const petilil_1 = require("./petilil");
 const plume_fossil_1 = require("./plume-fossil");
 const seismitoad_1 = require("./seismitoad");
 const terrakion_1 = require("./terrakion");
@@ -35,6 +36,7 @@ exports.setNobleVictories = [
     new kyurem_1.Kyurem(),
     new lampent_1.Lampent(),
     new palpitoad_1.Palpitoad(),
+    new petilil_1.Petilil(),
     new plume_fossil_1.PlumeFossil(),
     new seismitoad_1.Seismitoad(),
     new card_images_1.SuperRodNVI(),

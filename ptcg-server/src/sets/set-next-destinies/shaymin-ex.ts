@@ -29,7 +29,6 @@ export class ShayminEX extends PokemonCard {
   ];
 
   public set: string = 'NXD';
-  public regulationMark: string = 'G';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '5';
   public name: string = 'Shaymin EX';

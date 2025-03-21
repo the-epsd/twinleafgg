@@ -28,10 +28,12 @@ class UnitEnergyLPM extends energy_card_1.EnergyCard {
             catch (_a) {
                 return state;
             }
-            // Just tell the system we can provide L, P, or M (one at a time).
+            // Explicitly list all the energy types this card can provide
+            // This allows the checkEnoughEnergy function to pick the most appropriate type
+            // based on the attack cost
             effect.energyMap.push({
                 card: this,
-                provides: [card_types_1.CardType.LPM]
+                provides: [card_types_1.CardType.LIGHTNING, card_types_1.CardType.PSYCHIC, card_types_1.CardType.METAL]
             });
         }
         return state;

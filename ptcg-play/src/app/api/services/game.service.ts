@@ -14,6 +14,7 @@ import { LocalGameState } from '../../shared/session/session.interface';
 import { PlayerStatsResponse } from '../interfaces/game.interface';
 import { SocketService } from '../socket.service';
 import { SessionService } from '../../shared/session/session.service';
+import { BoardInteractionService } from '../../shared/services/board-interaction.service';
 
 export interface GameUserInfo {
   gameId: number;
@@ -28,7 +29,8 @@ export class GameService {
     private alertService: AlertService,
     private sessionService: SessionService,
     private socketService: SocketService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private boardInteractionService: BoardInteractionService
   ) { }
 
   public getPlayerStats(gameId: number) {
@@ -36,6 +38,8 @@ export class GameService {
   }
 
   public join(gameId: number): Observable<GameState> {
+    this.boardInteractionService.endBoardSelection();
+
     return new Observable<GameState>(observer => {
       this.socketService.emit('game:join', gameId)
         .pipe(finalize(() => observer.complete()))

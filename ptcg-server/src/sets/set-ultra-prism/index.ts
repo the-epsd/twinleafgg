@@ -28,6 +28,7 @@ import { Shiinotic } from './shiinotic';
 import { Sneasel } from './sneasel';
 import { SolgaleoPrismStar } from './solgaleo-prism-star';
 import { Spiritomb } from './spiritomb';
+import { SuperBoostEnergy } from './super-boost-energy-prism-star';
 import { TapuLele } from './tapu-lele';
 import { Turtwig } from './turtwig';
 import { UnitEnergyGRW } from './unit-energy-grw';
@@ -71,4 +72,5 @@ export const setUltraPrism: Card[] = [
   new Weavile(),
   new Spiritomb(),
   new SolgaleoPrismStar(),
+  new SuperBoostEnergy()
 ];

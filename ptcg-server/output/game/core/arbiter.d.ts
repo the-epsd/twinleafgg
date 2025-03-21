@@ -5,4 +5,5 @@ export declare class Arbiter {
     constructor();
     resolvePrompt(state: State, prompt: Prompt<any>): ResolvePromptAction | undefined;
     private shuffle;
+    cleanup(): void;
 }

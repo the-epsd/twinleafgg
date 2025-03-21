@@ -4,6 +4,7 @@ import { ChoosePokemonPrompt, CardTarget } from 'ptcg-server';
 import { GameService } from '../../../api/services/game.service';
 import { LocalGameState } from '../../../shared/session/session.interface';
 import { PokemonData, PokemonItem } from '../choose-pokemons-pane/pokemon-data';
+import { BoardInteractionService } from '../../../shared/services/board-interaction.service';
 
 @Component({
   selector: 'ptcg-prompt-choose-pokemon',
@@ -21,12 +22,14 @@ export class PromptChoosePokemonComponent implements OnChanges {
   public message: string;
   public blocked: CardTarget[];
   public isInvalid = false;
+  public useInteractiveBoard = true;
 
   private min = 1;
   private max = 1;
 
   constructor(
-    private gameService: GameService
+    private gameService: GameService,
+    private boardInteractionService: BoardInteractionService
   ) { }
 
   public minimize() {
@@ -81,7 +84,27 @@ export class PromptChoosePokemonComponent implements OnChanges {
       this.message = prompt.message;
       this.promptId = prompt.id;
       this.updateIsInvalid();
+
+      if (this.useInteractiveBoard) {
+        // Automatically minimize the prompt before starting board selection
+        this.minimize();
+        // Start the interactive board selection
+        this.startInteractiveBoardSelection();
+      }
     }
   }
 
+  private startInteractiveBoardSelection() {
+    this.boardInteractionService.startBoardSelection(
+      this.prompt,
+      (targets: CardTarget[]) => {
+        if (targets === null) {
+          this.cancel();
+        } else {
+          const gameId = this.gameState.gameId;
+          this.gameService.resolvePrompt(gameId, this.promptId, targets);
+        }
+      }
+    );
+  }
 }

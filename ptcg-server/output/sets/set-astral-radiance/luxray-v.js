@@ -6,27 +6,27 @@ const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const check_effects_1 = require("../../game/store/effects/check-effects");
-const game_effects_1 = require("../../game/store/effects/game-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class LuxrayV extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.cardType = card_types_1.CardType.LIGHTNING;
+        this.cardType = L;
         this.tags = [card_types_1.CardTag.POKEMON_V];
         this.stage = card_types_1.Stage.BASIC;
         this.hp = 210;
-        this.weakness = [{ type: card_types_1.CardType.FIGHTING }];
+        this.weakness = [{ type: F }];
         this.resistance = [];
-        this.retreat = [card_types_1.CardType.COLORLESS];
+        this.retreat = [C];
         this.attacks = [
             {
                 name: 'Fang Snipe',
-                cost: [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
+                cost: [C, C],
                 damage: 30,
                 text: 'Your opponent reveals their hand. Discard a Trainer card you find there.'
             },
             {
                 name: 'Radiating Pulse',
-                cost: [card_types_1.CardType.LIGHTNING, card_types_1.CardType.LIGHTNING, card_types_1.CardType.COLORLESS],
+                cost: [L, L, C],
                 damage: 120,
                 text: 'Discard 2 Energy from this Pokémon. Your opponent\'s Active Pokémon is now Paralyzed.'
             }
@@ -39,16 +39,16 @@ class LuxrayV extends pokemon_card_1.PokemonCard {
         this.fullName = 'Luxray V ASR';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+        if (prefabs_1.WAS_ATTACK_USED(effect, 0, this)) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            const cards = opponent.hand.cards.filter(c => c instanceof game_1.TrainerCard);
+            //const cards = opponent.hand.cards.filter(c => c instanceof TrainerCard);
             store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, opponent.hand, { superType: card_types_1.SuperType.TRAINER }, { min: 0, max: 1, allowCancel: false }), selected => {
-                selected = cards || [];
-                opponent.hand.moveCardsTo(cards, opponent.discard);
+                //selected = cards || [];
+                opponent.hand.moveCardsTo(selected, opponent.discard);
             });
         }
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
+        if (prefabs_1.WAS_ATTACK_USED(effect, 1, this)) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             const checkProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(opponent);

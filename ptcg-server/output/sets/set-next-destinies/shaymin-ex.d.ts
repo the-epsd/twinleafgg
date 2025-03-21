@@ -10,7 +10,6 @@ export declare class ShayminEX extends PokemonCard {
     retreat: CardType[];
     attacks: Attack[];
     set: string;
-    regulationMark: string;
     cardImage: string;
     setNumber: string;
     name: string;

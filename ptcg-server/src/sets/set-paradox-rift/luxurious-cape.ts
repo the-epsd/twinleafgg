@@ -1,10 +1,10 @@
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
+import { StoreLike, State, GamePhase } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckHpEffect } from '../../game/store/effects/check-effects';
 import { KnockOutEffect } from '../../game/store/effects/game-effects';
-import {ToolEffect} from '../../game/store/effects/play-card-effects';
+import {IS_TOOL_BLOCKED} from '../../game/store/prefabs/prefabs';
 
 
 export class LuxuriousCape extends TrainerCard {
@@ -32,13 +32,7 @@ export class LuxuriousCape extends TrainerCard {
 
     if (effect instanceof CheckHpEffect && effect.target.cards.includes(this)) {
 
-      // Try to reduce ToolEffect, to check if something is blocking the tool from working
-      try {
-        const stub = new ToolEffect(effect.player, this);
-        store.reduceEffect(state, stub);
-      } catch {
-        return state;
-      }
+      if (IS_TOOL_BLOCKED(store, state, effect.player, this)){ return state; }
 
       if (!effect.target.hasRuleBox()) {
 
@@ -48,11 +42,9 @@ export class LuxuriousCape extends TrainerCard {
 
     if (effect instanceof KnockOutEffect && effect.target.cards.includes(this) && effect.player.marker.hasMarker(effect.player.DAMAGE_DEALT_MARKER)) {
 
-      // Try to reduce ToolEffect, to check if something is blocking the tool from working
-      try {
-        const stub = new ToolEffect(effect.player, this);
-        store.reduceEffect(state, stub);
-      } catch {
+      if (IS_TOOL_BLOCKED(store, state, effect.player, this)){ return state; }
+
+      if (state.phase !== GamePhase.ATTACK) {
         return state;
       }
 

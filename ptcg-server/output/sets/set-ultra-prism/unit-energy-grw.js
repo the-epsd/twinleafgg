@@ -29,10 +29,12 @@ class UnitEnergyGRW extends energy_card_1.EnergyCard {
             catch (_a) {
                 return state;
             }
-            // Just tell the system we can provide G, R, or W (one at a time).
+            // Explicitly list all the energy types this card can provide
+            // This allows the checkEnoughEnergy function to pick the most appropriate type
+            // based on the attack cost
             effect.energyMap.push({
                 card: this,
-                provides: [card_types_1.CardType.GRW]
+                provides: [card_types_1.CardType.GRASS, card_types_1.CardType.FIRE, card_types_1.CardType.WATER]
             });
         }
         return state;

@@ -7,8 +7,10 @@ const play_card_effects_1 = require("../../game/store/effects/play-card-effects"
 const trainer_card_1 = require("../../game/store/card/trainer-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 function* playCard(next, store, state, self, effect) {
     const player = effect.player;
+    const opponent = game_1.StateUtils.getOpponent(state, player);
     const supporterTurn = player.supporterTurn;
     if (supporterTurn > 0) {
         throw new game_error_1.GameError(game_message_1.GameMessage.SUPPORTER_ALREADY_PLAYED);
@@ -33,10 +35,11 @@ function* playCard(next, store, state, self, effect) {
         throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_PLAY_THIS_CARD);
     }
     let cards = [];
-    yield store.prompt(state, new game_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_DECK, player.discard, {}, { min: 1, max: 3, allowCancel: false, blocked }), selected => {
+    yield store.prompt(state, new game_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, player.discard, {}, { min: 1, max: 3, allowCancel: false, blocked }), selected => {
         cards = selected || [];
         next();
     });
+    prefabs_1.SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
     player.discard.moveCardsTo(cards, player.hand);
     player.supporter.moveCardTo(effect.trainerCard, player.discard);
 }

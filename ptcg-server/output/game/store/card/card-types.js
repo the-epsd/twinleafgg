@@ -46,6 +46,7 @@ var CardTag;
     CardTag["ARVENS"] = "ARVENS";
     CardTag["POKEMON_SV_MEGA"] = "POKEMON_SV_MEGA";
     CardTag["HOLONS"] = "HOLONS";
+    CardTag["TEAM_ROCKET"] = "TEAM_ROCKET";
 })(CardTag = exports.CardTag || (exports.CardTag = {}));
 var SuperType;
 (function (SuperType) {

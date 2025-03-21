@@ -37,6 +37,7 @@ import { LilliesComfey } from './lillies-comfey';
 import { LilliesCutiefly } from './lillies-cutiefly';
 import { LilliesPearl } from './lillies-pearl';
 import { LilliesRibombee } from './lillies-ribombee';
+import { Lilligant } from './lilligant';
 import { Lombre } from './lombre';
 import { Lotad } from './lotad';
 import { Ludicolo } from './ludicolo';
@@ -122,6 +123,7 @@ export const setSV9: Card[] = [
   new Beldum(),
   new Metang(),
   new Metagross(),
+  new Lilligant(),
   new Lotad(),
   new Lombre(),
   new Ludicolo(),

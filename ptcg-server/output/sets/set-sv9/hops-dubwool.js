@@ -9,7 +9,7 @@ const play_card_effects_1 = require("../../game/store/effects/play-card-effects"
 class HopsDubwool extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
-        this.tags = [card_types_1.CardTag.HOPS, card_types_1.CardTag.POKEMON_ex];
+        this.tags = [card_types_1.CardTag.HOPS];
         this.stage = card_types_1.Stage.STAGE_1;
         this.evolvesFrom = 'Hop\'s Wooloo';
         this.cardType = C;

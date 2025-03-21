@@ -1,6 +1,8 @@
-import { Component, EventEmitter, Input, Output, Inject } from '@angular/core';
-import { Card, CardList, PokemonCardList, Power, BoardEffect, SpecialCondition, StadiumDirection, SuperType, EnergyCard, CardType } from 'ptcg-server';
+import { Component, EventEmitter, Input, Output, Inject, OnInit, OnDestroy } from '@angular/core';
+import { Card, CardList, PokemonCardList, Power, BoardEffect, SpecialCondition, StadiumDirection, SuperType, EnergyCard, CardType, PlayerType, SlotType } from 'ptcg-server';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { BoardInteractionService } from '../../../shared/services/board-interaction.service';
+import { Subscription } from 'rxjs';
 
 const MAX_ENERGY_CARDS = 8;
 
@@ -58,7 +60,7 @@ export class CardInfoDialogComponent {
   templateUrl: './board-card.component.html',
   styleUrls: ['./board-card.component.scss']
 })
-export class BoardCardComponent {
+export class BoardCardComponent implements OnInit, OnDestroy {
   private _cardList: CardList | PokemonCardList;
 
   @Input() showCardCount = false;
@@ -138,9 +140,96 @@ export class BoardCardComponent {
   private isPublic = false;
   private isOwner = false;
 
+  // Selection state for the card during board interaction mode
+  public isSelectable = false;
+  public isSelected = false;
+
+  private subscriptions: Subscription[] = [];
+  private cardTarget: { player: PlayerType, slot: SlotType, index: number };
+
+  @Input() set player(value: PlayerType) {
+    if (value !== undefined) {
+      this.cardTarget = { ...this.cardTarget, player: value };
+      this.updateSelectionState();
+    }
+  }
+
+  @Input() set slot(value: SlotType) {
+    if (value !== undefined) {
+      this.cardTarget = { ...this.cardTarget, slot: value };
+      this.updateSelectionState();
+    }
+  }
+
+  @Input() set index(value: number) {
+    if (value !== undefined) {
+      this.cardTarget = { ...this.cardTarget, index: value };
+      this.updateSelectionState();
+    }
+  }
+
   constructor(
-    private dialog: MatDialog
-  ) { }
+    private dialog: MatDialog,
+    private boardInteractionService: BoardInteractionService
+  ) {
+    this.cardTarget = { player: undefined, slot: undefined, index: 0 };
+  }
+
+  ngOnInit() {
+    // Subscribe to selection mode changes
+    this.subscriptions.push(
+      this.boardInteractionService.selectionMode$.subscribe(() => {
+        this.updateSelectionState();
+      })
+    );
+
+    // Subscribe to selected targets changes
+    this.subscriptions.push(
+      this.boardInteractionService.selectedTargets$.subscribe(() => {
+        this.updateSelectionState();
+      })
+    );
+  }
+
+  ngOnDestroy() {
+    // Unsubscribe from all subscriptions
+    this.subscriptions.forEach(sub => sub.unsubscribe());
+  }
+
+  /**
+   * Update the selection state of this card
+   */
+  private updateSelectionState() {
+    // Check if we have all the required target properties
+    if (!this.cardTarget.player || !this.cardTarget.slot) {
+      this.isSelectable = false;
+      this.isSelected = false;
+      return;
+    }
+
+    // Get the current selection mode
+    let isSelectionMode = false;
+    this.boardInteractionService.selectionMode$.subscribe(mode => {
+      isSelectionMode = mode;
+    }).unsubscribe();
+
+    if (!isSelectionMode) {
+      this.isSelectable = false;
+      this.isSelected = false;
+      return;
+    }
+
+    // Only mark as selectable if:
+    // 1. The slot is eligible for selection
+    // 2. The slot actually contains cards (not empty)
+    const hasCards = this._cardList && this._cardList.cards && this._cardList.cards.length > 0;
+
+    // Check if this card is eligible for selection
+    this.isSelectable = hasCards && this.boardInteractionService.isTargetEligible(this.cardTarget);
+
+    // Check if this card is currently selected
+    this.isSelected = this.boardInteractionService.isTargetSelected(this.cardTarget);
+  }
 
   private initPokemonCardList(cardList: PokemonCardList) {
     this.damage = cardList.damage;

@@ -27,6 +27,52 @@ $ptcg-energy-card-offset: 13%;
     display: block;
     padding-bottom: $card-aspect-ratio * 100%;
   }
+
+  // Styles for selectable cards during board selection
+  &.selectable {
+    cursor: pointer;
+    position: relative;
+    transform: scale(1.05);
+    transition: transform 0.2s ease;
+    z-index: 50;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border: 3px solid #FFFFFF;
+      border-radius: 4px;
+      pointer-events: none;
+      z-index: 10;
+      opacity: 0.9;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
+    }
+  }
+
+  // Styles for selected cards during board selection
+  &.selected {
+    transform: scale(1.08);
+    transition: transform 0.2s ease;
+    z-index: 60;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border: 4px solid #449058; // Twinleaf green
+      border-radius: 4px;
+      pointer-events: none;
+      z-index: 10;
+      opacity: 0.9;
+      box-shadow: 0 0 20px rgba(68, 144, 88, 0.8); // Green glow
+    }
+  }
 }
 
 .ptcg-energy-cards {
@@ -322,5 +368,19 @@ $ptcg-energy-card-offset: 13%;
 
   to {
     background-position: 0% 0%
+  }
+}
+
+@keyframes pulseBorder {
+  0% {
+    opacity: 0.4;
+  }
+
+  50% {
+    opacity: 0.8;
+  }
+
+  100% {
+    opacity: 0.4;
   }
 }

@@ -22,6 +22,7 @@ const nessa_1 = require("./nessa");
 const phanpy_1 = require("./phanpy");
 const raikou_1 = require("./raikou");
 const shaymin_1 = require("./shaymin");
+const shiftry_1 = require("./shiftry");
 const slugma_1 = require("./slugma");
 const snorlax_1 = require("./snorlax");
 const stone_fighting_energy_1 = require("./stone-fighting-energy");
@@ -53,6 +54,7 @@ exports.setVividVoltage = [
     new phanpy_1.Phanpy(),
     new raikou_1.Raikou(),
     new shaymin_1.Shaymin(),
+    new shiftry_1.Shiftry(),
     new slugma_1.Slugma(),
     new snorlax_1.Snorlax(),
     new stone_fighting_energy_1.StoneFightingEnergy(),

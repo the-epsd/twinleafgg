@@ -26,20 +26,6 @@ class Arbiter {
             return new resolve_prompt_action_1.ResolvePromptAction(prompt.id, result, log);
         }
     }
-    // private shuffle(cards: CardList): number[] {
-    //   const len = cards.cards.length;
-    //   const order: number[] = [];
-    //   for (let i = 0; i < len; i++) {
-    //     order.push(i);
-    //   }
-    //   for (let i = 0; i < len; i++) {
-    //     const position = Math.min(len - 1, Math.round(Math.random() * len));
-    //     const tmp = order[i];
-    //     order[i] = order[position];
-    //     order[position] = tmp;
-    //   }
-    //   return order;
-    // }
     shuffle(cards) {
         const len = cards.cards.length;
         const order = [];
@@ -55,6 +41,9 @@ class Arbiter {
             order[j] = tmp;
         }
         return order;
+    }
+    cleanup() {
+        // Reset any internal state if needed
     }
 }
 exports.Arbiter = Arbiter;

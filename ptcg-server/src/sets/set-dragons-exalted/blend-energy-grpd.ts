@@ -24,7 +24,6 @@ export class BlendEnergyGRPD extends EnergyCard {
 
   public text = 'This card provides [C] Energy. When this card is attached to a Pokémon, this card provides [G], [R], [P], or [D] Energy but provides only 1 Energy at a time.';
 
-  // We won't do the "needed cost logic" here anymore
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
@@ -36,12 +35,12 @@ export class BlendEnergyGRPD extends EnergyCard {
         return state;
       }
 
-      // Instead of guessing whether we provide [G] or [R] or [P] or [D],
-      // just push a placeholder so 'checkEnoughEnergy' can decide the best match.
+      // Explicitly list all the energy types this card can provide
+      // This allows the checkEnoughEnergy function to pick the most appropriate type
+      // based on the attack cost
       effect.energyMap.push({
         card: this,
-        // Put a single "GRPD" token to indicate this card can fulfill one of [G,R,P,D].
-        provides: [CardType.GRPD]
+        provides: [CardType.GRASS, CardType.FIRE, CardType.PSYCHIC, CardType.DARK]
       });
     }
 

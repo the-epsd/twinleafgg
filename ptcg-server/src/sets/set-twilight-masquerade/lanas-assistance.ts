@@ -6,11 +6,13 @@ import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { CardTag, EnergyType, TrainerType } from '../../game/store/card/card-types';
-import { PokemonCard, EnergyCard, Card, ChooseCardsPrompt } from '../../game';
+import { PokemonCard, EnergyCard, Card, ChooseCardsPrompt, StateUtils } from '../../game';
+import {SHOW_CARDS_TO_PLAYER} from '../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State,
   self: LanasAssistance, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
+  const opponent = StateUtils.getOpponent(state, player);
 
   const supporterTurn = player.supporterTurn;
 
@@ -42,7 +44,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   let cards: Card[] = [];
   yield store.prompt(state, new ChooseCardsPrompt(
     player,
-    GameMessage.CHOOSE_CARD_TO_DECK,
+    GameMessage.CHOOSE_CARD_TO_HAND,
     player.discard,
     {},
     { min: 1, max: 3, allowCancel: false, blocked }
@@ -51,6 +53,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
     next();
   });
 
+  SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
   player.discard.moveCardsTo(cards, player.hand);
   player.supporter.moveCardTo(effect.trainerCard, player.discard);
 

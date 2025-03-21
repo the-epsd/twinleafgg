@@ -46,7 +46,7 @@ export class Eldegoss extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      if (HAS_MARKER(this.COTTON_LIFT_MARKER, this, this)){
+      if (HAS_MARKER(this.COTTON_LIFT_MARKER, effect.player, this)){
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
 
@@ -68,7 +68,7 @@ export class Eldegoss extends PokemonCard {
         SHOW_CARDS_TO_PLAYER(store, state, opponent, selections);
         MOVE_CARDS(store, state, player.deck, player.hand, { cards: selections });
         SHUFFLE_DECK(store, state, player);
-        ADD_MARKER(this.COTTON_LIFT_MARKER, this, this);
+        ADD_MARKER(this.COTTON_LIFT_MARKER, effect.player, this);
         ABILITY_USED(player, this);
       });
 
