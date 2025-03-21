@@ -4,8 +4,8 @@ exports.Naganadel = void 0;
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
-const game_effects_1 = require("../../game/store/effects/game-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 // LOT Naganadel 108 (https://limitlesstcg.com/cards/LOT/108)
 class Naganadel extends pokemon_card_1.PokemonCard {
     constructor() {
@@ -39,20 +39,8 @@ class Naganadel extends pokemon_card_1.PokemonCard {
         this.CHARGE_MARKER = 'CHARGE_MARKER';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
+        if (prefabs_1.WAS_POWER_USED(effect, 0, this)) {
             const player = effect.player;
-            // Try to reduce PowerEffect, to check if something is blocking our ability
-            try {
-                const stub = new game_effects_1.PowerEffect(player, {
-                    name: 'test',
-                    powerType: game_1.PowerType.ABILITY,
-                    text: ''
-                }, this);
-                store.reduceEffect(state, stub);
-            }
-            catch (_a) {
-                return state;
-            }
             if (player.marker.hasMarker(this.CHARGE_MARKER, this)) {
                 throw new game_1.GameError(game_1.GameMessage.POWER_ALREADY_USED);
             }
@@ -77,7 +65,7 @@ class Naganadel extends pokemon_card_1.PokemonCard {
             });
         }
         // Turning Point
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+        if (prefabs_1.WAS_ATTACK_USED(effect, 0, this)) {
             const player = effect.player;
             const prizesLeft = player.getPrizeLeft();
             if (prizesLeft === 3) {

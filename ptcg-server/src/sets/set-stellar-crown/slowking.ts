@@ -21,7 +21,17 @@ function* useSeekInspiration(next: Function, store: StoreLike, state: State, eff
   }
 
   // this looks disgusting but the previous method didn't work (if only hasRuleBox() worked on topdeck, although that might not work either who knows)
-  if (topdeck.tags.includes(CardTag.POKEMON_EX) || topdeck.tags.includes(CardTag.POKEMON_GX) || topdeck.tags.includes(CardTag.POKEMON_LV_X) || topdeck.tags.includes(CardTag.POKEMON_V) || topdeck.tags.includes(CardTag.PRISM_STAR) || topdeck.tags.includes(CardTag.RADIANT) || topdeck.tags.includes(CardTag.POKEMON_VMAX) || topdeck.tags.includes(CardTag.POKEMON_VSTAR) || topdeck.tags.includes(CardTag.POKEMON_ex) || topdeck.tags.includes(CardTag.BREAK)){
+  if (topdeck.tags.includes(CardTag.POKEMON_EX) 
+    || topdeck.tags.includes(CardTag.POKEMON_GX) 
+    || topdeck.tags.includes(CardTag.POKEMON_LV_X) 
+    || topdeck.tags.includes(CardTag.POKEMON_V) 
+    || topdeck.tags.includes(CardTag.PRISM_STAR) 
+    || topdeck.tags.includes(CardTag.RADIANT) 
+    || topdeck.tags.includes(CardTag.POKEMON_VMAX) 
+    || topdeck.tags.includes(CardTag.POKEMON_VSTAR) 
+    || topdeck.tags.includes(CardTag.POKEMON_ex) 
+    || topdeck.tags.includes(CardTag.BREAK) 
+    || topdeck.tags.includes(CardTag.POKEMON_SV_MEGA)){
     return state;
   }
 
