@@ -85,6 +85,12 @@ export class PromptChoosePokemonComponent implements OnChanges {
       this.promptId = prompt.id;
       this.updateIsInvalid();
 
+      // Set a custom attribute that can be detected by the parent component
+      const element = document.querySelector('ptcg-prompt-choose-pokemon');
+      if (element) {
+        (element as HTMLElement).setAttribute('data-interactive-board', this.useInteractiveBoard.toString());
+      }
+
       if (this.useInteractiveBoard) {
         // Automatically minimize the prompt before starting board selection
         this.minimize();

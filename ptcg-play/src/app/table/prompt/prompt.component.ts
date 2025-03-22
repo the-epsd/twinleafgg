@@ -90,9 +90,9 @@ export class PromptComponent implements OnChanges {
   }
 
   private checkGameOver(gameState: LocalGameState): GameOverPrompt | undefined {
-    if (gameState.state.phase === GamePhase.FINISHED && gameState.gameOver === false) {
-      return new GameOverPrompt(this.clientId, gameState.state.winner);
-    }
+    // Return undefined to prevent the old game over prompt from appearing
+    // The new game over screen is now handled directly by the table component
+    return undefined;
   }
 
 }

@@ -57,7 +57,7 @@
     </div>
   </div>
 
-  <div class="ptcg-minimized-prompt" *ngIf="minimized">
+  <div class="ptcg-minimized-prompt" *ngIf="minimized && prompt?.type !== 'Choose pokemon'">
     <button mat-fab color="primary" (click)="maximize()">
       <mat-icon>keyboard_arrow_up</mat-icon>
     </button>

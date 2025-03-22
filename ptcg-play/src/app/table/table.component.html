@@ -32,6 +32,10 @@
       <!-- Player prompt -->
       <ptcg-prompt [gameState]="gameState" [clientId]="clientId">
       </ptcg-prompt>
+
+      <!-- Game Over screen -->
+      <ptcg-game-over *ngIf="showGameOver" [gameState]="gameState" [prompt]="gameOverPrompt">
+      </ptcg-game-over>
     </div>
   </ptcg-content>
 
