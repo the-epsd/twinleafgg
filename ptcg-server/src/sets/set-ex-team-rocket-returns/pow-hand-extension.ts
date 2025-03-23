@@ -3,6 +3,7 @@ import { TrainerCard } from '../../game/store/card/trainer-card';
 import { SuperType, TrainerType } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, GameError, GameMessage, SelectPrompt, AttachEnergyPrompt, PlayerType, SlotType, ChoosePokemonPrompt } from '../../game';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class PowHandExtension extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
@@ -11,7 +12,7 @@ export class PowHandExtension extends TrainerCard {
   public fullName: string = 'Pow! Hand Extension TRR';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '85';
-  public text = 'You may use this card only if you have more Prize cards left than your opponent. Move 1 Energy card attached to the Defending Pokémon to another of your opponent\'s Pokémon. Or, switch 1 of your opponent\'s Benched Pokémon with 1 of the Defending Pokémon.Your opponent chooses the Defending Pokémon to switch.';
+  public text = 'You may use this card only if you have more Prize cards left than your opponent. Move 1 Energy card attached to the Defending Pokémon to another of your opponent\'s Pokémon. Or, switch 1 of your opponent\'s Benched Pokémon with 1 of the Defending Pokémon. Your opponent chooses the Defending Pokémon to switch.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -47,6 +48,7 @@ export class PowHandExtension extends TrainerCard {
                 const target = StateUtils.getTarget(state, opponent, transfer.to);
                 opponent.active.moveCardTo(transfer.card, target);
               }
+              MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [effect.trainerCard] });
             });
           }
         },
@@ -54,7 +56,7 @@ export class PowHandExtension extends TrainerCard {
           message: GameMessage.CHOOSE_POKEMON_TO_SWITCH,
           action: () => {
             return store.prompt(state, new ChoosePokemonPrompt(
-              opponent.id,
+              player.id,
               GameMessage.CHOOSE_POKEMON_TO_SWITCH,
               PlayerType.BOTTOM_PLAYER,
               [SlotType.BENCH],
@@ -65,11 +67,11 @@ export class PowHandExtension extends TrainerCard {
                 opponent.switchPokemon(targets[0]);
                 return state;
               }
+              MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [effect.trainerCard] });
             });
           }
         }
       ];
-
 
       return store.prompt(state, new SelectPrompt(
         player.id,
@@ -79,6 +81,7 @@ export class PowHandExtension extends TrainerCard {
       ), choice => {
         const option = options[choice];
         option.action();
+        MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [effect.trainerCard] });
       });
     }
 

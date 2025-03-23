@@ -44,25 +44,68 @@ class Miloticex extends game_1.PokemonCard {
         //   });
         // }
         if (effect instanceof attack_effects_1.AbstractAttackEffect && effect.target.cards.includes(this)) {
-            const player = effect.player;
-            const attackingPokemon = player.active.getPokemonCard();
-            if (attackingPokemon && attackingPokemon.tags.includes(game_1.CardTag.POKEMON_TERA)) {
-                effect.attack.damage = 0;
+            const pokemonCard = effect.target.getPokemonCard();
+            const sourceCard = effect.source.getPokemonCard();
+            // Card is not active, or damage source is unknown
+            if (pokemonCard !== this || sourceCard === undefined) {
+                return state;
+            }
+            // Do not ignore self-damage from Pokemon-Ex
+            const player = game_1.StateUtils.findOwner(state, effect.target);
+            const opponent = game_1.StateUtils.findOwner(state, effect.source);
+            if (player === opponent) {
+                return state;
+            }
+            // It's not an attack
+            if (state.phase !== game_1.GamePhase.ATTACK) {
+                return state;
+            }
+            if (sourceCard.tags.includes(game_1.CardTag.POKEMON_TERA)) {
+                // Try to reduce PowerEffect, to check if something is blocking our ability
+                try {
+                    const stub = new game_effects_1.PowerEffect(player, {
+                        name: 'test',
+                        powerType: game_1.PowerType.ABILITY,
+                        text: ''
+                    }, this);
+                    store.reduceEffect(state, stub);
+                }
+                catch (_a) {
+                    return state;
+                }
                 effect.preventDefault = true;
             }
         }
         if (effect instanceof attack_effects_1.PutDamageEffect && effect.target.cards.includes(this)) {
-            const player = effect.player;
-            const sourcePokemon = player.active.getPokemonCard();
-            if (sourcePokemon && sourcePokemon.tags.includes(game_1.CardTag.POKEMON_TERA)) {
-                effect.damage = 0;
-                effect.preventDefault = true;
+            const pokemonCard = effect.target.getPokemonCard();
+            const sourceCard = effect.source.getPokemonCard();
+            // Card is not active, or damage source is unknown
+            if (pokemonCard !== this || sourceCard === undefined) {
+                return state;
             }
-        }
-        if (effect instanceof attack_effects_1.DealDamageEffect && effect.target.cards.includes(this)) {
-            const player = effect.player;
-            const sourcePokemon = player.active.getPokemonCard();
-            if (sourcePokemon && sourcePokemon.tags.includes(game_1.CardTag.POKEMON_TERA)) {
+            // Do not ignore self-damage from Pokemon-Ex
+            const player = game_1.StateUtils.findOwner(state, effect.target);
+            const opponent = game_1.StateUtils.findOwner(state, effect.source);
+            if (player === opponent) {
+                return state;
+            }
+            // It's not an attack
+            if (state.phase !== game_1.GamePhase.ATTACK) {
+                return state;
+            }
+            if (sourceCard.tags.includes(game_1.CardTag.POKEMON_TERA)) {
+                // Try to reduce PowerEffect, to check if something is blocking our ability
+                try {
+                    const stub = new game_effects_1.PowerEffect(player, {
+                        name: 'test',
+                        powerType: game_1.PowerType.ABILITY,
+                        text: ''
+                    }, this);
+                    store.reduceEffect(state, stub);
+                }
+                catch (_b) {
+                    return state;
+                }
                 effect.damage = 0;
                 effect.preventDefault = true;
             }

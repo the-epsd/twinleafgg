@@ -37,25 +37,31 @@ export class ReversalEnergy extends EnergyCard {
       const opponent = StateUtils.getOpponent(state, player);
       const attachedTo = effect.source.getPokemonCard();
 
-      const isValidPokemon = attachedTo instanceof PokemonCard
+      // Check if it's an Evolution Pokémon (not Basic or Restored)
+      const isEvolutionPokemon = attachedTo instanceof PokemonCard
         && attachedTo.stage !== Stage.BASIC
-        && attachedTo.stage !== Stage.RESTORED
-        && !attachedTo.tags.includes(CardTag.POKEMON_V)
-        && !attachedTo.tags.includes(CardTag.POKEMON_VSTAR)
-        && !attachedTo.tags.includes(CardTag.POKEMON_VMAX)
-        && !attachedTo.tags.includes(CardTag.POKEMON_VUNION)
-        && !attachedTo.tags.includes(CardTag.POKEMON_ex)
-        && !attachedTo.tags.includes(CardTag.POKEMON_EX)
-        && !attachedTo.tags.includes(CardTag.POKEMON_GX)
-        && !attachedTo.tags.includes(CardTag.TAG_TEAM)
-        && !attachedTo.tags.includes(CardTag.POKEMON_LV_X)
-        && !attachedTo.tags.includes(CardTag.BREAK)
-        && !attachedTo.tags.includes(CardTag.PRISM_STAR)
-        && !attachedTo.tags.includes(CardTag.MEGA)
-        && !attachedTo.tags.includes(CardTag.POKEMON_SV_MEGA)
-        && !attachedTo.tags.includes(CardTag.POKEMON_VUNION)
-        && !attachedTo.tags.includes(CardTag.LEGEND)
-        && !attachedTo.tags.includes(CardTag.RADIANT);
+        && attachedTo.stage !== Stage.RESTORED;
+
+      // Check if it doesn't have a Rule Box
+      const hasRuleBox = attachedTo instanceof PokemonCard && (
+        attachedTo.tags.includes(CardTag.POKEMON_V) ||
+        attachedTo.tags.includes(CardTag.POKEMON_VSTAR) ||
+        attachedTo.tags.includes(CardTag.POKEMON_VMAX) ||
+        attachedTo.tags.includes(CardTag.POKEMON_VUNION) ||
+        attachedTo.tags.includes(CardTag.POKEMON_ex) ||
+        attachedTo.tags.includes(CardTag.POKEMON_EX) ||
+        attachedTo.tags.includes(CardTag.POKEMON_GX) ||
+        attachedTo.tags.includes(CardTag.TAG_TEAM) ||
+        attachedTo.tags.includes(CardTag.POKEMON_LV_X) ||
+        attachedTo.tags.includes(CardTag.BREAK) ||
+        attachedTo.tags.includes(CardTag.PRISM_STAR) ||
+        attachedTo.tags.includes(CardTag.MEGA) ||
+        attachedTo.tags.includes(CardTag.POKEMON_SV_MEGA) ||
+        attachedTo.tags.includes(CardTag.LEGEND) ||
+        attachedTo.tags.includes(CardTag.RADIANT)
+      );
+
+      const isValidPokemon = isEvolutionPokemon && !hasRuleBox;
 
       const provides = player.getPrizeLeft() > opponent.getPrizeLeft() && isValidPokemon
         ? [CardType.ANY, CardType.ANY, CardType.ANY]

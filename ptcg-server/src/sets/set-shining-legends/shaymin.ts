@@ -16,7 +16,7 @@ export class Shaymin extends PokemonCard {
   public attacks = [{
     name: 'Flippity Flap',
     cost: [G],
-    damage: 30,
+    damage: 0,
     text: 'Shuffle your hand into your deck. Then, draw 6 cards.'
   },
   {

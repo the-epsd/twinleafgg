@@ -26,6 +26,7 @@ export class PromptChoosePokemonComponent implements OnChanges {
 
   private min = 1;
   private max = 1;
+  private previousReplayPosition: number = null;
 
   constructor(
     private gameService: GameService,
@@ -69,6 +70,28 @@ export class PromptChoosePokemonComponent implements OnChanges {
   }
 
   ngOnChanges() {
+    // Check if we're in replay mode and the state has changed
+    if (this.gameState && this.gameState.replay) {
+      const currentReplayPosition = this.gameState.replayPosition;
+
+      // Inform the board interaction service we're in replay mode
+      this.boardInteractionService.setReplayMode(true);
+
+      // If we have a previous position and it's different from the current position
+      // or this is the first time we're seeing a replay position, end any active board selection
+      if ((this.previousReplayPosition !== null &&
+        this.previousReplayPosition !== currentReplayPosition) ||
+        this.previousReplayPosition === null) {
+        this.boardInteractionService.endBoardSelection();
+      }
+
+      // Update the previous position
+      this.previousReplayPosition = currentReplayPosition;
+    } else if (this.gameState) {
+      // Not in replay mode
+      this.boardInteractionService.setReplayMode(false);
+    }
+
     if (this.prompt && this.gameState && !this.promptId) {
       const state = this.gameState.state;
       const prompt = this.prompt;
@@ -89,6 +112,11 @@ export class PromptChoosePokemonComponent implements OnChanges {
       const element = document.querySelector('ptcg-prompt-choose-pokemon');
       if (element) {
         (element as HTMLElement).setAttribute('data-interactive-board', this.useInteractiveBoard.toString());
+      }
+
+      // In replay mode, we don't want to use the interactive board selection
+      if (this.gameState.replay) {
+        this.useInteractiveBoard = false;
       }
 
       if (this.useInteractiveBoard) {

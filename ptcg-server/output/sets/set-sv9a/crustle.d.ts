@@ -23,6 +23,7 @@ export declare class Crustle extends PokemonCard {
         name: string;
         cost: (CardType.GRASS | CardType.COLORLESS)[];
         damage: number;
+        shredAttack: boolean;
         text: string;
     }[];
     set: string;

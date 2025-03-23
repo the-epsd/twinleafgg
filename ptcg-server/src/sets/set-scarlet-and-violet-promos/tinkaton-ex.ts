@@ -5,7 +5,7 @@ import {
 } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { AfterDamageEffect, ApplyWeaknessEffect, DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { AfterDamageEffect, ApplyWeaknessEffect } from '../../game/store/effects/attack-effects';
 
 // PAL Tinkaton ex 262 (https://limitlesstcg.com/cards/PAL/262)
 export class Tinkatonex extends PokemonCard {
@@ -65,10 +65,7 @@ export class Tinkatonex extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      const dealDamage = new DealDamageEffect(effect, 140);
-      store.reduceEffect(state, dealDamage);
-
-      const applyWeakness = new ApplyWeaknessEffect(effect, dealDamage.damage);
+      const applyWeakness = new ApplyWeaknessEffect(effect, 140);
       store.reduceEffect(state, applyWeakness);
       const damage = applyWeakness.damage;
 

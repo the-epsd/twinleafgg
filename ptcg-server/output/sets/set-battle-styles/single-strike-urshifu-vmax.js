@@ -45,9 +45,7 @@ class SingleStrikeUrshifuVMAX extends pokemon_card_1.PokemonCard {
             const opponent = game_1.StateUtils.getOpponent(state, player);
             const checkProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(player);
             state = store.reduceEffect(state, checkProvidedEnergy);
-            const dealDamage = new attack_effects_1.DealDamageEffect(effect, 270);
-            store.reduceEffect(state, dealDamage);
-            const applyWeakness = new attack_effects_1.ApplyWeaknessEffect(effect, dealDamage.damage);
+            const applyWeakness = new attack_effects_1.ApplyWeaknessEffect(effect, 270);
             store.reduceEffect(state, applyWeakness);
             const damage = applyWeakness.damage;
             effect.damage = 0;

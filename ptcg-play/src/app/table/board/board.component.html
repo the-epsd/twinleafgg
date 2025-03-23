@@ -146,12 +146,9 @@
         </ptcg-board-card>
       </div>
 
-      <!-- Bottom Stadium -->
+      <!-- Stadium - Single Slot for both players -->
       <div class="ptcg-board-row ptcg-board-stadium">
-        <ptcg-board-card class="stadium-card" [cardList]="bottomPlayer?.stadium" [owner]="bottomPlayer?.id === clientId"
-          (cardClick)="onStadiumClick($event)">
-        </ptcg-board-card>
-        <ptcg-board-card class="stadium-card" [cardList]="topPlayer?.stadium" [owner]="topPlayer?.id === clientId"
+        <ptcg-board-card class="stadium-card" [cardList]="stadiumCard" [owner]="stadiumOwner"
           (cardClick)="onStadiumClick($event)">
         </ptcg-board-card>
       </div>

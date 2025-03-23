@@ -20,6 +20,7 @@ export declare class GreatTuskex extends PokemonCard {
         name: string;
         cost: (CardType.FIGHTING | CardType.COLORLESS)[];
         damage: number;
+        shredAttack: boolean;
         text: string;
     }[];
     set: string;

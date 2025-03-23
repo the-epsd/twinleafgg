@@ -219,7 +219,13 @@ export enum Format {
   UNLIMITED,
   RETRO,
   GLC,
-  STANDARD_NIGHTLY
+  STANDARD_NIGHTLY,
+  BW,
+  XY,
+  SM,
+  SWSH,
+  SV,
+  WORLDS_2013,
 }
 
 export const Energy = {

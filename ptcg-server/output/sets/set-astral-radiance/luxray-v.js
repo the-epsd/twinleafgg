@@ -42,10 +42,14 @@ class LuxrayV extends pokemon_card_1.PokemonCard {
         if (prefabs_1.WAS_ATTACK_USED(effect, 0, this)) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            //const cards = opponent.hand.cards.filter(c => c instanceof TrainerCard);
+            let cards = [];
             store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, opponent.hand, { superType: card_types_1.SuperType.TRAINER }, { min: 0, max: 1, allowCancel: false }), selected => {
-                //selected = cards || [];
-                opponent.hand.moveCardsTo(selected, opponent.discard);
+                cards = selected || [];
+                // Operation canceled by the user
+                if (cards.length === 0) {
+                    return state;
+                }
+                prefabs_1.MOVE_CARDS(store, state, opponent.hand, opponent.discard, { cards });
             });
         }
         if (prefabs_1.WAS_ATTACK_USED(effect, 1, this)) {

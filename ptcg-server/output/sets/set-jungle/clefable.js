@@ -92,7 +92,7 @@ class Clefable extends pokemon_card_1.PokemonCard {
             const opponent = game_1.StateUtils.getOpponent(state, player);
             player.active.marker.addMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
             opponent.marker.addMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
-            console.log('marker added');
+            console.log('Minimize effect markers added');
         }
         if (effect instanceof attack_effects_1.PutDamageEffect && effect.target.cards.includes(this)) {
             if (effect.target.marker.hasMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this)) {
@@ -104,10 +104,10 @@ class Clefable extends pokemon_card_1.PokemonCard {
             && effect.player.active.marker.hasMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this)) {
             effect.player.active.marker.removeMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
             const opponent = game_1.StateUtils.getOpponent(state, effect.player);
-            opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList) => {
+            opponent.forEachPokemon(opponent.id, (cardList) => {
                 cardList.marker.removeMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
             });
-            console.log('marker removed');
+            console.log('Minimize effect markers removed at end of turn');
         }
         return state;
     }

@@ -1,4 +1,4 @@
-import { PokemonCard, CardTag, Stage, CardType, PowerType, StoreLike, State, ConfirmPrompt, GameMessage, SuperType, PlayerType, AttachEnergyPrompt, SlotType, StateUtils, EnergyCard, CardTarget } from '../../game';
+import { PokemonCard, CardTag, Stage, CardType, PowerType, StoreLike, State, ConfirmPrompt, GameMessage, SuperType, PlayerType, AttachEnergyPrompt, SlotType, StateUtils, EnergyCard, CardTarget, EnergyType } from '../../game';
 import { CheckPokemonStatsEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, EvolveEffect, PowerEffect } from '../../game/store/effects/game-effects';
@@ -80,7 +80,7 @@ export class Archaludonex extends PokemonCard {
             player.discard,
             PlayerType.BOTTOM_PLAYER,
             [SlotType.ACTIVE, SlotType.BENCH],
-            { superType: SuperType.ENERGY, name: 'Metal Energy' },
+            { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Metal Energy' },
             { allowCancel: false, min: 0, max: 2, blockedTo: blocked2 }
           ), transfers => {
             transfers = transfers || [];

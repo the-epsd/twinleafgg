@@ -4,7 +4,6 @@ exports.Crustle = void 0;
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const state_1 = require("../../game/store/state/state");
-const prefabs_1 = require("../../game/store/prefabs/prefabs");
 const game_1 = require("../../game");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
@@ -29,6 +28,7 @@ class Crustle extends pokemon_card_1.PokemonCard {
                 name: 'Great Scissors',
                 cost: [G, C, C],
                 damage: 120,
+                shredAttack: true,
                 text: 'This attack\'s damage isn\'t affected by any effects on your opponent\'s Active Pokémon.'
             }];
         this.set = 'SV9a';
@@ -70,20 +70,19 @@ class Crustle extends pokemon_card_1.PokemonCard {
             }
         }
         // Great Scissors
-        if (prefabs_1.WAS_ATTACK_USED(effect, 0, this)) {
-            //const player = effect.player;
-            //const opponent = StateUtils.getOpponent(state, player);
-            effect.damage = 0;
-            const dealDamage = new attack_effects_1.DealDamageEffect(effect, 120);
-            store.reduceEffect(state, dealDamage);
-            const applyWeakness = new attack_effects_1.ApplyWeaknessEffect(effect, dealDamage.damage);
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+            const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            const applyWeakness = new attack_effects_1.ApplyWeaknessEffect(effect, 120);
             store.reduceEffect(state, applyWeakness);
             const damage = applyWeakness.damage;
+            effect.damage = 0;
             if (damage > 0) {
-                //opponent.active.damage += damage;
+                opponent.active.damage += damage;
                 const afterDamage = new attack_effects_1.AfterDamageEffect(effect, damage);
                 state = store.reduceEffect(state, afterDamage);
             }
+            return state;
         }
         return state;
     }

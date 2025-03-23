@@ -2,10 +2,10 @@ import { CardTag, CardType, EnergyType } from '../../game/store/card/card-types'
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { EnergyEffect } from '../../game/store/effects/play-card-effects';
+import { AttachEnergyEffect, EnergyEffect } from '../../game/store/effects/play-card-effects';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
-import { PokemonCard } from '../../game/store/card/pokemon-card';
+import { PlayerType } from '../../game';
 
 export class TeamRocketEnergy extends EnergyCard {
 
@@ -32,16 +32,25 @@ export class TeamRocketEnergy extends EnergyCard {
   While this card is attached to a Pokémon, this card provides 2 in any combination of [P] and [D] Energy`;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Check if the card is attached to a Team Rocket's Pokémon
-    if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
-      const pokemonCard = effect.source.getPokemonCard();
 
-      // Check if the Pokémon is a Team Rocket's Pokémon
-      if (!this.isTeamRocketPokemon(pokemonCard)) {
-        // If not, we should discard this card, but don't provide energy
-        // Handling discard would be implemented elsewhere
-        return state;
-      }
+    // Check if the card is attached to a Team Rocket's Pokémon
+    if (effect instanceof AttachEnergyEffect) {
+      state.players.forEach(player => {
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+          if (!cardList.cards.includes(this)) {
+            return;
+          }
+          const pokemon = cardList;
+          const pokemonCard = pokemon.getPokemonCard();
+          if (pokemonCard && !pokemonCard.tags.includes(CardTag.TEAM_ROCKET)) {
+            cardList.moveCardTo(this, player.discard);
+          }
+        });
+      });
+      return state;
+    }
+
+    if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
 
       try {
         // Add the base EnergyEffect
@@ -50,7 +59,6 @@ export class TeamRocketEnergy extends EnergyCard {
       } catch {
         return state;
       }
-
       // This energy provides 2 energy in any combination of Psychic and Darkness
       // We'll provide both types and let the energy checking algorithm pick the best combination
       // The logic in StateUtils.checkEnoughEnergy will handle this appropriately
@@ -59,13 +67,6 @@ export class TeamRocketEnergy extends EnergyCard {
         provides: [CardType.PSYCHIC, CardType.PSYCHIC, CardType.DARK, CardType.DARK]
       });
     }
-
     return state;
-  }
-
-  // Helper method to check if a Pokémon is a Team Rocket's Pokémon
-  private isTeamRocketPokemon(pokemon: PokemonCard | undefined): boolean {
-    if (!pokemon) return false;
-    return pokemon.tags.includes(CardTag.TEAM_ROCKET);
   }
 }

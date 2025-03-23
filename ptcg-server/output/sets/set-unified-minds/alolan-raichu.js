@@ -40,30 +40,44 @@ class AlolanRaichu extends pokemon_card_1.PokemonCard {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             const blocked = [];
-            player.active.cards.forEach((cardList, card, target) => {
-                const checkProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(player, player.active);
-                store.reduceEffect(state, checkProvidedEnergy);
-                const blockedCards = [];
-                checkProvidedEnergy.energyMap.forEach(em => {
-                    if (!em.provides.includes(card_types_1.CardType.LIGHTNING) && !em.provides.includes(card_types_1.CardType.ANY)) {
-                        blockedCards.push(em.card);
-                    }
+            const cardEnergyCounts = new Map(); // Map card objects to their energy counts
+            // Check energy provided by each card
+            const checkProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(player, player.active);
+            store.reduceEffect(state, checkProvidedEnergy);
+            player.active.cards.forEach((card, index) => {
+                const providedEnergy = checkProvidedEnergy.energyMap.filter(em => em.card === card);
+                // Count how many Lightning/Any energy are provided by this card
+                let lightningCount = 0;
+                providedEnergy.forEach(em => {
+                    em.provides.forEach(type => {
+                        if (type === card_types_1.CardType.LIGHTNING || type === card_types_1.CardType.ANY) {
+                            lightningCount++;
+                        }
+                    });
                 });
-                blockedCards.forEach(bc => {
-                    const index = target.indexOf(bc);
-                    if (index !== -1 && !blocked.includes(index)) {
-                        blocked.push(index);
-                    }
-                });
+                // If the card doesn't provide any Lightning energy, block it
+                if (lightningCount === 0) {
+                    blocked.push(index);
+                }
+                else {
+                    cardEnergyCounts.set(card, lightningCount);
+                }
             });
             return store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, player.active, // Card source is target Pokemon
             { superType: card_types_1.SuperType.ENERGY }, { allowCancel: false, blocked }), selected => {
                 const cards = selected || [];
                 if (cards.length > 0) {
+                    // Save energy counts before discarding
+                    let totalEnergy = 0;
+                    cards.forEach(card => {
+                        if (cardEnergyCounts.has(card)) {
+                            totalEnergy += cardEnergyCounts.get(card) || 0;
+                        }
+                    });
                     const discardEnergy = new attack_effects_1.DiscardCardsEffect(effect, cards);
                     discardEnergy.target = player.active;
                     store.reduceEffect(state, discardEnergy);
-                    const damage = cards.length * 30;
+                    const damage = totalEnergy * 30;
                     const maxAllowedDamage = [];
                     opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList, card, target) => {
                         maxAllowedDamage.push({ target, damage: card.hp + damage });

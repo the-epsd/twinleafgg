@@ -74,7 +74,7 @@ const ninetales_1 = require("./ninetales");
 const palkia_1 = require("./palkia");
 const palossand_ex_1 = require("./palossand-ex");
 const pansear_1 = require("./pansear");
-const perfect_mixer_1 = require("./perfect-mixer");
+const brilliant_blender_1 = require("./brilliant-blender");
 const phanpy_ir_1 = require("./phanpy-ir");
 const pikachu_ex_1 = require("./pikachu-ex");
 const quaquaval_1 = require("./quaquaval");
@@ -143,7 +143,7 @@ exports.setSurgingSparks = [
     new palkia_1.Palkia(),
     new ho_oh_1.HoOh(),
     new azulmarill_1.Azumarill(),
-    new perfect_mixer_1.PerfectMixer(),
+    new brilliant_blender_1.BrilliantBlender(),
     new cherish_carrier_1.CherishCarrier(),
     new marill_1.Marill(),
     new tera_orb_1.TeraOrb(),

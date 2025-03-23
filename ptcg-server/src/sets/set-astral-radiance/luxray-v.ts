@@ -1,10 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { CardTag, SpecialCondition, Stage, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, ChooseCardsPrompt, GameMessage } from '../../game';
+import { StoreLike, State, StateUtils, ChooseCardsPrompt, GameMessage, Card } from '../../game';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import {WAS_ATTACK_USED} from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class LuxrayV extends PokemonCard {
 
@@ -55,8 +55,7 @@ export class LuxrayV extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      //const cards = opponent.hand.cards.filter(c => c instanceof TrainerCard);
-
+      let cards: Card[] = [];
       store.prompt(state, new ChooseCardsPrompt(
         player,
         GameMessage.CHOOSE_CARD_TO_DISCARD,
@@ -64,9 +63,12 @@ export class LuxrayV extends PokemonCard {
         { superType: SuperType.TRAINER },
         { min: 0, max: 1, allowCancel: false }
       ), selected => {
-        //selected = cards || [];
-
-        opponent.hand.moveCardsTo(selected, opponent.discard);
+        cards = selected || [];
+        // Operation canceled by the user
+        if (cards.length === 0) {
+          return state;
+        }
+        MOVE_CARDS(store, state, opponent.hand, opponent.discard, { cards });
       });
     }
 

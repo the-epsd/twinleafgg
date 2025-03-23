@@ -1,7 +1,7 @@
-import { PokemonCard, Stage, CardType, CardTag, PowerType, StoreLike, State, SpecialCondition } from '../../game';
-import { AbstractAttackEffect, DealDamageEffect, AddSpecialConditionsEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { PokemonCard, Stage, CardType, CardTag, PowerType, StoreLike, State, SpecialCondition, GamePhase, StateUtils } from '../../game';
+import { AbstractAttackEffect, AddSpecialConditionsEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 
 export class Miloticex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -46,30 +46,77 @@ export class Miloticex extends PokemonCard {
     // }
 
     if (effect instanceof AbstractAttackEffect && effect.target.cards.includes(this)) {
-      const player = effect.player;
-      const attackingPokemon = player.active.getPokemonCard();
+      const pokemonCard = effect.target.getPokemonCard();
+      const sourceCard = effect.source.getPokemonCard();
 
-      if (attackingPokemon && attackingPokemon.tags.includes(CardTag.POKEMON_TERA)) {
-        effect.attack.damage = 0;
+      // Card is not active, or damage source is unknown
+      if (pokemonCard !== this || sourceCard === undefined) {
+        return state;
+      }
+
+      // Do not ignore self-damage from Pokemon-Ex
+      const player = StateUtils.findOwner(state, effect.target);
+      const opponent = StateUtils.findOwner(state, effect.source);
+      if (player === opponent) {
+        return state;
+      }
+
+      // It's not an attack
+      if (state.phase !== GamePhase.ATTACK) {
+        return state;
+      }
+
+      if (sourceCard.tags.includes(CardTag.POKEMON_TERA)) {
+
+        // Try to reduce PowerEffect, to check if something is blocking our ability
+        try {
+          const stub = new PowerEffect(player, {
+            name: 'test',
+            powerType: PowerType.ABILITY,
+            text: ''
+          }, this);
+          store.reduceEffect(state, stub);
+        } catch {
+          return state;
+        }
         effect.preventDefault = true;
       }
     }
 
     if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {
-      const player = effect.player;
-      const sourcePokemon = player.active.getPokemonCard();
+      const pokemonCard = effect.target.getPokemonCard();
+      const sourceCard = effect.source.getPokemonCard();
 
-      if (sourcePokemon && sourcePokemon.tags.includes(CardTag.POKEMON_TERA)) {
-        effect.damage = 0;
-        effect.preventDefault = true;
+      // Card is not active, or damage source is unknown
+      if (pokemonCard !== this || sourceCard === undefined) {
+        return state;
       }
-    }
 
-    if (effect instanceof DealDamageEffect && effect.target.cards.includes(this)) {
-      const player = effect.player;
-      const sourcePokemon = player.active.getPokemonCard();
+      // Do not ignore self-damage from Pokemon-Ex
+      const player = StateUtils.findOwner(state, effect.target);
+      const opponent = StateUtils.findOwner(state, effect.source);
+      if (player === opponent) {
+        return state;
+      }
 
-      if (sourcePokemon && sourcePokemon.tags.includes(CardTag.POKEMON_TERA)) {
+      // It's not an attack
+      if (state.phase !== GamePhase.ATTACK) {
+        return state;
+      }
+
+      if (sourceCard.tags.includes(CardTag.POKEMON_TERA)) {
+
+        // Try to reduce PowerEffect, to check if something is blocking our ability
+        try {
+          const stub = new PowerEffect(player, {
+            name: 'test',
+            powerType: PowerType.ABILITY,
+            text: ''
+          }, this);
+          store.reduceEffect(state, stub);
+        } catch {
+          return state;
+        }
         effect.damage = 0;
         effect.preventDefault = true;
       }

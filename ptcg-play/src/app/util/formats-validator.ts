@@ -82,7 +82,8 @@ export class FormatValidator {
       Format.EXPANDED,
       Format.STANDARD,
       Format.STANDARD_NIGHTLY,
-      Format.RETRO
+      Format.RETRO,
+      Format.WORLDS_2013,
     ].forEach(format => {
       this.isValid(card, format) ? formats.push(format) : null;
     });
@@ -110,19 +111,20 @@ export class FormatValidator {
         var banList = BanLists[format];
         return card.regulationMark === 'G' ||
           card.regulationMark === 'H' ||
-          card.regulationMark === 'I';
+          card.regulationMark === 'I' ||
+          card.regulationMark === 'J';
 
       case Format.EXPANDED:
         var banList = BanLists[format];
         var setDate = SetReleaseDates[card.set];
-        return setDate >= new Date('Mon, 25 Apr 2011 00:00:00 GMT') &&
+        return setDate >= new Date('Mon, 25 Apr 2011 00:00:00 GMT') && setDate <= new Date() &&
           !banList.includes(`${card.name} ${card.set} ${card.setNumber}`);
 
       case Format.GLC:
         var banList = BanLists[format];
         var setDate = SetReleaseDates[card.set];
-        // return setDate >= new Date('Mon, 25 Apr 2011 00:00:00 GMT') && setDate <= new Date() &&
-        return setDate >= new Date('Mon, 25 Apr 2011 00:00:00 GMT') &&
+        return setDate >= new Date('Mon, 25 Apr 2011 00:00:00 GMT') && setDate <= new Date() &&
+          // return setDate >= new Date('Mon, 25 Apr 2011 00:00:00 GMT') &&
           !banList.includes(`${card.name} ${card.set} ${card.setNumber}`) &&
           !card.tags.some(t => [
             CardTag.ACE_SPEC.toString(),
@@ -141,6 +143,13 @@ export class FormatValidator {
           card.set === 'JU' ||
           card.set === 'FO' ||
           card.set === 'PR';
+
+      case Format.WORLDS_2013:
+        var banList = BanLists[format];
+        var setDate = SetReleaseDates[card.set];
+        return setDate >= SetReleaseDates['BWP'] &&
+          setDate <= SetReleaseDates['PLF'] &&
+          !banList.includes(`${card.name} ${card.set} ${card.setNumber}`);
     }
 
     if (banList.includes(`${card.name} ${card.set} ${card.setNumber}`)) {
@@ -217,7 +226,8 @@ export const BanLists: { [key: number]: string[] } = {
   [Format.RETRO]: [],
   [Format.UNLIMITED]: [],
   [Format.STANDARD]: [],
-  [Format.STANDARD_NIGHTLY]: []
+  [Format.STANDARD_NIGHTLY]: [],
+  [Format.WORLDS_2013]: [],
 }
 
 export const SetReleaseDates: { [key: string]: Date } = {
@@ -363,7 +373,8 @@ export const SetReleaseDates: { [key: string]: Date } = {
   'SSP': new Date('2024-11-08'),
   'SV8a': new Date('2024-12-06'),
   'PRE': new Date('2025-01-17'),
-  'SV9': new Date('2025-01-01'),
-  'SV9a': new Date('2025-01-01'),
-  'SV10': new Date('2025-01-01'),
+  'JTG': new Date('2025-04-11'),
+  'SV9': new Date('2025-04-11'),
+  'SV9a': new Date('2025-04-11'),
+  'SV10': new Date('2025-05-20'),
 }

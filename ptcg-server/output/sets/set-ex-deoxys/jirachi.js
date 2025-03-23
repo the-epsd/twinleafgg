@@ -66,16 +66,11 @@ class Jirachi extends pokemon_card_1.PokemonCard {
             }
             const deckTop = new game_1.CardList();
             player.deck.moveTo(deckTop, 5);
-            const opponent = game_1.StateUtils.getOpponent(state, player);
             return store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_HAND, deckTop, {}, { min: 1, max: 1, allowCancel: false }), selected => {
                 prefabs_1.ADD_MARKER(this.WISHING_STAR_MARKER, player, this);
                 deckTop.moveCardsTo(selected, player.hand);
                 deckTop.moveTo(player.deck);
                 prefabs_1.ABILITY_USED(player, this);
-                if (selected.length > 0) {
-                    return store.prompt(state, new game_1.ShowCardsPrompt(opponent.id, game_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, selected), () => {
-                    });
-                }
                 prefabs_1.SHUFFLE_DECK(store, state, player);
             });
         }

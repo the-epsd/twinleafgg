@@ -70,35 +70,25 @@ export class Jolteonex extends PokemonCard {
         player.id,
         GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
         PlayerType.BOTTOM_PLAYER,
-        [SlotType.BENCH],// Card source is target Pokemon
+        [SlotType.BENCH],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
         { min: 0, max: 2, allowCancel: false }
       ), transfers => {
 
-        if (transfers === null || transfers.length === 0) {
+        if (transfers === null) {
           return state;
         }
 
-        for (const transfer of transfers) {
-          let totalDiscarded = 0;
+        const baseDamage = 60;
+        const additionalDamage = transfers.length * 90;
+        effect.damage = baseDamage + additionalDamage;
 
+        for (const transfer of transfers) {
           const source = StateUtils.getTarget(state, player, transfer.from);
           const target = player.discard;
           source.moveCardTo(transfer.card, target);
-
-          totalDiscarded = transfers.length;
-
-          // Base damage is 60
-          if (totalDiscarded === 0) {
-            effect.damage = 60;
-          } else if (totalDiscarded === 1) {
-            effect.damage = 150;  // 60 + 90
-          } else if (totalDiscarded === 2) {
-            effect.damage = 240;  // 60 + (90 * 2)
-          }
-
         }
-        console.log('Total Damage: ' + effect.damage);
+
         return state;
       });
     }

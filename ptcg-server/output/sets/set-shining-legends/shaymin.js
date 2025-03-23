@@ -18,7 +18,7 @@ class Shaymin extends pokemon_card_1.PokemonCard {
         this.attacks = [{
                 name: 'Flippity Flap',
                 cost: [G],
-                damage: 30,
+                damage: 0,
                 text: 'Shuffle your hand into your deck. Then, draw 6 cards.'
             },
             {

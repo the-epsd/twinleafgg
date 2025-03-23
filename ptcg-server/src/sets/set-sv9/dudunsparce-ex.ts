@@ -1,5 +1,5 @@
 import { PokemonCard, CardTag, Stage, CardType, State, StoreLike, StateUtils, PlayerType } from '../../game';
-import { AfterDamageEffect, ApplyWeaknessEffect, DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { AfterDamageEffect, ApplyWeaknessEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 
@@ -54,10 +54,7 @@ export class Dudunsparceex extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      const dealDamage = new DealDamageEffect(effect, 150);
-      store.reduceEffect(state, dealDamage);
-
-      const applyWeakness = new ApplyWeaknessEffect(effect, dealDamage.damage);
+      const applyWeakness = new ApplyWeaknessEffect(effect, 150);
       store.reduceEffect(state, applyWeakness);
       const damage = applyWeakness.damage;
 
@@ -69,8 +66,6 @@ export class Dudunsparceex extends PokemonCard {
         state = store.reduceEffect(state, afterDamage);
       }
     }
-
     return state;
   }
-
 }

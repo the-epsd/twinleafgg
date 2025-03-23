@@ -223,6 +223,12 @@ var Format;
     Format[Format["RETRO"] = 4] = "RETRO";
     Format[Format["GLC"] = 5] = "GLC";
     Format[Format["STANDARD_NIGHTLY"] = 6] = "STANDARD_NIGHTLY";
+    Format[Format["BW"] = 7] = "BW";
+    Format[Format["XY"] = 8] = "XY";
+    Format[Format["SM"] = 9] = "SM";
+    Format[Format["SWSH"] = 10] = "SWSH";
+    Format[Format["SV"] = 11] = "SV";
+    Format[Format["WORLDS_2013"] = 12] = "WORLDS_2013";
 })(Format = exports.Format || (exports.Format = {}));
 exports.Energy = {
     D: CardType.DARK,

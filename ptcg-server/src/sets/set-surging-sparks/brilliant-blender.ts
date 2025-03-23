@@ -54,7 +54,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   });
 }
 
-export class PerfectMixer extends TrainerCard {
+export class BrilliantBlender extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
 
@@ -66,7 +66,7 @@ export class PerfectMixer extends TrainerCard {
 
   public name: string = 'Brilliant Blender';
 
-  public fullName: string = 'Perfect Mixer SSP';
+  public fullName: string = 'Brilliant Blender SSP';
 
   public cardImage: string = 'assets/cardback.png';
 

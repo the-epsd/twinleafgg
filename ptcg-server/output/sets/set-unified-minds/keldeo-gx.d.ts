@@ -14,12 +14,19 @@ export declare class KeldeoGX extends PokemonCard {
         powerType: PowerType;
         text: string;
     }[];
-    attacks: {
+    attacks: ({
+        name: string;
+        cost: (CardType.WATER | CardType.COLORLESS)[];
+        damage: number;
+        shredAttack: boolean;
+        text: string;
+    } | {
         name: string;
         cost: (CardType.WATER | CardType.COLORLESS)[];
         damage: number;
         text: string;
-    }[];
+        shredAttack?: undefined;
+    })[];
     set: string;
     setNumber: string;
     cardImage: string;

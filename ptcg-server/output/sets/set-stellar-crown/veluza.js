@@ -68,9 +68,7 @@ class Veluza extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            const dealDamage = new attack_effects_1.DealDamageEffect(effect, 110);
-            store.reduceEffect(state, dealDamage);
-            const applyWeakness = new attack_effects_1.ApplyWeaknessEffect(effect, dealDamage.damage);
+            const applyWeakness = new attack_effects_1.ApplyWeaknessEffect(effect, 110);
             store.reduceEffect(state, applyWeakness);
             const damage = applyWeakness.damage;
             effect.damage = 0;
