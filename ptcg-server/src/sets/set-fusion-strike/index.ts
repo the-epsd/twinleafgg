@@ -12,6 +12,7 @@ import { Croagunk } from './croagunk';
 import { CrossSwitcher } from './cross-switcher';
 import { Deoxys } from './deoxys';
 import { Dreepy } from './dreepy';
+import { Dragapult } from './dragapult';
 import { Dunsparce } from './dunsparce';
 import { ElesasSparkle } from './elesas-sparkle';
 import { FusionStrikeEnergy } from './fusion-strike-energy';
@@ -58,6 +59,7 @@ export const setFusionStrike: Card[] = [
   new Cook(),
   new Deoxys(),
   new Dreepy(),
+  new Dragapult(),
   new Dunsparce(),
   new ElesasSparkle(),
   new FusionStrikeEnergy(),

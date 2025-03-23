@@ -14,6 +14,7 @@ const croagunk_1 = require("./croagunk");
 const cross_switcher_1 = require("./cross-switcher");
 const deoxys_1 = require("./deoxys");
 const dreepy_1 = require("./dreepy");
+const dragapult_1 = require("./dragapult");
 const dunsparce_1 = require("./dunsparce");
 const elesas_sparkle_1 = require("./elesas-sparkle");
 const fusion_strike_energy_1 = require("./fusion-strike-energy");
@@ -57,6 +58,7 @@ exports.setFusionStrike = [
     new cook_1.Cook(),
     new deoxys_1.Deoxys(),
     new dreepy_1.Dreepy(),
+    new dragapult_1.Dragapult(),
     new dunsparce_1.Dunsparce(),
     new elesas_sparkle_1.ElesasSparkle(),
     new fusion_strike_energy_1.FusionStrikeEnergy(),
