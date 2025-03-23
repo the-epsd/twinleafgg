@@ -39,12 +39,20 @@ export class BoardInteractionService {
   // Callback when selection is confirmed
   private selectionCallback: (targets: CardTarget[]) => void;
 
+  // Track if we're in replay mode
+  private isReplayModeActive = false;
+
   constructor() { }
 
   /**
    * Start board selection mode for a Pokémon selection prompt
    */
   public startBoardSelection(prompt: ChoosePokemonPrompt, onComplete: (targets: CardTarget[]) => void): void {
+    // Don't start board selection if we're in replay mode
+    if (this.isReplayModeActive) {
+      return;
+    }
+
     this.promptSubject.next(prompt);
     this.selectionModeSubject.next(true);
     this.selectedTargetsSubject.next([]);
@@ -67,6 +75,17 @@ export class BoardInteractionService {
     this.eligiblePlayerTypeSubject.next(null);
     this.eligibleSlotsSubject.next([]);
     this.selectionCallback = null;
+  }
+
+  /**
+   * Set replay mode status
+   */
+  public setReplayMode(isReplayMode: boolean): void {
+    this.isReplayModeActive = isReplayMode;
+    if (isReplayMode) {
+      // If entering replay mode, end any active board selection
+      this.endBoardSelection();
+    }
   }
 
   /**

@@ -333,13 +333,21 @@
   "BUTTON_LEAVE_QUEUE": "Leave Queue",
   "BUTTON_COOLDOWN": "Cooldown",
   "BUTTON_MATCHMAKING_COOLDOWN": "Cooldown",
+  "NO_DECK": "No valid deck",
   "LABEL_SELECT_FORMAT": "Select format",
   "LABEL_PLAYERS_IN_QUEUE": "Now in Queue",
   "BUTTON_EXPORT_DECKLIST": "Export Decklist",
   "NEWS_AND_UPDATES": "News & Updates",
-  "DECK_SET_AS_DEFAULT": "Set Default",
+  "DECK_SET_AS_DEFAULT": "Set as default deck",
   "RECONNECTING_TO_SERVER": "Reconnecting to server...",
   "ERROR_ACCOUNT_BANNED": "This account has been banned for violating the Terms of Service",
+  "FORMAT_ALL": "All",
+  "FORMAT_STANDARD": "Standard",
+  "FORMAT_STANDARD_NIGHTLY": "Standard Nightly",
+  "FORMAT_EXPANDED": "Expanded",
+  "FORMAT_UNLIMITED": "Unlimited",
+  "FORMAT_RETRO": "Retro",
+  "FORMAT_GLC": "GLC",
   "GAME_MESSAGES": {
     "ACTION_IN_PROGRESS": "Action in progress",
     "ALL_FIRE_ENERGIES": "All fire energies",
@@ -364,6 +372,7 @@
     "CHOOSE_ATTACK_TO_DISABLE": "Choose attack to disable during your opponent's next turn.",
     "CHOOSE_CARDS_ORDER": "Order cards in any way you like.",
     "CHOOSE_CARDS_TO_PUT_ON_TOP_OF_THE_DECK": "Choose cards to place on top of the deck.",
+    "CHOOSE_CARDS_TO_PUT_ON_BOTTOM_OF_THE_DECK": "Choose cards to place at the bottom of the deck.",
     "CHOOSE_CARD_TO_ATTACH": "Choose card that will be attached to the Pokémon.",
     "CHOOSE_BASIC_POKEMON_TO_BENCH": "Choose a Basic Pokémon to place on your bench.",
     "CHOOSE_OPPONENTS_BASIC_POKEMON_TO_BENCH": "Choose a Basic Pokémon to place on your opponent's bench.",
@@ -570,5 +579,9 @@
     "LOG_HISUIAN_HEAVY_BALL": "{{name}} has taken {{card}} from their Prize Cards with Hisuian Heavy Ball.",
     "LOG_PLAYER_CHOOSES": "{{name}} chooses {{string}}.",
     "LOG_SHUFFLE_POKEMON_INTO_DECK": "{{name}} shuffles {{card}} into their deck with the effect of {{effect}}."
-  }
+  },
+  "DECK_NO_DECKS_FORMAT": "You don't have any decks legal in {{format}} format.",
+  "DECK_SET_AS_FORMAT_DEFAULT": "Set as {{format}} default",
+  "DECK_EXPORTED_TO_CLIPBOARD": "Deck exported to clipboard",
+  "DEFAULT": "Default"
 }

@@ -5,6 +5,7 @@ const trainer_card_1 = require("../../game/store/card/trainer-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class PowHandExtension extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -14,7 +15,7 @@ class PowHandExtension extends trainer_card_1.TrainerCard {
         this.fullName = 'Pow! Hand Extension TRR';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '85';
-        this.text = 'You may use this card only if you have more Prize cards left than your opponent. Move 1 Energy card attached to the Defending Pokémon to another of your opponent\'s Pokémon. Or, switch 1 of your opponent\'s Benched Pokémon with 1 of the Defending Pokémon.Your opponent chooses the Defending Pokémon to switch.';
+        this.text = 'You may use this card only if you have more Prize cards left than your opponent. Move 1 Energy card attached to the Defending Pokémon to another of your opponent\'s Pokémon. Or, switch 1 of your opponent\'s Benched Pokémon with 1 of the Defending Pokémon. Your opponent chooses the Defending Pokémon to switch.';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {
@@ -37,18 +38,20 @@ class PowHandExtension extends trainer_card_1.TrainerCard {
                                 const target = game_1.StateUtils.getTarget(state, opponent, transfer.to);
                                 opponent.active.moveCardTo(transfer.card, target);
                             }
+                            prefabs_1.MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [effect.trainerCard] });
                         });
                     }
                 },
                 {
                     message: game_1.GameMessage.CHOOSE_POKEMON_TO_SWITCH,
                     action: () => {
-                        return store.prompt(state, new game_1.ChoosePokemonPrompt(opponent.id, game_1.GameMessage.CHOOSE_POKEMON_TO_SWITCH, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { allowCancel: false }), targets => {
+                        return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_SWITCH, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { allowCancel: false }), targets => {
                             if (targets && targets.length > 0) {
                                 opponent.active.clearEffects();
                                 opponent.switchPokemon(targets[0]);
                                 return state;
                             }
+                            prefabs_1.MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [effect.trainerCard] });
                         });
                     }
                 }
@@ -56,6 +59,7 @@ class PowHandExtension extends trainer_card_1.TrainerCard {
             return store.prompt(state, new game_1.SelectPrompt(player.id, game_1.GameMessage.CHOOSE_OPTION, options.map(opt => opt.message), { allowCancel: false }), choice => {
                 const option = options[choice];
                 option.action();
+                prefabs_1.MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [effect.trainerCard] });
             });
         }
         return state;

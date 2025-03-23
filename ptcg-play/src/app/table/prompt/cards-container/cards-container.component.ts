@@ -25,5 +25,4 @@ export class CardsContainerComponent implements AfterViewInit {
       }, 100);
     }
   }
-
 }

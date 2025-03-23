@@ -1,10 +1,10 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Player, GamePhase, Card, Format } from 'ptcg-server';
+import { Player, GamePhase, Card, Format, GameWinner } from 'ptcg-server';
 import { Observable, from, EMPTY } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { withLatestFrom, switchMap, finalize } from 'rxjs/operators';
+import { withLatestFrom, switchMap, finalize, tap, map } from 'rxjs/operators';
 
 import { ApiError } from '../api/api.error';
 import { AlertService } from '../shared/alert/alert.service';
@@ -15,6 +15,7 @@ import { SessionService } from '../shared/session/session.service';
 import { CardsBaseService } from '../shared/cards/cards-base.service';
 import { FormatValidator } from '../util/formats-validator';
 import { BoardInteractionService } from '../shared/services/board-interaction.service';
+import { GameOverPrompt } from './prompt/prompt-game-over/game-over.prompt';
 
 @UntilDestroy()
 @Component({
@@ -33,6 +34,8 @@ export class TableComponent implements OnInit, OnDestroy {
   public loading: boolean;
   public waiting: boolean;
   private gameId: number;
+  public showGameOver = false;
+  public gameOverPrompt: GameOverPrompt;
 
   public formats = {
     [Format.STANDARD]: 'LABEL_STANDARD',
@@ -179,6 +182,29 @@ export class TableComponent implements OnInit, OnDestroy {
         && state.phase === GamePhase.PLAYER_TURN;
       this.waiting = (notMyTurn || waitingForOthers) && !waitingForMe && !isObserver;
     }
+
+    // Check if the game is in the FINISHED phase and update the game over state
+    if (state.phase === GamePhase.FINISHED && !gameState.gameOver) {
+      this.gameOverPrompt = new GameOverPrompt(clientId, state.winner);
+      this.showGameOver = true;
+    } else {
+      this.showGameOver = false;
+    }
   }
 
+  private updateGameState(state: LocalGameState) {
+    this.gameState = state;
+
+    // Show game over screen when the game is finished
+    if (state && state.state && state.state.phase === GamePhase.FINISHED && !state.gameOver) {
+      this.showGameOver = true;
+      this.gameOverPrompt = new GameOverPrompt(this.clientId, state.state.winner);
+    } else {
+      this.showGameOver = false;
+      this.gameOverPrompt = undefined;
+    }
+
+    // Update player information
+    this.updatePlayers(state, this.clientId);
+  }
 }

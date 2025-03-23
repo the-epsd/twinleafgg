@@ -41,7 +41,8 @@ export declare enum CardTag {
     CYNTHIAS = "CYNTHIAS",
     ARVENS = "ARVENS",
     POKEMON_SV_MEGA = "POKEMON_SV_MEGA",
-    HOLONS = "HOLONS"
+    HOLONS = "HOLONS",
+    TEAM_ROCKET = "TEAM_ROCKET"
 }
 export declare enum SuperType {
     NONE = 0,
@@ -207,7 +208,13 @@ export declare enum Format {
     UNLIMITED = 3,
     RETRO = 4,
     GLC = 5,
-    STANDARD_NIGHTLY = 6
+    STANDARD_NIGHTLY = 6,
+    BW = 7,
+    XY = 8,
+    SM = 9,
+    SWSH = 10,
+    SV = 11,
+    WORLDS_2013 = 12
 }
 export declare const Energy: {
     readonly D: CardType.DARK;

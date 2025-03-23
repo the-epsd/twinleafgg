@@ -72,7 +72,7 @@ import { Ninetales } from './ninetales';
 import { Palkia } from './palkia';
 import { Palossandex } from './palossand-ex';
 import { Pansear } from './pansear';
-import { PerfectMixer } from './perfect-mixer';
+import { BrilliantBlender } from './brilliant-blender';
 import { Phanpy } from './phanpy-ir';
 import { Pikachuex } from './pikachu-ex';
 import { Quaquaval } from './quaquaval';
@@ -142,7 +142,7 @@ export const setSurgingSparks: Card[] = [
   new Palkia(),
   new HoOh(),
   new Azumarill(),
-  new PerfectMixer(),
+  new BrilliantBlender(),
   new CherishCarrier(),
   new Marill(),
   new TeraOrb(),

@@ -6,7 +6,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { CheckAttackCostEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { ToolEffect } from '../../game/store/effects/play-card-effects';
 
-export class GlisteningCrystal extends TrainerCard {
+export class SparklingCrystal extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.TOOL;
 
@@ -22,7 +22,7 @@ export class GlisteningCrystal extends TrainerCard {
 
   public name: string = 'Sparkling Crystal';
 
-  public fullName: string = 'Glistening Crystal SCR';
+  public fullName: string = 'Sparkling Crystal SCR';
 
   public text: string =
     'When the Tera Pokémon this card is attached to uses an attack, that attack costs 1 Energy less. (The Energy can be of any type.)';

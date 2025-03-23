@@ -75,13 +75,14 @@ class BlisseyV extends game_1.PokemonCard {
             if (energyCards.length === 0) {
                 return state;
             }
+            this.usedBlissfulBlast = false;
             return store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_BENCH, player.discard, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE], { superType: game_1.SuperType.ENERGY }, { allowCancel: false, min: 0, max: maxEnergyCards }), transfers => {
                 transfers = transfers || [];
                 for (const transfer of transfers) {
                     const target = game_1.StateUtils.getTarget(state, player, transfer.to);
                     player.discard.moveCardTo(transfer.card, target);
                 }
-                this.usedBlissfulBlast = false;
+                return state;
             });
         }
         return state;

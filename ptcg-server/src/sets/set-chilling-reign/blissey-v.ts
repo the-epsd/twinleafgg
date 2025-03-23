@@ -99,6 +99,8 @@ export class BlisseyV extends PokemonCard {
         return state;
       }
 
+      this.usedBlissfulBlast = false;
+
       return store.prompt(state, new AttachEnergyPrompt(
         player.id,
         GameMessage.ATTACH_ENERGY_TO_BENCH,
@@ -113,7 +115,7 @@ export class BlisseyV extends PokemonCard {
           const target = StateUtils.getTarget(state, player, transfer.to);
           player.discard.moveCardTo(transfer.card, target);
         }
-        this.usedBlissfulBlast = false;
+        return state;
       });
     }
     return state;

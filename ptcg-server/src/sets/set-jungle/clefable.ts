@@ -1,7 +1,7 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import {
-  StoreLike, State, GameMessage, Attack, ChooseAttackPrompt, GameLog, StateUtils, PlayerType
+  StoreLike, State, GameMessage, Attack, ChooseAttackPrompt, GameLog, StateUtils
 } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
@@ -124,7 +124,7 @@ export class Clefable extends PokemonCard {
 
       player.active.marker.addMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
       opponent.marker.addMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
-      console.log('marker added');
+      console.log('Minimize effect markers added');
     }
 
     if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {
@@ -138,10 +138,10 @@ export class Clefable extends PokemonCard {
       && effect.player.active.marker.hasMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this)) {
       effect.player.active.marker.removeMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
       const opponent = StateUtils.getOpponent(state, effect.player);
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
+      opponent.forEachPokemon(opponent.id, (cardList) => {
         cardList.marker.removeMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
       });
-      console.log('marker removed');
+      console.log('Minimize effect markers removed at end of turn');
     }
     return state;
   }

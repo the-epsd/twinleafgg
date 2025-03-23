@@ -79,6 +79,37 @@ export class BoardComponent implements OnDestroy {
     return this.gameState?.state?.players[this.gameState.state.activePlayer]?.id === this.bottomPlayer?.id;
   }
 
+  // Get the active stadium card and its owner
+  get stadiumCard(): CardList {
+    // If top player has a stadium card, use it
+    if (this.topPlayer?.stadium?.cards?.length > 0) {
+      return this.topPlayer.stadium;
+    }
+    // If bottom player has a stadium card, use it
+    if (this.bottomPlayer?.stadium?.cards?.length > 0) {
+      return this.bottomPlayer.stadium;
+    }
+    // No stadium card is in play
+    return null;
+  }
+
+  // Determine who owns the active stadium
+  get stadiumOwner(): boolean {
+    if (!this.stadiumCard) return false;
+
+    // Check if it belongs to top player
+    if (this.topPlayer?.stadium?.cards?.length > 0) {
+      return this.topPlayer.id === this.clientId;
+    }
+
+    // Check if it belongs to bottom player
+    if (this.bottomPlayer?.stadium?.cards?.length > 0) {
+      return this.bottomPlayer.id === this.clientId;
+    }
+
+    return false;
+  }
+
   constructor(
     private cardsBaseService: CardsBaseService,
     private dnd: DndService,
@@ -347,12 +378,15 @@ export class BoardComponent implements OnDestroy {
     // Check if card is in top player's cards
     if (this.topPlayer && (
       (this.topPlayer.active === cardList) ||
-      this.topPlayer.bench.includes(cardList as PokemonCardList)
+      this.topPlayer.bench.includes(cardList as PokemonCardList) ||
+      this.topPlayer.stadium === cardList
     )) {
       player = PlayerType.TOP_PLAYER;
 
       if (this.topPlayer.active === cardList) {
         slot = SlotType.ACTIVE;
+      } else if (this.topPlayer.stadium === cardList) {
+        slot = SlotType.BOARD;
       } else {
         slot = SlotType.BENCH;
         index = this.topPlayer.bench.indexOf(cardList as PokemonCardList);
@@ -361,12 +395,15 @@ export class BoardComponent implements OnDestroy {
     // Check if card is in bottom player's cards
     else if (this.bottomPlayer && (
       (this.bottomPlayer.active === cardList) ||
-      this.bottomPlayer.bench.includes(cardList as PokemonCardList)
+      this.bottomPlayer.bench.includes(cardList as PokemonCardList) ||
+      this.bottomPlayer.stadium === cardList
     )) {
       player = PlayerType.BOTTOM_PLAYER;
 
       if (this.bottomPlayer.active === cardList) {
         slot = SlotType.ACTIVE;
+      } else if (this.bottomPlayer.stadium === cardList) {
+        slot = SlotType.BOARD;
       } else {
         slot = SlotType.BENCH;
         index = this.bottomPlayer.bench.indexOf(cardList as PokemonCardList);
@@ -534,11 +571,11 @@ export class BoardComponent implements OnDestroy {
     const isDeleted = this.gameState.deleted;
 
     if (!isBottomOwner || isDeleted) {
-      return this.onCardClick(card, undefined);
+      return this.onCardClick(card, this.stadiumCard);
     }
 
     const options = { enableTrainer: true };
-    this.cardsBaseService.showCardInfo({ card, options })
+    this.cardsBaseService.showCardInfo({ card, cardList: this.stadiumCard, options })
       .then(result => {
         if (!result) {
           return;

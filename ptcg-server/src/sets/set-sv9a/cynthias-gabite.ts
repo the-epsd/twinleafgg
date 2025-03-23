@@ -19,7 +19,7 @@ export class CynthiasGabite extends PokemonCard {
   public evolvesFrom = 'Cynthia\'s Gible';
   public tags = [CardTag.CYNTHIAS];
   public cardType: CardType = F;
-  public hp: number = 90;
+  public hp: number = 100;
   public weakness = [{ type: G }];
   public retreat = [C];
 

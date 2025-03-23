@@ -41,6 +41,17 @@ export class PromptComponent implements OnChanges {
       differentGame = !previousState || previousState.localId !== this.gameState.localId;
     }
 
+    // In replay mode, we need special handling
+    if (this.gameState.replay) {
+      // If we're navigating through replay states (position changes), hide any active prompts
+      if (changes.gameState && changes.gameState.previousValue &&
+        changes.gameState.previousValue.replayPosition !== this.gameState.replayPosition) {
+        this.prompt = undefined;
+        this.toggle(false);
+        return;
+      }
+    }
+
     let prompt = this.gameState.state.prompts.find(p => {
       return p.playerId === this.clientId && p.result === undefined;
     });
@@ -90,9 +101,9 @@ export class PromptComponent implements OnChanges {
   }
 
   private checkGameOver(gameState: LocalGameState): GameOverPrompt | undefined {
-    if (gameState.state.phase === GamePhase.FINISHED && gameState.gameOver === false) {
-      return new GameOverPrompt(this.clientId, gameState.state.winner);
-    }
+    // Return undefined to prevent the old game over prompt from appearing
+    // The new game over screen is now handled directly by the table component
+    return undefined;
   }
 
 }

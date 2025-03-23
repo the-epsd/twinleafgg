@@ -22,7 +22,7 @@ const fan_rotom_1 = require("./fan-rotom");
 const galvantula_ex_1 = require("./galvantula-ex");
 const garganacl_ex_1 = require("./garganacl-ex");
 const glass_trumpet_1 = require("./glass-trumpet");
-const glistening_crystal_1 = require("./glistening-crystal");
+const sparkling_crystal_1 = require("./sparkling-crystal");
 const gravity_gemstone_1 = require("./gravity-gemstone");
 const great_tree_1 = require("./great-tree");
 const hoothoot_1 = require("./hoothoot");
@@ -66,7 +66,7 @@ exports.setStellarCrown = [
     new galvantula_ex_1.Galvantulaex(),
     new garganacl_ex_1.Garganaclex(),
     new glass_trumpet_1.GlassTrumpet(),
-    new glistening_crystal_1.GlisteningCrystal(),
+    new sparkling_crystal_1.SparklingCrystal(),
     new gravity_gemstone_1.GravityGemstone(),
     new great_tree_1.GreatTree(),
     new hoothoot_1.Hoothoot(),

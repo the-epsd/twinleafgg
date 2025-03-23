@@ -43,7 +43,6 @@ class RapidStrikeUrshifuVMAX extends pokemon_card_1.PokemonCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof game_phase_effects_1.EndTurnEffect) {
             this.movedToActiveThisTurn = false;
-            console.log('movedToActiveThisTurn = false');
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             if (this.movedToActiveThisTurn) {
@@ -52,7 +51,6 @@ class RapidStrikeUrshifuVMAX extends pokemon_card_1.PokemonCard {
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
-            const opponent = game_1.StateUtils.getOpponent(state, player);
             const checkProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(player);
             state = store.reduceEffect(state, checkProvidedEnergy);
             const cards = checkProvidedEnergy.energyMap.map(e => e.card);
@@ -60,15 +58,14 @@ class RapidStrikeUrshifuVMAX extends pokemon_card_1.PokemonCard {
             discardEnergy.target = player.active;
             store.reduceEffect(state, discardEnergy);
             const max = Math.min(2);
-            return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { min: max, max, allowCancel: false }), selected => {
+            return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { min: 1, max, allowCancel: false }), selected => {
                 const targets = selected || [];
-                if (targets.includes(opponent.active)) {
-                    targets.forEach(target => {
-                        const damageEffect = new attack_effects_1.PutDamageEffect(effect, 120);
-                        damageEffect.target = target;
-                        store.reduceEffect(state, damageEffect);
-                    });
-                }
+                targets.forEach(target => {
+                    const damageEffect = new attack_effects_1.PutDamageEffect(effect, 120);
+                    damageEffect.target = target;
+                    store.reduceEffect(state, damageEffect);
+                });
+                return state;
             });
         }
         return state;

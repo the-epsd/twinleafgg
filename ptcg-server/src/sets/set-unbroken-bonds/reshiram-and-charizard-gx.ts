@@ -34,7 +34,7 @@ export class ReshiramCharizardGX extends PokemonCard {
       name: 'Double Blaze-GX',
       cost: [R, R, R],
       damage: 200,
-      shred: false,
+      shredAttack: false,
       gxAttack: true,
       damageCalculation: '+',
       text: 'If this Pokemon has at least 3 extra [R] Energy attached to it (in addition to this attack\'s cost), ' +
@@ -95,7 +95,7 @@ export class ReshiramCharizardGX extends PokemonCard {
       const meetsExtraEffectCost = StateUtils.checkEnoughEnergy(checkProvidedEnergy.energyMap, extraEffectCost);
 
       if (meetsExtraEffectCost) {
-        this.attacks[0].shred === true;
+        this.attacks[0].shredAttack === true;
         const applyWeakness = new ApplyWeaknessEffect(effect, effect.damage + 100);
         store.reduceEffect(state, applyWeakness);
         const damage = applyWeakness.damage;

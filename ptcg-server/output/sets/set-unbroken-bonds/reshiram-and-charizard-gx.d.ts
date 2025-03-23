@@ -15,7 +15,7 @@ export declare class ReshiramCharizardGX extends PokemonCard {
         damage: number;
         damageCalculation: string;
         text: string;
-        shred?: undefined;
+        shredAttack?: undefined;
         gxAttack?: undefined;
     } | {
         name: string;
@@ -23,13 +23,13 @@ export declare class ReshiramCharizardGX extends PokemonCard {
         damage: number;
         text: string;
         damageCalculation?: undefined;
-        shred?: undefined;
+        shredAttack?: undefined;
         gxAttack?: undefined;
     } | {
         name: string;
         cost: CardType.FIRE[];
         damage: number;
-        shred: boolean;
+        shredAttack: boolean;
         gxAttack: boolean;
         damageCalculation: string;
         text: string;

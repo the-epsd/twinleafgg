@@ -9,7 +9,7 @@ import { Comfey } from './comfey';
 import { Crabominable } from './crabominable';
 import { Crabrawler } from './crabrawler';
 import { Crispin } from './crispin';
-import {DeluxeBomb} from './deluxe-bomb';
+import { DeluxeBomb } from './deluxe-bomb';
 import { Diancie } from './diancie';
 import { Drednaw } from './drednaw';
 import { Drifblim } from './drifblim';
@@ -20,7 +20,7 @@ import { FanRotom } from './fan-rotom';
 import { Galvantulaex } from './galvantula-ex';
 import { Garganaclex } from './garganacl-ex';
 import { GlassTrumpet } from './glass-trumpet';
-import { GlisteningCrystal } from './glistening-crystal';
+import { SparklingCrystal } from './sparkling-crystal';
 import { GravityGemstone } from './gravity-gemstone';
 import { GreatTree } from './great-tree';
 import { Hoothoot } from './hoothoot';
@@ -65,7 +65,7 @@ export const setStellarCrown: Card[] = [
   new Galvantulaex(),
   new Garganaclex(),
   new GlassTrumpet(),
-  new GlisteningCrystal(),
+  new SparklingCrystal(),
   new GravityGemstone(),
   new GreatTree(),
   new Hoothoot(),

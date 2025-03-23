@@ -11,7 +11,6 @@ export declare class Voltorb extends PokemonCard {
     retreat: CardType[];
     powers: {
         name: string;
-        useWhenInPlay: boolean;
         powerType: PowerType;
         text: string;
     }[];

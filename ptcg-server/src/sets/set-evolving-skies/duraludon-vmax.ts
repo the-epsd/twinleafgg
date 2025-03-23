@@ -3,12 +3,12 @@ import { Stage, CardType, EnergyType, CardTag } from '../../game/store/card/card
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect } from '../../game/store/effects/game-effects';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { StateUtils } from '../../game/store/state-utils';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { EnergyCard } from '../../game';
-import { AfterDamageEffect, ApplyWeaknessEffect, DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { AfterDamageEffect, ApplyWeaknessEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 
 
 export class DuraludonVMAX extends PokemonCard {
@@ -62,10 +62,7 @@ export class DuraludonVMAX extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      const dealDamage = new DealDamageEffect(effect, 220);
-      store.reduceEffect(state, dealDamage);
-
-      const applyWeakness = new ApplyWeaknessEffect(effect, dealDamage.damage);
+      const applyWeakness = new ApplyWeaknessEffect(effect, 220);
       store.reduceEffect(state, applyWeakness);
       const damage = applyWeakness.damage;
 
@@ -79,7 +76,7 @@ export class DuraludonVMAX extends PokemonCard {
       return state;
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {
       const opponent = StateUtils.getOpponent(state, effect.player);
       const opponentPokemon = opponent.active;
 
@@ -98,7 +95,6 @@ export class DuraludonVMAX extends PokemonCard {
             return state;
           }
         }
-
       });
     }
     return state;

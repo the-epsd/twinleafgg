@@ -65,7 +65,7 @@ class Archaludonex extends game_1.PokemonCard {
             }
             return store.prompt(state, new game_1.ConfirmPrompt(player.id, game_1.GameMessage.WANT_TO_USE_ABILITY), wantToUse => {
                 if (wantToUse) {
-                    state = store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_ACTIVE, player.discard, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { superType: game_1.SuperType.ENERGY, name: 'Metal Energy' }, { allowCancel: false, min: 0, max: 2, blockedTo: blocked2 }), transfers => {
+                    state = store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_TO_ACTIVE, player.discard, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { superType: game_1.SuperType.ENERGY, energyType: game_1.EnergyType.BASIC, name: 'Metal Energy' }, { allowCancel: false, min: 0, max: 2, blockedTo: blocked2 }), transfers => {
                         transfers = transfers || [];
                         if (transfers.length === 0) {
                             return state;

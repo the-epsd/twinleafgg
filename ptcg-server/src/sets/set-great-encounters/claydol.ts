@@ -18,7 +18,7 @@ export class Claydol extends PokemonCard {
     name: 'Cosmic Power',
     useWhenInPlay: true,
     powerType: PowerType.POKEPOWER,
-    text: 'Once during your turn (before your attack), you may choose up to 2 cards from your hand and put them on the bottom of your deck in any order. If you do, draw cards until you have 6 cards in your hand. This power can\’t be used if Claydol is affected by a Special Condition.'
+    text: 'Once during your turn (before your attack), you may choose up to 2 cards from your hand and put them on the bottom of your deck in any order. If you do, draw cards until you have 6 cards in your hand. This power can\'t be used if Claydol is affected by a Special Condition.'
   }];
 
   public attacks = [{
@@ -66,7 +66,7 @@ export class Claydol extends PokemonCard {
 
       store.prompt(state, new ChooseCardsPrompt(
         player,
-        GameMessage.CHOOSE_CARD_TO_DISCARD,
+        GameMessage.CHOOSE_CARDS_TO_PUT_ON_BOTTOM_OF_THE_DECK,
         player.hand,
         {},
         { allowCancel: false, min: 1, max: 2 }

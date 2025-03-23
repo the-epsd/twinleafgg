@@ -25,6 +25,7 @@ export declare class Aegislash extends PokemonCard {
         name: string;
         cost: CardType[];
         damage: number;
+        shredAttack: boolean;
         text: string;
     }[];
     set: string;

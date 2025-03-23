@@ -15,80 +15,126 @@
 .deck-card {
   background-color: #2a2f3a;
   border-radius: 12px;
-  width: 140px;
-  text-align: center;
   overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  width: 140px;
+  margin: 0 auto 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+  }
+}
+
+.deck-archetype {
+  height: 145px;
+  background-color: #101219;
+  padding: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.deck-info {
+  background-color: #384259;
+  padding: 8px 12px;
   display: flex;
   flex-direction: column;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
 
-  .deck-archetype {
-    height: 145px;
-    background-color: #1a1d24;
-    padding: 24px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.deck-name {
+  color: white;
+  font-size: 12px;
+  font-family: 'Segoe UI', sans-serif;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-align: center;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
-    ::ng-deep img {
-      transform: scale(3);
-      image-rendering: pixelated;
-    }
+.deck-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.8);
+
+  .default-star {
+    color: gold;
+    font-size: 14px;
+    height: 14px;
+    width: 14px;
+    margin-right: 4px;
   }
 
-  .deck-name {
-    color: white;
-    font-size: 14px;
-    font-weight: 500;
-    padding: 12px;
-    background-color: #2a2f3a;
+  span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 
 .format-selection {
-  display: flex;
-  justify-content: space-evenly;
-  width: 100%;
-  position: relative;
+  margin-bottom: 20px;
+
+  .format-button-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+  }
 
   .format-button {
-    background-color: #191A1E;
-    border: 1px solid #9D9D9D;
-    border-radius: 32px;
-    opacity: 0.5;
-    transform: scale(0.85);
-    z-index: 0;
-    min-width: 80px;
-    height: 36px;
-    line-height: 36px;
+    padding: 6px 16px;
+    border-radius: 16px;
+    color: rgba(255, 255, 255, 0.7);
+    background-color: rgba(42, 47, 58, 0.5);
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    min-width: unset;
+
+    &:hover:not([disabled]) {
+      color: white;
+      background-color: rgba(42, 47, 58, 0.8);
+    }
 
     &.active {
-      background-color: #101219;
-      border: 1px solid #459058;
-      opacity: 1;
-      z-index: 1;
+      color: white;
+      background-color: #384259;
+      font-weight: bold;
+    }
+
+    &[disabled] {
+      opacity: 0.5;
     }
   }
 }
 
 .queue-button {
-  background-color: #101219;
-  border: 2px solid #459058;
-  border-radius: 32px;
-  min-width: 200px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 44px;
+  background-color: #449058;
+  color: white;
+  width: 200px;
+  padding: 8px 0;
+  font-weight: bold;
+  font-size: 14px;
+  border-radius: 24px;
+  margin: 0 auto;
+  display: block;
 
   &.in-queue {
-    background-color: #f44336;
-    border: 2px solid #d32f2f;
+    background-color: #d94e4e;
   }
 
-  &.error {
-    background-color: #6b6b6b;
-    border: 2px solid #4a4a4a;
-    color: #c7c7c7;
+  &[disabled] {
+    opacity: 0.7;
   }
 }
 
@@ -144,57 +190,45 @@
 }
 
 .connection-error {
+  color: #d94e4e;
+  font-size: 14px;
+  text-align: center;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #f44336;
-  color: white;
-  border-radius: 8px;
-  padding: 8px 16px;
-  margin: 8px 0;
-  font-size: 0.9rem;
+  margin-bottom: 16px;
 
   mat-icon {
-    margin-right: 8px;
-    font-size: 18px;
-    height: 18px;
-    width: 18px;
+    margin-right: 6px;
   }
 }
 
 .no-deck-warning {
   background-color: #2a2f3a;
   border-radius: 12px;
-  width: 140px;
-  text-align: center;
-  color: white;
-  font-size: 0.9rem;
-  display: flex;
-  flex-direction: column;
   overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  width: 140px;
+  margin: 0 auto 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 
   p {
-    background-color: #101219;
     height: 145px;
-    margin: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    background-color: #101219;
     padding: 24px;
-    flex: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 0;
+    text-align: center;
   }
+}
 
-  button {
-    background-color: #384259;
-    font-family: 'Segoe UI', sans-serif;
-    font-weight: bold;
-    text-transform: uppercase;
-    height: 43px;
-    margin: 0;
-    flex: none;
-    width: 100%;
-    border-radius: 0;
-  }
+.no-deck-icon {
+  font-size: 48px;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: bold;
 }
 
 ::ng-deep .no-ripple .mat-ripple-element {

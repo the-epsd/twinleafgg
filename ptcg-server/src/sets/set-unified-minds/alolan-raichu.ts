@@ -42,22 +42,31 @@ export class AlolanRaichu extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       const blocked: number[] = [];
-      player.active.cards.forEach((cardList, card, target) => {
-        const checkProvidedEnergy = new CheckProvidedEnergyEffect(player, player.active);
-        store.reduceEffect(state, checkProvidedEnergy);
-        const blockedCards: Card[] = [];
+      const cardEnergyCounts = new Map<Card, number>(); // Map card objects to their energy counts
 
-        checkProvidedEnergy.energyMap.forEach(em => {
-          if (!em.provides.includes(CardType.LIGHTNING) && !em.provides.includes(CardType.ANY)) {
-            blockedCards.push(em.card);
-          }
+      // Check energy provided by each card
+      const checkProvidedEnergy = new CheckProvidedEnergyEffect(player, player.active);
+      store.reduceEffect(state, checkProvidedEnergy);
+
+      player.active.cards.forEach((card, index) => {
+        const providedEnergy = checkProvidedEnergy.energyMap.filter(em => em.card === card);
+
+        // Count how many Lightning/Any energy are provided by this card
+        let lightningCount = 0;
+        providedEnergy.forEach(em => {
+          em.provides.forEach(type => {
+            if (type === CardType.LIGHTNING || type === CardType.ANY) {
+              lightningCount++;
+            }
+          });
         });
-        blockedCards.forEach(bc => {
-          const index = target.indexOf(bc);
-          if (index !== -1 && !blocked.includes(index)) {
-            blocked.push(index);
-          }
-        });
+
+        // If the card doesn't provide any Lightning energy, block it
+        if (lightningCount === 0) {
+          blocked.push(index);
+        } else {
+          cardEnergyCounts.set(card, lightningCount);
+        }
       });
 
       return store.prompt(state, new ChooseCardsPrompt(
@@ -69,13 +78,19 @@ export class AlolanRaichu extends PokemonCard {
       ), selected => {
         const cards = selected || [];
         if (cards.length > 0) {
+          // Save energy counts before discarding
+          let totalEnergy = 0;
+          cards.forEach(card => {
+            if (cardEnergyCounts.has(card)) {
+              totalEnergy += cardEnergyCounts.get(card) || 0;
+            }
+          });
 
           const discardEnergy = new DiscardCardsEffect(effect, cards);
           discardEnergy.target = player.active;
-
           store.reduceEffect(state, discardEnergy);
 
-          const damage = cards.length * 30;
+          const damage = totalEnergy * 30;
 
           const maxAllowedDamage: DamageMap[] = [];
           opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
