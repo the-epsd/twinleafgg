@@ -9,6 +9,7 @@ import { Horsea } from './horsea';
 import { Quagsire } from './quagsire';
 import { Salandit } from './salandit';
 import { SwitchRaft } from './switch-raft';
+import { Turtonator } from './turtonator';
 import { VictiniPrismStar } from './victini-prism-star';
 import { Wooper } from './wooper';
 
@@ -24,6 +25,7 @@ export const setDragonsMajesty: Card[] = [
   new Quagsire(),
   new Salandit(),
   new SwitchRaft(),
+  new Turtonator(),
   new VictiniPrismStar(),
-  new Wooper()
+  new Wooper(),
 ];
