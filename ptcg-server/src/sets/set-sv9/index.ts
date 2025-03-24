@@ -63,6 +63,7 @@ import { NsSigilyph } from './ns-sigilyph';
 import { NsZoroarkex } from './ns-zoroark-ex';
 import { NsZorua } from './ns-zorua';
 import { BrocksRecruitmentFA, DudunsparceexFA, HopsWoolooIR, HopsZacianexSIR, IonosBelliboltexFA, IonosBelliboltexSIR, IonosBelliboltexUR, IonosKilowattrelIR, IrisFightingSpiritFA, LilliesClefairyexFA, LilliesClefairyexSIR, LilliesRibombeeIR, LycanrocIR, MamoswineexFA, MaractusIR, NsReshiramIR, NsZoroarkexFA, NsZoroarkexSIR, NsZoroarkexUR, NsZoruaIR, RuffianFA, SalamenceexFA, SalamenceexSIR, SpikeEnergyUR, SwinubIR, VolcanionexFA, VolcanionexSIR, WailordIR } from './other-prints';
+import {Petilil} from './petilil';
 import { Piloswine } from './piloswine';
 import { Postwick } from './postwick';
 import { Pupitar } from './pupitar';
@@ -127,6 +128,8 @@ export const setSV9: Card[] = [
   new Lotad(),
   new Lombre(),
   new Ludicolo(),
+  new Petilil(),
+  new Lilligant(),
 
   new LilliesClefairyex(),
   new LilliesComfey(),
