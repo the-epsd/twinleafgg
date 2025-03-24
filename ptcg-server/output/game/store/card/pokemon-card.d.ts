@@ -22,7 +22,5 @@ export declare abstract class PokemonCard extends Card {
     movedToActiveThisTurn: boolean;
     tools: TrainerCard[];
     archetype: CardType[];
-    attacksThisTurn: number;
-    maxAttacksThisTurn: number;
-    allowSubsequentAttackChoice: boolean;
+    canAttackTwice?: boolean;
 }

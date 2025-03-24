@@ -18,8 +18,8 @@ class Jumpluff extends pokemon_card_1.PokemonCard {
         this.powers = [{
                 name: 'Fluffy Barrage',
                 powerType: game_1.PowerType.ABILITY,
-                text: 'This Pokémon may attack twice each turn. If the first attack Knocks Out your opponent\'s Active Pokémon,'
-                    + ' you may attack again after your opponent chooses a new Active Pokémon.'
+                barrage: false,
+                text: 'This Pokémon may attack twice each turn. If the first attack Knocks Out your opponent\'s Active Pokémon, you may attack again after your opponent chooses a new Active Pokémon.'
             }];
         this.attacks = [{
                 name: 'Spinning Attack',
@@ -37,8 +37,10 @@ class Jumpluff extends pokemon_card_1.PokemonCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect) {
             if (!prefabs_1.IS_ABILITY_BLOCKED(store, state, effect.player, this)) {
-                this.maxAttacksThisTurn = 2;
-                this.allowSubsequentAttackChoice = true;
+                this.powers[0].barrage = true;
+            }
+            else {
+                this.powers[0].barrage = false;
             }
         }
         return state;

@@ -21,8 +21,5 @@ export class PokemonCard extends Card {
         this.movedToActiveThisTurn = false;
         this.tools = [];
         this.archetype = [];
-        this.attacksThisTurn = 0;
-        this.maxAttacksThisTurn = 1;
-        this.allowSubsequentAttackChoice = false;
     }
 }

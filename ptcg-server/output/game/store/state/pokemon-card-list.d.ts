@@ -19,6 +19,7 @@ export declare class PokemonCardList extends CardList {
     stadium: Card | undefined;
     isActivatingCard: boolean;
     showAllStageAbilities: boolean;
+    attacksThisTurn?: number;
     static readonly ATTACK_USED_MARKER = "ATTACK_USED_MARKER";
     static readonly ATTACK_USED_2_MARKER = "ATTACK_USED_2_MARKER";
     static readonly CLEAR_KNOCKOUT_MARKER = "CLEAR_KNOCKOUT_MARKER";

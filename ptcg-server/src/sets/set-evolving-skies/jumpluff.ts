@@ -15,8 +15,8 @@ export class Jumpluff extends PokemonCard {
   public powers = [{
     name: 'Fluffy Barrage',
     powerType: PowerType.ABILITY,
-    text: 'This Pokémon may attack twice each turn. If the first attack Knocks Out your opponent\'s Active Pokémon,'
-      + ' you may attack again after your opponent chooses a new Active Pokémon.'
+    barrage: false,
+    text: 'This Pokémon may attack twice each turn. If the first attack Knocks Out your opponent\'s Active Pokémon, you may attack again after your opponent chooses a new Active Pokémon.'
   }];
 
   public attacks = [{
@@ -34,13 +34,14 @@ export class Jumpluff extends PokemonCard {
   public fullName: string = 'Jumpluff EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
     if (effect instanceof AttackEffect) {
       if (!IS_ABILITY_BLOCKED(store, state, effect.player, this)) {
-        this.maxAttacksThisTurn = 2;
-        this.allowSubsequentAttackChoice = true;
+        this.powers[0].barrage = true;
+      } else {
+        this.powers[0].barrage = false;
       }
     }
     return state;
   }
-
 }

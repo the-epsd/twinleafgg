@@ -1,8 +1,7 @@
 import { GameError } from '../../game-error';
 import { GameLog, GameMessage } from '../../game-message';
 import { BoardEffect, CardTag, CardType, SpecialCondition, Stage, SuperType, TrainerType } from '../card/card-types';
-import { PokemonCard } from '../card/pokemon-card';
-import { Attack, Resistance, Weakness } from '../card/pokemon-types';
+import { Resistance, Weakness } from '../card/pokemon-types';
 import { TrainerCard } from '../card/trainer-card';
 import { ApplyWeaknessEffect, DealDamageEffect } from '../effects/attack-effects';
 import {
@@ -103,8 +102,6 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
     }
   });
 
-  const attackingPokemonCard = attackingPokemon.getPokemonCard() as PokemonCard;
-
   const checkAttackCost = new CheckAttackCostEffect(player, attack);
   state = store.reduceEffect(state, checkAttackCost);
 
@@ -150,8 +147,6 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
     state = store.reduceEffect(state, dealDamage);
   }
 
-  attackingPokemonCard.attacksThisTurn += 1;
-
   const afterAttackEffect = new AfterAttackEffect(effect.player);
   store.reduceEffect(state, afterAttackEffect);
 
@@ -168,40 +163,25 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
     yield store.waitPrompt(state, () => next());
   }
 
-  function useSubsequentAttack(attack: Attack): State {
-    const nextAttackEffect = new AttackEffect(player, opponent, attack);
-    state = useAttack(() => next(), store, state, nextAttackEffect).next().value;
-
-    if (store.hasPrompts()) {
-      state = store.waitPrompt(state, () => next());
-    }
-
-    if (nextAttackEffect.damage > 0) {
-      const dealDamage = new DealDamageEffect(nextAttackEffect, nextAttackEffect.damage);
-      state = store.reduceEffect(state, dealDamage);
-    }
-
-    state = store.reduceEffect(state, new EndTurnEffect(player));
-    return state;
-  }
+  const attackThisTurn = player.active.attacksThisTurn;
+  const playerActive = player.active.getPokemonCard();
 
   // Now, we can check if the Pokémon can attack again
-  const canAttackAgain = attackingPokemonCard.maxAttacksThisTurn > attackingPokemonCard.attacksThisTurn;
+  const canAttackAgain = playerActive && playerActive.canAttackTwice && attackThisTurn && attackThisTurn < 2;
+  const hasBarrageAbility = player.active.getPokemonCard()?.powers.some(power => power.barrage === true);
 
-  if (canAttackAgain) {
+  if (canAttackAgain || hasBarrageAbility) {
     // Prompt the player if they want to attack again
     yield store.prompt(state, new ConfirmPrompt(
       player.id,
       GameMessage.WANT_TO_ATTACK_AGAIN
     ), wantToAttackAgain => {
       if (wantToAttackAgain) {
-        if (attackingPokemonCard.allowSubsequentAttackChoice) {
+        if (hasBarrageAbility) {
 
           const attackableCards = player.active.cards.filter(card =>
-            card.superType === SuperType.POKEMON || (
-              card.superType === SuperType.TRAINER && card instanceof TrainerCard &&
-              card.trainerType === TrainerType.TOOL && card.attacks.length > 0
-            )
+            card.superType === SuperType.POKEMON ||
+            (card.superType === SuperType.TRAINER && card instanceof TrainerCard && card.trainerType === TrainerType.TOOL && card.attacks.length > 0)
           );
 
           // Use ChooseAttackPrompt for Barrage ability
@@ -210,11 +190,29 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
             GameMessage.CHOOSE_ATTACK_TO_COPY,
             attackableCards,
             { allowCancel: false }
-          ), selection => {
-            return useSubsequentAttack(selection);
+          ), selectedAttack => {
+            if (selectedAttack) {
+              const secondAttackEffect = new AttackEffect(player, opponent, selectedAttack);
+              state = useAttack(() => next(), store, state, secondAttackEffect).next().value;
+
+              if (store.hasPrompts()) {
+                state = store.waitPrompt(state, () => next());
+              }
+
+              if (secondAttackEffect.damage > 0) {
+                const dealDamage = new DealDamageEffect(secondAttackEffect, secondAttackEffect.damage);
+                state = store.reduceEffect(state, dealDamage);
+              }
+
+              state = store.reduceEffect(state, new EndTurnEffect(player));
+              return state;
+            }
+            next();
           });
         } else {
-          return useSubsequentAttack(attack);
+          const dealDamage = new DealDamageEffect(attackEffect, attackEffect.damage);
+          state = store.reduceEffect(state, dealDamage);
+          state = store.reduceEffect(state, new EndTurnEffect(player));
         }
       } else {
         state = store.reduceEffect(state, new EndTurnEffect(player));
@@ -223,7 +221,7 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
     });
   }
 
-  if (!canAttackAgain) {
+  if (!canAttackAgain && !hasBarrageAbility) {
     return store.reduceEffect(state, new EndTurnEffect(player));
   }
 }
