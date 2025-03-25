@@ -16,6 +16,7 @@ export declare class PokemonCardList extends CardList {
     boardEffect: BoardEffect[];
     hpBonus: number;
     tool: Card | undefined;
+    energyCards: Card[];
     stadium: Card | undefined;
     isActivatingCard: boolean;
     showAllStageAbilities: boolean;
@@ -56,6 +57,8 @@ export declare class PokemonCardList extends CardList {
     addSpecialCondition(sp: SpecialCondition): void;
     removeBoardEffect(sp: BoardEffect): void;
     addBoardEffect(sp: BoardEffect): void;
+    addPokemonAsEnergy(card: Card): void;
+    removePokemonAsEnergy(card: Card): void;
     hasRuleBox(): boolean;
     vPokemon(): boolean;
     exPokemon(): boolean;

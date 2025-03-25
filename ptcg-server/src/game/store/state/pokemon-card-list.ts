@@ -18,9 +18,9 @@ export class PokemonCardList extends CardList {
   public boardEffect: BoardEffect[] = [];
   public hpBonus: number = 0;
   public tool: Card | undefined;
+  public energyCards: Card[] = [];
   public stadium: Card | undefined;
   public isActivatingCard: boolean = false;
-  public showAllStageAbilities: boolean = false;
   public attacksThisTurn?: number;
 
   public static readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
@@ -54,7 +54,7 @@ export class PokemonCardList extends CardList {
   public getPokemons(): PokemonCard[] {
     const result: PokemonCard[] = [];
     for (const card of this.cards) {
-      if (card.superType === SuperType.POKEMON && card !== this.tool) {
+      if (card.superType === SuperType.POKEMON && card !== this.tool && !this.energyCards.includes(card)) {
         result.push(card as PokemonCard);
       } else if (card.name === 'Lillie\'s Poké Doll') {
         result.push(card as PokemonCard);
@@ -130,6 +130,8 @@ export class PokemonCardList extends CardList {
     // if (this.tool && !this.cards.includes(this.tool)) {
     //   this.tool = undefined;
     // }
+    // Clear energy cards reference if they're no longer in the card list
+    this.energyCards = this.energyCards.filter(card => this.cards.includes(card));
   }
 
   clearAllSpecialConditions(): void {
@@ -190,6 +192,21 @@ export class PokemonCardList extends CardList {
       BoardEffect.POWER_RETURN,
     ].includes(s) === false);
     this.boardEffect.push(sp);
+  }
+
+  // Add a Pokemon card as energy
+  addPokemonAsEnergy(card: Card): void {
+    if (!this.energyCards.includes(card) && this.cards.includes(card)) {
+      this.energyCards.push(card);
+    }
+  }
+
+  // Remove a Pokemon card from energy list
+  removePokemonAsEnergy(card: Card): void {
+    const index = this.energyCards.indexOf(card);
+    if (index !== -1) {
+      this.energyCards.splice(index, 1);
+    }
   }
 
   //Rule-Box Pokemon
@@ -274,5 +291,15 @@ export class PokemonCardList extends CardList {
     //   }
     //   this.tools = this.tools.filter(c => c instanceof Card);
     // }
+  }
+
+  // Override the parent CardList's moveTo method to properly handle Pokemon acting as energy
+  public moveTo(destination: CardList, count?: number): void {
+    // Reset Pokemon-as-energy status before moving cards
+    if (this.energyCards.length > 0) {
+      this.energyCards = [];
+    }
+    
+    super.moveTo(destination, count);
   }
 }

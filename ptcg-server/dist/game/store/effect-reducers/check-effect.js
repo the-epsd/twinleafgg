@@ -372,9 +372,12 @@ export function checkState(store, state, onComplete) {
 export function checkStateReducer(store, state, effect) {
     if (effect instanceof CheckProvidedEnergyEffect) {
         effect.source.cards.forEach(c => {
+            // Handle regular energy cards
             if (c instanceof EnergyCard && !effect.energyMap.some(e => e.card === c)) {
                 effect.energyMap.push({ card: c, provides: c.provides });
             }
+            // Check for Pokemon cards that are acting as energy cards
+            // These are already handled by the card's own reduceEffect method if they're in the energyCards array
         });
         return state;
     }

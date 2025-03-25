@@ -10,6 +10,7 @@ const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const check_effects_1 = require("../../game/store/effects/check-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const coin_flip_prompt_1 = require("../../game/store/prompts/coin-flip-prompt");
+const choose_pokemon_prompt_1 = require("../../game/store/prompts/choose-pokemon-prompt");
 class Electrode extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -40,8 +41,8 @@ class Electrode extends pokemon_card_1.PokemonCard {
                 text: 'Flip a coin. If tails, Electrode does 10 damage to itself.'
             }
         ];
+        // Which energies this provides when attached as an energy
         this.provides = [];
-        this.energyType = card_types_1.EnergyType.SPECIAL;
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
@@ -77,25 +78,30 @@ class Electrode extends pokemon_card_1.PokemonCard {
                 if (!option) {
                     return state;
                 }
-                // Transform Electrode properties to act as energy
+                // Set energy properties but keep the superType as POKEMON
                 this.chosenEnergyType = option.value;
                 this.provides = [option.value, option.value];
-                this.superType = card_types_1.SuperType.ENERGY;
-                // Create energy list and add transformed Electrode
-                const energyList = new game_1.CardList();
-                energyList.cards.push(this);
-                return store.prompt(state, new game_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_CARDS, energyList, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], {}, { allowCancel: true }), transfers => {
-                    if (transfers && transfers.length > 0) {
-                        const target = game_1.StateUtils.getTarget(state, player, transfers[0].to);
-                        player.discard.moveCardTo(this, target);
-                        target.cards.unshift(target.cards.splice(target.cards.length - 1, 1)[0]);
+                return store.prompt(state, new choose_pokemon_prompt_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_ATTACH_CARDS, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { allowCancel: false }), targets => {
+                    if (!targets || targets.length === 0) {
+                        return;
                     }
-                    return state;
+                    // Moving it onto the pokemon
+                    effect.preventDefault = true;
+                    player.discard.moveCardTo(this, targets[0]);
+                    // Reposition it to be with energy cards (at the beginning of the card list)
+                    targets[0].cards.unshift(targets[0].cards.splice(targets[0].cards.length - 1, 1)[0]);
+                    // Register this card as energy in the PokemonCardList
+                    targets[0].addPokemonAsEnergy(this);
                 });
             });
         }
-        if (effect instanceof check_effects_1.CheckProvidedEnergyEffect && effect.source.cards.includes(this) && effect.source.getPokemonCard() !== this) {
-            effect.energyMap.push({ card: this, provides: this.chosenEnergyType ? [this.chosenEnergyType] : [] });
+        // Provide energy when attached as energy and included in CheckProvidedEnergyEffect
+        if (effect instanceof check_effects_1.CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
+            // Check if this card is registered as an energy card in the PokemonCardList
+            const pokemonList = effect.source;
+            if (pokemonList.energyCards.includes(this)) {
+                effect.energyMap.push({ card: this, provides: this.provides });
+            }
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             return store.prompt(state, new coin_flip_prompt_1.CoinFlipPrompt(effect.player.id, game_1.GameMessage.FLIP_COIN), (result) => {
