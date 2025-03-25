@@ -16,6 +16,7 @@ const damage_pump_1 = require("./damage-pump");
 const delphox_v_1 = require("./delphox-v");
 const drapion_v_1 = require("./drapion-v");
 const drapion_vstar_1 = require("./drapion-vstar");
+const galarian_perrserker_v_1 = require("./galarian-perrserker-v");
 const gengar_1 = require("./gengar");
 const gift_energy_1 = require("./gift-energy");
 const giratina_v_1 = require("./giratina-v");
@@ -122,4 +123,5 @@ exports.setLostOrigin = [
     new wurmple_1.Wurmple(),
     new lake_acuity_1.LakeAcuity(),
     new mr_mime_1.MrMime(),
+    new galarian_perrserker_v_1.GalarianPerrserkerV(),
 ];
