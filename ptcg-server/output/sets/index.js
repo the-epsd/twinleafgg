@@ -23,6 +23,7 @@ __exportStar(require("./set-base-set-energy"), exports);
 __exportStar(require("./set-ex-holon-phantoms"), exports);
 __exportStar(require("./set-ex-delta-species"), exports);
 __exportStar(require("./set-ex-dragon"), exports);
+__exportStar(require("./set-ex-team-magma-vs-team-aqua"), exports);
 __exportStar(require("./set-ex-dragon-frontiers"), exports);
 __exportStar(require("./set-ex-unseen-forces"), exports);
 __exportStar(require("./set-ex-deoxys"), exports);
