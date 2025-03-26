@@ -13,6 +13,7 @@ const froslass_1 = require("./froslass");
 const garchomp_1 = require("./garchomp");
 const garchomp_and_giratina_gx_1 = require("./garchomp-and-giratina-gx");
 const golisopod_1 = require("./golisopod");
+const grimsley_1 = require("./grimsley");
 const hapu_1 = require("./hapu");
 const hoopa_1 = require("./hoopa");
 const karate_belt_1 = require("./karate-belt");
@@ -49,6 +50,7 @@ exports.setUnifiedMinds = [
     new garchomp_and_giratina_gx_1.GarchompGiratinaGX(),
     new garchomp_1.Garchomp(),
     new golisopod_1.Golisopod(),
+    new grimsley_1.Grimsley(),
     new hapu_1.Hapu(),
     new hoopa_1.Hoopa(),
     new karate_belt_1.KarateBelt(),

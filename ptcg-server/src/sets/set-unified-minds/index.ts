@@ -11,6 +11,7 @@ import { Froslass } from './froslass';
 import { Garchomp } from './garchomp';
 import { GarchompGiratinaGX } from './garchomp-and-giratina-gx';
 import { Golisopod } from './golisopod';
+import { Grimsley } from './grimsley';
 import { Hapu } from './hapu';
 import { Hoopa } from './hoopa';
 import { KarateBelt } from './karate-belt';
@@ -49,6 +50,7 @@ export const setUnifiedMinds: Card[] = [
   new GarchompGiratinaGX(),
   new Garchomp(),
   new Golisopod(),
+  new Grimsley(),
   new Hapu(),
   new Hoopa(),
   new KarateBelt(),
