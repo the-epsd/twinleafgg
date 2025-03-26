@@ -26,6 +26,7 @@ __exportStar(require("./set-ex-dragon"), exports);
 __exportStar(require("./set-ex-dragon-frontiers"), exports);
 __exportStar(require("./set-ex-unseen-forces"), exports);
 __exportStar(require("./set-ex-deoxys"), exports);
+__exportStar(require("./set-ex-emerald"), exports);
 __exportStar(require("./set-ex-team-rocket-returns"), exports);
 __exportStar(require("./set-ex-crystal-guardians"), exports);
 __exportStar(require("./set-ex-power-keepers"), exports);
