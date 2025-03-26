@@ -19,8 +19,8 @@ export declare class PokemonCardList extends CardList {
     energyCards: Card[];
     stadium: Card | undefined;
     isActivatingCard: boolean;
-    showAllStageAbilities: boolean;
     attacksThisTurn?: number;
+    showAllStageAbilities: boolean;
     static readonly ATTACK_USED_MARKER = "ATTACK_USED_MARKER";
     static readonly ATTACK_USED_2_MARKER = "ATTACK_USED_2_MARKER";
     static readonly CLEAR_KNOCKOUT_MARKER = "CLEAR_KNOCKOUT_MARKER";
@@ -74,4 +74,5 @@ export declare class PokemonCardList extends CardList {
     isHops(): boolean;
     isEthans(): boolean;
     getToolEffect(): Power | Attack | undefined;
+    moveTo(destination: CardList, count?: number): void;
 }

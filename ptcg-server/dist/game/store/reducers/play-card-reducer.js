@@ -31,7 +31,7 @@ export function playCardReducer(store, state, action) {
             if (handCard === undefined) {
                 throw new GameError(GameMessage.UNKNOWN_CARD);
             }
-            if (handCard instanceof EnergyCard || handCard instanceof PokemonCard && handCard.name == 'Holon\'s Castofrm') {
+            if (handCard instanceof EnergyCard) {
                 const target = findCardList(state, action.target);
                 if (!(target instanceof PokemonCardList) || target.cards.length === 0) {
                     throw new GameError(GameMessage.INVALID_TARGET);

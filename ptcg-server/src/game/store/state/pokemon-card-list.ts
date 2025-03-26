@@ -22,6 +22,7 @@ export class PokemonCardList extends CardList {
   public stadium: Card | undefined;
   public isActivatingCard: boolean = false;
   public attacksThisTurn?: number;
+  public showAllStageAbilities: boolean = false;
 
   public static readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
   public static readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
@@ -299,7 +300,7 @@ export class PokemonCardList extends CardList {
     if (this.energyCards.length > 0) {
       this.energyCards = [];
     }
-    
+
     super.moveTo(destination, count);
   }
 }

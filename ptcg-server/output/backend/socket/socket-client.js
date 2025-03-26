@@ -13,13 +13,12 @@ class SocketClient {
         this.games = [];
         this.cache = new socket_cache_1.SocketCache();
         this._isDisposed = false;
-        this.id = Math.floor(Math.random() * 1000000); // Generate a unique client ID
+        this.id = Math.floor(Math.random() * 1000000);
         this.user = user;
         this.name = user.name;
         this.socket = new socket_wrapper_1.SocketWrapper(io, socket);
         this.core = core;
-        console.log(`[Socket] Creating socket client for user ${user.name} (${user.id}) with client ID ${this.id}`);
-        // Initialize socket components
+        console.log(`[Socket] Client created: ${user.name} [${this.id}]`);
         this.coreSocket = new core_socket_1.CoreSocket(this, this.socket, core, this.cache);
         this.gameSocket = new game_socket_1.GameSocket(this, this.socket, core, this.cache);
         this.messageSocket = new message_socket_1.MessageSocket(this, this.socket, core);
@@ -32,7 +31,7 @@ class SocketClient {
             this.coreSocket.onConnect(client);
         }
         catch (error) {
-            console.error(`[Socket] Error in onConnect for client ${this.name}: ${error.message || error}`);
+            console.error(`[Socket] Connect error: ${this.name} [${this.id}] - ${error.message}`);
         }
     }
     onDisconnect(client) {
@@ -42,7 +41,7 @@ class SocketClient {
             this.coreSocket.onDisconnect(client);
         }
         catch (error) {
-            console.error(`[Socket] Error in onDisconnect for client ${this.name}: ${error.message || error}`);
+            console.error(`[Socket] Disconnect error: ${this.name} [${this.id}] - ${error.message}`);
         }
     }
     onGameAdd(game) {
@@ -52,7 +51,7 @@ class SocketClient {
             this.coreSocket.onGameAdd(game);
         }
         catch (error) {
-            console.error(`[Socket] Error in onGameAdd for client ${this.name}: ${error.message || error}`);
+            console.error(`[Socket] Game add error: ${this.name} [${this.id}] - ${error.message}`);
         }
     }
     onGameDelete(game) {
@@ -62,7 +61,7 @@ class SocketClient {
             this.coreSocket.onGameDelete(game);
         }
         catch (error) {
-            console.error(`[Socket] Error in onGameDelete for client ${this.name}: ${error.message || error}`);
+            console.error(`[Socket] Game delete error: ${this.name} [${this.id}] - ${error.message}`);
         }
     }
     onUsersUpdate(users) {
@@ -72,7 +71,7 @@ class SocketClient {
             this.coreSocket.onUsersUpdate(users);
         }
         catch (error) {
-            console.error(`[Socket] Error in onUsersUpdate for client ${this.name}: ${error.message || error}`);
+            console.error(`[Socket] Users update error: ${this.name} [${this.id}] - ${error.message}`);
         }
     }
     onStateChange(game, state) {
@@ -83,7 +82,7 @@ class SocketClient {
             this.gameSocket.onStateChange(game, state);
         }
         catch (error) {
-            console.error(`[Socket] Error in onStateChange for client ${this.name}: ${error.message || error}`);
+            console.error(`[Socket] State change error: ${this.name} [${this.id}] - ${error.message}`);
         }
     }
     onGameJoin(game, client) {
@@ -93,7 +92,7 @@ class SocketClient {
             this.gameSocket.onGameJoin(game, client);
         }
         catch (error) {
-            console.error(`[Socket] Error in onGameJoin for client ${this.name}: ${error.message || error}`);
+            console.error(`[Socket] Game join error: ${this.name} [${this.id}] - ${error.message}`);
         }
     }
     onGameLeave(game, client) {
@@ -103,7 +102,7 @@ class SocketClient {
             this.gameSocket.onGameLeave(game, client);
         }
         catch (error) {
-            console.error(`[Socket] Error in onGameLeave for client ${this.name}: ${error.message || error}`);
+            console.error(`[Socket] Game leave error: ${this.name} [${this.id}] - ${error.message}`);
         }
     }
     onJoinQueue(from, message) {
@@ -113,7 +112,7 @@ class SocketClient {
             this.matchmakingSocket.onJoinQueue(from, message);
         }
         catch (error) {
-            console.error(`[Socket] Error in onJoinQueue for client ${this.name}: ${error.message || error}`);
+            console.error(`[Socket] Queue join error: ${this.name} [${this.id}] - ${error.message}`);
         }
     }
     onLeaveQueue() {
@@ -123,7 +122,7 @@ class SocketClient {
             this.matchmakingSocket.onLeaveQueue();
         }
         catch (error) {
-            console.error(`[Socket] Error in onLeaveQueue for client ${this.name}: ${error.message || error}`);
+            console.error(`[Socket] Queue leave error: ${this.name} [${this.id}] - ${error.message}`);
         }
     }
     onMessage(from, message) {
@@ -133,7 +132,7 @@ class SocketClient {
             this.messageSocket.onMessage(from, message);
         }
         catch (error) {
-            console.error(`[Socket] Error in onMessage for client ${this.name}: ${error.message || error}`);
+            console.error(`[Socket] Message error: ${this.name} [${this.id}] - ${error.message}`);
         }
     }
     onMessageRead(user) {
@@ -143,7 +142,7 @@ class SocketClient {
             this.messageSocket.onMessageRead(user);
         }
         catch (error) {
-            console.error(`[Socket] Error in onMessageRead for client ${this.name}: ${error.message || error}`);
+            console.error(`[Socket] Message read error: ${this.name} [${this.id}] - ${error.message}`);
         }
     }
     attachListeners() {
@@ -153,31 +152,45 @@ class SocketClient {
             this.socket.attachListeners();
         }
         catch (error) {
-            console.error(`[Socket] Error attaching listeners for client ${this.name}: ${error.message || error}`);
+            console.error(`[Socket] Listener attach error: ${this.name} [${this.id}] - ${error.message}`);
         }
     }
     dispose() {
+        var _a;
         try {
-            if (this._isDisposed) {
-                console.warn(`[Socket] Client ${this.name} (${this.id}) already disposed`);
+            if (this._isDisposed)
                 return;
+            console.log(`[Socket] Disposing client: ${this.name} [${this.id}]`);
+            if ((_a = this.socket) === null || _a === void 0 ? void 0 : _a.socket) {
+                this.socket.socket.removeAllListeners();
             }
-            console.log(`[Socket] Disposing client ${this.name} (${this.id})`);
-            this._isDisposed = true;
-            // Clean up matchmaking
             if (this.matchmakingSocket) {
                 this.matchmakingSocket.dispose();
             }
-            // Clear games
+            if (this.gameSocket) {
+                for (const game of this.games) {
+                    try {
+                        this.core.leaveGame(this, game);
+                    }
+                    catch (error) {
+                        console.error(`[Socket] Game leave error: ${this.name} [${this.id}] - Game ${game.id} - ${error.message}`);
+                    }
+                }
+            }
+            if (this.coreSocket) {
+                this.core.disconnect(this);
+            }
             this.games = [];
-            // Clear cache references
             if (this.cache) {
                 this.cache.gameInfoCache = {};
                 this.cache.lastLogIdCache = {};
             }
+            this._isDisposed = true;
+            console.log(`[Socket] Client disposed: ${this.name} [${this.id}]`);
         }
         catch (error) {
-            console.error(`[Socket] Error disposing client ${this.name}: ${error.message || error}`);
+            console.error(`[Socket] Disposal error: ${this.name} [${this.id}] - ${error.message}`);
+            this._isDisposed = true;
         }
     }
     get isDisposed() {

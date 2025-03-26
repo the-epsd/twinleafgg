@@ -20,6 +20,7 @@ class PokemonCardList extends card_list_1.CardList {
         this.hpBonus = 0;
         this.energyCards = [];
         this.isActivatingCard = false;
+        this.showAllStageAbilities = false;
     }
     getPokemons() {
         const result = [];

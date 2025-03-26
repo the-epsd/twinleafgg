@@ -230,6 +230,14 @@ export class PokemonCardList extends CardList {
         //   this.tools = this.tools.filter(c => c instanceof Card);
         // }
     }
+    // Override the parent CardList's moveTo method to properly handle Pokemon acting as energy
+    moveTo(destination, count) {
+        // Reset Pokemon-as-energy status before moving cards
+        if (this.energyCards.length > 0) {
+            this.energyCards = [];
+        }
+        super.moveTo(destination, count);
+    }
 }
 PokemonCardList.ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
 PokemonCardList.ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
