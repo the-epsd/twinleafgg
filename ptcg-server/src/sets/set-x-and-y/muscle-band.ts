@@ -1,6 +1,6 @@
 import { TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { IS_TOOL_BLOCKED } from '../../game/store/prefabs/prefabs';
 
@@ -29,7 +29,7 @@ export class MuscleBand extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PutDamageEffect && effect.player.active.cards.includes(this)) {
+    if (effect instanceof DealDamageEffect && effect.player.active.cards.includes(this)) {
       const opponent = StateUtils.getOpponent(state, effect.player);
 
       if (IS_TOOL_BLOCKED(store, state, effect.player, this)) { return state; }

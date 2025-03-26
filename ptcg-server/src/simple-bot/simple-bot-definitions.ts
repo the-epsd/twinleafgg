@@ -25,6 +25,7 @@ import { MoveEnergyPromptResolver } from './prompt-resolver/move-energy-prompt-r
 import { OrderCardsPromptResolver } from './prompt-resolver/order-cards-prompt-resolver';
 import { PutDamagePromptResolver } from './prompt-resolver/put-damage-prompt-resolver';
 import { SelectPromptResolver } from './prompt-resolver/select-prompt-resolver';
+import { SelectOptionPromptResolver } from './prompt-resolver/select-option-prompt-resolver';
 import { BotFlipMode, BotShuffleMode } from '../game/bots/bot-arbiter';
 
 export const defaultStateScores = {
@@ -112,7 +113,8 @@ export const allPromptResolvers: PromptResolverList = [
   MoveEnergyPromptResolver,
   OrderCardsPromptResolver,
   PutDamagePromptResolver,
-  SelectPromptResolver
+  SelectPromptResolver,
+  SelectOptionPromptResolver
 ];
 
 export const allSimpleTactics: SimpleTacticList = [

@@ -55,6 +55,7 @@ __exportStar(require("./store/prompts/shuffle-prompt"), exports);
 __exportStar(require("./store/prompts/remove-damage-prompt"), exports);
 __exportStar(require("./store/prompts/discard-energy-prompt"), exports);
 // export * from './store/prompts/shuffle-prizes-prompt';
+__exportStar(require("./store/prompts/select-option-prompt"), exports);
 __exportStar(require("./store/state/card-list"), exports);
 __exportStar(require("./store/state/player"), exports);
 __exportStar(require("./store/state/pokemon-card-list"), exports);

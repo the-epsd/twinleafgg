@@ -153,7 +153,7 @@ class MatchmakingService {
                         format: player1.format,
                         timeLimit: 1800,
                         rules: new game_1.Rules(),
-                        recordingEnabled: false
+                        recordingEnabled: true
                     };
                     // Use createGameWithDecks instead of createGame
                     const game = this.core.createGameWithDecks(player1.client, player1.deck, gameSettings, player2.client, player2.deck);

@@ -11,6 +11,7 @@ const horsea_1 = require("./horsea");
 const quagsire_1 = require("./quagsire");
 const salandit_1 = require("./salandit");
 const switch_raft_1 = require("./switch-raft");
+const turtonator_1 = require("./turtonator");
 const victini_prism_star_1 = require("./victini-prism-star");
 const wooper_1 = require("./wooper");
 exports.setDragonsMajesty = [
@@ -24,6 +25,7 @@ exports.setDragonsMajesty = [
     new quagsire_1.Quagsire(),
     new salandit_1.Salandit(),
     new switch_raft_1.SwitchRaft(),
+    new turtonator_1.Turtonator(),
     new victini_prism_star_1.VictiniPrismStar(),
-    new wooper_1.Wooper()
+    new wooper_1.Wooper(),
 ];

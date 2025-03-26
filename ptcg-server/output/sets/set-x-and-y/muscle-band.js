@@ -20,7 +20,7 @@ class MuscleBand extends trainer_card_1.TrainerCard {
             'and Resistance).';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof attack_effects_1.PutDamageEffect && effect.player.active.cards.includes(this)) {
+        if (effect instanceof attack_effects_1.DealDamageEffect && effect.player.active.cards.includes(this)) {
             const opponent = state_utils_1.StateUtils.getOpponent(state, effect.player);
             if (prefabs_1.IS_TOOL_BLOCKED(store, state, effect.player, this)) {
                 return state;

@@ -29,6 +29,7 @@ export class Player {
         this.usedVSTAR = false;
         this.usedGX = false;
         this.assembledVUNIONs = [];
+        this.showAllStageAbilities = false;
         this.DAMAGE_DEALT_MARKER = 'DAMAGE_DEALT_MARKER';
         this.ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
         this.ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';

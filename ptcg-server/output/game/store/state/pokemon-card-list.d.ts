@@ -16,8 +16,10 @@ export declare class PokemonCardList extends CardList {
     boardEffect: BoardEffect[];
     hpBonus: number;
     tool: Card | undefined;
+    energyCards: Card[];
     stadium: Card | undefined;
     isActivatingCard: boolean;
+    attacksThisTurn?: number;
     showAllStageAbilities: boolean;
     static readonly ATTACK_USED_MARKER = "ATTACK_USED_MARKER";
     static readonly ATTACK_USED_2_MARKER = "ATTACK_USED_2_MARKER";
@@ -55,6 +57,8 @@ export declare class PokemonCardList extends CardList {
     addSpecialCondition(sp: SpecialCondition): void;
     removeBoardEffect(sp: BoardEffect): void;
     addBoardEffect(sp: BoardEffect): void;
+    addPokemonAsEnergy(card: Card): void;
+    removePokemonAsEnergy(card: Card): void;
     hasRuleBox(): boolean;
     vPokemon(): boolean;
     exPokemon(): boolean;
@@ -70,4 +74,5 @@ export declare class PokemonCardList extends CardList {
     isHops(): boolean;
     isEthans(): boolean;
     getToolEffect(): Power | Attack | undefined;
+    moveTo(destination: CardList, count?: number): void;
 }

@@ -82,6 +82,9 @@ import { CalamitousSnowyMountain } from './calamitous-snowy-mountain';
 import {Gothita} from './gothita';
 import {Gothorita} from './gothorita';
 import {Gothitelle} from './gothitelle';
+import {Larvitar} from './larvitar';
+import {Pupitar} from './pupitar';
+import {Tyranitar} from './tyranitar';
 
 export const setPaldeaEvolved: Card[] = [
 
@@ -167,6 +170,9 @@ export const setPaldeaEvolved: Card[] = [
   new Gothita(),
   new Gothorita(),
   new Gothitelle(),
+  new Larvitar(),
+  new Pupitar(),
+  new Tyranitar(),
 
   // Full 
   new ArctibaxIR(),

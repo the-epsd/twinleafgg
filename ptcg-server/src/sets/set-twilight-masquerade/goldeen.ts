@@ -1,8 +1,7 @@
 import { CardType, Stage, SuperType } from '../../game/store/card/card-types';
 import { Attack, Card, ChooseCardsPrompt, CoinFlipPrompt, EnergyCard, GameMessage, PokemonCard, Power, PowerType, State, StateUtils, StoreLike } from '../../game';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 export class Goldeen extends PokemonCard {
 
@@ -42,17 +41,10 @@ export class Goldeen extends PokemonCard {
   public fullName: string = 'Goldeen TWM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    if (effect instanceof AttackEffect && this.attacks.includes(effect.attack)) {
-      const stadiumCard = StateUtils.getStadiumCard(state);
-      if (stadiumCard && stadiumCard.name === 'Festival Grounds' && !IS_ABILITY_BLOCKED(store, state, effect.player, this)) {
-        this.maxAttacksThisTurn = 2;
-      }
-    }
-
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
+      const stadiumCard = StateUtils.getStadiumCard(state);
 
       // Defending Pokemon has no energy cards attached
       if (!opponent.active.cards.some(c => c instanceof EnergyCard)) {
@@ -78,6 +70,28 @@ export class Goldeen extends PokemonCard {
           });
         }
       });
+
+      // Try to reduce PowerEffect, to check if something is blocking our ability
+      try {
+        const stub = new PowerEffect(player, {
+          name: 'test',
+          powerType: PowerType.ABILITY,
+          text: ''
+        }, this);
+        store.reduceEffect(state, stub);
+      } catch {
+        return state;
+      }
+
+      // Check if 'Festival Plaza' stadium is in play
+      if (stadiumCard && stadiumCard.name === 'Festival Grounds') {
+        this.canAttackTwice = true;
+      } else {
+        this.canAttackTwice = false;
+      }
+
+      // Increment attacksThisTurn
+      player.active.attacksThisTurn = (player.active.attacksThisTurn || 0) + 1;
 
     }
     return state;

@@ -14,6 +14,7 @@ import { DamagePump } from './damage-pump';
 import { DelphoxV } from './delphox-v';
 import { DrapionV } from './drapion-v';
 import { DrapionVSTAR } from './drapion-vstar';
+import {GalarianPerrserkerV} from './galarian-perrserker-v';
 import { Gengar } from './gengar';
 import { GiftEnergy } from './gift-energy';
 import { GiratinaV } from './giratina-v';
@@ -123,4 +124,5 @@ export const setLostOrigin: Card[] = [
   new Wurmple(),
   new LakeAcuity(),
   new MrMime(),
+  new GalarianPerrserkerV(),
 ];

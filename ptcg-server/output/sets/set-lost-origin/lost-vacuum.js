@@ -106,7 +106,7 @@ class LostVacuum extends trainer_card_1.TrainerCard {
                         }
                     }
                 ];
-                return store.prompt(state, new game_1.SelectPrompt(player.id, game_1.GameMessage.DISCARD_STADIUM_OR_TOOL, options.map(c => c.message), { allowCancel: false }), choice => {
+                return store.prompt(state, new game_1.SelectOptionPrompt(player.id, game_1.GameMessage.DISCARD_STADIUM_OR_TOOL, options.map(c => c.message), { allowCancel: false }), choice => {
                     const option = options[choice];
                     if (option.action) {
                         option.action();

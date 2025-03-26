@@ -48,6 +48,7 @@ export * from './store/prompts/shuffle-prompt';
 export * from './store/prompts/remove-damage-prompt';
 export * from './store/prompts/discard-energy-prompt';
 // export * from './store/prompts/shuffle-prizes-prompt';
+export * from './store/prompts/select-option-prompt';
 
 export * from './store/state/card-list';
 export * from './store/state/player';

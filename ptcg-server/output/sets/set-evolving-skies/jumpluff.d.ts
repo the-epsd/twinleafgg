@@ -14,6 +14,7 @@ export declare class Jumpluff extends PokemonCard {
     powers: {
         name: string;
         powerType: PowerType;
+        barrage: boolean;
         text: string;
     }[];
     attacks: {

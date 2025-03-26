@@ -15,13 +15,14 @@ export class PokemonCardList extends CardList {
         this.sleepFlips = 1;
         this.boardEffect = [];
         this.hpBonus = 0;
+        this.energyCards = [];
         this.isActivatingCard = false;
         this.showAllStageAbilities = false;
     }
     getPokemons() {
         const result = [];
         for (const card of this.cards) {
-            if (card.superType === SuperType.POKEMON && card !== this.tool) {
+            if (card.superType === SuperType.POKEMON && card !== this.tool && !this.energyCards.includes(card)) {
                 result.push(card);
             }
             else if (card.name === 'Lillie\'s Poké Doll') {
@@ -96,6 +97,8 @@ export class PokemonCardList extends CardList {
         // if (this.tool && !this.cards.includes(this.tool)) {
         //   this.tool = undefined;
         // }
+        // Clear energy cards reference if they're no longer in the card list
+        this.energyCards = this.energyCards.filter(card => this.cards.includes(card));
     }
     clearAllSpecialConditions() {
         this.removeSpecialCondition(SpecialCondition.POISONED);
@@ -151,6 +154,19 @@ export class PokemonCardList extends CardList {
             BoardEffect.POWER_RETURN,
         ].includes(s) === false);
         this.boardEffect.push(sp);
+    }
+    // Add a Pokemon card as energy
+    addPokemonAsEnergy(card) {
+        if (!this.energyCards.includes(card) && this.cards.includes(card)) {
+            this.energyCards.push(card);
+        }
+    }
+    // Remove a Pokemon card from energy list
+    removePokemonAsEnergy(card) {
+        const index = this.energyCards.indexOf(card);
+        if (index !== -1) {
+            this.energyCards.splice(index, 1);
+        }
     }
     //Rule-Box Pokemon
     hasRuleBox() {
@@ -213,6 +229,14 @@ export class PokemonCardList extends CardList {
         //   }
         //   this.tools = this.tools.filter(c => c instanceof Card);
         // }
+    }
+    // Override the parent CardList's moveTo method to properly handle Pokemon acting as energy
+    moveTo(destination, count) {
+        // Reset Pokemon-as-energy status before moving cards
+        if (this.energyCards.length > 0) {
+            this.energyCards = [];
+        }
+        super.moveTo(destination, count);
     }
 }
 PokemonCardList.ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';

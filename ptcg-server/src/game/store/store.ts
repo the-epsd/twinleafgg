@@ -86,23 +86,8 @@ export class Store implements StoreLike {
   }
 
   public reduceEffect(state: State, effect: Effect): State {
-    // this.checkEffectHistory(state, effect);
 
     state = this.propagateEffect(state, effect);
-
-    // const cardEffect = <any>effect;
-
-    // if (cardEffect.card)
-    //   console.log(`Running effect: ${effect.type} for card ${cardEffect.card?.fullName}`);
-
-    // if (cardEffect.energyCard)
-    //   console.log(`Running effect: ${effect.type} for card ${cardEffect.energyCard?.fullName}`);
-
-    // if (cardEffect.trainerCard)
-    //   console.log(`Running effect: ${effect.type} for card ${cardEffect.trainerCard?.fullName}`);
-
-    // if (cardEffect.pokemonCard)
-    //   console.log(`Running effect: ${effect.type} for card ${cardEffect.pokemonCard?.fullName}`);
 
     if (effect.preventDefault === true) {
       return state;
@@ -119,34 +104,6 @@ export class Store implements StoreLike {
 
     return state;
   }
-
-  // checkEffectHistory(state: State, effect: Effect) {
-  //   if (this.effectHistory.length === 300) {
-  //     this.effectHistory.shift();
-  //   }
-
-  //   this.effectHistory.push(effect);
-  //   if (this.effectHistory.length === 300) {
-  //     let isLoop = true;
-
-  //     const firstEffect = this.effectHistory[0];
-
-  //     this.effectHistory.forEach((effect, index) => {
-  //       if (index % 5 !== 0) {
-  //         return;
-  //       }
-
-  //       if (!this.compareEffects(effect, firstEffect)) {
-  //         isLoop = false;
-  //       }
-  //     });
-
-  //     if (isLoop) {
-  //       console.error(`Loop detected: ${firstEffect.type}, card: ${(<any>firstEffect).card?.fullName}`);
-  //       throw new Error('Loop detected');
-  //     }
-  //   }
-  // }
 
   compareEffects(effect1: Effect, effect2: Effect): boolean {
     if (effect1.type !== effect2.type) {
