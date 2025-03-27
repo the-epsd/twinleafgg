@@ -1,6 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setSV10 = void 0;
+const cetitan_ex_1 = require("./cetitan-ex");
+const cetoddle_1 = require("./cetoddle");
 const granite_cave_1 = require("./granite-cave");
 const marnies_grimmsnarl_ex_1 = require("./marnies-grimmsnarl-ex");
 const marnies_impidimp_1 = require("./marnies-impidimp");
@@ -20,9 +22,12 @@ const stevens_metagross_ex_1 = require("./stevens-metagross-ex");
 const stevens_metang_1 = require("./stevens-metang");
 const stevens_skarmory_1 = require("./stevens-skarmory");
 const team_rocket_energy_1 = require("./team-rocket-energy");
+const team_rockets_ampharos_1 = require("./team-rockets-ampharos");
 const team_rockets_archer_1 = require("./team-rockets-archer");
 const team_rockets_ariana_1 = require("./team-rockets-ariana");
+const team_rockets_flaaffy_1 = require("./team-rockets-flaaffy");
 const team_rockets_giovanni_1 = require("./team-rockets-giovanni");
+const team_rockets_mareep_1 = require("./team-rockets-mareep");
 const team_rockets_meowth_1 = require("./team-rockets-meowth");
 const team_rockets_mewtwo_ex_1 = require("./team-rockets-mewtwo-ex");
 const team_rockets_persian_ex_1 = require("./team-rockets-persian-ex");
@@ -32,7 +37,11 @@ const team_rockets_porygon2_1 = require("./team-rockets-porygon2");
 const team_rockets_receiver_1 = require("./team-rockets-receiver");
 const team_rockets_spidops_1 = require("./team-rockets-spidops");
 const team_rockets_tarountula_1 = require("./team-rockets-tarountula");
+const team_rockets_wobbuffet_1 = require("./team-rockets-wobbuffet");
 exports.setSV10 = [
+    new cetoddle_1.Cetoddle(),
+    new cetitan_ex_1.Cetitanex(),
+    new other_prints_1.EnergyRecyclerSV10(),
     new other_prints_1.MarniesMorpekoIR(),
     new marnies_impidimp_1.MarniesImpidimp(),
     new marnies_morgrem_1.MarniesMorgrem(),
@@ -65,5 +74,8 @@ exports.setSV10 = [
     new team_rockets_giovanni_1.TeamRocketsGiovanni(),
     new team_rockets_meowth_1.TeamRocketsMeowth(),
     new team_rockets_persian_ex_1.TeamRocketsPersianex(),
-    new other_prints_1.EnergyRecyclerSV10(),
+    new team_rockets_mareep_1.TeamRocketsMareep(),
+    new team_rockets_flaaffy_1.TeamRocketsFlaaffy(),
+    new team_rockets_ampharos_1.TeamRocketsAmpharos(),
+    new team_rockets_wobbuffet_1.TeamRocketsWobbuffet(),
 ];
