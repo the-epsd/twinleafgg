@@ -1,8 +1,8 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike,State, PlayerType } from '../../game';
+import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class GreatTusk2 extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -20,37 +20,29 @@ export class GreatTusk2 extends PokemonCard {
       text: '' 
     },
     { 
-      name: 'Wrathgul Charge', 
+      name: 'Wrathful Charge', 
       cost: [F, C, C], 
       damage: 80,
       damageCalculation: '+', 
       text: 'If your Benched Pokémon have any damage counters on them, this attack does 80 more damage.' 
     },
-    
   ];
 
   public set: string = 'TEF';
   public regulationMark = 'H';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '96';
-
   public name: string = 'Great Tusk';
-  public fullName: string = 'Great Tusk TEF';
+  public fullName: string = 'Great Tusk 2 TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Wrathful Charge
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
-      // checking if this pokemon is in play
       let isThereDamage = false;
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
-        if (cardList === player.active) {
-          return;
-        }
-        if (cardList.damage > 0) {
-          isThereDamage = true;
-        }
+      player.bench.forEach(cardList => {
+        if (cardList.cards.length > 0 && cardList.damage > 0) { isThereDamage = true; }
       });
       if (isThereDamage) {
         effect.damage += 80;
