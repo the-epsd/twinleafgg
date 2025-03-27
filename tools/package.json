@@ -1,0 +1,6 @@
+{
+  "devDependencies": {
+    "jsdom": "^26.0.0",
+    "typescript": "~4.3.5"
+  }
+}
