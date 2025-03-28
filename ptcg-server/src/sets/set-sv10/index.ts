@@ -1,4 +1,6 @@
 import { Card } from '../../game/store/card/card';
+import {Cetitanex} from './cetitan-ex';
+import {Cetoddle} from './cetoddle';
 import { GraniteCave } from './granite-cave';
 import { MarniesGrimmsnarlex } from './marnies-grimmsnarl-ex';
 import { MarniesImpidimp } from './marnies-impidimp';
@@ -18,20 +20,28 @@ import { StevensMetagrossex } from './stevens-metagross-ex';
 import { StevensMetang } from './stevens-metang';
 import { StevensSkarmory } from './stevens-skarmory';
 import { TeamRocketEnergy } from './team-rocket-energy';
+import { TeamRocketsAmpharos } from './team-rockets-ampharos';
 import { TeamRocketsArcher } from './team-rockets-archer';
 import { TeamRocketsAriana } from './team-rockets-ariana';
+import { TeamRocketsFlaaffy} from './team-rockets-flaaffy';
 import { TeamRocketsGiovanni } from './team-rockets-giovanni';
-import {TeamRocketsMeowth} from './team-rockets-meowth';
+import { TeamRocketsMareep } from './team-rockets-mareep';
+import { TeamRocketsMeowth } from './team-rockets-meowth';
 import { TeamRocketsMewtwoex } from './team-rockets-mewtwo-ex';
-import {TeamRocketsPersianex} from './team-rockets-persian-ex';
+import { TeamRocketsPersianex } from './team-rockets-persian-ex';
 import { TeamRocketsPorygon } from './team-rockets-porygon';
 import { TeamRocketsPorygonZ } from './team-rockets-porygon-z';
 import { TeamRocketsPorygon2 } from './team-rockets-porygon2';
 import { TeamRocketsReceiver } from './team-rockets-receiver';
 import { TeamRocketsSpidops } from './team-rockets-spidops';
 import { TeamRocketsTarountula } from './team-rockets-tarountula';
+import { TeamRocketsWobbuffet } from './team-rockets-wobbuffet';
 
 export const setSV10: Card[] = [
+  new Cetoddle(),
+  new Cetitanex(),
+  new EnergyRecyclerSV10(),
+
   new MarniesMorpekoIR(),
   new MarniesImpidimp(),
   new MarniesMorgrem(),
@@ -66,6 +76,8 @@ export const setSV10: Card[] = [
   new TeamRocketsGiovanni(),
   new TeamRocketsMeowth(),
   new TeamRocketsPersianex(),
-
-  new EnergyRecyclerSV10(),
+  new TeamRocketsMareep(),
+  new TeamRocketsFlaaffy(),
+  new TeamRocketsAmpharos(),
+  new TeamRocketsWobbuffet(),
 ];

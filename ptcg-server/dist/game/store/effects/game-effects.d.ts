@@ -124,6 +124,7 @@ export declare class EvolveEffect implements Effect {
     player: Player;
     target: PokemonCardList;
     pokemonCard: PokemonCard;
+    darkestImpulseSV?: boolean;
     constructor(player: Player, target: PokemonCardList, pokemonCard: PokemonCard);
 }
 export declare class DrawPrizesEffect implements Effect {

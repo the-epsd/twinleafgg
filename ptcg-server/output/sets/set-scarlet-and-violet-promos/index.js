@@ -6,6 +6,7 @@ const ampharos_ex_1 = require("./ampharos-ex");
 const charmander_1 = require("./charmander");
 const mimikyu_ex_1 = require("./mimikyu-ex");
 const pecharunt_1 = require("./pecharunt");
+const scrafty_1 = require("./scrafty");
 const tinkaton_ex_1 = require("./tinkaton-ex");
 const tm_machine_1 = require("./tm-machine");
 const toxtricity_ex_1 = require("./toxtricity-ex");
@@ -17,6 +18,7 @@ exports.setScarletAndVioletPromos = [
     new tinkaton_ex_1.Tinkatonex(),
     new tm_machine_1.TMMachine(),
     new toxtricity_ex_1.Toxtricityex(),
+    new scrafty_1.Scrafty(),
     // Alt arts
     new alt_arts_1.PawmotSVP(),
     new alt_arts_1.HawluchaSVP(),

@@ -39,7 +39,8 @@ class Shaymin extends pokemon_card_1.PokemonCard {
     reduceEffect(store, state, effect) {
         if (prefabs_1.WAS_ATTACK_USED(effect, 0, this)) {
             const player = effect.player;
-            prefabs_1.MOVE_CARDS(store, state, player.hand, player.deck, { cards: player.hand.cards });
+            //MOVE_CARDS(store, state, player.hand, player.deck, { cards: player.hand.cards });
+            player.hand.moveTo(player.deck);
             prefabs_1.SHUFFLE_DECK(store, state, player);
             prefabs_1.DRAW_CARDS(player, 6);
         }

@@ -21,11 +21,11 @@ export class TeamRocketsMewtwoex extends PokemonCard {
 
   public attacks = [
     {
-      name: 'Deletion Sphere',
+      name: 'Erasure Ball',
       cost: [P, P, C],
       damage: 160,
       damageCalculation: '+',
-      text: 'You may discard up to 2 Energy from your Benched Pokémon. This attack does 60 more damage for each card discarded this way.'
+      text: 'You may discard up to 2 Energy from your Benched Pokémon. This attack does 60 more damage for each card you discarded this way.'
     }
   ];
 
