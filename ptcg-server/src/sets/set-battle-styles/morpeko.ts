@@ -1,65 +1,50 @@
-import { ChooseCardsPrompt, TrainerCard } from '../../game';
-import { GameLog, GameMessage } from '../../game/game-message';
+import { ChooseCardsPrompt, GameLog, GameMessage, TrainerCard } from '../../game';
 import { CardType, Stage, SuperType, TrainerType } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { PowerType } from '../../game/store/card/pokemon-types';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
-export class Sableye extends PokemonCard {
+export class Morpeko extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
   public cardType: CardType = CardType.DARK;
 
-  public hp: number = 60;
+  public hp: number = 80;
 
-  public resistance = [{
-    type: CardType.COLORLESS,
-    value: -20
-  }];
+  public weakness = [{ type: CardType.GRASS }];
 
   public retreat = [CardType.COLORLESS];
 
-  public powers = [{
-    name: 'Overeager',
-    powerType: PowerType.POKEBODY,
-    text: 'If Sableye is your Active Pokemon at the beginning of the game, ' +
-      'you go first. (If each player\'s Active Pokemon has the Overreager ' +
-      'Poke-Body, this power does nothing.)'
+  public attacks = [{
+    name: 'Gather Food',
+    cost: [C],
+    damage: 0,
+    text: 'Put an Item card from your discard pile into your hand.'
+  }, {
+    name: 'Hangry Tackle',
+    cost: [D],
+    damage: 20,
+    damageCalculation: '+',
+    text: 'If you have no cards in your hand, this attack does 90 more damage.'
   }];
 
-  public attacks = [
-    {
-      name: 'Impersonate',
-      cost: [],
-      damage: 0,
-      text: 'Search your deck for a Supporter card and discard it. ' +
-        'Shuffle your deck afterward. ' +
-        'Then, use the effect of that card as the effect of this attack.'
-    },
-    {
-      name: 'Overconfident',
-      cost: [CardType.DARK],
-      damage: 10,
-      text: 'If the Defending Pokemon has fewer remaining HP than Sableye, ' +
-        'this attack\'s base damage is 40.'
-    }
-  ];
+  public regulationMark = 'E';
 
-  public set: string = 'SF';
-
-  public name: string = 'Sableye';
-
-  public fullName: string = 'Sableye SF';
+  public set: string = 'BST';
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '48';
+  public setNumber: string = '98';
+
+  public name: string = 'Morpeko';
+
+  public fullName: string = 'Morpeko BST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
@@ -102,5 +87,4 @@ export class Sableye extends PokemonCard {
 
     return state;
   }
-
 }

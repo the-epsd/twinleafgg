@@ -4,6 +4,7 @@ import { Ampharosex } from './ampharos-ex';
 import { Charmander } from './charmander';
 import { Mimikyuex } from './mimikyu-ex';
 import { Pecharunt } from './pecharunt';
+import { Scrafty } from './scrafty';
 import { Tinkatonex } from './tinkaton-ex';
 import { TMMachine } from './tm-machine';
 import { Toxtricityex } from './toxtricity-ex';
@@ -17,6 +18,7 @@ export const setScarletAndVioletPromos: Card[] = [
   new Tinkatonex(),
   new TMMachine(),
   new Toxtricityex(),
+  new Scrafty(),
 
   // Alt arts
   new PawmotSVP(),
