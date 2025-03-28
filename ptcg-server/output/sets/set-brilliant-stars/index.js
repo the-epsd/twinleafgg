@@ -17,6 +17,7 @@ const cynthias_ambition_1 = require("./cynthias-ambition");
 const double_turbo_energy_1 = require("./double-turbo-energy");
 const druddigon_1 = require("./druddigon");
 const duskull_1 = require("./duskull");
+const eiscue_1 = require("./eiscue");
 const electabuzz_1 = require("./electabuzz");
 const electivire_1 = require("./electivire");
 const empoleon_1 = require("./empoleon");
@@ -67,6 +68,7 @@ exports.setBrilliantStars = [
     new druddigon_1.Druddigon(),
     new double_turbo_energy_1.DoubleTurboEnergy(),
     new duskull_1.Duskull(),
+    new eiscue_1.Eiscue(),
     new electabuzz_1.Electabuzz(),
     new electivire_1.Electivire(),
     new empoleon_1.Empoleon(),

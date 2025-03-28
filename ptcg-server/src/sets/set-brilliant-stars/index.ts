@@ -15,6 +15,7 @@ import { CynthiasAmbition } from './cynthias-ambition';
 import { DoubleTurboEnergy } from './double-turbo-energy';
 import { Druddigon } from './druddigon';
 import { Duskull } from './duskull';
+import { Eiscue } from './eiscue';
 import { Electabuzz } from './electabuzz';
 import { Electivire } from './electivire';
 import { Empoleon } from './empoleon';
@@ -68,6 +69,7 @@ export const setBrilliantStars: Card[] = [
   new Druddigon(),
   new DoubleTurboEnergy(),
   new Duskull(),
+  new Eiscue(),
   new Electabuzz(),
   new Electivire(),
   new Empoleon(),
