@@ -4,7 +4,7 @@ import { StoreLike, State, StateUtils, GamePhase } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { KnockOutEffect } from '../../game/store/effects/game-effects';
-import { DRAW_CARDS, MOVE_CARDS, SHUFFLE_DECK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { DRAW_CARDS, SHUFFLE_DECK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Shaymin extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -41,7 +41,8 @@ export class Shaymin extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      MOVE_CARDS(store, state, player.hand, player.deck, { cards: player.hand.cards });
+      //MOVE_CARDS(store, state, player.hand, player.deck, { cards: player.hand.cards });
+      player.hand.moveTo(player.deck);
       SHUFFLE_DECK(store, state, player);
       DRAW_CARDS(player, 6);
     }

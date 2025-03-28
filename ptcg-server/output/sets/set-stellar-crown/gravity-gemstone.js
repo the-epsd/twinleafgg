@@ -5,6 +5,7 @@ const trainer_card_1 = require("../../game/store/card/trainer-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const check_effects_1 = require("../../game/store/effects/check-effects");
 const game_1 = require("../../game");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class GravityGemstone extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -21,6 +22,9 @@ class GravityGemstone extends trainer_card_1.TrainerCard {
         if (effect instanceof check_effects_1.CheckRetreatCostEffect) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
+            if (prefabs_1.IS_TOOL_BLOCKED(store, state, player, this)) {
+                return state;
+            }
             if (player.active.tool === this || opponent.active.tool === this) {
                 effect.cost.push(card_types_1.CardType.COLORLESS);
             }
