@@ -14,6 +14,7 @@ const reshiram_1 = require("./reshiram");
 const rillaboom_1 = require("./rillaboom");
 const snom_1 = require("./snom");
 const thwackey_1 = require("./thwackey");
+const yveltal_1 = require("./yveltal");
 exports.setShiningFates = [
     new ball_guy_1.BallGuy(),
     new buizel_1.Buizel(),
@@ -27,6 +28,7 @@ exports.setShiningFates = [
     new thwackey_1.Thwackey(),
     new reshiram_1.Reshiram(),
     new kyogre_1.Kyogre(),
+    new yveltal_1.Yveltal(),
     // Shiny Vault
     new full_art_1.ApplinSV(),
     new full_art_1.SnomSV(),
