@@ -1,33 +1,35 @@
+import { State, StoreLike } from '../../game';
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { PowerType } from '../../game/store/card/pokemon-types';
 import { Effect } from '../../game/store/effects/effect';
-import { State } from '../../game/store/state/state';
-import { StoreLike } from '../../game/store/store-like';
-export declare class Sableye extends PokemonCard {
+export declare class Scraggy extends PokemonCard {
     stage: Stage;
     cardType: CardType;
     hp: number;
+    weakness: {
+        type: CardType.FIGHTING;
+    }[];
     resistance: {
-        type: CardType;
+        type: CardType.PSYCHIC;
         value: number;
     }[];
-    retreat: CardType[];
-    powers: {
+    retreat: CardType.COLORLESS[];
+    attacks: ({
         name: string;
-        powerType: PowerType;
-        text: string;
-    }[];
-    attacks: {
-        name: string;
-        cost: CardType[];
+        cost: CardType.DARK[];
         damage: number;
         text: string;
-    }[];
+    } | {
+        name: string;
+        cost: CardType.COLORLESS[];
+        damage: number;
+        text: string;
+    })[];
+    regulationMark: string;
     set: string;
+    setNumber: string;
+    cardImage: string;
     name: string;
     fullName: string;
-    cardImage: string;
-    setNumber: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }
