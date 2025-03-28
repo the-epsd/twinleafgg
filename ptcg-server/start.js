@@ -23,6 +23,7 @@ cardManager.defineSet(sets.setVendingSeries);
 cardManager.defineSet(sets.setBaseSetEnergy);
 
 //ex Era shit
+cardManager.defineSet(sets.setEXRubyAndSapphire);
 cardManager.defineSet(sets.setEXHolonPhantoms);
 cardManager.defineSet(sets.setEXDragon);
 cardManager.defineSet(sets.setEXDragonFrontiers);
