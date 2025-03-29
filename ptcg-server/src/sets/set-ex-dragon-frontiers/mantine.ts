@@ -53,6 +53,11 @@ export class Mantine extends PokemonCard {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
 
+      // Cannot use if affected by special condition
+      if (player.active.cards[0] === this && player.active.specialConditions.length > 0) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
+      }
+
       //Must have basic energy in discard
       if (!player.discard.cards.some(c => c instanceof EnergyCard && c.energyType === EnergyType.BASIC)) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);

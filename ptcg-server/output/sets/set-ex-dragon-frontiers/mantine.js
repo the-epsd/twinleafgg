@@ -47,6 +47,10 @@ class Mantine extends pokemon_card_1.PokemonCard {
             if (prefabs_1.HAS_MARKER(this.POWER_CIRCULATION_MARKER, player, this)) {
                 throw new game_1.GameError(game_1.GameMessage.POWER_ALREADY_USED);
             }
+            // Cannot use if affected by special condition
+            if (player.active.cards[0] === this && player.active.specialConditions.length > 0) {
+                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
+            }
             //Must have basic energy in discard
             if (!player.discard.cards.some(c => c instanceof game_1.EnergyCard && c.energyType === card_types_1.EnergyType.BASIC)) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
