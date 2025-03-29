@@ -1,28 +1,27 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AvatarInfo } from 'ptcg-server';
 import { Observable } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { finalize } from 'rxjs/operators';
+
 import { AlertService } from '../../shared/alert/alert.service';
 import { ApiError } from '../../api/api.error';
 import { AvatarService } from '../../api/services/avatar.service';
 import { SessionService } from '../../shared/session/session.service';
-import { MatDialog } from '@angular/material/dialog';
+import { ApiService } from '../../api/api.service';
 
 @UntilDestroy()
 @Component({
-  selector: 'ptcg-edit-avatars-popup',
-  templateUrl: './edit-avatars-popup.component.html',
-  styleUrls: ['./edit-avatars-popup.component.scss']
+  selector: 'ptcg-select-avatar',
+  templateUrl: './select-avatar.component.html',
+  styleUrls: ['./select-avatar.component.scss']
 })
-export class EditAvatarsPopupComponent implements OnInit {
-
-  public displayedColumns: string[] = ['default', 'image', 'name'];
+export class SelectAvatarComponent implements OnInit {
   public loading = false;
-  public defaultAvatar$: Observable<string>;
   public avatars: AvatarInfo[] = [];
+  public defaultAvatar$: Observable<string>;
   private userId: number;
 
   constructor(
@@ -30,17 +29,29 @@ export class EditAvatarsPopupComponent implements OnInit {
     private avatarService: AvatarService,
     private sessionService: SessionService,
     private translate: TranslateService,
-    @Inject(MAT_DIALOG_DATA) data: { userId: number },
-    private dialog: MatDialog
+    private route: ActivatedRoute,
+    private router: Router,
+    private apiService: ApiService
   ) {
-    this.userId = data.userId;
+    this.userId = this.sessionService.session.loggedUserId;
     this.defaultAvatar$ = this.sessionService.get(session => {
-      const user = session.users[data.userId];
+      const user = session.users[this.userId];
       return user ? user.avatarFile : '';
     });
   }
 
-  public markAsDefault(avatar: AvatarInfo) {
+  ngOnInit() {
+    this.refreshAvatars();
+  }
+
+  public getAvatarUrl(fileName: string): string {
+    const config = this.sessionService.session.config;
+    const avatarUrl = config && config.avatarsUrl || '';
+    const apiUrl = this.apiService.getApiUrl();
+    return apiUrl + avatarUrl.replace('{name}', fileName);
+  }
+
+  public selectAvatar(avatar: AvatarInfo) {
     this.loading = true;
     this.avatarService.markAsDefault(avatar.id)
       .pipe(
@@ -48,16 +59,15 @@ export class EditAvatarsPopupComponent implements OnInit {
         untilDestroyed(this)
       )
       .subscribe({
+        next: () => {
+          this.router.navigate(['/profile']);
+        },
         error: (error: ApiError) => {
           if (!error.handled) {
             this.alertService.toast(this.translate.instant('ERROR_UNKNOWN'));
           }
         }
       });
-  }
-
-  ngOnInit() {
-    this.refreshAvatars();
   }
 
   private refreshAvatars(): void {
@@ -78,15 +88,4 @@ export class EditAvatarsPopupComponent implements OnInit {
         }
       });
   }
-
-  private getAvatarName(name: string = ''): Promise<string | undefined> {
-    const invalidValues = this.avatars.map(a => a.name);
-    return this.alertService.inputName({
-      title: this.translate.instant('PROFILE_ENTER_AVATAR_NAME'),
-      placeholder: this.translate.instant('PROFILE_AVATAR_NAME'),
-      invalidValues,
-      value: name
-    });
-  }
-
-}
+} 

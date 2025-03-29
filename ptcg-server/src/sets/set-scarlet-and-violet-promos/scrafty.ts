@@ -15,7 +15,7 @@ export class Scrafty extends PokemonCard {
   public attacks = [{
     name: 'Nab \'n Dash',
     cost: [C],
-    damage: 40,
+    damage: 0,
     text: 'Search your deck for a number of cards up to the number of your Benched Pokémon and put them into your hand. Then, shuffle your deck.'
   }, {
     name: 'High Jump Kick',

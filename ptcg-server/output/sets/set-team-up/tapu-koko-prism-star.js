@@ -14,7 +14,7 @@ class TapuKokoPrismStar extends pokemon_card_1.PokemonCard {
         this.hp = 130;
         this.weakness = [{ type: card_types_1.CardType.FIGHTING }];
         this.resistance = [{ type: card_types_1.CardType.METAL, value: -20 }];
-        this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
+        this.retreat = [card_types_1.CardType.COLORLESS];
         this.powers = [{
                 name: 'Dance of the Ancients',
                 useWhenInPlay: true,

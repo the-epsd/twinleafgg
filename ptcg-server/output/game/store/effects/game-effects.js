@@ -74,6 +74,7 @@ class UseAttackEffect {
         this.preventDefault = false;
         this.player = player;
         this.attack = attack;
+        this.source = player.active;
     }
 }
 exports.UseAttackEffect = UseAttackEffect;

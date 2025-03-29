@@ -123,6 +123,9 @@ export const cardReplacements = [
   { from: 'Pokemon Breeder BS 76', to: 'Pokémon Breeder BS 76' },
   { from: 'Pokemon Trader BS 77', to: 'Pokémon Trader BS 77' },
 
+  //GRI
+  { from: 'Oricorio GRI 55', to: 'Oricorio GRI2 55' },
+
   //SUM
   { from: 'Rotom Dex SUM 159', to: 'Rotom DexSR SM 159' },
 
@@ -347,6 +350,8 @@ export const cardReplacements = [
   { from: 'Penny PAF 236', to: 'PennySIR PAF 239' },
 
   //TEF
+  { from: 'Great Tusk TEF 96', to: 'Great Tusk TEF2 96' },
+
   //TEF FA
   { from: 'Grotle TEF 164', to: 'GrotleIR TEF 164' },
   { from: 'Charjabug TEF 169', to: 'CharjabugIR TEF 169' },
@@ -628,6 +633,9 @@ export const exportReplacements = [
   { from: 'Pokémon Breeder BS 76', to: 'Pokemon Breeder BS 76' },
   { from: 'Pokémon Trader BS 77', to: 'Pokemon Trader BS 77' },
 
+  //GRI
+  { from: 'Oricorio GRI2 55', to: 'Oricorio GRI 55' },
+
   //SUM
   { from: 'Rotom DexSR SM 159', to: 'Rotom Dex SUM 159' },
 
@@ -850,6 +858,8 @@ export const exportReplacements = [
   { from: 'PennySIR PAF 236', to: 'Penny PAF 239' },
 
   //TEF
+  { from: 'Great Tusk TEF2 96', to: 'Great Tusk TEF 96' },
+
   //TEF FA
   { from: 'GrotleIR TEF 164', to: 'Grotle TEF 164' },
   { from: 'CharjabugIR TEF 169', to: 'Charjabug TEF 169' },

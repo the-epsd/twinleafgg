@@ -48,7 +48,7 @@ export class BuddyBuddyRescue extends TrainerCard {
         if (isPokemon) {
           pokemonInOpponentsDiscard += 1;
         } else {
-          blocked.push(index);
+          blockedOpponent.push(index);
         }
       });
 

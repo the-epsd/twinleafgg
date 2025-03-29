@@ -1,0 +1,21 @@
+<ptcg-content [loading]="loading">
+  <mat-toolbar>
+    <mat-toolbar-row>
+      <h1 translate>PROFILE_SELECT_AVATAR</h1>
+      <span class="ptcg-u-spacer"></span>
+      <button mat-raised-button [routerLink]="['/profile']">
+        {{ 'BUTTON_BACK' | translate }}
+      </button>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+  <div class="ptcg-avatar-grid">
+    <div class="ptcg-avatar-grid-container">
+      <div *ngFor="let avatar of avatars" class="ptcg-avatar-grid-item"
+        [class.ptcg-avatar-selected]="(defaultAvatar$ | async) === avatar.fileName" (click)="selectAvatar(avatar)">
+        <img [src]="getAvatarUrl(avatar.fileName)" [alt]="avatar.name" class="ptcg-avatar-image">
+        <div class="ptcg-avatar-name">{{ avatar.name }}</div>
+      </div>
+    </div>
+  </div>
+</ptcg-content>

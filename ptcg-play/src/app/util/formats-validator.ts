@@ -103,9 +103,9 @@ export class FormatValidator {
 
       case Format.STANDARD:
         var banList = BanLists[format];
-        return card.regulationMark === 'F' ||
-          card.regulationMark === 'G' ||
-          card.regulationMark === 'H'
+        return card.regulationMark === 'G' ||
+          card.regulationMark === 'H' ||
+          card.regulationMark === 'I'
 
       case Format.STANDARD_NIGHTLY:
         var banList = BanLists[format];
