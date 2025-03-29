@@ -7,6 +7,7 @@ const beedrill_1 = require("./beedrill");
 const bills_analysis_1 = require("./bills-analysis");
 const bisharp_1 = require("./bisharp");
 const bronzor_1 = require("./bronzor");
+const charmander_1 = require("./charmander");
 const dragonite_1 = require("./dragonite");
 const ferrothorn_1 = require("./ferrothorn");
 const gengar_and_mimikyu_gx_1 = require("./gengar-and-mimikyu-gx");
@@ -38,6 +39,7 @@ exports.setTeamUp = [
     new bills_analysis_1.BillsAnalysis(),
     new bisharp_1.Bisharp(),
     new bronzor_1.Bronzor(),
+    new charmander_1.Charmander(),
     new dragonite_1.Dragonite(),
     new ferrothorn_1.Ferrothorn(),
     new gengar_and_mimikyu_gx_1.GengarMimikyuGX(),
