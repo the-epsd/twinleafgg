@@ -10,6 +10,7 @@ import { Ferrothorn } from './ferrothorn';
 import { GengarMimikyuGX } from './gengar-and-mimikyu-gx';
 import { Hitmonchan } from './hitmonchan';
 import { Hitmonlee } from './hitmonlee';
+import { Jasmine } from './jasmine';
 import { Jirachi } from './jirachi';
 import { JudgeWhistle } from './judge-whistle';
 import { Kakuna } from './kakuna';
@@ -42,6 +43,7 @@ export const setTeamUp: Card[] = [
   new GengarMimikyuGX(),
   new Hitmonchan(),
   new Hitmonlee(),
+  new Jasmine(),
   new Jirachi(),
   new Kakuna(),
   new Lapras(),
