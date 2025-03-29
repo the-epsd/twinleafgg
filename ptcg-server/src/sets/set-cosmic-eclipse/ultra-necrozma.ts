@@ -50,7 +50,7 @@ export class UltraNecrozma extends PokemonCard {
 
     // check to see if the opponent has less than 3 prize cards before allowing an attack
     // (Ultra Burst)
-    if (effect instanceof UseAttackEffect && effect.attack === this.attacks[0]) {
+    if (effect instanceof UseAttackEffect && effect.source.cards.includes(this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

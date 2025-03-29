@@ -4,6 +4,7 @@ import { ChoosePokemonPrompt, ConfirmPrompt, GameError, GameMessage, PlayerType,
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { ADD_MARKER } from '../../game/store/prefabs/prefabs';
 
 export class Sawsbuck extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -35,20 +36,31 @@ export class Sawsbuck extends PokemonCard {
 
   public bounceMarker = false;
 
+  public readonly SEASONAL_BLESSINGS_MARKER = 'SEASONAL_BLESSINGS_MARKER';
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
+
+      if (player.marker.hasMarker(this.SEASONAL_BLESSINGS_MARKER)) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
+      }
 
       if (player.deck.cards.length === 0) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
       player.deck.moveTo(player.hand, 1);
+      ADD_MARKER(this.SEASONAL_BLESSINGS_MARKER, player, this);
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       this.bounceMarker = true;
+    }
+
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.SEASONAL_BLESSINGS_MARKER)) {
+      effect.player.marker.removeMarker(this.SEASONAL_BLESSINGS_MARKER);
     }
 
     if (effect instanceof EndTurnEffect && this.bounceMarker == true) {

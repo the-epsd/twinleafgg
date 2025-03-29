@@ -5,19 +5,16 @@
 
   .ptcg-avatar-grid-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(100px, 2fr));
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     gap: map-get($padding, normal);
     max-width: 1200px;
     margin: 0 auto;
   }
 
   .ptcg-avatar-grid-item {
-    width: 100%;
-    height: 100%;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    overflow: hidden;
     padding: map-get($padding, small);
     border-radius: 8px;
     cursor: pointer;
@@ -35,26 +32,17 @@
     }
   }
 
+  .ptcg-avatar-image {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    margin-bottom: map-get($padding, small);
+    object-fit: cover;
+  }
+
   .ptcg-avatar-name {
     text-align: center;
     font-size: 14px;
     color: #fff;
-    margin-top: map-get($padding, small);
   }
-}
-
-mat-dialog-content {
-  min-width: 600px;
-  max-height: 80vh;
-}
-
-.large-avatar {
-  width: 240px;
-  height: 240px;
-}
-
-.ptcg-avatar {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
 }

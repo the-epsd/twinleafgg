@@ -103,10 +103,11 @@ export class UseAttackEffect implements Effect {
   public preventDefault = false;
   public player: Player;
   public attack: Attack;
-
+  public source: PokemonCardList;
   constructor(player: Player, attack: Attack) {
     this.player = player;
     this.attack = attack;
+    this.source = player.active;
   }
 }
 

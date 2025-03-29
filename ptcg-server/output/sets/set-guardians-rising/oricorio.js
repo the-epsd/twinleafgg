@@ -9,7 +9,7 @@ class Oricorio extends game_1.PokemonCard {
         super(...arguments);
         this.stage = game_1.Stage.BASIC;
         this.cardType = P;
-        this.hp = 60;
+        this.hp = 90;
         this.weakness = [{ type: P }];
         this.retreat = [C];
         this.powers = [{
@@ -27,7 +27,7 @@ class Oricorio extends game_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '55';
         this.name = 'Oricorio';
-        this.fullName = 'Oricorio GRI';
+        this.fullName = 'Oricorio GRI2';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {

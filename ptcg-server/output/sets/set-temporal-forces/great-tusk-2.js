@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.GreatTusk2 = void 0;
 const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
-const prefabs_1 = require("../../game/store/prefabs/prefabs");
+const game_effects_1 = require("../../game/store/effects/game-effects");
 class GreatTusk2 extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -33,19 +33,15 @@ class GreatTusk2 extends pokemon_card_1.PokemonCard {
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '96';
         this.name = 'Great Tusk';
-        this.fullName = 'Great Tusk 2 TEF';
+        this.fullName = 'Great Tusk TEF2';
     }
     reduceEffect(store, state, effect) {
         // Wrathful Charge
-        if (prefabs_1.WAS_ATTACK_USED(effect, 1, this)) {
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
-            let isThereDamage = false;
-            player.bench.forEach(cardList => {
-                if (cardList.cards.length > 0 && cardList.damage > 0) {
-                    isThereDamage = true;
-                }
-            });
-            if (isThereDamage) {
+            // Check if any benched Pokémon has damage
+            const hasDamagedBench = player.bench.some(pokemon => pokemon.damage > 0);
+            if (hasDamagedBench) {
                 effect.damage += 80;
             }
         }

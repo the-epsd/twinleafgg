@@ -21,8 +21,10 @@ class StoneFightingEnergy extends energy_card_1.EnergyCard {
 The [F] Pokémon this card is attached to takes 20 less damage from attacks from your opponent's Pokémon (after applying Weakness and Resistance).`;
     }
     reduceEffect(store, state, effect) {
-        var _a, _b;
-        if (prefabs_1.DEAL_DAMAGE(effect) && ((_b = (_a = effect.target) === null || _a === void 0 ? void 0 : _a.cards) === null || _b === void 0 ? void 0 : _b.includes(this))) {
+        if (effect instanceof check_effects_1.CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
+            effect.energyMap.push({ card: this, provides: [card_types_1.CardType.FIGHTING] });
+        }
+        if (prefabs_1.DEAL_DAMAGE(effect) && effect.target.cards.includes(this)) {
             const checkPokemonType = new check_effects_1.CheckPokemonTypeEffect(effect.target);
             store.reduceEffect(state, checkPokemonType);
             if (checkPokemonType.cardTypes.includes(card_types_1.CardType.FIGHTING)) {
