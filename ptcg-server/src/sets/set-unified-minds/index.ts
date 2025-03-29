@@ -1,11 +1,13 @@
 import { Card } from '../../game/store/card/card';
 import { AlolanGrimer } from './alolan-grimer';
 import { AlolanRaichu } from './alolan-raichu';
+import { Beheeyem } from './beheeyem';
 import { CherishBall } from './cherish-ball';
 import { Cottonee } from './cottonee';
 import { Cryogonal } from './cryogonal';
 import { DarkCity } from './dark-city';
 import { Eelektross } from './eelektross';
+import { Elgyem } from './elgyem';
 import { FlyiniumZAirSlash } from './flyinium-z-air-slash';
 import { Froslass } from './froslass';
 import { Garchomp } from './garchomp';
@@ -39,11 +41,13 @@ import { MegaSableyeTyranitarGX } from './mega-sableye-tyranitar-gx';
 export const setUnifiedMinds: Card[] = [
   new AlolanGrimer(),
   new AlolanRaichu(),
+  new Beheeyem(),
   new CherishBall(),
   new Cottonee(),
   new Cryogonal(),
   new DarkCity(),
   new Eelektross(),
+  new Elgyem(),
   new FlyiniumZAirSlash(),
   new Froslass(),
   new GarchompGiratinaGX(),
