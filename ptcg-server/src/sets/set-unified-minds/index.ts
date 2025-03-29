@@ -34,6 +34,7 @@ import { Wimpod } from './wimpod';
 import { Sneasel } from './sneasel';
 import { WeavileGX } from './weavile-gx';
 import { MegaSableyeTyranitarGX } from './mega-sableye-tyranitar-gx';
+import { PokemonResearchLab } from './pokemon-research-lab';
 
 
 export const setUnifiedMinds: Card[] = [
@@ -58,6 +59,7 @@ export const setUnifiedMinds: Card[] = [
   new Munchlax(),
   new Necrozma(),
   new Numel(),
+  new PokemonResearchLab(),
   new Purrloin(),
   new RaichuAlolanRaichuGX(),
   new RecycleEnergy(),
