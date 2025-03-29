@@ -494,6 +494,42 @@ export function IS_ABILITY_BLOCKED(store: StoreLike, state: State, player: Playe
 }
 
 /**
+ * Checks if pokebodies are blocked on `card` for `player`.
+ * @returns `true` if the pokebody is blocked, `false` if the pokebody is able to go thru.
+ */
+export function IS_POKEBODY_BLOCKED(store: StoreLike, state: State, player: Player, card: PokemonCard): boolean {
+  // Try to reduce PowerEffect, to check if something is blocking our pokebody
+  try {
+    store.reduceEffect(state, new PowerEffect(player, {
+      name: 'test',
+      powerType: PowerType.POKEBODY,
+      text: ''
+    }, card));
+  } catch {
+    return true;
+  }
+  return false;
+}
+
+/**
+ * Checks if pokepowers are blocked on `card` for `player`.
+ * @returns `true` if the pokepower is blocked, `false` if the pokepower is able to go thru.
+ */
+export function IS_POKEPOWER_BLOCKED(store: StoreLike, state: State, player: Player, card: PokemonCard): boolean {
+  // Try to reduce PowerEffect, to check if something is blocking our pokepower
+  try {
+    store.reduceEffect(state, new PowerEffect(player, {
+      name: 'test',
+      powerType: PowerType.POKEPOWER,
+      text: ''
+    }, card));
+  } catch {
+    return true;
+  }
+  return false;
+}
+
+/**
  * Checks if a tool's effect is being blocked 
  * @returns `true` if the tool's effect is blocked, `false` if the tool's effect is able to activate.
  */
