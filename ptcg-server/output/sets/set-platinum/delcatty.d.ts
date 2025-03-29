@@ -9,7 +9,7 @@ export declare class Delcatty extends PokemonCard {
     cardType: CardType;
     hp: number;
     weakness: {
-        type: CardType.FIGHTING;
+        type: CardType;
         value: number;
     }[];
     retreat: CardType.COLORLESS[];

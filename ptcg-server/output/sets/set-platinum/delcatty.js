@@ -15,7 +15,7 @@ class Delcatty extends pokemon_card_1.PokemonCard {
         this.evolvesFrom = 'Skitty';
         this.cardType = C;
         this.hp = 90;
-        this.weakness = [{ type: F, value: +20 }];
+        this.weakness = [{ type: card_types_1.CardType.FIGHTING, value: +20 }];
         this.retreat = [C];
         this.powers = [{
                 name: 'Power Circulation',
@@ -50,19 +50,15 @@ class Delcatty extends pokemon_card_1.PokemonCard {
         if (prefabs_1.WAS_POWER_USED(effect, 0, this)) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            // Once per turn
             if (prefabs_1.HAS_MARKER(this.POWER_CIRCULATION_MARKER, player, this)) {
                 throw new game_1.GameError(game_1.GameMessage.POWER_ALREADY_USED);
             }
-            // Can't be used with special condition
             if (player.active.cards[0] === this && player.active.specialConditions.length > 0) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
-            // Must have basic energy in discard
             if (!player.discard.cards.some(c => c instanceof game_1.EnergyCard && c.energyType === card_types_1.EnergyType.BASIC)) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
-            // Check if power is blocked
             try {
                 const stub = new game_effects_1.PowerEffect(player, {
                     name: 'test',
@@ -74,27 +70,33 @@ class Delcatty extends pokemon_card_1.PokemonCard {
             catch (_a) {
                 return state;
             }
-            // Power effect
             state = store.prompt(state, new game_1.ConfirmPrompt(effect.player.id, game_1.GameMessage.WANT_TO_USE_ABILITY), wantToUse => {
                 if (wantToUse) {
                     const deckTop = new game_1.CardList();
                     return store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_DECK, player.discard, { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC }, { min: 1, max: 2, allowCancel: false }), selected => {
+                        if (selected.length === 0)
+                            return;
                         selected.forEach(card => {
                             store.log(state, game_1.GameLog.LOG_PLAYER_RETURNS_TO_DECK_FROM_DISCARD, { name: player.name, card: card.name });
                             player.discard.moveCardTo(card, deckTop);
                         });
-                        deckTop.moveToTopOfDestination(player.deck);
-                        store.prompt(state, new game_1.ShowCardsPrompt(opponent.id, game_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, selected), () => { });
-                        player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
-                            if (cardList.getPokemonCard() === this) {
-                                cardList.damage += 20;
-                            }
-                        });
-                        prefabs_1.ADD_MARKER(this.POWER_CIRCULATION_MARKER, player, this);
-                        player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
-                            if (cardList.getPokemonCard() === this) {
-                                cardList.addBoardEffect(card_types_1.BoardEffect.ABILITY_USED);
-                            }
+                        store.prompt(state, new game_1.OrderCardsPrompt(player.id, game_1.GameMessage.CHOOSE_CARDS_ORDER, deckTop, { allowCancel: false }), order => {
+                            if (order === null)
+                                return state;
+                            deckTop.applyOrder(order);
+                            deckTop.moveToTopOfDestination(player.deck);
+                            store.prompt(state, new game_1.ShowCardsPrompt(opponent.id, game_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, selected), () => { });
+                            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
+                                if (cardList.getPokemonCard() === this) {
+                                    cardList.damage += 20;
+                                }
+                            });
+                            prefabs_1.ADD_MARKER(this.POWER_CIRCULATION_MARKER, player, this);
+                            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
+                                if (cardList.getPokemonCard() === this) {
+                                    cardList.addBoardEffect(card_types_1.BoardEffect.ABILITY_USED);
+                                }
+                            });
                         });
                     });
                 }
@@ -102,10 +104,8 @@ class Delcatty extends pokemon_card_1.PokemonCard {
             return state;
         }
         if (prefabs_1.WAS_ATTACK_USED(effect, 0, this)) {
-            // Get Delcatty's damage
             const delcattyDamage = effect.player.active.damage;
-            const damagePerCounter = 10;
-            effect.damage += (delcattyDamage * damagePerCounter / 10);
+            effect.damage += (delcattyDamage * 10 / 10);
             attack_effects_1.HEAL_X_DAMAGE_FROM_THIS_POKEMON(20, effect, store, state);
             return state;
         }
