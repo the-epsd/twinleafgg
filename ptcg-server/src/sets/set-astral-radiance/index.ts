@@ -46,6 +46,7 @@ import { OriginFormePalkiaV } from './origin-forme-palkia-v';
 import { OriginFormePalkiaVSTAR } from './origin-forme-palkia-vstar';
 import { RadiantGreninja } from './radiant-greninja';
 import { RadiantHawlucha } from './radiant-hawlucha';
+import { RadiantHeatran } from './radiant-heatran';
 import { Ralts } from './ralts';
 import { Regice } from './regice';
 import { Regidrago } from './regidrago';
@@ -116,6 +117,7 @@ export const setAstralRadiance: Card[] = [
   new OriginFormePalkiaVSTAR(),
   new RadiantGreninja(),
   new RadiantHawlucha(),
+  new RadiantHeatran(),
   new Ralts(),
   new Regice(),
   new Regidrago(),
