@@ -50,6 +50,8 @@ const togekiss_1 = require("./togekiss");
 const togepi_1 = require("./togepi");
 const togetic_1 = require("./togetic");
 const town_store_1 = require("./town-store");
+const toxel_1 = require("./toxel");
+const toxtricity_1 = require("./toxtricity");
 const tympole_1 = require("./tympole");
 const tyranitar_ex_1 = require("./tyranitar-ex");
 const varoom_1 = require("./varoom");
@@ -102,6 +104,8 @@ exports.setObsidianFlames = [
     new togepi_1.Togepi(),
     new togetic_1.Togetic(),
     new togekiss_1.Togekiss(),
+    new toxel_1.Toxel(),
+    new toxtricity_1.Toxtricity(),
     new victini_ex_1.Victiniex(),
     new eiscue_ex_1.Eiscueex(),
     new miraidon_ex_1.Miraidonex(),
