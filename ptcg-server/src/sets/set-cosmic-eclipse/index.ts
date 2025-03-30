@@ -1,4 +1,5 @@
 import { Card } from '../../game/store/card/card';
+import { Aipom } from './aipom';
 import { ArceusDialgaPalkiaGX } from './arceus-dialga-palkia-gx';
 import { BellelbaAndBrycenMan } from './bellelba-and-brycen-man';
 import { Blacephalon } from './blacephalon';
@@ -49,6 +50,7 @@ import { OricorioGX } from './oricorio-gx';
 
 
 export const setCosmicEclipse: Card[] = [
+  new Aipom(),
   new ArceusDialgaPalkiaGX(),
   new BellelbaAndBrycenMan(),
   new Blacephalon(),
