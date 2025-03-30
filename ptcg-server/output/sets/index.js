@@ -129,7 +129,7 @@ __exportStar(require("./set-shrouded-fable"), exports);
 __exportStar(require("./set-stellar-crown"), exports);
 __exportStar(require("./set-surging-sparks"), exports);
 __exportStar(require("./set-prismatic-evolution"), exports);
-__exportStar(require("./set-sv9"), exports);
+__exportStar(require("./set-journey-together"), exports);
 __exportStar(require("./set-sv9a"), exports);
 __exportStar(require("./set-sv10"), exports);
 __exportStar(require("./set-m1s"), exports);

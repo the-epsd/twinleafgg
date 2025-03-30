@@ -87,7 +87,7 @@ export class MewEx extends PokemonCard {
       return store.prompt(state, new MoveEnergyPrompt(
         effect.player.id,
         GameMessage.MOVE_ENERGY_CARDS,
-        PlayerType.ANY,
+        PlayerType.BOTTOM_PLAYER,
         [SlotType.ACTIVE, SlotType.BENCH],
         { superType: SuperType.ENERGY },
         { allowCancel: true }

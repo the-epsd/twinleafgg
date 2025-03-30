@@ -49,18 +49,30 @@ class Fezandipiti extends pokemon_card_1.PokemonCard {
                 return state;
             }
             // Check if we have dark energy attached
-            const checkProvidedEnergyEffect = new check_effects_1.CheckProvidedEnergyEffect(player, cardList);
-            store.reduceEffect(state, checkProvidedEnergyEffect);
-            let hasDarkEnergy = false;
-            checkProvidedEnergyEffect.energyMap.forEach(energy => {
-                energy.provides.forEach(e => {
-                    if (e === card_types_1.CardType.DARK) {
-                        hasDarkEnergy = true;
-                    }
-                });
+            const checkEnergy = new check_effects_1.CheckProvidedEnergyEffect(player, cardList);
+            store.reduceEffect(state, checkEnergy);
+            let hasDarkAttached = false;
+            checkEnergy.energyMap.forEach(em => {
+                var _a;
+                if (em.provides.includes(card_types_1.CardType.ANY)) {
+                    hasDarkAttached = true;
+                }
+                if (em.provides.includes(card_types_1.CardType.DARK)) {
+                    hasDarkAttached = true;
+                }
+                const energyCard = em.card;
+                if (energyCard instanceof game_1.EnergyCard && energyCard.provides.includes(card_types_1.CardType.DARK)) {
+                    hasDarkAttached = true;
+                }
+                if (energyCard instanceof game_1.EnergyCard && energyCard.provides.includes(card_types_1.CardType.ANY)) {
+                    hasDarkAttached = true;
+                }
+                if (energyCard instanceof game_1.EnergyCard && ((_a = energyCard.blendedEnergies) === null || _a === void 0 ? void 0 : _a.includes(card_types_1.CardType.DARK))) {
+                    hasDarkAttached = true;
+                }
             });
-            if (!hasDarkEnergy) {
-                return state;
+            if (!hasDarkAttached) {
+                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
             try {
                 const stub = new game_effects_1.PowerEffect(player, {

@@ -16,7 +16,9 @@ import { Potion } from './potion';
 import { Skyla } from './skyla';
 import { Squirtle } from './squirtle';
 import { Stoutland } from './stoutland';
+import { Swoobat } from './swoobat';
 import { Wartortle } from './wartortle';
+import { Woobat } from './woobat';
 
 export const setBoundariesCrossed: Card[] = [
   new AspertiaCityGym(),
@@ -36,5 +38,7 @@ export const setBoundariesCrossed: Card[] = [
   new Skyla(),
   new Squirtle(),
   new Stoutland(),
+  new Swoobat(),
   new Wartortle(),
+  new Woobat(),
 ];

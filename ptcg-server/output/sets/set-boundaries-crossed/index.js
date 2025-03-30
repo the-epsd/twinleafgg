@@ -18,7 +18,9 @@ const potion_1 = require("./potion");
 const skyla_1 = require("./skyla");
 const squirtle_1 = require("./squirtle");
 const stoutland_1 = require("./stoutland");
+const swoobat_1 = require("./swoobat");
 const wartortle_1 = require("./wartortle");
+const woobat_1 = require("./woobat");
 exports.setBoundariesCrossed = [
     new aspertia_city_gym_1.AspertiaCityGym(),
     new black_kyurem_1.BlackKyurem(),
@@ -37,5 +39,7 @@ exports.setBoundariesCrossed = [
     new skyla_1.Skyla(),
     new squirtle_1.Squirtle(),
     new stoutland_1.Stoutland(),
+    new swoobat_1.Swoobat(),
     new wartortle_1.Wartortle(),
+    new woobat_1.Woobat(),
 ];
