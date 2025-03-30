@@ -103,9 +103,8 @@ export class FormatValidator {
 
       case Format.STANDARD:
         var banList = BanLists[format];
-        return card.regulationMark === 'G' ||
-          card.regulationMark === 'H' ||
-          card.regulationMark === 'I'
+        var setDate = SetReleaseDates[card.set];
+        return setDate >= SetReleaseDates['SVP'] && setDate <= new Date();
 
       case Format.STANDARD_NIGHTLY:
         var banList = BanLists[format];
@@ -373,8 +372,8 @@ export const SetReleaseDates: { [key: string]: Date } = {
   'SSP': new Date('2024-11-08'),
   'SV8a': new Date('2024-12-06'),
   'PRE': new Date('2025-01-17'),
-  'JTG': new Date('2025-04-11'),
-  'SV9': new Date('2025-04-11'),
-  'SV9a': new Date('2025-04-11'),
-  'SV10': new Date('2025-05-20'),
+  'JTG': new Date('2025-03-28'),
+  'SV9': new Date('2025-03-28'),
+  'SV9a': new Date('2025-05-17'),
+  'SV10': new Date('2025-05-17'),
 }

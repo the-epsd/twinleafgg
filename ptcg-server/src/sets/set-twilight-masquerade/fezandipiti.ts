@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, PowerType, PokemonCardList, GamePhase, GameLog } from '../../game';
+import { StoreLike, State, StateUtils, PowerType, PokemonCardList, GamePhase, GameLog, EnergyCard, GameError, GameMessage } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
@@ -61,21 +61,31 @@ export class Fezandipiti extends PokemonCard {
       }
 
       // Check if we have dark energy attached
-      const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player, cardList);
-      store.reduceEffect(state, checkProvidedEnergyEffect);
-      let hasDarkEnergy: boolean = false;
+      const checkEnergy = new CheckProvidedEnergyEffect(player, cardList);
+      store.reduceEffect(state, checkEnergy);
+      let hasDarkAttached = false;
 
-      checkProvidedEnergyEffect.energyMap.forEach(
-        energy => {
-          energy.provides.forEach(e => {
-            if (e === CardType.DARK) {
-              hasDarkEnergy = true;
-            }
-          });
+      checkEnergy.energyMap.forEach(em => {
+        if (em.provides.includes(CardType.ANY)) {
+          hasDarkAttached = true;
         }
-      );
-      if (!hasDarkEnergy) {
-        return state;
+        if (em.provides.includes(CardType.DARK)) {
+          hasDarkAttached = true;
+        }
+        const energyCard = em.card;
+        if (energyCard instanceof EnergyCard && energyCard.provides.includes(CardType.DARK)) {
+          hasDarkAttached = true;
+        }
+        if (energyCard instanceof EnergyCard && energyCard.provides.includes(CardType.ANY)) {
+          hasDarkAttached = true;
+        }
+        if (energyCard instanceof EnergyCard && energyCard.blendedEnergies?.includes(CardType.DARK)) {
+          hasDarkAttached = true;
+        }
+      });
+
+      if (!hasDarkAttached) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
       try {
