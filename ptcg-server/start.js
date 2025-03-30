@@ -24,6 +24,7 @@ cardManager.defineSet(sets.setBaseSetEnergy);
 
 //ex Era shit
 cardManager.defineSet(sets.setEXHolonPhantoms);
+cardManager.defineSet(sets.setEXHiddenLegends)
 cardManager.defineSet(sets.setEXDragon);
 cardManager.defineSet(sets.setEXDragonFrontiers);
 cardManager.defineSet(sets.setEXDeoxys);

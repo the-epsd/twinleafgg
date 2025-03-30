@@ -21,6 +21,7 @@ __exportStar(require("./set-wotc-promos"), exports);
 __exportStar(require("./set-base-set-energy"), exports);
 //ex Era
 __exportStar(require("./set-ex-holon-phantoms"), exports);
+__exportStar(require("./set-ex-hidden-legends"), exports);
 __exportStar(require("./set-ex-delta-species"), exports);
 __exportStar(require("./set-ex-dragon"), exports);
 __exportStar(require("./set-ex-dragon-frontiers"), exports);
