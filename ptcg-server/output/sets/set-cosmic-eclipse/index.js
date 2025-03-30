@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setCosmicEclipse = void 0;
+const aipom_1 = require("./aipom");
 const arceus_dialga_palkia_gx_1 = require("./arceus-dialga-palkia-gx");
 const bellelba_and_brycen_man_1 = require("./bellelba-and-brycen-man");
 const blacephalon_1 = require("./blacephalon");
@@ -50,6 +51,7 @@ const swoobat_1 = require("./swoobat");
 const mimikyu_1 = require("./mimikyu");
 const oricorio_gx_1 = require("./oricorio-gx");
 exports.setCosmicEclipse = [
+    new aipom_1.Aipom(),
     new arceus_dialga_palkia_gx_1.ArceusDialgaPalkiaGX(),
     new bellelba_and_brycen_man_1.BellelbaAndBrycenMan(),
     new blacephalon_1.Blacephalon(),
