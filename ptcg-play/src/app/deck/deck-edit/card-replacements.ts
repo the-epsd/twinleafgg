@@ -177,7 +177,7 @@ export const cardReplacements = [
   { from: 'Nest Ball SVI 255', to: 'Nest BallHR SVI 255' },
   { from: 'Penny SVI 239', to: 'PennyFA SVI 239' },
   { from: 'Penny SVI 252', to: 'PennySIR SVI 252' },
-  { from: "Professor's Research SVI 240", to: "Professor's ResearchFA1 SVI 242" },
+  { from: "Professor's Research SVI 240", to: "Professor's ResearchFA1 SVI 240" },
   { from: "Professor's Research SVI 241", to: "Professor's ResearchFA2 SVI 241" },
   { from: 'Ralts SVI 211', to: 'RaltsIR SVI 211' },
   { from: 'Kirlia SVI 212', to: 'KirliaIR SVI 212' },
@@ -687,7 +687,7 @@ export const exportReplacements = [
   { from: 'Nest BallHR SVI 255', to: 'Nest Ball SVI 255' },
   { from: 'PennyFA SVI 239', to: 'Penny SVI 239' },
   { from: 'PennySIR SVI 252', to: 'Penny SVI 252' },
-  { from: "Professor's ResearchFA1 SVI 242", to: "Professor's Research SVI 240" },
+  { from: "Professor's ResearchFA1 SVI 240", to: "Professor's Research SVI 240" },
   { from: "Professor's ResearchFA2 SVI 241", to: "Professor's Research SVI 241" },
   { from: 'RaltsIR SVI 211', to: 'Ralts SVI 211' },
   { from: 'KirliaIR SVI 212', to: 'Kirlia SVI 212' },
@@ -744,6 +744,8 @@ export const exportReplacements = [
   { from: 'Ting-Lu exHR PAL 275', to: 'Ting-Lu ex PAL 275' },
   { from: 'Super RodHR PAL 276', to: 'Super Rod PAL 276' },
   { from: 'Superior Energy RetrievalHR PAL 277', to: 'Superior Energy Retrieval PAL 277' },
+
+  //OBF FA
 
   //151 FA
   { from: 'BulbasaurIR MEW 166', to: 'Bulbasaur MEW 166' },
@@ -848,10 +850,10 @@ export const exportReplacements = [
   { from: 'NemonaFA PAF 229', to: 'Nemona PAF 229' },
   { from: 'Paldean StudentFA PAF 230', to: 'Paldean Student PAF 230' },
   { from: 'Paldean StudentFA2 PAF 231', to: 'Paldean Student PAF 231' },
-  { from: 'Mew exSIR PAF 232', to: 'Mew exSIR PAF 232' },
+  { from: 'Mew exSIR PAF 232', to: 'Mew ex PAF 232' },
   { from: 'Gardevoir exSIR PAF 233', to: 'Gardevoir ex PAF 233' },
   { from: 'Charizard exSIR PAF 234', to: 'Charizard ex PAF 234' },
-  { from: 'ArvenSIR PAF 236', to: 'Arven PAF 235' },
+  { from: 'ArvenSIR PAF 235', to: 'Arven PAF 235' },
   { from: 'CliveSIR PAF 236', to: 'Clive PAF 236' },
   { from: 'IonoSIR PAF 237', to: 'Iono PAF 237' },
   { from: 'NemonaSIR PAF 238', to: 'Nemona PAF 238' },
