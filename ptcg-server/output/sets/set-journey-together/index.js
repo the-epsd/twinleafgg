@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.setSV9 = void 0;
+exports.setJourneyTogether = void 0;
 const rockruff_1 = require("../set-forbidden-light/rockruff");
 const accelgor_1 = require("./accelgor");
 const bagon_1 = require("./bagon");
@@ -84,7 +84,7 @@ const tyranitar_1 = require("./tyranitar");
 const volcanion_ex_1 = require("./volcanion-ex");
 const wailmer_1 = require("./wailmer");
 const wailord_1 = require("./wailord");
-exports.setSV9 = [
+exports.setJourneyTogether = [
     new torchic_1.Torchic(),
     new combusken_1.Combusken(),
     new blaziken_ex_1.Blazikenex(),

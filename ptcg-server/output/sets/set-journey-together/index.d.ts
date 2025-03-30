@@ -1,2 +1,2 @@
 import { Card } from '../../game/store/card/card';
-export declare const setSV9: Card[];
+export declare const setJourneyTogether: Card[];
