@@ -21,6 +21,7 @@ const great_catcher_1 = require("./great-catcher");
 const guzma_and_hala_1 = require("./guzma-and-hala");
 const guzzlord_1 = require("./guzzlord");
 const lanas_fishing_rod_1 = require("./lanas-fishing-rod");
+const lanturn_1 = require("./lanturn");
 const lillies_poke_doll_1 = require("./lillies-poke-doll");
 const lillipup_1 = require("./lillipup");
 const mallow_and_lana_1 = require("./mallow-and-lana");
@@ -69,6 +70,7 @@ exports.setCosmicEclipse = [
     new guzma_and_hala_1.GuzmaAndHala(),
     new guzzlord_1.Guzzlord(),
     new lanas_fishing_rod_1.LanasFishingRod(),
+    new lanturn_1.Lanturn(),
     new lillies_poke_doll_1.LilliesPokeDoll(),
     new lillipup_1.Lillipup(),
     new mallow_and_lana_1.MallowAndLana(),
