@@ -40,6 +40,7 @@ __exportStar(require("./set-platinum"), exports);
 __exportStar(require("./set-rising-rivals"), exports);
 //HGSS Era
 __exportStar(require("./set-battle-road-promos"), exports);
+__exportStar(require("./set-call-of-legends"), exports);
 __exportStar(require("./set-heartgold-and-soulsilver"), exports);
 __exportStar(require("./set-heartgold-and-soulsilver-promos"), exports);
 __exportStar(require("./set-l-p-promos"), exports);
