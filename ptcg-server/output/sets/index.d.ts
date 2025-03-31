@@ -5,6 +5,7 @@ export * from './set-team-rocket';
 export * from './set-vending-series';
 export * from './set-wotc-promos';
 export * from './set-base-set-energy';
+export * from './set-neo-genesis';
 export * from './set-ex-holon-phantoms';
 export * from './set-ex-delta-species';
 export * from './set-ex-dragon';

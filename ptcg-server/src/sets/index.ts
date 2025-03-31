@@ -9,6 +9,8 @@ export * from './set-wotc-promos';
 //Retro Energy
 export * from './set-base-set-energy';
 
+export * from './set-neo-genesis'
+
 //ex Era
 export * from './set-ex-holon-phantoms';
 export * from './set-ex-delta-species';
