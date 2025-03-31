@@ -76,6 +76,7 @@ import { Terapagosex } from '../set-stellar-crown/terapagos-ex';
 import { Jolteon } from '../set-pokemon-151/jolteon';
 import { Eevee } from '../set-surging-sparks/eevee';
 import { BloodmoonUrsalunaex } from '../set-twilight-masquerade/bloodmoon-ursaluna-ex';
+import { NsZorua } from '../set-journey-together/ns-zorua';
 export declare class PawmotSVP extends Pawmot {
     setNumber: string;
     fullName: string;
@@ -492,6 +493,11 @@ export declare class EeveeSVP extends Eevee {
     set: string;
 }
 export declare class BloodmoonUrsalunaexSVP extends BloodmoonUrsalunaex {
+    setNumber: string;
+    fullName: string;
+    set: string;
+}
+export declare class NsZoruaSVP extends NsZorua {
     setNumber: string;
     fullName: string;
     set: string;

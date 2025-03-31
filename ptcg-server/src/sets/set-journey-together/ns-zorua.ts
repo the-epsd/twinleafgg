@@ -20,7 +20,7 @@ export class NsZorua extends PokemonCard {
   ];
 
   public regulationMark = 'I';
-  public set: string = 'SV9';
+  public set: string = 'JTG';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '97';
   public name: string = 'N\'s Zorua';

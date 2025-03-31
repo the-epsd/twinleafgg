@@ -175,7 +175,6 @@ exports.setJourneyTogether = [
     new other_prints_1.LilliesRibombeeIR(),
     new other_prints_1.SwinubIR(),
     new other_prints_1.LycanrocIR(),
-    new other_prints_1.NsZoruaIR(),
     new other_prints_1.NsReshiramIR(),
     new other_prints_1.HopsWoolooIR(),
     new other_prints_1.VolcanionexFA(),
