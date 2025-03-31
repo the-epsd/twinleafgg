@@ -11,6 +11,7 @@ export * from './set-base-set-energy';
 
 //ex Era
 export * from './set-ex-holon-phantoms';
+export * from './set-ex-hidden-legends';
 export * from './set-ex-delta-species';
 export * from './set-ex-dragon';
 export * from './set-ex-dragon-frontiers';
