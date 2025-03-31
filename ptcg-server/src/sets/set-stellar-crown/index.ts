@@ -38,6 +38,8 @@ import { Noctowl } from './noctowl';
 import { ArchaludonIR, AreaZeroUnderdepthsHR, BraveryCharmHR, BriarFA, BriarSIR, BulbasaurIR, CinderaceexFA, CrispinFA, GalvantulaexFA, GalvantulaexSIR, HydrappleexFA, HydrappleexSIR, JoltikIR, KofuFA, LaceyFA, LaceySIR, LaprasexFA, MedichamexFA, MedititeIR, MilceryIR, OrthwormexFA, RabootIR, SquirtleIR, TerapagosexHR, TerapagosexSIR, ZeraoraIR } from './other-prints';
 import { Raboot } from './raboot';
 import { RagingBolt } from './raging-bolt';
+import { Salandit } from './salandit';
+import { Salazzle } from './salazzle';
 import { Scorbunny } from './scorbunny';
 import { Slowking } from './slowking';
 import { Terapagosex } from './terapagos-ex';
@@ -82,6 +84,8 @@ export const setStellarCrown: Card[] = [
   // new Orthwormex(),
   new Raboot(),
   new RagingBolt(),
+  new Salandit(),
+  new Salazzle(),
   new Scorbunny(),
   new Slowking(),
   new Terapagosex(),
