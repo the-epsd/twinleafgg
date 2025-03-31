@@ -44,7 +44,7 @@ cardManager.defineSet(sets.setPlatinum);
 cardManager.defineSet(sets.setRisingRivals)
 
 cardManager.defineSet(sets.setBattleRoadPromos);
-
+cardManager.defineSet(sets.setCallOfLegends);
 cardManager.defineSet(sets.setHeartGoldAndSoulSilver);
 cardManager.defineSet(sets.setHeartGoldAndSoulSilverPromos);
 cardManager.defineSet(sets.setLPPromos);

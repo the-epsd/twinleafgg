@@ -24,6 +24,7 @@ export * from './set-op9';
 export * from './set-platinum';
 export * from './set-rising-rivals';
 export * from './set-battle-road-promos';
+export * from './set-call-of-legends';
 export * from './set-heartgold-and-soulsilver';
 export * from './set-heartgold-and-soulsilver-promos';
 export * from './set-l-p-promos';
