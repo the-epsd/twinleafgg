@@ -8,6 +8,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { DiscardCardsEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 
 export class GalarianArticuno extends PokemonCard {
 
@@ -112,8 +113,13 @@ export class GalarianArticuno extends PokemonCard {
         c instanceof EnergyCard &&
         (c.provides.includes(CardType.PSYCHIC) || c.provides.includes(CardType.ANY))
       );
+
+      const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
+      state = store.reduceEffect(state, checkProvidedEnergy);
+
       const discardEnergy = new DiscardCardsEffect(effect, cards);
       discardEnergy.target = player.active;
+      store.reduceEffect(state, discardEnergy);
 
       state = store.prompt(state, new ChoosePokemonPrompt(
         player.id,

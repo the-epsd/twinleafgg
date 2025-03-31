@@ -36,11 +36,11 @@
 
     <!-- <h4 translate>LABEL_RANKING</h4> -->
 
-    <!-- <section class="ptcg-game-rule-checkbox">
+    <section class="ptcg-game-rule-checkbox" *ngIf="isAdmin">
       <mat-checkbox color="primary" name="rule1" [(ngModel)]="settings.recordingEnabled">
         {{ 'GAMES_RECORD_GAME' | translate }}
       </mat-checkbox>
-    </section> -->
+    </section>
 
     <h4 translate>GAMES_GAME_RULES</h4>
 
