@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ThwackeySVP = exports.IronThornsSVP = exports.FlutterManeSVP = exports.MiraidonSVP = exports.KoraidonSVP = exports.MetangSVP = exports.FeraligatrSVP = exports.QuaquavalexFASVP = exports.SkeledirgeexFASVP = exports.CrocalorSVP = exports.MeowscaradaexFASVP = exports.FloragatoSVP = exports.MimikyuSVP = exports.Charizardex2SVP = exports.GreatTuskexSVP = exports.IronValiantexSVP = exports.RoaringMoonexSVP = exports.IronBundleIRSVP = exports.ScreamTailSVP = exports.ArctibaxSVP = exports.PinecoSVP = exports.AegislashSVP = exports.XatuSVP = exports.IronBundleSVP = exports.ChiYuSVP = exports.CharizardexSVP = exports.KangaskhanexSVP = exports.MewexSVP = exports.SnorlaxSVP = exports.AlakazamexSVP = exports.ZapdosexSVP = exports.CharmanderIRSVP = exports.TogekissSVP = exports.CleffaSVP = exports.PalafinSVP = exports.QuaquavalexSVP = exports.SkeledirgeexSVP = exports.MeowscaradaexSVP = exports.ChienPaoexSVP = exports.KoraidonexSVP = exports.MiraidonexSVP = exports.GrowlitheSVP = exports.SmolivSVP = exports.PelipperSVP = exports.MurkrowSVP = exports.TinkatonSVP = exports.BaxcaliburSVP = exports.RevavroomSVP = exports.HawluchaSVP = exports.PawmotSVP = void 0;
-exports.BloodmoonUrsalunaexSVP = exports.EeveeSVP = exports.JolteonSVP = exports.TealMaskOgerponexSVP = exports.TerapagosexSVP = exports.LaprasexSVP = exports.CinderaceexSVP = exports.Charizardex3SVP = exports.SquawkabillyexSVP = exports.MagnetonIRSVP = exports.MagnetonSVP = exports.ChienPaoSVP = exports.GougingFireSVP = exports.IronCrownexSVP = exports.RagingBoltexSVP = exports.GougingFireexSVP = exports.Miraidonex2SVP = exports.VictiniexSVP = exports.NoctowlSVP = exports.Porygon2SVP = exports.BouffalantSVP = exports.DrifblimSVP = exports.CrabominableSVP = exports.KingdraexSVP = exports.PecharuntIRSVP = exports.IronLeavesexSVP = exports.WalkingWakeexSVP = exports.PalafinexSVP = exports.ArmarougeexSVP = exports.IonoSVP = exports.PupitarSVP = exports.TatsugiriSVP = exports.FroslassSVP = exports.InfernapeSVP = void 0;
+exports.NsZoruaSVP = exports.BloodmoonUrsalunaexSVP = exports.EeveeSVP = exports.JolteonSVP = exports.TealMaskOgerponexSVP = exports.TerapagosexSVP = exports.LaprasexSVP = exports.CinderaceexSVP = exports.Charizardex3SVP = exports.SquawkabillyexSVP = exports.MagnetonIRSVP = exports.MagnetonSVP = exports.ChienPaoSVP = exports.GougingFireSVP = exports.IronCrownexSVP = exports.RagingBoltexSVP = exports.GougingFireexSVP = exports.Miraidonex2SVP = exports.VictiniexSVP = exports.NoctowlSVP = exports.Porygon2SVP = exports.BouffalantSVP = exports.DrifblimSVP = exports.CrabominableSVP = exports.KingdraexSVP = exports.PecharuntIRSVP = exports.IronLeavesexSVP = exports.WalkingWakeexSVP = exports.PalafinexSVP = exports.ArmarougeexSVP = exports.IonoSVP = exports.PupitarSVP = exports.TatsugiriSVP = exports.FroslassSVP = exports.InfernapeSVP = void 0;
 const charizard_ex_1 = require("../set-obsidian-flames/charizard-ex");
 const charmander_1 = require("../set-obsidian-flames/charmander");
 const cleffa_1 = require("../set-obsidian-flames/cleffa");
@@ -80,6 +80,7 @@ const terapagos_ex_1 = require("../set-stellar-crown/terapagos-ex");
 const jolteon_1 = require("../set-pokemon-151/jolteon");
 const eevee_1 = require("../set-surging-sparks/eevee");
 const bloodmoon_ursaluna_ex_1 = require("../set-twilight-masquerade/bloodmoon-ursaluna-ex");
+const ns_zorua_1 = require("../set-journey-together/ns-zorua");
 // export class QuaquavalSVP extends Quaquaval {
 //   public setNumber = '5';
 //   public fullName: string = 'Quaquaval SVP';
@@ -996,3 +997,12 @@ class BloodmoonUrsalunaexSVP extends bloodmoon_ursaluna_ex_1.BloodmoonUrsalunaex
     }
 }
 exports.BloodmoonUrsalunaexSVP = BloodmoonUrsalunaexSVP;
+class NsZoruaSVP extends ns_zorua_1.NsZorua {
+    constructor() {
+        super(...arguments);
+        this.setNumber = '189';
+        this.fullName = 'N\'s Zorua SVP';
+        this.set = 'SVP';
+    }
+}
+exports.NsZoruaSVP = NsZoruaSVP;

@@ -7,6 +7,7 @@ const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
+const check_effects_1 = require("../../game/store/effects/check-effects");
 class GalarianArticuno extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -79,8 +80,11 @@ class GalarianArticuno extends pokemon_card_1.PokemonCard {
             const player = effect.player;
             const cards = player.active.cards.filter(c => c instanceof game_1.EnergyCard &&
                 (c.provides.includes(card_types_1.CardType.PSYCHIC) || c.provides.includes(card_types_1.CardType.ANY)));
+            const checkProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(player);
+            state = store.reduceEffect(state, checkProvidedEnergy);
             const discardEnergy = new attack_effects_1.DiscardCardsEffect(effect, cards);
             discardEnergy.target = player.active;
+            store.reduceEffect(state, discardEnergy);
             state = store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { max: 1, allowCancel: false }), targets => {
                 if (!targets || targets.length === 0) {
                     return;
