@@ -1,6 +1,6 @@
 import { GameError } from '../../game-error';
 import { GameLog, GameMessage } from '../../game-message';
-import { BoardEffect, CardTag, CardType, SpecialCondition, SuperType, TrainerType } from '../card/card-types';
+import { BoardEffect, CardTag, CardType, SpecialCondition, Stage, SuperType, TrainerType } from '../card/card-types';
 import { Resistance, Weakness } from '../card/pokemon-types';
 import { TrainerCard } from '../card/trainer-card';
 import { ApplyWeaknessEffect, DealDamageEffect } from '../effects/attack-effects';
@@ -252,30 +252,44 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
 
       store.log(state, GameLog.LOG_POKEMON_KO, { name: card.name });
 
-      // Clear effects before moving
-      effect.target.clearEffects();
+      const stadiumCard = StateUtils.getStadiumCard(state);
 
-      // Handle attached cards (energy, tools, etc.) - these always go to discard
-      const attachedCards = new CardList();
-      effect.target.cards.forEach(c => {
-        if (c !== card) {
-          attachedCards.cards.push(c);
+      if (card.tags.includes(CardTag.PRISM_STAR) || stadiumCard && stadiumCard.name === 'Lost City') {
+        const lostZoned = new CardList();
+        const pokemonIndices = effect.target.cards.map((card, index) => index);
+
+        for (let i = pokemonIndices.length - 1; i >= 0; i--) {
+          const removedCard = effect.target.cards.splice(pokemonIndices[i], 1)[0];
+
+          if (removedCard.cards) {
+            MOVE_CARDS(store, state, removedCard.cards, effect.player.discard);
+          }
+
+          if (removedCard.superType === SuperType.POKEMON || (<any>removedCard).stage === Stage.BASIC) {
+            lostZoned.cards.push(removedCard);
+          } else {
+            effect.player.discard.cards.push(removedCard);
+          }
         }
-      });
 
-      if (attachedCards.cards.length > 0) {
-        MOVE_CARDS(store, state, attachedCards, effect.player.discard);
-      }
-
-      // Handle the Pokémon card itself
-      const pokemonCard = new CardList();
-      pokemonCard.cards.push(card);
-
-      if (card.tags.includes(CardTag.PRISM_STAR)) {
-        MOVE_CARDS(store, state, pokemonCard, effect.player.lostzone);
+        // Move cards to lost zone
+        effect.target.clearEffects();
+        MOVE_CARDS(store, state, lostZoned, effect.player.lostzone);
       } else {
-        MOVE_CARDS(store, state, pokemonCard, effect.player.discard);
+        // Move cards to discard
+        effect.target.clearEffects();
+        MOVE_CARDS(store, state, effect.target, effect.player.discard);
       }
+
+      // const stadiumCard = StateUtils.getStadiumCard(state);
+
+      // if (card.tags.includes(CardTag.PRISM_STAR) || stadiumCard && stadiumCard.name === 'Lost City') {
+      //   effect.target.moveTo(effect.player.lostzone);
+      //   effect.target.clearEffects();
+      // } else {
+      //   effect.target.moveTo(effect.player.discard);
+      //   effect.target.clearEffects();
+      // }
     }
   }
 

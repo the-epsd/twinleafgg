@@ -19,7 +19,8 @@ export enum GameEffects {
   HEAL_EFFECT = 'HEAL_EFFECT',
   EVOLVE_EFFECT = 'EVOLVE_EFFECT',
   DRAW_PRIZES_EFFECT = 'DRAW_PRIZES_EFFECT',
-  MOVE_CARDS_EFFECT = 'MOVE_CARDS_EFFECT'
+  MOVE_CARDS_EFFECT = 'MOVE_CARDS_EFFECT',
+  EFFECT_OF_ABILITY_EFFECT = 'EFFECT_OF_ABILITY_EFFECT'
 }
 
 export class RetreatEffect implements Effect {
@@ -68,19 +69,20 @@ export class UseTrainerPowerEffect implements Effect {
   }
 }
 
-
 export class PowerEffect implements Effect {
   readonly type: string = GameEffects.POWER_EFFECT;
   public preventDefault = false;
   public player: Player;
   public power: Power;
   public card: PokemonCard;
+  public target?: PokemonCardList;
   static DISCARD_CARD_EFFECT: string;
 
-  constructor(player: Player, power: Power, card: PokemonCard) {
+  constructor(player: Player, power: Power, card: PokemonCard, target?: PokemonCardList) {
     this.player = player;
     this.power = power;
     this.card = card;
+    this.target = target;
   }
 }
 
@@ -250,6 +252,21 @@ export class MoveCardsEffect implements Effect {
     this.toTop = options.toTop;
     this.toBottom = options.toBottom;
     this.skipCleanup = options.skipCleanup;
+  }
+}
+
+export class EffectOfAbilityEffect implements Effect {
+  readonly type: string = GameEffects.EFFECT_OF_ABILITY_EFFECT;
+  public preventDefault = false;
+  public player: Player;
+  public power: Power;
+  public card: PokemonCard;
+  public target?: PokemonCardList;
+
+  constructor(player: Player, power: Power, card: PokemonCard) {
+    this.player = player;
+    this.power = power;
+    this.card = card;
   }
 }
 

@@ -38,21 +38,21 @@ class Inteleon extends pokemon_card_1.PokemonCard {
         this.setNumber = '43';
         this.name = 'Inteleon';
         this.fullName = 'Inteleon CRE';
-        this.DOUBLE_GUNNER_MARKER = 'DOUBLE_GUNNER_MARKER';
+        this.QUICK_SHOOTING_MARKER = 'QUICK_SHOOTING_MARKER';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {
             const player = effect.player;
-            player.marker.removeMarker(this.DOUBLE_GUNNER_MARKER, this);
+            player.marker.removeMarker(this.QUICK_SHOOTING_MARKER, this);
         }
-        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.DOUBLE_GUNNER_MARKER, this)) {
+        if (effect instanceof game_phase_effects_1.EndTurnEffect && effect.player.marker.hasMarker(this.QUICK_SHOOTING_MARKER, this)) {
             const player = effect.player;
-            player.marker.removeMarker(this.DOUBLE_GUNNER_MARKER, this);
+            player.marker.removeMarker(this.QUICK_SHOOTING_MARKER, this);
         }
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            if (player.marker.hasMarker(this.DOUBLE_GUNNER_MARKER, this)) {
+            if (player.marker.hasMarker(this.QUICK_SHOOTING_MARKER, this)) {
                 throw new game_1.GameError(game_message_1.GameMessage.POWER_ALREADY_USED);
             }
             const hasBenched = opponent.bench.some(b => b.cards.length > 0);
@@ -61,10 +61,15 @@ class Inteleon extends pokemon_card_1.PokemonCard {
             }
             return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { min: 1, max: 1, allowCancel: false }), selected => {
                 const targets = selected || [];
-                targets.forEach(target => {
-                    target.damage += 20;
-                    player.marker.addMarker(this.DOUBLE_GUNNER_MARKER, this);
-                });
+                if (targets.length > 0) {
+                    const damageEffect = new game_effects_1.EffectOfAbilityEffect(player, this.powers[0], this);
+                    damageEffect.target = targets[0];
+                    store.reduceEffect(state, damageEffect);
+                    if (damageEffect.target) {
+                        damageEffect.target.damage += 20;
+                    }
+                }
+                player.marker.addMarker(this.QUICK_SHOOTING_MARKER, this);
                 player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
                     if (cardList.getPokemonCard() === this) {
                         cardList.addBoardEffect(card_types_1.BoardEffect.ABILITY_USED);

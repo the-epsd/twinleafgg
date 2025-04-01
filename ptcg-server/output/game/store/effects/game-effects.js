@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.MoveCardsEffect = exports.DrawPrizesEffect = exports.EvolveEffect = exports.HealEffect = exports.KnockOutAttackEffect = exports.KnockOutEffect = exports.AttackEffect = exports.UseStadiumEffect = exports.UseAttackEffect = exports.TrainerPowerEffect = exports.PowerEffect = exports.UseTrainerPowerEffect = exports.UsePowerEffect = exports.RetreatEffect = exports.GameEffects = void 0;
+exports.EffectOfAbilityEffect = exports.MoveCardsEffect = exports.DrawPrizesEffect = exports.EvolveEffect = exports.HealEffect = exports.KnockOutAttackEffect = exports.KnockOutEffect = exports.AttackEffect = exports.UseStadiumEffect = exports.UseAttackEffect = exports.TrainerPowerEffect = exports.PowerEffect = exports.UseTrainerPowerEffect = exports.UsePowerEffect = exports.RetreatEffect = exports.GameEffects = void 0;
 var GameEffects;
 (function (GameEffects) {
     GameEffects["RETREAT_EFFECT"] = "RETREAT_EFFECT";
@@ -14,6 +14,7 @@ var GameEffects;
     GameEffects["EVOLVE_EFFECT"] = "EVOLVE_EFFECT";
     GameEffects["DRAW_PRIZES_EFFECT"] = "DRAW_PRIZES_EFFECT";
     GameEffects["MOVE_CARDS_EFFECT"] = "MOVE_CARDS_EFFECT";
+    GameEffects["EFFECT_OF_ABILITY_EFFECT"] = "EFFECT_OF_ABILITY_EFFECT";
 })(GameEffects = exports.GameEffects || (exports.GameEffects = {}));
 class RetreatEffect {
     constructor(player, benchIndex) {
@@ -49,12 +50,13 @@ class UseTrainerPowerEffect {
 }
 exports.UseTrainerPowerEffect = UseTrainerPowerEffect;
 class PowerEffect {
-    constructor(player, power, card) {
+    constructor(player, power, card, target) {
         this.type = GameEffects.POWER_EFFECT;
         this.preventDefault = false;
         this.player = player;
         this.power = power;
         this.card = card;
+        this.target = target;
     }
 }
 exports.PowerEffect = PowerEffect;
@@ -169,3 +171,13 @@ class MoveCardsEffect {
     }
 }
 exports.MoveCardsEffect = MoveCardsEffect;
+class EffectOfAbilityEffect {
+    constructor(player, power, card) {
+        this.type = GameEffects.EFFECT_OF_ABILITY_EFFECT;
+        this.preventDefault = false;
+        this.player = player;
+        this.power = power;
+        this.card = card;
+    }
+}
+exports.EffectOfAbilityEffect = EffectOfAbilityEffect;

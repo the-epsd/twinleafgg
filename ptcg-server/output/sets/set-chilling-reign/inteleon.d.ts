@@ -30,6 +30,6 @@ export declare class Inteleon extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
-    readonly DOUBLE_GUNNER_MARKER = "DOUBLE_GUNNER_MARKER";
+    readonly QUICK_SHOOTING_MARKER = "QUICK_SHOOTING_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }
