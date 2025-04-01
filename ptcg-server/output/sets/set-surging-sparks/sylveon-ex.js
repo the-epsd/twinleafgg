@@ -7,6 +7,7 @@ const __1 = require("../..");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
+const game_effects_2 = require("../../game/store/effects/game-effects");
 class Sylveonex extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -85,10 +86,16 @@ class Sylveonex extends pokemon_card_1.PokemonCard {
             return store.prompt(state, new __1.ChoosePokemonPrompt(player.id, __1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, __1.PlayerType.TOP_PLAYER, [__1.SlotType.BENCH], { min: 1, max: 2, allowCancel: false }), selected => {
                 const targets = selected || [];
                 player.marker.addMarker(this.ANGELITE_MARKER, this);
+                // Create an effect for each target
                 targets.forEach(target => {
-                    target.clearEffects();
-                    target.damage = 0;
-                    target.moveTo(opponent.deck);
+                    const effectOfAbility = new game_effects_2.EffectOfAbilityEffect(player, this.powers[0], this, [target]);
+                    effectOfAbility.target = target;
+                    store.reduceEffect(state, effectOfAbility);
+                    if (effectOfAbility.target) {
+                        target.clearEffects();
+                        target.damage = 0;
+                        target.moveTo(opponent.deck);
+                    }
                     return store.prompt(state, new __1.ShuffleDeckPrompt(opponent.id), order => {
                         opponent.deck.applyOrder(order);
                     });

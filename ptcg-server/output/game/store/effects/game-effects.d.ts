@@ -162,7 +162,12 @@ export declare class EffectOfAbilityEffect implements Effect {
     player: Player;
     power: Power;
     card: PokemonCard;
-    target?: PokemonCardList;
-    constructor(player: Player, power: Power, card: PokemonCard);
+    private _targets?;
+    constructor(player: Player, power: Power, card: PokemonCard, targets?: PokemonCardList[]);
+    hasTarget(card: PokemonCard): boolean;
+    get target(): PokemonCardList | undefined;
+    set target(value: PokemonCardList | undefined);
+    get targets(): PokemonCardList[] | undefined;
+    set targets(value: PokemonCardList[] | undefined);
 }
 export { Effect };

@@ -261,12 +261,39 @@ export class EffectOfAbilityEffect implements Effect {
   public player: Player;
   public power: Power;
   public card: PokemonCard;
-  public target?: PokemonCardList;
+  private _targets?: PokemonCardList[];
 
-  constructor(player: Player, power: Power, card: PokemonCard) {
+  constructor(player: Player, power: Power, card: PokemonCard, targets?: PokemonCardList[]) {
     this.player = player;
     this.power = power;
     this.card = card;
+    this._targets = targets;
+  }
+
+  // Helper method to check if a card is in any of the targets
+  public hasTarget(card: PokemonCard): boolean {
+    if (!this._targets) return false;
+    return this._targets.some(target => target.cards.includes(card));
+  }
+
+  // Getter for backward compatibility
+  public get target(): PokemonCardList | undefined {
+    return this._targets?.[0];
+  }
+
+  // Setter for backward compatibility
+  public set target(value: PokemonCardList | undefined) {
+    this._targets = value ? [value] : undefined;
+  }
+
+  // Getter for multiple targets
+  public get targets(): PokemonCardList[] | undefined {
+    return this._targets;
+  }
+
+  // Setter for multiple targets
+  public set targets(value: PokemonCardList[] | undefined) {
+    this._targets = value;
   }
 }
 

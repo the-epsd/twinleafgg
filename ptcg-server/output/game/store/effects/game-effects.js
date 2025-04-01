@@ -172,12 +172,36 @@ class MoveCardsEffect {
 }
 exports.MoveCardsEffect = MoveCardsEffect;
 class EffectOfAbilityEffect {
-    constructor(player, power, card) {
+    constructor(player, power, card, targets) {
         this.type = GameEffects.EFFECT_OF_ABILITY_EFFECT;
         this.preventDefault = false;
         this.player = player;
         this.power = power;
         this.card = card;
+        this._targets = targets;
+    }
+    // Helper method to check if a card is in any of the targets
+    hasTarget(card) {
+        if (!this._targets)
+            return false;
+        return this._targets.some(target => target.cards.includes(card));
+    }
+    // Getter for backward compatibility
+    get target() {
+        var _a;
+        return (_a = this._targets) === null || _a === void 0 ? void 0 : _a[0];
+    }
+    // Setter for backward compatibility
+    set target(value) {
+        this._targets = value ? [value] : undefined;
+    }
+    // Getter for multiple targets
+    get targets() {
+        return this._targets;
+    }
+    // Setter for multiple targets
+    set targets(value) {
+        this._targets = value;
     }
 }
 exports.EffectOfAbilityEffect = EffectOfAbilityEffect;

@@ -8,7 +8,7 @@ export class Dusclops extends PokemonCard {
 
   public regulationMark = 'H';
 
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.STAGE_1;
 
   public evolvesFrom = 'Duskull';
 
