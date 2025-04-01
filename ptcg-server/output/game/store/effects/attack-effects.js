@@ -45,6 +45,7 @@ class DealDamageEffect extends AbstractAttackEffect {
         super(base);
         this.type = AttackEffects.DEAL_DAMAGE_EFFECT;
         this.preventDefault = false;
+        this.damageIncreased = false;
         this.damage = damage;
     }
 }

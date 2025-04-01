@@ -59,8 +59,6 @@ export function playPokemonReducer(store: StoreLike, state: State, effect: Effec
       // effect.player.removePokemonEffects(effect.target);
       effect.target.specialConditions = [];
       effect.target.marker.markers = [];
-      effect.target.marker.markers = [];
-      effect.target.marker.markers = [];
 
       if (effect.target.specialConditions.includes(SpecialCondition.ABILITY_USED)) {
         effect.target.removeSpecialCondition(SpecialCondition.ABILITY_USED);

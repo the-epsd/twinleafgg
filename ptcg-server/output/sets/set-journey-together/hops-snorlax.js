@@ -34,6 +34,7 @@ class HopsSnorlax extends pokemon_card_1.PokemonCard {
         this.setNumber = '117';
         this.name = 'Hop\'s Snorlax';
         this.fullName = 'Hop\'s Snorlax JTG';
+        this.bigBellyApplied = false;
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
@@ -46,6 +47,17 @@ class HopsSnorlax extends pokemon_card_1.PokemonCard {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             const hopsPokemon = player.active.getPokemonCard();
+            // Count number of Hop's Snorlax in play
+            let snorlaxCount = 0;
+            player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+                if (card.name === 'Hop\'s Snorlax') {
+                    snorlaxCount++;
+                }
+            });
+            // Only proceed if there's at least one Snorlax
+            if (snorlaxCount === 0) {
+                return state;
+            }
             try {
                 const stub = new game_effects_1.PowerEffect(player, {
                     name: 'test',
@@ -57,8 +69,12 @@ class HopsSnorlax extends pokemon_card_1.PokemonCard {
             catch (_a) {
                 return state;
             }
-            if (hopsPokemon && hopsPokemon.tags.includes(card_types_1.CardTag.HOPS) && effect.target === opponent.active) {
+            // Apply the effect only once, regardless of how many Snorlax are in play
+            if (hopsPokemon && hopsPokemon.tags.includes(card_types_1.CardTag.HOPS) &&
+                effect.target === opponent.active &&
+                !effect.damageIncreased) {
                 effect.damage += 30;
+                effect.damageIncreased = true;
             }
         }
         return state;

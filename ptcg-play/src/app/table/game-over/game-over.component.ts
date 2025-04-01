@@ -4,6 +4,10 @@ import { LocalGameState } from '../../shared/session/session.interface';
 import { GameOverPrompt } from '../prompt/prompt-game-over/game-over.prompt';
 import { SessionService } from '../../shared/session/session.service';
 import { Router } from '@angular/router';
+import { GameService } from 'src/app/api/services/game.service';
+import { AlertService } from '../../shared/alert/alert.service';
+import { TranslateService } from '@ngx-translate/core';
+
 
 interface PokemonDamageStats {
   card: Card;
@@ -29,10 +33,17 @@ export class GameOverComponent implements OnInit {
   public opponentPrizesTaken = 0;
   public playerDamageDealt = 0;
   public topPokemon: PokemonDamageStats | null = null;
+  public isPlaying = false;
+  public isDeleted = false;
+  private gameId: number;
+  private localId: number;
 
   constructor(
     private sessionService: SessionService,
-    private router: Router
+    private router: Router,
+    private gameService: GameService,
+    private alertService: AlertService,
+    private translate: TranslateService
   ) { }
 
   ngOnInit(): void {
@@ -45,7 +56,20 @@ export class GameOverComponent implements OnInit {
       console.log('Player 1 data:', JSON.stringify(this.gameState.state.players[1], null, 2));
     }
 
+    // Set isPlaying and isDeleted
+    this.isPlaying = this.checkPlaying(this.gameState, this.sessionService.session.clientId);
+    this.isDeleted = this.gameState.deleted;
+    this.gameId = this.gameState.gameId;
+    this.localId = this.gameState.localId;
+
     this.calculateGameStats();
+  }
+
+  private checkPlaying(gameState: LocalGameState, clientId: number): boolean {
+    if (gameState.replay || gameState.deleted) {
+      return false;
+    }
+    return gameState.state.players.some(p => p.id === clientId);
   }
 
   calculateGameStats(): void {
@@ -223,6 +247,8 @@ export class GameOverComponent implements OnInit {
   }
 
   confirm(): void {
+    this.gameService.removeLocalGameState(this.localId);
     this.router.navigate(['/']);
+    this.isDeleted = true;
   }
 } 

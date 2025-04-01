@@ -7,12 +7,14 @@ import { SharedModule } from '../shared/shared.module';
 import { TableComponent } from './table.component';
 import { TableSidebarModule } from './table-sidebar/table-sidebar.module';
 import { VsScreenComponent } from './vs-screen/vs-screen.component';
+import { GameOverComponent } from './game-over/game-over.component';
 
 @NgModule({
   declarations: [
     TableComponent,
     HandComponent,
     VsScreenComponent,
+    GameOverComponent
   ],
   imports: [
     BoardModule,

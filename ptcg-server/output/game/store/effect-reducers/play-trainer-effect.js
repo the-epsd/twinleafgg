@@ -23,11 +23,24 @@ function playTrainerReducer(store, state, effect) {
     if (effect instanceof play_card_effects_1.PlayStadiumEffect) {
         const player = effect.player;
         const opponent = state_utils_1.StateUtils.getOpponent(state, player);
+        const stadiumCard = state_utils_1.StateUtils.getStadiumCard(state);
+        // Handle player's existing stadium
         if (player.stadium.cards.length > 0) {
-            player.stadium.moveTo(player.discard);
+            if (stadiumCard && stadiumCard.tags.includes(card_types_1.CardTag.PRISM_STAR)) {
+                player.stadium.moveTo(player.lostzone);
+            }
+            else {
+                player.stadium.moveTo(player.discard);
+            }
         }
+        // Handle opponent's existing stadium
         if (opponent.stadium.cards.length > 0) {
-            opponent.stadium.moveTo(opponent.discard);
+            if (stadiumCard && stadiumCard.tags.includes(card_types_1.CardTag.PRISM_STAR)) {
+                opponent.stadium.moveTo(opponent.lostzone);
+            }
+            else {
+                opponent.stadium.moveTo(opponent.discard);
+            }
         }
         store.log(state, game_message_1.GameLog.LOG_PLAYER_PLAYS_STADIUM, {
             name: effect.player.name,
