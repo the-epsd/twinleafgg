@@ -47,8 +47,9 @@ class Wobbuffet extends pokemon_card_1.PokemonCard {
             const player = effect.player;
             const opponent = state_utils_1.StateUtils.getOpponent(state, player);
             // Wobbuffet is not active Pokemon
-            if (player.active.getPokemonCard() !== this
-                && opponent.active.getPokemonCard() !== this) {
+            const playerHasWobb = player.active.getPokemonCard() === this;
+            const opponentHasWobb = opponent.active.getPokemonCard() === this;
+            if (!playerHasWobb && !opponentHasWobb) {
                 return state;
             }
             let cardTypes = [effect.card.cardType];
@@ -70,6 +71,15 @@ class Wobbuffet extends pokemon_card_1.PokemonCard {
             catch (_a) {
                 return state;
             }
+            // Check if we can apply the Ability lock to target Pokemon
+            if (cardList instanceof pokemon_card_list_1.PokemonCardList) {
+                const canApplyAbility = new game_effects_1.EffectOfAbilityEffect(playerHasWobb ? player : opponent, this.powers[0], this, [cardList]);
+                store.reduceEffect(state, canApplyAbility);
+                if (!canApplyAbility.target) {
+                    return state;
+                }
+            }
+            // Apply Ability lock
             if (!effect.power.exemptFromAbilityLock) {
                 throw new game_error_1.GameError(game_message_1.GameMessage.BLOCKED_BY_ABILITY);
             }

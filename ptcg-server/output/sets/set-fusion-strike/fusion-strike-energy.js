@@ -24,7 +24,7 @@ class FusionStrikeEnergy extends energy_card_1.EnergyCard {
             'As long as this card is attached to a Pokémon, it provides every type of Energy but provides only 1 Energy at a time. Prevent all effects of your opponent\'s Pokémon\'s Abilities done to the Pokémon this card is attached to.';
     }
     reduceEffect(store, state, effect) {
-        var _a, _b;
+        var _a;
         // Provide energy when attached to Fusion Strike Pokemon
         if (effect instanceof check_effects_1.CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
             const pokemon = effect.source;
@@ -33,8 +33,13 @@ class FusionStrikeEnergy extends energy_card_1.EnergyCard {
             }
             return state;
         }
-        if (effect instanceof game_effects_1.EffectOfAbilityEffect && ((_b = effect.target) === null || _b === void 0 ? void 0 : _b.cards.includes(this))) {
-            effect.target = undefined;
+        // Prevent effects of abilities from opponent's Pokemon
+        if (effect instanceof game_effects_1.EffectOfAbilityEffect && effect.target) {
+            const opponent = game_1.StateUtils.getOpponent(state, effect.player);
+            // Check for Fusion Strike Energy on the opposing side from the player using the ability
+            if (opponent.getPokemonInPlay().includes(effect.target) && effect.target.cards.includes(this)) {
+                effect.target = undefined;
+            }
         }
         // Discard card when not attached to Fusion Strike Pokemon
         if (effect instanceof play_card_effects_1.AttachEnergyEffect) {

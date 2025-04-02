@@ -9,6 +9,7 @@ const state_utils_1 = require("../../game/store/state-utils");
 const play_card_action_1 = require("../../game/store/actions/play-card-action");
 const game_error_1 = require("../../game/game-error");
 const game_message_1 = require("../../game/game-message");
+const game_1 = require("../../game");
 class Garbodor extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -43,18 +44,19 @@ class Garbodor extends pokemon_card_1.PokemonCard {
             && effect.power.name !== 'Garbotoxin') {
             const player = effect.player;
             const opponent = state_utils_1.StateUtils.getOpponent(state, player);
-            let isGarbodorWithToolInPlay = false;
+            let playerHasGarbotoxin = false;
+            let opponentHasGarbotoxin = false;
             player.forEachPokemon(play_card_action_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
                 if (card === this && cardList.tool !== undefined) {
-                    isGarbodorWithToolInPlay = true;
+                    playerHasGarbotoxin = true;
                 }
             });
             opponent.forEachPokemon(play_card_action_1.PlayerType.TOP_PLAYER, (cardList, card) => {
                 if (card === this && cardList.tool !== undefined) {
-                    isGarbodorWithToolInPlay = true;
+                    opponentHasGarbotoxin = true;
                 }
             });
-            if (!isGarbodorWithToolInPlay) {
+            if (!playerHasGarbotoxin && !opponentHasGarbotoxin) {
                 return state;
             }
             // Try reducing ability for each player  
@@ -65,6 +67,16 @@ class Garbodor extends pokemon_card_1.PokemonCard {
             catch (_a) {
                 return state;
             }
+            // Check if we can apply the Ability lock to target Pokemon
+            const cardList = state_utils_1.StateUtils.findCardList(state, effect.card);
+            if (cardList instanceof game_1.PokemonCardList) {
+                const canApplyAbility = new game_effects_1.EffectOfAbilityEffect(playerHasGarbotoxin ? player : opponent, this.powers[0], this, [cardList]);
+                store.reduceEffect(state, canApplyAbility);
+                if (!canApplyAbility.target) {
+                    return state;
+                }
+            }
+            // Apply Ability lock
             if (!effect.power.exemptFromAbilityLock) {
                 throw new game_error_1.GameError(game_message_1.GameMessage.BLOCKED_BY_ABILITY);
             }
