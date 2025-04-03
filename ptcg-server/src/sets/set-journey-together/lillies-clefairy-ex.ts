@@ -1,10 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, PowerType, StateUtils, PlayerType } from '../../game';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect, EffectOfAbilityEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckPokemonStatsEffect } from '../../game/store/effects/check-effects';
-import { IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 export class LilliesClefairyex extends PokemonCard {
 
@@ -38,38 +37,36 @@ export class LilliesClefairyex extends PokemonCard {
   public name: string = 'Lillie\'s Clefairy ex';
   public fullName: string = 'Lillie\'s Clefairy ex JTG';
 
-  public readonly DRAGON_VULNERABILITY_MARKER = 'DRAGON_VULNERABILITY_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
+    // Fairy Zone
     if (effect instanceof CheckPokemonStatsEffect) {
-      const player = state.players[state.activePlayer];
+      const player = StateUtils.findOwner(state, effect.target);
       const opponent = StateUtils.getOpponent(state, player);
       const pokemonCard = effect.target;
 
+      // Check for opponent's Lillie's Clefairy ex
       let isClefairyexInPlay = false;
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-        if (card === this) {
-          isClefairyexInPlay = true;
-        }
-      });
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
         if (card === this) {
           isClefairyexInPlay = true;
         }
       });
 
-      if (!isClefairyexInPlay) {
+      // Return if no Clefairy or target is not Dragon type
+      if (!isClefairyexInPlay || pokemonCard.getPokemonCard()?.cardType !== CardType.DRAGON) {
         return state;
       }
 
-      if (!IS_ABILITY_BLOCKED(store, state, player, this)) {
-        if (pokemonCard.getPokemonCard()?.cardType === CardType.DRAGON) {
-          effect.weakness.push({ type: CardType.PSYCHIC });
-        }
+      // Check if weakness can be changed
+      const canApplyAbility = new EffectOfAbilityEffect(opponent, this.powers[0], this, [pokemonCard]);
+      store.reduceEffect(state, canApplyAbility);
+      if (canApplyAbility.target) {
+        effect.weakness = [{ type: CardType.PSYCHIC }];
       }
     }
 
+    // Full Moon Rondo
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);

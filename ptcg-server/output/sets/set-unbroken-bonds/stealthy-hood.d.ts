@@ -9,5 +9,6 @@ export declare class StealthyHood extends TrainerCard {
     set: string;
     setNumber: string;
     cardImage: string;
+    text: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }
