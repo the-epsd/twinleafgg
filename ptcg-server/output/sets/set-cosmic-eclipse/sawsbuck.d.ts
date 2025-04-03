@@ -29,5 +29,6 @@ export declare class Sawsbuck extends PokemonCard {
     name: string;
     fullName: string;
     bounceMarker: boolean;
+    readonly SEASONAL_BLESSINGS_MARKER = "SEASONAL_BLESSINGS_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

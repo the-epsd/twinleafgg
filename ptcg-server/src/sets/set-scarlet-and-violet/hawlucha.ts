@@ -1,12 +1,14 @@
 import { Effect } from '../../game/store/effects/effect';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { PowerType, StoreLike, State, ChoosePokemonPrompt, PlayerType, SlotType,
-  StateUtils, 
-  ConfirmPrompt} from '../../game';
+import {
+  PowerType, StoreLike, State, ChoosePokemonPrompt, PlayerType, SlotType,
+  StateUtils,
+  ConfirmPrompt
+} from '../../game';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { GameMessage } from '../../game/game-message';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+import { EffectOfAbilityEffect, PowerEffect } from '../../game/store/effects/game-effects';
 
 
 export class Hawlucha extends PokemonCard {
@@ -21,7 +23,7 @@ export class Hawlucha extends PokemonCard {
 
   public weakness = [{ type: CardType.PSYCHIC }];
 
-  public retreat = [ CardType.COLORLESS];
+  public retreat = [CardType.COLORLESS];
 
   public powers = [{
     name: 'Flying Entry',
@@ -35,7 +37,7 @@ export class Hawlucha extends PokemonCard {
   public attacks = [
     {
       name: 'Wing Attack',
-      cost: [ CardType.FIGHTING, CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.FIGHTING, CardType.COLORLESS, CardType.COLORLESS],
       damage: 70,
       text: ''
     }
@@ -84,12 +86,17 @@ export class Hawlucha extends PokemonCard {
             player.id,
             GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
             PlayerType.TOP_PLAYER,
-            [ SlotType.BENCH ],
+            [SlotType.BENCH],
             { min: 1, max: 2, allowCancel: false },
           ), selected => {
             const targets = selected || [];
             targets.forEach(target => {
-              target.damage += 10;
+              const effectOfAbility = new EffectOfAbilityEffect(player, this.powers[0], this, state, [target]);
+              effectOfAbility.target = target;
+              store.reduceEffect(state, effectOfAbility);
+              if (effectOfAbility.target) {
+                target.damage += 10;
+              }
             });
           });
         }

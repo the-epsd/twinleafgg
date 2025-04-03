@@ -763,7 +763,25 @@ export class PromptDiscardEnergyComponent implements OnInit, OnDestroy {
   public getCustomEnergyImageUrl(card: Card): string {
     if (!card || card.superType !== SuperType.ENERGY) return '';
 
-    const customImageUrls = {
+    // Handle special energy cards
+    const specialEnergyUrls = {
+      'Double Turbo Energy': 'assets/energy/double-turbo.png',
+      'Jet Energy': 'assets/energy/jet.png',
+      'Gift Energy': 'assets/energy/gift.png',
+      'Mist Energy': 'assets/energy/mist.png',
+      'Legacy Energy': 'assets/energy/legacy.png',
+      'Neo Upper Energy': 'assets/energy/neo-upper.png',
+      'Electrode': 'assets/energy/neo-upper.png',
+      // Add more special energy mappings as needed
+    };
+
+    // Check if it's a special energy first
+    if (specialEnergyUrls[card.name]) {
+      return specialEnergyUrls[card.name];
+    }
+
+    // Handle basic energy cards
+    const basicEnergyUrls = {
       'Grass Energy': 'assets/energy/grass.png',
       'Fire Energy': 'assets/energy/fire.png',
       'Water Energy': 'assets/energy/water.png',
@@ -773,16 +791,9 @@ export class PromptDiscardEnergyComponent implements OnInit, OnDestroy {
       'Darkness Energy': 'assets/energy/dark.png',
       'Metal Energy': 'assets/energy/metal.png',
       'Fairy Energy': 'assets/energy/fairy.png',
-      'Double Turbo Energy': 'assets/energy/double-turbo.png',
-      'Jet Energy': 'assets/energy/jet.png',
-      'Gift Energy': 'assets/energy/gift.png',
-      'Mist Energy': 'assets/energy/mist.png',
-      'Legacy Energy': 'assets/energy/legacy.png',
-      'Neo Upper Energy': 'assets/energy/neo-upper.png',
-      'Electrode': 'assets/energy/neo-upper.png',
     };
 
-    return customImageUrls[card.name] || '';
+    return basicEnergyUrls[card.name] || '';
   }
 
   /**

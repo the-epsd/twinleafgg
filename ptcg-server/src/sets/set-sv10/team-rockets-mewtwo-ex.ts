@@ -33,7 +33,7 @@ export class TeamRocketsMewtwoex extends PokemonCard {
   public set: string = 'SV10';
   public setNumber: string = '39';
   public cardImage: string = 'assets/cardback.png';
-  public name: string = 'Team Rocket\'s Mewtwo';
+  public name: string = 'Team Rocket\'s Mewtwo ex';
   public fullName: string = 'Team Rocket\'s Mewtwo ex SV10';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

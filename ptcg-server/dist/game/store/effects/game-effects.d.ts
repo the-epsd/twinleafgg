@@ -18,7 +18,8 @@ export declare enum GameEffects {
     HEAL_EFFECT = "HEAL_EFFECT",
     EVOLVE_EFFECT = "EVOLVE_EFFECT",
     DRAW_PRIZES_EFFECT = "DRAW_PRIZES_EFFECT",
-    MOVE_CARDS_EFFECT = "MOVE_CARDS_EFFECT"
+    MOVE_CARDS_EFFECT = "MOVE_CARDS_EFFECT",
+    EFFECT_OF_ABILITY_EFFECT = "EFFECT_OF_ABILITY_EFFECT"
 }
 export declare class RetreatEffect implements Effect {
     readonly type: string;
@@ -53,8 +54,9 @@ export declare class PowerEffect implements Effect {
     player: Player;
     power: Power;
     card: PokemonCard;
+    target?: PokemonCardList;
     static DISCARD_CARD_EFFECT: string;
-    constructor(player: Player, power: Power, card: PokemonCard);
+    constructor(player: Player, power: Power, card: PokemonCard, target?: PokemonCardList);
 }
 export declare class TrainerPowerEffect implements Effect {
     readonly type: string;
@@ -69,6 +71,7 @@ export declare class UseAttackEffect implements Effect {
     preventDefault: boolean;
     player: Player;
     attack: Attack;
+    source: PokemonCardList;
     constructor(player: Player, attack: Attack);
 }
 export declare class UseStadiumEffect implements Effect {
@@ -152,5 +155,14 @@ export declare class MoveCardsEffect implements Effect {
         toBottom?: boolean;
         skipCleanup?: boolean;
     });
+}
+export declare class EffectOfAbilityEffect implements Effect {
+    readonly type: string;
+    preventDefault: boolean;
+    player: Player;
+    power: Power;
+    card: PokemonCard;
+    target?: PokemonCardList;
+    constructor(player: Player, power: Power, card: PokemonCard);
 }
 export { Effect };

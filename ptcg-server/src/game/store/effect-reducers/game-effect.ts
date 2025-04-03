@@ -28,13 +28,13 @@ import { ChooseAttackPrompt } from '../prompts/choose-attack-prompt';
 import { CoinFlipPrompt } from '../prompts/coin-flip-prompt';
 import { ConfirmPrompt } from '../prompts/confirm-prompt';
 import { StateUtils } from '../state-utils';
-import { CardList } from '../state/card-list';
 import { GamePhase, State } from '../state/state';
 import { StoreLike } from '../store-like';
 import { checkState } from './check-effect';
 import { MoveCardsEffect } from '../effects/game-effects';
 import { PokemonCardList } from '../state/pokemon-card-list';
 import { MOVE_CARDS } from '../prefabs/prefabs';
+import { CardList } from '../state/card-list';
 
 
 function applyWeaknessAndResistance(

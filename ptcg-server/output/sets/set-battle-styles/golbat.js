@@ -57,7 +57,7 @@ class Golbat extends pokemon_card_1.PokemonCard {
             });
             return state;
         }
-        if (prefabs_1.WAS_ATTACK_USED(effect, 1, this)) {
+        if (prefabs_1.WAS_ATTACK_USED(effect, 0, this)) {
             costs_1.DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, 1);
         }
         return state;

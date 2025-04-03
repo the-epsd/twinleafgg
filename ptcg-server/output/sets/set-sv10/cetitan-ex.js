@@ -36,7 +36,22 @@ class Cetitanex extends game_1.PokemonCard {
     reduceEffect(store, state, effect) {
         var _a;
         // Snow Cover
-        if ((effect instanceof play_card_effects_1.PlayItemEffect || effect instanceof play_card_effects_1.PlaySupporterEffect) && ((_a = effect.target) === null || _a === void 0 ? void 0 : _a.cards.includes(this))) {
+        if (effect instanceof play_card_effects_1.TrainerTargetEffect && ((_a = effect.target) === null || _a === void 0 ? void 0 : _a.cards.includes(this))) {
+            const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            if (prefabs_1.IS_ABILITY_BLOCKED(store, state, effect.player, this)) {
+                return state;
+            }
+            // finding if the owner of the card is playing the trainer or if the opponent is
+            let isCetitanOnOpponentsSide = false;
+            opponent.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
+                if (cardList.getPokemonCard() === this) {
+                    isCetitanOnOpponentsSide = true;
+                }
+            });
+            if (!isCetitanOnOpponentsSide) {
+                return state;
+            }
             effect.preventDefault = true;
         }
         // Crush Press

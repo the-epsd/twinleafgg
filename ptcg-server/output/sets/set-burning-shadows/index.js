@@ -23,6 +23,7 @@ const salazzle_gx_1 = require("./salazzle-gx");
 const sophocles_1 = require("./sophocles");
 const tapu_bulu_gx_1 = require("./tapu-bulu-gx");
 const tapu_fini_gx_1 = require("./tapu-fini-gx");
+const vileplume_1 = require("./vileplume");
 const wishful_baton_1 = require("./wishful-baton");
 exports.setBurningShadows = [
     new acerola_1.Acerola(),
@@ -48,4 +49,5 @@ exports.setBurningShadows = [
     new tapu_fini_gx_1.TapuFiniGX(),
     new noibat_1.Noibat(),
     new noivern_gx_1.NoivernGX(),
+    new vileplume_1.Vileplume()
 ];

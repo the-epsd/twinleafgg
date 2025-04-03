@@ -11,6 +11,7 @@ import { Froslass } from './froslass';
 import { Garchomp } from './garchomp';
 import { GarchompGiratinaGX } from './garchomp-and-giratina-gx';
 import { Golisopod } from './golisopod';
+import { Grimsley } from './grimsley';
 import { Hapu } from './hapu';
 import { Hoopa } from './hoopa';
 import { KarateBelt } from './karate-belt';
@@ -34,6 +35,7 @@ import { Wimpod } from './wimpod';
 import { Sneasel } from './sneasel';
 import { WeavileGX } from './weavile-gx';
 import { MegaSableyeTyranitarGX } from './mega-sableye-tyranitar-gx';
+import { PokemonResearchLab } from './pokemon-research-lab';
 
 
 export const setUnifiedMinds: Card[] = [
@@ -49,6 +51,7 @@ export const setUnifiedMinds: Card[] = [
   new GarchompGiratinaGX(),
   new Garchomp(),
   new Golisopod(),
+  new Grimsley(),
   new Hapu(),
   new Hoopa(),
   new KarateBelt(),
@@ -58,6 +61,7 @@ export const setUnifiedMinds: Card[] = [
   new Munchlax(),
   new Necrozma(),
   new Numel(),
+  new PokemonResearchLab(),
   new Purrloin(),
   new RaichuAlolanRaichuGX(),
   new RecycleEnergy(),

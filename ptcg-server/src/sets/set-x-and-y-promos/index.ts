@@ -5,6 +5,7 @@ import { Greninja } from './greninja';
 import { Jirachi } from './jirachi';
 import { Karen } from './karen';
 import { Meloetta } from './meloetta';
+import { Regirock } from './regirock';
 
 
 export const setXYPromos: Card[] = [
@@ -14,4 +15,5 @@ export const setXYPromos: Card[] = [
   new Jirachi(),
   new Karen(),
   new Meloetta(),
+  new Regirock(),
 ];

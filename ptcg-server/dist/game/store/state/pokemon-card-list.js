@@ -97,8 +97,6 @@ export class PokemonCardList extends CardList {
         // if (this.tool && !this.cards.includes(this.tool)) {
         //   this.tool = undefined;
         // }
-        // Clear energy cards reference if they're no longer in the card list
-        this.energyCards = this.energyCards.filter(card => this.cards.includes(card));
     }
     clearAllSpecialConditions() {
         this.removeSpecialCondition(SpecialCondition.POISONED);

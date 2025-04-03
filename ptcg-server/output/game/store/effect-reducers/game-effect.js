@@ -13,12 +13,12 @@ const choose_attack_prompt_1 = require("../prompts/choose-attack-prompt");
 const coin_flip_prompt_1 = require("../prompts/coin-flip-prompt");
 const confirm_prompt_1 = require("../prompts/confirm-prompt");
 const state_utils_1 = require("../state-utils");
-const card_list_1 = require("../state/card-list");
 const state_1 = require("../state/state");
 const check_effect_1 = require("./check-effect");
 const game_effects_2 = require("../effects/game-effects");
 const pokemon_card_list_1 = require("../state/pokemon-card-list");
 const prefabs_1 = require("../prefabs/prefabs");
+const card_list_1 = require("../state/card-list");
 function applyWeaknessAndResistance(damage, cardTypes, additionalCardTypes, weakness, resistance) {
     let multiply = 1;
     let modifier = 0;

@@ -12,5 +12,6 @@ export declare class UnitEnergyLPM extends EnergyCard {
     name: string;
     fullName: string;
     text: string;
+    blendedEnergies: CardType[];
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

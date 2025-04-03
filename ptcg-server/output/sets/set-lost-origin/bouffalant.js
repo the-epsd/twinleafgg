@@ -41,7 +41,7 @@ class Bouffalant extends pokemon_card_1.PokemonCard {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             if (!opponent.active.cards.some(c => c instanceof game_1.EnergyCard)) {
-                throw new game_1.GameError(game_1.GameMessage.CANNOT_PLAY_THIS_CARD);
+                return state;
             }
             const checkProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(opponent);
             state = store.reduceEffect(state, checkProvidedEnergy);

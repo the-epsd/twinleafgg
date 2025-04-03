@@ -39,7 +39,7 @@ class BuddyBuddyRescue extends trainer_card_1.TrainerCard {
                     pokemonInOpponentsDiscard += 1;
                 }
                 else {
-                    blocked.push(index);
+                    blockedOpponent.push(index);
                 }
             });
             if (pokemonInOpponentsDiscard === 0 && pokemonInPlayersDiscard === 0) {
