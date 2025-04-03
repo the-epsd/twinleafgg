@@ -1,6 +1,7 @@
 import { Card } from '../../game/store/card/card';
 import { BlackBelt } from './black-belt';
 import { Celebi } from './celebi';
+import { Ditto } from './ditto';
 import { JunkArm } from './junk-arm';
 import { Magnemite } from './magnemite';
 import { Magneton } from './magneton';
@@ -13,6 +14,7 @@ import { Twins } from './twins';
 export const setTriumphant: Card[] = [
   new BlackBelt(),
   new Celebi(),
+  new Ditto(),
   new JunkArm(),
   new Magnemite(),
   new Magneton(),

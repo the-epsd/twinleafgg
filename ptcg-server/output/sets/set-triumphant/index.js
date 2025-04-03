@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.setTriumphant = void 0;
 const black_belt_1 = require("./black-belt");
 const celebi_1 = require("./celebi");
+const ditto_1 = require("./ditto");
 const junk_arm_1 = require("./junk-arm");
 const magnemite_1 = require("./magnemite");
 const magneton_1 = require("./magneton");
@@ -14,6 +15,7 @@ const twins_1 = require("./twins");
 exports.setTriumphant = [
     new black_belt_1.BlackBelt(),
     new celebi_1.Celebi(),
+    new ditto_1.Ditto(),
     new junk_arm_1.JunkArm(),
     new magnemite_1.Magnemite(),
     new magneton_1.Magneton(),
