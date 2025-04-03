@@ -65,6 +65,10 @@ export class Magneton extends PokemonCard {
       if (player.hand.cards.length === 0) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
+      // Need cards in hand
+      if (player.hand.cards.length === 0) {
+        return state;
+      }
       // One per turn only
       if (HAS_MARKER(this.MAGNETIC_FIELD_MARKER, player, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
