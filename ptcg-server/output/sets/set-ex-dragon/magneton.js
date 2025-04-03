@@ -47,6 +47,14 @@ class Magneton extends pokemon_card_1.PokemonCard {
             const energyInDiscard = player.discard.cards.filter(c => c instanceof game_1.EnergyCard && c.energyType === card_types_1.EnergyType.BASIC).length;
             // Must have energy in discard
             if (energyInDiscard === 0) {
+                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
+            }
+            // Need cards in hand
+            if (player.hand.cards.length === 0) {
+                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
+            }
+            // Need cards in hand
+            if (player.hand.cards.length === 0) {
                 return state;
             }
             // One per turn only

@@ -45,7 +45,7 @@ class Vileplume extends game_1.PokemonCard {
                 return state;
             }
             // Check if Ability can target the attacker
-            const basicBlockEffect = new game_effects_1.EffectOfAbilityEffect(opponent, this.powers[0], this);
+            const basicBlockEffect = new game_effects_1.EffectOfAbilityEffect(opponent, this.powers[0], this, state, [effect.source]);
             basicBlockEffect.target = effect.source;
             store.reduceEffect(state, basicBlockEffect);
             if (basicBlockEffect.target === effect.source) {

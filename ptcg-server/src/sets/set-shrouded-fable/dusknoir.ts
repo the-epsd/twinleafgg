@@ -80,7 +80,7 @@ export class Dusknoir extends PokemonCard {
         const targets = selected || [];
 
         if (targets.length > 0) {
-          const damageEffect = new EffectOfAbilityEffect(player, this.powers[0], this);
+          const damageEffect = new EffectOfAbilityEffect(player, this.powers[0], this, state);
           damageEffect.target = targets[0];
           store.reduceEffect(state, damageEffect);
           if (damageEffect.target) {

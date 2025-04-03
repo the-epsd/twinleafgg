@@ -5,7 +5,6 @@ import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { EffectOfAbilityEffect } from '../../game/store/effects/game-effects';
 
 export class Sylveonex extends PokemonCard {
 
@@ -116,16 +115,10 @@ export class Sylveonex extends PokemonCard {
         const targets = selected || [];
         player.marker.addMarker(this.ANGELITE_MARKER, this);
 
-        // Create an effect for each target
         targets.forEach(target => {
-          const effectOfAbility = new EffectOfAbilityEffect(player, this.powers[0], this, [target]);
-          effectOfAbility.target = target;
-          store.reduceEffect(state, effectOfAbility);
-          if (effectOfAbility.target) {
-            target.clearEffects();
-            target.damage = 0;
-            target.moveTo(opponent.deck);
-          }
+          target.clearEffects();
+          target.damage = 0;
+          target.moveTo(opponent.deck);
 
           return store.prompt(state, new ShuffleDeckPrompt(opponent.id), order => {
             opponent.deck.applyOrder(order);

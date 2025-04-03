@@ -58,20 +58,21 @@ export class Garbodor extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      let playerHasGarbotoxin = false;
-      let opponentHasGarbotoxin = false;
+      let isGarbodorWithToolInPlay = false;
+
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
         if (card === this && cardList.tool !== undefined) {
-          playerHasGarbotoxin = true;
-        }
-      });
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
-        if (card === this && cardList.tool !== undefined) {
-          opponentHasGarbotoxin = true;
+          isGarbodorWithToolInPlay = true;
         }
       });
 
-      if (!playerHasGarbotoxin && !opponentHasGarbotoxin) {
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
+        if (card === this && cardList.tool !== undefined) {
+          isGarbodorWithToolInPlay = true;
+        }
+      });
+
+      if (!isGarbodorWithToolInPlay) {
         return state;
       }
 
@@ -86,7 +87,8 @@ export class Garbodor extends PokemonCard {
       // Check if we can apply the Ability lock to target Pokemon
       const cardList = StateUtils.findCardList(state, effect.card);
       if (cardList instanceof PokemonCardList) {
-        const canApplyAbility = new EffectOfAbilityEffect(playerHasGarbotoxin ? player : opponent, this.powers[0], this, [cardList]);
+        const canApplyAbility = new EffectOfAbilityEffect(isGarbodorWithToolInPlay ? player : opponent, this.powers[0], this, state, [cardList], true);
+        canApplyAbility.target = cardList;
         store.reduceEffect(state, canApplyAbility);
         if (!canApplyAbility.target) {
           return state;

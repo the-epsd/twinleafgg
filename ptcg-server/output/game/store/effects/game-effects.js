@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.EffectOfAbilityEffect = exports.MoveCardsEffect = exports.DrawPrizesEffect = exports.EvolveEffect = exports.HealEffect = exports.KnockOutAttackEffect = exports.KnockOutEffect = exports.AttackEffect = exports.UseStadiumEffect = exports.UseAttackEffect = exports.TrainerPowerEffect = exports.PowerEffect = exports.UseTrainerPowerEffect = exports.UsePowerEffect = exports.RetreatEffect = exports.GameEffects = void 0;
+const state_utils_1 = require("../state-utils");
 var GameEffects;
 (function (GameEffects) {
     GameEffects["RETREAT_EFFECT"] = "RETREAT_EFFECT";
@@ -172,17 +173,28 @@ class MoveCardsEffect {
 }
 exports.MoveCardsEffect = MoveCardsEffect;
 class EffectOfAbilityEffect {
-    constructor(player, power, card, targets) {
+    constructor(player, power, card, state, targets, allowSelfTarget = false) {
         this.type = GameEffects.EFFECT_OF_ABILITY_EFFECT;
         this.preventDefault = false;
         this.player = player;
         this.power = power;
         this.card = card;
-        this._targets = targets;
+        this.state = state;
+        this.allowSelfTarget = allowSelfTarget;
+        // Filter targets based on allowSelfTarget setting
+        this._targets = targets === null || targets === void 0 ? void 0 : targets.filter(target => {
+            const owner = state_utils_1.StateUtils.findOwner(state, target);
+            return this.allowSelfTarget || owner.id !== this.player.id;
+        });
     }
     // Helper method to check if a card is in any of the targets
     hasTarget(card) {
         if (!this._targets)
+            return false;
+        // Check ownership based on allowSelfTarget setting
+        const cardList = state_utils_1.StateUtils.findCardList(this.state, card);
+        const owner = state_utils_1.StateUtils.findOwner(this.state, cardList);
+        if (!this.allowSelfTarget && owner.id === this.player.id)
             return false;
         return this._targets.some(target => target.cards.includes(card));
     }
@@ -193,7 +205,19 @@ class EffectOfAbilityEffect {
     }
     // Setter for backward compatibility
     set target(value) {
-        this._targets = value ? [value] : undefined;
+        // Check ownership based on allowSelfTarget setting
+        if (value) {
+            const owner = state_utils_1.StateUtils.findOwner(this.state, value);
+            if (!this.allowSelfTarget && owner.id === this.player.id) {
+                this._targets = undefined;
+            }
+            else {
+                this._targets = [value];
+            }
+        }
+        else {
+            this._targets = undefined;
+        }
     }
     // Getter for multiple targets
     get targets() {
@@ -201,7 +225,11 @@ class EffectOfAbilityEffect {
     }
     // Setter for multiple targets
     set targets(value) {
-        this._targets = value;
+        // Filter targets based on allowSelfTarget setting
+        this._targets = value === null || value === void 0 ? void 0 : value.filter(target => {
+            const owner = state_utils_1.StateUtils.findOwner(this.state, target);
+            return this.allowSelfTarget || owner.id !== this.player.id;
+        });
     }
 }
 exports.EffectOfAbilityEffect = EffectOfAbilityEffect;

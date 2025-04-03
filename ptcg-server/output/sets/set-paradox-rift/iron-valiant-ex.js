@@ -97,7 +97,7 @@ class IronValiantex extends pokemon_card_1.PokemonCard {
                                 }
                             });
                             if (targets.length > 0) {
-                                const damageEffect = new game_effects_1.EffectOfAbilityEffect(player, this.powers[0], this);
+                                const damageEffect = new game_effects_1.EffectOfAbilityEffect(player, this.powers[0], this, state, targets);
                                 damageEffect.target = targets[0];
                                 store.reduceEffect(state, damageEffect);
                                 if (damageEffect.target) {

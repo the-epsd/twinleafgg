@@ -7,6 +7,7 @@ import { Card } from '../card/card';
 import { CardTarget } from '../actions/play-card-action';
 import { TrainerCard } from '../card/trainer-card';
 import { CardList } from '../state/card-list';
+import { State } from '../state/state';
 export declare enum GameEffects {
     RETREAT_EFFECT = "RETREAT_EFFECT",
     USE_ATTACK_EFFECT = "USE_ATTACK_EFFECT",
@@ -163,7 +164,9 @@ export declare class EffectOfAbilityEffect implements Effect {
     power: Power;
     card: PokemonCard;
     private _targets?;
-    constructor(player: Player, power: Power, card: PokemonCard, targets?: PokemonCardList[]);
+    private state;
+    private allowSelfTarget;
+    constructor(player: Player, power: Power, card: PokemonCard, state: State, targets?: PokemonCardList[], allowSelfTarget?: boolean);
     hasTarget(card: PokemonCard): boolean;
     get target(): PokemonCardList | undefined;
     set target(value: PokemonCardList | undefined);

@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.StealthyHood = void 0;
 const trainer_card_1 = require("../../game/store/card/trainer-card");
 const card_types_1 = require("../../game/store/card/card-types");
-const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class StealthyHood extends trainer_card_1.TrainerCard {
@@ -19,15 +18,11 @@ class StealthyHood extends trainer_card_1.TrainerCard {
     }
     reduceEffect(store, state, effect) {
         // Prevent effects of abilities from opponent's Pokemon
-        if (effect instanceof game_effects_1.EffectOfAbilityEffect && effect.target) {
-            const opponent = game_1.StateUtils.getOpponent(state, effect.player);
-            if (prefabs_1.IS_TOOL_BLOCKED(store, state, opponent, this)) {
+        if (effect instanceof game_effects_1.EffectOfAbilityEffect && effect.target && effect.target.cards.includes(this)) {
+            if (prefabs_1.IS_TOOL_BLOCKED(store, state, effect.player, this)) {
                 return state;
             }
-            // Check for Stealthy Hood on the opposing side from the player using the ability
-            if (opponent.getPokemonInPlay().includes(effect.target) && effect.target.cards.includes(this)) {
-                effect.target = undefined;
-            }
+            effect.target = undefined;
         }
         return state;
     }

@@ -73,7 +73,7 @@ class Wobbuffet extends pokemon_card_1.PokemonCard {
             }
             // Check if we can apply the Ability lock to target Pokemon
             if (cardList instanceof pokemon_card_list_1.PokemonCardList) {
-                const canApplyAbility = new game_effects_1.EffectOfAbilityEffect(playerHasWobb ? player : opponent, this.powers[0], this, [cardList]);
+                const canApplyAbility = new game_effects_1.EffectOfAbilityEffect(playerHasWobb ? player : opponent, this.powers[0], this, state, [cardList], true);
                 store.reduceEffect(state, canApplyAbility);
                 if (!canApplyAbility.target) {
                     return state;

@@ -62,8 +62,7 @@ class Inteleon extends pokemon_card_1.PokemonCard {
             return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { min: 1, max: 1, allowCancel: false }), selected => {
                 const targets = selected || [];
                 if (targets.length > 0) {
-                    const damageEffect = new game_effects_1.EffectOfAbilityEffect(player, this.powers[0], this);
-                    damageEffect.target = targets[0];
+                    const damageEffect = new game_effects_1.EffectOfAbilityEffect(player, this.powers[0], this, state, targets);
                     store.reduceEffect(state, damageEffect);
                     if (damageEffect.target) {
                         damageEffect.target.damage += 20;

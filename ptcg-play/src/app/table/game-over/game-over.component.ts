@@ -51,11 +51,6 @@ export class GameOverComponent implements OnInit {
     console.log('Game state in game-over component:', this.gameState);
     console.log('Prompt:', this.prompt);
 
-    if (this.gameState && this.gameState.state && this.gameState.state.players) {
-      console.log('Player 0 data:', JSON.stringify(this.gameState.state.players[0], null, 2));
-      console.log('Player 1 data:', JSON.stringify(this.gameState.state.players[1], null, 2));
-    }
-
     // Set isPlaying and isDeleted
     this.isPlaying = this.checkPlaying(this.gameState, this.sessionService.session.clientId);
     this.isDeleted = this.gameState.deleted;

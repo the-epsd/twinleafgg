@@ -55,7 +55,7 @@ class LilliesClefairyex extends pokemon_card_1.PokemonCard {
                 return state;
             }
             // Check if weakness can be changed
-            const canApplyAbility = new game_effects_1.EffectOfAbilityEffect(opponent, this.powers[0], this, [pokemonCard]);
+            const canApplyAbility = new game_effects_1.EffectOfAbilityEffect(opponent, this.powers[0], this, state, [pokemonCard]);
             store.reduceEffect(state, canApplyAbility);
             if (canApplyAbility.target) {
                 effect.weakness = [{ type: card_types_1.CardType.PSYCHIC }];
