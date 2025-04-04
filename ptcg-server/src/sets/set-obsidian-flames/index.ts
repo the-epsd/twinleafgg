@@ -3,7 +3,7 @@ import { Absolex } from './absol-ex';
 import { Barboach } from './barboach';
 import { Bellibolt } from './bellibolt';
 import { Bonsly } from './bonsly';
-import { ArvenOBF } from './card-images';
+import { ArvenOBF } from './other-prints';
 import { Charizardex } from './charizard-ex';
 import { Charmander } from './charmander';
 import { Charmeleon } from './charmeleon';

@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setPlasmaBlast = void 0;
 const archen_1 = require("./archen");
-const card_images_1 = require("./card-images");
+const other_prints_1 = require("./other-prints");
 const g_booster_1 = require("./g-booster");
 const g_scope_1 = require("./g-scope");
 const genesect_ex_1 = require("./genesect-ex");
@@ -30,7 +30,7 @@ exports.setPlasmaBlast = [
     new virizion_ex_1.VirizionEX(),
     new wartortle_1.Wartortle(),
     //Reprints
-    new card_images_1.ScoopUpCyclonePLB(),
-    new card_images_1.UltraBallPLB(),
-    new card_images_1.MasterBallPLB(),
+    new other_prints_1.ScoopUpCyclonePLB(),
+    new other_prints_1.UltraBallPLB(),
+    new other_prints_1.MasterBallPLB(),
 ];

@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { DarknessEnergyEVO, PokedexEVO } from './card-images';
+import { DarknessEnergyEVO, PokedexEVO } from './other-prints';
 import { DevolutionSpray } from './devolution-spray';
 import { DragoniteEX } from './dragonite-ex';
 import { Electabuzz } from './electabuzz';

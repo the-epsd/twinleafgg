@@ -70,10 +70,11 @@ class SandyShocksex extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
+            const prizes = opponent.getPrizeLeft();
             if (player.marker.hasMarker(this.MAGNETIC_ABSORPTION_MARKER, this)) {
                 throw new game_1.GameError(game_1.GameMessage.POWER_ALREADY_USED);
             }
-            if (opponent.prizes.length > 4) {
+            if (prizes > 4) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
             const hasEnergyInDiscard = player.discard.cards.some(c => {

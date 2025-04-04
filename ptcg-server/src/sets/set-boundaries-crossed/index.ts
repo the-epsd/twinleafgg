@@ -2,7 +2,7 @@ import { Card } from '../../game/store/card/card';
 import { AspertiaCityGym } from './aspertia-city-gym';
 import { BlackKyurem } from './black-kyurem';
 import { Blastoise } from './blastoise';
-import { RockyHelmetBCR } from './card-images';
+import { RockyHelmetBCR } from './other-prints';
 import { ComputerSearch } from './computer-search';
 import { Ditto } from './ditto';
 import { Dusclops } from './dusclops';

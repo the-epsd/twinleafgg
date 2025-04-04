@@ -4,7 +4,7 @@ exports.setBoundariesCrossed = void 0;
 const aspertia_city_gym_1 = require("./aspertia-city-gym");
 const black_kyurem_1 = require("./black-kyurem");
 const blastoise_1 = require("./blastoise");
-const card_images_1 = require("./card-images");
+const other_prints_1 = require("./other-prints");
 const computer_search_1 = require("./computer-search");
 const ditto_1 = require("./ditto");
 const dusclops_1 = require("./dusclops");
@@ -35,7 +35,7 @@ exports.setBoundariesCrossed = [
     new munna_1.Munna(),
     new pignite_1.Pignite(),
     new potion_1.Potion(),
-    new card_images_1.RockyHelmetBCR(),
+    new other_prints_1.RockyHelmetBCR(),
     new skyla_1.Skyla(),
     new squirtle_1.Squirtle(),
     new stoutland_1.Stoutland(),

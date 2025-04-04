@@ -4,7 +4,7 @@ import { AdventurersDiscovery } from './adventurers-discovery';
 import { Azumarill } from './azumarill';
 import { Basculin } from './basculin';
 import { BattleVIPPass } from './battle-vip-pass';
-import { JudgeFST } from './card-images';
+import { JudgeFST } from './other-prints';
 import { Cloyster } from './cloyster';
 import { Cook } from './cook';
 import { Creamomatic } from './cram-o-matic';
