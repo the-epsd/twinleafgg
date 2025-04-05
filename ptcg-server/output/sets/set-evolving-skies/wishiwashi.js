@@ -49,19 +49,18 @@ class Wishiwashi extends game_1.PokemonCard {
                 }
                 return state;
             });
-            if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
-                const player = effect.player;
-                const checkProvidedEnergyEffect = new check_effects_1.CheckProvidedEnergyEffect(player);
-                store.reduceEffect(state, checkProvidedEnergyEffect);
-                let energyCount = 0;
-                checkProvidedEnergyEffect.energyMap.forEach(em => {
-                    if (em.card.energyType === game_1.EnergyType.BASIC) {
-                        energyCount += em.provides.length;
-                    }
-                });
-                effect.damage += energyCount * 30;
-            }
-            return state;
+        }
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+            const player = effect.player;
+            const checkProvidedEnergyEffect = new check_effects_1.CheckProvidedEnergyEffect(player);
+            store.reduceEffect(state, checkProvidedEnergyEffect);
+            let energyCount = 0;
+            checkProvidedEnergyEffect.energyMap.forEach(em => {
+                if (em.card.energyType === game_1.EnergyType.BASIC) {
+                    energyCount += em.provides.length;
+                }
+            });
+            effect.damage += energyCount * 30;
         }
         return state;
     }

@@ -1,7 +1,7 @@
 import { JetEnergy } from '../set-paldea-evolved/jet-energy';
 import { NightlyStretcher } from '../set-shrouded-fable/nightly-stretcher';
 import { Archaludonex } from './archaludon-ex';
-import { CounterGainSSP } from './card-images';
+import { CounterGainSSP } from './other-prints';
 import { Cyrano } from './cyrano';
 import { Feebas } from './feebas';
 import { Hydreigonex } from './hydreigon-ex';

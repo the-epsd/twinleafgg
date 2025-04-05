@@ -9,6 +9,7 @@ import { Diantha } from './diantha';
 import { Flabebe } from './flabebe';
 import { Floette } from './floette';
 import { Florges } from './florges';
+import {FossilExcavationMap} from './fossil-excavation-map';
 import { Froakie } from './froakie';
 import { FroakieFrubbles } from './froakie-2';
 import { Frogadier } from './frogadier';
@@ -41,6 +42,7 @@ export const setForbiddenLight: Card[] = [
   new Froakie(),
   new FroakieFrubbles(),
   new Frogadier(),
+  new FossilExcavationMap(),
   new GreninjaGX(),
   new Inkay(),
   new Klefki(),

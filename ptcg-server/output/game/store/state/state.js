@@ -34,6 +34,7 @@ class State {
         this.skipOpponentTurn = false;
         this.lastAttack = null;
         this.playerLastAttack = {};
+        this.benchSizeChangeHandled = false;
     }
 }
 exports.State = State;

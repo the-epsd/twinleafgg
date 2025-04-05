@@ -9,13 +9,19 @@ export * from './set-wotc-promos';
 //Retro Energy
 export * from './set-base-set-energy';
 
+//E-Card Era
+export * from './set-aquapolis'
+
 //ex Era
 export * from './set-ex-holon-phantoms';
+export * from './set-ex-hidden-legends';
 export * from './set-ex-delta-species';
 export * from './set-ex-dragon';
+export * from './set-ex-team-magma-vs-team-aqua';
 export * from './set-ex-dragon-frontiers';
 export * from './set-ex-unseen-forces';
 export * from './set-ex-deoxys';
+export * from './set-ex-emerald';
 export * from './set-ex-team-rocket-returns';
 export * from './set-ex-crystal-guardians';
 export * from './set-ex-power-keepers';
@@ -33,7 +39,7 @@ export * from './set-rising-rivals'
 //HGSS Era
 
 export * from './set-battle-road-promos';
-
+export * from './set-call-of-legends';
 export * from './set-heartgold-and-soulsilver';
 export * from './set-heartgold-and-soulsilver-promos';
 export * from './set-l-p-promos';
@@ -130,7 +136,7 @@ export * from './set-shrouded-fable';
 export * from './set-stellar-crown';
 export * from './set-surging-sparks';
 export * from './set-prismatic-evolution';
-export * from './set-sv9';
+export * from './set-journey-together';
 export * from './set-sv9a';
 export * from './set-sv10';
 export * from './set-m1s';

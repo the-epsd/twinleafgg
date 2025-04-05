@@ -58,13 +58,13 @@ class Latiasex extends pokemon_card_1.PokemonCard {
             if (owner !== player || active === undefined) {
                 return state;
             }
-            let isRabscaInPlay = false;
+            let isLatiasexInPlay = false;
             owner.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
                 if (card === this) {
-                    isRabscaInPlay = true;
+                    isLatiasexInPlay = true;
                 }
             });
-            if (!isRabscaInPlay) {
+            if (!isLatiasexInPlay) {
                 return state;
             }
             if (!prefabs_1.IS_ABILITY_BLOCKED(store, state, player, this) && active.stage === card_types_1.Stage.BASIC) {

@@ -220,7 +220,7 @@ class ProfessorsResearchFA1 extends professors_research_1.ProfessorsResearch {
     constructor() {
         super(...arguments);
         this.setNumber = '240';
-        this.fullName = 'Professor\'s ResearchFA1 SVI 242';
+        this.fullName = 'Professor\'s ResearchFA1 SVI 240';
     }
 }
 exports.ProfessorsResearchFA1 = ProfessorsResearchFA1;

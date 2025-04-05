@@ -65,6 +65,7 @@ const ns_sigilyph_1 = require("./ns-sigilyph");
 const ns_zoroark_ex_1 = require("./ns-zoroark-ex");
 const ns_zorua_1 = require("./ns-zorua");
 const other_prints_1 = require("./other-prints");
+const petilil_1 = require("./petilil");
 const piloswine_1 = require("./piloswine");
 const postwick_1 = require("./postwick");
 const pupitar_1 = require("./pupitar");
@@ -127,6 +128,8 @@ exports.setSV9 = [
     new lotad_1.Lotad(),
     new lombre_1.Lombre(),
     new ludicolo_1.Ludicolo(),
+    new petilil_1.Petilil(),
+    new lilligant_1.Lilligant(),
     new lillies_clefairy_ex_1.LilliesClefairyex(),
     new lillies_comfey_1.LilliesComfey(),
     new lillies_pearl_1.LilliesPearl(),

@@ -68,6 +68,7 @@ const sandy_shocks_ex_1 = require("./sandy-shocks-ex");
 const scream_tail_1 = require("./scream-tail");
 const skeledirge_ex_1 = require("./skeledirge-ex");
 const slither_wing_1 = require("./slither-wing");
+const snorlax_doll_1 = require("./snorlax-doll");
 const snorunt_1 = require("./snorunt");
 const steenee_1 = require("./steenee");
 const tapu_koko_ex_1 = require("./tapu-koko-ex");
@@ -187,6 +188,7 @@ exports.setParadoxRift = [
     new vanillite_1.Vanillite(),
     new vanillish_1.Vanillish(),
     new vanilluxe_1.Vanilluxe(),
+    new snorlax_doll_1.SnorlaxDoll(),
     //Full s
     new full_art_1.ToedscruelIR(),
     new full_art_1.MagbyIR(),

@@ -10,6 +10,7 @@ import { Kyogre } from './kyogre';
 import { FrosmothSHF } from './other-prints';
 import { Reshiram } from './reshiram';
 import { Rillaboom } from './rillaboom';
+import { RustedSword } from './rusted-sword';
 import { Snom } from './snom';
 import { Thwackey } from './thwackey';
 import { Yveltal } from './yveltal';
@@ -23,6 +24,7 @@ export const setShiningFates: Card[] = [
   new Horsea(),
   new Koffing(),
   new Rillaboom(),
+  new RustedSword(),
   new Snom(),
   new Thwackey(),
   new Reshiram(),

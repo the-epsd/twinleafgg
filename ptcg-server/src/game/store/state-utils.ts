@@ -4,6 +4,7 @@ import { CardTarget, PlayerType, SlotType } from './actions/play-card-action';
 import { Card } from './card/card';
 import { CardType } from './card/card-types';
 import { PokemonCard } from './card/pokemon-card';
+import { EnergyCard } from './card/energy-card';
 import { EnergyMap } from './prompts/choose-energy-prompt';
 import { CardList } from './state/card-list';
 import { Player } from './state/player';
@@ -50,73 +51,61 @@ export class StateUtils {
       }
     });
 
-    // BEGIN HANDLING BLEND ENERGIES
+    // BEGIN HANDLING BLEND/UNIT ENERGIES
     const blendProvides: CardType[][] = [];
+    const blendCards: EnergyMap[] = [];
 
-    // Check blend/unit energies
-    provides.forEach((cardType, index) => {
-      switch (cardType) {
-        case CardType.LPM:
-          blendProvides.push([CardType.LIGHTNING, CardType.PSYCHIC, CardType.METAL]);
-          break;
-        case CardType.GRW:
-          blendProvides.push([CardType.GRASS, CardType.FIRE, CardType.WATER]);
-          break;
-        case CardType.FDY:
-          blendProvides.push([CardType.FAIRY, CardType.DARK, CardType.FIGHTING]);
-          break;
-        case CardType.WLFM:
-          blendProvides.push([CardType.WATER, CardType.LIGHTNING, CardType.FIGHTING, CardType.METAL]);
-          break;
-        case CardType.GRPD:
-          blendProvides.push([CardType.GRASS, CardType.FIRE, CardType.PSYCHIC, CardType.DARK]);
-          break;
-        default:
-          return;
+    // Collect blend/unit energies and their possible provides
+    energy.forEach((energyMap, index) => {
+      const card = energyMap.card;
+      if (card instanceof EnergyCard) {
+        let blendTypes: CardType[] | undefined;
+        switch (card.name) {
+          case 'Blend Energy WLFM':
+            blendTypes = [CardType.WATER, CardType.LIGHTNING, CardType.FIGHTING, CardType.METAL];
+            break;
+          case 'Blend Energy GRPD':
+            blendTypes = [CardType.GRASS, CardType.FIRE, CardType.PSYCHIC, CardType.DARK];
+            break;
+          case 'Unit Energy GRW':
+            blendTypes = [CardType.GRASS, CardType.FIRE, CardType.WATER];
+            break;
+          case 'Unit Energy LPM':
+            blendTypes = [CardType.LIGHTNING, CardType.PSYCHIC, CardType.METAL];
+            break;
+          case 'Unit Energy FDY':
+            blendTypes = [CardType.FIGHTING, CardType.DARK, CardType.FAIRY];
+            break;
+        }
+        if (blendTypes) {
+          blendProvides.push(blendTypes);
+          blendCards.push(energyMap);
+        }
       }
     });
 
-    const possibleBlendPermutations = this.getCombinations(blendProvides, blendProvides.length);
-    const needsProvidingPermutations: CardType[][] = [];
-
-    if (needsProviding.length === 1) {
-      needsProvidingPermutations.push(needsProviding);
-    } else if (needsProviding.length > 1) {
-      permutations(needsProviding, needsProviding.length);
-    }
-
-    // check needs providing from blendProvides
-    // subtract 1 from rainbow when find is successful
-    let needsProvidingMatchIndex = 0;
-    let maxMatches = 0;
-
-    possibleBlendPermutations.forEach((energyTypes, index) => {
-      let matches = 0;
-      for (let i = 0; i < needsProvidingPermutations.length; i++) {
-        for (let j = 0; j < needsProvidingPermutations[i].length; j++) {
-          if (energyTypes[j] === needsProvidingPermutations[i][j]) {
-            matches++;
+    // For each needed energy type, try to match it with a blend energy
+    const matchedBlends = new Set<number>();
+    for (let i = 0; i < needsProviding.length; i++) {
+      const neededType = needsProviding[i];
+      for (let j = 0; j < blendProvides.length; j++) {
+        if (!matchedBlends.has(j) && blendProvides[j].includes(neededType)) {
+          // Found a match - remove this blend energy from provides
+          const index = provides.findIndex(energy => energy === blendCards[j].provides[0]);
+          if (index !== -1) {
+            provides.splice(index, 1);
           }
-        }
-
-        if (matches > maxMatches) {
-          maxMatches = matches;
-          needsProvidingMatchIndex = i;
+          matchedBlends.add(j);
+          rainbow--;
+          needsProviding.splice(i, 1);
+          i--; // Adjust index since we removed an element
+          break;
         }
       }
-    });
-
-    // remove blend matches from rainbow requirement
-    rainbow -= maxMatches;
-
-    // remove matched energy from provides
-    for (let i = 0; i < maxMatches; i++) {
-      const index = provides.findIndex(energy => energy === needsProvidingPermutations[needsProvidingMatchIndex][i]);
-      provides.splice(index, 1);
     }
-    // END HANDLING BLEND ENERGIES
+    // END HANDLING BLEND/UNIT ENERGIES
 
-    // Check if we have enough rainbow energies
+    // Check if we have enough rainbow energies for remaining needs
     for (let i = 0; i < rainbow; i++) {
       const index = provides.findIndex(energy => energy === CardType.ANY);
       if (index !== -1) {
@@ -128,27 +117,6 @@ export class StateUtils {
 
     // Rest cards can be used to pay for colorless energies
     return provides.length >= colorless;
-
-
-    // permutations calculation helper function
-    function permutations(array: CardType[], currentSize: number) {
-      if (currentSize == 1) { // recursion base-case (end)
-        needsProvidingPermutations.push(array.join('').split('').map(x => parseInt(x)));
-      }
-
-      for (let i = 0; i < currentSize; i++) {
-        permutations(array, currentSize - 1);
-        if (currentSize % 2 == 1) {
-          const temp = array[0];
-          array[0] = array[currentSize - 1];
-          array[currentSize - 1] = temp;
-        } else {
-          const temp = array[i];
-          array[i] = array[currentSize - 1];
-          array[currentSize - 1] = temp;
-        }
-      }
-    }
   }
 
   static getCombinations(arr: CardType[][], n: number): CardType[][] {

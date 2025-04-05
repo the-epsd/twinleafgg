@@ -38,8 +38,8 @@ export class SkyPillar extends TrainerCard {
 
       effect.preventDefault = true;
     }
-    
-    if (effect instanceof PutCountersEffect) {
+
+    if (effect instanceof PutCountersEffect && StateUtils.getStadiumCard(state) === this) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

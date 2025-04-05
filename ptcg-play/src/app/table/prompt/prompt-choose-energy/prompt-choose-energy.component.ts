@@ -19,7 +19,7 @@ export class PromptChooseEnergyComponent {
     cardList.cards = prompt.energy.map(map => map.card);
     this.cards = cardList;
     this.energy = prompt.energy;
-    this.filter = { superType: SuperType.ENERGY };
+    this.filter = {};
     this.allowedCancel = prompt.options.allowCancel;
     this.message = prompt.message;
     this.promptId = prompt.id;

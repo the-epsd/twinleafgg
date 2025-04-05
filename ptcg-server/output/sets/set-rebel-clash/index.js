@@ -12,6 +12,8 @@ const caterpie_1 = require("./caterpie");
 const coalossal_1 = require("./coalossal");
 const cursed_shovel_1 = require("./cursed-shovel");
 const dragapult_1 = require("./dragapult");
+const dragapult_v_1 = require("./dragapult-v");
+const dragapult_vmax_1 = require("./dragapult-vmax");
 const duraludon_1 = require("./duraludon");
 const electivire_1 = require("./electivire");
 const galar_mine_1 = require("./galar-mine");
@@ -38,6 +40,8 @@ exports.setRebelClash = [
     new caterpie_1.Caterpie(),
     new coalossal_1.Coalossal(),
     new dragapult_1.Dragapult(),
+    new dragapult_v_1.DragapultV(),
+    new dragapult_vmax_1.DragapultVMAX(),
     new duraludon_1.Duraludon(),
     new electivire_1.Electivire(),
     new galar_mine_1.GalarMine(),

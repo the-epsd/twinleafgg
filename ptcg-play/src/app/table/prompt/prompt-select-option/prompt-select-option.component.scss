@@ -1,0 +1,98 @@
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 16px 0;
+
+  .option {
+    padding: 16px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    background: linear-gradient(to bottom, #3d4b63, #303b4e);
+    border: 2px solid #4a5a77;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(48, 59, 78, 0.3);
+    transform-origin: center;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(to bottom, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    &.selected {
+      background: linear-gradient(to bottom, #303b4e, #252f3d);
+      border-color: #4a5a77;
+      transform: scale(1.02);
+      box-shadow: 0 4px 12px rgba(48, 59, 78, 0.4);
+
+      &::before {
+        opacity: 1;
+      }
+    }
+
+    &:hover {
+      background: linear-gradient(to bottom, #4a5a77, #3d4b63);
+      border-color: #5c6f8f;
+      transform: scale(1.05);
+      box-shadow: 0 6px 12px rgba(48, 59, 78, 0.4);
+
+      &::before {
+        opacity: 0.5;
+      }
+    }
+
+    &:active {
+      transform: scale(0.98);
+      background: linear-gradient(to bottom, #252f3d, #1a2230);
+      box-shadow: 0 2px 4px rgba(48, 59, 78, 0.3);
+    }
+
+    &.disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      background: linear-gradient(to bottom, #1a1a1a, #0a0a0a);
+      border-color: #2a2a2a;
+      box-shadow: none;
+      transform: none;
+
+      &:hover {
+        transform: none;
+        box-shadow: none;
+      }
+
+      .option-text {
+        color: #666;
+      }
+    }
+
+    .option-text {
+      font-size: 16px;
+      line-height: 1.4;
+      position: relative;
+      z-index: 1;
+      color: #ffffff;
+      font-weight: 500;
+      text-align: center;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    }
+  }
+}
+
+.ptcg-prompt-content {
+  p {
+    margin-bottom: 24px;
+    font-size: 16px;
+    color: #ffffff;
+    text-align: center;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  }
+}

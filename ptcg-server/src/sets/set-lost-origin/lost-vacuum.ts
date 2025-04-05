@@ -4,7 +4,8 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { Card, CardList, CardTarget, ChooseCardsPrompt, ChoosePokemonPrompt, GameError, GameMessage, PlayerType, PokemonCardList, SelectPrompt, SlotType, StateUtils } from '../../game';
+import { Card, CardList, CardTarget, ChooseCardsPrompt, ChoosePokemonPrompt, GameError, GameMessage, PlayerType, PokemonCardList, SelectOptionPrompt, SlotType, StateUtils } from '../../game';
+
 
 export class LostVacuum extends TrainerCard {
 
@@ -145,7 +146,7 @@ export class LostVacuum extends TrainerCard {
 
           }
         ];
-        return store.prompt(state, new SelectPrompt(
+        return store.prompt(state, new SelectOptionPrompt(
           player.id,
           GameMessage.DISCARD_STADIUM_OR_TOOL,
           options.map(c => c.message),

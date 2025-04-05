@@ -41,12 +41,11 @@ class Glimmora extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.KnockOutEffect) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            // Try to reduce PowerEffect, to check if something is blocking our ability
-            try {
-                const powerEffect = new game_effects_1.PowerEffect(player, this.powers[0], this);
-                store.reduceEffect(state, powerEffect);
+            if (prefabs_1.IS_ABILITY_BLOCKED(store, state, player, this)) {
+                return state;
             }
-            catch (_a) {
+            // checking if this is the target for the damage
+            if (effect.target.getPokemonCard() !== this) {
                 return state;
             }
             // Flip a coin, and if heads, prevent damage.
@@ -54,7 +53,7 @@ class Glimmora extends pokemon_card_1.PokemonCard {
                 const coinFlip = new play_card_effects_1.CoinFlipEffect(player);
                 store.reduceEffect(state, coinFlip);
             }
-            catch (_b) {
+            catch (_a) {
                 return state;
             }
             const coinFlipResult = prefabs_1.SIMULATE_COIN_FLIP(store, state, player);

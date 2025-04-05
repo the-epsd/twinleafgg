@@ -30,7 +30,7 @@ class SkyPillar extends trainer_card_1.TrainerCard {
             }
             effect.preventDefault = true;
         }
-        if (effect instanceof attack_effects_1.PutCountersEffect) {
+        if (effect instanceof attack_effects_1.PutCountersEffect && game_1.StateUtils.getStadiumCard(state) === this) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             if (effect.target === player.active || effect.target === opponent.active) {

@@ -33,6 +33,8 @@ export class TableComponent implements OnInit, OnDestroy {
   public clientId: number;
   public loading: boolean;
   public waiting: boolean;
+  public isAdmin: boolean;
+  public isTO: boolean;
   private gameId: number;
   public showGameOver = false;
   public gameOverPrompt: GameOverPrompt;
@@ -59,6 +61,20 @@ export class TableComponent implements OnInit, OnDestroy {
   ) {
     this.gameStates$ = this.sessionService.get(session => session.gameStates);
     this.clientId$ = this.sessionService.get(session => session.clientId);
+    this.sessionService.get(session => {
+      const loggedUserId = session.loggedUserId;
+      const loggedUser = loggedUserId && session.users[loggedUserId];
+      return loggedUser && loggedUser.roleId === 4;
+    }).subscribe(isAdmin => {
+      this.isAdmin = isAdmin;
+    });
+    this.sessionService.get(session => {
+      const loggedUserId = session.loggedUserId;
+      const loggedUser = loggedUserId && session.users[loggedUserId];
+      return loggedUser && loggedUser.roleId === 5;
+    }).subscribe(isTO => {
+      this.isTO = isTO;
+    });
   }
 
   ngOnInit() {

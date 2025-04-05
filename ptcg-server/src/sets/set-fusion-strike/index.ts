@@ -4,7 +4,7 @@ import { AdventurersDiscovery } from './adventurers-discovery';
 import { Azumarill } from './azumarill';
 import { Basculin } from './basculin';
 import { BattleVIPPass } from './battle-vip-pass';
-import { JudgeFST } from './card-images';
+import { JudgeFST } from './other-prints';
 import { Cloyster } from './cloyster';
 import { Cook } from './cook';
 import { Creamomatic } from './cram-o-matic';
@@ -20,6 +20,8 @@ import { GalarianLinoone } from './galarian-linoone';
 import { GenesectV } from './genesect-v';
 import { GengarV } from './gengar-v';
 import { GengarVMAX } from './gengar-vmax';
+import { GreedentV } from './greedent-v';
+import { GreedentVMAX } from './greedent-vmax';
 import { Heatmor } from './heatmor';
 import { InteleonV } from './inteleon-v';
 import { InteleonVMAX } from './inteleon-vmax';
@@ -67,6 +69,8 @@ export const setFusionStrike: Card[] = [
   new GenesectV(),
   new GengarV(),
   new GengarVMAX(),
+  new GreedentV(),
+  new GreedentVMAX(),
   new Heatmor(),
   new InteleonV(),
   new InteleonVMAX(),

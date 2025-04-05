@@ -11,6 +11,7 @@ const diantha_1 = require("./diantha");
 const flabebe_1 = require("./flabebe");
 const floette_1 = require("./floette");
 const florges_1 = require("./florges");
+const fossil_excavation_map_1 = require("./fossil-excavation-map");
 const froakie_1 = require("./froakie");
 const froakie_2_1 = require("./froakie-2");
 const frogadier_1 = require("./frogadier");
@@ -42,6 +43,7 @@ exports.setForbiddenLight = [
     new froakie_1.Froakie(),
     new froakie_2_1.FroakieFrubbles(),
     new frogadier_1.Frogadier(),
+    new fossil_excavation_map_1.FossilExcavationMap(),
     new greninja_gx_1.GreninjaGX(),
     new inkay_1.Inkay(),
     new klefki_1.Klefki(),

@@ -24,7 +24,7 @@ export class EldegossV extends PokemonCard {
 
   public cardType: CardType = CardType.GRASS;
 
-  public hp: number = 190;
+  public hp: number = 180;
 
   public weakness = [{ type: CardType.FIRE }];
 
