@@ -22,6 +22,8 @@ cardManager.defineSet(sets.setVendingSeries);
 
 cardManager.defineSet(sets.setBaseSetEnergy);
 
+cardManager.defineSet(sets.setNeoGenesis);
+
 //E-Card Era
 cardManager.defineSet(sets.setAquapolis);
 
