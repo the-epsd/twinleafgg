@@ -64,7 +64,7 @@ class Magnemite extends pokemon_card_1.PokemonCard {
             if (pokemonCard) {
                 const magnemiteCount = player.bench.reduce((count, benchCard) => {
                     const benchPokemon = benchCard.getPokemonCard();
-                    return benchPokemon && benchPokemon.fullName === this.fullName ? count + 1 : count;
+                    return benchPokemon && benchPokemon.fullName === this.name ? count + 1 : count;
                 }, 0);
                 for (let i = 0; i < magnemiteCount; i++) {
                     const index = effect.cost.indexOf(card_types_1.CardType.COLORLESS);

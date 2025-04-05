@@ -7,6 +7,9 @@ export declare class GreedentV extends PokemonCard {
     cardType: CardType;
     hp: number;
     tags: CardTag[];
+    weakness: {
+        type: CardType.FIGHTING;
+    }[];
     retreat: CardType.COLORLESS[];
     attacks: {
         name: string;

@@ -12,7 +12,8 @@ class GreedentV extends pokemon_card_1.PokemonCard {
         this.cardType = C;
         this.hp = 210;
         this.tags = [card_types_1.CardTag.POKEMON_V];
-        this.retreat = [C];
+        this.weakness = [{ type: F }];
+        this.retreat = [C, C];
         this.attacks = [
             {
                 name: 'Body Slam',
