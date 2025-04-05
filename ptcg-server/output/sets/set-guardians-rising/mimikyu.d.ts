@@ -24,6 +24,8 @@ export declare class Mimikyu extends PokemonCard {
     fullName: string;
     cardImage: string;
     setNumber: string;
+    private copiedReduceEffect;
+    private copiedProperties;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
     private executeCopiedAttack;
     private findOriginalCard;

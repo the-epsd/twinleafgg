@@ -1,7 +1,7 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
+import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
 import { PowerType } from '../../game/store/card/pokemon-types';
-import { StoreLike, State, GameError, GameMessage, StateUtils, CardList, ChooseCardsPrompt, ShowCardsPrompt } from '../../game';
+import { StoreLike, State, GameError, GameMessage, StateUtils, CardList, ChooseCardsPrompt, PlayerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { ABILITY_USED, ADD_MARKER, HAS_MARKER, REMOVE_MARKER, REMOVE_MARKER_AT_END_OF_TURN, SHUFFLE_DECK, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
@@ -18,7 +18,7 @@ export class Jirachi extends PokemonCard {
     name: 'Wishing Star',
     useWhenInPlay: true,
     powerType: PowerType.POKEPOWER,
-    text: 'Once during your turn (before your attack), if Jirachi is your Active Pokémon, you may look at the top 5 cards of your deck, choose 1 of them, and put it into your hand. Shuffle your deck afterward. Jirachi and your other Active Pokémon, if any, are now Asleep. This power can\’t be used if Jirachi is affected by a Special Condition.'
+    text: 'Once during your turn (before your attack), if Jirachi is your Active Pokémon, you may look at the top 5 cards of your deck, choose 1 of them, and put it into your hand. Shuffle your deck afterward. Jirachi and your other Active Pokémon, if any, are now Asleep. This power can\'t be used if Jirachi is affected by a Special Condition.'
   }];
 
   public attacks = [{
@@ -77,13 +77,12 @@ export class Jirachi extends PokemonCard {
 
       const deckTop = new CardList();
       player.deck.moveTo(deckTop, 5);
-      const opponent = StateUtils.getOpponent(state, player);
 
       return store.prompt(state, new ChooseCardsPrompt(
         player,
         GameMessage.CHOOSE_CARD_TO_HAND,
         deckTop,
-        { },
+        {},
         { min: 1, max: 1, allowCancel: false }
       ), selected => {
         ADD_MARKER(this.WISHING_STAR_MARKER, player, this);
@@ -92,15 +91,13 @@ export class Jirachi extends PokemonCard {
 
         ABILITY_USED(player, this);
 
-        if (selected.length > 0) {
-          return store.prompt(state, new ShowCardsPrompt(
-            opponent.id,
-            GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-            selected
-          ), () => {
-          });
-        }
         SHUFFLE_DECK(store, state, player);
+
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+          if (cardList.getPokemonCard() === this) {
+            cardList.addSpecialCondition(SpecialCondition.ASLEEP);
+          }
+        });
       });
     }
     return state;

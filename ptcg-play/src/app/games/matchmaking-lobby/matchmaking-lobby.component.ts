@@ -19,13 +19,16 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./matchmaking-lobby.component.scss']
 })
 export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
+  // Make Format enum available to the template
+  public Format = Format;
+
   public formats = [
-    { value: Format.STANDARD, label: 'Standard' },
-    { value: Format.STANDARD_NIGHTLY, label: 'Standard Nightly' },
-    { value: Format.EXPANDED, label: 'Expanded' },
-    { value: Format.GLC, label: 'GLC' },
-    { value: Format.RETRO, label: 'Retro' },
-    { value: Format.UNLIMITED, label: 'Unlimited' },
+    { value: Format.STANDARD, label: 'LABEL_STANDARD' },
+    { value: Format.STANDARD_NIGHTLY, label: 'LABEL_STANDARD_NIGHTLY' },
+    { value: Format.EXPANDED, label: 'LABEL_EXPANDED' },
+    { value: Format.GLC, label: 'LABEL_GLC' },
+    { value: Format.RETRO, label: 'LABEL_RETRO' },
+    { value: Format.UNLIMITED, label: 'LABEL_UNLIMITED' },
   ];
 
   public selectedFormat: Format = Format.STANDARD;
@@ -36,6 +39,8 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
   public loading = false;
   public connectionError = false;
   public timeInQueue = 0;
+  public defaultDeckId: number | null = null;
+  public formatDefaultDecks: { [key: string]: number } = {};
 
   private queueTimeout: any;
   private cooldownInterval: any;
@@ -57,6 +62,18 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    // Load global default deck
+    const savedDefaultDeckId = localStorage.getItem('defaultDeckId');
+    if (savedDefaultDeckId) {
+      this.defaultDeckId = parseInt(savedDefaultDeckId, 10);
+    }
+
+    // Load format-specific default decks
+    const savedFormatDefaults = localStorage.getItem('formatDefaultDecks');
+    if (savedFormatDefaults) {
+      this.formatDefaultDecks = JSON.parse(savedFormatDefaults);
+    }
+
     // Monitor socket connection status
     this.socketService.connection
       .pipe(takeUntil(this.destroy$))
@@ -133,18 +150,15 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
     });
   }
 
-  private loadDefaultDeck(): void {
-    const savedDefaultDeckId = localStorage.getItem('defaultDeckId');
-    if (savedDefaultDeckId) {
-      const defaultId = parseInt(savedDefaultDeckId, 10);
-      // Only set the deck if it exists in the current format's deck list
-      const deck = this.decksByFormat.find(d => d.id === defaultId);
-      if (deck) {
-        this.deckId = defaultId;
-      } else {
-        this.deckId = null;
-      }
+  // Get the preferred deck for the current format
+  private getFormatDefaultDeckId(format: Format): number | null {
+    const formatKey = Format[format].toLowerCase();
+
+    if (this.formatDefaultDecks[formatKey]) {
+      return this.formatDefaultDecks[formatKey];
     }
+
+    return this.defaultDeckId;
   }
 
   public onFormatSelected(format: Format): void {
@@ -176,32 +190,26 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
         });
 
         this.decksByFormat = decks;
-        const savedDefaultDeckId = localStorage.getItem('defaultDeckId');
-        if (savedDefaultDeckId) {
-          const defaultId = parseInt(savedDefaultDeckId, 10);
-          if (this.decksByFormat.some(d => d.id === defaultId)) {
-            this.deckId = defaultId;
-          } else {
-            this.deckId = null;
-          }
+
+        // Get format-specific default deck
+        const formatDefaultDeckId = this.getFormatDefaultDeckId(this.selectedFormat);
+
+        // Check if the default deck for this format is available in the current deck list
+        if (formatDefaultDeckId && this.decksByFormat.some(d => d.id === formatDefaultDeckId)) {
+          this.deckId = formatDefaultDeckId;
+        } else if (this.decksByFormat.length > 0) {
+          // If no default for this format, use the first valid deck
+          this.deckId = this.decksByFormat[0].id;
+        } else {
+          this.deckId = null;
         }
+
         this.loading = false;
       },
       error => {
         console.error('Failed to load decks:', error);
         this.loading = false;
         this.showErrorMessage('Failed to load decks');
-      }
-    );
-  }
-
-  private loadDecks(): void {
-    this.deckService.getListByFormat(this.selectedFormat).subscribe(
-      decks => {
-        this.decksByFormat = decks;
-        if (!this.decksByFormat.find(d => d.id === this.deckId)) {
-          this.deckId = null;
-        }
       }
     );
   }

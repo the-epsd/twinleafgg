@@ -121,8 +121,17 @@ export class PromptDiscardEnergyComponent implements OnInit, OnDestroy {
       blockedMap: this.blockedMap
     });
 
+    // If minSelection is 0, empty selections are valid, so isInvalid should be false initially
+    if (this.minSelection === 0) {
+      console.log('Setting initial validation to valid (minSelection is 0)');
+      this.isInvalid = false;
+    }
+
     // Build Pokemon items from state
     this.buildPokemonItems(state);
+
+    // Run initial validation to ensure state is correct
+    this.validateSelection();
   }
 
   private buildPokemonItems(state: State): void {
@@ -399,7 +408,19 @@ export class PromptDiscardEnergyComponent implements OnInit, OnDestroy {
   }
 
   private validateSelection(): void {
-    console.log('Validating selection...');
+    console.log('Validating selection...', {
+      minSelection: this.minSelection,
+      maxSelection: this.maxSelection,
+      currentCount: this.selectedEnergies.length
+    });
+
+    // Special case: If minSelection is 0 and no cards selected, this is valid
+    if (this.minSelection === 0 && this.selectedEnergies.length === 0) {
+      console.log('Validation succeeded: No selection required (minSelection is 0)');
+      this.isInvalid = false;
+      console.log('Final validation state:', { isInvalid: this.isInvalid });
+      return;
+    }
 
     // Check minimum selection count
     if (this.selectedEnergies.length < this.minSelection) {
@@ -465,11 +486,27 @@ export class PromptDiscardEnergyComponent implements OnInit, OnDestroy {
 
     console.log('Formatted selections for validation:', formattedSelections);
 
+    // Log additional details for debugging
+    if (formattedSelections.length === 0) {
+      console.log('Empty selection being validated with prompt settings:', {
+        promptMin: this.prompt.options.min,
+        promptMax: this.prompt.options.max,
+        componentMin: this.minSelection,
+        componentMax: this.maxSelection,
+        allowCancel: this.prompt.options.allowCancel
+      });
+    }
+
     // Check if the prompt validates the selection
     try {
       const isValid = this.prompt.validate(formattedSelections);
       this.isInvalid = !isValid;
-      console.log(`Validation ${isValid ? 'succeeded' : 'failed'}`);
+      console.log(`Validation ${isValid ? 'succeeded' : 'failed'}:`, {
+        isValid,
+        isInvalid: this.isInvalid,
+        selectionCount: formattedSelections.length,
+        minRequired: this.minSelection
+      });
 
       // If validation failed but min/max constraints are met, it might be due to other constraints
       if (!isValid && this.selectedEnergies.length >= this.minSelection &&
@@ -482,6 +519,8 @@ export class PromptDiscardEnergyComponent implements OnInit, OnDestroy {
       console.error('Validation error:', error);
       this.isInvalid = true;
     }
+
+    console.log('Final validation state:', { isInvalid: this.isInvalid });
   }
 
   public resetSelection(): void {
@@ -531,16 +570,10 @@ export class PromptDiscardEnergyComponent implements OnInit, OnDestroy {
       return;
     }
 
-    // Check if any energy is selected
-    if (this.selectedEnergies.length === 0) {
-      console.warn('Cannot confirm: No energies selected');
-
-      if (this.minSelection > 0) {
-        this.statusMessage = `Please select at least ${this.minSelection} energy card(s).`;
-      } else {
-        this.statusMessage = 'Please select at least one energy card.';
-      }
-
+    // Check if any energy is selected - only required when minSelection > 0
+    if (this.minSelection > 0 && this.selectedEnergies.length === 0) {
+      console.warn('Cannot confirm: No energies selected but minimum required');
+      this.statusMessage = `Please select at least ${this.minSelection} energy card(s).`;
       setTimeout(() => this.statusMessage = '', 3000);
       return;
     }
@@ -617,6 +650,7 @@ export class PromptDiscardEnergyComponent implements OnInit, OnDestroy {
       // The server expects array of {from: CardTarget, index: number}
       const results = [];
 
+      // Process all selected energies (will be empty array if none selected)
       for (const selection of this.selectedEnergies) {
         // Create a plain object with no references to our component objects
         results.push({
@@ -729,7 +763,25 @@ export class PromptDiscardEnergyComponent implements OnInit, OnDestroy {
   public getCustomEnergyImageUrl(card: Card): string {
     if (!card || card.superType !== SuperType.ENERGY) return '';
 
-    const customImageUrls = {
+    // Handle special energy cards
+    const specialEnergyUrls = {
+      'Double Turbo Energy': 'assets/energy/double-turbo.png',
+      'Jet Energy': 'assets/energy/jet.png',
+      'Gift Energy': 'assets/energy/gift.png',
+      'Mist Energy': 'assets/energy/mist.png',
+      'Legacy Energy': 'assets/energy/legacy.png',
+      'Neo Upper Energy': 'assets/energy/neo-upper.png',
+      'Electrode': 'assets/energy/neo-upper.png',
+      // Add more special energy mappings as needed
+    };
+
+    // Check if it's a special energy first
+    if (specialEnergyUrls[card.name]) {
+      return specialEnergyUrls[card.name];
+    }
+
+    // Handle basic energy cards
+    const basicEnergyUrls = {
       'Grass Energy': 'assets/energy/grass.png',
       'Fire Energy': 'assets/energy/fire.png',
       'Water Energy': 'assets/energy/water.png',
@@ -739,16 +791,11 @@ export class PromptDiscardEnergyComponent implements OnInit, OnDestroy {
       'Darkness Energy': 'assets/energy/dark.png',
       'Metal Energy': 'assets/energy/metal.png',
       'Fairy Energy': 'assets/energy/fairy.png',
-      'Double Turbo Energy': 'assets/energy/double-turbo.png',
-      'Jet Energy': 'assets/energy/jet.png',
-      'Gift Energy': 'assets/energy/gift.png',
-      'Mist Energy': 'assets/energy/mist.png',
-      'Legacy Energy': 'assets/energy/legacy.png',
-      'Neo Upper Energy': 'assets/energy/neo-upper.png',
-      'Electrode': 'assets/energy/neo-upper.png',
+      'Electrode': 'assets/energy/electrode.png',
+      'Holon\'s Castform': 'assets/energy/holon-castform.png',
     };
 
-    return customImageUrls[card.name] || '';
+    return basicEnergyUrls[card.name] || '';
   }
 
   /**

@@ -49,4 +49,6 @@ export class State {
   public playerLastAttack: { [playerId: number]: Attack } = {};
 
   public isSuddenDeath?: boolean;
+
+  public benchSizeChangeHandled: boolean = false;
 }

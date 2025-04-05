@@ -20,7 +20,7 @@ class Claydol extends pokemon_card_1.PokemonCard {
                 name: 'Cosmic Power',
                 useWhenInPlay: true,
                 powerType: game_1.PowerType.POKEPOWER,
-                text: 'Once during your turn (before your attack), you may choose up to 2 cards from your hand and put them on the bottom of your deck in any order. If you do, draw cards until you have 6 cards in your hand. This power can\’t be used if Claydol is affected by a Special Condition.'
+                text: 'Once during your turn (before your attack), you may choose up to 2 cards from your hand and put them on the bottom of your deck in any order. If you do, draw cards until you have 6 cards in your hand. This power can\'t be used if Claydol is affected by a Special Condition.'
             }];
         this.attacks = [{
                 name: 'Spinning Attack',
@@ -56,7 +56,7 @@ class Claydol extends pokemon_card_1.PokemonCard {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
             const deckBottom = new game_1.CardList();
-            store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_DISCARD, player.hand, {}, { allowCancel: false, min: 1, max: 2 }), selected => {
+            store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARDS_TO_PUT_ON_BOTTOM_OF_THE_DECK, player.hand, {}, { allowCancel: false, min: 1, max: 2 }), selected => {
                 player.hand.moveCardsTo(selected, deckBottom);
                 deckBottom.moveTo(player.deck);
                 while (player.hand.cards.length < 6) {

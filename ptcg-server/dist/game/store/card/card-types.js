@@ -43,6 +43,7 @@ export var CardTag;
     CardTag["ARVENS"] = "ARVENS";
     CardTag["POKEMON_SV_MEGA"] = "POKEMON_SV_MEGA";
     CardTag["HOLONS"] = "HOLONS";
+    CardTag["TEAM_ROCKET"] = "TEAM_ROCKET";
 })(CardTag || (CardTag = {}));
 export var SuperType;
 (function (SuperType) {
@@ -219,6 +220,12 @@ export var Format;
     Format[Format["RETRO"] = 4] = "RETRO";
     Format[Format["GLC"] = 5] = "GLC";
     Format[Format["STANDARD_NIGHTLY"] = 6] = "STANDARD_NIGHTLY";
+    Format[Format["BW"] = 7] = "BW";
+    Format[Format["XY"] = 8] = "XY";
+    Format[Format["SM"] = 9] = "SM";
+    Format[Format["SWSH"] = 10] = "SWSH";
+    Format[Format["SV"] = 11] = "SV";
+    Format[Format["WORLDS_2013"] = 12] = "WORLDS_2013";
 })(Format || (Format = {}));
 export const Energy = {
     D: CardType.DARK,

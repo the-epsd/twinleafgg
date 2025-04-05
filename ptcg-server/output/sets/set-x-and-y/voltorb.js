@@ -14,7 +14,6 @@ class Voltorb extends game_1.PokemonCard {
         this.retreat = [game_1.CardType.COLORLESS];
         this.powers = [{
                 name: 'Destiny Burst',
-                useWhenInPlay: true,
                 powerType: game_1.PowerType.ABILITY,
                 text: 'If this Pokémon is your Active Pokémon and is Knocked Out by damage from an opponent\'s attack, flip a coin. If heads, put 5 damage counters on the Attacking Pokémon.'
             }];
@@ -34,6 +33,10 @@ class Voltorb extends game_1.PokemonCard {
         if (effect instanceof game_effects_1.KnockOutEffect && effect.target.cards.includes(this) && effect.player.marker.hasMarker(effect.player.DAMAGE_DEALT_MARKER)) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
+            // Do not activate between turns, or when it's not opponents turn.
+            if (state.phase !== game_1.GamePhase.ATTACK || state.players[state.activePlayer] == opponent) {
+                return state;
+            }
             return store.prompt(state, [
                 new game_1.CoinFlipPrompt(player.id, game_1.GameMessage.COIN_FLIP)
             ], result => {

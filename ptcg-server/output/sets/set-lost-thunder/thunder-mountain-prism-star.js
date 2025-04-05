@@ -8,7 +8,6 @@ const card_types_1 = require("../../game/store/card/card-types");
 const state_utils_1 = require("../../game/store/state-utils");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const check_effects_1 = require("../../game/store/effects/check-effects");
-const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class ThunderMountainPrismStar extends trainer_card_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -40,14 +39,17 @@ class ThunderMountainPrismStar extends trainer_card_1.TrainerCard {
         if (effect instanceof game_effects_1.UseStadiumEffect && state_utils_1.StateUtils.getStadiumCard(state) === this) {
             throw new game_error_1.GameError(game_message_1.GameMessage.CANNOT_USE_STADIUM);
         }
-        if (effect instanceof play_card_effects_1.PlaySupporterEffect && state_utils_1.StateUtils.getStadiumCard(state) === this) {
-            effect.preventDefault = true;
-            return state;
+        /* tossing this out while we actually work to get this working and to not make this the best floodgate in the game
+        if (effect instanceof PlaySupporterEffect && StateUtils.getStadiumCard(state) === this) {
+          effect.preventDefault = true;
+          return state;
         }
-        if (effect instanceof play_card_effects_1.PlayItemEffect && state_utils_1.StateUtils.getStadiumCard(state) === this) {
-            effect.preventDefault = true;
-            return state;
+    
+        if (effect instanceof PlayItemEffect && StateUtils.getStadiumCard(state) === this) {
+          effect.preventDefault = true;
+          return state;
         }
+        */
         return state;
     }
 }

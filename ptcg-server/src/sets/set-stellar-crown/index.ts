@@ -9,7 +9,7 @@ import { Comfey } from './comfey';
 import { Crabominable } from './crabominable';
 import { Crabrawler } from './crabrawler';
 import { Crispin } from './crispin';
-import {DeluxeBomb} from './deluxe-bomb';
+import { DeluxeBomb } from './deluxe-bomb';
 import { Diancie } from './diancie';
 import { Drednaw } from './drednaw';
 import { Drifblim } from './drifblim';
@@ -20,7 +20,7 @@ import { FanRotom } from './fan-rotom';
 import { Galvantulaex } from './galvantula-ex';
 import { Garganaclex } from './garganacl-ex';
 import { GlassTrumpet } from './glass-trumpet';
-import { GlisteningCrystal } from './glistening-crystal';
+import { SparklingCrystal } from './sparkling-crystal';
 import { GravityGemstone } from './gravity-gemstone';
 import { GreatTree } from './great-tree';
 import { Hoothoot } from './hoothoot';
@@ -38,6 +38,8 @@ import { Noctowl } from './noctowl';
 import { ArchaludonIR, AreaZeroUnderdepthsHR, BraveryCharmHR, BriarFA, BriarSIR, BulbasaurIR, CinderaceexFA, CrispinFA, GalvantulaexFA, GalvantulaexSIR, HydrappleexFA, HydrappleexSIR, JoltikIR, KofuFA, LaceyFA, LaceySIR, LaprasexFA, MedichamexFA, MedititeIR, MilceryIR, OrthwormexFA, RabootIR, SquirtleIR, TerapagosexHR, TerapagosexSIR, ZeraoraIR } from './other-prints';
 import { Raboot } from './raboot';
 import { RagingBolt } from './raging-bolt';
+import { Salandit } from './salandit';
+import { Salazzle } from './salazzle';
 import { Scorbunny } from './scorbunny';
 import { Slowking } from './slowking';
 import { Terapagosex } from './terapagos-ex';
@@ -65,7 +67,7 @@ export const setStellarCrown: Card[] = [
   new Galvantulaex(),
   new Garganaclex(),
   new GlassTrumpet(),
-  new GlisteningCrystal(),
+  new SparklingCrystal(),
   new GravityGemstone(),
   new GreatTree(),
   new Hoothoot(),
@@ -82,6 +84,8 @@ export const setStellarCrown: Card[] = [
   // new Orthwormex(),
   new Raboot(),
   new RagingBolt(),
+  new Salandit(),
+  new Salazzle(),
   new Scorbunny(),
   new Slowking(),
   new Terapagosex(),

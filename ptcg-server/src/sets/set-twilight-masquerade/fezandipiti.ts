@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, PowerType, PokemonCardList, GamePhase, GameLog } from '../../game';
+import { StoreLike, State, StateUtils, PowerType, PokemonCardList, GamePhase, GameLog, EnergyCard } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
@@ -49,6 +49,7 @@ export class Fezandipiti extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Adrena-Pheromone
+
     if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -57,24 +58,6 @@ export class Fezandipiti extends PokemonCard {
       const cardList = StateUtils.findCardList(state, this) as PokemonCardList;
 
       if (pokemonCard !== this || sourceCard === undefined || state.phase !== GamePhase.ATTACK) {
-        return state;
-      }
-
-      // Check if we have dark energy attached
-      const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player, cardList);
-      store.reduceEffect(state, checkProvidedEnergyEffect);
-      let hasDarkEnergy: boolean = false;
-
-      checkProvidedEnergyEffect.energyMap.forEach(
-        energy => {
-          energy.provides.forEach(e => {
-            if (e === CardType.DARK) {
-              hasDarkEnergy = true;
-            }
-          });
-        }
-      );
-      if (!hasDarkEnergy) {
         return state;
       }
 
@@ -89,21 +72,50 @@ export class Fezandipiti extends PokemonCard {
         return state;
       }
 
-      try {
-        const coinFlip = new CoinFlipEffect(player);
-        store.reduceEffect(state, coinFlip);
-      } catch {
+      const checkEnergy = new CheckProvidedEnergyEffect(player, cardList);
+      store.reduceEffect(state, checkEnergy);
+      let hasDarkAttached = false;
+
+      checkEnergy.energyMap.forEach(em => {
+        if (em.provides.includes(CardType.ANY)) {
+          hasDarkAttached = true;
+        }
+        if (em.provides.includes(CardType.DARK)) {
+          hasDarkAttached = true;
+        }
+        const energyCard = em.card;
+        if (energyCard instanceof EnergyCard && energyCard.provides.includes(CardType.DARK)) {
+          hasDarkAttached = true;
+        }
+        if (energyCard instanceof EnergyCard && energyCard.provides.includes(CardType.ANY)) {
+          hasDarkAttached = true;
+        }
+        if (energyCard instanceof EnergyCard && energyCard.blendedEnergies?.includes(CardType.DARK)) {
+          hasDarkAttached = true;
+        }
+      });
+
+      if (!hasDarkAttached) {
         return state;
       }
 
-      const coinFlipResult = SIMULATE_COIN_FLIP(store, state, player);
+      if (hasDarkAttached) {
+        try {
+          const coinFlip = new CoinFlipEffect(player);
+          store.reduceEffect(state, coinFlip);
+        } catch {
+          return state;
+        }
 
-      if (coinFlipResult) {
-        effect.damage = 0;
-        store.log(state, GameLog.LOG_ABILITY_BLOCKS_DAMAGE, { name: opponent.name, pokemon: this.name });
+        const coinFlipResult = SIMULATE_COIN_FLIP(store, state, player);
+
+        if (coinFlipResult) {
+          effect.damage = 0;
+          store.log(state, GameLog.LOG_ABILITY_BLOCKS_DAMAGE, { name: opponent.name, pokemon: this.name });
+        }
+
+        return state;
       }
-
-      return state;
     }
 
     // Energy Feather

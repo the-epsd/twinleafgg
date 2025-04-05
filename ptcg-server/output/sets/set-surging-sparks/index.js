@@ -13,7 +13,7 @@ const azulmarill_1 = require("./azulmarill");
 const black_kyurem_ex_1 = require("./black-kyurem-ex");
 const blitzle_1 = require("./blitzle");
 const capsakid_1 = require("./capsakid.");
-const card_images_1 = require("./card-images");
+const other_prints_1 = require("./other-prints");
 const celebration_fanfare_1 = require("./celebration-fanfare");
 const centiskorch_1 = require("./centiskorch");
 const ceruledge_1 = require("./ceruledge");
@@ -74,7 +74,7 @@ const ninetales_1 = require("./ninetales");
 const palkia_1 = require("./palkia");
 const palossand_ex_1 = require("./palossand-ex");
 const pansear_1 = require("./pansear");
-const perfect_mixer_1 = require("./perfect-mixer");
+const brilliant_blender_1 = require("./brilliant-blender");
 const phanpy_ir_1 = require("./phanpy-ir");
 const pikachu_ex_1 = require("./pikachu-ex");
 const quaquaval_1 = require("./quaquaval");
@@ -143,7 +143,7 @@ exports.setSurgingSparks = [
     new palkia_1.Palkia(),
     new ho_oh_1.HoOh(),
     new azulmarill_1.Azumarill(),
-    new perfect_mixer_1.PerfectMixer(),
+    new brilliant_blender_1.BrilliantBlender(),
     new cherish_carrier_1.CherishCarrier(),
     new marill_1.Marill(),
     new tera_orb_1.TeraOrb(),
@@ -221,8 +221,8 @@ exports.setSurgingSparks = [
     new armarouge_1.Armarouge(),
     new rotom_1.Rotom(),
     // Reprints
-    new card_images_1.ScrambleSwitchSSP(),
-    new card_images_1.CounterGainSSP(),
+    new other_prints_1.ScrambleSwitchSSP(),
+    new other_prints_1.CounterGainSSP(),
     // Full Art
     new full_art_1.LarvestaIR(),
     new full_art_1.FeebasIR(),

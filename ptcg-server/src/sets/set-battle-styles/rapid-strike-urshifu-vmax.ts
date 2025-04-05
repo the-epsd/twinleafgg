@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, ChoosePokemonPrompt, PlayerType, SlotType, Card, StateUtils } from '../../game';
+import { StoreLike, State, ChoosePokemonPrompt, PlayerType, SlotType, Card } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { DiscardCardsEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
@@ -55,7 +55,6 @@ export class RapidStrikeUrshifuVMAX extends PokemonCard {
 
     if (effect instanceof EndTurnEffect) {
       this.movedToActiveThisTurn = false;
-      console.log('movedToActiveThisTurn = false');
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
@@ -66,7 +65,6 @@ export class RapidStrikeUrshifuVMAX extends PokemonCard {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
 
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
       state = store.reduceEffect(state, checkProvidedEnergy);
@@ -82,16 +80,15 @@ export class RapidStrikeUrshifuVMAX extends PokemonCard {
         GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
         PlayerType.TOP_PLAYER,
         [SlotType.ACTIVE, SlotType.BENCH],
-        { min: max, max, allowCancel: false }
+        { min: 1, max, allowCancel: false }
       ), selected => {
         const targets = selected || [];
-        if (targets.includes(opponent.active)) {
-          targets.forEach(target => {
-            const damageEffect = new PutDamageEffect(effect, 120);
-            damageEffect.target = target;
-            store.reduceEffect(state, damageEffect);
-          });
-        }
+        targets.forEach(target => {
+          const damageEffect = new PutDamageEffect(effect, 120);
+          damageEffect.target = target;
+          store.reduceEffect(state, damageEffect);
+        });
+        return state;
       });
     }
     return state;

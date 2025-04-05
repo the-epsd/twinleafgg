@@ -6,19 +6,25 @@
         <ptcg-archetype [class]="getArchetype(selectedDeck.deckItems)"
           style="transform: scale(3); display: flex; image-rendering: pixelated;"></ptcg-archetype>
       </div>
-      <div class="deck-name"
-        style="background-color: #384259; font-family: 'Segoe UI', sans-serif; font-weight: bold; text-transform: uppercase;">
-        {{ selectedDeck.name }}
+      <div class="deck-info">
+        <div class="deck-name">
+          {{ selectedDeck.name }}
+        </div>
+        <!-- <div class="deck-status" *ngIf="getFormatDefaultDeckId(selectedFormat) === selectedDeck.id">
+          <mat-icon class="default-star">star</mat-icon>
+          <span>{{ 'DEFAULT' | translate }}</span>
+        </div> -->
       </div>
     </div>
 
     <!-- No Deck Warning -->
-    <div class="no-deck-warning" *ngIf="!selectedDeck">
-      <p>{{ 'NO_DECK' | translate }}</p>
-      <button mat-button color="primary" routerLink="/deck"
-        style="background-color: #384259; font-family: 'Segoe UI', sans-serif; font-weight: bold; text-transform: uppercase;">
-        {{ 'SET_DEFAULT' | translate }}
-      </button>
+    <div class="deck-card" *ngIf="!selectedDeck">
+      <div class="deck-archetype">
+        <span class="no-deck-icon">?</span>
+      </div>
+      <div class="deck-info">
+        <div class="deck-name">{{ 'NO_DECK' | translate }}</div>
+      </div>
     </div>
 
     <!-- Format Selection -->

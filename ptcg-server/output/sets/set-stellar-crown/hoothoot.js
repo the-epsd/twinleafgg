@@ -38,7 +38,7 @@ class Hoothoot extends game_1.PokemonCard {
             ], results => {
                 let heads = 0;
                 results.forEach(r => { heads += r ? 1 : 0; });
-                effect.damage += 10 * heads;
+                effect.damage = 10 * heads;
             });
         }
         return state;

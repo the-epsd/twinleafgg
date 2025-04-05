@@ -3,10 +3,9 @@ import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { GamePhase, State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import {WAS_ATTACK_USED} from '../../game/store/prefabs/prefabs';
-import {PowerType, StateUtils} from '../../game';
-import {AfterDamageEffect, ApplyWeaknessEffect, DealDamageEffect, PutDamageEffect} from '../../game/store/effects/attack-effects';
-import {PowerEffect} from '../../game/store/effects/game-effects';
+import { PowerType, StateUtils } from '../../game';
+import { AfterDamageEffect, ApplyWeaknessEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 
 export class Crustle extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -14,7 +13,7 @@ export class Crustle extends PokemonCard {
   public cardType: CardType = G;
   public hp: number = 150;
   public weakness = [{ type: R }];
-  public retreat = [ C, C, C ];
+  public retreat = [C, C, C];
 
   public powers = [
     {
@@ -27,8 +26,9 @@ export class Crustle extends PokemonCard {
 
   public attacks = [{
     name: 'Great Scissors',
-    cost: [ G, C, C ],
+    cost: [G, C, C],
     damage: 120,
+    shredAttack: true,
     text: 'This attack\'s damage isn\'t affected by any effects on your opponent\'s Active Pokémon.'
   }];
 
@@ -77,24 +77,22 @@ export class Crustle extends PokemonCard {
     }
 
     // Great Scissors
-    if (WAS_ATTACK_USED(effect, 0, this)){
-      //const player = effect.player;
-      //const opponent = StateUtils.getOpponent(state, player);
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
 
-      effect.damage = 0;
-
-      const dealDamage = new DealDamageEffect(effect, 120);
-      store.reduceEffect(state, dealDamage);
-
-      const applyWeakness = new ApplyWeaknessEffect(effect, dealDamage.damage);
+      const applyWeakness = new ApplyWeaknessEffect(effect, 120);
       store.reduceEffect(state, applyWeakness);
       const damage = applyWeakness.damage;
 
+      effect.damage = 0;
+
       if (damage > 0) {
-        //opponent.active.damage += damage;
+        opponent.active.damage += damage;
         const afterDamage = new AfterDamageEffect(effect, damage);
         state = store.reduceEffect(state, afterDamage);
       }
+      return state;
     }
 
     return state;

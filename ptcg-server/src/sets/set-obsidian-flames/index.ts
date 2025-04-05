@@ -3,7 +3,7 @@ import { Absolex } from './absol-ex';
 import { Barboach } from './barboach';
 import { Bellibolt } from './bellibolt';
 import { Bonsly } from './bonsly';
-import { ArvenOBF } from './card-images';
+import { ArvenOBF } from './other-prints';
 import { Charizardex } from './charizard-ex';
 import { Charmander } from './charmander';
 import { Charmeleon } from './charmeleon';
@@ -48,6 +48,8 @@ import { Togekiss } from './togekiss';
 import { Togepi } from './togepi';
 import { Togetic } from './togetic';
 import { TownStore } from './town-store';
+import { Toxel } from './toxel';
+import { Toxtricity } from './toxtricity';
 import { Tympole } from './tympole';
 import { Tyranitarex } from './tyranitar-ex';
 import { Varoom } from './varoom';
@@ -103,6 +105,8 @@ export const setObsidianFlames: Card[] = [
   new Togepi(),
   new Togetic(),
   new Togekiss(),
+  new Toxel(),
+  new Toxtricity(),
   new Victiniex(),
   new Eiscueex(),
   new Miraidonex(),

@@ -11,7 +11,7 @@ import { Azumarill } from './azulmarill';
 import { BlackKyuremex } from './black-kyurem-ex';
 import { Blitzle } from './blitzle';
 import { Capsakid } from './capsakid.';
-import { CounterGainSSP, ScrambleSwitchSSP } from './card-images';
+import { CounterGainSSP, ScrambleSwitchSSP } from './other-prints';
 import { CelebrationFanfare } from './celebration-fanfare';
 import { Centiskorch } from './centiskorch';
 import { Ceruledge } from './ceruledge';
@@ -72,7 +72,7 @@ import { Ninetales } from './ninetales';
 import { Palkia } from './palkia';
 import { Palossandex } from './palossand-ex';
 import { Pansear } from './pansear';
-import { PerfectMixer } from './perfect-mixer';
+import { BrilliantBlender } from './brilliant-blender';
 import { Phanpy } from './phanpy-ir';
 import { Pikachuex } from './pikachu-ex';
 import { Quaquaval } from './quaquaval';
@@ -142,7 +142,7 @@ export const setSurgingSparks: Card[] = [
   new Palkia(),
   new HoOh(),
   new Azumarill(),
-  new PerfectMixer(),
+  new BrilliantBlender(),
   new CherishCarrier(),
   new Marill(),
   new TeraOrb(),

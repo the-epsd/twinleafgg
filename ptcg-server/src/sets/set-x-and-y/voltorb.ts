@@ -1,4 +1,4 @@
-import { PokemonCard, Stage, CardType, Resistance, PowerType, StoreLike, State, CoinFlipPrompt, GameMessage, StateUtils } from '../../game';
+import { PokemonCard, Stage, CardType, Resistance, PowerType, StoreLike, State, CoinFlipPrompt, GameMessage, StateUtils, GamePhase } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { KnockOutEffect } from '../../game/store/effects/game-effects';
 
@@ -12,7 +12,6 @@ export class Voltorb extends PokemonCard {
 
   public powers = [{
     name: 'Destiny Burst',
-    useWhenInPlay: true,
     powerType: PowerType.ABILITY,
     text: 'If this Pokémon is your Active Pokémon and is Knocked Out by damage from an opponent\'s attack, flip a coin. If heads, put 5 damage counters on the Attacking Pokémon.'
   }];
@@ -35,6 +34,12 @@ export class Voltorb extends PokemonCard {
     if (effect instanceof KnockOutEffect && effect.target.cards.includes(this) && effect.player.marker.hasMarker(effect.player.DAMAGE_DEALT_MARKER)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
+
+      // Do not activate between turns, or when it's not opponents turn.
+      if (state.phase !== GamePhase.ATTACK || state.players[state.activePlayer] == opponent) {
+        return state;
+      }
+
       return store.prompt(state, [
         new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
       ], result => {

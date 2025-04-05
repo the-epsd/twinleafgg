@@ -39,13 +39,8 @@ class Torchic extends pokemon_card_1.PokemonCard {
         this.fullName = 'Torchic PRC';
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_effects_1.AttackEffect) {
-            this.maxAttacksThisTurn = 2;
-            this.allowSubsequentAttackChoice = true;
-        }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
-            //DO ATTACK
             let hasCardsInHand = false;
             const blocked = [];
             player.hand.cards.forEach((c, index) => {
@@ -72,7 +67,6 @@ class Torchic extends pokemon_card_1.PokemonCard {
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {
             const player = effect.player;
-            // DO ATTACK
             state = store.prompt(state, [
                 new game_1.CoinFlipPrompt(player.id, game_1.GameMessage.COIN_FLIP)
             ], result => {

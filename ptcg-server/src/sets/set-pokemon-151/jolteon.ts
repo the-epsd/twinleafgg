@@ -75,7 +75,12 @@ export class Jolteon extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const opponentActive = opponent.active.getPokemonCard();
-      if (opponentActive && (opponentActive.tags.includes(CardTag.POKEMON_V || CardTag.POKEMON_VSTAR || CardTag.POKEMON_VMAX || CardTag.POKEMON_ex))) {
+      if (opponentActive && (
+        opponentActive.tags.includes(CardTag.POKEMON_V) ||
+        opponentActive.tags.includes(CardTag.POKEMON_VSTAR) ||
+        opponentActive.tags.includes(CardTag.POKEMON_VMAX) ||
+        opponentActive.tags.includes(CardTag.POKEMON_ex)
+      )) {
         effect.damage += 90;
       }
     }

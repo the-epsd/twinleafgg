@@ -84,6 +84,9 @@ const calamitous_snowy_mountain_1 = require("./calamitous-snowy-mountain");
 const gothita_1 = require("./gothita");
 const gothorita_1 = require("./gothorita");
 const gothitelle_1 = require("./gothitelle");
+const larvitar_1 = require("./larvitar");
+const pupitar_1 = require("./pupitar");
+const tyranitar_1 = require("./tyranitar");
 exports.setPaldeaEvolved = [
     new arctibax_1.Arctibax(),
     new artazon_1.Artazon(),
@@ -167,6 +170,9 @@ exports.setPaldeaEvolved = [
     new gothita_1.Gothita(),
     new gothorita_1.Gothorita(),
     new gothitelle_1.Gothitelle(),
+    new larvitar_1.Larvitar(),
+    new pupitar_1.Pupitar(),
+    new tyranitar_1.Tyranitar(),
     // Full 
     new full_art_1.ArctibaxIR(),
     new full_art_1.BaxcaliburIR(),

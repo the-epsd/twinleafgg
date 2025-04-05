@@ -34,6 +34,24 @@ export class FormatValidator {
       );
     }
 
+    // Check GLC rules first
+    if (formatList.includes(Format.GLC)) {
+      // check for singleton violation
+      const nonBasicEnergyCards = cards.filter(c => c.superType !== SuperType.ENERGY && (<any>c).energyType !== EnergyType.BASIC);
+      const set = new Set(nonBasicEnergyCards.map(c => c.name));
+      if (set.size < nonBasicEnergyCards.length) {
+        formatList = formatList.filter(f => f !== Format.GLC);
+      }
+
+      // check for different type violation
+      const pokemonCards = cards.filter(c => c.superType === SuperType.POKEMON);
+      const pokemonSet = new Set(pokemonCards.map(c => (<PokemonCard>c).cardType));
+      if (pokemonSet.size > 1) {
+        formatList = formatList.filter(f => f !== Format.GLC);
+      }
+    }
+
+    // Then check energy type restrictions
     if ((set.has('Fairy Energy')) ||
       (set.has('Wonder Energy'))) {
       return formatList.filter(f =>
@@ -49,29 +67,7 @@ export class FormatValidator {
       );
     }
 
-    if (formatList.includes(Format.GLC)) {
-
-      // check for singleton violation
-      const nonBasicEnergyCards = cards.filter(c => c.superType !== SuperType.ENERGY && (<any>c).energyType !== EnergyType.BASIC);
-
-      const set = new Set(nonBasicEnergyCards.map(c => c.name));
-
-      if (set.size < nonBasicEnergyCards.length) {
-        formatList = formatList.filter(f => f !== Format.GLC);
-        return formatList;
-      }
-
-      // check for different type violation
-      const pokemonCards = cards.filter(c => c.superType === SuperType.POKEMON);
-
-      const pokemonSet = new Set(pokemonCards.map(c => (<PokemonCard>c).cardType));
-
-      if (pokemonSet.size > 1) {
-        formatList = formatList.filter(f => f !== Format.GLC);
-        return formatList;
-      }
-    }
-    return formatList
+    return formatList;
   }
 
   static getValidFormats(card: Card): Format[] {
@@ -102,27 +98,26 @@ export class FormatValidator {
 
       case Format.STANDARD:
         var banList = BanLists[format];
-        return card.regulationMark === 'F' ||
-          card.regulationMark === 'G' ||
-          card.regulationMark === 'H'
+        var setDate = SetReleaseDates[card.set];
+        return setDate >= SetReleaseDates['SVI'] && setDate <= new Date();
 
       case Format.STANDARD_NIGHTLY:
         var banList = BanLists[format];
         return card.regulationMark === 'G' ||
           card.regulationMark === 'H' ||
-          card.regulationMark === 'I';
+          card.regulationMark === 'I' ||
+          card.regulationMark === 'J';
 
       case Format.EXPANDED:
         var banList = BanLists[format];
         var setDate = SetReleaseDates[card.set];
-        return setDate >= new Date('Mon, 25 Apr 2011 00:00:00 GMT') &&
+        return setDate >= new Date('Mon, 25 Apr 2011 00:00:00 GMT') && setDate <= new Date() &&
           !banList.includes(`${card.name} ${card.set} ${card.setNumber}`);
 
       case Format.GLC:
         var banList = BanLists[format];
         var setDate = SetReleaseDates[card.set];
-        // return setDate >= new Date('Mon, 25 Apr 2011 00:00:00 GMT') && setDate <= new Date() &&
-        return setDate >= new Date('Mon, 25 Apr 2011 00:00:00 GMT') &&
+        return setDate >= new Date('Mon, 25 Apr 2011 00:00:00 GMT') && setDate <= new Date() &&
           !banList.includes(`${card.name} ${card.set} ${card.setNumber}`) &&
           !card.tags.some(t => [
             CardTag.ACE_SPEC.toString(),
@@ -141,6 +136,13 @@ export class FormatValidator {
           card.set === 'JU' ||
           card.set === 'FO' ||
           card.set === 'PR';
+
+      case Format.WORLDS_2013:
+        var banList = BanLists[format];
+        var setDate = SetReleaseDates[card.set];
+        return setDate >= SetReleaseDates['BWP'] &&
+          setDate <= SetReleaseDates['PLF'] &&
+          !banList.includes(`${card.name} ${card.set} ${card.setNumber}`);
     }
 
     if (banList.includes(`${card.name} ${card.set} ${card.setNumber}`)) {
@@ -217,7 +219,8 @@ export const BanLists: { [key: number]: string[] } = {
   [Format.RETRO]: [],
   [Format.UNLIMITED]: [],
   [Format.STANDARD]: [],
-  [Format.STANDARD_NIGHTLY]: []
+  [Format.STANDARD_NIGHTLY]: [],
+  [Format.WORLDS_2013]: [],
 }
 
 export const SetReleaseDates: { [key: string]: Date } = {
@@ -363,7 +366,8 @@ export const SetReleaseDates: { [key: string]: Date } = {
   'SSP': new Date('2024-11-08'),
   'SV8a': new Date('2024-12-06'),
   'PRE': new Date('2025-01-17'),
-  'SV9': new Date('2025-01-01'),
-  'SV9a': new Date('2025-01-01'),
-  'SV10': new Date('2025-01-01'),
+  'JTG': new Date('2025-03-28'),
+  'SV9': new Date('2025-03-28'),
+  'SV9a': new Date('2025-05-17'),
+  'SV10': new Date('2025-05-17'),
 }

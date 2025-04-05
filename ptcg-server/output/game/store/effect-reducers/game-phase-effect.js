@@ -150,8 +150,6 @@ function gamePhaseReducer(store, state, effect) {
         player.forEachPokemon(play_card_action_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
             cardList.removeSpecialCondition(card_types_1.SpecialCondition.ABILITY_USED);
             cardList.removeBoardEffect(card_types_1.BoardEffect.ABILITY_USED);
-            card.attacksThisTurn = 0;
-            card.maxAttacksThisTurn = 1;
         });
         effect.player.marker.removeMarker(effect.player.DAMAGE_DEALT_MARKER);
         player.supporterTurn = 0;

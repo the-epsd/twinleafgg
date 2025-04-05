@@ -50,29 +50,18 @@ class Jolteonex extends pokemon_card_1.PokemonCard {
             if (!hasBenched) {
                 return state;
             }
-            state = store.prompt(state, new discard_energy_prompt_1.DiscardEnergyPrompt(player.id, game_message_1.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], // Card source is target Pokemon
-            { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC }, { min: 0, max: 2, allowCancel: false }), transfers => {
-                if (transfers === null || transfers.length === 0) {
+            state = store.prompt(state, new discard_energy_prompt_1.DiscardEnergyPrompt(player.id, game_message_1.GameMessage.CHOOSE_ENERGIES_TO_DISCARD, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.BENCH], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC }, { min: 0, max: 2, allowCancel: false }), transfers => {
+                if (transfers === null) {
                     return state;
                 }
+                const baseDamage = 60;
+                const additionalDamage = transfers.length * 90;
+                effect.damage = baseDamage + additionalDamage;
                 for (const transfer of transfers) {
-                    let totalDiscarded = 0;
                     const source = game_1.StateUtils.getTarget(state, player, transfer.from);
                     const target = player.discard;
                     source.moveCardTo(transfer.card, target);
-                    totalDiscarded = transfers.length;
-                    // Base damage is 60
-                    if (totalDiscarded === 0) {
-                        effect.damage = 60;
-                    }
-                    else if (totalDiscarded === 1) {
-                        effect.damage = 150; // 60 + 90
-                    }
-                    else if (totalDiscarded === 2) {
-                        effect.damage = 240; // 60 + (90 * 2)
-                    }
                 }
-                console.log('Total Damage: ' + effect.damage);
                 return state;
             });
         }

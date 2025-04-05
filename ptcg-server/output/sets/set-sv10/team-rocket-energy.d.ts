@@ -15,5 +15,4 @@ export declare class TeamRocketEnergy extends EnergyCard {
     fullName: string;
     text: string;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
-    private isTeamRocketPokemon;
 }

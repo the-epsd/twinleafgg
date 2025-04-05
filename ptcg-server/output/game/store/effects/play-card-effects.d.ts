@@ -19,7 +19,8 @@ export declare enum PlayCardEffects {
     SUPPORTER_EFFECT = "SUPPORTER_EFFECT",
     COIN_FLIP_EFFECT = "COIN_FLIP_EFFECT",
     TRAINER_CARD_TO_DECK_EFFECT = "TRAINER_CARD_TO_DECK_EFFECT",
-    DISCARD_TO_HAND_EFFECT = "DISCARD_TO_HAND_EFFECT"
+    DISCARD_TO_HAND_EFFECT = "DISCARD_TO_HAND_EFFECT",
+    TRAINER_TARGET_EFFECT = "TRAINER_TARGET_EFFECT"
 }
 export declare class AttachEnergyEffect implements Effect {
     readonly type: string;
@@ -117,4 +118,12 @@ export declare class DiscardToHandEffect implements Effect {
     player: Player;
     card: Card;
     constructor(player: Player, card: Card);
+}
+export declare class TrainerTargetEffect implements Effect {
+    readonly type: string;
+    preventDefault: boolean;
+    player: Player;
+    trainerCard: TrainerCard;
+    target: PokemonCardList | undefined;
+    constructor(player: Player, trainerCard: TrainerCard, target?: PokemonCardList);
 }

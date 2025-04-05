@@ -177,8 +177,6 @@ export function gamePhaseReducer(store: StoreLike, state: State, effect: Effect)
     player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
       cardList.removeSpecialCondition(SpecialCondition.ABILITY_USED);
       cardList.removeBoardEffect(BoardEffect.ABILITY_USED);
-      card.attacksThisTurn = 0;
-      card.maxAttacksThisTurn = 1;
     });
 
     effect.player.marker.removeMarker(effect.player.DAMAGE_DEALT_MARKER);

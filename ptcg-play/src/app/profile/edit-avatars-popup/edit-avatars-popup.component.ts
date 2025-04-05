@@ -5,12 +5,11 @@ import { Observable } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { finalize } from 'rxjs/operators';
-
-import { AddAvatarPopupService } from '../add-avatar-popup/add-avatar-popup.service';
 import { AlertService } from '../../shared/alert/alert.service';
 import { ApiError } from '../../api/api.error';
 import { AvatarService } from '../../api/services/avatar.service';
 import { SessionService } from '../../shared/session/session.service';
+import { MatDialog } from '@angular/material/dialog';
 
 @UntilDestroy()
 @Component({
@@ -20,7 +19,7 @@ import { SessionService } from '../../shared/session/session.service';
 })
 export class EditAvatarsPopupComponent implements OnInit {
 
-  public displayedColumns: string[] = ['default', 'image', 'name', 'actions'];
+  public displayedColumns: string[] = ['default', 'image', 'name'];
   public loading = false;
   public defaultAvatar$: Observable<string>;
   public avatars: AvatarInfo[] = [];
@@ -28,73 +27,16 @@ export class EditAvatarsPopupComponent implements OnInit {
 
   constructor(
     private alertService: AlertService,
-    private addAvatarPopupService: AddAvatarPopupService,
     private avatarService: AvatarService,
     private sessionService: SessionService,
     private translate: TranslateService,
     @Inject(MAT_DIALOG_DATA) data: { userId: number },
+    private dialog: MatDialog
   ) {
     this.userId = data.userId;
     this.defaultAvatar$ = this.sessionService.get(session => {
       const user = session.users[data.userId];
       return user ? user.avatarFile : '';
-    });
-  }
-
-  public addAvatar() {
-    const dialogRef = this.addAvatarPopupService.openDialog();
-    dialogRef.afterClosed()
-      .pipe(untilDestroyed(this))
-      .subscribe({
-        next: avatar => {
-          if (avatar) {
-            this.avatars = [ ...this.avatars, avatar ];
-          }
-      }});
-  }
-
-  public deleteAvatar(avatarId: number) {
-    this.loading = true;
-    this.avatarService.deleteAvatar(avatarId)
-      .pipe(
-        finalize(() => { this.loading = false; }),
-        untilDestroyed(this)
-      )
-      .subscribe({
-        next: () => {
-          this.avatars = this.avatars.filter(a => a.id !== avatarId);
-        },
-        error: (error: ApiError) => {
-          if (!error.handled) {
-            this.alertService.toast(this.translate.instant('ERROR_UNKNOWN'));
-          }
-        }
-      });
-  }
-
-  public async renameAvatar(avatarId: number, previousName: string) {
-    const name = await this.getAvatarName(previousName);
-    if (name === undefined) {
-      return;
-    }
-
-    this.loading = true;
-    this.avatarService.rename(avatarId, name).pipe(
-      finalize(() => { this.loading = false; }),
-      untilDestroyed(this)
-    ).subscribe({
-      next: response => {
-        const index = this.avatars.findIndex(a => a.id === avatarId);
-        if (index !== -1) {
-          this.avatars = [ ...this.avatars ];
-          this.avatars[index] = response.avatar;
-        }
-      },
-      error: (error: ApiError) => {
-        if (!error.handled) {
-          this.alertService.toast(this.translate.instant('ERROR_UNKNOWN'));
-        }
-      }
     });
   }
 
@@ -120,7 +62,7 @@ export class EditAvatarsPopupComponent implements OnInit {
 
   private refreshAvatars(): void {
     this.loading = true;
-    this.avatarService.getList()
+    this.avatarService.getPredefinedAvatars()
       .pipe(
         finalize(() => { this.loading = false; }),
         untilDestroyed(this)

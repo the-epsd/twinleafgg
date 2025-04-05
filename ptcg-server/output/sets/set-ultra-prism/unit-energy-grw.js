@@ -29,13 +29,15 @@ class UnitEnergyGRW extends energy_card_1.EnergyCard {
             catch (_a) {
                 return state;
             }
-            // Explicitly list all the energy types this card can provide
-            // This allows the checkEnoughEnergy function to pick the most appropriate type
-            // based on the attack cost
-            effect.energyMap.push({
-                card: this,
-                provides: [card_types_1.CardType.GRASS, card_types_1.CardType.FIRE, card_types_1.CardType.WATER]
-            });
+            // Find the first energy type that's not already provided by other energies
+            const neededType = this.blendedEnergies.find(type => !effect.energyMap.some(energy => energy.provides.includes(type)));
+            if (neededType) {
+                // Only provide the specific energy type that's needed
+                effect.energyMap.push({
+                    card: this,
+                    provides: [neededType]
+                });
+            }
         }
         return state;
     }

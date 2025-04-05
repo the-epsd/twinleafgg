@@ -45,9 +45,7 @@ class DuraludonVMAX extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const opponent = state_utils_1.StateUtils.getOpponent(state, player);
-            const dealDamage = new attack_effects_1.DealDamageEffect(effect, 220);
-            store.reduceEffect(state, dealDamage);
-            const applyWeakness = new attack_effects_1.ApplyWeaknessEffect(effect, dealDamage.damage);
+            const applyWeakness = new attack_effects_1.ApplyWeaknessEffect(effect, 220);
             store.reduceEffect(state, applyWeakness);
             const damage = applyWeakness.damage;
             effect.damage = 0;
@@ -58,7 +56,7 @@ class DuraludonVMAX extends pokemon_card_1.PokemonCard {
             }
             return state;
         }
-        if (effect instanceof game_effects_1.PowerEffect && effect.power === this.powers[0]) {
+        if (effect instanceof attack_effects_1.PutDamageEffect && effect.target.cards.includes(this)) {
             const opponent = state_utils_1.StateUtils.getOpponent(state, effect.player);
             const opponentPokemon = opponent.active;
             const checkEnergy = new check_effects_1.CheckProvidedEnergyEffect(opponent, opponentPokemon);

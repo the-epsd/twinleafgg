@@ -48,20 +48,6 @@ class Fezandipiti extends pokemon_card_1.PokemonCard {
             if (pokemonCard !== this || sourceCard === undefined || state.phase !== game_1.GamePhase.ATTACK) {
                 return state;
             }
-            // Check if we have dark energy attached
-            const checkProvidedEnergyEffect = new check_effects_1.CheckProvidedEnergyEffect(player, cardList);
-            store.reduceEffect(state, checkProvidedEnergyEffect);
-            let hasDarkEnergy = false;
-            checkProvidedEnergyEffect.energyMap.forEach(energy => {
-                energy.provides.forEach(e => {
-                    if (e === card_types_1.CardType.DARK) {
-                        hasDarkEnergy = true;
-                    }
-                });
-            });
-            if (!hasDarkEnergy) {
-                return state;
-            }
             try {
                 const stub = new game_effects_1.PowerEffect(player, {
                     name: 'test',
@@ -73,19 +59,46 @@ class Fezandipiti extends pokemon_card_1.PokemonCard {
             catch (_a) {
                 return state;
             }
-            try {
-                const coinFlip = new play_card_effects_1.CoinFlipEffect(player);
-                store.reduceEffect(state, coinFlip);
-            }
-            catch (_b) {
+            const checkEnergy = new check_effects_1.CheckProvidedEnergyEffect(player, cardList);
+            store.reduceEffect(state, checkEnergy);
+            let hasDarkAttached = false;
+            checkEnergy.energyMap.forEach(em => {
+                var _a;
+                if (em.provides.includes(card_types_1.CardType.ANY)) {
+                    hasDarkAttached = true;
+                }
+                if (em.provides.includes(card_types_1.CardType.DARK)) {
+                    hasDarkAttached = true;
+                }
+                const energyCard = em.card;
+                if (energyCard instanceof game_1.EnergyCard && energyCard.provides.includes(card_types_1.CardType.DARK)) {
+                    hasDarkAttached = true;
+                }
+                if (energyCard instanceof game_1.EnergyCard && energyCard.provides.includes(card_types_1.CardType.ANY)) {
+                    hasDarkAttached = true;
+                }
+                if (energyCard instanceof game_1.EnergyCard && ((_a = energyCard.blendedEnergies) === null || _a === void 0 ? void 0 : _a.includes(card_types_1.CardType.DARK))) {
+                    hasDarkAttached = true;
+                }
+            });
+            if (!hasDarkAttached) {
                 return state;
             }
-            const coinFlipResult = prefabs_1.SIMULATE_COIN_FLIP(store, state, player);
-            if (coinFlipResult) {
-                effect.damage = 0;
-                store.log(state, game_1.GameLog.LOG_ABILITY_BLOCKS_DAMAGE, { name: opponent.name, pokemon: this.name });
+            if (hasDarkAttached) {
+                try {
+                    const coinFlip = new play_card_effects_1.CoinFlipEffect(player);
+                    store.reduceEffect(state, coinFlip);
+                }
+                catch (_b) {
+                    return state;
+                }
+                const coinFlipResult = prefabs_1.SIMULATE_COIN_FLIP(store, state, player);
+                if (coinFlipResult) {
+                    effect.damage = 0;
+                    store.log(state, game_1.GameLog.LOG_ABILITY_BLOCKS_DAMAGE, { name: opponent.name, pokemon: this.name });
+                }
+                return state;
             }
-            return state;
         }
         // Energy Feather
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

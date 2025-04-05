@@ -68,7 +68,7 @@ class Noivernex extends pokemon_card_1.PokemonCard {
                 throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);
             }
         }
-        if (effect instanceof play_card_effects_1.AttachEnergyEffect && card_types_1.EnergyType.SPECIAL) {
+        if (effect instanceof play_card_effects_1.AttachEnergyEffect && effect.energyCard.energyType === card_types_1.EnergyType.SPECIAL) {
             const player = effect.player;
             if (player.marker.hasMarker(this.DOMINATING_ECHO_MARKER, this)) {
                 throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);

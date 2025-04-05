@@ -25,6 +25,7 @@ const korrinas_focus_1 = require("./korrinas-focus");
 const kricketune_v_1 = require("./kricketune-v");
 const level_ball_1 = require("./level-ball");
 const mimikyu_v_1 = require("./mimikyu-v");
+const morpeko_1 = require("./morpeko");
 const necrozma_v_1 = require("./necrozma-v");
 const octillery_1 = require("./octillery");
 const primeape_1 = require("./primeape");
@@ -76,6 +77,7 @@ exports.setBattleStyles = [
     new korrinas_focus_1.KorrinasFocus(),
     new level_ball_1.LevelBall(),
     new mimikyu_v_1.MimikyuV(),
+    new morpeko_1.Morpeko(),
     new necrozma_v_1.NecrozmaV(),
     new octillery_1.Octillery(),
     new primeape_1.Primeape(),

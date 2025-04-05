@@ -390,12 +390,14 @@ ptcg-board-prizes {
 }
 
 .lost-zone {
+  grid-area: stadium;
+  // align-self: start;
   transform: rotate(-90deg);
 }
 
 .stadium-card {
   align-self: flex-start;
-  margin-top: -40px;
+  margin-top: -48px;
   width: calc(var(--card-size) * 1.15 * var(--card-scale));
   height: calc(var(--card-size) * 1.15 * #{$card-aspect-ratio} * var(--card-scale));
 
@@ -506,9 +508,9 @@ ptcg-board-prizes {
 
 .deck-card,
 .discard-card {
-  &[style*="transform"] {
-    transform: translate3d(var(--x, 0), var(--y, 0), 0) !important;
-  }
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 ptcg-board-card.highlighted-pokemon {

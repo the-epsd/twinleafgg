@@ -7,7 +7,7 @@ import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 export class Oricorio extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = P;
-  public hp: number = 60;
+  public hp: number = 90;
   public weakness = [{ type: P }];
   public retreat = [C];
 
@@ -28,7 +28,7 @@ export class Oricorio extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '55';
   public name: string = 'Oricorio';
-  public fullName: string = 'Oricorio GRI';
+  public fullName: string = 'Oricorio GRI2';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

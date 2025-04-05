@@ -20,7 +20,7 @@ class Jirachi extends pokemon_card_1.PokemonCard {
                 name: 'Wishing Star',
                 useWhenInPlay: true,
                 powerType: pokemon_types_1.PowerType.POKEPOWER,
-                text: 'Once during your turn (before your attack), if Jirachi is your Active Pokémon, you may look at the top 5 cards of your deck, choose 1 of them, and put it into your hand. Shuffle your deck afterward. Jirachi and your other Active Pokémon, if any, are now Asleep. This power can\’t be used if Jirachi is affected by a Special Condition.'
+                text: 'Once during your turn (before your attack), if Jirachi is your Active Pokémon, you may look at the top 5 cards of your deck, choose 1 of them, and put it into your hand. Shuffle your deck afterward. Jirachi and your other Active Pokémon, if any, are now Asleep. This power can\'t be used if Jirachi is affected by a Special Condition.'
             }];
         this.attacks = [{
                 name: 'Metallic Blow',
@@ -66,17 +66,17 @@ class Jirachi extends pokemon_card_1.PokemonCard {
             }
             const deckTop = new game_1.CardList();
             player.deck.moveTo(deckTop, 5);
-            const opponent = game_1.StateUtils.getOpponent(state, player);
             return store.prompt(state, new game_1.ChooseCardsPrompt(player, game_1.GameMessage.CHOOSE_CARD_TO_HAND, deckTop, {}, { min: 1, max: 1, allowCancel: false }), selected => {
                 prefabs_1.ADD_MARKER(this.WISHING_STAR_MARKER, player, this);
                 deckTop.moveCardsTo(selected, player.hand);
                 deckTop.moveTo(player.deck);
                 prefabs_1.ABILITY_USED(player, this);
-                if (selected.length > 0) {
-                    return store.prompt(state, new game_1.ShowCardsPrompt(opponent.id, game_1.GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, selected), () => {
-                    });
-                }
                 prefabs_1.SHUFFLE_DECK(store, state, player);
+                player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
+                    if (cardList.getPokemonCard() === this) {
+                        cardList.addSpecialCondition(card_types_1.SpecialCondition.ASLEEP);
+                    }
+                });
             });
         }
         return state;

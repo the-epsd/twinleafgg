@@ -25,6 +25,7 @@ class KeldeoGX extends game_1.PokemonCard {
                 name: 'Sonic Edge',
                 cost: [W, W, C],
                 damage: 110,
+                shredAttack: true,
                 text: 'This attack\'s damage isn\'t affected by any effects on your opponent\'s Active Pokemon.'
             },
             {
@@ -65,15 +66,18 @@ class KeldeoGX extends game_1.PokemonCard {
         }
         // Sonic Edge
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
-            const applyWeakness = new attack_effects_1.ApplyWeaknessEffect(effect, effect.damage);
+            const player = effect.player;
+            const opponent = game_1.StateUtils.getOpponent(state, player);
+            const applyWeakness = new attack_effects_1.ApplyWeaknessEffect(effect, 110);
             store.reduceEffect(state, applyWeakness);
             const damage = applyWeakness.damage;
             effect.damage = 0;
             if (damage > 0) {
-                effect.opponent.active.damage += damage;
+                opponent.active.damage += damage;
                 const afterDamage = new attack_effects_1.AfterDamageEffect(effect, damage);
                 state = store.reduceEffect(state, afterDamage);
             }
+            return state;
         }
         // Resolute Blade-GX
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[1]) {

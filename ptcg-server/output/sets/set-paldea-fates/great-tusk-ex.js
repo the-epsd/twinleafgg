@@ -25,6 +25,7 @@ class GreatTuskex extends pokemon_card_1.PokemonCard {
                 name: 'Great Bash',
                 cost: [F, C, C, C],
                 damage: 260,
+                shredAttack: true,
                 text: 'This attack\'s damage isn\'t affected by any effects on your opponent\'s Active Pokémon.'
             }];
         this.set = 'PAF';
@@ -53,9 +54,7 @@ class GreatTuskex extends pokemon_card_1.PokemonCard {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
-            const dealDamage = new attack_effects_1.DealDamageEffect(effect, 260);
-            store.reduceEffect(state, dealDamage);
-            const applyWeakness = new attack_effects_1.ApplyWeaknessEffect(effect, dealDamage.damage);
+            const applyWeakness = new attack_effects_1.ApplyWeaknessEffect(effect, 260);
             store.reduceEffect(state, applyWeakness);
             const damage = applyWeakness.damage;
             effect.damage = 0;

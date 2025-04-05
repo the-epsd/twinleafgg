@@ -11,32 +11,67 @@
 
     </mat-toolbar-row>
 
+    <!-- Format filter tabs -->
+    <div class="format-tabs">
+      <button mat-button class="format-tab" [class.active]="selectedFormat === 'all'" (click)="selectFormat('all')">
+        {{ 'FORMAT_ALL' | translate }}
+      </button>
+      <button mat-button class="format-tab" [class.active]="selectedFormat === 'standard'"
+        (click)="selectFormat('standard')">
+        {{ 'FORMAT_STANDARD' | translate }}
+      </button>
+      <button mat-button class="format-tab" [class.active]="selectedFormat === 'standard_nightly'"
+        (click)="selectFormat('standard_nightly')">
+        {{ 'FORMAT_STANDARD_NIGHTLY' | translate }}
+      </button>
+      <button mat-button class="format-tab" [class.active]="selectedFormat === 'expanded'"
+        (click)="selectFormat('expanded')">
+        {{ 'FORMAT_EXPANDED' | translate }}
+      </button>
+      <button mat-button class="format-tab" [class.active]="selectedFormat === 'unlimited'"
+        (click)="selectFormat('unlimited')">
+        {{ 'FORMAT_UNLIMITED' | translate }}
+      </button>
+      <button mat-button class="format-tab" [class.active]="selectedFormat === 'retro'" (click)="selectFormat('retro')">
+        {{ 'FORMAT_RETRO' | translate }}
+      </button>
+      <button mat-button class="format-tab" [class.active]="selectedFormat === 'glc'" (click)="selectFormat('glc')">
+        {{ 'FORMAT_GLC' | translate }}
+      </button>
+    </div>
+
     <div class="deck-grid-container">
-      <div class="deck-grid">
-        <div class="deck-tile" *ngFor="let deck of decks"
-          [ngStyle]="{'background-image': getDeckBackground(deck.name)}">
-          <div class="deck-header">
-            <div class="deck-validity">
-              <mat-icon *ngIf="deck.isValid" color="primary">check</mat-icon>
-              <mat-icon *ngIf="!deck.isValid">remove</mat-icon>
+      <div class="deck-grid" *ngIf="filteredDecks.length > 0">
+        <div class="deck-tile" *ngFor="let deck of filteredDecks">
+          <div class="deck-card" [routerLink]="['/deck', deck.id]">
+            <!-- Status indicators -->
+            <div class="deck-status">
+              <div class="deck-validity">
+                <mat-icon *ngIf="deck.isValid" color="primary">check</mat-icon>
+                <mat-icon *ngIf="!deck.isValid">remove</mat-icon>
+              </div>
+              <div class="default-wrapper" *ngIf="isFormatDefaultDeck(deck.id)">
+                <mat-icon class="default-star" color="accent">star</mat-icon>
+                <div class="default-tooltip" *ngIf="selectedFormat !== 'all'">
+                  {{ getFormatDisplayName(selectedFormat) }} {{ 'DEFAULT' | translate }}
+                </div>
+              </div>
             </div>
-            <mat-icon *ngIf="defaultDeckId === deck.id" class="default-star" color="accent">star</mat-icon>
-          </div>
 
-
-          <div class="deck-card-types">
-            <ptcg-archetype [class]="getArchetype(deck.deckItems)"></ptcg-archetype>
-          </div>
-
-          <div class="deck-name">{{ deck.name }}</div>
-
-          <div class="deck-footer">
-            <div class="deck-formats">
-              <ptcg-deck-validity [deck]="deck.deckItems" [validOnly]="true"></ptcg-deck-validity>
+            <!-- Card archetype -->
+            <div class="deck-archetype">
+              <ptcg-archetype [class]="getArchetype(deck.deckItems)"></ptcg-archetype>
             </div>
-            <div class="deck-actions">
-              <button mat-button mat-raised-button class="action-button" [matMenuTriggerFor]="menu">
-                {{ 'BUTTON_ACTIONS' | translate }}
+
+            <!-- Deck name and actions row -->
+            <div class="deck-name-row">
+              <div class="deck-formats" (click)="$event.stopPropagation()">
+                <ptcg-deck-validity [deck]="deck.deckItems" [validOnly]="true"></ptcg-deck-validity>
+              </div>
+              <div class="deck-name">{{ deck.name }}</div>
+              <button mat-icon-button class="action-button-small" [matMenuTriggerFor]="menu"
+                (click)="$event.stopPropagation()">
+                <mat-icon>more_vert</mat-icon>
               </button>
               <mat-menu #menu="matMenu">
                 <button mat-menu-item [routerLink]="['/deck', deck.id]">
@@ -44,6 +79,10 @@
                 </button>
                 <button mat-menu-item (click)="setAsDefault(deck.id)" *ngIf="defaultDeckId !== deck.id && deck.isValid">
                   {{ 'DECK_SET_AS_DEFAULT' | translate }}
+                </button>
+                <button mat-menu-item (click)="setAsFormatDefault(deck.id, selectedFormat)"
+                  *ngIf="selectedFormat !== 'all' && !isFormatDefaultDeck(deck.id) && deck.isValid">
+                  {{ 'DECK_SET_AS_FORMAT_DEFAULT' | translate:{format: getFormatDisplayName(selectedFormat)} }}
                 </button>
                 <button mat-menu-item (click)="exportDeckList(deck)">
                   {{ 'BUTTON_EXPORT_DECKLIST' | translate }}
@@ -61,6 +100,15 @@
             </div>
           </div>
         </div>
+      </div>
+      <div class="no-decks-message" *ngIf="filteredDecks.length === 0">
+        <mat-icon>info</mat-icon>
+        <p *ngIf="selectedFormat === 'all'">{{ 'DECK_NO_DECKS' | translate }}</p>
+        <p *ngIf="selectedFormat !== 'all'">{{ 'DECK_NO_DECKS_FORMAT' | translate:{format:
+          getFormatDisplayName(selectedFormat)} }}</p>
+        <button mat-raised-button class="deck-button" (click)="createDeck()">
+          {{ 'DECK_CREATE' | translate }}
+        </button>
       </div>
     </div>
 

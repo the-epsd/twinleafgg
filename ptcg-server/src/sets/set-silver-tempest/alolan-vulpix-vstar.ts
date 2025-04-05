@@ -4,7 +4,7 @@ import { GameError, GameMessage, PlayerType, State, StateUtils, StoreLike } from
 import { Effect } from '../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { ApplyWeaknessEffect, AfterDamageEffect, PutDamageEffect, DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { ApplyWeaknessEffect, AfterDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
@@ -65,10 +65,7 @@ export class AlolanVulpixVSTAR extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      const dealDamage = new DealDamageEffect(effect, 160);
-      store.reduceEffect(state, dealDamage);
-
-      const applyWeakness = new ApplyWeaknessEffect(effect, dealDamage.damage);
+      const applyWeakness = new ApplyWeaknessEffect(effect, 160);
       store.reduceEffect(state, applyWeakness);
       const damage = applyWeakness.damage;
 

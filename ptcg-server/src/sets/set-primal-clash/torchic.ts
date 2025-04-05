@@ -40,16 +40,8 @@ export class Torchic extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect) {
-      this.maxAttacksThisTurn = 2;
-      this.allowSubsequentAttackChoice = true;
-    }
-
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-
       const player = effect.player;
-
-      //DO ATTACK
 
       let hasCardsInHand = false;
       const blocked: number[] = [];
@@ -85,10 +77,7 @@ export class Torchic extends PokemonCard {
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-
       const player = effect.player;
-
-      // DO ATTACK
 
       state = store.prompt(state, [
         new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
@@ -97,9 +86,7 @@ export class Torchic extends PokemonCard {
           effect.damage = 0;
         }
       });
-
     }
-
     return state;
   }
 }

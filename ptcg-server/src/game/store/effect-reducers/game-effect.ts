@@ -1,8 +1,7 @@
 import { GameError } from '../../game-error';
 import { GameLog, GameMessage } from '../../game-message';
 import { BoardEffect, CardTag, CardType, SpecialCondition, Stage, SuperType, TrainerType } from '../card/card-types';
-import { PokemonCard } from '../card/pokemon-card';
-import { Attack, Resistance, Weakness } from '../card/pokemon-types';
+import { Resistance, Weakness } from '../card/pokemon-types';
 import { TrainerCard } from '../card/trainer-card';
 import { ApplyWeaknessEffect, DealDamageEffect } from '../effects/attack-effects';
 import {
@@ -29,13 +28,13 @@ import { ChooseAttackPrompt } from '../prompts/choose-attack-prompt';
 import { CoinFlipPrompt } from '../prompts/coin-flip-prompt';
 import { ConfirmPrompt } from '../prompts/confirm-prompt';
 import { StateUtils } from '../state-utils';
-import { CardList } from '../state/card-list';
 import { GamePhase, State } from '../state/state';
 import { StoreLike } from '../store-like';
 import { checkState } from './check-effect';
 import { MoveCardsEffect } from '../effects/game-effects';
 import { PokemonCardList } from '../state/pokemon-card-list';
 import { MOVE_CARDS } from '../prefabs/prefabs';
+import { CardList } from '../state/card-list';
 
 
 function applyWeaknessAndResistance(
@@ -103,8 +102,6 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
     }
   });
 
-  const attackingPokemonCard = attackingPokemon.getPokemonCard() as PokemonCard;
-
   const checkAttackCost = new CheckAttackCostEffect(player, attack);
   state = store.reduceEffect(state, checkAttackCost);
 
@@ -150,8 +147,6 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
     state = store.reduceEffect(state, dealDamage);
   }
 
-  attackingPokemonCard.attacksThisTurn += 1;
-
   const afterAttackEffect = new AfterAttackEffect(effect.player);
   store.reduceEffect(state, afterAttackEffect);
 
@@ -168,40 +163,25 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
     yield store.waitPrompt(state, () => next());
   }
 
-  function useSubsequentAttack(attack: Attack): State {
-    const nextAttackEffect = new AttackEffect(player, opponent, attack);
-    state = useAttack(() => next(), store, state, nextAttackEffect).next().value;
-
-    if (store.hasPrompts()) {
-      state = store.waitPrompt(state, () => next());
-    }
-
-    if (nextAttackEffect.damage > 0) {
-      const dealDamage = new DealDamageEffect(nextAttackEffect, nextAttackEffect.damage);
-      state = store.reduceEffect(state, dealDamage);
-    }
-
-    state = store.reduceEffect(state, new EndTurnEffect(player));
-    return state;
-  }
+  const attackThisTurn = player.active.attacksThisTurn;
+  const playerActive = player.active.getPokemonCard();
 
   // Now, we can check if the Pokémon can attack again
-  const canAttackAgain = attackingPokemonCard.maxAttacksThisTurn > attackingPokemonCard.attacksThisTurn;
+  const canAttackAgain = playerActive && playerActive.canAttackTwice && attackThisTurn && attackThisTurn < 2;
+  const hasBarrageAbility = player.active.getPokemonCard()?.powers.some(power => power.barrage === true);
 
-  if (canAttackAgain) {
+  if (canAttackAgain || hasBarrageAbility) {
     // Prompt the player if they want to attack again
     yield store.prompt(state, new ConfirmPrompt(
       player.id,
       GameMessage.WANT_TO_ATTACK_AGAIN
     ), wantToAttackAgain => {
       if (wantToAttackAgain) {
-        if (attackingPokemonCard.allowSubsequentAttackChoice) {
+        if (hasBarrageAbility) {
 
           const attackableCards = player.active.cards.filter(card =>
-            card.superType === SuperType.POKEMON || (
-              card.superType === SuperType.TRAINER && card instanceof TrainerCard &&
-              card.trainerType === TrainerType.TOOL && card.attacks.length > 0
-            )
+            card.superType === SuperType.POKEMON ||
+            (card.superType === SuperType.TRAINER && card instanceof TrainerCard && card.trainerType === TrainerType.TOOL && card.attacks.length > 0)
           );
 
           // Use ChooseAttackPrompt for Barrage ability
@@ -210,11 +190,29 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
             GameMessage.CHOOSE_ATTACK_TO_COPY,
             attackableCards,
             { allowCancel: false }
-          ), selection => {
-            return useSubsequentAttack(selection);
+          ), selectedAttack => {
+            if (selectedAttack) {
+              const secondAttackEffect = new AttackEffect(player, opponent, selectedAttack);
+              state = useAttack(() => next(), store, state, secondAttackEffect).next().value;
+
+              if (store.hasPrompts()) {
+                state = store.waitPrompt(state, () => next());
+              }
+
+              if (secondAttackEffect.damage > 0) {
+                const dealDamage = new DealDamageEffect(secondAttackEffect, secondAttackEffect.damage);
+                state = store.reduceEffect(state, dealDamage);
+              }
+
+              state = store.reduceEffect(state, new EndTurnEffect(player));
+              return state;
+            }
+            next();
           });
         } else {
-          return useSubsequentAttack(attack);
+          const dealDamage = new DealDamageEffect(attackEffect, attackEffect.damage);
+          state = store.reduceEffect(state, dealDamage);
+          state = store.reduceEffect(state, new EndTurnEffect(player));
         }
       } else {
         state = store.reduceEffect(state, new EndTurnEffect(player));
@@ -223,7 +221,7 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
     });
   }
 
-  if (!canAttackAgain) {
+  if (!canAttackAgain && !hasBarrageAbility) {
     return store.reduceEffect(state, new EndTurnEffect(player));
   }
 }
@@ -231,14 +229,8 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
 export function gameReducer(store: StoreLike, state: State, effect: Effect): State {
 
   if (effect instanceof KnockOutEffect) {
-    // const player = effect.player;
     const card = effect.target.getPokemonCard();
     if (card !== undefined) {
-
-      //Altered Creation GX
-      // if (player.usedAlteredCreation == true) {
-      //   effect.prizeCount += 1;
-      // }
 
       // Pokemon ex rule
       if (card.tags.includes(CardTag.POKEMON_EX) || card.tags.includes(CardTag.POKEMON_V) || card.tags.includes(CardTag.POKEMON_VSTAR) || card.tags.includes(CardTag.POKEMON_ex) || card.tags.includes(CardTag.POKEMON_GX)) {
@@ -254,44 +246,51 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
 
       store.log(state, GameLog.LOG_POKEMON_KO, { name: card.name });
 
-      const stadiumCard = StateUtils.getStadiumCard(state);
-
-      if (card.tags.includes(CardTag.PRISM_STAR) || stadiumCard && stadiumCard.name === 'Lost City') {
+      // Handle Lost City marker
+      if (effect.target.marker.hasMarker('LOST_CITY_MARKER')) {
         const lostZoned = new CardList();
+        const attachedCards = new CardList();
         const pokemonIndices = effect.target.cards.map((card, index) => index);
+
+        // Clear damage and effects first
+        effect.target.damage = 0;
+        effect.target.clearEffects();
 
         for (let i = pokemonIndices.length - 1; i >= 0; i--) {
           const removedCard = effect.target.cards.splice(pokemonIndices[i], 1)[0];
 
+          // Handle cardlist cards (energy, tools, etc.)
           if (removedCard.cards) {
-            MOVE_CARDS(store, state, removedCard.cards, effect.player.discard);
+            const cards = removedCard.cards;
+            while (cards.cards.length > 0) {
+              const card = cards.cards[0];
+              attachedCards.cards.push(card);
+              cards.cards.splice(0, 1);
+            }
           }
 
+          // Handle the main card
           if (removedCard.superType === SuperType.POKEMON || (<any>removedCard).stage === Stage.BASIC) {
             lostZoned.cards.push(removedCard);
           } else {
-            effect.player.discard.cards.push(removedCard);
+            attachedCards.cards.push(removedCard);
           }
         }
 
-        // Move cards to lost zone
-        effect.target.clearEffects();
-        MOVE_CARDS(store, state, lostZoned, effect.player.lostzone);
+        // Move attached cards to discard
+        if (attachedCards.cards.length > 0) {
+          state = MOVE_CARDS(store, state, attachedCards, effect.player.discard);
+        }
+
+        // Move Pokémon to lost zone
+        if (lostZoned.cards.length > 0) {
+          state = MOVE_CARDS(store, state, lostZoned, effect.player.lostzone);
+        }
       } else {
-        // Move cards to discard
+        // Default behavior - move to discard
         effect.target.clearEffects();
-        MOVE_CARDS(store, state, effect.target, effect.player.discard);
+        state = MOVE_CARDS(store, state, effect.target, effect.player.discard);
       }
-
-      // const stadiumCard = StateUtils.getStadiumCard(state);
-
-      // if (card.tags.includes(CardTag.PRISM_STAR) || stadiumCard && stadiumCard.name === 'Lost City') {
-      //   effect.target.moveTo(effect.player.lostzone);
-      //   effect.target.clearEffects();
-      // } else {
-      //   effect.target.moveTo(effect.player.discard);
-      //   effect.target.clearEffects();
-      // }
     }
   }
 
@@ -463,3 +462,4 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
 
   return state;
 }
+

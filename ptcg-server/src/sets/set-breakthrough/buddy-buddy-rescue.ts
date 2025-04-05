@@ -48,7 +48,7 @@ export class BuddyBuddyRescue extends TrainerCard {
         if (isPokemon) {
           pokemonInOpponentsDiscard += 1;
         } else {
-          blocked.push(index);
+          blockedOpponent.push(index);
         }
       });
 
@@ -63,10 +63,6 @@ export class BuddyBuddyRescue extends TrainerCard {
       if (discardEffect.preventDefault) {
         // If prevented, just discard the card and return
         player.supporter.moveCardTo(effect.trainerCard, player.discard);
-        return state;
-      }
-
-      if (!pokemonInOpponentsDiscard) {
         return state;
       }
 

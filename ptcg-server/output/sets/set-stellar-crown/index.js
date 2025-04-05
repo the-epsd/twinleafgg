@@ -22,7 +22,7 @@ const fan_rotom_1 = require("./fan-rotom");
 const galvantula_ex_1 = require("./galvantula-ex");
 const garganacl_ex_1 = require("./garganacl-ex");
 const glass_trumpet_1 = require("./glass-trumpet");
-const glistening_crystal_1 = require("./glistening-crystal");
+const sparkling_crystal_1 = require("./sparkling-crystal");
 const gravity_gemstone_1 = require("./gravity-gemstone");
 const great_tree_1 = require("./great-tree");
 const hoothoot_1 = require("./hoothoot");
@@ -40,6 +40,8 @@ const noctowl_1 = require("./noctowl");
 const other_prints_1 = require("./other-prints");
 const raboot_1 = require("./raboot");
 const raging_bolt_1 = require("./raging-bolt");
+const salandit_1 = require("./salandit");
+const salazzle_1 = require("./salazzle");
 const scorbunny_1 = require("./scorbunny");
 const slowking_1 = require("./slowking");
 const terapagos_ex_1 = require("./terapagos-ex");
@@ -66,7 +68,7 @@ exports.setStellarCrown = [
     new galvantula_ex_1.Galvantulaex(),
     new garganacl_ex_1.Garganaclex(),
     new glass_trumpet_1.GlassTrumpet(),
-    new glistening_crystal_1.GlisteningCrystal(),
+    new sparkling_crystal_1.SparklingCrystal(),
     new gravity_gemstone_1.GravityGemstone(),
     new great_tree_1.GreatTree(),
     new hoothoot_1.Hoothoot(),
@@ -83,6 +85,8 @@ exports.setStellarCrown = [
     // new Orthwormex(),
     new raboot_1.Raboot(),
     new raging_bolt_1.RagingBolt(),
+    new salandit_1.Salandit(),
+    new salazzle_1.Salazzle(),
     new scorbunny_1.Scorbunny(),
     new slowking_1.Slowking(),
     new terapagos_ex_1.Terapagosex(),

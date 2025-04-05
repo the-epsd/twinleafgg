@@ -1,4 +1,4 @@
-import { PokemonCard, CardTag, Stage, CardType, PowerType, StoreLike, State, ConfirmPrompt, GameMessage, SuperType, PlayerType, AttachEnergyPrompt, SlotType, StateUtils, EnergyCard, CardTarget } from '../../game';
+import { PokemonCard, CardTag, Stage, CardType, PowerType, StoreLike, State, ConfirmPrompt, GameMessage, SuperType, PlayerType, AttachEnergyPrompt, SlotType, StateUtils, EnergyCard, CardTarget, EnergyType } from '../../game';
 import { CheckPokemonStatsEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, EvolveEffect, PowerEffect } from '../../game/store/effects/game-effects';
@@ -15,7 +15,7 @@ export class Archaludonex extends PokemonCard {
   public retreat = [C, C];
 
   public powers = [{
-    name: 'Energy Attachment',
+    name: 'Assemble Alloy',
     powerType: PowerType.ABILITY,
     text: 'When you play this Pokémon from your hand to evolve 1 of your Pokemon during your turn, you may attach 2 Basic [M] Energy from your discard pile to your [M] Pokémon in any way you like.'
   }];
@@ -80,7 +80,7 @@ export class Archaludonex extends PokemonCard {
             player.discard,
             PlayerType.BOTTOM_PLAYER,
             [SlotType.ACTIVE, SlotType.BENCH],
-            { superType: SuperType.ENERGY, name: 'Metal Energy' },
+            { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Metal Energy' },
             { allowCancel: false, min: 0, max: 2, blockedTo: blocked2 }
           ), transfers => {
             transfers = transfers || [];

@@ -3,7 +3,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { Card, CardList, ChooseCardsPrompt, GameError, GameMessage, PokemonCard, ShuffleDeckPrompt, StateUtils } from '../../game';
-import { ApplyWeaknessEffect, AfterDamageEffect, DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { ApplyWeaknessEffect, AfterDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 
 export class Tatsugiriex extends PokemonCard {
@@ -56,10 +56,7 @@ export class Tatsugiriex extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      const dealDamage = new DealDamageEffect(effect, 100);
-      store.reduceEffect(state, dealDamage);
-
-      const applyWeakness = new ApplyWeaknessEffect(effect, dealDamage.damage);
+      const applyWeakness = new ApplyWeaknessEffect(effect, 100);
       store.reduceEffect(state, applyWeakness);
       const damage = applyWeakness.damage;
 

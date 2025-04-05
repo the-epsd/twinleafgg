@@ -15,7 +15,7 @@ class CynthiasGabite extends pokemon_card_1.PokemonCard {
         this.evolvesFrom = 'Cynthia\'s Gible';
         this.tags = [card_types_1.CardTag.CYNTHIAS];
         this.cardType = F;
-        this.hp = 90;
+        this.hp = 100;
         this.weakness = [{ type: G }];
         this.retreat = [C];
         this.powers = [

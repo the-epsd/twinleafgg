@@ -48,7 +48,8 @@ export class HandComponent implements OnChanges {
   @Input() gameState: LocalGameState;
   @Input() clientId: number;
   @Input() isOpponent: boolean = false;
-
+  @Input() isAdmin: boolean = false;
+  @Input() isTO: boolean = false;
 
   public cards: Card[] = [];
   public isFaceDown: boolean;
@@ -112,7 +113,11 @@ export class HandComponent implements OnChanges {
       this.cards = hand.cards;
       this.list = this.buildHandList(hand);
       this.tempList = this.list;
-      this.isFaceDown = hand.isSecret || (!hand.isPublic && !this.isOwner);
+
+      // Show hands for admins only when they are observers
+      const isPlaying = this.gameState.state.players.some(p => p.id === this.clientId);
+      const isObserver = !isPlaying;
+      this.isFaceDown = hand.isSecret || (!hand.isPublic && !this.isOwner && (!isObserver || !this.isAdmin || !this.isTO));
     } else {
       this.cards = [];
       this.list = [];

@@ -13,7 +13,7 @@ class LatiasEX extends pokemon_card_1.PokemonCard {
         this.stage = card_types_1.Stage.BASIC;
         this.tags = [card_types_1.CardTag.POKEMON_EX];
         this.cardType = N;
-        this.hp = 180;
+        this.hp = 160;
         this.weakness = [{ type: N }];
         this.retreat = [C, C, C];
         this.powers = [{

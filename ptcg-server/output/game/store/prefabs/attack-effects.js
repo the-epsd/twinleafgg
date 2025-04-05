@@ -95,9 +95,7 @@ exports.FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE = FLIP_A_COIN_IF_HEADS_DEAL_MORE_D
 function THIS_ATTACKS_DAMAGE_ISNT_AFFECTED_BY_EFFECTS(store, state, effect, amount) {
     const player = effect.player;
     const opponent = __1.StateUtils.getOpponent(state, player);
-    const dealDamage = new attack_effects_1.DealDamageEffect(effect, amount);
-    store.reduceEffect(state, dealDamage);
-    const applyWeakness = new attack_effects_1.ApplyWeaknessEffect(effect, dealDamage.damage);
+    const applyWeakness = new attack_effects_1.ApplyWeaknessEffect(effect, effect.damage);
     store.reduceEffect(state, applyWeakness);
     const damage = applyWeakness.damage;
     effect.damage = 0;

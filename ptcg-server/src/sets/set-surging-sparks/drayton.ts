@@ -26,11 +26,14 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   effect.preventDefault = true;
   player.hand.moveCardTo(effect.trainerCard, player.supporter);
 
+  const deckTop = new CardList();
+  player.deck.moveTo(deckTop, 7);
+
   // Count tools and items separately
   let trainers = 0;
   let pokemons = 0;
   const blocked: number[] = [];
-  player.deck.cards.forEach((c, index) => {
+  deckTop.cards.forEach((c, index) => {
     if (c instanceof TrainerCard) {
       trainers += 1;
     } else if (c instanceof PokemonCard) {
@@ -47,16 +50,22 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   // Total max is sum of max for each 
   const count = maxTrainers + maxPokemons;
 
-  const deckTop = new CardList();
-  player.deck.moveTo(deckTop, 7);
-
   let cards: Card[] = [];
   yield store.prompt(state, new ChooseCardsPrompt(
     player,
     GameMessage.CHOOSE_CARD_TO_HAND,
     deckTop,
     {},
-    { min: 0, max: count, allowCancel: false, blocked, maxTrainers, maxPokemons }
+    {
+      min: 0,
+      max: count,
+      allowCancel: false,
+      blocked,
+      maxTrainers,
+      maxPokemons,
+      allowDifferentSuperTypes: true,
+      differentTypes: true
+    }
   ), selected => {
     cards = selected || [];
     next();
