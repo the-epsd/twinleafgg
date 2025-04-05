@@ -32,7 +32,7 @@ class TeamRocketsMewtwoex extends game_1.PokemonCard {
         this.set = 'SV10';
         this.setNumber = '39';
         this.cardImage = 'assets/cardback.png';
-        this.name = 'Team Rocket\'s Mewtwo';
+        this.name = 'Team Rocket\'s Mewtwo ex';
         this.fullName = 'Team Rocket\'s Mewtwo ex SV10';
     }
     reduceEffect(store, state, effect) {

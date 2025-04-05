@@ -26,6 +26,8 @@ export class UnitEnergyLPM extends EnergyCard {
     '' +
     'While this card is attached to a Pokémon, it provides [L], [P], and [M] Energy but provides only 1 Energy at a time.';
 
+  public blendedEnergies = [CardType.LIGHTNING, CardType.PSYCHIC, CardType.METAL];
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
       try {
@@ -35,13 +37,18 @@ export class UnitEnergyLPM extends EnergyCard {
         return state;
       }
 
-      // Explicitly list all the energy types this card can provide
-      // This allows the checkEnoughEnergy function to pick the most appropriate type
-      // based on the attack cost
-      effect.energyMap.push({
-        card: this,
-        provides: [CardType.LIGHTNING, CardType.PSYCHIC, CardType.METAL]
-      });
+      // Find the first energy type that's not already provided by other energies
+      const neededType = this.blendedEnergies.find(type =>
+        !effect.energyMap.some(energy => energy.provides.includes(type))
+      );
+
+      if (neededType) {
+        // Only provide the specific energy type that's needed
+        effect.energyMap.push({
+          card: this,
+          provides: [neededType]
+        });
+      }
     }
     return state;
   }

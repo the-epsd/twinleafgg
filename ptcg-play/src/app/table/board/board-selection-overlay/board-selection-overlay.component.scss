@@ -66,17 +66,6 @@
   }
 }
 
-.ptcg-overlay-background {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.2);
-  pointer-events: none;
-  z-index: 999;
-}
-
 .confirm-button {
   transform: scale(1.1);
   box-shadow: 0 0 12px rgba(68, 144, 88, 0.6);

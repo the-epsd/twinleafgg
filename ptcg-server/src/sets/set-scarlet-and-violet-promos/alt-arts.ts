@@ -76,6 +76,7 @@ import { Terapagosex } from '../set-stellar-crown/terapagos-ex';
 import { Jolteon } from '../set-pokemon-151/jolteon';
 import { Eevee } from '../set-surging-sparks/eevee';
 import { BloodmoonUrsalunaex } from '../set-twilight-masquerade/bloodmoon-ursaluna-ex';
+import {NsZorua} from '../set-journey-together/ns-zorua';
 
 // export class QuaquavalSVP extends Quaquaval {
 //   public setNumber = '5';
@@ -770,5 +771,11 @@ export class EeveeSVP extends Eevee {
 export class BloodmoonUrsalunaexSVP extends BloodmoonUrsalunaex {
   public setNumber = '177';
   public fullName: string = 'Bloodmoon Ursaluna ex SVP';
+  public set = 'SVP';
+}
+
+export class NsZoruaSVP extends NsZorua{
+  public setNumber = '189';
+  public fullName: string = 'N\'s Zorua SVP';
   public set = 'SVP';
 }

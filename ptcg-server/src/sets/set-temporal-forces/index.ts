@@ -4,7 +4,7 @@ import { BiancasDevotion } from './biancas-devotion';
 import { Brambleghast } from './brambleghast';
 import { Bramblin } from './bramblin';
 import { BuddyBuddyPoffin } from './buddy-buddy-poffin';
-import { AncientBoosterEnergyCapsuleTEF, FutureBoosterEnergyCapsuleTEF } from './card-images';
+import { AncientBoosterEnergyCapsuleTEF, FutureBoosterEnergyCapsuleTEF } from './other-prints';
 import { Charjabug } from './charjabug';
 import { Chatot } from './chatot';
 import { Cinccino } from './cincinno';

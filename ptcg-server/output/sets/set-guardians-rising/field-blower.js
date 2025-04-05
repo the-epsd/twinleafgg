@@ -57,10 +57,6 @@ class FieldBlower extends trainer_card_1.TrainerCard {
                             let targets = [];
                             return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DISCARD_CARDS, game_1.PlayerType.ANY, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { min: 0, max: 1, allowCancel: false, blocked }), results => {
                                 targets = results || [];
-                                if (targets.length === 0) {
-                                    player.supporter.moveCardTo(this, player.discard);
-                                    return state;
-                                }
                                 targets.forEach(target => {
                                     const owner = game_1.StateUtils.findOwner(state, target);
                                     if (target.tool !== undefined) {
@@ -68,9 +64,8 @@ class FieldBlower extends trainer_card_1.TrainerCard {
                                         store.log(state, game_1.GameLog.LOG_PLAYER_DISCARDS_WITH_FIELD_BLOWER, { name: player.name, card: target.tool.name });
                                         target.tool = undefined;
                                     }
-                                    player.supporter.moveCardTo(this, player.discard);
-                                    return state;
                                 });
+                                player.supporter.moveCardTo(this, player.discard);
                                 return state;
                             });
                         }
@@ -82,10 +77,6 @@ class FieldBlower extends trainer_card_1.TrainerCard {
                             let targets = [];
                             return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DISCARD_CARDS, game_1.PlayerType.ANY, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { min: 1, max: max, allowCancel: false, blocked }), results => {
                                 targets = results || [];
-                                if (targets.length === 0) {
-                                    player.supporter.moveCardTo(this, player.discard);
-                                    return state;
-                                }
                                 targets.forEach(target => {
                                     const owner = game_1.StateUtils.findOwner(state, target);
                                     if (target.tool !== undefined) {
@@ -93,7 +84,6 @@ class FieldBlower extends trainer_card_1.TrainerCard {
                                         store.log(state, game_1.GameLog.LOG_PLAYER_DISCARDS_WITH_FIELD_BLOWER, { name: player.name, card: target.tool.name });
                                         target.tool = undefined;
                                     }
-                                    return state;
                                 });
                                 player.supporter.moveCardTo(this, player.discard);
                                 return state;
@@ -106,7 +96,6 @@ class FieldBlower extends trainer_card_1.TrainerCard {
                     if (option.action) {
                         option.action();
                     }
-                    player.supporter.moveCardTo(this, player.discard);
                     return state;
                 });
             }
@@ -120,15 +109,10 @@ class FieldBlower extends trainer_card_1.TrainerCard {
                 return state;
             }
             else if (pokemonsWithTool >= 1 && stadiumCard == undefined) {
-                // We will discard this card after prompt confirmation
-                effect.preventDefault = true;
                 const max = Math.min(2, pokemonsWithTool);
                 let targets = [];
                 return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DISCARD_CARDS, game_1.PlayerType.ANY, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { min: 1, max: max, allowCancel: false, blocked }), results => {
                     targets = results || [];
-                    if (targets.length === 0) {
-                        return state;
-                    }
                     targets.forEach(target => {
                         const owner = game_1.StateUtils.findOwner(state, target);
                         if (target.tool !== undefined) {
@@ -136,9 +120,9 @@ class FieldBlower extends trainer_card_1.TrainerCard {
                             store.log(state, game_1.GameLog.LOG_PLAYER_DISCARDS_WITH_FIELD_BLOWER, { name: player.name, card: target.tool.name });
                             target.tool = undefined;
                         }
-                        player.supporter.moveCardTo(this, player.discard);
-                        return state;
                     });
+                    player.supporter.moveCardTo(this, player.discard);
+                    return state;
                 });
             }
             return state;

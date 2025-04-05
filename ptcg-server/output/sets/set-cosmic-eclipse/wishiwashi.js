@@ -7,6 +7,8 @@ const pokemon_types_1 = require("../../game/store/card/pokemon-types");
 const game_1 = require("../../game");
 const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
+const pokemon_card_2 = require("../../game/store/card/pokemon-card");
 class Wishiwashi extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -60,8 +62,14 @@ class Wishiwashi extends pokemon_card_1.PokemonCard {
                             new game_1.CoinFlipPrompt(opponent.id, game_1.GameMessage.COIN_FLIP)
                         ], result => {
                             if (result === false) {
-                                cardList.moveTo(opponent.deck);
-                                cardList.clearEffects();
+                                const pokemons = cardList.getPokemons();
+                                const otherCards = cardList.cards.filter(card => !(card instanceof pokemon_card_2.PokemonCard));
+                                if (otherCards.length > 0) {
+                                    prefabs_1.MOVE_CARDS(store, state, cardList, opponent.deck, { cards: otherCards });
+                                }
+                                if (pokemons.length > 0) {
+                                    prefabs_1.MOVE_CARDS(store, state, cardList, opponent.deck, { cards: pokemons });
+                                }
                             }
                         });
                     }

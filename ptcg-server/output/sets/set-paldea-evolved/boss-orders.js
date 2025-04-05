@@ -22,17 +22,14 @@ function* playCard(next, store, state, effect) {
     effect.preventDefault = true;
     return store.prompt(state, new choose_pokemon_prompt_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_SWITCH, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH], { allowCancel: false }), result => {
         const cardList = result[0];
-        if (cardList.isStage(card_types_1.Stage.BASIC)) {
-            try {
-                const supporterEffect = new play_card_effects_1.SupporterEffect(player, effect.trainerCard);
-                store.reduceEffect(state, supporterEffect);
-            }
-            catch (_a) {
-                player.supporter.moveCardTo(effect.trainerCard, player.discard);
-                return state;
+        if (cardList) {
+            const targetCard = new play_card_effects_1.TrainerTargetEffect(player, effect.trainerCard, cardList);
+            targetCard.target = cardList;
+            store.reduceEffect(state, targetCard);
+            if (targetCard.target) {
+                opponent.switchPokemon(targetCard.target);
             }
         }
-        opponent.switchPokemon(cardList);
         player.supporter.moveCardTo(effect.trainerCard, player.discard);
         return state;
     });

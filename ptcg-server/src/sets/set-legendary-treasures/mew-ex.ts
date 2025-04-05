@@ -87,7 +87,7 @@ export class MewEx extends PokemonCard {
       return store.prompt(state, new MoveEnergyPrompt(
         effect.player.id,
         GameMessage.MOVE_ENERGY_CARDS,
-        PlayerType.ANY,
+        PlayerType.BOTTOM_PLAYER,
         [SlotType.ACTIVE, SlotType.BENCH],
         { superType: SuperType.ENERGY },
         { allowCancel: true }
@@ -117,7 +117,15 @@ export class MewEx extends PokemonCard {
 
     const pokemonCards: PokemonCard[] = [];
     const blocked: { index: number, attack: string }[] = [];
+
+    // Check player's Pokemon
     player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+      this.checkAttack(state, store, player, card, energyMap, pokemonCards, blocked);
+    });
+
+    // Check opponent's Pokemon
+    const opponent = StateUtils.getOpponent(state, player);
+    opponent.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
       this.checkAttack(state, store, player, card, energyMap, pokemonCards, blocked);
     });
 
@@ -128,27 +136,23 @@ export class MewEx extends PokemonCard {
     card: PokemonCard, energyMap: EnergyMap[], pokemonCards: PokemonCard[],
     blocked: { index: number, attack: string }[]
   ) {
-    {
-      // // Only include Pokemon V cards
-      // if (!card.tags.includes(CardTag.POKEMON_V)) {
-      //   return;
-      // }
-      // No need to include Mew Ex to the list
-      if (card instanceof MewEx) {
-        return;
-      }
-      const attacks = card.attacks.filter(attack => {
-        const checkAttackCost = new CheckAttackCostEffect(player, attack);
-        state = store.reduceEffect(state, checkAttackCost);
-        return StateUtils.checkEnoughEnergy(energyMap, checkAttackCost.cost as CardType[]);
-      });
-      const index = pokemonCards.length;
-      pokemonCards.push(card);
-      card.attacks.forEach(attack => {
-        if (!attacks.includes(attack)) {
-          blocked.push({ index, attack: attack.name });
-        }
-      });
+    // No need to include Mew Ex to the list
+    if (card instanceof MewEx) {
+      return;
     }
+
+    const attacks = card.attacks.filter(attack => {
+      const checkAttackCost = new CheckAttackCostEffect(player, attack);
+      state = store.reduceEffect(state, checkAttackCost);
+      return StateUtils.checkEnoughEnergy(energyMap, checkAttackCost.cost as CardType[]);
+    });
+
+    const index = pokemonCards.length;
+    pokemonCards.push(card);
+    card.attacks.forEach(attack => {
+      if (!attacks.includes(attack)) {
+        blocked.push({ index, attack: attack.name });
+      }
+    });
   }
 }

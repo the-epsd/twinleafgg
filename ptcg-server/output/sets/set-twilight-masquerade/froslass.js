@@ -60,12 +60,14 @@ class Froslass extends game_1.PokemonCard {
                     }
                 });
                 player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-                    if (card.powers.length > 0 && card.name !== 'Froslass') {
+                    if (card.powers.length > 0 && card.name !== 'Froslass' &&
+                        card.powers.some(power => power.powerType === game_1.PowerType.ABILITY)) {
                         cardList.damage += (10 * numberOfFroslass);
                     }
                 });
                 opponent.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-                    if (card.name !== 'Froslass' && card.powers.length > 0) {
+                    if (card.name !== 'Froslass' && card.powers.length > 0 &&
+                        card.powers.some(power => power.powerType === game_1.PowerType.ABILITY)) {
                         cardList.damage += (10 * numberOfFroslass);
                     }
                 });

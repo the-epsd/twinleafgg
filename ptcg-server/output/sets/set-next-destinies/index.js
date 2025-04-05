@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setNextDestinies = void 0;
-const card_images_1 = require("./card-images");
+const other_prints_1 = require("./other-prints");
 const gardevoir_1 = require("./gardevoir");
 const heavy_ball_1 = require("./heavy-ball");
 const mewtwo_ex_1 = require("./mewtwo-ex");
@@ -15,7 +15,7 @@ const zekrom_ex_1 = require("./zekrom-ex");
 exports.setNextDestinies = [
     new gardevoir_1.Gardevoir(),
     new heavy_ball_1.HeavyBall(),
-    new card_images_1.LevelBallNXD(),
+    new other_prints_1.LevelBallNXD(),
     new mewtwo_ex_1.MewtwoEx(),
     new musharna_1.Musharna(),
     new pokemon_center_1.PokemonCenter(),

@@ -28,7 +28,6 @@ import { PromptDiscardEnergyComponent } from './prompt-discard-energy/prompt-dis
 import { PromptConfirmCardsComponent } from './prompt-confirm-card/prompt-confirm-cards.component';
 import { ChooseStartingPokemonPromptComponent } from './choose-starting-pokemon-prompt/choose-starting-pokemon-prompt.component';
 import { ChooseCardsPanes2Component } from './choose-cards-panes-2/choose-cards-panes-2.component';
-import { GameOverComponent } from '../game-over/game-over.component';
 import { PromptSelectOptionComponent } from './prompt-select-option/prompt-select-option.component';
 
 @NgModule({
@@ -58,7 +57,6 @@ import { PromptSelectOptionComponent } from './prompt-select-option/prompt-selec
     PromptConfirmCardsComponent,
     ChooseStartingPokemonPromptComponent,
     ChooseCardsPanes2Component,
-    GameOverComponent,
     PromptSelectOptionComponent
   ],
   imports: [
@@ -69,7 +67,6 @@ import { PromptSelectOptionComponent } from './prompt-select-option/prompt-selec
   ],
   exports: [
     PromptComponent,
-    GameOverComponent,
     PromptSelectOptionComponent
   ]
 })

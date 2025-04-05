@@ -2,7 +2,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State, PowerType, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+import { PowerEffect, EffectOfAbilityEffect } from '../../game/store/effects/game-effects';
 
 export class Dusclops extends PokemonCard {
 
@@ -49,7 +49,6 @@ export class Dusclops extends PokemonCard {
   public fullName: string = 'Dusclops SFA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
 
@@ -61,9 +60,16 @@ export class Dusclops extends PokemonCard {
         { min: 1, max: 1, allowCancel: false },
       ), selected => {
         const targets = selected || [];
-        targets.forEach(target => {
-          target.damage += 50;
-        });
+
+        if (targets.length > 0) {
+          const damageEffect = new EffectOfAbilityEffect(player, this.powers[0], this, state);
+          damageEffect.target = targets[0];
+          store.reduceEffect(state, damageEffect);
+          if (damageEffect.target) {
+            damageEffect.target.damage += 50;
+          }
+        }
+
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
           if (cardList.getPokemonCard() === this) {
             cardList.damage += 999;
