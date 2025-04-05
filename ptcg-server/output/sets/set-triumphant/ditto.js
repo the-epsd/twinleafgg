@@ -49,7 +49,7 @@ class Ditto extends pokemon_card_1.PokemonCard {
                 // Check for Ditto on opponent's board
                 let isDittoInPlay = false;
                 const opponent = game_1.StateUtils.getOpponent(state, player);
-                opponent.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList) => {
+                opponent.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList) => {
                     const pokemon = cardList.getPokemonCard();
                     if (!!pokemon && pokemon.name === 'Ditto' && pokemon.powers.map(p => p.name).includes(this.powers[0].name)) {
                         isDittoInPlay = true;
