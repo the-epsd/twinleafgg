@@ -1,6 +1,6 @@
 import { Card } from '../../game/store/card/card';
 import { Atticus } from './atticus';
-import { CharmanderPAF, MimikyuPAF, RareCandyPAF, CharizardexPAF, ElectricGeneratorPAF, IonoPAF, NestBallPAF, ProfessorsResearchPAF, ProfessorsResearch2PAF, UltraBallPAF, ArmarougePAF, NatuPAF, XatuPAF, CharcadetPAF, RaltsPAF, GardevoirexPAF, NoibatPAF, NoivernexPAF, SquawkabillyexPAF, ArtazonPAF } from './card-images';
+import { CharmanderPAF, MimikyuPAF, RareCandyPAF, CharizardexPAF, ElectricGeneratorPAF, IonoPAF, NestBallPAF, ProfessorsResearchPAF, ProfessorsResearch2PAF, UltraBallPAF, ArmarougePAF, NatuPAF, XatuPAF, CharcadetPAF, RaltsPAF, GardevoirexPAF, NoibatPAF, NoivernexPAF, SquawkabillyexPAF, ArtazonPAF } from './other-prints';
 import { Charmeleon } from './charmeleon';
 import { Clive } from './clive';
 import { Espathraex } from './espathra-ex';

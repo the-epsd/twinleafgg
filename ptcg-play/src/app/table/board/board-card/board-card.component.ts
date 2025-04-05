@@ -239,7 +239,8 @@ export class BoardCardComponent implements OnInit, OnDestroy {
     this.trainerCard = cardList.tool;
 
     for (const card of cardList.cards) {
-      if (card.superType === SuperType.ENERGY) {
+      // Check if card is an energy card or has a custom energy image
+      if (card.superType === SuperType.ENERGY || this.getCustomImageUrl(card)) {
         if (this.energyCards.length < MAX_ENERGY_CARDS) {
           this.energyCards.push(card);
         } else {
@@ -268,9 +269,9 @@ export class BoardCardComponent implements OnInit, OnDestroy {
       'Mist Energy': 'assets/energy/mist.png',
       'Legacy Energy': 'assets/energy/legacy.png',
       'Neo Upper Energy': 'assets/energy/neo-upper.png',
-      'Electrode': 'assets/energy/neo-upper.png',
+      'Electrode': 'assets/energy/electrode.png',
+      'Holon\'s Castform': 'assets/energy/holons-castform.png',
     };
-
     return customImageUrls[card.name] || '';
   }
 

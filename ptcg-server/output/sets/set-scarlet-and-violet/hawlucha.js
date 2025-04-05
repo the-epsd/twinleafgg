@@ -63,7 +63,12 @@ class Hawlucha extends pokemon_card_1.PokemonCard {
                     return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_message_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH], { min: 1, max: 2, allowCancel: false }), selected => {
                         const targets = selected || [];
                         targets.forEach(target => {
-                            target.damage += 10;
+                            const effectOfAbility = new game_effects_1.EffectOfAbilityEffect(player, this.powers[0], this, state, [target]);
+                            effectOfAbility.target = target;
+                            store.reduceEffect(state, effectOfAbility);
+                            if (effectOfAbility.target) {
+                                target.damage += 10;
+                            }
                         });
                     });
                 }

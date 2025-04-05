@@ -355,7 +355,7 @@ export function SEARCH_DECK_FOR_CARDS_TO_HAND(store, state, player, min = 0, max
     if (player.deck.cards.length === 0)
         return;
     let cards = [];
-    store.prompt(state, new ChooseCardsPrompt(player, GameMessage.CHOOSE_CARD_TO_HAND, player.deck, {}, { min: 0, max: 3, allowCancel: false }), selected => {
+    store.prompt(state, new ChooseCardsPrompt(player, GameMessage.CHOOSE_CARD_TO_HAND, player.deck, {}, { min: min, max: max, allowCancel: false }), selected => {
         cards = selected || [];
         player.deck.moveCardsTo(cards, player.hand);
     });

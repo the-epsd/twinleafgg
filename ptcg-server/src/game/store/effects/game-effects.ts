@@ -7,6 +7,8 @@ import { Card } from '../card/card';
 import { CardTarget } from '../actions/play-card-action';
 import { TrainerCard } from '../card/trainer-card';
 import { CardList } from '../state/card-list';
+import { StateUtils } from '../state-utils';
+import { State } from '../state/state';
 
 export enum GameEffects {
   RETREAT_EFFECT = 'RETREAT_EFFECT',
@@ -19,7 +21,8 @@ export enum GameEffects {
   HEAL_EFFECT = 'HEAL_EFFECT',
   EVOLVE_EFFECT = 'EVOLVE_EFFECT',
   DRAW_PRIZES_EFFECT = 'DRAW_PRIZES_EFFECT',
-  MOVE_CARDS_EFFECT = 'MOVE_CARDS_EFFECT'
+  MOVE_CARDS_EFFECT = 'MOVE_CARDS_EFFECT',
+  EFFECT_OF_ABILITY_EFFECT = 'EFFECT_OF_ABILITY_EFFECT'
 }
 
 export class RetreatEffect implements Effect {
@@ -68,19 +71,20 @@ export class UseTrainerPowerEffect implements Effect {
   }
 }
 
-
 export class PowerEffect implements Effect {
   readonly type: string = GameEffects.POWER_EFFECT;
   public preventDefault = false;
   public player: Player;
   public power: Power;
   public card: PokemonCard;
+  public target?: PokemonCardList;
   static DISCARD_CARD_EFFECT: string;
 
-  constructor(player: Player, power: Power, card: PokemonCard) {
+  constructor(player: Player, power: Power, card: PokemonCard, target?: PokemonCardList) {
     this.player = player;
     this.power = power;
     this.card = card;
+    this.target = target;
   }
 }
 
@@ -250,6 +254,81 @@ export class MoveCardsEffect implements Effect {
     this.toTop = options.toTop;
     this.toBottom = options.toBottom;
     this.skipCleanup = options.skipCleanup;
+  }
+}
+
+export class EffectOfAbilityEffect implements Effect {
+  readonly type: string = GameEffects.EFFECT_OF_ABILITY_EFFECT;
+  public preventDefault = false;
+  public player: Player;
+  public power: Power;
+  public card: PokemonCard;
+  private _targets?: PokemonCardList[];
+  private state: State;
+  private allowSelfTarget: boolean;
+
+  constructor(
+    player: Player,
+    power: Power,
+    card: PokemonCard,
+    state: State,
+    targets?: PokemonCardList[],
+    allowSelfTarget: boolean = false
+  ) {
+    this.player = player;
+    this.power = power;
+    this.card = card;
+    this.state = state;
+    this.allowSelfTarget = allowSelfTarget;
+    // Filter targets based on allowSelfTarget setting
+    this._targets = targets?.filter(target => {
+      const owner = StateUtils.findOwner(state, target);
+      return this.allowSelfTarget || owner.id !== this.player.id;
+    });
+  }
+
+  // Helper method to check if a card is in any of the targets
+  public hasTarget(card: PokemonCard): boolean {
+    if (!this._targets) return false;
+    // Check ownership based on allowSelfTarget setting
+    const cardList = StateUtils.findCardList(this.state, card);
+    const owner = StateUtils.findOwner(this.state, cardList);
+    if (!this.allowSelfTarget && owner.id === this.player.id) return false;
+    return this._targets.some(target => target.cards.includes(card));
+  }
+
+  // Getter for backward compatibility
+  public get target(): PokemonCardList | undefined {
+    return this._targets?.[0];
+  }
+
+  // Setter for backward compatibility
+  public set target(value: PokemonCardList | undefined) {
+    // Check ownership based on allowSelfTarget setting
+    if (value) {
+      const owner = StateUtils.findOwner(this.state, value);
+      if (!this.allowSelfTarget && owner.id === this.player.id) {
+        this._targets = undefined;
+      } else {
+        this._targets = [value];
+      }
+    } else {
+      this._targets = undefined;
+    }
+  }
+
+  // Getter for multiple targets
+  public get targets(): PokemonCardList[] | undefined {
+    return this._targets;
+  }
+
+  // Setter for multiple targets
+  public set targets(value: PokemonCardList[] | undefined) {
+    // Filter targets based on allowSelfTarget setting
+    this._targets = value?.filter(target => {
+      const owner = StateUtils.findOwner(this.state, target);
+      return this.allowSelfTarget || owner.id !== this.player.id;
+    });
   }
 }
 

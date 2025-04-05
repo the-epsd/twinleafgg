@@ -27,12 +27,14 @@ const pokemon_fan_club_1 = require("./pokemon-fan-club");
 const riolu_1 = require("./riolu");
 const roselia_1 = require("./roselia");
 const shiinotic_1 = require("./shiinotic");
+const silvally_gx_1 = require("./silvally-gx");
 const sneasel_1 = require("./sneasel");
 const solgaleo_prism_star_1 = require("./solgaleo-prism-star");
 const spiritomb_1 = require("./spiritomb");
 const super_boost_energy_prism_star_1 = require("./super-boost-energy-prism-star");
 const tapu_lele_1 = require("./tapu-lele");
 const turtwig_1 = require("./turtwig");
+const type_null_1 = require("./type-null");
 const unit_energy_grw_1 = require("./unit-energy-grw");
 const unit_energy_lpm_1 = require("./unit-energy-lpm");
 const volkner_1 = require("./volkner");
@@ -73,5 +75,7 @@ exports.setUltraPrism = [
     new weavile_1.Weavile(),
     new spiritomb_1.Spiritomb(),
     new solgaleo_prism_star_1.SolgaleoPrismStar(),
-    new super_boost_energy_prism_star_1.SuperBoostEnergy()
+    new super_boost_energy_prism_star_1.SuperBoostEnergy(),
+    new type_null_1.TypeNull(),
+    new silvally_gx_1.SilvallyGX(),
 ];

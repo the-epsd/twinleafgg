@@ -7,6 +7,7 @@ const greninja_1 = require("./greninja");
 const jirachi_1 = require("./jirachi");
 const karen_1 = require("./karen");
 const meloetta_1 = require("./meloetta");
+const regirock_1 = require("./regirock");
 exports.setXYPromos = [
     new azelf_1.Azelf(),
     new celebi_1.Celebi(),
@@ -14,4 +15,5 @@ exports.setXYPromos = [
     new jirachi_1.Jirachi(),
     new karen_1.Karen(),
     new meloetta_1.Meloetta(),
+    new regirock_1.Regirock(),
 ];

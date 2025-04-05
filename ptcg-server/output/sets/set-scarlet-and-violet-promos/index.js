@@ -104,4 +104,5 @@ exports.setScarletAndVioletPromos = [
     new alt_arts_1.JolteonSVP(),
     new alt_arts_1.EeveeSVP(),
     new alt_arts_1.BloodmoonUrsalunaexSVP(),
+    new alt_arts_1.NsZoruaSVP(),
 ];

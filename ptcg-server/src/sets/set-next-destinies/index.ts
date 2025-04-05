@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { LevelBallNXD } from './card-images';
+import { LevelBallNXD } from './other-prints';
 import { Gardevoir } from './gardevoir';
 import { HeavyBall } from './heavy-ball';
 import { MewtwoEx } from './mewtwo-ex';

@@ -460,7 +460,7 @@ export function SEARCH_DECK_FOR_CARDS_TO_HAND(store: StoreLike, state: State, pl
     GameMessage.CHOOSE_CARD_TO_HAND,
     player.deck,
     {},
-    { min: 0, max: 3, allowCancel: false }
+    { min: min, max: max, allowCancel: false }
   ), selected => {
     cards = selected || [];
     player.deck.moveCardsTo(cards, player.hand);
@@ -485,6 +485,42 @@ export function IS_ABILITY_BLOCKED(store: StoreLike, state: State, player: Playe
     store.reduceEffect(state, new PowerEffect(player, {
       name: 'test',
       powerType: PowerType.ABILITY,
+      text: ''
+    }, card));
+  } catch {
+    return true;
+  }
+  return false;
+}
+
+/**
+ * Checks if pokebodies are blocked on `card` for `player`.
+ * @returns `true` if the pokebody is blocked, `false` if the pokebody is able to go thru.
+ */
+export function IS_POKEBODY_BLOCKED(store: StoreLike, state: State, player: Player, card: PokemonCard): boolean {
+  // Try to reduce PowerEffect, to check if something is blocking our pokebody
+  try {
+    store.reduceEffect(state, new PowerEffect(player, {
+      name: 'test',
+      powerType: PowerType.POKEBODY,
+      text: ''
+    }, card));
+  } catch {
+    return true;
+  }
+  return false;
+}
+
+/**
+ * Checks if pokepowers are blocked on `card` for `player`.
+ * @returns `true` if the pokepower is blocked, `false` if the pokepower is able to go thru.
+ */
+export function IS_POKEPOWER_BLOCKED(store: StoreLike, state: State, player: Player, card: PokemonCard): boolean {
+  // Try to reduce PowerEffect, to check if something is blocking our pokepower
+  try {
+    store.reduceEffect(state, new PowerEffect(player, {
+      name: 'test',
+      powerType: PowerType.POKEPOWER,
       text: ''
     }, card));
   } catch {
