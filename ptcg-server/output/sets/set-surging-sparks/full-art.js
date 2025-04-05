@@ -4,7 +4,7 @@ exports.JetEnergyUR = exports.NightStretcherUR = exports.CounterGainUR = exports
 const jet_energy_1 = require("../set-paldea-evolved/jet-energy");
 const nightly_stretcher_1 = require("../set-shrouded-fable/nightly-stretcher");
 const archaludon_ex_1 = require("./archaludon-ex");
-const card_images_1 = require("./card-images");
+const other_prints_1 = require("./other-prints");
 const cyrano_1 = require("./cyrano");
 const feebas_1 = require("./feebas");
 const hydreigon_ex_1 = require("./hydreigon-ex");
@@ -150,7 +150,7 @@ class PikachuexUR extends pikachu_ex_1.Pikachuex {
     }
 }
 exports.PikachuexUR = PikachuexUR;
-class CounterGainUR extends card_images_1.CounterGainSSP {
+class CounterGainUR extends other_prints_1.CounterGainSSP {
     constructor() {
         super(...arguments);
         this.set = 'SSP';

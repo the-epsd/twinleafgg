@@ -5,7 +5,7 @@ const aether_paradise_conservation_area_1 = require("./aether-paradise-conservat
 const alolan_ninetales_gx_1 = require("./alolan-ninetales-gx");
 const aqua_patch_1 = require("./aqua-patch");
 const brooklet_hill_1 = require("./brooklet-hill");
-const card_images_1 = require("./card-images");
+const other_prints_1 = require("./other-prints");
 const choice_band_1 = require("./choice-band");
 const drampa_gx_1 = require("./drampa-gx");
 const field_blower_1 = require("./field-blower");
@@ -25,12 +25,12 @@ const tapu_lele_gx_1 = require("./tapu-lele-gx");
 exports.setGuardiansRising = [
     new aether_paradise_conservation_area_1.AetherParadiseConvserationArea(),
     new alolan_ninetales_gx_1.AlolanNinetalesGX(),
-    new card_images_1.AlolanVulpixGRI(),
+    new other_prints_1.AlolanVulpixGRI(),
     new aqua_patch_1.AquaPatch(),
     new brooklet_hill_1.BrookletHill(),
     new choice_band_1.ChoiceBand(),
     new drampa_gx_1.DrampaGX(),
-    new card_images_1.EnhancedHammerGRI(),
+    new other_prints_1.EnhancedHammerGRI(),
     new field_blower_1.FieldBlower(),
     new garbodor_1.Garbodor(),
     new lycanroc_gx_1.LycanrocGX(),

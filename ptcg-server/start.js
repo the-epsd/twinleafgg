@@ -24,12 +24,17 @@ cardManager.defineSet(sets.setBaseSetEnergy);
 
 cardManager.defineSet(sets.setNeoDiscovery)
 
+//E-Card Era
+cardManager.defineSet(sets.setAquapolis);
+
 //ex Era shit
 cardManager.defineSet(sets.setEXHolonPhantoms);
 cardManager.defineSet(sets.setEXHiddenLegends)
 cardManager.defineSet(sets.setEXDragon);
+cardManager.defineSet(sets.setEXTeamMagmaVsTeamAqua);
 cardManager.defineSet(sets.setEXDragonFrontiers);
 cardManager.defineSet(sets.setEXDeoxys);
+cardManager.defineSet(sets.setEXEmerald);
 cardManager.defineSet(sets.setEXUnseenForces);
 cardManager.defineSet(sets.setEXTeamRocketReturns);
 cardManager.defineSet(sets.setEXCrystalGuardians);

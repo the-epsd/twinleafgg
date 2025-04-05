@@ -66,6 +66,8 @@ class ExpShare extends trainer_card_1.TrainerCard {
         // because they will be transfered to discard shortly
         const activeCopy = new pokemon_card_list_1.PokemonCardList();
         activeCopy.cards = player.active.cards.slice();
+        // Don't prevent default knockout behavior yet
+        // effect.preventDefault = true;
         state = store.prompt(state, new attach_energy_prompt_1.AttachEnergyPrompt(player.id, game_message_1.GameMessage.ATTACH_ENERGY_TO_BENCH, activeCopy, play_card_action_1.PlayerType.BOTTOM_PLAYER, [play_card_action_1.SlotType.BENCH], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC }, { allowCancel: true, min: 1, max: expShareCount, differentTargets: true, blockedTo }), transfers => {
             transfers = transfers || [];
             active.marker.removeMarker(this.EXP_SHARE_MARKER);
@@ -73,6 +75,8 @@ class ExpShare extends trainer_card_1.TrainerCard {
                 const target = state_utils_1.StateUtils.getTarget(state, player, transfer.to);
                 player.discard.moveCardTo(transfer.card, target);
             }
+            // Now prevent the default knockout behavior after prize cards are handled
+            effect.preventDefault = true;
         });
         return state;
     }

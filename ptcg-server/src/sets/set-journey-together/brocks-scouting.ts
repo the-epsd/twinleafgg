@@ -75,7 +75,7 @@ export class BrocksScouting extends TrainerCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '96';
+  public setNumber: string = '146';
 
   public name: string = 'Brock\'s Scouting';
 

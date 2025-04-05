@@ -53,9 +53,6 @@ class BuddyBuddyRescue extends trainer_card_1.TrainerCard {
                 player.supporter.moveCardTo(effect.trainerCard, player.discard);
                 return state;
             }
-            if (!pokemonInOpponentsDiscard) {
-                return state;
-            }
             if (pokemonInOpponentsDiscard > 0) {
                 let cards = [];
                 store.prompt(state, new game_1.ChooseCardsPrompt(opponent, game_1.GameMessage.CHOOSE_CARD_TO_HAND, opponent.discard, { superType: card_types_1.SuperType.POKEMON }, { min: 1, max: 1, allowCancel: false, blocked }), selected => {

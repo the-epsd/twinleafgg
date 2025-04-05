@@ -3,7 +3,7 @@ import { AetherParadiseConvserationArea } from './aether-paradise-conservation-a
 import { AlolanNinetalesGX } from './alolan-ninetales-gx';
 import { AquaPatch } from './aqua-patch';
 import { BrookletHill } from './brooklet-hill';
-import { AlolanVulpixGRI, EnhancedHammerGRI } from './card-images';
+import { AlolanVulpixGRI, EnhancedHammerGRI } from './other-prints';
 import { ChoiceBand } from './choice-band';
 import { DrampaGX } from './drampa-gx';
 import { FieldBlower } from './field-blower';

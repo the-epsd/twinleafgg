@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setDarkExplorers = void 0;
 const accelgor_1 = require("./accelgor");
-const card_images_1 = require("./card-images");
+const other_prints_1 = require("./other-prints");
 const dark_claw_1 = require("./dark-claw");
 const darkrai_ex_1 = require("./darkrai-ex");
 const empoleon_1 = require("./empoleon");
@@ -23,10 +23,10 @@ const zorua_1 = require("./zorua");
 exports.setDarkExplorers = [
     new accelgor_1.Accelgor(),
     new dark_claw_1.DarkClaw(),
-    new card_images_1.DarkPatchDEX(),
+    new other_prints_1.DarkPatchDEX(),
     new darkrai_ex_1.DarkraiEx(),
     new empoleon_1.Empoleon(),
-    new card_images_1.EnhancedHammerDEX(),
+    new other_prints_1.EnhancedHammerDEX(),
     new gardevoir_1.Gardevoir(),
     new ivysaur_1.Ivysaur(),
     new minun_1.Minun(),
