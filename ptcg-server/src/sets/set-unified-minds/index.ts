@@ -1,12 +1,14 @@
 import { Card } from '../../game/store/card/card';
 import { AlolanGrimer } from './alolan-grimer';
 import { AlolanRaichu } from './alolan-raichu';
+import { Beheeyem } from './beheeyem';
 import { CherishBall } from './cherish-ball';
 import { Cottonee } from './cottonee';
 import { Cryogonal } from './cryogonal';
 import { DarkCity } from './dark-city';
 import { Drilbur } from './drilbur';
 import { Eelektross } from './eelektross';
+import { Elgyem } from './elgyem';
 import { Excadrill } from './excadrill';
 import { FlyiniumZAirSlash } from './flyinium-z-air-slash';
 import { Froslass } from './froslass';
@@ -43,6 +45,7 @@ import { PokemonResearchLab } from './pokemon-research-lab';
 export const setUnifiedMinds: Card[] = [
   new AlolanGrimer(),
   new AlolanRaichu(),
+  new Beheeyem(),
   new CherishBall(),
   new Cottonee(),
   new Cryogonal(),
@@ -50,6 +53,7 @@ export const setUnifiedMinds: Card[] = [
   new DarkCity(),
   new Drilbur(),
   new Eelektross(),
+  new Elgyem(),
   new FlyiniumZAirSlash(),
   new Froslass(),
   new GarchompGiratinaGX(),
