@@ -114,6 +114,7 @@ export class Sylveonex extends PokemonCard {
       ), selected => {
         const targets = selected || [];
         player.marker.addMarker(this.ANGELITE_MARKER, this);
+
         targets.forEach(target => {
           target.clearEffects();
           target.damage = 0;

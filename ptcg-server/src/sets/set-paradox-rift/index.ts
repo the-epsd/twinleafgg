@@ -66,6 +66,7 @@ import { SandyShocksex } from './sandy-shocks-ex';
 import { ScreamTail } from './scream-tail';
 import { Skeledirgeex } from './skeledirge-ex';
 import { SlitherWing } from './slither-wing';
+import {SnorlaxDoll} from './snorlax-doll';
 import { Snorunt } from './snorunt';
 import { Steenee } from './steenee';
 import { TapuKokoex } from './tapu-koko-ex';
@@ -185,6 +186,7 @@ export const setParadoxRift: Card[] = [
   new Vanillite(),
   new Vanillish(),
   new Vanilluxe(),
+  new SnorlaxDoll(),
 
   //Full s
   new ToedscruelIR(),

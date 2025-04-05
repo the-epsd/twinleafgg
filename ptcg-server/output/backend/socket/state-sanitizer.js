@@ -53,8 +53,11 @@ class StateSanitizer {
             });
         });
         const opponents = state.players.filter(p => p.id !== this.client.id);
+        const isPlaying = state.players.some(p => p.id === this.client.id);
+        const isObserver = !isPlaying;
         opponents.forEach(opponent => {
-            if (!opponent.hand.isPublic) {
+            // Show hands for admins and TOs only when they are observers
+            if (!opponent.hand.isPublic && (!isObserver || (this.client.user.roleId !== 4 && this.client.user.roleId !== 5))) {
                 cardLists.push(opponent.hand);
             }
             if (!opponent.deck.isPublic) {

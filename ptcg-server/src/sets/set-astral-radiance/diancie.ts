@@ -3,7 +3,7 @@ import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { SupporterEffect } from '../../game/store/effects/play-card-effects';
+import { TrainerTargetEffect } from '../../game/store/effects/play-card-effects';
 import { DRAW_CARDS, IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 export class Diancie extends PokemonCard {
@@ -45,7 +45,7 @@ export class Diancie extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof SupporterEffect) {
+    if (effect instanceof TrainerTargetEffect) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -53,7 +53,9 @@ export class Diancie extends PokemonCard {
         return state;
       }
 
-      effect.preventDefault = true;
+      if (effect.target && effect.target.isStage(Stage.BASIC) && opponent.bench.some(b => b === effect.target)) {
+        effect.preventDefault = true;
+      }
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

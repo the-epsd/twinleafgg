@@ -59,6 +59,8 @@ export class ZeraoraGX extends PokemonCard {
 
     if (effect instanceof CheckRetreatCostEffect) {
       const player = effect.player;
+      const cardList = StateUtils.findCardList(state, this);
+      const owner = StateUtils.findOwner(state, cardList);
 
       // Check to see if anything is blocking our Ability
       try {
@@ -69,6 +71,17 @@ export class ZeraoraGX extends PokemonCard {
         }, this);
         store.reduceEffect(state, stub);
       } catch {
+        return state;
+      }
+
+      let isZeraoraGXInPlay = false;
+      owner.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+        if (card === this) {
+          isZeraoraGXInPlay = true;
+        }
+      });
+
+      if (!isZeraoraGXInPlay) {
         return state;
       }
 

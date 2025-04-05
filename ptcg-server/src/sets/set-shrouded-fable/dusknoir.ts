@@ -2,7 +2,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State, PowerType, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, GameError, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect, RetreatEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect, EffectOfAbilityEffect, PowerEffect, RetreatEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class Dusknoir extends PokemonCard {
@@ -78,9 +78,16 @@ export class Dusknoir extends PokemonCard {
         { min: 1, max: 1, allowCancel: false },
       ), selected => {
         const targets = selected || [];
-        targets.forEach(target => {
-          target.damage += 130;
-        });
+
+        if (targets.length > 0) {
+          const damageEffect = new EffectOfAbilityEffect(player, this.powers[0], this, state);
+          damageEffect.target = targets[0];
+          store.reduceEffect(state, damageEffect);
+          if (damageEffect.target) {
+            damageEffect.target.damage += 130;
+          }
+        }
+
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
           if (cardList.getPokemonCard() === this) {
             cardList.damage += 999;

@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setDarknessAblaze = void 0;
+const big_parasol_1 = require("./big-parasol");
 const billowing_smoke_1 = require("./billowing-smoke");
 const bird_keeper_1 = require("./bird-keeper");
 const bunnelby_1 = require("./bunnelby");
@@ -33,6 +34,7 @@ const ursaring_1 = require("./ursaring");
 const vikavolt_v_1 = require("./vikavolt-v");
 const yell_horn_1 = require("./yell-horn");
 exports.setDarknessAblaze = [
+    new big_parasol_1.BigParasol(),
     new billowing_smoke_1.BillowingSmoke(),
     new bird_keeper_1.BirdKeeper(),
     new bunnelby_1.Bunnelby(),

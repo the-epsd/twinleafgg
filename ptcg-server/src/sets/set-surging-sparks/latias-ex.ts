@@ -75,14 +75,14 @@ export class Latiasex extends PokemonCard {
         return state;
       }
 
-      let isRabscaInPlay = false;
+      let isLatiasexInPlay = false;
       owner.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
         if (card === this) {
-          isRabscaInPlay = true;
+          isLatiasexInPlay = true;
         }
       });
 
-      if (!isRabscaInPlay) {
+      if (!isLatiasexInPlay) {
         return state;
       }
 

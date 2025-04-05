@@ -5,11 +5,13 @@ import { Beedrill } from './beedrill';
 import { BillsAnalysis } from './bills-analysis';
 import { Bisharp } from './bisharp';
 import { Bronzor } from './bronzor';
+import { Charmander } from './charmander';
 import { Dragonite } from './dragonite';
 import { Ferrothorn } from './ferrothorn';
 import { GengarMimikyuGX } from './gengar-and-mimikyu-gx';
 import { Hitmonchan } from './hitmonchan';
 import { Hitmonlee } from './hitmonlee';
+import { Jasmine } from './jasmine';
 import { Jirachi } from './jirachi';
 import { JudgeWhistle } from './judge-whistle';
 import { Kakuna } from './kakuna';
@@ -37,11 +39,13 @@ export const setTeamUp: Card[] = [
   new BillsAnalysis(),
   new Bisharp(),
   new Bronzor(),
+  new Charmander(),
   new Dragonite(),
   new Ferrothorn(),
   new GengarMimikyuGX(),
   new Hitmonchan(),
   new Hitmonlee(),
+  new Jasmine(),
   new Jirachi(),
   new Kakuna(),
   new Lapras(),

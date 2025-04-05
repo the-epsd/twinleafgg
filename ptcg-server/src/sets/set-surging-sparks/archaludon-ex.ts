@@ -15,7 +15,7 @@ export class Archaludonex extends PokemonCard {
   public retreat = [C, C];
 
   public powers = [{
-    name: 'Energy Attachment',
+    name: 'Assemble Alloy',
     powerType: PowerType.ABILITY,
     text: 'When you play this Pokémon from your hand to evolve 1 of your Pokemon during your turn, you may attach 2 Basic [M] Energy from your discard pile to your [M] Pokémon in any way you like.'
   }];

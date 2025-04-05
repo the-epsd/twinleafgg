@@ -1,22 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setScarletAndVioletEnergy = void 0;
-const card_images_1 = require("./card-images");
+const other_prints_1 = require("./other-prints");
 exports.setScarletAndVioletEnergy = [
-    new card_images_1.GrassEnergyArt(),
-    new card_images_1.FireEnergyArt(),
-    new card_images_1.WaterEnergyArt(),
-    new card_images_1.LightningEnergyArt(),
-    new card_images_1.PsychicEnergyArt(),
-    new card_images_1.FightingEnergyArt(),
-    new card_images_1.DarknessEnergyArt(),
-    new card_images_1.MetalEnergyArt(),
-    new card_images_1.GrassEnergyArt2(),
-    new card_images_1.FireEnergyArt2(),
-    new card_images_1.WaterEnergyArt2(),
-    new card_images_1.LightningEnergyArt2(),
-    new card_images_1.PsychicEnergyArt2(),
-    new card_images_1.FightingEnergyArt2(),
-    new card_images_1.DarknessEnergyArt2(),
-    new card_images_1.MetalEnergyArt2(),
+    new other_prints_1.GrassEnergyArt(),
+    new other_prints_1.FireEnergyArt(),
+    new other_prints_1.WaterEnergyArt(),
+    new other_prints_1.LightningEnergyArt(),
+    new other_prints_1.PsychicEnergyArt(),
+    new other_prints_1.FightingEnergyArt(),
+    new other_prints_1.DarknessEnergyArt(),
+    new other_prints_1.MetalEnergyArt(),
+    new other_prints_1.GrassEnergyArt2(),
+    new other_prints_1.FireEnergyArt2(),
+    new other_prints_1.WaterEnergyArt2(),
+    new other_prints_1.LightningEnergyArt2(),
+    new other_prints_1.PsychicEnergyArt2(),
+    new other_prints_1.FightingEnergyArt2(),
+    new other_prints_1.DarknessEnergyArt2(),
+    new other_prints_1.MetalEnergyArt2(),
 ];

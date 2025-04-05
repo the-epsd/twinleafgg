@@ -87,10 +87,12 @@ class BloodmoonUrsalunaex extends pokemon_card_1.PokemonCard {
             }
             return state;
         }
-        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
+        if (effect instanceof game_effects_1.UseAttackEffect && effect.source.cards.includes(this)) {
             if (effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
                 throw new game_1.GameError(game_1.GameMessage.BLOCKED_BY_EFFECT);
             }
+        }
+        if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             effect.player.marker.addMarker(this.ATTACK_USED_MARKER, this);
         }
         return state;

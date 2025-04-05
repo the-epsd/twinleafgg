@@ -5,6 +5,7 @@ import { PokeTurn } from './poke-turn';
 import { PokemonRescue } from './pokemon-rescue';
 import { Skitty } from './skitty';
 import { SkuntankG } from './skuntank-g';
+import { Ralts } from './ralts';
 
 export const setPlatinum: Card[] = [
   new SkuntankG(),
@@ -12,5 +13,6 @@ export const setPlatinum: Card[] = [
   new Delcatty(),
   new PokeTurn(),
   new PokemonRescue(),
+  new Ralts(),
   new Skitty(),
 ];

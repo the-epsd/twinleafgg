@@ -4,6 +4,7 @@ exports.Mimikyu = void 0;
 const game_1 = require("../../game");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
 const game_effects_1 = require("../../game/store/effects/game-effects");
+const game_phase_effects_1 = require("../../game/store/effects/game-phase-effects");
 class Mimikyu extends game_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -29,8 +30,26 @@ class Mimikyu extends game_1.PokemonCard {
         this.fullName = 'Mimikyu GRI';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '58';
+        this.copiedReduceEffect = null;
+        this.copiedProperties = null;
     }
     reduceEffect(store, state, effect) {
+        // If we have a copied reduceEffect and this is an AttackEffect, use it
+        if (this.copiedReduceEffect && effect instanceof game_effects_1.AttackEffect) {
+            console.log('Using copied reduceEffect for attack:', effect.attack.name);
+            return this.copiedReduceEffect(store, state, effect);
+        }
+        if (effect instanceof game_phase_effects_1.EndTurnEffect) {
+            // Only clear the copied reduceEffect when it's our turn ending
+            const cardList = game_1.StateUtils.findCardList(state, this);
+            const owner = game_1.StateUtils.findOwner(state, cardList);
+            if (owner === effect.player) {
+                console.log('Clearing copied reduceEffect and properties for Mimikyu');
+                this.copiedReduceEffect = null;
+                this.copiedProperties = null;
+            }
+            return state;
+        }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             player.deck.moveTo(player.hand, 2);
@@ -48,20 +67,34 @@ class Mimikyu extends game_1.PokemonCard {
             if (!originalCard) {
                 return state;
             }
-            return store.prompt(state, new game_1.ChooseAttackPrompt(player.id, game_1.GameMessage.CHOOSE_ATTACK_TO_COPY, [originalCard], { allowCancel: true, blocked: [] }), attack => {
-                if (attack.name !== lastAttack.name) {
-                    throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_ATTACK);
+            console.log('Copying properties from card:', originalCard.name);
+            // Copy all properties from the original card
+            this.copiedProperties = {};
+            Object.getOwnPropertyNames(originalCard).forEach(prop => {
+                if (prop !== 'reduceEffect' && typeof originalCard[prop] !== 'function') {
+                    this.copiedProperties[prop] = originalCard[prop];
+                    console.log('Copied property:', prop, '=', originalCard[prop]);
                 }
-                if (attack !== null) {
-                    state = this.executeCopiedAttack(store, state, player, opponent, attack);
-                }
-                return state;
             });
+            // Copy the original card's reduceEffect
+            this.copiedReduceEffect = originalCard.reduceEffect.bind(originalCard);
+            console.log('Copied reduceEffect from:', originalCard.name);
+            // Directly execute the copied attack without UI prompt
+            return this.executeCopiedAttack(store, state, player, opponent, lastAttack);
         }
         return state;
     }
     executeCopiedAttack(store, state, player, opponent, attack) {
+        // Create a new attack effect using the attack
         const copiedAttackEffect = new game_effects_1.AttackEffect(player, opponent, attack);
+        copiedAttackEffect.source = player.active;
+        copiedAttackEffect.target = opponent.active;
+        // If we have copied properties, apply them to the effect
+        if (this.copiedProperties) {
+            Object.assign(copiedAttackEffect, this.copiedProperties);
+            console.log('Applied copied properties to attack effect:', this.copiedProperties);
+        }
+        // Execute the attack
         state = store.reduceEffect(state, copiedAttackEffect);
         if (copiedAttackEffect.attack.shredAttack === true && copiedAttackEffect.damage > 0) {
             // Apply damage and trigger AfterDamageEffect

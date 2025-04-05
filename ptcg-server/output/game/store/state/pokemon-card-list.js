@@ -18,13 +18,14 @@ class PokemonCardList extends card_list_1.CardList {
         this.sleepFlips = 1;
         this.boardEffect = [];
         this.hpBonus = 0;
+        this.energyCards = [];
         this.isActivatingCard = false;
         this.showAllStageAbilities = false;
     }
     getPokemons() {
         const result = [];
         for (const card of this.cards) {
-            if (card.superType === card_types_1.SuperType.POKEMON && card !== this.tool) {
+            if (card.superType === card_types_1.SuperType.POKEMON && card !== this.tool && !this.energyCards.includes(card)) {
                 result.push(card);
             }
             else if (card.name === 'Lillie\'s Poké Doll') {
@@ -155,6 +156,19 @@ class PokemonCardList extends card_list_1.CardList {
         ].includes(s) === false);
         this.boardEffect.push(sp);
     }
+    // Add a Pokemon card as energy
+    addPokemonAsEnergy(card) {
+        if (!this.energyCards.includes(card) && this.cards.includes(card)) {
+            this.energyCards.push(card);
+        }
+    }
+    // Remove a Pokemon card from energy list
+    removePokemonAsEnergy(card) {
+        const index = this.energyCards.indexOf(card);
+        if (index !== -1) {
+            this.energyCards.splice(index, 1);
+        }
+    }
     //Rule-Box Pokemon
     hasRuleBox() {
         return this.cards.some(c => c.tags.includes(card_types_1.CardTag.POKEMON_ex) || c.tags.includes(card_types_1.CardTag.RADIANT) || c.tags.includes(card_types_1.CardTag.POKEMON_V) || c.tags.includes(card_types_1.CardTag.POKEMON_VMAX) || c.tags.includes(card_types_1.CardTag.POKEMON_VSTAR) || c.tags.includes(card_types_1.CardTag.POKEMON_GX) || c.tags.includes(card_types_1.CardTag.PRISM_STAR) || c.tags.includes(card_types_1.CardTag.BREAK) || c.tags.includes(card_types_1.CardTag.POKEMON_SV_MEGA));
@@ -216,6 +230,14 @@ class PokemonCardList extends card_list_1.CardList {
         //   }
         //   this.tools = this.tools.filter(c => c instanceof Card);
         // }
+    }
+    // Override the parent CardList's moveTo method to properly handle Pokemon acting as energy
+    moveTo(destination, count) {
+        // Reset Pokemon-as-energy status before moving cards
+        if (this.energyCards.length > 0) {
+            this.energyCards = [];
+        }
+        super.moveTo(destination, count);
     }
 }
 exports.PokemonCardList = PokemonCardList;

@@ -1,4 +1,5 @@
 import { Card } from '../../game/store/card/card';
+import { Ditto } from './ditto';
 import { VsSeekerFL } from './other-prints';
 import { Pidgeot } from './pidgeot';
 import { Pidgeotto } from './pidgeotto';
@@ -8,5 +9,6 @@ export const setEXFireRedLeafGreen: Card[] = [
   new Pidgey(),
   new Pidgeotto(),
   new Pidgeot(),
-  new VsSeekerFL()
+  new VsSeekerFL(),
+  new Ditto()
 ];
