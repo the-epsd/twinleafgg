@@ -29,6 +29,7 @@ cardManager.defineSet(sets.setAquapolis);
 cardManager.defineSet(sets.setEXHolonPhantoms);
 cardManager.defineSet(sets.setEXHiddenLegends)
 cardManager.defineSet(sets.setEXDragon);
+cardManager.defineSet(sets.setEXTeamMagmaVsTeamAqua);
 cardManager.defineSet(sets.setEXDragonFrontiers);
 cardManager.defineSet(sets.setEXDeoxys);
 cardManager.defineSet(sets.setEXEmerald);

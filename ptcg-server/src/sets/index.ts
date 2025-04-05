@@ -17,6 +17,7 @@ export * from './set-ex-holon-phantoms';
 export * from './set-ex-hidden-legends';
 export * from './set-ex-delta-species';
 export * from './set-ex-dragon';
+export * from './set-ex-team-magma-vs-team-aqua';
 export * from './set-ex-dragon-frontiers';
 export * from './set-ex-unseen-forces';
 export * from './set-ex-deoxys';
