@@ -52,8 +52,9 @@ export class Player {
 
   assembledVUNIONs: string[] = [];
 
-  public readonly DAMAGE_DEALT_MARKER = 'DAMAGE_DEALT_MARKER';
+  showAllStageAbilities: boolean = false;
 
+  public readonly DAMAGE_DEALT_MARKER = 'DAMAGE_DEALT_MARKER';
   public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
   public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
   public readonly CLEAR_KNOCKOUT_MARKER = 'CLEAR_KNOCKOUT_MARKER';

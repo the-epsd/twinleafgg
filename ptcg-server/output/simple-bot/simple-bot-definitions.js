@@ -26,6 +26,7 @@ const move_energy_prompt_resolver_1 = require("./prompt-resolver/move-energy-pro
 const order_cards_prompt_resolver_1 = require("./prompt-resolver/order-cards-prompt-resolver");
 const put_damage_prompt_resolver_1 = require("./prompt-resolver/put-damage-prompt-resolver");
 const select_prompt_resolver_1 = require("./prompt-resolver/select-prompt-resolver");
+const select_option_prompt_resolver_1 = require("./prompt-resolver/select-option-prompt-resolver");
 const bot_arbiter_1 = require("../game/bots/bot-arbiter");
 exports.defaultStateScores = {
     hand: {
@@ -110,7 +111,8 @@ exports.allPromptResolvers = [
     move_energy_prompt_resolver_1.MoveEnergyPromptResolver,
     order_cards_prompt_resolver_1.OrderCardsPromptResolver,
     put_damage_prompt_resolver_1.PutDamagePromptResolver,
-    select_prompt_resolver_1.SelectPromptResolver
+    select_prompt_resolver_1.SelectPromptResolver,
+    select_option_prompt_resolver_1.SelectOptionPromptResolver
 ];
 exports.allSimpleTactics = [
     evolve_tactic_1.EvolveTactic,

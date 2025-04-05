@@ -2,9 +2,9 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, PowerType, GameLog } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { KnockOutEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { KnockOutEffect } from '../../game/store/effects/game-effects';
 import { CoinFlipEffect } from '../../game/store/effects/play-card-effects';
-import { ADD_POISON_TO_PLAYER_ACTIVE, SIMULATE_COIN_FLIP, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { ADD_POISON_TO_PLAYER_ACTIVE, IS_ABILITY_BLOCKED, SIMULATE_COIN_FLIP, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Glimmora extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -42,13 +42,10 @@ export class Glimmora extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      // Try to reduce PowerEffect, to check if something is blocking our ability
-      try {
-        const powerEffect = new PowerEffect(player, this.powers[0], this);
-        store.reduceEffect(state, powerEffect);
-      } catch {
-        return state;
-      }
+      if (IS_ABILITY_BLOCKED(store, state, player, this)){ return state; }
+
+      // checking if this is the target for the damage
+      if (effect.target.getPokemonCard() !== this){ return state; }
 
       // Flip a coin, and if heads, prevent damage.
       try {

@@ -60,6 +60,13 @@ export class CardList {
             const index = this.cards.indexOf(cards[i]);
             if (index !== -1) {
                 const card = this.cards.splice(index, 1);
+                // If this is a PokemonCardList with the energyCards property, remove the card from energyCards
+                if ('energyCards' in this) {
+                    const pokemonList = this;
+                    if (typeof pokemonList.removePokemonAsEnergy === 'function') {
+                        pokemonList.removePokemonAsEnergy(card[0]);
+                    }
+                }
                 destination.cards.push(card[0]);
             }
         }

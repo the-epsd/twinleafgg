@@ -5,6 +5,8 @@ import { StoreLike, State, StateUtils, PlayerType, CoinFlipPrompt, GameMessage, 
 import { Effect } from '../../game/store/effects/effect';
 import { BeginTurnEffect, EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PowerEffect } from '../../game/store/effects/game-effects';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { PokemonCard as PokemonCardType } from '../../game/store/card/pokemon-card';
 
 export class Wishiwashi extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -64,8 +66,16 @@ export class Wishiwashi extends PokemonCard {
               new CoinFlipPrompt(opponent.id, GameMessage.COIN_FLIP)
             ], result => {
               if (result === false) {
-                cardList.moveTo(opponent.deck);
-                cardList.clearEffects();
+                const pokemons = cardList.getPokemons();
+                const otherCards = cardList.cards.filter(card => !(card instanceof PokemonCardType));
+
+                if (otherCards.length > 0) {
+                  MOVE_CARDS(store, state, cardList, opponent.deck, { cards: otherCards });
+                }
+
+                if (pokemons.length > 0) {
+                  MOVE_CARDS(store, state, cardList, opponent.deck, { cards: pokemons });
+                }
               }
             });
           }

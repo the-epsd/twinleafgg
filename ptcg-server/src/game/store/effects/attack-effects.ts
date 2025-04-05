@@ -57,7 +57,7 @@ export class DealDamageEffect extends AbstractAttackEffect implements Effect {
   readonly type: string = AttackEffects.DEAL_DAMAGE_EFFECT;
   public preventDefault = false;
   public damage: number;
-
+  public damageIncreased = false;
   constructor(base: AttackEffect, damage: number) {
     super(base);
     this.damage = damage;

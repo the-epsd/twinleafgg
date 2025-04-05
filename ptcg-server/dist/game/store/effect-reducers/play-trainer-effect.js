@@ -2,7 +2,7 @@ import { AttachPokemonToolEffect, TrainerEffect, PlaySupporterEffect, PlayItemEf
 import { GameError } from '../../game-error';
 import { GameMessage, GameLog } from '../../game-message';
 import { StateUtils } from '../state-utils';
-import { TrainerType } from '../card/card-types';
+import { CardTag, TrainerType } from '../card/card-types';
 export function playTrainerReducer(store, state, effect) {
     /* Play supporter card */
     if (effect instanceof PlaySupporterEffect) {
@@ -20,11 +20,24 @@ export function playTrainerReducer(store, state, effect) {
     if (effect instanceof PlayStadiumEffect) {
         const player = effect.player;
         const opponent = StateUtils.getOpponent(state, player);
+        const stadiumCard = StateUtils.getStadiumCard(state);
+        // Handle player's existing stadium
         if (player.stadium.cards.length > 0) {
-            player.stadium.moveTo(player.discard);
+            if (stadiumCard && stadiumCard.tags.includes(CardTag.PRISM_STAR)) {
+                player.stadium.moveTo(player.lostzone);
+            }
+            else {
+                player.stadium.moveTo(player.discard);
+            }
         }
+        // Handle opponent's existing stadium
         if (opponent.stadium.cards.length > 0) {
-            opponent.stadium.moveTo(opponent.discard);
+            if (stadiumCard && stadiumCard.tags.includes(CardTag.PRISM_STAR)) {
+                opponent.stadium.moveTo(opponent.lostzone);
+            }
+            else {
+                opponent.stadium.moveTo(opponent.discard);
+            }
         }
         store.log(state, GameLog.LOG_PLAYER_PLAYS_STADIUM, {
             name: effect.player.name,

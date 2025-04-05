@@ -6,6 +6,7 @@ const card_types_1 = require("../../game/store/card/card-types");
 const pokemon_types_1 = require("../../game/store/card/pokemon-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
+const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class Fraxure extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -35,6 +36,10 @@ class Fraxure extends pokemon_card_1.PokemonCard {
         this.regulationMark = 'H';
     }
     reduceEffect(store, state, effect) {
+        var _a;
+        if (effect instanceof play_card_effects_1.TrainerTargetEffect && ((_a = effect.target) === null || _a === void 0 ? void 0 : _a.cards.includes(this))) {
+            effect.target = undefined;
+        }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
             const deckTop = new game_1.CardList();

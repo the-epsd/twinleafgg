@@ -1,5 +1,6 @@
 import { Card } from '../../game/store/card/card';
 import { Deerling } from './deerling';
+import { Diglett } from './diglett';
 import { EnergyPouch } from './energy-pouch';
 import { Fennekin } from './fennekin';
 import { Lucario } from './lucario';
@@ -11,6 +12,7 @@ import { Whismur } from './whismur';
 
 export const setFatesCollide: Card[] = [
   new Deerling(),
+  new Diglett(),
   new EnergyPouch(),
   new Fennekin(),
   new Lucario(),

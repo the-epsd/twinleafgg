@@ -21,6 +21,7 @@ export enum PlayCardEffects {
   COIN_FLIP_EFFECT = 'COIN_FLIP_EFFECT',
   TRAINER_CARD_TO_DECK_EFFECT = 'TRAINER_CARD_TO_DECK_EFFECT',
   DISCARD_TO_HAND_EFFECT = 'DISCARD_TO_HAND_EFFECT',
+  TRAINER_TARGET_EFFECT = 'TRAINER_TARGET_EFFECT',
 }
 
 export class AttachEnergyEffect implements Effect {
@@ -187,5 +188,19 @@ export class DiscardToHandEffect implements Effect {
   constructor(player: Player, card: Card) {
     this.player = player;
     this.card = card;
+  }
+}
+
+export class TrainerTargetEffect implements Effect {
+  readonly type: string = PlayCardEffects.TRAINER_TARGET_EFFECT;
+  public preventDefault = false;
+  public player: Player;
+  public trainerCard: TrainerCard;
+  public target: PokemonCardList | undefined;
+
+  constructor(player: Player, trainerCard: TrainerCard, target?: PokemonCardList) {
+    this.player = player;
+    this.trainerCard = trainerCard;
+    this.target = target;
   }
 }

@@ -21,11 +21,13 @@ function* playCard(next, store, state, effect) {
     // We will discard this card after prompt confirmation
     effect.preventDefault = true;
     player.hand.moveCardTo(effect.trainerCard, player.supporter);
+    const deckTop = new card_list_1.CardList();
+    player.deck.moveTo(deckTop, 7);
     // Count tools and items separately
     let trainers = 0;
     let pokemons = 0;
     const blocked = [];
-    player.deck.cards.forEach((c, index) => {
+    deckTop.cards.forEach((c, index) => {
         if (c instanceof trainer_card_1.TrainerCard) {
             trainers += 1;
         }
@@ -41,10 +43,17 @@ function* playCard(next, store, state, effect) {
     const maxPokemons = Math.min(pokemons, 1);
     // Total max is sum of max for each 
     const count = maxTrainers + maxPokemons;
-    const deckTop = new card_list_1.CardList();
-    player.deck.moveTo(deckTop, 7);
     let cards = [];
-    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, deckTop, {}, { min: 0, max: count, allowCancel: false, blocked, maxTrainers, maxPokemons }), selected => {
+    yield store.prompt(state, new choose_cards_prompt_1.ChooseCardsPrompt(player, game_message_1.GameMessage.CHOOSE_CARD_TO_HAND, deckTop, {}, {
+        min: 0,
+        max: count,
+        allowCancel: false,
+        blocked,
+        maxTrainers,
+        maxPokemons,
+        allowDifferentSuperTypes: true,
+        differentTypes: true
+    }), selected => {
         cards = selected || [];
         next();
     });

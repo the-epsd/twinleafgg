@@ -43,7 +43,7 @@ import { TripleAccelerationEnergy } from './triple-acceleration-energy';
 import { Tyrogue } from './tyrogue';
 import { Volcanion } from './volcanion';
 import { Zeraora } from './zeraora';
-
+import { StealthyHood } from './stealthy-hood';
 export const setUnbrokenBonds: Card[] = [
   new Arcanine(),
   new Aron(),
@@ -89,4 +89,5 @@ export const setUnbrokenBonds: Card[] = [
   new Murkrow(),
   new HonchkrowGX(),
   new Gastly(),
+  new StealthyHood(),
 ];

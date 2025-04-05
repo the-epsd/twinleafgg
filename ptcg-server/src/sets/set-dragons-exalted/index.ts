@@ -10,6 +10,7 @@ import { Drifloon } from './drifloon';
 import { Emolga } from './emolga';
 import { Gabite } from './gabite';
 import { Garbodor } from './garbodor';
+import {GiantCape} from './giant-cape';
 import { HoOhEx } from './ho-oh-ex';
 import { Hydreigon } from './hydreigon';
 import { Ninetales } from './ninetales';
@@ -47,4 +48,5 @@ export const setDragonsExalted: Card[] = [
   new ToolScrapper(),
   new Vulpix(),
   new Zweilous(),
+  new GiantCape(),
 ];

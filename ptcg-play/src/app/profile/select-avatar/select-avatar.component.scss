@@ -1,0 +1,48 @@
+@import '../../../../src/theme/variables.scss';
+
+.ptcg-avatar-grid {
+  padding: map-get($padding, normal);
+
+  .ptcg-avatar-grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: map-get($padding, normal);
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .ptcg-avatar-grid-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: map-get($padding, small);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background-color: rgba(255, 255, 255, 0.05);
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      transform: scale(1.05);
+    }
+
+    &.ptcg-avatar-selected {
+      background-color: rgba(68, 144, 88, 0.2);
+      border: 2px solid #449058;
+    }
+  }
+
+  .ptcg-avatar-image {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    margin-bottom: map-get($padding, small);
+    object-fit: cover;
+  }
+
+  .ptcg-avatar-name {
+    text-align: center;
+    font-size: 14px;
+    color: #fff;
+  }
+}

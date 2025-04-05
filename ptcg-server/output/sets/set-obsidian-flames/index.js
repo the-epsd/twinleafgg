@@ -5,7 +5,7 @@ const absol_ex_1 = require("./absol-ex");
 const barboach_1 = require("./barboach");
 const bellibolt_1 = require("./bellibolt");
 const bonsly_1 = require("./bonsly");
-const card_images_1 = require("./card-images");
+const other_prints_1 = require("./other-prints");
 const charizard_ex_1 = require("./charizard-ex");
 const charmander_1 = require("./charmander");
 const charmeleon_1 = require("./charmeleon");
@@ -50,6 +50,8 @@ const togekiss_1 = require("./togekiss");
 const togepi_1 = require("./togepi");
 const togetic_1 = require("./togetic");
 const town_store_1 = require("./town-store");
+const toxel_1 = require("./toxel");
+const toxtricity_1 = require("./toxtricity");
 const tympole_1 = require("./tympole");
 const tyranitar_ex_1 = require("./tyranitar-ex");
 const varoom_1 = require("./varoom");
@@ -58,7 +60,7 @@ const victini_ex_1 = require("./victini-ex");
 const whiscash_1 = require("./whiscash");
 exports.setObsidianFlames = [
     new absol_ex_1.Absolex(),
-    new card_images_1.ArvenOBF(),
+    new other_prints_1.ArvenOBF(),
     new barboach_1.Barboach(),
     new bonsly_1.Bonsly(),
     new charizard_ex_1.Charizardex(),
@@ -102,6 +104,8 @@ exports.setObsidianFlames = [
     new togepi_1.Togepi(),
     new togetic_1.Togetic(),
     new togekiss_1.Togekiss(),
+    new toxel_1.Toxel(),
+    new toxtricity_1.Toxtricity(),
     new victini_ex_1.Victiniex(),
     new eiscue_ex_1.Eiscueex(),
     new miraidon_ex_1.Miraidonex(),

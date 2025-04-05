@@ -33,18 +33,25 @@ export class SocketService {
     if (this.socket) {
       this.socket.off('connect');
       this.socket.off('disconnect');
+      this.socket.off('connect_error');
+      this.socket.off('reconnect');
+      this.socket.off('reconnect_attempt');
+      this.socket.off('reconnect_error');
+      this.socket.off('reconnect_failed');
+      this.socket.off('ping');
     }
 
     this.socket = io(apiUrl, {
       autoConnect: false,
       reconnection: true,
-      reconnectionAttempts: Infinity,
+      reconnectionAttempts: 10,
       reconnectionDelay: 1000,
-      reconnectionDelayMax: 10000,
-      timeout: 30000,
+      reconnectionDelayMax: 5000,
+      timeout: 20000,
       transports: ['websocket'],
       forceNew: true,
-      query: {}
+      query: {},
+      randomizationFactor: 0.5
     });
 
     this.socket.on('connect', () => {
@@ -54,39 +61,79 @@ export class SocketService {
     });
 
     this.socket.on('connect_error', (error) => {
-      console.error('[Socket] Connection error:', error);
+      if (!error.message.includes('xhr poll error') && !error.message.includes('network error')) {
+        console.error('[Socket] Connection error:', error.message);
+      }
+      const delay = Math.min(1000 * Math.pow(2, this.socket.io.reconnectionAttempts()), 5000);
+      setTimeout(() => {
+        if (!this.socket.connected) {
+          this.socket.connect();
+        }
+      }, delay);
     });
 
     this.socket.on('disconnect', (reason) => {
-      console.log('[Socket] Disconnected from server. Reason:', reason);
+      console.log(`[Socket] Disconnected: ${reason}`);
       this.connectionSubject.next(false);
 
-      // If the server closed the connection, try to reconnect
-      if (reason === 'io server disconnect') {
-        this.socket.connect();
+      switch (reason) {
+        case 'io server disconnect':
+          console.log('[Socket] Server initiated disconnect, attempting reconnect');
+          this.socket.connect();
+          break;
+        case 'transport close':
+          const delay = Math.min(1000 * Math.pow(2, this.socket.io.reconnectionAttempts()), 5000);
+          console.log(`[Socket] Transport closed, reconnecting in ${delay}ms`);
+          setTimeout(() => {
+            if (!this.socket.connected) {
+              this.socket.connect();
+            }
+          }, delay);
+          break;
+        case 'ping timeout':
+          console.log('[Socket] Ping timeout, attempting immediate reconnect');
+          this.socket.connect();
+          break;
+        default:
+          const defaultDelay = Math.min(1000 * Math.pow(2, this.socket.io.reconnectionAttempts()), 5000);
+          console.log(`[Socket] Unknown disconnect reason, reconnecting in ${defaultDelay}ms`);
+          setTimeout(() => {
+            if (!this.socket.connected) {
+              this.socket.connect();
+            }
+          }, defaultDelay);
       }
     });
 
     this.socket.on('reconnect', (attemptNumber) => {
-      console.log(`[Socket] Reconnected to server after ${attemptNumber} attempts`);
+      console.log(`[Socket] Reconnected after ${attemptNumber} attempts`);
+      this.connectionSubject.next(true);
+      this.lastPingTime = Date.now();
     });
 
     this.socket.on('reconnect_attempt', (attemptNumber) => {
-      console.log(`[Socket] Attempting to reconnect (attempt ${attemptNumber})`);
+      if (attemptNumber % 5 === 0) {
+        console.log(`[Socket] Reconnection attempt ${attemptNumber}`);
+      }
     });
 
     this.socket.on('reconnect_error', (error) => {
-      console.error('[Socket] Reconnection error:', error);
+      if (!error.message.includes('xhr poll error') && !error.message.includes('network error')) {
+        console.error('[Socket] Reconnection error:', error.message);
+      }
     });
 
     this.socket.on('reconnect_failed', () => {
-      console.error('[Socket] Failed to reconnect after all attempts');
+      console.error('[Socket] Reconnection failed after all attempts');
+      this.connectionSubject.next(false);
     });
 
-    // Monitor connection health
     this.socket.io.on('ping', () => {
-      console.log('[Socket] Ping sent to server');
-      this.lastPingTime = Date.now();
+      const now = Date.now();
+      if (this.lastPingTime > 0 && now - this.lastPingTime > 30000) {
+        console.log(`[Socket] Delayed ping (${now - this.lastPingTime}ms)`);
+      }
+      this.lastPingTime = now;
     });
   }
 
@@ -120,10 +167,8 @@ export class SocketService {
 
     (this.socket.io.opts.query as any).token = authToken;
 
-    // Clear any existing listeners before connecting
     this.off();
 
-    // Ensure clean state before connecting
     if (this.socket.connected) {
       this.socket.disconnect();
     }
@@ -131,27 +176,20 @@ export class SocketService {
     this.socket.connect();
     this.enabled = true;
 
-    // Add connection monitoring
     this.startConnectionMonitoring();
   }
 
   private startConnectionMonitoring() {
-    // Monitor for potential frozen connections
     setInterval(() => {
       if (this.enabled && !this.socket.connected) {
-        console.log('[Socket] Connection appears frozen, attempting to reconnect...');
-        this.socket.disconnect();
-        this.socket.connect();
+        const timeSinceLastPing = Date.now() - this.lastPingTime;
+        if (this.lastPingTime > 0 && timeSinceLastPing > 45000) {
+          console.log(`[Socket] Connection frozen (no ping for ${Math.floor(timeSinceLastPing / 1000)}s), reconnecting...`);
+          this.socket.disconnect();
+          this.socket.connect();
+        }
       }
-
-      // Check if we haven't received a ping in more than 45 seconds
-      const timeSinceLastPing = Date.now() - this.lastPingTime;
-      if (this.enabled && this.lastPingTime > 0 && timeSinceLastPing > 45000) {
-        console.log('[Socket] No ping received for 45 seconds, attempting to reconnect...');
-        this.socket.disconnect();
-        this.socket.connect();
-      }
-    }, 30000); // Check every 30 seconds
+    }, 30000);
   }
 
   public disable() {

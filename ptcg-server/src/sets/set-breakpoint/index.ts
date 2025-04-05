@@ -3,7 +3,7 @@ import { Bayleef } from './bayleef';
 import { Delinquent } from './delinquent';
 import { FightingFuryBelt } from './fighting-fury-belt';
 import { Froakie } from './froakie';
-import {Garbodor} from './garbodor';
+import { Garbodor } from './garbodor';
 import { Greninja } from './greninja';
 import { Kricketot } from './kricketot';
 import { ManaphyEX } from './manaphy-ex';
@@ -13,6 +13,7 @@ import { ReverseValley } from './reverse-valley';
 import { SplashEnergy } from './splash-energy';
 import { Staryu } from './staryu';
 import { Sudowoodo } from './sudowoodo';
+import { Trubbish } from './trubbish';
 import { Tympole } from './tympole';
 import { Zoroark } from './zoroark';
 
@@ -29,6 +30,7 @@ export const setBreakpoint: Card[] = [
   new SplashEnergy(),
   new Staryu(),
   new Sudowoodo(),
+  new Trubbish(),
   new Tympole(),
   new Zoroark(),
   new ManaphyEX(),

@@ -1,6 +1,6 @@
 import { CardType, EnergyType } from '../../game/store/card/card-types';
 import { EnergyCard } from '../../game/store/card/energy-card';
-import { CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
+import { CheckPokemonTypeEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { DEAL_DAMAGE } from '../../game/store/prefabs/prefabs';
 
@@ -31,7 +31,11 @@ The [F] Pokémon this card is attached to takes 20 less damage from attacks from
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (DEAL_DAMAGE(effect) && effect.target?.cards?.includes(this)) {
+    if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
+      effect.energyMap.push({ card: this, provides: [CardType.FIGHTING] });
+    }
+
+    if (DEAL_DAMAGE(effect) && effect.target.cards.includes(this)) {
       const checkPokemonType = new CheckPokemonTypeEffect(effect.target);
       store.reduceEffect(state, checkPokemonType);
 

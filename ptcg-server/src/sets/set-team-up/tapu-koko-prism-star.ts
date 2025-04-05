@@ -11,7 +11,7 @@ export class TapuKokoPrismStar extends PokemonCard {
   public hp: number = 130;
   public weakness = [{ type: CardType.FIGHTING }];
   public resistance = [{ type: CardType.METAL, value: -20 }];
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public retreat = [CardType.COLORLESS];
 
   public powers = [{
     name: 'Dance of the Ancients',

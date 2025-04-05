@@ -52,6 +52,8 @@
           [prompt]="prompt"></ptcg-prompt-discard-energy>
         <ptcg-prompt-confirm-cards *ngSwitchCase="'Confirm cards'" [gameState]="gameState"
           [prompt]="prompt"></ptcg-prompt-confirm-cards>
+        <ptcg-prompt-select-option *ngSwitchCase="'SelectOption'" [gameState]="gameState"
+          [prompt]="prompt"></ptcg-prompt-select-option>
         <div *ngSwitchDefault translate [translateParams]="{type: prompt?.type}">PROMPT_UNKNOWN_TYPE</div>
       </div>
     </div>

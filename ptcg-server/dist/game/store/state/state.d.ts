@@ -35,4 +35,5 @@ export declare class State {
         [playerId: number]: Attack;
     };
     isSuddenDeath?: boolean;
+    benchSizeChangeHandled: boolean;
 }

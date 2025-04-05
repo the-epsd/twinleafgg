@@ -61,7 +61,7 @@ export class Golbat extends PokemonCard {
       return state;
     }
 
-    if (WAS_ATTACK_USED(effect, 1, this)) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, 1);
     }
     return state;

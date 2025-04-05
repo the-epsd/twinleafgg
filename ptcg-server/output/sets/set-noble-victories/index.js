@@ -4,7 +4,7 @@ exports.setNobleVictories = void 0;
 const archen_1 = require("./archen");
 const archeops_1 = require("./archeops");
 const blitzle_1 = require("./blitzle");
-const card_images_1 = require("./card-images");
+const other_prints_1 = require("./other-prints");
 const chandelure_1 = require("./chandelure");
 const durant_1 = require("./durant");
 const eelektrik_1 = require("./eelektrik");
@@ -39,7 +39,7 @@ exports.setNobleVictories = [
     new petilil_1.Petilil(),
     new plume_fossil_1.PlumeFossil(),
     new seismitoad_1.Seismitoad(),
-    new card_images_1.SuperRodNVI(),
+    new other_prints_1.SuperRodNVI(),
     new terrakion_1.Terrakion(),
     new trubbish_1.Trubbish(),
     new tympole_1.Tympole(),

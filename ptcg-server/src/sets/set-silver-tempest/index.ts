@@ -28,6 +28,7 @@ import { Klang } from './klang';
 import { Klink } from './klink';
 import { Klinklang } from './klinklang';
 import { Lance } from './lance';
+import { LeafyCamoPoncho } from './leafy-camo-poncho';
 import { Litten } from './litten';
 import { LugiaV } from './lugia-v';
 import { LugiaVSTAR } from './lugia-vstar';
@@ -93,6 +94,7 @@ export const setSilverTempest: Card[] = [
   new Klink(),
   new Klinklang(),
   new Lance(),
+  new LeafyCamoPoncho(),
   new Litten(),
   new LugiaV(),
   new LugiaVSTAR(),

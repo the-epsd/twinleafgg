@@ -39,7 +39,7 @@ class BuddyBuddyRescue extends trainer_card_1.TrainerCard {
                     pokemonInOpponentsDiscard += 1;
                 }
                 else {
-                    blocked.push(index);
+                    blockedOpponent.push(index);
                 }
             });
             if (pokemonInOpponentsDiscard === 0 && pokemonInPlayersDiscard === 0) {
@@ -51,9 +51,6 @@ class BuddyBuddyRescue extends trainer_card_1.TrainerCard {
             if (discardEffect.preventDefault) {
                 // If prevented, just discard the card and return
                 player.supporter.moveCardTo(effect.trainerCard, player.discard);
-                return state;
-            }
-            if (!pokemonInOpponentsDiscard) {
                 return state;
             }
             if (pokemonInOpponentsDiscard > 0) {

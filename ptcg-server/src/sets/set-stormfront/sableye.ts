@@ -1,16 +1,12 @@
+import { ChooseCardsPrompt, TrainerCard } from '../../game';
+import { GameLog, GameMessage } from '../../game/game-message';
+import { CardType, Stage, SuperType, TrainerType } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SuperType, TrainerType } from '../../game/store/card/card-types';
-import { StoreLike } from '../../game/store/store-like';
-import { State } from '../../game/store/state/state';
-import { Effect } from '../../game/store/effects/effect';
 import { PowerType } from '../../game/store/card/pokemon-types';
-import { AttackEffect } from '../../game/store/effects/game-effects';
-import { ChooseCardsPrompt, TrainerCard, StateUtils, ShuffleDeckPrompt } from '../../game';
-import { GameMessage, GameLog } from '../../game/game-message';
-import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { CheckHpEffect } from '../../game/store/effects/check-effects';
-import { WhoBeginsEffect } from '../../game/store/effects/game-phase-effects';
-import { DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { Effect } from '../../game/store/effects/effect';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { State } from '../../game/store/state/state';
+import { StoreLike } from '../../game/store/store-like';
 
 export class Sableye extends PokemonCard {
 
@@ -64,72 +60,43 @@ export class Sableye extends PokemonCard {
   public setNumber: string = '48';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Overeager
-    if (effect instanceof WhoBeginsEffect) {
-      const cardList = StateUtils.findCardList(state, this);
-      const player = StateUtils.findOwner(state, cardList);
-      const opponent = StateUtils.getOpponent(state, player);
-      const opponentCard = opponent.active.getPokemonCard();
-      if (opponentCard && opponentCard.powers.some(p => p.name === 'Overeager')) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      const player = effect.player;
+
+      const itemCount = player.discard.cards.filter(c => {
+        return c instanceof TrainerCard && c.trainerType === TrainerType.ITEM;
+      }).length;
+
+      if (itemCount === 0) {
         return state;
       }
-      if (cardList === player.active) {
-        store.log(state, GameLog.LOG_STARTS_BECAUSE_OF_ABILITY, {
-          name: player.name,
-          ability: this.powers[0].name
+
+      const max = Math.min(1, itemCount);
+      const min = max;
+
+      return store.prompt(state, [
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_HAND,
+          player.discard,
+          { superType: SuperType.TRAINER, trainerType: TrainerType.ITEM },
+          { min, max, allowCancel: false }
+        )], selected => {
+        const cards = selected || [];
+        player.discard.moveCardsTo(cards, player.hand);
+        
+        cards.forEach((card, index) => {
+          player.deck.moveCardTo(card, player.hand);
+          store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
         });
-        effect.player = player;
-      }
-      return state;
-    }
-
-    // Impersonate
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const player = effect.player;
-
-      store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_COPY_EFFECT,
-        player.deck,
-        { superType: SuperType.TRAINER, trainerType: TrainerType.SUPPORTER },
-        { min: 1, max: 1, allowCancel: true }
-      ), (cards) => {
-        if (!cards || cards.length === 0) {
-          return;
-        }
-        const trainerCard = cards[0] as TrainerCard;
-        const deckIndex = player.deck.cards.indexOf(trainerCard);
-        player.deck.moveCardTo(trainerCard, player.hand);
-        try {
-          const playTrainer = new TrainerEffect(player, trainerCard);
-          store.reduceEffect(state, playTrainer);
-        } catch (error) {
-          player.hand.cards.pop();
-          player.deck.cards.splice(deckIndex, 0, trainerCard);
-          throw error;
-        }
-      });
-
-      return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-        player.deck.applyOrder(order);
       });
     }
-
-    // Overconfident
-    if (effect instanceof DealDamageEffect && effect.attack === this.attacks[1]) {
+    
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      const sourceHp = new CheckHpEffect(player, effect.source);
-      store.reduceEffect(state, sourceHp);
-      const targetHp = new CheckHpEffect(opponent, effect.target);
-      store.reduceEffect(state, targetHp);
-
-      const sourceHpLeft = sourceHp.hp - effect.source.damage;
-      const targetHpLeft = targetHp.hp - effect.target.damage;
-
-      if (sourceHpLeft > targetHpLeft) {
-        effect.damage = 40;
+      
+      if (player.hand.cards.length === 0) {
+        effect.damage += 90;
       }
     }
 

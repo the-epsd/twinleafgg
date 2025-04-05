@@ -23,6 +23,7 @@ import { KorrinasFocus } from './korrinas-focus';
 import { KricketuneV } from './kricketune-v';
 import { LevelBall } from './level-ball';
 import { MimikyuV } from './mimikyu-v';
+import { Morpeko } from './morpeko';
 import { NecrozmaV } from './necrozma-v';
 import { Octillery } from './octillery';
 import { Primeape } from './primeape';
@@ -75,6 +76,7 @@ export const setBattleStyles: Card[] = [
   new KorrinasFocus(),
   new LevelBall(),
   new MimikyuV(),
+  new Morpeko(),
   new NecrozmaV(),
   new Octillery(),
   new Primeape(),
