@@ -22,6 +22,9 @@ cardManager.defineSet(sets.setVendingSeries);
 
 cardManager.defineSet(sets.setBaseSetEnergy);
 
+//E-Card Era
+cardManager.defineSet(sets.setAquapolis);
+
 //ex Era shit
 cardManager.defineSet(sets.setEXHolonPhantoms);
 cardManager.defineSet(sets.setEXHiddenLegends)

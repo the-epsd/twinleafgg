@@ -19,6 +19,8 @@ __exportStar(require("./set-vending-series"), exports);
 __exportStar(require("./set-wotc-promos"), exports);
 //Retro Energy
 __exportStar(require("./set-base-set-energy"), exports);
+//E-Card Era
+__exportStar(require("./set-aquapolis"), exports);
 //ex Era
 __exportStar(require("./set-ex-holon-phantoms"), exports);
 __exportStar(require("./set-ex-hidden-legends"), exports);
