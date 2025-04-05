@@ -73,6 +73,15 @@ export class CardList {
       const index = this.cards.indexOf(cards[i]);
       if (index !== -1) {
         const card = this.cards.splice(index, 1);
+
+        // If this is a PokemonCardList with the energyCards property, remove the card from energyCards
+        if ('energyCards' in this) {
+          const pokemonList = this as any;
+          if (typeof pokemonList.removePokemonAsEnergy === 'function') {
+            pokemonList.removePokemonAsEnergy(card[0]);
+          }
+        }
+
         destination.cards.push(card[0]);
       }
     }
@@ -104,10 +113,10 @@ export class CardList {
   public count(query: Partial<Card>): number {
     return this.filter(query).length;
   }
-  
+
   public sort(superType: SuperType = SuperType.POKEMON) {
     this.cards.sort((a, b) => {
-      
+
       const result = this.compareSupertype(a.superType) - this.compareSupertype(b.superType);
 
       // not of the same supertype
@@ -136,7 +145,7 @@ export class CardList {
           }
         }
       }
-      
+
       // subtype matches, sort by name
       if (a.name < b.name) {
         return -1;
@@ -145,14 +154,14 @@ export class CardList {
       }
     });
   }
-  
+
   private compareSupertype(input: SuperType) {
     if (input === SuperType.POKEMON) return 1;
     if (input === SuperType.TRAINER) return 2;
     if (input === SuperType.ENERGY) return 3;
     return Infinity;
   }
-  
+
   private compareTrainerType(input: TrainerType) {
     if (input === TrainerType.SUPPORTER) return 1;
     if (input === TrainerType.ITEM) return 2;
@@ -160,8 +169,8 @@ export class CardList {
     if (input === TrainerType.STADIUM) return 4;
     return Infinity;
   }
-  
-  private compareEnergyType (input: EnergyType) {
+
+  private compareEnergyType(input: EnergyType) {
     if (input === EnergyType.BASIC) return 1;
     if (input === EnergyType.SPECIAL) return 2;
     return Infinity;

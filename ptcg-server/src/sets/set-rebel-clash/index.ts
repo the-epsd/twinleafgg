@@ -10,6 +10,8 @@ import { Caterpie } from './caterpie';
 import { Coalossal } from './coalossal';
 import { CursedShovel } from './cursed-shovel';
 import { Dragapult } from './dragapult';
+import { DragapultV } from './dragapult-v';
+import { DragapultVMAX } from './dragapult-vmax';
 import { Duraludon } from './duraludon';
 import { Electivire } from './electivire';
 import { GalarMine } from './galar-mine';
@@ -37,6 +39,8 @@ export const setRebelClash: Card[] = [
   new Caterpie(),
   new Coalossal(),
   new Dragapult(),
+  new DragapultV(),
+  new DragapultVMAX(),
   new Duraludon(),
   new Electivire(),
   new GalarMine(),

@@ -28,6 +28,6 @@ export declare class HolonsCastform extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
-    energyEffectActivated: boolean;
+    provides: CardType[];
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

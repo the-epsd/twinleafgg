@@ -2,7 +2,7 @@ import { Card } from '../../game/store/card/card';
 import { Archen } from './archen';
 import { Archeops } from './archeops';
 import { Blitzle } from './blitzle';
-import { SuperRodNVI } from './card-images';
+import { SuperRodNVI } from './other-prints';
 import { Chandelure } from './chandelure';
 import { Durant } from './durant';
 import { Eelektrik } from './eelektrik';

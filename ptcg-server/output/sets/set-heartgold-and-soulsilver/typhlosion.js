@@ -63,12 +63,12 @@ class Typhlosion extends pokemon_card_1.PokemonCard {
         this.fullName = 'Typhlosion HS';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '110';
-        this.AFTERBURNER_MAREKER = 'DYNAMOTOR_MAREKER';
+        this.AFTERBURNER_MARKER = 'AFTERBURNER_MARKER';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.PlayPokemonEffect && effect.pokemonCard === this) {
             const player = effect.player;
-            player.marker.removeMarker(this.AFTERBURNER_MAREKER, this);
+            player.marker.removeMarker(this.AFTERBURNER_MARKER, this);
             return state;
         }
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
@@ -88,7 +88,7 @@ class Typhlosion extends pokemon_card_1.PokemonCard {
             if (!hasEnergyInDiscard) {
                 throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
             }
-            if (player.marker.hasMarker(this.AFTERBURNER_MAREKER, this)) {
+            if (player.marker.hasMarker(this.AFTERBURNER_MARKER, this)) {
                 throw new game_1.GameError(game_1.GameMessage.POWER_ALREADY_USED);
             }
             return store.prompt(state, new attach_energy_prompt_1.AttachEnergyPrompt(player.id, game_1.GameMessage.ATTACH_ENERGY_CARDS, player.discard, game_1.PlayerType.BOTTOM_PLAYER, [game_1.SlotType.ACTIVE, game_1.SlotType.BENCH], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC, name: 'Fire Energy' }, { allowCancel: true, min: 1, max: 1 }), transfers => {
@@ -97,7 +97,7 @@ class Typhlosion extends pokemon_card_1.PokemonCard {
                 if (transfers.length === 0) {
                     return;
                 }
-                player.marker.addMarker(this.AFTERBURNER_MAREKER, this);
+                player.marker.addMarker(this.AFTERBURNER_MARKER, this);
                 for (const transfer of transfers) {
                     const target = game_1.StateUtils.getTarget(state, player, transfer.to);
                     player.discard.moveCardTo(transfer.card, target);
@@ -106,7 +106,7 @@ class Typhlosion extends pokemon_card_1.PokemonCard {
             });
         }
         if (effect instanceof game_phase_effects_1.EndTurnEffect) {
-            effect.player.marker.removeMarker(this.AFTERBURNER_MAREKER, this);
+            effect.player.marker.removeMarker(this.AFTERBURNER_MARKER, this);
         }
         return state;
     }

@@ -21,7 +21,7 @@ export class Blisseyex extends PokemonCard {
 
   public weakness = [{ type: CardType.FIGHTING }];
 
-  public hp: number = 310;
+  public hp: number = 300;
 
   public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 

@@ -3,7 +3,7 @@ import { Dartrix } from '../set-shining-fates/dartrix';
 import { AlolanGrimer } from './alolan-grimer';
 import { AlolanMuk } from './alolan-muk';
 import { AlolanRattata } from './alolan_rattata';
-import { EnergyRetrievalSUM, ExpShareSUM, NestBallSUM, RareCandySUM, RotomDexSR } from './card-images';
+import { EnergyRetrievalSUM, ExpShareSUM, NestBallSUM, RareCandySUM, RotomDexSR } from './other-prints';
 import { DecidueyeGX } from './decidueye-gx';
 import { Dragonair } from './dragonair';
 import { Eevee } from './eevee';

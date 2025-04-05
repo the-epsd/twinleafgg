@@ -5,7 +5,7 @@ const dartrix_1 = require("../set-shining-fates/dartrix");
 const alolan_grimer_1 = require("./alolan-grimer");
 const alolan_muk_1 = require("./alolan-muk");
 const alolan_rattata_1 = require("./alolan_rattata");
-const card_images_1 = require("./card-images");
+const other_prints_1 = require("./other-prints");
 const decidueye_gx_1 = require("./decidueye-gx");
 const dragonair_1 = require("./dragonair");
 const eevee_1 = require("./eevee");
@@ -44,10 +44,10 @@ exports.setSunAndMoon = [
     new repel_1.Repel(),
     new timer_ball_1.TimerBall(),
     // Reprints
-    new card_images_1.NestBallSUM(),
-    new card_images_1.RareCandySUM(),
-    new card_images_1.EnergyRetrievalSUM(),
-    new card_images_1.ExpShareSUM(),
+    new other_prints_1.NestBallSUM(),
+    new other_prints_1.RareCandySUM(),
+    new other_prints_1.EnergyRetrievalSUM(),
+    new other_prints_1.ExpShareSUM(),
     // Full Arts
-    new card_images_1.RotomDexSR(),
+    new other_prints_1.RotomDexSR(),
 ];

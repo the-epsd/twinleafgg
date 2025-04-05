@@ -1,4 +1,5 @@
 import { Card } from '../../game/store/card/card';
+import { Aipom } from './aipom';
 import { ArceusDialgaPalkiaGX } from './arceus-dialga-palkia-gx';
 import { BellelbaAndBrycenMan } from './bellelba-and-brycen-man';
 import { Blacephalon } from './blacephalon';
@@ -19,6 +20,7 @@ import { GreatCatcher } from './great-catcher';
 import { GuzmaAndHala } from './guzma-and-hala';
 import { Guzzlord } from './guzzlord';
 import { LanasFishingRod } from './lanas-fishing-rod';
+import { Lanturn } from './lanturn';
 import { LilliesPokeDoll } from './lillies-poke-doll';
 import { Lillipup } from './lillipup';
 import { MallowAndLana } from './mallow-and-lana';
@@ -49,6 +51,7 @@ import { OricorioGX } from './oricorio-gx';
 
 
 export const setCosmicEclipse: Card[] = [
+  new Aipom(),
   new ArceusDialgaPalkiaGX(),
   new BellelbaAndBrycenMan(),
   new Blacephalon(),
@@ -69,6 +72,7 @@ export const setCosmicEclipse: Card[] = [
   new GuzmaAndHala(),
   new Guzzlord(),
   new LanasFishingRod(),
+  new Lanturn(),
   new LilliesPokeDoll(),
   new Lillipup(),
   new MallowAndLana(),

@@ -1,6 +1,6 @@
 import { Card } from '../../game/store/card/card';
 import { Accelgor } from './accelgor';
-import { DarkPatchDEX, EnhancedHammerDEX } from './card-images';
+import { DarkPatchDEX, EnhancedHammerDEX } from './other-prints';
 import { DarkClaw } from './dark-claw';
 import { DarkraiEx } from './darkrai-ex';
 import { Empoleon } from './empoleon';

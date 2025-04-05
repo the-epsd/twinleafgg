@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setPaldeaFates = void 0;
 const atticus_1 = require("./atticus");
-const card_images_1 = require("./card-images");
+const other_prints_1 = require("./other-prints");
 const charmeleon_1 = require("./charmeleon");
 const clive_1 = require("./clive");
 const espathra_ex_1 = require("./espathra-ex");
@@ -14,6 +14,7 @@ const haunter_1 = require("./haunter");
 const kilowattrel_1 = require("./kilowattrel");
 const mime_jr_1 = require("./mime-jr");
 const moonlight_hill_1 = require("./moonlight-hill");
+const scraggy_1 = require("./scraggy");
 const shiny_vault_1 = require("./shiny-vault");
 const students_in_paldea_1 = require("./students-in-paldea");
 const technical_machine_crisis_punch_1 = require("./technical-machine-crisis-punch");
@@ -24,6 +25,7 @@ exports.setPaldeaFates = [
     new espathra_ex_1.Espathraex(),
     new moonlight_hill_1.MoonlightHill(),
     new students_in_paldea_1.StudentsInPaldea(),
+    new scraggy_1.Scraggy(),
     new gengar_1.Gengar(),
     new kilowattrel_1.Kilowattrel(),
     new mime_jr_1.MimeJr(),
@@ -33,26 +35,26 @@ exports.setPaldeaFates = [
     new technical_machine_crisis_punch_1.TechnicalMachineCrisisPunch(),
     new great_tusk_ex_1.GreatTuskex(),
     //Reprints
-    new card_images_1.CharmanderPAF(),
-    new card_images_1.MimikyuPAF(),
-    new card_images_1.RareCandyPAF(),
-    new card_images_1.CharizardexPAF(),
-    new card_images_1.ElectricGeneratorPAF(),
-    new card_images_1.IonoPAF(),
-    new card_images_1.NestBallPAF(),
-    new card_images_1.ProfessorsResearchPAF(),
-    new card_images_1.ProfessorsResearch2PAF(),
-    new card_images_1.UltraBallPAF(),
-    new card_images_1.ArmarougePAF(),
-    new card_images_1.NatuPAF(),
-    new card_images_1.XatuPAF(),
-    new card_images_1.CharcadetPAF(),
-    new card_images_1.RaltsPAF(),
-    new card_images_1.GardevoirexPAF(),
-    new card_images_1.NoibatPAF(),
-    new card_images_1.NoivernexPAF(),
-    new card_images_1.SquawkabillyexPAF(),
-    new card_images_1.ArtazonPAF(),
+    new other_prints_1.CharmanderPAF(),
+    new other_prints_1.MimikyuPAF(),
+    new other_prints_1.RareCandyPAF(),
+    new other_prints_1.CharizardexPAF(),
+    new other_prints_1.ElectricGeneratorPAF(),
+    new other_prints_1.IonoPAF(),
+    new other_prints_1.NestBallPAF(),
+    new other_prints_1.ProfessorsResearchPAF(),
+    new other_prints_1.ProfessorsResearch2PAF(),
+    new other_prints_1.UltraBallPAF(),
+    new other_prints_1.ArmarougePAF(),
+    new other_prints_1.NatuPAF(),
+    new other_prints_1.XatuPAF(),
+    new other_prints_1.CharcadetPAF(),
+    new other_prints_1.RaltsPAF(),
+    new other_prints_1.GardevoirexPAF(),
+    new other_prints_1.NoibatPAF(),
+    new other_prints_1.NoivernexPAF(),
+    new other_prints_1.SquawkabillyexPAF(),
+    new other_prints_1.ArtazonPAF(),
     //Shiny Vault
     new shiny_vault_1.OddishSV(),
     new shiny_vault_1.GloomSV(),

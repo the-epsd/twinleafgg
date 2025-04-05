@@ -13,7 +13,7 @@ const azulmarill_1 = require("./azulmarill");
 const black_kyurem_ex_1 = require("./black-kyurem-ex");
 const blitzle_1 = require("./blitzle");
 const capsakid_1 = require("./capsakid.");
-const card_images_1 = require("./card-images");
+const other_prints_1 = require("./other-prints");
 const celebration_fanfare_1 = require("./celebration-fanfare");
 const centiskorch_1 = require("./centiskorch");
 const ceruledge_1 = require("./ceruledge");
@@ -221,8 +221,8 @@ exports.setSurgingSparks = [
     new armarouge_1.Armarouge(),
     new rotom_1.Rotom(),
     // Reprints
-    new card_images_1.ScrambleSwitchSSP(),
-    new card_images_1.CounterGainSSP(),
+    new other_prints_1.ScrambleSwitchSSP(),
+    new other_prints_1.CounterGainSSP(),
     // Full Art
     new full_art_1.LarvestaIR(),
     new full_art_1.FeebasIR(),

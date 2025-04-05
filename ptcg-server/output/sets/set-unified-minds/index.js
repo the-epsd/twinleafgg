@@ -8,13 +8,16 @@ const cherish_ball_1 = require("./cherish-ball");
 const cottonee_1 = require("./cottonee");
 const cryogonal_1 = require("./cryogonal");
 const dark_city_1 = require("./dark-city");
+const drilbur_1 = require("./drilbur");
 const eelektross_1 = require("./eelektross");
 const elgyem_1 = require("./elgyem");
+const excadrill_1 = require("./excadrill");
 const flyinium_z_air_slash_1 = require("./flyinium-z-air-slash");
 const froslass_1 = require("./froslass");
 const garchomp_1 = require("./garchomp");
 const garchomp_and_giratina_gx_1 = require("./garchomp-and-giratina-gx");
 const golisopod_1 = require("./golisopod");
+const grimsley_1 = require("./grimsley");
 const hapu_1 = require("./hapu");
 const hoopa_1 = require("./hoopa");
 const karate_belt_1 = require("./karate-belt");
@@ -38,6 +41,7 @@ const wimpod_1 = require("./wimpod");
 const sneasel_1 = require("./sneasel");
 const weavile_gx_1 = require("./weavile-gx");
 const mega_sableye_tyranitar_gx_1 = require("./mega-sableye-tyranitar-gx");
+const pokemon_research_lab_1 = require("./pokemon-research-lab");
 exports.setUnifiedMinds = [
     new alolan_grimer_1.AlolanGrimer(),
     new alolan_raichu_1.AlolanRaichu(),
@@ -45,7 +49,9 @@ exports.setUnifiedMinds = [
     new cherish_ball_1.CherishBall(),
     new cottonee_1.Cottonee(),
     new cryogonal_1.Cryogonal(),
+    new excadrill_1.Excadrill(),
     new dark_city_1.DarkCity(),
+    new drilbur_1.Drilbur(),
     new eelektross_1.Eelektross(),
     new elgyem_1.Elgyem(),
     new flyinium_z_air_slash_1.FlyiniumZAirSlash(),
@@ -53,6 +59,7 @@ exports.setUnifiedMinds = [
     new garchomp_and_giratina_gx_1.GarchompGiratinaGX(),
     new garchomp_1.Garchomp(),
     new golisopod_1.Golisopod(),
+    new grimsley_1.Grimsley(),
     new hapu_1.Hapu(),
     new hoopa_1.Hoopa(),
     new karate_belt_1.KarateBelt(),
@@ -62,6 +69,7 @@ exports.setUnifiedMinds = [
     new munchlax_1.Munchlax(),
     new necrozma_1.Necrozma(),
     new numel_1.Numel(),
+    new pokemon_research_lab_1.PokemonResearchLab(),
     new purrloin_1.Purrloin(),
     new raichu_and_alolan_raichu_gx_1.RaichuAlolanRaichuGX(),
     new recycle_energy_1.RecycleEnergy(),

@@ -1,5 +1,9 @@
-import { TrainerType } from '../../game/store/card/card-types';
+import { TrainerType, CardTag } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
+import { Effect } from '../../game/store/effects/effect';
+import { KnockOutEffect } from '../../game/store/effects/game-effects';
+import { State } from '../../game/store/state/state';
+import { StoreLike } from '../../game/store/store-like';
 
 export class LostCity extends TrainerCard {
 
@@ -22,6 +26,17 @@ export class LostCity extends TrainerCard {
 
   public readonly LOST_CITY_MARKER = 'LOST_CITY_MARKER';
 
+  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    if (effect instanceof KnockOutEffect) {
+      const card = effect.target.getPokemonCard();
+      if (card !== undefined && !card.tags.includes(CardTag.PRISM_STAR)) {
+        // Don't prevent default behavior yet - let other cards handle the knockout first
+        // We'll handle moving to lost zone in the game reducer
+        effect.target.marker.addMarker(this.LOST_CITY_MARKER, this);
+      }
+    }
+    return state;
+  }
 
   // const player = effect.player;
   // const target = effect.target;

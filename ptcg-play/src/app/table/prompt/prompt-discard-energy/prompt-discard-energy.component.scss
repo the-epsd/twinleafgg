@@ -426,13 +426,11 @@ h3 {
 .energy-icon {
   width: 32px;
   height: 32px;
-  border-radius: 50%;
+  clip-path: circle(34%);
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  // background-color: rgba(0, 0, 0, 0.6);
-  // box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
   margin-right: -15px;
 
   /* First 5 icons get incrementally higher z-index to layer properly */
@@ -460,6 +458,13 @@ h3 {
     width: 100%;
     height: 100%;
     object-fit: contain;
+  }
+
+  .card-image {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
   }
 }
 

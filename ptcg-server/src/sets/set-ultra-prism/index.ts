@@ -25,12 +25,14 @@ import { PokemonFanClub } from './pokemon-fan-club';
 import { Riolu } from './riolu';
 import { Roselia } from './roselia';
 import { Shiinotic } from './shiinotic';
+import {SilvallyGX} from './silvally-gx';
 import { Sneasel } from './sneasel';
 import { SolgaleoPrismStar } from './solgaleo-prism-star';
 import { Spiritomb } from './spiritomb';
 import { SuperBoostEnergy } from './super-boost-energy-prism-star';
 import { TapuLele } from './tapu-lele';
 import { Turtwig } from './turtwig';
+import {TypeNull} from './type-null';
 import { UnitEnergyGRW } from './unit-energy-grw';
 import { UnitEnergyLPM } from './unit-energy-lpm';
 import { Volkner } from './volkner';
@@ -72,5 +74,7 @@ export const setUltraPrism: Card[] = [
   new Weavile(),
   new Spiritomb(),
   new SolgaleoPrismStar(),
-  new SuperBoostEnergy()
+  new SuperBoostEnergy(),
+  new TypeNull(),
+  new SilvallyGX(),
 ];

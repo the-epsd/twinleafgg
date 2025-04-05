@@ -6,7 +6,7 @@ const adventurers_discovery_1 = require("./adventurers-discovery");
 const azumarill_1 = require("./azumarill");
 const basculin_1 = require("./basculin");
 const battle_vip_pass_1 = require("./battle-vip-pass");
-const card_images_1 = require("./card-images");
+const other_prints_1 = require("./other-prints");
 const cloyster_1 = require("./cloyster");
 const cook_1 = require("./cook");
 const cram_o_matic_1 = require("./cram-o-matic");
@@ -22,6 +22,8 @@ const galarian_linoone_1 = require("./galarian-linoone");
 const genesect_v_1 = require("./genesect-v");
 const gengar_v_1 = require("./gengar-v");
 const gengar_vmax_1 = require("./gengar-vmax");
+const greedent_v_1 = require("./greedent-v");
+const greedent_vmax_1 = require("./greedent-vmax");
 const heatmor_1 = require("./heatmor");
 const inteleon_v_1 = require("./inteleon-v");
 const inteleon_vmax_1 = require("./inteleon-vmax");
@@ -66,10 +68,12 @@ exports.setFusionStrike = [
     new genesect_v_1.GenesectV(),
     new gengar_v_1.GengarV(),
     new gengar_vmax_1.GengarVMAX(),
+    new greedent_v_1.GreedentV(),
+    new greedent_vmax_1.GreedentVMAX(),
     new heatmor_1.Heatmor(),
     new inteleon_v_1.InteleonV(),
     new inteleon_vmax_1.InteleonVMAX(),
-    new card_images_1.JudgeFST(),
+    new other_prints_1.JudgeFST(),
     new lapras_1.Lapras(),
     new maractus_1.Maractus(),
     new meloetta_1.Meloetta(),

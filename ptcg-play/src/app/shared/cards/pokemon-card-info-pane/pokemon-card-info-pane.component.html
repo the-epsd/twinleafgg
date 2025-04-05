@@ -12,7 +12,8 @@
       <div class="subtitle-hp" *ngIf="getMaxHp()">
         <span class="subtitle-hp-unit" translate>HP</span>
         <span class="subtitle-hp-value" [class.damaged]="getCurrentHp() < getMaxHp()">
-          {{getCurrentHp()}}/{{getMaxHp()}}
+          <!-- {{getCurrentHp()}}/{{getMaxHp()}} -->
+          {{getMainCard().hp}}
         </span>
       </div>
       <div class="subtitle-card-type">
@@ -25,7 +26,7 @@
 
     <div class="subtitle">
       <div class="subtitle-stage">
-        {{Stage[getMainCard().stage]}}
+        {{getFormattedStage(getMainCard().stage)}}
       </div>
       <div class="ptcg-u-spacer"></div>
       <div class="subtitle-evolves-from" *ngIf="getMainCard().evolvesFrom">
@@ -35,8 +36,9 @@
 
     <!-- Powers/Abilities -->
     <div class="powers" *ngIf="getDisplayPowers()?.length > 0">
-      <ptcg-hover-highlight *ngFor="let power of getDisplayPowers()" (click)="clickAction({ability: power.name})"
-        [enabled]="enabledAbilities[power.name]">
+      <ptcg-hover-highlight *ngFor="let power of getDisplayPowers()"
+        (click)="!isSelectionMode && clickAction({ability: power.name})"
+        [enabled]="enabledAbilities[power.name] && !isSelectionMode">
         <div class="power">
           <div class="power-header">
             <div class="power-type" [ngSwitch]="power.powerType">
@@ -55,14 +57,16 @@
 
     <!-- Attacks -->
     <div class="attacks" *ngIf="getDisplayAttacks()?.length > 0">
-      <ptcg-hover-highlight *ngFor="let attack of getDisplayAttacks()" (click)="clickAction({attack: attack.name})"
-        [enabled]="options.enableAttack">
-        <div class="attack">
+      <ptcg-hover-highlight *ngFor="let attack of getDisplayAttacks()"
+        (click)="!isSelectionMode && clickAction({attack: attack.name})"
+        [enabled]="options.enableAttack && !isSelectionMode">
+        <div class="attack" [class.disabled]="!hasEnoughEnergyForAttack(attack)">
           <div class="attack-header">
             <div class="attack-cost">
               <ptcg-energy *ngIf="attack.cost.length === 0" style="transform: translateY(5px);"></ptcg-energy>
-              <ptcg-energy *ngFor="let cost of attack.cost" [type]="cost"
-                style="transform: translateY(5px);"></ptcg-energy>
+              <ptcg-energy *ngFor="let cost of attack.cost; let i = index" [type]="cost"
+                style="transform: translateY(5px);"
+                [class.insufficient]="isEnergyTypeMissing(attack, cost, i)"></ptcg-energy>
             </div>
             <div class="attack-name">{{attack.name}}</div>
             <div class="ptcg-u-spacer"></div>
@@ -79,7 +83,7 @@
         <div class="stats-item-header" translate>WEAKNESS</div>
         <div class="stats-item-content">
           <div class="stats-item-value" *ngFor="let weakness of getMainCard().weakness">
-            <ptcg-energy [type]="weakness.type" style="transform: translateY(3px);"></ptcg-energy>
+            <ptcg-energy [type]="weakness.type" style="transform: translateY(0px) scale(0.8);"></ptcg-energy>
             <span class="stats-item-value-modifier">
               {{weakness.value ? '+' + weakness.value : 'x2'}}
             </span>
@@ -92,7 +96,7 @@
         <div class="stats-item-header" translate>RESISTANCE</div>
         <div class="stats-item-content">
           <div class="stats-item-value" *ngFor="let resistance of getMainCard().resistance">
-            <ptcg-energy [type]="resistance.type" style="transform: translateY(3px);"></ptcg-energy>
+            <ptcg-energy [type]="resistance.type" style="transform: translateY(0px) scale(0.8);"></ptcg-energy>
             <span class="stats-item-value-modifier">
               {{resistance.value}}
             </span>
@@ -106,7 +110,7 @@
         <div class="stats-item-content">
           <div class="stats-item-value">
             <ng-container *ngFor="let cost of getMainCard().retreat">
-              <ptcg-energy [type]="cost" style="transform: translateY(3px);"></ptcg-energy>
+              <ptcg-energy [type]="cost" style="transform: translateY(0px) scale(0.8);"></ptcg-energy>
             </ng-container>
             <div class="stats-item-value empty" *ngIf="!getMainCard().retreat?.length"></div>
           </div>

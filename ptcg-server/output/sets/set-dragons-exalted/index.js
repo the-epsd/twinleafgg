@@ -12,6 +12,7 @@ const drifloon_1 = require("./drifloon");
 const emolga_1 = require("./emolga");
 const gabite_1 = require("./gabite");
 const garbodor_1 = require("./garbodor");
+const giant_cape_1 = require("./giant-cape");
 const ho_oh_ex_1 = require("./ho-oh-ex");
 const hydreigon_1 = require("./hydreigon");
 const ninetales_1 = require("./ninetales");
@@ -48,4 +49,5 @@ exports.setDragonsExalted = [
     new tool_scrapper_1.ToolScrapper(),
     new vulpix_1.Vulpix(),
     new zweilous_1.Zweilous(),
+    new giant_cape_1.GiantCape(),
 ];

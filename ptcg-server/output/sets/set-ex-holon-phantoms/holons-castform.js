@@ -33,7 +33,8 @@ class HolonsCastform extends pokemon_card_1.PokemonCard {
         this.setNumber = '44';
         this.name = 'Holon\'s Castform';
         this.fullName = 'Holon\'s Castform HP';
-        this.energyEffectActivated = false;
+        // Which energies this provides when attached as an energy
+        this.provides = [card_types_1.CardType.ANY, card_types_1.CardType.ANY];
     }
     reduceEffect(store, state, effect) {
         // The Special Energy Stuff
@@ -88,30 +89,28 @@ class HolonsCastform extends pokemon_card_1.PokemonCard {
                     const cards = (energy || []).map(e => e.card);
                     store.log(state, game_1.GameLog.LOG_PLAYER_CHOOSES, { name: player.name, string: '' + cards[0].name });
                     targets[0].moveCardsTo(cards, player.hand);
-                    // moving it onto the pokemon
+                    // Moving it onto the pokemon
                     effect.preventDefault = true;
                     player.hand.moveCardTo(this, targets[0]);
-                    // moving it to the back so it doesn't affect any evolution/name interactions 
-                    // this unfortunately doesn't make it show up as energy, but it works
+                    // Reposition it to be with energy cards (at the beginning of the card list)
                     targets[0].cards.unshift(targets[0].cards.splice(targets[0].cards.length - 1, 1)[0]);
-                    // activating the energy
-                    this.energyEffectActivated = true;
-                    this.superType = card_types_1.SuperType.ENERGY;
-                    this.energyType = card_types_1.EnergyType.SPECIAL;
+                    // Register this card as energy in the PokemonCardList
+                    targets[0].addPokemonAsEnergy(this);
                 });
             });
         }
-        // providing the energy stuff
+        // Provide energy when attached as energy and included in CheckProvidedEnergyEffect
         if (effect instanceof check_effects_1.CheckProvidedEnergyEffect
-            && effect.source.cards.includes(this)
-            && effect.source.getPokemonCard() !== this
-            && this.energyEffectActivated === true) {
-            effect.energyMap.push({ card: this, provides: [card_types_1.CardType.ANY, card_types_1.CardType.ANY] });
+            && effect.source.cards.includes(this)) {
+            // Check if this card is registered as an energy card in the PokemonCardList
+            const pokemonList = effect.source;
+            if (pokemonList.energyCards.includes(this)) {
+                effect.energyMap.push({ card: this, provides: this.provides });
+            }
         }
-        // trying to remove the effect when the card is discarded for any reason
+        // Reset the flag when the card is discarded
         if (effect instanceof attack_effects_1.DiscardCardsEffect && effect.target.cards.includes(this)) {
-            this.superType = card_types_1.SuperType.POKEMON;
-            this.energyEffectActivated = false;
+            effect.target.removePokemonAsEnergy(this);
         }
         // Delta Draw
         if (prefabs_1.WAS_ATTACK_USED(effect, 0, this)) {

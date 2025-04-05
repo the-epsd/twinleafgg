@@ -55,6 +55,8 @@ class ZeraoraGX extends pokemon_card_1.PokemonCard {
         }
         if (effect instanceof check_effects_1.CheckRetreatCostEffect) {
             const player = effect.player;
+            const cardList = game_1.StateUtils.findCardList(state, this);
+            const owner = game_1.StateUtils.findOwner(state, cardList);
             // Check to see if anything is blocking our Ability
             try {
                 const stub = new game_effects_1.PowerEffect(player, {
@@ -65,6 +67,15 @@ class ZeraoraGX extends pokemon_card_1.PokemonCard {
                 store.reduceEffect(state, stub);
             }
             catch (_a) {
+                return state;
+            }
+            let isZeraoraGXInPlay = false;
+            owner.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+                if (card === this) {
+                    isZeraoraGXInPlay = true;
+                }
+            });
+            if (!isZeraoraGXInPlay) {
                 return state;
             }
             const checkProvidedEnergy = new check_effects_1.CheckProvidedEnergyEffect(player, player.active);

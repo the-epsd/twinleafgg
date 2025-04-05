@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setLegendaryTreasures = void 0;
-const card_images_1 = require("./card-images");
+const other_prints_1 = require("./other-prints");
 const cobalion_1 = require("./cobalion");
 const emboar_1 = require("./emboar");
 const gothita_1 = require("./gothita");
@@ -14,7 +14,7 @@ const trubbish_1 = require("./trubbish");
 exports.setLegendaryTreasures = [
     new cobalion_1.Cobalion(),
     new emboar_1.Emboar(),
-    new card_images_1.EnergySwitchLTR(),
+    new other_prints_1.EnergySwitchLTR(),
     new gothita_1.Gothita(),
     new gothitelle_1.Gothitelle(),
     new gothorita_1.Gothorita(),
