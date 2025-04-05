@@ -15,6 +15,7 @@ const reverse_valley_1 = require("./reverse-valley");
 const splash_energy_1 = require("./splash-energy");
 const staryu_1 = require("./staryu");
 const sudowoodo_1 = require("./sudowoodo");
+const trubbish_1 = require("./trubbish");
 const tympole_1 = require("./tympole");
 const zoroark_1 = require("./zoroark");
 exports.setBreakpoint = [
@@ -30,6 +31,7 @@ exports.setBreakpoint = [
     new splash_energy_1.SplashEnergy(),
     new staryu_1.Staryu(),
     new sudowoodo_1.Sudowoodo(),
+    new trubbish_1.Trubbish(),
     new tympole_1.Tympole(),
     new zoroark_1.Zoroark(),
     new manaphy_ex_1.ManaphyEX(),
