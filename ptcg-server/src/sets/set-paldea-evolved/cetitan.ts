@@ -6,6 +6,7 @@ import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 import { EnergyCard } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
+import { THIS_ATTACK_DOES_X_MORE_DAMAGE } from '../../game/store/prefabs/prefabs';
 
 export class Cetitan extends PokemonCard {
 
@@ -59,17 +60,14 @@ export class Cetitan extends PokemonCard {
       const checkEnergy = new CheckProvidedEnergyEffect(player, pokemon);
       store.reduceEffect(state, checkEnergy);
 
-      let damage = 80;
-
-      checkEnergy.energyMap.forEach(em => {
+      const hasSpecialEnergy = checkEnergy.energyMap.some(em => {
         const energyCard = em.card;
-        if (energyCard instanceof EnergyCard && energyCard.energyType === EnergyType.SPECIAL) {
-          damage += 140;
-        }
+        return energyCard instanceof EnergyCard && energyCard.energyType === EnergyType.SPECIAL;
       });
 
-      effect.damage = damage;
-
+      if (hasSpecialEnergy) {
+        THIS_ATTACK_DOES_X_MORE_DAMAGE(effect, store, state, 140);
+      }
     }
     return state;
   }
