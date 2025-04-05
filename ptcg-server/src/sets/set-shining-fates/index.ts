@@ -13,6 +13,7 @@ import { Rillaboom } from './rillaboom';
 import { RustedSword } from './rusted-sword';
 import { Snom } from './snom';
 import { Thwackey } from './thwackey';
+import { Yveltal } from './yveltal';
 
 export const setShiningFates: Card[] = [
   new BallGuy(),
@@ -28,6 +29,7 @@ export const setShiningFates: Card[] = [
   new Thwackey(),
   new Reshiram(),
   new Kyogre(),
+  new Yveltal(),
 
   // Shiny Vault
   new ApplinSV(),
