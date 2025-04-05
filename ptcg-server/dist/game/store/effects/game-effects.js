@@ -11,6 +11,7 @@ export var GameEffects;
     GameEffects["EVOLVE_EFFECT"] = "EVOLVE_EFFECT";
     GameEffects["DRAW_PRIZES_EFFECT"] = "DRAW_PRIZES_EFFECT";
     GameEffects["MOVE_CARDS_EFFECT"] = "MOVE_CARDS_EFFECT";
+    GameEffects["EFFECT_OF_ABILITY_EFFECT"] = "EFFECT_OF_ABILITY_EFFECT";
 })(GameEffects || (GameEffects = {}));
 export class RetreatEffect {
     constructor(player, benchIndex) {
@@ -43,12 +44,13 @@ export class UseTrainerPowerEffect {
     }
 }
 export class PowerEffect {
-    constructor(player, power, card) {
+    constructor(player, power, card, target) {
         this.type = GameEffects.POWER_EFFECT;
         this.preventDefault = false;
         this.player = player;
         this.power = power;
         this.card = card;
+        this.target = target;
     }
 }
 export class TrainerPowerEffect {
@@ -66,6 +68,7 @@ export class UseAttackEffect {
         this.preventDefault = false;
         this.player = player;
         this.attack = attack;
+        this.source = player.active;
     }
 }
 export class UseStadiumEffect {
@@ -149,5 +152,14 @@ export class MoveCardsEffect {
         this.toTop = options.toTop;
         this.toBottom = options.toBottom;
         this.skipCleanup = options.skipCleanup;
+    }
+}
+export class EffectOfAbilityEffect {
+    constructor(player, power, card) {
+        this.type = GameEffects.EFFECT_OF_ABILITY_EFFECT;
+        this.preventDefault = false;
+        this.player = player;
+        this.power = power;
+        this.card = card;
     }
 }

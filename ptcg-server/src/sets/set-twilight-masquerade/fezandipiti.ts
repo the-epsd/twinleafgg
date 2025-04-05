@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, PowerType, PokemonCardList, GamePhase, GameLog, EnergyCard, GameError, GameMessage } from '../../game';
+import { StoreLike, State, StateUtils, PowerType, PokemonCardList, GamePhase, GameLog, EnergyCard } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
@@ -49,6 +49,7 @@ export class Fezandipiti extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Adrena-Pheromone
+
     if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -60,7 +61,17 @@ export class Fezandipiti extends PokemonCard {
         return state;
       }
 
-      // Check if we have dark energy attached
+      try {
+        const stub = new PowerEffect(player, {
+          name: 'test',
+          powerType: PowerType.ABILITY,
+          text: ''
+        }, this);
+        store.reduceEffect(state, stub);
+      } catch {
+        return state;
+      }
+
       const checkEnergy = new CheckProvidedEnergyEffect(player, cardList);
       store.reduceEffect(state, checkEnergy);
       let hasDarkAttached = false;
@@ -85,35 +96,26 @@ export class Fezandipiti extends PokemonCard {
       });
 
       if (!hasDarkAttached) {
-        throw new GameError(GameMessage.CANNOT_USE_POWER);
-      }
-
-      try {
-        const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
-      } catch {
         return state;
       }
 
-      try {
-        const coinFlip = new CoinFlipEffect(player);
-        store.reduceEffect(state, coinFlip);
-      } catch {
+      if (hasDarkAttached) {
+        try {
+          const coinFlip = new CoinFlipEffect(player);
+          store.reduceEffect(state, coinFlip);
+        } catch {
+          return state;
+        }
+
+        const coinFlipResult = SIMULATE_COIN_FLIP(store, state, player);
+
+        if (coinFlipResult) {
+          effect.damage = 0;
+          store.log(state, GameLog.LOG_ABILITY_BLOCKS_DAMAGE, { name: opponent.name, pokemon: this.name });
+        }
+
         return state;
       }
-
-      const coinFlipResult = SIMULATE_COIN_FLIP(store, state, player);
-
-      if (coinFlipResult) {
-        effect.damage = 0;
-        store.log(state, GameLog.LOG_ABILITY_BLOCKS_DAMAGE, { name: opponent.name, pokemon: this.name });
-      }
-
-      return state;
     }
 
     // Energy Feather

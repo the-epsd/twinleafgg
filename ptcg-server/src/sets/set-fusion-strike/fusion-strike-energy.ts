@@ -3,6 +3,7 @@ import { CardTag, CardType, EnergyType } from '../../game/store/card/card-types'
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
+import { EffectOfAbilityEffect } from '../../game/store/effects/game-effects';
 import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
 
 export class FusionStrikeEnergy extends EnergyCard {
@@ -40,6 +41,11 @@ export class FusionStrikeEnergy extends EnergyCard {
         effect.energyMap.push({ card: this, provides: [CardType.ANY] });
       }
       return state;
+    }
+
+    // Prevent effects of abilities from opponent's Pokemon
+    if (effect instanceof EffectOfAbilityEffect && effect.target?.cards.includes(this)) {
+      effect.target = undefined;
     }
 
     // Discard card when not attached to Fusion Strike Pokemon

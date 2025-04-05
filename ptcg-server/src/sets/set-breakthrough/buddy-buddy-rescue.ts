@@ -66,10 +66,6 @@ export class BuddyBuddyRescue extends TrainerCard {
         return state;
       }
 
-      if (!pokemonInOpponentsDiscard) {
-        return state;
-      }
-
       if (pokemonInOpponentsDiscard > 0) {
         let cards: Card[] = [];
 

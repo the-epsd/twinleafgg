@@ -9,14 +9,19 @@ export * from './set-wotc-promos';
 //Retro Energy
 export * from './set-base-set-energy';
 
+//E-Card Era
+export * from './set-aquapolis'
+
 //ex Era
 export * from './set-ex-holon-phantoms';
 export * from './set-ex-hidden-legends';
 export * from './set-ex-delta-species';
 export * from './set-ex-dragon';
+export * from './set-ex-team-magma-vs-team-aqua';
 export * from './set-ex-dragon-frontiers';
 export * from './set-ex-unseen-forces';
 export * from './set-ex-deoxys';
+export * from './set-ex-emerald';
 export * from './set-ex-team-rocket-returns';
 export * from './set-ex-crystal-guardians';
 export * from './set-ex-power-keepers';

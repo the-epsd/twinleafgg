@@ -26,7 +26,7 @@ class SnorlaxDoll extends game_1.TrainerCard {
         this.attacks = [];
         this.set = 'PAR';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '165';
+        this.setNumber = '175';
         this.name = 'Snorlax Doll';
         this.fullName = 'Snorlax Doll SIT';
         this.regulationMark = 'G';

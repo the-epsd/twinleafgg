@@ -41,9 +41,14 @@ class Dusclops extends pokemon_card_1.PokemonCard {
             const player = effect.player;
             return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH, game_1.SlotType.ACTIVE], { min: 1, max: 1, allowCancel: false }), selected => {
                 const targets = selected || [];
-                targets.forEach(target => {
-                    target.damage += 50;
-                });
+                if (targets.length > 0) {
+                    const damageEffect = new game_effects_1.EffectOfAbilityEffect(player, this.powers[0], this, state);
+                    damageEffect.target = targets[0];
+                    store.reduceEffect(state, damageEffect);
+                    if (damageEffect.target) {
+                        damageEffect.target.damage += 50;
+                    }
+                }
                 player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
                     if (cardList.getPokemonCard() === this) {
                         cardList.damage += 999;
