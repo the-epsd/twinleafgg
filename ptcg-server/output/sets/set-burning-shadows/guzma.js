@@ -35,8 +35,12 @@ function* playCard(next, store, state, effect) {
             if (!targets || targets.length === 0) {
                 return;
             }
-            opponent.active.clearEffects();
-            opponent.switchPokemon(targets[0]);
+            const targetCard = new play_card_effects_1.TrainerTargetEffect(player, effect.trainerCard, targets[0]);
+            targetCard.target = targets[0];
+            store.reduceEffect(state, targetCard);
+            if (targetCard.target) {
+                opponent.switchPokemon(targetCard.target);
+            }
             store.log(state, game_message_1.GameLog.LOG_PLAYER_SWITCHES_POKEMON_TO_ACTIVE, { name: player.name, card: targets[0].getPokemonCard().name });
             next();
             // Do not discard the card yet
