@@ -42,6 +42,7 @@ cardManager.defineSet(sets.setEXDeltaSpecies);
 cardManager.defineSet(sets.setEXLegendMaker);
 
 cardManager.defineSet(sets.setDiamondAndPearl);
+cardManager.defineSet(sets.setMysteriousTreasures);
 cardManager.defineSet(sets.setSecretWonders);
 // cardManager.defineSet(sets.setOP9);
 cardManager.defineSet(sets.setGreatEncounters);
