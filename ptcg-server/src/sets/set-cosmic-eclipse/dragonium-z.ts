@@ -1,4 +1,3 @@
-import { check } from '../../backend/services';
 import { Attack, Card, GameError, GameMessage } from '../../game';
 import { CardType, EnergyType, TrainerType } from '../../game/store/card/card-types';
 import { ColorlessCostReducer } from '../../game/store/card/pokemon-interface';
