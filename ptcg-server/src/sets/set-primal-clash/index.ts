@@ -5,6 +5,7 @@ import { Bunnelby } from './bunnelby';
 import { DiveBall } from './dive-ball';
 import { Electrike } from './electrike';
 import { MaxiesHiddenBallTrick } from './maxies-hidden-ball-trick';
+import { Medicham } from './medicham';
 import { Milotic } from './milotic';
 import { RoughSeas } from './rough-seas';
 import { Sceptile } from './sceptile';
@@ -24,6 +25,7 @@ export const setPrimalClash: Card[] = [
   new DiveBall(),
   new Electrike(),
   new MaxiesHiddenBallTrick(),
+  new Medicham(),
   new Milotic(),
   new RoughSeas(),
   new Sceptile(),
