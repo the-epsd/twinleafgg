@@ -1,4 +1,4 @@
-import { Attack, Card, CardManager, CardTarget, ChooseCardsPrompt, ChoosePokemonPrompt, GameError, GameMessage, PlayerType, PokemonCard, PokemonCardList, ShuffleDeckPrompt, SlotType } from '../../game';
+import { Attack, Card, CardManager, CardTarget, ChooseCardsPrompt, ChoosePokemonPrompt, GameError, GameMessage, GameLog, PlayerType, PokemonCard, PokemonCardList, ShuffleDeckPrompt, SlotType } from '../../game';
 import { CardType, Stage, SuperType, TrainerType } from '../../game/store/card/card-types';
 import { ColorlessCostReducer, DarkCostReducer, WaterCostReducer } from '../../game/store/card/pokemon-interface';
 import { TrainerCard } from '../../game/store/card/trainer-card';
@@ -59,6 +59,12 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Attac
   if (targets.length === 0) {
     return state; // canceled by user
   }
+
+  // Log the selected Pokémon targets
+  const targetNames = targets.map(target => target.getPokemonCard()?.name).filter(Boolean);
+  store.log(state, GameLog.LOG_TEXT, {
+    text: `${player.name} chooses to evolve ${targetNames.join(' and ')}`
+  });
 
   for (const target of targets) {
     const pokemonCard = target.getPokemonCard();
@@ -129,7 +135,7 @@ export class TechnicalMachineEvolution extends TrainerCard {
     if (effect instanceof EndTurnEffect) {
       const player = effect.player;
 
-      if (IS_TOOL_BLOCKED(store, state, player, this)){ return state; }
+      if (IS_TOOL_BLOCKED(store, state, player, this)) { return state; }
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, index) => {
         if (cardList.cards.includes(this)) {
@@ -178,7 +184,7 @@ export class TechnicalMachineEvolution extends TrainerCard {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
 
-      if (IS_TOOL_BLOCKED(store, state, effect.player, this)){ throw new GameError(GameMessage.CANNOT_USE_ATTACK); }
+      if (IS_TOOL_BLOCKED(store, state, effect.player, this)) { throw new GameError(GameMessage.CANNOT_USE_ATTACK); }
 
       const generator = playCard(() => generator.next(), store, state, effect);
       return generator.next().value;

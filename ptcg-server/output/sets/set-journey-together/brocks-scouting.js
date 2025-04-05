@@ -48,7 +48,7 @@ class BrocksScouting extends trainer_card_1.TrainerCard {
         this.regulationMark = 'I';
         this.set = 'JTG';
         this.cardImage = 'assets/cardback.png';
-        this.setNumber = '96';
+        this.setNumber = '146';
         this.name = 'Brock\'s Scouting';
         this.fullName = 'Brock\'s Scouting JTG';
         this.text = 'Search your deck for either up to 2 Basic Pokémon or 1 Evolution Pokémon, reveal them, and put them into your hand. Then shuffle your deck.';
