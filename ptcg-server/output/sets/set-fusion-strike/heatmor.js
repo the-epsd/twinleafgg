@@ -73,14 +73,14 @@ class Heatmor extends pokemon_card_1.PokemonCard {
             // Check attached energy
             const checkEnergy = new check_effects_1.CheckProvidedEnergyEffect(player);
             state = store.reduceEffect(state, checkEnergy);
-            // Count total FIRE energy provided
+            // Count total Fire energy provided
             const totalFireEnergy = checkEnergy.energyMap.reduce((sum, energy) => {
                 return sum + energy.provides.filter(type => type === card_types_1.CardType.FIRE).length;
             }, 0);
-            // Get number of extra Fire energy  
-            const extrafireEnergy = totalFireEnergy - checkCost.cost.length;
+            // Get number of extra Fire energy (total Fire energy minus Fire cost)
+            const extraFireEnergy = totalFireEnergy - 2; // Subtract 2 for the [R][R] in the cost
             // Apply damage boost based on extra Fire energy
-            if (extrafireEnergy >= 3) {
+            if (extraFireEnergy >= 3) {
                 return store.prompt(state, new game_1.ChoosePokemonPrompt(player.id, game_1.GameMessage.CHOOSE_POKEMON_TO_DAMAGE, game_1.PlayerType.TOP_PLAYER, [game_1.SlotType.BENCH], { min: 1, max: 1, allowCancel: false }), selected => {
                     const targets = selected || [];
                     targets.forEach(target => {

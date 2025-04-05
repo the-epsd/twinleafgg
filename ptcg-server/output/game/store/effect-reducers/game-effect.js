@@ -13,12 +13,12 @@ const choose_attack_prompt_1 = require("../prompts/choose-attack-prompt");
 const coin_flip_prompt_1 = require("../prompts/coin-flip-prompt");
 const confirm_prompt_1 = require("../prompts/confirm-prompt");
 const state_utils_1 = require("../state-utils");
-const card_list_1 = require("../state/card-list");
 const state_1 = require("../state/state");
 const check_effect_1 = require("./check-effect");
 const game_effects_2 = require("../effects/game-effects");
 const pokemon_card_list_1 = require("../state/pokemon-card-list");
 const prefabs_1 = require("../prefabs/prefabs");
+const card_list_1 = require("../state/card-list");
 function applyWeaknessAndResistance(damage, cardTypes, additionalCardTypes, weakness, resistance) {
     let multiply = 1;
     let modifier = 0;
@@ -160,13 +160,8 @@ function* useAttack(next, store, state, effect) {
 }
 function gameReducer(store, state, effect) {
     if (effect instanceof game_effects_1.KnockOutEffect) {
-        // const player = effect.player;
         const card = effect.target.getPokemonCard();
         if (card !== undefined) {
-            //Altered Creation GX
-            // if (player.usedAlteredCreation == true) {
-            //   effect.prizeCount += 1;
-            // }
             // Pokemon ex rule
             if (card.tags.includes(card_types_1.CardTag.POKEMON_EX) || card.tags.includes(card_types_1.CardTag.POKEMON_V) || card.tags.includes(card_types_1.CardTag.POKEMON_VSTAR) || card.tags.includes(card_types_1.CardTag.POKEMON_ex) || card.tags.includes(card_types_1.CardTag.POKEMON_GX)) {
                 effect.prizeCount += 1;
@@ -178,39 +173,47 @@ function gameReducer(store, state, effect) {
                 effect.prizeCount += 2;
             }
             store.log(state, game_message_1.GameLog.LOG_POKEMON_KO, { name: card.name });
-            const stadiumCard = state_utils_1.StateUtils.getStadiumCard(state);
-            if (card.tags.includes(card_types_1.CardTag.PRISM_STAR) || stadiumCard && stadiumCard.name === 'Lost City') {
+            // Handle Lost City marker
+            if (effect.target.marker.hasMarker('LOST_CITY_MARKER')) {
                 const lostZoned = new card_list_1.CardList();
+                const attachedCards = new card_list_1.CardList();
                 const pokemonIndices = effect.target.cards.map((card, index) => index);
+                // Clear damage and effects first
+                effect.target.damage = 0;
+                effect.target.clearEffects();
                 for (let i = pokemonIndices.length - 1; i >= 0; i--) {
                     const removedCard = effect.target.cards.splice(pokemonIndices[i], 1)[0];
+                    // Handle cardlist cards (energy, tools, etc.)
                     if (removedCard.cards) {
-                        prefabs_1.MOVE_CARDS(store, state, removedCard.cards, effect.player.discard);
+                        const cards = removedCard.cards;
+                        while (cards.cards.length > 0) {
+                            const card = cards.cards[0];
+                            attachedCards.cards.push(card);
+                            cards.cards.splice(0, 1);
+                        }
                     }
+                    // Handle the main card
                     if (removedCard.superType === card_types_1.SuperType.POKEMON || removedCard.stage === card_types_1.Stage.BASIC) {
                         lostZoned.cards.push(removedCard);
                     }
                     else {
-                        effect.player.discard.cards.push(removedCard);
+                        attachedCards.cards.push(removedCard);
                     }
                 }
-                // Move cards to lost zone
-                effect.target.clearEffects();
-                prefabs_1.MOVE_CARDS(store, state, lostZoned, effect.player.lostzone);
+                // Move attached cards to discard
+                if (attachedCards.cards.length > 0) {
+                    state = prefabs_1.MOVE_CARDS(store, state, attachedCards, effect.player.discard);
+                }
+                // Move Pokémon to lost zone
+                if (lostZoned.cards.length > 0) {
+                    state = prefabs_1.MOVE_CARDS(store, state, lostZoned, effect.player.lostzone);
+                }
             }
             else {
-                // Move cards to discard
+                // Default behavior - move to discard
                 effect.target.clearEffects();
-                prefabs_1.MOVE_CARDS(store, state, effect.target, effect.player.discard);
+                state = prefabs_1.MOVE_CARDS(store, state, effect.target, effect.player.discard);
             }
-            // const stadiumCard = StateUtils.getStadiumCard(state);
-            // if (card.tags.includes(CardTag.PRISM_STAR) || stadiumCard && stadiumCard.name === 'Lost City') {
-            //   effect.target.moveTo(effect.player.lostzone);
-            //   effect.target.clearEffects();
-            // } else {
-            //   effect.target.moveTo(effect.player.discard);
-            //   effect.target.clearEffects();
-            // }
         }
     }
     if (effect instanceof attack_effects_1.ApplyWeaknessEffect) {

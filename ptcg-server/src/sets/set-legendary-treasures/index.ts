@@ -1,5 +1,5 @@
 import { Card } from '../../game/store/card/card';
-import { EnergySwitchLTR } from './card-images';
+import { EnergySwitchLTR } from './other-prints';
 import { Cobalion } from './cobalion';
 import { Emboar } from './emboar';
 import { Gothita } from './gothita';

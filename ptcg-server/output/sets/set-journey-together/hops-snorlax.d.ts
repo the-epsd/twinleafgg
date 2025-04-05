@@ -28,5 +28,6 @@ export declare class HopsSnorlax extends PokemonCard {
     setNumber: string;
     name: string;
     fullName: string;
+    bigBellyApplied: boolean;
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

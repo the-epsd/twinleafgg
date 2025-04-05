@@ -7,7 +7,9 @@ const cherish_ball_1 = require("./cherish-ball");
 const cottonee_1 = require("./cottonee");
 const cryogonal_1 = require("./cryogonal");
 const dark_city_1 = require("./dark-city");
+const drilbur_1 = require("./drilbur");
 const eelektross_1 = require("./eelektross");
+const excadrill_1 = require("./excadrill");
 const flyinium_z_air_slash_1 = require("./flyinium-z-air-slash");
 const froslass_1 = require("./froslass");
 const garchomp_1 = require("./garchomp");
@@ -44,7 +46,9 @@ exports.setUnifiedMinds = [
     new cherish_ball_1.CherishBall(),
     new cottonee_1.Cottonee(),
     new cryogonal_1.Cryogonal(),
+    new excadrill_1.Excadrill(),
     new dark_city_1.DarkCity(),
+    new drilbur_1.Drilbur(),
     new eelektross_1.Eelektross(),
     new flyinium_z_air_slash_1.FlyiniumZAirSlash(),
     new froslass_1.Froslass(),

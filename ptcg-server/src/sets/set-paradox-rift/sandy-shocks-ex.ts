@@ -81,12 +81,13 @@ export class SandyShocksex extends PokemonCard {
 
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
+      const prizes = opponent.getPrizeLeft();
 
       if (player.marker.hasMarker(this.MAGNETIC_ABSORPTION_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
 
-      if (opponent.prizes.length > 4) {
+      if (prizes > 4) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 

@@ -1,6 +1,6 @@
 import { Card } from '../../game/store/card/card';
 import { Archen } from './archen';
-import { MasterBallPLB, ScoopUpCyclonePLB, UltraBallPLB } from './card-images';
+import { MasterBallPLB, ScoopUpCyclonePLB, UltraBallPLB } from './other-prints';
 import { GBooster } from './g-booster';
 import { GScope } from './g-scope';
 import { GenesectEX } from './genesect-ex';

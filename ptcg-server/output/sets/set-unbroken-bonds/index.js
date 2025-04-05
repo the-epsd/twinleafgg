@@ -45,6 +45,7 @@ const triple_acceleration_energy_1 = require("./triple-acceleration-energy");
 const tyrogue_1 = require("./tyrogue");
 const volcanion_1 = require("./volcanion");
 const zeraora_1 = require("./zeraora");
+const stealthy_hood_1 = require("./stealthy-hood");
 exports.setUnbrokenBonds = [
     new arcanine_1.Arcanine(),
     new aron_1.Aron(),
@@ -90,4 +91,5 @@ exports.setUnbrokenBonds = [
     new murkrow_1.Murkrow(),
     new honchkrow_gx_1.HonchkrowGX(),
     new gastly_1.Gastly(),
+    new stealthy_hood_1.StealthyHood(),
 ];

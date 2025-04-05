@@ -83,6 +83,9 @@ export class ExpShare extends TrainerCard {
     const activeCopy = new PokemonCardList();
     activeCopy.cards = player.active.cards.slice();
 
+    // Don't prevent default knockout behavior yet
+    // effect.preventDefault = true;
+
     state = store.prompt(state, new AttachEnergyPrompt(
       player.id,
       GameMessage.ATTACH_ENERGY_TO_BENCH,
@@ -98,6 +101,8 @@ export class ExpShare extends TrainerCard {
         const target = StateUtils.getTarget(state, player, transfer.to);
         player.discard.moveCardTo(transfer.card, target);
       }
+      // Now prevent the default knockout behavior after prize cards are handled
+      effect.preventDefault = true;
     });
 
     return state;

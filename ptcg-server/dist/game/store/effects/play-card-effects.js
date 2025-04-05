@@ -13,6 +13,7 @@ export var PlayCardEffects;
     PlayCardEffects["COIN_FLIP_EFFECT"] = "COIN_FLIP_EFFECT";
     PlayCardEffects["TRAINER_CARD_TO_DECK_EFFECT"] = "TRAINER_CARD_TO_DECK_EFFECT";
     PlayCardEffects["DISCARD_TO_HAND_EFFECT"] = "DISCARD_TO_HAND_EFFECT";
+    PlayCardEffects["TRAINER_TARGET_EFFECT"] = "TRAINER_TARGET_EFFECT";
 })(PlayCardEffects || (PlayCardEffects = {}));
 export class AttachEnergyEffect {
     constructor(player, energyCard, target) {
@@ -121,5 +122,14 @@ export class DiscardToHandEffect {
         this.preventDefault = false;
         this.player = player;
         this.card = card;
+    }
+}
+export class TrainerTargetEffect {
+    constructor(player, trainerCard, target) {
+        this.type = PlayCardEffects.TRAINER_TARGET_EFFECT;
+        this.preventDefault = false;
+        this.player = player;
+        this.trainerCard = trainerCard;
+        this.target = target;
     }
 }

@@ -21,11 +21,11 @@ class NsZorua extends pokemon_card_1.PokemonCard {
             }
         ];
         this.regulationMark = 'I';
-        this.set = 'SV9';
+        this.set = 'JTG';
         this.cardImage = 'assets/cardback.png';
         this.setNumber = '97';
         this.name = 'N\'s Zorua';
-        this.fullName = 'N\'s Zorua SV9';
+        this.fullName = 'N\'s Zorua JTG';
     }
 }
 exports.NsZorua = NsZorua;

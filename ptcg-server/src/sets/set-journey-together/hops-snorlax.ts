@@ -1,9 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { PowerType, State, StateUtils, StoreLike } from '../../game';
+import { PlayerType, PowerType, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
+
 
 export class HopsSnorlax extends PokemonCard {
 
@@ -46,6 +47,8 @@ export class HopsSnorlax extends PokemonCard {
 
   public fullName: string = 'Hop\'s Snorlax JTG';
 
+  public bigBellyApplied: boolean = false;
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
@@ -61,6 +64,19 @@ export class HopsSnorlax extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
       const hopsPokemon = player.active.getPokemonCard();
 
+      // Count number of Hop's Snorlax in play
+      let snorlaxCount = 0;
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+        if (card.name === 'Hop\'s Snorlax') {
+          snorlaxCount++;
+        }
+      });
+
+      // Only proceed if there's at least one Snorlax
+      if (snorlaxCount === 0) {
+        return state;
+      }
+
       try {
         const stub = new PowerEffect(player, {
           name: 'test',
@@ -72,8 +88,12 @@ export class HopsSnorlax extends PokemonCard {
         return state;
       }
 
-      if (hopsPokemon && hopsPokemon.tags.includes(CardTag.HOPS) && effect.target === opponent.active) {
+      // Apply the effect only once, regardless of how many Snorlax are in play
+      if (hopsPokemon && hopsPokemon.tags.includes(CardTag.HOPS) &&
+        effect.target === opponent.active &&
+        !effect.damageIncreased) {
         effect.damage += 30;
+        effect.damageIncreased = true;
       }
     }
     return state;

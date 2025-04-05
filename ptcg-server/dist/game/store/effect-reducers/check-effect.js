@@ -51,6 +51,10 @@ function findKoPokemons(store, state) {
 //   return state;
 // }
 function handleBenchSizeChange(store, state, benchSizes) {
+    // Skip if we've already handled bench size changes in this state check
+    if (state.benchSizeChangeHandled) {
+        return state;
+    }
     state.players.forEach((player, index) => {
         const benchSize = benchSizes[index];
         // Add empty slots if bench is smaller
@@ -94,6 +98,8 @@ function handleBenchSizeChange(store, state, benchSizes) {
             }
         });
     });
+    // Mark that we've handled bench size changes
+    state.benchSizeChangeHandled = true;
     return state;
 }
 function chooseActivePokemons(state) {
@@ -357,6 +363,8 @@ export function* executeCheckState(next, store, state, onComplete) {
         }
     }
     checkWinner(store, state, onComplete);
+    // Reset the bench size change handled flag after all effects are resolved
+    state.benchSizeChangeHandled = false;
     return state;
 }
 export function checkState(store, state, onComplete) {

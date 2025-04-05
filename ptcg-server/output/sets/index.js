@@ -20,13 +20,18 @@ __exportStar(require("./set-wotc-promos"), exports);
 //Retro Energy
 __exportStar(require("./set-base-set-energy"), exports);
 __exportStar(require("./set-neo-genesis"), exports);
+//E-Card Era
+__exportStar(require("./set-aquapolis"), exports);
 //ex Era
 __exportStar(require("./set-ex-holon-phantoms"), exports);
+__exportStar(require("./set-ex-hidden-legends"), exports);
 __exportStar(require("./set-ex-delta-species"), exports);
 __exportStar(require("./set-ex-dragon"), exports);
+__exportStar(require("./set-ex-team-magma-vs-team-aqua"), exports);
 __exportStar(require("./set-ex-dragon-frontiers"), exports);
 __exportStar(require("./set-ex-unseen-forces"), exports);
 __exportStar(require("./set-ex-deoxys"), exports);
+__exportStar(require("./set-ex-emerald"), exports);
 __exportStar(require("./set-ex-team-rocket-returns"), exports);
 __exportStar(require("./set-ex-crystal-guardians"), exports);
 __exportStar(require("./set-ex-power-keepers"), exports);
@@ -41,6 +46,7 @@ __exportStar(require("./set-platinum"), exports);
 __exportStar(require("./set-rising-rivals"), exports);
 //HGSS Era
 __exportStar(require("./set-battle-road-promos"), exports);
+__exportStar(require("./set-call-of-legends"), exports);
 __exportStar(require("./set-heartgold-and-soulsilver"), exports);
 __exportStar(require("./set-heartgold-and-soulsilver-promos"), exports);
 __exportStar(require("./set-l-p-promos"), exports);

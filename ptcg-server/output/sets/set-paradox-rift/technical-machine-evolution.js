@@ -43,6 +43,11 @@ function* playCard(next, store, state, effect) {
     if (targets.length === 0) {
         return state; // canceled by user
     }
+    // Log the selected Pokémon targets
+    const targetNames = targets.map(target => { var _a; return (_a = target.getPokemonCard()) === null || _a === void 0 ? void 0 : _a.name; }).filter(Boolean);
+    store.log(state, game_1.GameLog.LOG_TEXT, {
+        text: `${player.name} chooses to evolve ${targetNames.join(' and ')}`
+    });
     for (const target of targets) {
         const pokemonCard = target.getPokemonCard();
         if (pokemonCard === undefined) {

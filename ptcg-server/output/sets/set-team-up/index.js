@@ -13,6 +13,7 @@ const ferrothorn_1 = require("./ferrothorn");
 const gengar_and_mimikyu_gx_1 = require("./gengar-and-mimikyu-gx");
 const hitmonchan_1 = require("./hitmonchan");
 const hitmonlee_1 = require("./hitmonlee");
+const jasmine_1 = require("./jasmine");
 const jirachi_1 = require("./jirachi");
 const judge_whistle_1 = require("./judge-whistle");
 const kakuna_1 = require("./kakuna");
@@ -45,6 +46,7 @@ exports.setTeamUp = [
     new gengar_and_mimikyu_gx_1.GengarMimikyuGX(),
     new hitmonchan_1.Hitmonchan(),
     new hitmonlee_1.Hitmonlee(),
+    new jasmine_1.Jasmine(),
     new jirachi_1.Jirachi(),
     new kakuna_1.Kakuna(),
     new lapras_1.Lapras(),

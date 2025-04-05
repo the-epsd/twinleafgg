@@ -28,6 +28,6 @@ export declare class Typhlosion extends PokemonCard {
     fullName: string;
     cardImage: string;
     setNumber: string;
-    readonly AFTERBURNER_MAREKER = "DYNAMOTOR_MAREKER";
+    readonly AFTERBURNER_MARKER = "AFTERBURNER_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

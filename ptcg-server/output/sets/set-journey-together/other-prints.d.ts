@@ -12,7 +12,6 @@ import { Mamoswineex } from './mamoswine-ex';
 import { Maractus } from './maractus';
 import { NsReshiram } from './ns-reshiram';
 import { NsZoroarkex } from './ns-zoroark-ex';
-import { NsZorua } from './ns-zorua';
 import { Ruffian } from './ruffian';
 import { Salamenceex } from './salamence-ex';
 import { SpikyEnergy } from './spiky-energy';
@@ -40,10 +39,6 @@ export declare class SwinubIR extends Swinub {
     setNumber: string;
 }
 export declare class LycanrocIR extends Lycanroc {
-    fullName: string;
-    setNumber: string;
-}
-export declare class NsZoruaIR extends NsZorua {
     fullName: string;
     setNumber: string;
 }

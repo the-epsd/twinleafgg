@@ -4,7 +4,7 @@ import { StoreLike, State, ChoosePokemonPrompt, PlayerType, SlotType, PowerType,
 import { Effect } from '../../game/store/effects/effect';
 import { GameMessage } from '../../game/game-message';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect, EffectOfAbilityEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 
 export class IronValiantex extends PokemonCard {
@@ -130,10 +130,14 @@ export class IronValiantex extends PokemonCard {
                   cardList.addBoardEffect(BoardEffect.ABILITY_USED);
                 }
               });
-              targets.forEach(target => {
-                target.damage += 20;
-                player.marker.addMarker(this.TACHYON_BITS_MARKER, this);
-              });
+              if (targets.length > 0) {
+                const damageEffect = new EffectOfAbilityEffect(player, this.powers[0], this, state, targets);
+                damageEffect.target = targets[0];
+                store.reduceEffect(state, damageEffect);
+                if (damageEffect.target) {
+                  damageEffect.target.damage += 20;
+                }
+              }
               this.tachyonBits++;
             });
           }
