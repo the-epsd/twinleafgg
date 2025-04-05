@@ -5,6 +5,7 @@ const acro_bike_1 = require("./acro-bike");
 const archies_ace_in_the_hole_1 = require("./archies-ace-in-the hole");
 const bunnelby_1 = require("./bunnelby");
 const dive_ball_1 = require("./dive-ball");
+const electrike_1 = require("./electrike");
 const maxies_hidden_ball_trick_1 = require("./maxies-hidden-ball-trick");
 const milotic_1 = require("./milotic");
 const rough_seas_1 = require("./rough-seas");
@@ -22,6 +23,7 @@ exports.setPrimalClash = [
     new archies_ace_in_the_hole_1.ArchiesAceInTheHole(),
     new bunnelby_1.Bunnelby(),
     new dive_ball_1.DiveBall(),
+    new electrike_1.Electrike(),
     new maxies_hidden_ball_trick_1.MaxiesHiddenBallTrick(),
     new milotic_1.Milotic(),
     new rough_seas_1.RoughSeas(),

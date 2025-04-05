@@ -29,6 +29,5 @@ export declare class LilliesClefairyex extends PokemonCard {
     cardImage: string;
     name: string;
     fullName: string;
-    readonly DRAGON_VULNERABILITY_MARKER = "DRAGON_VULNERABILITY_MARKER";
     reduceEffect(store: StoreLike, state: State, effect: Effect): State;
 }

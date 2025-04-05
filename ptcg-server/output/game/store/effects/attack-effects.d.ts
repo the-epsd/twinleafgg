@@ -41,6 +41,7 @@ export declare class DealDamageEffect extends AbstractAttackEffect implements Ef
     readonly type: string;
     preventDefault: boolean;
     damage: number;
+    damageIncreased: boolean;
     constructor(base: AttackEffect, damage: number);
 }
 export declare class PutDamageEffect extends AbstractAttackEffect implements Effect {

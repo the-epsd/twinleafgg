@@ -1,7 +1,7 @@
-import { PokemonCard, Stage, CardType, PowerType, State, StoreLike, StateUtils, ConfirmPrompt, GameMessage, CardTag } from '../../game';
-import {Effect} from '../../game/store/effects/effect';
-import {PlayItemEffect, PlaySupporterEffect} from '../../game/store/effects/play-card-effects';
-import {DISCARD_A_STADIUM_CARD_IN_PLAY, WAS_ATTACK_USED} from '../../game/store/prefabs/prefabs';
+import { PokemonCard, Stage, CardType, PowerType, State, StoreLike, StateUtils, ConfirmPrompt, GameMessage, CardTag, PlayerType } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { TrainerTargetEffect } from '../../game/store/effects/play-card-effects';
+import { DISCARD_A_STADIUM_CARD_IN_PLAY, IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Cetitanex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -35,7 +35,19 @@ export class Cetitanex extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Snow Cover
-    if ((effect instanceof PlayItemEffect || effect instanceof PlaySupporterEffect) && effect.target?.cards.includes(this)){
+    if (effect instanceof TrainerTargetEffect && effect.target?.cards.includes(this)){
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+      
+      if (IS_ABILITY_BLOCKED(store, state, effect.player, this)){ return state; }
+
+      // finding if the owner of the card is playing the trainer or if the opponent is
+      let isCetitanOnOpponentsSide = false;
+      opponent.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+        if (cardList.getPokemonCard() === this){ isCetitanOnOpponentsSide = true; }
+      });
+      if (!isCetitanOnOpponentsSide){ return state; }
+      
       effect.preventDefault = true;
     }
     

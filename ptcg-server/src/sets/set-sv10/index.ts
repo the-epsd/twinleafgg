@@ -1,7 +1,11 @@
 import { Card } from '../../game/store/card/card';
+import {Annihilape} from './annihilape';
+import {Blaziken} from './blaziken';
 import {Cetitanex} from './cetitan-ex';
 import {Cetoddle} from './cetoddle';
+import {Combusken} from './combusken';
 import { GraniteCave } from './granite-cave';
+import {Mankey} from './mankey';
 import { MarniesGrimmsnarlex } from './marnies-grimmsnarl-ex';
 import { MarniesImpidimp } from './marnies-impidimp';
 import { MarniesLiepard } from './marnies-liepard';
@@ -11,6 +15,7 @@ import { MarniesPurrloin } from './marnies-purrloin';
 import { MarniesScrafty } from './marnies-scrafty';
 import { MarniesScraggy } from './marnies-scraggy';
 import { EnergyRecyclerSV10, MarniesMorpekoIR, StevensBeldumIR } from './other-prints';
+import {Primeape} from './primeape';
 import { SpikemuthGym } from './spikemuth-gym';
 import { StevensBaltoy } from './stevens-baltoy';
 import { StevensBeldum } from './stevens-beldum';
@@ -36,10 +41,17 @@ import { TeamRocketsReceiver } from './team-rockets-receiver';
 import { TeamRocketsSpidops } from './team-rockets-spidops';
 import { TeamRocketsTarountula } from './team-rockets-tarountula';
 import { TeamRocketsWobbuffet } from './team-rockets-wobbuffet';
+import {Torchic} from './torchic';
 
 export const setSV10: Card[] = [
   new Cetoddle(),
   new Cetitanex(),
+  new Torchic(),
+  new Combusken(),
+  new Blaziken(),
+  new Mankey(),
+  new Primeape(),
+  new Annihilape(),
   new EnergyRecyclerSV10(),
 
   new MarniesMorpekoIR(),

@@ -13,6 +13,7 @@ export * from './set-neo-discovery'
 
 //ex Era
 export * from './set-ex-holon-phantoms';
+export * from './set-ex-hidden-legends';
 export * from './set-ex-delta-species';
 export * from './set-ex-dragon';
 export * from './set-ex-dragon-frontiers';
@@ -35,7 +36,7 @@ export * from './set-rising-rivals'
 //HGSS Era
 
 export * from './set-battle-road-promos';
-
+export * from './set-call-of-legends';
 export * from './set-heartgold-and-soulsilver';
 export * from './set-heartgold-and-soulsilver-promos';
 export * from './set-l-p-promos';

@@ -26,6 +26,7 @@ cardManager.defineSet(sets.setNeoDiscovery)
 
 //ex Era shit
 cardManager.defineSet(sets.setEXHolonPhantoms);
+cardManager.defineSet(sets.setEXHiddenLegends)
 cardManager.defineSet(sets.setEXDragon);
 cardManager.defineSet(sets.setEXDragonFrontiers);
 cardManager.defineSet(sets.setEXDeoxys);
@@ -45,7 +46,7 @@ cardManager.defineSet(sets.setPlatinum);
 cardManager.defineSet(sets.setRisingRivals)
 
 cardManager.defineSet(sets.setBattleRoadPromos);
-
+cardManager.defineSet(sets.setCallOfLegends);
 cardManager.defineSet(sets.setHeartGoldAndSoulSilver);
 cardManager.defineSet(sets.setHeartGoldAndSoulSilverPromos);
 cardManager.defineSet(sets.setLPPromos);

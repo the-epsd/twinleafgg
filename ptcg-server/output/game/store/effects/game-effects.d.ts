@@ -7,6 +7,7 @@ import { Card } from '../card/card';
 import { CardTarget } from '../actions/play-card-action';
 import { TrainerCard } from '../card/trainer-card';
 import { CardList } from '../state/card-list';
+import { State } from '../state/state';
 export declare enum GameEffects {
     RETREAT_EFFECT = "RETREAT_EFFECT",
     USE_ATTACK_EFFECT = "USE_ATTACK_EFFECT",
@@ -18,7 +19,8 @@ export declare enum GameEffects {
     HEAL_EFFECT = "HEAL_EFFECT",
     EVOLVE_EFFECT = "EVOLVE_EFFECT",
     DRAW_PRIZES_EFFECT = "DRAW_PRIZES_EFFECT",
-    MOVE_CARDS_EFFECT = "MOVE_CARDS_EFFECT"
+    MOVE_CARDS_EFFECT = "MOVE_CARDS_EFFECT",
+    EFFECT_OF_ABILITY_EFFECT = "EFFECT_OF_ABILITY_EFFECT"
 }
 export declare class RetreatEffect implements Effect {
     readonly type: string;
@@ -53,8 +55,9 @@ export declare class PowerEffect implements Effect {
     player: Player;
     power: Power;
     card: PokemonCard;
+    target?: PokemonCardList;
     static DISCARD_CARD_EFFECT: string;
-    constructor(player: Player, power: Power, card: PokemonCard);
+    constructor(player: Player, power: Power, card: PokemonCard, target?: PokemonCardList);
 }
 export declare class TrainerPowerEffect implements Effect {
     readonly type: string;
@@ -153,5 +156,21 @@ export declare class MoveCardsEffect implements Effect {
         toBottom?: boolean;
         skipCleanup?: boolean;
     });
+}
+export declare class EffectOfAbilityEffect implements Effect {
+    readonly type: string;
+    preventDefault: boolean;
+    player: Player;
+    power: Power;
+    card: PokemonCard;
+    private _targets?;
+    private state;
+    private allowSelfTarget;
+    constructor(player: Player, power: Power, card: PokemonCard, state: State, targets?: PokemonCardList[], allowSelfTarget?: boolean);
+    hasTarget(card: PokemonCard): boolean;
+    get target(): PokemonCardList | undefined;
+    set target(value: PokemonCardList | undefined);
+    get targets(): PokemonCardList[] | undefined;
+    set targets(value: PokemonCardList[] | undefined);
 }
 export { Effect };

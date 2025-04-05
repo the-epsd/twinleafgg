@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SpikeEnergyUR = exports.NsZoroarkexUR = exports.IonosBelliboltexUR = exports.SalamenceexSIR = exports.HopsZacianexSIR = exports.NsZoroarkexSIR = exports.LilliesClefairyexSIR = exports.IonosBelliboltexSIR = exports.VolcanionexSIR = exports.RuffianFA = exports.IrisFightingSpiritFA = exports.BrocksRecruitmentFA = exports.DudunsparceexFA = exports.SalamenceexFA = exports.HopsZacianexFA = exports.NsZoroarkexFA = exports.MamoswineexFA = exports.LilliesClefairyexFA = exports.IonosBelliboltexFA = exports.VolcanionexFA = exports.HopsWoolooIR = exports.NsReshiramIR = exports.NsZoruaIR = exports.LycanrocIR = exports.SwinubIR = exports.LilliesRibombeeIR = exports.IonosKilowattrelIR = exports.WailordIR = exports.MaractusIR = void 0;
+exports.SpikeEnergyUR = exports.NsZoroarkexUR = exports.IonosBelliboltexUR = exports.SalamenceexSIR = exports.HopsZacianexSIR = exports.NsZoroarkexSIR = exports.LilliesClefairyexSIR = exports.IonosBelliboltexSIR = exports.VolcanionexSIR = exports.RuffianFA = exports.IrisFightingSpiritFA = exports.BrocksRecruitmentFA = exports.DudunsparceexFA = exports.SalamenceexFA = exports.HopsZacianexFA = exports.NsZoroarkexFA = exports.MamoswineexFA = exports.LilliesClefairyexFA = exports.IonosBelliboltexFA = exports.VolcanionexFA = exports.HopsWoolooIR = exports.NsReshiramIR = exports.LycanrocIR = exports.SwinubIR = exports.LilliesRibombeeIR = exports.IonosKilowattrelIR = exports.WailordIR = exports.MaractusIR = void 0;
 const brocks_scouting_1 = require("./brocks-scouting");
 const dudunsparce_ex_1 = require("./dudunsparce-ex");
 const hops_wooloo_1 = require("./hops-wooloo");
@@ -15,7 +15,6 @@ const mamoswine_ex_1 = require("./mamoswine-ex");
 const maractus_1 = require("./maractus");
 const ns_reshiram_1 = require("./ns-reshiram");
 const ns_zoroark_ex_1 = require("./ns-zoroark-ex");
-const ns_zorua_1 = require("./ns-zorua");
 const ruffian_1 = require("./ruffian");
 const salamence_ex_1 = require("./salamence-ex");
 const spiky_energy_1 = require("./spiky-energy");
@@ -74,14 +73,10 @@ class LycanrocIR extends lycanroc_1.Lycanroc {
     }
 }
 exports.LycanrocIR = LycanrocIR;
-class NsZoruaIR extends ns_zorua_1.NsZorua {
-    constructor() {
-        super(...arguments);
-        this.fullName = 'N\'s ZoruaIR JTG';
-        this.setNumber = '100';
-    }
-}
-exports.NsZoruaIR = NsZoruaIR;
+//export class NsZoruaIR extends NsZorua {
+//  public fullName = 'N\'s ZoruaIR JTG';
+//  public setNumber = '100';
+//}
 class NsReshiramIR extends ns_reshiram_1.NsReshiram {
     constructor() {
         super(...arguments);

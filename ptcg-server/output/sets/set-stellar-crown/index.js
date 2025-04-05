@@ -40,6 +40,8 @@ const noctowl_1 = require("./noctowl");
 const other_prints_1 = require("./other-prints");
 const raboot_1 = require("./raboot");
 const raging_bolt_1 = require("./raging-bolt");
+const salandit_1 = require("./salandit");
+const salazzle_1 = require("./salazzle");
 const scorbunny_1 = require("./scorbunny");
 const slowking_1 = require("./slowking");
 const terapagos_ex_1 = require("./terapagos-ex");
@@ -83,6 +85,8 @@ exports.setStellarCrown = [
     // new Orthwormex(),
     new raboot_1.Raboot(),
     new raging_bolt_1.RagingBolt(),
+    new salandit_1.Salandit(),
+    new salazzle_1.Salazzle(),
     new scorbunny_1.Scorbunny(),
     new slowking_1.Slowking(),
     new terapagos_ex_1.Terapagosex(),

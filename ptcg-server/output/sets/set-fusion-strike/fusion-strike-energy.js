@@ -5,6 +5,7 @@ const game_1 = require("../../game");
 const card_types_1 = require("../../game/store/card/card-types");
 const energy_card_1 = require("../../game/store/card/energy-card");
 const check_effects_1 = require("../../game/store/effects/check-effects");
+const game_effects_1 = require("../../game/store/effects/game-effects");
 const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
 class FusionStrikeEnergy extends energy_card_1.EnergyCard {
     constructor() {
@@ -23,7 +24,7 @@ class FusionStrikeEnergy extends energy_card_1.EnergyCard {
             'As long as this card is attached to a Pokémon, it provides every type of Energy but provides only 1 Energy at a time. Prevent all effects of your opponent\'s Pokémon\'s Abilities done to the Pokémon this card is attached to.';
     }
     reduceEffect(store, state, effect) {
-        var _a;
+        var _a, _b;
         // Provide energy when attached to Fusion Strike Pokemon
         if (effect instanceof check_effects_1.CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
             const pokemon = effect.source;
@@ -31,6 +32,10 @@ class FusionStrikeEnergy extends energy_card_1.EnergyCard {
                 effect.energyMap.push({ card: this, provides: [card_types_1.CardType.ANY] });
             }
             return state;
+        }
+        // Prevent effects of abilities from opponent's Pokemon
+        if (effect instanceof game_effects_1.EffectOfAbilityEffect && ((_b = effect.target) === null || _b === void 0 ? void 0 : _b.cards.includes(this))) {
+            effect.target = undefined;
         }
         // Discard card when not attached to Fusion Strike Pokemon
         if (effect instanceof play_card_effects_1.AttachEnergyEffect) {

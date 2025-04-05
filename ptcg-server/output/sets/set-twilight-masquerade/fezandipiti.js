@@ -48,7 +48,17 @@ class Fezandipiti extends pokemon_card_1.PokemonCard {
             if (pokemonCard !== this || sourceCard === undefined || state.phase !== game_1.GamePhase.ATTACK) {
                 return state;
             }
-            // Check if we have dark energy attached
+            try {
+                const stub = new game_effects_1.PowerEffect(player, {
+                    name: 'test',
+                    powerType: game_1.PowerType.ABILITY,
+                    text: ''
+                }, this);
+                store.reduceEffect(state, stub);
+            }
+            catch (_a) {
+                return state;
+            }
             const checkEnergy = new check_effects_1.CheckProvidedEnergyEffect(player, cardList);
             store.reduceEffect(state, checkEnergy);
             let hasDarkAttached = false;
@@ -72,32 +82,23 @@ class Fezandipiti extends pokemon_card_1.PokemonCard {
                 }
             });
             if (!hasDarkAttached) {
-                throw new game_1.GameError(game_1.GameMessage.CANNOT_USE_POWER);
-            }
-            try {
-                const stub = new game_effects_1.PowerEffect(player, {
-                    name: 'test',
-                    powerType: game_1.PowerType.ABILITY,
-                    text: ''
-                }, this);
-                store.reduceEffect(state, stub);
-            }
-            catch (_a) {
                 return state;
             }
-            try {
-                const coinFlip = new play_card_effects_1.CoinFlipEffect(player);
-                store.reduceEffect(state, coinFlip);
-            }
-            catch (_b) {
+            if (hasDarkAttached) {
+                try {
+                    const coinFlip = new play_card_effects_1.CoinFlipEffect(player);
+                    store.reduceEffect(state, coinFlip);
+                }
+                catch (_b) {
+                    return state;
+                }
+                const coinFlipResult = prefabs_1.SIMULATE_COIN_FLIP(store, state, player);
+                if (coinFlipResult) {
+                    effect.damage = 0;
+                    store.log(state, game_1.GameLog.LOG_ABILITY_BLOCKS_DAMAGE, { name: opponent.name, pokemon: this.name });
+                }
                 return state;
             }
-            const coinFlipResult = prefabs_1.SIMULATE_COIN_FLIP(store, state, player);
-            if (coinFlipResult) {
-                effect.damage = 0;
-                store.log(state, game_1.GameLog.LOG_ABILITY_BLOCKS_DAMAGE, { name: opponent.name, pokemon: this.name });
-            }
-            return state;
         }
         // Energy Feather
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {

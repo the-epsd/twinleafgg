@@ -12,7 +12,6 @@ import { Mamoswineex } from './mamoswine-ex';
 import { Maractus } from './maractus';
 import { NsReshiram } from './ns-reshiram';
 import { NsZoroarkex } from './ns-zoroark-ex';
-import { NsZorua } from './ns-zorua';
 import { Ruffian } from './ruffian';
 import { Salamenceex } from './salamence-ex';
 import { SpikyEnergy } from './spiky-energy';
@@ -55,10 +54,10 @@ export class LycanrocIR extends Lycanroc {
   public setNumber = '166';
 }
 
-export class NsZoruaIR extends NsZorua {
-  public fullName = 'N\'s ZoruaIR JTG';
-  public setNumber = '100';
-}
+//export class NsZoruaIR extends NsZorua {
+//  public fullName = 'N\'s ZoruaIR JTG';
+//  public setNumber = '100';
+//}
 
 export class NsReshiramIR extends NsReshiram {
   public fullName = 'N\'s ReshiramIR JTG';

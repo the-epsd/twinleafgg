@@ -18,6 +18,7 @@ const mimikyu_1 = require("./mimikyu");
 const oricorio_1 = require("./oricorio");
 const oricorio_2_1 = require("./oricorio-2");
 const rescue_stretcher_1 = require("./rescue-stretcher");
+const sudowoodo_1 = require("./sudowoodo");
 const sylveon_gx_1 = require("./sylveon-gx");
 const tapu_koko_gx_1 = require("./tapu-koko-gx");
 const tapu_lele_gx_1 = require("./tapu-lele-gx");
@@ -40,6 +41,7 @@ exports.setGuardiansRising = [
     new oricorio_1.Oricorio(),
     new oricorio_2_1.Oricorio2(),
     new rescue_stretcher_1.RescueStretcher(),
+    new sudowoodo_1.Sudowoodo(),
     new sylveon_gx_1.SylveonGX(),
     new tapu_lele_gx_1.TapuLeleGX(),
     new tapu_koko_gx_1.TapuKokoGX(),
