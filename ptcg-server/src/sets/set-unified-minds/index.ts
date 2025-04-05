@@ -5,7 +5,9 @@ import { CherishBall } from './cherish-ball';
 import { Cottonee } from './cottonee';
 import { Cryogonal } from './cryogonal';
 import { DarkCity } from './dark-city';
+import { Drilbur } from './drilbur';
 import { Eelektross } from './eelektross';
+import { Excadrill } from './excadrill';
 import { FlyiniumZAirSlash } from './flyinium-z-air-slash';
 import { Froslass } from './froslass';
 import { Garchomp } from './garchomp';
@@ -44,7 +46,9 @@ export const setUnifiedMinds: Card[] = [
   new CherishBall(),
   new Cottonee(),
   new Cryogonal(),
+  new Excadrill(),
   new DarkCity(),
+  new Drilbur(),
   new Eelektross(),
   new FlyiniumZAirSlash(),
   new Froslass(),
