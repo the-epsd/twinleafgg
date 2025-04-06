@@ -5,6 +5,7 @@ export * from './set-team-rocket';
 export * from './set-vending-series';
 export * from './set-wotc-promos';
 export * from './set-base-set-energy';
+export * from './set-ex-ruby-and-sapphire';
 export * from './set-neo-genesis';
 export * from './set-neo-discovery';
 export * from './set-aquapolis';

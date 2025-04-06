@@ -16,6 +16,7 @@ export * from './set-neo-discovery'
 export * from './set-aquapolis'
 
 //ex Era
+export * from './set-ex-ruby-and-sapphire';
 export * from './set-ex-holon-phantoms';
 export * from './set-ex-hidden-legends';
 export * from './set-ex-delta-species';

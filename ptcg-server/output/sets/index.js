@@ -24,6 +24,7 @@ __exportStar(require("./set-neo-discovery"), exports);
 //E-Card Era
 __exportStar(require("./set-aquapolis"), exports);
 //ex Era
+__exportStar(require("./set-ex-ruby-and-sapphire"), exports);
 __exportStar(require("./set-ex-holon-phantoms"), exports);
 __exportStar(require("./set-ex-hidden-legends"), exports);
 __exportStar(require("./set-ex-delta-species"), exports);

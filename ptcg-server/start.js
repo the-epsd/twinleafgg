@@ -29,6 +29,7 @@ cardManager.defineSet(sets.setNeoDiscovery)
 cardManager.defineSet(sets.setAquapolis);
 
 //ex Era shit
+cardManager.defineSet(sets.setEXRubyAndSapphire);
 cardManager.defineSet(sets.setEXHolonPhantoms);
 cardManager.defineSet(sets.setEXHiddenLegends)
 cardManager.defineSet(sets.setEXDragon);
