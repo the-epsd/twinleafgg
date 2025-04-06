@@ -4,7 +4,7 @@ import { PlayerType, SlotType } from '../../game/store/actions/play-card-action'
 import { Stage, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
-import { SupporterEffect, TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { SupporterEffect, TrainerEffect, TrainerTargetEffect } from '../../game/store/effects/play-card-effects';
 import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
 import { StateUtils } from '../../game/store/state-utils';
 import { State } from '../../game/store/state/state';
@@ -50,9 +50,13 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
         return;
       }
 
-      opponent.active.clearEffects();
-      opponent.switchPokemon(targets[0]);
-
+      const targetCard = new TrainerTargetEffect(player, effect.trainerCard, targets[0]);
+      targetCard.target = targets[0];
+      store.reduceEffect(state, targetCard);
+      if (targetCard.target) {
+        opponent.switchPokemon(targetCard.target);
+      }
+      
       store.log(state, GameLog.LOG_PLAYER_SWITCHES_POKEMON_TO_ACTIVE, { name: player.name, card: targets[0].getPokemonCard()!.name });
 
       next();
