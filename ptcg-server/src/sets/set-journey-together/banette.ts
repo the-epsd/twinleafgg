@@ -15,10 +15,10 @@ export class Banette extends PokemonCard {
 
   public attacks = [
     {
-      name: 'Cursed Speech',
+      name: 'Cursed Words',
       cost: [CardType.PSYCHIC],
       damage: 0,
-      text: 'Your opponent shuffles 3 cards from their hand into their deck.'
+      text: 'Your opponent chooses 3 cards from their hand and shuffles those cards into their deck.'
     },
     {
       name: 'Spooky Shot',

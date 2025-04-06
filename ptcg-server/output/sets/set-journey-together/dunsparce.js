@@ -19,7 +19,12 @@ class Dunsparce extends pokemon_card_1.PokemonCard {
                 damage: 0,
                 text: 'Switch this Pokémon with 1 of your Benched Pokémon.'
             },
-            { name: 'Ram', cost: [C, C], damage: 20, text: '' },
+            {
+                name: 'Ram',
+                cost: [C, C],
+                damage: 20,
+                text: ''
+            },
         ];
         this.set = 'JTG';
         this.regulationMark = 'I';

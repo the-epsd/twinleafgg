@@ -13,7 +13,7 @@ class Accelgor extends game_1.PokemonCard {
         this.weakness = [{ type: R }];
         this.retreat = [C];
         this.attacks = [{
-                name: 'Ephemeral Poison',
+                name: 'Poisonous Ploy',
                 cost: [G, C],
                 damage: 70,
                 text: 'Your opponent\'s Active Pokémon is now Confused and Poisoned. Switch this Pokémon with 1 of your Benched Pokémon.'

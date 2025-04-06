@@ -6,6 +6,7 @@ const card_types_1 = require("../../game/store/card/card-types");
 const game_effects_1 = require("../../game/store/effects/game-effects");
 const check_effects_1 = require("../../game/store/effects/check-effects");
 const game_1 = require("../../game");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class Cetitan extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -43,14 +44,13 @@ class Cetitan extends pokemon_card_1.PokemonCard {
             const pokemon = player.active;
             const checkEnergy = new check_effects_1.CheckProvidedEnergyEffect(player, pokemon);
             store.reduceEffect(state, checkEnergy);
-            let damage = 80;
-            checkEnergy.energyMap.forEach(em => {
+            const hasSpecialEnergy = checkEnergy.energyMap.some(em => {
                 const energyCard = em.card;
-                if (energyCard instanceof game_1.EnergyCard && energyCard.energyType === card_types_1.EnergyType.SPECIAL) {
-                    damage += 140;
-                }
+                return energyCard instanceof game_1.EnergyCard && energyCard.energyType === card_types_1.EnergyType.SPECIAL;
             });
-            effect.damage = damage;
+            if (hasSpecialEnergy) {
+                prefabs_1.THIS_ATTACK_DOES_X_MORE_DAMAGE(effect, store, state, 140);
+            }
         }
         return state;
     }

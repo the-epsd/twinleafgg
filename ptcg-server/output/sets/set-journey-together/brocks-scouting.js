@@ -51,7 +51,7 @@ class BrocksScouting extends trainer_card_1.TrainerCard {
         this.setNumber = '146';
         this.name = 'Brock\'s Scouting';
         this.fullName = 'Brock\'s Scouting JTG';
-        this.text = 'Search your deck for either up to 2 Basic Pokémon or 1 Evolution Pokémon, reveal them, and put them into your hand. Then shuffle your deck.';
+        this.text = 'Search your deck for up to 2 Basic Pokémon or 1 Evolution Pokémon, reveal them, and put them into your hand. Then, shuffle your deck.';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof play_card_effects_1.TrainerEffect && effect.trainerCard === this) {

@@ -20,8 +20,18 @@ export class HopsCorvisquire extends PokemonCard {
   public retreat = [C];
 
   public attacks = [
-    { name: 'Speed Dive', cost: [C], damage: 30, text: '' },
-    { name: 'Razor Wing', cost: [C, C, C], damage: 80, text: '' },
+    {
+      name: 'Speed Dive',
+      cost: [C],
+      damage: 30,
+      text: ''
+    },
+    {
+      name: 'Razor Wing',
+      cost: [C, C, C],
+      damage: 80,
+      text: ''
+    },
   ];
 
   public regulationMark = 'I';

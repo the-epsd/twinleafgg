@@ -29,8 +29,7 @@ class HopsSandaconda extends pokemon_card_1.PokemonCard {
                 name: 'Break Ground',
                 cost: [F, C, C],
                 damage: 140,
-                text: 'This attack does 20 damage to each of your Benched Pokémon. ' +
-                    '(Don\'t apply Weakness and Resistance for Benched Pokémon.) '
+                text: 'This attack also does 20 damage to each of your Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.) '
             },
         ];
         this.regulationMark = 'I';

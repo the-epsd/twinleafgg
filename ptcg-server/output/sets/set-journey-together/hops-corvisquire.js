@@ -15,8 +15,18 @@ class HopsCorvisquire extends pokemon_card_1.PokemonCard {
         this.resistance = [{ type: F, value: -30 }];
         this.retreat = [C];
         this.attacks = [
-            { name: 'Speed Dive', cost: [C], damage: 30, text: '' },
-            { name: 'Razor Wing', cost: [C, C, C], damage: 80, text: '' },
+            {
+                name: 'Speed Dive',
+                cost: [C],
+                damage: 30,
+                text: ''
+            },
+            {
+                name: 'Razor Wing',
+                cost: [C, C, C],
+                damage: 80,
+                text: ''
+            },
         ];
         this.regulationMark = 'I';
         this.set = 'JTG';

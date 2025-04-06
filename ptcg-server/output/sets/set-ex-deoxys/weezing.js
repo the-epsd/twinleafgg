@@ -54,12 +54,12 @@ class Weezing extends pokemon_card_1.PokemonCard {
                 damageAmount = Math.max(0, damageAmount - targetDamage);
             }
             if (damageAmount > 0) {
-                const damageEffect = new attack_effects_1.PutDamageEffect(effect, damageAmount);
+                const damageEffect = new attack_effects_1.PutCountersEffect(effect, damageAmount);
                 damageEffect.target = selectedTarget;
                 store.reduceEffect(state, damageEffect);
             }
             else if (damageAmount <= 0) {
-                const damageEffect = new attack_effects_1.PutDamageEffect(effect, 0);
+                const damageEffect = new attack_effects_1.PutCountersEffect(effect, 0);
                 damageEffect.target = selectedTarget;
                 store.reduceEffect(state, damageEffect);
             }

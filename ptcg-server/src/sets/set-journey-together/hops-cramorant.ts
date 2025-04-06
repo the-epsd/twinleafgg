@@ -21,7 +21,7 @@ export class HopsCramorant extends PokemonCard {
 
   public attacks = [
     {
-      name: 'Fickle Spit',
+      name: 'Fickle Spitting',
       cost: [C],
       damage: 120,
       text: 'If your opponent doesn\'t have exactly 3 or 4 Prize cards remaining, this attack does nothing.'

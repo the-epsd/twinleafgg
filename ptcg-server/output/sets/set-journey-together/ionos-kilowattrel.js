@@ -20,10 +20,10 @@ class IonosKilowattrel extends pokemon_card_1.PokemonCard {
         this.resistance = [{ type: F, value: -30 }];
         this.retreat = [C];
         this.powers = [{
-                name: 'Flash Draw',
+                name: 'Flashing Draw',
                 useWhenInPlay: true,
                 powerType: game_1.PowerType.ABILITY,
-                text: 'You may use this Ability once during your turn by discarding a Basic [L] Energy card from this Pokémon. Draw cards until you have 6 cards in your hand.'
+                text: 'You must discard a Basic [L] Energy from this Pokémon in order to use this Ability. Once during your turn, you may draw cards until you have 6 cards in your hand.'
             }];
         this.attacks = [{
                 name: 'Mach Bolt',
