@@ -32,6 +32,7 @@ const team_rockets_archer_1 = require("./team-rockets-archer");
 const team_rockets_ariana_1 = require("./team-rockets-ariana");
 const team_rockets_flaaffy_1 = require("./team-rockets-flaaffy");
 const team_rockets_giovanni_1 = require("./team-rockets-giovanni");
+const team_rockets_great_ball_1 = require("./team-rockets-great-ball");
 const team_rockets_mareep_1 = require("./team-rockets-mareep");
 const team_rockets_meowth_1 = require("./team-rockets-meowth");
 const team_rockets_mewtwo_ex_1 = require("./team-rockets-mewtwo-ex");
@@ -90,4 +91,5 @@ exports.setSV10 = [
     new team_rockets_flaaffy_1.TeamRocketsFlaaffy(),
     new team_rockets_ampharos_1.TeamRocketsAmpharos(),
     new team_rockets_wobbuffet_1.TeamRocketsWobbuffet(),
+    new team_rockets_great_ball_1.TeamRocketsGreatBall(),
 ];

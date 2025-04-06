@@ -12,7 +12,7 @@ class TeamRocketsTarountula extends game_1.PokemonCard {
         this.cardType = G;
         this.hp = 50;
         this.weakness = [{ type: R }];
-        this.retreat = [C, C];
+        this.retreat = [C];
         this.attacks = [
             {
                 name: 'Take Down',

@@ -1,14 +1,14 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State, PowerType } from '../../game';
-import { AttackEffect, Effect } from '../../game/store/effects/game-effects';
+import { Effect } from '../../game/store/effects/game-effects';
 export declare class TestPokemon extends PokemonCard {
     regulationMark: string;
     stage: Stage;
     cardType: CardType;
     hp: number;
     weakness: {
-        type: CardType;
+        type: CardType.COLORLESS;
     }[];
     retreat: never[];
     powers: {
@@ -19,10 +19,9 @@ export declare class TestPokemon extends PokemonCard {
     }[];
     attacks: {
         name: string;
-        cost: never[];
+        cost: CardType.COLORLESS[];
         damage: number;
         text: string;
-        effect: (store: StoreLike, state: State, effect: AttackEffect) => void;
     }[];
     set: string;
     cardImage: string;

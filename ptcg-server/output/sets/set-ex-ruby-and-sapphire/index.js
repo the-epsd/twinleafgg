@@ -8,5 +8,4 @@ exports.setEXRubyAndSapphire = [
     new delcatty_1.Delcatty(),
     new skitty_1.Skitty(),
     new blaziken_1.Blaziken()
-  
-  ];
+];

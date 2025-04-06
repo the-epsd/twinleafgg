@@ -98,10 +98,6 @@ export class GameOverComponent implements OnInit {
     const playerIndex = state.players.findIndex(p => String(p.id) === String(currentPlayerId));
     const opponentIndex = playerIndex === 0 ? 1 : 0;
 
-    console.log('Player indices:', { playerIndex, opponentIndex });
-    console.log('Player data:', state.players[playerIndex]);
-    console.log('Opponent data:', state.players[opponentIndex]);
-
     this.playerUsername = state.players[playerIndex]?.name || `Player ${playerIndex + 1}`;
     this.opponentUsername = state.players[opponentIndex]?.name || `Player ${opponentIndex + 1}`;
 
@@ -114,40 +110,20 @@ export class GameOverComponent implements OnInit {
     if (state.players[playerIndex] && state.players[playerIndex].prizes) {
       // Calculate based on remaining prizes (out of 6)
       this.playerPrizesTaken = 6 - state.players[playerIndex].prizes.length;
-      console.log('Player prizes calculation (from prizes array):', {
-        prizes: state.players[playerIndex].prizes,
-        prizesLength: state.players[playerIndex].prizes.length,
-        playerPrizesTaken: this.playerPrizesTaken
-      });
     }
 
     if (state.players[opponentIndex] && state.players[opponentIndex].prizes) {
       this.opponentPrizesTaken = 6 - state.players[opponentIndex].prizes.length;
-      console.log('Opponent prizes calculation (from prizes array):', {
-        prizes: state.players[opponentIndex].prizes,
-        prizesLength: state.players[opponentIndex].prizes.length,
-        opponentPrizesTaken: this.opponentPrizesTaken
-      });
     }
 
     // If values are still 0, try alternate properties
     if (this.playerPrizesTaken === 0 && state.players[playerIndex].prizesTaken !== undefined) {
       this.playerPrizesTaken = state.players[playerIndex].prizesTaken as number;
-      console.log('Player prizes from prizesTaken property:', this.playerPrizesTaken);
     }
 
     if (this.opponentPrizesTaken === 0 && state.players[opponentIndex].prizesTaken !== undefined) {
       this.opponentPrizesTaken = state.players[opponentIndex].prizesTaken as number;
-      console.log('Opponent prizes from prizesTaken property:', this.opponentPrizesTaken);
     }
-
-    // For debugging, log the prize counts
-    console.log('Player prizes taken:', this.playerPrizesTaken,
-      'Opponent prizes taken:', this.opponentPrizesTaken);
-
-    // Debug information for the first prize indicators
-    console.log('First player prize indicator should be lit?', 0 < this.playerPrizesTaken);
-    console.log('First opponent prize indicator should be lit?', 0 < this.opponentPrizesTaken);
 
     // Set placeholder values if still 0 and the game is over
     if (state.phase === GamePhase.FINISHED) {
@@ -160,19 +136,11 @@ export class GameOverComponent implements OnInit {
         // If opponent won but prizes count is 0, set to 6 (or at least 1)
         this.opponentPrizesTaken = Math.max(1, this.opponentPrizesTaken);
       }
-
-      // After applying placeholder values, log again
-      console.log('Final player prizes taken:', this.playerPrizesTaken,
-        'Final opponent prizes taken:', this.opponentPrizesTaken);
     }
 
     // Ensure prize values are numbers
     this.playerPrizesTaken = Number(this.playerPrizesTaken);
     this.opponentPrizesTaken = Number(this.opponentPrizesTaken);
-
-    // Log the final values
-    console.log('FINAL player prizes (normalized):', this.playerPrizesTaken);
-    console.log('FINAL opponent prizes (normalized):', this.opponentPrizesTaken);
 
     // Try to get damage stats if available
     this.findBestPokemon(playerIndex);

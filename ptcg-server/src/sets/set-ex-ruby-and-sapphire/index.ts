@@ -7,5 +7,4 @@ export const setEXRubyAndSapphire: Card[] = [
   new Delcatty(),
   new Skitty(),
   new Blaziken()
-  
 ]; 

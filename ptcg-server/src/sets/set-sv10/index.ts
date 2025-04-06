@@ -1,11 +1,11 @@
 import { Card } from '../../game/store/card/card';
-import {Annihilape} from './annihilape';
-import {Blaziken} from './blaziken';
-import {Cetitanex} from './cetitan-ex';
-import {Cetoddle} from './cetoddle';
-import {Combusken} from './combusken';
+import { Annihilape } from './annihilape';
+import { Blaziken } from './blaziken';
+import { Cetitanex } from './cetitan-ex';
+import { Cetoddle } from './cetoddle';
+import { Combusken } from './combusken';
 import { GraniteCave } from './granite-cave';
-import {Mankey} from './mankey';
+import { Mankey } from './mankey';
 import { MarniesGrimmsnarlex } from './marnies-grimmsnarl-ex';
 import { MarniesImpidimp } from './marnies-impidimp';
 import { MarniesLiepard } from './marnies-liepard';
@@ -15,7 +15,7 @@ import { MarniesPurrloin } from './marnies-purrloin';
 import { MarniesScrafty } from './marnies-scrafty';
 import { MarniesScraggy } from './marnies-scraggy';
 import { EnergyRecyclerSV10, MarniesMorpekoIR, StevensBeldumIR } from './other-prints';
-import {Primeape} from './primeape';
+import { Primeape } from './primeape';
 import { SpikemuthGym } from './spikemuth-gym';
 import { StevensBaltoy } from './stevens-baltoy';
 import { StevensBeldum } from './stevens-beldum';
@@ -28,8 +28,9 @@ import { TeamRocketEnergy } from './team-rocket-energy';
 import { TeamRocketsAmpharos } from './team-rockets-ampharos';
 import { TeamRocketsArcher } from './team-rockets-archer';
 import { TeamRocketsAriana } from './team-rockets-ariana';
-import { TeamRocketsFlaaffy} from './team-rockets-flaaffy';
+import { TeamRocketsFlaaffy } from './team-rockets-flaaffy';
 import { TeamRocketsGiovanni } from './team-rockets-giovanni';
+import { TeamRocketsGreatBall } from './team-rockets-great-ball';
 import { TeamRocketsMareep } from './team-rockets-mareep';
 import { TeamRocketsMeowth } from './team-rockets-meowth';
 import { TeamRocketsMewtwoex } from './team-rockets-mewtwo-ex';
@@ -41,7 +42,7 @@ import { TeamRocketsReceiver } from './team-rockets-receiver';
 import { TeamRocketsSpidops } from './team-rockets-spidops';
 import { TeamRocketsTarountula } from './team-rockets-tarountula';
 import { TeamRocketsWobbuffet } from './team-rockets-wobbuffet';
-import {Torchic} from './torchic';
+import { Torchic } from './torchic';
 
 export const setSV10: Card[] = [
   new Cetoddle(),
@@ -92,4 +93,5 @@ export const setSV10: Card[] = [
   new TeamRocketsFlaaffy(),
   new TeamRocketsAmpharos(),
   new TeamRocketsWobbuffet(),
+  new TeamRocketsGreatBall(),
 ];

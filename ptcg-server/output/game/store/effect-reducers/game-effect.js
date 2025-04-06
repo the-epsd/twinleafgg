@@ -173,8 +173,8 @@ function gameReducer(store, state, effect) {
                 effect.prizeCount += 2;
             }
             store.log(state, game_message_1.GameLog.LOG_POKEMON_KO, { name: card.name });
-            // Handle Lost City marker
-            if (effect.target.marker.hasMarker('LOST_CITY_MARKER')) {
+            // Handle Lost City marker or PRISM_STAR cards
+            if (effect.target.marker.hasMarker('LOST_CITY_MARKER') || card.tags.includes(card_types_1.CardTag.PRISM_STAR)) {
                 const lostZoned = new card_list_1.CardList();
                 const attachedCards = new card_list_1.CardList();
                 const pokemonIndices = effect.target.cards.map((card, index) => index);
@@ -193,7 +193,7 @@ function gameReducer(store, state, effect) {
                         }
                     }
                     // Handle the main card
-                    if (removedCard.superType === card_types_1.SuperType.POKEMON || removedCard.stage === card_types_1.Stage.BASIC) {
+                    if (removedCard.superType === card_types_1.SuperType.POKEMON || removedCard.stage === card_types_1.Stage.BASIC || removedCard.tags.includes(card_types_1.CardTag.PRISM_STAR)) {
                         lostZoned.cards.push(removedCard);
                     }
                     else {

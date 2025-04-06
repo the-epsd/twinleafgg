@@ -33,27 +33,26 @@ class Sudowoodo extends pokemon_card_1.PokemonCard {
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof check_effects_1.CheckTableStateEffect) {
-            effect.benchSizes = state.players.map((player, index) => {
-                // Return original bench size if Ability is blocked
-                if (prefabs_1.IS_ABILITY_BLOCKED(store, state, player, this)) {
-                    return 5;
+            const player = effect.player;
+            const cardList = game_1.StateUtils.findCardList(state, this);
+            const owner = game_1.StateUtils.findOwner(state, cardList);
+            let isOpponentSudowoodoInPlay = false;
+            owner.forEachPokemon(game_1.PlayerType.TOP_PLAYER, (cardList, card) => {
+                if (card === this) {
+                    isOpponentSudowoodoInPlay = true;
                 }
-                // Check for Sudowoodo on opponent's board
-                let isSudowoodoInPlay = false;
-                const opponent = game_1.StateUtils.getOpponent(state, player);
-                opponent.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList) => {
-                    const pokemon = cardList.getPokemonCard();
-                    if (!!pokemon && pokemon.name === 'Sudowoodo' && pokemon.powers.map(p => p.name).includes(this.powers[0].name)) {
-                        isSudowoodoInPlay = true;
-                    }
-                });
-                // Modify bench size
-                if (isSudowoodoInPlay) {
-                    return 4;
-                }
-                // Return original bench size
-                return 5;
             });
+            if (!isOpponentSudowoodoInPlay) {
+                return state;
+            }
+            if (!prefabs_1.IS_ABILITY_BLOCKED(store, state, player, this)) {
+                effect.benchSizes = state.players.map((player, index) => {
+                    if (player === owner) {
+                        return effect.benchSizes[index];
+                    }
+                    return Math.min(effect.benchSizes[index], 4);
+                });
+            }
         }
         return state;
     }

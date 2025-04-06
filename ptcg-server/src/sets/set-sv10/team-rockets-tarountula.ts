@@ -9,7 +9,7 @@ export class TeamRocketsTarountula extends PokemonCard {
   public cardType: CardType = G;
   public hp: number = 50;
   public weakness = [{ type: R }];
-  public retreat = [C, C];
+  public retreat = [C];
 
   public attacks = [
     {
