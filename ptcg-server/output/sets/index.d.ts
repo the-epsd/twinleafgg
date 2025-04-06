@@ -6,6 +6,7 @@ export * from './set-vending-series';
 export * from './set-wotc-promos';
 export * from './set-base-set-energy';
 export * from './set-neo-genesis';
+export * from './set-neo-discovery';
 export * from './set-aquapolis';
 export * from './set-ex-holon-phantoms';
 export * from './set-ex-hidden-legends';

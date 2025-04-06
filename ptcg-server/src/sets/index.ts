@@ -10,6 +10,7 @@ export * from './set-wotc-promos';
 export * from './set-base-set-energy';
 
 export * from './set-neo-genesis'
+export * from './set-neo-discovery'
 
 //E-Card Era
 export * from './set-aquapolis'
