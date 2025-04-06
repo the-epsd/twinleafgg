@@ -43,14 +43,13 @@ class Cetitan extends pokemon_card_1.PokemonCard {
             const pokemon = player.active;
             const checkEnergy = new check_effects_1.CheckProvidedEnergyEffect(player, pokemon);
             store.reduceEffect(state, checkEnergy);
-            let damage = 80;
-            checkEnergy.energyMap.forEach(em => {
+            const hasSpecialEnergy = checkEnergy.energyMap.some(em => {
                 const energyCard = em.card;
-                if (energyCard instanceof game_1.EnergyCard && energyCard.energyType === card_types_1.EnergyType.SPECIAL) {
-                    damage += 140;
-                }
+                return energyCard instanceof game_1.EnergyCard && energyCard.energyType === card_types_1.EnergyType.SPECIAL;
             });
-            effect.damage = damage;
+            if (hasSpecialEnergy) {
+                effect.damage += 140;
+            }
         }
         return state;
     }

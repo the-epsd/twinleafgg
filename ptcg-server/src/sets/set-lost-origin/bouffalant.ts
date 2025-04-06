@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, EnergyCard, GameError, GameMessage, ChooseEnergyPrompt, Card, GameLog } from '../../game';
+import { StoreLike, State, StateUtils, EnergyCard, GameMessage, ChooseEnergyPrompt, Card, GameLog } from '../../game';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
@@ -54,7 +54,7 @@ export class Bouffalant extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       if (!opponent.active.cards.some(c => c instanceof EnergyCard)) {
-        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+        return state;
       }
 
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(opponent);

@@ -30,6 +30,7 @@ const klang_1 = require("./klang");
 const klink_1 = require("./klink");
 const klinklang_1 = require("./klinklang");
 const lance_1 = require("./lance");
+const leafy_camo_poncho_1 = require("./leafy-camo-poncho");
 const litten_1 = require("./litten");
 const lugia_v_1 = require("./lugia-v");
 const lugia_vstar_1 = require("./lugia-vstar");
@@ -93,6 +94,7 @@ exports.setSilverTempest = [
     new klink_1.Klink(),
     new klinklang_1.Klinklang(),
     new lance_1.Lance(),
+    new leafy_camo_poncho_1.LeafyCamoPoncho(),
     new litten_1.Litten(),
     new lugia_v_1.LugiaV(),
     new lugia_vstar_1.LugiaVSTAR(),

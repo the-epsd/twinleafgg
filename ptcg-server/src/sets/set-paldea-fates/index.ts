@@ -1,6 +1,6 @@
 import { Card } from '../../game/store/card/card';
 import { Atticus } from './atticus';
-import { CharmanderPAF, MimikyuPAF, RareCandyPAF, CharizardexPAF, ElectricGeneratorPAF, IonoPAF, NestBallPAF, ProfessorsResearchPAF, ProfessorsResearch2PAF, UltraBallPAF, ArmarougePAF, NatuPAF, XatuPAF, CharcadetPAF, RaltsPAF, GardevoirexPAF, NoibatPAF, NoivernexPAF, SquawkabillyexPAF, ArtazonPAF } from './card-images';
+import { CharmanderPAF, MimikyuPAF, RareCandyPAF, CharizardexPAF, ElectricGeneratorPAF, IonoPAF, NestBallPAF, ProfessorsResearchPAF, ProfessorsResearch2PAF, UltraBallPAF, ArmarougePAF, NatuPAF, XatuPAF, CharcadetPAF, RaltsPAF, GardevoirexPAF, NoibatPAF, NoivernexPAF, SquawkabillyexPAF, ArtazonPAF } from './other-prints';
 import { Charmeleon } from './charmeleon';
 import { Clive } from './clive';
 import { Espathraex } from './espathra-ex';
@@ -12,6 +12,7 @@ import { Haunter } from './haunter';
 import { Kilowattrel } from './kilowattrel';
 import { MimeJr } from './mime-jr';
 import { MoonlightHill } from './moonlight-hill';
+import { Scraggy } from './scraggy';
 import { ArbolivaSV, ArctibaxSV, ArmarougeSV, ArvenSV, BaxcaliburSV, CapsakidSV, CharcadetSV, CharizardexSVSIR, CharmanderSV, CharmeleonSV, ChienPaoexUR, ChiYuexUR, CleffaSV, CliveSV, CliveSV2, DittoSV, DodrioSV, DoduoSV, DollivSV, DrifloonSV, EnteiSV, EspathraexSV, FinizenSV, FlamigoSV, ForretressexSV, FrigibaxSV, GardevoirexSV, GardevoirexSVSIR, GloomSV, HawluchaSV, IonoSV, JudgeSV, KilowattrelSV, KirliaSV, KlefkiSV, KoraidonexUR, LucarioSV, LuxraySV, MewexSV, MewexSVSIR, MimeJrSV, MimikyuSV, MiraidonexUR, MurkrowSV, NatuSV, NemonaSV, NemonaSV2, NoibatSV, NoivernexSV, OddishSV, PalafinSV, PalafinSVFA, PaldeanStudentSV1, PaldeanStudentSV2, PawmiSV, PawmiSVFA, PawmoSV, PawmotSV, PelipperSV, PennySV, PidgeotexSV, PidgeottoSV, PidgeySV, PinecoSV, RaltsSV, RevavroomSV, RioluSV, ScizorSV, SkwovetSV, SlowpokeSV, SmolivSV, SnorlaxSV, SpiritombSV, SquawkabillyexSV, StarmieSV, StaryuSV, ThundurusSV, TingLuexUR, TinkatinkSV, TinkatonSV, TinkatuffSV, ToedscruelexSV, VileplumeSV, WattrelSV, WingullSV, WoChienexUR, WugtrioSVFA, XatuSV } from './shiny-vault';
 import { StudentsInPaldea } from './students-in-paldea';
 import { TechnicalMachineCrisisPunch } from './technical-machine-crisis-punch';
@@ -23,6 +24,7 @@ export const setPaldeaFates: Card[] = [
   new Espathraex(),
   new MoonlightHill(),
   new StudentsInPaldea(),
+  new Scraggy(),
   new Gengar(),
   new Kilowattrel(),
   new MimeJr(),

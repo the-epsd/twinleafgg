@@ -3,12 +3,8 @@ import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, EvolveEffect, PowerEffect } from '../../game/store/effects/game-effects';
-import { GameMessage } from '../../game/game-message';
-import { PowerType } from '../../game/store/card/pokemon-types';
-import { DiscardCardsEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
-import { CheckPokemonTypeEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
-import { ChooseEnergyPrompt, Card, PlayerType } from '../../game';
+import { AttackEffect, EvolveEffect } from '../../game/store/effects/game-effects';
+import { PlayerType, StateUtils } from '../../game';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class MCharizardEX extends PokemonCard {
@@ -64,54 +60,12 @@ export class MCharizardEX extends PokemonCard {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
 
-      const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
-      state = store.reduceEffect(state, checkProvidedEnergy);
+      // Discard 2 cards from opponent's deck 
+      opponent.deck.moveTo(opponent.discard, 5);
 
-      state = store.prompt(state, new ChooseEnergyPrompt(
-        player.id,
-        GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
-        checkProvidedEnergy.energyMap,
-        [CardType.COLORLESS, CardType.COLORLESS],
-        { allowCancel: false }
-      ), energy => {
-        const cards: Card[] = (energy || []).map(e => e.card);
-        const discardEnergy = new DiscardCardsEffect(effect, cards);
-        discardEnergy.target = player.active;
-        store.reduceEffect(state, discardEnergy);
-      });
     }
-
-    // Delta Plus
-    if (effect instanceof PutDamageEffect) {
-      const player = effect.player;
-
-      // Try to reduce PowerEffect, to check if something is blocking our ability
-      try {
-        const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
-      } catch {
-        return state;
-      }
-
-      if (effect.target.cards.includes(this)) {
-        const checkPokemonType = new CheckPokemonTypeEffect(effect.source);
-        store.reduceEffect(state, checkPokemonType);
-        if (checkPokemonType.cardTypes.includes(CardType.GRASS) ||
-          checkPokemonType.cardTypes.includes(CardType.FIRE) ||
-          checkPokemonType.cardTypes.includes(CardType.WATER) ||
-          checkPokemonType.cardTypes.includes(CardType.LIGHTNING)) {
-          effect.damage -= 20;
-        }
-
-      }
-    }
-
-
     return state;
   }
 

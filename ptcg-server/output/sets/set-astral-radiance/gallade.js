@@ -44,8 +44,12 @@ class Gallade extends pokemon_card_1.PokemonCard {
     reduceEffect(store, state, effect) {
         if (effect instanceof game_effects_1.AttackEffect && effect.attack === this.attacks[0]) {
             const player = effect.player;
+            const hasBench = player.bench.some(b => b.cards.length > 0);
             const blockedFrom = [];
             const blockedTo = [];
+            if (hasBench === false) {
+                return state;
+            }
             player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
                 if (cardList === player.active) {
                     blockedTo.push(target);

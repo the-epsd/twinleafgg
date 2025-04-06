@@ -74,6 +74,10 @@
   gap: -12px;
 }
 
+.subtitle-stage {
+  font-weight: bold;
+}
+
 .power {
   margin: map-get($padding, small) 0;
   padding: 12px;
@@ -110,6 +114,11 @@
   padding: 12px;
   background-color: rgba(255, 255, 255, 0.05);
   border-radius: map-get($padding, small);
+  transition: background-color 0.3s ease;
+
+  &.disabled {
+    background-color: rgba(255, 255, 255, 0.03);
+  }
 }
 
 .attack-header {
@@ -125,6 +134,17 @@
 
   ptcg-energy+ptcg-energy {
     margin-left: -4px;
+  }
+
+  ptcg-energy.insufficient {
+    filter: grayscale(0.9);
+    opacity: 0.5;
+    transition: filter 0.3s ease, opacity 0.3s ease;
+
+    &:hover {
+      filter: grayscale(0.3);
+      opacity: 0.7;
+    }
   }
 }
 
@@ -166,8 +186,13 @@
   padding: 0 16px;
   position: relative;
 
-  &:last-child .stats-item-value {
-    transform: translateX(4px);
+  &:last-child {
+    flex: 1.5;
+
+    .stats-item-value {
+      transform: translateX(4px);
+      min-width: 150px;
+    }
   }
 }
 
@@ -189,6 +214,8 @@
 }
 
 .stats-item-value {
+  font-size: 13px;
+  font-weight: 600;
   display: flex;
   align-items: center;
   height: 28px;
@@ -196,6 +223,7 @@
   justify-content: center;
   width: 100%;
   position: relative;
+  flex-wrap: wrap;
 
   ptcg-energy {
     display: flex;
@@ -206,14 +234,21 @@
     margin-left: -8px;
   }
 
+  // Closer spacing for retreat cost icons
+  .stats-item:last-child & ptcg-energy+ptcg-energy {
+    margin-left: -14px; // Only 2px visible gap between icons
+  }
+
   .stats-item-value-modifier {
     position: absolute;
     left: calc(50% + 12px);
   }
 
   &.empty {
-    color: rgba(255, 255, 255, 0.5);
+    color: #aaffe0;
     font-style: italic;
+    font-size: 11px;
+    padding: 4px 8px;
   }
 }
 

@@ -25,32 +25,44 @@ class WishfulBaton extends trainer_card_1.TrainerCard {
         if (effect instanceof game_effects_1.KnockOutEffect && effect.target.cards.includes(this) && effect.player.marker.hasMarker(effect.player.DAMAGE_DEALT_MARKER)) {
             const player = effect.player;
             const target = effect.target;
-            const removedCards = [];
-            const pokemonIndices = effect.target.cards.map((card, index) => index);
             if (prefabs_1.IS_TOOL_BLOCKED(store, state, effect.player, this)) {
                 return state;
             }
-            for (let i = pokemonIndices.length - 1; i >= 0; i--) {
-                const removedCard = target.cards.splice(pokemonIndices[i], 1)[0];
-                removedCards.push(removedCard);
-                target.damage = 0;
+            // Get all cards from the target
+            const allCards = [...target.cards];
+            // Filter out basic energy cards
+            const basicEnergy = allCards.filter(c => c instanceof game_1.EnergyCard && c.energyType === game_1.EnergyType.BASIC);
+            // If there are basic energy cards, prompt to attach them
+            if (basicEnergy.length > 0) {
+                const energyToAttach = new game_1.CardList();
+                energyToAttach.cards = basicEnergy;
+                // Remove the energy cards from the target so they don't get moved to discard/lost zone
+                target.cards = target.cards.filter(c => !(c instanceof game_1.EnergyCard && c.energyType === game_1.EnergyType.BASIC));
+                // Remove the Wishful Baton from both the cards array and the tool property
+                target.cards = target.cards.filter(c => c !== this);
+                target.tool = undefined;
+                // Move the Wishful Baton to the discard pile using MOVE_CARDS
+                state = prefabs_1.MOVE_CARDS(store, state, target, player.discard, { cards: [this] });
+                // Prevent the default knockout behavior since we're handling the energy cards
+                effect.preventDefault = true;
+                return store.prompt(state, new attach_energy_prompt_1.AttachEnergyPrompt(player.id, game_message_1.GameMessage.ATTACH_ENERGY_TO_BENCH, energyToAttach, play_card_action_1.PlayerType.BOTTOM_PLAYER, [play_card_action_1.SlotType.BENCH], { superType: game_1.SuperType.ENERGY, energyType: game_1.EnergyType.BASIC }, { allowCancel: false, min: 0, max: 3, sameTarget: true }), transfers => {
+                    transfers = transfers || [];
+                    if (transfers.length === 0) {
+                        // If no transfers were made, move all energy to discard
+                        state = prefabs_1.MOVE_CARDS(store, state, energyToAttach, player.discard, { cards: energyToAttach.cards });
+                        return state;
+                    }
+                    for (const transfer of transfers) {
+                        const target = state_utils_1.StateUtils.getTarget(state, player, transfer.to);
+                        energyToAttach.moveCardTo(transfer.card, target);
+                    }
+                    // Move any remaining energy to discard
+                    if (energyToAttach.cards.length > 0) {
+                        state = prefabs_1.MOVE_CARDS(store, state, energyToAttach, player.discard, { cards: energyToAttach.cards });
+                    }
+                    return state;
+                });
             }
-            const energyToAttach = new game_1.CardList();
-            const basicEnergy = new game_1.CardList();
-            basicEnergy.cards = removedCards.filter(c => c instanceof game_1.EnergyCard && c.energyType === card_types_1.EnergyType.BASIC);
-            basicEnergy.moveTo(energyToAttach);
-            return store.prompt(state, new attach_energy_prompt_1.AttachEnergyPrompt(player.id, game_message_1.GameMessage.ATTACH_ENERGY_TO_BENCH, energyToAttach, play_card_action_1.PlayerType.BOTTOM_PLAYER, [play_card_action_1.SlotType.BENCH], { superType: card_types_1.SuperType.ENERGY, energyType: card_types_1.EnergyType.BASIC }, { allowCancel: false, min: 0, max: 3, sameTarget: true }), transfers => {
-                transfers = transfers || [];
-                // cancelled by user
-                if (transfers.length === 0) {
-                    return;
-                }
-                for (const transfer of transfers) {
-                    const target = state_utils_1.StateUtils.getTarget(state, player, transfer.to);
-                    energyToAttach.moveCardTo(transfer.card, target);
-                }
-                energyToAttach.moveTo(player.discard);
-            });
         }
         return state;
     }

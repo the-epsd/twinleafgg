@@ -5,7 +5,7 @@ const card_types_1 = require("../../game/store/card/card-types");
 const state_1 = require("../../game/store/state/state");
 const game_1 = require("../../game");
 const attack_effects_1 = require("../../game/store/effects/attack-effects");
-const play_card_effects_1 = require("../../game/store/effects/play-card-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class RockChestplate extends game_1.TrainerCard {
     constructor() {
         super(...arguments);
@@ -26,15 +26,16 @@ class RockChestplate extends game_1.TrainerCard {
                 return state;
             }
             // Try to reduce ToolEffect, to check if something is blocking the tool from working
-            try {
-                const stub = new play_card_effects_1.ToolEffect(effect.player, this);
-                store.reduceEffect(state, stub);
-            }
-            catch (_a) {
+            if (prefabs_1.IS_TOOL_BLOCKED(store, state, effect.player, this)) {
                 return state;
             }
             const player = game_1.StateUtils.findOwner(state, effect.target);
             const sourceCard = player.active.getPokemonCard();
+            // Do not ignore self-damage
+            const opponent = game_1.StateUtils.findOwner(state, effect.source);
+            if (player === opponent) {
+                return state;
+            }
             if ((sourceCard === null || sourceCard === void 0 ? void 0 : sourceCard.cardType) == card_types_1.CardType.FIGHTING) {
                 // Check if damage target is owned by this card's owner 
                 const targetPlayer = game_1.StateUtils.findOwner(state, effect.target);

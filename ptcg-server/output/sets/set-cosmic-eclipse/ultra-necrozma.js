@@ -40,7 +40,7 @@ class UltraNecrozma extends pokemon_card_1.PokemonCard {
     reduceEffect(store, state, effect) {
         // check to see if the opponent has less than 3 prize cards before allowing an attack
         // (Ultra Burst)
-        if (effect instanceof game_effects_1.UseAttackEffect && effect.attack === this.attacks[0]) {
+        if (effect instanceof game_effects_1.UseAttackEffect && effect.source.cards.includes(this)) {
             const player = effect.player;
             const opponent = game_1.StateUtils.getOpponent(state, player);
             // Try to reduce PowerEffect, to check if something is blocking our ability

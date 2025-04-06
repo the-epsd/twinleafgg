@@ -1,4 +1,5 @@
 import { Card } from '../../game/store/card/card';
+import { Aipom } from './aipom';
 import { ArceusDialgaPalkiaGX } from './arceus-dialga-palkia-gx';
 import { BellelbaAndBrycenMan } from './bellelba-and-brycen-man';
 import { Blacephalon } from './blacephalon';
@@ -19,6 +20,7 @@ import { GreatCatcher } from './great-catcher';
 import { GuzmaAndHala } from './guzma-and-hala';
 import { Guzzlord } from './guzzlord';
 import { LanasFishingRod } from './lanas-fishing-rod';
+import { Lanturn } from './lanturn';
 import { LilliesPokeDoll } from './lillies-poke-doll';
 import { Lillipup } from './lillipup';
 import { MallowAndLana } from './mallow-and-lana';
@@ -46,9 +48,11 @@ import { Woobat } from './woobat';
 import { Swoobat } from './swoobat';
 import { Mimikyu } from './mimikyu';
 import { OricorioGX } from './oricorio-gx';
+import { DragoniumZDragonClaw } from './dragonium-z';
 
 
 export const setCosmicEclipse: Card[] = [
+  new Aipom(),
   new ArceusDialgaPalkiaGX(),
   new BellelbaAndBrycenMan(),
   new Blacephalon(),
@@ -56,6 +60,7 @@ export const setCosmicEclipse: Card[] = [
   new ChaoticSwell(),
   new Clay(),
   new CynthiaAndCaitlin(),
+  new DragoniumZDragonClaw(),
   new Drampa(),
   new DrawEnergy(),
   new Dusclops(),
@@ -69,6 +74,7 @@ export const setCosmicEclipse: Card[] = [
   new GuzmaAndHala(),
   new Guzzlord(),
   new LanasFishingRod(),
+  new Lanturn(),
   new LilliesPokeDoll(),
   new Lillipup(),
   new MallowAndLana(),

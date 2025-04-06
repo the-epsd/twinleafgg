@@ -179,7 +179,7 @@ export class MatchmakingService {
             format: player1.format,
             timeLimit: 1800,
             rules: new Rules(),
-            recordingEnabled: false
+            recordingEnabled: true
           };
 
           // Use createGameWithDecks instead of createGame

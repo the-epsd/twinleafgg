@@ -8,7 +8,6 @@ import { TrainerType, CardType, CardTag } from '../../game/store/card/card-types
 import { StateUtils } from '../../game/store/state-utils';
 import { UseStadiumEffect } from '../../game/store/effects/game-effects';
 import { CheckAttackCostEffect, CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
-import { PlayItemEffect, PlaySupporterEffect } from '../../game/store/effects/play-card-effects';
 
 export class ThunderMountainPrismStar extends TrainerCard {
 
@@ -54,6 +53,7 @@ export class ThunderMountainPrismStar extends TrainerCard {
       throw new GameError(GameMessage.CANNOT_USE_STADIUM);
     }
 
+    /* tossing this out while we actually work to get this working and to not make this the best floodgate in the game
     if (effect instanceof PlaySupporterEffect && StateUtils.getStadiumCard(state) === this) {
       effect.preventDefault = true;
       return state;
@@ -63,6 +63,7 @@ export class ThunderMountainPrismStar extends TrainerCard {
       effect.preventDefault = true;
       return state;
     }
+    */
 
     return state;
   }

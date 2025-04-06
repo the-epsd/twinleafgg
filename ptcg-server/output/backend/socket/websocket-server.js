@@ -16,24 +16,26 @@ class WebSocketServer {
     }
     async listen(httpServer) {
         const opts = {
-            pingInterval: 25000,
-            pingTimeout: 30000,
-            connectTimeout: 30000,
+            pingInterval: 15000,
+            pingTimeout: 20000,
+            connectTimeout: 45000,
             transports: ['websocket'],
             allowUpgrades: true,
-            upgradeTimeout: 30000,
+            upgradeTimeout: 45000,
             perMessageDeflate: true,
             httpCompression: true,
             allowEIO3: true,
-            maxHttpBufferSize: 1e8, // 100 MB
+            maxHttpBufferSize: 1e8,
+            cors: config_1.config.backend.allowCors ? { origin: '*' } : undefined
         };
-        if (config_1.config.backend.allowCors) {
-            opts.cors = { origin: '*' };
-        }
         try {
             const server = new socket_io_1.Server(httpServer, opts);
             this.server = server;
             server.use(auth_middleware_1.authMiddleware);
+            // Add error handling
+            server.on('error', (error) => {
+                console.error('[Socket] Server error:', error);
+            });
             server.on('connection', this.handleConnection.bind(this));
             // Set up stats monitoring
             this.statsInterval = setInterval(() => this.logServerStats(), this.STATS_INTERVAL);
@@ -47,50 +49,48 @@ class WebSocketServer {
         try {
             const user = socket.user;
             if (!user) {
-                console.error('[Socket] Connection without user data, rejecting');
+                console.error('[Socket] Connection rejected: Missing user data');
                 socket.disconnect();
                 return;
             }
             // Generate a unique ID for this connection
             const connectionId = `${user.id}-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-            console.log(`[Socket] User ${user.name} (${user.id}) connected. Transport: ${socket.conn.transport.name}, Connection ID: ${connectionId}`);
+            console.log(`[Socket] New connection: User ${user.name} (${user.id}) [${connectionId}]`);
             const socketClient = new socket_client_1.SocketClient(user, this.core, this.server, socket);
-            // Store client for monitoring
             this.clients.set(connectionId, socketClient);
             this.core.connect(socketClient);
             socketClient.attachListeners();
             socket.conn.on('upgrade', (transport) => {
-                console.log(`[Socket] Transport upgraded for user ${user.name} (${user.id}): ${transport.name}, Connection ID: ${connectionId}`);
+                console.log(`[Socket] Transport upgrade: ${user.name} [${connectionId}] -> ${transport.name}`);
             });
             socket.conn.on('packet', (packet) => {
                 if (packet.type === 'ping') {
-                    // For performance, only log some pings for monitoring
-                    if (Math.random() < 0.1) { // Log roughly 10% of pings
-                        console.log(`[Socket] Heartbeat received from user ${user.name} (${user.id}), Connection ID: ${connectionId}`);
+                    // Only log pings if they're delayed or if we're debugging
+                    const now = Date.now();
+                    const lastPing = socket.lastPing || now;
+                    if (now - lastPing > 30000) { // Log if ping interval is > 30s
+                        console.log(`[Socket] Delayed heartbeat: ${user.name} [${connectionId}] (${now - lastPing}ms)`);
                     }
+                    socket.lastPing = now;
                 }
             });
             socket.on('disconnect', (reason) => {
                 try {
-                    console.log(`[Socket] User ${user.name} (${user.id}) disconnected. Reason: ${reason}, Connection ID: ${connectionId}`);
-                    this.core.disconnect(socketClient);
+                    console.log(`[Socket] Disconnect: ${user.name} [${connectionId}] - ${reason}`);
                     user.updateLastSeen();
-                    // Remove from clients map
                     this.clients.delete(connectionId);
-                    // Explicitly dispose
                     socketClient.dispose();
                 }
                 catch (error) {
-                    console.error(`[Socket] Error handling disconnect for user ${user.name} (${user.id}):`, error);
+                    console.error(`[Socket] Error during disconnect: ${user.name} [${connectionId}] - ${error.message}`);
                 }
             });
             socket.on('error', (error) => {
-                console.error(`[Socket] Error for user ${user.name} (${user.id}), Connection ID: ${connectionId}:`, error);
+                console.error(`[Socket] Error: ${user.name} [${connectionId}] - ${error.message}`);
             });
         }
         catch (error) {
-            console.error('[Socket] Error handling new connection:', error);
-            // Attempt to disconnect the problematic socket
+            console.error('[Socket] Connection error:', error.message);
             try {
                 socket.disconnect();
             }
@@ -104,10 +104,15 @@ class WebSocketServer {
             const cpuUsage = this.getCpuUsagePercent();
             const memoryUsage = process.memoryUsage();
             const clientCount = this.clients.size;
-            console.log(`[Stats] Connections: ${clientCount}, CPU: ${cpuUsage.toFixed(1)}%, Memory: ${this.formatMemory(memoryUsage.rss)}`);
-            // Log details if there are a lot of connections
-            if (clientCount > 50) {
-                console.log(`[Stats] High connection count: ${clientCount}`);
+            // Only log stats if there are significant changes or issues
+            const lastStats = this.lastStats || { clientCount: 0, cpuUsage: 0, memoryUsage: 0 };
+            const hasSignificantChange = Math.abs(clientCount - lastStats.clientCount) > 5 ||
+                Math.abs(cpuUsage - lastStats.cpuUsage) > 10 ||
+                Math.abs(memoryUsage.rss - lastStats.memoryUsage) > 100 * 1024 * 1024; // 100MB change
+            if (hasSignificantChange) {
+                console.log(`[Stats] Connections: ${clientCount} (${clientCount - lastStats.clientCount > 0 ? '+' : ''}${clientCount - lastStats.clientCount}), CPU: ${cpuUsage.toFixed(1)}%, Memory: ${this.formatMemory(memoryUsage.rss)}`);
+                // Store current stats for next comparison
+                this.lastStats = { clientCount, cpuUsage, memoryUsage: memoryUsage.rss };
             }
             // Warning for high CPU usage
             if (cpuUsage > 70) {
@@ -119,7 +124,7 @@ class WebSocketServer {
             }
         }
         catch (error) {
-            console.error('[Stats] Error logging server stats:', error);
+            console.error('[Stats] Error logging server stats:', error.message);
         }
     }
     getCpuUsagePercent() {

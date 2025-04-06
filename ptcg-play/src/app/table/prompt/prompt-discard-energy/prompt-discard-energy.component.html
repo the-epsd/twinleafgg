@@ -21,18 +21,21 @@
           (click)="pokemon.cardList.cards.length > 0 && getVisibleEnergyCards(pokemon).length > 0 ? selectPokemon(pokemon) : null"
           (contextmenu)="pokemon.cardList.cards.length > 0 ? showCardInfo(pokemon.cardList.cards[0], pokemon.cardList) : null; $event.preventDefault()">
           <div class="pokemon-img" *ngIf="pokemon.cardList.cards.length > 0">
-            <div class="card-fallback" *ngIf="!getCardScanUrl(pokemon.cardList.cards[0])">
-              {{ pokemon.cardList.cards[0].name }}
+            <div class="card-fallback" *ngIf="!getCardScanUrl(pokemon.cardList.getPokemonCard())">
+              {{ pokemon.cardList.getPokemonCard()?.name }}
             </div>
-            <img *ngIf="getCardScanUrl(pokemon.cardList.cards[0])" [src]="getCardScanUrl(pokemon.cardList.cards[0])"
-              alt="Pokemon">
+            <img *ngIf="getCardScanUrl(pokemon.cardList.getPokemonCard())"
+              [src]="getCardScanUrl(pokemon.cardList.getPokemonCard())" alt="Pokemon">
 
             <!-- Energy icons display -->
             <div class="energy-icons-container">
               <div class="energy-icons">
                 <ng-container *ngFor="let energy of getVisibleEnergyCards(pokemon).slice().reverse()">
-                  <div class="energy-icon" *ngIf="getCustomEnergyImageUrl(energy)">
-                    <img [src]="getCustomEnergyImageUrl(energy)" [alt]="energy.name">
+                  <div class="energy-icon">
+                    <img *ngIf="getCustomEnergyImageUrl(energy)" [src]="getCustomEnergyImageUrl(energy)"
+                      [alt]="energy.name">
+                    <img *ngIf="!getCustomEnergyImageUrl(energy)" [src]="getCardScanUrl(energy)" [alt]="energy.name"
+                      class="card-image">
                   </div>
                 </ng-container>
                 <!-- Show count if there are more than displayed -->
@@ -53,18 +56,21 @@
           (click)="pokemon.cardList.cards.length > 0 && getVisibleEnergyCards(pokemon).length > 0 ? selectPokemon(pokemon) : null"
           (contextmenu)="pokemon.cardList.cards.length > 0 ? showCardInfo(pokemon.cardList.cards[0], pokemon.cardList) : null; $event.preventDefault()">
           <div class="pokemon-img" *ngIf="pokemon.cardList.cards.length > 0">
-            <div class="card-fallback" *ngIf="!getCardScanUrl(pokemon.cardList.cards[0])">
-              {{ pokemon.cardList.cards[0].name }}
+            <div class="card-fallback" *ngIf="!getCardScanUrl(pokemon.cardList.getPokemonCard())">
+              {{ pokemon.cardList.getPokemonCard()?.name }}
             </div>
-            <img *ngIf="getCardScanUrl(pokemon.cardList.cards[0])" [src]="getCardScanUrl(pokemon.cardList.cards[0])"
-              alt="Pokemon">
+            <img *ngIf="getCardScanUrl(pokemon.cardList.getPokemonCard())"
+              [src]="getCardScanUrl(pokemon.cardList.getPokemonCard())" alt="Pokemon">
 
             <!-- Energy icons display -->
             <div class="energy-icons-container">
               <div class="energy-icons">
                 <ng-container *ngFor="let energy of getVisibleEnergyCards(pokemon).slice().reverse()">
-                  <div class="energy-icon" *ngIf="getCustomEnergyImageUrl(energy)">
-                    <img [src]="getCustomEnergyImageUrl(energy)" [alt]="energy.name">
+                  <div class="energy-icon">
+                    <img *ngIf="getCustomEnergyImageUrl(energy)" [src]="getCustomEnergyImageUrl(energy)"
+                      [alt]="energy.name">
+                    <img *ngIf="!getCustomEnergyImageUrl(energy)" [src]="getCardScanUrl(energy)" [alt]="energy.name"
+                      class="card-image">
                   </div>
                 </ng-container>
                 <!-- Show count if there are more than displayed -->

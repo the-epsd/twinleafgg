@@ -18,7 +18,7 @@ function* useMagneticLift(next: Function, store: StoreLike, state: State,
 
   yield store.prompt(state, new ChooseCardsPrompt(
     player,
-    GameMessage.CHOOSE_CARD_TO_HAND,
+    GameMessage.CHOOSE_CARDS,
     player.deck,
     {},
     { min: 1, max: 1, allowCancel: false }
@@ -29,11 +29,11 @@ function* useMagneticLift(next: Function, store: StoreLike, state: State,
 
   player.deck.moveCardsTo(cards, deckTop);
 
-  state = store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+  return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);
+    deckTop.moveToTopOfDestination(player.deck);
+    return state;
   });
-
-  deckTop.moveToTopOfDestination(player.deck);
 }
 
 export class Beldum extends PokemonCard {

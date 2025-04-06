@@ -27,7 +27,7 @@ class CynthiasGarchompex extends pokemon_card_1.PokemonCard {
                 text: 'You may draw cards until you have 6 cards in your hand.'
             },
             {
-                name: 'Dragon Blaster',
+                name: 'Draconic Buster',
                 cost: [F, F],
                 damage: 260,
                 text: 'Discard all Energy from this Pokémon.'

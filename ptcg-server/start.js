@@ -22,12 +22,21 @@ cardManager.defineSet(sets.setVendingSeries);
 
 cardManager.defineSet(sets.setBaseSetEnergy);
 
+cardManager.defineSet(sets.setNeoGenesis);
+cardManager.defineSet(sets.setNeoDiscovery)
+
+//E-Card Era
+cardManager.defineSet(sets.setAquapolis);
+
 //ex Era shit
 cardManager.defineSet(sets.setEXRubyAndSapphire);
 cardManager.defineSet(sets.setEXHolonPhantoms);
+cardManager.defineSet(sets.setEXHiddenLegends)
 cardManager.defineSet(sets.setEXDragon);
+cardManager.defineSet(sets.setEXTeamMagmaVsTeamAqua);
 cardManager.defineSet(sets.setEXDragonFrontiers);
 cardManager.defineSet(sets.setEXDeoxys);
+cardManager.defineSet(sets.setEXEmerald);
 cardManager.defineSet(sets.setEXUnseenForces);
 cardManager.defineSet(sets.setEXTeamRocketReturns);
 cardManager.defineSet(sets.setEXCrystalGuardians);
@@ -37,6 +46,7 @@ cardManager.defineSet(sets.setEXDeltaSpecies);
 cardManager.defineSet(sets.setEXLegendMaker);
 
 cardManager.defineSet(sets.setDiamondAndPearl);
+cardManager.defineSet(sets.setMysteriousTreasures);
 cardManager.defineSet(sets.setSecretWonders);
 // cardManager.defineSet(sets.setOP9);
 cardManager.defineSet(sets.setGreatEncounters);
@@ -44,7 +54,7 @@ cardManager.defineSet(sets.setPlatinum);
 cardManager.defineSet(sets.setRisingRivals)
 
 cardManager.defineSet(sets.setBattleRoadPromos);
-
+cardManager.defineSet(sets.setCallOfLegends);
 cardManager.defineSet(sets.setHeartGoldAndSoulSilver);
 cardManager.defineSet(sets.setHeartGoldAndSoulSilverPromos);
 cardManager.defineSet(sets.setLPPromos);
@@ -140,7 +150,7 @@ cardManager.defineSet(sets.setShroudedFable);
 cardManager.defineSet(sets.setStellarCrown);
 cardManager.defineSet(sets.setSurgingSparks);
 cardManager.defineSet(sets.setPrismaticEvolution);
-cardManager.defineSet(sets.setSV9);
+cardManager.defineSet(sets.setJourneyTogether);
 cardManager.defineSet(sets.setSV9a);
 cardManager.defineSet(sets.setSV10);
 cardManager.defineSet(sets.setM1S);

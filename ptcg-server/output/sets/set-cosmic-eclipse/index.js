@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setCosmicEclipse = void 0;
+const aipom_1 = require("./aipom");
 const arceus_dialga_palkia_gx_1 = require("./arceus-dialga-palkia-gx");
 const bellelba_and_brycen_man_1 = require("./bellelba-and-brycen-man");
 const blacephalon_1 = require("./blacephalon");
@@ -21,6 +22,7 @@ const great_catcher_1 = require("./great-catcher");
 const guzma_and_hala_1 = require("./guzma-and-hala");
 const guzzlord_1 = require("./guzzlord");
 const lanas_fishing_rod_1 = require("./lanas-fishing-rod");
+const lanturn_1 = require("./lanturn");
 const lillies_poke_doll_1 = require("./lillies-poke-doll");
 const lillipup_1 = require("./lillipup");
 const mallow_and_lana_1 = require("./mallow-and-lana");
@@ -48,7 +50,9 @@ const woobat_1 = require("./woobat");
 const swoobat_1 = require("./swoobat");
 const mimikyu_1 = require("./mimikyu");
 const oricorio_gx_1 = require("./oricorio-gx");
+const dragonium_z_1 = require("./dragonium-z");
 exports.setCosmicEclipse = [
+    new aipom_1.Aipom(),
     new arceus_dialga_palkia_gx_1.ArceusDialgaPalkiaGX(),
     new bellelba_and_brycen_man_1.BellelbaAndBrycenMan(),
     new blacephalon_1.Blacephalon(),
@@ -56,6 +60,7 @@ exports.setCosmicEclipse = [
     new chaotic_swell_1.ChaoticSwell(),
     new clay_1.Clay(),
     new cynthia_and_caitlin_1.CynthiaAndCaitlin(),
+    new dragonium_z_1.DragoniumZDragonClaw(),
     new drampa_1.Drampa(),
     new draw_energy_1.DrawEnergy(),
     new dusclops_1.Dusclops(),
@@ -69,6 +74,7 @@ exports.setCosmicEclipse = [
     new guzma_and_hala_1.GuzmaAndHala(),
     new guzzlord_1.Guzzlord(),
     new lanas_fishing_rod_1.LanasFishingRod(),
+    new lanturn_1.Lanturn(),
     new lillies_poke_doll_1.LilliesPokeDoll(),
     new lillipup_1.Lillipup(),
     new mallow_and_lana_1.MallowAndLana(),

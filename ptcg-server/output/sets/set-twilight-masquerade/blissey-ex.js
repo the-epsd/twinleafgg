@@ -15,7 +15,7 @@ class Blisseyex extends game_1.PokemonCard {
         this.regulationMark = 'H';
         this.cardType = card_types_1.CardType.COLORLESS;
         this.weakness = [{ type: card_types_1.CardType.FIGHTING }];
-        this.hp = 310;
+        this.hp = 300;
         this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
         this.powers = [{
                 name: 'Happy Switch',

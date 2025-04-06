@@ -19,14 +19,21 @@ __exportStar(require("./set-vending-series"), exports);
 __exportStar(require("./set-wotc-promos"), exports);
 //Retro Energy
 __exportStar(require("./set-base-set-energy"), exports);
+__exportStar(require("./set-neo-genesis"), exports);
+__exportStar(require("./set-neo-discovery"), exports);
+//E-Card Era
+__exportStar(require("./set-aquapolis"), exports);
 //ex Era
 __exportStar(require("./set-ex-ruby-and-sapphire"), exports);
 __exportStar(require("./set-ex-holon-phantoms"), exports);
+__exportStar(require("./set-ex-hidden-legends"), exports);
 __exportStar(require("./set-ex-delta-species"), exports);
 __exportStar(require("./set-ex-dragon"), exports);
+__exportStar(require("./set-ex-team-magma-vs-team-aqua"), exports);
 __exportStar(require("./set-ex-dragon-frontiers"), exports);
 __exportStar(require("./set-ex-unseen-forces"), exports);
 __exportStar(require("./set-ex-deoxys"), exports);
+__exportStar(require("./set-ex-emerald"), exports);
 __exportStar(require("./set-ex-team-rocket-returns"), exports);
 __exportStar(require("./set-ex-crystal-guardians"), exports);
 __exportStar(require("./set-ex-power-keepers"), exports);
@@ -34,6 +41,7 @@ __exportStar(require("./set-ex-firered-leafgreen"), exports);
 __exportStar(require("./set-ex-legend-maker"), exports);
 //DP Era
 __exportStar(require("./set-diamond-and-pearl"), exports);
+__exportStar(require("./set-mysterious-treasures"), exports);
 __exportStar(require("./set-secret-wonders"), exports);
 __exportStar(require("./set-great-encounters"), exports);
 __exportStar(require("./set-op9"), exports);
@@ -41,6 +49,7 @@ __exportStar(require("./set-platinum"), exports);
 __exportStar(require("./set-rising-rivals"), exports);
 //HGSS Era
 __exportStar(require("./set-battle-road-promos"), exports);
+__exportStar(require("./set-call-of-legends"), exports);
 __exportStar(require("./set-heartgold-and-soulsilver"), exports);
 __exportStar(require("./set-heartgold-and-soulsilver-promos"), exports);
 __exportStar(require("./set-l-p-promos"), exports);
@@ -130,7 +139,7 @@ __exportStar(require("./set-shrouded-fable"), exports);
 __exportStar(require("./set-stellar-crown"), exports);
 __exportStar(require("./set-surging-sparks"), exports);
 __exportStar(require("./set-prismatic-evolution"), exports);
-__exportStar(require("./set-sv9"), exports);
+__exportStar(require("./set-journey-together"), exports);
 __exportStar(require("./set-sv9a"), exports);
 __exportStar(require("./set-sv10"), exports);
 __exportStar(require("./set-m1s"), exports);

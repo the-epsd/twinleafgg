@@ -11,7 +11,7 @@ import { Azumarill } from './azulmarill';
 import { BlackKyuremex } from './black-kyurem-ex';
 import { Blitzle } from './blitzle';
 import { Capsakid } from './capsakid.';
-import { CounterGainSSP, ScrambleSwitchSSP } from './card-images';
+import { CounterGainSSP, ScrambleSwitchSSP } from './other-prints';
 import { CelebrationFanfare } from './celebration-fanfare';
 import { Centiskorch } from './centiskorch';
 import { Ceruledge } from './ceruledge';

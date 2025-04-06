@@ -20,7 +20,7 @@ class Jirachi extends pokemon_card_1.PokemonCard {
                 name: 'Wishing Star',
                 useWhenInPlay: true,
                 powerType: pokemon_types_1.PowerType.POKEPOWER,
-                text: 'Once during your turn (before your attack), if Jirachi is your Active Pokémon, you may look at the top 5 cards of your deck, choose 1 of them, and put it into your hand. Shuffle your deck afterward. Jirachi and your other Active Pokémon, if any, are now Asleep. This power can\’t be used if Jirachi is affected by a Special Condition.'
+                text: 'Once during your turn (before your attack), if Jirachi is your Active Pokémon, you may look at the top 5 cards of your deck, choose 1 of them, and put it into your hand. Shuffle your deck afterward. Jirachi and your other Active Pokémon, if any, are now Asleep. This power can\'t be used if Jirachi is affected by a Special Condition.'
             }];
         this.attacks = [{
                 name: 'Metallic Blow',
@@ -72,6 +72,11 @@ class Jirachi extends pokemon_card_1.PokemonCard {
                 deckTop.moveTo(player.deck);
                 prefabs_1.ABILITY_USED(player, this);
                 prefabs_1.SHUFFLE_DECK(store, state, player);
+                player.forEachPokemon(game_1.PlayerType.BOTTOM_PLAYER, cardList => {
+                    if (cardList.getPokemonCard() === this) {
+                        cardList.addSpecialCondition(card_types_1.SpecialCondition.ASLEEP);
+                    }
+                });
             });
         }
         return state;
