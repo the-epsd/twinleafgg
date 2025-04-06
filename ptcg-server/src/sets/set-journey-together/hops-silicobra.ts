@@ -19,12 +19,17 @@ export class HopsSilicobra extends PokemonCard {
 
   public attacks = [
     {
-      name: 'Make Territory',
+      name: 'Turf Maker',
       cost: [C],
       damage: 0,
       text: 'Search your deck for a Stadium card, reveal it, and put it into your hand. Then, shuffle your deck.'
     },
-    { name: 'Gnaw', cost: [F, C], damage: 20, text: '' },
+    {
+      name: 'Gnaw',
+      cost: [F, C],
+      damage: 20,
+      text: ''
+    },
   ];
 
   public regulationMark = 'I';

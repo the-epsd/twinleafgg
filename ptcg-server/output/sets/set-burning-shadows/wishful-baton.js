@@ -41,6 +41,8 @@ class WishfulBaton extends trainer_card_1.TrainerCard {
                 // Remove the Wishful Baton from both the cards array and the tool property
                 target.cards = target.cards.filter(c => c !== this);
                 target.tool = undefined;
+                // Move the Wishful Baton to the discard pile using MOVE_CARDS
+                state = prefabs_1.MOVE_CARDS(store, state, target, player.discard, { cards: [this] });
                 // Prevent the default knockout behavior since we're handling the energy cards
                 effect.preventDefault = true;
                 return store.prompt(state, new attach_energy_prompt_1.AttachEnergyPrompt(player.id, game_message_1.GameMessage.ATTACH_ENERGY_TO_BENCH, energyToAttach, play_card_action_1.PlayerType.BOTTOM_PLAYER, [play_card_action_1.SlotType.BENCH], { superType: game_1.SuperType.ENERGY, energyType: game_1.EnergyType.BASIC }, { allowCancel: false, min: 0, max: 3, sameTarget: true }), transfers => {

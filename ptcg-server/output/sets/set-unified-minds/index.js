@@ -3,12 +3,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.setUnifiedMinds = void 0;
 const alolan_grimer_1 = require("./alolan-grimer");
 const alolan_raichu_1 = require("./alolan-raichu");
+const beheeyem_1 = require("./beheeyem");
 const cherish_ball_1 = require("./cherish-ball");
 const cottonee_1 = require("./cottonee");
 const cryogonal_1 = require("./cryogonal");
 const dark_city_1 = require("./dark-city");
 const drilbur_1 = require("./drilbur");
 const eelektross_1 = require("./eelektross");
+const elgyem_1 = require("./elgyem");
 const excadrill_1 = require("./excadrill");
 const flyinium_z_air_slash_1 = require("./flyinium-z-air-slash");
 const froslass_1 = require("./froslass");
@@ -43,6 +45,7 @@ const pokemon_research_lab_1 = require("./pokemon-research-lab");
 exports.setUnifiedMinds = [
     new alolan_grimer_1.AlolanGrimer(),
     new alolan_raichu_1.AlolanRaichu(),
+    new beheeyem_1.Beheeyem(),
     new cherish_ball_1.CherishBall(),
     new cottonee_1.Cottonee(),
     new cryogonal_1.Cryogonal(),
@@ -50,6 +53,7 @@ exports.setUnifiedMinds = [
     new dark_city_1.DarkCity(),
     new drilbur_1.Drilbur(),
     new eelektross_1.Eelektross(),
+    new elgyem_1.Elgyem(),
     new flyinium_z_air_slash_1.FlyiniumZAirSlash(),
     new froslass_1.Froslass(),
     new garchomp_and_giratina_gx_1.GarchompGiratinaGX(),

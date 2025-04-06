@@ -28,6 +28,8 @@ import { Rookidee } from './rookidee';
 import { Sizzlipede } from './sizzlipede';
 import { Snom } from './snom';
 import { Sobble } from './sobble';
+import { StonjournerV } from './stonjourner-v';
+import { StonjournerVMAX } from './stonjourner-vmax';
 import { Toxicroak } from './toxicroak';
 import { Welder } from './welder';
 import { ZacianV } from './zacian-v';
@@ -59,6 +61,8 @@ export const setSwordAndShield: Card[] = [
   new QuickBall(),
   new Raboot(),
   new Rookidee(),
+  new StonjournerV(),
+  new StonjournerVMAX(),
   new Toxicroak(),
   new Welder(),
   new ZacianV(),

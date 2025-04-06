@@ -22,8 +22,7 @@ export class LilliesPearl extends TrainerCard {
 
   public fullName: string = 'Lillie\'s Pearl JTG';
 
-  public text: string =
-    'If the Lillie\'s Pokémon this card is attached to is Knocked Out by damage from an attack from your opponent\'s Pokémon, that player takes 1 fewer Prize card.';
+  public text: string = 'If the Lillie\'s Pokémon this card is attached to is Knocked Out by damage from an attack from your opponent\'s Pokémon, that player takes 1 fewer Prize card.';
 
   // public damageDealt = false;
 

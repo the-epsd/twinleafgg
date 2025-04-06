@@ -19,6 +19,7 @@ __exportStar(require("./set-vending-series"), exports);
 __exportStar(require("./set-wotc-promos"), exports);
 //Retro Energy
 __exportStar(require("./set-base-set-energy"), exports);
+__exportStar(require("./set-neo-genesis"), exports);
 __exportStar(require("./set-neo-discovery"), exports);
 //E-Card Era
 __exportStar(require("./set-aquapolis"), exports);
@@ -39,6 +40,7 @@ __exportStar(require("./set-ex-firered-leafgreen"), exports);
 __exportStar(require("./set-ex-legend-maker"), exports);
 //DP Era
 __exportStar(require("./set-diamond-and-pearl"), exports);
+__exportStar(require("./set-mysterious-treasures"), exports);
 __exportStar(require("./set-secret-wonders"), exports);
 __exportStar(require("./set-great-encounters"), exports);
 __exportStar(require("./set-op9"), exports);

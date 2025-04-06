@@ -5,6 +5,7 @@ const pokemon_card_1 = require("../../game/store/card/pokemon-card");
 const card_types_1 = require("../../game/store/card/card-types");
 const game_1 = require("../../game");
 const game_effects_1 = require("../../game/store/effects/game-effects");
+const prefabs_1 = require("../../game/store/prefabs/prefabs");
 class TsareenaV extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
@@ -40,11 +41,24 @@ class TsareenaV extends pokemon_card_1.PokemonCard {
                 results = results || [];
                 let discardCount = 0;
                 // Discard all selected Pokemon
-                for (let i = player.bench.length - 1; i >= 0; i--)
+                for (let i = player.bench.length - 1; i >= 0; i--) {
                     if (results.includes(player.bench[i])) {
-                        player.bench[i].moveTo(player.discard);
+                        const cardList = player.bench[i];
+                        const pokemons = cardList.getPokemons();
+                        const otherCards = cardList.cards.filter(card => !(card instanceof pokemon_card_1.PokemonCard));
+                        // Move other cards (tools, energy, etc.) to discard
+                        if (otherCards.length > 0) {
+                            prefabs_1.MOVE_CARDS(store, state, cardList, player.discard, { cards: otherCards });
+                        }
+                        // Move Pokémon to discard and clear their effects
+                        if (pokemons.length > 0) {
+                            cardList.damage = 0;
+                            cardList.clearEffects();
+                            prefabs_1.MOVE_CARDS(store, state, cardList, player.discard, { cards: pokemons });
+                        }
                         discardCount++;
                     }
+                }
                 effect.damage += (40 * discardCount);
             });
         }

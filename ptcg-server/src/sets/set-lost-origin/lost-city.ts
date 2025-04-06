@@ -1,3 +1,4 @@
+import { StateUtils } from '../../game';
 import { TrainerType, CardTag } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
@@ -27,7 +28,7 @@ export class LostCity extends TrainerCard {
   public readonly LOST_CITY_MARKER = 'LOST_CITY_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof KnockOutEffect) {
+    if (effect instanceof KnockOutEffect && StateUtils.getStadiumCard(state) === this) {
       const card = effect.target.getPokemonCard();
       if (card !== undefined && !card.tags.includes(CardTag.PRISM_STAR)) {
         // Don't prevent default behavior yet - let other cards handle the knockout first

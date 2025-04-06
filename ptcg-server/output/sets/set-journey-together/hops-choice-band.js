@@ -18,7 +18,7 @@ class HopsChoiceBand extends trainer_card_1.TrainerCard {
         this.regulationMark = 'I';
         this.name = 'Hop\'s Choice Band';
         this.fullName = 'Hop\'s Choice Band JTG';
-        this.text = 'When the Hop\'s Pokémon this card is attached to uses an attack, that attack costs 1 [C] Energy less and does 30 more damage to your opponent\'s Active Pokémon (before applying Weakness and Resistance).';
+        this.text = 'Attacks used by the Hop\'s Pokémon this card is attached to cost [C] less and do 30 more damage to your opponent\'s Active Pokémon (before applying Weakness and Resistance).';
     }
     reduceEffect(store, state, effect) {
         if (effect instanceof check_effects_1.CheckAttackCostEffect && effect.player.active.tool === this) {

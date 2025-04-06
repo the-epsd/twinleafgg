@@ -9,20 +9,20 @@ import { PowerEffect } from '../../game/store/effects/game-effects';
 export class Lilligant extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Petilil';
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType = G;
   public hp: number = 110;
-  public weakness = [{ type: CardType.FIRE }];
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: R }];
+  public retreat = [C, C];
 
   public powers = [{
     name: 'Sunny Day',
     powerType: PowerType.ABILITY,
-    text: 'Attacks used by your [G] Pokémon and [R] Pokémon do 20 more damage to your opponent\'s Active Pokémon (before applying Weakness and Resistance).'
+    text: 'Attacks used by your [G] Pokémon and [R] Pokémon do 20 more damage to your opponent\'s Active Pokémon(before applying Weakness and Resistance).'
   }];
 
   public attacks = [{
-    name: 'Solar Beam',
-    cost: [CardType.GRASS, CardType.COLORLESS, CardType.COLORLESS],
+    name: 'Spinning Attack',
+    cost: [G, G, C],
     damage: 60,
     text: ''
   }];

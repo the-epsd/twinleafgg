@@ -15,18 +15,18 @@ class Dudunsparceex extends game_1.PokemonCard {
         this.weakness = [{ type: F }];
         this.retreat = [C, C, C];
         this.attacks = [{
-                name: 'Adversity Tail',
+                name: 'Tenacious Tail',
                 cost: [C],
                 damage: 60,
                 damageCalculation: 'x',
-                text: 'This attack does 60 damage for each of your opponent\'s Pokemon ex in play.'
+                text: 'This attack does 60 damage for each of your opponent\'s Pokémon ex in play.'
             },
             {
-                name: 'Breaking Drill',
+                name: 'Destructive Drill',
                 cost: [C, C, C],
                 damage: 150,
                 shredAttack: true,
-                text: 'This attack\'s damage isn\'t affected by any effects on your opponent\'s Active Pokemon.'
+                text: 'This attack\'s damage isn\'t affected by any effects on your opponent\'s Active Pokémon.'
             }];
         this.regulationMark = 'H';
         this.set = 'JTG';

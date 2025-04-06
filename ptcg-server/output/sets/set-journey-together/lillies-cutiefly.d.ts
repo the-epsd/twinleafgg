@@ -4,16 +4,16 @@ import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 export declare class LilliesCutiefly extends PokemonCard {
     stage: Stage;
-    cardType: CardType;
     tags: CardTag[];
+    cardType: CardType;
     hp: number;
     weakness: {
-        type: CardType;
+        type: CardType.METAL;
     }[];
     retreat: never[];
     attacks: {
         name: string;
-        cost: CardType[];
+        cost: CardType.PSYCHIC[];
         damage: number;
         text: string;
     }[];

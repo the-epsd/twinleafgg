@@ -30,6 +30,8 @@ const rookidee_1 = require("./rookidee");
 const sizzlipede_1 = require("./sizzlipede");
 const snom_1 = require("./snom");
 const sobble_1 = require("./sobble");
+const stonjourner_v_1 = require("./stonjourner-v");
+const stonjourner_vmax_1 = require("./stonjourner-vmax");
 const toxicroak_1 = require("./toxicroak");
 const welder_1 = require("./welder");
 const zacian_v_1 = require("./zacian-v");
@@ -60,6 +62,8 @@ exports.setSwordAndShield = [
     new quick_ball_1.QuickBall(),
     new raboot_1.Raboot(),
     new rookidee_1.Rookidee(),
+    new stonjourner_v_1.StonjournerV(),
+    new stonjourner_vmax_1.StonjournerVMAX(),
     new toxicroak_1.Toxicroak(),
     new welder_1.Welder(),
     new zacian_v_1.ZacianV(),

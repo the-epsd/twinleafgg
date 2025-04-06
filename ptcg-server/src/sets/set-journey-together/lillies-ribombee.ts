@@ -17,7 +17,7 @@ export class LilliesRibombee extends PokemonCard {
   public powers = [{
     name: 'Inviting Wink',
     powerType: PowerType.ABILITY,
-    text: 'Once during your turn, when you play this card from your hand to evolve 1 of your Pokémon, you may look at your opponent\'s hand, choose any number of Basic Pokemon you find there, and put them onto their Bench.'
+    text: 'When you play this Pokémon from your hand to evolve 1 of your Pokémon during your turn, you may have your opponent reveal their hand and you put any number of Basic Pokémon you find there onto their Bench.'
   }];
 
   public attacks = [
