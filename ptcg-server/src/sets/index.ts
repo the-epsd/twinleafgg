@@ -9,6 +9,8 @@ export * from './set-wotc-promos';
 //Retro Energy
 export * from './set-base-set-energy';
 
+export * from './set-neo-genesis'
+
 //E-Card Era
 export * from './set-aquapolis'
 
