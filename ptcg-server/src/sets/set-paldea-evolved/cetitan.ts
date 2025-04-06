@@ -6,7 +6,6 @@ import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 import { EnergyCard } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { THIS_ATTACK_DOES_X_MORE_DAMAGE } from '../../game/store/prefabs/prefabs';
 
 export class Cetitan extends PokemonCard {
 
@@ -66,7 +65,7 @@ export class Cetitan extends PokemonCard {
       });
 
       if (hasSpecialEnergy) {
-        THIS_ATTACK_DOES_X_MORE_DAMAGE(effect, store, state, 140);
+        effect.damage += 140;
       }
     }
     return state;
