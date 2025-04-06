@@ -59,17 +59,14 @@ export class Cetitan extends PokemonCard {
       const checkEnergy = new CheckProvidedEnergyEffect(player, pokemon);
       store.reduceEffect(state, checkEnergy);
 
-      let damage = 80;
-
-      checkEnergy.energyMap.forEach(em => {
+      const hasSpecialEnergy = checkEnergy.energyMap.some(em => {
         const energyCard = em.card;
-        if (energyCard instanceof EnergyCard && energyCard.energyType === EnergyType.SPECIAL) {
-          damage += 140;
-        }
+        return energyCard instanceof EnergyCard && energyCard.energyType === EnergyType.SPECIAL;
       });
 
-      effect.damage = damage;
-
+      if (hasSpecialEnergy) {
+        effect.damage += 140;
+      }
     }
     return state;
   }

@@ -10,8 +10,18 @@ export class Beldum extends PokemonCard {
   public retreat: CardType[] = [C];
 
   public attacks: Attack[] = [
-    { name: 'Spinning Attack', cost: [P], damage: 10, text: '' },
-    { name: 'Beam', cost: [P, P], damage: 30, text: '' },
+    {
+      name: 'Spinning Attack',
+      cost: [P],
+      damage: 10,
+      text: ''
+    },
+    {
+      name: 'Beam',
+      cost: [P, P],
+      damage: 30,
+      text: ''
+    },
   ];
 
   public set: string = 'JTG';

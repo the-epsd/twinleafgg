@@ -18,12 +18,17 @@ class IonosElectrode extends pokemon_card_1.PokemonCard {
         this.retreat = [];
         this.attacks = [
             {
-                name: 'Heartpounding Bomb',
+                name: 'Thump-Thump Boom',
                 cost: [L, L],
                 damage: 0,
                 text: 'This Pokémon does 100 damage to itself. Flip a coin. If heads, your opponent\'s Active Pokémon is Knocked Out.'
             },
-            { name: 'Electric Ball', cost: [L, L, C], damage: 100, text: '' },
+            {
+                name: 'Electric Ball',
+                cost: [L, L, C],
+                damage: 100,
+                text: ''
+            },
         ];
         this.regulationMark = 'I';
         this.cardImage = 'assets/cardback.png';

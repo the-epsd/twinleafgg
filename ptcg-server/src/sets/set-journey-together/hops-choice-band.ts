@@ -27,8 +27,7 @@ export class HopsChoiceBand extends TrainerCard {
 
   public fullName: string = 'Hop\'s Choice Band JTG';
 
-  public text: string =
-    'When the Hop\'s Pokémon this card is attached to uses an attack, that attack costs 1 [C] Energy less and does 30 more damage to your opponent\'s Active Pokémon (before applying Weakness and Resistance).';
+  public text: string = 'Attacks used by the Hop\'s Pokémon this card is attached to cost [C] less and do 30 more damage to your opponent\'s Active Pokémon (before applying Weakness and Resistance).';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

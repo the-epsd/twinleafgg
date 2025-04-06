@@ -45,13 +45,13 @@ class LilliesComfey extends pokemon_card_1.PokemonCard {
         this.retreat = [C];
         this.attacks = [
             {
-                name: 'Flower Call',
+                name: 'Inviting Flowers',
                 cost: [C],
                 damage: 0,
-                text: 'Search your deck for any number of Basic Lillie\'s Pokémon and put them onto your Bench. Then, shuffle your deck.'
+                text: 'You may search your deck for any number of Basic Lillie\'s Pokémon and put them onto your Bench. Then, shuffle your deck.'
             },
             {
-                name: 'Tackle',
+                name: 'Fade Out',
                 cost: [P],
                 damage: 30,
                 text: 'Put this Pokémon and all attached cards into your hand.'

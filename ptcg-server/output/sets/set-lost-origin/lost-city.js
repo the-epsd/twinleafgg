@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LostCity = void 0;
+const game_1 = require("../../game");
 const card_types_1 = require("../../game/store/card/card-types");
 const trainer_card_1 = require("../../game/store/card/trainer-card");
 const game_effects_1 = require("../../game/store/effects/game-effects");
@@ -41,7 +42,7 @@ class LostCity extends trainer_card_1.TrainerCard {
         // attachedCards.moveTo(player.discard);
     }
     reduceEffect(store, state, effect) {
-        if (effect instanceof game_effects_1.KnockOutEffect) {
+        if (effect instanceof game_effects_1.KnockOutEffect && game_1.StateUtils.getStadiumCard(state) === this) {
             const card = effect.target.getPokemonCard();
             if (card !== undefined && !card.tags.includes(card_types_1.CardTag.PRISM_STAR)) {
                 // Don't prevent default behavior yet - let other cards handle the knockout first

@@ -19,7 +19,7 @@ class HopsRookidee extends pokemon_card_1.PokemonCard {
         this.retreat = [C];
         this.attacks = [
             {
-                name: 'Frightening Gaze',
+                name: 'Intimidating Stare',
                 cost: [C],
                 damage: 0,
                 text: 'During your opponent\'s next turn, attacks used by the Defending Pokémon do 20 less damage (before applying Weakness and Resistance).'

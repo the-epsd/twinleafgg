@@ -9,13 +9,18 @@ class LilliesCutiefly extends pokemon_card_1.PokemonCard {
     constructor() {
         super(...arguments);
         this.stage = card_types_1.Stage.BASIC;
-        this.cardType = card_types_1.CardType.PSYCHIC;
         this.tags = [card_types_1.CardTag.LILLIES];
+        this.cardType = P;
         this.hp = 30;
-        this.weakness = [{ type: card_types_1.CardType.METAL }];
+        this.weakness = [{ type: M }];
         this.retreat = [];
         this.attacks = [
-            { name: 'Stay Still', cost: [card_types_1.CardType.PSYCHIC], damage: 0, text: 'Heal 10 damage from this Pokemon.' }
+            {
+                name: 'Hold Still',
+                cost: [P],
+                damage: 0,
+                text: 'Heal 10 damage from this Pokémon.'
+            }
         ];
         this.set = 'JTG';
         this.regulationMark = 'I';

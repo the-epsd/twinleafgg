@@ -12,8 +12,18 @@ class Beldum extends game_1.PokemonCard {
         this.resistance = [{ type: F, value: -30 }];
         this.retreat = [C];
         this.attacks = [
-            { name: 'Spinning Attack', cost: [P], damage: 10, text: '' },
-            { name: 'Beam', cost: [P, P], damage: 30, text: '' },
+            {
+                name: 'Spinning Attack',
+                cost: [P],
+                damage: 10,
+                text: ''
+            },
+            {
+                name: 'Beam',
+                cost: [P, P],
+                damage: 30,
+                text: ''
+            },
         ];
         this.set = 'JTG';
         this.regulationMark = 'I';

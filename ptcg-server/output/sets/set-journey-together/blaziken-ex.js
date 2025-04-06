@@ -15,10 +15,10 @@ class Blazikenex extends game_1.PokemonCard {
         this.weakness = [{ type: W }];
         this.retreat = [C, C];
         this.powers = [{
-                name: 'Overflowing Spirit',
+                name: 'Seething Spirit',
                 useWhenInPlay: true,
                 powerType: game_1.PowerType.ABILITY,
-                text: 'Once during your turn, you may attach a basic Energy card from your discard pile to 1 of your Pokemon.'
+                text: 'Once during your turn, you may attach a Basic Energy card from your discard pile to 1 of your Pokémon.'
             }];
         this.attacks = [
             {

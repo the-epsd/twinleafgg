@@ -21,11 +21,11 @@ export class IonosVoltorb extends PokemonCard {
 
   public attacks = [
     {
-      name: 'Chain Bolt',
+      name: 'Voltaic Chain',
       cost: [C, C],
       damage: 20,
       damageCalculation: '+',
-      text: 'This attack does 20 more damage for each [L] Energy attached to your Iono\'s Pokémon.'
+      text: 'This attack does 20 more damage for each [L] Energy attached to all of your Iono\'s Pokémon.'
     }
   ];
 

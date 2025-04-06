@@ -18,7 +18,12 @@ export class Dunsparce extends PokemonCard {
       damage: 0,
       text: 'Switch this Pokémon with 1 of your Benched Pokémon.'
     },
-    { name: 'Ram', cost: [C, C], damage: 20, text: '' },
+    {
+      name: 'Ram',
+      cost: [C, C],
+      damage: 20,
+      text: ''
+    },
   ];
 
   public set = 'JTG';

@@ -12,18 +12,18 @@ class Lilligant extends pokemon_card_1.PokemonCard {
         super(...arguments);
         this.stage = card_types_1.Stage.STAGE_1;
         this.evolvesFrom = 'Petilil';
-        this.cardType = card_types_1.CardType.GRASS;
+        this.cardType = G;
         this.hp = 110;
-        this.weakness = [{ type: card_types_1.CardType.FIRE }];
-        this.retreat = [card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS];
+        this.weakness = [{ type: R }];
+        this.retreat = [C, C];
         this.powers = [{
                 name: 'Sunny Day',
                 powerType: game_1.PowerType.ABILITY,
-                text: 'Attacks used by your [G] Pokémon and [R] Pokémon do 20 more damage to your opponent\'s Active Pokémon (before applying Weakness and Resistance).'
+                text: 'Attacks used by your [G] Pokémon and [R] Pokémon do 20 more damage to your opponent\'s Active Pokémon(before applying Weakness and Resistance).'
             }];
         this.attacks = [{
-                name: 'Solar Beam',
-                cost: [card_types_1.CardType.GRASS, card_types_1.CardType.COLORLESS, card_types_1.CardType.COLORLESS],
+                name: 'Spinning Attack',
+                cost: [G, G, C],
                 damage: 60,
                 text: ''
             }];
