@@ -130,6 +130,11 @@ export declare function IS_POKEBODY_BLOCKED(store: StoreLike, state: State, play
  */
 export declare function IS_POKEPOWER_BLOCKED(store: StoreLike, state: State, player: Player, card: PokemonCard): boolean;
 /**
+ * Checks if pokemon powers are blocked on `card` for `player`.
+ * @returns `true` if the pokemon power is blocked, `false` if the pokepower is able to go thru.
+ */
+export declare function IS_POKEMON_POWER_BLOCKED(store: StoreLike, state: State, player: Player, card: PokemonCard): boolean;
+/**
  * Checks if a tool's effect is being blocked
  * @returns `true` if the tool's effect is blocked, `false` if the tool's effect is able to activate.
  */
