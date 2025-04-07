@@ -9,7 +9,7 @@ import { BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class PikachuZekromGX extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public tags = [CardTag.TAG_TEAM];
+  public tags = [CardTag.TAG_TEAM, CardTag.POKEMON_GX];
   public cardType: CardType = CardType.LIGHTNING;
   public hp: number = 240;
   public weakness = [{ type: CardType.FIGHTING }];
