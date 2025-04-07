@@ -39,7 +39,7 @@ export class Salazzle extends PokemonCard {
 
     if (JUST_EVOLVED(effect, this) && !IS_ABILITY_BLOCKED(store, state, effect.player, this)) {
       const player = effect.player;
-      ADD_MARKER(this.SUDDEN_SCORCHING_MARKER, player, this)
+      ADD_MARKER(this.SUDDEN_SCORCHING_MARKER, player, this);
     }
 
     REMOVE_MARKER_AT_END_OF_TURN(effect, this.SUDDEN_SCORCHING_MARKER, this);

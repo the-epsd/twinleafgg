@@ -21,7 +21,7 @@ export class Pidgeot extends PokemonCard {
     name: 'Quick Search',
     powerType: PowerType.POKEPOWER,
     useWhenInPlay: true,
-    text: 'Once during your turn (before your attack), you may choose any 1 card from your deck and put it into your hand. Shuffle your deck afterward. You can\’t use more than 1 Quick Search Poké-Power each turn. This power can\’t be used if Pidgeot is affected by a Special Condition.'
+    text: 'Once during your turn (before your attack), you may choose any 1 card from your deck and put it into your hand. Shuffle your deck afterward. You can\'t use more than 1 Quick Search Poké-Power each turn. This power can\'t be used if Pidgeot is affected by a Special Condition.'
   }];
 
   public attacks = [{
@@ -55,7 +55,7 @@ export class Pidgeot extends PokemonCard {
       if (player.deck.cards.length === 0) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
-  
+
       ADD_MARKER(this.QUICK_SEARCH_POWER_MARKER, player, this);
       ABILITY_USED(player, this);
 

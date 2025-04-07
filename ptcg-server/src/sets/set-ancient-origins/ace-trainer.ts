@@ -26,7 +26,7 @@ export class AceTrainer extends TrainerCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       if (player.deck.cards.length === 0) {
-          throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
       
       if (player.getPrizeLeft() <= opponent.getPrizeLeft()) {

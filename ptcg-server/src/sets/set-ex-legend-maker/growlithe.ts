@@ -1,4 +1,4 @@
-import { PokemonCard, Stage, CardType } from "../../game";
+import { PokemonCard, Stage, CardType } from '../../game';
 import { StoreLike, State, GameMessage, CoinFlipPrompt } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';

@@ -9,11 +9,11 @@ export * from './set-wotc-promos';
 //Retro Energy
 export * from './set-base-set-energy';
 
-export * from './set-neo-genesis'
-export * from './set-neo-discovery'
+export * from './set-neo-genesis';
+export * from './set-neo-discovery';
 
 //E-Card Era
-export * from './set-aquapolis'
+export * from './set-aquapolis';
 
 //ex Era
 export * from './set-ex-ruby-and-sapphire';
@@ -35,11 +35,11 @@ export * from './set-ex-legend-maker';
 //DP Era
 export * from './set-diamond-and-pearl';
 export * from './set-mysterious-treasures';
-export * from './set-secret-wonders'
+export * from './set-secret-wonders';
 export * from './set-great-encounters';
 export * from './set-op9';
 export * from './set-platinum';
-export * from './set-rising-rivals'
+export * from './set-rising-rivals';
 
 //HGSS Era
 

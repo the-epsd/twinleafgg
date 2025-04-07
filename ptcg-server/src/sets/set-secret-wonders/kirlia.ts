@@ -32,7 +32,7 @@ export class Kirlia extends PokemonCard {
       name: 'Telekinesis',
       cost: [P, C, C],
       damage: 0,
-      text: 'Choose 1 of your opponent\’s Pokémon. This attack does 40 damage to that Pokémon. This attack\’s damage isn\’t affected by Weakness or Resistance.'
+      text: 'Choose 1 of your opponent\'s Pokémon. This attack does 40 damage to that Pokémon. This attack\'s damage isn\'t affected by Weakness or Resistance.'
     }
   ];
 

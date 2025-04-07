@@ -44,7 +44,7 @@ export class Persian extends PokemonCard {
           SEARCH_DECK_FOR_CARDS_TO_HAND(store, state, player, 0, 1);
         }
       }))
-      return state;
+        return state;
     }
 
     // Snap Tail

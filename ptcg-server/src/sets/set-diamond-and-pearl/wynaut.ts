@@ -15,18 +15,18 @@ export class Wynaut extends PokemonCard {
   public retreat = [C];
 
   public powers = [{
-      name: 'Baby Evolution',
-      powerType: PowerType.POKEPOWER,
-      useWhenInPlay: true,
-      text: 'Once during your turn (before your attack), you may put Wobbuffet from your hand onto Wynaut (this counts as evolving Wynaut) and remove all damage counters from Wynaut.'
+    name: 'Baby Evolution',
+    powerType: PowerType.POKEPOWER,
+    useWhenInPlay: true,
+    text: 'Once during your turn (before your attack), you may put Wobbuffet from your hand onto Wynaut (this counts as evolving Wynaut) and remove all damage counters from Wynaut.'
   }];
 
   public attacks = [
     {
-    name: 'Astonish',
-    cost: [],
-    damage: 0,
-    text: 'Choose 1 card from your opponent\'s hand without looking. Look at the card you chose, then have your opponent shuffle that card into his or her deck.'
+      name: 'Astonish',
+      cost: [],
+      damage: 0,
+      text: 'Choose 1 card from your opponent\'s hand without looking. Look at the card you chose, then have your opponent shuffle that card into his or her deck.'
     }
   ];
 

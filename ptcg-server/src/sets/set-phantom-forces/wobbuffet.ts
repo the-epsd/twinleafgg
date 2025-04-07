@@ -62,7 +62,7 @@ export class Wobbuffet extends PokemonCard {
 
       // Wobbuffet is not active Pokemon
       const playerHasWobb = player.active.getPokemonCard() === this;
-      const opponentHasWobb = opponent.active.getPokemonCard() === this
+      const opponentHasWobb = opponent.active.getPokemonCard() === this;
       if (!playerHasWobb && !opponentHasWobb) {
         return state;
       }

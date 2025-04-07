@@ -54,7 +54,7 @@ export class TeamRocketsMeowth extends PokemonCard {
 
         SHOW_CARDS_TO_PLAYER(store, state, player, cards);
         opponent.hand.moveCardsTo(cards, opponent.deck);
-        SHUFFLE_DECK(store, state, opponent)
+        SHUFFLE_DECK(store, state, opponent);
       });
     }
 

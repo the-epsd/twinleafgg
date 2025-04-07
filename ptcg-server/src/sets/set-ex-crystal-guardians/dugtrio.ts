@@ -27,16 +27,16 @@ export class Dugtrio extends PokemonCard {
 
   public attacks = [
     {
-    name: 'Dig Under',
-    cost: [F, C],
-    damage: 0,
-    text: 'Choose 1 of your opponent\'s Pokémon. This attack does 30 damage to that Pokémon. This attack\'s damage isn\'t affected by Weakness or Resistance.'
+      name: 'Dig Under',
+      cost: [F, C],
+      damage: 0,
+      text: 'Choose 1 of your opponent\'s Pokémon. This attack does 30 damage to that Pokémon. This attack\'s damage isn\'t affected by Weakness or Resistance.'
     },
     {
-    name: 'Double-edge',
-    cost: [F, C, C],
-    damage: 60,
-    text: 'Dugtrio does 10 damage to itself.'
+      name: 'Double-edge',
+      cost: [F, C, C],
+      damage: 60,
+      text: 'Dugtrio does 10 damage to itself.'
     },
   ];
 

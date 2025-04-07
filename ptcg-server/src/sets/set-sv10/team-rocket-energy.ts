@@ -27,7 +27,7 @@ export class TeamRocketEnergy extends EnergyCard {
 
   public fullName = 'Team Rocket Energy SV10';
 
-  public text = `This card can only be attached to a Team Rocket\'s Pokémon. If this card is attached to anything other than a Team Rocket\'s Pokémon, discard this card.
+  public text = `This card can only be attached to a Team Rocket's Pokémon. If this card is attached to anything other than a Team Rocket's Pokémon, discard this card.
   
   While this card is attached to a Pokémon, this card provides 2 in any combination of [P] and [D] Energy`;
 

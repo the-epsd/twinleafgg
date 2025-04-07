@@ -68,7 +68,7 @@ export class MoltresZapdosArticunoGX extends PokemonCard {
           });
           SHUFFLE_THIS_POKEMON_AND_ALL_ATTACHED_CARDS_INTO_YOUR_DECK(store, state, effect);
           return state;
-        })
+        });
       } else {
         SHUFFLE_THIS_POKEMON_AND_ALL_ATTACHED_CARDS_INTO_YOUR_DECK(store, state, effect);
       }

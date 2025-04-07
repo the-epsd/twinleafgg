@@ -61,7 +61,7 @@ export class HolonsElectrode extends PokemonCard {
           player: PlayerType.BOTTOM_PLAYER,
           slot: SlotType.ACTIVE,
           index: 0
-        }
+        };
         blockedTo.push(target);
       }
 

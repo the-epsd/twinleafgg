@@ -72,7 +72,7 @@ export class DragoniumZDragonClaw extends TrainerCard {
       store.reduceEffect(state, checkProvidedEnergyEffect);
 
       let energyCount = 0;
-      let cardsToDiscard: Card[] = [];
+      const cardsToDiscard: Card[] = [];
 
       checkProvidedEnergyEffect.energyMap.forEach(em => {
         if (em.card.energyType === EnergyType.BASIC) {

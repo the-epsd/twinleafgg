@@ -8,7 +8,7 @@ export class ArvensToedscruel extends PokemonCard {
   public regulationMark = 'I';
   public tags = [CardTag.ARVENS];
   public stage: Stage = Stage.STAGE_1;
-  public evolvesFrom = 'Arven\'s Toedscool'
+  public evolvesFrom = 'Arven\'s Toedscool';
   public cardType: CardType = F;
   public hp: number = 140;
   public weakness = [{ type: G }];

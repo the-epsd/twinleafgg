@@ -79,11 +79,11 @@ export class Magneton extends PokemonCard {
       }
       
       state = store.prompt(state, new ChooseCardsPrompt(
-      player,
-      GameMessage.CHOOSE_CARD_TO_DISCARD,
-      player.hand,
-      {},
-      { allowCancel: true, min: 1, max: 1 }
+        player,
+        GameMessage.CHOOSE_CARD_TO_DISCARD,
+        player.hand,
+        {},
+        { allowCancel: true, min: 1, max: 1 }
       ), cards => {
         cards = cards || [];
         if (cards.length === 0) {
@@ -102,9 +102,9 @@ export class Magneton extends PokemonCard {
           const cards = selected || [];
 
           store.prompt(state, [new ShowCardsPrompt(
-          opponent.id,
-          GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-          cards
+            opponent.id,
+            GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
+            cards
           )], () => {
             player.discard.moveCardsTo(cards, player.hand);
           });

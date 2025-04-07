@@ -76,9 +76,9 @@ export class Magnemite extends PokemonCard {
         for (let i = 0; i < magnemiteCount; i++) {
           const index = effect.cost.indexOf(CardType.COLORLESS);
           if (index !== -1) {
-        effect.cost.splice(index, 1);
+            effect.cost.splice(index, 1);
           } else {
-        break;
+            break;
           }
         }
       }

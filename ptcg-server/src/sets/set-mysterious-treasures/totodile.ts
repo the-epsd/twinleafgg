@@ -38,7 +38,7 @@ export class Totodile extends PokemonCard {
     
     if (WAS_ATTACK_USED(effect, 1, this)) {
       if (THIS_POKEMON_HAS_ANY_DAMAGE_COUNTERS_ON_IT(effect, this)) {
-        THIS_ATTACK_DOES_X_MORE_DAMAGE(effect, store, state, 10)
+        THIS_ATTACK_DOES_X_MORE_DAMAGE(effect, store, state, 10);
       }
     }
 

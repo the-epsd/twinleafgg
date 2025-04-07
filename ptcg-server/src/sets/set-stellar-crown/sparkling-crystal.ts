@@ -48,12 +48,12 @@ export class SparklingCrystal extends TrainerCard {
 
         if (effect.cost.length > 0) {
           // A list of matched energies.
-          let contained: CardType[] = [];
+          const contained: CardType[] = [];
           for (const costType of effect.cost) {
             if (costType == 9 && availableEnergy.length > 0) {
               contained.push(availableEnergy.splice(0, 1)[0]);
             } else {
-              let i = availableEnergy.indexOf(costType);
+              const i = availableEnergy.indexOf(costType);
               if (i > -1) {
                 //Remove from the available pool and add to the contained energy pool
                 contained.push(availableEnergy.splice(i, 1)[0]);

@@ -54,7 +54,7 @@ export class Regirock extends PokemonCard {
     ) {
       const targetCard = effect.target.getPokemonCard();
       if (targetCard && targetCard.fullName === this.fullName) {
-      effect.target = undefined;
+        effect.target = undefined;
       }
     }
 

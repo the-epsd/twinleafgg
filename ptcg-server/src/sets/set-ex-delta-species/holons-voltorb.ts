@@ -90,7 +90,7 @@ export class HolonsVoltorb extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       COIN_FLIP_PROMPT(store, state, effect.player, (result => {
         if (result) {
-          YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED(store, state, effect)
+          YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED(store, state, effect);
         }
       }));
     }

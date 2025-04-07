@@ -62,7 +62,7 @@ export class HolonsMagneton extends PokemonCard {
           player: PlayerType.BOTTOM_PLAYER,
           slot: SlotType.ACTIVE,
           index: 0
-        }
+        };
         blockedTo.push(target);
       }
 
@@ -143,7 +143,7 @@ export class HolonsMagneton extends PokemonCard {
 
     // Extra Ball
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      DEAL_MORE_DAMAGE_IF_OPPONENT_ACTIVE_HAS_CARD_TAG(effect, state, 20, CardTag.POKEMON_ex)
+      DEAL_MORE_DAMAGE_IF_OPPONENT_ACTIVE_HAS_CARD_TAG(effect, state, 20, CardTag.POKEMON_ex);
     }
 
     return state;

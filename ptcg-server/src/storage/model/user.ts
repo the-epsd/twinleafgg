@@ -40,13 +40,13 @@ export class User extends BaseEntity {
   public avatarFile: string = '';
 
   @OneToMany(type => Deck, deck => deck.user)
-  decks!: Deck[];
+    decks!: Deck[];
 
   @OneToMany(type => Avatar, avatar => avatar.user)
-  avatars!: Avatar[];
+    avatars!: Avatar[];
 
   @OneToMany(type => Replay, replay => replay.user)
-  replays!: Replay[];
+    replays!: Replay[];
 
   public getRank(): Rank {
     let rank = rankLevels[0].rank;

@@ -1,12 +1,12 @@
-import { CardType, PokemonCard, PowerType, Stage, AttachEnergyPrompt, EnergyCard, EnergyType, GameError, PlayerType, PokemonCardList, SlotType, StateUtils, SuperType } from "../../game";
+import { CardType, PokemonCard, PowerType, Stage, AttachEnergyPrompt, EnergyCard, EnergyType, GameError, PlayerType, PokemonCardList, SlotType, StateUtils, SuperType } from '../../game';
 import { StoreLike, State, GameMessage, ChooseEnergyPrompt } from '../../game';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Card } from '../../game';
-import { EndTurnEffect } from "../../game/store/effects/game-phase-effects";
-import { PlayPokemonEffect } from "../../game/store/effects/play-card-effects";
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 
 export class Blaziken extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;

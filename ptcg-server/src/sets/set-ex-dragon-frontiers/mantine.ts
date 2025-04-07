@@ -125,7 +125,7 @@ export class Mantine extends PokemonCard {
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      HEAL_X_DAMAGE_FROM_THIS_POKEMON(10, effect, store, state)
+      HEAL_X_DAMAGE_FROM_THIS_POKEMON(10, effect, store, state);
     }
 
     return state;

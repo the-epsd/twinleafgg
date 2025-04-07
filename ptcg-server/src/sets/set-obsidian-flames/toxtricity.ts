@@ -51,16 +51,16 @@ export class Toxtricity extends PokemonCard {
       const uniqueTypes = new Set<CardType>();
 
       playerBench.forEach(c => {
-      if (c.getPokemonCard() instanceof PokemonCard) {
-        const card = c.getPokemonCard();
-        const cardType = card?.cardType;
-        if (cardType) {
-          uniqueTypes.add(cardType);
+        if (c.getPokemonCard() instanceof PokemonCard) {
+          const card = c.getPokemonCard();
+          const cardType = card?.cardType;
+          if (cardType) {
+            uniqueTypes.add(cardType);
+          }
+          if (card?.additionalCardTypes) {
+            card.additionalCardTypes.forEach(type => uniqueTypes.add(type));
+          }
         }
-        if (card?.additionalCardTypes) {
-          card.additionalCardTypes.forEach(type => uniqueTypes.add(type));
-        }
-      }
       });
 
       // Set the damage based on the count of unique Pokémon types

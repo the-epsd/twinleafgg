@@ -29,7 +29,7 @@ export class Azelf extends PokemonCard {
       name: 'Lock Up',
       cost: [CardType.PSYCHIC],
       damage: 20,
-      text: 'The Defending Pokémon can\’t retreat during your opponent\’s next turn.'
+      text: 'The Defending Pokémon can\'t retreat during your opponent\'s next turn.'
     }
   ];
 
@@ -95,7 +95,7 @@ export class Azelf extends PokemonCard {
 
               player.prizes.forEach(p => {
                 if (p.cards[0] === chosenPrize[0]) {
-                  p.moveCardsTo(chosenPrize, player.supporter)
+                  p.moveCardsTo(chosenPrize, player.supporter);
                 }
               });
 
@@ -106,10 +106,10 @@ export class Azelf extends PokemonCard {
                 {},
                 { min: 1, max: 1, allowCancel: false }
               ), selected => {
-                player.supporter.moveCardsTo(chosenPrize, player.hand)
+                player.supporter.moveCardsTo(chosenPrize, player.hand);
                 player.prizes.forEach(p => {
                   if (p.cards.length === 0) {
-                    player.hand.moveCardsTo(selected, p)
+                    player.hand.moveCardsTo(selected, p);
                   }
                 });
               });

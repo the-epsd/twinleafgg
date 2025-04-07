@@ -206,8 +206,9 @@ export function TAKE_SPECIFIC_PRIZES(
   prizes: CardList[],
   options: TakeSpecificPrizesOptions = {}
 ): void {
-  let { destination = player.hand, skipReduce = false } = options;
-  let preventDefault;
+  let { destination = player.hand } = options;
+  const { skipReduce = false } = options;
+  let preventDefault: boolean = false;
 
   if (!skipReduce) {
     const drawPrizesEffect = new DrawPrizesEffect(

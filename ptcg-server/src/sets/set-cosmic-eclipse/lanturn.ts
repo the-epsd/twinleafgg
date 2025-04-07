@@ -44,20 +44,20 @@ export class Lanturn extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       if (opponent.deck.cards.length === 0) {
-      throw new GameError(GameMessage.CANNOT_USE_POWER);
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
       const deckTop = new CardList();
       opponent.deck.moveTo(deckTop, 1);
 
       state = store.prompt(state, new ShowCardsPrompt(
-      player.id,
-      GameMessage.CARDS_SHOWED_BY_EFFECT,
-      deckTop.cards,
+        player.id,
+        GameMessage.CARDS_SHOWED_BY_EFFECT,
+        deckTop.cards,
       ), () => {
       // Move the card back to the top of the deck
-      deckTop.moveTo(opponent.deck, 0); // Ensure the card is placed back on top of the deck
-      opponent.deck.cards = deckTop.cards.concat(opponent.deck.cards);
+        deckTop.moveTo(opponent.deck, 0); // Ensure the card is placed back on top of the deck
+        opponent.deck.cards = deckTop.cards.concat(opponent.deck.cards);
       });
     }
 
@@ -70,7 +70,7 @@ export class Lanturn extends PokemonCard {
         GameMessage.WANT_TO_USE_ABILITY,
       ), wantToUse => {
         if (wantToUse) {
-          SHUFFLE_DECK(store, state, opponent)
+          SHUFFLE_DECK(store, state, opponent);
         }
       });
     }

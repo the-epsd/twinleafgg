@@ -4,6 +4,7 @@ import { Prompt } from './prompt';
 
 export interface ShowCardsOptions {
   allowCancel: boolean;
+  duration?: number; // Duration in milliseconds before auto-confirming
 }
 
 export class ShowCardsPrompt extends Prompt<true> {
@@ -22,7 +23,8 @@ export class ShowCardsPrompt extends Prompt<true> {
 
     // Default options
     this.options = Object.assign({}, {
-      allowCancel: false
+      allowCancel: false,
+      duration: 3000 // Default 3 seconds
     }, options);
   }
 

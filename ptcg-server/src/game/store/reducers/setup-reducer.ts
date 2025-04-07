@@ -162,7 +162,7 @@ export function* setupGame(next: Function, store: StoreLike, state: State): Iter
   const blocked: number[] = [];
   player.hand.cards.forEach((c, index) => {
     if (c.tags.includes((CardTag.PLAY_DURING_SETUP)) || (c instanceof PokemonCard && c.stage === Stage.BASIC)) {
-
+      // Allow card to be played during setup
     } else {
       blocked.push(index);
     }
@@ -171,7 +171,7 @@ export function* setupGame(next: Function, store: StoreLike, state: State): Iter
   const blockedOpponent: number[] = [];
   opponent.hand.cards.forEach((c, index) => {
     if (c.tags.includes((CardTag.PLAY_DURING_SETUP)) || (c instanceof PokemonCard && c.stage === Stage.BASIC)) {
-
+      // Allow card to be played during setup
     } else {
       blockedOpponent.push(index);
     }

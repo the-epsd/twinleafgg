@@ -53,11 +53,11 @@ export class Aipom extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       if (HAS_MARKER(this.SCAMPERING_TAIL_MARKER, player, this)) {
-      throw new GameError(GameMessage.POWER_ALREADY_USED);
+        throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
 
       if (opponent.deck.cards.length === 0) {
-      throw new GameError(GameMessage.CANNOT_USE_POWER);
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
       ADD_MARKER(this.SCAMPERING_TAIL_MARKER, player, this);

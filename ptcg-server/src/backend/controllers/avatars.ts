@@ -90,7 +90,7 @@ export class Avatars extends Controller {
   public async onMarkAsDefault(req: Request, res: Response) {
     const body: { id: number } = req.body;
     const userId: number = req.body.userId;
-    let user = await User.findOne(userId);
+    const user = await User.findOne(userId);
 
     if (user === undefined) {
       res.status(400);

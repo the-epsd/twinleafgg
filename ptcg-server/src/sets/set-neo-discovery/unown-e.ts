@@ -40,8 +40,8 @@ export class UnwonE extends PokemonCard {
 
       // Opponent chooses first
       state = store.prompt(state, new ConfirmPrompt(
-      opponent.id,
-      GameMessage.WANT_TO_USE_ABILITY
+        opponent.id,
+        GameMessage.WANT_TO_USE_ABILITY
       ), opponentWantsToShuffle => {
         if (opponentWantsToShuffle) {
           opponent.hand.moveTo(opponent.deck);

@@ -48,7 +48,7 @@ export class GreedentVMAX extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       this.usedTurnAProfit = false;
-      DRAW_CARDS(player, 3)
+      DRAW_CARDS(player, 3);
     }
 
     if (effect instanceof KnockOutEffect && effect.target === effect.player.active) {
