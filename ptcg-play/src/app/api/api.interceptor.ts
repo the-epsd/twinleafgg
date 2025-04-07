@@ -33,6 +33,16 @@ export class ApiInterceptor implements HttpInterceptor {
   }
 
   public intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    // Add auth token to request headers
+    const token = this.sessionService.session.authToken;
+    if (token) {
+      request = request.clone({
+        setHeaders: {
+          'Auth-Token': token
+        }
+      });
+    }
+
     return next.handle(request).pipe(
       timeout(environment.timeout),
       catchError(response => {

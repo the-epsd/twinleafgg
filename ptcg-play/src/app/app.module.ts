@@ -20,7 +20,7 @@ import { RankingModule } from './ranking/ranking.module';
 import { ReplaysModule } from './replays/replays.module';
 import { SharedModule } from './shared/shared.module';
 import { TableModule } from './table/table.module';
-// import { MatchmakingLobbyComponent } from './games/matchmaking-lobby/matchmaking-lobby.component';
+import { FriendsModule } from './friends/friends.module';
 import { TermsModule } from './terms/terms.module';
 import { CardInfoDialogComponent } from './table/board/board-card/board-card.component';
 
@@ -41,6 +41,7 @@ import { CardInfoDialogComponent } from './table/board/board-card/board-card.com
     ReplaysModule,
     SharedModule,
     TermsModule,
+    FriendsModule,
     DndMultiBackendModule,
     DndModule.forRoot({ backend: MultiBackend, options: HTML5ToTouch }),
     TableModule,

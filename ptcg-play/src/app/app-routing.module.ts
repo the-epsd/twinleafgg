@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { CanActivateService } from './can-activate.service';
 import { DeckComponent } from './deck/deck.component';
 import { DeckEditComponent } from './deck/deck-edit/deck-edit.component';
+import { FriendsComponent } from './friends/friends.component';
 import { GamesComponent } from './games/games.component';
 import { LoginComponent } from './login/login/login.component';
 import { MessagesComponent } from './messages/messages.component';
@@ -20,6 +21,7 @@ import { TermsComponent } from './terms/terms.component';
 const routes: Routes = [
   { path: 'deck', component: DeckComponent, canActivate: [CanActivateService] },
   { path: 'deck/:deckId', component: DeckEditComponent, canActivate: [CanActivateService] },
+  { path: 'friends', component: FriendsComponent, canActivate: [CanActivateService] },
   { path: 'games', component: GamesComponent, canActivate: [CanActivateService] },
   { path: 'login', component: LoginComponent },
   { path: 'message', redirectTo: 'message/', pathMatch: 'full' },

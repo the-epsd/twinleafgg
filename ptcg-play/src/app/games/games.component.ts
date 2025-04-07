@@ -17,7 +17,8 @@ import { SessionService } from '../shared/session/session.service';
 import { UserInfoMap } from '../shared/session/session.interface';
 import { Deck, DeckListEntry } from '../api/interfaces/deck.interface';
 import { MatchmakingLobbyComponent } from './matchmaking-lobby/matchmaking-lobby.component';
-
+import { environment } from '../../environments/environment';
+import { HttpClient } from '@angular/common/http';
 
 @UntilDestroy()
 @Component({
@@ -44,7 +45,8 @@ export class GamesComponent implements OnInit {
     private dialog: MatDialog,
     private mainSevice: MainService,
     private sessionService: SessionService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private http: HttpClient
   ) {
     this.clients$ = this.sessionService.get(
       session => session.users,
@@ -71,7 +73,20 @@ export class GamesComponent implements OnInit {
     this.sessionService.get(session => session.loggedUserId)
       .pipe(untilDestroyed(this))
       .subscribe(loggedUserId => { this.loggedUserId = loggedUserId; });
+  }
 
+  public async sendFriendRequest(userId: number) {
+    try {
+      const response = await this.http.post(`${environment.apiUrl}/v1/friends/request/${userId}`, {}).toPromise();
+      this.alertService.toast(this.translate.instant('FRIEND_REQUEST_SENT'));
+    } catch (error) {
+      console.error('Error sending friend request:', error);
+      if (error.error && error.error.error) {
+        this.alertService.toast(error.error.error);
+      } else {
+        this.alertService.toast(this.translate.instant('ERROR_SENDING_FRIEND_REQUEST'));
+      }
+    }
   }
 
   private showCreateGamePopup(decks: SelectPopupOption<DeckListEntry>[]): Promise<CreateGamePopupResult> {

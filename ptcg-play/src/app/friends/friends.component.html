@@ -1,0 +1,85 @@
+<div class="friends-container">
+  <div class="header">
+    <h1>Friends</h1>
+    <div class="tabs">
+      <button class="tab" [class.active]="activeTab === 'friends'" (click)="activeTab = 'friends'">
+        Friends
+        <span class="badge" *ngIf="friends.length > 0">{{ friends.length }}</span>
+      </button>
+      <button class="tab" [class.active]="activeTab === 'requests'" (click)="activeTab = 'requests'">
+        Requests
+        <span class="badge" *ngIf="friendRequests.length > 0">{{ friendRequests.length }}</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Friend Requests Section -->
+  <div class="section" *ngIf="activeTab === 'requests'">
+    <h2>Friend Requests</h2>
+
+    <div class="empty-state" *ngIf="friendRequests.length === 0">
+      <mat-icon>people_outline</mat-icon>
+      <p>No pending friend requests</p>
+    </div>
+
+    <div class="requests-grid">
+      <div *ngFor="let request of friendRequests" class="request-card">
+        <div class="user-info">
+          <img [src]="request.avatar || 'assets/avatar.svg'" alt="Avatar" class="avatar"
+            (error)="request.avatar = 'assets/avatar.svg'">
+          <div class="username">{{ request.username }}</div>
+        </div>
+        <div class="actions">
+          <button mat-icon-button class="accept" *ngIf="!request.isSent" (click)="acceptFriendRequest(request.id)"
+            matTooltip="Accept">
+            <mat-icon>check</mat-icon>
+          </button>
+          <button mat-icon-button class="reject" (click)="rejectFriendRequest(request.id)"
+            [matTooltip]="request.isSent ? 'Cancel' : 'Reject'">
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Friends List Section -->
+  <div class="section" *ngIf="activeTab === 'friends'">
+    <h2>Friends List</h2>
+
+    <div class="empty-state" *ngIf="!loading && friends.length === 0">
+      <mat-icon>group</mat-icon>
+      <p>No friends yet. Add some friends to start playing!</p>
+    </div>
+
+    <div class="loading-state" *ngIf="loading">
+      <mat-spinner diameter="40"></mat-spinner>
+    </div>
+
+    <div class="friends-grid">
+      <div *ngFor="let friend of friends" class="friend-card">
+        <div class="user-info">
+          <div class="avatar-container">
+            <img [src]="friend.avatar" alt="Avatar" class="avatar" (error)="friend.avatar = 'assets/avatar.svg'">
+            <span class="status-indicator" [ngClass]="friend.status"></span>
+          </div>
+          <div class="details">
+            <div class="username">{{ friend.username }}</div>
+            <div class="status" [ngClass]="friend.status">{{ friend.status === 'online' ? 'Online' : 'Offline' }}</div>
+          </div>
+        </div>
+        <div class="actions">
+          <button mat-icon-button [routerLink]="['/profile', friend.id]" matTooltip="Profile">
+            <mat-icon>person</mat-icon>
+          </button>
+          <button mat-icon-button [routerLink]="['/message', friend.id]" matTooltip="Message">
+            <mat-icon>chat</mat-icon>
+          </button>
+          <button mat-icon-button (click)="removeFriend(friend.id)" matTooltip="Remove">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

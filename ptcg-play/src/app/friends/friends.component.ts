@@ -1,27 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
+import { environment } from '../../environments/environment';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-interface User {
+interface Friend {
   id: number;
   username: string;
+  avatar: string;
   status: string;
-  avatar?: string;
-  isFriend?: boolean;
+  isSent?: boolean;
 }
 
 @Component({
-  selector: 'ptcg-sidebar',
-  templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.scss']
+  selector: 'ptcg-friends',
+  templateUrl: './friends.component.html',
+  styleUrls: ['./friends.component.scss']
 })
-export class SidebarComponent implements OnInit {
-  friends: User[] = [];
-  onlineUsers: User[] = [];
-  friendRequests: User[] = [];
+export class FriendsComponent implements OnInit {
+  friends: Friend[] = [];
+  friendRequests: Friend[] = [];
   loading = false;
-  activeTab: 'friends' | 'online' = 'friends';
+  activeTab: 'friends' | 'requests' = 'friends';
 
   constructor(
     private http: HttpClient,
@@ -30,15 +29,14 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit() {
     this.loadFriends();
-    this.loadOnlineUsers();
     this.loadFriendRequests();
   }
 
   loadFriends() {
     this.loading = true;
-    this.http.get<User[]>(`${environment.apiUrl}/v1/friends`).subscribe({
+    this.http.get<Friend[]>(`${environment.apiUrl}/v1/friends`).subscribe({
       next: (friends) => {
-        this.friends = friends.map(friend => ({ ...friend, isFriend: true }));
+        this.friends = friends;
         this.loading = false;
       },
       error: (error) => {
@@ -48,22 +46,8 @@ export class SidebarComponent implements OnInit {
     });
   }
 
-  loadOnlineUsers() {
-    this.http.get<User[]>(`${environment.apiUrl}/v1/users/online`).subscribe({
-      next: (users) => {
-        // Filter out friends and add isFriend flag
-        this.onlineUsers = users
-          .filter(user => !this.friends.some(friend => friend.id === user.id))
-          .map(user => ({ ...user, isFriend: false }));
-      },
-      error: (error) => {
-        this.snackBar.open('Failed to load online users', 'Close', { duration: 3000 });
-      }
-    });
-  }
-
   loadFriendRequests() {
-    this.http.get<User[]>(`${environment.apiUrl}/v1/friends/requests`).subscribe({
+    this.http.get<Friend[]>(`${environment.apiUrl}/v1/friends/requests`).subscribe({
       next: (requests) => {
         this.friendRequests = requests;
       },
@@ -77,7 +61,6 @@ export class SidebarComponent implements OnInit {
     this.http.post(`${environment.apiUrl}/v1/friends/accept/${friendId}`, {}).subscribe({
       next: () => {
         this.loadFriends();
-        this.loadOnlineUsers();
         this.loadFriendRequests();
         this.snackBar.open('Friend request accepted', 'Close', { duration: 3000 });
       },
@@ -99,15 +82,15 @@ export class SidebarComponent implements OnInit {
     });
   }
 
-  sendFriendRequest(userId: number) {
-    this.http.post(`${environment.apiUrl}/v1/friends/request/${userId}`, {}).subscribe({
+  removeFriend(friendId: number) {
+    this.http.delete(`${environment.apiUrl}/v1/friends/${friendId}`).subscribe({
       next: () => {
-        this.loadOnlineUsers();
-        this.snackBar.open('Friend request sent', 'Close', { duration: 3000 });
+        this.loadFriends();
+        this.snackBar.open('Friend removed', 'Close', { duration: 3000 });
       },
       error: (error) => {
-        this.snackBar.open('Failed to send friend request', 'Close', { duration: 3000 });
+        this.snackBar.open('Failed to remove friend', 'Close', { duration: 3000 });
       }
     });
   }
-}
+} 

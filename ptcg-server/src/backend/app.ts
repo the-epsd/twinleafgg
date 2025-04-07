@@ -13,6 +13,7 @@ import {
   Cards,
   ControllerClass,
   Decks,
+  Friends,
   Game,
   Login,
   Messages,
@@ -20,6 +21,7 @@ import {
   Ranking,
   Replays,
   ResetPassword,
+  Users,
 } from './controllers';
 
 export class App {
@@ -50,6 +52,7 @@ export class App {
     define('/v1/avatars', Avatars);
     define('/v1/cards', Cards);
     define('/v1/decks', Decks);
+    define('/v1/friends', Friends);
     define('/v1/game', Game);
     define('/v1/login', Login);
     define('/v1/messages', Messages);
@@ -57,6 +60,7 @@ export class App {
     define('/v1/ranking', Ranking);
     define('/v1/replays', Replays);
     define('/v1/resetPassword', ResetPassword);
+    define('/v1/users', Users);
 
     if (config.sets.scansDir) {
       app.use('/scans', express.static(config.sets.scansDir));

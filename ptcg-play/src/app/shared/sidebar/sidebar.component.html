@@ -1,1 +1,102 @@
 <ng-content></ng-content>
+
+<div class="sidebar">
+  <div class="header">
+    <h2>Online Users</h2>
+  </div>
+
+  <!-- Friend Requests Section -->
+  <div class="section" *ngIf="friendRequests.length > 0">
+    <h3>Friend Requests</h3>
+    <div class="user-list">
+      <div *ngFor="let request of friendRequests" class="user-card">
+        <div class="user-info">
+          <div class="avatar-container">
+            <img [src]="'assets/avatar/' + request.avatar || 'assets/avatar.svg'" alt="Avatar" class="avatar"
+              (error)="request.avatar = 'assets/avatar.svg'">
+          </div>
+          <div class="details">
+            <div class="username">{{ request.username }}</div>
+            <div class="status">{{ request.isSent ? 'Request sent' : 'Wants to be friends' }}</div>
+          </div>
+        </div>
+        <div class="actions">
+          <button class="action-btn accept" *ngIf="!request.isSent" (click)="acceptFriendRequest(request.id)">
+            <mat-icon>check</mat-icon>
+          </button>
+          <button class="action-btn reject" (click)="rejectFriendRequest(request.id)">
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Friends List Section -->
+  <div class="section">
+    <div class="section-header">
+      <h3>Friends</h3>
+      <button class="manage-btn" mat-button [routerLink]="['/friends']">
+        <mat-icon>settings</mat-icon>
+        Manage
+      </button>
+    </div>
+    <div class="user-list">
+      <div *ngFor="let friend of friends" class="user-card">
+        <div class="user-info">
+          <div class="avatar-container">
+            <img [src]="'assets/avatar/' + friend.avatar || 'assets/avatar.svg'" alt="Avatar" class="avatar"
+              (error)="friend.avatar = 'assets/avatar.svg'">
+            <span class="status-indicator" [ngClass]="friend.status"></span>
+          </div>
+          <div class="details">
+            <div class="username">{{ friend.username }}</div>
+            <div class="status">{{ friend.status }}</div>
+          </div>
+        </div>
+        <div class="actions">
+          <button class="action-btn" [routerLink]="['/message', friend.id]">
+            <mat-icon>chat</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="empty-state" *ngIf="!loading && friends.length === 0">
+      <mat-icon>group</mat-icon>
+      <p>No friends yet</p>
+    </div>
+  </div>
+
+  <!-- Online Users Section -->
+  <div class="section">
+    <h3>Online Users</h3>
+    <div class="user-list">
+      <div *ngFor="let user of onlineUsers" class="user-card">
+        <div class="user-info">
+          <div class="avatar-container">
+            <img [src]="'assets/avatar/' + user.avatar || 'assets/avatar.svg'" alt="Avatar" class="avatar"
+              (error)="user.avatar = 'assets/avatar.svg'">
+            <span class="status-indicator" [ngClass]="user.status"></span>
+          </div>
+          <div class="details">
+            <div class="username">{{ user.username }}</div>
+            <div class="status">{{ user.status }}</div>
+          </div>
+        </div>
+        <div class="actions">
+          <button class="action-btn" *ngIf="!user.isFriend" (click)="sendFriendRequest(user.id)">
+            <mat-icon>person_add</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="empty-state" *ngIf="!loading && onlineUsers.length === 0">
+      <mat-icon>people_outline</mat-icon>
+      <p>No users online</p>
+    </div>
+  </div>
+
+  <div class="loading-state" *ngIf="loading">
+    <mat-spinner diameter="24"></mat-spinner>
+  </div>
+</div>

@@ -9,3 +9,5 @@ export * from './profile';
 export * from './ranking';
 export * from './replays';
 export * from './reset-password';
+export * from './friends';
+export * from './users';
