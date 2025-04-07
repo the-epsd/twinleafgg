@@ -26,7 +26,7 @@ export class IonosBelliboltex extends PokemonCard {
     name: 'Electric Streamer',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
-    text: 'As often as you like during your turn, you may attach a Basic [L] Energy card from your hand to 1 of your Iono\'s Pokemon.'
+    text: 'As often as you like during your turn, you may attach a Basic [L] Energy card from your hand to 1 of your Iono\'s Pokémon.'
   }];
 
   public attacks = [{
@@ -89,6 +89,13 @@ export class IonosBelliboltex extends PokemonCard {
       });
 
       return state;
+    }
+
+    // Cannot attack next turn
+    if (effect instanceof AttackEffect && effect.source.cards.includes(this)) {
+      if (effect.player.marker.hasMarker(PokemonCardList.ATTACK_USED_MARKER, this)) {
+        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+      }
     }
 
     // Thunderous Bolt

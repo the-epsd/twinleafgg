@@ -40,7 +40,7 @@ export class GreedentV extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       COIN_FLIP_PROMPT(store, state, effect.player, (result => {
         if (result) {
-          YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED(store, state, effect)
+          YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED(store, state, effect);
         }
       }));
     }
@@ -48,7 +48,7 @@ export class GreedentV extends PokemonCard {
     // Nom-Nom-Nom Incisors
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
-      DRAW_CARDS(player, 3)
+      DRAW_CARDS(player, 3);
     }
 
     return state;

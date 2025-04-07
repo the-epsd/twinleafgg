@@ -10,7 +10,7 @@ export class Feraligatr extends PokemonCard {
 
   public regulationMark = 'H';
 
-  public stage: Stage = Stage.STAGE_2;
+  public stage: Stage = Stage.BASIC;
 
   public evolvesFrom = 'Croconaw';
 
@@ -52,7 +52,6 @@ export class Feraligatr extends PokemonCard {
   public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: AttackEffect): State {
-
     REMOVE_MARKER_AT_END_OF_TURN(effect, this.ATTACK_USED_2_MARKER, this);
     REPLACE_MARKER_AT_END_OF_TURN(effect, this.ATTACK_USED_MARKER, this.ATTACK_USED_2_MARKER, this);
     REMOVE_MARKER_AT_END_OF_TURN(effect, this.TORRENTIAL_HEART_MARKER, this);
@@ -75,7 +74,6 @@ export class Feraligatr extends PokemonCard {
         ADD_MARKER(this.TORRENTIAL_HEART_MARKER, effect.player, this);
         ABILITY_USED(effect.player, this);
       }
-
     }
     return state;
   }

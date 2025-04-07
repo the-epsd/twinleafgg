@@ -59,7 +59,7 @@ export class HolonsCastform extends PokemonCard {
           player: PlayerType.BOTTOM_PLAYER,
           slot: SlotType.ACTIVE,
           index: 0
-        }
+        };
         blockedTo.push(target);
       }
 

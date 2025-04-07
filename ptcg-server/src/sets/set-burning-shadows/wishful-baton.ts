@@ -54,6 +54,9 @@ export class WishfulBaton extends TrainerCard {
         target.cards = target.cards.filter(c => c !== this);
         target.tool = undefined;
 
+        // Move the Wishful Baton to the discard pile using MOVE_CARDS
+        state = MOVE_CARDS(store, state, target, player.discard, { cards: [this] });
+
         // Prevent the default knockout behavior since we're handling the energy cards
         effect.preventDefault = true;
 

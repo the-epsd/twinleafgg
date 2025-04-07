@@ -17,12 +17,12 @@ export class Ditto extends PokemonCard {
     useWhenInPlay: true,
     text: 'Once during your turn (before your attack), you may search your discard pile for a Basic Pokémon (excluding Pokémon-ex and Ditto) and switch it with Ditto. (Any  cards attached to Ditto, damage counters, Special Conditions, and effects on it are now on the new Pokémon.) Place Ditto in the discard pile.'
   }];
-  
+
   public attacks = [{
     name: 'Energy Ball',
     cost: [C],
     damage: 10,
-    text: 'Does 10 damage plus 10 more damage for each Energy attached to Ditto but not used to pay for this attack\’s Energy cost. You can\’t add more then 20 damage in this way.'
+    text: 'Does 10 damage plus 10 more damage for each Energy attached to Ditto but not used to pay for this attack\'s Energy cost. You can\'t add more then 20 damage in this way.'
   }];
 
   public set: string = 'RG';
@@ -62,7 +62,7 @@ export class Ditto extends PokemonCard {
         GameMessage.CHOOSE_POKEMON_TO_SWITCH,
         player.discard,
         { superType: SuperType.POKEMON, stage: Stage.BASIC },
-        { min: 1, max: 1, allowCancel: false, blocked},
+        { min: 1, max: 1, allowCancel: false, blocked },
       ), (selection) => {
         if (selection.length <= 0) {
           throw new GameError(GameMessage.INVALID_TARGET);
@@ -87,18 +87,18 @@ export class Ditto extends PokemonCard {
     //Attack
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-    
+
       const checkCost = new CheckAttackCostEffect(player, this.attacks[0]);
       state = store.reduceEffect(state, checkCost);
-      
+
       const checkEnergy = new CheckProvidedEnergyEffect(player);
       state = store.reduceEffect(state, checkEnergy);
 
-      const energy = checkEnergy.energyMap
+      const energy = checkEnergy.energyMap;
 
       const extraEnergy = energy.length - checkCost.cost.length;
 
-      if (extraEnergy == 1) effect.damage += 10; 
+      if (extraEnergy == 1) effect.damage += 10;
       else if (extraEnergy >= 2) effect.damage += 20;
     }
 

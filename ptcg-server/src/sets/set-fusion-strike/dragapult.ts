@@ -35,7 +35,7 @@ export class Dragapult extends PokemonCard {
   public name: string = 'Dragapult';
   public fullName: string = 'Dragapult FST';
 
-public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const playerBench = player.bench;

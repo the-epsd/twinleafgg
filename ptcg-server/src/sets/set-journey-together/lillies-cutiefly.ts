@@ -7,14 +7,19 @@ import { Effect } from '../../game/store/effects/effect';
 
 export class LilliesCutiefly extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.PSYCHIC;
   public tags = [CardTag.LILLIES];
+  public cardType: CardType = P;
   public hp: number = 30;
-  public weakness = [{ type: CardType.METAL }];
+  public weakness = [{ type: M }];
   public retreat = [];
 
   public attacks = [
-    { name: 'Stay Still', cost: [CardType.PSYCHIC], damage: 0, text: 'Heal 10 damage from this Pokemon.' }
+    {
+      name: 'Hold Still',
+      cost: [P],
+      damage: 0,
+      text: 'Heal 10 damage from this Pokémon.'
+    }
   ];
 
   public set: string = 'JTG';

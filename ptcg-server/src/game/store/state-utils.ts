@@ -120,7 +120,9 @@ export class StateUtils {
   }
 
   static getCombinations(arr: CardType[][], n: number): CardType[][] {
-    let i, j, k, l = arr.length, childperm, ret = [];
+    const l = arr.length;
+    const ret = [];
+    let i, j, k, childperm;
     let elem: CardType[] = [];
     if (n == 1) {
       for (i = 0; i < arr.length; i++) {

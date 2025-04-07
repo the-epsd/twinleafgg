@@ -119,10 +119,10 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
     yield store.prompt(state, new CoinFlipPrompt(
       player.id,
       GameMessage.FLIP_CONFUSION),
-      result => {
-        flip = result;
-        next();
-      });
+    result => {
+      flip = result;
+      next();
+    });
 
     if (flip === false) {
       store.log(state, GameLog.LOG_HURTS_ITSELF);
@@ -246,8 +246,8 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
 
       store.log(state, GameLog.LOG_POKEMON_KO, { name: card.name });
 
-      // Handle Lost City marker
-      if (effect.target.marker.hasMarker('LOST_CITY_MARKER')) {
+      // Handle Lost City marker or PRISM_STAR cards
+      if (effect.target.marker.hasMarker('LOST_CITY_MARKER') || card.tags.includes(CardTag.PRISM_STAR)) {
         const lostZoned = new CardList();
         const attachedCards = new CardList();
         const pokemonIndices = effect.target.cards.map((card, index) => index);
@@ -270,7 +270,7 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
           }
 
           // Handle the main card
-          if (removedCard.superType === SuperType.POKEMON || (<any>removedCard).stage === Stage.BASIC) {
+          if (removedCard.superType === SuperType.POKEMON || (<any>removedCard).stage === Stage.BASIC || removedCard.tags.includes(CardTag.PRISM_STAR)) {
             lostZoned.cards.push(removedCard);
           } else {
             attachedCards.cards.push(removedCard);

@@ -24,7 +24,7 @@ export class BigParasol extends TrainerCard {
       const player = StateUtils.findOwner(state, effect.target);
 
       if (player.active.tool === this && !IS_TOOL_BLOCKED(store, state, player, this)) {
-      const sourceCard = effect.source.getPokemonCard();
+        const sourceCard = effect.source.getPokemonCard();
 
         if (sourceCard) {
           // Check if the effect targets the player's active or benched Pokémon

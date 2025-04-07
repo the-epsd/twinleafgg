@@ -16,8 +16,8 @@ export class RustedSword extends TrainerCard {
   public regulationMark = 'D';
   public name: string = 'Rusted Sword';
   public fullName: string = 'Rusted Sword SHF';
-  
-  public text: string = 'The attacks of the Zacian V this card is attached to do 30 more damage to your opponent\’s Active Pokémon (before applying Weakness and Resistance).';
+
+  public text: string = 'The attacks of the Zacian V this card is attached to do 30 more damage to your opponent\'s Active Pokémon (before applying Weakness and Resistance).';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

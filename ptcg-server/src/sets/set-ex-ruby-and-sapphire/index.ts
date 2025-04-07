@@ -1,7 +1,10 @@
-
 import { Card } from '../../game';
+import { Delcatty } from './delcatty';
+import { Skitty } from './skitty';
 import { Blaziken } from './blaziken';
 
-export const RUBY_SAPPHIRE: Card[] = [
+export const setEXRubyAndSapphire: Card[] = [
+  new Delcatty(),
+  new Skitty(),
   new Blaziken()
 ]; 

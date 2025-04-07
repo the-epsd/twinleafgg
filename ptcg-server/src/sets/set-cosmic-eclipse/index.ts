@@ -48,6 +48,7 @@ import { Woobat } from './woobat';
 import { Swoobat } from './swoobat';
 import { Mimikyu } from './mimikyu';
 import { OricorioGX } from './oricorio-gx';
+import { DragoniumZDragonClaw } from './dragonium-z';
 
 
 export const setCosmicEclipse: Card[] = [
@@ -59,6 +60,7 @@ export const setCosmicEclipse: Card[] = [
   new ChaoticSwell(),
   new Clay(),
   new CynthiaAndCaitlin(),
+  new DragoniumZDragonClaw(),
   new Drampa(),
   new DrawEnergy(),
   new Dusclops(),

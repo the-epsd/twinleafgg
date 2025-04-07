@@ -20,10 +20,10 @@ export class Blazikenex extends PokemonCard {
   public retreat = [C, C];
 
   public powers = [{
-    name: 'Overflowing Spirit',
+    name: 'Seething Spirit',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
-    text: 'Once during your turn, you may attach a basic Energy card from your discard pile to 1 of your Pokemon.'
+    text: 'Once during your turn, you may attach a Basic Energy card from your discard pile to 1 of your Pokémon.'
   }];
 
   public attacks = [

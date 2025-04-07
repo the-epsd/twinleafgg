@@ -21,7 +21,7 @@ export class Jirachi extends PokemonCard {
     name: 'Final Wish',
     useWhenInPlay: true,
     powerType: PowerType.POKEPOWER,
-    text: 'Once during your opponent\’s turn, if Jirachi would be Knocked Out by damage from an attack, you may search your deck for any 1 card and put it into your hand. Shuffle your deck afterward.'
+    text: 'Once during your opponent\'s turn, if Jirachi would be Knocked Out by damage from an attack, you may search your deck for any 1 card and put it into your hand. Shuffle your deck afterward.'
   }];
 
   public attacks = [
@@ -35,7 +35,7 @@ export class Jirachi extends PokemonCard {
       name: 'Swift',
       cost: [CardType.METAL],
       damage: 20,
-      text: 'This attack\’s damage isn\’t affected by Weakness, Resistance, Poké-Powers, Poké-Bodies, or any other effects on the Defending Pokémon.'
+      text: 'This attack\'s damage isn\'t affected by Weakness, Resistance, Poké-Powers, Poké-Bodies, or any other effects on the Defending Pokémon.'
     }
   ];
 
@@ -74,15 +74,15 @@ export class Jirachi extends PokemonCard {
             player.deck,
             {},
             { min: 1, max: 1, allowCancel: false }),
-            (selected: any[]) => {
-              cards = selected || [];
-              if (cards.length > 0) {
-                player.deck.moveCardsTo(cards, player.hand);
-              }
-              SHUFFLE_DECK(store, state, player);
-            });
+          (selected: any[]) => {
+            cards = selected || [];
+            if (cards.length > 0) {
+              player.deck.moveCardsTo(cards, player.hand);
+            }
+            SHUFFLE_DECK(store, state, player);
+          });
         }
-      })
+      });
     }
 
     if (effect instanceof PlaySupporterEffect) {
@@ -98,7 +98,7 @@ export class Jirachi extends PokemonCard {
       if (player.supportersForDetour.cards.length == 0) {
         return state;
       }
-      
+
       return store.prompt(state, new ChooseCardsPrompt(
         player,
         GameMessage.CHOOSE_CARD_TO_COPY_EFFECT,
@@ -110,7 +110,7 @@ export class Jirachi extends PokemonCard {
         player.supporterTurn -= 1;
         const playTrainerEffect = new TrainerEffect(player, trainerCard);
         store.reduceEffect(state, playTrainerEffect);
-      })
+      });
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {

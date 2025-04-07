@@ -1,7 +1,7 @@
-import { PokemonCard, Stage, CardType, CardTag, StoreLike, State } from "../../game";
-import { DealDamageEffect } from "../../game/store/effects/attack-effects";
-import { Effect } from "../../game/store/effects/effect";
-import { AttackEffect } from "../../game/store/effects/game-effects";
+import { PokemonCard, Stage, CardType, CardTag, StoreLike, State } from '../../game';
+import { DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { Effect } from '../../game/store/effects/effect';
+import { AttackEffect } from '../../game/store/effects/game-effects';
 
 export class TeamRocketsTarountula extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -9,7 +9,7 @@ export class TeamRocketsTarountula extends PokemonCard {
   public cardType: CardType = G;
   public hp: number = 50;
   public weakness = [{ type: R }];
-  public retreat = [C, C];
+  public retreat = [C];
 
   public attacks = [
     {

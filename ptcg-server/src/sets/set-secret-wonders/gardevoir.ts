@@ -24,7 +24,7 @@ export class Gardevoir extends PokemonCard {
     name: 'Telepass',
     useWhenInPlay: true,
     powerType: PowerType.POKEPOWER,
-    text: 'Once during your turn (before your attack), you may search your opponent\’s discard pile for a Supporter card and use the effect of that card as the effect of this power. (The Supporter card remains in your opponent\’s discard pile.) You can\’t use more than 1 Telepass Poké-Power each turn. This power can\’t be used if Gardevoir is affected by a Special Condition.'
+    text: 'Once during your turn (before your attack), you may search your opponent\'s discard pile for a Supporter card and use the effect of that card as the effect of this power. (The Supporter card remains in your opponent\'s discard pile.) You can\'t use more than 1 Telepass Poké-Power each turn. This power can\'t be used if Gardevoir is affected by a Special Condition.'
   }];
 
   public attacks = [
@@ -32,7 +32,7 @@ export class Gardevoir extends PokemonCard {
       name: 'Psychic Lock',
       cost: [P, C, C],
       damage: 60,
-      text: 'During your opponent\’s next turn, your opponent can\’t use any Poké-Powers on his or her Pokémon.'
+      text: 'During your opponent\'s next turn, your opponent can\'t use any Poké-Powers on his or her Pokémon.'
     }
   ];
 
@@ -103,7 +103,7 @@ export class Gardevoir extends PokemonCard {
     //Remove Markers
     REMOVE_MARKER_AT_END_OF_TURN(effect, this.TELEPASS_MARKER, this);
     REMOVE_MARKER_AT_END_OF_TURN(effect, this.PSCHIC_LOCK_MARKER, this);
-    
+
     return state;
   }
 }

@@ -22,10 +22,14 @@ cardManager.defineSet(sets.setVendingSeries);
 
 cardManager.defineSet(sets.setBaseSetEnergy);
 
+cardManager.defineSet(sets.setNeoGenesis);
+cardManager.defineSet(sets.setNeoDiscovery)
+
 //E-Card Era
 cardManager.defineSet(sets.setAquapolis);
 
 //ex Era shit
+cardManager.defineSet(sets.setEXRubyAndSapphire);
 cardManager.defineSet(sets.setEXHolonPhantoms);
 cardManager.defineSet(sets.setEXHiddenLegends)
 cardManager.defineSet(sets.setEXDragon);
@@ -42,6 +46,7 @@ cardManager.defineSet(sets.setEXDeltaSpecies);
 cardManager.defineSet(sets.setEXLegendMaker);
 
 cardManager.defineSet(sets.setDiamondAndPearl);
+cardManager.defineSet(sets.setMysteriousTreasures);
 cardManager.defineSet(sets.setSecretWonders);
 // cardManager.defineSet(sets.setOP9);
 cardManager.defineSet(sets.setGreatEncounters);

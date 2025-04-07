@@ -26,14 +26,14 @@ export class SkuntankG extends PokemonCard {
     name: 'Poison Structure',
     powerType: PowerType.POKEPOWER,
     useWhenInPlay: true,
-    text: 'Once during your turn (before your attack), if you have a Stadium card in play, you may use this power. Each Active Pokémon (both yours and your opponent\’s) (excluding Pokémon SP) is now Poisoned. This power can\’t be used if Skuntank is affected by a Special Condition.'
+    text: 'Once during your turn (before your attack), if you have a Stadium card in play, you may use this power. Each Active Pokémon (both yours and your opponent\'s) (excluding Pokémon SP) is now Poisoned. This power can\'t be used if Skuntank is affected by a Special Condition.'
   }];
 
   public attacks = [{
     name: 'Smokescreen',
     cost: [CardType.COLORLESS, CardType.COLORLESS],
     damage: 20,
-    text: 'If the Defending Pokémon tries to attack during your opponent\’s next turn, your opponent flips a coin. If tails, that attack does nothing.'
+    text: 'If the Defending Pokémon tries to attack during your opponent\'s next turn, your opponent flips a coin. If tails, that attack does nothing.'
   }];
 
   public set: string = 'PL';

@@ -31,7 +31,7 @@ export class PokemonResearchLab extends TrainerCard {
       const slots = GET_PLAYER_BENCH_SLOTS(player);
 
       SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH(store, state, player,
-        { evolvesFrom: "Unidentified Fossil" },
+        { evolvesFrom: 'Unidentified Fossil' },
         { min: 0, max: Math.min(2, slots.length), allowCancel: true }
       );
 

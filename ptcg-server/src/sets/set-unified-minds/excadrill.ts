@@ -50,19 +50,19 @@ export class Excadrill extends PokemonCard {
         ), selected => {
           const cards = selected || [];
           store.prompt(state, [new ShowCardsPrompt(
-          opponent.id,
-          GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-          cards
+            opponent.id,
+            GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
+            cards
           )], () => {
-          player.discard.moveCardsTo(cards, player.deck);
+            player.discard.moveCardsTo(cards, player.deck);
           });
 
           return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-          player.deck.applyOrder(order);
+            player.deck.applyOrder(order);
           });
         });
       }
     }
-  return state;
+    return state;
   }
 }

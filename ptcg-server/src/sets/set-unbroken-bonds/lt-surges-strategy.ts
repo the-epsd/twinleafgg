@@ -37,7 +37,7 @@ export class LtSurgesStrategy extends TrainerCard {
       }
 
       if (this.playedSurgeThisTurn) {
-
+        // Already played Lt. Surge's Strategy this turn, do nothing
       } else {
         // going to be increased by one in the play-trainer file
         player.supporterTurn = -2;

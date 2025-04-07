@@ -2,6 +2,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { Attack, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, State, StoreLike } from '../../game';
 import { AttackEffect, Effect } from '../../game/store/effects/game-effects';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class TsareenaV extends PokemonCard {
 
@@ -32,7 +33,6 @@ export class TsareenaV extends PokemonCard {
 
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
 
@@ -50,15 +50,29 @@ export class TsareenaV extends PokemonCard {
         let discardCount = 0;
 
         // Discard all selected Pokemon
-        for (let i = player.bench.length - 1; i >= 0; i--)
+        for (let i = player.bench.length - 1; i >= 0; i--) {
           if (results.includes(player.bench[i])) {
-            player.bench[i].moveTo(player.discard);
+            const cardList = player.bench[i];
+            const pokemons = cardList.getPokemons();
+            const otherCards = cardList.cards.filter(card => !(card instanceof PokemonCard));
+
+            // Move other cards (tools, energy, etc.) to discard
+            if (otherCards.length > 0) {
+              MOVE_CARDS(store, state, cardList, player.discard, { cards: otherCards });
+            }
+
+            // Move Pokémon to discard and clear their effects
+            if (pokemons.length > 0) {
+              cardList.damage = 0;
+              cardList.clearEffects();
+              MOVE_CARDS(store, state, cardList, player.discard, { cards: pokemons });
+            }
             discardCount++;
           }
+        }
 
         effect.damage += (40 * discardCount);
       });
-
     }
 
     return state;

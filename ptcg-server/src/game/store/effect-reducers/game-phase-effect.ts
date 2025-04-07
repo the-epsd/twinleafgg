@@ -110,6 +110,8 @@ function startNextTurn(store: StoreLike, state: State): State {
 function handleSpecialConditions(store: StoreLike, state: State, effect: BetweenTurnsEffect) {
   const player = effect.player;
   for (const sp of player.active.specialConditions) {
+    const flipsForSleep: CoinFlipPrompt[] = [];
+
     switch (sp) {
       case SpecialCondition.POISONED:
         player.active.damage += effect.poisonDamage;
@@ -142,7 +144,6 @@ function handleSpecialConditions(store: StoreLike, state: State, effect: Between
           break;
         }
 
-        const flipsForSleep = [];
         for (let i = 0; i < effect.player.active.sleepFlips; i++) {
           store.log(state, GameLog.LOG_FLIP_ASLEEP, { name: player.name });
           flipsForSleep.push(new CoinFlipPrompt(

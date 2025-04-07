@@ -206,8 +206,9 @@ export function TAKE_SPECIFIC_PRIZES(
   prizes: CardList[],
   options: TakeSpecificPrizesOptions = {}
 ): void {
-  let { destination = player.hand, skipReduce = false } = options;
-  let preventDefault;
+  let { destination = player.hand } = options;
+  const { skipReduce = false } = options;
+  let preventDefault: boolean = false;
 
   if (!skipReduce) {
     const drawPrizesEffect = new DrawPrizesEffect(
@@ -521,6 +522,24 @@ export function IS_POKEPOWER_BLOCKED(store: StoreLike, state: State, player: Pla
     store.reduceEffect(state, new PowerEffect(player, {
       name: 'test',
       powerType: PowerType.POKEPOWER,
+      text: ''
+    }, card));
+  } catch {
+    return true;
+  }
+  return false;
+}
+
+/**
+ * Checks if pokemon powers are blocked on `card` for `player`.
+ * @returns `true` if the pokemon power is blocked, `false` if the pokepower is able to go thru.
+ */
+export function IS_POKEMON_POWER_BLOCKED(store: StoreLike, state: State, player: Player, card: PokemonCard): boolean {
+  // Try to reduce PowerEffect, to check if something is blocking our pokepower
+  try {
+    store.reduceEffect(state, new PowerEffect(player, {
+      name: 'test',
+      powerType: PowerType.POKEMON_POWER,
       text: ''
     }, card));
   } catch {

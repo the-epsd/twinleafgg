@@ -22,7 +22,7 @@ export class Diglett extends PokemonCard {
       name: 'Sand Pit',
       cost: [F, C],
       damage: 20,
-      text: "The Defending Pokémon can't retreat during your opponent's next turn."
+      text: 'The Defending Pokémon can\'t retreat during your opponent\'s next turn.'
     },
   ];
 

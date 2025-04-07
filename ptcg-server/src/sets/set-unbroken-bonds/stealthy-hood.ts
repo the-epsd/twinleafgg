@@ -12,7 +12,7 @@ export class StealthyHood extends TrainerCard {
   public set: string = 'UNB';
   public setNumber: string = '186';
   public cardImage: string = 'assets/cardback.png';
-  public text: string = 'Prevent all effects of your opponent\'s Abilities done to the Pokémon this card is attached to. Remove any such existing effects.'
+  public text: string = 'Prevent all effects of your opponent\'s Abilities done to the Pokémon this card is attached to. Remove any such existing effects.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Prevent effects of abilities from opponent's Pokemon

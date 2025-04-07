@@ -23,12 +23,17 @@ export class IonosElectrode extends PokemonCard {
 
   public attacks = [
     {
-      name: 'Heartpounding Bomb',
+      name: 'Thump-Thump Boom',
       cost: [L, L],
       damage: 0,
       text: 'This Pokémon does 100 damage to itself. Flip a coin. If heads, your opponent\'s Active Pokémon is Knocked Out.'
     },
-    { name: 'Electric Ball', cost: [L, L, C], damage: 100, text: '' },
+    {
+      name: 'Electric Ball',
+      cost: [L, L, C],
+      damage: 100,
+      text: ''
+    },
   ];
 
   public regulationMark = 'I';

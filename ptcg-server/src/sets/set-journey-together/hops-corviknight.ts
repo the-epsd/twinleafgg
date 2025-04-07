@@ -29,15 +29,13 @@ export class HopsCorviknight extends PokemonCard {
       name: 'Shoot Through',
       cost: [C],
       damage: 50,
-      text: 'This attack also does 50 damage to 1 of your opponent\'s Benched Pokémon. ' +
-        '(Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+      text: 'This attack also does 50 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
     },
     {
       name: 'Steel Wing',
       cost: [M, M, C],
       damage: 150,
-      text: 'During your opponent\'s next turn, this Pokémon takes 60 less damage from attacks ' +
-        '(after applying Weakness and Resistance).'
+      text: 'During your opponent\'s next turn, this Pokémon takes 60 less damage from attacks (after applying Weakness and Resistance).'
     },
   ];
 

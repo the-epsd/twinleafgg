@@ -1,7 +1,7 @@
-import { PokemonCard, Stage, CardType, StoreLike, State, PokemonCardList, DiscardEnergyPrompt, GameError, GameMessage, EnergyType, PlayerType, SlotType, StateUtils, SuperType, CardTag, PowerType } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
-import { AttackEffect, UseAttackEffect } from "../../game/store/effects/game-effects";
-import { IS_ABILITY_BLOCKED } from "../../game/store/prefabs/prefabs";
+import { PokemonCard, Stage, CardType, StoreLike, State, PokemonCardList, DiscardEnergyPrompt, GameError, GameMessage, EnergyType, PlayerType, SlotType, StateUtils, SuperType, CardTag, PowerType } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { AttackEffect, UseAttackEffect } from '../../game/store/effects/game-effects';
+import { IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 
 export class TeamRocketsMewtwoex extends PokemonCard {

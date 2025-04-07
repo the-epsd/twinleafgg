@@ -43,34 +43,31 @@ export class Sudowoodo extends PokemonCard {
   public fullName: string = 'Sudowoodo GRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof CheckTableStateEffect) {
-      effect.benchSizes = state.players.map((player, index) => {
-        // Return original bench size if Ability is blocked
-        if (IS_ABILITY_BLOCKED(store, state, player, this)) {
-          return 5;
+      const player = effect.player;
+      const cardList = StateUtils.findCardList(state, this);
+      const owner = StateUtils.findOwner(state, cardList);
+
+      let isOpponentSudowoodoInPlay = false;
+      owner.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
+        if (card === this) {
+          isOpponentSudowoodoInPlay = true;
         }
-
-        // Check for Sudowoodo on opponent's board
-        let isSudowoodoInPlay = false;
-        const opponent = StateUtils.getOpponent(state, player);
-        opponent.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
-          const pokemon = cardList.getPokemonCard();
-          if (!!pokemon && pokemon.name === 'Sudowoodo' && pokemon.powers.map(p => p.name).includes(this.powers[0].name)) {
-            isSudowoodoInPlay = true;
-          }
-        });
-
-        // Modify bench size
-        if (isSudowoodoInPlay) {
-          return 4;
-        }
-
-        // Return original bench size
-        return 5;
       });
-    }
 
+      if (!isOpponentSudowoodoInPlay) {
+        return state;
+      }
+
+      if (!IS_ABILITY_BLOCKED(store, state, player, this)) {
+        effect.benchSizes = state.players.map((player, index) => {
+          if (player === owner) {
+            return effect.benchSizes[index];
+          }
+          return Math.min(effect.benchSizes[index], 4);
+        });
+      }
+    }
     return state;
   }
 }

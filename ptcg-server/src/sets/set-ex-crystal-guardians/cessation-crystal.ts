@@ -23,7 +23,7 @@ export class CessationCrystal extends TrainerCard {
 
   public setNumber: string = '74';
 
-  public text: string = 'Attach Cessation Crystal to 1 of your Pokémon (excluding Pokémon-ex) that doesn\’t already have a Pokémon Tool attached to it. If the Pokémon Cessation Crystal is attached to is a Pokémon-ex, discard this card.\n\nAs long as Cessation Crystal is attached to an Active Pokémon, each player\’s Pokémon(both yours and your opponent\’s) can\’t use any Poké - Powers or Poké - Bodies.';
+  public text: string = 'Attach Cessation Crystal to 1 of your Pokémon (excluding Pokémon-ex) that doesn\'t already have a Pokémon Tool attached to it. If the Pokémon Cessation Crystal is attached to is a Pokémon-ex, discard this card.\n\nAs long as Cessation Crystal is attached to an Active Pokémon, each player\'s Pokémon(both yours and your opponent\'s) can\'t use any Poké - Powers or Poké - Bodies.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PowerEffect
@@ -56,7 +56,7 @@ export class CessationCrystal extends TrainerCard {
     }
 
     if (effect instanceof AttachPokemonToolEffect && effect.trainerCard == this) {
-      if (effect.target.getPokemonCard()?.tags.includes(CardTag.POKEMON_ex)){
+      if (effect.target.getPokemonCard()?.tags.includes(CardTag.POKEMON_ex)) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
     }

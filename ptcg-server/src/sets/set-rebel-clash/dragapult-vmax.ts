@@ -49,43 +49,43 @@ export class DragapultVMAX extends PokemonCard {
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)){
-        const player = effect.player;
-        const opponent = StateUtils.getOpponent(state, player);
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
   
-        const hasBenched = opponent.bench.some(b => b.cards.length > 0);
-        if (!hasBenched) {
-          return state;
-        }
-  
-        const maxAllowedDamage: DamageMap[] = [];
-        let damageLeft = 0;
-        opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-          const checkHpEffect = new CheckHpEffect(opponent, cardList);
-          store.reduceEffect(state, checkHpEffect);
-          damageLeft += checkHpEffect.hp - cardList.damage;
-          maxAllowedDamage.push({ target, damage: checkHpEffect.hp });
-        });
-  
-        const damage = Math.min(50, damageLeft);
-  
-        return store.prompt(state, new PutDamagePrompt(
-          effect.player.id,
-          GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-          PlayerType.TOP_PLAYER,
-          [ SlotType.BENCH ],
-          damage,
-          maxAllowedDamage,
-          { allowCancel: false }
-        ), targets => {
-          const results = targets || [];
-          for (const result of results) {
-            const target = StateUtils.getTarget(state, player, result.target);
-            const putCountersEffect = new PutCountersEffect(effect, result.damage);
-            putCountersEffect.target = target;
-            store.reduceEffect(state, putCountersEffect);
-          }
-        });
+      const hasBenched = opponent.bench.some(b => b.cards.length > 0);
+      if (!hasBenched) {
+        return state;
       }
+  
+      const maxAllowedDamage: DamageMap[] = [];
+      let damageLeft = 0;
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
+        const checkHpEffect = new CheckHpEffect(opponent, cardList);
+        store.reduceEffect(state, checkHpEffect);
+        damageLeft += checkHpEffect.hp - cardList.damage;
+        maxAllowedDamage.push({ target, damage: checkHpEffect.hp });
+      });
+  
+      const damage = Math.min(50, damageLeft);
+  
+      return store.prompt(state, new PutDamagePrompt(
+        effect.player.id,
+        GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+        PlayerType.TOP_PLAYER,
+        [ SlotType.BENCH ],
+        damage,
+        maxAllowedDamage,
+        { allowCancel: false }
+      ), targets => {
+        const results = targets || [];
+        for (const result of results) {
+          const target = StateUtils.getTarget(state, player, result.target);
+          const putCountersEffect = new PutCountersEffect(effect, result.damage);
+          putCountersEffect.target = target;
+          store.reduceEffect(state, putCountersEffect);
+        }
+      });
+    }
     return state;
   }
 }

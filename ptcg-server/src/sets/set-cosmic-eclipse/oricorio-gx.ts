@@ -22,7 +22,7 @@ export class OricorioGX extends PokemonCard {
     name: 'Dance of Tribute',
     powerType: PowerType.ABILITY,
     useWhenInPlay: true,
-    text: 'Once during your turn (before your attack), if any of your Pokémon were Knocked Out during your opponent\’s last turn, you may draw 3 cards. You can\’t use more than 1 Dance of Tribute Ability each turn.'
+    text: 'Once during your turn (before your attack), if any of your Pokémon were Knocked Out during your opponent\'s last turn, you may draw 3 cards. You can\'t use more than 1 Dance of Tribute Ability each turn.'
   }];
 
   public attacks = [{

@@ -65,7 +65,7 @@ export class TeamRocketsWobbuffet extends PokemonCard {
         if (!targets || targets.length === 0) {
           return;
         }
-        let damageOnRocket = targets[0].damage;
+        const damageOnRocket = targets[0].damage;
 
         targets[0].damage = 0;
         effect.opponent.active.damage += damageOnRocket;

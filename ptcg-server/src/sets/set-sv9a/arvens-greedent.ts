@@ -10,7 +10,7 @@ export class ArvensGreedent extends PokemonCard {
   public regulationMark = 'I';
   public tags = [CardTag.ARVENS];
   public stage: Stage = Stage.STAGE_1;
-  public evolvesFrom = 'Arven\'s Skwovet'
+  public evolvesFrom = 'Arven\'s Skwovet';
   public cardType: CardType = F;
   public hp: number = 120;
   public weakness = [{ type: G }];

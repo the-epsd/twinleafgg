@@ -3,7 +3,7 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, GameLog } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { PutCountersEffect } from '../../game/store/effects/attack-effects';
 import { CheckHpEffect } from '../../game/store/effects/check-effects';
 import { ADD_MARKER, HAS_MARKER, REMOVE_MARKER, SIMULATE_COIN_FLIP, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { CoinFlipEffect } from '../../game/store/effects/play-card-effects';
@@ -59,11 +59,11 @@ export class Weezing extends PokemonCard {
       }
 
       if (damageAmount > 0) {
-        const damageEffect = new PutDamageEffect(effect, damageAmount);
+        const damageEffect = new PutCountersEffect(effect, damageAmount);
         damageEffect.target = selectedTarget;
         store.reduceEffect(state, damageEffect);
       } else if (damageAmount <= 0) {
-        const damageEffect = new PutDamageEffect(effect, 0);
+        const damageEffect = new PutCountersEffect(effect, 0);
         damageEffect.target = selectedTarget;
         store.reduceEffect(state, damageEffect);
       }

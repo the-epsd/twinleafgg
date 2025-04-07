@@ -22,7 +22,7 @@ export class Minun extends PokemonCard {
     name: 'Minus Charge',
     powerType: PowerType.POKEPOWER,
     useWhenInPlay: true,
-    text: 'Once during your turn (before your attack), if any Pokémon were Knocked Out during your opponent\’s last turn, you may draw 2 cards. You can\’t use more than 1 Minus Charge Poké-Power each turn. This power can\’t be used if Minun is affected by a Special Condition.'
+    text: 'Once during your turn (before your attack), if any Pokémon were Knocked Out during your opponent\'s last turn, you may draw 2 cards. You can\'t use more than 1 Minus Charge Poké-Power each turn. This power can\'t be used if Minun is affected by a Special Condition.'
   }];
 
   public attacks = [{

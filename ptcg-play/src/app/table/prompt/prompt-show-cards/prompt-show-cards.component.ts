@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { ShowCardsPrompt, Card, GamePhase } from 'ptcg-server';
+import { ShowCardsPrompt, Card } from 'ptcg-server';
 
 import { CardsBaseService } from '../../../shared/cards/cards-base.service';
 import { GameService } from '../../../api/services/game.service';
@@ -17,10 +17,7 @@ export class PromptShowCardsComponent implements OnInit, OnDestroy {
   @Input() prompt: ShowCardsPrompt;
   @Input() gameState: LocalGameState;
 
-  public isLoading = true;
-
   private isResolved = false;
-  private timeoutId: any;
   private destroyed$ = new Subject<void>();
 
   constructor(
@@ -29,8 +26,10 @@ export class PromptShowCardsComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.isLoading = true;
-    timer(3000).pipe(
+    const duration = this.prompt.options.duration || 3000;
+
+    // Auto-resolve after the specified duration
+    timer(duration).pipe(
       take(1),
       takeUntil(this.destroyed$)
     ).subscribe(() => {
@@ -50,7 +49,7 @@ export class PromptShowCardsComponent implements OnInit, OnDestroy {
   private resolvePrompt() {
     if (!this.isResolved) {
       this.isResolved = true;
-      const gameId = this.gameState.gameId;
+      const gameId = this.gameState.localId;
       const id = this.prompt.id;
       this.gameService.resolvePrompt(gameId, id, null);
     }
@@ -62,9 +61,6 @@ export class PromptShowCardsComponent implements OnInit, OnDestroy {
 
   public cancel() {
     this.resolvePrompt();
-    const gameId = this.gameState.gameId;
-    const id = this.prompt.id;
-    // this.gameService.resolvePrompt(gameId, id, null);
   }
 
   public onCardClick(card: Card) {

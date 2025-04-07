@@ -27,8 +27,8 @@ export class NsDarumaka extends PokemonCard {
 
   public regulationMark = 'I';
   public set: string = 'JTG';
-  public setNumber = '26'
-  public cardImage: string = 'assets/cardback.png';;
+  public setNumber = '26';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'N\'s Darumaka';
   public fullName: string = 'N\'s Darumaka JTG';
 }

@@ -21,9 +21,9 @@ export class HopsSnorlax extends PokemonCard {
   public retreat = [C, C, C, C];
 
   public powers = [{
-    name: 'Big Belly',
+    name: 'Extra Helpings',
     powerType: PowerType.ABILITY,
-    text: 'The attacks of your Hop\'s Pokémon do 30 more damage to your opponent\'s Active Pokémon (before applying Weakness and Resistance). The effect of Big Belly doesn\'t stack.'
+    text: 'Attacks used by your Hop\'s Pokémon do 30 more damage to your opponent\'s Active Pokémon (before applying Weakness and Resistance). The effect of Extra Helpings doesn\'t stack.'
   }];
 
   public attacks = [

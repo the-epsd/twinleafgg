@@ -17,7 +17,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
     const playedTurnEffect = new CheckPokemonPlayedTurnEffect(player, list);
     store.reduceEffect(state, playedTurnEffect);
-    if (playedTurnEffect.pokemonPlayedTurn = state.turn) {
+    if (playedTurnEffect.pokemonPlayedTurn === state.turn) {
       blocked2.push(target);
     }
   });

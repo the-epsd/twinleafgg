@@ -16,8 +16,7 @@ export class Messager {
     const message = new Message();
     message.sender = client.user;
     message.created = time;
-    message.text = text.replace(/[^\x00-\x7F]/g, '');
-
+    message.text = text.replace(/[^\x20-\x7E]/g, '');
     await message.send(receiver);
 
     this.core.clients.forEach(c => {

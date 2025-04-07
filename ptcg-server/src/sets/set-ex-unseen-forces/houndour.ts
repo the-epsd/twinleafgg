@@ -1,4 +1,4 @@
-import { PokemonCard, Stage, CardType, SpecialCondition } from "../../game";
+import { PokemonCard, Stage, CardType, SpecialCondition } from '../../game';
 import { StoreLike, State } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
