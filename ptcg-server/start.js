@@ -27,6 +27,7 @@ cardManager.defineSet(sets.setNeoDiscovery)
 
 //E-Card Era
 cardManager.defineSet(sets.setAquapolis);
+cardManager.defineSet(sets.setSkyridge);
 
 //ex Era shit
 cardManager.defineSet(sets.setEXRubyAndSapphire);
