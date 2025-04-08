@@ -115,6 +115,8 @@
   "GAMES_GAME_RULES": "Game rules",
   "GAMES_LIMIT_10_MIN": "10 min",
   "GAMES_LIMIT_15_MIN": "15 min",
+  "GAMES_LIMIT_20_MIN": "20 min",
+  "GAMES_LIMIT_25_MIN": "25 min",
   "GAMES_LIMIT_30_MIN": "30 min",
   "GAMES_LIMIT_NO_LIMIT": "No limit",
   "GAMES_NEED_DECK": "You must prepare a valid deck before starting a game",

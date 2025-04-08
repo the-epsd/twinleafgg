@@ -44,6 +44,9 @@ export class CreateGamePopupComponent implements OnInit {
     { value: 0, viewValue: 'GAMES_LIMIT_NO_LIMIT' },
     { value: 600, viewValue: 'GAMES_LIMIT_10_MIN' },
     { value: 900, viewValue: 'GAMES_LIMIT_15_MIN' },
+    { value: 1200, viewValue: 'GAMES_LIMIT_20_MIN' },
+    { value: 1500, viewValue: 'GAMES_LIMIT_25_MIN' },
+    { value: 1800, viewValue: 'GAMES_LIMIT_30_MIN' },
   ];
 
   constructor(

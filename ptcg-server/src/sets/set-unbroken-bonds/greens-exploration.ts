@@ -24,23 +24,27 @@ export class GreensExploration extends TrainerCard {
   public fullName: string = 'Green\'s Exploration UNB';
 
   public text: string =
-    'You can play this card only if you have no Pokémon with Abilities in play.' + 
-    '' + 
+    'You can play this card only if you have no Pokémon with Abilities in play.' +
+    '' +
     'Search your deck for up to 2 Trainer cards, reveal them, and put them into your hand. Then, shuffle your deck.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
+      const supporterTurn = player.supporterTurn;
+      if (supporterTurn > 0) {
+        throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
+      }
 
       if (player.deck.cards.length === 0) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
-      
+
       let benchPokemon: PokemonCard[] = [];
       const pokemonWithAbilities: PokemonCard[] = [];
       const playerActive = player.active.getPokemonCard();
-    
+
       const stubPowerEffectForActive = new PowerEffect(player, {
         name: 'test',
         powerType: PowerType.ABILITY,
@@ -50,7 +54,7 @@ export class GreensExploration extends TrainerCard {
       try {
         store.reduceEffect(state, stubPowerEffectForActive);
 
-        if (playerActive && playerActive.powers.length) {
+        if (playerActive && playerActive.powers.some(power => power.powerType === PowerType.ABILITY)) {
           pokemonWithAbilities.push(playerActive);
         }
       } catch {
@@ -68,16 +72,18 @@ export class GreensExploration extends TrainerCard {
           store.reduceEffect(state, stubPowerEffectForBench);
 
           benchPokemon = player.bench.map(b => b.getPokemonCard()).filter(card => card !== undefined) as PokemonCard[];
-          pokemonWithAbilities.push(...benchPokemon.filter(card => card.powers.length));
+          pokemonWithAbilities.push(...benchPokemon.filter(card =>
+            card.powers.some(power => power.powerType === PowerType.ABILITY)
+          ));
         } catch {
           // no abilities on bench
         }
-      }   
+      }
 
       if (pokemonWithAbilities.length > 0) {
-        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);        
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
-  
+
       return store.prompt(state, new ChooseCardsPrompt(
         player,
         GameMessage.CHOOSE_CARD_TO_ATTACH,
@@ -92,15 +98,15 @@ export class GreensExploration extends TrainerCard {
           state = store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
             player.deck.applyOrder(order);
           });
-          
+
           state = store.prompt(state, new ShowCardsPrompt(
             opponent.id,
             GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
             cards), () => state);
         }
-        
+
         player.supporter.moveCardTo(effect.trainerCard, player.discard);
-        
+
         return state;
       });
     }
