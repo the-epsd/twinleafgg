@@ -12,6 +12,7 @@ import { CounterGain } from './counter-gain';
 import { CustomCatcher } from './custom-catcher';
 import { Cutiefly } from './cutiefly';
 import { DittoPrismStar } from './ditto-prism-star';
+import { Donphan } from './donphan';
 import { Electropower } from './electropower';
 import { Faba } from './faba';
 import { Girafarig } from './girafarig';
@@ -70,6 +71,7 @@ export const setLostThunder: Card[] = [
   new CustomCatcher(),
   new Cutiefly(),
   new DittoPrismStar(),
+  new Donphan(),
   new Electropower(),
   new Faba(),
   new Girafarig(),
