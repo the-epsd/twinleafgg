@@ -62,11 +62,31 @@ export class AppComponent implements OnInit {
       next: async connected => {
         if (!connected && this.isLoggedIn) {
           console.log('[Client Disconnect] Socket connection lost while logged in');
-          this.socketService.disable();
-          this.dialog.closeAll();
-          await this.alertService.alert(this.translate.instant('ERROR_DISCONNECTED_FROM_SERVER'));
-          this.sessionService.clear();
-          this.router.navigate(['/login']);
+          
+          // Wait for reconnection attempts to complete
+          await new Promise<void>((resolve) => {
+            const checkConnection = () => {
+              if (this.socketService.isConnected) {
+                console.log('[Client Reconnect] Successfully reconnected');
+                resolve();
+              } else if (this.socketService.socket.io.reconnectionAttempts() >= 10) {
+                console.log('[Client Disconnect] Reconnection attempts exhausted');
+                resolve();
+              } else {
+                setTimeout(checkConnection, 1000);
+              }
+            };
+            checkConnection();
+          });
+
+          // If still not connected after all attempts, proceed with disconnect
+          if (!this.socketService.isConnected) {
+            this.socketService.disable();
+            this.dialog.closeAll();
+            await this.alertService.alert(this.translate.instant('ERROR_DISCONNECTED_FROM_SERVER'));
+            this.sessionService.clear();
+            this.router.navigate(['/login']);
+          }
         } else if (connected) {
           console.log('[Client Connect] Socket connection established');
         }
