@@ -2,7 +2,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { SuperType, TrainerType } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, GameError, GameMessage, SelectPrompt, AttachEnergyPrompt, PlayerType, SlotType, ChoosePokemonPrompt } from '../../game';
-import { TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { TrainerEffect, TrainerTargetEffect } from '../../game/store/effects/play-card-effects';
 import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class PowHandExtension extends TrainerCard {
@@ -58,16 +58,23 @@ export class PowHandExtension extends TrainerCard {
             return store.prompt(state, new ChoosePokemonPrompt(
               player.id,
               GameMessage.CHOOSE_POKEMON_TO_SWITCH,
-              PlayerType.BOTTOM_PLAYER,
+              PlayerType.TOP_PLAYER,
               [SlotType.BENCH],
               { allowCancel: false }
-            ), targets => {
-              if (targets && targets.length > 0) {
-                opponent.active.clearEffects();
-                opponent.switchPokemon(targets[0]);
-                return state;
+            ), result => {
+              const cardList = result[0];
+          
+              if (cardList) {
+                const targetCard = new TrainerTargetEffect(player, effect.trainerCard, cardList);
+                targetCard.target = cardList;
+                store.reduceEffect(state, targetCard);
+                if (targetCard.target) {
+                  opponent.switchPokemon(targetCard.target);
+                }
               }
-              MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [effect.trainerCard] });
+          
+              player.supporter.moveCardTo(effect.trainerCard, player.discard);
+              return state;
             });
           }
         }
