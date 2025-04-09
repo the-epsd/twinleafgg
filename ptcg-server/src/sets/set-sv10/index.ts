@@ -30,27 +30,36 @@ import { TeamRocketsAmpharos } from './team-rockets-ampharos';
 import { TeamRocketsArcher } from './team-rockets-archer';
 import { TeamRocketsAriana } from './team-rockets-ariana';
 import {TeamRocketsArticuno} from './team-rockets-articuno';
+import {TeamRocketsCrobatex} from './team-rockets-crobat-ex';
 import {TeamRocketsDrowzee} from './team-rockets-drowzee';
 import { TeamRocketsFlaaffy } from './team-rockets-flaaffy';
 import { TeamRocketsGiovanni } from './team-rockets-giovanni';
+import {TeamRocketsGolbat} from './team-rockets-golbat';
 import { TeamRocketsGreatBall } from './team-rockets-great-ball';
 import {TeamRocketsHypno} from './team-rockets-hypno';
+import {TeamRocketsKoffing} from './team-rockets-koffing';
 import {TeamRocketsLarvitar} from './team-rockets-larvitar';
 import { TeamRocketsMareep } from './team-rockets-mareep';
 import { TeamRocketsMeowth } from './team-rockets-meowth';
 import { TeamRocketsMewtwoex } from './team-rockets-mewtwo-ex';
 import {TeamRocketsMoltresex} from './team-rockets-moltres-ex';
 import { TeamRocketsPersianex } from './team-rockets-persian-ex';
+import {TeamRocketsPetrel} from './team-rockets-petrel';
 import { TeamRocketsPorygon } from './team-rockets-porygon';
 import { TeamRocketsPorygonZ } from './team-rockets-porygon-z';
 import { TeamRocketsPorygon2 } from './team-rockets-porygon2';
+import {TeamRocketsProton} from './team-rockets-proton';
 import {TeamRocketsPupitar} from './team-rockets-pupitar';
 import { TeamRocketsReceiver } from './team-rockets-receiver';
+import {TeamRocketsSneasel} from './team-rockets-sneasel';
 import { TeamRocketsSpidops } from './team-rockets-spidops';
 import { TeamRocketsTarountula } from './team-rockets-tarountula';
 import {TeamRocketsTyranitar} from './team-rockets-tyranitar';
+import {TeamRocketsVentureBomb} from './team-rockets-venture-bomb';
+import {TeamRocketsWeezing} from './team-rockets-weezing';
 import { TeamRocketsWobbuffet } from './team-rockets-wobbuffet';
 import {TeamRocketsZapdos} from './team-rockets-zapdos';
+import {TeamRocketsZubat} from './team-rockets-zubat';
 import { Torchic } from './torchic';
 
 export const setSV10: Card[] = [
@@ -112,4 +121,13 @@ export const setSV10: Card[] = [
   new TeamRocketsMoltresex(),
   new TeamRocketsArticuno(),
   new TeamRocketsZapdos(),
+  new TeamRocketsZubat(),
+  new TeamRocketsGolbat(),
+  new TeamRocketsCrobatex(),
+  new TeamRocketsVentureBomb(),
+  new TeamRocketsPetrel(),
+  new TeamRocketsProton(),
+  new TeamRocketsSneasel(),
+  new TeamRocketsKoffing(),
+  new TeamRocketsWeezing(),
 ];
