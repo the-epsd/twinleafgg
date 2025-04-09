@@ -3,7 +3,6 @@ import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, PlayerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
-import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 
 export class TeamRocketsHypno extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -47,14 +46,17 @@ export class TeamRocketsHypno extends PokemonCard {
         if (opponent.active === card){
           return;
         }
-        COIN_FLIP_PROMPT(store, state, opponent, result => { if (!result){ tails++; } });
+        
+        COIN_FLIP_PROMPT(store, state, effect.player, result => { 
+          if (!result){
+            tails++; 
+          } 
+        });
       });
 
-      const damageEffect = new PutDamageEffect(effect, (80 * tails));
-      damageEffect.target = opponent.active;
-      effect.ignoreWeakness = true;
       effect.ignoreResistance = true;
-      store.reduceEffect(state, damageEffect);
+      effect.ignoreWeakness = true;
+      effect.damage = (80 * tails);
     }
 
     return state;

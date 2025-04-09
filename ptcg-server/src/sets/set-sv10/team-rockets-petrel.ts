@@ -1,15 +1,15 @@
 import { Card } from '../../game/store/card/card';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { TrainerType, SuperType } from '../../game/store/card/card-types';
+import { TrainerType, SuperType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
-import { StateUtils } from '../../game/store/state-utils';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
 import {SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK} from '../../game/store/prefabs/prefabs';
+import {StateUtils} from '../../game';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -41,6 +41,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
 export class TeamRocketsPetrel extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
+  public tags = [CardTag.TEAM_ROCKET];
   public set: string = 'SV10';
   public name: string = 'Team Rocket\'s Petrel';
   public fullName: string = 'Team Rocket\'s Petrel SV10';

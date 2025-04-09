@@ -1,12 +1,13 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { CardType, Stage, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, GameMessage, ChooseCardsPrompt, PowerType, GameLog } from '../../game';
+import { CardTag, CardType, Stage, SuperType } from '../../game/store/card/card-types';
+import { StoreLike, State, GameMessage, ChooseCardsPrompt, PowerType, GameLog, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { CONFIRMATION_PROMPT, IS_ABILITY_BLOCKED, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
-import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { AfterDamageEffect } from '../../game/store/effects/attack-effects';
 
 export class TeamRocketsKoffing extends PokemonCard {
   public stage: Stage = Stage.BASIC;
+  public tags = [CardTag.TEAM_ROCKET];
   public cardType: CardType = D;
   public hp: number = 70;
   public weakness = [{ type: F }];
@@ -35,8 +36,8 @@ export class TeamRocketsKoffing extends PokemonCard {
   public fullName: string = 'Team Rocket\'s Koffing SV10';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {
-      const player = effect.player;
+    if (effect instanceof AfterDamageEffect && effect.target.getPokemonCard() === this) {
+      const player = StateUtils.findOwner(state, effect.target);
 
       if (IS_ABILITY_BLOCKED(store, state, player, this)){ return state; }
 
@@ -54,7 +55,7 @@ export class TeamRocketsKoffing extends PokemonCard {
 
           const blocked: number[] = [];
           player.deck.cards.forEach((card, index) => {
-            if (card instanceof PokemonCard && card.name.includes('Koffing')) {
+            if (!card.name.includes('Koffing')) {
               blocked.push(index);
             }
           });

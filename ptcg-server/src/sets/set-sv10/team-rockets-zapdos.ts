@@ -31,14 +31,14 @@ export class TeamRocketsZapdos extends PokemonCard {
 
   public regulationMark = 'I';
   public set: string = 'SV10';
-  public setNumber: string = '22';
+  public setNumber: string = '33';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Team Rocket\'s Zapdos';
   public fullName: string = 'Team Rocket\'s Zapdos SV10';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Jamming Wave
-    if (WAS_ATTACK_USED(effect, 1, this)){
+    if (WAS_ATTACK_USED(effect, 0, this)){
       const player = effect.player;
       const opponent = effect.opponent;
 

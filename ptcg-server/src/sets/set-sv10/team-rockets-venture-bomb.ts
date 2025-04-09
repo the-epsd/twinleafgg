@@ -8,40 +8,6 @@ import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { COIN_FLIP_PROMPT } from '../../game/store/prefabs/prefabs';
 import { ChoosePokemonPrompt, PlayerType, SlotType } from '../../game';
 
-function* playCard(next: Function, store: StoreLike, state: State, self: TeamRocketsVentureBomb, effect: TrainerEffect): IterableIterator<State> {
-  const player = effect.player;
-
-  // We will discard this card after prompt confirmation
-  effect.preventDefault = true;
-
-  let flipResult = false;
-  COIN_FLIP_PROMPT(store, state, player, result => {
-    flipResult = result;
-    next();
-  });
-
-  if (flipResult){
-    store.prompt(state, new ChoosePokemonPrompt(
-      player.id,
-      GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-      PlayerType.TOP_PLAYER,
-      [ SlotType.ACTIVE, SlotType.BENCH ],
-      { min: 1, max: 1, allowCancel: false },
-    ), selected => {
-      const targets = selected || [];
-      targets.forEach(target => {
-        target.damage += 20;
-      });
-    });
-  }
-
-  if (!flipResult){
-    player.active.damage += 20;
-  }
-
-  player.supporter.moveCardTo(effect.trainerCard, player.discard);
-}
-
 export class TeamRocketsVentureBomb extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
   public tags = [CardTag.TEAM_ROCKET];
@@ -56,8 +22,35 @@ export class TeamRocketsVentureBomb extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-      const generator = playCard(() => generator.next(), store, state, this, effect);
-      return generator.next().value;
+      const player = effect.player;
+
+      COIN_FLIP_PROMPT(store, state, player, result => {
+          
+        if (result){
+          return store.prompt(state, new ChoosePokemonPrompt(
+            player.id,
+            GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+            PlayerType.TOP_PLAYER,
+            [ SlotType.ACTIVE, SlotType.BENCH ],
+            { min: 1, max: 1, allowCancel: false },
+          ), selected => {
+            const targets = selected || [];
+            targets.forEach(target => {
+              target.damage += 20;
+            });
+          });
+        }
+
+        if (!result){
+          player.active.damage += 20;
+          return state;
+        }
+
+      });
+
+      player.supporter.moveTo(player.discard);
+
+      return state;
     }
 
     return state;

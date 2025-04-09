@@ -6,11 +6,12 @@ import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { CardTag, Stage, SuperType, TrainerType } from '../../game/store/card/card-types';
-import { Card, ChooseCardsPrompt } from '../../game';
+import { Card, ChooseCardsPrompt, StateUtils } from '../../game';
 import { SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 
 export class TeamRocketsProton extends TrainerCard {
   public regulationMark = 'I';
+  public tags = [CardTag.TEAM_ROCKET];
   public trainerType: TrainerType = TrainerType.SUPPORTER;
   public set: string = 'SV10';
   public cardImage: string = 'assets/cardback.png';
@@ -27,6 +28,7 @@ Search your deck for up to 3 Basic Team Rocket\'s Pokémon, reveal them, and put
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
 
       effect.preventDefault = true;
       player.hand.moveCardTo(effect.trainerCard, player.supporter);
@@ -53,7 +55,7 @@ Search your deck for up to 3 Basic Team Rocket\'s Pokémon, reveal them, and put
         cards = selectedCards || [];
 
         player.deck.moveCardsTo(cards, player.hand);
-        SHOW_CARDS_TO_PLAYER(store, state, player, cards);
+        SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
         player.supporter.moveCardTo(this, player.discard);        
         SHUFFLE_DECK(store, state, player);
       });

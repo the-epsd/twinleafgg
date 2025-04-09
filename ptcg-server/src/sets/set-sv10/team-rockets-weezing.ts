@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { CardType, Stage } from '../../game/store/card/card-types';
+import { CardTag, CardType, Stage } from '../../game/store/card/card-types';
 import { StoreLike, State, PlayerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
@@ -7,6 +7,7 @@ import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 export class TeamRocketsWeezing extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Team Rocket\'s Koffing';
+  public tags = [CardTag.TEAM_ROCKET];
   public cardType: CardType = D;
   public hp: number = 130;
   public weakness = [{ type: F }];
