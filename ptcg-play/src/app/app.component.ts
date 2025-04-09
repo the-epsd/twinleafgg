@@ -69,7 +69,7 @@ export class AppComponent implements OnInit {
               if (this.socketService.isConnected) {
                 console.log('[Client Reconnect] Successfully reconnected');
                 resolve();
-              } else if (this.socketService.socket.io.reconnectionAttempts() >= 10) {
+              } else if (this.socketService.socket.io.reconnectionAttempts() >= 3) {
                 console.log('[Client Disconnect] Reconnection attempts exhausted');
                 resolve();
               } else {
