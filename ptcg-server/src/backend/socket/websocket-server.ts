@@ -101,12 +101,18 @@ export class WebSocketServer {
         }
       });
 
-      socket.on('disconnect', (reason) => {
+      socket.on('disconnect', async (reason) => {
         try {
           console.log(`[Socket] Disconnect: ${user.name} [${connectionId}] - ${reason}`);
-          user.updateLastSeen();
-          this.clients.delete(connectionId);
-          socketClient.dispose();
+
+          await new Promise(resolve => setTimeout(resolve, 10000));
+                    
+          // Check if we're still disconnected after the delay
+          if (!socket.connected) {
+            user.updateLastSeen();
+            this.clients.delete(connectionId);
+            socketClient.dispose();
+          }
         }
         catch (error: any) {
           console.error(`[Socket] Error during disconnect: ${user.name} [${connectionId}] - ${error.message}`);

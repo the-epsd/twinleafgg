@@ -1,9 +1,9 @@
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { SuperType, TrainerType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, GameError, GameMessage, SelectPrompt, AttachEnergyPrompt, PlayerType, SlotType, ChoosePokemonPrompt } from '../../game';
-import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { StoreLike, State, StateUtils, GameError, GameMessage, MoveEnergyPrompt, PlayerType, SlotType, ChoosePokemonPrompt } from '../../game';
+import { TrainerEffect, TrainerTargetEffect } from '../../game/store/effects/play-card-effects';
+import { SelectOptionPrompt } from '../../game/store/prompts/select-option-prompt';
 
 export class PowHandExtension extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
@@ -12,7 +12,8 @@ export class PowHandExtension extends TrainerCard {
   public fullName: string = 'Pow! Hand Extension TRR';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '85';
-  public text = 'You may use this card only if you have more Prize cards left than your opponent. Move 1 Energy card attached to the Defending Pokémon to another of your opponent\'s Pokémon. Or, switch 1 of your opponent\'s Benched Pokémon with 1 of the Defending Pokémon. Your opponent chooses the Defending Pokémon to switch.';
+  public text = `You may use this card only if you have more Prize cards left than your opponent.
+Move 1 Energy card attached to the Defending Pokémon to another of your opponent's Pokémon. Or, switch 1 of your opponent's Benched Pokémon with 1 of the Defending Pokémon. Your opponent chooses the Defending Pokémon to switch.`
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -24,56 +25,72 @@ export class PowHandExtension extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
+      const hasBench = opponent.bench.some(b => b.cards.length > 0);
+      if (!hasBench) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      }
+
       const options: { message: GameMessage, action: () => void }[] = [
         {
           message: GameMessage.MOVE_ENERGY_CARDS,
           action: () => {
-            const hasBench = opponent.bench.some(b => b.cards.length > 0);
 
-            if (hasBench === false) {
-              return state;
-            }
-
-            return store.prompt(state, new AttachEnergyPrompt(
+            return store.prompt(state, new MoveEnergyPrompt(
               player.id,
-              GameMessage.ATTACH_ENERGY_TO_BENCH,
-              opponent.active,
+              GameMessage.MOVE_ENERGY_CARDS,
               PlayerType.TOP_PLAYER,
-              [SlotType.BENCH],
+              [SlotType.ACTIVE],
               { superType: SuperType.ENERGY },
-              { allowCancel: false, min: 0, max: 1 }
+              { min: 0, max: 1, allowCancel: false }
             ), transfers => {
-              transfers = transfers || [];
-              for (const transfer of transfers) {
-                const target = StateUtils.getTarget(state, opponent, transfer.to);
-                opponent.active.moveCardTo(transfer.card, target);
+              if (transfers === null) {
+                return state;
               }
-              MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [effect.trainerCard] });
+
+              for (const transfer of transfers) {
+                const source = StateUtils.getTarget(state, opponent, transfer.from);
+                const target = StateUtils.getTarget(state, opponent, transfer.to);
+                source.moveCardTo(transfer.card, target);
+              }
+
+              player.supporter.moveCardTo(effect.trainerCard, player.discard);
+              return state;
             });
           }
         },
         {
           message: GameMessage.CHOOSE_POKEMON_TO_SWITCH,
           action: () => {
+            player.hand.moveCardTo(effect.trainerCard, player.supporter);
+            // We will discard this card after prompt confirmation
+            effect.preventDefault = true;
+
             return store.prompt(state, new ChoosePokemonPrompt(
               player.id,
               GameMessage.CHOOSE_POKEMON_TO_SWITCH,
-              PlayerType.BOTTOM_PLAYER,
+              PlayerType.TOP_PLAYER,
               [SlotType.BENCH],
               { allowCancel: false }
-            ), targets => {
-              if (targets && targets.length > 0) {
-                opponent.active.clearEffects();
-                opponent.switchPokemon(targets[0]);
-                return state;
+            ), result => {
+              const cardList = result[0];
+
+              if (cardList) {
+                const targetCard = new TrainerTargetEffect(player, effect.trainerCard, cardList);
+                targetCard.target = cardList;
+                store.reduceEffect(state, targetCard);
+                if (targetCard.target) {
+                  opponent.switchPokemon(targetCard.target);
+                }
               }
-              MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [effect.trainerCard] });
+
+              player.supporter.moveCardTo(effect.trainerCard, player.discard);
+              return state;
             });
           }
         }
       ];
 
-      return store.prompt(state, new SelectPrompt(
+      return store.prompt(state, new SelectOptionPrompt(
         player.id,
         GameMessage.CHOOSE_OPTION,
         options.map(opt => opt.message),
@@ -81,7 +98,8 @@ export class PowHandExtension extends TrainerCard {
       ), choice => {
         const option = options[choice];
         option.action();
-        MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [effect.trainerCard] });
+        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+        return state;
       });
     }
 

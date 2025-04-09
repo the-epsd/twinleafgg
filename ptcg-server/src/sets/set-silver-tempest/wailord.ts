@@ -84,7 +84,7 @@ export class Wailord extends PokemonCard {
       });
 
       if (specialEnergyCount > 0) {
-        effect.damage = 120 + 120;
+        effect.damage += 120;
       }
     }
 

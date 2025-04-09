@@ -1,4 +1,4 @@
-import { PokemonCard, CardType, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, State, StoreLike, GameError } from '../../game';
+import { PokemonCard, CardType, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, State, StoreLike, GameError, CardTag, Stage } from '../../game';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, KnockOutEffect } from '../../game/store/effects/game-effects';
@@ -7,12 +7,11 @@ import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 
 export class MedichamV extends PokemonCard {
 
+  public stage: Stage = Stage.BASIC;
+  public tags = [CardTag.POKEMON_V];
   public cardType = CardType.FIGHTING;
-
   public hp = 210;
-
   public weakness = [{ type: CardType.PSYCHIC }];
-
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
@@ -31,13 +30,9 @@ export class MedichamV extends PokemonCard {
   ];
 
   public set: string = 'EVS';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '83';
-
   public name: string = 'Medicham V';
-
   public fullName: string = 'Medicham V EVS';
 
   public readonly YOGA_LOOP_MARKER = 'YOGA_LOOP_MARKER';

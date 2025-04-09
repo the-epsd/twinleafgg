@@ -37,7 +37,7 @@ import { Pidgey } from './pidgey';
 import { PokemonLeagueHeadquarters } from './pokemon-league-headquarters';
 import { Poppy } from './poppy';
 import { Pupitar } from './pupitar';
-import { Revavroomex } from './revavroom-ex';
+// import { Revavroomex } from './revavroom-ex';
 import { Rowlet } from './rowlet';
 import { Ryme } from './ryme';
 import { Scizor } from './scizor';
@@ -116,7 +116,7 @@ export const setObsidianFlames: Card[] = [
   new Glimmoraex(),
   new Geeta(),
 
-  new Revavroomex(),
+  // new Revavroomex(),
 
   //Alt-s
 
