@@ -17,7 +17,7 @@ export class TeamRocketsMoltresex extends PokemonCard {
   public attacks = [
     {
       name: 'Flame Screen',
-      cost: [ F, C, C ],
+      cost: [ R, C, C ],
       damage: 110,
       text: 'During your opponent\'s next turn, this Pokémon takes 50 less damage from attacks (after applying Weakness and Resistance).'
     },

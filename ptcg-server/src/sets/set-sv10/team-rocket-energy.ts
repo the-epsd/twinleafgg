@@ -34,7 +34,7 @@ export class TeamRocketEnergy extends EnergyCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     // Check if the card is attached to a Team Rocket's Pokémon
-    if (effect instanceof AttachEnergyEffect) {
+    if (effect instanceof AttachEnergyEffect && effect.energyCard === this) {
       state.players.forEach(player => {
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
           if (!cardList.cards.includes(this)) {
