@@ -19,7 +19,7 @@ export class Slugma extends PokemonCard {
     name: 'Active Volcano',
     useWhenInPlay: true,
     powerType: PowerType.POKEPOWER,
-    text: 'Once during your turn (before your attack), you may discard the top card of your deck. If that card is a {R} Energy card, attach it to Slugma. This power can\'t be used if Slugma is affected by a Special Condition.'
+    text: 'Once during your turn (before your attack), you may discard the top card of your deck. If that card is a [R] Energy card, attach it to Slugma. This power can\'t be used if Slugma is affected by a Special Condition.'
   }];
 
   public attacks = [{
