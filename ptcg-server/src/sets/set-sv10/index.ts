@@ -16,6 +16,7 @@ import { MarniesScrafty } from './marnies-scrafty';
 import { MarniesScraggy } from './marnies-scraggy';
 import { EnergyRecyclerSV10, MarniesMorpekoIR, StevensBeldumIR } from './other-prints';
 import { Primeape } from './primeape';
+import {Regirockex} from './regirock-ex';
 import { SpikemuthGym } from './spikemuth-gym';
 import { StevensBaltoy } from './stevens-baltoy';
 import { StevensBeldum } from './stevens-beldum';
@@ -28,20 +29,28 @@ import { TeamRocketEnergy } from './team-rocket-energy';
 import { TeamRocketsAmpharos } from './team-rockets-ampharos';
 import { TeamRocketsArcher } from './team-rockets-archer';
 import { TeamRocketsAriana } from './team-rockets-ariana';
+import {TeamRocketsArticuno} from './team-rockets-articuno';
+import {TeamRocketsDrowzee} from './team-rockets-drowzee';
 import { TeamRocketsFlaaffy } from './team-rockets-flaaffy';
 import { TeamRocketsGiovanni } from './team-rockets-giovanni';
 import { TeamRocketsGreatBall } from './team-rockets-great-ball';
+import {TeamRocketsHypno} from './team-rockets-hypno';
+import {TeamRocketsLarvitar} from './team-rockets-larvitar';
 import { TeamRocketsMareep } from './team-rockets-mareep';
 import { TeamRocketsMeowth } from './team-rockets-meowth';
 import { TeamRocketsMewtwoex } from './team-rockets-mewtwo-ex';
+import {TeamRocketsMoltresex} from './team-rockets-moltres-ex';
 import { TeamRocketsPersianex } from './team-rockets-persian-ex';
 import { TeamRocketsPorygon } from './team-rockets-porygon';
 import { TeamRocketsPorygonZ } from './team-rockets-porygon-z';
 import { TeamRocketsPorygon2 } from './team-rockets-porygon2';
+import {TeamRocketsPupitar} from './team-rockets-pupitar';
 import { TeamRocketsReceiver } from './team-rockets-receiver';
 import { TeamRocketsSpidops } from './team-rockets-spidops';
 import { TeamRocketsTarountula } from './team-rockets-tarountula';
+import {TeamRocketsTyranitar} from './team-rockets-tyranitar';
 import { TeamRocketsWobbuffet } from './team-rockets-wobbuffet';
+import {TeamRocketsZapdos} from './team-rockets-zapdos';
 import { Torchic } from './torchic';
 
 export const setSV10: Card[] = [
@@ -54,6 +63,7 @@ export const setSV10: Card[] = [
   new Primeape(),
   new Annihilape(),
   new EnergyRecyclerSV10(),
+  new Regirockex(),
 
   new MarniesMorpekoIR(),
   new MarniesImpidimp(),
@@ -94,4 +104,12 @@ export const setSV10: Card[] = [
   new TeamRocketsAmpharos(),
   new TeamRocketsWobbuffet(),
   new TeamRocketsGreatBall(),
+  new TeamRocketsDrowzee(),
+  new TeamRocketsHypno(),
+  new TeamRocketsLarvitar(),
+  new TeamRocketsPupitar(),
+  new TeamRocketsTyranitar(),
+  new TeamRocketsMoltresex(),
+  new TeamRocketsArticuno(),
+  new TeamRocketsZapdos(),
 ];
