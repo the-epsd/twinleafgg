@@ -1,20 +1,19 @@
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Player, GamePhase, Card, Format, GameWinner } from 'ptcg-server';
-import { Observable, from, EMPTY } from 'rxjs';
-import { TranslateService } from '@ngx-translate/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { withLatestFrom, switchMap, finalize, tap, map } from 'rxjs/operators';
+import { TranslateService } from '@ngx-translate/core';
+import { Format, GamePhase, Player } from 'ptcg-server';
+import { EMPTY, Observable, from } from 'rxjs';
+import { finalize, switchMap, withLatestFrom } from 'rxjs/operators';
 
 import { ApiError } from '../api/api.error';
-import { AlertService } from '../shared/alert/alert.service';
 import { DeckService } from '../api/services/deck.service';
 import { GameService } from '../api/services/game.service';
+import { AlertService } from '../shared/alert/alert.service';
+import { CardsBaseService } from '../shared/cards/cards-base.service';
+import { BoardInteractionService } from '../shared/services/board-interaction.service';
 import { LocalGameState } from '../shared/session/session.interface';
 import { SessionService } from '../shared/session/session.service';
-import { CardsBaseService } from '../shared/cards/cards-base.service';
-import { FormatValidator } from '../util/formats-validator';
-import { BoardInteractionService } from '../shared/services/board-interaction.service';
 import { GameOverPrompt } from './prompt/prompt-game-over/game-over.prompt';
 
 @UntilDestroy()
