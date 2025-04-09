@@ -54,7 +54,8 @@ export class CardComponent {
       || this.data.tags.includes(CardTag.POKEMON_EX)
       || this.data.tags.includes(CardTag.POKEMON_GX)
       || this.data.tags.includes(CardTag.POKEMON_VMAX)
-      || this.data.tags.includes(CardTag.POKEMON_VSTAR)) {
+      || this.data.tags.includes(CardTag.POKEMON_VSTAR)
+      || this.data.tags.includes(CardTag.POKEMON_VUNION)) {
       return 'fullart-holo';
     }
 
