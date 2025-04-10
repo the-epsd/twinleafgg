@@ -24,6 +24,7 @@ import { RemoveDamagePrompt } from '../store/prompts/remove-damage-prompt';
 import { DiscardEnergyPrompt } from '../store/prompts/discard-energy-prompt';
 import { ConfirmCardsPrompt } from '../store/prompts/confirm-cards-prompt';
 import { SelectOptionPrompt } from '../store/prompts/select-option-prompt';
+import { ChooseStartingPokemonPrompt } from '../store/prompts/choose-starting-pokemon-prompt';
 
 export class PromptSerializer implements Serializer<Prompt<any>> {
 
@@ -53,6 +54,7 @@ export class PromptSerializer implements Serializer<Prompt<any>> {
     { classValue: DiscardEnergyPrompt, type: 'DiscardEnergyPrompt' },
     { classValue: ConfirmCardsPrompt, type: 'ConfirmCardsPrompt' },
     { classValue: SelectOptionPrompt, type: 'SelectOptionPrompt' },
+    { classValue: ChooseStartingPokemonPrompt, type: 'ChooseStartingPokemonPrompt' },
   ];
 
   constructor() {

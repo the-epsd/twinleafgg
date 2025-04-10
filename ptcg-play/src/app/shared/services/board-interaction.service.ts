@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { CardTarget, ChoosePokemonPrompt, PlayerType, SlotType } from 'ptcg-server';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { CardTarget, ChoosePokemonPrompt, PlayerType, SlotType, Card } from 'ptcg-server';
 
 @Injectable({
   providedIn: 'root'
@@ -41,6 +41,10 @@ export class BoardInteractionService {
 
   // Track if we're in replay mode
   private isReplayModeActive = false;
+
+  private cardPlacedSubject = new Subject<Card>();
+  public onCardPlaced = this.cardPlacedSubject.asObservable();
+  private isStartingPokemonPlacementEnabled = false;
 
   constructor() { }
 
@@ -196,5 +200,23 @@ export class BoardInteractionService {
     const maxSelections = this.maxSelectionsSubject.value;
 
     return currentTargets >= minSelections && currentTargets <= maxSelections;
+  }
+
+  public enableStartingPokemonPlacement(): void {
+    this.isStartingPokemonPlacementEnabled = true;
+  }
+
+  public disableStartingPokemonPlacement(): void {
+    this.isStartingPokemonPlacementEnabled = false;
+  }
+
+  public isStartingPokemonPlacement(): boolean {
+    return this.isStartingPokemonPlacementEnabled;
+  }
+
+  public placeCard(card: Card): void {
+    if (this.isStartingPokemonPlacementEnabled) {
+      this.cardPlacedSubject.next(card);
+    }
   }
 } 

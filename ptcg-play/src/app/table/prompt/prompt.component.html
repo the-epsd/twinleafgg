@@ -11,11 +11,16 @@
 
 <div class="ptcg-prompt">
 
-  <div class="ptcg-prompt-overlay" [ngClass]="{active: isPromptVisible}">
+  <div class="ptcg-prompt-overlay" [ngClass]="{
+    active: isPromptVisible,
+    'fullscreen-overlay': prompt?.type === 'Choose cards' && isPromptVisible
+  }">
   </div>
 
-  <div class="ptcg-prompt-container-wrapper" [hidden]="!isPromptVisible">
-    <div class="ptcg-prompt-container" *ngIf="prompt" [@state]="animationState" (@state.done)="onAnimationEnd($event)">
+  <div class="ptcg-prompt-container-wrapper" [ngClass]="{'fullscreen-prompt': prompt?.type === 'Choose cards'}"
+    [hidden]="!isPromptVisible">
+    <div class="ptcg-prompt-container" [ngClass]="{'choose-cards-container': prompt?.type === 'Choose cards'}"
+      *ngIf="prompt" [@state]="animationState" (@state.done)="onAnimationEnd($event)">
       <div [ngSwitch]="prompt.type">
         <ptcg-prompt-confirm *ngSwitchCase="'Confirm'" [gameState]="gameState" [prompt]="prompt"></ptcg-prompt-confirm>
         <ptcg-prompt-alert *ngSwitchCase="'Alert'" [gameState]="gameState" [prompt]="prompt"></ptcg-prompt-alert>
@@ -23,6 +28,8 @@
           [prompt]="prompt"></ptcg-prompt-attach-energy>
         <ptcg-prompt-choose-attack *ngSwitchCase="'Choose attack'" [gameState]="gameState"
           [prompt]="prompt"></ptcg-prompt-choose-attack>
+        <ptcg-choose-starting-pokemon-prompt *ngSwitchCase="'Choose starting pokemon'" [gameState]="gameState"
+          [prompt]="prompt"></ptcg-choose-starting-pokemon-prompt>
         <ptcg-prompt-choose-cards *ngSwitchCase="'Choose cards'" [gameState]="gameState"
           [prompt]="prompt"></ptcg-prompt-choose-cards>
         <ptcg-prompt-choose-energy *ngSwitchCase="'Choose energy'" [gameState]="gameState"

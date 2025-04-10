@@ -27,6 +27,7 @@ export interface ChooseCardsOptions {
   maxSpecialEnergies: number | undefined;
   maxItems: number | undefined;
   allowDifferentSuperTypes: boolean;
+  promptType?: 'default' | 'starting-pokemon';
 }
 
 export type FilterType = Partial<PokemonCard | TrainerCard | EnergyCard>;

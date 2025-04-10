@@ -1,30 +1,36 @@
-<div class="ptcg-prompt-title">
-  <h2 translate>PROMPT_CHOOSE_CARDS_TITLE</h2>
-  <div class="ptcg-u-spacer"></div>
-  <button mat-button mat-icon-button (click)="minimize()">
-    <mat-icon>keyboard_arrow_down</mat-icon>
-  </button>
+<!-- Only show the prompt in non-interactive mode or replay -->
+<div *ngIf="!useInteractiveBoard || gameState?.replay">
+  <div class="ptcg-prompt-title">
+    <h2 translate>PROMPT_CHOOSE_STARTING_POKEMON_TITLE</h2>
+  </div>
+
+  <div class="ptcg-prompt-content">
+    <p [translate]="'GAME_MESSAGES.' + message"></p>
+  </div>
+
+  <div class="ptcg-prompt-actions">
+    <button mat-raised-button *ngIf="allowedCancel && !gameState.replay" [disabled]="gameState.deleted"
+      (click)="cancel()">
+      {{ 'BUTTON_CANCEL' | translate }}
+    </button>
+  </div>
 </div>
 
-<div class="ptcg-prompt-content">
-  <p [translate]="'GAME_MESSAGES.' + message"></p>
-
-  <ptcg-choose-cards-panes [cards]="cards.cards" [cardbackMap]="revealed === false ? cardbackMap : {}" [filter]="filter"
-    [blocked]="blocked" (changeCards)="onChange($event)">
-  </ptcg-choose-cards-panes>
+<!-- Starting Pokemon Selection Overlay - only show in interactive mode and not in replay -->
+<div class="starting-pokemon-selection" *ngIf="useInteractiveBoard && !gameState?.replay">
+  <div class="message-bar">
+    <p [translate]="'GAME_MESSAGES.' + message"></p>
+  </div>
+  <div class="floating-hand">
+    <div class="cards-container">
+      <ptcg-card *ngFor="let card of cards.cards; let i = index" [card]="card"
+        [ngClass]="{ 'unavailable': blocked.includes(i) }" [draggable]="!blocked.includes(i)"
+        (click)="$event.stopPropagation(); $event.preventDefault()" (dragstart)="onDragStart($event, card, i)"
+        (dragend)="onDragEnd()">
+      </ptcg-card>
+    </div>
+  </div>
 </div>
 
-<div class="ptcg-prompt-actions">
-  <section class="ptcg-card-info-reveal-cards" *ngIf="isSecret && gameState.replay">
-    <mat-checkbox color="primary" name="reveal-card" [checked]="revealed" (change)="revealed = !revealed">
-      {{ 'CARDS_REVEAL_CARDS' | translate }}
-    </mat-checkbox>
-  </section>
-  <span class="ptcg-u-spacer"></span>
-  <button mat-raised-button *ngIf="allowedCancel" [disabled]="gameState.deleted" (click)="cancel()">
-    {{ 'BUTTON_CANCEL' | translate }}
-  </button>
-  <button mat-raised-button [disabled]="gameState.deleted || isInvalid" (click)="confirm()">
-    {{ 'BUTTON_OK' | translate }}
-  </button>
-</div>
+<!-- No need for a placeholder when using the interactive board selection -->
+<!-- The prompt is automatically minimized and we directly interact with the board -->
