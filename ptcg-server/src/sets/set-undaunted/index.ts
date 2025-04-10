@@ -5,6 +5,8 @@ import { Gloom } from './gloom';
 import { MetalEnergySpecial } from './metal-energy-special';
 import { Oddish } from './oddish';
 import { Rotom } from './rotom';
+import { Scizor } from './scizor-prime';
+import { Scyther } from './scyther';
 import { Smeargle } from './smeargle';
 import { Vileplume } from './vileplume';
 
@@ -15,7 +17,8 @@ export const setUndaunted: Card[] = [
   new MetalEnergySpecial(),
   new Oddish(),
   new Rotom(),
+  new Scizor(),
+  new Scyther(),
   new Smeargle(),
   new Vileplume(),
-
 ];
