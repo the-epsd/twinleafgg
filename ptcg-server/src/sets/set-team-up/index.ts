@@ -5,7 +5,9 @@ import { Beedrill } from './beedrill';
 import { BillsAnalysis } from './bills-analysis';
 import { Bisharp } from './bisharp';
 import { Bronzor } from './bronzor';
+import { Charizard } from './charizard';
 import { Charmander } from './charmander';
+import { Charmeleon } from './charmeleon';
 import { Dragonite } from './dragonite';
 import { Ferrothorn } from './ferrothorn';
 import { GengarMimikyuGX } from './gengar-and-mimikyu-gx';
@@ -39,7 +41,9 @@ export const setTeamUp: Card[] = [
   new BillsAnalysis(),
   new Bisharp(),
   new Bronzor(),
+  new Charizard(),
   new Charmander(),
+  new Charmeleon(),
   new Dragonite(),
   new Ferrothorn(),
   new GengarMimikyuGX(),
