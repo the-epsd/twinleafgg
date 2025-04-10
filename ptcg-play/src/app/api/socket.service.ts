@@ -49,7 +49,7 @@ export class SocketService {
       reconnectionDelayMax: 5000,
       timeout: 20000,
       transports: ['websocket'],
-      forceNew: true,
+      forceNew: false,
       query: {},
       randomizationFactor: 0.5
     });
@@ -64,7 +64,7 @@ export class SocketService {
       if (!error.message.includes('xhr poll error') && !error.message.includes('network error')) {
         console.error('[Socket] Connection error:', error.message);
       }
-      const delay = Math.min(1000 * Math.pow(2, this.socket.io.reconnectionAttempts()), 5000);
+      const delay = 1000;
       setTimeout(() => {
         if (!this.socket.connected) {
           this.socket.connect();
@@ -82,7 +82,7 @@ export class SocketService {
           this.socket.connect();
           break;
         case 'transport close':
-          const delay = Math.min(1000 * Math.pow(2, this.socket.io.reconnectionAttempts()), 5000);
+          const delay = 1000;
           console.log(`[Socket] Transport closed, reconnecting in ${delay}ms`);
           setTimeout(() => {
             if (!this.socket.connected) {
@@ -95,7 +95,7 @@ export class SocketService {
           this.socket.connect();
           break;
         default:
-          const defaultDelay = Math.min(1000 * Math.pow(2, this.socket.io.reconnectionAttempts()), 5000);
+          const defaultDelay = 1000;
           console.log(`[Socket] Unknown disconnect reason, reconnecting in ${defaultDelay}ms`);
           setTimeout(() => {
             if (!this.socket.connected) {

@@ -64,20 +64,7 @@ export class AppComponent implements OnInit {
           console.log('[Client Disconnect] Socket connection lost while logged in');
           
           // Wait for reconnection attempts to complete
-          await new Promise<void>((resolve) => {
-            const checkConnection = () => {
-              if (this.socketService.isConnected) {
-                console.log('[Client Reconnect] Successfully reconnected');
-                resolve();
-              } else if (this.socketService.socket.io.reconnectionAttempts() >= 3) {
-                console.log('[Client Disconnect] Reconnection attempts exhausted');
-                resolve();
-              } else {
-                setTimeout(checkConnection, 1000);
-              }
-            };
-            checkConnection();
-          });
+          await new Promise<void>(resolve => setTimeout(resolve, 5000));
 
           // If still not connected after all attempts, proceed with disconnect
           if (!this.socketService.isConnected) {
@@ -140,11 +127,7 @@ export class AppComponent implements OnInit {
     const activeGames = this.sessionService.session.gameStates?.filter(g => !g.deleted && !g.gameOver);
 
     if (activeGames && activeGames.length > 0) {
-      // Show a warning
-      const message = this.translate.instant('WARNING_ACTIVE_GAMES');
       event.preventDefault();
-      event.returnValue = message;
-      return message;
     }
   }
 }
