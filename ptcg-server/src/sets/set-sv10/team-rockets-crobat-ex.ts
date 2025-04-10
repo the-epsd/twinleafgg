@@ -69,14 +69,11 @@ export class TeamRocketsCrobatex extends PokemonCard {
       CONFIRMATION_PROMPT(store, state, player, result => {
         if (result){
 
-          player.active.cards.forEach((c) => {
-            if (c !instanceof PokemonCard) {
-              c.cards.moveTo(player.discard)
-            }
-          });
-
+          const pokemons = player.active.getPokemons();
+          player.active.moveCardsTo(pokemons, player.hand);
+          player.active.moveTo(player.discard);
           player.active.clearEffects();
-          player.active.moveTo(player.hand);
+
         }
       });
     }
