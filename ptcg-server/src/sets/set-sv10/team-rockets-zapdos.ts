@@ -70,7 +70,7 @@ export class TeamRocketsZapdos extends PokemonCard {
           });
 
         }
-      })
+      });
     }
 
     // Bad Thunder

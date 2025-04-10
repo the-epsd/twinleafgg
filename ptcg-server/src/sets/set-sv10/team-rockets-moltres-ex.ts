@@ -76,7 +76,7 @@ export class TeamRocketsMoltresex extends PokemonCard {
         { superType: SuperType.ENERGY, energyType: EnergyType.SPECIAL, name: 'Team Rocket Energy' },
         { min: 1, max: 1, allowCancel: false }
       ), selected => {
-        let cards = selected || [];
+        const cards = selected || [];
 
         player.active.moveCardsTo(cards, player.discard);
         opponent.active.clearEffects();

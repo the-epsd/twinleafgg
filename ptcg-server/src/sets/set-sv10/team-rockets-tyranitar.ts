@@ -18,7 +18,7 @@ export class TeamRocketsTyranitar extends PokemonCard {
     name: 'Sand Stream',
     powerType: PowerType.ABILITY,
     text: 'As long as this Pokémon is in the Active Spot, put 2 damage counter on each of your opponent\'s Basic Pokémon during Pokémon Checkup.'
-  }]
+  }];
 
   public attacks = [
     {

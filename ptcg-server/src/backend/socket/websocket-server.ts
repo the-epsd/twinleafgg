@@ -105,14 +105,14 @@ export class WebSocketServer {
         try {
           console.log(`[Socket] Disconnect: ${user.name} [${connectionId}] - ${reason}`);
 
-          let maxTries = 10;
-          let tries = 0;
+          const maxTries = 10;
+          const tries = 0;
           let reconnected = false;
           do {
             await new Promise(resolve => setTimeout(resolve, 1000));
             // Check if we have a new socket for this user
             const newSocket = Array.from(this.server!.sockets.sockets.values())
-                .find(s => (s as any).user?.id === user.id && s.id !== socket.id);
+              .find(s => (s as any).user?.id === user.id && s.id !== socket.id);
 
             if (newSocket) {
               console.log(`[Socket] Reconnected: ${user.name} [${socket}]`);
