@@ -1,13 +1,13 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, BoardEffect } from '../../game/store/card/card-types';
 import { StoreLike, State, ConfirmPrompt, GameMessage, PlayerType } from '../../game';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerType } from '../../game/store/card/pokemon-types';
-import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
-import { SpecialCondition } from '../../game/store/card/card-types';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED } from '../../game/store/prefabs/attack-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class CrobatV extends PokemonCard {
 
@@ -98,12 +98,11 @@ export class CrobatV extends PokemonCard {
             player.deck.moveTo(player.hand, 1);
           }
         }
-
-        if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-          const specialConditionEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.POISONED]);
-          state = store.reduceEffect(state, specialConditionEffect);
-        }
       });
+    }
+
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED(store, state, effect);
     }
 
     return state;
