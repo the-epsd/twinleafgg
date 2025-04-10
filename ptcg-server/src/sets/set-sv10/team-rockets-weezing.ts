@@ -33,6 +33,7 @@ export class TeamRocketsWeezing extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)){
       const player = effect.player;
+      const opponent = effect.opponent;
 
       let koffingsAndWeezings = 0;
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, card => {
@@ -40,6 +41,12 @@ export class TeamRocketsWeezing extends PokemonCard {
           koffingsAndWeezings++;
         }
       });
+      opponent.forEachPokemon(PlayerType.BOTTOM_PLAYER, card => {
+        if (card.getPokemonCard()?.name.includes('Koffing') || card.getPokemonCard()?.name.includes('Weezing')){
+          koffingsAndWeezings++;
+        }
+      });
+      
 
       effect.damage = 40 * koffingsAndWeezings;
     }
