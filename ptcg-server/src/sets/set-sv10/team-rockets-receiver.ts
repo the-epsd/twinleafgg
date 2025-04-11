@@ -17,7 +17,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   const opponent = StateUtils.getOpponent(state, player);
   let cards: Card[] = [];
 
-  player.hand.moveCardTo(effect.trainerCard, player.discard);
+  player.hand.moveCardTo(effect.trainerCard, player.supporter);
   effect.preventDefault = true;
 
   if (player.deck.cards.length === 0) {
@@ -46,6 +46,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   });
 
   player.deck.moveCardsTo(cards, player.hand);
+  player.supporter.moveTo(player.discard);
 
   cards.forEach((card) => {
     store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
