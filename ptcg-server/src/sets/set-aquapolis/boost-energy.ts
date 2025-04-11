@@ -4,6 +4,7 @@ import { EnergyCard } from '../../game/store/card/energy-card';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { CheckProvidedEnergyEffect, CheckTableStateEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
+import { RetreatEffect } from '../../game/store/effects/game-effects';
 import { BetweenTurnsEffect } from '../../game/store/effects/game-phase-effects';
 import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
 import { State } from '../../game/store/state/state';
@@ -70,6 +71,11 @@ export class BoostEnergy extends EnergyCard {
       });
       return state;
     }
+
+    if (effect instanceof RetreatEffect && effect.player.active.cards.includes(this)) {
+      throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+    }
+
     return state;
   }
 }
