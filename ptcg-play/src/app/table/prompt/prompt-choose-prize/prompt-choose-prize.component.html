@@ -7,11 +7,33 @@
 </div>
 
 <div class="ptcg-prompt-content">
-  <p [translate]="'GAME_MESSAGES.' + message"></p>
+  <p class="prompt-message" [translate]="'GAME_MESSAGES.' + message"></p>
 
-  <ptcg-choose-cards-panes-2 [cards]="cards" [cardbackMap]="revealed === false ? cardbackMap : {}"
-    (changeCards)="onChange($event)">
-  </ptcg-choose-cards-panes-2>
+  <div class="selection-helper">
+    <span class="helper-text">
+      {{ (prompt?.options?.count > 1 ? 'PROMPT.SELECT_MULTIPLE_PRIZES' : 'PROMPT.SELECT_PRIZE') | translate }}
+    </span>
+  </div>
+
+  <!-- Debugging overlay - hidden in production 
+  <div class="debug-overlay" *ngIf="false">
+    <p>Selected prize indexes: {{ result | json }}</p>
+  </div>
+  -->
+
+  <div class="ptcg-prizes-grid">
+    <div *ngFor="let prize of prizes; let i = index" class="ptcg-prize-slot" [class.selected]="isPrizeSelected(i)"
+      [class.empty]="!prize || prize.cards.length === 0" (click)="onPrizeClick(prize, i)">
+      <!-- Debug info
+      <div class="debug-index" *ngIf="false">{{i}}</div>
+      -->
+      <ptcg-board-card *ngIf="prize && prize.cards.length > 0" [cardList]="prize"
+        [showCardBack]="prize.isSecret && !revealed">
+      </ptcg-board-card>
+      <div *ngIf="!prize || prize.cards.length === 0" class="ptcg-empty-prize-slot"></div>
+      <div *ngIf="isPrizeSelected(i)" class="selection-indicator">✓</div>
+    </div>
+  </div>
 </div>
 
 <div class="ptcg-prompt-actions">
@@ -24,7 +46,7 @@
   <button mat-raised-button *ngIf="allowedCancel" [disabled]="gameState.deleted" (click)="cancel()">
     {{ 'BUTTON_CANCEL' | translate }}
   </button>
-  <button mat-raised-button [disabled]="gameState.deleted || isInvalid" (click)="confirm()">
+  <button mat-raised-button color="primary" [disabled]="gameState.deleted || isInvalid" (click)="confirm()">
     {{ 'BUTTON_OK' | translate }}
   </button>
 </div>
