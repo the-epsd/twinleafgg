@@ -31,6 +31,7 @@ export enum CardTag {
   MEGA = 'MEGA',
   PLAY_DURING_SETUP = 'PLAY_DURING_SETUP',
   DELTA_SPECIES = 'DELTA_SPECIES',
+  DARK = 'DARK',
   LILLIES = 'LILLIES',
   NS = 'NS',
   IONOS = 'IONOS',
