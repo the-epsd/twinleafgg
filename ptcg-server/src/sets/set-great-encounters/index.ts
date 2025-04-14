@@ -3,6 +3,7 @@ import { Baltoy } from './baltoy';
 import { Buizel } from './buizel';
 import { Claydol } from './claydol';
 import { Floatzel } from './floatzel';
+import { Illumise } from './illumise';
 import { MoonlightStadium } from './moonlight-stadium';
 
 export const setGreatEncounters: Card[] = [
@@ -10,5 +11,6 @@ export const setGreatEncounters: Card[] = [
   new Floatzel(),
   new Baltoy(),
   new Claydol(),
+  new Illumise(),
   new MoonlightStadium(),
 ];
