@@ -32,9 +32,31 @@ export class PromptChoosePrizeComponent implements OnChanges {
   // Maps from the non-empty prize index to grid position
   private prizeToGridMap: { [prizeIndex: number]: number } = {};
 
+  // Property to force re-render of the component
+  public revealToggleCount = 0;
+
   constructor(
     private gameService: GameService
   ) { }
+
+  // Toggle card reveal in replay mode
+  public toggleReveal(): void {
+    this.revealed = !this.revealed;
+    this.revealToggleCount++; // Increment counter to force component update
+
+    console.log('Cards revealed:', this.revealed);
+
+    // Force refresh by temporarily resetting and then restoring the prizes array
+    setTimeout(() => {
+      const tempPrizes = [...this.prizes];
+      this.prizes = new Array(6).fill(null);
+
+      // Wait for Angular to detect this change
+      setTimeout(() => {
+        this.prizes = tempPrizes;
+      }, 0);
+    }, 0);
+  }
 
   public minimize() {
     this.gameService.setPromptMinimized(this.gameState.localId, true);
@@ -68,27 +90,35 @@ export class PromptChoosePrizeComponent implements OnChanges {
     }
 
     const count = this.prompt.options.count || 1;
+    const isCurrentlySelected = this.isPrizeSelected(gridIndex);
 
     // Single selection mode (most common case)
     if (count === 1) {
-      // Always clear previous selections
-      this.result = [];
-      // Then add the new selection using the non-empty prize index
-      this.result.push(nonEmptyPrizeIndex);
+      if (isCurrentlySelected) {
+        // If already selected, unselect it
+        this.result = [];
+      } else {
+        // Clear previous selections and select the new one
+        this.result = [nonEmptyPrizeIndex];
+      }
     } else {
       // Multiple selection mode
-      const index = this.result.indexOf(nonEmptyPrizeIndex);
-      if (index !== -1) {
-        // If already selected, deselect it
-        this.result.splice(index, 1);
+      if (isCurrentlySelected) {
+        // If already selected, remove it from selection
+        const index = this.result.indexOf(nonEmptyPrizeIndex);
+        if (index !== -1) {
+          this.result.splice(index, 1);
+        }
       } else if (this.result.length < count) {
-        // If not selected and we haven't reached the limit, select it
+        // If not selected and we haven't reached the limit, add it
         this.result.push(nonEmptyPrizeIndex);
       }
     }
 
-    console.log('Selected prize at grid index', gridIndex, 'prize array index', this.gridToPrizeMap[gridIndex], 'non-empty prize index', nonEmptyPrizeIndex);
-    console.log('Current selections:', this.result);
+    console.log('Selected prize at grid index', gridIndex,
+      'prize array index', this.gridToPrizeMap[gridIndex],
+      'non-empty prize index', nonEmptyPrizeIndex,
+      'is selected:', this.isPrizeSelected(gridIndex));
 
     // Update validation state
     this.isInvalid = this.result.length !== count;
@@ -171,6 +201,10 @@ export class PromptChoosePrizeComponent implements OnChanges {
       this.promptId = prompt.id;
       this.result = [];
       this.isInvalid = true;
+
+      // Reset revealed state whenever the prompt changes
+      this.revealed = false;
+      this.revealToggleCount = 0;
     }
   }
 }
