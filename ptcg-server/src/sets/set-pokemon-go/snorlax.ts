@@ -1,9 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
 import { StoreLike, State, PowerType, GameError, GameMessage, PlayerType, StateUtils } from '../../game';
-import { AttackEffect, PowerEffect, RetreatEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect, EffectOfAbilityEffect, RetreatEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
+import { IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 
 export class Snorlax extends PokemonCard {
@@ -47,7 +48,7 @@ export class Snorlax extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    // Block retreat for opponent's poisoned Pokemon.
+    // Block
     if (effect instanceof RetreatEffect) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -61,26 +62,28 @@ export class Snorlax extends PokemonCard {
 
       if (isSnorlaxInPlay) {
         // Try to reduce PowerEffect, to check if something is blocking our ability
-        try {
-          const stub = new PowerEffect(player, {
-            name: 'test',
-            powerType: PowerType.ABILITY,
-            text: ''
-          }, this);
-          store.reduceEffect(state, stub);
-        } catch {
+        if (IS_ABILITY_BLOCKED(store, state, player, this)) return state;
+
+        // Check if Block can target the retreating Pokemon
+        const canApplyAbility = new EffectOfAbilityEffect(opponent, this.powers[0], this, state, [player.active]);
+        store.reduceEffect(state, canApplyAbility);
+        if (!canApplyAbility.target) {
           return state;
         }
+
+        // Block the retreat action
         throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
       }
-      if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-        const specialConditionEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.ASLEEP]);
-        specialConditionEffect.target = effect.player.active;
-        store.reduceEffect(state, specialConditionEffect);
-        return state;
-      }
     }
-    return state;
 
+    // Collapse
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+      const specialConditionEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.ASLEEP]);
+      specialConditionEffect.target = effect.player.active;
+      store.reduceEffect(state, specialConditionEffect);
+      return state;
+    }
+
+    return state;
   }
 }

@@ -1,12 +1,15 @@
 import { Effect } from '../../game/store/effects/effect';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { PowerType, StoreLike, State, ChoosePokemonPrompt, PlayerType, SlotType,
-  StateUtils } from '../../game';
+import {
+  PowerType, StoreLike, State, ChoosePokemonPrompt, PlayerType, SlotType,
+  StateUtils
+} from '../../game';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { GameMessage } from '../../game/game-message';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect, EffectOfAbilityEffect } from '../../game/store/effects/game-effects';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 
 export class Golbat extends PokemonCard {
@@ -23,7 +26,7 @@ export class Golbat extends PokemonCard {
 
   public resistance = [{ type: CardType.FIGHTING, value: -20 }];
 
-  public retreat = [ ];
+  public retreat = [];
 
   public powers = [{
     name: 'Sneaky Bite',
@@ -35,7 +38,7 @@ export class Golbat extends PokemonCard {
   public attacks = [
     {
       name: 'Swoop Across',
-      cost: [ CardType.COLORLESS ],
+      cost: [CardType.COLORLESS],
       damage: 0,
       text: 'This attack does 10 damage to each of your opponent\'s Pokemon. ' +
         '(Don\'t apply Weakness and Resistance for Benched Pokemon.)'
@@ -57,28 +60,24 @@ export class Golbat extends PokemonCard {
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const player = StateUtils.findOwner(state, effect.target);
 
-      // Try to reduce PowerEffect, to check if something is blocking our ability
-      try {
-        const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
-      } catch {
-        return state;
-      }
+      if (IS_ABILITY_BLOCKED(store, state, player, this)) return state;
 
       return store.prompt(state, new ChoosePokemonPrompt(
         player.id,
         GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
         PlayerType.TOP_PLAYER,
-        [ SlotType.ACTIVE, SlotType.BENCH ],
+        [SlotType.ACTIVE, SlotType.BENCH],
         { allowCancel: true },
       ), selected => {
         const targets = selected || [];
+
         targets.forEach(target => {
-          target.damage += 20;
+          // Check if ability can target selected Pokemon
+          const canApplyAbility = new EffectOfAbilityEffect(player, this.powers[0], this, state, [target]);
+          store.reduceEffect(state, canApplyAbility);
+          if (canApplyAbility.target) {
+            target.damage += 20;
+          }
         });
       });
     }
