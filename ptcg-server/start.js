@@ -28,6 +28,8 @@ cardManager.defineSet(sets.setNeoDiscovery)
 //E-Card Era
 cardManager.defineSet(sets.setAquapolis);
 
+cardManager.defineSet(sets.setBestOfGame);
+
 //ex Era shit
 cardManager.defineSet(sets.setEXRubyAndSapphire);
 cardManager.defineSet(sets.setEXHolonPhantoms);
@@ -47,6 +49,7 @@ cardManager.defineSet(sets.setEXLegendMaker);
 
 cardManager.defineSet(sets.setDiamondAndPearl);
 cardManager.defineSet(sets.setMysteriousTreasures);
+cardManager.defineSet(sets.setSupremeVictors);
 cardManager.defineSet(sets.setSecretWonders);
 // cardManager.defineSet(sets.setOP9);
 cardManager.defineSet(sets.setGreatEncounters);
