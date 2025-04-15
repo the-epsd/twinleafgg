@@ -27,6 +27,7 @@ export enum CardTag {
   PRIME = 'PRIME',
   HOLO = 'HOLO',
   LEGEND = 'LEGEND',
+  DUAL_LEGEND = 'DUAL_LEGEND',
   TEAM_FLARE = 'TEAM_FLARE',
   MEGA = 'MEGA',
   PLAY_DURING_SETUP = 'PLAY_DURING_SETUP',
@@ -82,6 +83,7 @@ export enum Stage {
   VMAX,
   VSTAR,
   VUNION,
+  LEGEND,
   MEGA,
   BREAK,
 }
