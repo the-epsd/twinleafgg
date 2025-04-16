@@ -13,9 +13,9 @@ export class Karen extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
   public set: string = 'XYP';
   public name: string = 'Karen';
-  public fullName: string = 'Karen PHF';
+  public fullName: string = 'Karen XYP';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = 'XY177';
+  public setNumber: string = '177';
 
   public text: string = 'Each player shuffles all Pokémon in his or her discard pile into his or her deck.';
 

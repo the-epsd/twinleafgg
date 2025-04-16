@@ -4,6 +4,7 @@ import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED } from '../../game/store/prefabs/attack-effects';
+import { CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
 
 export class Toxtricity extends PokemonCard {
   public regulationMark: string = 'G';
@@ -53,15 +54,15 @@ export class Toxtricity extends PokemonCard {
       playerBench.forEach(c => {
         if (c.getPokemonCard() instanceof PokemonCard) {
           const card = c.getPokemonCard();
-          const cardType = card?.cardType;
-          if (cardType) {
-            uniqueTypes.add(cardType);
-          }
-          if (card?.additionalCardTypes) {
-            card.additionalCardTypes.forEach(type => uniqueTypes.add(type));
-          }
+          const checkEffect = new CheckPokemonTypeEffect(c);
+          store.reduceEffect(state, checkEffect);
+          console.log('Card Types:', checkEffect.cardTypes);
+          console.log('Additional Types:', card?.additionalCardTypes);
+          checkEffect.cardTypes.forEach(type => uniqueTypes.add(type));
         }
       });
+
+      console.log('Unique types:', uniqueTypes);
 
       // Set the damage based on the count of unique Pokémon types
       effect.damage += 30 * uniqueTypes.size;

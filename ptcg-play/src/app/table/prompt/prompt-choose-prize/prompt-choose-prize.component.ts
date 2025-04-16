@@ -1,15 +1,36 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges, Host, Optional } from '@angular/core';
 import { Card, ChoosePrizePrompt, CardList } from 'ptcg-server';
+import { trigger, transition, style, animate } from '@angular/animations';
 
 import { GameService } from '../../../api/services/game.service';
 import { LocalGameState } from '../../../shared/session/session.interface';
+import { PromptComponent } from '../prompt.component';
+import { PromptBaseComponent } from '../prompt-base/prompt-base.component';
 
 @Component({
   selector: 'ptcg-prompt-choose-prize',
   templateUrl: './prompt-choose-prize.component.html',
-  styleUrls: ['./prompt-choose-prize.component.scss']
+  styleUrls: ['./prompt-choose-prize.component.scss'],
+  animations: [
+    trigger('fadeIn', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('300ms ease-in', style({ opacity: 1 }))
+      ])
+    ]),
+    trigger('slideIn', [
+      transition(':enter', [
+        style({ transform: 'translateY(50px)', opacity: 0 }),
+        animate('300ms ease-out', style({ transform: 'translateY(0)', opacity: 1 }))
+      ]),
+      transition(':leave', [
+        style({ transform: 'translateY(0)', opacity: 1 }),
+        animate('200ms ease-in', style({ transform: 'translateY(50px)', opacity: 0 }))
+      ])
+    ])
+  ]
 })
-export class PromptChoosePrizeComponent implements OnChanges {
+export class PromptChoosePrizeComponent extends PromptBaseComponent implements OnChanges {
 
   @Input() prompt: ChoosePrizePrompt;
   @Input() gameState: LocalGameState;
@@ -36,8 +57,11 @@ export class PromptChoosePrizeComponent implements OnChanges {
   public revealToggleCount = 0;
 
   constructor(
-    private gameService: GameService
-  ) { }
+    gameService: GameService,
+    @Host() @Optional() parentPrompt: PromptComponent
+  ) {
+    super(gameService, parentPrompt);
+  }
 
   // Toggle card reveal in replay mode
   public toggleReveal(): void {
@@ -58,6 +82,10 @@ export class PromptChoosePrizeComponent implements OnChanges {
     }, 0);
   }
 
+  protected minimizeFallback() {
+    this.gameService.setPromptMinimized(this.gameState.localId, true);
+  }
+
   public minimize() {
     this.gameService.setPromptMinimized(this.gameState.localId, true);
   }
@@ -65,14 +93,14 @@ export class PromptChoosePrizeComponent implements OnChanges {
   public cancel() {
     const gameId = this.gameState.gameId;
     const id = this.promptId;
-    this.gameService.resolvePrompt(gameId, id, null);
+    this.cancelWithAnimation(gameId, id);
   }
 
   public confirm() {
     const gameId = this.gameState.gameId;
     const id = this.promptId;
     console.log('Confirming with prize indexes:', this.result);
-    this.gameService.resolvePrompt(gameId, id, this.result);
+    this.confirmWithAnimation(gameId, id, this.result);
   }
 
   public onPrizeClick(prize: CardList, gridIndex: number) {

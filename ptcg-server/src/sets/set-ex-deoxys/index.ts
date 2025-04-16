@@ -4,6 +4,7 @@ import { Jirachi } from './jirachi';
 import { Koffing } from './koffing';
 import { Magcargo } from './magcargo';
 import { Minun } from './minun';
+import { Nosepass } from './nosepass';
 import { ScrambleEnergy } from './scramble-energy';
 import { Slugma } from './slugma';
 import { Weezing } from './weezing';
@@ -14,6 +15,7 @@ export const setEXDeoxys: Card[] = [
   new Jirachi(),
   new Koffing(),
   new Magcargo(),
+  new Nosepass(),
   new ScrambleEnergy(),
   new Slugma(),
   new Weezing(),
