@@ -131,7 +131,6 @@ export class SocketService {
       }
       this.lastPingTime = now;
     });
-    this.startConnectionMonitoring();
   }
 
   public joinMatchmakingQueue(format: Format, deck: string[]): Observable<any> {
