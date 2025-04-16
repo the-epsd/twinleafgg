@@ -1,9 +1,11 @@
 import { Card } from '../../game/store/card/card';
 import { Annihilape } from './annihilape';
+import {Arbolivaex} from './arboliva-ex';
 import { Blaziken } from './blaziken';
 import { Cetitanex } from './cetitan-ex';
 import { Cetoddle } from './cetoddle';
 import { Combusken } from './combusken';
+import {Dolliv} from './dolliv';
 import { GraniteCave } from './granite-cave';
 import { Mankey } from './mankey';
 import { MarniesGrimmsnarlex } from './marnies-grimmsnarl-ex';
@@ -17,6 +19,7 @@ import { MarniesScraggy } from './marnies-scraggy';
 import { EnergyRecyclerSV10, MarniesMorpekoIR, StevensBeldumIR } from './other-prints';
 import { Primeape } from './primeape';
 import {Regirockex} from './regirock-ex';
+import {Smoliv} from './smoliv';
 import { SpikemuthGym } from './spikemuth-gym';
 import { StevensBaltoy } from './stevens-baltoy';
 import { StevensBeldum } from './stevens-beldum';
@@ -27,11 +30,14 @@ import { StevensMetang } from './stevens-metang';
 import { StevensSkarmory } from './stevens-skarmory';
 import { TeamRocketEnergy } from './team-rocket-energy';
 import { TeamRocketsAmpharos } from './team-rockets-ampharos';
+import {TeamRocketsArbok} from './team-rockets-arbok';
 import { TeamRocketsArcher } from './team-rockets-archer';
 import { TeamRocketsAriana } from './team-rockets-ariana';
 import {TeamRocketsArticuno} from './team-rockets-articuno';
 import {TeamRocketsCrobatex} from './team-rockets-crobat-ex';
 import {TeamRocketsDrowzee} from './team-rockets-drowzee';
+import {TeamRocketsEkans} from './team-rockets-ekans';
+import {TeamRocketsFactory} from './team-rockets-factory';
 import { TeamRocketsFlaaffy } from './team-rockets-flaaffy';
 import { TeamRocketsGiovanni } from './team-rockets-giovanni';
 import {TeamRocketsGolbat} from './team-rockets-golbat';
@@ -42,7 +48,14 @@ import {TeamRocketsLarvitar} from './team-rockets-larvitar';
 import { TeamRocketsMareep } from './team-rockets-mareep';
 import { TeamRocketsMeowth } from './team-rockets-meowth';
 import { TeamRocketsMewtwoex } from './team-rockets-mewtwo-ex';
+import {TeamRocketsMimikyu} from './team-rockets-mimikyu';
 import {TeamRocketsMoltresex} from './team-rockets-moltres-ex';
+import {TeamRocketsNidokingex} from './team-rockets-nidoking-ex';
+import {TeamRocketsNidoqueen} from './team-rockets-nidoqueen';
+import {TeamRocketsNidoranFemale} from './team-rockets-nidoran-female';
+import {TeamRocketsNidoranMale} from './team-rockets-nidoran-male';
+import {TeamRocketsNidorina} from './team-rockets-nidorina';
+import {TeamRocketsNidorino} from './team-rockets-nidorino';
 import { TeamRocketsPersianex } from './team-rockets-persian-ex';
 import {TeamRocketsPetrel} from './team-rockets-petrel';
 import { TeamRocketsPorygon } from './team-rockets-porygon';
@@ -56,6 +69,7 @@ import { TeamRocketsSpidops } from './team-rockets-spidops';
 import { TeamRocketsTarountula } from './team-rockets-tarountula';
 import {TeamRocketsTyranitar} from './team-rockets-tyranitar';
 import {TeamRocketsVentureBomb} from './team-rockets-venture-bomb';
+import {TeamRocketsWatchtower} from './team-rockets-watchtower';
 import {TeamRocketsWeezing} from './team-rockets-weezing';
 import { TeamRocketsWobbuffet } from './team-rockets-wobbuffet';
 import {TeamRocketsZapdos} from './team-rockets-zapdos';
@@ -73,6 +87,10 @@ export const setSV10: Card[] = [
   new Annihilape(),
   new EnergyRecyclerSV10(),
   new Regirockex(),
+  new Smoliv(),
+  new Dolliv(),
+  new Arbolivaex(),
+
 
   new MarniesMorpekoIR(),
   new MarniesImpidimp(),
@@ -130,4 +148,15 @@ export const setSV10: Card[] = [
   new TeamRocketsSneasel(),
   new TeamRocketsKoffing(),
   new TeamRocketsWeezing(),
+  new TeamRocketsMimikyu(),
+  new TeamRocketsNidoranMale(),
+  new TeamRocketsNidorino(),
+  new TeamRocketsNidokingex(),
+  new TeamRocketsNidoranFemale(),
+  new TeamRocketsNidorina(),
+  new TeamRocketsNidoqueen(),
+  new TeamRocketsEkans(),
+  new TeamRocketsArbok(),
+  new TeamRocketsWatchtower(),
+  new TeamRocketsFactory(),
 ];

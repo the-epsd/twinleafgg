@@ -45,11 +45,17 @@ export class HyperDevolutionSpray extends TrainerCard {
         (results) => {
           if (results && results.length > 0) {
             const targetPokemon = results[0];
+            const pokemons = targetPokemon.getPokemons();
 
-            targetPokemon.moveCardsTo([targetPokemon.cards[targetPokemon.cards.length - 1]], effect.player.hand);
-            targetPokemon.clearEffects();
-            targetPokemon.pokemonPlayedTurn = state.turn;
-            player.supporter.moveCardTo(effect.trainerCard, player.discard);
+            if (pokemons.length > 1) {
+              const highestStagePokemon = pokemons[pokemons.length - 1];
+              targetPokemon.moveCardsTo([highestStagePokemon], effect.player.hand);
+              targetPokemon.clearEffects();
+              targetPokemon.pokemonPlayedTurn = state.turn;
+              player.supporter.moveCardTo(effect.trainerCard, player.discard);
+            } else {
+              throw new GameError(GameStoreMessage.INVALID_GAME_STATE);
+            }
           }
 
           return state;

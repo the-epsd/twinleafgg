@@ -14,7 +14,7 @@ import { OrderCardsPrompt } from '../../game';
 
 
 function* playCard(next: Function, store: StoreLike, state: State,
-  self: CryptomaniacsDeciphering, effect: TrainerEffect): IterableIterator<State> {
+  self: CiphermaniacsCodebreaking, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
   let cards: Card[] = [];
 
@@ -69,7 +69,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   });
 }
 
-export class CryptomaniacsDeciphering extends TrainerCard {
+export class CiphermaniacsCodebreaking extends TrainerCard {
 
   public regulationMark = 'H';
 

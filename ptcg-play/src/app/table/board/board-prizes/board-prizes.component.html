@@ -1,9 +1,11 @@
 <div class="ptcg-board-prizes">
 
   <div class="ptcg-board-prizes-container">
-    <ptcg-board-card *ngFor="let cardList of prizes" (click)="onPrizeClick(cardList)" [cardList]="cardList"
-      [owner]="isOwner">
-    </ptcg-board-card>
+    <div *ngFor="let cardList of prizes; let i = index" class="ptcg-prize-slot">
+      <div class="prize-number">{{[5,6,3,4,1,2][i]}}</div>
+      <ptcg-board-card (click)="onPrizeClick(cardList)" [cardList]="cardList" [owner]="isOwner">
+      </ptcg-board-card>
+    </div>
   </div>
 
 </div>

@@ -22,23 +22,7 @@ type DropTargetType = DropTarget<DraggedItem<HandItem> | BoardCardItem, any>;
 @Component({
   selector: 'ptcg-board',
   templateUrl: './board.component.html',
-  styleUrls: ['./board.component.scss'],
-  animations: [
-    trigger('phaseTransition', [
-      transition(':enter', [
-        style({ opacity: 0, transform: 'translateY(-20px)' }),
-        animate('300ms ease-out')
-      ])
-    ]),
-    trigger('gameStateChange', [
-      transition('* => *', [
-        query(':enter', [
-          style({ opacity: 0 }),
-          stagger(100, animate('200ms ease-out'))
-        ])
-      ])
-    ])
-  ]
+  styleUrls: ['./board.component.scss']
 })
 export class BoardComponent implements OnDestroy {
 

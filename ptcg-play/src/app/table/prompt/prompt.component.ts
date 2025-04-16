@@ -22,11 +22,14 @@ export class PromptComponent implements OnChanges {
   public isPromptVisible = false;
 
   /** State of the dialog animation. */
-  public animationState: 'void' | 'enter' | 'exit' = 'void';
+  public animationState: 'void' | 'enter' | 'exit' | 'minimize' | 'confirm' = 'void';
 
   public prompt: Prompt<any>;
 
   public minimized = false;
+
+  // Store the prompt action to be executed after animation completes
+  // private pendingPromptAction: { gameId: number, promptId: number, result: any } | null = null;
 
   constructor(private gameService: GameService) { }
 
@@ -75,28 +78,61 @@ export class PromptComponent implements OnChanges {
     }
   }
 
+  public minimize() {
+    // Start minimize animation before actually setting minimized state
+    this.animationState = 'minimize';
+    // Since animation is now immediate, set minimized state right away
+    this.gameService.setPromptMinimized(this.gameState.localId, true);
+    // No need for animation on the minimize button
+  }
+
   public maximize() {
     if (this.gameState.promptMinimized) {
+      // Update the game state
       this.gameService.setPromptMinimized(this.gameState.localId, false);
+
+      // Make the prompt visible again
+      this.isPromptVisible = true;
+
+      // Trigger animation from minimize to enter
+      this.animationState = 'enter';
     }
+  }
+
+  /**
+   * Play confirm animation before resolving prompt
+   */
+  public animateAndResolvePrompt(gameId: number, promptId: number, result: any) {
+    // Since animation is now immediate, resolve prompt right away
+    this.gameService.resolvePrompt(gameId, promptId, result);
+    // Set animation state last to ensure proper onAnimationEnd behavior
+    this.animationState = 'confirm';
   }
 
   /** Callback, invoked whenever an animation on the host completes. */
   public onAnimationEnd(event: AnimationEvent) {
-    const toExitState = event.toState === 'exit' || event.toState === 'void';
+    // If exiting or void state and prompt is gone/minimized, hide the prompt
+    const toExitState = event.toState === 'exit' || event.toState === 'void' ||
+      event.toState === 'minimize' || event.toState === 'confirm';
     const isNotVisible = this.prompt === undefined || this.minimized;
+
     if (toExitState && isNotVisible) {
       this.isPromptVisible = false;
     }
   }
 
-  /** Starts the dialog enter animation. */
+  /** Starts the dialog enter/exit animation. */
   private toggle(value: boolean): void {
     if (this.animationState !== 'enter' && value === true) {
       this.isPromptVisible = true;
       this.animationState = 'enter';
     } else if (this.animationState !== 'exit' && value === false) {
-      this.animationState = 'exit';
+      // If already minimized, don't animate exit again
+      if (this.minimized) {
+        this.isPromptVisible = false;
+      } else {
+        this.animationState = 'exit';
+      }
     }
   }
 

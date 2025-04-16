@@ -34,22 +34,14 @@ export class EthansAdventure extends TrainerCard {
       player.hand.moveCardTo(this, player.supporter);
       BLOCK_IF_DECK_EMPTY(player);
 
-      let ethansPokemonOrFireEnergy: number = 0;
       const blocked: number[] = [];
       player.deck.cards.forEach((c, index) => {
         const isPokemon = c instanceof PokemonCard && c.tags.includes(CardTag.ETHANS);
         const isBasicEnergy = c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.name === 'Fire Energy';
-        if (isPokemon || isBasicEnergy) {
-          ethansPokemonOrFireEnergy += 1;
-        } else {
+        if (!isPokemon && !isBasicEnergy) {
           blocked.push(index);
         }
       });
-
-      // Player does not have correct cards in discard
-      if (ethansPokemonOrFireEnergy === 0) {
-        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-      }
 
       effect.preventDefault = true;
 

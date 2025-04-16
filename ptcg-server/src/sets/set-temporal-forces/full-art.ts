@@ -2,7 +2,7 @@ import { BiancasDevotion } from './biancas-devotion';
 import { Charjabug } from './charjabug';
 import { Chatot } from './chatot';
 import { Cinccino } from './cincinno';
-import { CryptomaniacsDeciphering } from './cryptomaniacs-deciphering';
+import { CiphermaniacsCodebreaking } from './cryptomaniacs-deciphering';
 import { Eri } from './eri';
 import { ExplorersGuidance } from './explorers-guidance';
 import { Gastly } from './gastly';
@@ -196,7 +196,7 @@ export class BiancasDevotionFA extends BiancasDevotion {
   public fullName: string = 'BiancasDevotionFA TEF';
 }
 
-export class CryptomaniacsDecipheringFA extends CryptomaniacsDeciphering {
+export class CryptomaniacsDecipheringFA extends CiphermaniacsCodebreaking {
   public setNumber = '198';
   public fullName: string = 'CiphermaniacsCodebreakingFA TEF';
 }

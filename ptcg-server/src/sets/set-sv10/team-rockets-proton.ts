@@ -23,7 +23,7 @@ export class TeamRocketsProton extends TrainerCard {
   public text: string =
     `If you go first, you may use this card during your first turn.
 
-Search your deck for up to 3 Basic Team Rocket\'s Pokémon, reveal them, and put them into your hand. Then, shuffle your deck.`;
+Search your deck for up to 3 Basic Team Rocket's Pokémon, reveal them, and put them into your hand. Then, shuffle your deck.`;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
@@ -56,7 +56,7 @@ Search your deck for up to 3 Basic Team Rocket\'s Pokémon, reveal them, and put
 
         player.deck.moveCardsTo(cards, player.hand);
         SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
-        player.supporter.moveCardTo(this, player.discard);        
+        player.supporter.moveCardTo(this, player.discard);
         SHUFFLE_DECK(store, state, player);
       });
     }

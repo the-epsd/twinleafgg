@@ -61,8 +61,8 @@ export class Feraligatr extends PokemonCard {
     }
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      BLOCK_EFFECT_IF_MARKER(this.ATTACK_USED_2_MARKER, effect.player, this);
-      ADD_MARKER(this.ATTACK_USED_MARKER, effect.player, this);
+      BLOCK_EFFECT_IF_MARKER(this.ATTACK_USED_2_MARKER, this, this);
+      ADD_MARKER(this.ATTACK_USED_MARKER, this, this);
     }
 
     if (WAS_POWER_USED(effect, 0, this)) {
