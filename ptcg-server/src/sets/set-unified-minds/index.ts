@@ -30,6 +30,7 @@ import { RaichuAlolanRaichuGX } from './raichu-and-alolan-raichu-gx';
 import { RecycleEnergy } from './recycle-energy';
 import { ResetStamp } from './reset-stamp';
 import { Riolu } from './riolu';
+import { SlumberingForest } from './slumbering-forest';
 import { StadiumNav } from './stadium-nav';
 import { TagSwitch } from './tag_switch';
 import { UTurnBoard } from './u-turn-board';
@@ -75,6 +76,7 @@ export const setUnifiedMinds: Card[] = [
   new RecycleEnergy(),
   new ResetStamp(),
   new Riolu(),
+  new SlumberingForest(),
   new StadiumNav(),
   new TagSwitch(),
   new UTurnBoard(),
