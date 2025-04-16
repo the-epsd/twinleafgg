@@ -220,7 +220,7 @@
 .nav-button {
   height: clamp(36px, 5vh, 48px);
   width: clamp(36px, 5vh, 48px);
-  background: rgba(255, 255, 255, 0.1);
+  background: #449058;
   border-radius: 50%;
   color: white;
   display: flex;
@@ -230,22 +230,27 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 
   &:hover {
-    background: rgba(255, 255, 255, 0.2);
+    background: #4fa567;
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   }
 
   &[disabled] {
-    opacity: 0.5;
+    background: #2c5f39;
+    opacity: 0.7;
     cursor: not-allowed;
   }
 
   &.prev-button {
-    left: calc(50% - clamp(200px, 20vw, 300px));
+    left: calc(50% - clamp(230px, 23vw, 345px));
   }
 
   &.next-button {
-    right: calc(50% - clamp(200px, 20vw, 300px));
+    right: calc(50% - clamp(230px, 23vw, 345px));
   }
 }
 
@@ -406,9 +411,8 @@ ptcg-card {
 }
 
 .unavailable {
-  // opacity: 0.3;
   pointer-events: none;
-  filter: grayscale(100%);
+  filter: grayscale(85%);
   cursor: not-allowed;
 }
 
@@ -425,6 +429,7 @@ ptcg-card {
   overflow: hidden;
   transform: translateY(0);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  border-radius: 200px;
 
   &:hover {
     background-color: #4fa567;
@@ -487,14 +492,13 @@ ptcg-card {
     gap: 8px;
     margin-bottom: 16px;
     padding: 16px;
-    // background: rgba(10, 12, 16, 0.8);
-    border-radius: 8px;
-    // box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    border-radius: 200px;
 
     .prompt-tabs {
       display: flex;
       gap: 12px;
-      margin-top: 8px;
+      margin-top: 6px;
+      margin-left: 16px;
 
       .tab-button {
         padding: 8px 16px;
@@ -503,7 +507,7 @@ ptcg-card {
         cursor: pointer;
         font-size: 14px;
         color: #FFE0A3;
-        border-radius: 20px;
+        border-radius: 200px;
         transition: all 0.2s ease;
         text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 
@@ -693,11 +697,11 @@ ptcg-card {
       z-index: 15;
 
       &.prev-button {
-        left: 2vw;
+        left: 3vw;
       }
 
       &.next-button {
-        right: 2vw;
+        right: 3vw;
       }
     }
 
