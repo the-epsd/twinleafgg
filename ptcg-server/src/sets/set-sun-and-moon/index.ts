@@ -19,6 +19,7 @@ import { RainbowEnergy } from './rainbow-energy';
 import { Repel } from './repel';
 import { RotomDex } from './rotom-dex';
 import { Rowlet } from './rowlet';
+import { TeamSkullGrunt } from './team-skull-grunt';
 import { TimerBall } from './timer-ball';
 
 export const setSunAndMoon: Card[] = [
@@ -41,6 +42,7 @@ export const setSunAndMoon: Card[] = [
   new RotomDex(),
   new Rowlet(),
   new Repel(),
+  new TeamSkullGrunt(),
   new TimerBall(),
 
   // Reprints
