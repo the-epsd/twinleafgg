@@ -1,18 +1,18 @@
-import { Component, OnInit, HostListener, ElementRef } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { UserInfo } from 'ptcg-server';
-import { Observable, interval } from 'rxjs';
 import { Router } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { switchMap, filter, take } from 'rxjs/operators';
+import { UserInfo } from 'ptcg-server';
+import { Observable, interval } from 'rxjs';
+import { filter, switchMap, take } from 'rxjs/operators';
 
-import { AlertService } from './shared/alert/alert.service';
-import { LoginRememberService } from './login/login-remember.service';
-import { LoginService } from './api/services/login.service';
-import { SessionService } from './shared/session/session.service';
-import { SocketService } from './api/socket.service';
 import { TranslateService } from '@ngx-translate/core';
 import { environment } from '../environments/environment';
+import { LoginService } from './api/services/login.service';
+import { SocketService } from './api/socket.service';
+import { LoginRememberService } from './login/login-remember.service';
+import { AlertService } from './shared/alert/alert.service';
+import { SessionService } from './shared/session/session.service';
 
 @UntilDestroy()
 @Component({
@@ -61,22 +61,25 @@ export class AppComponent implements OnInit {
     ).subscribe({
       next: async connected => {
         if (!connected && this.isLoggedIn) {
-          console.log('[Client Disconnect] Socket connection lost while logged in');
-          this.socketService.disable();
-          this.dialog.closeAll();
-          await this.alertService.alert(this.translate.instant('ERROR_DISCONNECTED_FROM_SERVER'));
-          this.sessionService.clear();
-          this.router.navigate(['/login']);
+
+          // Wait for reconnection attempts to complete
+          await new Promise<void>(resolve => setTimeout(resolve, 5000));
+
+          // If still not connected after all attempts, proceed with disconnect
+          if (!this.socketService.isConnected) {
+            this.socketService.disable();
+            this.dialog.closeAll();
+            await this.alertService.alert(this.translate.instant('ERROR_DISCONNECTED_FROM_SERVER'));
+            this.sessionService.clear();
+            this.router.navigate(['/login']);
+          }
         } else if (connected) {
-          console.log('[Client Connect] Socket connection established');
         }
       }
     });
 
     document.addEventListener('visibilitychange', () => {
-      console.log('[Visibility Change] Document visibility:', document.visibilityState);
       if (document.visibilityState === 'visible' && this.isLoggedIn && !this.socketService.isEnabled) {
-        console.log('[Visibility Change] Attempting to reconnect socket');
         this.authToken$.pipe(take(1)).subscribe(authToken => {
           this.socketService.enable(authToken);
         });
@@ -120,11 +123,7 @@ export class AppComponent implements OnInit {
     const activeGames = this.sessionService.session.gameStates?.filter(g => !g.deleted && !g.gameOver);
 
     if (activeGames && activeGames.length > 0) {
-      // Show a warning
-      const message = this.translate.instant('WARNING_ACTIVE_GAMES');
       event.preventDefault();
-      event.returnValue = message;
-      return message;
     }
   }
 }

@@ -1,30 +1,52 @@
-<div class="ptcg-prompt-title">
-  <h2 translate>PROMPT_CHOOSE_PRIZE_TITLE</h2>
-  <div class="ptcg-u-spacer"></div>
-  <button mat-button mat-icon-button (click)="minimize()">
-    <mat-icon>keyboard_arrow_down</mat-icon>
-  </button>
-</div>
+<div class="fullscreen-wrapper">
+  <div class="fullscreen-overlay"></div>
+  <div class="fullscreen-container">
+    <div class="ptcg-prompt-title">
+      <h2 translate>PROMPT_CHOOSE_PRIZE_TITLE</h2>
+      <div class="ptcg-u-spacer"></div>
+      <button mat-button mat-icon-button (click)="minimizeWithAnimation()">
+        <mat-icon>keyboard_arrow_down</mat-icon>
+      </button>
+    </div>
 
-<div class="ptcg-prompt-content">
-  <p [translate]="'GAME_MESSAGES.' + message"></p>
+    <!-- Message Section -->
+    <div class="prompt-message">
+      <p>{{message}}</p>
+    </div>
 
-  <ptcg-choose-cards-panes-2 [cards]="cards" [cardbackMap]="revealed === false ? cardbackMap : {}"
-    (changeCards)="onChange($event)">
-  </ptcg-choose-cards-panes-2>
-</div>
+    <!-- Prize Selection Grid -->
+    <div class="ptcg-prompt-content">
+      <div class="ptcg-prizes">
+        <div class="ptcg-prizes-grid" [attr.data-revealed]="revealed">
+          <div *ngFor="let prize of prizes; let i = index" class="ptcg-prize-slot" [class.selected]="isPrizeSelected(i)"
+            [class.empty]="!prize || prize.cards.length === 0" (click)="onPrizeClick(prize, i)">
+            <div class="prize-number">{{[5,6,3,4,1,2][i]}}</div>
+            <ptcg-board-card *ngIf="prize && prize.cards.length > 0" [cardList]="prize"
+              [showCardBack]="!revealed && prize.isSecret" [attr.data-revealed]="revealed"
+              [attr.data-toggle-count]="revealToggleCount">
+            </ptcg-board-card>
+            <div *ngIf="!prize || prize.cards.length === 0" class="ptcg-empty-prize-slot"></div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-<div class="ptcg-prompt-actions">
-  <section class="ptcg-card-info-reveal-cards" *ngIf="hasSecret && gameState.replay">
-    <mat-checkbox color="primary" name="reveal-card" [checked]="revealed" (change)="revealed = !revealed">
-      {{ 'CARDS_REVEAL_CARDS' | translate }}
-    </mat-checkbox>
-  </section>
-  <span class="ptcg-u-spacer"></span>
-  <button mat-raised-button *ngIf="allowedCancel" [disabled]="gameState.deleted" (click)="cancel()">
-    {{ 'BUTTON_CANCEL' | translate }}
-  </button>
-  <button mat-raised-button [disabled]="gameState.deleted || isInvalid" (click)="confirm()">
-    {{ 'BUTTON_OK' | translate }}
-  </button>
+    <div class="ptcg-prompt-actions">
+      <section class="ptcg-card-info-reveal-cards" *ngIf="hasSecret && gameState.replay">
+        <mat-checkbox color="primary" name="reveal-card" [checked]="revealed" (change)="toggleReveal()">
+          {{ 'CARDS_REVEAL_CARDS' | translate }}
+        </mat-checkbox>
+      </section>
+
+      <button *ngIf="allowedCancel" mat-raised-button class="cancel-button" [disabled]="gameState.deleted"
+        (click)="cancel()">
+        {{ 'BUTTON_CANCEL' | translate }}
+      </button>
+
+      <button mat-raised-button color="primary" class="confirm-button" [disabled]="gameState.deleted || isInvalid"
+        (click)="confirm()">
+        {{ 'BUTTON_OK' | translate }}
+      </button>
+    </div>
+  </div>
 </div>

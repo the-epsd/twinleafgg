@@ -49,13 +49,13 @@ export class SocketService {
       reconnectionDelayMax: 5000,
       timeout: 20000,
       transports: ['websocket'],
-      forceNew: true,
+      forceNew: false,
       query: {},
       randomizationFactor: 0.5
     });
 
     this.socket.on('connect', () => {
-      console.log('[Socket] Connected to server');
+      console.log('[Socket] Connected');
       this.connectionSubject.next(true);
       this.lastPingTime = Date.now();
     });
@@ -64,7 +64,7 @@ export class SocketService {
       if (!error.message.includes('xhr poll error') && !error.message.includes('network error')) {
         console.error('[Socket] Connection error:', error.message);
       }
-      const delay = Math.min(1000 * Math.pow(2, this.socket.io.reconnectionAttempts()), 5000);
+      const delay = 1000;
       setTimeout(() => {
         if (!this.socket.connected) {
           this.socket.connect();
@@ -78,12 +78,10 @@ export class SocketService {
 
       switch (reason) {
         case 'io server disconnect':
-          console.log('[Socket] Server initiated disconnect, attempting reconnect');
           this.socket.connect();
           break;
         case 'transport close':
-          const delay = Math.min(1000 * Math.pow(2, this.socket.io.reconnectionAttempts()), 5000);
-          console.log(`[Socket] Transport closed, reconnecting in ${delay}ms`);
+          const delay = 1000;
           setTimeout(() => {
             if (!this.socket.connected) {
               this.socket.connect();
@@ -91,12 +89,10 @@ export class SocketService {
           }, delay);
           break;
         case 'ping timeout':
-          console.log('[Socket] Ping timeout, attempting immediate reconnect');
           this.socket.connect();
           break;
         default:
-          const defaultDelay = Math.min(1000 * Math.pow(2, this.socket.io.reconnectionAttempts()), 5000);
-          console.log(`[Socket] Unknown disconnect reason, reconnecting in ${defaultDelay}ms`);
+          const defaultDelay = 1000;
           setTimeout(() => {
             if (!this.socket.connected) {
               this.socket.connect();
@@ -124,7 +120,7 @@ export class SocketService {
     });
 
     this.socket.on('reconnect_failed', () => {
-      console.error('[Socket] Reconnection failed after all attempts');
+      console.error('[Socket] Reconnection failed');
       this.connectionSubject.next(false);
     });
 
@@ -135,6 +131,7 @@ export class SocketService {
       }
       this.lastPingTime = now;
     });
+    this.startConnectionMonitoring();
   }
 
   public joinMatchmakingQueue(format: Format, deck: string[]): Observable<any> {
@@ -184,7 +181,7 @@ export class SocketService {
       if (this.enabled && !this.socket.connected) {
         const timeSinceLastPing = Date.now() - this.lastPingTime;
         if (this.lastPingTime > 0 && timeSinceLastPing > 45000) {
-          console.log(`[Socket] Connection frozen (no ping for ${Math.floor(timeSinceLastPing / 1000)}s), reconnecting...`);
+          console.log(`[Socket] Connection frozen (${Math.floor(timeSinceLastPing / 1000)}s), reconnecting...`);
           this.socket.disconnect();
           this.socket.connect();
         }

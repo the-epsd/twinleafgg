@@ -18,6 +18,7 @@ import { Golisopod } from './golisopod';
 import { Grimsley } from './grimsley';
 import { Hapu } from './hapu';
 import { Hoopa } from './hoopa';
+import { Jynx } from './jynx';
 import { KarateBelt } from './karate-belt';
 import { KeldeoGX } from './keldeo-gx';
 import { Lickilicky } from './lickilicky';
@@ -30,6 +31,7 @@ import { RaichuAlolanRaichuGX } from './raichu-and-alolan-raichu-gx';
 import { RecycleEnergy } from './recycle-energy';
 import { ResetStamp } from './reset-stamp';
 import { Riolu } from './riolu';
+import { SlumberingForest } from './slumbering-forest';
 import { StadiumNav } from './stadium-nav';
 import { TagSwitch } from './tag_switch';
 import { UTurnBoard } from './u-turn-board';
@@ -62,6 +64,7 @@ export const setUnifiedMinds: Card[] = [
   new Grimsley(),
   new Hapu(),
   new Hoopa(),
+  new Jynx(),
   new KarateBelt(),
   new KeldeoGX(),
   new Lickilicky(),
@@ -75,6 +78,7 @@ export const setUnifiedMinds: Card[] = [
   new RecycleEnergy(),
   new ResetStamp(),
   new Riolu(),
+  new SlumberingForest(),
   new StadiumNav(),
   new TagSwitch(),
   new UTurnBoard(),

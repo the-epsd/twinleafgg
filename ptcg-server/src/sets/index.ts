@@ -14,6 +14,9 @@ export * from './set-neo-discovery';
 
 //E-Card Era
 export * from './set-aquapolis';
+export * from './set-skyridge';
+
+export * from './set-best-of-game';
 
 //ex Era
 export * from './set-ex-ruby-and-sapphire';
@@ -35,6 +38,7 @@ export * from './set-ex-legend-maker';
 //DP Era
 export * from './set-diamond-and-pearl';
 export * from './set-mysterious-treasures';
+export * from './set-supreme-victors'
 export * from './set-secret-wonders';
 export * from './set-great-encounters';
 export * from './set-op9';

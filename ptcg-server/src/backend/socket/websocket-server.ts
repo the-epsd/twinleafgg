@@ -101,12 +101,38 @@ export class WebSocketServer {
         }
       });
 
-      socket.on('disconnect', (reason) => {
+      socket.on('disconnect', async (reason) => {
         try {
           console.log(`[Socket] Disconnect: ${user.name} [${connectionId}] - ${reason}`);
-          user.updateLastSeen();
-          this.clients.delete(connectionId);
-          socketClient.dispose();
+
+          const maxTries = 10;
+          const tries = 0;
+          let reconnected = false;
+          do {
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            // Check if we have a new socket for this user
+            const newSocket = Array.from(this.server!.sockets.sockets.values())
+              .find(s => (s as any).user?.id === user.id && s.id !== socket.id);
+
+            if (newSocket) {
+              console.log(`[Socket] Reconnected: ${user.name} [${socket}]`);
+              const newSocketClient = new SocketClient(user, this.core, this.server!, newSocket);
+
+              this.clients.set(connectionId, newSocketClient);
+              newSocketClient.id = socketClient.id;
+              newSocketClient.attachListeners();
+
+              socketClient.dispose(true, newSocketClient);
+              reconnected = true;
+              break;
+            }
+          } while (tries < maxTries && !reconnected);
+
+          if (!reconnected) {
+            user.updateLastSeen();
+            this.clients.delete(connectionId);
+            socketClient.dispose();
+          }
         }
         catch (error: any) {
           console.error(`[Socket] Error during disconnect: ${user.name} [${connectionId}] - ${error.message}`);
