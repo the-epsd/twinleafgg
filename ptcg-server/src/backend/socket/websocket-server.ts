@@ -26,7 +26,6 @@ export class WebSocketServer {
   private pingInterval: NodeJS.Timeout | null = null;
   private readonly STATS_INTERVAL = 60000; // Log stats every minute
 
-
   constructor(private core: Core) { }
 
   public async listen(httpServer: http.Server): Promise<void> {
@@ -105,30 +104,10 @@ export class WebSocketServer {
         try {
           console.log(`[Socket] Disconnect: ${user.name} [${connectionId}] - ${reason}`);
 
-          const maxTries = 10;
-          const tries = 0;
-          let reconnected = false;
-          do {
-            await new Promise(resolve => setTimeout(resolve, 1000));
-            // Check if we have a new socket for this user
-            const newSocket = Array.from(this.server!.sockets.sockets.values())
-              .find(s => (s as any).user?.id === user.id && s.id !== socket.id);
+          await new Promise(resolve => setTimeout(resolve, 10000));
 
-            if (newSocket) {
-              console.log(`[Socket] Reconnected: ${user.name} [${socket}]`);
-              const newSocketClient = new SocketClient(user, this.core, this.server!, newSocket);
-
-              this.clients.set(connectionId, newSocketClient);
-              newSocketClient.id = socketClient.id;
-              newSocketClient.attachListeners();
-
-              socketClient.dispose(true, newSocketClient);
-              reconnected = true;
-              break;
-            }
-          } while (tries < maxTries && !reconnected);
-
-          if (!reconnected) {
+          // Check if we're still disconnected after the delay
+          if (!socket.connected) {
             user.updateLastSeen();
             this.clients.delete(connectionId);
             socketClient.dispose();
