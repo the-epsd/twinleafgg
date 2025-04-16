@@ -1,4 +1,4 @@
-import { Component, Host, Input, Optional, OnInit, ElementRef, Renderer2, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Host, Input, Optional, ElementRef, Renderer2, OnChanges, SimpleChanges } from '@angular/core';
 import { Card, CardList, ChooseCardsPrompt } from 'ptcg-server';
 
 import { GameService } from '../../../api/services/game.service';
@@ -15,29 +15,11 @@ import { PromptBaseComponent } from '../prompt-base/prompt-base.component';
   templateUrl: './prompt-choose-cards.component.html',
   styleUrls: ['./prompt-choose-cards.component.scss']
 })
-export class PromptChooseCardsComponent extends PromptBaseComponent implements OnInit, OnChanges {
+export class PromptChooseCardsComponent extends PromptBaseComponent implements OnChanges {
 
   @Input() set prompt(prompt: ChooseCardsPrompt) {
     this.promptValue = prompt;
-    this.cards = prompt.cards;
-    this.filter = prompt.filter;
-    this.allowedCancel = prompt.options.allowCancel;
-    this.blocked = prompt.options.blocked;
-    this.message = prompt.message;
-    this.promptId = prompt.id;
-    this.isSecret = prompt.options.isSecret;
-
-    // Start with invalid state if min > 0
-    this.isInvalid = prompt.options.min > 0;
-
-    if (prompt.options.isSecret) {
-      prompt.cards.cards.forEach((c, i) => {
-        this.cardbackMap[i] = true;
-      });
-    }
-
-    // Initialize card items
-    this.initializeCardItems();
+    this.initializePrompt();
   }
 
   @Input() gameState: LocalGameState;
@@ -82,25 +64,33 @@ export class PromptChooseCardsComponent extends PromptBaseComponent implements O
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.prompt && changes.prompt.currentValue) {
-      this.initializePrompt(changes.prompt.currentValue);
+      this.initializePrompt();
     }
   }
 
-  private initializePrompt(prompt: ChooseCardsPrompt) {
-    this.promptValue = prompt;
-    this.cards = prompt.cards;
-    this.filter = prompt.filter;
-    this.allowedCancel = prompt.options.allowCancel;
-    this.blocked = prompt.options.blocked;
-    this.message = prompt.message;
-    this.promptId = prompt.id;
-    this.isSecret = prompt.options.isSecret;
+  private initializePrompt() {
+    if (!this.promptValue) {
+      return;
+    }
+
+    // Reset state
+    this.cards = this.promptValue.cards;
+    this.filter = this.promptValue.filter;
+    this.allowedCancel = this.promptValue.options.allowCancel;
+    this.blocked = this.promptValue.options.blocked;
+    this.message = this.promptValue.message;
+    this.promptId = this.promptValue.id;
+    this.isSecret = this.promptValue.options.isSecret;
+    this.cardbackMap = {};
+    this.selectedCards = [];
+    this.result = [];
+    this.currentIndex = 0;
 
     // Start with invalid state if min > 0
-    this.isInvalid = prompt.options.min > 0;
+    this.isInvalid = this.promptValue.options.min > 0;
 
-    if (prompt.options.isSecret) {
-      prompt.cards.cards.forEach((c, i) => {
+    if (this.promptValue.options.isSecret) {
+      this.promptValue.cards.cards.forEach((c, i) => {
         this.cardbackMap[i] = true;
       });
     }
@@ -109,13 +99,11 @@ export class PromptChooseCardsComponent extends PromptBaseComponent implements O
     this.initializeCardItems();
   }
 
-  ngOnInit() {
-    if (this.cards && this.filter) {
-      this.initializeCardItems();
-    }
-  }
-
   private initializeCardItems() {
+    if (!this.cards || !this.cards.cards) {
+      return;
+    }
+
     // Build filter map
     this.filterMap = this.buildFilterMap(this.cards.cards, this.filter, this.blocked || []);
 
