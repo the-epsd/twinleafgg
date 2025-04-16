@@ -17,10 +17,10 @@ describe('PromptComponent', () => {
         NoopAnimationsModule,
         TranslateModule.forRoot()
       ],
-      declarations: [ PromptComponent ],
-      schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+      declarations: [PromptComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

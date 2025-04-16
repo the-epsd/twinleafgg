@@ -61,8 +61,7 @@ export class AppComponent implements OnInit {
     ).subscribe({
       next: async connected => {
         if (!connected && this.isLoggedIn) {
-          console.log('[Client Disconnect] Socket connection lost while logged in');
-          
+
           // Wait for reconnection attempts to complete
           await new Promise<void>(resolve => setTimeout(resolve, 5000));
 
@@ -75,15 +74,12 @@ export class AppComponent implements OnInit {
             this.router.navigate(['/login']);
           }
         } else if (connected) {
-          console.log('[Client Connect] Socket connection established');
         }
       }
     });
 
     document.addEventListener('visibilitychange', () => {
-      console.log('[Visibility Change] Document visibility:', document.visibilityState);
       if (document.visibilityState === 'visible' && this.isLoggedIn && !this.socketService.isEnabled) {
-        console.log('[Visibility Change] Attempting to reconnect socket');
         this.authToken$.pipe(take(1)).subscribe(authToken => {
           this.socketService.enable(authToken);
         });
