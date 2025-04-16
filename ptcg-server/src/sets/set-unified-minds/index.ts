@@ -18,6 +18,7 @@ import { Golisopod } from './golisopod';
 import { Grimsley } from './grimsley';
 import { Hapu } from './hapu';
 import { Hoopa } from './hoopa';
+import { Jynx } from './jynx';
 import { KarateBelt } from './karate-belt';
 import { KeldeoGX } from './keldeo-gx';
 import { Lickilicky } from './lickilicky';
@@ -63,6 +64,7 @@ export const setUnifiedMinds: Card[] = [
   new Grimsley(),
   new Hapu(),
   new Hoopa(),
+  new Jynx(),
   new KarateBelt(),
   new KeldeoGX(),
   new Lickilicky(),
