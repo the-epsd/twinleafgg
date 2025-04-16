@@ -19,7 +19,29 @@ export class PromptChooseCardsComponent extends PromptBaseComponent implements O
 
   @Input() set prompt(prompt: ChooseCardsPrompt) {
     this.promptValue = prompt;
-    this.initializePrompt();
+    this.cards = prompt.cards;
+    this.filter = prompt.filter;
+    this.allowedCancel = prompt.options.allowCancel;
+    this.blocked = prompt.options.blocked;
+    this.message = prompt.message;
+    this.promptId = prompt.id;
+    this.isSecret = prompt.options.isSecret;
+    this.cardbackMap = {};
+    this.selectedCards = [];
+    this.result = [];
+    this.currentIndex = 0;
+
+    // Start with invalid state if min > 0
+    this.isInvalid = prompt.options.min > 0;
+
+    if (prompt.options.isSecret) {
+      prompt.cards.cards.forEach((c, i) => {
+        this.cardbackMap[i] = true;
+      });
+    }
+
+    // Initialize card items
+    this.initializeCardItems();
   }
 
   @Input() gameState: LocalGameState;
@@ -60,11 +82,36 @@ export class PromptChooseCardsComponent extends PromptBaseComponent implements O
     private el: ElementRef
   ) {
     super(gameService, parentPrompt);
+    // Ensure we have access to the parent prompt
+    if (!parentPrompt) {
+      console.warn('PromptChooseCardsComponent initialized without parent prompt');
+    }
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.prompt && changes.prompt.currentValue) {
-      this.initializePrompt();
+    // Handle prompt changes
+    if (changes.prompt) {
+      const currentPrompt = changes.prompt.currentValue;
+      const previousPrompt = changes.prompt.previousValue;
+
+      // Only reinitialize if we have a new prompt or the prompt content has changed
+      if (currentPrompt && (!previousPrompt ||
+        currentPrompt.id !== previousPrompt.id ||
+        currentPrompt.cards !== previousPrompt.cards)) {
+        this.initializePrompt();
+      }
+    }
+
+    // Handle game state changes
+    if (changes.gameState) {
+      const currentState = changes.gameState.currentValue;
+      const previousState = changes.gameState.previousValue;
+
+      // Update validity if game state has changed
+      if (currentState && (!previousState ||
+        currentState.state !== previousState.state)) {
+        this.updateValidity();
+      }
     }
   }
 

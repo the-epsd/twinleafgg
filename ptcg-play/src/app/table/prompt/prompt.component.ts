@@ -64,9 +64,12 @@ export class PromptComponent implements OnChanges {
     const currentId = this.prompt ? this.prompt.id : -1;
 
     if (currentId !== promptId || differentGame) {
+      // Clear current prompt and animation state
       this.prompt = undefined;
-      // setTimeout, because we would like the new prompt animate before displaying
-      window.setTimeout(() => {
+      this.animationState = 'void';
+
+      // Use requestAnimationFrame instead of setTimeout for better timing
+      requestAnimationFrame(() => {
         this.prompt = prompt;
         this.minimized = false;
         this.maximize();
@@ -94,8 +97,10 @@ export class PromptComponent implements OnChanges {
       // Make the prompt visible again
       this.isPromptVisible = true;
 
-      // Trigger animation from minimize to enter
-      this.animationState = 'enter';
+      // Use requestAnimationFrame for smoother animation
+      requestAnimationFrame(() => {
+        this.animationState = 'enter';
+      });
     }
   }
 
