@@ -14,6 +14,7 @@ export * from './set-neo-discovery';
 
 //E-Card Era
 export * from './set-aquapolis';
+export * from './set-skyridge';
 
 export * from './set-best-of-game';
 
