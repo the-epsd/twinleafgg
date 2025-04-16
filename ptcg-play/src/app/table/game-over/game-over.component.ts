@@ -47,10 +47,6 @@ export class GameOverComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // Output the full game state for debugging
-    console.log('Game state in game-over component:', this.gameState);
-    console.log('Prompt:', this.prompt);
-
     // Set isPlaying and isDeleted
     this.isPlaying = this.checkPlaying(this.gameState, this.sessionService.session.clientId);
     this.isDeleted = this.gameState.deleted;
@@ -76,9 +72,6 @@ export class GameOverComponent implements OnInit {
     const state = this.gameState.state;
     const currentPlayerId = this.sessionService.session.clientId;
 
-    console.log('Current player ID:', currentPlayerId);
-    console.log('Game state:', state);
-
     // Determine winner
     if (this.prompt.winner !== GameWinner.DRAW) {
       // Handle different winner enums (PLAYER_A vs PLAYER_1)
@@ -86,12 +79,6 @@ export class GameOverComponent implements OnInit {
         (this.prompt.winner as any) === 'PLAYER_A';
       const winningPlayerId = isPlayerA ? state.players[0].id : state.players[1].id;
       this.isWinner = String(currentPlayerId) === String(winningPlayerId);
-      console.log('Winner determination:', {
-        promptWinner: this.prompt.winner,
-        isPlayerA,
-        winningPlayerId,
-        isWinner: this.isWinner
-      });
     }
 
     // Set player usernames (use ID as fallback if username not available)

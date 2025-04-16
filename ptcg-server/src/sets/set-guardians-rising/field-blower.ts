@@ -97,7 +97,7 @@ export class FieldBlower extends TrainerCard {
                 GameMessage.CHOOSE_POKEMON_TO_DISCARD_CARDS,
                 PlayerType.ANY,
                 [SlotType.ACTIVE, SlotType.BENCH],
-                { min: 1, max: max, allowCancel: false, blocked }
+                { min: 0, max: max, allowCancel: false, blocked }
               ), results => {
                 targets = results || [];
                 targets.forEach(target => {

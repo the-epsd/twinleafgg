@@ -6,21 +6,21 @@ export class Applin extends PokemonCard {
   public cardType: CardType = G;
   public hp: number = 40;
   public weakness = [{ type: R }];
-  public retreat = [ C ];
+  public retreat = [C];
 
   public attacks = [
     {
       name: 'Spray Fluid',
-      cost: [ G ],
+      cost: [G],
       damage: 20,
       text: '',
     }
   ];
 
   public regulationMark = 'H';
-  public set: string = 'PRE';
+  public set: string = 'SCR';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '9';
+  public setNumber: string = '12';
   public name: string = 'Applin';
-  public fullName: string = 'Applin PRE';
+  public fullName: string = 'Applin SCR';
 }

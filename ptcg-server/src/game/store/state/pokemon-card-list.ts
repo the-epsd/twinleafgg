@@ -4,6 +4,8 @@ import { PokemonCard } from '../card/pokemon-card';
 import { Power, Attack } from '../card/pokemon-types';
 import { CardList } from './card-list';
 import { Marker } from './card-marker';
+import { State } from './state';
+import { StateUtils } from '../state-utils';
 
 export class PokemonCardList extends CardList {
 
@@ -215,7 +217,7 @@ export class PokemonCardList extends CardList {
   }
 
   vPokemon(): boolean {
-    return this.cards.some(c => c.tags.includes(CardTag.POKEMON_V) || c.tags.includes(CardTag.POKEMON_VMAX) || c.tags.includes(CardTag.POKEMON_VSTAR));
+    return this.cards.some(c => c.tags.includes(CardTag.POKEMON_V) || c.tags.includes(CardTag.POKEMON_VMAX) || c.tags.includes(CardTag.POKEMON_VSTAR) || c.tags.includes(CardTag.POKEMON_VUNION));
   }
 
   exPokemon(): boolean {
@@ -290,6 +292,26 @@ export class PokemonCardList extends CardList {
     //   }
     //   this.tools = this.tools.filter(c => c instanceof Card);
     // }
+  }
+
+  isPlayerActive(state: State): boolean {
+    const player = state.players[state.activePlayer];
+    return player.active === this;
+  }
+
+  isOpponentActive(state: State): boolean {
+    const opponent = StateUtils.getOpponent(state, state.players[state.activePlayer]);
+    return opponent.active === this;
+  }
+
+  isPlayerBench(state: State): boolean {
+    const player = state.players[state.activePlayer];
+    return player.bench.includes(this);
+  }
+
+  isOpponentBench(state: State): boolean {
+    const opponent = StateUtils.getOpponent(state, state.players[state.activePlayer]);
+    return opponent.bench.includes(this);
   }
 
   // Override the parent CardList's moveTo method to properly handle Pokemon acting as energy

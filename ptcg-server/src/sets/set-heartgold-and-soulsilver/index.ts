@@ -10,6 +10,7 @@ import { PsychicEnergy } from './psychic-energy';
 import { FightingEnergy } from './fighting-energy';
 import { DarknessEnergy } from './darkness-energy';
 import { MetalEnergy } from './metal-energy';
+import { Ninetales } from './ninetales';
 import { Hypno } from './hypno';
 import { Pichu } from './pichu';
 import { PokemonCollector } from './pokemon-collector';
@@ -18,6 +19,7 @@ import { Quilava } from './quilava';
 import { Typhlosion } from './typhlosion';
 import { Tyrogue } from './tyrogue';
 import { Unown } from './unown';
+import { Vulpix } from './vulpix';
 
 export const setHeartGoldAndSoulSilver: Card[] = [
   new Cleffa(),
@@ -30,6 +32,7 @@ export const setHeartGoldAndSoulSilver: Card[] = [
   new Hypno(),
   new LightningEnergy(),
   new MetalEnergy(),
+  new Ninetales(),
   new Pichu(),
   new PokemonCollector(),
   new ProfessorOaksNewTheory(),
@@ -38,5 +41,6 @@ export const setHeartGoldAndSoulSilver: Card[] = [
   new Typhlosion(),
   new Tyrogue(),
   new Unown(),
+  new Vulpix(),
   new WaterEnergy(),
 ];

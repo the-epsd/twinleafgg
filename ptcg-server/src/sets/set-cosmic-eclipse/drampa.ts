@@ -9,7 +9,7 @@ export class Drampa extends PokemonCard {
   public cardType: CardType = N;
   public hp: number = 120;
   public weakness = [{ type: Y }];
-  public retreat = [C, C];
+  public retreat = [C];
 
   public attacks = [
     {
