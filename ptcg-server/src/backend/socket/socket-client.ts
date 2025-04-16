@@ -159,7 +159,7 @@ export class SocketClient implements Client {
     }
   }
 
-  public dispose(reconnect: boolean = false, newClient: SocketClient | null = null): void {
+  public dispose(): void {
     try {
       if (this._isDisposed) return;
 
@@ -173,7 +173,7 @@ export class SocketClient implements Client {
         this.matchmakingSocket.dispose();
       }
 
-      if (this.gameSocket && !reconnect) {
+      if (this.gameSocket) {
         for (const game of this.games) {
           try {
             this.core.leaveGame(this, game);
@@ -181,15 +181,7 @@ export class SocketClient implements Client {
             console.error(`[Socket] Game leave error: ${this.name} [${this.id}] - Game ${game.id} - ${error.message}`);
           }
         }
-      } else if (this.gameSocket && reconnect && newClient) {
-        for (const game of this.games) {
-          const index = game.clients.findIndex(c => c.id === this.id);
-          if (index !== -1) {
-            game.clients[index] = newClient;
-          }
-        }
       }
-
       if (this.coreSocket) {
         this.core.disconnect(this);
       }
