@@ -1,11 +1,14 @@
 import { Card } from './card.service';
+import { setCodeService } from './set-code.service';
 
 export class CardImageService {
   private static instance: CardImageService;
   private baseUrl: string;
+  private imageCache: Map<string, string>;
 
   private constructor() {
-    this.baseUrl = process.env.REACT_APP_API_URL || 'http://localhost:8080';
+    this.baseUrl = 'https://images.pokemontcg.io/';
+    this.imageCache = new Map();
   }
 
   public static getInstance(): CardImageService {
@@ -15,11 +18,22 @@ export class CardImageService {
     return CardImageService.instance;
   }
 
-  public getCardImage(card: any): string {
-    if (!card || !card.set || !card.setNumber) {
-      return '/placeholder-card.png';
+  public getCardImage(card: Card): string {
+    if (!card.set || !card.setNumber) {
+      console.warn('Invalid card data for image:', card);
+      return '';
     }
-    return `${this.baseUrl}/v1/cards/${card.set}/${card.setNumber}/image`;
+
+    const imageKey = `${card.set} ${card.setNumber}`;
+    const cachedUrl = this.imageCache.get(imageKey);
+    if (cachedUrl) {
+      return cachedUrl;
+    }
+
+    const convertedSet = setCodeService.convertSetCode(card.set);
+    const imageUrl = `${this.baseUrl}${convertedSet}/${card.setNumber}.png`;
+    this.imageCache.set(imageKey, imageUrl);
+    return imageUrl;
   }
 }
 
