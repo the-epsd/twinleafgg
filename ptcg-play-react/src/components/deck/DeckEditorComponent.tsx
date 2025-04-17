@@ -40,7 +40,7 @@ export const DeckEditorComponent: React.FC<{ deckId: number }> = ({ deckId }) =>
         cardCounts[cardName] = (cardCounts[cardName] || 0) + 1;
       });
 
-      // Find cards in allCards by fullName
+      // Find cards in allCards by name
       const items: DeckItem[] = [];
       for (const cardName of Object.keys(cardCounts)) {
         const card = allCards.find(c => c.fullName === cardName);
@@ -192,8 +192,8 @@ export const DeckEditorComponent: React.FC<{ deckId: number }> = ({ deckId }) =>
             onChange={(e) => filterCards(e.target.value)}
           />
           <div className="card-grid">
-            {displayedCards.map(card => (
-              <div key={card.id} className="card-item" onClick={() => addCard(card)}>
+            {displayedCards.map((card, index) => (
+              <div key={`card-${card.id}-${index}`} className="card-item" onClick={() => addCard(card)}>
                 <img
                   src={cardImageService.getCardImage(card)}
                   alt={card.name}
@@ -211,7 +211,7 @@ export const DeckEditorComponent: React.FC<{ deckId: number }> = ({ deckId }) =>
           <div className="deck-cards">
             {deckItems.map((item, index) => (
               <div
-                key={`${item.card.id}-${index}`}
+                key={`deck-${item.card.id}-${index}`}
                 className="deck-card"
                 onClick={() => removeCard(item.card)}
               >
