@@ -1,0 +1,144 @@
+.deck-editor {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.deck-editor .deck-info {
+  background: #2a2a2a;
+  padding: 20px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.deck-editor .deck-info h2 {
+  margin: 0;
+  color: #fff;
+}
+
+.deck-editor .deck-info button {
+  background: #4a4a4a;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.deck-editor .deck-info button:hover {
+  background: #5a5a5a;
+}
+
+.deck-editor .deck-content {
+  display: flex;
+  gap: 20px;
+}
+
+.deck-editor .card-library {
+  flex: 2;
+  background: #2a2a2a;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.deck-editor .card-library input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 20px;
+  background: #3a3a3a;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+}
+
+.deck-editor .card-library input::placeholder {
+  color: #888;
+}
+
+.deck-editor .card-library .card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 16px;
+}
+
+.deck-editor .card-library .card-item {
+  background: #3a3a3a;
+  padding: 10px;
+  border-radius: 4px;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.deck-editor .card-library .card-item:hover {
+  transform: scale(1.05);
+}
+
+.deck-editor .card-library .card-item img {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+.deck-editor .card-library .card-item span {
+  color: #fff;
+  font-size: 14px;
+}
+
+.deck-editor .deck-view {
+  flex: 1;
+  background: #2a2a2a;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.deck-editor .deck-view h3 {
+  margin: 0 0 20px 0;
+  color: #fff;
+}
+
+.deck-editor .deck-view .deck-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 16px;
+}
+
+.deck-editor .deck-view .deck-card {
+  background: #3a3a3a;
+  padding: 10px;
+  border-radius: 4px;
+  text-align: center;
+  position: relative;
+}
+
+.deck-editor .deck-view .deck-card img {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+.deck-editor .deck-view .deck-card span {
+  color: #fff;
+  font-size: 14px;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.deck-editor .deck-view .deck-card button {
+  background: #ff4444;
+  color: #fff;
+  border: none;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.deck-editor .deck-view .deck-card button:hover {
+  background: #ff5555;
+}
