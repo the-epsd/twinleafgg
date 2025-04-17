@@ -11,18 +11,11 @@
 
 <div class="ptcg-prompt">
 
-  <div class="ptcg-prompt-overlay" [ngClass]="{
-    active: isPromptVisible,
-    'fullscreen-overlay': (prompt?.type === 'Choose cards' || prompt?.type === 'Choose prize') && isPromptVisible
-  }">
+  <div class="ptcg-prompt-overlay" [ngClass]="{active: isPromptVisible}">
   </div>
 
-  <div class="ptcg-prompt-container-wrapper"
-    [ngClass]="{'fullscreen-prompt': prompt?.type === 'Choose cards' || prompt?.type === 'Choose prize'}"
-    [hidden]="!isPromptVisible">
-    <div class="ptcg-prompt-container"
-      [ngClass]="{'choose-cards-container': prompt?.type === 'Choose cards' || prompt?.type === 'Choose prize'}"
-      *ngIf="prompt" [@state]="animationState" (@state.done)="onAnimationEnd($event)">
+  <div class="ptcg-prompt-container-wrapper" [hidden]="!isPromptVisible">
+    <div class="ptcg-prompt-container" *ngIf="prompt" [@state]="animationState" (@state.done)="onAnimationEnd($event)">
       <div [ngSwitch]="prompt.type">
         <ptcg-prompt-confirm *ngSwitchCase="'Confirm'" [gameState]="gameState" [prompt]="prompt"></ptcg-prompt-confirm>
         <ptcg-prompt-alert *ngSwitchCase="'Alert'" [gameState]="gameState" [prompt]="prompt"></ptcg-prompt-alert>

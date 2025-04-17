@@ -12,6 +12,7 @@ import { StoreLike } from '../../game/store/store-like';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
+  const opponent = StateUtils.getOpponent(state, player);
 
   if (player.deck.cards.length === 0) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
@@ -28,6 +29,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   });
 
   let cards: any[] = [];
+
   if (coin1Result) {
     yield store.prompt(state, new ChooseCardsPrompt(
       player,
@@ -35,29 +37,24 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
       player.deck,
       { superType: SuperType.TRAINER, trainerType: TrainerType.ITEM },
       { min: 0, max: 1, allowCancel: false }), (selected: any[]) => {
-      cards = selected || [];
-      next();
-    });
-
-    player.deck.moveCardsTo(cards, player.hand);
-  } else {
-    return state;
+        cards = selected || [];
+        next();
+      });
+    if (cards.length > 0) {
+      player.deck.moveCardsTo(cards, player.hand);
+    }
   }
-  
-  const opponent = StateUtils.getOpponent(state, player);
-  
   yield store.prompt(state, new ShowCardsPrompt(
     opponent.id,
     GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
     cards
   ), () => state);
-  
+
   player.supporter.moveCardTo(effect.trainerCard, player.discard);
 
   return store.prompt(state, new ShuffleDeckPrompt(player.id), (order: any[]) => {
     player.deck.applyOrder(order);
   });
-
 }
 
 export class OrderPad extends TrainerCard {
@@ -81,7 +78,6 @@ export class OrderPad extends TrainerCard {
       const generator = playCard(() => generator.next(), store, state, effect);
       return generator.next().value;
     }
-
     return state;
   }
 }                         
