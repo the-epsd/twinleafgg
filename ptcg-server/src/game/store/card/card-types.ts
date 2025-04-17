@@ -23,6 +23,7 @@ export enum CardTag {
   TAG_TEAM = 'TAG_TEAM',
   TEAM_MAGMA = 'TEAM_MAGMA',
   PRISM_STAR = 'PRISM_STAR',
+  STAR = 'STAR',
   BREAK = 'BREAK',
   PRIME = 'PRIME',
   HOLO = 'HOLO',
