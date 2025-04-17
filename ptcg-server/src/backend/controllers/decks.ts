@@ -25,7 +25,8 @@ export class Decks extends Controller {
       name: deck.name,
       isValid: deck.isValid,
       cards: JSON.parse(deck.cards),
-      cardTypes: JSON.parse(deck.cardTypes)
+      cardTypes: JSON.parse(deck.cardTypes),
+      sleeveFile: deck.sleeveFile
     }));
 
     res.send({ ok: true, decks });
@@ -48,7 +49,8 @@ export class Decks extends Controller {
       name: entity.name,
       isValid: entity.isValid,
       cardTypes: JSON.parse(entity.cardTypes),
-      cards: JSON.parse(entity.cards)
+      cards: JSON.parse(entity.cards),
+      sleeveFile: entity.sleeveFile
     };
 
     res.send({ ok: true, deck });
@@ -101,6 +103,7 @@ export class Decks extends Controller {
     deck.cards = JSON.stringify(body.cards);
     deck.isValid = deckUtils.isValid();
     deck.cardTypes = JSON.stringify(deckUtils.getDeckType());
+    deck.sleeveFile = body.sleeveFile || '';
 
     try {
       deck = await deck.save();
@@ -114,7 +117,8 @@ export class Decks extends Controller {
       ok: true, deck: {
         id: deck.id,
         name: deck.name,
-        cards: body.cards
+        cards: body.cards,
+        sleeveFile: deck.sleeveFile
       }
     });
   }

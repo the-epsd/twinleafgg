@@ -4,6 +4,9 @@ import { CardsBaseService } from '../cards-base.service';
 import { SettingsService } from 'src/app/table/table-sidebar/settings-dialog/settings.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { SessionService } from '../../../shared/session/session.service';
+import { ApiService } from '../../../api/api.service';
+import { ServerConfig } from '../../../api/interfaces/config.interface';
 
 @Component({
   selector: 'ptcg-card',
@@ -16,14 +19,35 @@ export class CardComponent {
   public data: Card;
   private holoEnabled = true;
   private destroyed$ = new Subject<void>();
+  public showCardback: boolean = false;
 
   @Input() showCardName: boolean = true;
-  @Input() cardback = false;
+  @Input() set cardback(value: boolean) {
+    this._cardback = value;
+    this.updateShowCardback();
+  }
+  get cardback(): boolean {
+    return this._cardback;
+  }
+  private _cardback = false;
   @Input() placeholder = false;
   @Input() customImageUrl: string;
   @Input() set card(value: Card) {
     this.data = value;
-    this.scanUrl = this.customImageUrl || this.cardsBaseService.getScanUrl(this.data);
+    if (value) {
+      this.scanUrl = this.cardsBaseService.getScanUrl(value);
+      this.updateShowCardback();
+    }
+  }
+  @Input() set sleeveFile(fileName: string) {
+    this.updateSleeveImage(fileName);
+  }
+
+  private updateShowCardback() {
+    // Show cardback if explicitly requested or if we don't have a valid image URL
+    const hasValidImage = (this.customImageUrl && this.customImageUrl.length > 0) ||
+      (this.scanUrl && this.scanUrl.length > 0);
+    this.showCardback = this.cardback || !hasValidImage;
   }
 
   shouldShowCardName(): boolean {
@@ -32,7 +56,6 @@ export class CardComponent {
     }
     return true; // Otherwise, use the showCardName input
   }
-
 
   getCardClass(): string {
     let classes = '';
@@ -168,7 +191,9 @@ export class CardComponent {
   }
 
   constructor(private cardsBaseService: CardsBaseService,
-    private settingsService: SettingsService) {
+    private settingsService: SettingsService,
+    private sessionService: SessionService,
+    private apiService: ApiService) {
     settingsService.holoEnabled$.subscribe(enabled => this.holoEnabled = enabled);
     settingsService.showCardName$.subscribe(enabled => this.showCardName = enabled);
   }
@@ -184,5 +209,22 @@ export class CardComponent {
   ngOnDestroy(): void {
     this.destroyed$.next();
     this.destroyed$.complete();
+  }
+
+  private updateSleeveImage(fileName: string) {
+    this.updateShowCardback();
+  }
+
+  public hasValidImage(): boolean {
+    return (this.customImageUrl && this.customImageUrl.length > 0) ||
+      (this.scanUrl && this.scanUrl.length > 0);
+  }
+
+  public getImageUrl(): string {
+    return this.customImageUrl || this.scanUrl;
+  }
+
+  public onImageError() {
+    this.showCardback = true;
   }
 }

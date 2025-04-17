@@ -4,4 +4,5 @@ export * from './deck';
 export * from './match';
 export * from './message';
 export * from './replay';
+export * from './sleeve';
 export * from './user';

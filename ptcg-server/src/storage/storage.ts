@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import { Connection, createConnection, EntityManager } from 'typeorm';
-import { Avatar, Conversation, Deck, Match, Message, Replay, User } from './model';
+import { Avatar, Conversation, Deck, Match, Message, Replay, User, Sleeve } from './model';
 
 export class Storage {
 
@@ -17,7 +17,7 @@ export class Storage {
       password: process.env.STORAGE_DATABASE_PASSWORD,
       database: process.env.STORAGE_DATABASE
     };
-    
+
     this.connection = await createConnection({
       ...storageConfig,
       entities: [
@@ -27,7 +27,8 @@ export class Storage {
         Match,
         Message,
         Replay,
-        User
+        User,
+        Sleeve
       ],
       synchronize: true,
       logging: false

@@ -28,19 +28,14 @@
   }
 
   .card-container {
-    background-image: url(~src/assets/cardback.png);
+    background-image: var(--sleeve-image);
     background-repeat: no-repeat;
     background-size: 100% 100%;
+    background-position: center;
   }
 
   img {
     display: none;
-  }
-
-  .ptcg-card:after {
-    background-image: url(~src/assets/cardback.png);
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
   }
 }
 
@@ -54,6 +49,9 @@
   width: 100%;
   will-change: transform;
   transform: translateZ(0);
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
 
   &:after {
     content: "";
@@ -69,6 +67,7 @@
   position: absolute;
   top: 0;
   left: 0;
+  object-fit: cover;
 }
 
 .card-name {

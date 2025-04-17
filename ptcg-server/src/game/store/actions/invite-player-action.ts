@@ -6,7 +6,9 @@ export class InvitePlayerAction implements Action {
 
   constructor(
     public clientId: number,
-    public name: string
-  ) {}
+    public name: string,
+    public deck: string[],
+    public sleeveFile?: string
+  ) { }
 
 }

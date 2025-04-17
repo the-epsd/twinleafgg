@@ -1,9 +1,10 @@
-import { BaseEntity, Column, Entity, Unique, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn, OneToMany, Unique } from 'typeorm';
 import { Avatar } from './avatar';
 import { Deck } from './deck';
 import { Replay } from './replay';
 import { Rank, rankLevels } from '../../backend/interfaces/rank.enum';
 import { bigint } from '../transformers/bigint';
+import { Sleeve } from './sleeve';
 
 @Entity()
 @Unique(['name'])
@@ -39,14 +40,20 @@ export class User extends BaseEntity {
   @Column()
   public avatarFile: string = '';
 
+  @Column({ nullable: true })
+  public sleeveFile: string = '';
+
   @OneToMany(type => Deck, deck => deck.user)
-    decks!: Deck[];
+  decks!: Deck[];
 
   @OneToMany(type => Avatar, avatar => avatar.user)
-    avatars!: Avatar[];
+  avatars!: Avatar[];
 
   @OneToMany(type => Replay, replay => replay.user)
-    replays!: Replay[];
+  replays!: Replay[];
+
+  @OneToMany(type => Sleeve, sleeve => sleeve.user)
+  sleeves!: Sleeve[];
 
   public getRank(): Rank {
     let rank = rankLevels[0].rank;
@@ -64,5 +71,4 @@ export class User extends BaseEntity {
     await User.update(this.id, { lastSeen: this.lastSeen });
     return this;
   }
-
 }

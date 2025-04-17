@@ -14,18 +14,23 @@ $ptcg-energy-card-offset: 13%;
     padding-bottom: $card-aspect-ratio * 100%;
   }
 
-  &.face-down>div:not(.ptcg-card-counts),
+  &.face-down>div:not(.ptcg-card-counts):not(.card-container),
   &.face-down>ptcg-card {
     display: none;
   }
 
   &.face-down:after {
-    background-image: url(~src/assets/cardback.png);
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
     content: "";
     display: block;
     padding-bottom: $card-aspect-ratio * 100%;
+    background-image: var(--sleeve-image);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  &.face-down[style*="--sleeve-image"]:after {
+    background-image: var(--sleeve-image);
   }
 
   // Styles for selectable cards during board selection

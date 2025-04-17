@@ -112,6 +112,7 @@ export class CoreSocket {
       rank: user.getRank(),
       lastRankingChange: user.lastRankingChange,
       avatarFile: user.avatarFile,
+      sleeveFile: user.sleeveFile,
       roleId: user.roleId
     };
   }

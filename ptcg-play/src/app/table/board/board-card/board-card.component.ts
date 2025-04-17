@@ -1,8 +1,11 @@
-import { Component, EventEmitter, Input, Output, Inject, OnInit, OnDestroy } from '@angular/core';
-import { Card, CardList, PokemonCardList, Power, BoardEffect, SpecialCondition, StadiumDirection, SuperType, EnergyCard, CardType, PlayerType, SlotType } from 'ptcg-server';
+import { Component, EventEmitter, Input, Output, Inject, OnInit, OnDestroy, ElementRef } from '@angular/core';
+import { Card, CardList, PokemonCardList, Power, BoardEffect, SpecialCondition, StadiumDirection, SuperType, EnergyCard, CardType, PlayerType, SlotType, ServerConfig } from 'ptcg-server';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { BoardInteractionService } from '../../../shared/services/board-interaction.service';
 import { Subscription } from 'rxjs';
+import { SessionService } from '../../../shared/session/session.service';
+import { ApiService } from '../../../api/api.service';
+import { ServerConfig as ApiServerConfig } from '../../../api/interfaces/config.interface';
 
 const MAX_ENERGY_CARDS = 8;
 
@@ -168,9 +171,33 @@ export class BoardCardComponent implements OnInit, OnDestroy {
     }
   }
 
+  @Input() set sleeveFile(fileName: string) {
+    this._sleeveFile = fileName;
+    const config = this.sessionService.session.config as ApiServerConfig;
+    const sleeveUrl = config && config.sleevesUrl || '';
+    const apiUrl = this.apiService.getApiUrl();
+
+    if (!fileName) {
+      // Use the default cardback from the server's sleeves directory
+      const defaultCardbackUrl = apiUrl + sleeveUrl.replace('{name}', 'cardback.png');
+      this.elementRef.nativeElement.style.setProperty('--sleeve-image', `url(${defaultCardbackUrl})`);
+      return;
+    }
+
+    const sleeveImageUrl = apiUrl + sleeveUrl.replace('{name}', fileName);
+    this.elementRef.nativeElement.style.setProperty('--sleeve-image', `url(${sleeveImageUrl})`);
+  }
+  get sleeveFile(): string {
+    return this._sleeveFile;
+  }
+  private _sleeveFile: string;
+
   constructor(
     private dialog: MatDialog,
-    private boardInteractionService: BoardInteractionService
+    private boardInteractionService: BoardInteractionService,
+    private sessionService: SessionService,
+    private apiService: ApiService,
+    private elementRef: ElementRef
   ) {
     this.cardTarget = { player: undefined, slot: undefined, index: 0 };
   }
@@ -315,6 +342,22 @@ export class BoardCardComponent implements OnInit, OnDestroy {
     //   });
     // } else {
     this.cardClick.emit(card);
+  }
+
+  private updateSleeveImage() {
+    const config = this.sessionService.session.config as ApiServerConfig;
+    const sleeveUrl = config && config.sleevesUrl || '';
+    const apiUrl = this.apiService.getApiUrl();
+
+    if (!this._sleeveFile) {
+      // Use the default cardback from the server's sleeves directory
+      const defaultCardbackUrl = apiUrl + sleeveUrl.replace('{name}', 'cardback.png');
+      this.elementRef.nativeElement.style.setProperty('--sleeve-image', `url(${defaultCardbackUrl})`);
+      return;
+    }
+
+    const sleeveImageUrl = apiUrl + sleeveUrl.replace('{name}', this._sleeveFile);
+    this.elementRef.nativeElement.style.setProperty('--sleeve-image', `url(${sleeveImageUrl})`);
   }
 }
 

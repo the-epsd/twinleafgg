@@ -1,0 +1,26 @@
+<div class="ptcg-select-sleeve">
+  <div class="ptcg-select-sleeve-header">
+    <h2 mat-dialog-title>{{ 'DECK_EDIT_SELECT_SLEEVE' | translate }}</h2>
+  </div>
+
+  <mat-dialog-content>
+    <div class="ptcg-select-sleeve-content">
+      <div class="ptcg-select-sleeve-grid">
+        <!-- Predefined Sleeves -->
+        <div class="ptcg-select-sleeve-item" *ngFor="let sleeve of sleeves">
+          <div class="ptcg-select-sleeve-card" [class.selected]="(defaultSleeve$ | async) === sleeve.fileName"
+            (click)="selectSleeve(sleeve)">
+            <div class="ptcg-select-sleeve-image"
+              [style.background-image]="'url(' + getSleeveUrl(sleeve.fileName) + ')'">
+            </div>
+            <div class="ptcg-select-sleeve-name">{{ sleeve.name }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>{{ 'BUTTON_CANCEL' | translate }}</button>
+  </mat-dialog-actions>
+</div>

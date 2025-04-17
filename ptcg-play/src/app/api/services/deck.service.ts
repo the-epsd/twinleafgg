@@ -15,7 +15,7 @@ export class DeckService {
   constructor(
     private api: ApiService,
     private cardsBaseService: CardsBaseService
-  ) {}
+  ) { }
 
   public getList() {
     return this.api.get<DeckListResponse>('/v1/decks/list');
@@ -54,11 +54,12 @@ export class DeckService {
     });
   }
 
-  public saveDeck(deckId: number, name: string, cards: string[]) {
+  public saveDeck(deckId: number, name: string, cards: string[], sleeveFile?: string) {
     return this.api.post<DeckResponse>('/v1/decks/save', {
       id: deckId,
       name,
-      cards
+      cards,
+      sleeveFile
     });
   }
 

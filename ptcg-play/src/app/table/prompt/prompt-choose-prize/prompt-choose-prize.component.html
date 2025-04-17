@@ -20,12 +20,12 @@
         <div class="ptcg-prizes-grid" [attr.data-revealed]="revealed">
           <div *ngFor="let prize of prizes; let i = index" class="ptcg-prize-slot" [class.selected]="isPrizeSelected(i)"
             [class.empty]="!prize || prize.cards.length === 0" (click)="onPrizeClick(prize, i)">
-            <div class="prize-number">{{[5,6,3,4,1,2][i]}}</div>
             <ptcg-board-card *ngIf="prize && prize.cards.length > 0" [cardList]="prize"
               [showCardBack]="!revealed && prize.isSecret" [attr.data-revealed]="revealed"
               [attr.data-toggle-count]="revealToggleCount">
             </ptcg-board-card>
             <div *ngIf="!prize || prize.cards.length === 0" class="ptcg-empty-prize-slot"></div>
+            <div class="prize-number" *ngIf="prize && prize.cards.length > 0">{{getPrizeNumber(i)}}</div>
           </div>
         </div>
       </div>

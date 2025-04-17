@@ -14,6 +14,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TypeIconsModule } from '../shared/type-icons/type-icons.module';
 import { DeckCardDialogComponent } from './deck-card-dialog/deck-card-dialog.component';
 import { DeckValidityModule } from '../shared/deck-validity/deck-validity.module';
+import { SelectSleeveComponent } from './select-sleeve/select-sleeve.component';
 
 @NgModule({
   imports: [
@@ -25,7 +26,8 @@ import { DeckValidityModule } from '../shared/deck-validity/deck-validity.module
     TypeIconsModule
   ],
   entryComponents: [
-    ImportDeckPopupComponent
+    ImportDeckPopupComponent,
+    SelectSleeveComponent
   ],
   declarations: [
     DeckCardComponent,
@@ -36,7 +38,8 @@ import { DeckValidityModule } from '../shared/deck-validity/deck-validity.module
     DeckEditPanesComponent,
     DeckEditInfoComponent,
     ImportDeckPopupComponent,
-    DeckCardDialogComponent
+    DeckCardDialogComponent,
+    SelectSleeveComponent
   ]
 })
 export class DeckModule { }

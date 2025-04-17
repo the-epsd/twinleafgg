@@ -1,12 +1,14 @@
 import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
 import { UntilDestroy } from '@ngneat/until-destroy';
+import { MatDialog } from '@angular/material/dialog';
 
 import { Deck } from '../../api/interfaces/deck.interface';
 import { DeckEditToolbarFilter } from './deck-edit-toolbar-filter.interface';
 import { ControlContainer, FormBuilder, FormGroupDirective } from '@angular/forms';
 import { filter, map, shareReplay, startWith, tap } from 'rxjs/operators';
 import { merge } from 'rxjs';
-import { CardTag, CardType, EnergyType, Format, Stage, SuperType, TrainerType } from 'ptcg-server';
+import { CardTag, CardType, EnergyType, Format, Stage, SuperType, TrainerType, SleeveInfo } from 'ptcg-server';
+import { SelectSleeveComponent } from '../select-sleeve/select-sleeve.component';
 
 @UntilDestroy()
 @Component({
@@ -219,7 +221,7 @@ export class DeckEditToolbarComponent implements OnDestroy {
     this.onFormChange$,
   ).subscribe();
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder, private dialog: MatDialog) { }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
@@ -311,6 +313,23 @@ export class DeckEditToolbarComponent implements OnDestroy {
 
   public exportToFile() {
     this.export.next();
+  }
+
+  openSleeveSelector() {
+    this.dialog.open(SelectSleeveComponent, {
+      maxWidth: '100%',
+      width: '565px',
+      autoFocus: false
+    }).afterClosed().subscribe((sleeve: SleeveInfo) => {
+      if (sleeve) {
+        console.log('Selected sleeve:', sleeve);
+        // Update the deck's sleeve
+        if (this.deck) {
+          this.deck.sleeveFile = sleeve.fileName;
+          this.save.emit();
+        }
+      }
+    });
   }
 
 }

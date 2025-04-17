@@ -25,6 +25,7 @@ export interface Deck {
   format: Format[];
   isValid: boolean;
   cards: string[];
+  sleeveFile?: string;
 }
 
 export interface DeckResponse extends Response {

@@ -120,7 +120,7 @@
 
       <span class="ptcg-u-spacer"></span>
 
-      <button class="green-button" mat-raised-button (click)="onSave()" [routerLink]="['/deck']">
+      <button class="green-button" mat-raised-button [routerLink]="['/deck']">
         <!-- <mat-icon>arrow_back</mat-icon> -->
         <span translate>DECK_EDIT_BACK</span>
       </button>
@@ -138,6 +138,10 @@
 
       <button mat-raised-button class="green-button" (click)="onSave()">
         {{ 'BUTTON_SAVE' | translate }}
+      </button>
+
+      <button mat-icon-button (click)="openSleeveSelector()">
+        <mat-icon>style</mat-icon>
       </button>
 
     </mat-toolbar-row>

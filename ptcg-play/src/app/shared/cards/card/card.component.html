@@ -1,8 +1,9 @@
 <div class="ptcg-card" *ngIf="data">
-  <span class="card-name" *ngIf="showCardName && !this.cardback">{{data.name}}</span>
-  <div class="card-container" [class]="getCardClass()">
-    <img *ngIf="customImageUrl" class="ptcg-card-scan" [src]="customImageUrl" alt="Card Image" draggable="false">
-    <img *ngIf="!customImageUrl" class="ptcg-card-scan" [src]="scanUrl" alt="Card Image" draggable="false">
+  <span class="card-name" *ngIf="showCardName && !showCardback">{{data.name}}</span>
+  <div class="card-container">
+    <img *ngIf="!showCardback && ((customImageUrl && customImageUrl.length > 0) || (scanUrl && scanUrl.length > 0))"
+      class="ptcg-card-scan" [src]="customImageUrl || scanUrl" alt="Card Image" draggable="false"
+      (error)="onImageError()">
     <div class="holo-overlay"></div>
   </div>
   <ng-content></ng-content>

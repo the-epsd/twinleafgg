@@ -3,6 +3,7 @@ export interface ServerConfig {
   defaultPageSize: number;
   scansUrl: string;
   avatarsUrl: string;
+  sleevesUrl: string;
   avatarFileSize: number;
   avatarMinSize: number;
   avatarMaxSize: number;

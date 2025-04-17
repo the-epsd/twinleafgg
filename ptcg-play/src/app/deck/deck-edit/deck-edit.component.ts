@@ -282,13 +282,11 @@ export class DeckEditComponent implements OnInit {
     const items = this.deckItems.flatMap(item => Array(item.count).fill(item.card.fullName));
 
     this.loading = true;
-    this.deckService.saveDeck(this.deck.id, this.deck.name, items).pipe(
+    this.deckService.saveDeck(this.deck.id, this.deck.name, items, this.deck.sleeveFile).pipe(
       finalize(() => { this.loading = false; }),
       untilDestroyed(this)
     ).subscribe(() => {
       this.alertService.toast(this.translate.instant('DECK_EDIT_SAVED'));
-      // Consider using a less intrusive notification for incremental saves
-      // console.log('Deck saved incrementally');
     }, (error: ApiError) => {
       if (!error.handled) {
         this.alertService.toast(this.translate.instant('ERROR_UNKNOWN'));

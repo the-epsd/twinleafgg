@@ -31,4 +31,8 @@ export class BoardPrizesComponent implements OnChanges {
     this.prizeClick.next(cardList);
   }
 
+  public getPrizeNumber(index: number): number {
+    return [5, 6, 3, 4, 1, 2][index];
+  }
+
 }

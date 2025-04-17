@@ -18,6 +18,7 @@ import { ReplayService } from './services/replay.service';
 import { ResetPasswordService } from './services/reset-password.service';
 import { SharedModule } from '../shared/shared.module';
 import { SocketService } from './socket.service';
+import { SleeveService } from './services/sleeve.service';
 
 @NgModule({
   imports: [
@@ -39,7 +40,8 @@ import { SocketService } from './socket.service';
     RankingService,
     ReplayService,
     ResetPasswordService,
-    SocketService
+    SocketService,
+    SleeveService
   ]
 })
 export class ApiModule {

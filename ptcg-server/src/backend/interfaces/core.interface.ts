@@ -50,5 +50,6 @@ export interface UserInfo {
   rank: Rank;
   lastRankingChange: number;
   avatarFile: string;
+  sleeveFile: string;
   roleId: number;
 }

@@ -5,7 +5,6 @@ import { GameError } from '../game-error';
 import { GameMessage } from '../game-message';
 import { Game } from './game';
 import { GameSettings } from './game-settings';
-import { InvitePlayerAction } from '../store/actions/invite-player-action';
 import { Messager } from './messager';
 import { RankingCalculator } from './ranking-calculator';
 import { Scheduler, generateId } from '../../utils';
@@ -14,6 +13,7 @@ import { Format } from '../store/card/card-types';
 import { AbortGameAction } from '../store/actions/abort-game-action';
 import { AbortGameReason } from '../store/actions/abort-game-action';
 import { GamePhase } from '../store/state/state';
+import { InvitePlayerAction } from '../store/actions/invite-player-action';
 
 export class Core {
   public clients: Client[] = [];
@@ -84,9 +84,10 @@ export class Core {
       gameSettings.rules.firstTurnDrawCard = false;
     }
     const game = new Game(this, generateId(this.games), gameSettings);
-    game.dispatch(client, new AddPlayerAction(client.id, client.name, deck));
+    const deckSleeve = client.user.decks.find(d => JSON.stringify(JSON.parse(d.cards)) === JSON.stringify(deck))?.sleeveFile;
+    game.dispatch(client, new AddPlayerAction(client.id, client.name, deck, deckSleeve || client.user.sleeveFile));
     if (invited) {
-      game.dispatch(client, new InvitePlayerAction(invited.id, invited.name));
+      game.dispatch(client, new InvitePlayerAction(invited.id, invited.name, [], invited.user.sleeveFile));
     }
     this.games.push(game);
     this.emit(c => c.onGameAdd(game));
@@ -115,8 +116,10 @@ export class Core {
     }
 
     const game = new Game(this, generateId(this.games), gameSettings);
-    game.dispatch(client, new AddPlayerAction(client.id, client.name, deck));
-    game.dispatch(client, new AddPlayerAction(client2.id, client2.name, deck2));
+    const deck1Sleeve = client.user.decks.find(d => JSON.stringify(JSON.parse(d.cards)) === JSON.stringify(deck))?.sleeveFile;
+    const deck2Sleeve = client2.user.decks.find(d => JSON.stringify(JSON.parse(d.cards)) === JSON.stringify(deck2))?.sleeveFile;
+    game.dispatch(client, new AddPlayerAction(client.id, client.name, deck, deck1Sleeve || client.user.sleeveFile));
+    game.dispatch(client, new AddPlayerAction(client2.id, client2.name, deck2, deck2Sleeve || client2.user.sleeveFile));
     this.games.push(game);
     this.emit(c => c.onGameAdd(game));
     this.joinGame(client, game);
@@ -154,22 +157,40 @@ export class Core {
   }
 
   public leaveGame(client: Client, game: Game): void {
-    if (this.clients.indexOf(client) === -1) {
-      throw new GameError(GameMessage.ERROR_CLIENT_NOT_CONNECTED);
-    }
-    if (this.games.indexOf(game) === -1) {
-      throw new GameError(GameMessage.ERROR_GAME_NOT_FOUND);
-    }
-    const gameIndex = client.games.indexOf(game);
-    const clientIndex = game.clients.indexOf(client);
-    if (clientIndex !== -1 && gameIndex !== -1) {
-      client.games.splice(gameIndex, 1);
-      game.clients.splice(clientIndex, 1);
-      this.emit(c => c.onGameLeave(game, client));
-      game.handleClientLeave(client);
-    }
-    if (game.clients.length === 0) {
-      this.deleteGame(game);
+    try {
+      if (this.clients.indexOf(client) === -1) {
+        console.log(`[Core LeaveGame] Client not found for user ${client.user.name} (${client.user.id})`);
+        return;
+      }
+
+      if (this.games.indexOf(game) === -1) {
+        console.log(`[Core LeaveGame] Game not found for user ${client.user.name} (${client.user.id})`);
+        return;
+      }
+
+      const gameIndex = client.games.indexOf(game);
+      const clientIndex = game.clients.indexOf(client);
+
+      if (clientIndex !== -1 && gameIndex !== -1) {
+        console.log(`[Core LeaveGame] User ${client.user.name} (${client.user.id}) leaving game ${game.id}`);
+
+        client.games.splice(gameIndex, 1);
+        game.clients.splice(clientIndex, 1);
+        this.emit(c => c.onGameLeave(game, client));
+
+        // Only handle client leave if the game is still active
+        if (game.state.phase !== GamePhase.FINISHED) {
+          game.handleClientLeave(client);
+        }
+      }
+
+      // Only delete the game if all clients have left and it's not in progress
+      if (game.clients.length === 0 && game.state.phase === GamePhase.FINISHED) {
+        console.log(`[Core LeaveGame] Deleting finished game ${game.id} with no remaining clients`);
+        this.deleteGame(game);
+      }
+    } catch (error) {
+      console.error(`[Core LeaveGame Error] Error handling game leave for user ${client.user.name}:`, error);
     }
   }
 

@@ -158,6 +158,10 @@ export class PromptChoosePrizeComponent extends PromptBaseComponent implements O
     return nonEmptyPrizeIndex !== undefined && this.result.indexOf(nonEmptyPrizeIndex) !== -1;
   }
 
+  public getPrizeNumber(index: number): number {
+    return [5, 6, 3, 4, 1, 2][index];
+  }
+
   // Keep this for backward compatibility
   public onChange(result: number[]) {
     const count = this.prompt.options.count;

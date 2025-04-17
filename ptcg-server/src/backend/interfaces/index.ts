@@ -7,3 +7,4 @@ export * from './profile.interface';
 export * from './rank.enum';
 export * from './ranking.interface';
 export * from './replay.interface';
+export * from './sleeve.interface';

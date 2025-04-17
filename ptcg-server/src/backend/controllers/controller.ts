@@ -37,6 +37,7 @@ export abstract class Controller {
       lastSeen: user.lastSeen,
       lastRankingChange: user.lastRankingChange,
       avatarFile: user.avatarFile,
+      sleeveFile: user.sleeveFile,
       connected,
       roleId: user.roleId
     };

@@ -237,10 +237,11 @@ export function* setupGame(next: Function, store: StoreLike, state: State): Iter
   return initNextTurn(store, state);
 }
 
-function createPlayer(id: number, name: string): Player {
+function createPlayer(id: number, name: string, sleeveFile?: string): Player {
   const player = new Player();
   player.id = id;
   player.name = name;
+  player.sleeveFile = sleeveFile || '';
 
   // Empty prizes, places for 6 cards
   for (let i = 0; i < 6; i++) {
@@ -282,7 +283,7 @@ export function setupPhaseReducer(store: StoreLike, state: State, action: Action
         throw new GameError(GameMessage.INVALID_DECK);
       }
 
-      const player = createPlayer(action.clientId, action.name);
+      const player = createPlayer(action.clientId, action.name, action.sleeveFile);
       player.deck = CardList.fromList(action.deck);
       player.deck.isSecret = true;
       player.deck.cards.forEach(c => {
@@ -310,7 +311,7 @@ export function setupPhaseReducer(store: StoreLike, state: State, action: Action
         throw new GameError(GameMessage.ALREADY_PLAYING);
       }
 
-      const player = createPlayer(action.clientId, action.name);
+      const player = createPlayer(action.clientId, action.name, action.sleeveFile);
       state.players.push(player);
 
       state = store.prompt(state, new InvitePlayerPrompt(

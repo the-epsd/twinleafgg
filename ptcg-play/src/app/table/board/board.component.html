@@ -26,7 +26,7 @@
       <div class="ptcg-board-row ptcg-board-active">
         <ptcg-board-card [cardList]="topPlayer?.active" [owner]="topPlayer?.id === clientId"
           (cardClick)="onCardClick($event, topPlayer?.active)" [player]="PlayerType.TOP_PLAYER" [slot]="SlotType.ACTIVE"
-          [index]="0">
+          [index]="0" [sleeveFile]="topPlayer?.sleeveFile">
         </ptcg-board-card>
       </div>
 
@@ -35,7 +35,7 @@
         <ptcg-board-card *ngFor="let slot of topBench
         | slice:0:(topPlayer?.bench.length || defaultBenchSize); index as i" [cardList]="topPlayer?.bench[i]"
           [owner]="topPlayer?.id === clientId" (cardClick)="onCardClick($event, topPlayer?.bench[i])"
-          [player]="PlayerType.TOP_PLAYER" [slot]="SlotType.BENCH" [index]="i">
+          [player]="PlayerType.TOP_PLAYER" [slot]="SlotType.BENCH" [index]="i" [sleeveFile]="topPlayer?.sleeveFile">
         </ptcg-board-card>
       </div>
 
@@ -43,7 +43,7 @@
       <div class="ptcg-board-row ptcg-board-supporter">
         <ptcg-board-card class="lost-zone" [cardList]="topPlayer?.lostzone" [owner]="topPlayer?.id === clientId"
           (cardClick)="onLostZoneClick($event, topPlayer?.lostzone)" showCardCount="true"
-          [style.transform]="'rotate(90deg)'">
+          [style.transform]="'rotate(90deg)'" [sleeveFile]="topPlayer?.sleeveFile">
         </ptcg-board-card>
       </div>
 
@@ -57,7 +57,7 @@
       <!-- Top Supporter -->
       <div class="ptcg-board-row ptcg-board-stadium">
         <ptcg-board-card [cardList]="topPlayer?.supporter" [owner]="topPlayer?.id === clientId"
-          (cardClick)="onCardClick($event, null)">
+          (cardClick)="onCardClick($event, null)" [sleeveFile]="topPlayer?.sleeveFile">
         </ptcg-board-card>
       </div>
 
@@ -66,7 +66,7 @@
         <div class="deck-container">
           <ng-container *ngFor="let i of createRange(topPlayer?.deck?.cards?.length || 0); let idx = index">
             <ptcg-board-card (click)="onDeckClick($event, topPlayer?.deck)" [cardList]="topPlayer?.deck"
-              [owner]="topPlayer" class="deck-card"
+              [owner]="topPlayer" class="deck-card" [sleeveFile]="topPlayer?.sleeveFile"
               [style.transform]="'translate(' + (idx * 0.25) + 'px, ' + (idx * 0.25) + 'px)'">
             </ptcg-board-card>
           </ng-container>
@@ -79,7 +79,7 @@
         <div class="discard-container">
           <ng-container *ngFor="let i of createRange(topPlayer?.discard?.cards?.length || 0); let idx = index">
             <ptcg-board-card (click)="onDiscardClick($event, topPlayer?.discard)" [cardList]="topPlayer?.discard"
-              [owner]="topPlayer" class="discard-card"
+              [owner]="topPlayer" class="discard-card" [sleeveFile]="topPlayer?.sleeveFile"
               [style.transform]="'translate(' + (idx * 0.25) + 'px, ' + (idx * 0.25) + 'px)'">
             </ptcg-board-card>
           </ng-container>
@@ -119,7 +119,8 @@
             [class.draggable]="!gameState.deleted && bottomPlayer?.id === clientId && bottomPlayer?.active.cards.length > 0"
             [dragSource]="bottomActive.source" [noHTML5Preview]="true" [cardList]="bottomPlayer?.active"
             [owner]="bottomPlayer?.id === clientId" (cardClick)="onActiveClick($event, bottomPlayer?.active)"
-            [player]="PlayerType.BOTTOM_PLAYER" [slot]="SlotType.ACTIVE" [index]="0">
+            [player]="PlayerType.BOTTOM_PLAYER" [slot]="SlotType.ACTIVE" [index]="0"
+            [sleeveFile]="bottomPlayer?.sleeveFile">
           </ptcg-board-card>
         </div>
       </div>
@@ -134,7 +135,8 @@
             [dragSource]="slot.source" [noHTML5Preview]="true" [cardList]="bottomPlayer?.bench[slot.index]"
             [owner]="bottomPlayer?.id === clientId"
             (cardClick)="onBenchClick($event, bottomPlayer?.bench[slot.index], slot.index)"
-            [player]="PlayerType.BOTTOM_PLAYER" [slot]="SlotType.BENCH" [index]="slot.index">
+            [player]="PlayerType.BOTTOM_PLAYER" [slot]="SlotType.BENCH" [index]="slot.index"
+            [sleeveFile]="bottomPlayer?.sleeveFile">
           </ptcg-board-card>
         </div>
       </div>
@@ -142,7 +144,8 @@
       <!-- Bottom Lost Zone -->
       <div class="ptcg-board-row ptcg-board-stadium">
         <ptcg-board-card class="lost-zone" [cardList]="bottomPlayer?.lostzone" [owner]="bottomPlayer?.id === clientId"
-          (cardClick)="onLostZoneClick($event, bottomPlayer?.lostzone)" showCardCount="true">
+          (cardClick)="onLostZoneClick($event, bottomPlayer?.lostzone)" showCardCount="true"
+          [sleeveFile]="bottomPlayer?.sleeveFile">
         </ptcg-board-card>
       </div>
 
@@ -156,7 +159,7 @@
       <!-- Bottom Supporter -->
       <div class="ptcg-board-row ptcg-board-supporter">
         <ptcg-board-card [cardList]="bottomPlayer?.supporter" [owner]="bottomPlayer?.id === clientId"
-          (cardClick)="onCardClick($event, null)">
+          (cardClick)="onCardClick($event, null)" [sleeveFile]="bottomPlayer?.sleeveFile">
         </ptcg-board-card>
       </div>
 
@@ -165,7 +168,7 @@
         <div class="deck-container">
           <ng-container *ngFor="let i of createRange(bottomPlayer?.deck?.cards?.length || 0); let idx = index">
             <ptcg-board-card (click)="onDeckClick($event, bottomPlayer?.deck)" [cardList]="bottomPlayer?.deck"
-              [owner]="bottomPlayer" class="deck-card"
+              [owner]="bottomPlayer" class="deck-card" [sleeveFile]="bottomPlayer?.sleeveFile"
               [style.transform]="'translate(' + (idx * 0.25) + 'px, ' + (-idx * 0.25) + 'px)'">
             </ptcg-board-card>
           </ng-container>
@@ -178,7 +181,7 @@
         <div class="discard-container">
           <ng-container *ngFor="let i of createRange(bottomPlayer?.discard?.cards?.length || 0); let idx = index">
             <ptcg-board-card (click)="onDiscardClick($event, bottomPlayer?.discard)" [cardList]="bottomPlayer?.discard"
-              [owner]="bottomPlayer" class="discard-card"
+              [owner]="bottomPlayer" class="discard-card" [sleeveFile]="bottomPlayer?.sleeveFile"
               [style.transform]="'translate(' + (idx * 0.25) + 'px, ' + (-idx * 0.25) + 'px)'">
             </ptcg-board-card>
           </ng-container>

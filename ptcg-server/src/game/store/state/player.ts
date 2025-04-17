@@ -46,6 +46,8 @@ export class Player {
 
   avatarName: string = '';
 
+  sleeveFile: string = '';
+
   usedVSTAR: boolean = false;
 
   usedGX: boolean = false;

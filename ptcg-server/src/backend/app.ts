@@ -20,6 +20,7 @@ import {
   Ranking,
   Replays,
   ResetPassword,
+  Sleeves,
 } from './controllers';
 
 export class App {
@@ -57,11 +58,13 @@ export class App {
     define('/v1/ranking', Ranking);
     define('/v1/replays', Replays);
     define('/v1/resetPassword', ResetPassword);
+    define('/v1/sleeves', Sleeves);
 
     if (config.sets.scansDir) {
       app.use('/scans', express.static(config.sets.scansDir));
     }
     app.use('/avatars', express.static(config.backend.avatarsDir));
+    app.use('/sleeves', express.static(config.backend.sleevesDir));
 
     app.use((err: any, req: any, res: any, next: any) => {
       // Handle request aborted errors
