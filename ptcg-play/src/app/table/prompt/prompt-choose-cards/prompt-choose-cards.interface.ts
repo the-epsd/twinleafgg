@@ -7,11 +7,3 @@ export interface PromptSortable {
   list: PromptItem[];
   tempList: PromptItem[];
 }
-
-export interface PromptCardItem extends PromptItem {
-  showButtons?: boolean;
-  originalIndex?: number;
-  element?: HTMLElement;
-  isLeftSide?: boolean;
-  isLeftBack?: boolean;
-}

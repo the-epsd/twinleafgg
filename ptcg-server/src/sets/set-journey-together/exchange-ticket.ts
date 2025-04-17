@@ -14,7 +14,7 @@ export class RedeemableTicket extends TrainerCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '90';
+  public setNumber: string = '156';
 
   public fullName: string = 'Redeemable Ticket JTG';
 

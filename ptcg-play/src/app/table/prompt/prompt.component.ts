@@ -20,16 +20,9 @@ export class PromptComponent implements OnChanges {
   @Input() clientId: number;
 
   public isPromptVisible = false;
-
-  /** State of the dialog animation. */
-  public animationState: 'void' | 'enter' | 'exit' | 'minimize' | 'confirm' = 'void';
-
+  public animationState: 'void' | 'enter' | 'exit' = 'void';
   public prompt: Prompt<any>;
-
   public minimized = false;
-
-  // Store the prompt action to be executed after animation completes
-  // private pendingPromptAction: { gameId: number, promptId: number, result: any } | null = null;
 
   constructor(private gameService: GameService) { }
 
@@ -64,12 +57,9 @@ export class PromptComponent implements OnChanges {
     const currentId = this.prompt ? this.prompt.id : -1;
 
     if (currentId !== promptId || differentGame) {
-      // Clear current prompt and animation state
       this.prompt = undefined;
-      this.animationState = 'void';
-
-      // Use requestAnimationFrame instead of setTimeout for better timing
-      requestAnimationFrame(() => {
+      // setTimeout, because we would like the new prompt animate before displaying
+      window.setTimeout(() => {
         this.prompt = prompt;
         this.minimized = false;
         this.maximize();
@@ -81,63 +71,28 @@ export class PromptComponent implements OnChanges {
     }
   }
 
-  public minimize() {
-    // Start minimize animation before actually setting minimized state
-    this.animationState = 'minimize';
-    // Since animation is now immediate, set minimized state right away
-    this.gameService.setPromptMinimized(this.gameState.localId, true);
-    // No need for animation on the minimize button
-  }
-
   public maximize() {
     if (this.gameState.promptMinimized) {
-      // Update the game state
       this.gameService.setPromptMinimized(this.gameState.localId, false);
-
-      // Make the prompt visible again
-      this.isPromptVisible = true;
-
-      // Use requestAnimationFrame for smoother animation
-      requestAnimationFrame(() => {
-        this.animationState = 'enter';
-      });
     }
-  }
-
-  /**
-   * Play confirm animation before resolving prompt
-   */
-  public animateAndResolvePrompt(gameId: number, promptId: number, result: any) {
-    // Since animation is now immediate, resolve prompt right away
-    this.gameService.resolvePrompt(gameId, promptId, result);
-    // Set animation state last to ensure proper onAnimationEnd behavior
-    this.animationState = 'confirm';
   }
 
   /** Callback, invoked whenever an animation on the host completes. */
   public onAnimationEnd(event: AnimationEvent) {
-    // If exiting or void state and prompt is gone/minimized, hide the prompt
-    const toExitState = event.toState === 'exit' || event.toState === 'void' ||
-      event.toState === 'minimize' || event.toState === 'confirm';
+    const toExitState = event.toState === 'exit' || event.toState === 'void';
     const isNotVisible = this.prompt === undefined || this.minimized;
-
     if (toExitState && isNotVisible) {
       this.isPromptVisible = false;
     }
   }
 
-  /** Starts the dialog enter/exit animation. */
+  /** Starts the dialog enter animation. */
   private toggle(value: boolean): void {
     if (this.animationState !== 'enter' && value === true) {
       this.isPromptVisible = true;
       this.animationState = 'enter';
     } else if (this.animationState !== 'exit' && value === false) {
-      // If already minimized, don't animate exit again
-      if (this.minimized) {
-        this.isPromptVisible = false;
-      } else {
-        this.animationState = 'exit';
-      }
+      this.animationState = 'exit';
     }
   }
 
@@ -146,5 +101,4 @@ export class PromptComponent implements OnChanges {
     // The new game over screen is now handled directly by the table component
     return undefined;
   }
-
 }

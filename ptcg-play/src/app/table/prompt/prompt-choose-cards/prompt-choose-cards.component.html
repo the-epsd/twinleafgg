@@ -1,91 +1,17 @@
 <div class="ptcg-prompt-title">
   <h2 translate>PROMPT_CHOOSE_CARDS_TITLE</h2>
   <div class="ptcg-u-spacer"></div>
-  <button mat-button mat-icon-button (click)="minimizeWithAnimation()">
+  <button mat-button mat-icon-button (click)="minimize()">
     <mat-icon>keyboard_arrow_down</mat-icon>
   </button>
 </div>
 
-<div class="prompt-choose-cards">
-  <div class="prompt-header">
-    <div class="prompt-tabs">
-      <button *ngFor="let tab of tabs" [class.active]="currentTab === tab" (click)="onTabChange(tab)"
-        class="tab-button">
-        {{ tab }}
-      </button>
-    </div>
-  </div>
-</div>
-
-<!-- Top Pane - Carousel -->
-<div class="carousel-container" (wheel)="onWheel($event)">
-  <button mat-icon-button class="nav-button prev-button" (click)="previousCards()" [disabled]="currentIndex === 0">
-    <mat-icon>chevron_left</mat-icon>
-  </button>
-
-  <div class="cards-carousel">
-    <ng-container *ngFor="let card of visibleCards; let i = index">
-      <ptcg-card [card]="card.card" [attr.data-quantity]="card.quantity > 1 ? card.quantity : ''" [ngClass]="{
-          'card-main': !card.isLeftSide && (currentIndex > 1 ? i === 2 : currentIndex > 0 ? i === 1 : i === 0),
-          'card-side-left': card.isLeftSide && !card.isLeftBack,
-          'card-side-left-back': card.isLeftSide && card.isLeftBack,
-          'card-side': !card.isLeftSide && (currentIndex > 1 ? i === 3 : currentIndex > 0 ? i === 2 : i === 1),
-          'card-back': !card.isLeftSide && (currentIndex > 1 ? i === 4 : currentIndex > 0 ? i === 3 : i === 2),
-          'card-exit': !card.isLeftSide && i > (currentIndex > 1 ? 4 : currentIndex > 0 ? 3 : 2),
-          'unavailable': !filterMap[card.card.fullName]
-        }" (click)="toggleCardSelection(card, $event)" (mouseenter)="card.showButtons = true"
-        (mouseleave)="card.showButtons = false">
-
-        <button mat-mini-fab color="primary"
-          *ngIf="card.showButtons && !cardbackMap[card.index] && !promptValue?.options?.isSecret && filterMap[card.card.fullName]"
-          class="inspect-button" (click)="showCardInfo(card); $event.stopPropagation()">
-          <mat-icon>info_outline</mat-icon>
-        </button>
-      </ptcg-card>
-    </ng-container>
-  </div>
-
-  <button mat-icon-button class="nav-button next-button" (click)="nextCards()"
-    [disabled]="currentIndex >= promptItems.length - 1">
-    <mat-icon>chevron_right</mat-icon>
-  </button>
-</div>
-
-<!-- Game Message -->
-<div class="prompt-message">
-  <p>{{promptValue?.message}}</p>
-</div>
-
-<!-- Bottom Pane - Selected Cards -->
-<div class="selected-cards" [ngClass]="{'setup-game': isSetupGame, 'compact': !isSetupGame}">
-  <ng-container *ngIf="isSetupGame; else regularLayout">
-    <div class="setup-game-layout">
-      <div class="active-slot">
-        <div class="card-slot">
-          <ptcg-card *ngIf="selectedCards[0]" class="card-slot" [card]="selectedCards[0].card"
-            [ngClass]="{'cardback': revealed === false && cardbackMap[selectedCards[0].originalIndex]}"
-            [isSecret]="promptValue?.options?.isSecret" (click)="toggleCardSelection(selectedCards[0], $event)">
-          </ptcg-card>
-        </div>
-      </div>
-      <div class="bench-slots">
-        <div class="card-slot" *ngFor="let i of [1,2,3,4,5]">
-          <ptcg-card *ngIf="selectedCards[i]" class="card-slot" [card]="selectedCards[i].card"
-            [ngClass]="{'cardback': revealed === false && cardbackMap[selectedCards[i].originalIndex]}"
-            [isSecret]="promptValue?.options?.isSecret" (click)="toggleCardSelection(selectedCards[i], $event)">
-          </ptcg-card>
-        </div>
-      </div>
-    </div>
-  </ng-container>
-  <ng-template #regularLayout>
-    <div class="card-slot" *ngFor="let i of getSlotArray()">
-      <ptcg-card *ngIf="selectedCards[i]" class="card-slot" [card]="selectedCards[i].card"
-        [ngClass]="{'cardback': revealed === false && cardbackMap[selectedCards[i].originalIndex]}"
-        [isSecret]="promptValue?.options?.isSecret" (click)="toggleCardSelection(selectedCards[i], $event)">
-      </ptcg-card>
-    </div>
-  </ng-template>
+<div class="ptcg-prompt-content">
+  <p [translate]="'GAME_MESSAGES.' + message"></p>
+  <ptcg-choose-cards-panes [promptValue]="promptValue" [cards]="cards.cards"
+    [cardbackMap]="revealed === false ? cardbackMap : {}" [filter]="filter" [blocked]="blocked"
+    (changeCards)="onChange($event)" [maxCards]="promptValue.options.min">
+  </ptcg-choose-cards-panes>
 </div>
 
 <div class="ptcg-prompt-actions">
@@ -94,14 +20,11 @@
       {{ 'CARDS_REVEAL_CARDS' | translate }}
     </mat-checkbox>
   </section>
-
-  <button *ngIf="allowedCancel" mat-raised-button class="cancel-button" [disabled]="gameState.deleted"
-    (click)="cancel()">
+  <span class="ptcg-u-spacer"></span>
+  <button mat-raised-button *ngIf="allowedCancel" [disabled]="gameState.deleted" (click)="cancel()">
     {{ 'BUTTON_CANCEL' | translate }}
   </button>
-
-  <button mat-raised-button color="primary" class="confirm-button" [disabled]="gameState.deleted || isInvalid"
-    (click)="confirm()">
+  <button mat-raised-button [disabled]="gameState.deleted || isInvalid" (click)="confirm()">
     {{ 'BUTTON_OK' | translate }}
   </button>
 </div>
