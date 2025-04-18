@@ -71,14 +71,14 @@ export class Golbat extends PokemonCard {
       ), selected => {
         const targets = selected || [];
 
-        targets.forEach(target => {
+        if (targets.length > 0) {
           // Check if ability can target selected Pokemon
-          const canApplyAbility = new EffectOfAbilityEffect(player, this.powers[0], this, state, [target]);
+          const canApplyAbility = new EffectOfAbilityEffect(player, this.powers[0], this, targets[0]);
           store.reduceEffect(state, canApplyAbility);
           if (canApplyAbility.target) {
-            target.damage += 20;
+            canApplyAbility.target.damage += 20;
           }
-        });
+        }
       });
     }
 

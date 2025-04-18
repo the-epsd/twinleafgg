@@ -89,8 +89,7 @@ export class IronThornsex extends PokemonCard {
       const cardList = StateUtils.findCardList(state, effect.card);
       if (cardList instanceof PokemonCardList) {
         const canApplyAbility = new EffectOfAbilityEffect(
-          player.active.getPokemonCard() === this ? player : opponent,
-          this.powers[0], this, state, [cardList], true);
+          player.active.getPokemonCard() === this ? player : opponent, this.powers[0], this, cardList);
         store.reduceEffect(state, canApplyAbility);
         if (!canApplyAbility.target) {
           return state;

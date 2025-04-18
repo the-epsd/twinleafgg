@@ -90,12 +90,13 @@ export class Giratina extends PokemonCard {
 
         targets.forEach(target => {
           // Check if ability can target selected Pokemon
-          const canApplyAbility = new EffectOfAbilityEffect(player, this.powers[0], this, state, [target]);
+          const canApplyAbility = new EffectOfAbilityEffect(player, this.powers[0], this, target);
           store.reduceEffect(state, canApplyAbility);
           if (canApplyAbility.target) {
-            target.damage += 10;
+            canApplyAbility.target.damage += 10;
           }
         });
+
       });
 
     }

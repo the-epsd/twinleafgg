@@ -65,7 +65,7 @@ export class Snorlax extends PokemonCard {
         if (IS_ABILITY_BLOCKED(store, state, player, this)) return state;
 
         // Check if Block can target the retreating Pokemon
-        const canApplyAbility = new EffectOfAbilityEffect(opponent, this.powers[0], this, state, [player.active]);
+        const canApplyAbility = new EffectOfAbilityEffect(opponent, this.powers[0], this, player.active);
         store.reduceEffect(state, canApplyAbility);
         if (!canApplyAbility.target) {
           return state;

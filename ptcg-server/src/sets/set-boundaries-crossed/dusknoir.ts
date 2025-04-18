@@ -40,7 +40,7 @@ function* useSinisterHand(next: Function, store: StoreLike, state: State, effect
       const target = StateUtils.getTarget(state, player, transfer.to);
 
       // Check if ability can target the transfer source
-      const canApplyAbilityToSource = new EffectOfAbilityEffect(player, effect.power, effect.card, state, [source], true);
+      const canApplyAbilityToSource = new EffectOfAbilityEffect(player, effect.power, effect.card, source);
       store.reduceEffect(state, canApplyAbilityToSource);
 
       // Remove damage if we can target the transfer source
@@ -48,7 +48,7 @@ function* useSinisterHand(next: Function, store: StoreLike, state: State, effect
         source.damage -= 10;
 
         // Check if ability can target the transfer target
-        const canApplyAbilityToTarget = new EffectOfAbilityEffect(player, effect.power, effect.card, state, [target], true);
+        const canApplyAbilityToTarget = new EffectOfAbilityEffect(player, effect.power, effect.card, target);
         store.reduceEffect(state, canApplyAbilityToTarget);
 
         // Add damage if we can target the transfer target

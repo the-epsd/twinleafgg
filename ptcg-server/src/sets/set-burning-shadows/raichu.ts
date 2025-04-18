@@ -41,7 +41,7 @@ export class Raichu extends PokemonCard {
       if (CONFIRMATION_PROMPT(store, state, effect.player, result => {
         if (result) {
           const opponent = StateUtils.getOpponent(state, effect.player);
-          const canApplyAbility = new EffectOfAbilityEffect(effect.player, this.powers[0], this, state, [opponent.active]);
+          const canApplyAbility = new EffectOfAbilityEffect(effect.player, this.powers[0], this, opponent.active);
           store.reduceEffect(state, canApplyAbility);
           if (canApplyAbility.target) {
             ADD_PARALYZED_TO_PLAYER_ACTIVE(store, state, opponent, this);

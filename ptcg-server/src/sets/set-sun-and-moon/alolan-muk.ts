@@ -126,8 +126,7 @@ export class AlolanMuk extends PokemonCard {
       // Check if we can apply the ability lock to target Pokemon
       if (cardList instanceof PokemonCardList) {
         const canApplyAbility = new EffectOfAbilityEffect(
-          playerHasAlolanMukInPlay ? player : opponent,
-          this.powers[0], this, state, [cardList], true);
+          playerHasAlolanMukInPlay ? player : opponent, this.powers[0], this, cardList);
         store.reduceEffect(state, canApplyAbility);
         if (!canApplyAbility.target) {
           return state;
