@@ -1,5 +1,6 @@
 import { Attack, CardType, PokemonCard, Power, PowerType, Stage, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
+import { EffectOfAbilityEffect } from '../../game/store/effects/game-effects';
 import { ADD_PARALYZED_TO_PLAYER_ACTIVE, CONFIRMATION_PROMPT, IS_ABILITY_BLOCKED, JUST_EVOLVED, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Raichu extends PokemonCard {
@@ -38,8 +39,14 @@ export class Raichu extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (JUST_EVOLVED(effect, this) && !IS_ABILITY_BLOCKED(store, state, effect.player, this))
       if (CONFIRMATION_PROMPT(store, state, effect.player, result => {
-        if (result)
-          ADD_PARALYZED_TO_PLAYER_ACTIVE(store, state, StateUtils.getOpponent(state, effect.player), this);
+        if (result) {
+          const opponent = StateUtils.getOpponent(state, effect.player);
+          const canApplyAbility = new EffectOfAbilityEffect(effect.player, this.powers[0], this, opponent.active);
+          store.reduceEffect(state, canApplyAbility);
+          if (canApplyAbility.target) {
+            ADD_PARALYZED_TO_PLAYER_ACTIVE(store, state, opponent, this);
+          }
+        }
       }))
         if (WAS_ATTACK_USED(effect, 0, this))
           THIS_POKEMON_DOES_DAMAGE_TO_ITSELF(store, state, effect, 30);

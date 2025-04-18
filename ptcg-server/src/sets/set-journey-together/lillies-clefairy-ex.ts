@@ -59,7 +59,7 @@ export class LilliesClefairyex extends PokemonCard {
       }
 
       // Check if weakness can be changed
-      const canApplyAbility = new EffectOfAbilityEffect(opponent, this.powers[0], this, state, [pokemonCard]);
+      const canApplyAbility = new EffectOfAbilityEffect(opponent, this.powers[0], this, pokemonCard);
       store.reduceEffect(state, canApplyAbility);
       if (canApplyAbility.target) {
         effect.weakness = [{ type: CardType.PSYCHIC }];

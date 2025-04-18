@@ -3,7 +3,7 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { StoreLike, State, GameMessage, PlayerType, SlotType, ChoosePokemonPrompt, PokemonCardList, GameError, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect, EffectOfAbilityEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { PutCountersEffect } from '../../game/store/effects/attack-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
@@ -87,9 +87,16 @@ export class Giratina extends PokemonCard {
         { min: 1, max: 2, allowCancel: false },
       ), selected => {
         const targets = selected || [];
+
         targets.forEach(target => {
-          target.damage += 10;
+          // Check if ability can target selected Pokemon
+          const canApplyAbility = new EffectOfAbilityEffect(player, this.powers[0], this, target);
+          store.reduceEffect(state, canApplyAbility);
+          if (canApplyAbility.target) {
+            canApplyAbility.target.damage += 10;
+          }
         });
+
       });
 
     }

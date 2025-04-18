@@ -89,7 +89,7 @@ export class Inteleon extends PokemonCard {
         const targets = selected || [];
 
         if (targets.length > 0) {
-          const damageEffect = new EffectOfAbilityEffect(player, this.powers[0], this, state, targets);
+          const damageEffect = new EffectOfAbilityEffect(player, this.powers[0], this, targets[0]);
           store.reduceEffect(state, damageEffect);
           if (damageEffect.target) {
             damageEffect.target.damage += 20;

@@ -34,8 +34,10 @@ export class Baltoy extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof EffectOfAbilityEffect && effect.target && effect.target?.cards?.includes(this)) {
+      const opponent = StateUtils.getOpponent(state, effect.player);
       const targetCard = effect.target.getPokemonCard();
-      if (targetCard && targetCard.fullName === this.fullName) {
+
+      if (targetCard && targetCard === this && opponent.getPokemonInPlay().includes(effect.target)) {
         effect.target = undefined;
       }
     }

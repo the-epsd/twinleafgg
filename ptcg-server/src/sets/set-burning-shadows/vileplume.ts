@@ -48,8 +48,7 @@ export class Vileplume extends PokemonCard {
       }
 
       // Check if Ability can target the attacker
-      const basicBlockEffect = new EffectOfAbilityEffect(opponent, this.powers[0], this, state, [effect.source]);
-      basicBlockEffect.target = effect.source;
+      const basicBlockEffect = new EffectOfAbilityEffect(opponent, this.powers[0], this, effect.source);
       store.reduceEffect(state, basicBlockEffect);
       if (basicBlockEffect.target === effect.source) {
         throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
