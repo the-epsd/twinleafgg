@@ -60,7 +60,7 @@ export class Absolex extends PokemonCard {
 
       const options: { message: GameMessage, action: () => void }[] = [
         {
-          message: GameMessage.CHOOSE_OPTION,
+          message: GameMessage.ORDER_OPPONENT_DECK,
           action: () => {
 
             const opponentDeckTop = new CardList();
@@ -83,7 +83,7 @@ export class Absolex extends PokemonCard {
           }
         },
         {
-          message: GameMessage.CHOOSE_OPTION,
+          message: GameMessage.ORDER_YOUR_DECK,
           action: () => {
             const player = effect.player;
 
