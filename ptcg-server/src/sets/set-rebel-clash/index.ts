@@ -3,6 +3,7 @@ import { Aegislash } from './aegislash';
 import { Applin } from './applin';
 import { Arrokuda } from './arrokuda';
 import { Barraskewda } from './barraskewda';
+import { BurningScarf } from './burning-scarf';
 import { Butterfree } from './butterfree';
 import { CapaciousBucket } from './capacious-bucket';
 import { CaptureEnergy } from './capture-energy';
@@ -33,6 +34,7 @@ export const setRebelClash: Card[] = [
   new Applin(),
   new Arrokuda(),
   new Barraskewda(),
+  new BurningScarf(),
   new Butterfree(),
   new CapaciousBucket(),
   new CaptureEnergy(),
