@@ -55,7 +55,7 @@ export class SocketService {
     });
 
     this.socket.on('connect', () => {
-      console.log('[Socket] Connected');
+      console.log('[Socket] Connected to server');
       this.connectionSubject.next(true);
       this.lastPingTime = Date.now();
     });
@@ -78,10 +78,12 @@ export class SocketService {
 
       switch (reason) {
         case 'io server disconnect':
+          console.log('[Socket] Server initiated disconnect, attempting reconnect');
           this.socket.connect();
           break;
         case 'transport close':
           const delay = Math.min(1000 * Math.pow(2, this.socket.io.reconnectionAttempts()), 5000);
+          console.log(`[Socket] Transport closed, reconnecting in ${delay}ms`);
           setTimeout(() => {
             if (!this.socket.connected) {
               this.socket.connect();
@@ -89,10 +91,12 @@ export class SocketService {
           }, delay);
           break;
         case 'ping timeout':
+          console.log('[Socket] Ping timeout, attempting immediate reconnect');
           this.socket.connect();
           break;
         default:
           const defaultDelay = Math.min(1000 * Math.pow(2, this.socket.io.reconnectionAttempts()), 5000);
+          console.log(`[Socket] Unknown disconnect reason, reconnecting in ${defaultDelay}ms`);
           setTimeout(() => {
             if (!this.socket.connected) {
               this.socket.connect();
@@ -120,7 +124,7 @@ export class SocketService {
     });
 
     this.socket.on('reconnect_failed', () => {
-      console.error('[Socket] Reconnection failed');
+      console.error('[Socket] Reconnection failed after all attempts');
       this.connectionSubject.next(false);
     });
 
@@ -180,7 +184,7 @@ export class SocketService {
       if (this.enabled && !this.socket.connected) {
         const timeSinceLastPing = Date.now() - this.lastPingTime;
         if (this.lastPingTime > 0 && timeSinceLastPing > 45000) {
-          console.log(`[Socket] Connection frozen (${Math.floor(timeSinceLastPing / 1000)}s), reconnecting...`);
+          console.log(`[Socket] Connection frozen (no ping for ${Math.floor(timeSinceLastPing / 1000)}s), reconnecting...`);
           this.socket.disconnect();
           this.socket.connect();
         }

@@ -8,27 +8,15 @@ export function cors(): RequestHandler {
       'X-Requested-With',
       'Content-Type',
       'Accept',
-      'Auth-Token',
-      'Authorization'
+      'Auth-Token'
     ];
 
     if (config.backend.allowCors) {
-      // Allow requests from the React development server
-      const origin = req.headers.origin;
-      if (origin && (origin.includes('localhost:3000') || origin.includes('127.0.0.1:3000'))) {
-        res.header('Access-Control-Allow-Origin', origin);
-        res.header('Access-Control-Allow-Credentials', 'true');
-      }
+      res.header('Access-Control-Allow-Origin', '*');
     }
 
-    res.header('Access-Control-Allow-Methods', 'GET,HEAD,OPTIONS,POST,PUT,DELETE');
+    res.header('Access-Control-Allow-Methods', 'GET,HEAD,OPTIONS,POST');
     res.header('Access-Control-Allow-Headers', allowedHeaders.join(','));
-
-    // Handle preflight requests
-    if (req.method === 'OPTIONS') {
-      res.status(200).end();
-      return;
-    }
 
     next();
   };

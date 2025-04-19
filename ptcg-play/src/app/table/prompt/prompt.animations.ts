@@ -7,7 +7,7 @@ export const ptcgPromptAnimations: {
   /** Animation that is applied on the dialog container by default. */
   promptContent: trigger('state', [
     // Initial hidden state
-    state('void, exit, minimize', style({
+    state('void, exit', style({
       opacity: 0,
       transform: 'scale(0.7)',
       transformOrigin: 'center center'
@@ -15,49 +15,20 @@ export const ptcgPromptAnimations: {
 
     // Fully visible state
     state('enter', style({
-      transform: 'scale(1)',
-      opacity: 1,
-      transformOrigin: 'center center'
+      transform: 'translate3d(0, 0, 0)'
     })),
 
-    // Enter animation - simple and snappy
+    // Enter animation
     transition('* => enter', animate('150ms cubic-bezier(0, 0, 0.2, 1)',
       style({
-        transform: 'scale(1)',
+        transform: 'translate3d(0, 0, 0)',
         opacity: 1
       })
     )),
 
-    // Minimize animation - instant with no animation
-    transition('enter => minimize', animate('0ms',
-      style({
-        opacity: 0,
-        transform: 'scale(0.7)'
-      })
-    )),
-
-    // Restore from minimized - only animate when opening
-    transition('minimize => enter', animate('150ms cubic-bezier(0, 0, 0.2, 1)',
-      style({
-        transform: 'scale(1)',
-        opacity: 1
-      })
-    )),
-
-    // Confirm/Cancel animation - instant with no animation
-    transition('enter => confirm', animate('0ms',
-      style({
-        opacity: 0,
-        transform: 'scale(0.7)'
-      })
-    )),
-
-    // Exit animation - instant with no animation
-    transition('* => void, * => exit', animate('0ms',
-      style({
-        opacity: 0,
-        transform: 'scale(0.7)'
-      })
+    // Exit animation (slightly longer for better UX)
+    transition('* => void, * => exit', animate('100ms cubic-bezier(0.4, 0.0, 0.2, 1)',
+      style({ opacity: 0 })
     )),
   ])
 };
