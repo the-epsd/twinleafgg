@@ -80,28 +80,8 @@ export function* setupGame(next: Function, store: StoreLike, state: State): Iter
       yield store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
         player.deck.applyOrder(order);
         player.deck.moveTo(player.hand, 7);
-        const hasBasicPokemon = player.hand.count(basicPokemon) > 0;
-        const setupCards = player.hand.cards.filter(c => c.tags.includes(CardTag.PLAY_DURING_SETUP));
-        const hasOnlySetupCards = !hasBasicPokemon && setupCards.length > 0;
-
-        if (hasBasicPokemon) {
-          playerHasBasic = true;
-          next();
-        } else if (hasOnlySetupCards) {
-          playerHasBasic = false; // Reset this before the prompt
-          return store.prompt(state, new SelectPrompt(
-            player.id,
-            GameMessage.SETUP_CARDS_AVAILABLE,
-            [GameMessage.USE_SETUP_CARDS, GameMessage.MULLIGAN],
-            { allowCancel: false }
-          ), choice => {
-            playerHasBasic = choice === 0;
-            next();
-          });
-        } else {
-          playerHasBasic = false;
-          next();
-        }
+        playerHasBasic = player.hand.count(basicPokemon) > 0 || player.hand.cards.some(c => c.tags.includes(CardTag.PLAY_DURING_SETUP));
+        next();
       });
     }
 
@@ -110,28 +90,8 @@ export function* setupGame(next: Function, store: StoreLike, state: State): Iter
       yield store.prompt(state, new ShuffleDeckPrompt(opponent.id), order => {
         opponent.deck.applyOrder(order);
         opponent.deck.moveTo(opponent.hand, 7);
-        const hasBasicPokemon = opponent.hand.count(basicPokemon) > 0;
-        const setupCards = opponent.hand.cards.filter(c => c.tags.includes(CardTag.PLAY_DURING_SETUP));
-        const hasOnlySetupCards = !hasBasicPokemon && setupCards.length > 0;
-
-        if (hasBasicPokemon) {
-          opponentHasBasic = true;
-          next();
-        } else if (hasOnlySetupCards) {
-          opponentHasBasic = false; // Reset this before the prompt
-          return store.prompt(state, new SelectPrompt(
-            opponent.id,
-            GameMessage.SETUP_CARDS_AVAILABLE,
-            [GameMessage.USE_SETUP_CARDS, GameMessage.MULLIGAN],
-            { allowCancel: false }
-          ), choice => {
-            opponentHasBasic = choice === 0;
-            next();
-          });
-        } else {
-          opponentHasBasic = false;
-          next();
-        }
+        opponentHasBasic = opponent.hand.count(basicPokemon) > 0 || opponent.hand.cards.some(c => c.tags.includes(CardTag.PLAY_DURING_SETUP));
+        next();
       });
     }
 
@@ -162,7 +122,7 @@ export function* setupGame(next: Function, store: StoreLike, state: State): Iter
   const blocked: number[] = [];
   player.hand.cards.forEach((c, index) => {
     if (c.tags.includes((CardTag.PLAY_DURING_SETUP)) || (c instanceof PokemonCard && c.stage === Stage.BASIC)) {
-      // Allow card to be played during setup
+
     } else {
       blocked.push(index);
     }
@@ -171,7 +131,7 @@ export function* setupGame(next: Function, store: StoreLike, state: State): Iter
   const blockedOpponent: number[] = [];
   opponent.hand.cards.forEach((c, index) => {
     if (c.tags.includes((CardTag.PLAY_DURING_SETUP)) || (c instanceof PokemonCard && c.stage === Stage.BASIC)) {
-      // Allow card to be played during setup
+
     } else {
       blockedOpponent.push(index);
     }

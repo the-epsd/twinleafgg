@@ -12,6 +12,33 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
   selector: 'ptcg-hand',
   templateUrl: './hand.component.html',
   styleUrls: ['./hand.component.scss'],
+  template: `
+    <div class="ptcg-hand" [class.opponent]="isOpponent">
+      <div class="ptcg-hand-container">
+        <dnd-sortable-list>
+          <ptcg-card 
+            *ngFor="let card of cards"
+            [card]="card"
+            [class.dragging]="isDragging(card)"
+            (dragstart)="onDragStart(card)"
+            (dragend)="onDragEnd(card)">
+          </ptcg-card>
+        </dnd-sortable-list>
+      </div>
+    </div>
+  `,
+  animations: [
+    trigger('cardDrag', [
+      state('dragging', style({
+        position: 'fixed',
+        zIndex: 1000,
+        pointerEvents: 'none',
+        transform: 'rotate(5deg) scale(1.05)'
+      })),
+      transition('* => dragging', animate('100ms ease-out')),
+      transition('dragging => *', animate('150ms ease-in'))
+    ])
+  ]
 })
 export class HandComponent implements OnChanges {
 

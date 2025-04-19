@@ -2,7 +2,7 @@ import { Request, Response, NextFunction, RequestHandler } from 'express';
 import { config } from '../../config';
 
 export function cors(): RequestHandler {
-  return function(req: Request, res: Response, next: NextFunction): any {
+  return function (req: Request, res: Response, next: NextFunction): any {
     const allowedHeaders = [
       'Origin',
       'X-Requested-With',
