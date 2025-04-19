@@ -9,6 +9,7 @@ import { Oddish } from './oddish';
 import { Rotom } from './rotom';
 import { Scizor } from './scizor-prime';
 import { Scyther } from './scyther';
+import { Slugma } from './slugma';
 import { Smeargle } from './smeargle';
 import { Vileplume } from './vileplume';
 
@@ -23,6 +24,7 @@ export const setUndaunted: Card[] = [
   new Rotom(),
   new Scizor(),
   new Scyther(),
+  new Slugma(),
   new Smeargle(),
   new Vileplume(),
 ];
