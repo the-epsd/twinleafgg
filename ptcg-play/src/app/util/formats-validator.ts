@@ -34,6 +34,20 @@ export class FormatValidator {
       );
     }
 
+    // Check for Unown card restriction
+    const hasUnownTag = cards.some(card => card.tags.includes(CardTag.UNOWN));
+    if (hasUnownTag) {
+      const unownCount = cards.filter(card => card.name.includes('Unown')).length;
+      if (unownCount > 4) {
+        return formatList.filter(f =>
+          f !== Format.GLC &&
+          f !== Format.EXPANDED &&
+          f !== Format.STANDARD &&
+          f !== Format.UNLIMITED
+        );
+      }
+    }
+
     // Check GLC rules first
     if (formatList.includes(Format.GLC)) {
       // check for singleton violation

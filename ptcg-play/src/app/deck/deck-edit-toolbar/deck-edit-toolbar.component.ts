@@ -6,7 +6,7 @@ import { DeckEditToolbarFilter } from './deck-edit-toolbar-filter.interface';
 import { ControlContainer, FormBuilder, FormGroupDirective } from '@angular/forms';
 import { filter, map, shareReplay, startWith, tap } from 'rxjs/operators';
 import { merge } from 'rxjs';
-import { CardTag, CardType, EnergyType, Format, Stage, SuperType, TrainerType } from 'ptcg-server';
+import { CardTag, CardType, EnergyType, Format, Stage, SuperType, TrainerType, Archetype } from 'ptcg-server';
 
 @UntilDestroy()
 @Component({
@@ -35,6 +35,8 @@ export class DeckEditToolbarComponent implements OnDestroy {
   @Output() export = new EventEmitter<void>();
 
   @Output() clearDeck = new EventEmitter<void>();
+
+  @Output() deckChange = new EventEmitter<Deck>();
 
   @Input() selected: CardType[] = [];
 
@@ -311,6 +313,33 @@ export class DeckEditToolbarComponent implements OnDestroy {
 
   public exportToFile() {
     this.export.next();
+  }
+
+  public archetypes = Object.values(Archetype)
+    .filter(value => typeof value === 'string')
+    .map(value => ({
+      value: value as Archetype,
+      label: value.toString().toLowerCase().replace(/_/g, ' ')
+    }))
+    .sort((a, b) => a.label.localeCompare(b.label));
+
+  public filteredArchetypes = this.archetypes;
+
+  public onArchetypeSearch(searchText: string) {
+    if (!searchText) {
+      this.filteredArchetypes = this.archetypes;
+      return;
+    }
+    const searchLower = searchText.toLowerCase();
+    this.filteredArchetypes = this.archetypes.filter(archetype =>
+      archetype.label.includes(searchLower)
+    );
+  }
+
+  public onArchetypeChange(archetype1: Archetype | null, archetype2: Archetype | null) {
+    this.deck.manualArchetype1 = archetype1;
+    this.deck.manualArchetype2 = archetype2;
+    this.deckChange.emit(this.deck);
   }
 
 }

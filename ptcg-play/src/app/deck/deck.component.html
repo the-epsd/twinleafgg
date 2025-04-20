@@ -46,9 +46,8 @@
           <div class="deck-card" [routerLink]="['/deck', deck.id]">
             <!-- Status indicators -->
             <div class="deck-status">
-              <div class="deck-validity">
-                <mat-icon *ngIf="deck.isValid" color="primary">check</mat-icon>
-                <mat-icon *ngIf="!deck.isValid">remove</mat-icon>
+              <div class="deck-validity" [class.valid]="deck.isValid" [class.invalid]="!deck.isValid">
+                {{ deck.isValid ? ('DECK_VALID' | translate) : ('DECK_INVALID' | translate) }}
               </div>
               <div class="default-wrapper" *ngIf="isFormatDefaultDeck(deck.id)">
                 <mat-icon class="default-star" color="accent">star</mat-icon>
@@ -60,7 +59,7 @@
 
             <!-- Card archetype -->
             <div class="deck-archetype">
-              <ptcg-archetype [class]="getArchetype(deck.deckItems)"></ptcg-archetype>
+              <ptcg-archetype [class]="getArchetype(deck)"></ptcg-archetype>
             </div>
 
             <!-- Deck name and actions row -->

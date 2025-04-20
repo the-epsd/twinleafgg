@@ -20,16 +20,16 @@ export class Gengar extends PokemonCard {
 
   public attacks = [
     {
-    name: 'Sinister Fog',
-    cost: [P],
-    damage: 0,
-    text: 'Your opponent\'s Active Pokémon is now Poisoned. Put 1 damage counter on each of your opponent\'s Benched Pokémon.'
+      name: 'Sinister Fog',
+      cost: [P],
+      damage: 0,
+      text: 'Your opponent\'s Active Pokémon is now Poisoned. Put 1 damage counter on each of your opponent\'s Benched Pokémon.'
     },
     {
-    name: 'Creep Show',
-    cost: [P, C],
-    damage: 0,
-    text: 'If your opponent\'s Active Pokémon has 3 or more damage counters on it, that Pokémon is Knocked Out.'
+      name: 'Creep Show',
+      cost: [P, C],
+      damage: 0,
+      text: 'If your opponent\'s Active Pokémon has 3 or more damage counters on it, that Pokémon is Knocked Out.'
     },
   ];
 

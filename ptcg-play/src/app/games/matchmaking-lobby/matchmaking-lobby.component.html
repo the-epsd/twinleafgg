@@ -3,7 +3,7 @@
     <!-- Deck Card -->
     <div class="deck-card" *ngIf="selectedDeck">
       <div class="deck-archetype" style="background-color: #101219;">
-        <ptcg-archetype [class]="getArchetype(selectedDeck.deckItems)"
+        <ptcg-archetype [class]="getArchetype(selectedDeck)"
           style="transform: scale(3); display: flex; image-rendering: pixelated;"></ptcg-archetype>
       </div>
       <div class="deck-info">

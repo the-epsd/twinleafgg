@@ -42,7 +42,7 @@ export class Illumise extends PokemonCard {
       REMOVE_MARKER(this.SCENT_CONDUCT_MARKER, effect.player, this);
     }
 
-    REMOVE_MARKER_AT_END_OF_TURN(effect, this.SCENT_CONDUCT_MARKER, this)
+    REMOVE_MARKER_AT_END_OF_TURN(effect, this.SCENT_CONDUCT_MARKER, this);
 
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
@@ -57,7 +57,7 @@ export class Illumise extends PokemonCard {
 
       COIN_FLIP_PROMPT(store, state, effect.player, (result) => {
         if (result) {
-          SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH(store, state, player, { cardType: CardType.GRASS, stage: Stage.BASIC }, { min: 0, max: 1 })
+          SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH(store, state, player, { cardType: CardType.GRASS, stage: Stage.BASIC }, { min: 0, max: 1 });
         }
       });
     }

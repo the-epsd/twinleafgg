@@ -24,4 +24,10 @@ export class Deck extends BaseEntity {
   @Column()
   public cardTypes: string = '[]';
 
+  @Column()
+  public manualArchetype1: string = '';
+
+  @Column()
+  public manualArchetype2: string = '';
+
 }

@@ -39,8 +39,8 @@ export class ProfessorElm extends TrainerCard {
         });
       }
 
-      DRAW_CARDS_UNTIL_CARDS_IN_HAND(player, 7)
-      ADD_MARKER(this.PROFESSOR_ELM_MARKER, player, this)
+      DRAW_CARDS_UNTIL_CARDS_IN_HAND(player, 7);
+      ADD_MARKER(this.PROFESSOR_ELM_MARKER, player, this);
       player.supporter.moveCardTo(effect.trainerCard, player.discard);
       
       return state;

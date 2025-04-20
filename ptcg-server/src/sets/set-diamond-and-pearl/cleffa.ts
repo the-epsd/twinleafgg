@@ -84,7 +84,7 @@ export class Cleffa extends PokemonCard {
     }
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      DRAW_CARDS(effect.player, 1)
+      DRAW_CARDS(effect.player, 1);
     }
 
     return state;

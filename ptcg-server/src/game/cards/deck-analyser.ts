@@ -26,6 +26,9 @@ export class DeckAnalyser {
     let hasBasicPokemon = false;
     let hasAceSpec = false;
     let hasRadiant = false;
+    let hasStar = false;
+    let hasUnownTag = false;
+    let unownCount = 0;
 
     if (this.cards.length !== 60) {
       return false;
@@ -45,6 +48,16 @@ export class DeckAnalyser {
 
       if (card instanceof PokemonCard && card.stage === Stage.BASIC) {
         hasBasicPokemon = true;
+      }
+
+      // Check for UNOWN tag
+      if (card.tags.includes(CardTag.UNOWN)) {
+        hasUnownTag = true;
+      }
+
+      // Count cards with 'Unown' in their name
+      if (card.name.includes('Unown')) {
+        unownCount++;
       }
 
       if (!(card instanceof EnergyCard) || card.energyType !== EnergyType.BASIC) {
@@ -68,12 +81,24 @@ export class DeckAnalyser {
         hasRadiant = true;
       }
 
+      if (card.tags.includes(CardTag.STAR)) {
+        if (hasStar) {
+          return false;
+        }
+        hasStar = true;
+      }
+
       if (card.tags.includes(CardTag.PRISM_STAR)) {
         if (prismStarCards.has(card.name)) {
           return false;
         }
         prismStarCards.add(card.name);
       }
+    }
+
+    // If any card has UNOWN tag, total Unown cards must be 4 or less
+    if (hasUnownTag && unownCount > 4) {
+      return false;
     }
 
     return hasBasicPokemon;
