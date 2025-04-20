@@ -47,7 +47,7 @@ export class Regirock extends PokemonCard {
       REMOVE_MARKER(this.REGI_CYCLE_MARKER, effect.player, this);
     }
 
-    REMOVE_MARKER_AT_END_OF_TURN(effect, this.REGI_CYCLE_MARKER, this)
+    REMOVE_MARKER_AT_END_OF_TURN(effect, this.REGI_CYCLE_MARKER, this);
 
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;

@@ -1,5 +1,5 @@
 import { ConfirmPrompt, GameMessage, PowerType, ShuffleDeckPrompt, State, StateUtils, StoreLike } from '../../game';
-import { CardType, Stage } from '../../game/store/card/card-types';
+import { CardTag, CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
@@ -8,6 +8,7 @@ import { IS_POKEMON_POWER_BLOCKED } from '../../game/store/prefabs/prefabs';
 export class UnwonE extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
+  public tags = [CardTag.UNOWN];
   public cardType: CardType = P;
   public hp: number = 40;
   public weakness = [{ type: P }];

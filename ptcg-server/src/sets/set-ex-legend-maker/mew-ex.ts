@@ -82,32 +82,32 @@ export class Mewex extends PokemonCard {
       const player = effect.player;
 
       return store.prompt(state, new AttachEnergyPrompt(
-      player.id,
-      GameMessage.ATTACH_ENERGY_CARDS,
-      player.deck,
-      PlayerType.BOTTOM_PLAYER,
+        player.id,
+        GameMessage.ATTACH_ENERGY_CARDS,
+        player.deck,
+        PlayerType.BOTTOM_PLAYER,
         [SlotType.ACTIVE],
-      { superType: SuperType.ENERGY },
-      { allowCancel: false, min: 0, max: 1 },
+        { superType: SuperType.ENERGY },
+        { allowCancel: false, min: 0, max: 1 },
       ), transfers => {
-      transfers = transfers || [];
-      // Attach energy if selected
-      for (const transfer of transfers) {
-        const target = StateUtils.getTarget(state, player, transfer.to);
-        player.deck.moveCardTo(transfer.card, target);
-      }
-
-      // Shuffle the deck after attaching energy
-      state = store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-        player.deck.applyOrder(order);
-      });
-
-      // Prompt to switch Mew ex with a Benched Pokémon
-      CONFIRMATION_PROMPT(store, state, player, result => {
-        if (result) {
-        SWITCH_ACTIVE_WITH_BENCHED(store, state, player);
+        transfers = transfers || [];
+        // Attach energy if selected
+        for (const transfer of transfers) {
+          const target = StateUtils.getTarget(state, player, transfer.to);
+          player.deck.moveCardTo(transfer.card, target);
         }
-      });
+
+        // Shuffle the deck after attaching energy
+        state = store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+          player.deck.applyOrder(order);
+        });
+
+        // Prompt to switch Mew ex with a Benched Pokémon
+        CONFIRMATION_PROMPT(store, state, player, result => {
+          if (result) {
+            SWITCH_ACTIVE_WITH_BENCHED(store, state, player);
+          }
+        });
       });
     }
     return state;

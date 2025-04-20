@@ -7,144 +7,66 @@ import { Archetype } from "ptcg-server";
   styleUrls: ['./archetype.component.scss']
 })
 export class ArchetypeComponent {
+  public archetypes: string[] = [];
+  public isSingleArchetype: boolean = true;
 
-  public typeClass = 'unown';
-  public archetype = 'unown';
+  @Input() set class(value: Archetype | Archetype[]) {
+    console.log('ArchetypeComponent received value:', value);
+    console.log('Value type:', typeof value);
+    console.log('Is array:', Array.isArray(value));
 
-  @Input() set class(value: Archetype) {
-    switch (value) {
-      case Archetype.UNOWN:
-        this.archetype = 'unown';
-        break;
-      case Archetype.ARCEUS:
-        this.archetype = 'arceus';
-        break;
-      case Archetype.CHARIZARD:
-        this.archetype = 'charizard';
-        break;
-      case Archetype.PIDGEOT:
-        this.archetype = 'pidgeot';
-        break;
-      case Archetype.MIRAIDON:
-        this.archetype = 'miraidon';
-        break;
-      case Archetype.PIKACHU:
-        this.archetype = 'pikachu';
-        break;
-      case Archetype.RAGING_BOLT:
-        this.archetype = 'raging-bolt';
-        break;
-      case Archetype.GIRATINA:
-        this.archetype = 'giratina';
-        break;
-      case Archetype.PALKIA_ORIGIN:
-        this.archetype = 'palkia-origin';
-        break;
-      case Archetype.COMFEY:
-        this.archetype = 'comfey';
-        break;
-      case Archetype.IRON_THORNS:
-        this.archetype = 'iron-thorns';
-        break;
-      case Archetype.TERAPAGOS:
-        this.archetype = 'terapagos';
-        break;
-      case Archetype.REGIDRAGO:
-        this.archetype = 'regidrago';
-        break;
-      case Archetype.SNORLAX:
-        this.archetype = 'snorlax';
-        break;
-      case Archetype.GARDEVOIR:
-        this.archetype = 'gardevoir';
-        break;
-      case Archetype.ROARING_MOON:
-        this.archetype = 'roaring-moon';
-        break;
-      case Archetype.CERULEDGE:
-        this.archetype = 'ceruledge';
-        break;
-      case Archetype.DRAGAPULT:
-        this.archetype = 'dragapult';
-        break;
-      case Archetype.ARCHALUDON:
-        this.archetype = 'archaludon';
-        break;
-      case Archetype.KLAWF:
-        this.archetype = 'klawf';
-        break;
-      case Archetype.GOUGING_FIRE:
-        this.archetype = 'gouging-fire';
-        break;
-      case Archetype.GHOLDENGO:
-        this.archetype = 'gholdengo';
-        break;
-      case Archetype.IRON_CROWN:
-        this.archetype = 'iron-crown';
-        break;
-      case Archetype.FERALIGATR:
-        this.archetype = 'feraligatr';
-        break;
-      case Archetype.BLISSEY:
-        this.archetype = 'blissey';
-        break;
-      case Archetype.MILOTIC:
-        this.archetype = 'milotic';
-        break;
-      case Archetype.TEAL_MASK_OGERPON:
-        this.archetype = 'teal-mask-ogerpon';
-        break;
-      case Archetype.ZOROARK:
-        this.archetype = 'zorark';
-        break;
-      case Archetype.BELLIBOLT:
-        this.archetype = 'bellibolt';
-        break;
-      case Archetype.FLAREON:
-        this.archetype = 'flareon';
-        break;
-      case Archetype.TYRANITAR:
-        this.archetype = 'tyrantiar';
-        break;
-      case Archetype.SLOWKING:
-        this.archetype = 'slowking';
-        break;
-      case Archetype.MAMOSWINE:
-        this.archetype = 'mamoswine';
-        break;
-      case Archetype.CLEFAIRY:
-        this.archetype = 'clefairy';
-        break;
-      case Archetype.ZACIAN:
-        this.archetype = 'zacian';
-        break;
-      case Archetype.FROSLASS:
-        this.archetype = 'froslass';
-        break;
-      case Archetype.DIPPLIN:
-        this.archetype = 'dipplin';
-        break;
-      case Archetype.ROTOM:
-        this.archetype = 'rotom';
-        break;
-      case Archetype.HYDRAPPLE:
-        this.archetype = 'hydrapple';
-        break;
-      case Archetype.GARCHOMP:
-        this.archetype = 'garchomp';
-        break;
-      case Archetype.HOOH:
-        this.archetype = 'hooh';
-        break;
-      case Archetype.HYDREIGON:
-        this.archetype = 'hydreigon';
-        break;
-      case Archetype.MEGA_GARDEVOIR:
-        this.archetype = 'mega-gardevoir';
-        break;
-      default:
-        this.archetype = 'unown';
+    if (!value) {
+      console.log('No value provided, defaulting to unown');
+      this.archetypes = ['unown'];
+      this.isSingleArchetype = true;
+      return;
     }
+
+    if (Array.isArray(value)) {
+      console.log('Processing array of archetypes:', value);
+      // Remove duplicates and convert to strings, then take only the first 2
+      const uniqueArchetypes = [...new Set(value)]
+        .filter(v => v !== undefined && v !== null)
+        .map(v => {
+          console.log('Processing archetype:', v);
+          const result = this.getArchetypeString(v);
+          console.log('Converted to:', result);
+          return result;
+        })
+        .slice(0, 2); // Limit to maximum of 2 archetypes
+      console.log('Final unique archetypes:', uniqueArchetypes);
+      this.archetypes = uniqueArchetypes.length > 0 ? uniqueArchetypes : ['unown'];
+      this.isSingleArchetype = uniqueArchetypes.length === 1;
+    } else {
+      console.log('Processing single archetype:', value);
+      const result = this.getArchetypeString(value);
+      console.log('Converted to:', result);
+      this.archetypes = [result];
+      this.isSingleArchetype = true;
+    }
+  }
+
+  private getArchetypeString(archetype: Archetype): string {
+    if (!archetype) {
+      console.log('Null archetype, returning unown');
+      return 'unown';
+    }
+
+    console.log('Getting string for archetype:', archetype);
+    console.log('Archetype enum:', Archetype);
+
+    // First try to find the enum key that matches the archetype value
+    const enumKey = Object.keys(Archetype).find(key => Archetype[key] === archetype);
+    if (enumKey) {
+      const result = enumKey.toLowerCase();
+      console.log('Found matching enum key:', result);
+      return result;
+    }
+
+    // If no match found, try to use the archetype value directly
+    const result = typeof archetype === 'string' ? archetype.toLowerCase() : 'unown';
+    console.log('Result:', result);
+    return result;
   }
 
   constructor() { }

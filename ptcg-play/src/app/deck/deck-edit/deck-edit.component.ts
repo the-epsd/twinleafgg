@@ -13,7 +13,7 @@ import { DeckEditPane } from '../deck-edit-panes/deck-edit-pane.interface';
 import { DeckEditToolbarFilter } from '../deck-edit-toolbar/deck-edit-toolbar-filter.interface';
 import { DeckService } from '../../api/services/deck.service';
 // import { FileDownloadService } from '../../shared/file-download/file-download.service';
-import { Card, EnergyCard, EnergyType, PokemonCard, SuperType, TrainerCard, TrainerType } from 'ptcg-server';
+import { Card, EnergyCard, EnergyType, PokemonCard, SuperType, TrainerCard, TrainerType, Archetype } from 'ptcg-server';
 import { cardReplacements, exportReplacements, setCodeReplacements } from './card-replacements';
 // import { interval, Subject, Subscription } from 'rxjs';
 // import { takeUntil } from 'rxjs/operators';
@@ -282,13 +282,17 @@ export class DeckEditComponent implements OnInit {
     const items = this.deckItems.flatMap(item => Array(item.count).fill(item.card.fullName));
 
     this.loading = true;
-    this.deckService.saveDeck(this.deck.id, this.deck.name, items).pipe(
+    this.deckService.saveDeck(
+      this.deck.id,
+      this.deck.name,
+      items,
+      this.deck.manualArchetype1 as Archetype,
+      this.deck.manualArchetype2 as Archetype
+    ).pipe(
       finalize(() => { this.loading = false; }),
       untilDestroyed(this)
     ).subscribe(() => {
       this.alertService.toast(this.translate.instant('DECK_EDIT_SAVED'));
-      // Consider using a less intrusive notification for incremental saves
-      // console.log('Deck saved incrementally');
     }, (error: ApiError) => {
       if (!error.handled) {
         this.alertService.toast(this.translate.instant('ERROR_UNKNOWN'));

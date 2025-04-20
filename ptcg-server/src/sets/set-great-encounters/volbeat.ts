@@ -103,7 +103,7 @@ export class Volbeat extends PokemonCard {
             ), () => { });
 
             ADD_MARKER(this.LIGHT_CONDUCT_MARKER, player, this);
-            ABILITY_USED(player, this)
+            ABILITY_USED(player, this);
           });
         }
       });

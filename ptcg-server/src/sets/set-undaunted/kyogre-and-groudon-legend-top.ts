@@ -54,7 +54,7 @@ export class KyogreAndGroudonLegendTop extends PokemonCard {
       const slots: PokemonCardList[] = player.bench.filter(b => b.cards.length === 0);
 
       if (slots.length === 0) {
-      throw new GameError(GameMessage.CANNOT_USE_POWER);
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
       let topPiece = false;
@@ -63,14 +63,14 @@ export class KyogreAndGroudonLegendTop extends PokemonCard {
       let bottomCard: KyogreAndGroudonLegendBottom | null = null;
 
       player.hand.cards.forEach(card => {
-      if (card instanceof KyogreAndGroudonLegendTop && !topPiece) {
-        topPiece = true;
-        topCard = card;
-      }
-      if (card instanceof KyogreAndGroudonLegendBottom && !bottomPiece) {
-        bottomPiece = true;
-        bottomCard = card;
-      }
+        if (card instanceof KyogreAndGroudonLegendTop && !topPiece) {
+          topPiece = true;
+          topCard = card;
+        }
+        if (card instanceof KyogreAndGroudonLegendBottom && !bottomPiece) {
+          bottomPiece = true;
+          bottomCard = card;
+        }
       });
 
       if (topPiece && bottomPiece && topCard && bottomCard) {

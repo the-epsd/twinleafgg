@@ -48,7 +48,7 @@ export class Nosepass extends PokemonCard {
 
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player)
+      const opponent = StateUtils.getOpponent(state, player);
 
       if (HAS_MARKER(this.MAGNETIC_REVERSAL_MARKER, player, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
@@ -80,9 +80,9 @@ export class Nosepass extends PokemonCard {
             const cardList = result[0];
         
             if (cardList) {
-                opponent.switchPokemon(cardList);
-              }
+              opponent.switchPokemon(cardList);
             }
+          }
           );
         }
       });

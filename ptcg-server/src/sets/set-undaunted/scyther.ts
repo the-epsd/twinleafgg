@@ -35,14 +35,14 @@ export class Scyther extends PokemonCard {
   public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: AttackEffect): State {
-      REMOVE_MARKER_AT_END_OF_TURN(effect, this.ATTACK_USED_2_MARKER, this);
-      REPLACE_MARKER_AT_END_OF_TURN(effect, this.ATTACK_USED_MARKER, this.ATTACK_USED_2_MARKER, this);
+    REMOVE_MARKER_AT_END_OF_TURN(effect, this.ATTACK_USED_2_MARKER, this);
+    REPLACE_MARKER_AT_END_OF_TURN(effect, this.ATTACK_USED_MARKER, this.ATTACK_USED_2_MARKER, this);
   
-      if (WAS_ATTACK_USED(effect, 1, this)) {
-        BLOCK_EFFECT_IF_MARKER(this.ATTACK_USED_2_MARKER, effect.player, this);
-        ADD_MARKER(this.ATTACK_USED_MARKER, effect.player, this);
-      }
-
-      return state;
+    if (WAS_ATTACK_USED(effect, 1, this)) {
+      BLOCK_EFFECT_IF_MARKER(this.ATTACK_USED_2_MARKER, effect.player, this);
+      ADD_MARKER(this.ATTACK_USED_MARKER, effect.player, this);
     }
+
+    return state;
+  }
 }

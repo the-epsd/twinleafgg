@@ -19,13 +19,13 @@ ptcg-archetype,
 
 .deck-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   grid-gap: 1.5rem;
   justify-content: center;
   margin: 0 auto;
 
   @media screen and (max-width: 600px) {
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
     grid-gap: 1rem;
   }
 }
@@ -65,8 +65,7 @@ ptcg-archetype,
   flex-direction: column;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   position: relative;
-  width: 100%;
-  max-width: 160px;
+  width: 180px;
   margin: 0 auto;
   transition: box-shadow 0.3s ease, transform 0.3s ease;
   cursor: pointer;
@@ -80,32 +79,43 @@ ptcg-archetype,
 .deck-status {
   position: absolute;
   top: 0;
+  left: 0;
   right: 0;
-  display: flex;
-  padding: 10px;
+  height: 24px;
   z-index: 2;
 }
 
 .deck-validity {
-  background-color: rgba(16, 18, 25, 0.7);
-  border-radius: 50%;
-  width: 28px;
-  height: 28px;
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background-color: #ff4444;
+  color: white;
+  border-radius: 8px;
+  padding: 2px 6px;
+  font-size: 8px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
   display: flex;
   align-items: center;
   justify-content: center;
+  min-width: 40px;
   backdrop-filter: blur(2px);
 
-  mat-icon {
-    font-size: 16px;
-    height: 16px;
-    width: 16px;
-    line-height: 16px;
+  &.valid {
+    background-color: #4CAF50;
+  }
+
+  &.invalid {
+    background-color: #ff4444;
   }
 }
 
 .default-wrapper {
-  position: relative;
+  position: absolute;
+  top: 8px;
+  right: 8px;
 
   &:hover {
     .default-tooltip {
@@ -145,7 +155,7 @@ ptcg-archetype,
 }
 
 .deck-archetype {
-  height: 140px;
+  height: 145px;
   background-color: #101219;
   padding: 24px;
   display: flex;
