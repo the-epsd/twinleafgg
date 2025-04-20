@@ -63,13 +63,16 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
       player.deck,
       {},
       { min: 1, max: 1, allowCancel: false }), (selected: any[]) => {
-      cards = selected || [];
-      next();
-    });
+        cards = selected || [];
+        next();
+      });
     player.deck.moveCardsTo(cards, player.hand);
 
     player.supporter.moveCardTo(effect.trainerCard, player.discard);
   }
+
+  player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
   return store.prompt(state, new ShuffleDeckPrompt(player.id), (order: any[]) => {
     player.deck.applyOrder(order);
   });
@@ -93,15 +96,15 @@ export class Creamomatic extends TrainerCard {
   public fullName: string = 'Cram-o-matic FST';
 
   public text: string = 'You can use this card only if you discard another Item card from your hand.' +
-  '' +
-  'Flip a coin. If heads, search your deck for a card and put it into your hand. Then, shuffle your deck.';
+    '' +
+    'Flip a coin. If heads, search your deck for a card and put it into your hand. Then, shuffle your deck.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const generator = playCard(() => generator.next(), store, state, effect);
       return generator.next().value;
     }
-                                                    
+
     return state;
   }
 }                         
