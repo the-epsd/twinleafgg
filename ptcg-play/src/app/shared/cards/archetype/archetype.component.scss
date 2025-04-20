@@ -51,11 +51,6 @@
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/giratina.png);
   }
 
-  &[archetype="chien-pao"] {
-    background-size: contain;
-    background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/chien-pao.png);
-  }
-
   // &[archetype="baxcalibur"] {
   //   background-size: contain;
   //   background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/baxcalibur.png);
@@ -261,11 +256,6 @@
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/gouging-fire.png);
   }
 
-  &[archetype="gholdengo"] {
-    background-size: contain;
-    background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/gholdengo.png);
-  }
-
   &[archetype="iron-crown"] {
     background-size: contain;
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/iron-crown.png);
@@ -284,11 +274,6 @@
   &[archetype="milotic"] {
     background-size: contain;
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/milotic.png);
-  }
-
-  &[archetype="teal-mask-ogerpon"] {
-    background-size: contain;
-    background-image: url(https:///r2.limitlesstcg.net/pokemon/gen9/ogerpon.png);
   }
 
   &[archetype="zorark"] {
@@ -5672,9 +5657,19 @@
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/gimmighoul.png);
   }
 
+  &[archetype="gholdengo"] {
+    background-size: contain;
+    background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/gholdengo.png);
+  }
+
   &[archetype="wo-chien"] {
     background-size: contain;
     background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/wo-chien.png);
+  }
+
+  &[archetype="chien-pao"] {
+    background-size: contain;
+    background-image: url(https://r2.limitlesstcg.net/pokemon/gen9/chien-pao.png);
   }
 
   &[archetype="ting-lu"] {
