@@ -27,9 +27,10 @@ export class Lilligant extends PokemonCard {
     text: ''
   }];
 
+  public regulationMark = 'H';
   public set: string = 'JTG';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '70';
+  public setNumber: string = '7';
   public name: string = 'Lilligant';
   public fullName: string = 'Lilligant JTG';
 

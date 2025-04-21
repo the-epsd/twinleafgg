@@ -58,13 +58,15 @@ export class ArchetypeComponent {
     // First try to find the enum key that matches the archetype value
     const enumKey = Object.keys(Archetype).find(key => Archetype[key] === archetype);
     if (enumKey) {
-      const result = enumKey.toLowerCase();
+      const result = enumKey.toLowerCase().replace(/_/g, '-');
       console.log('Found matching enum key:', result);
       return result;
     }
 
     // If no match found, try to use the archetype value directly
-    const result = typeof archetype === 'string' ? archetype.toLowerCase() : 'unown';
+    const result = typeof archetype === 'string'
+      ? archetype.toLowerCase().replace(/_/g, '-')
+      : 'unown';
     console.log('Result:', result);
     return result;
   }
