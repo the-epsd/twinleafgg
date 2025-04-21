@@ -20,6 +20,8 @@ cardManager.defineSet(sets.setTeamRocket);
 cardManager.defineSet(sets.setWOTCPromos);
 cardManager.defineSet(sets.setVendingSeries);
 
+cardManager.defineSet(sets.setGymHeros);
+
 cardManager.defineSet(sets.setBaseSetEnergy);
 
 cardManager.defineSet(sets.setNeoGenesis);
