@@ -50,6 +50,9 @@ import { Swoobat } from './swoobat';
 import { Mimikyu } from './mimikyu';
 import { OricorioGX } from './oricorio-gx';
 import { DragoniumZDragonClaw } from './dragonium-z';
+import { Gloom } from './gloom';
+import { Oddish } from './oddish';
+import { VileplumeGX } from './vileplume-gx';
 
 
 export const setCosmicEclipse: Card[] = [
@@ -57,8 +60,11 @@ export const setCosmicEclipse: Card[] = [
   new ArceusDialgaPalkiaGX(),
   new BellelbaAndBrycenMan(),
   new Blacephalon(),
+  new BlastoisePiplupGX(),
   new Buzzwole(),
+  new Carvanha(),
   new ChaoticSwell(),
+  new CharizardBraixenGX(),
   new Clay(),
   new Clefairy(),
   new CynthiaAndCaitlin(),
@@ -71,6 +77,7 @@ export const setCosmicEclipse: Card[] = [
   new Flabebe(),
   new Flabebe2(),
   new Floette(),
+  new Gloom(),
   new Golett(),
   new GreatCatcher(),
   new GuzmaAndHala(),
@@ -80,8 +87,12 @@ export const setCosmicEclipse: Card[] = [
   new LilliesPokeDoll(),
   new Lillipup(),
   new MallowAndLana(),
+  new Mimikyu(),
+  new NaganadelGuzzlordGX(),
   new Natu(),
+  new Oddish(),
   new Onix(),
+  new OricorioGX(),
   new Phione(),
   new Pikachu(),
   new Ponyta(),
@@ -92,16 +103,11 @@ export const setCosmicEclipse: Card[] = [
   new Stoutland(),
   new Sunkern(),
   new Swirlix(),
-  new TagCall(),
-  new UltraNecrozma(),
-  new Wishiwashi(),
-  new BlastoisePiplupGX(),
-  new CharizardBraixenGX(),
-  new TogepiCleffaIgglybuffGX(),
-  new Carvanha(),
-  new NaganadelGuzzlordGX(),
-  new Woobat(),
   new Swoobat(),
-  new Mimikyu(),
-  new OricorioGX()
+  new TagCall(),
+  new TogepiCleffaIgglybuffGX(),
+  new UltraNecrozma(),
+  new VileplumeGX(),
+  new Wishiwashi(),
+  new Woobat(),
 ];
