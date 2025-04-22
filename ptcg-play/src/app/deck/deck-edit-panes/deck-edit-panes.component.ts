@@ -31,7 +31,7 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
 
   @Input() toolbarFilter: DeckEditToolbarFilter;
   @Output() deckItemsChange = new EventEmitter<DeckItem[]>();
-
+  public showLibrary = true;
 
   @Input() set deckItems(value: DeckItem[]) {
     this.list = value;
@@ -145,68 +145,6 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
 
     return cards;
   }
-
-  // sortByPokemonEvolution(cards: DeckItem[]): DeckItem[] {
-  //   // Sort by superType first
-  //   cards.sort((a, b) => a.card.superType - b.card.superType);
-  //   const firstTrainerIndex = cards.findIndex((d) => d.card.superType === SuperType.TRAINER);
-
-  //   for (let i = 0; i < firstTrainerIndex; i++) {
-  //     if ((<PokemonCard>cards[i].card).evolvesFrom) {
-  //       const indexOfPrevolution = this.findLastIndex(cards, c => c.card.name === (<PokemonCard>cards[i].card).evolvesFrom);
-
-  //       if (cards[indexOfPrevolution]?.card.superType !== SuperType.POKEMON) {
-  //         continue;
-  //       }
-
-  //       const currentPokemon = { ...cards.splice(i, 1)[0] };
-
-  //       cards = [
-  //         ...cards.slice(0, indexOfPrevolution + 1),
-  //         { ...currentPokemon },
-  //         ...cards.slice(indexOfPrevolution + 1),
-  //       ];
-  //     }
-  //   }
-
-  //   // Sort Pokemon cards by cardType after sorting by evolution
-  //   const pokemonCards = cards.slice(0, firstTrainerIndex);
-  //   pokemonCards.sort((a, b) => {
-  //     const cardA = a.card as PokemonCard;
-  //     const cardB = b.card as PokemonCard;
-  //     return cardA.cardType - cardB.cardType;
-  //   });
-  //   cards = [...pokemonCards, ...cards.slice(firstTrainerIndex)];
-
-  //   // Sort Trainer cards by trainerType and then alphabetically
-  //   const firstEnergyIndex = cards.findIndex((d) => d.card.superType === SuperType.ENERGY, firstTrainerIndex);
-  //   cards = [...cards.slice(0, firstTrainerIndex), ...cards.slice(firstTrainerIndex, firstEnergyIndex).sort((a, b) => {
-  //     const trainerA = a.card as TrainerCard;
-  //     const trainerB = b.card as TrainerCard;
-
-  //     const trainerTypeOrder = [TrainerType.SUPPORTER, TrainerType.ITEM, TrainerType.TOOL, TrainerType.STADIUM];
-  //     const trainerAIndex = trainerTypeOrder.indexOf(trainerA.trainerType);
-  //     const trainerBIndex = trainerTypeOrder.indexOf(trainerB.trainerType);
-
-  //     if (trainerAIndex !== trainerBIndex) {
-  //       return trainerAIndex - trainerBIndex;
-  //     }
-
-  //     return trainerA.name.localeCompare(trainerB.name);
-  //   }), ...cards.slice(firstEnergyIndex)];
-
-  //   // Sort Energy cards
-  //   const energyCards = cards.slice(firstEnergyIndex);
-  //   const specialEnergyCards = energyCards.filter((d) => d.card.energyType === EnergyType.SPECIAL);
-  //   const basicEnergyCards = energyCards.filter((d) => d.card.energyType === EnergyType.BASIC);
-
-  //   specialEnergyCards.sort((a, b) => a.card.name.localeCompare(b.card.name));
-  //   basicEnergyCards.sort((a, b) => a.card.name.localeCompare(b.card.name));
-
-  //   cards = [...cards.slice(0, firstEnergyIndex), ...specialEnergyCards, ...basicEnergyCards];
-
-  //   return cards;
-  // }
 
   findLastIndex<T>(array: Array<T>, predicate: (value: T, index: number, obj: T[]) => boolean): number {
     let l = array.length;
@@ -529,8 +467,6 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
     });
   }
 
-
-
   public async setCardCount(item: DeckItem) {
     const MAX_CARD_VALUE = 99;
     const index = this.tempList.findIndex(c => c.card.fullName === item.card.fullName);
@@ -577,8 +513,6 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
     this.deckTarget.unsubscribe();
   }
 
-  // deck-edit-panes.component.ts
-
   onDeckCardClick(card: DeckItem) {
     this.removeCardFromDeck(card);
   }
@@ -605,5 +539,9 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
         scanUrl: this.cardsBaseService.getScanUrl(selectedCard)
       })
     }
+  }
+
+  public toggleLibrary() {
+    this.showLibrary = !this.showLibrary;
   }
 }
