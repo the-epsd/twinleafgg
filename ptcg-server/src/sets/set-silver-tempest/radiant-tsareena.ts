@@ -8,6 +8,7 @@ import { PowerType } from '../../game/store/card/pokemon-types';
 import { PlayerType } from '../../game/store/actions/play-card-action';
 import { GameError, GameMessage, PokemonCardList } from '../../game';
 import { RemoveSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
+import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 
 export class RadiantTsareena extends PokemonCard {
@@ -54,8 +55,7 @@ export class RadiantTsareena extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
       if (player.marker.hasMarker(this.ELEGANT_HEAL_MARKER, this)) {
@@ -69,15 +69,17 @@ export class RadiantTsareena extends PokemonCard {
         state = store.reduceEffect(state, healEffect);
         return state;
       });
-      if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-        const player = effect.player;
-
-        const removeSpecialCondition = new RemoveSpecialConditionsEffect(effect, undefined);
-        removeSpecialCondition.target = player.active;
-        state = store.reduceEffect(state, removeSpecialCondition);
-        return state;
-      }
     }
+
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      const player = effect.player;
+
+      const removeSpecialCondition = new RemoveSpecialConditionsEffect(effect, undefined);
+      removeSpecialCondition.target = player.active;
+      state = store.reduceEffect(state, removeSpecialCondition);
+      return state;
+    }
+
     return state;
   }
 }
