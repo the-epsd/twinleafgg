@@ -1,7 +1,8 @@
 import { PokemonCard, Stage, CardType, PowerType, State, StoreLike, EnergyType, CardTag } from '../../game';
-import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { CheckHpEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect } from '../../game/store/effects/game-effects';
+import {IS_ABILITY_BLOCKED} from '../../game/store/prefabs/prefabs';
 
 export class Wishiwashi extends PokemonCard {
 
@@ -47,9 +48,11 @@ export class Wishiwashi extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (effect instanceof CheckHpEffect) {
 
       const player = effect.player;
+
+      if (IS_ABILITY_BLOCKED(store, state, player, this)){ return state; }
 
       const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player);
       store.reduceEffect(state, checkProvidedEnergyEffect);

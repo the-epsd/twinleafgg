@@ -41,7 +41,7 @@ export class Kingambit extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)){
       const opponent = effect.opponent;
 
-      if (opponent.active.damage === 40){
+      if (opponent.active.damage >= 40){
         const knockout = new KnockOutOpponentEffect(effect, 999);
         knockout.target = opponent.active;
         store.reduceEffect(state, knockout);
