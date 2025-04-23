@@ -3,6 +3,7 @@ import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
 import { PowerType, StoreLike, State, PlayerType, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckTableStateEffect, CheckPokemonAttacksEffect } from '../../game/store/effects/check-effects';
+import {IS_ABILITY_BLOCKED} from '../../game/store/prefabs/prefabs';
 
 export class Relicanth extends PokemonCard {
 
@@ -18,7 +19,7 @@ export class Relicanth extends PokemonCard {
 
   public powers = [{
     name: 'Memory Dive',
-    useWhenInPlay: true,
+    useWhenInPlay: false,
     powerType: PowerType.ABILITY,
     text: 'Each of your evolved Pokémon can use any attack from its previous Evolutions. (You still need the necessary Energy to use each attack.)'
   }];
@@ -53,6 +54,9 @@ export class Relicanth extends PokemonCard {
       if (owner !== player) {
         return state;
       }
+
+      if (IS_ABILITY_BLOCKED(store, state, player, this)){ return state; }
+
 
       let isRelicanthInPlay = false;
       owner.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
