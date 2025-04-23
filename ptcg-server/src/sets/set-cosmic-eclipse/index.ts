@@ -50,6 +50,7 @@ import { Swoobat } from './swoobat';
 import { Mimikyu } from './mimikyu';
 import { OricorioGX } from './oricorio-gx';
 import { DragoniumZDragonClaw } from './dragonium-z';
+import {MegaLopunnyJigglypuffGX} from './mega-lopuny-and-jigglypuff-gx';
 
 
 export const setCosmicEclipse: Card[] = [
@@ -103,5 +104,6 @@ export const setCosmicEclipse: Card[] = [
   new Woobat(),
   new Swoobat(),
   new Mimikyu(),
-  new OricorioGX()
+  new OricorioGX(),
+  new MegaLopunnyJigglypuffGX(),
 ];

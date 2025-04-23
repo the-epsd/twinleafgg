@@ -5,10 +5,12 @@ import { Beedrill } from './beedrill';
 import { BillsAnalysis } from './bills-analysis';
 import { Bisharp } from './bisharp';
 import { Bronzor } from './bronzor';
+import {CelebiVenusaurGX} from './celebi-and-venusaur-gx';
 import { Charizard } from './charizard';
 import { Charmander } from './charmander';
 import { Charmeleon } from './charmeleon';
 import { Dragonite } from './dragonite';
+import {EeveeSnorlaxGX} from './eevee-and-snorlax-gx';
 import { Ferrothorn } from './ferrothorn';
 import { GengarMimikyuGX } from './gengar-and-mimikyu-gx';
 import { Hitmonchan } from './hitmonchan';
@@ -18,6 +20,7 @@ import { Jirachi } from './jirachi';
 import { JudgeWhistle } from './judge-whistle';
 import { Kakuna } from './kakuna';
 import { Lapras } from './lapras';
+import {MagikarpWailordGX} from './magikarp-and-wailord-gx';
 import { Mareep } from './mareep';
 import { MetalGoggles } from './metal-goggles';
 import { Mimikyu } from './mimikyu';
@@ -68,4 +71,7 @@ export const setTeamUp: Card[] = [
   new Yveltal(),
   new Zapdos(),
   new JudgeWhistle(),
+  new EeveeSnorlaxGX(),
+  new MagikarpWailordGX(),
+  new CelebiVenusaurGX(),
 ];

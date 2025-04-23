@@ -95,6 +95,7 @@ export class Player {
   //GX-Attack Dedicated Section
   public usedAlteredCreation: boolean = false;
   public alteredCreationDamage: boolean = false;
+  public usedFullMetalWall: boolean = false;
 
   // Taken prize cards ("taken" means "moved to the player's hand")
   prizesTaken: number = 0;
