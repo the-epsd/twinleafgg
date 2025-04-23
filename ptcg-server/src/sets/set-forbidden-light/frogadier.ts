@@ -4,7 +4,8 @@ import { PowerType } from '../../game/store/card/pokemon-types';
 import { StoreLike, State, StateUtils, ConfirmPrompt, GameMessage, ChoosePokemonPrompt, PlayerType, SlotType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+import { EffectOfAbilityEffect } from '../../game/store/effects/game-effects';
+import { IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 export class Frogadier extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -49,18 +50,7 @@ export class Frogadier extends PokemonCard {
         GameMessage.WANT_TO_USE_ABILITY,
       ), wantToUse => {
         if (wantToUse) {
-
-          // Try to reduce PowerEffect, to check if something is blocking our ability
-          try {
-            const stub = new PowerEffect(player, {
-              name: 'test',
-              powerType: PowerType.ABILITY,
-              text: ''
-            }, this);
-            store.reduceEffect(state, stub);
-          } catch {
-            return state;
-          }
+          if (IS_ABILITY_BLOCKED(store, state, player, this)) return state;
 
           return store.prompt(state, new ChoosePokemonPrompt(
             player.id,
@@ -70,9 +60,15 @@ export class Frogadier extends PokemonCard {
             { min: 1, max: 1, allowCancel: false },
           ), selected => {
             const targets = selected || [];
-            targets.forEach(target => {
-              target.damage += 20;
-            });
+
+            if (targets.length > 0) {
+              // Check if ability can target selected Pokemon
+              const canApplyAbility = new EffectOfAbilityEffect(player, this.powers[0], this, targets[0]);
+              store.reduceEffect(state, canApplyAbility);
+              if (canApplyAbility.target) {
+                canApplyAbility.target.damage += 20;
+              }
+            }
           });
         }
 

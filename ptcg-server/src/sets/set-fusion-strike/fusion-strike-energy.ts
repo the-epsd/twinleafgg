@@ -1,4 +1,4 @@
-import { PlayerType, State, StoreLike } from '../../game';
+import { PlayerType, State, StateUtils, StoreLike } from '../../game';
 import { CardTag, CardType, EnergyType } from '../../game/store/card/card-types';
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
@@ -45,7 +45,12 @@ export class FusionStrikeEnergy extends EnergyCard {
 
     // Prevent effects of abilities from opponent's Pokemon
     if (effect instanceof EffectOfAbilityEffect && effect.target?.cards.includes(this)) {
-      effect.target = undefined;
+      const opponent = StateUtils.getOpponent(state, effect.player);
+
+      // Check for Fusion Strike Energy on the opposing side from the player using the ability
+      if (opponent.getPokemonInPlay().includes(effect.target) && effect.target.cards.includes(this)) {
+        effect.target = undefined;
+      }
     }
 
     // Discard card when not attached to Fusion Strike Pokemon
