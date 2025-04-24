@@ -3,5 +3,41 @@
 :host {
   display: block;
   height: 100%;
+  position: relative;
+}
+
+.sidebar-container {
+  display: flex;
+  height: 100%;
+  position: relative;
+}
+
+.main-content {
+  flex: 1;
+  transition: margin-right 0.3s ease;
   margin-right: map-get($ptcg-size, sidebar);
+
+  &.sidebar-hidden {
+    margin-right: 0;
+  }
+}
+
+.sidebar-toggle {
+  position: absolute;
+  right: map-get($ptcg-size, sidebar);
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
+  border-radius: 50%;
+  transition: right 0.3s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  .sidebar-hidden+& {
+    right: 0;
+  }
 }
