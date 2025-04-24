@@ -44,6 +44,10 @@ import { Tyrogue } from './tyrogue';
 import { Volcanion } from './volcanion';
 import { Zeraora } from './zeraora';
 import { StealthyHood } from './stealthy-hood';
+import {MukAlolanMukGX} from './muk-and-alolan-muk-gx';
+import {MarshadowMachampGX} from './marshadow-and-machamp-gx';
+import {LucarioMelmetalGX} from './lucario-and-melmetal-gx';
+
 export const setUnbrokenBonds: Card[] = [
   new Arcanine(),
   new Aron(),
@@ -90,4 +94,7 @@ export const setUnbrokenBonds: Card[] = [
   new HonchkrowGX(),
   new Gastly(),
   new StealthyHood(),
+  new MukAlolanMukGX(),
+  new MarshadowMachampGX(),
+  new LucarioMelmetalGX(),
 ];

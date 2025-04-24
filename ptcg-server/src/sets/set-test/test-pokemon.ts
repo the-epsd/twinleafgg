@@ -83,7 +83,7 @@ export class TestPokemon extends PokemonCard {
       });
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, cardList => {
         if (cardList.getPokemonCard() === opponentActive) {
-          const damageEffect = new EffectOfAbilityEffect(player, this.powers[0], this, state, [cardList]);
+          const damageEffect = new EffectOfAbilityEffect(player, this.powers[0], this, cardList);
           store.reduceEffect(state, damageEffect);
           if (damageEffect.target) {
             damageEffect.target.damage += 999;

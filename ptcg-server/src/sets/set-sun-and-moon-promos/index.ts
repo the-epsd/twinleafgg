@@ -4,6 +4,7 @@ import { GreninjaGX } from './greninja-gx';
 import { JolteonGX } from './jolteon-gx';
 import { LucarioGX } from './lucario-gx';
 import { Lurantis } from './lurantis';
+import {CelebiVenusaurGXSMP, EeveeSnorlaxGXSMP, EspeonDeoxysGXSMP, LucarioMelmetalGXSMP, MagikarpWailordGXSMP, UmbreonDarkraiGXSMP} from './other-prints';
 import { PalaceBook } from './palace-book';
 import { PikachuZekromGX } from './pikachu-and-zekrom-gx';
 import { ShiningCelebi } from './shining-celebi';
@@ -25,4 +26,10 @@ export const setSunAndMoonPromos: Card[] = [
   new TapuKoko(),
   new TapuLele(),
   new TrevenantDusknoirGX(),
+  new UmbreonDarkraiGXSMP(),
+  new LucarioMelmetalGXSMP(),
+  new EeveeSnorlaxGXSMP(),
+  new MagikarpWailordGXSMP(),
+  new CelebiVenusaurGXSMP(),
+  new EspeonDeoxysGXSMP(),
 ];

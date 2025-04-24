@@ -1,12 +1,56 @@
 @import '../../../theme/variables.scss';
 
 :host {
-  box-sizing: content-box;
+  box-sizing: border-box;
   display: block;
   height: 100%;
   overflow: auto;
-  position: absolute;
+  position: fixed;
   right: 0;
   width: map-get($ptcg-size, sidebar);
   z-index: 1;
+  transition: transform 0.3s ease;
+  background: #2D3748;
+  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.1);
+
+  &.hidden {
+    transform: translateX(100%);
+  }
+
+  .sidebar-toggle {
+    position: absolute;
+    left: -36px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    border-radius: 50%;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .hidden & {
+      left: -36px;
+    }
+  }
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+  }
 }

@@ -91,8 +91,7 @@ export class Hawlucha extends PokemonCard {
           ), selected => {
             const targets = selected || [];
             targets.forEach(target => {
-              const effectOfAbility = new EffectOfAbilityEffect(player, this.powers[0], this, state, [target]);
-              effectOfAbility.target = target;
+              const effectOfAbility = new EffectOfAbilityEffect(player, this.powers[0], this, target);
               store.reduceEffect(state, effectOfAbility);
               if (effectOfAbility.target) {
                 target.damage += 10;

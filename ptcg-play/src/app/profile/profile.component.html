@@ -30,6 +30,11 @@
         <button mat-raised-button [routerLink]="['/message', userId]">
           {{ 'BUTTON_SEND_MESSAGE' | translate }}
         </button>
+        <button *ngIf="isAdmin$ | async" mat-raised-button
+          [style.background-color]="(isBanned$ | async) ? '' : '#FF0000'"
+          [style.color]="(isBanned$ | async) ? '' : 'white'" (click)="banUser(userId)">
+          {{ (isBanned$ | async) ? ('PROFILE_UNBAN_USER' | translate) : ('PROFILE_BAN_USER' | translate) }}
+        </button>
       </ng-template>
     </mat-toolbar-row>
   </mat-toolbar>

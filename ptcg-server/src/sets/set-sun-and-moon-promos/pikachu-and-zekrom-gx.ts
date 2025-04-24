@@ -34,7 +34,7 @@ export class PikachuZekromGX extends PokemonCard {
 
   public set: string = 'SMP';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = 'SM168';
+  public setNumber: string = '168';
   public name: string = 'Pikachu & Zekrom-GX';
   public fullName: string = 'Pikachu & Zekrom GX SMP';
 

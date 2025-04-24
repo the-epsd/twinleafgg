@@ -1,1 +1,46 @@
-<ptcg-content [loading]="loading"></ptcg-content>
+<div class="login-container" [class.is-loading]="loading || initialLoading">
+  <div *ngIf="loading || initialLoading" class="loading-spinner">
+    <svg class="spinner" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+      <circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
+    </svg>
+  </div>
+
+  <ng-container *ngIf="!loading && !initialLoading">
+    <div class="logo">
+      <img src="assets/tl-open-beta.webp" alt="Logo">
+    </div>
+
+    <form (ngSubmit)="login()" class="login-form">
+      <div class="form-field">
+        <label>{{ 'LOGIN_USERNAME' | translate }}</label>
+        <input [(ngModel)]="name" name="name" type="text" required>
+      </div>
+
+      <div class="form-field">
+        <label>{{ 'LOGIN_PASSWORD' | translate }}</label>
+        <input [(ngModel)]="password" name="password" type="password" required>
+      </div>
+
+      <div class="remember-me">
+        <label class="checkbox-container">
+          <input type="checkbox" [(ngModel)]="rememberMe" name="rememberMe">
+          <span class="checkmark"></span>
+          {{ 'LOGIN_REMEMBER_ME' | translate }}
+        </label>
+      </div>
+
+      <button type="submit" class="login-button">
+        {{ 'BUTTON_LOGIN' | translate }}
+      </button>
+
+      <div class="links">
+        <a (click)="register()">{{ 'LOGIN_CREATE_ACCOUNT' | translate }}</a>
+        <div *ngIf="allowServerChange" class="server-change">
+          <button (click)="changeServer()">
+            {{ 'LOGIN_CHANGE_SERVER' | translate }}
+          </button>
+        </div>
+      </div>
+    </form>
+  </ng-container>
+</div>

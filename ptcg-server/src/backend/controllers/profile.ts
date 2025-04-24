@@ -10,6 +10,14 @@ import { User, Match } from '../../storage';
 import { UserInfo } from '../interfaces/core.interface';
 import { config } from '../../config';
 
+// Extend Express Request to include user property
+declare module 'express' {
+  interface Request {
+    user?: {
+      id: number;
+    };
+  }
+}
 
 export class Profile extends Controller {
 
@@ -19,11 +27,11 @@ export class Profile extends Controller {
     const userId: number = req.body.userId;
     const user = await User.findOne(userId);
     if (user === undefined) {
-      res.send({error: ApiErrorEnum.PROFILE_INVALID});
+      res.send({ error: ApiErrorEnum.PROFILE_INVALID });
       return;
     }
     const userInfo = this.buildUserInfo(user);
-    res.send({ok: true, user: userInfo});
+    res.send({ ok: true, user: userInfo });
   }
 
   @Get('/get/:id')
@@ -32,11 +40,11 @@ export class Profile extends Controller {
     const userId: number = parseInt(req.params.id, 10);
     const user = await User.findOne(userId);
     if (user === undefined) {
-      res.send({error: ApiErrorEnum.PROFILE_INVALID});
+      res.send({ error: ApiErrorEnum.PROFILE_INVALID });
       return;
     }
     const userInfo = this.buildUserInfo(user);
-    res.send({ok: true, user: userInfo});
+    res.send({ ok: true, user: userInfo });
   }
 
   @Get('/matchHistory/:userId/:page?/:pageSize?')
@@ -48,7 +56,7 @@ export class Profile extends Controller {
     const pageSize: number = parseInt(req.params.pageSize, 10) || defaultPageSize;
 
     const where: FindConditions<Match>[] = userId === 0 ? []
-      : [ { player1: { id: userId } }, { player2: { id: userId } } ];
+      : [{ player1: { id: userId } }, { player2: { id: userId } }];
 
     const [matchRows, total] = await Match.findAndCount({
       relations: ['player1', 'player2'],
@@ -80,7 +88,7 @@ export class Profile extends Controller {
         created: match.created
       }));
 
-    res.send({ok: true, matches, users, total});
+    res.send({ ok: true, matches, users, total });
   }
 
   @Post('/changePassword')
@@ -96,7 +104,7 @@ export class Profile extends Controller {
 
     if (user === undefined || user.password !== Md5.init(body.currentPassword)) {
       res.status(400);
-      res.send({error: ApiErrorEnum.LOGIN_INVALID});
+      res.send({ error: ApiErrorEnum.LOGIN_INVALID });
       return;
     }
 
@@ -105,7 +113,7 @@ export class Profile extends Controller {
       await user.save();
     } catch (error) {
       res.status(400);
-      res.send({error: ApiErrorEnum.LOGIN_INVALID});
+      res.send({ error: ApiErrorEnum.LOGIN_INVALID });
       return;
     }
 
@@ -124,7 +132,7 @@ export class Profile extends Controller {
 
     if (user === undefined) {
       res.status(400);
-      res.send({error: ApiErrorEnum.LOGIN_INVALID});
+      res.send({ error: ApiErrorEnum.LOGIN_INVALID });
       return;
     }
 
@@ -133,9 +141,9 @@ export class Profile extends Controller {
       return;
     }
 
-    if (await User.findOne({email: body.email})) {
+    if (await User.findOne({ email: body.email })) {
       res.status(400);
-      res.send({error: ApiErrorEnum.REGISTER_EMAIL_EXISTS});
+      res.send({ error: ApiErrorEnum.REGISTER_EMAIL_EXISTS });
       return;
     }
 
@@ -144,11 +152,55 @@ export class Profile extends Controller {
       await user.save();
     } catch (error) {
       res.status(400);
-      res.send({error: ApiErrorEnum.LOGIN_INVALID});
+      res.send({ error: ApiErrorEnum.LOGIN_INVALID });
       return;
     }
 
     res.send({ ok: true });
   }
 
+  @Post('/updateRole')
+  @AuthToken()
+  @Validate({
+    targetUserId: check().isNumber(),
+    roleId: check().isNumber()
+  })
+  public async onUpdateRole(req: Request, res: Response) {
+    const adminId: number = req.body.userId;
+    const admin = await User.findOne(adminId);
+
+    if (!admin || admin.roleId !== 4) {
+      res.status(403);
+      res.send({ error: ApiErrorEnum.AUTH_INVALID_PERMISSIONS });
+      return;
+    }
+
+    const body: { targetUserId: number, roleId: number } = req.body;
+    const targetUser = await User.findOne(body.targetUserId);
+
+    if (!targetUser) {
+      res.status(400);
+      res.send({ error: ApiErrorEnum.PROFILE_INVALID });
+      return;
+    }
+
+    if (![1, 2, 3, 4, 5].includes(body.roleId)) {
+      res.status(400);
+      res.send({ error: ApiErrorEnum.VALIDATION_INVALID_PARAM });
+      return;
+    }
+
+    try {
+      targetUser.roleId = body.roleId;
+      await targetUser.save();
+
+      this.core.emit(c => c.onUsersUpdate([targetUser]));
+
+      res.send({ ok: true });
+    } catch (error) {
+      res.status(500);
+      res.send({ error: ApiErrorEnum.SERVER_ERROR });
+      return;
+    }
+  }
 }

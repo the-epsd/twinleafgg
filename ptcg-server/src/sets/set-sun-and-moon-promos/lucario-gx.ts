@@ -45,7 +45,7 @@ export class LucarioGX extends PokemonCard {
 
   public set: string = 'SMP';
 
-  public setNumber = 'SM100';
+  public setNumber = '100';
 
   public cardImage = 'assets/cardback.png';
 

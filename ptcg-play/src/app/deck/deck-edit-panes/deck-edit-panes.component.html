@@ -8,10 +8,9 @@
   </ng-template>
 </dnd-preview>
 
-
-<!-- <div class="ptcg-deck-edit-container"> -->
-<cdk-virtual-scroll-viewport class="ptcg-deck-edit-pane" [dropTarget]="libraryTarget" ptcgDropHighlight
-  [ptcgDropHighlightVisible]="libraryHighlight$ | async" [itemSize]="77" minBufferPx="900" maxBufferPx="1800">
+<cdk-virtual-scroll-viewport *ngIf="showLibrary" class="ptcg-deck-edit-pane" [dropTarget]="libraryTarget"
+  ptcgDropHighlight [ptcgDropHighlightVisible]="libraryHighlight$ | async" [itemSize]="77" minBufferPx="900"
+  maxBufferPx="1800">
   <ptcg-deck-card *cdkVirtualFor="let card of (cards | filterCards: toolbarFilter)" [dndSortableExternal]="card.spec"
     #ext="dndSortableExternal" [source]="ext.source" (cardClick)="onLibraryCardClick(card)" [showDetailButtons]="true"
     (cardSelected)="onCardSelectedOnDialog(render.data, $event.card, $event.action)" [card]="card">
@@ -20,13 +19,13 @@
 
 <div class="ptcg-deck-edit-pane-secondary" [dropTarget]="deckTarget" ptcgDropHighlight
   [ptcgDropHighlightVisible]="deckHighlight$ | async">
-  <!-- <button mat-raised-button (click)="exportDeckImage()">
-      {{ 'EXPORT_IMAGE' | translate }}
-    </button> -->
+  <button mat-icon-button class="library-toggle" (click)="toggleLibrary()"
+    [matTooltip]="(showLibrary ? 'Hide' : 'Show') + ' Card Library'">
+    <mat-icon>{{ showLibrary ? 'chevron_left' : 'chevron_right' }}</mat-icon>
+  </button>
   <div #deckPane>
     <dnd-sortable-list listId="CARD_LIBRARY_LIST" hoverTrigger="fixed" [children]="tempList" [spec]="deckSpec">
       <ng-template dndSortableTemplate let-context>
-        <!-- dndSortableRender configures a DragSource for you, but you have to attach it. -->
         <ptcg-deck-card [dndSortableRender]="context" #render="dndSortableRender"
           [ptcgCardPlaceholder]="render.isDragging$" [source]="render.source" showCardCount="true"
           (infoClick)="showCardInfo(render.data)" (cardClick)="onDeckCardClick(render.data)"
@@ -39,5 +38,4 @@
   <div class="deck-validity-container">
     <ptcg-deck-validity [deck]="tempList"></ptcg-deck-validity>
   </div>
-
 </div>

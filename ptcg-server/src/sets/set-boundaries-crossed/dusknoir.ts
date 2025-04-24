@@ -3,7 +3,7 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect, EffectOfAbilityEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { StateUtils } from '../../game/store/state-utils';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { CheckHpEffect } from '../../game/store/effects/check-effects';
@@ -27,7 +27,7 @@ function* useSinisterHand(next: Function, store: StoreLike, state: State, effect
     effect.player.id,
     GameMessage.MOVE_DAMAGE,
     PlayerType.TOP_PLAYER,
-    [ SlotType.ACTIVE, SlotType.BENCH ],
+    [SlotType.ACTIVE, SlotType.BENCH],
     maxAllowedDamage,
     { allowCancel: true }
   ), transfers => {
@@ -38,9 +38,23 @@ function* useSinisterHand(next: Function, store: StoreLike, state: State, effect
     for (const transfer of transfers) {
       const source = StateUtils.getTarget(state, player, transfer.from);
       const target = StateUtils.getTarget(state, player, transfer.to);
-      if (source.damage >= 10) {
+
+      // Check if ability can target the transfer source
+      const canApplyAbilityToSource = new EffectOfAbilityEffect(player, effect.power, effect.card, source);
+      store.reduceEffect(state, canApplyAbilityToSource);
+
+      // Remove damage if we can target the transfer source
+      if (canApplyAbilityToSource.target && source.damage >= 10) {
         source.damage -= 10;
-        target.damage += 10;
+
+        // Check if ability can target the transfer target
+        const canApplyAbilityToTarget = new EffectOfAbilityEffect(player, effect.power, effect.card, target);
+        store.reduceEffect(state, canApplyAbilityToTarget);
+
+        // Add damage if we can target the transfer target
+        if (canApplyAbilityToTarget.target) {
+          target.damage += 10;
+        }
       }
     }
   });
@@ -58,7 +72,7 @@ export class Dusknoir extends PokemonCard {
 
   public weakness = [{ type: CardType.DARK }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Sinister Hand',
@@ -71,7 +85,7 @@ export class Dusknoir extends PokemonCard {
 
   public attacks = [{
     name: 'Shadow Punch',
-    cost: [ CardType.PSYCHIC, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ],
+    cost: [CardType.PSYCHIC, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
     damage: 60,
     text: 'This attack\'s damage isn\'t affected by Resistance.'
   }];

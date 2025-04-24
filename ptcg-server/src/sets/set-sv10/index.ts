@@ -34,6 +34,7 @@ import {TeamRocketsArbok} from './team-rockets-arbok';
 import { TeamRocketsArcher } from './team-rockets-archer';
 import { TeamRocketsAriana } from './team-rockets-ariana';
 import {TeamRocketsArticuno} from './team-rockets-articuno';
+import {TeamRocketsChingling} from './team-rockets-chingling';
 import {TeamRocketsCrobatex} from './team-rockets-crobat-ex';
 import {TeamRocketsDrowzee} from './team-rockets-drowzee';
 import {TeamRocketsEkans} from './team-rockets-ekans';
@@ -159,4 +160,5 @@ export const setSV10: Card[] = [
   new TeamRocketsArbok(),
   new TeamRocketsWatchtower(),
   new TeamRocketsFactory(),
+  new TeamRocketsChingling(),
 ];

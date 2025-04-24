@@ -26,6 +26,8 @@ export class ProfileComponent implements OnInit {
   public loading: boolean;
   public userId: number;
   public owner$: Observable<boolean>;
+  public isAdmin$: Observable<boolean>;
+  public isBanned$: Observable<boolean>;
 
   constructor(
     private dialog: MatDialog,
@@ -39,6 +41,15 @@ export class ProfileComponent implements OnInit {
   ) {
     this.user$ = EMPTY;
     this.owner$ = EMPTY;
+    this.isAdmin$ = this.sessionService.get(session => {
+      const loggedUserId = session.loggedUserId;
+      const loggedUser = loggedUserId && session.users[loggedUserId];
+      return loggedUser && loggedUser.roleId === 4;
+    });
+    this.isBanned$ = this.sessionService.get(session => {
+      const user = session.users[this.userId];
+      return user && user.roleId === 1;
+    });
   }
 
   ngOnInit(): void {
@@ -89,6 +100,27 @@ export class ProfileComponent implements OnInit {
 
   changeEmail(userId: number) {
     this.profilePopupService.openChangeEmailPopup(userId);
+  }
+
+  banUser(userId: number) {
+    const isBanned = this.sessionService.session.users[userId]?.roleId === 1;
+    const newRoleId = isBanned ? 2 : 1; // 2 is regular user, 1 is banned
+    const successMessage = isBanned ? 'PROFILE_UNBAN_SUCCESS' : 'PROFILE_BAN_SUCCESS';
+    const errorMessage = isBanned ? 'PROFILE_UNBAN_ERROR' : 'PROFILE_BAN_ERROR';
+
+    this.profileService.updateUserRole(userId, newRoleId).subscribe({
+      next: () => {
+        this.alertService.toast(this.translate.instant(successMessage));
+        const users = { ...this.sessionService.session.users };
+        if (users[userId]) {
+          users[userId] = { ...users[userId], roleId: newRoleId };
+          this.sessionService.set({ users });
+        }
+      },
+      error: async error => {
+        await this.alertService.error(this.translate.instant(errorMessage));
+      }
+    });
   }
 
 }

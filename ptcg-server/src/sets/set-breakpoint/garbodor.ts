@@ -75,7 +75,7 @@ export class Garbodor extends PokemonCard {
       // Check if we can apply the Ability lock to target Pokemon
       const cardList = StateUtils.findCardList(state, effect.card);
       if (cardList instanceof PokemonCardList) {
-        const canApplyAbility = new EffectOfAbilityEffect(playerHasGarbotoxin ? player : opponent, this.powers[0], this, state, [cardList], true);
+        const canApplyAbility = new EffectOfAbilityEffect(playerHasGarbotoxin ? player : opponent, this.powers[0], this, cardList);
         store.reduceEffect(state, canApplyAbility);
         if (!canApplyAbility.target) {
           return state;
