@@ -38,8 +38,13 @@ export class TeamRocketsAmpharos extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
       //const sourcePlayer = StateUtils.findOwner(state, effect.target);
 
-      if (IS_ABILITY_BLOCKED(store, state, opponent, this)){ return state; }
-      if (effect.darkestImpulseSV){ return state; }
+      if (IS_ABILITY_BLOCKED(store, state, opponent, this)) {
+        return state;
+      }
+
+      if (effect.darkestImpulseSV) {
+        return state;
+      }
 
       // checking if this is on the opponent's side
       let isAmphyOnOppsSide = false;
@@ -48,7 +53,9 @@ export class TeamRocketsAmpharos extends PokemonCard {
           isAmphyOnOppsSide = true;
         }
       });
-      if (!isAmphyOnOppsSide){ return state; }
+      if (!isAmphyOnOppsSide) {
+        return state;
+      }
 
       store.log(state, GameLog.LOG_PLAYER_USES_ABILITY, { name: player.name, ability: this.powers[0].name });
 

@@ -1,11 +1,11 @@
-<div class="sidebar-container">
-  <div class="main-content" [class.sidebar-hidden]="!isSidebarVisible">
-    <ng-content></ng-content>
-  </div>
-  <!-- <button mat-icon-button class="sidebar-toggle" (click)="toggleSidebar()">
+<!-- <div class="sidebar-container">
+  <div class="main-content" [class.sidebar-hidden]="!isSidebarVisible"> -->
+<ng-content></ng-content>
+<!-- </div>
+  <button mat-icon-button class="sidebar-toggle" (click)="toggleSidebar()">
     <mat-icon>{{ isSidebarVisible ? 'chevron_right' : 'chevron_left' }}</mat-icon>
-  </button> -->
+  </button>
   <ptcg-sidebar [class.hidden]="!isSidebarVisible">
     <ng-content select="ptcg-sidebar"></ng-content>
   </ptcg-sidebar>
-</div>
+</div> -->

@@ -28,11 +28,11 @@ export class Dunsparce extends PokemonCard {
   ];
 
 
-  public set: string = 'CES';
+  public set: string = 'SS';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '110';
+  public setNumber: string = '60';
   public name: string = 'Dunsparce';
-  public fullName: string = 'Dunsparce CES';
+  public fullName: string = 'Dunsparce SS';
 
   public wantsToSwitch: boolean = false;
 

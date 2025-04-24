@@ -2,7 +2,7 @@ import { PokemonCard, Stage, CardType, CardTag, State, StoreLike, PowerType, Att
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { AfterAttackEffect } from '../../game/store/effects/game-phase-effects';
+import { AfterAttackEffect, EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class BlisseyV extends PokemonCard {
 
@@ -73,6 +73,10 @@ export class BlisseyV extends PokemonCard {
     //   return state;
     // }
 
+    if (effect instanceof EndTurnEffect && this.usedBlissfulBlast) {
+      this.usedBlissfulBlast = false;
+    }
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
 
@@ -92,10 +96,18 @@ export class BlisseyV extends PokemonCard {
 
     if (effect instanceof AfterAttackEffect && this.usedBlissfulBlast === true) {
       const player = effect.player;
+
+      // Only proceed if the active Pokémon is Blissey V
+      if (player.active.getPokemonCard() !== this) {
+        this.usedBlissfulBlast = false;
+        return state;
+      }
+
       const energyCards = player.discard.cards.filter(c => c.superType === SuperType.ENERGY);
       const maxEnergyCards = Math.min(3, energyCards.length);
 
       if (energyCards.length === 0) {
+        this.usedBlissfulBlast = false;
         return state;
       }
 
