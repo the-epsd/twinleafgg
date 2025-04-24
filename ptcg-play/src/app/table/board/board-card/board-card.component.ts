@@ -135,7 +135,6 @@ export class BoardCardComponent implements OnInit, OnDestroy {
   public isUpsideDown = false;
   public boardEffect: BoardEffect[] = [];
   public BoardEffect = BoardEffect;
-
   private isSecret = false;
   private isPublic = false;
   private isOwner = false;
@@ -231,12 +230,35 @@ export class BoardCardComponent implements OnInit, OnDestroy {
     this.isSelected = this.boardInteractionService.isTargetSelected(this.cardTarget);
   }
 
+  private hasPlayedSquawkabillyAnimation = false;
+  private currentCardId: number | string;
+
   private initPokemonCardList(cardList: PokemonCardList) {
     this.damage = cardList.damage;
     this.specialConditions = cardList.specialConditions;
     this.boardEffect = cardList.boardEffect;
     this.mainCard = cardList.getPokemonCard();
     this.trainerCard = cardList.tool;
+
+    // Check if this is a new card instance
+    const newCardId = this.mainCard?.id;
+    if (newCardId && newCardId !== this.currentCardId) {
+      this.currentCardId = newCardId;
+      this.hasPlayedSquawkabillyAnimation = false;
+    }
+
+    // Check if this is Squawkabilly ex being played to the bench and hasn't played the animation yet
+    if (this.mainCard &&
+      this.mainCard.name === 'Squawkabilly ex' &&
+      !this.hasPlayedSquawkabillyAnimation) {
+      this.showSquawkabillyAnimation = true;
+      this.hasPlayedSquawkabillyAnimation = true;
+
+      // Remove the animation class after the animation completes
+      setTimeout(() => {
+        this.showSquawkabillyAnimation = false;
+      }, 1000);
+    }
 
     for (const card of cardList.cards) {
       // Check if card is an energy card or has a custom energy image
@@ -316,5 +338,7 @@ export class BoardCardComponent implements OnInit, OnDestroy {
     // } else {
     this.cardClick.emit(card);
   }
+
+  public showSquawkabillyAnimation = false;
 }
 
