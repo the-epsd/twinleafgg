@@ -1,91 +1,50 @@
 import { Component } from '@angular/core';
-
-import { TranslateService } from '@ngx-translate/core';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { finalize } from 'rxjs/operators';
-
-import { AlertService } from 'src/app/shared/alert/alert.service';
-import { ApiError } from 'src/app/api/api.error';
-import { LoginService } from 'src/app/api/services/login.service';
 import { Router } from '@angular/router';
-import { ServerPasswordPopupService } from '../server-password-popup/server-password-popup.service';
-import { ApiErrorEnum } from 'ptcg-server';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { LoginService } from '../../api/services/login.service';
 
 @UntilDestroy()
 @Component({
-  selector: 'ptcg-register',
+  selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent {
-
+  public name = '';
+  public email = '';
+  public password = '';
   public loading = false;
-  public name: string;
-  email: string = `user_${Math.random().toString(36).substring(2, 10)}@example.com`;
-  public password: string;
-  public confirmPassword: string;
-  public invalidName: string;
-  public invalidEmail: string;
+  public invalidName: string | null = null;
+  public invalidEmail: string | null = null;
 
   constructor(
-    private alertService: AlertService,
-    private loginService: LoginService,
-    private serverPasswordPopupService: ServerPasswordPopupService,
-    private router: Router,
-    private translate: TranslateService
+    private readonly router: Router,
+    private readonly loginService: LoginService
   ) {
-    this.email = this.generateRandomEmail();
+    this.email = `${Math.random().toString(36).substring(7)}@example.com`;
   }
 
-  public register(code?: string): void {
-    this.loading = true;
+  goToLogin(): void {
+    this.router.navigate(['/login']);
+  }
 
-    this.loginService.register(this.name, this.password, this.email, code).pipe(
-      finalize(() => { this.loading = false; }),
-      untilDestroyed(this)
-    )
-      .subscribe(async () => {
-        await this.alertService.alert(this.translate.instant('REGISTER_SUCCESS'));
-        this.router.navigate(['/games']);
-      }, (error: ApiError) => {
-        this.handleError(error);
+  register(): void {
+    if (this.invalidName || this.invalidEmail) {
+      return;
+    }
+
+    this.loading = true;
+    this.loginService
+      .register(this.name, this.email, this.password)
+      .pipe(untilDestroyed(this))
+      .subscribe({
+        next: () => {
+          this.loading = false;
+          this.router.navigate(['/login']);
+        },
+        error: () => {
+          this.loading = false;
+        }
       });
   }
-
-  private generateRandomEmail(): string {
-    const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
-    const length = 10;
-    let result = '';
-    for (let i = 0; i < length; i++) {
-      result += characters.charAt(Math.floor(Math.random() * characters.length));
-    }
-    return `${result}@example.com`;
-  }
-
-  private handleError(error: ApiError) {
-    switch (error.code) {
-      case ApiErrorEnum.REGISTER_DISABLED:
-        this.alertService.error(this.translate.instant('ERROR_REGISTRATION_DISABLED'));
-        break;
-
-      case ApiErrorEnum.REGISTER_INVALID_SERVER_PASSWORD:
-        this.serverPasswordPopupService.openDialog()
-          .pipe(untilDestroyed(this))
-          .subscribe(code => {
-            if (code !== undefined) {
-              this.register(code);
-            }
-          });
-        break;
-
-      case ApiErrorEnum.REGISTER_NAME_EXISTS:
-        this.invalidName = this.name;
-        break;
-
-      case ApiErrorEnum.REGISTER_EMAIL_EXISTS:
-        this.invalidEmail = this.email;
-        break;
-    }
-  }
-
 }

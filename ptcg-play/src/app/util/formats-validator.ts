@@ -185,7 +185,10 @@ export const BanLists: { [key: number]: string[] } = {
     'Raikou VIV 50',
     'Duskull CEC 83',
     'Marshadow SLG 45',
-    'Marshadow SM 85'
+    'Marshadow SM 85',
+    'Double Colorless Energy XY 130',
+    'Double Colorless Energy BS 96',
+    'Twin Energy RCL 174'
   ],
   [Format.EXPANDED]: [
     'Palace Book SMP NAN25',
