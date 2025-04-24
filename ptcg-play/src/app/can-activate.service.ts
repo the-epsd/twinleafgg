@@ -2,7 +2,6 @@ import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTr
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { LoginPopupService } from './login/login-popup/login-popup.service';
 import { SessionService } from './shared/session/session.service';
 import { TranslateService } from '@ngx-translate/core';
 import { AlertService } from './shared/alert/alert.service';
@@ -14,7 +13,6 @@ import { LoginService } from './api/services/login.service';
 export class CanActivateService implements CanActivate {
 
   constructor(
-    private loginPopupService: LoginPopupService,
     private sessionService: SessionService,
     private router: Router,
     private alertService: AlertService,
@@ -35,12 +33,10 @@ export class CanActivateService implements CanActivate {
         this.alertService.toast(this.translate.instant('ERROR_ACCOUNT_BANNED'));
         this.sessionService.clear();
         this.loginService.logout();
-        this.loginPopupService.redirectUrl = state.url;
-        return this.router.parseUrl('/login');
+        return this.router.createUrlTree(['/login'], { queryParams: { redirectUrl: state.url } });
       }
       return true;
     }
-    this.loginPopupService.redirectUrl = state.url;
-    return this.router.parseUrl('/login');
+    return this.router.createUrlTree(['/login'], { queryParams: { redirectUrl: state.url } });
   }
 }

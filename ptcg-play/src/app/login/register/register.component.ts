@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ApiErrorEnum } from 'ptcg-server';
+
 import { TranslateService } from '@ngx-translate/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { finalize } from 'rxjs/operators';
@@ -9,6 +9,7 @@ import { ApiError } from 'src/app/api/api.error';
 import { LoginService } from 'src/app/api/services/login.service';
 import { Router } from '@angular/router';
 import { ServerPasswordPopupService } from '../server-password-popup/server-password-popup.service';
+import { ApiErrorEnum } from 'ptcg-server';
 
 @UntilDestroy()
 @Component({
