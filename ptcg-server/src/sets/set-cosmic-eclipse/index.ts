@@ -51,6 +51,9 @@ import { Mimikyu } from './mimikyu';
 import { OricorioGX } from './oricorio-gx';
 import { DragoniumZDragonClaw } from './dragonium-z';
 import {MegaLopunnyJigglypuffGX} from './mega-lopuny-and-jigglypuff-gx';
+import {VenusaurSnivyGX} from './venusaur-and-snivy-gx';
+import {LilliesFullForce} from './lillies-full-force';
+import {SolgaleoLunalaGX} from './solgaleo-and-lunala-gx';
 
 
 export const setCosmicEclipse: Card[] = [
@@ -106,4 +109,7 @@ export const setCosmicEclipse: Card[] = [
   new Mimikyu(),
   new OricorioGX(),
   new MegaLopunnyJigglypuffGX(),
+  new VenusaurSnivyGX(),
+  new LilliesFullForce(),
+  new SolgaleoLunalaGX(),
 ];

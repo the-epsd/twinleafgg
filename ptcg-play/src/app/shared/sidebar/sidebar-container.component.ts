@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'ptcg-sidebar-container',
@@ -6,9 +6,7 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./sidebar-container.component.scss']
 })
 export class SidebarContainerComponent {
-  @Input() isSidebarVisible = true;
 
-  toggleSidebar() {
-    this.isSidebarVisible = !this.isSidebarVisible;
-  }
+  constructor() { }
+
 }

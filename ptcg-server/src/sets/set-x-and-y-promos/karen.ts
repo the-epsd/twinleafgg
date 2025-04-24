@@ -3,9 +3,8 @@ import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { TrainerType } from '../../game/store/card/card-types';
+import { TrainerType, SuperType } from '../../game/store/card/card-types';
 import { StateUtils } from '../../game/store/state-utils';
-import { PokemonCard } from '../../game';
 import { SHUFFLE_CARDS_INTO_DECK } from '../../game/store/prefabs/prefabs';
 
 export class Karen extends TrainerCard {
@@ -22,12 +21,10 @@ export class Karen extends TrainerCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       for (const p of [effect.player, StateUtils.getOpponent(state, effect.player)]) {
-        const discardedPokemon = p.discard.cards.filter(c => c instanceof PokemonCard);
+        const discardedPokemon = p.discard.cards.filter(c => c.superType === SuperType.POKEMON);
         SHUFFLE_CARDS_INTO_DECK(store, state, p, discardedPokemon);
       }
     }
-
     return state;
   }
-
 }

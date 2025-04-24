@@ -1,17 +1,11 @@
-import { PlayerType } from '../../game';
-import { GameError } from '../../game/game-error';
-import { GameMessage } from '../../game/game-message';
-import { Card } from '../../game/store/card/card';
-import { BoardEffect, CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { PowerType } from '../../game/store/card/pokemon-types';
+import { Stage, CardType, BoardEffect } from '../../game/store/card/card-types';
+import { StoreLike, State, GameMessage, StateUtils, ConfirmPrompt, Card, GameError, PlayerType, PowerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+import { PowerEffect, AttackEffect } from '../../game/store/effects/game-effects';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
 import { CardList } from '../../game/store/state/card-list';
-import { State } from '../../game/store/state/state';
-import { StoreLike } from '../../game/store/store-like';
 
 function* useSmoothOver(next: Function, store: StoreLike, state: State,
   self: Magcargo, effect: PowerEffect): IterableIterator<State> {
@@ -56,33 +50,61 @@ function* useSmoothOver(next: Function, store: StoreLike, state: State,
 export class Magcargo extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Slugma';
-  public cardType: CardType = CardType.FIRE;
-  public hp: number = 90;
-  public weakness = [{ type: CardType.WATER }];
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
+  public cardType: CardType = R;
+  public hp: number = 80;
+  public weakness = [{ type: W }];
+  public retreat = [C, C, C];
+
   public powers = [{
     name: 'Smooth Over',
     useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'Once during your turn, you may search your deck for a card, shuffle your deck, then put that card on top of it.'
+    powerType: PowerType.POKEPOWER,
+    text: 'Once during your turn (before your attack), you may search your deck for a card. Shuffle your deck, then put that card on top of your deck. This power can\'t be used if Magcargo is affected by a Special Condition.'
   }];
-  public attacks = [{
-    name: 'Combustion',
-    cost: [CardType.FIRE, CardType.COLORLESS, CardType.COLORLESS],
-    damage: 50,
-    text: ''
-  }];
-  public set: string = 'CES';
-  public name: string = 'Magcargo';
-  public fullName: string = 'Magcargo CES';
+
+  public attacks = [
+    {
+      name: 'Knock Over',
+      cost: [C],
+      damage: 10,
+      text: 'You may discard any Stadium card in play.'
+    },
+    {
+      name: 'Combustion',
+      cost: [R, C, C],
+      damage: 50,
+      text: ''
+    }
+  ];
+
+  public set: string = 'DX';
+  public setNumber: string = '20';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '24';
+  public name: string = 'Magcargo';
+  public fullName: string = 'Magcargo DX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const generator = useSmoothOver(() => generator.next(), store, state, this, effect);
       return generator.next().value;
     }
+
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+      const stadiumCard = StateUtils.getStadiumCard(state);
+      if (stadiumCard !== undefined) {
+        state = store.prompt(state, new ConfirmPrompt(
+          effect.player.id,
+          GameMessage.WANT_TO_DISCARD_STADIUM,
+        ), wantToUse => {
+          if (wantToUse) {
+            const cardList = StateUtils.findCardList(state, stadiumCard);
+            const player = StateUtils.findOwner(state, cardList);
+            cardList.moveTo(player.discard);
+          }
+          return state;
+        });
+      }
+    }
     return state;
   }
-}
+} 

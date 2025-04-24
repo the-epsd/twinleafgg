@@ -123,6 +123,9 @@ export const cardReplacements = [
   { from: 'Pokemon Breeder BS 76', to: 'Pokémon Breeder BS 76' },
   { from: 'Pokemon Trader BS 77', to: 'Pokémon Trader BS 77' },
 
+  //DX
+  { from: 'Ludicolo DX 19', to: 'Ludicolo DX2 19' },
+
   //GRI
   { from: 'Oricorio GRI 55', to: 'Oricorio GRI2 55' },
 
@@ -632,6 +635,9 @@ export const exportReplacements = [
   //BS
   { from: 'Pokémon Breeder BS 76', to: 'Pokemon Breeder BS 76' },
   { from: 'Pokémon Trader BS 77', to: 'Pokemon Trader BS 77' },
+
+  //DX
+  { from: 'Ludicolo DX2 19', to: 'Ludicolo DX 19' },
 
   //GRI
   { from: 'Oricorio GRI2 55', to: 'Oricorio GRI 55' },

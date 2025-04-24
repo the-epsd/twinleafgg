@@ -33,6 +33,7 @@ cardManager.defineSet(sets.setBestOfGame);
 
 //ex Era shit
 cardManager.defineSet(sets.setEXRubyAndSapphire);
+cardManager.defineSet(sets.setEXSandstorm);
 cardManager.defineSet(sets.setEXHolonPhantoms);
 cardManager.defineSet(sets.setEXHiddenLegends)
 cardManager.defineSet(sets.setEXDragon);

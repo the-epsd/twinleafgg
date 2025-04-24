@@ -22,6 +22,7 @@ export enum CardTag {
   TAG_TEAM = 'TAG_TEAM',
   TEAM_MAGMA = 'TEAM_MAGMA',
   PRISM_STAR = 'PRISM_STAR',
+  STAR = 'STAR',
   BREAK = 'BREAK',
   PRIME = 'PRIME',
   HOLO = 'HOLO',
@@ -45,8 +46,7 @@ export enum CardTag {
   POKEMON_SV_MEGA = 'POKEMON_SV_MEGA',
   HOLONS = 'HOLONS',
   TEAM_ROCKET = 'TEAM_ROCKET',
-  UNOWN = 'UNOWN',
-  STAR = 'STAR',
+  UNOWN = 'UNOWN'
 }
 
 export enum SuperType {
