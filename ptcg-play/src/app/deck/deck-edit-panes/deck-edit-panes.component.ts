@@ -12,7 +12,7 @@ import { DeckEditToolbarFilter } from '../deck-edit-toolbar/deck-edit-toolbar-fi
 import { DeckItem, LibraryItem } from '../deck-card/deck-card.interface';
 import { DeckCardType } from '../deck-card/deck-card.component';
 import { DeckEditVirtualScrollStrategy } from './deck-edit-virtual-scroll-strategy';
-import { Card, CardTag, EnergyCard, EnergyType, PokemonCard, SuperType, TrainerCard, TrainerType } from 'ptcg-server';
+import { Card, CardTag, EnergyCard, EnergyType, PokemonCard, SuperType, TrainerCard, TrainerType, CardType, Stage } from 'ptcg-server';
 import html2canvas from 'html2canvas';
 
 const DECK_CARD_ITEM_WIDTH = 148;
@@ -77,44 +77,7 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
       },
       endDrag: () => {
         this.hasDropped = false;
-        this.tempList = this.list.sort((a, b) => {
-          const result = this.compareSupertype(a.card.superType) - this.compareSupertype(b.card.superType);
-
-          // not of the same supertype
-          if (result !== 0) {
-            return result;
-          }
-
-          // cards match supertype, so sort by subtype
-          if ((<any>a.card).trainerType != null) {
-            const cardA = a.card as TrainerCard;
-            if (cardA.trainerType != null && (<any>b.card).trainerType != null) {
-              const cardB = b.card as TrainerCard;
-              const subtypeCompare = this.compareTrainerType(cardA.trainerType) - this.compareTrainerType(cardB.trainerType);
-              if (subtypeCompare !== 0) {
-                return subtypeCompare;
-              }
-            }
-          }
-          else if ((<any>a.card).energyType != null) {
-            const cardA = a.card as EnergyCard;
-            if (cardA.energyType != null && (<any>b.card).energyType != null) {
-              const cardB = b.card as TrainerCard;
-              const subtypeCompare = this.compareEnergyType(cardA.energyType) - this.compareEnergyType(cardB.energyType);
-              if (subtypeCompare !== 0) {
-                return subtypeCompare;
-              }
-            }
-          }
-
-          // subtype matches, sort by name
-          if (a.card.name < b.card.name) {
-            return -1;
-          } else {
-            return 1;
-          }
-        });
-        this.tempList = this.sortByPokemonEvolution([...this.tempList]);
+        this.tempList = this.sortByPokemonEvolution([...this.list]);
       },
       isDragging: (ground: DeckItem, inFlight: DraggedItem<DeckItem>) => {
         return ground.card.fullName === inFlight.data.card.fullName;
@@ -222,7 +185,7 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
     }
 
     temp.splice(target, 0, data);
-    return temp;
+    return this.sortByPokemonEvolution(temp);
   }
 
   private initDropTarget(pane: DeckEditPane): [DropTarget<DraggedItem<DeckItem>, any>, Observable<boolean>] {
@@ -293,7 +256,31 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
 
     const count = 1;
     if (index === -1) {
-      list.push({ ...item, pane: DeckEditPane.DECK, count });
+      // First sort the list to find the correct position
+      list = this.sortByPokemonEvolution(list);
+
+      // Find the correct position to insert the new card
+      let insertIndex = list.length;
+      for (let i = 0; i < list.length; i++) {
+        const result = this.compareSupertype(item.card.superType) - this.compareSupertype(list[i].card.superType);
+        if (result < 0) {
+          insertIndex = i;
+          break;
+        }
+
+        // If same supertype, check card type for Pokemon
+        if (result === 0 && item.card.superType === SuperType.POKEMON) {
+          const itemCard = item.card as PokemonCard;
+          const listCard = list[i].card as PokemonCard;
+          const typeCompare = this.compareCardType(itemCard.cardType) - this.compareCardType(listCard.cardType);
+          if (typeCompare < 0) {
+            insertIndex = i;
+            break;
+          }
+        }
+      }
+
+      list.splice(insertIndex, 0, { ...item, pane: DeckEditPane.DECK, count });
     } else {
       if (list[index].count < 4) {
         list[index].count += count;
@@ -305,48 +292,8 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
       }
     }
 
-    list.sort((a, b) => {
-      const result = this.compareSupertype(a.card.superType) - this.compareSupertype(b.card.superType);
-
-      // not of the same supertype
-      if (result !== 0) {
-        return result;
-      }
-
-      // cards match supertype, so sort by subtype
-      if ((<any>a.card).trainerType != null) {
-        const cardA = a.card as TrainerCard;
-        if (cardA.trainerType != null && (<any>b.card).trainerType != null) {
-          const cardB = b.card as TrainerCard;
-          const subtypeCompare = this.compareTrainerType(cardA.trainerType) - this.compareTrainerType(cardB.trainerType);
-          if (subtypeCompare !== 0) {
-            return subtypeCompare;
-          }
-        }
-      }
-      else if ((<any>a.card).energyType != null) {
-        const cardA = a.card as EnergyCard;
-        if (cardA.energyType != null && (<any>b.card).energyType != null) {
-          const cardB = b.card as TrainerCard;
-          const subtypeCompare = this.compareEnergyType(cardA.energyType) - this.compareEnergyType(cardB.energyType);
-          if (subtypeCompare !== 0) {
-            return subtypeCompare;
-          }
-        }
-      }
-
-      // subtype matches, sort by name
-      if (a.card.name < b.card.name) {
-        return -1;
-      } else {
-        return 1;
-      }
-    });
-
-    list = this.sortByPokemonEvolution(list);
-
-    this.tempList = this.list = list;
-    this.deckItemsChange.next(list);
+    this.tempList = this.list = this.sortByPokemonEvolution(list);
+    this.deckItemsChange.next(this.list);
   }
 
   public async removeCardFromDeck(item: DeckItem) {
@@ -363,49 +310,154 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
       list[index].count -= count;
     }
 
-    list.sort((a, b) => {
-      const result = this.compareSupertype(a.card.superType) - this.compareSupertype(b.card.superType);
+    this.tempList = this.list = this.sortByPokemonEvolution(list);
+    this.deckItemsChange.next(this.list);
+  }
 
-      // not of the same supertype
-      if (result !== 0) {
-        return result;
-      }
+  private sortDeckCards(cards: DeckItem[]): DeckItem[] {
+    // First, separate Pokemon from non-Pokemon cards
+    const pokemonCards = cards.filter(item => item.card.superType === SuperType.POKEMON);
+    const nonPokemonCards = cards.filter(item => item.card.superType !== SuperType.POKEMON);
 
-      // cards match supertype, so sort by subtype
-      if ((<any>a.card).trainerType != null) {
-        const cardA = a.card as TrainerCard;
-        if (cardA.trainerType != null && (<any>b.card).trainerType != null) {
-          const cardB = b.card as TrainerCard;
-          const subtypeCompare = this.compareTrainerType(cardA.trainerType) - this.compareTrainerType(cardB.trainerType);
-          if (subtypeCompare !== 0) {
-            return subtypeCompare;
-          }
-        }
-      }
-      else if ((<any>a.card).energyType != null) {
-        const cardA = a.card as EnergyCard;
-        if (cardA.energyType != null && (<any>b.card).energyType != null) {
-          const cardB = b.card as TrainerCard;
-          const subtypeCompare = this.compareEnergyType(cardA.energyType) - this.compareEnergyType(cardB.energyType);
-          if (subtypeCompare !== 0) {
-            return subtypeCompare;
-          }
-        }
-      }
+    // Sort non-Pokemon cards by supertype
+    const sortedNonPokemon = nonPokemonCards.sort((a, b) => {
+      return this.compareSupertype(a.card.superType) - this.compareSupertype(b.card.superType);
+    });
 
-      // subtype matches, sort by name
-      if (a.card.name < b.card.name) {
-        return -1;
-      } else {
-        return 1;
+    // For Pokemon cards, first identify all evolution chains
+    const evolutionChains = new Map<string, DeckItem[]>();
+    const basicPokemon = new Set<string>();
+    const evolutionCards = new Set<string>();
+
+    // First pass: identify all evolution relationships
+    pokemonCards.forEach(item => {
+      const pokemonCard = item.card as PokemonCard;
+      if (pokemonCard.evolvesFrom) {
+        basicPokemon.add(pokemonCard.evolvesFrom);
+        evolutionCards.add(pokemonCard.name);
+        // Also add the evolved form to evolutionCards
+        evolutionCards.add(pokemonCard.evolvesFrom);
       }
     });
 
-    list = this.sortByPokemonEvolution(list);
+    // Second pass: build evolution chains
+    pokemonCards.forEach(item => {
+      const pokemonCard = item.card as PokemonCard;
+      let chainKey = pokemonCard.name;
 
-    this.tempList = this.list = list;
-    this.deckItemsChange.next(list);
+      // If this Pokemon evolves from another, use that as the chain key
+      if (pokemonCard.evolvesFrom) {
+        chainKey = pokemonCard.evolvesFrom;
+      }
+      // If this is a basic Pokemon that others evolve from, use its name as the chain key
+      else if (basicPokemon.has(pokemonCard.name)) {
+        chainKey = pokemonCard.name;
+      }
+      // If this Pokemon is part of an evolution chain but not a basic, find its basic
+      else if (evolutionCards.has(pokemonCard.name)) {
+        // Find the basic Pokemon this evolves from
+        const basic = pokemonCards.find(p => {
+          const pCard = p.card as PokemonCard;
+          return pCard.evolvesFrom === pokemonCard.name;
+        });
+        if (basic) {
+          chainKey = basic.card.name;
+        }
+      }
+
+      if (!evolutionChains.has(chainKey)) {
+        evolutionChains.set(chainKey, []);
+      }
+      evolutionChains.get(chainKey)!.push(item);
+    });
+
+    // Sort each evolution chain
+    const stageOrder = [
+      Stage.BASIC,
+      Stage.STAGE_1,
+      Stage.STAGE_2,
+      Stage.VMAX,
+      Stage.VSTAR,
+      Stage.VUNION,
+      Stage.LEGEND,
+      Stage.MEGA,
+      Stage.BREAK,
+      Stage.RESTORED,
+      Stage.NONE
+    ];
+
+    evolutionChains.forEach(chain => {
+      chain.sort((a, b) => {
+        const pokemonA = a.card as PokemonCard;
+        const pokemonB = b.card as PokemonCard;
+        const aIndex = stageOrder.indexOf(pokemonA.stage);
+        const bIndex = stageOrder.indexOf(pokemonB.stage);
+
+        // If they're in the same evolution chain, sort by stage
+        if (pokemonA.evolvesFrom === pokemonB.name || pokemonB.evolvesFrom === pokemonA.name) {
+          return aIndex - bIndex;
+        }
+
+        // If they're not in the same chain, but one is a basic that others evolve from
+        if (basicPokemon.has(pokemonA.name) && !basicPokemon.has(pokemonB.name)) return -1;
+        if (!basicPokemon.has(pokemonA.name) && basicPokemon.has(pokemonB.name)) return 1;
+
+        // If neither is a basic that others evolve from, sort by stage first
+        if (aIndex !== bIndex) {
+          return aIndex - bIndex;
+        }
+
+        // If same stage, sort alphabetically
+        return pokemonA.name.localeCompare(pokemonB.name);
+      });
+    });
+
+    // Get all cards that are part of evolution chains
+    const evolutionChainCards = Array.from(evolutionChains.values()).flat();
+    const evolutionCardNames = new Set(evolutionChainCards.map(item => item.card.name));
+
+    // Get non-evolution Pokemon cards
+    const nonEvolutionPokemon = pokemonCards.filter(item => !evolutionCardNames.has(item.card.name));
+
+    // Sort non-evolution Pokemon by type and name
+    const sortedNonEvolutionPokemon = nonEvolutionPokemon.sort((a, b) => {
+      const pokemonA = a.card as PokemonCard;
+      const pokemonB = b.card as PokemonCard;
+
+      // First sort by card type
+      const typeCompare = this.compareCardType(pokemonA.cardType) - this.compareCardType(pokemonB.cardType);
+      if (typeCompare !== 0) return typeCompare;
+
+      // Then sort by name
+      return pokemonA.name.localeCompare(pokemonB.name);
+    });
+
+    // Sort chains alphabetically by their basic Pokemon
+    const sortedChains = Array.from(evolutionChains.entries())
+      .sort(([aKey], [bKey]) => aKey.localeCompare(bKey))
+      .map(([_, chain]) => chain)
+      .flat();
+
+    // Combine everything in the correct order: evolution chains, then non-evolution Pokemon, then non-Pokemon
+    return [...sortedChains, ...sortedNonEvolutionPokemon, ...sortedNonPokemon];
   }
+
+  private compareCardType = (cardType: CardType) => {
+    const order = [
+      CardType.GRASS,
+      CardType.FIRE,
+      CardType.WATER,
+      CardType.LIGHTNING,
+      CardType.PSYCHIC,
+      CardType.FIGHTING,
+      CardType.DARK,
+      CardType.METAL,
+      CardType.COLORLESS,
+      CardType.FAIRY,
+      CardType.DRAGON
+    ];
+    return order.indexOf(cardType);
+  };
 
   @ViewChild('deckPane') deckPane: ElementRef;
 

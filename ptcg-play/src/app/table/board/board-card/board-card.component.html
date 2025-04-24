@@ -3,7 +3,8 @@
   'face-down': isFaceDown, 
   'upside-down': isUpsideDown,
   'selectable': isSelectable,
-  'selected': isSelected
+  'selected': isSelected,
+  'squawkabilly-entrance': showSquawkabillyAnimation
   }">
   <div class="ptcg-board-card" [class.asleep-position]="specialConditions.includes(SpecialCondition.ASLEEP)">
     <div class="ptcg-card-container" [class.rotate-180]="specialConditions.includes(SpecialCondition.ASLEEP)">

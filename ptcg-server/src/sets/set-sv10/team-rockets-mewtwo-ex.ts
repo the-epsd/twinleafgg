@@ -1,4 +1,4 @@
-import { PokemonCard, Stage, CardType, StoreLike, State, PokemonCardList, DiscardEnergyPrompt, GameError, GameMessage, EnergyType, PlayerType, SlotType, StateUtils, SuperType, CardTag, PowerType } from '../../game';
+import { PokemonCard, Stage, CardType, StoreLike, State, DiscardEnergyPrompt, GameError, GameMessage, EnergyType, PlayerType, SlotType, StateUtils, SuperType, CardTag, PowerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, UseAttackEffect } from '../../game/store/effects/game-effects';
 import { IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
@@ -38,25 +38,20 @@ export class TeamRocketsMewtwoex extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof UseAttackEffect && effect.attack === this.attacks[0]) {
+    if (effect instanceof UseAttackEffect && effect.source.cards.includes(this)) {
       const player = effect.player;
 
       if (!IS_ABILITY_BLOCKED) {
         // Count Team Rocket's Pokémon in play
         let teamRocketPokemonCount = 0;
 
-        // Check active
-        if (this.isTeamRocketPokemon(player.active)) {
+        if (player.active?.getPokemonCard()?.tags.includes(CardTag.TEAM_ROCKET)) {
           teamRocketPokemonCount++;
         }
 
-        // Check bench
-        player.bench.forEach(benchSlot => {
-          if (benchSlot.cards.length > 0) {
-            const pokemon = benchSlot.getPokemonCard();
-            if (pokemon && this.isTeamRocketPokemon(benchSlot)) {
-              teamRocketPokemonCount++;
-            }
+        player.bench.forEach(benchSpot => {
+          if (benchSpot.getPokemonCard()?.tags.includes(CardTag.TEAM_ROCKET)) {
+            teamRocketPokemonCount++;
           }
         });
 
@@ -102,15 +97,6 @@ export class TeamRocketsMewtwoex extends PokemonCard {
         return state;
       });
     }
-
     return state;
-  }
-
-  // Helper method to check if a Pokémon is a Team Rocket's Pokémon
-  private isTeamRocketPokemon(pokemonList: PokemonCardList): boolean {
-    const pokemon = pokemonList.getPokemonCard();
-    if (!pokemon) return false;
-
-    return pokemon.tags.includes(CardTag.TEAM_ROCKET);
   }
 }
