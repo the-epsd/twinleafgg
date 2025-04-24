@@ -45,6 +45,7 @@ import { PokemonResearchLab } from './pokemon-research-lab';
 import {UmbreonDarkraiGX} from './umbreon-and-darkrai-gx';
 import {SlowpokePsyduckGX} from './slowpoke-and-psyduck-gx';
 import {EspeonDeoxysGX} from './espeon-and-deoxys-gx';
+import {RowletAlolanExeggutorGX} from './rowlet-and-alolan-exeggutor-gx';
 
 
 export const setUnifiedMinds: Card[] = [
@@ -94,4 +95,5 @@ export const setUnifiedMinds: Card[] = [
   new UmbreonDarkraiGX(),
   new SlowpokePsyduckGX(),
   new EspeonDeoxysGX(),
+  new RowletAlolanExeggutorGX(),
 ];

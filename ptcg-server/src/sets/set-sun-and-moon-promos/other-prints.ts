@@ -1,7 +1,9 @@
+import {VenusaurSnivyGX} from '../set-cosmic-eclipse/venusaur-and-snivy-gx';
 import {CelebiVenusaurGX} from '../set-team-up/celebi-and-venusaur-gx';
 import { EeveeSnorlaxGX } from '../set-team-up/eevee-and-snorlax-gx';
 import { MagikarpWailordGX } from '../set-team-up/magikarp-and-wailord-gx';
 import { LucarioMelmetalGX } from '../set-unbroken-bonds/lucario-and-melmetal-gx';
+import {ReshiramCharizardGX} from '../set-unbroken-bonds/reshiram-and-charizard-gx';
 import {EspeonDeoxysGX} from '../set-unified-minds/espeon-and-deoxys-gx';
 import { UmbreonDarkraiGX } from '../set-unified-minds/umbreon-and-darkrai-gx';
 
@@ -39,4 +41,16 @@ export class EspeonDeoxysGXSMP extends EspeonDeoxysGX {
   public fullName = 'Espeon & Deoxys-GX SMP';
   public set = 'SMP';
   public setNumber = '240';
+}
+
+export class ReshiramCharizardGXSMP extends ReshiramCharizardGX {
+  public fullName = 'Reshiram & Charizard-GX SMP';
+  public set = 'SMP';
+  public setNumber = '201';
+}
+
+export class VenusaurSnivyGXSMP extends VenusaurSnivyGX {
+  public fullName = 'Venusaur & Snivy-GX SMP';
+  public set = 'SMP';
+  public setNumber = '229';
 }
