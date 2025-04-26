@@ -9,6 +9,8 @@ import { SpecialCharge } from './special-charge';
 import { Talonflame } from './talonflame';
 import { Volcanion } from './volcanion';
 import { VolcanionEX } from './volcanion-ex';
+import {Xerneas} from './xerneas';
+import {XerneasBREAK} from './xerneas-break';
 
 export const setSteamSiege: Card[] = [
   new Cobalion(),
@@ -21,4 +23,6 @@ export const setSteamSiege: Card[] = [
   new VolcanionEX(),
   new GardevoirEx(),
   new MGardevoirEx(),
+  new Xerneas(),
+  new XerneasBREAK(),
 ];

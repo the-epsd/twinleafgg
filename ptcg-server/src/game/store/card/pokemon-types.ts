@@ -40,6 +40,7 @@ export enum PowerType {
   HOLONS_SPECIAL_ENERGY_EFFECT,
   MEGA_EVOLUTION_RULE,
   LV_X_RULE,
+  BREAK_RULE,
 }
 
 export interface Power {
