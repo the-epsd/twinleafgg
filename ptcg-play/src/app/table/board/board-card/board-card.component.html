@@ -4,7 +4,7 @@
   'upside-down': isUpsideDown,
   'selectable': isSelectable,
   'selected': isSelected,
-  'squawkabilly-entrance': showSquawkabillyAnimation
+  'test-entrance': showTestAnimation
   }">
   <div class="ptcg-board-card" [class.asleep-position]="specialConditions.includes(SpecialCondition.ASLEEP)">
     <div class="ptcg-card-container" [class.rotate-180]="specialConditions.includes(SpecialCondition.ASLEEP)">
@@ -33,6 +33,10 @@
 
         <div class="ptcg-trainer-card" *ngIf="trainerCard">
           <ptcg-card [card]="trainerCard" (click)="onCardClick(trainerCard)"></ptcg-card>
+        </div>
+
+        <div class="ptcg-break-card" *ngIf="breakCard">
+          <ptcg-card [card]="breakCard" (click)="onCardClick(breakCard)"></ptcg-card>
         </div>
 
         <ptcg-card [card]="mainCard" *ngIf="mainCard" (click)="onCardClick(mainCard)">
