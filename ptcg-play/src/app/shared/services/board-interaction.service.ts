@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { CardTarget, ChoosePokemonPrompt, PlayerType, SlotType } from 'ptcg-server';
+import { CardTarget, ChoosePokemonPrompt, PlayerType, SlotType, StateLog } from 'ptcg-server';
 
 @Injectable({
   providedIn: 'root'
@@ -36,6 +36,10 @@ export class BoardInteractionService {
   private maxSelectionsSubject = new BehaviorSubject<number>(1);
   public maxSelections$ = this.maxSelectionsSubject.asObservable();
 
+  // Game logs for tracking events
+  private gameLogsSubject = new BehaviorSubject<StateLog[]>([]);
+  public gameLogs$ = this.gameLogsSubject.asObservable();
+
   // Callback when selection is confirmed
   private selectionCallback: (targets: CardTarget[]) => void;
 
@@ -43,6 +47,13 @@ export class BoardInteractionService {
   private isReplayModeActive = false;
 
   constructor() { }
+
+  /**
+   * Update game logs
+   */
+  public updateGameLogs(logs: StateLog[]): void {
+    this.gameLogsSubject.next(logs);
+  }
 
   /**
    * Start board selection mode for a Pokémon selection prompt

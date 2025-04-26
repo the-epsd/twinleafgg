@@ -27,6 +27,7 @@ import { UltraNecrozmaGX } from './ultra-necrozma-gx';
 import { UltraSpace } from './ultra-space';
 import { UnitEnergyFDY } from './unit-energy-fdy';
 import { VolcanionPrismStar } from './volcanion-prism-star';
+import {XerneasGX} from './xerneas-gx';
 import { YveltalGX } from './yveltal-gx';
 
 export const setForbiddenLight: Card[] = [
@@ -59,4 +60,5 @@ export const setForbiddenLight: Card[] = [
   new YveltalGX(),
   new DialgaGX(),
   new LysandrePrismStar(),
+  new XerneasGX(),
 ];

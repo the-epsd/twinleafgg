@@ -41,7 +41,7 @@ export class GardevoirLVX extends PokemonCard {
   public set: string = 'SW';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '131';
-  public name: string = 'Gardevoir LV.X';
+  public name: string = 'Gardevoir';
   public fullName: string = 'Gardevoir LV.X SW';
   
   public readonly TELEPORTATION_MARKER = 'TELEPORTATION_MARKER';
