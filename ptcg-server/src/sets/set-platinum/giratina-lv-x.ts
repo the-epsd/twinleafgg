@@ -42,7 +42,7 @@ export class GiratinaLVX extends PokemonCard {
   public set: string = 'PL';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '124';
-  public name: string = 'Giratina LV.X';
+  public name: string = 'Giratina';
   public fullName: string = 'Giratina LV.X PL';
 
   public readonly DARKNESS_LOST_MARKER = 'DARKNESS_LOST_MARKER';

@@ -45,6 +45,7 @@ import { Slowking } from './slowking';
 import { Terapagosex } from './terapagos-ex';
 import { Veluza } from './veluza';
 import { Zeraora } from './zeraora';
+import {Marill} from './marill';
 
 export const setStellarCrown: Card[] = [
   new Archaludon(),
@@ -93,6 +94,7 @@ export const setStellarCrown: Card[] = [
   new Zeraora(),
   new Milcery(),
   new DeluxeBomb(),
+  new Marill(),
 
   //FA
   new BulbasaurIR(),

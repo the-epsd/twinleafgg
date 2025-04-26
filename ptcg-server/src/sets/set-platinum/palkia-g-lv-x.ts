@@ -42,7 +42,7 @@ export class PalkiaGLVX extends PokemonCard {
   public set: string = 'PL';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '125';
-  public name: string = 'Palkia G LV.X';
+  public name: string = 'Palkia G';
   public fullName: string = 'Palkia G LV.X PL';
 
   public readonly LOST_CYCLONE_MARKER = 'LOST_CYCLONE_MARKER';

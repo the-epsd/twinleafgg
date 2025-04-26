@@ -42,7 +42,7 @@ export class GarchompCLVX extends PokemonCard {
   public set: string = 'SV';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '145';
-  public name: string = 'Garchomp C LV.X';
+  public name: string = 'Garchomp C';
   public fullName: string = 'Garchomp C LV.X SV';
 
   public readonly DRAGON_RUSH_MARKER = 'DRAGON_RUSH_MARKER';

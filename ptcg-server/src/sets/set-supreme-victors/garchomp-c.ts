@@ -40,7 +40,7 @@ export class GarchompC extends PokemonCard {
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, card => {
         if (card !== player.active){
           const damage = new PutDamageEffect(effect, 10);
-          damage.target === card;
+          damage.target = card;
           store.reduceEffect(state, damage);
         }
       })
