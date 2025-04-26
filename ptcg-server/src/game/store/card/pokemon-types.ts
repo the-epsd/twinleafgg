@@ -38,6 +38,7 @@ export enum PowerType {
   LEGEND_ASSEMBLY,
   TRAINER_ABILITY,
   HOLONS_SPECIAL_ENERGY_EFFECT,
+  MEGA_EVOLUTION_RULE,
 }
 
 export interface Power {
