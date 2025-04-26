@@ -135,6 +135,7 @@ export class AttackEffect implements Effect {
   public ignoreWeakness = false;
   public ignoreResistance = false;
   public source: PokemonCardList;
+  public invisibleTentacles?: boolean = false;
   target: any;
 
   constructor(player: Player, opponent: Player, attack: Attack) {

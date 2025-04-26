@@ -39,6 +39,7 @@ export enum PowerType {
   TRAINER_ABILITY,
   HOLONS_SPECIAL_ENERGY_EFFECT,
   MEGA_EVOLUTION_RULE,
+  LV_X_RULE,
 }
 
 export interface Power {

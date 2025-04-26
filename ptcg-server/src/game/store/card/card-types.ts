@@ -88,6 +88,7 @@ export enum Stage {
   LEGEND,
   MEGA,
   BREAK,
+  LV_X,
 }
 
 export enum Archetype {
