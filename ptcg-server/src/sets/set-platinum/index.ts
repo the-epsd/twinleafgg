@@ -10,6 +10,8 @@ import {Giratina} from './giratina';
 import {GiratinaLVX} from './giratina-lv-x';
 import {PalkiaG} from './palkia-g';
 import {PalkiaGLVX} from './palkia-g-lv-x';
+import {DialgaG} from './dialgs-g';
+import {DialgaGLVX} from './dialga-g-lv-x';
 
 export const setPlatinum: Card[] = [
   new SkuntankG(),
@@ -23,4 +25,6 @@ export const setPlatinum: Card[] = [
   new GiratinaLVX(),
   new PalkiaG(),
   new PalkiaGLVX(),
+  new DialgaG(),
+  new DialgaGLVX(),
 ];
