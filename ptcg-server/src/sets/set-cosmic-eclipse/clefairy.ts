@@ -4,7 +4,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerCard } from '../../game';
-import { CONFIRMATION_PROMPT, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { CONFIRMATION_PROMPT, WAS_ATTACK_USED, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 
 export class Clefairy extends PokemonCard {
@@ -30,13 +30,22 @@ export class Clefairy extends PokemonCard {
   public fullName: string = 'Clefairy CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       player.active.clearEffects();
-      player.active.moveTo(player.hand);
-      const pokemon = player.active.getPokemonCard();
-      pokemon?.cards.moveCardsTo(pokemon.cards.cards, player.hand);
+
+      const pokemons = player.active.getPokemons();
+      const otherCards = player.active.cards.filter(card => !(card instanceof PokemonCard));
+
+      // Move other cards to hand
+      if (otherCards.length > 0) {
+        MOVE_CARDS(store, state, player.active, player.hand, { cards: otherCards });
+      }
+
+      // Move Pokémon to hand
+      if (pokemons.length > 0) {
+        MOVE_CARDS(store, state, player.active, player.hand, { cards: pokemons });
+      }
 
       const lilliesPokeDoll = player.hand.cards.find(card => card instanceof TrainerCard && card.name === 'Lillie\'s Poké Doll');
 
@@ -49,7 +58,6 @@ export class Clefairy extends PokemonCard {
           }
         });
       }
-
     }
     return state;
   }
