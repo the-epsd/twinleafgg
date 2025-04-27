@@ -7,7 +7,7 @@ $ptcg-energy-card-offset: 13%;
   max-width: map-get($ptcg-size, card);
   min-width: map-get($ptcg-size, board-card);
   position: relative;
-  transition: all 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
 
   &.test-entrance {
     transform-style: preserve-3d;

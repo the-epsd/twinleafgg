@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, Inject, OnInit, OnDestroy } from '@angular/core';
+import { Component, EventEmitter, Input, Output, Inject, OnInit, OnDestroy, ElementRef } from '@angular/core';
 import { Card, CardList, PokemonCardList, Power, BoardEffect, SpecialCondition, StadiumDirection, SuperType, EnergyCard, CardType, PlayerType, SlotType, CardTag } from 'ptcg-server';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { BoardInteractionService } from '../../../shared/services/board-interaction.service';
@@ -79,6 +79,7 @@ export class BoardCardComponent implements OnInit, OnDestroy {
     this.isFaceDown = false;
     this.boardEffect = [];
     this.isUpsideDown = value?.stadiumDirection === StadiumDirection.DOWN;
+    this.showTestAnimation = false;
 
     this.isEmpty = !value || !value.cards.length;
     if (this.isEmpty) {
@@ -171,7 +172,8 @@ export class BoardCardComponent implements OnInit, OnDestroy {
 
   constructor(
     private dialog: MatDialog,
-    private boardInteractionService: BoardInteractionService
+    private boardInteractionService: BoardInteractionService,
+    private elementRef: ElementRef
   ) {
     this.cardTarget = { player: undefined, slot: undefined, index: 0 };
   }
@@ -192,16 +194,16 @@ export class BoardCardComponent implements OnInit, OnDestroy {
     );
 
     // Subscribe to game logs to catch Pokemon played events
-    this.subscriptions.push(
-      this.boardInteractionService.gameLogs$.subscribe(logs => {
-        const lastLog = logs[logs.length - 1];
-        if (lastLog?.params?.isFrontendEvent === 'true' &&
-          lastLog?.params?.eventType === 'POKEMON_PLAYED' &&
-          lastLog?.params?.pokemonId === this.mainCard?.id) {
-          this.pokemonPlayed.emit({ pokemonId: lastLog.params.pokemonId });
-        }
-      })
-    );
+    // this.subscriptions.push(
+    //   this.boardInteractionService.gameLogs$.subscribe(logs => {
+    //     const lastLog = logs[logs.length - 1];
+    //     if (lastLog?.params?.isFrontendEvent === 'true' &&
+    //       lastLog?.params?.eventType === 'POKEMON_PLAYED' &&
+    //       lastLog?.params?.pokemonId === this.mainCard?.id) {
+    //       this.pokemonPlayed.emit({ pokemonId: lastLog.params.pokemonId });
+    //     }
+    //   })
+    // );
 
     // Create animation end handler
     this.animationEndHandler = () => {
@@ -265,6 +267,8 @@ export class BoardCardComponent implements OnInit, OnDestroy {
     if (this.animationElement) {
       this.animationElement.removeEventListener('animationend', this.animationEndHandler);
       this.showTestAnimation = false;
+      this.hasPlayedTestAnimation = true;
+      this.animationElement = null;
     }
   };
 
@@ -295,12 +299,15 @@ export class BoardCardComponent implements OnInit, OnDestroy {
     if (newCardId && newCardId !== this.currentCardId) {
       this.currentCardId = newCardId;
       this.hasPlayedTestAnimation = false;
+      this.showTestAnimation = false;
     }
 
-    // Check if this is Test being played to the bench and hasn't played the animation yet
+    // Check for evolution animation
     if (this.mainCard &&
-      this.mainCard.name === 'Test' &&
-      !this.hasPlayedTestAnimation) {
+      this.mainCard.superType === SuperType.POKEMON &&
+      !this.hasPlayedTestAnimation &&
+      cardList.triggerAnimation &&
+      !this.showTestAnimation) {
       this.hasPlayedTestAnimation = true;
       this.showTestAnimation = true;
 
