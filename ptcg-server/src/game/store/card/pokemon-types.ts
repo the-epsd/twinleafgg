@@ -41,6 +41,7 @@ export enum PowerType {
   MEGA_EVOLUTION_RULE,
   LV_X_RULE,
   BREAK_RULE,
+  ARCEUS_RULE,
 }
 
 export interface Power {
