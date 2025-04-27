@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output, Inject, OnInit, OnDestroy, Elem
 import { Card, CardList, PokemonCardList, Power, BoardEffect, SpecialCondition, StadiumDirection, SuperType, EnergyCard, CardType, PlayerType, SlotType, CardTag } from 'ptcg-server';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { BoardInteractionService } from '../../../shared/services/board-interaction.service';
+import { SettingsService } from '../../table-sidebar/settings-dialog/settings.service';
 import { Subscription } from 'rxjs';
 
 const MAX_ENERGY_CARDS = 8;
@@ -173,7 +174,8 @@ export class BoardCardComponent implements OnInit, OnDestroy {
   constructor(
     private dialog: MatDialog,
     private boardInteractionService: BoardInteractionService,
-    private elementRef: ElementRef
+    private elementRef: ElementRef,
+    private settingsService: SettingsService
   ) {
     this.cardTarget = { player: undefined, slot: undefined, index: 0 };
   }
@@ -212,6 +214,15 @@ export class BoardCardComponent implements OnInit, OnDestroy {
         this.showTestAnimation = false;
       }
     };
+
+    // Subscribe to test animation setting
+    this.subscriptions.push(
+      this.settingsService.testAnimation$.subscribe(enabled => {
+        if (!enabled) {
+          this.showTestAnimation = false;
+        }
+      })
+    );
   }
 
   ngOnDestroy() {
@@ -308,16 +319,25 @@ export class BoardCardComponent implements OnInit, OnDestroy {
       !this.hasPlayedTestAnimation &&
       cardList.triggerAnimation &&
       !this.showTestAnimation) {
-      this.hasPlayedTestAnimation = true;
-      this.showTestAnimation = true;
 
-      // Wait for the next tick to ensure the element is in the DOM
-      setTimeout(() => {
-        this.animationElement = document.querySelector('.test-entrance');
-        if (this.animationElement) {
-          this.animationElement.addEventListener('animationend', this.animationEndHandler);
-        }
-      });
+      // Check if test animation is enabled
+      let isTestAnimationEnabled = true;
+      this.settingsService.testAnimation$.subscribe(enabled => {
+        isTestAnimationEnabled = enabled;
+      }).unsubscribe();
+
+      if (isTestAnimationEnabled) {
+        this.hasPlayedTestAnimation = true;
+        this.showTestAnimation = true;
+
+        // Wait for the next tick to ensure the element is in the DOM
+        setTimeout(() => {
+          this.animationElement = document.querySelector('.test-entrance');
+          if (this.animationElement) {
+            this.animationElement.addEventListener('animationend', this.animationEndHandler);
+          }
+        });
+      }
     }
 
     for (const card of cardList.cards) {
