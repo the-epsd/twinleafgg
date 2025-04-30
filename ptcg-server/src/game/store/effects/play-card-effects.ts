@@ -49,6 +49,8 @@ export class PlayPokemonEffect implements Effect {
     this.player = player;
     this.pokemonCard = pokemonCard;
     this.target = target;
+    this.target.showBasicAnimation = false;
+
   }
 }
 

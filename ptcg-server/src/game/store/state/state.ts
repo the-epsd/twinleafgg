@@ -51,10 +51,4 @@ export class State {
   public isSuddenDeath?: boolean;
 
   public benchSizeChangeHandled: boolean = false;
-
-  public isPaused: boolean = false;
-
-  public pausedBy: number | null = null;
-
-  public pauseStartTime: number | null = null;
 }

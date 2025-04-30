@@ -271,6 +271,7 @@ export class BoardCardComponent implements OnInit, OnDestroy {
   }
 
   private hasPlayedTestAnimation = false;
+  private hasPlayedBasicAnimation = false;
   private currentCardId: number | string;
   private animationElement: HTMLElement;
   private isInPrompt = false;
@@ -283,6 +284,17 @@ export class BoardCardComponent implements OnInit, OnDestroy {
       this.animationElement = null;
       if (this._cardList instanceof PokemonCardList) {
         this._cardList.triggerAnimation = false;
+      }
+    }
+  };
+
+  private basicAnimationEndHandler = () => {
+    if (this.animationElement) {
+      this.animationElement.removeEventListener('animationend', this.basicAnimationEndHandler);
+      this.showBasicAnimation = false;
+      this.animationElement = null;
+      if (this._cardList instanceof PokemonCardList) {
+        this._cardList.showBasicAnimation = false;
       }
     }
   };
@@ -309,6 +321,17 @@ export class BoardCardComponent implements OnInit, OnDestroy {
 
     this.trainerCard = cardList.tool;
 
+    for (const card of cardList.cards) {
+      // Check if card is an energy card or has a custom energy image
+      if (card.superType === SuperType.ENERGY || this.getCustomImageUrl(card)) {
+        if (this.energyCards.length < MAX_ENERGY_CARDS) {
+          this.energyCards.push(card);
+        } else {
+          this.moreEnergies++;
+        }
+      }
+    }
+
     // Check if this is a new card instance
     const newCardId = this.mainCard?.id;
     if (newCardId && newCardId !== this.currentCardId) {
@@ -317,7 +340,7 @@ export class BoardCardComponent implements OnInit, OnDestroy {
       this.showTestAnimation = false;
     }
 
-    // Check for evolution animation
+    // Handle Evolution animation
     if (this.mainCard &&
       this.mainCard.superType === SuperType.POKEMON &&
       !this.hasPlayedTestAnimation &&
@@ -325,7 +348,7 @@ export class BoardCardComponent implements OnInit, OnDestroy {
       !this.showTestAnimation &&
       !this.isInPrompt) {
 
-      // Check if test animation is enabled
+      // Check if Evolution animation is enabled
       let isTestAnimationEnabled = true;
       this.settingsService.testAnimation$.subscribe(enabled => {
         isTestAnimationEnabled = enabled;
@@ -345,14 +368,30 @@ export class BoardCardComponent implements OnInit, OnDestroy {
       }
     }
 
-    for (const card of cardList.cards) {
-      // Check if card is an energy card or has a custom energy image
-      if (card.superType === SuperType.ENERGY || this.getCustomImageUrl(card)) {
-        if (this.energyCards.length < MAX_ENERGY_CARDS) {
-          this.energyCards.push(card);
-        } else {
-          this.moreEnergies++;
-        }
+    // Handle Playing Basic Pokemon animation
+    if (this.mainCard &&
+      this.mainCard.superType === SuperType.POKEMON &&
+      this.mainCard instanceof PokemonCard &&
+      this.mainCard.stage === Stage.BASIC &&
+      !this.isInPrompt) {
+
+      // Check if Playing Basic Pokemon animation is enabled
+      let isBasicAnimationEnabled = true;
+      this.settingsService.testAnimation$.subscribe(enabled => {
+        isBasicAnimationEnabled = enabled;
+      }).unsubscribe();
+
+      if (isBasicAnimationEnabled) {
+        this.hasPlayedBasicAnimation = true;
+        this.showBasicAnimation = true;
+
+        // Wait for the next tick to ensure the element is in the DOM
+        setTimeout(() => {
+          this.animationElement = document.querySelector('.basic-entrance');
+          if (this.animationElement) {
+            this.animationElement.addEventListener('animationend', this.basicAnimationEndHandler);
+          }
+        });
       }
     }
   }
@@ -421,7 +460,10 @@ export class BoardCardComponent implements OnInit, OnDestroy {
     this.cardClick.emit(card);
   }
 
+  /////////////////////// ANIMATIONS ///////////////////////
+
   public showTestAnimation = false;
+  public showBasicAnimation = false;
   private isAnimating = false;
 
   @Input() set testEntrance(value: boolean) {
@@ -437,6 +479,7 @@ export class BoardCardComponent implements OnInit, OnDestroy {
     this.isInPrompt = value;
     if (value) {
       this.showTestAnimation = false;
+      this.showBasicAnimation = false;
       if (this._cardList instanceof PokemonCardList) {
         this._cardList.triggerAnimation = false;
       }
