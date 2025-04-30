@@ -46,7 +46,9 @@ export enum CardTag {
   POKEMON_SV_MEGA = 'POKEMON_SV_MEGA',
   HOLONS = 'HOLONS',
   TEAM_ROCKET = 'TEAM_ROCKET',
-  UNOWN = 'UNOWN'
+  UNOWN = 'UNOWN',
+  PRIMAL = 'PRIMAL',
+  ARCEUS = 'ARCEUS',
 }
 
 export enum SuperType {
@@ -87,6 +89,7 @@ export enum Stage {
   LEGEND,
   MEGA,
   BREAK,
+  LV_X,
 }
 
 export enum Archetype {

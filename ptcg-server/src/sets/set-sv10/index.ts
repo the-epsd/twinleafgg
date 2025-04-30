@@ -4,9 +4,12 @@ import {Arbolivaex} from './arboliva-ex';
 import { Blaziken } from './blaziken';
 import { Cetitanex } from './cetitan-ex';
 import { Cetoddle } from './cetoddle';
+import {Clamperl} from './clamperl';
 import { Combusken } from './combusken';
 import {Dolliv} from './dolliv';
+import {Gorebyss} from './gorebyss';
 import { GraniteCave } from './granite-cave';
+import {Huntail} from './huntail';
 import { Mankey } from './mankey';
 import { MarniesGrimmsnarlex } from './marnies-grimmsnarl-ex';
 import { MarniesImpidimp } from './marnies-impidimp';
@@ -91,7 +94,9 @@ export const setSV10: Card[] = [
   new Smoliv(),
   new Dolliv(),
   new Arbolivaex(),
-
+  new Clamperl(),
+  new Huntail(),
+  new Gorebyss(),
 
   new MarniesMorpekoIR(),
   new MarniesImpidimp(),

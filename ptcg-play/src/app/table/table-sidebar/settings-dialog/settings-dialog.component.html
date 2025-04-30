@@ -5,14 +5,17 @@
       <label>
         <input type="checkbox" [(ngModel)]="holoEnabled"> Enable Holo Effects
       </label>
-      <div class="slider-container">
-        <label>Card Size</label>
-        <input type="range" [(ngModel)]="cardSize" min="50" max="150" step="10" (input)="onCardSizeChange($event)">
-        <span>{{cardSize}}%</span>
-      </div>
       <label>
         <input type="checkbox" [(ngModel)]="showCardName"> Show Card Names
       </label>
+      <label>
+        <input type="checkbox" [(ngModel)]="testAnimation"> Enable Test Animation
+      </label>
+      <div class="slider-container">
+        <label>Card Size</label>
+        <input type="range" [(ngModel)]="cardSize" min="50" max="200" step="10" (change)="onCardSizeChange($event)">
+        <span>{{cardSize}}%</span>
+      </div>
     </div>
     <div class="settings-actions">
       <button (click)="dialogRef.close()">Cancel</button>

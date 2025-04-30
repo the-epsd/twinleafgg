@@ -9,7 +9,7 @@ import { PlayStadiumEffect } from '../../game/store/effects/play-card-effects';
 
 export class DusknoirLvX extends PokemonCard {
 
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.LV_X;
 
   public cardType: CardType = CardType.PSYCHIC;
 
@@ -32,7 +32,7 @@ export class DusknoirLvX extends PokemonCard {
 
   public setNumber: string = '96';
 
-  public name: string = 'Dusknoir Lv.X';
+  public name: string = 'Dusknoir';
 
   public fullName: string = 'DusknLv.X SF';
 

@@ -25,6 +25,8 @@ export class PokemonCardList extends CardList {
   public isActivatingCard: boolean = false;
   public attacksThisTurn?: number;
   public showAllStageAbilities: boolean = false;
+  public triggerAnimation: boolean = false;
+  public triggerAttackAnimation: boolean = false;
 
   public static readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
   public static readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
