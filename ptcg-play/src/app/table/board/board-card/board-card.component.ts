@@ -319,6 +319,10 @@ export class BoardCardComponent implements OnInit, OnDestroy {
       );
       this.legendTopCard = topCard;
       this.legendBottomCard = bottomCard;
+    } else {
+      this.mainCard = pokemonCard;
+      this.legendTopCard = undefined;
+      this.legendBottomCard = undefined;
     }
 
     this.trainerCard = cardList.tool;
