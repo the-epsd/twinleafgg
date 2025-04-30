@@ -150,6 +150,24 @@ $ptcg-energy-card-offset: 13%;
     z-index: 1;
   }
 
+  .ptcg-legend-top-card {
+    width: 100%;
+    left: 50%;
+    top: -28%;
+    position: absolute;
+    transform: translateX(-50%) rotate(90deg) scale(.75);
+    z-index: 1;
+  }
+
+  .ptcg-legend-bottom-card {
+    width: 100%;
+    left: 50%;
+    top: +25%;
+    position: absolute;
+    transform: translateX(-50%) rotate(90deg) scale(.75);
+    z-index: 1;
+  }
+
   $ptcg-vunion-offset: 25%;
 
   .ptcg-vunion-top-left-card {

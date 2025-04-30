@@ -40,6 +40,14 @@
           <ptcg-card [card]="breakCard" (click)="onCardClick(breakCard)"></ptcg-card>
         </div>
 
+        <div class="ptcg-legend-top-card" *ngIf="legendTopCard">
+          <ptcg-card [card]="legendTopCard" (click)="onCardClick(legendTopCard)"></ptcg-card>
+        </div>
+
+        <div class="ptcg-legend-bottom-card" *ngIf="legendBottomCard">
+          <ptcg-card [card]="legendBottomCard" (click)="onCardClick(legendBottomCard)"></ptcg-card>
+        </div>
+
         <div class="ptcg-vunion-top-left-card" *ngIf="vunionTopLeftCard">
           <ptcg-card [card]="vunionTopLeftCard" (click)="onCardClick(vunionTopLeftCard)"></ptcg-card>
         </div>

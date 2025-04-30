@@ -129,6 +129,8 @@ export class BoardCardComponent implements OnInit, OnDestroy {
   public isEmpty = true;
   public mainCard: Card;
   public breakCard: Card;
+  public legendTopCard: Card;
+  public legendBottomCard: Card;
   public vunionTopLeftCard: Card;
   public vunionTopRightCard: Card;
   public vunionBottomLeftCard: Card;
@@ -330,6 +332,26 @@ export class BoardCardComponent implements OnInit, OnDestroy {
     } else {
       this.mainCard = pokemonCard;
       this.breakCard = undefined;
+    }
+
+    if (pokemonCard?.tags?.includes(CardTag.LEGEND)) {
+      // If it's a Legend card, find the original Pokemon card
+      const topCard = cardList.cards.find(card =>
+        card.superType === SuperType.POKEMON &&
+        card.tags?.includes(CardTag.LEGEND) &&
+        card.fullName.includes('(Top)')
+      );
+      const bottomCard = cardList.cards.find(card =>
+        card.superType === SuperType.POKEMON &&
+        card.tags?.includes(CardTag.LEGEND) &&
+        card.fullName.includes('(Bottom)')
+      );
+      this.legendTopCard = topCard;
+      this.legendBottomCard = bottomCard;
+    } else {
+      this.mainCard = pokemonCard;
+      this.legendTopCard = undefined;
+      this.legendBottomCard = undefined;
     }
 
     if (pokemonCard?.tags?.includes(CardTag.POKEMON_VUNION)) {
