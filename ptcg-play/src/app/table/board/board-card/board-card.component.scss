@@ -150,6 +150,40 @@ $ptcg-energy-card-offset: 13%;
     z-index: 1;
   }
 
+  $ptcg-vunion-offset: 25%;
+
+  .ptcg-vunion-top-left-card {
+    width: 100%;
+    top: -$ptcg-vunion-offset;
+    position: absolute;
+    transform: translateX(-$ptcg-vunion-offset) scale(.5);
+    z-index: 1;
+  }
+
+  .ptcg-vunion-top-right-card {
+    width: 100%;
+    top: -$ptcg-vunion-offset;
+    position: absolute;
+    transform: translateX($ptcg-vunion-offset) scale(.5);
+    z-index: 1;
+  }
+
+  .ptcg-vunion-bottom-left-card {
+    width: 100%;
+    top: $ptcg-vunion-offset;
+    position: absolute;
+    transform: translateX(-$ptcg-vunion-offset) scale(.5);
+    z-index: 1;
+  }
+
+  .ptcg-vunion-bottom-right-card {
+    width: 100%;
+    top: $ptcg-vunion-offset;
+    position: absolute;
+    transform: translateX($ptcg-vunion-offset) scale(.5);
+    z-index: 1;
+  }
+
   .ptcg-card-counts {
     bottom: 0;
     padding: $ptcg-board-tiny-padding 0;
