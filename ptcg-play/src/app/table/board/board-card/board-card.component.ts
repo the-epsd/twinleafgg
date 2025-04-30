@@ -129,6 +129,10 @@ export class BoardCardComponent implements OnInit, OnDestroy {
   public isEmpty = true;
   public mainCard: Card;
   public breakCard: Card;
+  public vunionTopLeftCard: Card;
+  public vunionTopRightCard: Card;
+  public vunionBottomLeftCard: Card;
+  public vunionBottomRightCard: Card;
   public moreEnergies = 0;
   public cardCount = 0;
   public energyCards: Card[] = [];
@@ -326,6 +330,40 @@ export class BoardCardComponent implements OnInit, OnDestroy {
     } else {
       this.mainCard = pokemonCard;
       this.breakCard = undefined;
+    }
+
+    if (pokemonCard?.tags?.includes(CardTag.POKEMON_VUNION)) {
+      // If it's a Legend card, find the original Pokemon card
+      const topLeftCard = cardList.cards.find(card =>
+        card.superType === SuperType.POKEMON &&
+        card.tags?.includes(CardTag.POKEMON_VUNION) &&
+        card.fullName.includes('(Top Left)')
+      );
+      const topRightCard = cardList.cards.find(card =>
+        card.superType === SuperType.POKEMON &&
+        card.tags?.includes(CardTag.POKEMON_VUNION) &&
+        card.fullName.includes('(Top Right)')
+      );
+      const bottomLeftCard = cardList.cards.find(card =>
+        card.superType === SuperType.POKEMON &&
+        card.tags?.includes(CardTag.POKEMON_VUNION) &&
+        card.fullName.includes('(Bottom Left)')
+      );
+      const bottomRightCard = cardList.cards.find(card =>
+        card.superType === SuperType.POKEMON &&
+        card.tags?.includes(CardTag.POKEMON_VUNION) &&
+        card.fullName.includes('(Bottom Right)')
+      );
+      this.vunionTopLeftCard = topLeftCard;
+      this.vunionTopRightCard = topRightCard;
+      this.vunionBottomLeftCard = bottomLeftCard;
+      this.vunionBottomRightCard = bottomRightCard;
+    } else {
+      this.mainCard = pokemonCard;
+      this.vunionTopLeftCard = undefined;
+      this.vunionTopRightCard = undefined;
+      this.vunionBottomLeftCard = undefined;
+      this.vunionBottomRightCard = undefined;
     }
 
     this.trainerCard = cardList.tool;
