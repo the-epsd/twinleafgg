@@ -17,6 +17,14 @@ $ptcg-energy-card-offset: 13%;
     position: relative;
   }
 
+  &.basic-entrance {
+    transform-style: preserve-3d;
+    animation: basicEntrance 0.5s cubic-bezier(0.4, 0, 0.1, 1);
+    z-index: 1000;
+    backface-visibility: visible;
+    position: relative;
+  }
+
   &.empty:after {
     content: "";
     display: block;
@@ -157,6 +165,40 @@ $ptcg-energy-card-offset: 13%;
     top: +25%;
     position: absolute;
     transform: translateX(-50%) rotate(90deg) scale(.75);
+    z-index: 1;
+  }
+
+  $ptcg-vunion-offset: 25%;
+
+  .ptcg-vunion-top-left-card {
+    width: 100%;
+    top: -$ptcg-vunion-offset;
+    position: absolute;
+    transform: translateX(-$ptcg-vunion-offset) scale(.5);
+    z-index: 1;
+  }
+
+  .ptcg-vunion-top-right-card {
+    width: 100%;
+    top: -$ptcg-vunion-offset;
+    position: absolute;
+    transform: translateX($ptcg-vunion-offset) scale(.5);
+    z-index: 1;
+  }
+
+  .ptcg-vunion-bottom-left-card {
+    width: 100%;
+    top: $ptcg-vunion-offset;
+    position: absolute;
+    transform: translateX(-$ptcg-vunion-offset) scale(.5);
+    z-index: 1;
+  }
+
+  .ptcg-vunion-bottom-right-card {
+    width: 100%;
+    top: $ptcg-vunion-offset;
+    position: absolute;
+    transform: translateX($ptcg-vunion-offset) scale(.5);
     z-index: 1;
   }
 
@@ -457,12 +499,12 @@ $ptcg-energy-card-offset: 13%;
     }
 
     40% {
-      transform: translate(0, -60px) rotateY(1080deg) scale(1.25);
+      transform: translate(0, -60px) rotateY(1080deg) scale(1.3);
       filter: brightness(100) grayscale(1);
     }
 
     42% {
-      transform: translate(0, -60px) rotateY(1080deg) scale(1.25);
+      transform: translate(0, -60px) rotateY(1080deg) scale(1.3);
       filter: brightness(1);
     }
 
@@ -474,6 +516,20 @@ $ptcg-energy-card-offset: 13%;
     100% {
       transform: translate(0, 0) rotateY(1080deg) scale(1);
       filter: brightness(1);
+    }
+  }
+
+  @keyframes basicEntrance {
+    0% {
+      transform: translate(0, -30px) scale(1.3);
+    }
+
+    55% {
+      transform: translate(0, -30px) scale(1.3);
+    }
+
+    100% {
+      transform: translate(0, 0) scale(1);
     }
   }
 

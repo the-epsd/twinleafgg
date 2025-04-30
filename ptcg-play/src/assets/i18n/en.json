@@ -591,5 +591,10 @@
   "PROFILE_BAN_ERROR": "Error banning user",
   "PROFILE_UNBAN_USER": "Unban User",
   "PROFILE_UNBAN_SUCCESS": "User has been unbanned successfully",
-  "PROFILE_UNBAN_ERROR": "Error unbanning user"
+  "PROFILE_UNBAN_ERROR": "Error unbanning user",
+  "SOCKET_DISCONNECTED": "Disconnected from server",
+  "SOCKET_RECONNECTING": "Reconnecting... (Attempt {attempt})",
+  "SOCKET_RECONNECT_ATTEMPT": "Reconnection attempt {attempt}",
+  "SOCKET_RECONNECTED": "Reconnected successfully",
+  "SOCKET_RECONNECT_FAILED": "Failed to reconnect to server"
 }

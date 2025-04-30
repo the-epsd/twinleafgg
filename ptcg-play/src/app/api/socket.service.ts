@@ -175,21 +175,6 @@ export class SocketService {
 
     this.socket.connect();
     this.enabled = true;
-
-    this.startConnectionMonitoring();
-  }
-
-  private startConnectionMonitoring() {
-    setInterval(() => {
-      if (this.enabled && !this.socket.connected) {
-        const timeSinceLastPing = Date.now() - this.lastPingTime;
-        if (this.lastPingTime > 0 && timeSinceLastPing > 45000) {
-          console.log(`[Socket] Connection frozen (no ping for ${Math.floor(timeSinceLastPing / 1000)}s), reconnecting...`);
-          this.socket.disconnect();
-          this.socket.connect();
-        }
-      }
-    }, 30000);
   }
 
   public disable() {

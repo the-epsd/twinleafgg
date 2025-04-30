@@ -230,5 +230,4 @@ export class Game implements StoreHandler {
       this.timeoutRef = undefined;
     }
   }
-
 }

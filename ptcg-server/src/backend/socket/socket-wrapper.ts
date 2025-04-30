@@ -26,11 +26,17 @@ export class SocketWrapper {
       const listener = this.listeners[i];
 
       this.socket.on(listener.message, async <T, R>(data: T, fn: Function) => {
+        if (!this.socket.connected) {
+          console.warn(`[Socket] Received message on disconnected socket: ${listener.message}`);
+          return;
+        }
+
         const response: Response<R> =
           (message: string, data?: R | ApiErrorEnum) => fn && fn({ message, data });
         try {
           await listener.handler(data, response);
         } catch (error) {
+          console.error(`[Socket] Error handling message ${listener.message}:`, error);
           response('error', error.message);
         }
       });
