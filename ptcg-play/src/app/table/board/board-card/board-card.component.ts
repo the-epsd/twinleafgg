@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output, Inject, OnInit, OnDestroy, ElementRef } from '@angular/core';
-import { Card, CardList, PokemonCardList, Power, BoardEffect, SpecialCondition, StadiumDirection, SuperType, EnergyCard, CardType, PlayerType, SlotType, CardTag } from 'ptcg-server';
+import { Card, CardList, PokemonCardList, Power, BoardEffect, SpecialCondition, StadiumDirection, SuperType, EnergyCard, CardType, PlayerType, SlotType, CardTag, Stage, PokemonCard } from 'ptcg-server';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { BoardInteractionService } from '../../../shared/services/board-interaction.service';
 import { SettingsService } from '../../table-sidebar/settings-dialog/settings.service';
@@ -273,6 +273,7 @@ export class BoardCardComponent implements OnInit, OnDestroy {
   private hasPlayedTestAnimation = false;
   private currentCardId: number | string;
   private animationElement: HTMLElement;
+  private isInPrompt = false;
 
   private animationEndHandler = () => {
     if (this.animationElement) {
@@ -280,6 +281,9 @@ export class BoardCardComponent implements OnInit, OnDestroy {
       this.showTestAnimation = false;
       this.hasPlayedTestAnimation = true;
       this.animationElement = null;
+      if (this._cardList instanceof PokemonCardList) {
+        this._cardList.triggerAnimation = false;
+      }
     }
   };
 
@@ -318,7 +322,8 @@ export class BoardCardComponent implements OnInit, OnDestroy {
       this.mainCard.superType === SuperType.POKEMON &&
       !this.hasPlayedTestAnimation &&
       cardList.triggerAnimation &&
-      !this.showTestAnimation) {
+      !this.showTestAnimation &&
+      !this.isInPrompt) {
 
       // Check if test animation is enabled
       let isTestAnimationEnabled = true;
@@ -425,6 +430,16 @@ export class BoardCardComponent implements OnInit, OnDestroy {
       setTimeout(() => {
         this.isAnimating = false;
       }, 3000);
+    }
+  }
+
+  @Input() set inPrompt(value: boolean) {
+    this.isInPrompt = value;
+    if (value) {
+      this.showTestAnimation = false;
+      if (this._cardList instanceof PokemonCardList) {
+        this._cardList.triggerAnimation = false;
+      }
     }
   }
 }
