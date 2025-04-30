@@ -19,6 +19,20 @@ export class SocketWrapper {
   constructor(io: Server, socket: Socket) {
     this.io = io;
     this.socket = socket;
+
+    // Add connection state tracking
+    this.socket.on('connect', () => {
+      console.log(`[Socket] Connected: ${this.socket.id}`);
+    });
+
+    this.socket.on('disconnect', (reason) => {
+      console.log(`[Socket] Disconnected: ${this.socket.id} - ${reason}`);
+    });
+
+    this.socket.on('error', (error: unknown) => {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      console.error(`[Socket] Error: ${this.socket.id} - ${errorMessage}`);
+    });
   }
 
   public attachListeners(): void {
@@ -26,11 +40,17 @@ export class SocketWrapper {
       const listener = this.listeners[i];
 
       this.socket.on(listener.message, async <T, R>(data: T, fn: Function) => {
+        if (!this.socket.connected) {
+          console.warn(`[Socket] Received message on disconnected socket: ${listener.message}`);
+          return;
+        }
+
         const response: Response<R> =
           (message: string, data?: R | ApiErrorEnum) => fn && fn({ message, data });
         try {
           await listener.handler(data, response);
         } catch (error) {
+          console.error(`[Socket] Error handling message ${listener.message}:`, error);
           response('error', error.message);
         }
       });
