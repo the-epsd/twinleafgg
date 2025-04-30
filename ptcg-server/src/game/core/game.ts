@@ -71,10 +71,7 @@ export class Game implements StoreHandler {
 
     this.updateIsTimeRunning(state);
 
-    // Only emit state changes if game is not paused
-    if (!state.isPaused) {
-      this.core.emit(c => c.onStateChange(this, state));
-    }
+    this.core.emit(c => c.onStateChange(this, state));
 
     if (state.phase !== GamePhase.FINISHED && this.timeoutRef === undefined) {
       this.startTimer();
@@ -128,39 +125,8 @@ export class Game implements StoreHandler {
 
     const player = state.players.find(p => p.id === client.id);
     if (player !== undefined) {
-      // Instead of immediately aborting, pause the game
-      if (!state.isPaused) {
-        state.isPaused = true;
-        state.pausedBy = player.id;
-        state.pauseStartTime = Date.now();
-        console.log(`[Game] Game ${this.id} paused due to player ${player.name} disconnection`);
-
-        // Notify other players
-        this.core.emit(c => {
-          if (c !== client) {
-            c.onStateChange(this, state);
-          }
-        });
-      }
-    }
-  }
-
-  public handleClientReconnect(client: Client): void {
-    const state = this.store.state;
-    if (state.phase === GamePhase.FINISHED) {
-      return;
-    }
-
-    const player = state.players.find(p => p.id === client.id);
-    if (player !== undefined && state.isPaused && state.pausedBy === player.id) {
-      // Resume the game
-      state.isPaused = false;
-      state.pausedBy = null;
-      state.pauseStartTime = null;
-      console.log(`[Game] Game ${this.id} resumed after player ${player.name} reconnection`);
-
-      // Notify all players
-      this.core.emit(c => c.onStateChange(this, state));
+      const action = new AbortGameAction(player.id, AbortGameReason.DISCONNECTED);
+      this.store.dispatch(action);
     }
   }
 
@@ -264,5 +230,4 @@ export class Game implements StoreHandler {
       this.timeoutRef = undefined;
     }
   }
-
 }

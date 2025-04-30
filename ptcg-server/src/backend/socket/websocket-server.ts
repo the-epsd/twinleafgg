@@ -30,8 +30,8 @@ export class WebSocketServer {
 
   public async listen(httpServer: http.Server): Promise<void> {
     const opts: Partial<ServerOptions> = {
-      pingInterval: 10000,    // Reduced to 10s for more frequent health checks
-      pingTimeout: 5000,      // Reduced to 5s to detect disconnections faster
+      pingInterval: 30000,    // Check connection every 30s
+      pingTimeout: 86400000,  // Set to 24 hours to effectively disable inactivity timeout
       connectTimeout: 30000,  // Standard 30s connection timeout
       transports: ['websocket'],
       allowUpgrades: true,

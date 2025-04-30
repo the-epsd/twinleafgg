@@ -19,20 +19,6 @@ export class SocketWrapper {
   constructor(io: Server, socket: Socket) {
     this.io = io;
     this.socket = socket;
-
-    // Add connection state tracking
-    this.socket.on('connect', () => {
-      console.log(`[Socket] Connected: ${this.socket.id}`);
-    });
-
-    this.socket.on('disconnect', (reason) => {
-      console.log(`[Socket] Disconnected: ${this.socket.id} - ${reason}`);
-    });
-
-    this.socket.on('error', (error: unknown) => {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-      console.error(`[Socket] Error: ${this.socket.id} - ${errorMessage}`);
-    });
   }
 
   public attachListeners(): void {

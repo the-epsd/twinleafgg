@@ -21,6 +21,7 @@ export function playPokemonReducer(store: StoreLike, state: State, effect: Effec
         name: effect.player.name,
         card: effect.pokemonCard.name
       });
+      effect.target.showBasicAnimation = true;
       effect.player.hand.moveCardTo(effect.pokemonCard, effect.target);
       effect.target.pokemonPlayedTurn = state.turn;
       effect.target.removeSpecialCondition(SpecialCondition.ABILITY_USED);

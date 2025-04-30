@@ -39,20 +39,6 @@ export class SocketClient implements Client {
     this.gameSocket = new GameSocket(this, this.socket, core, this.cache);
     this.messageSocket = new MessageSocket(this, this.socket, core);
     this.matchmakingSocket = new MatchmakingSocket(this, this.socket, core);
-
-    // Add reconnection handler
-    this.socket.socket.on('reconnect', () => {
-      console.log(`[Socket] Client reconnected: ${user.name} [${this.id}]`);
-      // Handle reconnection for each game
-      this.games.forEach(game => {
-        try {
-          game.handleClientReconnect(this);
-        } catch (error: unknown) {
-          const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-          console.error(`[Socket] Error handling game reconnection: ${errorMessage}`);
-        }
-      });
-    });
   }
 
   public onConnect(client: Client): void {

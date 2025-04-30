@@ -6,8 +6,6 @@ import { timeout, catchError, retry } from 'rxjs/operators';
 
 import { ApiError } from './api.error';
 import { environment } from '../../environments/environment';
-import { AlertService } from '../shared/alert/alert.service';
-import { TranslateService } from '@ngx-translate/core';
 
 interface SocketResponse<T> {
   message: string;
@@ -23,10 +21,7 @@ export class SocketService {
   private connectionSubject = new BehaviorSubject<boolean>(false);
   private lastPingTime: number = 0;
 
-  constructor(
-    private alertService: AlertService,
-    private translate: TranslateService
-  ) {
+  constructor() {
     this.setServerUrl(environment.apiUrl);
   }
 
@@ -49,10 +44,10 @@ export class SocketService {
     this.socket = io(apiUrl, {
       autoConnect: false,
       reconnection: true,
-      reconnectionAttempts: 5,
+      reconnectionAttempts: 10,
       reconnectionDelay: 1000,
       reconnectionDelayMax: 5000,
-      timeout: 10000,
+      timeout: 20000,
       transports: ['websocket'],
       forceNew: true,
       query: {},
@@ -69,9 +64,7 @@ export class SocketService {
       if (!error.message.includes('xhr poll error') && !error.message.includes('network error')) {
         console.error('[Socket] Connection error:', error.message);
       }
-      const attempt = this.socket.io.reconnectionAttempts();
-      const delay = Math.min(1000 * Math.pow(2, attempt), 5000);
-      console.log(`[Socket] Connection error, retrying in ${delay}ms (attempt ${attempt + 1})`);
+      const delay = Math.min(1000 * Math.pow(2, this.socket.io.reconnectionAttempts()), 5000);
       setTimeout(() => {
         if (!this.socket.connected) {
           this.socket.connect();
@@ -82,7 +75,6 @@ export class SocketService {
     this.socket.on('disconnect', (reason) => {
       console.log(`[Socket] Disconnected: ${reason}`);
       this.connectionSubject.next(false);
-      this.alertService.toast(this.translate.instant('SOCKET_DISCONNECTED'), 5000);
 
       switch (reason) {
         case 'io server disconnect':
@@ -90,21 +82,26 @@ export class SocketService {
           this.socket.connect();
           break;
         case 'transport close':
-        case 'ping timeout':
-        case 'transport error':
-          const attempt = this.socket.io.reconnectionAttempts();
-          const delay = Math.min(1000 * Math.pow(2, attempt), 5000);
-          console.log(`[Socket] ${reason}, retrying in ${delay}ms (attempt ${attempt + 1})`);
-          this.alertService.toast(this.translate.instant('SOCKET_RECONNECTING', { attempt: attempt + 1 }), 5000);
+          const delay = Math.min(1000 * Math.pow(2, this.socket.io.reconnectionAttempts()), 5000);
+          console.log(`[Socket] Transport closed, reconnecting in ${delay}ms`);
           setTimeout(() => {
             if (!this.socket.connected) {
               this.socket.connect();
             }
           }, delay);
           break;
-        default:
-          console.log(`[Socket] Unknown disconnect reason: ${reason}, attempting reconnect`);
+        case 'ping timeout':
+          console.log('[Socket] Ping timeout, attempting immediate reconnect');
           this.socket.connect();
+          break;
+        default:
+          const defaultDelay = Math.min(1000 * Math.pow(2, this.socket.io.reconnectionAttempts()), 5000);
+          console.log(`[Socket] Unknown disconnect reason, reconnecting in ${defaultDelay}ms`);
+          setTimeout(() => {
+            if (!this.socket.connected) {
+              this.socket.connect();
+            }
+          }, defaultDelay);
       }
     });
 
@@ -112,15 +109,11 @@ export class SocketService {
       console.log(`[Socket] Reconnected after ${attemptNumber} attempts`);
       this.connectionSubject.next(true);
       this.lastPingTime = Date.now();
-      this.alertService.toast(this.translate.instant('SOCKET_RECONNECTED'), 3000);
-
-      this.socket.io.reconnectionAttempts(0);
     });
 
     this.socket.on('reconnect_attempt', (attemptNumber) => {
-      if (attemptNumber % 2 === 0) {
+      if (attemptNumber % 5 === 0) {
         console.log(`[Socket] Reconnection attempt ${attemptNumber}`);
-        this.alertService.toast(this.translate.instant('SOCKET_RECONNECT_ATTEMPT', { attempt: attemptNumber }), 3000);
       }
     });
 
@@ -133,14 +126,6 @@ export class SocketService {
     this.socket.on('reconnect_failed', () => {
       console.error('[Socket] Reconnection failed after all attempts');
       this.connectionSubject.next(false);
-      this.alertService.toast(this.translate.instant('SOCKET_RECONNECT_FAILED'), 5000);
-
-      setTimeout(() => {
-        if (!this.socket.connected) {
-          console.log('[Socket] Attempting fresh connection after reconnection failure');
-          this.socket.connect();
-        }
-      }, 10000);
     });
 
     this.socket.io.on('ping', () => {
@@ -190,21 +175,6 @@ export class SocketService {
 
     this.socket.connect();
     this.enabled = true;
-
-    this.startConnectionMonitoring();
-  }
-
-  private startConnectionMonitoring() {
-    setInterval(() => {
-      if (this.enabled && !this.socket.connected) {
-        const timeSinceLastPing = Date.now() - this.lastPingTime;
-        if (this.lastPingTime > 0 && timeSinceLastPing > 15000) {
-          console.log(`[Socket] Connection frozen (no ping for ${Math.floor(timeSinceLastPing / 1000)}s), reconnecting...`);
-          this.socket.disconnect();
-          this.socket.connect();
-        }
-      }
-    }, 10000);
   }
 
   public disable() {
