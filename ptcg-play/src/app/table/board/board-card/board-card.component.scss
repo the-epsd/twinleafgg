@@ -19,7 +19,7 @@ $ptcg-energy-card-offset: 13%;
 
   &.basic-entrance {
     transform-style: preserve-3d;
-    animation: basicEntrance 1.5s cubic-bezier(0.4, 0, 0.1, 1);
+    animation: basicEntrance 0.5s cubic-bezier(0.4, 0, 0.1, 1);
     z-index: 1000;
     backface-visibility: visible;
     position: relative;
@@ -469,23 +469,15 @@ $ptcg-energy-card-offset: 13%;
 
   @keyframes basicEntrance {
     0% {
-      transform: translate(0, -60px) rotateY(1080deg) scale(1.3);
-      filter: brightness(100) grayscale(1);
+      transform: translate(0, -30px) scale(1.3);
     }
 
-    2% {
-      transform: translate(0, -60px) rotateY(1080deg) scale(1.3);
-      filter: brightness(1);
-    }
-
-    15% {
-      transform: translate(0, 0) rotateY(1080deg) scale(1);
-      filter: brightness(1);
+    55% {
+      transform: translate(0, -30px) scale(1.3);
     }
 
     100% {
-      transform: translate(0, 0) rotateY(1080deg) scale(1);
-      filter: brightness(1);
+      transform: translate(0, 0) scale(1);
     }
   }
 
