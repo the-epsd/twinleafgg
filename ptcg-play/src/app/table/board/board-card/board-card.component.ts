@@ -1,7 +1,8 @@
-import { Component, EventEmitter, Input, Output, Inject, OnInit, OnDestroy } from '@angular/core';
-import { Card, CardList, PokemonCardList, Power, BoardEffect, SpecialCondition, StadiumDirection, SuperType, EnergyCard, CardType, PlayerType, SlotType } from 'ptcg-server';
+import { Component, EventEmitter, Input, Output, Inject, OnInit, OnDestroy, ElementRef } from '@angular/core';
+import { Card, CardList, PokemonCardList, Power, BoardEffect, SpecialCondition, StadiumDirection, SuperType, EnergyCard, CardType, PlayerType, SlotType, CardTag, Stage, PokemonCard } from 'ptcg-server';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { BoardInteractionService } from '../../../shared/services/board-interaction.service';
+import { SettingsService } from '../../table-sidebar/settings-dialog/settings.service';
 import { Subscription } from 'rxjs';
 
 const MAX_ENERGY_CARDS = 8;
@@ -65,6 +66,7 @@ export class BoardCardComponent implements OnInit, OnDestroy {
 
   @Input() showCardCount = false;
   @Output() cardClick = new EventEmitter<Card>();
+  @Output() pokemonPlayed = new EventEmitter<{ pokemonId: string | number }>();
 
   @Input() set cardList(value: CardList | PokemonCardList) {
     this._cardList = value;
@@ -78,6 +80,8 @@ export class BoardCardComponent implements OnInit, OnDestroy {
     this.isFaceDown = false;
     this.boardEffect = [];
     this.isUpsideDown = value?.stadiumDirection === StadiumDirection.DOWN;
+    this.showTestAnimation = false;
+    this.showBasicAnimation = false;
 
     this.isEmpty = !value || !value.cards.length;
     if (this.isEmpty) {
@@ -124,6 +128,13 @@ export class BoardCardComponent implements OnInit, OnDestroy {
 
   public isEmpty = true;
   public mainCard: Card;
+  public breakCard: Card;
+  public legendTopCard: Card;
+  public legendBottomCard: Card;
+  public vunionTopLeftCard: Card;
+  public vunionTopRightCard: Card;
+  public vunionBottomLeftCard: Card;
+  public vunionBottomRightCard: Card;
   public moreEnergies = 0;
   public cardCount = 0;
   public energyCards: Card[] = [];
@@ -135,7 +146,6 @@ export class BoardCardComponent implements OnInit, OnDestroy {
   public isUpsideDown = false;
   public boardEffect: BoardEffect[] = [];
   public BoardEffect = BoardEffect;
-
   private isSecret = false;
   private isPublic = false;
   private isOwner = false;
@@ -170,7 +180,9 @@ export class BoardCardComponent implements OnInit, OnDestroy {
 
   constructor(
     private dialog: MatDialog,
-    private boardInteractionService: BoardInteractionService
+    private boardInteractionService: BoardInteractionService,
+    private elementRef: ElementRef,
+    private settingsService: SettingsService
   ) {
     this.cardTarget = { player: undefined, slot: undefined, index: 0 };
   }
@@ -189,11 +201,52 @@ export class BoardCardComponent implements OnInit, OnDestroy {
         this.updateSelectionState();
       })
     );
+
+    // Create animation end handlers
+    this.animationEndHandler = () => {
+      if (this.animationElement) {
+        this.animationElement.removeEventListener('animationend', this.animationEndHandler);
+        this.showTestAnimation = false;
+        this.hasPlayedTestAnimation = true;
+        this.animationElement = null;
+        if (this._cardList instanceof PokemonCardList) {
+          this._cardList.triggerAnimation = false;
+        }
+      }
+    };
+
+    this.basicAnimationEndHandler = () => {
+      if (this.animationElement) {
+        this.animationElement.removeEventListener('animationend', this.basicAnimationEndHandler);
+        this.showBasicAnimation = false;
+        this.hasPlayedBasicAnimation = true;
+        this.animationElement = null;
+        if (this._cardList instanceof PokemonCardList) {
+          this._cardList.showBasicAnimation = false;
+        }
+      }
+    };
+
+    // Subscribe to animation settings
+    this.subscriptions.push(
+      this.settingsService.testAnimation$.subscribe(enabled => {
+        if (!enabled) {
+          this.showTestAnimation = false;
+          this.showBasicAnimation = false;
+        }
+      })
+    );
   }
 
   ngOnDestroy() {
     // Unsubscribe from all subscriptions
     this.subscriptions.forEach(sub => sub.unsubscribe());
+
+    // Clean up animation handler
+    if (this.animationElement) {
+      this.animationElement.removeEventListener('animationend', this.animationEndHandler);
+      this.animationElement.removeEventListener('animationend', this.basicAnimationEndHandler);
+    }
   }
 
   /**
@@ -231,11 +284,110 @@ export class BoardCardComponent implements OnInit, OnDestroy {
     this.isSelected = this.boardInteractionService.isTargetSelected(this.cardTarget);
   }
 
+  private hasPlayedTestAnimation = false;
+  private hasPlayedBasicAnimation = false;
+  private currentCardId: number | string;
+  private animationElement: HTMLElement;
+  private isInPrompt = false;
+
+  private animationEndHandler = () => {
+    if (this.animationElement) {
+      this.animationElement.removeEventListener('animationend', this.animationEndHandler);
+      this.showTestAnimation = false;
+      this.hasPlayedTestAnimation = true;
+      this.animationElement = null;
+      if (this._cardList instanceof PokemonCardList) {
+        this._cardList.triggerAnimation = false;
+      }
+    }
+  };
+
+  private basicAnimationEndHandler = () => {
+    if (this.animationElement) {
+      this.animationElement.removeEventListener('animationend', this.basicAnimationEndHandler);
+      this.showBasicAnimation = false;
+      this.hasPlayedBasicAnimation = true;
+      this.animationElement = null;
+      if (this._cardList instanceof PokemonCardList) {
+        this._cardList.showBasicAnimation = false;
+      }
+    }
+  };
+
   private initPokemonCardList(cardList: PokemonCardList) {
     this.damage = cardList.damage;
     this.specialConditions = cardList.specialConditions;
     this.boardEffect = cardList.boardEffect;
-    this.mainCard = cardList.getPokemonCard();
+
+    // Get the Pokemon card and check if it's a BREAK card
+    const pokemonCard = cardList.getPokemonCard();
+    if (pokemonCard?.tags?.includes(CardTag.BREAK)) {
+      // If it's a BREAK card, find the original Pokemon card
+      const originalCard = cardList.cards.find(card =>
+        card.superType === SuperType.POKEMON &&
+        !card.tags?.includes(CardTag.BREAK)
+      );
+      this.mainCard = originalCard;
+      this.breakCard = pokemonCard;
+    } else {
+      this.mainCard = pokemonCard;
+      this.breakCard = undefined;
+    }
+
+    if (pokemonCard?.tags?.includes(CardTag.LEGEND)) {
+      // If it's a Legend card, find the original Pokemon card
+      const topCard = cardList.cards.find(card =>
+        card.superType === SuperType.POKEMON &&
+        card.tags?.includes(CardTag.LEGEND) &&
+        card.fullName.includes('(Top)')
+      );
+      const bottomCard = cardList.cards.find(card =>
+        card.superType === SuperType.POKEMON &&
+        card.tags?.includes(CardTag.LEGEND) &&
+        card.fullName.includes('(Bottom)')
+      );
+      this.legendTopCard = topCard;
+      this.legendBottomCard = bottomCard;
+    } else {
+      this.mainCard = pokemonCard;
+      this.legendTopCard = undefined;
+      this.legendBottomCard = undefined;
+    }
+
+    if (pokemonCard?.tags?.includes(CardTag.POKEMON_VUNION)) {
+      // If it's a Legend card, find the original Pokemon card
+      const topLeftCard = cardList.cards.find(card =>
+        card.superType === SuperType.POKEMON &&
+        card.tags?.includes(CardTag.POKEMON_VUNION) &&
+        card.fullName.includes('(Top Left)')
+      );
+      const topRightCard = cardList.cards.find(card =>
+        card.superType === SuperType.POKEMON &&
+        card.tags?.includes(CardTag.POKEMON_VUNION) &&
+        card.fullName.includes('(Top Right)')
+      );
+      const bottomLeftCard = cardList.cards.find(card =>
+        card.superType === SuperType.POKEMON &&
+        card.tags?.includes(CardTag.POKEMON_VUNION) &&
+        card.fullName.includes('(Bottom Left)')
+      );
+      const bottomRightCard = cardList.cards.find(card =>
+        card.superType === SuperType.POKEMON &&
+        card.tags?.includes(CardTag.POKEMON_VUNION) &&
+        card.fullName.includes('(Bottom Right)')
+      );
+      this.vunionTopLeftCard = topLeftCard;
+      this.vunionTopRightCard = topRightCard;
+      this.vunionBottomLeftCard = bottomLeftCard;
+      this.vunionBottomRightCard = bottomRightCard;
+    } else {
+      this.mainCard = pokemonCard;
+      this.vunionTopLeftCard = undefined;
+      this.vunionTopRightCard = undefined;
+      this.vunionBottomLeftCard = undefined;
+      this.vunionBottomRightCard = undefined;
+    }
+
     this.trainerCard = cardList.tool;
 
     for (const card of cardList.cards) {
@@ -248,11 +400,75 @@ export class BoardCardComponent implements OnInit, OnDestroy {
         }
       }
     }
+
+    // Check if this is a new card instance
+    const newCardId = this.mainCard?.id;
+    if (newCardId && newCardId !== this.currentCardId) {
+      this.currentCardId = newCardId;
+      this.hasPlayedTestAnimation = false;
+      this.showTestAnimation = false;
+      this.hasPlayedBasicAnimation = false;
+      this.showBasicAnimation = false;
+    }
+
+    // Handle Evolution animation
+    if (this.mainCard &&
+      this.mainCard.superType === SuperType.POKEMON &&
+      !this.hasPlayedTestAnimation &&
+      cardList.triggerAnimation &&
+      !this.showTestAnimation &&
+      !this.isInPrompt) {
+
+      // Check if Evolution animation is enabled
+      let isTestAnimationEnabled = true;
+      this.settingsService.testAnimation$.subscribe(enabled => {
+        isTestAnimationEnabled = enabled;
+      }).unsubscribe();
+
+      if (isTestAnimationEnabled) {
+        this.hasPlayedTestAnimation = true;
+        this.showTestAnimation = true;
+
+        // Wait for the next tick to ensure the element is in the DOM
+        setTimeout(() => {
+          this.animationElement = document.querySelector('.test-entrance');
+          if (this.animationElement) {
+            this.animationElement.addEventListener('animationend', this.animationEndHandler);
+          }
+        });
+      }
+    }
+
+    // Handle Playing Basic Pokemon animation
+    if (this.mainCard &&
+      this.mainCard.superType === SuperType.POKEMON &&
+      !this.hasPlayedBasicAnimation &&
+      cardList.showBasicAnimation &&
+      !this.showBasicAnimation &&
+      !this.isInPrompt) {
+
+      // Check if Basic Pokemon animation is enabled
+      let isBasicAnimationEnabled = true;
+      this.settingsService.testAnimation$.subscribe(enabled => {
+        isBasicAnimationEnabled = enabled;
+      }).unsubscribe();
+
+      if (isBasicAnimationEnabled) {
+        this.hasPlayedBasicAnimation = true;
+        this.showBasicAnimation = true;
+
+        // Wait for the next tick to ensure the element is in the DOM
+        setTimeout(() => {
+          this.animationElement = document.querySelector('.basic-entrance');
+          if (this.animationElement) {
+            this.animationElement.addEventListener('animationend', this.basicAnimationEndHandler);
+          }
+        });
+      }
+    }
   }
 
-
   getCustomImageUrl(card: Card): string {
-
     const customImageUrls = {
       'Grass Energy': 'assets/energy/grass.png',
       'Fire Energy': 'assets/energy/fire.png',
@@ -274,7 +490,6 @@ export class BoardCardComponent implements OnInit, OnDestroy {
     };
     return customImageUrls[card.name] || '';
   }
-
 
   public onCardClick(card: Card) {
     // console.log('Card clicked:', {
@@ -315,6 +530,42 @@ export class BoardCardComponent implements OnInit, OnDestroy {
     //   });
     // } else {
     this.cardClick.emit(card);
+  }
+
+  /////////////////////// ANIMATIONS ///////////////////////
+
+  public showTestAnimation = false;
+  public showBasicAnimation = false;
+  private isAnimating = false;
+
+  @Input() set testEntrance(value: boolean) {
+    if (value && !this.isAnimating) {
+      this.isAnimating = true;
+      setTimeout(() => {
+        this.isAnimating = false;
+      }, 3000);
+    }
+  }
+
+  @Input() set basicEntrance(value: boolean) {
+    if (value && !this.isAnimating) {
+      this.isAnimating = true;
+      setTimeout(() => {
+        this.isAnimating = false;
+      }, 600);
+    }
+  }
+
+  @Input() set inPrompt(value: boolean) {
+    this.isInPrompt = value;
+    if (value) {
+      this.showTestAnimation = false;
+      this.showBasicAnimation = false;
+      if (this._cardList instanceof PokemonCardList) {
+        this._cardList.triggerAnimation = false;
+        this._cardList.showBasicAnimation = false;
+      }
+    }
   }
 }
 

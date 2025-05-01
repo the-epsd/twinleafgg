@@ -20,6 +20,8 @@ cardManager.defineSet(sets.setTeamRocket);
 cardManager.defineSet(sets.setWOTCPromos);
 cardManager.defineSet(sets.setVendingSeries);
 
+cardManager.defineSet(sets.setGymHeros);
+
 cardManager.defineSet(sets.setBaseSetEnergy);
 
 cardManager.defineSet(sets.setNeoGenesis);
@@ -33,6 +35,7 @@ cardManager.defineSet(sets.setBestOfGame);
 
 //ex Era shit
 cardManager.defineSet(sets.setEXRubyAndSapphire);
+cardManager.defineSet(sets.setEXSandstorm);
 cardManager.defineSet(sets.setEXHolonPhantoms);
 cardManager.defineSet(sets.setEXHiddenLegends)
 cardManager.defineSet(sets.setEXDragon);

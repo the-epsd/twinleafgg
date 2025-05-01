@@ -6,6 +6,10 @@ import { AttachEnergyEffect, EnergyEffect } from '../../game/store/effects/play-
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 import { PlayerType } from '../../game';
+import { PokemonCard } from '../../game/store/card/pokemon-card';
+import { EnergyMap } from '../../game/store/prompts/choose-energy-prompt';
+import { CardList } from '../../game/store/state/card-list';
+import { Card } from '../../game/store/card/card';
 
 export class TeamRocketEnergy extends EnergyCard {
 
@@ -31,18 +35,98 @@ export class TeamRocketEnergy extends EnergyCard {
   
   While this card is attached to a Pokémon, this card provides 2 in any combination of [P] and [D] Energy`;
 
-  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+  private getExistingEnergy(source: CardList): EnergyMap[] {
+    return source.cards
+      .filter((card: Card) => card instanceof EnergyCard && card !== this)
+      .map((card: Card) => ({
+        card: card as EnergyCard,
+        provides: (card as EnergyCard).provides
+      }));
+  }
 
+  private countEnergyType(energy: EnergyMap[], type: CardType): number {
+    return energy.reduce((count, e) => {
+      return count + e.provides.filter(p => p === type).length;
+    }, 0);
+  }
+
+  private getEnergyToProvide(attackCost: CardType[], existingEnergy: EnergyMap[]): CardType[] {
+    const needsPsychic = attackCost.includes(CardType.PSYCHIC);
+    const needsDark = attackCost.includes(CardType.DARK);
+
+    console.log('Attack cost:', attackCost);
+    console.log('Needs Psychic:', needsPsychic);
+    console.log('Needs Dark:', needsDark);
+    console.log('Existing energy:', existingEnergy.map(e => ({
+      card: e.card.name,
+      provides: e.provides
+    })));
+
+    if (!needsPsychic && !needsDark) {
+      console.log('Providing COLORLESS, COLORLESS (no type needed)');
+      return [CardType.COLORLESS, CardType.COLORLESS];
+    }
+
+    const psychicCount = this.countEnergyType(existingEnergy, CardType.PSYCHIC);
+    const darkCount = this.countEnergyType(existingEnergy, CardType.DARK);
+    const requiredPsychic = attackCost.filter(c => c === CardType.PSYCHIC).length;
+    const requiredDark = attackCost.filter(c => c === CardType.DARK).length;
+
+    console.log('Existing Psychic count:', psychicCount);
+    console.log('Existing Dark count:', darkCount);
+    console.log('Required Psychic:', requiredPsychic);
+    console.log('Required Dark:', requiredDark);
+
+    const hasEnoughPsychic = !needsPsychic || psychicCount >= requiredPsychic;
+    const hasEnoughDark = !needsDark || darkCount >= requiredDark;
+
+    console.log('Has enough Psychic:', hasEnoughPsychic);
+    console.log('Has enough Dark:', hasEnoughDark);
+
+    if (hasEnoughPsychic && hasEnoughDark) {
+      console.log('Providing COLORLESS, COLORLESS (enough of both types)');
+      return [CardType.COLORLESS, CardType.COLORLESS];
+    }
+
+    if (needsPsychic && needsDark) {
+      if (!hasEnoughPsychic && !hasEnoughDark) {
+        console.log('Providing PSYCHIC, DARK (needs both)');
+        return [CardType.PSYCHIC, CardType.DARK];
+      }
+      if (!hasEnoughPsychic) {
+        console.log('Providing PSYCHIC, PSYCHIC (needs Psychic)');
+        return [CardType.PSYCHIC, CardType.PSYCHIC];
+      }
+      console.log('Providing DARK, DARK (needs Dark)');
+      return [CardType.DARK, CardType.DARK];
+    }
+
+    if (needsPsychic && !hasEnoughPsychic) {
+      console.log('Providing PSYCHIC, PSYCHIC (needs Psychic)');
+      return [CardType.PSYCHIC, CardType.PSYCHIC];
+    }
+
+    if (needsDark && !hasEnoughDark) {
+      console.log('Providing DARK, DARK (needs Dark)');
+      return [CardType.DARK, CardType.DARK];
+    }
+
+    console.log('Providing COLORLESS, COLORLESS (default)');
+    return [CardType.COLORLESS, CardType.COLORLESS];
+  }
+
+  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Check if the card is attached to a Team Rocket's Pokémon
     if (effect instanceof AttachEnergyEffect && effect.energyCard === this) {
+      console.log('Team Rocket Energy attached to:', effect.target.getPokemonCard()?.name);
       state.players.forEach(player => {
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
           if (!cardList.cards.includes(this)) {
             return;
           }
-          const pokemon = cardList;
-          const pokemonCard = pokemon.getPokemonCard();
+          const pokemonCard = cardList.getPokemonCard();
           if (pokemonCard && !pokemonCard.tags.includes(CardTag.TEAM_ROCKET)) {
+            console.log('Discarding Team Rocket Energy from non-Team Rocket Pokémon:', pokemonCard.name);
             cardList.moveCardTo(this, player.discard);
           }
         });
@@ -51,20 +135,27 @@ export class TeamRocketEnergy extends EnergyCard {
     }
 
     if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
-
       try {
-        // Add the base EnergyEffect
         const energyEffect = new EnergyEffect(effect.player, this);
         store.reduceEffect(state, energyEffect);
       } catch {
         return state;
       }
-      // This energy provides 2 energy in any combination of Psychic and Darkness
-      // We'll provide both types and let the energy checking algorithm pick the best combination
-      // The logic in StateUtils.checkEnoughEnergy will handle this appropriately
+
+      const pokemonCard = effect.source.getPokemonCard();
+      if (!pokemonCard || !(pokemonCard instanceof PokemonCard)) {
+        return state;
+      }
+
+      console.log('Checking energy provision for:', pokemonCard.name);
+      const attackCost = pokemonCard.attacks[0]?.cost || [];
+      const existingEnergy = this.getExistingEnergy(effect.source);
+      const energyToProvide = this.getEnergyToProvide(attackCost, existingEnergy);
+
+      console.log('Final energy provided:', energyToProvide);
       effect.energyMap.push({
         card: this,
-        provides: [CardType.PSYCHIC, CardType.PSYCHIC, CardType.DARK, CardType.DARK]
+        provides: energyToProvide
       });
     }
     return state;

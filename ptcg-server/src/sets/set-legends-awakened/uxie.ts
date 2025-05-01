@@ -5,6 +5,7 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { OrderCardsPrompt } from '../../game/store/prompts/order-cards-prompt';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { PowerType, StoreLike, State, ConfirmPrompt, GameMessage } from '../../game';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 function* usePsychicRestore(next: Function, store: StoreLike, state: State, effect: AttackEffect): IterableIterator<State> {
   const player = effect.player;
@@ -34,7 +35,20 @@ function* usePsychicRestore(next: Function, store: StoreLike, state: State, effe
     }
 
     target.applyOrder(order);
-    target.moveTo(player.deck);
+
+    // Separate Pokemon card from attached cards
+    const pokemons = target.getPokemons();
+    const otherCards = target.cards.filter(card => !(card instanceof PokemonCard));
+
+    // Move other cards to deck first
+    if (otherCards.length > 0) {
+      MOVE_CARDS(store, state, target, player.deck, { cards: otherCards });
+    }
+
+    // Move Pokemon to deck
+    if (pokemons.length > 0) {
+      MOVE_CARDS(store, state, target, player.deck, { cards: pokemons });
+    }
   });
 }
 

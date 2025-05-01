@@ -51,7 +51,7 @@ export class Jolteonex extends PokemonCard {
         if (result) {
           const opponent = StateUtils.getOpponent(state, effect.player);
           opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-            const effectOfAbility = new EffectOfAbilityEffect(effect.player, this.powers[0], this, state, [cardList]);
+            const effectOfAbility = new EffectOfAbilityEffect(effect.player, this.powers[0], this, cardList);
             effectOfAbility.target = cardList;
             store.reduceEffect(state, effectOfAbility);
             if (effectOfAbility.target) {

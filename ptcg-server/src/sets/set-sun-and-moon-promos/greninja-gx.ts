@@ -47,7 +47,7 @@ export class GreninjaGX extends PokemonCard {
 
   public set: string = 'SMP';
 
-  public setNumber = 'SM197';
+  public setNumber = '197';
 
   public cardImage: string = 'assets/cardback.png';
 

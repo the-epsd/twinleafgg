@@ -4,6 +4,7 @@ import { Kecleon } from './kecleon';
 import { Lapras } from './lapras';
 import { Mewex } from './mew-ex';
 import { Pikachu } from './pikachu';
+import { PowerTree } from './power-tree';
 import { ReactEnergy } from './react-energy';
 
 export const setEXLegendMaker: Card[] = [
@@ -12,5 +13,6 @@ export const setEXLegendMaker: Card[] = [
   new Lapras(),
   new Mewex(),
   new Pikachu(),
+  new PowerTree(),
   new ReactEnergy(),
 ];

@@ -547,5 +547,13 @@
     "LOG_PLAYER_PUTS_CARD_IN_LOST_ZONE": "{{name}} place {{card}} de sa main dans la Zone Perdue.",
     "LOG_PLAYER_HEALS_POKEMON": "{{name}} soigne {{pokemon}} de {{healingAmount}}.",
     "LOG_HISUIAN_HEAVY_BALL": "{{name}} a ajouté {{card}} à sa main depuis ses Cartes Récompense avec Hisuian Heavy Ball (Masse Ball de Hisui)."
-  }
+  },
+  "PROFILE_BAN_USER": "Bannir l'utilisateur",
+  "PROFILE_BAN_SUCCESS": "L'utilisateur a été banni avec succès",
+  "PROFILE_BAN_ERROR": "Erreur lors du bannissement de l'utilisateur",
+  "SOCKET_DISCONNECTED": "Déconnecté du serveur",
+  "SOCKET_RECONNECTING": "Reconnexion... (Essai {attempt})",
+  "SOCKET_RECONNECT_ATTEMPT": "Essai de reconnexion {attempt}",
+  "SOCKET_RECONNECTED": "Reconnecté avec succès",
+  "SOCKET_RECONNECT_FAILED": "Échec de la reconnexion au serveur"
 }

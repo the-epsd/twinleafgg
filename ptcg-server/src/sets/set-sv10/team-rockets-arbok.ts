@@ -1,9 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import {StoreLike,State, PowerType, StateUtils, GameError, GameMessage} from '../../game';
+import {StoreLike,State, PowerType, StateUtils, GameError, GameMessage, PlayerType} from '../../game';
 import {Effect} from '../../game/store/effects/effect';
 import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import {PlayPokemonEffect} from '../../game/store/effects/play-card-effects';
+import {PutDamageEffect} from '../../game/store/effects/attack-effects';
 
 export class TeamRocketsArbok extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -49,15 +50,21 @@ export class TeamRocketsArbok extends PokemonCard {
 
       if (IS_ABILITY_BLOCKED(store, state, opponent, this)){ return state; }
 
-      if (pokemonCard.powers.length > 0 && pokemonCard.powers[0].powerType === PowerType.ABILITY){
+      if (pokemonCard.powers.length > 0 && pokemonCard.powers[0].powerType === PowerType.ABILITY && !pokemonCard.tags.includes(CardTag.TEAM_ROCKET)){
         throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
       }
     }
 
-
     // Spinning Tail
     if (WAS_ATTACK_USED(effect, 0, this)){
-      
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
+        const damageEffect = new PutDamageEffect(effect, 30);
+        damageEffect.target = cardList;
+        store.reduceEffect(state, damageEffect);
+      });
     }
     
     return state;

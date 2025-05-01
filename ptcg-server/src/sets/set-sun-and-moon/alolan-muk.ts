@@ -6,7 +6,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect, EffectOfAbilityEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { StateUtils } from '../../game/store/state-utils';
 import { PokemonCardList } from '../../game/store/state/pokemon-card-list';
 import { State } from '../../game/store/state/state';
@@ -87,19 +87,20 @@ export class AlolanMuk extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      let isAlolanMukInPlay = false;
+      let playerHasAlolanMukInPlay = false;
+      let opponentHasAlolanMukInPlay = false;
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
         if (card === this) {
-          isAlolanMukInPlay = true;
+          playerHasAlolanMukInPlay = true;
         }
       });
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
         if (card === this) {
-          isAlolanMukInPlay = true;
+          opponentHasAlolanMukInPlay = true;
         }
       });
 
-      if (!isAlolanMukInPlay) {
+      if (!playerHasAlolanMukInPlay && !opponentHasAlolanMukInPlay) {
         return state;
       }
 
@@ -121,6 +122,17 @@ export class AlolanMuk extends PokemonCard {
       } catch {
         return state;
       }
+
+      // Check if we can apply the ability lock to target Pokemon
+      if (cardList instanceof PokemonCardList) {
+        const canApplyAbility = new EffectOfAbilityEffect(
+          playerHasAlolanMukInPlay ? player : opponent, this.powers[0], this, cardList);
+        store.reduceEffect(state, canApplyAbility);
+        if (!canApplyAbility.target) {
+          return state;
+        }
+      }
+
       if (!effect.power.exemptFromAbilityLock) {
         throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
       }

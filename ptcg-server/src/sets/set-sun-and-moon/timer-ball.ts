@@ -62,7 +62,7 @@ export class TimerBall extends TrainerCard {
         const blocked: number[] = [];
         player.deck.cards.forEach((card, index) => {
           // eslint-disable-next-line no-empty
-          if (card instanceof PokemonCard && card.stage !== Stage.BASIC && card.stage !== Stage.RESTORED) {
+          if (card instanceof PokemonCard && card.evolvesFrom !== '' && card.stage !== Stage.LV_X) {
           } else {
             blocked.push(index);
           }

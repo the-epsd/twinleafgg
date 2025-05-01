@@ -51,7 +51,7 @@ export class JolteonGX extends PokemonCard {
 
   public set: string = 'SMP';
 
-  public setNumber = 'SM173';
+  public setNumber = '173';
 
   public cardImage = 'assets/cardback.png';
 

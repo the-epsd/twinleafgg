@@ -5,6 +5,7 @@ import { Charmander } from './charmander';
 import { Diglett } from './diglett';
 import { Dugtrio } from './dugtrio';
 import { Treecko } from './treecko';
+import { Windstorm } from './windstorm';
 
 export const setEXCrystalGuardians: Card[] = [
   new Castaway(),
@@ -13,4 +14,5 @@ export const setEXCrystalGuardians: Card[] = [
   new Diglett(),
   new Dugtrio(),
   new Treecko(),
+  new Windstorm(),
 ];

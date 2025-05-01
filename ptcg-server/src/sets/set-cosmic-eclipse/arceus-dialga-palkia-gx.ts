@@ -102,7 +102,7 @@ export class ArceusDialgaPalkiaGX extends PokemonCard {
         e.provides.includes(CardType.WATER));
 
       if (hasWaterEnergy) {
-        player.usedAlteredCreation == true;
+        player.usedAlteredCreation = true;
         console.log('Used Altered Creation with Extra Water');
       }
     }

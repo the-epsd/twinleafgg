@@ -32,6 +32,7 @@ import { Pikachu } from './pikachu';
 import { Ponyta } from './ponyta';
 import { ProfessorOaksSetup } from './professor-oaks-setup';
 import { Rosa } from './rosa';
+import { Roxie } from './roxie';
 import { Sawsbuck } from './sawsbuck';
 import { Slugma } from './slugma';
 import { Stoutland } from './stoutland';
@@ -53,6 +54,10 @@ import { DragoniumZDragonClaw } from './dragonium-z';
 import { Gloom } from './gloom';
 import { Oddish } from './oddish';
 import { VileplumeGX } from './vileplume-gx';
+import {MegaLopunnyJigglypuffGX} from './mega-lopuny-and-jigglypuff-gx';
+import {VenusaurSnivyGX} from './venusaur-and-snivy-gx';
+import {LilliesFullForce} from './lillies-full-force';
+import {SolgaleoLunalaGX} from './solgaleo-and-lunala-gx';
 
 
 export const setCosmicEclipse: Card[] = [
@@ -98,6 +103,7 @@ export const setCosmicEclipse: Card[] = [
   new Ponyta(),
   new ProfessorOaksSetup(),
   new Rosa(),
+  new Roxie(),
   new Sawsbuck(),
   new Slugma(),
   new Stoutland(),
@@ -110,4 +116,11 @@ export const setCosmicEclipse: Card[] = [
   new VileplumeGX(),
   new Wishiwashi(),
   new Woobat(),
+  new Swoobat(),
+  new Mimikyu(),
+  new OricorioGX(),
+  new MegaLopunnyJigglypuffGX(),
+  new VenusaurSnivyGX(),
+  new LilliesFullForce(),
+  new SolgaleoLunalaGX(),
 ];

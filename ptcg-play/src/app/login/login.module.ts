@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 
 import { LoginComponent } from './login/login.component';
-import { LoginPopupComponent } from './login-popup/login-popup.component';
-import { LoginPopupService } from './login-popup/login-popup.service';
 import { SharedModule } from '../shared/shared.module';
 import { RegisterComponent } from './register/register.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
@@ -11,13 +10,20 @@ import { ServerPasswordPopupService } from './server-password-popup/server-passw
 import { ChangeServerPopupComponent } from './change-server-popup/change-server-popup.component';
 import { SetNewPasswordComponent } from './set-new-password/set-new-password.component';
 
+const routes: Routes = [
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: 'reset-password', component: ResetPasswordComponent },
+  { path: 'set-new-password', component: SetNewPasswordComponent }
+];
+
 @NgModule({
   imports: [
-    SharedModule
+    SharedModule,
+    RouterModule.forChild(routes)
   ],
   declarations: [
     ChangeServerPopupComponent,
-    LoginPopupComponent,
     RegisterComponent,
     ResetPasswordComponent,
     ServerPasswordPopupComponent,
@@ -26,11 +32,9 @@ import { SetNewPasswordComponent } from './set-new-password/set-new-password.com
   ],
   entryComponents: [
     ChangeServerPopupComponent,
-    LoginPopupComponent,
     ServerPasswordPopupComponent
   ],
   providers: [
-    LoginPopupService,
     ServerPasswordPopupService
   ],
   exports: [
@@ -38,4 +42,4 @@ import { SetNewPasswordComponent } from './set-new-password/set-new-password.com
     ResetPasswordComponent
   ]
 })
-export class LoginModule {}
+export class LoginModule { }

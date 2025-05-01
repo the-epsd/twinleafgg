@@ -25,6 +25,10 @@
             [routerLink]="['/message', client.user.userId]">
             {{ 'BUTTON_SEND_MESSAGE' | translate }}
           </button>
+          <button mat-menu-item *ngIf="(isAdmin$ | async) && (loggedUserId !== client.user.userId)"
+            [style.color]="client.user.roleId === 1 ? '' : '#FF0000'" (click)="banUser(client.user.userId)">
+            {{ client.user.roleId === 1 ? ('PROFILE_UNBAN_USER' | translate) : ('PROFILE_BAN_USER' | translate) }}
+          </button>
         </mat-menu>
       </a>
     </mat-nav-list>

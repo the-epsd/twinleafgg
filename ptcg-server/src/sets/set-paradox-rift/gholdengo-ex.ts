@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType, BoardEffect } from '../../game/store/card/card-types';
-import { StoreLike, State, ChooseCardsPrompt, PowerType, GameError, PlayerType } from '../../game';
+import { StoreLike, State, ChooseCardsPrompt, PowerType, GameError, PlayerType, EnergyCard } from '../../game';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { GameMessage } from '../../game/game-message';
@@ -100,6 +100,7 @@ export class Gholdengoex extends PokemonCard {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
 
       const player = effect.player;
+      const energiesInHand = player.hand.cards.filter(card => card instanceof EnergyCard && card.superType === SuperType.ENERGY);
 
       // Prompt player to choose cards to discard 
       return store.prompt(state, new ChooseCardsPrompt(
@@ -107,7 +108,7 @@ export class Gholdengoex extends PokemonCard {
         GameMessage.CHOOSE_CARD_TO_DISCARD,
         player.hand,
         { superType: SuperType.ENERGY },
-        { allowCancel: false, min: 0 }
+        { allowCancel: false, min: 0, max: energiesInHand.length }
       ), cards => {
         cards = cards || [];
         if (cards.length === 0) {

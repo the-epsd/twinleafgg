@@ -1,5 +1,6 @@
 import { Card } from '../../game/store/card/card';
 import { Gardevoir } from './gardevoir';
+import {GardevoirLVX} from './gardevoir-lv-x';
 import { Kirlia } from './kirlia';
 import { Minun } from './minun';
 import { Ralts } from './ralts';
@@ -11,4 +12,5 @@ export const setSecretWonders: Card[] = [
   new Kirlia(),
   new Gardevoir(), 
   new RoseannesResearch(),
+  new GardevoirLVX()
 ];

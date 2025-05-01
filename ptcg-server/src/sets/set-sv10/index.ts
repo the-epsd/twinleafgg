@@ -4,9 +4,12 @@ import {Arbolivaex} from './arboliva-ex';
 import { Blaziken } from './blaziken';
 import { Cetitanex } from './cetitan-ex';
 import { Cetoddle } from './cetoddle';
+import {Clamperl} from './clamperl';
 import { Combusken } from './combusken';
 import {Dolliv} from './dolliv';
+import {Gorebyss} from './gorebyss';
 import { GraniteCave } from './granite-cave';
+import {Huntail} from './huntail';
 import { Mankey } from './mankey';
 import { MarniesGrimmsnarlex } from './marnies-grimmsnarl-ex';
 import { MarniesImpidimp } from './marnies-impidimp';
@@ -34,6 +37,7 @@ import {TeamRocketsArbok} from './team-rockets-arbok';
 import { TeamRocketsArcher } from './team-rockets-archer';
 import { TeamRocketsAriana } from './team-rockets-ariana';
 import {TeamRocketsArticuno} from './team-rockets-articuno';
+import {TeamRocketsChingling} from './team-rockets-chingling';
 import {TeamRocketsCrobatex} from './team-rockets-crobat-ex';
 import {TeamRocketsDrowzee} from './team-rockets-drowzee';
 import {TeamRocketsEkans} from './team-rockets-ekans';
@@ -90,7 +94,9 @@ export const setSV10: Card[] = [
   new Smoliv(),
   new Dolliv(),
   new Arbolivaex(),
-
+  new Clamperl(),
+  new Huntail(),
+  new Gorebyss(),
 
   new MarniesMorpekoIR(),
   new MarniesImpidimp(),
@@ -159,4 +165,5 @@ export const setSV10: Card[] = [
   new TeamRocketsArbok(),
   new TeamRocketsWatchtower(),
   new TeamRocketsFactory(),
+  new TeamRocketsChingling(),
 ];

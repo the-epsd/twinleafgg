@@ -6,7 +6,7 @@ import { GameMessage } from '../../game/game-message';
 import { ChoosePokemonPrompt, PlayerType, PokemonCard, SlotType, StateUtils } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { AfterAttackEffect, EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class HisuianGoodraV extends PokemonCard {
 
@@ -47,14 +47,22 @@ export class HisuianGoodraV extends PokemonCard {
 
   public fullName: string = 'Hisuian Goodra V LOR';
 
+  private usedSlipNTrip: boolean = false;
+
   public readonly DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';
   public readonly CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+      this.usedSlipNTrip = true;
+    }
+
+    if (effect instanceof AfterAttackEffect && this.usedSlipNTrip) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const opponentHasBenched = opponent.bench.some(b => b.cards.length > 0);
+
       if (!opponentHasBenched) {
         return state;
       }
@@ -71,6 +79,7 @@ export class HisuianGoodraV extends PokemonCard {
         }
         const target = selected[0];
         opponent.switchPokemon(target);
+        this.usedSlipNTrip = false;
       });
     }
 

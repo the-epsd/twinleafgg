@@ -3,7 +3,7 @@ import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
 import { StoreLike, State, Card, ChooseCardsPrompt, GameMessage, PowerType, GameError, PokemonCardList, StateUtils, ShowCardsPrompt, ShuffleDeckPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { HealEffect } from '../../game/store/effects/game-effects';
-import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 
 export class Wynaut extends PokemonCard {
@@ -41,7 +41,7 @@ export class Wynaut extends PokemonCard {
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const hasWobbuffet = player.hand.cards.some(card => card instanceof PokemonCard && card.name === 'Wobbuffet');
-      
+
       // Check if Wobbuffet is in the player's hand
       if (!hasWobbuffet) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
@@ -87,7 +87,7 @@ export class Wynaut extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      if (opponent.hand.cards.length === 0){
+      if (opponent.hand.cards.length === 0) {
         return state;
       }
 
@@ -101,7 +101,7 @@ export class Wynaut extends PokemonCard {
           [randomCard]
         ), () => []);
 
-        opponent.hand.moveCardsTo([randomCard], opponent.deck);
+        MOVE_CARDS(store, state, opponent.hand, opponent.deck, { cards: [randomCard] });
 
         return store.prompt(state, new ShuffleDeckPrompt(opponent.id), order => {
           opponent.deck.applyOrder(order);

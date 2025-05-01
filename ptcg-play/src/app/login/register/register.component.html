@@ -1,90 +1,65 @@
-<ptcg-content [loading]="loading" class="ptcg-u-padding">
-
-  <h1 class="mat-h1" translate>
-    REGISTER_TITLE
-  </h1>
-
-  <div class="ptcg-register-form">
-    <!-- Player Name -->
-    <mat-card>
-
-      <mat-card-content>
-        <form #form="ngForm">
-
-          <mat-form-field>
-            <mat-label translate>REGISTER_NAME</mat-label>
-            <input matInput [placeholder]="'REGISTER_NAME' | translate" name="name" [(ngModel)]="name"
-              [disabled]="loading" #nameField="ngModel" ptcgPlayerNameValidator [ptcgInvalidValue]="invalidName"
-              required maxlength="32">
-            <mat-hint translate>
-              REGISTER_NAME_HINT
-            </mat-hint>
-            <mat-error>
-              <div *ngIf="nameField.errors?.name" translate>VALIDATION_INVALID_NAME_FORMAT</div>
-              <div *ngIf="nameField.errors?.invalidValue" translate>REGISTER_NAME_TAKEN</div>
-            </mat-error>
-          </mat-form-field>
-
-          <!-- E-mail -->
-          <!-- <mat-form-field>
-            <mat-label translate>LABEL_EMAIL</mat-label>
-            <input matInput [placeholder]="'LABEL_EMAIL' | translate" name="email"
-              [(ngModel)]="email" [disabled]="loading" #emailField="ngModel"
-              ptcgEmailValidator [ptcgInvalidValue]="invalidEmail" required>
-            <mat-hint translate>
-              REGISTER_EMAIL_HINT
-            </mat-hint>
-            <mat-error>
-              <div *ngIf="emailField.errors?.email" translate>VALIDATION_INVALID_EMAIL_FORMAT</div>
-              <div *ngIf="emailField.errors?.invalidValue" translate>REGISTER_EMAIL_TAKEN</div>
-            </mat-error>
-          </mat-form-field> -->
-          <input type="hidden" name="email" [(ngModel)]="email">
-
-          <!-- Password -->
-          <mat-form-field>
-            <mat-label translate>REGISTER_PASSWORD</mat-label>
-            <input type="password" matInput [placeholder]="'REGISTER_PASSWORD' | translate" name="password"
-              [(ngModel)]="password" [disabled]="loading" #passwordField="ngModel" ptcgPasswordValidator required
-              maxlength="32">
-            <mat-hint translate>
-              REGISTER_PASSWORD_HINT
-            </mat-hint>
-            <mat-error>
-              <div *ngIf="passwordField.errors?.password" translate>VALIDATION_INVALID_PASSWORD_FORMAT</div>
-            </mat-error>
-          </mat-form-field>
-
-          <!-- Confirm Password -->
-          <mat-form-field>
-            <mat-label translate>REGISTER_PASSWORD_CONFIRM</mat-label>
-            <input type="password" matInput [placeholder]="'REGISTER_PASSWORD_CONFIRM' | translate"
-              name="confirmPassword" [(ngModel)]="confirmPassword" [disabled]="loading" #confirmPasswordField="ngModel"
-              [ptcgPasswordMatchValidator]="password" required maxlength="32">
-            <mat-hint translate>
-              REGISTER_PASSWORD_CONFIRM_HINT
-            </mat-hint>
-            <mat-error>
-              <div *ngIf="confirmPasswordField.errors?.passwordMatch" translate>VALIDATION_PASSWORD_MATCH</div>
-            </mat-error>
-          </mat-form-field>
-
-        </form>
-
-      </mat-card-content>
-    </mat-card>
-
-    <p translate>
-      REGISTER_NOTE
-    </p>
-
-    <p>
-      <button mat-raised-button [disabled]="loading || form.invalid" [ngClass]="{'ptcg-u-loading': loading}"
-        (click)="register()">
-        {{ 'REGISTER_BUTTON' | translate }}
-      </button>
-    </p>
-
+<div class="register-container">
+  <div class="back-button" (click)="goToLogin()">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M19 12H5M12 19l-7-7 7-7" />
+    </svg>
   </div>
 
-</ptcg-content>
+  <div *ngIf="loading" class="loading-spinner">
+    <svg class="spinner" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+      <circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
+    </svg>
+  </div>
+
+  <ng-container *ngIf="!loading">
+    <div class="logo">
+      <img src="assets/tl-open-beta.webp" alt="Logo">
+    </div>
+
+    <form #form="ngForm" class="register-form">
+      <div class="form-field">
+        <label>{{ 'REGISTER_NAME' | translate }}</label>
+        <input [(ngModel)]="name" name="name" type="text" required #nameField="ngModel" ptcgPlayerNameValidator
+          [ptcgInvalidValue]="invalidName" maxlength="32">
+        <div class="field-hint">{{ 'REGISTER_NAME_HINT' | translate }}</div>
+        <div class="field-error" *ngIf="nameField.errors?.name">
+          {{ 'VALIDATION_INVALID_NAME_FORMAT' | translate }}
+        </div>
+        <div class="field-error" *ngIf="nameField.errors?.invalidValue">
+          {{ 'REGISTER_NAME_TAKEN' | translate }}
+        </div>
+      </div>
+
+      <input type="hidden" name="email" [(ngModel)]="email">
+
+      <div class="form-field">
+        <label>{{ 'REGISTER_PASSWORD' | translate }}</label>
+        <input type="password" [(ngModel)]="password" name="password" required #passwordField="ngModel"
+          ptcgPasswordValidator maxlength="32">
+        <div class="field-hint">{{ 'REGISTER_PASSWORD_HINT' | translate }}</div>
+        <div class="field-error" *ngIf="passwordField.errors?.password">
+          {{ 'VALIDATION_INVALID_PASSWORD_FORMAT' | translate }}
+        </div>
+      </div>
+
+      <div class="form-field">
+        <label>{{ 'REGISTER_PASSWORD_CONFIRM' | translate }}</label>
+        <input type="password" [(ngModel)]="confirmPassword" name="confirmPassword" required
+          #confirmPasswordField="ngModel" [ptcgPasswordMatchValidator]="password" maxlength="32">
+        <div class="field-hint">{{ 'REGISTER_PASSWORD_CONFIRM_HINT' | translate }}</div>
+        <div class="field-error" *ngIf="confirmPasswordField.errors?.passwordMatch">
+          {{ 'VALIDATION_PASSWORD_MATCH' | translate }}
+        </div>
+      </div>
+
+      <div class="register-note">
+        {{ 'REGISTER_NOTE' | translate }}
+      </div>
+
+      <button type="submit" class="register-button" [disabled]="form.invalid" (click)="register()">
+        {{ 'REGISTER_BUTTON' | translate }}
+      </button>
+    </form>
+  </ng-container>
+</div>

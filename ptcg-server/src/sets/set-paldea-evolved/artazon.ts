@@ -49,10 +49,11 @@ function* useStadium(next: Function, store: StoreLike, state: State, effect: Use
       if (cards[0].tags.includes(CardTag.POKEMON_V) ||
         cards[0].tags.includes(CardTag.POKEMON_VSTAR) ||
         cards[0].tags.includes(CardTag.POKEMON_VMAX) ||
-        cards[0].tags.includes(CardTag.POKEMON_ex) ||
-        cards[0].tags.includes(CardTag.RADIANT)) {
+        cards[0].tags.includes(CardTag.RADIANT) ||
+        (cards[0].tags.includes(CardTag.POKEMON_ex) && cards[0].regulationMark)) {
         throw new GameError(GameMessage.INVALID_TARGET);
       }
+
       else {
         cards.forEach((card, index) => {
           player.deck.moveCardTo(card, slots[index]);

@@ -48,6 +48,23 @@ export class FormatValidator {
       }
     }
 
+    // code for the Arceus Rule
+    const hasArceusRule = cards.some(card => card.tags.includes(CardTag.ARCEUS));
+    if (hasArceusRule) {
+      const arceusRuleCount = cards.filter(card => card.tags.includes(CardTag.ARCEUS)).length;
+      const arceusCount = cards.filter(card => card.name === 'Arceus').length;
+
+      if (arceusCount !== arceusCount && arceusCount > 4){
+        return formatList.filter(f => 
+          f !== Format.GLC &&
+          f !== Format.EXPANDED &&
+          f !== Format.STANDARD &&
+          f !== Format.STANDARD_NIGHTLY &&
+          f !== Format.UNLIMITED
+        );
+      }
+    }
+
     // Check GLC rules first
     if (formatList.includes(Format.GLC)) {
       // check for singleton violation
@@ -185,7 +202,10 @@ export const BanLists: { [key: number]: string[] } = {
     'Raikou VIV 50',
     'Duskull CEC 83',
     'Marshadow SLG 45',
-    'Marshadow SM 85'
+    'Marshadow SM 85',
+    'Double Colorless Energy XY 130',
+    'Double Colorless Energy BS 96',
+    'Twin Energy RCL 174'
   ],
   [Format.EXPANDED]: [
     'Palace Book SMP NAN25',

@@ -585,5 +585,16 @@
   "DECK_NO_DECKS_FORMAT": "You don't have any decks legal in {{format}} format.",
   "DECK_SET_AS_FORMAT_DEFAULT": "Set as {{format}} default",
   "DECK_EXPORTED_TO_CLIPBOARD": "Deck exported to clipboard",
-  "DEFAULT": "Default"
+  "DEFAULT": "Default",
+  "PROFILE_BAN_USER": "Ban User",
+  "PROFILE_BAN_SUCCESS": "User has been banned successfully",
+  "PROFILE_BAN_ERROR": "Error banning user",
+  "PROFILE_UNBAN_USER": "Unban User",
+  "PROFILE_UNBAN_SUCCESS": "User has been unbanned successfully",
+  "PROFILE_UNBAN_ERROR": "Error unbanning user",
+  "SOCKET_DISCONNECTED": "Disconnected from server",
+  "SOCKET_RECONNECTING": "Reconnecting... (Attempt {attempt})",
+  "SOCKET_RECONNECT_ATTEMPT": "Reconnection attempt {attempt}",
+  "SOCKET_RECONNECTED": "Reconnected successfully",
+  "SOCKET_RECONNECT_FAILED": "Failed to reconnect to server"
 }
