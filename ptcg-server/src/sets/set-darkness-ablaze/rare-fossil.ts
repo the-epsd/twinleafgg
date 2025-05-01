@@ -55,7 +55,7 @@ This card can't be affected by any Special Conditions, and it can't retreat.`,
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AddSpecialConditionsEffect && effect.player.active.cards.includes(this)) {
+    if (effect instanceof AddSpecialConditionsEffect && effect.target.getPokemonCard() === this) {
       effect.preventDefault = true;
     }
 
@@ -81,7 +81,7 @@ This card can't be affected by any Special Conditions, and it can't retreat.`,
       store.reduceEffect(state, playPokemonEffect);
     }
 
-    if (effect instanceof RetreatEffect && effect.player.active.cards.includes(this)) {
+    if (effect instanceof RetreatEffect && effect.player.active.getPokemonCard() === this) {
       throw new GameError(GameMessage.CANNOT_RETREAT);
     }
 

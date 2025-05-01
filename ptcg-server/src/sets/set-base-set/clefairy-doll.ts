@@ -51,7 +51,7 @@ export class ClefairyDoll extends TrainerCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     // Clefairy Doll can't be affected by special conditions
-    if (effect instanceof AddSpecialConditionsEffect && effect.player.active.cards.includes(this)) {
+    if (effect instanceof AddSpecialConditionsEffect && effect.target.getPokemonCard() === this) {
       effect.preventDefault = true;
     }
 
@@ -85,12 +85,12 @@ export class ClefairyDoll extends TrainerCard {
       store.reduceEffect(state, playPokemonEffect);
     }
 
-    if (effect instanceof KnockOutEffect && effect.target.cards.includes(this)) {
+    if (effect instanceof KnockOutEffect && effect.target.getPokemonCard() === this) {
       effect.prizeCount = 0;
       return state;
     }
 
-    if (effect instanceof RetreatEffect && effect.player.active.cards.includes(this)) {
+    if (effect instanceof RetreatEffect && effect.player.active.getPokemonCard() === this) {
       throw new GameError(GameMessage.CANNOT_RETREAT);
     }
 

@@ -369,17 +369,7 @@ function setupSuddenDeathGame(store: StoreLike, state: State, firstPlayer: numbe
 export function* executeCheckState(next: Function, store: StoreLike, state: State, onComplete?: () => void): IterableIterator<State> {
   const prizeGroups: PrizeGroup[][] = state.players.map(() => []);
 
-  // Check table state and handle bench size first
-  const checkTableStateEffect = new CheckTableStateEffect([5, 5]);
-  store.reduceEffect(state, checkTableStateEffect);
-
-  // handleMaxToolsChange(store, state);
-  handleBenchSizeChange(store, state, checkTableStateEffect.benchSizes);
-  if (store.hasPrompts()) {
-    yield store.waitPrompt(state, () => next());
-  }
-
-  // Handle KOs and prize selection first
+  // Handle KOs first
   const pokemonsToDiscard = findKoPokemons(store, state);
   for (const pokemonToDiscard of pokemonsToDiscard) {
     const owner = state.players[pokemonToDiscard.playerNum];
@@ -402,6 +392,14 @@ export function* executeCheckState(next: Function, store: StoreLike, state: Stat
       }
       group.count += knockOutEffect.prizeCount;
     }
+  }
+
+  // Check table state and handle bench size after KOs
+  const checkTableStateEffect = new CheckTableStateEffect([5, 5]);
+  store.reduceEffect(state, checkTableStateEffect);
+  handleBenchSizeChange(store, state, checkTableStateEffect.benchSizes);
+  if (store.hasPrompts()) {
+    yield store.waitPrompt(state, () => next());
   }
 
   // Check if the game has ended before proceeding with prompts

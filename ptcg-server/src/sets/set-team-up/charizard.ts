@@ -57,7 +57,7 @@ export class Charizard extends PokemonCard {
           cardList.damage += 20;
         }
       });
-      
+
       store.prompt(state, new AttachEnergyPrompt(
         player.id,
         GameMessage.ATTACH_ENERGY_CARDS,
@@ -65,7 +65,7 @@ export class Charizard extends PokemonCard {
         PlayerType.BOTTOM_PLAYER,
         [SlotType.ACTIVE],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fire Energy' },
-        { min: 0, max: 2, allowCancel: true }
+        { min: 0, max: 2, allowCancel: false }
       ), transfers => {
         transfers = transfers || [];
         for (const transfer of transfers) {
