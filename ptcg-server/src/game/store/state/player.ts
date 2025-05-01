@@ -84,6 +84,7 @@ export class Player {
   usedTurnSkip: any;
   usedTableTurner: any;
   usedMinusCharge: any;
+  usedPlusCharge: any;
   usedTributeDance: any;
   chainsOfControlUsed: any;
   usedDragonsWish = false;

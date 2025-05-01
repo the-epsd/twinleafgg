@@ -6,7 +6,7 @@ export * from './set-team-rocket';
 export * from './set-vending-series';
 export * from './set-wotc-promos';
 
-export * from './set-gym-heros'
+export * from './set-gym-heros';
 
 //Retro Energy
 export * from './set-base-set-energy';

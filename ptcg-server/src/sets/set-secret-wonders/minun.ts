@@ -26,7 +26,7 @@ export class Minun extends PokemonCard {
   }];
 
   public attacks = [{
-    name: 'Tag Play',
+    name: 'Tag Play -',
     cost: [CardType.LIGHTNING],
     damage: 20,
     text: 'If you have Plusle on your Bench, you may move an Energy card attached to Minun to 1 of your Benched Pokémon.'
