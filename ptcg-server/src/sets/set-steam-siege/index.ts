@@ -1,4 +1,5 @@
 import { Card } from '../../game/store/card/card';
+import { CaptivatingPokePuff } from './captivating-pokepuff';
 import { Cobalion } from './cobalion';
 import {GardevoirEx} from './gardevoir-ex';
 import { GreedyDice } from './greedy-dice';
@@ -13,6 +14,7 @@ import {Xerneas} from './xerneas';
 import {XerneasBREAK} from './xerneas-break';
 
 export const setSteamSiege: Card[] = [
+  new CaptivatingPokePuff(),
   new Cobalion(),
   new GreedyDice(),
   new NinjaBoy(),

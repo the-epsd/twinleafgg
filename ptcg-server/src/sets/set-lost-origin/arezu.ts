@@ -37,10 +37,10 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
   const blocked: number[] = [];
   player.deck.cards.forEach((card, index) => {
-    if (card instanceof PokemonCard && card.tags.includes(CardTag.RADIANT) || card.tags.includes(CardTag.POKEMON_V) || card.tags.includes(CardTag.POKEMON_VSTAR) || card.tags.includes(CardTag.POKEMON_VMAX) || card.tags.includes(CardTag.POKEMON_ex)) {
+    if (card instanceof PokemonCard && card.tags.includes(CardTag.RADIANT) || card.tags.includes(CardTag.POKEMON_V) || card.tags.includes(CardTag.POKEMON_VSTAR) || card.tags.includes(CardTag.POKEMON_VMAX) || (card.tags.includes(CardTag.POKEMON_ex) && card.regulationMark)) {
       blocked.push(index);
     }
-    if (card instanceof PokemonCard && card.stage == Stage.BASIC) {
+    if (card instanceof PokemonCard && (card.evolvesFrom === '' || card.stage === Stage.LV_X)) {
       blocked.push(index);
     }
   });

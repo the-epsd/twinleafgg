@@ -74,9 +74,7 @@ export class AppComponent implements OnInit {
     });
 
     document.addEventListener('visibilitychange', () => {
-      console.log('[Visibility Change] Document visibility:', document.visibilityState);
       if (document.visibilityState === 'visible' && this.isLoggedIn && !this.socketService.isEnabled) {
-        console.log('[Visibility Change] Attempting to reconnect socket');
         this.authToken$.pipe(take(1)).subscribe(authToken => {
           this.socketService.enable(authToken);
         });

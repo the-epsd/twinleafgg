@@ -84,7 +84,7 @@ This card can't retreat.`,
       store.reduceEffect(state, playPokemonEffect);
     }
 
-    if (effect instanceof RetreatEffect && effect.player.active.cards.includes(this)) {
+    if (effect instanceof RetreatEffect && effect.player.active.getPokemonCard() === this) {
       throw new GameError(GameMessage.CANNOT_RETREAT);
     }
 

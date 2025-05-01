@@ -81,6 +81,7 @@ export class BoardCardComponent implements OnInit, OnDestroy {
     this.boardEffect = [];
     this.isUpsideDown = value?.stadiumDirection === StadiumDirection.DOWN;
     this.showTestAnimation = false;
+    this.showBasicAnimation = false;
 
     this.isEmpty = !value || !value.cards.length;
     if (this.isEmpty) {
@@ -128,6 +129,12 @@ export class BoardCardComponent implements OnInit, OnDestroy {
   public isEmpty = true;
   public mainCard: Card;
   public breakCard: Card;
+  public legendTopCard: Card;
+  public legendBottomCard: Card;
+  public vunionTopLeftCard: Card;
+  public vunionTopRightCard: Card;
+  public vunionBottomLeftCard: Card;
+  public vunionBottomRightCard: Card;
   public moreEnergies = 0;
   public cardCount = 0;
   public energyCards: Card[] = [];
@@ -195,31 +202,37 @@ export class BoardCardComponent implements OnInit, OnDestroy {
       })
     );
 
-    // Subscribe to game logs to catch Pokemon played events
-    // this.subscriptions.push(
-    //   this.boardInteractionService.gameLogs$.subscribe(logs => {
-    //     const lastLog = logs[logs.length - 1];
-    //     if (lastLog?.params?.isFrontendEvent === 'true' &&
-    //       lastLog?.params?.eventType === 'POKEMON_PLAYED' &&
-    //       lastLog?.params?.pokemonId === this.mainCard?.id) {
-    //       this.pokemonPlayed.emit({ pokemonId: lastLog.params.pokemonId });
-    //     }
-    //   })
-    // );
-
-    // Create animation end handler
+    // Create animation end handlers
     this.animationEndHandler = () => {
       if (this.animationElement) {
         this.animationElement.removeEventListener('animationend', this.animationEndHandler);
         this.showTestAnimation = false;
+        this.hasPlayedTestAnimation = true;
+        this.animationElement = null;
+        if (this._cardList instanceof PokemonCardList) {
+          this._cardList.triggerAnimation = false;
+        }
       }
     };
 
-    // Subscribe to test animation setting
+    this.basicAnimationEndHandler = () => {
+      if (this.animationElement) {
+        this.animationElement.removeEventListener('animationend', this.basicAnimationEndHandler);
+        this.showBasicAnimation = false;
+        this.hasPlayedBasicAnimation = true;
+        this.animationElement = null;
+        if (this._cardList instanceof PokemonCardList) {
+          this._cardList.showBasicAnimation = false;
+        }
+      }
+    };
+
+    // Subscribe to animation settings
     this.subscriptions.push(
       this.settingsService.testAnimation$.subscribe(enabled => {
         if (!enabled) {
           this.showTestAnimation = false;
+          this.showBasicAnimation = false;
         }
       })
     );
@@ -232,6 +245,7 @@ export class BoardCardComponent implements OnInit, OnDestroy {
     // Clean up animation handler
     if (this.animationElement) {
       this.animationElement.removeEventListener('animationend', this.animationEndHandler);
+      this.animationElement.removeEventListener('animationend', this.basicAnimationEndHandler);
     }
   }
 
@@ -292,6 +306,7 @@ export class BoardCardComponent implements OnInit, OnDestroy {
     if (this.animationElement) {
       this.animationElement.removeEventListener('animationend', this.basicAnimationEndHandler);
       this.showBasicAnimation = false;
+      this.hasPlayedBasicAnimation = true;
       this.animationElement = null;
       if (this._cardList instanceof PokemonCardList) {
         this._cardList.showBasicAnimation = false;
@@ -319,6 +334,60 @@ export class BoardCardComponent implements OnInit, OnDestroy {
       this.breakCard = undefined;
     }
 
+    if (pokemonCard?.tags?.includes(CardTag.LEGEND)) {
+      // If it's a Legend card, find the original Pokemon card
+      const topCard = cardList.cards.find(card =>
+        card.superType === SuperType.POKEMON &&
+        card.tags?.includes(CardTag.LEGEND) &&
+        card.fullName.includes('(Top)')
+      );
+      const bottomCard = cardList.cards.find(card =>
+        card.superType === SuperType.POKEMON &&
+        card.tags?.includes(CardTag.LEGEND) &&
+        card.fullName.includes('(Bottom)')
+      );
+      this.legendTopCard = topCard;
+      this.legendBottomCard = bottomCard;
+    } else {
+      this.mainCard = pokemonCard;
+      this.legendTopCard = undefined;
+      this.legendBottomCard = undefined;
+    }
+
+    if (pokemonCard?.tags?.includes(CardTag.POKEMON_VUNION)) {
+      // If it's a Legend card, find the original Pokemon card
+      const topLeftCard = cardList.cards.find(card =>
+        card.superType === SuperType.POKEMON &&
+        card.tags?.includes(CardTag.POKEMON_VUNION) &&
+        card.fullName.includes('(Top Left)')
+      );
+      const topRightCard = cardList.cards.find(card =>
+        card.superType === SuperType.POKEMON &&
+        card.tags?.includes(CardTag.POKEMON_VUNION) &&
+        card.fullName.includes('(Top Right)')
+      );
+      const bottomLeftCard = cardList.cards.find(card =>
+        card.superType === SuperType.POKEMON &&
+        card.tags?.includes(CardTag.POKEMON_VUNION) &&
+        card.fullName.includes('(Bottom Left)')
+      );
+      const bottomRightCard = cardList.cards.find(card =>
+        card.superType === SuperType.POKEMON &&
+        card.tags?.includes(CardTag.POKEMON_VUNION) &&
+        card.fullName.includes('(Bottom Right)')
+      );
+      this.vunionTopLeftCard = topLeftCard;
+      this.vunionTopRightCard = topRightCard;
+      this.vunionBottomLeftCard = bottomLeftCard;
+      this.vunionBottomRightCard = bottomRightCard;
+    } else {
+      this.mainCard = pokemonCard;
+      this.vunionTopLeftCard = undefined;
+      this.vunionTopRightCard = undefined;
+      this.vunionBottomLeftCard = undefined;
+      this.vunionBottomRightCard = undefined;
+    }
+
     this.trainerCard = cardList.tool;
 
     for (const card of cardList.cards) {
@@ -338,6 +407,8 @@ export class BoardCardComponent implements OnInit, OnDestroy {
       this.currentCardId = newCardId;
       this.hasPlayedTestAnimation = false;
       this.showTestAnimation = false;
+      this.hasPlayedBasicAnimation = false;
+      this.showBasicAnimation = false;
     }
 
     // Handle Evolution animation
@@ -371,11 +442,12 @@ export class BoardCardComponent implements OnInit, OnDestroy {
     // Handle Playing Basic Pokemon animation
     if (this.mainCard &&
       this.mainCard.superType === SuperType.POKEMON &&
-      this.mainCard instanceof PokemonCard &&
-      this.mainCard.stage === Stage.BASIC &&
+      !this.hasPlayedBasicAnimation &&
+      cardList.showBasicAnimation &&
+      !this.showBasicAnimation &&
       !this.isInPrompt) {
 
-      // Check if Playing Basic Pokemon animation is enabled
+      // Check if Basic Pokemon animation is enabled
       let isBasicAnimationEnabled = true;
       this.settingsService.testAnimation$.subscribe(enabled => {
         isBasicAnimationEnabled = enabled;
@@ -475,6 +547,15 @@ export class BoardCardComponent implements OnInit, OnDestroy {
     }
   }
 
+  @Input() set basicEntrance(value: boolean) {
+    if (value && !this.isAnimating) {
+      this.isAnimating = true;
+      setTimeout(() => {
+        this.isAnimating = false;
+      }, 600);
+    }
+  }
+
   @Input() set inPrompt(value: boolean) {
     this.isInPrompt = value;
     if (value) {
@@ -482,6 +563,7 @@ export class BoardCardComponent implements OnInit, OnDestroy {
       this.showBasicAnimation = false;
       if (this._cardList instanceof PokemonCardList) {
         this._cardList.triggerAnimation = false;
+        this._cardList.showBasicAnimation = false;
       }
     }
   }

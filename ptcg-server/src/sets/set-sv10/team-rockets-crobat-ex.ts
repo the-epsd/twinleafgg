@@ -1,7 +1,8 @@
 import { PokemonCard, Stage, CardType, CardTag, StoreLike, State, PowerType, StateUtils, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
+import { AfterAttackEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { CONFIRMATION_PROMPT, IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { CONFIRMATION_PROMPT, IS_ABILITY_BLOCKED, WAS_ATTACK_USED, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class TeamRocketsCrobatex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -11,7 +12,7 @@ export class TeamRocketsCrobatex extends PokemonCard {
   public hp: number = 310;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -30 }];
-  public retreat = [ C ];
+  public retreat = [C];
 
   public powers = [{
     name: 'Bite About',
@@ -22,7 +23,7 @@ export class TeamRocketsCrobatex extends PokemonCard {
   public attacks = [
     {
       name: 'Assassin\'s Return',
-      cost: [ D, D ],
+      cost: [D, D],
       damage: 120,
       text: 'You may put this Pokémon into your hand. (Discard all attached cards.)'
     }
@@ -35,15 +36,17 @@ export class TeamRocketsCrobatex extends PokemonCard {
   public name: string = 'Team Rocket\'s Crobat ex';
   public fullName: string = 'Team Rocket\'s Crobat ex SV10';
 
+  public usedAssassinsReturn = false;
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Bite About
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const player = StateUtils.findOwner(state, effect.target);
 
-      if (IS_ABILITY_BLOCKED(store, state, player, this)){ return state; }
+      if (IS_ABILITY_BLOCKED(store, state, player, this)) { return state; }
 
       CONFIRMATION_PROMPT(store, state, player, result => {
-        if (!result){
+        if (!result) {
           return state;
         }
       });
@@ -52,7 +55,7 @@ export class TeamRocketsCrobatex extends PokemonCard {
         player.id,
         GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
         PlayerType.TOP_PLAYER,
-        [ SlotType.ACTIVE, SlotType.BENCH ],
+        [SlotType.ACTIVE, SlotType.BENCH],
         { min: 1, max: 2, allowCancel: false },
       ), selected => {
         const targets = selected || [];
@@ -61,19 +64,30 @@ export class TeamRocketsCrobatex extends PokemonCard {
         });
       });
     }
-    
+
     // Assassin's Return
-    if(WAS_ATTACK_USED(effect, 0, this)){
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      this.usedAssassinsReturn = true;
+    }
+
+    if (effect instanceof AfterAttackEffect && this.usedAssassinsReturn) {
       const player = effect.player;
 
       CONFIRMATION_PROMPT(store, state, player, result => {
-        if (result){
-
+        if (result) {
           const pokemons = player.active.getPokemons();
-          player.active.moveCardsTo(pokemons, player.hand);
-          player.active.moveTo(player.discard);
+          const otherCards = player.active.cards.filter(card => !(card instanceof PokemonCard));
           player.active.clearEffects();
 
+          // Move other cards to discard
+          if (otherCards.length > 0) {
+            MOVE_CARDS(store, state, player.active, player.discard, { cards: otherCards });
+          }
+          // Move Pokémon to hand
+          if (pokemons.length > 0) {
+            MOVE_CARDS(store, state, player.active, player.hand, { cards: pokemons });
+          }
+          this.usedAssassinsReturn = false;
         }
       });
     }

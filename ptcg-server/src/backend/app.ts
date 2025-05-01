@@ -47,6 +47,25 @@ export class App {
 
     app.use(json({ limit: 512 + config.backend.avatarFileSize * 4 }));
     app.use(cors());
+
+    // Add health check endpoint
+    app.get('/health', async (req, res) => {
+      try {
+        // Check database connection
+        const dbStatus = await this.storage.checkConnection();
+        res.status(200).json({
+          status: 'ok',
+          database: dbStatus ? 'connected' : 'disconnected'
+        });
+      } catch (error: any) {
+        res.status(500).json({
+          status: 'error',
+          database: 'error',
+          error: error?.message || 'Unknown error'
+        });
+      }
+    });
+
     define('/v1/avatars', Avatars);
     define('/v1/cards', Cards);
     define('/v1/decks', Decks);

@@ -19,6 +19,7 @@ import { Oricorio } from './oricorio';
 import { SuperScoopUpCES } from './other-prints';
 import { Phanpy } from './phanpy';
 import { RayquazaGX } from './rayquaza-gx';
+import { Registeel } from './registeel';
 import { Sableye } from './sableye';
 import { Sceptile } from './sceptile';
 import { ShrineOfPunishment } from './shrine-of-punishment';
@@ -49,6 +50,7 @@ export const setCelestialStorm: Card[] = [
   new Oricorio(),
   new Phanpy(),
   new RayquazaGX(),
+  new Registeel(),
   new Sableye(),
   new Sceptile(),
   new ShrineOfPunishment(),

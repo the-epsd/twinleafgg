@@ -10,6 +10,7 @@ import { CoatingMetalEnergy } from './coating-metal-energy';
 import { Dhelmise } from './dhelmise';
 import { Donphan } from './donphan';
 import { Duraludon } from './duraludon';
+import { Duskull } from './duskull';
 import { Exploud } from './exploud';
 import { TalonflameVFA } from './full-art';
 import { Jirachi } from './jirachi';
@@ -44,6 +45,7 @@ export const setVividVoltage: Card[] = [
   new Dhelmise(),
   new Donphan(),
   new Duraludon(),
+  new Duskull(),
   new Exploud(),
   new Jirachi(),
   new Leon(),

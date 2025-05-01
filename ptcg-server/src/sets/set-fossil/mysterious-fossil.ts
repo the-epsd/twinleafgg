@@ -1,4 +1,5 @@
 import { TrainerCard, TrainerType, Stage, CardType, PokemonType, Power, PowerType, StoreLike, State, GameLog, StateUtils, GameError, GameMessage, PokemonCard } from '../../game';
+import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect, RetreatEffect, KnockOutEffect } from '../../game/store/effects/game-effects';
 import { PlayItemEffect, PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
@@ -80,16 +81,16 @@ export class MysteriousFossil extends TrainerCard {
       store.reduceEffect(state, playPokemonEffect);
     }
 
-    if (effect instanceof RetreatEffect && effect.player.active.cards.includes(this)) {
-      throw new GameError(GameMessage.CANNOT_RETREAT);
+    if (effect instanceof AddSpecialConditionsEffect && effect.target.getPokemonCard() === this) {
+      effect.preventDefault = true;
     }
 
-    if (effect instanceof KnockOutEffect && effect.target.cards.includes(this)) {
+    if (effect instanceof KnockOutEffect && effect.player.active.getPokemonCard() === this) {
       effect.prizeCount = 0;
       return state;
     }
 
-    if (effect instanceof RetreatEffect && effect.player.active.cards.includes(this)) {
+    if (effect instanceof RetreatEffect && effect.player.active.getPokemonCard() === this) {
       throw new GameError(GameMessage.CANNOT_RETREAT);
     }
 

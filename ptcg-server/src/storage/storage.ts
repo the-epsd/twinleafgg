@@ -17,7 +17,7 @@ export class Storage {
       password: process.env.STORAGE_DATABASE_PASSWORD,
       database: process.env.STORAGE_DATABASE
     };
-    
+
     this.connection = await createConnection({
       ...storageConfig,
       entities: [
@@ -46,6 +46,18 @@ export class Storage {
       throw new Error('Not connected to the database.');
     }
     return this.connection.manager;
+  }
+
+  public async checkConnection(): Promise<boolean> {
+    if (this.connection === null) {
+      return false;
+    }
+    try {
+      await this.connection.query('SELECT 1');
+      return true;
+    } catch (error) {
+      return false;
+    }
   }
 
 }
