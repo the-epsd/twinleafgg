@@ -77,18 +77,16 @@ export class TeamRocketsCrobatex extends PokemonCard {
         if (result) {
           const pokemons = player.active.getPokemons();
           const otherCards = player.active.cards.filter(card => !(card instanceof PokemonCard));
+          player.active.clearEffects();
 
           // Move other cards to discard
           if (otherCards.length > 0) {
             MOVE_CARDS(store, state, player.active, player.discard, { cards: otherCards });
           }
-
           // Move Pokémon to hand
           if (pokemons.length > 0) {
             MOVE_CARDS(store, state, player.active, player.hand, { cards: pokemons });
           }
-
-          player.active.clearEffects();
           this.usedAssassinsReturn = false;
         }
       });
