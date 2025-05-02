@@ -82,12 +82,13 @@ import { Tyranitar } from './tyranitar';
 import { Volcanionex } from './volcanion-ex';
 import { Wailmer } from './wailmer';
 import { Wailord } from './wailord';
-
+import { Butterfree } from './butterfree';
 export const setJourneyTogether: Card[] = [
 
   new Torchic(),
   new Combusken(),
   new Blazikenex(),
+  new Butterfree(),
   new TapuKokoex(),
   new Swinub(),
   new Piloswine(),

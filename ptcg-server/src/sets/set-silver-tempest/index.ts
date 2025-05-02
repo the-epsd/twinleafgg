@@ -56,6 +56,7 @@ import { SerperiorVSTAR } from './serperior-vstar';
 import { Snorunt } from './snorunt';
 import { Spinda } from './spinda';
 import { Sunflora } from './sunflora';
+import { Terrakion } from './terrakion';
 import { UnidentifiedFossil } from './unidentified-fossil';
 import { UrsalunaV } from './ursaluna-v';
 import { VGuardEnergy } from './v-guard-energy';
@@ -122,7 +123,7 @@ export const setSilverTempest: Card[] = [
   new Snorunt(),
   new Spinda(),
   new Sunflora(),
-  //new Terrakion(),
+  new Terrakion(),
   new UnidentifiedFossil(),
   new UrsalunaV(),
   new VGuardEnergy(),

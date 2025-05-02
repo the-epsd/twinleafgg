@@ -22,6 +22,7 @@ import { Sophocles } from './sophocles';
 import { TapuBuluGX } from './tapu-bulu-gx';
 import { TapuFiniGX } from './tapu-fini-gx';
 import { Vileplume } from './vileplume';
+import { Weavile } from './weavile';
 import { WishfulBaton } from './wishful-baton';
 
 export const setBurningShadows: Card[] = [
@@ -48,5 +49,6 @@ export const setBurningShadows: Card[] = [
   new TapuFiniGX(),
   new Noibat(),
   new NoivernGX(),
-  new Vileplume()
+  new Vileplume(),
+  new Weavile()
 ];
