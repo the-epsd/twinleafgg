@@ -28,19 +28,19 @@ export class Terrakion extends PokemonCard {
   public name: string = 'Terrakion';
   public fullName: string = 'Terrakion SIT';
 
-  public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
+  public readonly CAVERN_TACKLE_MARKER = 'CAVERN_TACKLE_MARKER';
 
   private turnTracker = 0;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.CAVERN_TACKLE_MARKER, this)) {
       this.turnTracker++;
 
       // if 3 turns have passed, that means the attack was used, opponent couldn't damage
       // player couldn't use cavern tackle, so the attack is fully resolved
-      if (this.turnTracker === 3) {
-        effect.player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
+      if (this.turnTracker === 2) {
+        effect.player.marker.removeMarker(this.CAVERN_TACKLE_MARKER, this);
       }
     }
 
@@ -48,16 +48,16 @@ export class Terrakion extends PokemonCard {
       const player = effect.player;
 
       // Check marker
-      if (player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+      if (player.marker.hasMarker(this.CAVERN_TACKLE_MARKER, this)) {
         throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
       }
 
-      player.marker.addMarker(this.ATTACK_USED_MARKER, this);
+      player.marker.addMarker(this.CAVERN_TACKLE_MARKER, this);
 
       this.turnTracker = 0;
     }
 
-    if (effect instanceof PutDamageEffect && effect.target.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
+    if (effect instanceof PutDamageEffect && effect.target.marker.hasMarker(this.CAVERN_TACKLE_MARKER, this)) {
       effect.preventDefault = true;
       return state;
     }
