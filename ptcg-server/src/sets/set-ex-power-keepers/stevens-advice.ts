@@ -1,4 +1,4 @@
-import { StoreLike, State, GameError, GameMessage, StateUtils } from '../../game';
+﻿import { StoreLike, State, GameError, GameMessage, StateUtils } from '../../game';
 import { TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
@@ -11,7 +11,7 @@ export class StevensAdvice extends TrainerCard {
   public setNumber: string = '83';
   public name: string = 'Steven\'s Advice';
   public fullName: string = 'Steven\'s Advice PK';
-  public text = 'Draw a number of cards up to the number of your opponent\'s Pokémon in play. If you have more than 7 cards(including this one) in your hand, you can\'t play this card.';
+  public text = 'Draw a number of cards up to the number of your opponent\'s Pokémon in play. If you have 7 or more cards (including this one) in your hand, you can\'t play this card.';
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
