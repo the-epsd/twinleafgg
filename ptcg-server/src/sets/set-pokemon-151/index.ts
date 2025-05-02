@@ -10,6 +10,7 @@ import { Chansey } from './chansey';
 import { Charizardex } from './charizard-ex';
 import { Charmander } from './charmander';
 import { Charmeleon } from './charmeleon';
+import { Cloyster } from './cloytser';
 import { CyclingRoad } from './cycling-road';
 import { Ditto } from './ditto';
 import { Dodrio } from './dodrio';
@@ -76,6 +77,7 @@ export const setPokemon151: Card[] = [
   new Charizardex(),
   new Charmeleon(),
   new Charmander(),
+  new Cloyster(),
   new CyclingRoad(),
   new Ditto(),
   new Dodrio(),

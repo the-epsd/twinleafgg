@@ -46,6 +46,7 @@ import {UmbreonDarkraiGX} from './umbreon-and-darkrai-gx';
 import {SlowpokePsyduckGX} from './slowpoke-and-psyduck-gx';
 import {EspeonDeoxysGX} from './espeon-and-deoxys-gx';
 import {RowletAlolanExeggutorGX} from './rowlet-and-alolan-exeggutor-gx';
+import { Magnemite } from './magnemite';
 
 
 export const setUnifiedMinds: Card[] = [
@@ -71,6 +72,7 @@ export const setUnifiedMinds: Card[] = [
   new Jynx(),
   new KarateBelt(),
   new KeldeoGX(),
+  new Magnemite(),
   new Lickilicky(),
   new MewtwoMewGX(),
   new Munchlax(),

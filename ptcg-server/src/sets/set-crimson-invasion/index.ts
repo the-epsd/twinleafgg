@@ -9,6 +9,7 @@ import { Haunter } from './haunter';
 import { KartanaGX } from './kartana-gx';
 import { Lusamine } from './lusamine';
 import { Misdreavus } from './misdreavus';
+import { Regigigas } from './regigigas';
 import { Weedle } from './weedle';
 import { Xerneas } from './xerneas';
 
@@ -24,5 +25,6 @@ export const setCrimsonInvasion: Card[] = [
   new Misdreavus(),
   new Weedle(),
   new Xerneas(),
+  new Regigigas(),
   new Haunter(),
 ];

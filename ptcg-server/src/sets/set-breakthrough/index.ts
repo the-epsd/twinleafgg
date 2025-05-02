@@ -8,9 +8,10 @@ import { MrMime } from './mr-mime';
 import { Octillery } from './octillery';
 import { ParallelCity } from './parallel-city';
 import { TownMap } from './town-map';
-
+import { BurningEnergy } from './burning-energy';
 export const setBreakthrough: Card[] = [
   new Brigette(),
+  new BurningEnergy(),
   new BuddyBuddyRescue(),
   new Magneton(),
   new Florges(),
