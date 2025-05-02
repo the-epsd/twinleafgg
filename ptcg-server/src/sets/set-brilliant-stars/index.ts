@@ -2,11 +2,13 @@ import { Card } from '../../game/store/card/card';
 import { AcerolasPremonition } from './acerolas-premonition';
 import { AggronV } from './aggron-v';
 import { AggronVMAX } from './aggron-vmax';
+import { Alcremie } from './alcremie';
 import { ArceusV } from './arceus-v';
 import { ArceusVSTAR } from './arceus-vstar';
 import { Axew } from './axew';
 import { Bibarel } from './bibarel';
 import { Bidoof } from './bidoof';
+import { CafeMaster } from './cafe-master';
 import { CherensCare } from './cherens-care';
 import { Cherubi } from './cherubi';
 import { CleansingGloves } from './cleansing-gloves';
@@ -36,6 +38,7 @@ import { MagmaBasin } from './magma-basin';
 import { Magmortar } from './magmortar';
 import { Manaphy } from './manaphy';
 import { MarniesPride } from './marnies-pride';
+import { Milcery } from './milcery';
 import { Minccino } from './minccino';
 import { Moltres } from './moltres';
 import { UltraBallHR } from './other-prints';
@@ -56,11 +59,13 @@ export const setBrilliantStars: Card[] = [
   new AcerolasPremonition(),
   new AggronV(),
   new AggronVMAX(),
+  new Alcremie(),
   new ArceusV(),
   new ArceusVSTAR(),
   new Axew(),
   new Bibarel(),
   new Bidoof(),
+  new CafeMaster(),
   new CherensCare(),
   new Cherubi(),
   new CleansingGloves(),
@@ -88,6 +93,7 @@ export const setBrilliantStars: Card[] = [
   new Magmortar(),
   new Manaphy(),
   new MarniesPride(),
+  new Milcery(),
   new Minccino(),
   new Moltres(),
   new RaichuV(),
