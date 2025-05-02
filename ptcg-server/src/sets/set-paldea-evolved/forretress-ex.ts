@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, EnergyType, SuperType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, PowerType, GameMessage, PlayerType, SlotType, EnergyCard, GameError, AttachEnergyPrompt, StateUtils, CardTarget } from '../../game';
+import { StoreLike, State, PowerType, GameMessage, PlayerType, SlotType, AttachEnergyPrompt, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
@@ -55,31 +55,15 @@ export class Forretressex extends PokemonCard {
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
-      const hasEnergyInHand = player.discard.cards.some(c => {
-        return c instanceof EnergyCard;
-      });
-      if (!hasEnergyInHand) {
-        throw new GameError(GameMessage.CANNOT_USE_POWER);
-      }
-
-      const blocked2: CardTarget[] = [];
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
-        if (card.tags.includes(CardTag.POKEMON_EX)) {
-          blocked2.push(target);
-        }
-        if (card.tags.includes(CardTag.POKEMON_GX)) {
-          blocked2.push(target);
-        }
-      });
 
       return store.prompt(state, new AttachEnergyPrompt(
         player.id,
         GameMessage.ATTACH_ENERGY_CARDS,
-        player.discard,
+        player.deck,
         PlayerType.BOTTOM_PLAYER,
         [SlotType.BENCH, SlotType.ACTIVE],
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-        { allowCancel: false, min: 0, max: 5, blockedTo: blocked2 },
+        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Grass Energy' },
+        { allowCancel: false, min: 0, max: 5 },
       ), transfers => {
         transfers = transfers || [];
         // cancelled by user
@@ -88,7 +72,7 @@ export class Forretressex extends PokemonCard {
         }
         for (const transfer of transfers) {
           const target = StateUtils.getTarget(state, player, transfer.to);
-          player.discard.moveCardTo(transfer.card, target);
+          player.deck.moveCardTo(transfer.card, target);
         }
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
           if (cardList.getPokemonCard() === this) {
