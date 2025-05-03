@@ -160,6 +160,7 @@ cardManager.defineSet(sets.setPrismaticEvolution);
 cardManager.defineSet(sets.setJourneyTogether);
 cardManager.defineSet(sets.setSV9a);
 cardManager.defineSet(sets.setSV10);
+cardManager.defineSet(sets.setSV11);
 cardManager.defineSet(sets.setM1S);
 
 cardManager.defineSet(sets.setTest);
