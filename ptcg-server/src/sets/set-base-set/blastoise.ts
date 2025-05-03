@@ -1,14 +1,15 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, EnergyType, SuperType, SpecialCondition } from '../../game/store/card/card-types';
+import { Stage, CardType, EnergyType, SuperType } from '../../game/store/card/card-types';
 import {
   PowerType, StoreLike, State, StateUtils,
-  GameError, GameMessage, EnergyCard, PlayerType, SlotType, PokemonCardList
+  GameError, GameMessage, EnergyCard, PlayerType, SlotType
 } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect, AttackEffect } from '../../game/store/effects/game-effects';
 import { AttachEnergyPrompt } from '../../game/store/prompts/attach-energy-prompt';
 import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
 import { CheckAttackCostEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { BLOCK_IF_ASLEEP_CONFUSED_PARALYZED } from '../../game/store/prefabs/prefabs';
 
 export class Blastoise extends PokemonCard {
 
@@ -28,7 +29,7 @@ export class Blastoise extends PokemonCard {
     name: 'Rain Dance',
     useWhenInPlay: true,
     powerType: PowerType.POKEMON_POWER,
-    text: 'As often as you like during your turn (before your attack), you may attach 1 W Energy card to 1 of your W Pokémon. (This doesn\'t use up your 1 Energy card attachment for the turn.) This power can\'t be used if Blastoise is Asleep, Confused, or Paralyzed.'
+    text: 'As often as you like during your turn (before your attack), you may attach 1 [W] Energy card to 1 of your [W] Pokémon. (This doesn\'t use up your 1 Energy card attachment for the turn.) This power can\'t be used if Blastoise is Asleep, Confused, or Paralyzed.'
   }];
 
   public attacks = [
@@ -36,7 +37,7 @@ export class Blastoise extends PokemonCard {
       name: 'Hydro Pump',
       cost: [CardType.WATER, CardType.WATER, CardType.WATER],
       damage: 40,
-      text: 'Does 40 damage plus 10 more damage for each W Energy attached to Blastoise but not used to pay for this attack\'s Energy cost. Extra W Energy after the 2nd doesn\'t count.'
+      text: 'Does 40 damage plus 10 more damage for each [W] Energy attached to Blastoise but not used to pay for this attack\'s Energy cost. Extra [W] Energy after the 2nd doesn\'t count.'
     }
   ];
 
@@ -79,13 +80,8 @@ export class Blastoise extends PokemonCard {
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
-      const cardList = StateUtils.findCardList(state, this) as PokemonCardList;
 
-      if (cardList.specialConditions.includes(SpecialCondition.ASLEEP) ||
-        cardList.specialConditions.includes(SpecialCondition.CONFUSED) ||
-        cardList.specialConditions.includes(SpecialCondition.PARALYZED)) {
-        return state;
-      }
+      BLOCK_IF_ASLEEP_CONFUSED_PARALYZED(player, this);
 
       const hasEnergyInHand = player.hand.cards.some(c => {
         return c instanceof EnergyCard

@@ -24,7 +24,7 @@ export class SteelShelter extends TrainerCard {
   public setNumber: string = '105';
 
   public text: string =
-    'Each M Pokemon (both yours and your opponent\'s) can\'t be affected ' +
+    'Each [M] Pokemon (both yours and your opponent\'s) can\'t be affected ' +
     'by any Special Conditions. (Remove any Special Conditions affecting ' +
     'those Pokemon.)';
 
