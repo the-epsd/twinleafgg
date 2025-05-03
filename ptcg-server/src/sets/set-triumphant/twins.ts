@@ -14,6 +14,7 @@ import { StateUtils } from '../../game/store/state-utils';
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
+  const supporterTurn = player.supporterTurn;
 
   if (player.deck.cards.length === 0) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
@@ -21,6 +22,10 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
   if (player.getPrizeLeft() <= opponent.getPrizeLeft()) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+  }
+
+  if (supporterTurn > 0) {
+    throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
   }
 
   player.hand.moveCardTo(effect.trainerCard, player.supporter);
