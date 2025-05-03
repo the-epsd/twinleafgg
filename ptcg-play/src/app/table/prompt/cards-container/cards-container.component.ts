@@ -7,7 +7,7 @@ import { Component, AfterViewInit, ElementRef, Input } from '@angular/core';
 })
 export class CardsContainerComponent implements AfterViewInit {
 
-  @Input() keepInitialSize: boolean;
+  @Input() keepInitialSize: boolean = false;
 
   constructor(private elementRef: ElementRef<HTMLElement>) { }
 
@@ -17,11 +17,13 @@ export class CardsContainerComponent implements AfterViewInit {
     if (this.keepInitialSize) {
       setTimeout(() => {
         const host = this.elementRef.nativeElement;
-        const container: HTMLElement = host.querySelector('.ptcg-cards-container');
-        const height = container.offsetHeight + 'px';
-        const width = container.offsetWidth + 'px';
-        container.style.height = height;
-        container.style.width = width;
+        const container: HTMLElement | null = host.querySelector('.ptcg-cards-container');
+        if (container) {
+          const height = container.offsetHeight + 'px';
+          const width = container.offsetWidth + 'px';
+          container.style.height = height;
+          container.style.width = width;
+        }
       }, 100);
     }
   }

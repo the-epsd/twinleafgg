@@ -21,8 +21,8 @@ interface PokemonDamageStats {
   styleUrls: ['./game-over.component.scss']
 })
 export class GameOverComponent implements OnInit {
-  @Input() prompt!: GameOverPrompt;
-  @Input() gameState!: LocalGameState;
+  @Input() prompt: GameOverPrompt;
+  @Input() gameState: LocalGameState;
 
   public GameWinner = GameWinner;
   public isWinner = false;
@@ -32,11 +32,11 @@ export class GameOverComponent implements OnInit {
   public playerPrizesTaken = 0;
   public opponentPrizesTaken = 0;
   public playerDamageDealt = 0;
-  public topPokemon: PokemonDamageStats | null = null;
+  public topPokemon: PokemonDamageStats;
   public isPlaying = false;
   public isDeleted = false;
-  private gameId: number;
-  private localId: number;
+  private gameId: number = 0;
+  private localId: number = 0;
 
   constructor(
     private sessionService: SessionService,

@@ -15,9 +15,7 @@
     <button mat-icon-button (click)="showPreviousState()">
       <mat-icon>chevron_left</mat-icon>
     </button>
-    <button mat-icon-button
-      [color]="playInterval !== undefined ? 'primary' : ''"
-      (click)="togglePlay()">
+    <button mat-icon-button [color]="playInterval !== undefined ? 'primary' : ''" (click)="togglePlay()">
       <mat-icon>play_arrow</mat-icon>
     </button>
     <button mat-icon-button (click)="showNextState()">
@@ -29,19 +27,15 @@
   </div>
 
   <div class="replay-slider">
-    <mat-slider thumbLabel color="primary"
-      [value]="position"
-      [min]="1"
-      [max]="stateCount"
-      (input)="onSliderChange($event)">
+    <mat-slider thumbLabel color="primary" [value]="position" [min]="1" [max]="stateCount"
+      (change)="onSliderChange($event)">
     </mat-slider>
   </div>
 
   <div class="replay-options">
     <mat-form-field>
       <mat-label translate>TABLE_REPLAY_STATES_PER_SECOND</mat-label>
-      <mat-select [(value)]="statesPerSecond"
-        (selectionChange)="onStatesPerSecondChange($event)">
+      <mat-select [(value)]="statesPerSecond" (selectionChange)="onStatesPerSecondChange($event)">
         <mat-option *ngFor="let option of statesPerSecondOptions" [value]="option.value">
           {{option.viewValue}}
         </mat-option>

@@ -54,5 +54,4 @@ export class CardInfoListPopupComponent {
   public close(result?: CardInfoPaneAction) {
     this.dialogRef.close(result);
   }
-
 }

@@ -1,18 +1,26 @@
-import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, Output, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { DraggedItem } from '@ng-dnd/sortable';
 import { DropTarget, DndService } from '@ng-dnd/core';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Player, SlotType, PlayerType, CardTarget, Card, CardList, PokemonCardList, StateUtils, CoinFlipPrompt } from 'ptcg-server';
 import { map } from 'rxjs/operators';
+import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { RouterModule } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
+import { DndModule } from '@ng-dnd/core';
+import { CardsModule } from '../../shared/cards/cards.module';
 
 import { HandItem, HandCardType } from '../hand/hand-item.interface';
 import { BoardCardItem, BoardCardType } from './board-item.interface';
 import { CardsBaseService } from '../../shared/cards/cards-base.service';
 import { GameService } from '../../api/services/game.service';
-import { LocalGameState } from 'src/app/shared/session/session.interface';
-import { trigger, transition, style, animate, query, stagger } from '@angular/animations';
 import { SettingsService } from '../table-sidebar/settings-dialog/settings.service';
 import { BoardInteractionService } from '../../shared/services/board-interaction.service';
+import { LocalGameState } from '../../shared/session/session.interface';
+import { DropHighlightDirective } from '../../shared/cards/drop-highlight/drop-highlight.directive';
 
 const MAX_BENCH_SIZE = 8;
 const DEFAULT_BENCH_SIZE = 5;
@@ -23,6 +31,18 @@ type DropTargetType = DropTarget<DraggedItem<HandItem> | BoardCardItem, any>;
   selector: 'ptcg-board',
   templateUrl: './board.component.html',
   styleUrls: ['./board.component.scss'],
+  standalone: true,
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    MatTooltipModule,
+    RouterModule,
+    TranslateModule,
+    DndModule,
+    CardsModule
+  ]
 })
 export class BoardComponent implements OnDestroy {
 

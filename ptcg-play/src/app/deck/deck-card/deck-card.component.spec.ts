@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { Card } from 'ptcg-server';
+import { DeckEditPane } from '../deck-edit-panes/deck-edit-pane.interface';
 
 import { DeckCardComponent } from './deck-card.component';
 
@@ -13,16 +14,16 @@ describe('DeckCardComponent', () => {
     card = { fullName: 'Name' } as any;
 
     TestBed.configureTestingModule({
-      declarations: [ DeckCardComponent ],
-      schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+      declarations: [DeckCardComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(DeckCardComponent);
     component = fixture.componentInstance;
-    component.card = { card, count: 1, pane: null, scanUrl: '' };
+    component.card = { card, count: 1, pane: DeckEditPane.DECK, scanUrl: '' };
     fixture.detectChanges();
   });
 

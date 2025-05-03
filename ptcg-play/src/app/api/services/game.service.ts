@@ -43,11 +43,15 @@ export class GameService {
     return new Observable<GameState>(observer => {
       this.socketService.emit('game:join', gameId)
         .pipe(finalize(() => observer.complete()))
-        .subscribe((gameState: GameState) => {
-          this.appendGameState(gameState);
-          observer.next(gameState);
-        }, (error: any) => {
-          observer.error(error);
+        .subscribe({
+          next: (gameState: unknown) => {
+            const typedGameState = gameState as GameState;
+            this.appendGameState(typedGameState);
+            observer.next(typedGameState);
+          },
+          error: (error: any) => {
+            observer.error(error);
+          }
         });
     });
   }
@@ -77,6 +81,7 @@ export class GameService {
       this.sessionService.set({ gameStates, lastGameId });
       return localGameState;
     }
+    return undefined;
   }
 
   public markAsDeleted(gameId: number) {

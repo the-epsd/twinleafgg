@@ -1,5 +1,13 @@
 import { Component, Input, ElementRef } from '@angular/core';
-import { CardTarget, SlotType, StateLog, StateLogParam, Player } from 'ptcg-server';
+import { CardTarget, SlotType, StateLog, StateLogParam, Player, PlayerType } from 'ptcg-server';
+import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { FormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { GameService } from '../../../api/services/game.service';
 import { LocalGameState } from '../../../shared/session/session.interface';
@@ -18,7 +26,18 @@ interface GameLog {
 @Component({
   selector: 'ptcg-game-logs',
   templateUrl: './game-logs.component.html',
-  styleUrls: ['./game-logs.component.scss']
+  styleUrls: ['./game-logs.component.scss'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    MatTooltipModule,
+    MatFormFieldModule,
+    MatInputModule,
+    FormsModule,
+    TranslateModule
+  ]
 })
 export class GameLogsComponent {
 
@@ -130,7 +149,7 @@ export class GameLogsComponent {
   private buildGameLog(log: StateLog): GameLog | undefined {
     let name: string;
     let className: string;
-    const timestamp = String(log.params?.timestamp || '');
+    const timestamp = String(log.params?.['timestamp'] || '');
 
     const client = this.sessionService.session.clients.find(c => c.clientId === log.client);
     const user = client ? this.sessionService.session.users[client.userId] : undefined;
@@ -138,7 +157,7 @@ export class GameLogsComponent {
     const activePlayerId = this.state.state.activePlayer;
     const activePlayer = this.state.state.players.find(p => p.id === activePlayerId);
 
-    if (log.params?.private === 'true' && log.client !== this.sessionService.session.users[log.client]?.userId) {
+    if (log.params?.['private'] === 'true' && log.client !== this.sessionService.session.users[log.client]?.userId) {
       return undefined;
     }
 
@@ -149,25 +168,19 @@ export class GameLogsComponent {
       } else {
         className = 'ptcg-player-opponent'; // Opponent
       }
-      return {
-        id: log.id,
-        name,
-        className,
-        message: log.message,
-        params: log.params,
-        timestamp
-      };
-    } else if (log.client === 0) {
-      return {
-        id: log.id,
-        name: 'System',
-        className: 'ptcg-system',
-        message: log.message,
-        params: log.params,
-        timestamp
-      };
+    } else {
+      name = 'System';
+      className = 'ptcg-player-system';
     }
-    return undefined;
+
+    return {
+      id: log.id,
+      name,
+      className,
+      message: log.message,
+      params: log.params,
+      timestamp
+    };
   }
 
   copyLogsToClipboard() {
@@ -208,5 +221,4 @@ export class GameLogsComponent {
       });
     } catch (err) { }
   }
-
 }

@@ -20,7 +20,7 @@ import { environment } from '../../../environments/environment';
 export class ChangeServerPopupComponent {
 
   public value: string;
-  public invalidValue: string;
+  public invalidValue: string = '';
   public loading = false;
 
   constructor(

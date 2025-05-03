@@ -1,16 +1,29 @@
 import { Component, Input, Output, EventEmitter, OnChanges, ElementRef, ViewChild } from '@angular/core';
 import { Card, ChooseCardsPrompt, ChooseEnergyPrompt, ChoosePrizePrompt, DiscardEnergyPrompt, EnergyCard } from 'ptcg-server';
 import { DraggedItem } from '@ng-dnd/sortable';
-
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { CardsBaseService } from '../../../shared/cards/cards-base.service';
 import { PromptCardType, PromptItem } from '../prompt-card-item.interface';
 import { ChooseCardsSortable } from './choose-cards-panes.interface';
-
+import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'ptcg-choose-cards-panes',
   templateUrl: './choose-cards-panes.component.html',
-  styleUrls: ['./choose-cards-panes.component.scss']
+  styleUrls: ['./choose-cards-panes.component.scss'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    MatTooltipModule,
+    TranslateModule
+  ],
+  schemas: [NO_ERRORS_SCHEMA]
 })
 export class ChooseCardsPanesComponent implements OnChanges {
   selectedCards: any[] = [];
@@ -20,7 +33,7 @@ export class ChooseCardsPanesComponent implements OnChanges {
   public readonly bottomListId = 'CHOOSE_CARDS_BOTTOM_LIST';
   public showButtons = false;
 
-  @Input() cards: Card[];
+  @Input() cards: Card[] = [];
   @Input() filter: Partial<Card> = {};
   @Input() blocked: number[] = [];
   @Input() cardbackMap: { [index: number]: boolean } = {};
@@ -28,17 +41,17 @@ export class ChooseCardsPanesComponent implements OnChanges {
   @Input() bottomCardbackMap: { [index: number]: boolean } = {};
   @Input() singlePaneMode = false;
   @Output() changeCards = new EventEmitter<number[]>();
-  @Input() promptValue: ChooseCardsPrompt;
-  @Input() maxCards: number;
-  @ViewChild('viewport') viewport: ElementRef;
+  @Input() promptValue: ChooseCardsPrompt | null = null;
+  @Input() maxCards: number = 0;
+  @ViewChild('viewport') viewport: ElementRef | null = null;
   @Input() showDetailButtons = true;
   @Input() noBottomPane = false;
   @Input() dragConfig: { dragEnabled: boolean } = { dragEnabled: false };
 
 
-  public allowedCancel: boolean;
-  public promptId: number;
-  public message: string;
+  public allowedCancel: boolean = false;
+  public promptId: number = 0;
+  public message: string = '';
   public filterMap: { [fullName: string]: boolean } = {};
   public topSortable: ChooseCardsSortable;
   public bottomSortable: ChooseCardsSortable;
@@ -141,22 +154,20 @@ export class ChooseCardsPanesComponent implements OnChanges {
     const sortable: ChooseCardsSortable = {
       list: [],
       tempList: [],
-      spec: undefined
-    };
-
-    sortable.spec = {
-      type: PromptCardType,
-      trackBy: item => item.index,
-      hover: item => {
-        this.updateTempLists(sortable, item);
-      },
-      drop: item => {
-        this.updateTempLists(sortable, item);
-        this.commitTempLists();
-      },
-      canDrag: () => this.dragConfig.dragEnabled,
-      endDrag: () => {
-        this.revertTempLists();
+      spec: {
+        type: PromptCardType,
+        trackBy: item => item.index,
+        hover: item => {
+          this.updateTempLists(sortable, item);
+        },
+        drop: item => {
+          this.updateTempLists(sortable, item);
+          this.commitTempLists();
+        },
+        canDrag: () => this.dragConfig.dragEnabled,
+        endDrag: () => {
+          this.revertTempLists();
+        }
       }
     };
 

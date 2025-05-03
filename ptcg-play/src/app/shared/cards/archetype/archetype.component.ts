@@ -42,7 +42,7 @@ export class ArchetypeComponent {
     }
 
     // First try to find the enum key that matches the archetype value
-    const enumKey = Object.keys(Archetype).find(key => Archetype[key] === archetype);
+    const enumKey = Object.keys(Archetype).find(key => Archetype[key as keyof typeof Archetype] === archetype);
     if (enumKey) {
       const result = enumKey.toLowerCase().replace(/_/g, '-');
       return result;

@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DndModule } from '@ng-dnd/core';
-import { DndMultiBackendModule } from '@ng-dnd/multi-backend';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { PokemonCardInfoPaneComponent } from './pokemon-card-info-pane/pokemon-card-info-pane.component';
@@ -26,8 +25,7 @@ import { ArchetypeComponent } from './archetype/archetype.component';
     CommonModule,
     ImageCacheModule,
     MaterialModule,
-    DndMultiBackendModule,
-    DndModule,
+    DragDropModule,
     TranslateModule,
     MatDialogModule
   ],
@@ -47,7 +45,7 @@ import { ArchetypeComponent } from './archetype/archetype.component';
     CardInfoListPopupComponent,
     PokemonCardInfoPaneComponent
   ],
-  entryComponents: [
+  providers: [
     CardImagePopupComponent,
     CardInfoPopupComponent,
     CardInfoListPopupComponent,

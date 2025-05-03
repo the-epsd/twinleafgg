@@ -4,7 +4,10 @@
     "outDir": "../out-tsc/app",
     "types": [
       "node"
-    ]
+    ],
+    "module": "esnext",
+    "target": "es2020",
+    "useDefineForClassFields": false
   },
   "files": [
     "main.ts",
@@ -15,5 +18,8 @@
   ],
   "angularCompilerOptions": {
     "enableIvy": true,
+    "fullTemplateTypeCheck": true,
+    "strictInjectionParameters": true,
+    "strictTemplates": true
   }
 }

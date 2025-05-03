@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { Card, CardTag, Player, State, StoreLike } from 'ptcg-server';
 import { CardsBaseService } from '../cards-base.service';
 import { SettingsService } from 'src/app/table/table-sidebar/settings-dialog/settings.service';
@@ -16,7 +16,9 @@ export class CardComponent {
   public data: Card;
   private holoEnabled = true;
   private destroyed$ = new Subject<void>();
+  public overlayActive = false;
 
+  @ViewChild('cardElement') cardElement: ElementRef;
   @Input() showCardName: boolean = true;
   @Input() cardback = false;
   @Input() placeholder = false;
@@ -167,22 +169,18 @@ export class CardComponent {
     return holoTrainers.includes(this.data.fullName);
   }
 
-  constructor(private cardsBaseService: CardsBaseService,
-    private settingsService: SettingsService) {
+  constructor(
+    private cardsBaseService: CardsBaseService,
+    private settingsService: SettingsService,
+    private elementRef: ElementRef
+  ) {
     settingsService.holoEnabled$.subscribe(enabled => this.holoEnabled = enabled);
     settingsService.showCardName$.subscribe(enabled => this.showCardName = enabled);
   }
 
-  ngOnInit(): void {
-    this.settingsService.showCardName$.pipe(
-      takeUntil(this.destroyed$)
-    ).subscribe(enabled => {
-      this.showCardName = enabled;
-    });
-  }
-
-  ngOnDestroy(): void {
+  ngOnDestroy() {
     this.destroyed$.next();
     this.destroyed$.complete();
+    this.overlayActive = false;
   }
 }

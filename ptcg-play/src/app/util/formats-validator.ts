@@ -8,13 +8,13 @@ export class FormatValidator {
       return [];
     }
 
-    let formats = [];
+    let formats: Format[][] = [];
 
     cards.filter(c => !!c && (c.superType !== SuperType.ENERGY || (<any>c).energyType === EnergyType.SPECIAL)).forEach(card => {
       formats.push(this.getValidFormats(card));
     });
 
-    let formatList = formats.reduce((a, b) => a.filter(c => b.includes(c)))
+    let formatList = formats.reduce((a: Format[], b: Format[]) => a.filter((c: Format) => b.includes(c)))
 
     // Add Professor validation check here
     if (!cards) {
@@ -26,7 +26,7 @@ export class FormatValidator {
       (set.has('Professor Juniper') && set.has('Professor\'s Research')) ||
       (set.has('Professor Sycamore') && set.has('Professor\'s Research')) ||
       (set.has('Lysandre') && set.has('Boss\'s Orders'))) {
-      return formatList.filter(f =>
+      return formatList.filter((f: Format) =>
         f !== Format.GLC &&
         f !== Format.EXPANDED &&
         f !== Format.STANDARD &&
@@ -39,7 +39,7 @@ export class FormatValidator {
     if (hasUnownTag) {
       const unownCount = cards.filter(card => card.name.includes('Unown')).length;
       if (unownCount > 4) {
-        return formatList.filter(f =>
+        return formatList.filter((f: Format) =>
           f !== Format.GLC &&
           f !== Format.EXPANDED &&
           f !== Format.STANDARD &&
@@ -54,8 +54,8 @@ export class FormatValidator {
       const arceusRuleCount = cards.filter(card => card.tags.includes(CardTag.ARCEUS)).length;
       const arceusCount = cards.filter(card => card.name === 'Arceus').length;
 
-      if (arceusCount !== arceusCount && arceusCount > 4){
-        return formatList.filter(f => 
+      if (arceusCount !== arceusCount && arceusCount > 4) {
+        return formatList.filter((f: Format) =>
           f !== Format.GLC &&
           f !== Format.EXPANDED &&
           f !== Format.STANDARD &&
@@ -71,21 +71,21 @@ export class FormatValidator {
       const nonBasicEnergyCards = cards.filter(c => c.superType !== SuperType.ENERGY && (<any>c).energyType !== EnergyType.BASIC);
       const set = new Set(nonBasicEnergyCards.map(c => c.name));
       if (set.size < nonBasicEnergyCards.length) {
-        formatList = formatList.filter(f => f !== Format.GLC);
+        formatList = formatList.filter((f: Format) => f !== Format.GLC);
       }
 
       // check for different type violation
       const pokemonCards = cards.filter(c => c.superType === SuperType.POKEMON);
       const pokemonSet = new Set(pokemonCards.map(c => (<PokemonCard>c).cardType));
       if (pokemonSet.size > 1) {
-        formatList = formatList.filter(f => f !== Format.GLC);
+        formatList = formatList.filter((f: Format) => f !== Format.GLC);
       }
     }
 
     // Then check energy type restrictions
     if ((set.has('Fairy Energy')) ||
       (set.has('Wonder Energy'))) {
-      return formatList.filter(f =>
+      return formatList.filter((f: Format) =>
         f !== Format.STANDARD &&
         f !== Format.RETRO
       );
@@ -93,7 +93,7 @@ export class FormatValidator {
 
     if ((set.has('Metal Energy')) ||
       (set.has('Darkness Energy'))) {
-      return formatList.filter(f =>
+      return formatList.filter((f: Format) =>
         f !== Format.RETRO
       );
     }
@@ -118,6 +118,7 @@ export class FormatValidator {
   }
 
   static isValid(card: Card, format: Format): boolean {
+    let banList: string[] = [];
 
     if (card.superType === SuperType.ENERGY && (<any>card).energyType === EnergyType.BASIC) {
       return true;
@@ -128,25 +129,25 @@ export class FormatValidator {
         return true;
 
       case Format.STANDARD:
-        var banList = BanLists[format];
+        banList = BanLists[format];
         var setDate = SetReleaseDates[card.set];
         return setDate >= SetReleaseDates['SVI'] && setDate <= new Date();
 
       case Format.STANDARD_NIGHTLY:
-        var banList = BanLists[format];
+        banList = BanLists[format];
         return card.regulationMark === 'G' ||
           card.regulationMark === 'H' ||
           card.regulationMark === 'I' ||
           card.regulationMark === 'J';
 
       case Format.EXPANDED:
-        var banList = BanLists[format];
+        banList = BanLists[format];
         var setDate = SetReleaseDates[card.set];
         return setDate >= new Date('Mon, 25 Apr 2011 00:00:00 GMT') && setDate <= new Date() &&
           !banList.includes(`${card.name} ${card.set} ${card.setNumber}`);
 
       case Format.GLC:
-        var banList = BanLists[format];
+        banList = BanLists[format];
         var setDate = SetReleaseDates[card.set];
         return setDate >= new Date('Mon, 25 Apr 2011 00:00:00 GMT') && setDate <= new Date() &&
           !banList.includes(`${card.name} ${card.set} ${card.setNumber}`) &&
@@ -170,7 +171,7 @@ export class FormatValidator {
           card.set === 'PR';
 
       case Format.WORLDS_2013:
-        var banList = BanLists[format];
+        banList = BanLists[format];
         var setDate = SetReleaseDates[card.set];
         return setDate >= SetReleaseDates['BWP'] &&
           setDate <= SetReleaseDates['PLF'] &&

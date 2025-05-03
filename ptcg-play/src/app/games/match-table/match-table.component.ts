@@ -148,7 +148,7 @@ export class MatchTableComponent implements OnInit {
     if (this.sessionService.session.config) {
       pageSize = this.sessionService.session.config.defaultPageSize;
     }
-    this.pageSizeOptions = [ pageSize ];
+    this.pageSizeOptions = [pageSize];
     this.pageSize = pageSize;
   }
 
@@ -159,5 +159,4 @@ export class MatchTableComponent implements OnInit {
   public refresh() {
     this.matchesPageRequst$.next(this.pageIndex);
   }
-
 }

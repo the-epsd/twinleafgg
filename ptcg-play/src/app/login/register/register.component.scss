@@ -1,3 +1,4 @@
+@use "sass:math";
 @import '../../../theme/variables.scss';
 
 .ptcg-register-form {
@@ -103,7 +104,7 @@ $duration: 1.4s;
   }
 
   50% {
-    stroke-dashoffset: $offset/4;
+    stroke-dashoffset: math.div($offset, 4);
     transform: rotate(135deg);
   }
 

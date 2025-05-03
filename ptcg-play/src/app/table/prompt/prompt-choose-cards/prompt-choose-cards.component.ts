@@ -1,8 +1,10 @@
-import { Component, Input } from '@angular/core';
+import { Component, ElementRef, Host, Input, OnChanges, Optional, Renderer2, SimpleChanges } from '@angular/core';
 import { Card, CardList, ChooseCardsPrompt } from 'ptcg-server';
 
 import { GameService } from '../../../api/services/game.service';
 import { LocalGameState } from '../../../shared/session/session.interface';
+import { CardsBaseService } from 'src/app/shared/cards/cards-base.service';
+import { PromptComponent } from '../prompt.component';
 
 @Component({
   selector: 'ptcg-prompt-choose-cards',
@@ -30,19 +32,19 @@ export class PromptChooseCardsComponent {
     }
   }
 
-  @Input() gameState: LocalGameState;
+  @Input() gameState: LocalGameState | null = null;
 
-  public cards: CardList;
-  public allowedCancel: boolean;
-  public promptId: number;
-  public message: string;
-  public filter: Partial<Card>;
-  public blocked: number[];
+  public cards: CardList = new CardList();
+  public allowedCancel: boolean = false;
+  public promptId: number = 0;
+  public message: string = '';
+  public filter: Partial<Card> = {};
+  public blocked: number[] = [];
   public isInvalid = false;
-  public isSecret: boolean;
+  public isSecret: boolean = false;
   public revealed = false;
   public cardbackMap: { [index: number]: boolean } = {};
-  public promptValue: ChooseCardsPrompt;
+  public promptValue: ChooseCardsPrompt | null = null;
   public currentTab = 'All';
   public filteredCards: Card[] = [];
   private result: number[] = [];
@@ -52,13 +54,17 @@ export class PromptChooseCardsComponent {
   ) { }
 
   public minimize() {
-    this.gameService.setPromptMinimized(this.gameState.localId, true);
+    if (this.gameState) {
+      this.gameService.setPromptMinimized(this.gameState.localId, true);
+    }
   }
 
   public cancel() {
-    const gameId = this.gameState.gameId;
-    const id = this.promptId;
-    this.gameService.resolvePrompt(gameId, id, null);
+    if (this.gameState) {
+      const gameId = this.gameState.gameId;
+      const id = this.promptId;
+      this.gameService.resolvePrompt(gameId, id, null);
+    }
   }
 
   public confirm() {
@@ -66,13 +72,15 @@ export class PromptChooseCardsComponent {
       return;
     }
 
-    const gameId = this.gameState.gameId;
-    const id = this.promptId;
+    if (this.gameState) {
+      const gameId = this.gameState.gameId;
+      const id = this.promptId;
 
-    // Final validation before sending
-    const selectedCards = this.result ? this.result.map(index => this.cards.cards[index]) : [];
-    if (this.promptValue.validate(selectedCards)) {
-      this.gameService.resolvePrompt(gameId, id, this.result || []);
+      // Final validation before sending
+      const selectedCards = this.result ? this.result.map(index => this.cards.cards[index]) : [];
+      if (this.promptValue && this.promptValue.validate(selectedCards)) {
+        this.gameService.resolvePrompt(gameId, id, this.result || []);
+      }
     }
   }
 

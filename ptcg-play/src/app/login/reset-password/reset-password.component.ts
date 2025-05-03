@@ -18,8 +18,8 @@ import { ResetPasswordService } from '../../api/services/reset-password.service'
 export class ResetPasswordComponent {
 
   public loading = false;
-  public email: string;
-  public invalidEmail: string;
+  public email: string = '';
+  public invalidEmail: string = '';
 
   constructor(
     private alertService: AlertService,

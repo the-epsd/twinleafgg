@@ -20,16 +20,16 @@ export class ImportReplayPopupComponent {
 
   public GameWinner = GameWinner;
   public loading = false;
-  public invalidName: string;
-  public replayFile: FileInput;
-  public name: string;
-  public replayError: string;
-  public maxFileSize: number;
+  public invalidName: string = '';
+  public replayFile: FileInput = new FileInput(null);
+  public name: string = '';
+  public replayError: string = '';
+  public maxFileSize: number = 0;
   public replay: Replay | undefined;
-  public statesCount: number;
-  public turnsCount: number;
-  public replayWinner: string;
-  private replayData: string;
+  public statesCount: number = 0;
+  public turnsCount: number = 0;
+  public replayWinner: string = '';
+  private replayData: string = '';
 
   constructor(
     private alertService: AlertService,
@@ -62,6 +62,11 @@ export class ImportReplayPopupComponent {
     const fileReader = new FileReader();
 
     fileReader.onload = event => {
+      if (!event.target) {
+        this.loading = false;
+        this.replayError = 'CANNOT_READ_REPLAY_FILE';
+        return;
+      }
       const replayData = event.target.result as string;
       const replay = new Replay({ indexEnabled: false });
       const base64 = new Base64();
@@ -102,5 +107,4 @@ export class ImportReplayPopupComponent {
         }
       });
   }
-
 }

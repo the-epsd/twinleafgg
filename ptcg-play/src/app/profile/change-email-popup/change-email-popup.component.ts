@@ -19,8 +19,8 @@ import { SessionService } from '../../shared/session/session.service';
 export class ChangeEmailPopupComponent {
 
   public loading = false;
-  public invalidEmail: string;
-  public email: string;
+  public invalidEmail: string = '';
+  public email: string = '';
 
   private userId: number;
 
@@ -60,5 +60,4 @@ export class ChangeEmailPopupComponent {
       }
     });
   }
-
 }

@@ -1,3 +1,5 @@
+@use "sass:math";
+
 .login-container {
   display: flex;
   flex-direction: column;
@@ -274,8 +276,7 @@ $duration: 1.4s;
 }
 
 .path {
-  stroke-dasharray: $offset;
-  stroke-dashoffset: 0;
+  stroke-dashoffset: math.div($offset, 4);
   transform-origin: center;
   animation:
     dash $duration ease-in-out infinite,
@@ -298,7 +299,7 @@ $duration: 1.4s;
   }
 
   50% {
-    stroke-dashoffset: $offset/4;
+    stroke-dashoffset: math.div($offset, 4);
     transform: rotate(135deg);
   }
 

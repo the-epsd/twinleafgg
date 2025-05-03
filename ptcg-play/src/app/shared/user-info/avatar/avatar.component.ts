@@ -57,5 +57,4 @@ export class AvatarComponent {
     return dialog.afterClosed().toPromise()
       .catch(() => false);
   }
-
 }

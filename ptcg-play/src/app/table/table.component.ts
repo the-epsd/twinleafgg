@@ -23,19 +23,19 @@ import { GameOverPrompt } from './prompt/prompt-game-over/game-over.prompt';
 })
 export class TableComponent implements OnInit, OnDestroy {
 
-  public gameState: LocalGameState;
+  public gameState: LocalGameState | undefined;
   public gameStates$: Observable<LocalGameState[]>;
   public clientId$: Observable<number>;
-  public bottomPlayer: Player;
-  public topPlayer: Player;
-  public clientId: number;
-  public loading: boolean;
-  public waiting: boolean;
-  public isAdmin: boolean;
-  public isTO: boolean;
-  private gameId: number;
+  public bottomPlayer: Player | undefined;
+  public topPlayer: Player | undefined;
+  public clientId!: number;
+  public loading!: boolean;
+  public waiting!: boolean;
+  public isAdmin!: boolean;
+  public isTO!: boolean;
+  private gameId!: number;
   public showGameOver = false;
-  public gameOverPrompt: GameOverPrompt;
+  public gameOverPrompt: GameOverPrompt | undefined;
 
   public formats = {
     [Format.STANDARD]: 'LABEL_STANDARD',
@@ -85,7 +85,7 @@ export class TableComponent implements OnInit, OnDestroy {
         untilDestroyed(this)
       )
       .subscribe(([paramMap, gameStates, clientId]) => {
-        this.gameId = parseInt(paramMap.get('gameId'), 10);
+        this.gameId = parseInt(paramMap.get('gameId') ?? '', 10);
         this.gameState = gameStates.find(state => state.localId === this.gameId);
         this.updatePlayers(this.gameState, clientId);
       });
@@ -107,6 +107,10 @@ export class TableComponent implements OnInit, OnDestroy {
   }
 
   public play() {
+    if (!this.gameState?.format) {
+      console.error('Game state or format is undefined.');
+      return;
+    }
     this.loading = true;
     this.deckService.getListByFormat(this.gameState.format)
       .pipe(
@@ -122,6 +126,10 @@ export class TableComponent implements OnInit, OnDestroy {
               this.translate.instant('GAMES_NEED_DECK'),
               this.translate.instant('GAMES_NEED_DECK_TITLE')
             );
+            return EMPTY;
+          }
+
+          if (!this.gameState?.format) {
             return EMPTY;
           }
 
@@ -148,7 +156,7 @@ export class TableComponent implements OnInit, OnDestroy {
       });
   }
 
-  private updatePlayers(gameState: LocalGameState, clientId: number) {
+  private updatePlayers(gameState: LocalGameState | undefined, clientId: number) {
     this.bottomPlayer = undefined;
     this.topPlayer = undefined;
     this.waiting = false;
@@ -206,7 +214,7 @@ export class TableComponent implements OnInit, OnDestroy {
     }
   }
 
-  private updateGameState(state: LocalGameState) {
+  private updateGameState(state: LocalGameState | undefined) {
     this.gameState = state;
 
     // Show game over screen when the game is finished

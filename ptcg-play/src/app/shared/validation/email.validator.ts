@@ -13,10 +13,10 @@ export class EmailValidatorDirective implements Validator {
     const value: string = control.value || '';
 
     if (value.length > 128) {
-      return {email: true};
+      return { email: true };
     }
 
-    return emailPattern.test(value) ? null : {email: true};
+    return emailPattern.test(value) ? {} : { email: true };
   }
 
 }

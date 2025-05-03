@@ -28,12 +28,12 @@ export class ReplaysComponent implements OnInit {
   public displayedColumns: string[] = ['name', 'player1', 'player2', 'created', 'actions'];
   public replays: ReplayInfo[] = [];
   public loading = false;
-  public searchValue: string;
+  public searchValue: string = '';
   public pageIndex = 0;
   public pageSizeOptions: number[] = [];
-  public pageSize: number;
-  public rankingTotal: number;
-  public loggedUserId: number;
+  public pageSize: number = 0;
+  public rankingTotal: number = 0;
+  public loggedUserId: number = 0;
 
   private replaysSearch$ = new Subject<ReplaySearch>();
   private searchValue$ = new Subject<string>();
@@ -117,7 +117,7 @@ export class ReplaysComponent implements OnInit {
     if (this.sessionService.session.config) {
       pageSize = this.sessionService.session.config.defaultPageSize;
     }
-    this.pageSizeOptions = [ pageSize ];
+    this.pageSizeOptions = [pageSize];
     this.pageSize = pageSize;
   }
 
@@ -227,7 +227,8 @@ export class ReplaysComponent implements OnInit {
           if (avatar) {
             this.refreshList();
           }
-      }});
+        }
+      });
   }
 
   private refreshList() {
@@ -245,5 +246,4 @@ export class ReplaysComponent implements OnInit {
       value: name
     });
   }
-
 }

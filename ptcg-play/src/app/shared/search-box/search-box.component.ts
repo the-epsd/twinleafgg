@@ -9,7 +9,7 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class SearchBoxComponent {
 
-  @ViewChild(MatInput, {static: true}) searchInput: MatInput;
+  @ViewChild(MatInput, { static: true }) searchInput: MatInput;
   @Output() search = new EventEmitter<string>();
   @Input() showSearchButton = true;
   @Input() label = this.translateService.instant('BUTTON_SEARCH');
@@ -41,5 +41,4 @@ export class SearchBoxComponent {
   public onChange() {
     this.search.emit(this.searchValue);
   }
-
 }

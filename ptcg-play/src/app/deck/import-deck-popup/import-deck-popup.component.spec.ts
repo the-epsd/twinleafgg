@@ -21,11 +21,11 @@ describe('ImportDeckPopupComponent', () => {
         FormsModule,
         TranslateModule.forRoot()
       ],
-      declarations: [ FileInputComponent, ImportDeckPopupComponent ],
-      providers: [ { provide: MatDialogRef, useValue: {} } ],
-      schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+      declarations: [FileInputComponent, ImportDeckPopupComponent],
+      providers: [{ provide: MatDialogRef, useValue: {} }],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
-    .compileComponents();
+      .compileComponents();
 
     sessionService = TestBed.inject(SessionService);
     sessionService.set({ config: { avatarFileSize: 1000 } as any })

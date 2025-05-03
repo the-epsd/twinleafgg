@@ -6,26 +6,26 @@
   border-radius: 50%;
 }
 
-:host[type="profile"] > .ptcg-avatar {
+:host[type="profile"]>.ptcg-avatar {
   height: map-get($ptcg-size, profile-avatar);
   width: map-get($ptcg-size, profile-avatar);
   border-radius: 50%;
 }
 
-:host[type="double"] > .ptcg-avatar {
+:host[type="double"]>.ptcg-avatar {
   height: 2 * map-get($ptcg-size, profile-avatar);
   width: 2 * map-get($ptcg-size, profile-avatar);
   border-radius: 50%;
 }
 
 .empty {
-  background-image: url(~src/assets/avatar.svg);
+  background-image: url(../../../../assets/avatar.svg);
   background-repeat: no-repeat;
   background-size: 100% 100%;
   border-radius: 50%;
 }
 
-.ptcg-avatar > img {
+.ptcg-avatar>img {
   display: block;
   height: 100%;
   width: 100%;

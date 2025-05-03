@@ -31,5 +31,4 @@ export class PromptConfirmComponent {
     const id = this.prompt.id;
     this.gameService.resolvePrompt(gameId, id, false);
   }
-
 }

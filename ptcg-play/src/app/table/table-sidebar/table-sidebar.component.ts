@@ -4,33 +4,56 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 import { LocalGameState } from '../../shared/session/session.interface';
 import { GameService } from '../../api/services/game.service';
-import { SessionService } from 'src/app/shared/session/session.service';
+import { SessionService } from '../../shared/session/session.service';
 import { MatDialog } from '@angular/material/dialog';
 import { SettingsDialogComponent } from './settings-dialog/settings-dialog.component';
+import { UserInfoModule } from '../../shared/user-info/user-info.module';
+import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
+import { PlayerActionsComponent } from './player-actions/player-actions.component';
+import { GameLogsComponent } from './game-logs/game-logs.component';
+import { ReplayControlsComponent } from './replay-controls/replay-controls.component';
+import { PlayerBarComponent } from './player-bar/player-bar.component';
 
 @UntilDestroy()
 @Component({
   selector: 'ptcg-table-sidebar',
   templateUrl: './table-sidebar.component.html',
-  styleUrls: ['./table-sidebar.component.scss']
+  styleUrls: ['./table-sidebar.component.scss'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    MatTooltipModule,
+    TranslateModule,
+    UserInfoModule,
+    PlayerActionsComponent,
+    GameLogsComponent,
+    ReplayControlsComponent,
+    PlayerBarComponent
+  ]
 })
 export class TableSidebarComponent implements OnDestroy, OnChanges {
 
   @Output() join = new EventEmitter<void>();
 
-  @Input() clientId: number;
-  @Input() topPlayer: Player;
-  @Input() bottomPlayer: Player;
-  @Input() gameState: LocalGameState;
+  @Input() clientId!: number;
+  @Input() topPlayer!: Player;
+  @Input() bottomPlayer!: Player;
+  @Input() gameState!: LocalGameState;
 
   public bottomReplayPlayer: ReplayPlayer | undefined;
   public topReplayPlayer: ReplayPlayer | undefined;
   public bottomPlayerStats: PlayerStats | undefined;
   public topPlayerStats: PlayerStats | undefined;
-  public turn: number;
-  public gameId: number;
-  public isTopPlayerActive: boolean;
-  public isBottomPlayerActive: boolean;
+  public turn!: number;
+  public gameId!: number;
+  public isTopPlayerActive!: boolean;
+  public isBottomPlayerActive!: boolean;
 
   private timerId: number | undefined;
 
@@ -125,7 +148,7 @@ export class TableSidebarComponent implements OnDestroy, OnChanges {
   ngOnChanges() {
     if (!this.gameState) {
       this.turn = 0;
-      this.gameId = undefined;
+      this.gameId = 0;
       this.isTopPlayerActive = false;
       this.isBottomPlayerActive = false;
       this.bottomReplayPlayer = undefined;
@@ -171,7 +194,5 @@ export class TableSidebarComponent implements OnDestroy, OnChanges {
         ? this.gameState.replay.player1
         : this.gameState.replay.player2;
     }
-
   }
-
 }

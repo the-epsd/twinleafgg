@@ -3,11 +3,21 @@ import { AlertPrompt } from 'ptcg-server';
 
 import { GameService } from '../../../api/services/game.service';
 import { LocalGameState } from '../../../shared/session/session.interface';
-
+import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { TranslateModule } from '@ngx-translate/core';
 @Component({
   selector: 'ptcg-prompt-alert',
   templateUrl: './prompt-alert.component.html',
-  styleUrls: ['./prompt-alert.component.scss']
+  styleUrls: ['./prompt-alert.component.scss'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    MatIconModule,
+    MatButtonModule,
+    TranslateModule
+  ],
 })
 export class PromptAlertComponent {
 

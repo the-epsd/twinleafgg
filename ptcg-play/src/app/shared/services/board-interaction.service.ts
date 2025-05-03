@@ -208,4 +208,4 @@ export class BoardInteractionService {
 
     return currentTargets >= minSelections && currentTargets <= maxSelections;
   }
-} 
+}

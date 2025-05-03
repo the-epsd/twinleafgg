@@ -1,21 +1,34 @@
 import { Component, Output, EventEmitter, Input, OnChanges } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { AlertService } from '../../../shared/alert/alert.service';
 import { GameService } from '../../../api/services/game.service';
 import { LocalGameState } from '../../../shared/session/session.interface';
 import { SessionService } from '../../../shared/session/session.service';
-import {GamePhase} from 'ptcg-server';
+import { GamePhase } from 'ptcg-server';
+import { BoardInteractionService } from 'src/app/shared/services/board-interaction.service';
 
 @Component({
   selector: 'ptcg-player-actions',
   templateUrl: './player-actions.component.html',
-  styleUrls: ['./player-actions.component.scss']
+  styleUrls: ['./player-actions.component.scss'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    MatTooltipModule,
+    TranslateModule
+  ]
 })
 export class PlayerActionsComponent implements OnChanges {
 
-  @Input() gameState: LocalGameState;
-  @Input() clientId: number;
+  @Input() gameState!: LocalGameState;
+  @Input() clientId!: number;
 
   @Output() join = new EventEmitter<void>();
 
@@ -67,7 +80,7 @@ export class PlayerActionsComponent implements OnChanges {
     }
     const gameStates = this.sessionService.session.gameStates.slice();
     const switchSide = !this.gameState.switchSide;
-    gameStates[index] = {...gameStates[index], switchSide };
+    gameStates[index] = { ...gameStates[index], switchSide };
     this.sessionService.set({ gameStates });
   }
 
@@ -86,5 +99,4 @@ export class PlayerActionsComponent implements OnChanges {
       this.isObserver = isReplay || (!this.isPlaying && !waitingForPlayers);
     }
   }
-
 }

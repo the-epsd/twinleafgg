@@ -63,5 +63,4 @@ export class PromptChooseAttackComponent {
         this.gameService.resolvePrompt(gameId, id, { index, attack });
       });
   }
-
 }

@@ -7,6 +7,7 @@ import { ApiModule } from '../../api/api.module';
 import { LoginComponent } from './login.component';
 import { LoginPopupService } from '../login-popup/login-popup.service';
 
+
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
@@ -18,11 +19,11 @@ describe('LoginComponent', () => {
         FormsModule,
         TranslateModule.forRoot()
       ],
-      declarations: [ LoginComponent ],
-      providers: [ { provide: LoginPopupService, useValue: { openDialog: () => {} } } ],
-      schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+      declarations: [LoginComponent],
+      providers: [{ provide: LoginPopupService, useValue: { openDialog: () => { } } }],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

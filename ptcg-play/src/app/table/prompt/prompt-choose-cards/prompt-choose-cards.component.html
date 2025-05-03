@@ -2,7 +2,7 @@
   <h2 translate>PROMPT_CHOOSE_CARDS_TITLE</h2>
   <div class="ptcg-u-spacer"></div>
   <button mat-button mat-icon-button (click)="minimize()">
-    <mat-icon>keyboard_arrow_down</mat-icon>
+    <img src="assets/iconfont/arrow-down.png" alt="Minimize">
   </button>
 </div>
 
@@ -15,16 +15,16 @@
 </div>
 
 <div class="ptcg-prompt-actions">
-  <section class="ptcg-card-info-reveal-cards" *ngIf="isSecret && gameState.replay">
+  <section class="ptcg-card-info-reveal-cards" *ngIf="isSecret && gameState?.replay">
     <mat-checkbox color="primary" name="reveal-card" [checked]="revealed" (change)="revealed = !revealed">
       {{ 'CARDS_REVEAL_CARDS' | translate }}
     </mat-checkbox>
   </section>
   <span class="ptcg-u-spacer"></span>
-  <button mat-raised-button *ngIf="allowedCancel" [disabled]="gameState.deleted" (click)="cancel()">
+  <button mat-raised-button *ngIf="allowedCancel" [disabled]="gameState?.deleted" (click)="cancel()">
     {{ 'BUTTON_CANCEL' | translate }}
   </button>
-  <button mat-raised-button [disabled]="gameState.deleted || isInvalid" (click)="confirm()">
+  <button mat-raised-button [disabled]="gameState?.deleted || isInvalid" (click)="confirm()">
     {{ 'BUTTON_OK' | translate }}
   </button>
 </div>

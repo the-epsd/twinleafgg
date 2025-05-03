@@ -17,17 +17,19 @@ import { ChangeEmailPopupComponent } from './change-email-popup/change-email-pop
 import { ChangePasswordPopupComponent } from './change-password-popup/change-password-popup.component';
 import { ChangeCardImagesPopupComponent } from './change-card-images-popup/change-card-images-popup.component';
 import { SelectAvatarComponent } from './select-avatar/select-avatar.component';
+import { MatError } from '@angular/material/form-field';
 
 @NgModule({
   imports: [
-    SharedModule,
     GamesModule,
+    SharedModule,
     MatDialogModule,
     MatTableModule,
     MatRadioModule,
     MatButtonModule,
     MatProgressBarModule,
     MatToolbarModule,
+    MatError,
     TranslateModule.forChild({
       loader: {
         provide: TranslateLoader,
@@ -44,7 +46,7 @@ import { SelectAvatarComponent } from './select-avatar/select-avatar.component';
     ProfileComponent,
     SelectAvatarComponent
   ],
-  entryComponents: [
+  providers: [
     ChangeEmailPopupComponent,
     ChangeCardImagesPopupComponent,
     ChangePasswordPopupComponent,

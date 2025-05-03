@@ -13,9 +13,9 @@ import { SessionService } from '../../shared/session/session.service';
 export class ImportDeckPopupComponent {
 
   public loading = false;
-  public deckFile: FileInput;
-  public name: string;
-  public deckError: string;
+  public deckFile: FileInput | null = null;
+  public name: string = '';
+  public deckError: string = '';
   public maxFileSize: number;
   public cardNames: string[] | undefined;
 
@@ -49,6 +49,11 @@ export class ImportDeckPopupComponent {
     const fileReader = new FileReader();
 
     fileReader.onload = event => {
+      if (!event.target) {
+        this.loading = false;
+        this.deckError = 'CANNOT_READ_DECK_FILE';
+        return;
+      }
       const deckData = event.target.result as string;
       const cardNames = deckData.split(/\n/).filter(name => name !== '');
       const cards = cardNames.map(name => this.cardsBaseService.getCardByName(name));
@@ -73,5 +78,4 @@ export class ImportDeckPopupComponent {
   public importDeck() {
     this.dialogRef.close(this.cardNames);
   }
-
 }

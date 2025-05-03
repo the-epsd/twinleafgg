@@ -2,11 +2,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { MaterialModule } from './material.module';
 import { NgModule } from '@angular/core';
-import { DndModule } from '@ng-dnd/core';
-import { DndMultiBackendModule } from '@ng-dnd/multi-backend';
-import { DndSortableModule } from '@ng-dnd/sortable';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { TranslateModule } from '@ngx-translate/core';
-
 import { AlertModule } from './alert/alert.module';
 import { AppRoutingModule } from '../app-routing.module';
 import { CardsModule } from './cards/cards.module';
@@ -32,9 +29,7 @@ import { ArchetypeComponent } from './cards/archetype/archetype.component';
     FormsModule,
     ImageCacheModule,
     MaterialModule,
-    DndMultiBackendModule,
-    DndSortableModule,
-    DndModule,
+    DragDropModule,
     TranslateModule,
     UserInfoModule,
     ValidationModule
@@ -63,9 +58,7 @@ import { ArchetypeComponent } from './cards/archetype/archetype.component';
     SearchBoxComponent,
     SidebarComponent,
     SidebarContainerComponent,
-    DndModule,
-    DndMultiBackendModule,
-    DndSortableModule,
+    DragDropModule,
     TranslateModule,
     UserInfoModule,
     ValidationModule
@@ -74,4 +67,4 @@ import { ArchetypeComponent } from './cards/archetype/archetype.component';
     SessionService
   ]
 })
-export class SharedModule {}
+export class SharedModule { }

@@ -39,7 +39,7 @@ export class ChoosePokemonsPaneComponent implements OnDestroy {
   @Output() cardClick = new EventEmitter<PokemonItem>();
   @Output() cardDrop = new EventEmitter<[PokemonItem, Card]>();
 
-  public rows: PokemonDropRow[];
+  public rows: PokemonDropRow[] = [];
 
   constructor(
     private cardsBaseService: CardsBaseService,
@@ -76,8 +76,10 @@ export class ChoosePokemonsPaneComponent implements OnDestroy {
         return item.cardList.cards.length > 0;
       },
       drop: monitor => {
-        const card = monitor.getItem().data.card;
-        this.cardDrop.next([item, card]);
+        const draggedItem = monitor.getItem();
+        if (draggedItem?.data?.card) {
+          this.cardDrop.next([item, draggedItem.data.card]);
+        }
       }
     });
 
@@ -105,5 +107,4 @@ export class ChoosePokemonsPaneComponent implements OnDestroy {
   ngOnDestroy() {
     this.unsubscribeDropTargets();
   }
-
 }

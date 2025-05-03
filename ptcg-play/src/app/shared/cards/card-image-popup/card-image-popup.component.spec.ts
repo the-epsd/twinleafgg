@@ -14,13 +14,13 @@ describe('CardImagePopupComponent', () => {
     data = { card: null, facedown: false };
 
     TestBed.configureTestingModule({
-      declarations: [ CardImagePopupComponent ],
+      declarations: [CardImagePopupComponent],
       providers: [
         { provide: MAT_DIALOG_DATA, useValue: data }
       ],
-      schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

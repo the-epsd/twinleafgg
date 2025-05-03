@@ -7,21 +7,32 @@ import { exhaustMap, filter, tap } from 'rxjs/operators';
 import { DeckCardDialogComponent } from '../deck-card-dialog/deck-card-dialog.component';
 import { Subject, merge } from 'rxjs';
 import { Card } from 'ptcg-server';
+import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 export const DeckCardType = 'DECK_CARD';
 
 @Component({
   selector: 'ptcg-deck-card',
   templateUrl: './deck-card.component.html',
-  styleUrls: ['./deck-card.component.scss']
+  styleUrls: ['./deck-card.component.scss'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class DeckCardComponent implements OnDestroy {
 
   public showButtons = false;
 
-  @Input() source: DragSource<DeckItem, any>;
-  @Input() card: DeckItem;
-  @Input() showCardCount: boolean;
+  @Input() source!: DragSource<DeckItem, any>;
+  @Input() card!: DeckItem;
+  @Input() showCardCount!: boolean;
   @Input() showDetailButtons = false;
 
   @Output() cardSelected = new EventEmitter<{ card: Card, action: 'add' | 'replace' }>();

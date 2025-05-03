@@ -23,7 +23,7 @@ export class MessagesComponent implements OnInit {
 
   public conversations$: Observable<ConversationInfo[]>;
   public userId = 0;
-  public loggedUserId: number;
+  public loggedUserId!: number;
 
   constructor(
     private alertService: AlertService,
@@ -46,14 +46,14 @@ export class MessagesComponent implements OnInit {
     this.route.paramMap.pipe(
       untilDestroyed(this)
     )
-    .subscribe({
-      next: paramMap => {
-        this.loggedUserId = this.sessionService.session.loggedUserId;
-        const userId = parseInt(paramMap.get('userId') || '0', 10);
-        this.userId = userId;
-        this.createOrUpdateConversation(this.loggedUserId, userId);
-      }
-    });
+      .subscribe({
+        next: paramMap => {
+          this.loggedUserId = this.sessionService.session.loggedUserId;
+          const userId = parseInt(paramMap.get('userId') || '0', 10);
+          this.userId = userId;
+          this.createOrUpdateConversation(this.loggedUserId, userId);
+        }
+      });
 
     this.conversations$.pipe(
       untilDestroyed(this)
@@ -113,14 +113,14 @@ export class MessagesComponent implements OnInit {
         }
       };
       this.sessionService.set({
-        conversations: [ newConversation, ...conversations ]
+        conversations: [newConversation, ...conversations]
       });
     }
 
     // User does not exists
     if (index === -1 && !userExists) {
       // Redirect to the another conversation
-      this.sessionService.set({ conversations: [ ...conversations ] });
+      this.sessionService.set({ conversations: [...conversations] });
     }
   }
 
@@ -138,20 +138,19 @@ export class MessagesComponent implements OnInit {
       untilDestroyed(this),
       finalize(() => { this.loading = false; })
     ).subscribe({
-        next: () => {
-          const conversations = this.sessionService.session.conversations
-            .filter(c => c.user1Id !== userId && c.user2Id !== userId);
-          this.sessionService.set({ conversations });
-          if (this.userId === userId) {
-            this.router.navigate(['/message']);
-          }
-        },
-        error: (error: ApiError) => {
-          if (!error.handled) {
-            this.alertService.toast(this.translate.instant('ERROR_UNKNOWN'));
-          }
+      next: () => {
+        const conversations = this.sessionService.session.conversations
+          .filter(c => c.user1Id !== userId && c.user2Id !== userId);
+        this.sessionService.set({ conversations });
+        if (this.userId === userId) {
+          this.router.navigate(['/message']);
         }
-      });
+      },
+      error: (error: ApiError) => {
+        if (!error.handled) {
+          this.alertService.toast(this.translate.instant('ERROR_UNKNOWN'));
+        }
+      }
+    });
   }
-
 }

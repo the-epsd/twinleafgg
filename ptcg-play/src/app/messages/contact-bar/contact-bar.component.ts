@@ -11,15 +11,15 @@ import { SessionService } from '../../shared/session/session.service';
 })
 export class ContactBarComponent implements OnChanges {
 
-  @Input() conversation: ConversationInfo;
+  @Input() conversation!: ConversationInfo;
 
-  @Input() loggedUserId: number;
+  @Input() loggedUserId!: number;
 
   @Input() active = false;
 
   public user$: Observable<UserInfo> = EMPTY;
 
-  public marked: boolean;
+  public marked: boolean = false;
 
   constructor(private sessionService: SessionService) { }
 
@@ -35,5 +35,4 @@ export class ContactBarComponent implements OnChanges {
       this.user$ = this.sessionService.get(session => session.users[userId]);
     }
   }
-
 }

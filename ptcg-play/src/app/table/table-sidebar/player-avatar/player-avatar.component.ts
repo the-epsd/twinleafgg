@@ -1,8 +1,14 @@
 import { Component, Input } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
 import { UserInfo } from 'ptcg-server';
 import { Subject } from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { takeUntil } from 'rxjs/operators';
+import { UserInfoModule } from '../../../shared/user-info/user-info.module';
 
 import { AvatarService } from '../../../api/services/avatar.service';
 
@@ -10,7 +16,16 @@ import { AvatarService } from '../../../api/services/avatar.service';
 @Component({
   selector: 'ptcg-player-avatar',
   templateUrl: './player-avatar.component.html',
-  styleUrls: ['./player-avatar.component.scss']
+  styleUrls: ['./player-avatar.component.scss'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    MatTooltipModule,
+    TranslateModule,
+    UserInfoModule
+  ]
 })
 export class PlayerAvatarComponent {
 
@@ -23,7 +38,7 @@ export class PlayerAvatarComponent {
     this.updateAvatar();
   }
 
-  @Input() allowClick: boolean;
+  @Input() allowClick: boolean = true;
 
   public nextRequest = new Subject<void>();
   public avatarFile = '';
@@ -60,5 +75,4 @@ export class PlayerAvatarComponent {
       }
     });
   }
-
 }

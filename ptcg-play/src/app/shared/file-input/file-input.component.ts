@@ -1,5 +1,7 @@
-import { Component, OnInit, Input, ElementRef, OnDestroy, HostBinding,
-  Renderer2, HostListener, Optional, Self, DoCheck } from '@angular/core';
+import {
+  Component, OnInit, Input, ElementRef, OnDestroy, HostBinding,
+  Renderer2, HostListener, Optional, Self, DoCheck
+} from '@angular/core';
 import { ControlValueAccessor, NgControl, NgForm, FormGroupDirective } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { MatFormFieldControl } from '@angular/material/form-field';
@@ -8,6 +10,7 @@ import { coerceBooleanProperty } from '@angular/cdk/coercion';
 
 import { FileInput } from './file-input.model';
 import { FileInputMixinBase } from './file-input-mixin';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'ptcg-file-input',
@@ -22,6 +25,8 @@ export class FileInputComponent extends FileInputMixinBase
 
   focused = false;
   controlType = 'file-input';
+  override stateChanges = new Subject<void>();
+  private _errorState = false;
 
   @Input() autofilled = false;
 
@@ -31,10 +36,14 @@ export class FileInputComponent extends FileInputMixinBase
   @Input() valuePlaceholder: string;
   @Input() multiple: boolean;
   @Input() accept: string | null = null;
-  @Input() errorStateMatcher: ErrorStateMatcher;
+  @Input() override errorStateMatcher: ErrorStateMatcher;
 
   @HostBinding() id = `ptcg-file-input-${FileInputComponent.nextId++}`;
   @HostBinding('attr.aria-describedby') describedBy = '';
+
+  override get errorState(): boolean {
+    return this._errorState;
+  }
 
   setDescribedByIds(ids: string[]) {
     this.describedBy = ids.join(' ');
@@ -110,14 +119,14 @@ export class FileInputComponent extends FileInputMixinBase
     // eslint-disable-next-line @typescript-eslint/naming-convention,no-underscore-dangle,id-denylist,id-match
     private _renderer: Renderer2,
     // eslint-disable-next-line @typescript-eslint/naming-convention,no-underscore-dangle,id-denylist,id-match
-    public _defaultErrorStateMatcher: ErrorStateMatcher,
+    public override _defaultErrorStateMatcher: ErrorStateMatcher,
     @Optional()
     @Self()
-    public ngControl: NgControl,
+    public override ngControl: NgControl,
     // eslint-disable-next-line @typescript-eslint/naming-convention,no-underscore-dangle,id-denylist,id-match
-    @Optional() public _parentForm: NgForm,
+    @Optional() public override _parentForm: NgForm,
     // eslint-disable-next-line @typescript-eslint/naming-convention,no-underscore-dangle,id-denylist,id-match
-    @Optional() public _parentFormGroup: FormGroupDirective,
+    @Optional() public override _parentFormGroup: FormGroupDirective,
   ) {
     super(_defaultErrorStateMatcher, _parentForm, _parentFormGroup, ngControl);
 
@@ -131,9 +140,9 @@ export class FileInputComponent extends FileInputMixinBase
   }
 
   // eslint-disable-next-line @typescript-eslint/naming-convention,no-underscore-dangle,id-denylist,id-match
-  private _onChange = (_: any) => {};
+  private _onChange = (_: any) => { };
   // eslint-disable-next-line @typescript-eslint/naming-convention, no-underscore-dangle, id-denylist, id-match
-  private _onTouched = () => {};
+  private _onTouched = () => { };
 
   get fileNames() {
     return this.value ? this.value.fileNames : this.valuePlaceholder;
@@ -213,4 +222,13 @@ export class FileInputComponent extends FileInputMixinBase
     }
   }
 
+  override updateErrorState(): void {
+    const oldState = this._errorState;
+    const newState = this.errorStateMatcher.isErrorState(this.ngControl?.control, this._parentForm);
+
+    if (oldState !== newState) {
+      this._errorState = newState;
+      this.stateChanges.next();
+    }
+  }
 }

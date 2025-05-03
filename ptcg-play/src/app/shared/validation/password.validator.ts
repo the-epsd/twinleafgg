@@ -20,14 +20,14 @@ export class PasswordValidatorDirective implements Validator {
 
     // Password must not contains white space characters
     if (value.match(/\s/) !== null) {
-      return {password: true};
+      return { password: true };
     }
 
     if (value.length < this.length || value.length > 32) {
-      return {password: true};
+      return { password: true };
     }
 
-    return null;
+    return {};
   }
 
 }

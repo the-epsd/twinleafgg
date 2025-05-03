@@ -203,5 +203,4 @@ export class PromptPutDamageComponent implements OnChanges {
       this.updateIsInvalid();
     }
   }
-
 }

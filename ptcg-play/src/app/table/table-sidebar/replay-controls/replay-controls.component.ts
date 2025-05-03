@@ -1,10 +1,18 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { MatSelectChange } from '@angular/material/select';
-import { MatSliderChange } from '@angular/material/slider';
+import { MatSliderChange, MatSliderModule } from '@angular/material/slider';
 import { Replay } from 'ptcg-server';
 import { Subject } from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { debounceTime } from 'rxjs/operators';
+import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { FormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { LocalGameState } from '../../../shared/session/session.interface';
 import { SelectPopupOption } from '../../../shared/alert/select-popup/select-popup.component';
@@ -14,14 +22,27 @@ import { SessionService } from '../../../shared/session/session.service';
 @Component({
   selector: 'ptcg-replay-controls',
   templateUrl: './replay-controls.component.html',
-  styleUrls: ['./replay-controls.component.scss']
+  styleUrls: ['./replay-controls.component.scss'],
+  standalone: true,
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    MatTooltipModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatSliderModule,
+    FormsModule,
+    TranslateModule
+  ]
 })
 export class ReplayControlsComponent implements OnInit, OnDestroy {
 
   @Input() set gameState(gameState: LocalGameState) {
     this.gameStateValue = gameState;
 
-    if (this.replay !== gameState.replay) {
+    if (this.replay !== gameState.replay && gameState.replay) {
       this.initReplayControls(gameState.replay, gameState.replayPosition);
     }
   }
@@ -39,8 +60,8 @@ export class ReplayControlsComponent implements OnInit, OnDestroy {
   public statesPerSecond = 1000;
   public playInterval: number | undefined;
   private sliderChange$ = new Subject<number>();
-  private gameStateValue: LocalGameState;
-  private replay: Replay;
+  private gameStateValue!: LocalGameState;
+  private replay!: Replay;
 
   constructor(private sessionService: SessionService) { }
 
@@ -164,5 +185,4 @@ export class ReplayControlsComponent implements OnInit, OnDestroy {
     this.stateCount = replay.getStateCount();
     this.turnCount = replay.getTurnCount();
   }
-
 }

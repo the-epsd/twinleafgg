@@ -18,5 +18,4 @@ export class CardListPaneComponent {
   selectCard(card: Card) {
     this.cardClick.next(card);
   }
-
 }

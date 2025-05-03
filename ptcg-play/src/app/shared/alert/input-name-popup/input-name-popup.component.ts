@@ -20,10 +20,10 @@ export class InputNamePopupComponent {
   public title: string;
   public message: string;
   public placeholder: string;
-  public invalidValues: string[];
-  public invalidValue: string;
-  public value: string;
-  public initialValue: string;
+  public invalidValues: string[] = [];
+  public invalidValue: string = '';
+  public value: string = '';
+  public initialValue: string = '';
 
   constructor(
     private dialogRef: MatDialogRef<InputNamePopupComponent>,
@@ -33,7 +33,7 @@ export class InputNamePopupComponent {
     const DEFAULT_TITLE = translate.instant('ALERT_NAME_TITLE');
 
     this.title = data.title || DEFAULT_TITLE;
-    this.message = data.message;
+    this.message = data.message || '';
     this.placeholder = data.placeholder || DEFAULT_TITLE;
     this.value = String(data.value) || '';
     this.initialValue = this.value;
@@ -58,5 +58,4 @@ export class InputNamePopupComponent {
   public cancel() {
     this.dialogRef.close();
   }
-
 }

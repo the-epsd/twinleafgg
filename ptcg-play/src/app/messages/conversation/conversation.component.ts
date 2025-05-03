@@ -18,13 +18,13 @@ import { SessionService } from '../../shared/session/session.service';
 })
 export class ConversationComponent implements OnInit, OnChanges {
 
-  @Input() userId: number;
-  @Input() loggedUserId: number;
+  @Input() userId!: number;
+  @Input() loggedUserId!: number;
 
   public loading = false;
   public messages$ = new BehaviorSubject<MessageInfo[]>([]);
   public lastMessage$: Observable<MessageInfo | undefined>;
-  public text: string;
+  public text: string = '';
   private userChanged$ = new Subject<void>();
 
   constructor(
@@ -200,5 +200,4 @@ export class ConversationComponent implements OnInit, OnChanges {
       });
     } catch (err) { }
   }
-
 }

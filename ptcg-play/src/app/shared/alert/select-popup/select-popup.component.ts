@@ -52,5 +52,4 @@ export class SelectPopupComponent {
   public cancel() {
     this.dialogRef.close();
   }
-
 }

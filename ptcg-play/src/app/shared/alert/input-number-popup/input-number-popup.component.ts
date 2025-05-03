@@ -33,11 +33,11 @@ export class InputNumberPopupComponent {
     const DEFAULT_TITLE = translate.instant('ALERT_NUMBER_TITLE');
 
     this.title = data.title || DEFAULT_TITLE;
-    this.message = data.message;
+    this.message = data.message || '';
     this.placeholder = data.placeholder || DEFAULT_TITLE;
     this.value = String(data.value) || '';
-    this.min = data.minValue;
-    this.max = data.maxValue;
+    this.min = data.minValue ?? 0;
+    this.max = data.maxValue ?? Number.MAX_SAFE_INTEGER;
   }
 
   public confirm() {
@@ -50,5 +50,4 @@ export class InputNumberPopupComponent {
   public cancel() {
     this.dialogRef.close();
   }
-
 }

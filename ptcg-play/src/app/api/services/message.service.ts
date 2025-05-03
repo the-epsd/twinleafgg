@@ -105,9 +105,7 @@ export class MessageService {
     if (conversation !== undefined) {
       const lastMessage = { ...conversation.lastMessage, isRead: true };
       conversation = { ...conversation, lastMessage };
+      this.setSessionConversations([conversation], [user]);
     }
-
-    this.setSessionConversations([conversation], [user]);
   }
-
 }

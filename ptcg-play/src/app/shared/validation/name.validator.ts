@@ -11,10 +11,10 @@ export class NameValidatorDirective implements Validator {
     const value = String(control.value || '').trim();
 
     if (value.length < 3 || value.length > 32) {
-      return {name: true};
+      return { name: true };
     }
 
-    return null;
+    return {};
   }
 
 }

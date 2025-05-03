@@ -11,10 +11,10 @@ export class PlayerNameValidatorDirective implements Validator {
     const value = String(control.value || '');
 
     if (!value.match(/^[a-zA-Z0-9]{3,32}$/)) {
-      return {name: true};
+      return { name: true };
     }
 
-    return null;
+    return {};
   }
 
 }

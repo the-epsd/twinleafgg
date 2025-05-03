@@ -27,15 +27,13 @@ import { ValidationModule } from '../validation/validation.module';
     InputNamePopupComponent,
     SelectPopupComponent
   ],
-  entryComponents: [
+  providers: [
+    AlertService,
     AlertPopupComponent,
     ConfirmPopupComponent,
     InputNumberPopupComponent,
     InputNamePopupComponent,
     SelectPopupComponent
-  ],
-  providers: [
-    AlertService
   ]
 })
 export class AlertModule { }

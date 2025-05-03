@@ -1,27 +1,36 @@
 import { NgModule } from '@angular/core';
-
-import { BoardModule } from './board/board.module';
-import { HandComponent } from './hand/hand.component';
-import { PromptModule } from './prompt/prompt.module';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 import { SharedModule } from '../shared/shared.module';
+import { MaterialModule } from '../shared/material.module';
+import { BoardModule } from './board/board.module';
+import { PromptModule } from './prompt/prompt.module';
 import { TableComponent } from './table.component';
-import { TableSidebarModule } from './table-sidebar/table-sidebar.module';
-import { VsScreenComponent } from './vs-screen/vs-screen.component';
-import { GameOverComponent } from './game-over/game-over.component';
+import { GameService } from '../api/services/game.service';
+import { MessageService } from '../api/services/message.service';
+import { TableSidebarComponent } from './table-sidebar/table-sidebar.component';
 
 @NgModule({
   declarations: [
-    TableComponent,
-    HandComponent,
-    VsScreenComponent,
-    GameOverComponent
+    TableComponent
   ],
   imports: [
+    CommonModule,
+    FormsModule,
+    TranslateModule,
+    SharedModule,
+    MaterialModule,
     BoardModule,
     PromptModule,
-    SharedModule,
-    TableSidebarModule
+    TableSidebarComponent
   ],
-  providers: []
+  exports: [
+    TableComponent
+  ],
+  providers: [
+    GameService,
+    MessageService
+  ]
 })
 export class TableModule { }

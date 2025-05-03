@@ -5,11 +5,17 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
+  min-height: 300px;
 }
 
 ptcg-card {
-  margin: map-get($padding, small);
+  margin: 0.5rem;
   width: map-get($ptcg-size, card);
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: scale(1.05);
+  }
 
   &.unavailable {
     opacity: $ptcg-disabled-opacity;
@@ -22,8 +28,10 @@ ptcg-card {
 
 dnd-sortable-list {
   display: flex;
-  flex: 1 1 auto;
   flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  padding: 1rem;
 }
 
 .selected-card {
@@ -31,7 +39,6 @@ dnd-sortable-list {
   transform: scale(1.05);
   transition: all 0.2s ease;
   border-radius: 5px;
-  width: map-get($ptcg-size, card);
 }
 
 .selected-cards {
@@ -123,20 +130,11 @@ dnd-sortable-list {
 }
 
 .cards-viewport {
-  width: 1000px;
-  // height: 500px;
+  width: 100%;
+  min-height: 300px;
   overflow-y: auto;
   overflow-x: hidden;
-  // border: 2px solid rgba(255, 255, 255, 0.2);
-  // border-radius: 8px;
-}
-
-dnd-sortable-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  // padding: 20px;
-  // justify-content: center;
+  padding: 1rem;
 }
 
 ptcg-card {

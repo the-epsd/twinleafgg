@@ -1,7 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { Format, InvitePlayerPrompt } from 'ptcg-server';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { finalize } from 'rxjs/operators';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { ApiError } from '../../../api/api.error';
 import { AlertService } from '../../../shared/alert/alert.service';
@@ -14,7 +18,15 @@ import { LocalGameState } from '../../../shared/session/session.interface';
 @Component({
   selector: 'ptcg-prompt-invite-player',
   templateUrl: './prompt-invite-player.component.html',
-  styleUrls: ['./prompt-invite-player.component.scss']
+  styleUrls: ['./prompt-invite-player.component.scss'],
+  standalone: true,
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [
+    CommonModule,
+    FormsModule,
+    MatButtonModule,
+    TranslateModule
+  ]
 })
 export class PromptInvitePlayerComponent implements OnInit {
 
@@ -78,7 +90,7 @@ export class PromptInvitePlayerComponent implements OnInit {
         next: decks => {
           this.decks = decks
             .filter(deckEntry => deckEntry.isValid)
-            .map(deckEntry => ({value: deckEntry.id, viewValue: deckEntry.name}));
+            .map(deckEntry => ({ value: deckEntry.id, viewValue: deckEntry.name }));
           if (this.decks.length > 0) {
             this.deckId = this.decks[0].value;
           }
@@ -93,5 +105,4 @@ export class PromptInvitePlayerComponent implements OnInit {
   ngOnInit() {
     this.loadDecks();
   }
-
 }

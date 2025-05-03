@@ -54,7 +54,7 @@ export class PokemonData {
     const player = state.players.find(p => p.id === playerId);
     const opponent = state.players.find(p => p.id !== playerId);
     if (player === undefined || opponent === undefined) {
-      return;
+      return [];
     }
 
     const hasOpponent = [PlayerType.TOP_PLAYER, PlayerType.ANY].includes(playerType);

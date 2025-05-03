@@ -30,5 +30,4 @@ export class PromptGameOverComponent {
       this.sessionService.set({ gameStates });
     }
   }
-
 }

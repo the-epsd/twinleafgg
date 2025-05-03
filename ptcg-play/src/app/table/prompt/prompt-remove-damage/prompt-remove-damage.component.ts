@@ -242,5 +242,4 @@ export class PromptRemoveDamageComponent implements OnChanges {
       this.updateIsInvalid();
     }
   }
-
 }

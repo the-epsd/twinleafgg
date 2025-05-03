@@ -24,12 +24,12 @@ export class RankingComponent implements OnInit {
   public displayedColumns: string[] = ['position', 'ranking', 'user', 'actions'];
   public ranking: RankingInfo[] = [];
   public loading = false;
-  public searchValue: string;
+  public searchValue: string = '';
   public pageIndex = 0;
   public pageSizeOptions: number[] = [];
-  public pageSize: number;
-  public rankingTotal: number;
-  public loggedUserId: number;
+  public pageSize: number = 0;
+  public rankingTotal: number = 0;
+  public loggedUserId: number = 0;
 
   private rankingSearch$ = new Subject<RankingSearch>();
   private searchValue$ = new Subject<string>();
@@ -132,5 +132,4 @@ export class RankingComponent implements OnInit {
       page: this.pageIndex
     });
   }
-
 }

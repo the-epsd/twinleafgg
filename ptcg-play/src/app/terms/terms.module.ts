@@ -1,11 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatToolbar, MatToolbarModule } from '@angular/material/toolbar';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
 import { TermsComponent } from './terms.component';
-import { SharedModule } from '../shared/shared.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { ContentComponent } from '../shared/content/content.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [TermsComponent],
@@ -13,8 +12,8 @@ import { ContentComponent } from '../shared/content/content.component';
     CommonModule,
     MatToolbarModule,
     MatCardModule,
-    SharedModule,
     TranslateModule,
+    SharedModule
   ],
   exports: [TermsComponent]
 })

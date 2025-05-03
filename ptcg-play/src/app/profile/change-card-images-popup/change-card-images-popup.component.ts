@@ -10,7 +10,7 @@ import { CardsBaseService } from "src/app/shared/cards/cards-base.service";
   styleUrls: ['./change-card-images-popup.component.scss']
 })
 export class ChangeCardImagesPopupComponent {
-  public jsonUrl: string;
+  public jsonUrl: string = '';
 
   constructor(
     private dialogRef: MatDialogRef<ChangeCardImagesPopupComponent>,

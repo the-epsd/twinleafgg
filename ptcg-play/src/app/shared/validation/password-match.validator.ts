@@ -7,16 +7,16 @@ import { NG_VALIDATORS, AbstractControl, Validator, ValidationErrors } from '@an
 })
 export class PasswordMatchDirective implements Validator {
 
-  @Input() ptcgPasswordMatchValidator: string;
+  @Input() ptcgPasswordMatchValidator: string = '';
 
   validate(control: AbstractControl): ValidationErrors {
     const value = String(control.value || '');
 
     if (value !== this.ptcgPasswordMatchValidator) {
-      return {passwordMatch: true};
+      return { passwordMatch: true };
     }
 
-    return null;
+    return {};
   }
 
 }

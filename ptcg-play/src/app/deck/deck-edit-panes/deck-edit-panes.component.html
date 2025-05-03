@@ -8,34 +8,33 @@
   </ng-template>
 </dnd-preview>
 
-<cdk-virtual-scroll-viewport *ngIf="showLibrary" class="ptcg-deck-edit-pane" [dropTarget]="libraryTarget"
-  ptcgDropHighlight [ptcgDropHighlightVisible]="libraryHighlight$ | async" [itemSize]="77" minBufferPx="900"
-  maxBufferPx="1800">
-  <ptcg-deck-card *cdkVirtualFor="let card of (cards | filterCards: toolbarFilter)" [dndSortableExternal]="card.spec"
-    #ext="dndSortableExternal" [source]="ext.source" (cardClick)="onLibraryCardClick(card)" [showDetailButtons]="true"
-    (cardSelected)="onCardSelectedOnDialog(render.data, $event.card, $event.action)" [card]="card">
-  </ptcg-deck-card>
-</cdk-virtual-scroll-viewport>
+<!-- (cdkDropListDropped)="onDeckDrop($event)" -->
 
-<div class="ptcg-deck-edit-pane-secondary" [dropTarget]="deckTarget" ptcgDropHighlight
-  [ptcgDropHighlightVisible]="deckHighlight$ | async">
+<div class="ptcg-deck-edit-pane-secondary" cdkDropList [cdkDropListConnectedTo]="['library']"
+  [cdkDropListData]="tempList">
   <button mat-icon-button class="library-toggle" (click)="toggleLibrary()"
     [matTooltip]="(showLibrary ? 'Hide' : 'Show') + ' Card Library'">
     <mat-icon>{{ showLibrary ? 'chevron_left' : 'chevron_right' }}</mat-icon>
   </button>
   <div #deckPane>
-    <dnd-sortable-list listId="CARD_LIBRARY_LIST" hoverTrigger="fixed" [children]="tempList" [spec]="deckSpec">
-      <ng-template dndSortableTemplate let-context>
-        <ptcg-deck-card [dndSortableRender]="context" #render="dndSortableRender"
-          [ptcgCardPlaceholder]="render.isDragging$" [source]="render.source" showCardCount="true"
-          (infoClick)="showCardInfo(render.data)" (cardClick)="onDeckCardClick(render.data)"
-          (countClick)="setCardCount(render.data)" [showDetailButtons]="true"
-          (cardSelected)="onCardSelectedOnDialog(render.data, $event.card, $event.action)" [card]="render.data">
-        </ptcg-deck-card>
-      </ng-template>
-    </dnd-sortable-list>
+    <div *ngFor="let item of tempList" cdkDrag [cdkDragData]="item">
+      <ptcg-deck-card [ptcgCardPlaceholder]="true" showCardCount="true" (infoClick)="showCardInfo(item)"
+        (cardClick)="onDeckCardClick(item)" (countClick)="setCardCount(item)" [showDetailButtons]="true"
+        (cardSelected)="onCardSelectedOnDialog(item, $event.card, $event.action)" [card]="item">
+      </ptcg-deck-card>
+    </div>
   </div>
   <div class="deck-validity-container">
     <ptcg-deck-validity [deck]="tempList"></ptcg-deck-validity>
   </div>
 </div>
+
+<cdk-virtual-scroll-viewport *ngIf="showLibrary" class="ptcg-deck-edit-pane" cdkDropList id="library"
+  (cdkDropListDropped)="onLibraryDrop($event)" [cdkDropListConnectedTo]="['deck']" [cdkDropListData]="cards"
+  [itemSize]="77" minBufferPx="900" maxBufferPx="1800">
+  <div *cdkVirtualFor="let card of (cards | filterCards: toolbarFilter)" cdkDrag [cdkDragData]="card">
+    <ptcg-deck-card (cardClick)="onLibraryCardClick(card)" [showDetailButtons]="true"
+      (cardSelected)="onCardSelectedOnDialog(card, $event.card, $event.action)" [card]="card">
+    </ptcg-deck-card>
+  </div>
+</cdk-virtual-scroll-viewport>

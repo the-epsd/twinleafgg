@@ -25,7 +25,7 @@ export interface CreateGamePopupResult {
 export class CreateGamePopupComponent implements OnInit {
 
   decks: SelectPopupOption<DeckListEntry>[];
-  public deckId: number;
+  public deckId = 0;
   public settings = new GameSettings();
   public isAdmin = false;
 
@@ -38,7 +38,7 @@ export class CreateGamePopupComponent implements OnInit {
     { value: Format.UNLIMITED, label: 'LABEL_UNLIMITED' },
   ];
 
-  public formatValidDecks: SelectPopupOption<number>[];
+  public formatValidDecks: SelectPopupOption<number>[] = [];
 
   public timeLimits: SelectPopupOption<number>[] = [
     { value: 0, viewValue: 'GAMES_LIMIT_NO_LIMIT' },
@@ -60,7 +60,12 @@ export class CreateGamePopupComponent implements OnInit {
 
     data.decks.forEach(deck => {
       const deckCards: Card[] = [];
-      deck.value.cards.forEach(card => deckCards.push(this.cardsBaseService.getCardByName(card)));
+      deck.value.cards.forEach(card => {
+        const foundCard = this.cardsBaseService.getCardByName(card);
+        if (foundCard) {
+          deckCards.push(foundCard);
+        }
+      });
       deck.value.format = FormatValidator.getValidFormatsForCardList(deckCards);
     });
 
@@ -83,8 +88,9 @@ export class CreateGamePopupComponent implements OnInit {
   }
 
   hasValidDeck(): boolean {
+    if (!this.deckId) return false;
     const selectedDeck = this.decks.find(d => d.value.id === this.deckId);
-    return selectedDeck && selectedDeck.value.format.includes(this.settings.format);
+    return selectedDeck ? selectedDeck.value.format.includes(this.settings.format) : false;
   }
 
 

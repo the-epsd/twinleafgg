@@ -10,14 +10,14 @@ import { LanguageService, LanguageItem } from './language.service';
 export class LanguageSelectComponent {
 
   public languages: LanguageItem[];
-  public name: string;
+  public name: string = '';
 
   constructor(private languageService: LanguageService) {
     this.languages = languageService.getLanguages();
 
     const value = languageService.getLanguage();
     const language = this.languages.find(l => l.value === value);
-    this.name = language.name;
+    this.name = language?.name ?? '';
   }
 
   public onLanguageChange(language: LanguageItem): void {

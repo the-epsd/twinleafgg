@@ -25,7 +25,7 @@ export class LoginService {
     private profileService: ProfileService,
     private sessionService: SessionService,
     private socketService: SocketService
-  ) {}
+  ) { }
 
   public login(name: string, password: string, loginAborted$: Observable<void>): Observable<LoginResponse> {
     return this.api.post<LoginResponse>('/v1/login', { name, password }).pipe(
@@ -87,7 +87,7 @@ export class LoginService {
         });
 
         return response;
-    }));
+      }));
   }
 
   private waitForSocketConnection(token: string): Observable<boolean> {

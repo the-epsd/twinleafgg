@@ -33,5 +33,4 @@ export class ApiError implements Error {
     this.message = message || code;
     this.code = code;
   }
-
 }

@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges, ElementRef } from '@angular/core';
 import {
   Card, AttachEnergyPrompt, FilterType, CardList, AttachEnergyOptions,
   PokemonCardList,
@@ -8,9 +8,15 @@ import {
 import { GameService } from '../../../api/services/game.service';
 import { LocalGameState } from '../../../shared/session/session.interface';
 import { PokemonData, PokemonItem } from '../choose-pokemons-pane/pokemon-data';
+import { DragSourceMonitor, DropTargetMonitor } from '@ng-dnd/core';
+import { DragSourceConnector, DropTargetConnector } from '@ng-dnd/core/src/connectors';
 
 interface AttachEnergyResult {
   to: PokemonItem;
+  card: Card;
+}
+
+interface DragItem {
   card: Card;
 }
 
@@ -189,5 +195,4 @@ export class PromptAttachEnergyComponent implements OnChanges {
       this.updateIsInvalid(this.results);
     }
   }
-
 }

@@ -17,15 +17,14 @@ import { MatchmakingLobbyComponent } from './matchmaking-lobby/matchmaking-lobby
     GamesTableComponent,
     MatchmakingLobbyComponent
   ],
-  entryComponents: [
-    CreateGamePopupComponent
-  ],
   imports: [
     SharedModule
   ],
   exports: [
     MatchTableComponent
   ],
-  providers: []
+  providers: [
+    CreateGamePopupComponent
+  ]
 })
 export class GamesModule { }

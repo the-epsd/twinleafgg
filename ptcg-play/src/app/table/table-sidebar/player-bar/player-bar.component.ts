@@ -2,6 +2,9 @@ import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Player, UserInfo, ReplayPlayer, PlayerStats, State, GamePhase } from 'ptcg-server';
 import { Observable, EMPTY } from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { PlayerAvatarComponent } from '../player-avatar/player-avatar.component';
 
 import { ChooseAvatarPopupService } from '../choose-avatar-popup/choose-avatar-popup.service';
 import { GameService } from '../../../api/services/game.service';
@@ -13,27 +16,33 @@ import { UserInfoPopupService } from '../../../shared/user-info/user-info-popup/
 @Component({
   selector: 'ptcg-player-bar',
   templateUrl: './player-bar.component.html',
-  styleUrls: ['./player-bar.component.scss']
+  styleUrls: ['./player-bar.component.scss'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    TranslateModule,
+    PlayerAvatarComponent
+  ]
 })
 export class PlayerBarComponent implements OnChanges {
 
-  @Input() clientId: number;
-  @Input() gameState: LocalGameState;
-  @Input() player: Player;
-  @Input() replayPlayer: ReplayPlayer;
-  @Input() active: boolean;
+  @Input() clientId!: number;
+  @Input() gameState!: LocalGameState;
+  @Input() player!: Player;
+  @Input() replayPlayer!: ReplayPlayer;
+  @Input() active!: boolean;
   @Input() playerStats: PlayerStats | undefined;
 
-  public isTimeRunning: boolean;
-  public timeLimit: number;
+  public isTimeRunning!: boolean;
+  public timeLimit!: number;
   public isEmpty = true;
-  public deckCount: number;
-  public handCount: number;
-  public discardCount: number;
-  public lostzoneCount: number;
-  public name: string;
-  public allowAvatarClick: boolean;
-  public avatarName: string;
+  public deckCount!: number;
+  public handCount!: number;
+  public discardCount!: number;
+  public lostzoneCount!: number;
+  public name!: string;
+  public allowAvatarClick!: boolean;
+  public avatarName!: string;
   public userInfo$: Observable<UserInfo | undefined> = EMPTY;
 
   constructor(
@@ -91,7 +100,7 @@ export class PlayerBarComponent implements OnChanges {
     // Not fully initialized
     if (!this.clientId || !this.gameState || !this.player) {
       this.isEmpty = true;
-      this.avatarName = undefined;
+      this.avatarName = '';
       this.allowAvatarClick = false;
       return;
     }
@@ -127,5 +136,4 @@ export class PlayerBarComponent implements OnChanges {
     const client = session.clients.find(c => c.clientId === player.id);
     return client !== undefined ? session.users[client.userId] : undefined;
   }
-
 }

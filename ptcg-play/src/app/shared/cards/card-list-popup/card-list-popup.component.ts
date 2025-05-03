@@ -33,5 +33,4 @@ export class CardListPopupComponent {
   public close(result?: Card) {
     this.dialogRef.close(result);
   }
-
 }

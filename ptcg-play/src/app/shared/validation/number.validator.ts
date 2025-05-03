@@ -7,14 +7,14 @@ import { NG_VALIDATORS, AbstractControl, Validator, ValidationErrors } from '@an
 })
 export class NumberValidatorDirective implements Validator {
 
-  @Input() ptcgNumberValidatorMin: number;
-  @Input() ptcgNumberValidatorMax: number;
+  @Input() ptcgNumberValidatorMin: number = 0;
+  @Input() ptcgNumberValidatorMax: number = 0;
 
   validate(control: AbstractControl): ValidationErrors {
     const value = String(control.value === undefined ? '' : control.value).trim();
 
     if (!value.match(/^\d+$/)) {
-      return {numberInvalid: true};
+      return { numberInvalid: true };
     }
 
     const numberValue = parseInt(value, 10);
@@ -22,14 +22,14 @@ export class NumberValidatorDirective implements Validator {
     const max = this.ptcgNumberValidatorMax;
 
     if (min !== undefined && min > numberValue) {
-      return {numberMin: true};
+      return { numberMin: true };
     }
 
     if (max !== undefined && max < numberValue) {
-      return {numberMin: true};
+      return { numberMin: true };
     }
 
-    return null;
+    return {};
   }
 
 }

@@ -11,6 +11,7 @@ import { ArchetypeUtils } from '../../deck/deck-archetype-service/archetype.util
 import { CardsBaseService } from '../../shared/cards/cards-base.service';
 import { DeckItem } from '../../deck/deck-card/deck-card.interface';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { DeckEditPane } from '../../deck/deck-edit-panes/deck-edit-pane.interface';
 
 
 @Component({

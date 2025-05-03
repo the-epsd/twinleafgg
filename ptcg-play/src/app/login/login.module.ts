@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { SharedModule } from '../shared/shared.module';
 
 import { LoginComponent } from './login/login.component';
-import { SharedModule } from '../shared/shared.module';
 import { RegisterComponent } from './register/register.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { ServerPasswordPopupComponent } from './server-password-popup/server-password-popup.component';
@@ -19,8 +20,9 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
-    SharedModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    FormsModule,
+    SharedModule
   ],
   declarations: [
     ChangeServerPopupComponent,
@@ -30,12 +32,10 @@ const routes: Routes = [
     SetNewPasswordComponent,
     LoginComponent
   ],
-  entryComponents: [
+  providers: [
+    ServerPasswordPopupService,
     ChangeServerPopupComponent,
     ServerPasswordPopupComponent
-  ],
-  providers: [
-    ServerPasswordPopupService
   ],
   exports: [
     RegisterComponent,

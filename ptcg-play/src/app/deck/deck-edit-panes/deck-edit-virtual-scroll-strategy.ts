@@ -23,12 +23,15 @@ export class DeckEditVirtualScrollStrategy implements VirtualScrollStrategy {
    * @param imageHeight The height of the items in the virtually scrolling list.
    */
   constructor(private itemWidth: number, private itemHeight: number) {
-    const [minBufferPx, maxBufferPx] = [ itemHeight, itemHeight * 2 ];
+    const [minBufferPx, maxBufferPx] = [itemHeight, itemHeight * 2];
     this.minBufferPx = minBufferPx;
     this.maxBufferPx = maxBufferPx;
   }
 
   private getItemsPerRow(): number {
+    if (!this.viewport) {
+      return 1;
+    }
     const width = this.viewport._contentWrapper.nativeElement.offsetWidth;
     return Math.max(1, Math.floor(width / this.itemWidth));
   }
@@ -100,7 +103,7 @@ export class DeckEditVirtualScrollStrategy implements VirtualScrollStrategy {
     const scrollOffset = this.viewport.measureScrollOffset();
     const firstVisibleIndex = Math.floor(scrollOffset / this.itemHeight) * itemsPerRow;
     const renderedRange = this.viewport.getRenderedRange();
-    const newRange = {start: renderedRange.start, end: renderedRange.end};
+    const newRange = { start: renderedRange.start, end: renderedRange.end };
     const viewportSize = this.viewport.getViewportSize();
     const dataLength = this.viewport.getDataLength();
 
@@ -109,7 +112,7 @@ export class DeckEditVirtualScrollStrategy implements VirtualScrollStrategy {
       const expandStart = Math.floor((this.maxBufferPx - startBuffer) / this.itemHeight) * itemsPerRow;
       newRange.start = Math.max(0, newRange.start - expandStart);
       newRange.end = Math.min(dataLength,
-          firstVisibleIndex + Math.ceil((viewportSize + this.minBufferPx) / this.itemHeight) * itemsPerRow);
+        firstVisibleIndex + Math.ceil((viewportSize + this.minBufferPx) / this.itemHeight) * itemsPerRow);
     } else {
       const endBuffer = Math.ceil(newRange.end / itemsPerRow) * this.itemHeight - (scrollOffset + viewportSize);
       if (endBuffer < this.minBufferPx && newRange.end !== dataLength) {
@@ -117,7 +120,7 @@ export class DeckEditVirtualScrollStrategy implements VirtualScrollStrategy {
         if (expandEnd > 0) {
           newRange.end = Math.min(dataLength, newRange.end + expandEnd);
           newRange.start = Math.max(0,
-              firstVisibleIndex - Math.floor(this.minBufferPx / this.itemHeight) * itemsPerRow);
+            firstVisibleIndex - Math.floor(this.minBufferPx / this.itemHeight) * itemsPerRow);
         }
       }
     }

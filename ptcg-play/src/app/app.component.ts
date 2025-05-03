@@ -1,11 +1,9 @@
-import { Component, OnInit, HostListener, ElementRef } from '@angular/core';
+import { Component, OnInit, HostListener, ElementRef, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { UserInfo } from 'ptcg-server';
 import { Observable, interval } from 'rxjs';
-import { Router } from '@angular/router';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { Router, RouterOutlet } from '@angular/router';
 import { switchMap, filter, take } from 'rxjs/operators';
-
 import { AlertService } from './shared/alert/alert.service';
 import { LoginRememberService } from './login/login-remember.service';
 import { LoginService } from './api/services/login.service';
@@ -13,6 +11,7 @@ import { SessionService } from './shared/session/session.service';
 import { SocketService } from './api/socket.service';
 import { TranslateService } from '@ngx-translate/core';
 import { environment } from '../environments/environment';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 @UntilDestroy()
 @Component({
@@ -20,7 +19,7 @@ import { environment } from '../environments/environment';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
 
   public isLoggedIn = false;
   public loggedUser: UserInfo | undefined;

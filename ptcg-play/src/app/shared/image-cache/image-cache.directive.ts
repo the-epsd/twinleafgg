@@ -27,7 +27,7 @@ export class ImageCacheDirective {
   constructor(
     private imageCacheService: ImageCacheService,
     private sanitizer: DomSanitizer
-  ) {}
+  ) { }
 
   @Input('ptcgImageCache')
   set src(value: string) {

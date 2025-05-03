@@ -22,9 +22,9 @@ import { ChangeCardImagesPopupComponent } from './change-card-images-popup/chang
 export class ProfileComponent implements OnInit {
 
   public user$: Observable<UserInfo | undefined>;
-  public loggedUserId: number;
-  public loading: boolean;
-  public userId: number;
+  public loggedUserId: number = 0;
+  public loading: boolean = false;
+  public userId: number = 0;
   public owner$: Observable<boolean>;
   public isAdmin$: Observable<boolean>;
   public isBanned$: Observable<boolean>;
@@ -55,7 +55,12 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
     this.route.paramMap.pipe(
       switchMap(paramMap => {
-        const userId = parseInt(paramMap.get('userId'), 10);
+        const userIdParam = paramMap.get('userId');
+        if (!userIdParam) {
+          this.router.navigate(['/']);
+          return EMPTY;
+        }
+        const userId = parseInt(userIdParam, 10);
         this.userId = userId;
         this.owner$ = this.sessionService.get(session => session.loggedUserId === userId);
         this.user$ = this.sessionService.get(session => session.users[userId]);

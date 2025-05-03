@@ -50,8 +50,8 @@ $board-min-height: calc(6 * var(--card-size) * #{$card-aspect-ratio} + 2 * #{map
 @media (max-width: 990px) {
   .responsive-board {
     transform-origin: top left;
-    transform: scale(calc(round(100vw / 990)));
-    height: calc(100vh * (990 / 100vw));
+    transform: scale(calc(100vw / 990));
+    height: calc(100vh * 0.85);
 
     .perspective-wrapper {
       transform-style: preserve-3d;

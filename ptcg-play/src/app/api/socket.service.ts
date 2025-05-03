@@ -15,7 +15,7 @@ interface SocketResponse<T> {
 @Injectable()
 export class SocketService {
 
-  public socket: Socket;
+  public socket!: Socket;
   private callbacks: { event: string, fn: any }[] = [];
   private enabled = false;
   private connectionSubject = new BehaviorSubject<boolean>(false);
@@ -189,6 +189,12 @@ export class SocketService {
       this.socket.emit(message, data, (response: SocketResponse<R>) => {
         if (response && response.message !== 'ok') {
           observer.error(new ApiError(ApiErrorEnum.SOCKET_ERROR, String(response.data)));
+          observer.complete();
+          return;
+        }
+
+        if (response.data === undefined) {
+          observer.error(new ApiError(ApiErrorEnum.SOCKET_ERROR, 'No data received'));
           observer.complete();
           return;
         }

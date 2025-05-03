@@ -18,12 +18,12 @@ export class PromptOrderCardsComponent {
     this.promptId = prompt.id;
   }
 
-  @Input() gameState: LocalGameState;
+  @Input() gameState!: LocalGameState;
 
-  public cards: CardList;
-  public allowedCancel: boolean;
-  public promptId: number;
-  public message: string;
+  public cards!: CardList;
+  public allowedCancel!: boolean;
+  public promptId!: number;
+  public message!: string;
   private result: number[] = [];
 
   constructor(
@@ -49,5 +49,4 @@ export class PromptOrderCardsComponent {
   public onChange(result: number[]) {
     this.result = result;
   }
-
 }

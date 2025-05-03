@@ -1,19 +1,22 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { PlayerStats } from 'ptcg-server';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'ptcg-player-time',
   templateUrl: './player-time.component.html',
-  styleUrls: ['./player-time.component.scss']
+  styleUrls: ['./player-time.component.scss'],
+  standalone: true,
+  imports: [CommonModule]
 })
 export class PlayerTimeComponent implements OnChanges {
 
-  @Input() timeLimit: number;
-  @Input() playerStats: PlayerStats;
+  @Input() timeLimit!: number;
+  @Input() playerStats!: PlayerStats;
 
-  public disabled: boolean;
-  public value: number;
-  public timeString: string;
+  public disabled!: boolean;
+  public value!: number;
+  public timeString!: string;
 
   constructor() { }
 
@@ -31,5 +34,4 @@ export class PlayerTimeComponent implements OnChanges {
     const seconds = timeLeft % 60;
     this.timeString = String(minutes) + ':' + String(seconds).padStart(2, '0');
   }
-
 }

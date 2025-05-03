@@ -54,5 +54,4 @@ export class PromptConfirmCardsComponent {
   public onCardClick(card: Card) {
     this.cardsBaseService.showCardInfo({ card });
   }
-
 }

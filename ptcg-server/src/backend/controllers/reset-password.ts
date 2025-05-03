@@ -20,6 +20,10 @@ export class ResetPassword extends Controller {
   private mailer = new Mailer();
   private tokens: OneTimeToken[] = [];
 
+  private getIpAddress(req: Request): string {
+    return req.ip || '127.0.0.1';
+  }
+
   @Post('/sendMail')
   @Validate({
     email: check().isEmail(),
@@ -27,20 +31,20 @@ export class ResetPassword extends Controller {
   public async onSendMail(req: Request, res: Response) {
     const body: { email: string, language?: string } = req.body;
 
-    if (this.rateLimit.isLimitExceeded(req.ip)) {
+    if (this.rateLimit.isLimitExceeded(this.getIpAddress(req))) {
       res.status(400);
-      res.send({error: ApiErrorEnum.REQUESTS_LIMIT_REACHED});
+      res.send({ error: ApiErrorEnum.REQUESTS_LIMIT_REACHED });
       return;
     }
 
     // Don't allow to create to many reset-password requests
-    this.rateLimit.increment(req.ip);
+    this.rateLimit.increment(this.getIpAddress(req));
 
-    const user = await User.findOne({email: body.email});
+    const user = await User.findOne({ email: body.email });
 
     if (user === undefined) {
       res.status(400);
-      res.send({error: ApiErrorEnum.LOGIN_INVALID});
+      res.send({ error: ApiErrorEnum.LOGIN_INVALID });
       return;
     }
 
@@ -57,11 +61,11 @@ export class ResetPassword extends Controller {
       await this.mailer.sendEmail(body.email, template, params);
     } catch (error) {
       res.status(400);
-      res.send({error: ApiErrorEnum.CANNOT_SEND_MESSAGE});
+      res.send({ error: ApiErrorEnum.CANNOT_SEND_MESSAGE });
       return;
     }
 
-    res.send({ok: true});
+    res.send({ ok: true });
   }
 
   @Post('/changePassword')
@@ -75,7 +79,7 @@ export class ResetPassword extends Controller {
     const token = this.validateToken(body.token);
     if (token === undefined) {
       res.status(400);
-      res.send({error: ApiErrorEnum.LOGIN_INVALID});
+      res.send({ error: ApiErrorEnum.LOGIN_INVALID });
       return;
     }
 
@@ -84,7 +88,7 @@ export class ResetPassword extends Controller {
 
     if (user === undefined) {
       res.status(400);
-      res.send({error: ApiErrorEnum.LOGIN_INVALID});
+      res.send({ error: ApiErrorEnum.LOGIN_INVALID });
       return;
     }
 
@@ -93,7 +97,7 @@ export class ResetPassword extends Controller {
       await user.save();
     } catch (error) {
       res.status(400);
-      res.send({error: ApiErrorEnum.LOGIN_INVALID});
+      res.send({ error: ApiErrorEnum.LOGIN_INVALID });
       return;
     }
 

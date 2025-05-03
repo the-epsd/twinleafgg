@@ -23,7 +23,7 @@ export class EditAvatarsPopupComponent implements OnInit {
   public loading = false;
   public defaultAvatar$: Observable<string>;
   public avatars: AvatarInfo[] = [];
-  private userId: number;
+  private userId: number = 0;
 
   constructor(
     private alertService: AlertService,
@@ -88,5 +88,4 @@ export class EditAvatarsPopupComponent implements OnInit {
       value: name
     });
   }
-
 }

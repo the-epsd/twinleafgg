@@ -28,8 +28,8 @@ export interface EnergySelection {
   styleUrls: ['./prompt-discard-energy.component.scss']
 })
 export class PromptDiscardEnergyComponent implements OnInit, OnDestroy {
-  @Input() prompt: DiscardEnergyPrompt;
-  @Input() gameState: LocalGameState;
+  @Input() prompt!: DiscardEnergyPrompt;
+  @Input() gameState!: LocalGameState;
 
   // Pokemon data
   public pokemonItems: PokemonCardItem[] = [];

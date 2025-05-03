@@ -1,4 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 import { DeckEditToolbarFilter } from './deck-edit-toolbar-filter.interface';
 import { Card, CardType, SuperType, PokemonCard, EnergyCard, CardTag, Format, TrainerCard, Stage } from 'ptcg-server';
@@ -6,7 +7,8 @@ import { LibraryItem } from '../deck-card/deck-card.interface';
 import { FormatValidator } from 'src/app/util/formats-validator';
 
 @Pipe({
-  name: 'filterCards'
+  name: 'filterCards',
+  standalone: true
 })
 export class FilterCardsPipe implements PipeTransform {
 
@@ -121,6 +123,7 @@ export class FilterCardsPipe implements PipeTransform {
       if (powerNames.some(n => (n.includes(search))) || powerTexts.some(n => (n.includes(search))))
         return true;
     }
+    return false;
   }
 
   private matchRetreatCosts(retreatCosts: number[], card: Card): boolean {

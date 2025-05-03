@@ -34,6 +34,10 @@ export function AuthToken() {
   const TOKEN_HEADER: string = 'Auth-Token';
   const rateLimit = RateLimit.getInstance();
 
+  const getIpAddress = (req: Request): string => {
+    return req.ip || '127.0.0.1';
+  };
+
   return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
     const handler = descriptor.value;
 
@@ -45,20 +49,20 @@ export function AuthToken() {
       const token = req.header(TOKEN_HEADER) || '';
       const userId = validateToken(token);
 
-      if (rateLimit.isLimitExceeded(req.ip)) {
+      if (rateLimit.isLimitExceeded(getIpAddress(req))) {
         res.status(400);
-        res.send({error: ApiErrorEnum.REQUESTS_LIMIT_REACHED});
+        res.send({ error: ApiErrorEnum.REQUESTS_LIMIT_REACHED });
         return;
       }
 
       if (!userId) {
-        rateLimit.increment(req.ip);
+        rateLimit.increment(getIpAddress(req));
         res.statusCode = 403;
-        res.send({error: ApiErrorEnum.AUTH_TOKEN_INVALID});
+        res.send({ error: ApiErrorEnum.AUTH_TOKEN_INVALID });
         return;
       }
 
-      Object.assign(req.body, {userId});
+      Object.assign(req.body, { userId });
       return handler.apply(this, arguments);
     };
   };

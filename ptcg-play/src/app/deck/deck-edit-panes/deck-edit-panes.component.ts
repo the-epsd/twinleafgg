@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy, Input, Output, EventEmitter, NgZone, ViewChild, ElementRef } from '@angular/core';
-import { DndService, DropTarget } from '@ng-dnd/core';
-import { DraggedItem, SortableSpec } from '@ng-dnd/sortable';
-import { Observable } from 'rxjs';
+import { CdkDragDrop, moveItemInArray, transferArrayItem, CdkDropList, CdkDrag } from '@angular/cdk/drag-drop';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { VIRTUAL_SCROLL_STRATEGY } from '@angular/cdk/scrolling';
 import { map } from 'rxjs/operators';
@@ -14,6 +13,23 @@ import { DeckCardType } from '../deck-card/deck-card.component';
 import { DeckEditVirtualScrollStrategy } from './deck-edit-virtual-scroll-strategy';
 import { Card, CardTag, EnergyCard, EnergyType, PokemonCard, SuperType, TrainerCard, TrainerType, CardType, Stage } from 'ptcg-server';
 import html2canvas from 'html2canvas';
+import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSliderModule } from '@angular/material/slider';
+import { ScrollingModule } from '@angular/cdk/scrolling';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { DeckCardComponent } from '../deck-card/deck-card.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { FilterCardsPipe } from '../deck-edit-toolbar/filter-cards.pipe';
+import { TranslateModule } from '@ngx-translate/core';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { DndModule, DndService, DropTarget } from '@ng-dnd/core';
+import { DndSortableModule, DraggedItem, SortableSpec } from '@ng-dnd/sortable';
+import { DeckValidityModule } from '../../shared/deck-validity/deck-validity.module';
 
 const DECK_CARD_ITEM_WIDTH = 148;
 const DECK_CARD_ITEM_HEIGHT = 173;
@@ -22,14 +38,34 @@ const DECK_CARD_ITEM_HEIGHT = 173;
   selector: 'ptcg-deck-edit-panes',
   templateUrl: './deck-edit-panes.component.html',
   styleUrls: ['./deck-edit-panes.component.scss'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    ScrollingModule,
+    MatButtonModule,
+    MatIconModule,
+    MatTooltipModule,
+    MatSliderModule,
+    MatFormFieldModule,
+    MatInputModule,
+    TranslateModule,
+    DragDropModule,
+    DndModule,
+    DndSortableModule,
+    DeckCardComponent,
+    DeckValidityModule,
+    FilterCardsPipe
+  ],
   providers: [{
     provide: VIRTUAL_SCROLL_STRATEGY,
     useValue: new DeckEditVirtualScrollStrategy(DECK_CARD_ITEM_WIDTH, DECK_CARD_ITEM_HEIGHT)
-  }]
+  }],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
+
 export class DeckEditPanesComponent implements OnInit, OnDestroy {
 
-  @Input() toolbarFilter: DeckEditToolbarFilter;
+  @Input() toolbarFilter: DeckEditToolbarFilter = {} as DeckEditToolbarFilter;
   @Output() deckItemsChange = new EventEmitter<DeckItem[]>();
   public showLibrary = true;
 
@@ -44,7 +80,7 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
   public libraryHighlight$: Observable<boolean>;
   public deckSpec: SortableSpec<DeckItem>;
   public cards: LibraryItem[] = [];
-  public hasDropped: boolean;
+  public hasDropped: boolean = false;
 
   list: DeckItem[] = [];
   tempList: DeckItem[] = [];
@@ -459,7 +495,7 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
     return order.indexOf(cardType);
   };
 
-  @ViewChild('deckPane') deckPane: ElementRef;
+  @ViewChild('deckPane') deckPane!: ElementRef;
 
   public exportDeckImage() {
     const element = this.deckPane.nativeElement;

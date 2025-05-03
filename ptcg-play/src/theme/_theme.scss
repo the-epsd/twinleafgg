@@ -1,18 +1,40 @@
+@use '@angular/material' as mat;
+@import './variables.scss';
 @import '../app/shared/sidebar/_sidebar-theme.scss';
-@import '../app/login/login-popup/_login-popup-theme.scss';
 @import '../app/deck/deck-edit/_deck-edit-theme.scss';
+@import '../app/login/login-popup/_login-popup-theme.scss';
 @import '../app/main/_main-theme.scss';
-@import '../app/profile/_profile.theme.scss';
-@import '../app/replays/_replays.theme.scss';
 @import '../app/shared/search-box/_search-box-theme.scss';
 @import '../app/shared/info/_info-theme.scss';
-@import '../app/messages/_messages.theme.scss';
 @import '../app/shared/user-info/badge/_badge-theme.scss';
 @import '../app/shared/cards/_cards-theme.scss';
-@import '../app/shared/file-input/_file-input.theme.scss';
-@import '../app/shared/user-info/_user-info.theme.scss';
 @import '../app/table/_table-theme.scss';
+@import '../app/shared/user-info/_user-info.theme.scss';
 @import '../app/table/prompt/_prompt-theme.scss';
+@import '../app/shared/file-input/_file-input.theme.scss';
+@import '../app/profile/_profile.theme.scss';
+@import '../app/replays/_replays.theme.scss';
+@import '../app/messages/_messages.theme.scss';
+
+// Include non-theme styles for core.
+@include mat.core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+$primary: mat.define-palette(mat.$green-palette, 700);
+$accent: mat.define-palette(mat.$green-palette, 500);
+$warn: mat.define-palette(mat.$red-palette);
+
+// Create the theme object (a Sass map containing all of the palettes).
+$theme: mat.define-light-theme((color: (primary: $primary,
+        accent: $accent,
+        warn: $warn,
+      ),
+      typography: mat.define-typography-config(),
+      density: 0,
+    ));
+
+// Include theme styles for core and each component used in your app.
+@include mat.all-component-themes($theme);
 
 @mixin ptcg-theme($theme) {
   @include ptcg-sidebar-theme($theme);
@@ -40,6 +62,5 @@
   @include ptcg-prompt-typography($config);
   @include ptcg-info-typography($config);
   @include ptcg-table-typography($config);
-  @include ptcg-file-input-typography($config);
   @include ptcg-messages-typography($config);
 }

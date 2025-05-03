@@ -25,8 +25,8 @@ import { ChangeServerPopupComponent } from '../change-server-popup/change-server
 export class LoginComponent implements OnInit, OnDestroy {
   public loading = false;
   public initialLoading = true;
-  public name: string;
-  public password: string;
+  public name: string = '';
+  public password: string = '';
   public rememberMe = true;
   public allowServerChange = environment.allowServerChange;
   private loginAborted$ = new Subject<void>();

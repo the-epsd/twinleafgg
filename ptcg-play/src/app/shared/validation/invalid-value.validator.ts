@@ -7,8 +7,8 @@ import { NG_VALIDATORS, AbstractControl, Validator, ValidationErrors } from '@an
 })
 export class InvalidValueDirective implements Validator {
 
-  private control: AbstractControl;
-  private invalidValue: string;
+  private control: AbstractControl | null = null;
+  private invalidValue: string = '';
 
   @Input() set ptcgInvalidValue(value: string) {
     this.invalidValue = value;
@@ -22,10 +22,10 @@ export class InvalidValueDirective implements Validator {
     const value = String(control.value || '').trim();
 
     if (value === this.invalidValue) {
-      return {invalidValue: true};
+      return { invalidValue: true };
     }
 
-    return null;
+    return {};
   }
 
 }

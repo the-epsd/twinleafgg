@@ -1,33 +1,35 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatDialogModule } from '@angular/material/dialog';
-import { BoardComponent } from './board.component';
+import { FormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
+import { SharedModule } from '../../shared/shared.module';
+import { MaterialModule } from '../../shared/material.module';
+import { BoardCardComponent, CardInfoDialogComponent } from './board-card/board-card.component';
 import { BoardPrizesComponent } from './board-prizes/board-prizes.component';
 import { BoardDeckComponent } from './board-deck/board-deck.component';
-import { BoardCardComponent } from './board-card/board-card.component';
-import { SharedModule } from '../../shared/shared.module';
-import { CardInfoDialogComponent } from './board-card/board-card.component';
-import { CardsModule } from 'src/app/shared/cards/cards.module';
 import { BoardSelectionOverlayComponent } from './board-selection-overlay/board-selection-overlay.component';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    MatDialogModule,
-    SharedModule,
-    CardsModule
-  ],
   declarations: [
-    BoardComponent,
+    BoardCardComponent,
     BoardPrizesComponent,
     BoardDeckComponent,
-    BoardCardComponent,
-    CardInfoDialogComponent,
-    BoardSelectionOverlayComponent
+    BoardSelectionOverlayComponent,
+    CardInfoDialogComponent
+  ],
+  imports: [
+    CommonModule,
+    FormsModule,
+    TranslateModule,
+    SharedModule,
+    MaterialModule
   ],
   exports: [
-    BoardComponent,
-    BoardCardComponent
+    BoardCardComponent,
+    BoardPrizesComponent,
+    BoardDeckComponent,
+    BoardSelectionOverlayComponent,
+    CardInfoDialogComponent
   ]
 })
 export class BoardModule { }

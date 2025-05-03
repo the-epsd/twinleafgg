@@ -8,8 +8,8 @@ import { MatFormFieldControl } from '@angular/material/form-field';
 })
 export class ErrorValidatorDirective implements Validator {
 
-  private error: string;
-  private control: AbstractControl;
+  private error: string = '';
+  private control: AbstractControl | null = null;
 
   @Input() set ptcgErrorValue(value: string) {
     this.error = value;
@@ -23,7 +23,7 @@ export class ErrorValidatorDirective implements Validator {
     if (this.error) {
       return { ptcgError: this.error };
     }
-    return null;
+    return {};
   }
 
 }

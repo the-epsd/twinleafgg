@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { UserInfo } from 'ptcg-server';
+import { UserInfo, Rank } from 'ptcg-server';
 
 import { UserInfoPopupService } from '../user-info-popup/user-info-popup.service';
 
@@ -33,5 +33,4 @@ export class UserBarComponent {
 
     this.userInfoPopupService.showUserInfo(user);
   }
-
 }

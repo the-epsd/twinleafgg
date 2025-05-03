@@ -232,5 +232,4 @@ export class PromptMoveEnergyComponent implements OnChanges {
       this.updateIsInvalid(this.results);
     }
   }
-
 }

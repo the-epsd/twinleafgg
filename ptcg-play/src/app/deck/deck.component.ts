@@ -9,10 +9,11 @@ import { DeckService } from '../api/services/deck.service';
 import { AlertService } from '../shared/alert/alert.service';
 import { CardsBaseService } from '../shared/cards/cards-base.service';
 import { DeckItem } from './deck-card/deck-card.interface';
-import { Archetype, CardType } from 'ptcg-server';
+import { Archetype, CardType, Card } from 'ptcg-server';
 import { ArchetypeUtils } from './deck-archetype-service/archetype.utils';
 import { Format } from 'ptcg-server';
 import { FormatValidator } from 'src/app/util/formats-validator';
+import { DeckEditPane } from './deck-edit-panes/deck-edit-pane.interface';
 
 @UntilDestroy()
 
@@ -104,12 +105,15 @@ export class DeckComponent implements OnInit {
         this.decks.forEach(deck => {
           const deckCards: DeckItem[] = [];
           deck.cards.forEach(card => {
-            deckCards.push({
-              card: this.cardsBaseService.getCardByName(card),
-              count: 0,
-              pane: null,
-              scanUrl: null
-            });
+            const cardObj = this.cardsBaseService.getCardByName(card);
+            if (cardObj) {
+              deckCards.push({
+                card: cardObj,
+                count: 1,
+                pane: DeckEditPane.DECK,
+                scanUrl: this.cardsBaseService.getScanUrl(cardObj)
+              });
+            }
           });
 
           deck.deckItems = deckCards;

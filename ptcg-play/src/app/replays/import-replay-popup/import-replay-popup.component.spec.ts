@@ -23,11 +23,11 @@ describe('ImportReplayPopupComponent', () => {
         TranslateModule.forRoot(),
         ValidationModule
       ],
-      declarations: [ FileInputComponent, ImportReplayPopupComponent ],
-      providers: [ { provide: MatDialogRef, useValue: {} } ],
-      schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+      declarations: [FileInputComponent, ImportReplayPopupComponent],
+      providers: [{ provide: MatDialogRef, useValue: {} }],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
-    .compileComponents();
+      .compileComponents();
 
     sessionService = TestBed.inject(SessionService);
     sessionService.set({ config: { avatarFileSize: 1000 } as any })

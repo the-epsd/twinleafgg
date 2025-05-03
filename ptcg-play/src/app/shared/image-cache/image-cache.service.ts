@@ -31,12 +31,12 @@ export interface ImgCacheConfig {
 export class ImageCacheService {
 
   private initialized = false;
-  private cachedFilesMap: {[url: string]: string} = {};
-  private inProgressMap: {[url: string]: Subject<string>} = {};
+  private cachedFilesMap: { [url: string]: string } = {};
+  private inProgressMap: { [url: string]: Subject<string> } = {};
 
   constructor(
     private ngZone: NgZone
-  ) {}
+  ) { }
 
   public init(config: ImgCacheConfig = {}) {
     Object.assign(ImgCache.options, config);
@@ -106,5 +106,4 @@ export class ImageCacheService {
       ImgCache.clearCache(resolve, reject);
     });
   }
-
 }

@@ -1,32 +1,47 @@
-import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
-import { Card } from 'ptcg-server';
-import { DraggedItem } from '@ng-dnd/sortable';
-
+import { Component, Input, Output, EventEmitter, OnChanges, OnDestroy, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Card, PlayerType } from 'ptcg-server';
+import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
 import { CardsBaseService } from '../../../shared/cards/cards-base.service';
-import { PromptCardType, PromptItem } from '../prompt-card-item.interface';
+import { DraggedItem } from '@ng-dnd/sortable';
+import { PromptItem, PromptCardType } from '../prompt-card-item.interface';
 import { ChooseCardsSortable } from './choose-cards-panes-2.interface';
-
+import { DndService } from '@ng-dnd/core';
+import { Observable, map } from 'rxjs';
+import { PokemonData, PokemonItem, PokemonRow } from '../choose-pokemons-pane/pokemon-data';
 
 @Component({
   selector: 'ptcg-choose-cards-panes-2',
   templateUrl: './choose-cards-panes-2.component.html',
-  styleUrls: ['./choose-cards-panes-2.component.scss']
+  styleUrls: ['./choose-cards-panes-2.component.scss'],
+  standalone: true,
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    MatTooltipModule,
+    TranslateModule
+  ]
 })
 export class ChooseCardsPanes2Component implements OnChanges {
 
   public readonly topListId = 'CHOOSE_CARDS_TOP_LIST';
   public readonly bottomListId = 'CHOOSE_CARDS_BOTTOM_LIST';
 
-  @Input() cards: Card[];
+  @Input() cards: Card[] = [];
   @Input() filter: Partial<Card> = {};
   @Input() blocked: number[] = [];
   @Input() cardbackMap: { [index: number]: boolean } = {};
   @Input() singlePaneMode = false;
   @Output() changeCards = new EventEmitter<number[]>();
 
-  public allowedCancel: boolean;
-  public promptId: number;
-  public message: string;
+  public allowedCancel: boolean = false;
+  public promptId: number = 0;
+  public message: string = '';
   public filterMap: { [fullName: string]: boolean } = {};
   public topSortable: ChooseCardsSortable;
   public bottomSortable: ChooseCardsSortable;
@@ -50,22 +65,20 @@ export class ChooseCardsPanes2Component implements OnChanges {
     const sortable: ChooseCardsSortable = {
       list: [],
       tempList: [],
-      spec: undefined
-    };
-
-    sortable.spec = {
-      type: PromptCardType,
-      trackBy: item => item.index,
-      hover: item => {
-        this.updateTempLists(sortable, item);
-      },
-      drop: item => {
-        this.updateTempLists(sortable, item);
-        this.commitTempLists();
-      },
-      canDrag: item => item.isAvailable,
-      endDrag: () => {
-        this.revertTempLists();
+      spec: {
+        type: PromptCardType,
+        trackBy: item => item.index,
+        hover: item => {
+          this.updateTempLists(sortable, item);
+        },
+        drop: item => {
+          this.updateTempLists(sortable, item);
+          this.commitTempLists();
+        },
+        canDrag: item => item.isAvailable,
+        endDrag: () => {
+          this.revertTempLists();
+        }
       }
     };
 
@@ -171,5 +184,4 @@ export class ChooseCardsPanes2Component implements OnChanges {
       this.commitTempLists();
     }
   }
-
 }

@@ -1,32 +1,22 @@
-import { Component, HostBinding, Input, OnChanges } from '@angular/core';
+import { Component, ElementRef, HostBinding, Input, OnChanges, OnDestroy } from '@angular/core';
 import { Player, Card, CardList, CardTarget, PlayerType, SlotType } from 'ptcg-server';
 import { SortableSpec, DraggedItem } from '@ng-dnd/sortable';
-
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CardsBaseService } from '../../shared/cards/cards-base.service';
 import { HandItem, HandCardType } from './hand-item.interface';
 import { LocalGameState } from '../../shared/session/session.interface';
 import { GameService } from '../../api/services/game.service';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { CommonModule } from '@angular/common';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'ptcg-hand',
   templateUrl: './hand.component.html',
   styleUrls: ['./hand.component.scss'],
-  template: `
-    <div class="ptcg-hand" [class.opponent]="isOpponent">
-      <div class="ptcg-hand-container">
-        <dnd-sortable-list>
-          <ptcg-card 
-            *ngFor="let card of cards"
-            [card]="card"
-            [class.dragging]="isDragging(card)"
-            (dragstart)="onDragStart(card)"
-            (dragend)="onDragEnd(card)">
-          </ptcg-card>
-        </dnd-sortable-list>
-      </div>
-    </div>
-  `,
+  standalone: true,
+  imports: [CommonModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   animations: [
     trigger('cardDrag', [
       state('dragging', style({
@@ -54,47 +44,93 @@ export class HandComponent implements OnChanges {
   public cards: Card[] = [];
   public isFaceDown: boolean;
   public isDeleted: boolean;
-  public handSpec: SortableSpec<HandItem>;
+  public handSpec: SortableSpec<HandItem> = {
+    type: HandCardType,
+    trackBy: item => item.index,
+    hover: item => {
+      this.tempList = this.move(item);
+    },
+    drop: item => {
+      this.tempList = this.move(item);
+      this.list = this.tempList;
+      this.dispatchAction(this.list);
+    },
+    canDrag: () => {
+      const isMinimized = this.gameState && this.gameState.promptMinimized;
+      return this.isOwner && !this.isDeleted && !isMinimized;
+    },
+    endDrag: () => {
+      this.tempList = this.list;
+    }
+  };
   public list: HandItem[] = [];
   public tempList: HandItem[] = [];
   private draggingCard: Card | null = null;
   private isOwner: boolean;
 
+  private dragVelocity = { x: 0, y: 0 };
+  private lastDragPosition = { x: 0, y: 0 };
+  private dragStartTime = 0;
+  private dragElement: HTMLElement | null = null;
+
   constructor(
     private cardsBaseService: CardsBaseService,
-    private gameService: GameService
+    private gameService: GameService,
+    private elementRef: ElementRef
   ) {
-    this.handSpec = {
-      type: HandCardType,
-      trackBy: item => item.index,
-      hover: item => {
-        this.tempList = this.move(item);
-      },
-      drop: item => {
-        this.tempList = this.move(item);
-        this.list = this.tempList;
-        this.dispatchAction(this.list);
-      },
-      canDrag: () => {
-        const isMinimized = this.gameState && this.gameState.promptMinimized;
-        return this.isOwner && !this.isDeleted && !isMinimized;
-      },
-      endDrag: () => {
-        this.tempList = this.list;
-      }
-    };
   }
 
   isDragging(card: Card): boolean {
     return this.draggingCard === card;
   }
 
-  onDragStart(card: Card): void {
+  onDragStart(card: Card, event: DragEvent): void {
     this.draggingCard = card;
+    this.dragStartTime = performance.now();
+    this.lastDragPosition = { x: event.clientX, y: event.clientY };
+    this.dragVelocity = { x: 0, y: 0 };
+    this.dragElement = event.target as HTMLElement;
+  }
+
+  onDragMove(event: MouseEvent): void {
+    if (!this.draggingCard || !this.dragElement) return;
+
+    const currentTime = performance.now();
+    const deltaTime = currentTime - this.dragStartTime;
+
+    if (deltaTime > 0) {
+      const currentPosition = { x: event.clientX, y: event.clientY };
+      this.dragVelocity = {
+        x: (currentPosition.x - this.lastDragPosition.x) / deltaTime,
+        y: (currentPosition.y - this.lastDragPosition.y) / deltaTime
+      };
+      this.lastDragPosition = currentPosition;
+
+      // Calculate rotation based on drag direction
+      const angle = Math.atan2(
+        currentPosition.y - this.lastDragPosition.y,
+        currentPosition.x - this.lastDragPosition.x
+      ) * (180 / Math.PI);
+
+      // Calculate scale based on drag speed
+      const speed = Math.sqrt(
+        Math.pow(this.dragVelocity.x, 2) +
+        Math.pow(this.dragVelocity.y, 2)
+      );
+      const scale = 1 + Math.min(speed * 0.001, 0.15);
+
+      // Apply transform
+      this.dragElement.style.transform = `
+        translate(${currentPosition.x}px, ${currentPosition.y}px)
+        rotate(${angle}deg)
+        scale(${scale})
+      `;
+    }
   }
 
   onDragEnd(card: Card): void {
     this.draggingCard = null;
+    this.dragElement = null;
   }
 
   @HostBinding('style.--card-margin')
@@ -196,5 +232,4 @@ export class HandComponent implements OnChanges {
       return item;
     });
   }
-
 }

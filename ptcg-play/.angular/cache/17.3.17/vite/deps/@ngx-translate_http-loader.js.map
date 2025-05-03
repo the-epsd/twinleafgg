@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../node_modules/@ngx-translate/http-loader/dist/fesm2022/ngx-translate-http-loader.mjs"],
+  "sourcesContent": ["class TranslateHttpLoader {\n    http;\n    prefix;\n    suffix;\n    constructor(http, prefix = \"/assets/i18n/\", suffix = \".json\") {\n        this.http = http;\n        this.prefix = prefix;\n        this.suffix = suffix;\n    }\n    /**\n     * Gets the translations from the server\n     */\n    getTranslation(lang) {\n        return this.http.get(`${this.prefix}${lang}${this.suffix}`);\n    }\n}\n\n/**\n * Generated bundle index. Do not edit.\n */\n\nexport { TranslateHttpLoader };\n\n"],
+  "mappings": ";;;;;AAAA,IAAM,sBAAN,MAA0B;AAAA,EAItB,YAAY,MAAM,SAAS,iBAAiB,SAAS,SAAS;AAH9D;AACA;AACA;AAEI,SAAK,OAAO;AACZ,SAAK,SAAS;AACd,SAAK,SAAS;AAAA,EAClB;AAAA;AAAA;AAAA;AAAA,EAIA,eAAe,MAAM;AACjB,WAAO,KAAK,KAAK,IAAI,GAAG,KAAK,MAAM,GAAG,IAAI,GAAG,KAAK,MAAM,EAAE;AAAA,EAC9D;AACJ;",
+  "names": []
+}

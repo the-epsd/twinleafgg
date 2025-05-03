@@ -19,7 +19,8 @@ export class LanguageService {
   constructor(
     private translate: TranslateService
   ) {
-    this.language = window.localStorage.getItem('language');
+    const storedLanguage = window.localStorage.getItem('language');
+    this.language = storedLanguage || undefined;
 
     // this language will be used as a fallback when a translation isn't found in the current language
     translate.setDefaultLang(environment.defaultLanguage);
@@ -33,17 +34,24 @@ export class LanguageService {
       const browserLang = this.translate.getBrowserLang();
 
       // decode borser language, strip format 'en-US' to 'en'
-      if (browserLang !== undefined && browserLang.match(/\w\w/i) !== null) {
-        language = browserLang.match(/\w\w/i)[0].toLowerCase();
+      if (browserLang !== undefined) {
+        const match = browserLang.match(/\w\w/i);
+        if (match) {
+          language = match[0].toLowerCase();
+        }
       }
     }
 
-    this.changeLanguage(language);
+    if (language) {
+      this.changeLanguage(language);
+    } else {
+      this.changeLanguage(environment.defaultLanguage);
+    }
   }
 
   public changeLanguage(language: string) {
     if (!this.languages.some(l => l.value === language)) {
-      language = undefined;
+      language = environment.defaultLanguage;
     }
 
     this.setLanguage(language);
@@ -88,5 +96,4 @@ export class LanguageService {
 
     return languages;
   }
-
 }

@@ -36,7 +36,7 @@ describe('AppComponent', () => {
         { provide: SessionService, useClass: SessionServiceMock },
         { provide: SocketService, useValue: {} }
       ],
-      schemas: [ NO_ERRORS_SCHEMA ]
+      schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents();
   }));
 

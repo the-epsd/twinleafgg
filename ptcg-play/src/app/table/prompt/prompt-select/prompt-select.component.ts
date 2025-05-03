@@ -50,5 +50,4 @@ export class PromptSelectComponent {
     const id = this.promptId;
     this.gameService.resolvePrompt(gameId, id, null);
   }
-
 }

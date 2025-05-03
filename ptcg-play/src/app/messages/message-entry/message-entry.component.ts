@@ -11,10 +11,10 @@ import { SessionService } from '../../shared/session/session.service';
 })
 export class MessageEntryComponent implements OnChanges {
 
-  @Input() message: MessageInfo;
-  @Input() loggedUserId: number;
+  @Input() message!: MessageInfo;
+  @Input() loggedUserId!: number;
   public user$: Observable<UserInfo> = EMPTY;
-  public writtenByMe: boolean;
+  public writtenByMe: boolean = false;
 
   constructor(private sessionService: SessionService) { }
 
@@ -25,5 +25,4 @@ export class MessageEntryComponent implements OnChanges {
       this.user$ = this.sessionService.get(session => session.users[senderId]);
     }
   }
-
 }

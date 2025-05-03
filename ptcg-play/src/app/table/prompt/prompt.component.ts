@@ -1,6 +1,12 @@
 import { AnimationEvent } from '@angular/animations';
-import { Component, Input, OnChanges, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, ViewEncapsulation, SimpleChange, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { Prompt, GamePhase } from 'ptcg-server';
+import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
+import { DndModule } from '@ng-dnd/core';
 
 import { GameService } from '../../api/services/game.service';
 import { GameOverPrompt } from './prompt-game-over/game-over.prompt';
@@ -12,16 +18,27 @@ import { ptcgPromptAnimations } from './prompt.animations';
   templateUrl: './prompt.component.html',
   styleUrls: ['./prompt.component.scss'],
   animations: [ptcgPromptAnimations.promptContent],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  standalone: true,
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    MatTooltipModule,
+    TranslateModule,
+    DndModule
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
+
 export class PromptComponent implements OnChanges {
 
-  @Input() gameState: LocalGameState;
-  @Input() clientId: number;
+  @Input() gameState!: LocalGameState;
+  @Input() clientId!: number;
 
   public isPromptVisible = false;
   public animationState: 'void' | 'enter' | 'exit' = 'void';
-  public prompt: Prompt<any>;
+  public prompt: Prompt<any> | undefined;
   public minimized = false;
 
   constructor(private gameService: GameService) { }
@@ -32,16 +49,17 @@ export class PromptComponent implements OnChanges {
     }
 
     let differentGame = false;
-    if (changes.gameState) {
-      const previousState: LocalGameState = changes.gameState.previousValue;
+    if (changes['gameState']) {
+      const previousState: LocalGameState = changes['gameState'].previousValue;
       differentGame = !previousState || previousState.localId !== this.gameState.localId;
     }
 
     // In replay mode, we need special handling
     if (this.gameState.replay) {
       // If we're navigating through replay states (position changes), hide any active prompts
-      if (changes.gameState && changes.gameState.previousValue &&
-        changes.gameState.previousValue.replayPosition !== this.gameState.replayPosition) {
+      const gameStateChange: SimpleChange | undefined = changes['gameState'];
+      if (gameStateChange && gameStateChange.previousValue &&
+        gameStateChange.previousValue.replayPosition !== this.gameState.replayPosition) {
         this.prompt = undefined;
         this.toggle(false);
         return;

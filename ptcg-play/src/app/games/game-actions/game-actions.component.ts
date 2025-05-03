@@ -17,9 +17,9 @@ import { SessionService } from '../../shared/session/session.service';
 })
 export class GameActionsComponent implements OnInit {
 
-  @Input() game: GameInfo;
+  @Input() game!: GameInfo;
   public gameStates$: Observable<GameState[]>;
-  public isJoined: boolean;
+  public isJoined = false;
 
   constructor(
     private alertService: AlertService,
@@ -49,7 +49,7 @@ export class GameActionsComponent implements OnInit {
 
   public join() {
     this.gameService.join(this.game.gameId)
-      .subscribe(() => {}, () => {});
+      .subscribe(() => { }, () => { });
   }
 
   public async leave() {
@@ -63,5 +63,4 @@ export class GameActionsComponent implements OnInit {
 
     this.gameService.leave(this.game.gameId);
   }
-
 }

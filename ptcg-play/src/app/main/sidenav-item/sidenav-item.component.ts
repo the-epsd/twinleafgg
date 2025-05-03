@@ -26,11 +26,11 @@ export class SidenavItemComponent {
 
   public isPlaying = false;
   public isDeleted = false;
-  public label: string;
-  public badgeContent: string;
-  public badgeColor: string;
-  public localId: number;
-  private gameId: number;
+  public label: string = '';
+  public badgeContent: string = '';
+  public badgeColor: string = 'primary';
+  public localId: number = 0;
+  private gameId: number = 0;
 
   constructor(
     private alertService: AlertService,
@@ -108,5 +108,4 @@ export class SidenavItemComponent {
       this.gameService.leave(this.gameId);
     }
   }
-
 }

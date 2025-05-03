@@ -32,7 +32,10 @@ export class DeckService {
         return decks.decks.filter(deck => {
           const deckCards: Card[] = [];
           deck.cards.forEach(card => {
-            deckCards.push(this.cardsBaseService.getCardByName(card));
+            const foundCard = this.cardsBaseService.getCardByName(card);
+            if (foundCard) {
+              deckCards.push(foundCard);
+            }
           });
 
           deck.format = FormatValidator.getValidFormatsForCardList(deckCards);
@@ -83,5 +86,4 @@ export class DeckService {
       name
     });
   }
-
 }

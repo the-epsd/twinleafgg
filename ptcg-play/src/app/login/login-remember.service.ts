@@ -5,8 +5,8 @@ import { Injectable } from '@angular/core';
 })
 export class LoginRememberService {
 
-  public token: string;
-  public apiUrl: string;
+  public token: string | null = null;
+  public apiUrl: string | null = null;
 
   constructor() {
     this.token = window.localStorage.getItem('token');
@@ -14,7 +14,7 @@ export class LoginRememberService {
   }
 
   public rememberApiUrl(apiUrl?: string) {
-    this.apiUrl = apiUrl;
+    this.apiUrl = apiUrl ?? null;
     if (apiUrl === undefined) {
       window.localStorage.removeItem('apiUrl');
       return;
@@ -23,7 +23,7 @@ export class LoginRememberService {
   }
 
   public rememberToken(token?: string) {
-    this.token = token;
+    this.token = token ?? null;
     if (token === undefined) {
       window.localStorage.removeItem('token');
       return;

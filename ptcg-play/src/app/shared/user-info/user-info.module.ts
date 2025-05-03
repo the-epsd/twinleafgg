@@ -22,7 +22,7 @@ import { UserInfoPopupComponent } from './user-info-popup/user-info-popup.compon
     UserInfoPaneComponent,
     UserInfoPopupComponent
   ],
-  entryComponents: [
+  providers: [
     AvatarPopupComponent,
     UserInfoPopupComponent
   ],

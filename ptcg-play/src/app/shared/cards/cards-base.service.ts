@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Card, StateSerializer, SuperType, PokemonCard, EnergyCard, CardType, TrainerCard } from 'ptcg-server';
+import { Subject } from 'rxjs';
 
 import { ApiService } from '../../api/api.service';
 import { CardInfoPopupData, CardInfoPopupComponent } from './card-info-popup/card-info-popup.component';
@@ -19,6 +20,8 @@ export class CardsBaseService {
   private cards: Card[] = [];
   private names: string[] = [];
   private customImages: { [key: string]: string } = {};
+  private effectActivatedSource = new Subject<string>();
+  effectActivated$ = this.effectActivatedSource.asObservable();
 
   constructor(
     private apiService: ApiService,
@@ -138,6 +141,10 @@ export class CardsBaseService {
 
     return dialog.afterClosed().toPromise()
       .catch(() => undefined);
+  }
+
+  activateEffect(cardId: string) {
+    this.effectActivatedSource.next(cardId);
   }
 
 }

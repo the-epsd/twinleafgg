@@ -17,9 +17,9 @@ import { ProfileService } from '../../api/services/profile.service';
 })
 export class ChangePasswordPopupComponent {
 
-  public currentPassword: string;
-  public newPassword: string;
-  public invalidPassword: string;
+  public currentPassword: string = '';
+  public newPassword: string = '';
+  public invalidPassword: string = '';
   public loading = false;
 
   constructor(
@@ -46,5 +46,4 @@ export class ChangePasswordPopupComponent {
       }
     });
   }
-
 }

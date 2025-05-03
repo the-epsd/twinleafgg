@@ -25,5 +25,4 @@ export class CardPlaceholderDirective implements OnDestroy {
       this.subscription.unsubscribe();
     }
   }
-
 }

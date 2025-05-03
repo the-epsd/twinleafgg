@@ -18,9 +18,9 @@ import { ResetPasswordService } from '../../api/services/reset-password.service'
 export class SetNewPasswordComponent implements OnInit {
 
   public loading = false;
-  public confirmPassword: string;
-  public newPassword: string;
-  public token: string;
+  public confirmPassword: string = '';
+  public newPassword: string = '';
+  public token: string = '';
 
   constructor(
     private alertService: AlertService,
@@ -33,7 +33,7 @@ export class SetNewPasswordComponent implements OnInit {
   ngOnInit(): void {
     this.route.paramMap.pipe(untilDestroyed(this)).subscribe({
       next: paramMap => {
-        this.token = paramMap.get('token');
+        this.token = paramMap.get('token') || '';
       }
     });
   }

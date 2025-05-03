@@ -1,5 +1,7 @@
-import { GameInfo, GameState, ClientInfo, UserInfo, StateLog, ServerConfig,
-  Replay, State, ConversationInfo } from 'ptcg-server';
+import {
+  GameInfo, GameState, ClientInfo, UserInfo, StateLog, ServerConfig,
+  Replay, State, ConversationInfo, Format
+} from 'ptcg-server';
 import { Observable } from 'rxjs';
 
 export class Session {

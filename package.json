@@ -1,6 +1,13 @@
 {
   "dependencies": {
-    "sqlite3": "^5.1.6"
+    "@angular/material": "^19.2.14",
+    "sqlite3": "^5.1.6",
+    "@ng-dnd/core": "^5.0.0",
+    "@ng-dnd/multi-backend": "^5.0.0",
+    "@ng-dnd/sortable": "^5.0.0",
+    "@ng-dnd/html5-backend": "^5.0.0",
+    "@ng-dnd/touch-backend": "^5.0.0",
+    "ptcg-server": "file:../ptcg-server"
   },
   "engines": {
     "node": ">=12.14.1 <=18.19.1",

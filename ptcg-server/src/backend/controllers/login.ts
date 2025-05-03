@@ -13,6 +13,10 @@ export class Login extends Controller {
 
   private rateLimit = RateLimit.getInstance();
 
+  private getIpAddress(req: Request): string {
+    return req.ip || '127.0.0.1';
+  }
+
   @Post('/register')
   @Validate({
     name: check().isName(),
@@ -28,7 +32,7 @@ export class Login extends Controller {
       return;
     }
 
-    if (this.rateLimit.isLimitExceeded(req.ip)) {
+    if (this.rateLimit.isLimitExceeded(this.getIpAddress(req))) {
       res.status(400);
       res.send({ error: ApiErrorEnum.REQUESTS_LIMIT_REACHED });
       return;
@@ -37,7 +41,7 @@ export class Login extends Controller {
     if (process.env.SERVER_PASSWORD
       && process.env.SERVER_PASSWORD !== body.serverPassword
     ) {
-      this.rateLimit.increment(req.ip);
+      this.rateLimit.increment(this.getIpAddress(req));
       res.status(400);
       res.send({ error: ApiErrorEnum.REGISTER_INVALID_SERVER_PASSWORD });
       return;
@@ -56,7 +60,7 @@ export class Login extends Controller {
     }
 
     // Don't allow to create to many users
-    this.rateLimit.increment(req.ip);
+    this.rateLimit.increment(this.getIpAddress(req));
 
     const user = new User();
     user.name = body.name;
@@ -77,14 +81,14 @@ export class Login extends Controller {
     const body: LoginRequest = req.body;
     const user = await User.findOne({ name: body.name });
 
-    if (this.rateLimit.isLimitExceeded(req.ip)) {
+    if (this.rateLimit.isLimitExceeded(this.getIpAddress(req))) {
       res.status(400);
       res.send({ error: ApiErrorEnum.REQUESTS_LIMIT_REACHED });
       return;
     }
 
     if (user === undefined || user.password !== Md5.init(body.password)) {
-      this.rateLimit.increment(req.ip);
+      this.rateLimit.increment(this.getIpAddress(req));
       res.status(400);
       res.send({ error: ApiErrorEnum.LOGIN_INVALID });
       return;

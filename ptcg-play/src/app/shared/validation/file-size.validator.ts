@@ -17,15 +17,15 @@ export class FileSizeValidatorDirective implements Validator {
 
   validate(control: AbstractControl): ValidationErrors {
     if (!control || !control.value) {
-      return null;
+      return {};
     }
     const fileInput: FileInput = control.value;
     if (!fileInput.files) {
-      return null;
+      return {};
     }
     const size = fileInput.files.map(f => f.size).reduce((acc, i) => acc + i, 0);
     if (size <= this.fileSize) {
-      return null;
+      return {};
     }
     return {
       maxFileSize: {

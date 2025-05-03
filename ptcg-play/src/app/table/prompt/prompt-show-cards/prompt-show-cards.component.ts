@@ -14,8 +14,8 @@ import { take, takeUntil } from 'rxjs/operators';
 })
 export class PromptShowCardsComponent implements OnInit, OnDestroy {
 
-  @Input() prompt: ShowCardsPrompt;
-  @Input() gameState: LocalGameState;
+  @Input() prompt!: ShowCardsPrompt;
+  @Input() gameState!: LocalGameState;
 
   public isLoading = true;
 

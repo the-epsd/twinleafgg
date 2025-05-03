@@ -1,9 +1,20 @@
 import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
 import { UntilDestroy } from '@ngneat/until-destroy';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule, FormBuilder, FormGroupDirective } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { Deck } from '../../api/interfaces/deck.interface';
 import { DeckEditToolbarFilter } from './deck-edit-toolbar-filter.interface';
-import { ControlContainer, FormBuilder, FormGroupDirective } from '@angular/forms';
 import { filter, map, shareReplay, startWith, tap } from 'rxjs/operators';
 import { merge } from 'rxjs';
 import { CardTag, CardType, EnergyType, Format, Stage, SuperType, TrainerType, Archetype } from 'ptcg-server';
@@ -13,18 +24,33 @@ import { CardTag, CardType, EnergyType, Format, Stage, SuperType, TrainerType, A
   selector: 'ptcg-deck-edit-toolbar',
   templateUrl: './deck-edit-toolbar.component.html',
   styleUrls: ['./deck-edit-toolbar.component.scss'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    MatButtonModule,
+    MatIconModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatCheckboxModule,
+    MatAutocompleteModule,
+    RouterModule,
+    TranslateModule
+  ],
   viewProviders: [
     {
-      provide: ControlContainer,
+      provide: FormGroupDirective,
       useExisting: FormGroupDirective
     }
-  ]
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class DeckEditToolbarComponent implements OnDestroy {
 
-  @Input() deck: Deck;
+  @Input() deck!: Deck;
 
-  @Input() disabled: boolean;
+  @Input() disabled = false;
 
   @Output() filterChange = new EventEmitter<DeckEditToolbarFilter>();
 
@@ -169,18 +195,17 @@ export class DeckEditToolbarComponent implements OnDestroy {
   };
 
   form = this.formBuilder.group({
-    formats: [[]],
-    cardTypes: [[]],
-    energyTypes: [[]],
-    superTypes: [[]],
-    attackCosts: [[]],
-    retreatCosts: [[]],
-    trainerTypes: [[]],
-    tags: [[]],
-    stages: [[]],
+    formats: [[] as Format[]],
+    cardTypes: [[] as CardType[]],
+    energyTypes: [[] as EnergyType[]],
+    superTypes: [[] as SuperType[]],
+    attackCosts: [[] as number[]],
+    retreatCosts: [[] as number[]],
+    trainerTypes: [[] as TrainerType[]],
+    tags: [[] as CardTag[]],
+    stages: [[] as Stage[]],
     hasAbility: false,
-
-    searchValue: null
+    searchValue: ''
   });
 
   formValue$ = this.form.valueChanges.pipe(
@@ -229,23 +254,23 @@ export class DeckEditToolbarComponent implements OnDestroy {
 
   resetPokemonFilters() {
     this.form.patchValue({
-      hasAbility: null,
-      cardTypes: [],
-      attackCosts: [],
-      retreatCosts: [],
-      stages: []
+      hasAbility: false,
+      cardTypes: [] as CardType[],
+      attackCosts: [] as number[],
+      retreatCosts: [] as number[],
+      stages: [] as Stage[]
     }, { emitEvent: false });
   }
 
   resetTrainerFilters() {
     this.form.patchValue({
-      trainerTypes: []
+      trainerTypes: [] as TrainerType[]
     }, { emitEvent: false });
   }
 
   resetEnergyFilters() {
     this.form.patchValue({
-      energyTypes: []
+      energyTypes: [] as EnergyType[]
     }, { emitEvent: false });
   }
 
@@ -255,8 +280,8 @@ export class DeckEditToolbarComponent implements OnDestroy {
 
   public onSearch(value: string) {
     // Replace curly apostrophes with straight apostrophes
-    const normalizedValue = value.replace(/’|‘/g, '\'');
-    this.form.patchValue({ searchValue: normalizedValue });
+    const normalizedValue = value.replace(/'|'/g, '\'');
+    this.form.patchValue({ searchValue: normalizedValue || '' });
   }
 
 
@@ -279,11 +304,11 @@ export class DeckEditToolbarComponent implements OnDestroy {
   }
 
   onTypeSelected(type: CardType) {
-    const currentTypes = this.form.get('cardTypes').value;
+    const currentTypes = this.form.get('cardTypes')?.value || [];
     if (currentTypes.includes(type)) {
-      this.form.patchValue({ cardTypes: [] });
+      this.form.patchValue({ cardTypes: [] as CardType[] });
     } else {
-      this.form.patchValue({ cardTypes: [type] });
+      this.form.patchValue({ cardTypes: [type] as CardType[] });
     }
   }
 
@@ -303,12 +328,12 @@ export class DeckEditToolbarComponent implements OnDestroy {
 
     // Reset additional filters
     this.form.patchValue({
-      formats: [],
-      tags: [],
+      formats: [] as Format[],
+      tags: [] as CardTag[],
     }, { emitEvent: false });
 
     // Update the form control
-    this.form.patchValue({ superTypes: this.selectedSuperTypes });
+    this.form.patchValue({ superTypes: this.selectedSuperTypes as SuperType[] });
   }
 
   public exportToFile() {
@@ -336,10 +361,9 @@ export class DeckEditToolbarComponent implements OnDestroy {
     );
   }
 
-  public onArchetypeChange(archetype1: Archetype | null, archetype2: Archetype | null) {
+  public onArchetypeChange(archetype1: Archetype | undefined, archetype2: Archetype | undefined) {
     this.deck.manualArchetype1 = archetype1;
     this.deck.manualArchetype2 = archetype2;
     this.deckChange.emit(this.deck);
   }
-
 }

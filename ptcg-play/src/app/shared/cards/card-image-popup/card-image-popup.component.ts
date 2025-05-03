@@ -10,13 +10,15 @@ import { Card } from 'ptcg-server';
 export class CardImagePopupComponent {
 
   public card: Card;
+  public cardList: any;
   public facedown: boolean;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) data: { card: Card, facedown: boolean },
+    @Inject(MAT_DIALOG_DATA) public data: { card: Card; cardList: any; facedown: boolean },
   ) {
     this.card = data.card;
+    this.cardList = data.cardList;
     this.facedown = data.facedown;
+    console.log('Dialog Data:', data);
   }
-
 }

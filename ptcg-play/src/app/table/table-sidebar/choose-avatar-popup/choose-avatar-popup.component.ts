@@ -1,5 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { CommonModule } from '@angular/common';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { TranslateModule } from '@ngx-translate/core';
 import { AvatarInfo } from 'ptcg-server';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { finalize } from 'rxjs/operators';
@@ -13,7 +16,14 @@ import { SessionService } from '../../../shared/session/session.service';
 @Component({
   selector: 'ptcg-choose-avatar-popup',
   templateUrl: './choose-avatar-popup.component.html',
-  styleUrls: ['./choose-avatar-popup.component.scss']
+  styleUrls: ['./choose-avatar-popup.component.scss'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    MatDialogModule,
+    MatButtonModule,
+    TranslateModule
+  ]
 })
 export class ChooseAvatarPopupComponent implements OnInit {
 
@@ -82,5 +92,4 @@ export class ChooseAvatarPopupComponent implements OnInit {
 
     this.dialogRef.close(selected);
   }
-
 }

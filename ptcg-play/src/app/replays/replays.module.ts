@@ -9,7 +9,7 @@ import { ImportReplayPopupComponent } from './import-replay-popup/import-replay-
     ReplaysComponent,
     ImportReplayPopupComponent
   ],
-  entryComponents: [
+  providers: [
     ImportReplayPopupComponent
   ],
   imports: [
