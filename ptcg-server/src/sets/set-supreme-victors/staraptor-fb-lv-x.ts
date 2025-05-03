@@ -3,7 +3,7 @@ import { CheckPokemonAttacksEffect, CheckPokemonPowersEffect, CheckTableStateEff
 import { Effect } from '../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { DISCARD_A_STADIUM_CARD_IN_PLAY } from '../../game/store/prefabs/attack-effects';
-import { WAS_POWER_USED, BLOCK_EFFECT_IF_MARKER, BLOCK_IF_DECK_EMPTY, SHOW_CARDS_TO_PLAYER, MOVE_CARD_TO, ADD_MARKER, ABILITY_USED, SHUFFLE_DECK, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { WAS_POWER_USED, BLOCK_EFFECT_IF_MARKER, BLOCK_IF_DECK_EMPTY, SHOW_CARDS_TO_PLAYER, MOVE_CARD_TO, ADD_MARKER, ABILITY_USED, SHUFFLE_DECK, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED, BLOCK_IF_HAS_SPECIAL_CONDITION } from '../../game/store/prefabs/prefabs';
 
 export class StaraptorFBLVX extends PokemonCard {
 
@@ -46,6 +46,7 @@ export class StaraptorFBLVX extends PokemonCard {
 
       BLOCK_EFFECT_IF_MARKER(this.FAST_CALL_MARKER, player, this);
       BLOCK_IF_DECK_EMPTY(player);
+      BLOCK_IF_HAS_SPECIAL_CONDITION(player, this);
 
       state = store.prompt(state, new ChooseCardsPrompt(
         player,
