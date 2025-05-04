@@ -1,4 +1,4 @@
-import { PokemonCard, Stage, CardType, StoreLike, State, CardTag, ChooseCardsPrompt } from "../../game";
+import { PokemonCard, Stage, CardType, StoreLike, State, CardTag, ChooseCardsPrompt, PowerType } from "../../game";
 import { Effect } from "../../game/store/effects/effect";
 import { GameMessage, ShuffleDeckPrompt } from "../../game";
 import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from "../../game/store/prefabs/prefabs";
@@ -14,8 +14,9 @@ export class Serperiorex extends PokemonCard {
   public weakness = [{ type: R, value: 2 }];
   public retreat = [C, C];
 
-  public abilities = [{
+  public powers = [{
     name: 'Royal Cheer',
+    powerType: PowerType.ABILITY,
     text: 'Attacks used by your Pokémon do 20 more damage to your opponent\'s Active Pokémon (before applying Weakness and Resistance).'
   }];
 

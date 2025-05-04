@@ -1,12 +1,61 @@
-import { PokemonCard, Stage, CardType, StoreLike, State } from "../../game";
+import { PokemonCard, Stage, CardType, StoreLike, State, PowerType, GameError, BoardEffect } from "../../game";
 import { Effect } from "../../game/store/effects/effect";
-import { AttackEffect } from "../../game/store/effects/game-effects";
+import { AttackEffect, PowerEffect } from "../../game/store/effects/game-effects";
 import { CheckProvidedEnergyEffect } from "../../game/store/effects/check-effects";
 import { ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, StateUtils } from "../../game";
-import { IS_ABILITY_BLOCKED } from "../../game/store/prefabs/prefabs";
+import { EndTurnEffect } from "../../game/store/effects/game-phase-effects";
+
+function* useNightGate(next: Function, store: StoreLike, state: State,
+  effect: PowerEffect): IterableIterator<State> {
+  const player = effect.player;
+  const opponent = StateUtils.getOpponent(state, player);
+
+  const playerHasBench = player.bench.some(b => b.cards.length > 0);
+  const opponentHasBench = opponent.bench.some(b => b.cards.length > 0);
+
+  if (playerHasBench === false) {
+    throw new GameError(GameMessage.CANNOT_USE_POWER);
+  }
+
+  if (opponentHasBench === false) {
+    return state;
+  }
+
+  if (playerHasBench && opponentHasBench) {
+    // First, opponent switches
+    return store.prompt(state, new ChoosePokemonPrompt(
+      player.id,
+      GameMessage.CHOOSE_POKEMON_TO_SWITCH,
+      PlayerType.BOTTOM_PLAYER,
+      [SlotType.BENCH],
+      { allowCancel: false }
+    ), results => {
+      if (results && results.length > 0) {
+        player.active.clearEffects();
+        player.switchPokemon(results[0]);
+
+        // Then player switches
+        return store.prompt(state, new ChoosePokemonPrompt(
+          opponent.id,
+          GameMessage.CHOOSE_POKEMON_TO_SWITCH,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.BENCH],
+          { allowCancel: false }
+        ), playerResults => {
+          if (playerResults && playerResults.length > 0) {
+            opponent.active.clearEffects();
+            opponent.switchPokemon(playerResults[0]);
+          }
+          return state;
+        });
+      }
+      return state;
+    });
+  }
+}
+
 
 export class Samurott extends PokemonCard {
-
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Dewott';
   public cardType: CardType = W;
@@ -14,8 +63,10 @@ export class Samurott extends PokemonCard {
   public weakness = [{ type: L }];
   public retreat = [C, C];
 
-  public abilities = [{
+  public powers = [{
     name: 'Strong Currents',
+    powerType: PowerType.ABILITY,
+    useWhenInPlay: true,
     text: 'Once during your turn, you may switch your Active Pokémon with 1 of your Benched Pokemon. If you do, your opponent switches their Active Pokemon with 1 of their Benched Pokemon.'
   }];
 
@@ -34,46 +85,30 @@ export class Samurott extends PokemonCard {
   public name: string = 'Samurott';
   public fullName: string = 'Samurott SV11W';
 
+  public readonly STRONG_CURRENTS_MARKER = 'STRONG_CURRENTS_MARKER';
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    // Remove marker on end turn
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.STRONG_CURRENTS_MARKER, this)) {
+      effect.player.marker.removeMarker(this.STRONG_CURRENTS_MARKER, this);
+    }
+
     // Strong Currents ability
-    if (effect instanceof AttackEffect && !IS_ABILITY_BLOCKED(store, state, effect.player, this)) {
+    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+      const generator = useNightGate(() => generator.next(), store, state, effect);
       const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      const playerHasBench = player.bench.some(b => b.cards.length > 0);
-      const opponentHasBench = opponent.bench.some(b => b.cards.length > 0);
-
-      if (playerHasBench && opponentHasBench) {
-        // First, opponent switches
-        return store.prompt(state, new ChoosePokemonPrompt(
-          player.id,
-          GameMessage.CHOOSE_POKEMON_TO_SWITCH,
-          PlayerType.TOP_PLAYER,
-          [SlotType.BENCH],
-          { allowCancel: false }
-        ), results => {
-          if (results && results.length > 0) {
-            player.active.clearEffects();
-            player.switchPokemon(results[0]);
-
-            // Then player switches
-            return store.prompt(state, new ChoosePokemonPrompt(
-              opponent.id,
-              GameMessage.CHOOSE_POKEMON_TO_SWITCH,
-              PlayerType.BOTTOM_PLAYER,
-              [SlotType.BENCH],
-              { allowCancel: false }
-            ), playerResults => {
-              if (playerResults && playerResults.length > 0) {
-                opponent.active.clearEffects();
-                opponent.switchPokemon(playerResults[0]);
-              }
-              return state;
-            });
-          }
-          return state;
-        });
+      if (player.marker.hasMarker(this.STRONG_CURRENTS_MARKER, this)) {
+        throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
+
+      effect.player.marker.addMarker(this.STRONG_CURRENTS_MARKER, this);
+
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+        if (cardList.getPokemonCard() === this) {
+          cardList.addBoardEffect(BoardEffect.ABILITY_USED);
+        }
+      });
+      return generator.next().value;
     }
 
     // Energy Slash attack
