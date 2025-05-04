@@ -47,7 +47,7 @@ export class Lycanroc extends PokemonCard {
           return;
         ATTACH_ENERGY_PROMPT(
           store, state, effect.player, PlayerType.BOTTOM_PLAYER, SlotType.DISCARD, [SlotType.ACTIVE, SlotType.BENCH],
-          { energyType: EnergyType.SPECIAL, name: 'Spike Energy' },
+          { energyType: EnergyType.SPECIAL, name: 'Spiky Energy' },
           { min: 0, max: 1, allowCancel: false },
         );
       });

@@ -151,6 +151,7 @@ export * from './set-prismatic-evolution';
 export * from './set-journey-together';
 export * from './set-sv9a';
 export * from './set-sv10';
+export * from './set-sv11';
 export * from './set-m1s';
 
 //TEST
