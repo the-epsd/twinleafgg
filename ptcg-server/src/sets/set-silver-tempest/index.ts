@@ -14,6 +14,7 @@ import { Crobat } from './crobat';
 import { Dragonite } from './dragonite';
 import { Drakloak } from './drakloak';
 import { Dreepy } from './dreepy';
+import { Durant } from './durant';
 import { Elgyem } from './elgyem';
 import { EmergencyJelly } from './emergency-jelly';
 import { Feebas } from './feebas';
@@ -81,6 +82,7 @@ export const setSilverTempest: Card[] = [
   new Dragonite(),
   new Drakloak(),
   new Dreepy(),
+  new Durant(),
   new Elgyem(),
   new EmergencyJelly(),
   new Feebas(),
