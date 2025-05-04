@@ -52,7 +52,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     }
 
     if (cards.length > 0) {
-      // Recover discarded Pokemon
+      // Recover discarded Energy
       player.discard.moveCardsTo(cards, player.hand);
       // Discard item card
       player.supporter.moveCardTo(effect.trainerCard, player.discard);
