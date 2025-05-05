@@ -96,6 +96,7 @@ export class Recycle extends TrainerCard {
             return state;
           });
         }
+        player.supporter.moveCardTo(effect.trainerCard, player.discard);
       });
     }
 

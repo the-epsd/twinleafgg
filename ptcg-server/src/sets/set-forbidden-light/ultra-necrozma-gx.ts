@@ -29,6 +29,7 @@ export class UltraNecrozmaGX extends PokemonCard {
       name: 'Photon Geyser',
       cost: [CardType.PSYCHIC, CardType.METAL],
       damage: 20,
+      damageCalculation: 'x',
       text: 'Discard all basic [P] Energy from this Pokémon. This attack does 80 more damage for each card you discarded in this way.'
     },
 
