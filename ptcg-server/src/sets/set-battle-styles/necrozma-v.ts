@@ -30,7 +30,7 @@ export class NecrozmaV extends PokemonCard {
     {
       name: 'Prismatic Ray',
       cost: [CardType.PSYCHIC],
-      damage: 30,
+      damage: 20,
       text: 'This attack also does 20 damage to 2 of your opponent\'s ' +
         'Benched Pokémon. (Don\'t apply Weakness and Resistance ' +
         'for Benched Pokémon.) '
