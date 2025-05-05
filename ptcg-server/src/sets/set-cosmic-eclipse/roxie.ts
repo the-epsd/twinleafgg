@@ -1,9 +1,10 @@
-import { ChooseCardsPrompt, GameError, GameMessage, PokemonCard } from '../../game';
+import { ChooseCardsPrompt, GameError, GameMessage, PlayerType, PokemonCard, StateUtils } from '../../game';
 import { CardTag, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
+import { EffectOfAbilityEffect } from '../../game/store/effects/game-effects';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { DRAW_CARDS } from '../../game/store/prefabs/prefabs';
+import { CONFIRMATION_PROMPT, DRAW_CARDS, IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
@@ -22,6 +23,7 @@ export class Roxie extends TrainerCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
 
       const supporterTurn = player.supporterTurn;
       if (supporterTurn > 0) {
@@ -59,6 +61,31 @@ export class Roxie extends TrainerCard {
         const cardsToDraw = 3 * cards.length
         player.hand.moveCardsTo(cards, player.discard);
         DRAW_CARDS(player, cardsToDraw);
+
+        // Handling Blow-Away Bomb mons
+        cards.forEach(card => {
+          if (card instanceof PokemonCard && (card.fullName === 'Koffing CEC' || card.fullName === 'Weezing CEC')) {
+            const pokemonCard = card as PokemonCard;
+            if (IS_ABILITY_BLOCKED(store, state, player, pokemonCard)) {
+              return state;
+            }
+
+            CONFIRMATION_PROMPT(store, state, effect.player, result => {
+              if (result) {
+                opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
+
+
+                  const effectOfAbility = new EffectOfAbilityEffect(effect.player, pokemonCard.powers[0], pokemonCard, cardList);
+                  effectOfAbility.target = cardList;
+                  store.reduceEffect(state, effectOfAbility);
+                  if (effectOfAbility.target) {
+                    cardList.damage += 10;
+                  }
+                });
+              }
+            });
+          }
+        });
       });
 
       player.supporter.moveCardTo(effect.trainerCard, player.discard);

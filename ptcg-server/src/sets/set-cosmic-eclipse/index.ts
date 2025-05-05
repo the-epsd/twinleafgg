@@ -20,6 +20,7 @@ import { Golett } from './golett';
 import { GreatCatcher } from './great-catcher';
 import { GuzmaAndHala } from './guzma-and-hala';
 import { Guzzlord } from './guzzlord';
+import { Koffing } from './koffing';
 import { LanasFishingRod } from './lanas-fishing-rod';
 import { Lanturn } from './lanturn';
 import { LilliesPokeDoll } from './lillies-poke-doll';
@@ -46,15 +47,16 @@ import { CharizardBraixenGX } from './charizard-braixen-gx';
 import { TogepiCleffaIgglybuffGX } from './togepi-cleffa-igglybuff-gx';
 import { Carvanha } from './carvanha';
 import { NaganadelGuzzlordGX } from './naganadel-guzzlord-gx';
+import { Weezing } from './weezing';
 import { Woobat } from './woobat';
 import { Swoobat } from './swoobat';
 import { Mimikyu } from './mimikyu';
 import { OricorioGX } from './oricorio-gx';
 import { DragoniumZDragonClaw } from './dragonium-z';
-import {MegaLopunnyJigglypuffGX} from './mega-lopuny-and-jigglypuff-gx';
-import {VenusaurSnivyGX} from './venusaur-and-snivy-gx';
-import {LilliesFullForce} from './lillies-full-force';
-import {SolgaleoLunalaGX} from './solgaleo-and-lunala-gx';
+import { MegaLopunnyJigglypuffGX } from './mega-lopuny-and-jigglypuff-gx';
+import { VenusaurSnivyGX } from './venusaur-and-snivy-gx';
+import { LilliesFullForce } from './lillies-full-force';
+import { SolgaleoLunalaGX } from './solgaleo-and-lunala-gx';
 
 
 export const setCosmicEclipse: Card[] = [
@@ -80,6 +82,7 @@ export const setCosmicEclipse: Card[] = [
   new GreatCatcher(),
   new GuzmaAndHala(),
   new Guzzlord(),
+  new Koffing(),
   new LanasFishingRod(),
   new Lanturn(),
   new LilliesPokeDoll(),
@@ -100,6 +103,7 @@ export const setCosmicEclipse: Card[] = [
   new Swirlix(),
   new TagCall(),
   new UltraNecrozma(),
+  new Weezing(),
   new Wishiwashi(),
   new BlastoisePiplupGX(),
   new CharizardBraixenGX(),
