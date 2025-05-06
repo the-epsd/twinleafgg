@@ -1,6 +1,7 @@
 import { Card } from '../../game/store/card/card';
 
 import { Dewott } from './dewott';
+import { Eelektrik } from './eelektrik';
 import { Emboar } from './emboar';
 import { Hilda } from './hilda';
 import { IgnitionEnergy } from './ignition-energy';
@@ -14,6 +15,7 @@ import { Serperiorex } from './serperior-ex';
 import { Servine } from './servine';
 import { Snivy } from './snivy';
 import { Tepig } from './tepig';
+import { Tynamo } from './tynamo';
 import { Victini } from './victini';
 import { Zekromex } from './zekrom-ex';
 
@@ -31,6 +33,9 @@ export const setSV11: Card[] = [
   new Oshawott(),
   new Dewott(),
   new Samurott(),
+
+  new Tynamo(),
+  new Eelektrik(),
 
   new Kyuremex(),
   new Zekromex(),

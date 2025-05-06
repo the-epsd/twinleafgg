@@ -16,10 +16,15 @@ export class Vigoroth extends PokemonCard {
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
-    { name: 'Slashing Claw', cost: [CardType.COLORLESS, CardType.COLORLESS], damage: 50, text: '' }
+    {
+      name: 'Slashing Claw',
+      cost: [CardType.COLORLESS, CardType.COLORLESS],
+      damage: 50,
+      text: ''
+    }
   ];
 
-  public set: string = 'SVI';
+  public set: string = 'SSP';
 
   public setNumber = '146';
 
