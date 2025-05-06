@@ -3,7 +3,7 @@ import { CardTag, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { DRAW_CARDS } from '../../game/store/prefabs/prefabs';
+import { DRAW_CARDS, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
@@ -56,8 +56,8 @@ export class Roxie extends TrainerCard {
           return;
         }
 
-        const cardsToDraw = 3 * cards.length
-        player.hand.moveCardsTo(cards, player.discard);
+        const cardsToDraw = 3 * cards.length;
+        state = MOVE_CARDS(store, state, player.hand, player.discard, { cards, sourceCard: this });
         DRAW_CARDS(player, cardsToDraw);
       });
 

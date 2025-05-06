@@ -28,7 +28,7 @@ export class ShiningCelebi extends PokemonCard {
 
   public set: string = 'SMP';
 
-  public setNumber = 'SM79';
+  public setNumber = '79';
 
   public cardImage = 'assets/cardback.png';
 

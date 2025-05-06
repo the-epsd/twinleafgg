@@ -31,6 +31,7 @@ import { Pawniard } from './pawniard';
 import { Persian } from './persian';
 import { Pidgeotto } from './pidgeotto';
 import { PokemonCommunication } from './pokemon-communication';
+import { ShayminPrismStar } from './shaymin-prism-star';
 import { TapuKokoPrismStar } from './tapu-koko-prism-star';
 import { ViridianForest } from './viridian-forest';
 import { Weedle } from './weedle';
@@ -68,6 +69,7 @@ export const setTeamUp: Card[] = [
   new Persian(),
   new Pidgeotto(),
   new PokemonCommunication(),
+  new ShayminPrismStar(),
   new TapuKokoPrismStar(),
   new ViridianForest(),
   new Weedle(),

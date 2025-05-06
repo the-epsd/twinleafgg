@@ -30,10 +30,10 @@ export class MysteryEnergy extends EnergyCard {
   public readonly STRONG_ENERGY_MAREKER = 'STRONG_ENERGY_MAREKER';
 
   public text =
-    'This card can only be attached to P Pokemon. This card provides P ' +
-    'Energy, but only while this card is attached to a P Pokemon. ' +
+    'This card can only be attached to [P] Pokemon. This card provides [P] ' +
+    'Energy, but only while this card is attached to a [P] Pokemon. ' +
     'The Retreat Cost of the Pokemon this card is attached to is 2 less. ' +
-    '(If this card is attached to anything other than a P Pokemon, discard ' +
+    '(If this card is attached to anything other than a [P] Pokemon, discard ' +
     'this card.)';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

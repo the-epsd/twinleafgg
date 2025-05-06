@@ -1,7 +1,7 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, BoardEffect } from '../../game/store/card/card-types';
 import { StoreLike, State, PowerType, PlayerType, StateUtils, ChooseCardsPrompt, GameMessage, ShuffleDeckPrompt, ChoosePokemonPrompt, SlotType } from '../../game';
-import { AttackEffect, Effect, EffectOfAbilityEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect, Effect, EffectOfAbilityEffect, MoveCardsEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 
 export class TestPokemon extends PokemonCard {
@@ -31,8 +31,8 @@ export class TestPokemon extends PokemonCard {
   public attacks = [
     {
       name: 'A Bit Much',
-      cost: [C],
-      damage: 0,
+      cost: [],
+      damage: 100,
       text: ''
     },
   ];
@@ -44,6 +44,17 @@ export class TestPokemon extends PokemonCard {
   public fullName: string = 'Test Pokemon TEST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
+    if (effect instanceof MoveCardsEffect && effect.cards?.includes(this) && effect.sourceCard?.name === 'Roxie') {
+      const playerPokemon = StateUtils.findOwner(state, effect.source);
+      const opponentPokemon = StateUtils.getOpponent(state, playerPokemon);
+
+      opponentPokemon.forEachPokemon(PlayerType.TOP_PLAYER, cardList => {
+        if (cardList.getPokemonCard() === opponentPokemon.active.getPokemonCard()) {
+          cardList.damage += 100;
+        }
+      });
+    }
 
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
