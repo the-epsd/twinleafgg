@@ -4,7 +4,7 @@ import { PokemonCard } from '../card/pokemon-card';
 import { DealDamageEffect, DiscardCardsEffect, HealTargetEffect, PutDamageEffect } from '../effects/attack-effects';
 import { AddSpecialConditionsPowerEffect, CheckPrizesDestinationEffect, CheckProvidedEnergyEffect } from '../effects/check-effects';
 import { Effect } from '../effects/effect';
-import { AttackEffect, DrawPrizesEffect, EvolveEffect, KnockOutEffect, PowerEffect, RetreatEffect } from '../effects/game-effects';
+import { AttackEffect, DrawPrizesEffect, EvolveEffect, KnockOutEffect, PowerEffect, RetreatEffect, SpecialEnergyEffect } from '../effects/game-effects';
 import { AfterAttackEffect, EndTurnEffect } from '../effects/game-phase-effects';
 import { MoveCardsEffect } from '../effects/game-effects';
 import { AttachEnergyEffect, ToolEffect } from '../effects/play-card-effects';
@@ -556,6 +556,21 @@ export function IS_TOOL_BLOCKED(store: StoreLike, state: State, player: Player, 
   // Try to reduce ToolEffect, to check if something is blocking the tool from working
   try {
     const stub = new ToolEffect(player, card);
+    store.reduceEffect(state, stub);
+  } catch {
+    return true;
+  }
+  return false;
+}
+
+/**
+ * Checks if a special energy's effect is being blocked for the given player and Pokemon it is attached to. Do not use in CheckProvidedEnergyEffect.
+ * @returns `true` if the special energy's effect is blocked, `false` if the special energy's effect is able to activate.
+ */
+export function IS_SPECIAL_ENERGY_BLOCKED(store: StoreLike, state: State, player: Player, card: EnergyCard, attachedTo: PokemonCardList, exemptFromOpponentsSpecialEnergyBlockingAbility = false): boolean {
+  // Try to reduce SpecialEnergyEffect, to check if something is blocking the effect
+  try {
+    const stub = new SpecialEnergyEffect(player, card, attachedTo, exemptFromOpponentsSpecialEnergyBlockingAbility);
     store.reduceEffect(state, stub);
   } catch {
     return true;

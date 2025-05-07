@@ -1,15 +1,16 @@
 import { CardTag, CardType, EnergyType } from '../../game/store/card/card-types';
 import { EnergyCard } from '../../game/store/card/energy-card';
-import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { CheckProvidedEnergyEffect, CheckTableStateEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttachEnergyEffect, EnergyEffect } from '../../game/store/effects/play-card-effects';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
-import { PlayerType } from '../../game';
+import { GameError, GameMessage, PlayerType } from '../../game';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { EnergyMap } from '../../game/store/prompts/choose-energy-prompt';
 import { CardList } from '../../game/store/state/card-list';
 import { Card } from '../../game/store/card/card';
+import { IS_SPECIAL_ENERGY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 export class TeamRocketEnergy extends EnergyCard {
 
@@ -116,14 +117,21 @@ export class TeamRocketEnergy extends EnergyCard {
   }
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Check if the card is attached to a Team Rocket's Pokémon
-    if (effect instanceof AttachEnergyEffect && effect.energyCard === this) {
-      console.log('Team Rocket Energy attached to:', effect.target.getPokemonCard()?.name);
+    // Prevent attaching to non Team Rocket's Pokemon
+    if (effect instanceof AttachEnergyEffect) {
+      if (effect.energyCard === this && !effect.target.getPokemonCard()?.tags.includes(CardTag.TEAM_ROCKET)) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      }
+    }
+
+    // Discard card when not attached to Team Rocket's Pokemon
+    if (effect instanceof CheckTableStateEffect) {
       state.players.forEach(player => {
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-          if (!cardList.cards.includes(this)) {
+          if (!cardList.cards.includes(this) || IS_SPECIAL_ENERGY_BLOCKED(store, state, player, this, cardList)) {
             return;
           }
+
           const pokemonCard = cardList.getPokemonCard();
           if (pokemonCard && !pokemonCard.tags.includes(CardTag.TEAM_ROCKET)) {
             console.log('Discarding Team Rocket Energy from non-Team Rocket Pokémon:', pokemonCard.name);
@@ -131,7 +139,6 @@ export class TeamRocketEnergy extends EnergyCard {
           }
         });
       });
-      return state;
     }
 
     if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {

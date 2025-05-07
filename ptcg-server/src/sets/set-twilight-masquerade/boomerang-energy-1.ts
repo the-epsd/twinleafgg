@@ -1,10 +1,11 @@
 import { StoreLike, State } from '../../game';
 import { CardType, EnergyType } from '../../game/store/card/card-types';
 import { EnergyCard } from '../../game/store/card/energy-card';
-import {DiscardCardsEffect} from '../../game/store/effects/attack-effects';
+import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import {AttackEffect} from '../../game/store/effects/game-effects';
-import {EndTurnEffect} from '../../game/store/effects/game-phase-effects';
+import { AttackEffect } from '../../game/store/effects/game-effects';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { IS_SPECIAL_ENERGY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 export class BoomerangEnergy extends EnergyCard {
   public provides: CardType[] = [CardType.COLORLESS];
@@ -24,27 +25,34 @@ export class BoomerangEnergy extends EnergyCard {
   public readonly BOOMERANG_DISCARDED_MARKER = 'BOOMERANG_DISCARDED_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
     // checking if this is on the player's active when attacking
-    if (effect instanceof AttackEffect && effect.source.cards.includes(this)){
+    if (effect instanceof AttackEffect && effect.source.cards.includes(this)) {
+      if (IS_SPECIAL_ENERGY_BLOCKED(store, state, effect.player, this, effect.source)) {
+        return state;
+      }
       effect.player.marker.addMarker(this.BOOMERANG_EXISTANCE_MARKER, this);
     }
 
     // checking if this card is discarded while attacking
-    if (effect instanceof DiscardCardsEffect && effect.player.marker.hasMarker(this.BOOMERANG_EXISTANCE_MARKER, this)){
+    if (effect instanceof DiscardCardsEffect && effect.player.marker.hasMarker(this.BOOMERANG_EXISTANCE_MARKER, this)) {
+      if (IS_SPECIAL_ENERGY_BLOCKED(store, state, effect.player, this, effect.source)) {
+        return state;
+      }
       effect.player.marker.addMarker(this.BOOMERANG_DISCARDED_MARKER, this);
     }
 
     // removing the markers and handling the reattaching of it
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.BOOMERANG_EXISTANCE_MARKER, this)){
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.BOOMERANG_EXISTANCE_MARKER, this)) {
       effect.player.marker.removeMarker(this.BOOMERANG_EXISTANCE_MARKER, this);
 
       // if this card was in the discard and triggered that earlier part, move it onto the acitve
-      if (effect.player.marker.hasMarker(this.BOOMERANG_DISCARDED_MARKER, this)){
+      if (effect.player.marker.hasMarker(this.BOOMERANG_DISCARDED_MARKER, this)) {
         effect.player.marker.removeMarker(this.BOOMERANG_DISCARDED_MARKER, this);
 
-        if (effect.player.active !== undefined){
+        if (effect.player.active !== undefined) {
           effect.player.discard.cards.forEach(card => {
-            if (card === this){
+            if (card === this) {
               effect.player.discard.moveCardTo(card, effect.player.active);
             }
           });

@@ -5,6 +5,7 @@ import { State, GamePhase } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { StateUtils } from '../../game';
 import { AfterDamageEffect } from '../../game/store/effects/attack-effects';
+import { IS_SPECIAL_ENERGY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 
 export class SpikyEnergy extends EnergyCard {
@@ -37,6 +38,10 @@ export class SpikyEnergy extends EnergyCard {
       const opponent = effect.player;
       if (player === opponent || player.active !== effect.target)
         return state;
+
+      if (IS_SPECIAL_ENERGY_BLOCKED(store, state, effect.player, this, effect.target)) {
+        return state;
+      }
 
       effect.source.damage += 20;
     }

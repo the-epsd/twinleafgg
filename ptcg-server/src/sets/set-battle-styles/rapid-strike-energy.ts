@@ -3,9 +3,10 @@ import { EnergyCard } from '../../game/store/card/energy-card';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
-import { PlayerType } from '../../game';
+import { CheckProvidedEnergyEffect, CheckTableStateEffect } from '../../game/store/effects/check-effects';
+import { GameError, GameMessage, PlayerType } from '../../game';
 import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
+import { IS_SPECIAL_ENERGY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 export class RapidStrikeEnergy extends EnergyCard {
 
@@ -52,22 +53,28 @@ As long as this card is attached to a Pokémon, it provides 2 in any combination
       return state;
     }
 
-    // Discard card when not attached to Rapid Strike Pokemon
+    // Prevent attaching to non Rapid Strike Pokemon
     if (effect instanceof AttachEnergyEffect) {
+      if (effect.energyCard === this && !effect.target.getPokemonCard()?.tags.includes(CardTag.RAPID_STRIKE)) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      }
+    }
+
+    // Discard card when not attached to Rapid Strike Pokemon
+    if (effect instanceof CheckTableStateEffect) {
       state.players.forEach(player => {
         player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-          if (!cardList.cards.includes(this)) {
+          if (!cardList.cards.includes(this) || IS_SPECIAL_ENERGY_BLOCKED(store, state, player, this, cardList)) {
             return;
           }
-          const pokemon = cardList;
-          const pokemonCard = pokemon.getPokemonCard();
-          if (pokemonCard && !pokemonCard.tags.includes(CardTag.RAPID_STRIKE)) {
+
+          if (!cardList.getPokemonCard()?.tags.includes(CardTag.RAPID_STRIKE)) {
             cardList.moveCardTo(this, player.discard);
           }
         });
       });
-      return state;
     }
+
     return state;
   }
 
