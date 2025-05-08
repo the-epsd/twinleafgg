@@ -3,7 +3,6 @@ require('./config');
 const { App } = require('./output/backend/app');
 const { BotManager } = require('./output/game/bots/bot-manager');
 const { SimpleBot } = require('./output/simple-bot/simple-bot');
-const { TeamRocketBot } = require('./output/team-rocket-bot/team-rocket-bot');
 const { CardManager } = require('./output/game/cards/card-manager');
 const { StateSerializer } = require('./output/game/serializer/state-serializer');
 const { config } = require('./output/config');

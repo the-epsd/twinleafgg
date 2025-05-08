@@ -44,6 +44,33 @@ export class CardInfoPaneComponent implements OnChanges {
   public TrainerType = TrainerType;
   public heavilyPlayedUrl: SafeUrl;
 
+  private characterNames = [
+    "Marnie's",
+    "Iono's",
+    "Ethan's",
+    "Steven's",
+    "Cynthia's",
+    "Arven's",
+    "N's",
+    "Hop's",
+    "Team Rocket's"
+  ];
+
+  parseCardName(name: string): { prefix: string | null, rest: string } {
+    for (const character of this.characterNames) {
+      if (name.startsWith(character)) {
+        return {
+          prefix: character,
+          rest: name.substring(character.length).trim()
+        };
+      }
+    }
+    return {
+      prefix: null,
+      rest: name
+    };
+  }
+
   constructor(
     private dialog: MatDialog,
     private sanitizer: DomSanitizer
