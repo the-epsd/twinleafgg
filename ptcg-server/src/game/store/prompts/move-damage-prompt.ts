@@ -27,6 +27,7 @@ export interface MoveDamageOptions {
   blockedTo: CardTarget[];
   singleSourceTarget: boolean;
   singleDestinationTarget: boolean;
+  damageMultiple?: number;
 }
 
 export class MoveDamagePrompt extends Prompt<DamageTransfer[]> {
@@ -53,7 +54,8 @@ export class MoveDamagePrompt extends Prompt<DamageTransfer[]> {
       blockedFrom: [],
       blockedTo: [],
       singleSourceTarget: false,
-      singleDestinationTarget: false
+      singleDestinationTarget: false,
+      damageMultiple: 10
     }, options);
   }
 
