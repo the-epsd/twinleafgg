@@ -159,11 +159,13 @@ export class ChooseCardsPrompt extends Prompt<Card[]> {
 
     const { maxPokemons, maxBasicEnergies, maxTrainers, maxItems, maxTools, maxStadiums, maxSupporters, maxSpecialEnergies, maxEnergies, maxBasics, maxEvolutions } = this.options;
 
-    // Check if we have both basics and evolutions selected
-    const hasBasics = countMap[`${SuperType.POKEMON}-${Stage.BASIC}`] > 0;
-    const hasEvolutions = countMap[`${SuperType.POKEMON}`] - (countMap[`${SuperType.POKEMON}-${Stage.BASIC}`] || 0) > 0;
-    if (hasBasics && hasEvolutions) {
-      return false;
+    // Check if we have both basics and evolutions selected - only if maxBasics or maxEvolutions is defined
+    if (maxBasics !== undefined || maxEvolutions !== undefined) {
+      const hasBasics = countMap[`${SuperType.POKEMON}-${Stage.BASIC}`] > 0;
+      const hasEvolutions = countMap[`${SuperType.POKEMON}`] - (countMap[`${SuperType.POKEMON}-${Stage.BASIC}`] || 0) > 0;
+      if (hasBasics && hasEvolutions) {
+        return false;
+      }
     }
 
     if ((maxPokemons !== undefined && maxPokemons < countMap[`${SuperType.POKEMON}`])
