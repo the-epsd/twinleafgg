@@ -14,7 +14,7 @@ export class Victini extends PokemonCard {
     name: 'V Force',
     cost: [R, R],
     damage: 120,
-    text: 'If you have less than 4 Benched Pokémon, this attack does nothing.'
+    text: 'If you have less than 5 Benched Pokémon, this attack does nothing.'
   }];
 
   public regulationMark = 'I';
@@ -31,8 +31,8 @@ export class Victini extends PokemonCard {
       // Count number of benched Pokémon
       const benchedCount = player.bench.reduce((count, b) => count + (b.cards.length ? 1 : 0), 0);
 
-      // If less than 4 benched Pokémon, attack does nothing
-      if (benchedCount < 4) {
+      // If less than 5 benched Pokémon, attack does nothing
+      if (benchedCount < 5) {
         effect.damage = 0;
       }
     }
