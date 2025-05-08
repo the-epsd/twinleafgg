@@ -1,6 +1,7 @@
 import { Card } from '../../game/store/card/card';
 import { Hoopa } from '../set-unified-minds/hoopa';
 import { Croconaw } from './croconaw';
+import { DamageMover } from './damage-mover';
 import { Latios } from './latios';
 import { Marshadow } from './marshadow';
 import { Plusle } from './plusle';
@@ -15,6 +16,7 @@ import { Zorua } from './zorua';
 
 export const setShiningLegends: Card[] = [
   new Croconaw(),
+  new DamageMover(),
   new Hoopa(),
   new Latios(),
   new Marshadow(),
