@@ -25,7 +25,7 @@ export class TrevenantBREAK extends PokemonCard {
     cost: [P, C],
     damage: 0,
     text: 'Put 3 damage counters on each of your opponent\'s Pokémon.'
-  }]
+  }];
 
   public set: string = 'BKP';
   public cardImage: string = 'assets/cardback.png';

@@ -47,7 +47,7 @@ export class SocketService {
       reconnectionAttempts: 10,
       reconnectionDelay: 1000,
       reconnectionDelayMax: 5000,
-      timeout: 20000,
+      timeout: 24 * 60 * 60 * 1000,
       transports: ['websocket'],
       forceNew: true,
       query: {},

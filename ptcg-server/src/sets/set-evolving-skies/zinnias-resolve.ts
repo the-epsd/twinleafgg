@@ -45,7 +45,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   player.hand.moveCardsTo(cards, player.discard);
 
   const opponent = StateUtils.getOpponent(state, player);
-  let cardsToDraw = opponent.bench.reduce((left, b) => left + (b.cards.length ? 1 : 0), 0);;
+  const cardsToDraw = opponent.bench.reduce((left, b) => left + (b.cards.length ? 1 : 0), 0);
 
   player.deck.moveTo(player.hand, cardsToDraw);
   return state;

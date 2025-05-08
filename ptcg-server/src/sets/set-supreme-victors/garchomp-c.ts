@@ -43,7 +43,7 @@ export class GarchompC extends PokemonCard {
           damage.target = card;
           store.reduceEffect(state, damage);
         }
-      })
+      });
     }
 
     return state;

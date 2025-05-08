@@ -4,6 +4,7 @@ import { PowerType, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { AttackEffect, HealEffect } from '../../game/store/effects/game-effects';
+import { IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 export class Buzzwole extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -34,18 +35,22 @@ export class Buzzwole extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PutDamageEffect && effect.target === StateUtils.getOpponent(state, effect.player).active) {
+    if (effect instanceof PutDamageEffect && effect.source.getPokemonCard() === this) {
       const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, effect.player);
       const prizesTaken = 6 - player.getPrizeLeft();
 
-      console.log('Current Damage Boost: ' + (20 * prizesTaken));
-
-      if (player.active.getPokemonCard() === this) {
-        effect.damage += (20 * prizesTaken);
-
-        console.log('Current Damage: ' + effect.damage);
+      if (IS_ABILITY_BLOCKED(store, state, effect.player, this)) {
+        return state;
       }
 
+      if (effect.target !== player.active && effect.target !== opponent.active) {
+        return state;
+      }
+
+      if (effect.damage > 0 && effect.target === opponent.active) {
+        effect.damage += (20 * prizesTaken);
+      }
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

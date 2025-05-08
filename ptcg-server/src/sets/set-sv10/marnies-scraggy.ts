@@ -3,6 +3,7 @@ import { Stage, CardType, SuperType, CardTag } from '../../game/store/card/card-
 import { StoreLike, State, StateUtils, Card, ChooseCardsPrompt, EnergyCard, GameMessage } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 
 export class MarniesScraggy extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -45,8 +46,7 @@ export class MarniesScraggy extends PokemonCard {
         { min: 1, max: 1, allowCancel: false }
       ), selected => {
         card = selected[0];
-        opponent.active.moveCardTo(card, opponent.discard);
-        return state;
+        return store.reduceEffect(state, new DiscardCardsEffect(effect, [card]));
       });
     }
     return state;

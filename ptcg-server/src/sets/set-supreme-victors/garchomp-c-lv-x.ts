@@ -72,7 +72,7 @@ export class GarchompCLVX extends PokemonCard {
               const healing = new HealEffect(player, card, card.damage);
               store.reduceEffect(state, healing);
             }
-          })
+          });
 
         }
       });

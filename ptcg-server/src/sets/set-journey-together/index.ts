@@ -1,5 +1,4 @@
 import { Card } from '../../game/store/card/card';
-import { Rockruff } from '../set-forbidden-light/rockruff';
 import { Accelgor } from './accelgor';
 import { Bagon } from './bagon';
 import { Banette } from './banette';
@@ -83,6 +82,7 @@ import { Volcanionex } from './volcanion-ex';
 import { Wailmer } from './wailmer';
 import { Wailord } from './wailord';
 import { Butterfree } from './butterfree';
+import { Rockruff } from './rockruff';
 export const setJourneyTogether: Card[] = [
 
   new Torchic(),

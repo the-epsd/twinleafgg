@@ -3,7 +3,7 @@ import { CardTag, EnergyType, TrainerType } from '../../game/store/card/card-typ
 import { StoreLike, State, EnergyCard, PokemonCardList, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class MegatonBlower extends TrainerCard {
 
@@ -28,18 +28,18 @@ export class MegatonBlower extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-
       const player = effect.player;
       effect.preventDefault = true;
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
 
-      // We will discard this card after prompt confirmation
-      effect.preventDefault = true;
-
+      // Handle stadium discard if one is in play
       const stadiumCard = StateUtils.getStadiumCard(state);
-      const cardList = StateUtils.findCardList(state, stadiumCard!);
-      const stadiumOwner = StateUtils.findOwner(state, cardList);
-      cardList.moveTo(stadiumOwner.discard);
+      if (stadiumCard) {
+        const cardList = StateUtils.findCardList(state, stadiumCard);
+        if (cardList) {
+          const stadiumOwner = StateUtils.findOwner(state, cardList);
+          state = MOVE_CARDS(store, state, cardList, stadiumOwner.discard, { cards: [stadiumCard] });
+        }
+      }
 
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -49,7 +49,9 @@ export class MegatonBlower extends TrainerCard {
           (card instanceof EnergyCard && card.energyType === EnergyType.SPECIAL) ||
           (card instanceof TrainerCard && card.trainerType === TrainerType.TOOL)
         );
-        pokemonCardList.moveCardsTo(cardsToDiscard, opponent.discard);
+        if (cardsToDiscard.length > 0) {
+          state = MOVE_CARDS(store, state, pokemonCardList, opponent.discard, { cards: cardsToDiscard });
+        }
       };
 
       // Discard from active Pokémon
@@ -60,7 +62,8 @@ export class MegatonBlower extends TrainerCard {
         discardSpecialEnergyAndTools(benchPokemon);
       });
 
-      player.supporter.moveCardTo(this, player.discard);
+      // Move this card to discard pile
+      state = MOVE_CARDS(store, state, player.supporter, player.discard, { cards: [this] });
     }
     return state;
   }

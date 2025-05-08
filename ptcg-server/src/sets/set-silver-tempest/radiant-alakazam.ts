@@ -106,14 +106,10 @@ export class RadiantAlakazam extends PokemonCard {
         for (const transfer of transfers) {
           const source = StateUtils.getTarget(state, player, transfer.from);
           const target = StateUtils.getTarget(state, player, transfer.to);
-          if (source.damage == 10) {
-            source.damage -= 10;
-            target.damage += 10;
-          }
-          if (source.damage >= 10) {
-            source.damage -= 20;
-            target.damage += 20;
-          }
+          const damageToMove = 10; // Each transfer represents 10 damage
+
+          source.damage -= damageToMove;
+          target.damage += damageToMove;
 
           player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
             if (cardList.getPokemonCard() === this) {

@@ -153,24 +153,24 @@ export class Plusle extends PokemonCard {
         }
 
         // Set the damage to 0
-        effect.damage = 0
+        effect.damage = 0;
         
         // Prompt asking which Pokémon to attack
         // (user can choose opponent's Active)
         return store.prompt(state, new ChoosePokemonPrompt(
-            player.id,
-            GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-            PlayerType.TOP_PLAYER,
-            [SlotType.BENCH, SlotType.ACTIVE],
-            { allowCancel: false }
-          ), targets => {
-            if (!targets || targets.length === 0) {
-              return;
-            }
-            const damageEffect = new PutDamageEffect(effect, 20);
-            damageEffect.target = targets[0];
-            store.reduceEffect(state, damageEffect);
-          });
+          player.id,
+          GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+          PlayerType.TOP_PLAYER,
+          [SlotType.BENCH, SlotType.ACTIVE],
+          { allowCancel: false }
+        ), targets => {
+          if (!targets || targets.length === 0) {
+            return;
+          }
+          const damageEffect = new PutDamageEffect(effect, 20);
+          damageEffect.target = targets[0];
+          store.reduceEffect(state, damageEffect);
+        });
       }
       return state;
     }

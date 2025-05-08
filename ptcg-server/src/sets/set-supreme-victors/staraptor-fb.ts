@@ -37,7 +37,7 @@ export class StaraptorFB extends PokemonCard {
   public name: string = 'Staraptor FB';
   public fullName: string = 'Staraptor FB SV';
 
-  public usedWhirlwind = false
+  public usedWhirlwind = false;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -46,7 +46,7 @@ export class StaraptorFB extends PokemonCard {
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      this.usedWhirlwind = true
+      this.usedWhirlwind = true;
     }
 
     if (effect instanceof AfterAttackEffect && this.usedWhirlwind === true) {

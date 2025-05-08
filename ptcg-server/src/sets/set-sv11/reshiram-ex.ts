@@ -1,7 +1,7 @@
-import { PokemonCard, Stage, CardType, StoreLike, State, CardTag } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
-import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from "../../game/store/prefabs/costs";
-import { WAS_ATTACK_USED } from "../../game/store/prefabs/prefabs";
+import { PokemonCard, Stage, CardType, StoreLike, State, CardTag } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../game/store/prefabs/costs';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Reshiramex extends PokemonCard {
 

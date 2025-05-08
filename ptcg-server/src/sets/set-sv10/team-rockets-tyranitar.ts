@@ -4,6 +4,7 @@ import { StoreLike, State, ChooseCardsPrompt, GameMessage, Card, PowerType, Stat
 import { Effect } from '../../game/store/effects/effect';
 import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { BetweenTurnsEffect } from '../../game/store/effects/game-phase-effects';
+import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 
 export class TeamRocketsTyranitar extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -12,7 +13,7 @@ export class TeamRocketsTyranitar extends PokemonCard {
   public cardType: CardType = F;
   public hp: number = 180;
   public weakness = [{ type: G }];
-  public retreat = [ C, C, C ];
+  public retreat = [C, C, C];
 
   public powers = [{
     name: 'Sand Stream',
@@ -23,7 +24,7 @@ export class TeamRocketsTyranitar extends PokemonCard {
   public attacks = [
     {
       name: 'Breakthrough Tackle',
-      cost: [ F, C, C, C ],
+      cost: [F, C, C, C],
       damage: 180,
       text: 'Discard an Energy from your opponent\'s Active Pokémon.'
     }
@@ -38,12 +39,12 @@ export class TeamRocketsTyranitar extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Sand Stream
-    if (effect instanceof BetweenTurnsEffect){
+    if (effect instanceof BetweenTurnsEffect) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      
-      if (IS_ABILITY_BLOCKED(store, state, player, this)){ return state; }
-      if (player.active.getPokemonCard() !== this){ return state; }
+
+      if (IS_ABILITY_BLOCKED(store, state, player, this)) { return state; }
+      if (player.active.getPokemonCard() !== this) { return state; }
 
       opponent.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
         if (card.stage === Stage.BASIC) {
@@ -53,7 +54,7 @@ export class TeamRocketsTyranitar extends PokemonCard {
 
       return state;
     }
-    
+
     // Breakthrough Tackle
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const opponent = effect.opponent;
@@ -61,18 +62,17 @@ export class TeamRocketsTyranitar extends PokemonCard {
       if (!opponent.active.cards.some(c => c.superType === SuperType.ENERGY)) {
         return state;
       }
-      
-      let cards: Card[] = [];
+
+      let card: Card;
       return store.prompt(state, new ChooseCardsPrompt(
         effect.player,
         GameMessage.CHOOSE_CARD_TO_DISCARD,
-        effect.opponent.active,
+        opponent.active,
         { superType: SuperType.ENERGY },
         { min: 1, max: 1, allowCancel: false }
       ), selected => {
-        cards = selected;
-        
-        opponent.active.moveCardsTo(cards, opponent.discard);
+        card = selected[0];
+        return store.reduceEffect(state, new DiscardCardsEffect(effect, [card]));
       });
     }
 

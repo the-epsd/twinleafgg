@@ -63,9 +63,9 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
       player.deck,
       {},
       { min: 1, max: 1, allowCancel: false }), (selected: any[]) => {
-        cards = selected || [];
-        next();
-      });
+      cards = selected || [];
+      next();
+    });
     player.deck.moveCardsTo(cards, player.hand);
 
     player.supporter.moveCardTo(effect.trainerCard, player.discard);

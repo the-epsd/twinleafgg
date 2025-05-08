@@ -92,7 +92,7 @@ export class VenusaurSnivyGX extends PokemonCard {
         if (card.marker.hasMarker(this.SHINING_VINE_MARKER, this)){
           card.marker.removeMarker(this.SHINING_VINE_MARKER, this);
         }
-      })
+      });
     }
 
     // Solar Plant-GX
@@ -107,7 +107,7 @@ export class VenusaurSnivyGX extends PokemonCard {
         const damage = new DealDamageEffect(effect, 50);
         damage.target = card;
         store.reduceEffect(state, damage);
-      })
+      });
 
       const extraEffectCost: CardType[] = [C, C, C, C, C];
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);

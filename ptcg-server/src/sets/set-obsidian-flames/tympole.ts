@@ -1,6 +1,7 @@
 import { Card, ChooseCardsPrompt, CoinFlipPrompt, EnergyCard, GameMessage, State, StateUtils, StoreLike } from '../../game';
 import { CardType, Stage, SuperType } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
+import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 
@@ -63,14 +64,12 @@ export class Tympole extends PokemonCard {
             { min: 1, max: 1, allowCancel: false }
           ), selected => {
             card = selected[0];
-
-            opponent.active.moveCardTo(card, opponent.discard);
-            return state;
+            return store.reduceEffect(state, new DiscardCardsEffect(effect, [card]));
           });
         }
       });
     }
-    
+
     return state;
   }
 }

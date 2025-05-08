@@ -1,7 +1,7 @@
-import { PokemonCard, Stage, CardType, StoreLike, State, CardTag } from "../../game";
-import { DealDamageEffect } from "../../game/store/effects/attack-effects";
-import { Effect } from "../../game/store/effects/effect";
-import { WAS_ATTACK_USED } from "../../game/store/prefabs/prefabs";
+import { PokemonCard, Stage, CardType, StoreLike, State, CardTag } from '../../game';
+import { DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { Effect } from '../../game/store/effects/effect';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Zekromex extends PokemonCard {
 

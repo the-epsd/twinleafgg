@@ -14,18 +14,25 @@ import { Format } from '../store/card/card-types';
 import { AbortGameAction } from '../store/actions/abort-game-action';
 import { AbortGameReason } from '../store/actions/abort-game-action';
 import { GamePhase } from '../store/state/state';
+import { BotManager } from '../bots/bot-manager';
 
 export class Core {
   public clients: Client[] = [];
   public games: Game[] = [];
   public messager: Messager;
+  private botManager: BotManager;
 
   constructor() {
     this.messager = new Messager(this);
+    this.botManager = BotManager.getInstance();
     const cleanerTask = new CleanerTask(this);
     cleanerTask.startTasks();
     this.startRankingDecrease();
     this.startInactiveGameCleanup();
+  }
+
+  public getBotManager(): BotManager {
+    return this.botManager;
   }
 
   public connect(client: Client): Client {

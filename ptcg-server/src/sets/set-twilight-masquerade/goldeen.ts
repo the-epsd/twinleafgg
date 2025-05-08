@@ -2,6 +2,7 @@ import { CardType, Stage, SuperType } from '../../game/store/card/card-types';
 import { Attack, Card, ChooseCardsPrompt, CoinFlipPrompt, EnergyCard, GameMessage, PokemonCard, Power, PowerType, State, StateUtils, StoreLike } from '../../game';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
+import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 
 export class Goldeen extends PokemonCard {
 
@@ -65,8 +66,7 @@ export class Goldeen extends PokemonCard {
             { min: 1, max: 1, allowCancel: false }
           ), selected => {
             card = selected[0];
-
-            opponent.active.moveCardTo(card, opponent.discard);
+            return store.reduceEffect(state, new DiscardCardsEffect(effect, [card]));
           });
         }
       });

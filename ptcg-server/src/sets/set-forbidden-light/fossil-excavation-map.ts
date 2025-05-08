@@ -33,7 +33,7 @@ export class FossilExcavationMap extends TrainerCard {
 
       const options: { message: GameMessage, action: () => void }[] = [
         {
-          message: GameMessage.DISCARD_AND_DRAW,
+          message: GameMessage.SEARCH_DECK_FOR_CARD,
           action: () => {
 
             let cards: Card[] = [];
@@ -64,7 +64,7 @@ export class FossilExcavationMap extends TrainerCard {
           }
         },
         {
-          message: GameMessage.SWITCH_POKEMON,
+          message: GameMessage.CHOOSE_CARD_FROM_DISCARD,
           action: () => {
 
             let cards: Card[] = [];

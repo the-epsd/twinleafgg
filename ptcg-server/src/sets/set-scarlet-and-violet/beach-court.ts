@@ -26,7 +26,7 @@ export class BeachCourt extends TrainerCard {
   public fullName: string = 'Beach Court SVI';
 
   public text: string =
-    'The Retreat Cost of each Basic Pokémon in play (both yours and your opponent\'s) is C less.';
+    'The Retreat Cost of each Basic Pokémon in play (both yours and your opponent\'s) is [C] less.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof CheckRetreatCostEffect && StateUtils.getStadiumCard(state) === this) {

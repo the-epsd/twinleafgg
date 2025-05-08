@@ -78,7 +78,7 @@ export class Regice extends PokemonCard {
         if (cards.length === 0) {
           return;
         }
-        const opponent = StateUtils.getOpponent(state, player)
+        const opponent = StateUtils.getOpponent(state, player);
 
         player.hand.moveCardsTo(cards, player.discard);
 

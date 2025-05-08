@@ -1,7 +1,7 @@
-import { PokemonCard, Stage, CardType, StoreLike, State } from "../../game";
-import { HealTargetEffect } from "../../game/store/effects/attack-effects";
-import { Effect } from "../../game/store/effects/effect";
-import { AttackEffect } from "../../game/store/effects/game-effects";
+import { PokemonCard, Stage, CardType, StoreLike, State } from '../../game';
+import { HealTargetEffect } from '../../game/store/effects/attack-effects';
+import { Effect } from '../../game/store/effects/effect';
+import { AttackEffect } from '../../game/store/effects/game-effects';
 
 export class Tynamo extends PokemonCard {
 
