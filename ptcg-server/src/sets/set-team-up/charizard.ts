@@ -3,6 +3,7 @@ import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { HAS_MARKER, IS_ABILITY_BLOCKED, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { CardTarget } from '../../game/store/actions/play-card-action';
 
 export class Charizard extends PokemonCard {
 
@@ -58,14 +59,30 @@ export class Charizard extends PokemonCard {
         }
       });
 
+      const blockedTo: CardTarget[] = [];
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+        if (cardList.getPokemonCard() !== this) {
+          blockedTo.push({
+            player: PlayerType.BOTTOM_PLAYER,
+            slot: cardList === player.active ? SlotType.ACTIVE : SlotType.BENCH,
+            index: cardList === player.active ? 0 : player.bench.indexOf(cardList)
+          });
+        }
+      });
+
       store.prompt(state, new AttachEnergyPrompt(
         player.id,
         GameMessage.ATTACH_ENERGY_CARDS,
         player.deck,
         PlayerType.BOTTOM_PLAYER,
-        [SlotType.ACTIVE],
+        [SlotType.ACTIVE, SlotType.BENCH],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fire Energy' },
-        { min: 0, max: 2, allowCancel: false }
+        {
+          min: 0,
+          max: 2,
+          allowCancel: false,
+          blockedTo
+        }
       ), transfers => {
         transfers = transfers || [];
         for (const transfer of transfers) {

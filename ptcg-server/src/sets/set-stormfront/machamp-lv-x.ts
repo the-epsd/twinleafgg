@@ -74,8 +74,8 @@ export class MachampLVX extends PokemonCard {
 
     // No Guard: taking damage
     if ((effect instanceof DealDamageEffect || effect instanceof PutDamageEffect) && effect.target.getPokemonCard() === this) {
-      const opponent = effect.player
-      const player = StateUtils.getOpponent(state, opponent)
+      const opponent = effect.player;
+      const player = StateUtils.getOpponent(state, opponent);
 
       if (IS_POKEBODY_BLOCKED(store, state, player, this)) {
         return state;

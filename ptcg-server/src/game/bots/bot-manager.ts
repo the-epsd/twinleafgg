@@ -6,6 +6,7 @@ import { User } from '../../storage';
 import { config } from '../../config';
 import { Md5 } from '../../utils/md5';
 import { BotGamesTask } from './bot-games-task';
+import { Format } from '../store/card/card-types';
 
 export class BotManager {
 
@@ -24,6 +25,13 @@ export class BotManager {
 
   public registerBot(bot: BotClient): void {
     this.bots.push(bot);
+  }
+
+  public getBotsForFormat(format: Format): BotClient[] {
+    return this.bots.filter(bot => {
+      // Check if bot has a deck for this format
+      return bot.hasDeckForFormat(format);
+    });
   }
 
   public async initBots(core: Core) {
@@ -47,7 +55,7 @@ export class BotManager {
   }
 
   private async findOrCreateUser(name: string, registered: number): Promise<User> {
-    let user = await User.findOne({name});
+    let user = await User.findOne({ name });
     if (user === undefined) {
       user = new User();
       user.name = name;

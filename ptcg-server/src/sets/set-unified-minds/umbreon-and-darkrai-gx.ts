@@ -124,7 +124,7 @@ export class UmbreonDarkraiGX extends PokemonCard {
       || effect instanceof PlaySupporterEffect 
       || effect instanceof PlayStadiumEffect 
       || effect instanceof AttachPokemonToolEffect) && effect.player.marker.hasMarker(this.DARK_MOON_MARKER, this)){
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+      throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
     }
 
     if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.DARK_MOON_MARKER, this)){

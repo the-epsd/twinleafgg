@@ -4,6 +4,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { PlaySupporterEffect } from '../../game/store/effects/play-card-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 
 export class ScreamTailex extends PokemonCard {
 
@@ -85,9 +86,7 @@ export class ScreamTailex extends PokemonCard {
           { min: 1, max: 1, allowCancel: false }
         ), selected => {
           card = selected[0];
-
-          opponent.active.moveCardTo(card, opponent.discard);
-          return state;
+          return store.reduceEffect(state, new DiscardCardsEffect(effect, [card]));
         });
       }
 

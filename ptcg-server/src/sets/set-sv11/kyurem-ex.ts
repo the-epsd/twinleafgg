@@ -1,7 +1,7 @@
-import { PokemonCard, Stage, CardType, StoreLike, State, CardTag } from "../../game";
-import { PutDamageEffect } from "../../game/store/effects/attack-effects";
-import { Effect } from "../../game/store/effects/effect";
-import { AttackEffect } from "../../game/store/effects/game-effects";
+import { PokemonCard, Stage, CardType, StoreLike, State, CardTag } from '../../game';
+import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { Effect } from '../../game/store/effects/effect';
+import { AttackEffect } from '../../game/store/effects/game-effects';
 
 export class Kyuremex extends PokemonCard {
 

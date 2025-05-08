@@ -55,7 +55,7 @@ export class DialgaLVX extends PokemonCard {
 
     // Time Skip
     if (effect instanceof BeginTurnEffect && HAS_MARKER(this.TIME_SKIP_EFFECT_MARKER, effect.player, this)) {
-      REMOVE_MARKER(this.TIME_SKIP_EFFECT_MARKER, effect.player, this)
+      REMOVE_MARKER(this.TIME_SKIP_EFFECT_MARKER, effect.player, this);
       const endTurnEffect = new EndTurnEffect(effect.player);
       return store.reduceEffect(state, endTurnEffect);
     }

@@ -1,10 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, EnergyType, SuperType, BoardEffect } from '../../game/store/card/card-types';
-import { StoreLike, State, GameMessage, AttachEnergyPrompt, EnergyCard, GameError, PlayerType, SlotType, StateUtils, PowerType } from '../../game';
+import { StoreLike, State, GameMessage, AttachEnergyPrompt, EnergyCard, GameError, PlayerType, SlotType, StateUtils, PowerType, CardTarget } from '../../game';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 
 export class Solrock extends PokemonCard {
 
@@ -38,9 +37,9 @@ export class Solrock extends PokemonCard {
 
   public readonly SUN_ENERGY_MARKER = 'SUN_ENERGY_MARKER';
 
-  // BEGIN: abpxx6d04wxr
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
+
+    if (effect instanceof EndTurnEffect) {
       const player = effect.player;
       player.marker.removeMarker(this.SUN_ENERGY_MARKER, this);
     }
@@ -48,75 +47,73 @@ export class Solrock extends PokemonCard {
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
       const player = effect.player;
 
-      const hasBench = player.bench.some(b => b.cards.length > 0);
-      if (!hasBench) {
+      // Check if player has a Lunatone in play
+      let hasLunatone = false;
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+        const pokemon = cardList.getPokemonCard();
+        if (pokemon && pokemon.name === 'Lunatone') {
+          hasLunatone = true;
+        }
+      });
+
+      if (!hasLunatone) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      const hasEnergyInDiscard = player.discard.cards.some(c => {
+      const hasPsychicEnergyInDiscard = player.discard.cards.some(c => {
         return c instanceof EnergyCard
           && c.energyType === EnergyType.BASIC
           && c.provides.includes(CardType.PSYCHIC);
       });
-      if (!hasEnergyInDiscard) {
+
+      if (!hasPsychicEnergyInDiscard) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
-      if (player.marker.hasMarker(this.SUN_ENERGY_MARKER, this)) {
-        throw new GameError(GameMessage.POWER_ALREADY_USED);
-      }
 
-      const blocked: number[] = [];
-      player.bench.forEach((card, index) => {
-        if (!(card instanceof PokemonCard && card.name === 'Lunatone')) {
-          blocked.push(index);
+      const blocked2: CardTarget[] = [];
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
+        if (card.name !== 'Lunatone') {
+          blocked2.push(target);
         }
       });
-      player.active.cards.forEach((card, index) => {
-        if (!(card instanceof PokemonCard && card.name === 'Lunatone')) {
-          blocked.push(index);
-        }
-      });
+
+      if (player.marker.hasMarker(this.SUN_ENERGY_MARKER, this)) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
+      }
 
       state = store.prompt(state, new AttachEnergyPrompt(
         player.id,
-        GameMessage.ATTACH_ENERGY_TO_BENCH,
+        GameMessage.ATTACH_ENERGY_TO_ACTIVE,
         player.discard,
         PlayerType.BOTTOM_PLAYER,
         [SlotType.BENCH, SlotType.ACTIVE],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Psychic Energy' },
-        { allowCancel: true, min: 1, max: 1, blocked: blocked }
+        { allowCancel: false, min: 1, max: 1, blockedTo: blocked2 }
       ), transfers => {
         transfers = transfers || [];
-        // cancelled by user
+        player.marker.addMarker(this.SUN_ENERGY_MARKER, this);
+
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+          if (cardList.getPokemonCard() === this) {
+            cardList.addBoardEffect(BoardEffect.ABILITY_USED);
+          }
+        });
+
         if (transfers.length === 0) {
           return;
         }
+
         for (const transfer of transfers) {
           const target = StateUtils.getTarget(state, player, transfer.to);
-          // if (target.getPokemonCard()?.name !== 'Lunatone') {
-          //   throw new GameError(GameMessage.INVALID_TARGET);
-          // }
-          player.discard.moveCardTo(transfer.card, target);
-          player.marker.addMarker(this.SUN_ENERGY_MARKER, this);
-
-          player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-            if (cardList.getPokemonCard() === this) {
-              cardList.addBoardEffect(BoardEffect.ABILITY_USED);
-            }
-          });
-
+          const targetPokemon = target.getPokemonCard();
+          if (targetPokemon && targetPokemon.name === 'Lunatone') {
+            player.discard.moveCardTo(transfer.card, target);
+          }
         }
-      }
-      );
-      // END: abpxx6d04wxr
-
-      // BEGIN: ed8c6549bwf9
-      if (effect instanceof EndTurnEffect) {
-        effect.player.marker.removeMarker(this.SUN_ENERGY_MARKER, this);
-      }
-      return state;
-      // END: ed8c6549bwf9
+        return state;
+      });
     }
+
     return state;
   }
 }

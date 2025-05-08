@@ -4,7 +4,7 @@ import { Card, ChooseCardsPrompt, CoinFlipPrompt, EnergyCard, GameMessage, Playe
 import { StoreLike, State } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { PutCountersEffect } from '../../game/store/effects/attack-effects';
+import { DiscardCardsEffect, PutCountersEffect } from '../../game/store/effects/attack-effects';
 
 export class Yveltal extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -74,9 +74,7 @@ export class Yveltal extends PokemonCard {
             { min: 1, max: 1, allowCancel: false }
           ), selected => {
             card = selected[0];
-
-            opponent.active.moveCardTo(card, opponent.discard);
-            return state;
+            return store.reduceEffect(state, new DiscardCardsEffect(effect, [card]));
           });
         }
       });

@@ -1,7 +1,7 @@
-import { PokemonCard, Stage, CardType, CardTag, PowerType, StoreLike, State, StateUtils, PlayerType, GameLog } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
-import { EvolveEffect } from "../../game/store/effects/game-effects";
-import { IS_ABILITY_BLOCKED } from "../../game/store/prefabs/prefabs";
+import { PokemonCard, Stage, CardType, CardTag, PowerType, StoreLike, State, StateUtils, PlayerType, GameLog } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { EvolveEffect } from '../../game/store/effects/game-effects';
+import { IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 
 export class DarkAmpharos extends PokemonCard {

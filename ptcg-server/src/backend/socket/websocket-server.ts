@@ -30,8 +30,8 @@ export class WebSocketServer {
 
   public async listen(httpServer: http.Server): Promise<void> {
     const opts: Partial<ServerOptions> = {
-      pingInterval: 30000,    // Check connection every 30s
-      pingTimeout: 86400000,  // Set to 24 hours to effectively disable inactivity timeout
+      pingInterval: 24 * 60 * 60 * 1000,    // Check connection every 24 hours
+      pingTimeout: 24 * 60 * 60 * 1000,     // Set timeout to 24 hours
       connectTimeout: 30000,  // Standard 30s connection timeout
       transports: ['websocket'],
       allowUpgrades: true,
@@ -93,7 +93,7 @@ export class WebSocketServer {
           // Only log pings if they're delayed or if we're debugging
           const now = Date.now();
           const lastPing = (socket as any).lastPing || now;
-          if (now - lastPing > 30000) { // Log if ping interval is > 30s
+          if (now - lastPing > 24 * 60 * 60 * 1000) { // Log if ping interval is > 24h
             console.log(`[Socket] Delayed heartbeat: ${user.name} [${connectionId}] (${now - lastPing}ms)`);
           }
           (socket as any).lastPing = now;

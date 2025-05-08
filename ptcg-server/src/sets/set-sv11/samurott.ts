@@ -1,9 +1,9 @@
-import { PokemonCard, Stage, CardType, StoreLike, State, PowerType, GameError, BoardEffect } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
-import { AttackEffect, PowerEffect } from "../../game/store/effects/game-effects";
-import { CheckProvidedEnergyEffect } from "../../game/store/effects/check-effects";
-import { ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, StateUtils } from "../../game";
-import { EndTurnEffect } from "../../game/store/effects/game-phase-effects";
+import { PokemonCard, Stage, CardType, StoreLike, State, PowerType, GameError, BoardEffect } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, StateUtils } from '../../game';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 function* useNightGate(next: Function, store: StoreLike, state: State,
   effect: PowerEffect): IterableIterator<State> {

@@ -93,7 +93,7 @@ export class Giratina extends PokemonCard {
             damage.target = card;
             store.reduceEffect(state, damage);
           }
-        })
+        });
       }
     }
 

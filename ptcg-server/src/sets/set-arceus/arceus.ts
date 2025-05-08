@@ -80,7 +80,7 @@ export class Arceus extends PokemonCard {
       THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_POKEMON(80, effect, store, state);
       
       const energies = player.active.cards.filter(card => card instanceof EnergyCard );
-      MOVE_CARDS(store, state, player.active, player.lostzone, { cards: energies })
+      MOVE_CARDS(store, state, player.active, player.lostzone, { cards: energies });
     }
 
     return state;

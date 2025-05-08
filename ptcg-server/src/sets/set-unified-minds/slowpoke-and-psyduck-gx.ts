@@ -86,7 +86,7 @@ export class SlowpokePsyduckGX extends PokemonCard {
       for (let i = 0; i < coinFlips; i++){
         COIN_FLIP_PROMPT(store, state, player, result => {
           if (result){ heads++; }
-        })
+        });
       }
 
       effect.damage = heads * 100;

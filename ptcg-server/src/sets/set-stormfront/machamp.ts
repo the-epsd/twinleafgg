@@ -46,13 +46,13 @@ export class Machamp extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Take Out
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player
+      const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
       if (opponent.active.getPokemons().length > 1) {
         return state;
       }
-      effect.damage = 0
+      effect.damage = 0;
 
       const dealDamage = new KnockOutOpponentEffect(effect, 999);
       dealDamage.target = opponent.active;

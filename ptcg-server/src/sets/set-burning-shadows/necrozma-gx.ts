@@ -1,7 +1,7 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import {
-  PowerType, StoreLike, State, StateUtils, 
+  PowerType, StoreLike, State, StateUtils,
   PlayerType,
   GamePhase,
   EnergyCard
@@ -95,7 +95,6 @@ export class NecrozmaGX extends PokemonCard {
     // Prismatic Burst
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
 
       const psychicEnergy = player.active.cards.filter(card =>
         card instanceof EnergyCard && card.name === 'Psychic Energy'
@@ -105,10 +104,7 @@ export class NecrozmaGX extends PokemonCard {
       discardEnergy.target = player.active;
       store.reduceEffect(state, discardEnergy);
 
-      const damageAmount = psychicEnergy.length * 60;
-      const damageEffect = new PutDamageEffect(effect, damageAmount);
-      damageEffect.target = opponent.active;
-      store.reduceEffect(state, damageEffect);
+      effect.damage += psychicEnergy.length * 60;
     }
 
     // Black Ray-GX

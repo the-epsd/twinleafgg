@@ -1,8 +1,8 @@
-import { PokemonCard, Stage, CardType, StoreLike, State, Card } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
-import { DiscardCardsEffect } from "../../game/store/effects/attack-effects";
-import { StateUtils, ChooseCardsPrompt, CoinFlipPrompt, GameMessage, EnergyCard, SuperType } from "../../game";
-import { WAS_ATTACK_USED } from "../../game/store/prefabs/prefabs";
+import { PokemonCard, Stage, CardType, StoreLike, State, Card } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
+import { StateUtils, ChooseCardsPrompt, CoinFlipPrompt, GameMessage, EnergyCard, SuperType } from '../../game';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Servine extends PokemonCard {
 
