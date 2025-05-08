@@ -4,11 +4,13 @@ import { AlolanVulpixVSTAR } from './alolan-vulpix-vstar';
 import { Archen } from './archen';
 import { Archeops } from './archeops';
 import { Articuno } from './articuno';
+import { Baltoy } from './baltoy';
 import { Beheeyem } from './beheeyem';
 import { Beldum } from './beldum';
 import { Braixen } from './braixen';
 import { Candice } from './candice';
 import { CapturingAroma } from './capturing-aroma';
+import { Claydol } from './claydol';
 import { Cobalion } from './cobalion';
 import { Crobat } from './crobat';
 import { Dragonite } from './dragonite';
@@ -73,10 +75,12 @@ export const setSilverTempest: Card[] = [
   new Archen(),
   new Archeops(),
   new Articuno(),
+  new Baltoy(),
   new Beheeyem(),
   new Braixen(),
   new Candice(),
   new CapturingAroma(),
+  new Claydol(),
   new Cobalion(),
   new Crobat(),
   new Dragonite(),
