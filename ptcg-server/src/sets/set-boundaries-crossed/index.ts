@@ -8,6 +8,7 @@ import { Ditto } from './ditto';
 import { Dusclops } from './dusclops';
 import { Dusknoir } from './dusknoir';
 import { Duskull } from './duskull';
+import { Hugh } from './hugh';
 import { KeldeoEx } from './keldeo-ex';
 import { LandorusEx } from './landorus-ex';
 import { Munna } from './munna';
@@ -29,6 +30,7 @@ export const setBoundariesCrossed: Card[] = [
   new Dusclops(),
   new Dusknoir(),
   new Duskull(),
+  new Hugh(),
   new KeldeoEx(),
   new LandorusEx(),
   new Munna(),
