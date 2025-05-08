@@ -5,7 +5,14 @@
 
   <div class="ptcg-card-info-text" *ngIf="!facedown && card.superType === SuperType.POKEMON">
     <div class="title">
-      <span>{{card.name}}</span> <span class="subtitle-set-code">{{card.set}} {{card.setNumber}}</span>
+      <ng-container *ngIf="parseCardName(card.name).prefix; else normalName">
+        <span class="subtitle-set-code">{{parseCardName(card.name).prefix}}</span>
+        <span>{{parseCardName(card.name).rest}}</span>
+      </ng-container>
+      <ng-template #normalName>
+        <span>{{card.name}}</span>
+      </ng-template>
+      <span class="subtitle-set-code">{{card.set}} {{card.setNumber}}</span>
       <div class="ptcg-u-spacer"></div>
       <div class="subtitle-hp">
         <span class="subtitle-hp-unit" translate>CARDS_HP</span>
