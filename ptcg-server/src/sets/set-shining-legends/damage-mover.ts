@@ -51,7 +51,7 @@ export class DamageMover extends TrainerCard {
         PlayerType.BOTTOM_PLAYER,
         [SlotType.ACTIVE, SlotType.BENCH],
         maxAllowedDamage,
-        { min: 1, max: 3, allowCancel: false, singleSourceTarget: true, singleDestinationTarget: true }
+        { min: 3, max: 3, damageMultiple: 30, allowCancel: false, singleSourceTarget: true, singleDestinationTarget: true }
       ), transfers => {
         if (transfers === null) {
           player.supporter.moveCardTo(this, player.discard);
