@@ -61,6 +61,8 @@ import { Spinda } from './spinda';
 import { Sunflora } from './sunflora';
 import { Terrakion } from './terrakion';
 import { UnidentifiedFossil } from './unidentified-fossil';
+import { UnownV } from './unown-v';
+import { UnownVSTAR } from './unown-vstar';
 import { UrsalunaV } from './ursaluna-v';
 import { VGuardEnergy } from './v-guard-energy';
 import { Wailord } from './wailord';
@@ -131,6 +133,8 @@ export const setSilverTempest: Card[] = [
   new Sunflora(),
   new Terrakion(),
   new UnidentifiedFossil(),
+  new UnownV(),
+  new UnownVSTAR(),
   new UrsalunaV(),
   new VGuardEnergy(),
   new Wailord(),
