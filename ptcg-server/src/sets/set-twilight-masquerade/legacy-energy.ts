@@ -1,7 +1,7 @@
 import { StoreLike } from '../../game/store/store-like';
 import { State, GamePhase } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { EnergyCard, CardType, EnergyType, CardTag } from '../../game';
+import { EnergyCard, CardType, EnergyType, CardTag, StateUtils } from '../../game';
 import { KnockOutEffect } from '../../game/store/effects/game-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { IS_SPECIAL_ENERGY_BLOCKED } from '../../game/store/prefabs/prefabs';
@@ -27,12 +27,9 @@ export class LegacyEnergy extends EnergyCard {
 
   public fullName = 'Legacy Energy TWM';
 
-  private legacyEnergyUsed = false;
+  public text: string = `As long as this card is attached to a Pokémon, it provides every type of Energy but provides only 1 Energy at a time.
 
-  public text: string =
-    'As long as this card is attached to a Pokémon, it provides every type of Energy but provides only 1 Energy at a time.' +
-    '\n\n' +
-    'If the Pokémon this card is attached to is Knocked Out by damage from an attack from your opponent\'s Pokémon, that player takes 1 fewer Prize card. This effect of your Legacy Energy can\'t be applied more than once per game.';
+  If the Pokémon this card is attached to is Knocked Out by damage from an attack from your opponent's Pokémon, that player takes 1 fewer Prize card. This effect of your Legacy Energy can't be applied more than once per game.`;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -41,15 +38,16 @@ export class LegacyEnergy extends EnergyCard {
     }
 
     if (effect instanceof KnockOutEffect && effect.target.cards.includes(this)) {
-      if (state.phase === GamePhase.ATTACK) {
-        if (IS_SPECIAL_ENERGY_BLOCKED(store, state, effect.player, this, effect.target)) {
-          return state;
-        }
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
 
-        if (this.legacyEnergyUsed == false) {
-          effect.prizeCount -= 1;
-          this.legacyEnergyUsed = true;
-        }
+      if (state.phase !== GamePhase.ATTACK || state.players[state.activePlayer] == opponent) {
+        return state;
+      }
+
+      if (player.legacyEnergyUsed == false) {
+        effect.prizeCount -= 1;
+        player.legacyEnergyUsed = true;
       }
     }
     return state;
