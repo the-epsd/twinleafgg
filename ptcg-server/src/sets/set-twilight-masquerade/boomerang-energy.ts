@@ -27,11 +27,17 @@ export class BoomerangEnergy extends EnergyCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // checking if this is on the player's active when attacking
     if (effect instanceof AttackEffect && effect.source.cards.includes(this) && effect.player.active === effect.source) {
+      if (IS_SPECIAL_ENERGY_BLOCKED(store, state, effect.player, this, effect.source)) {
+        return state;
+      }
       effect.player.marker.addMarker(this.BOOMERANG_EXISTANCE_MARKER, this);
     }
 
     // checking if this card is discarded while attacking
     if (effect instanceof DiscardCardsEffect && effect.player.marker.hasMarker(this.BOOMERANG_EXISTANCE_MARKER, this)) {
+      if (IS_SPECIAL_ENERGY_BLOCKED(store, state, effect.player, this, effect.source)) {
+        return state;
+      }
       effect.player.marker.addMarker(this.BOOMERANG_DISCARDED_MARKER, this);
     }
 

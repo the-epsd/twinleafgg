@@ -45,6 +45,10 @@ export class LegacyEnergy extends EnergyCard {
         return state;
       }
 
+      if (IS_SPECIAL_ENERGY_BLOCKED(store, state, player, this, effect.target)) {
+        return state;
+      }
+
       if (player.legacyEnergyUsed == false) {
         effect.prizeCount -= 1;
         player.legacyEnergyUsed = true;
