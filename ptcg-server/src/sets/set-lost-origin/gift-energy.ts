@@ -5,6 +5,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State, GamePhase } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { KnockOutEffect } from '../../game/store/effects/game-effects';
+import { IS_SPECIAL_ENERGY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 
 export class GiftEnergy extends EnergyCard {
@@ -39,6 +40,10 @@ export class GiftEnergy extends EnergyCard {
 
       // Do not activate between turns, or when it's not opponents turn.
       if (state.phase !== GamePhase.ATTACK) {
+        return state;
+      }
+
+      if (IS_SPECIAL_ENERGY_BLOCKED(store, state, player, this, effect.target)) {
         return state;
       }
 

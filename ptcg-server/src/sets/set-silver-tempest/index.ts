@@ -4,11 +4,13 @@ import { AlolanVulpixVSTAR } from './alolan-vulpix-vstar';
 import { Archen } from './archen';
 import { Archeops } from './archeops';
 import { Articuno } from './articuno';
+import { Baltoy } from './baltoy';
 import { Beheeyem } from './beheeyem';
 import { Beldum } from './beldum';
 import { Braixen } from './braixen';
 import { Candice } from './candice';
 import { CapturingAroma } from './capturing-aroma';
+import { Claydol } from './claydol';
 import { Cobalion } from './cobalion';
 import { Crobat } from './crobat';
 import { Dragonite } from './dragonite';
@@ -59,6 +61,8 @@ import { Spinda } from './spinda';
 import { Sunflora } from './sunflora';
 import { Terrakion } from './terrakion';
 import { UnidentifiedFossil } from './unidentified-fossil';
+import { UnownV } from './unown-v';
+import { UnownVSTAR } from './unown-vstar';
 import { UrsalunaV } from './ursaluna-v';
 import { VGuardEnergy } from './v-guard-energy';
 import { Wailord } from './wailord';
@@ -73,10 +77,12 @@ export const setSilverTempest: Card[] = [
   new Archen(),
   new Archeops(),
   new Articuno(),
+  new Baltoy(),
   new Beheeyem(),
   new Braixen(),
   new Candice(),
   new CapturingAroma(),
+  new Claydol(),
   new Cobalion(),
   new Crobat(),
   new Dragonite(),
@@ -127,6 +133,8 @@ export const setSilverTempest: Card[] = [
   new Sunflora(),
   new Terrakion(),
   new UnidentifiedFossil(),
+  new UnownV(),
+  new UnownVSTAR(),
   new UrsalunaV(),
   new VGuardEnergy(),
   new Wailord(),

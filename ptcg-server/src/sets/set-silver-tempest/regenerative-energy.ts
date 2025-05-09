@@ -3,8 +3,8 @@ import { EnergyCard } from '../../game/store/card/energy-card';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
-import { HealEffect } from '../../game/store/effects/game-effects';
+import { EvolveEffect, HealEffect } from '../../game/store/effects/game-effects';
+import { IS_SPECIAL_ENERGY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 
 export class RegenerativeEnergy extends EnergyCard {
@@ -32,20 +32,19 @@ export class RegenerativeEnergy extends EnergyCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     // Provide energy when attached to Single Strike Pokemon
-    if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
+    if (effect instanceof EvolveEffect && effect.target.cards.includes(this)) {
       const player = effect.player;
-      const pokemon = effect.source;
 
-
-
-      if (pokemon.getPokemonCard()?.tags.includes(CardTag.POKEMON_V)) {
-
-        const healEffect = new HealEffect(player, pokemon, 100);
-        store.reduceEffect(state, healEffect);
-
+      if (IS_SPECIAL_ENERGY_BLOCKED(store, state, player, this, effect.target)) {
+        return state;
       }
-      return state;
+
+      if (effect.target.getPokemonCard()?.tags.includes(CardTag.POKEMON_V)) {
+        const healEffect = new HealEffect(player, effect.target, 100);
+        store.reduceEffect(state, healEffect);
+      }
     }
+
     return state;
   }
 }
