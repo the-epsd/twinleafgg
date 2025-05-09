@@ -3,6 +3,7 @@ import { CardType, EnergyType } from '../../game/store/card/card-types';
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
+import { IS_SPECIAL_ENERGY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 export class BoomerangEnergy extends EnergyCard {
 
@@ -29,13 +30,12 @@ export class BoomerangEnergy extends EnergyCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof DiscardCardsEffect && effect.target === this.cards) {
-
+      if (IS_SPECIAL_ENERGY_BLOCKED(store, state, effect.player, this, effect.source)) {
+        return state;
+      }
       effect.preventDefault = true;
-
     }
 
     return state;
-
   }
-
 }
