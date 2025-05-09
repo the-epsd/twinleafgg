@@ -32,10 +32,10 @@ export class WebSocketServer {
     const opts: Partial<ServerOptions> = {
       pingInterval: 24 * 60 * 60 * 1000,    // Check connection every 24 hours
       pingTimeout: 24 * 60 * 60 * 1000,     // Set timeout to 24 hours
-      connectTimeout: 30000,  // Standard 30s connection timeout
-      transports: ['websocket'],
+      connectTimeout: 60000,  // Increased to 60s connection timeout
+      transports: ['websocket', 'polling'],  // Allow polling as fallback
       allowUpgrades: true,
-      upgradeTimeout: 30000,   // Standard 30s upgrade timeout
+      upgradeTimeout: 60000,   // Increased to 60s upgrade timeout
       perMessageDeflate: true,
       httpCompression: true,
       allowEIO3: true,

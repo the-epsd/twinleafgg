@@ -44,11 +44,11 @@ export class SocketService {
     this.socket = io(apiUrl, {
       autoConnect: false,
       reconnection: true,
-      reconnectionAttempts: 10,
+      reconnectionAttempts: Infinity,
       reconnectionDelay: 1000,
-      reconnectionDelayMax: 5000,
+      reconnectionDelayMax: 30000,
       timeout: 24 * 60 * 60 * 1000,
-      transports: ['websocket'],
+      transports: ['websocket', 'polling'],
       forceNew: true,
       query: {},
       randomizationFactor: 0.5
@@ -58,6 +58,16 @@ export class SocketService {
       console.log('[Socket] Connected to server');
       this.connectionSubject.next(true);
       this.lastPingTime = Date.now();
+
+      if (this.socket.io.engine) {
+        this.socket.io.engine.on('upgrade', () => {
+          console.log('[Socket] Transport upgraded to:', this.socket.io.engine.transport.name);
+        });
+
+        this.socket.io.engine.on('downgrade', () => {
+          console.log('[Socket] Transport downgraded to:', this.socket.io.engine.transport.name);
+        });
+      }
     });
 
     this.socket.on('connect_error', (error) => {
