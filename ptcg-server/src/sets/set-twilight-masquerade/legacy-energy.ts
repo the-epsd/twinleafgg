@@ -4,6 +4,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { EnergyCard, CardType, EnergyType, CardTag, StateUtils } from '../../game';
 import { KnockOutEffect } from '../../game/store/effects/game-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { IS_SPECIAL_ENERGY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 
 export class LegacyEnergy extends EnergyCard {
@@ -41,6 +42,10 @@ export class LegacyEnergy extends EnergyCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       if (state.phase !== GamePhase.ATTACK || state.players[state.activePlayer] == opponent) {
+        return state;
+      }
+
+      if (IS_SPECIAL_ENERGY_BLOCKED(store, state, player, this, effect.target)) {
         return state;
       }
 
