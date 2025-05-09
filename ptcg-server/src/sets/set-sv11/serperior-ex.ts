@@ -1,8 +1,8 @@
-import { PokemonCard, Stage, CardType, StoreLike, State, CardTag, ChooseCardsPrompt, PowerType } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
-import { GameMessage, ShuffleDeckPrompt } from "../../game";
-import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from "../../game/store/prefabs/prefabs";
-import { PutDamageEffect } from "../../game/store/effects/attack-effects";
+import { PokemonCard, Stage, CardType, StoreLike, State, CardTag, ChooseCardsPrompt, PowerType } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { GameMessage, ShuffleDeckPrompt } from '../../game';
+import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 
 export class Serperiorex extends PokemonCard {
 

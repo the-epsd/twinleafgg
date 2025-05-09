@@ -80,7 +80,7 @@ export class CafeMaster extends TrainerCard {
       });
       player.supporter.moveCardTo(effect.trainerCard, player.discard);
 
-      const playerActive = player.active.getPokemonCard()
+      const playerActive = player.active.getPokemonCard();
       if (playerActive) {
         if (!(playerActive.fullName === 'Alcremie BRS') && !IS_ABILITY_BLOCKED(store, state, player, playerActive)) {
           const endTurnEffect = new EndTurnEffect(player);

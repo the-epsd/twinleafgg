@@ -1,4 +1,4 @@
-import { PokemonCard, CardTag, Stage, CardType, PowerType, StoreLike, State, GameError, GameMessage, AttachEnergyPrompt, EnergyType, PlayerType, SlotType, StateUtils, SuperType, EnergyCard } from '../../game';
+import { PokemonCard, CardTag, Stage, CardType, PowerType, StoreLike, State, GameError, GameMessage, AttachEnergyPrompt, EnergyType, PlayerType, SlotType, StateUtils, SuperType, EnergyCard, BoardEffect } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
@@ -85,6 +85,13 @@ export class Blazikenex extends PokemonCard {
       ), transfers => {
         transfers = transfers || [];
         player.marker.addMarker(this.OVERFLOWING_SPIRIT_MARKER, this);
+
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+          if (cardList.getPokemonCard() === this) {
+            cardList.addBoardEffect(BoardEffect.ABILITY_USED);
+          }
+        });
+
         if (transfers.length === 0) {
           return;
         }

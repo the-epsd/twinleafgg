@@ -55,16 +55,7 @@ export class TeamRocketEnergy extends EnergyCard {
     const needsPsychic = attackCost.includes(CardType.PSYCHIC);
     const needsDark = attackCost.includes(CardType.DARK);
 
-    console.log('Attack cost:', attackCost);
-    console.log('Needs Psychic:', needsPsychic);
-    console.log('Needs Dark:', needsDark);
-    console.log('Existing energy:', existingEnergy.map(e => ({
-      card: e.card.name,
-      provides: e.provides
-    })));
-
     if (!needsPsychic && !needsDark) {
-      console.log('Providing COLORLESS, COLORLESS (no type needed)');
       return [CardType.COLORLESS, CardType.COLORLESS];
     }
 
@@ -73,46 +64,31 @@ export class TeamRocketEnergy extends EnergyCard {
     const requiredPsychic = attackCost.filter(c => c === CardType.PSYCHIC).length;
     const requiredDark = attackCost.filter(c => c === CardType.DARK).length;
 
-    console.log('Existing Psychic count:', psychicCount);
-    console.log('Existing Dark count:', darkCount);
-    console.log('Required Psychic:', requiredPsychic);
-    console.log('Required Dark:', requiredDark);
-
     const hasEnoughPsychic = !needsPsychic || psychicCount >= requiredPsychic;
     const hasEnoughDark = !needsDark || darkCount >= requiredDark;
 
-    console.log('Has enough Psychic:', hasEnoughPsychic);
-    console.log('Has enough Dark:', hasEnoughDark);
-
     if (hasEnoughPsychic && hasEnoughDark) {
-      console.log('Providing COLORLESS, COLORLESS (enough of both types)');
       return [CardType.COLORLESS, CardType.COLORLESS];
     }
 
     if (needsPsychic && needsDark) {
       if (!hasEnoughPsychic && !hasEnoughDark) {
-        console.log('Providing PSYCHIC, DARK (needs both)');
         return [CardType.PSYCHIC, CardType.DARK];
       }
       if (!hasEnoughPsychic) {
-        console.log('Providing PSYCHIC, PSYCHIC (needs Psychic)');
         return [CardType.PSYCHIC, CardType.PSYCHIC];
       }
-      console.log('Providing DARK, DARK (needs Dark)');
       return [CardType.DARK, CardType.DARK];
     }
 
     if (needsPsychic && !hasEnoughPsychic) {
-      console.log('Providing PSYCHIC, PSYCHIC (needs Psychic)');
       return [CardType.PSYCHIC, CardType.PSYCHIC];
     }
 
     if (needsDark && !hasEnoughDark) {
-      console.log('Providing DARK, DARK (needs Dark)');
       return [CardType.DARK, CardType.DARK];
     }
 
-    console.log('Providing COLORLESS, COLORLESS (default)');
     return [CardType.COLORLESS, CardType.COLORLESS];
   }
 
@@ -134,7 +110,6 @@ export class TeamRocketEnergy extends EnergyCard {
 
           const pokemonCard = cardList.getPokemonCard();
           if (pokemonCard && !pokemonCard.tags.includes(CardTag.TEAM_ROCKET)) {
-            console.log('Discarding Team Rocket Energy from non-Team Rocket Pokémon:', pokemonCard.name);
             cardList.moveCardTo(this, player.discard);
           }
         });
@@ -154,12 +129,10 @@ export class TeamRocketEnergy extends EnergyCard {
         return state;
       }
 
-      console.log('Checking energy provision for:', pokemonCard.name);
       const attackCost = pokemonCard.attacks[0]?.cost || [];
       const existingEnergy = this.getExistingEnergy(effect.source);
       const energyToProvide = this.getEnergyToProvide(attackCost, existingEnergy);
 
-      console.log('Final energy provided:', energyToProvide);
       effect.energyMap.push({
         card: this,
         provides: energyToProvide

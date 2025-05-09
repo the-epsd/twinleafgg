@@ -95,7 +95,7 @@ export class EeveeSnorlaxGX extends PokemonCard {
 
       if (meetsExtraEffectCost) {
         if (player.hand.cards.length > 10){ return state; }
-        let cardsToDraw = 10 - player.hand.cards.length;
+        const cardsToDraw = 10 - player.hand.cards.length;
         
         for (let i = 0; i < cardsToDraw; i++){ DRAW_CARDS(player, 1); }
       }

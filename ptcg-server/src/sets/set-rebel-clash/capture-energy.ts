@@ -1,8 +1,9 @@
-import { Card, ChooseCardsPrompt, GameMessage, ShuffleDeckPrompt } from '../../game';
+import { Card, ChooseCardsPrompt, GameMessage } from '../../game';
 import { CardType, EnergyType, Stage, SuperType } from '../../game/store/card/card-types';
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { Effect } from '../../game/store/effects/effect';
 import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
+import { SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
@@ -24,10 +25,9 @@ export class CaptureEnergy extends EnergyCard {
 
   public fullName = 'Capture Energy RCL';
 
-  public text =
-    'This card provides [C] Energy.' +
-    '' +
-    'When you attach this card from your hand to a Pokémon, search your deck for a Basic Pokémon and put it onto your Bench. Then, shuffle your deck.';
+  public text = `This card provides [C] Energy.
+
+  When you attach this card from your hand to a Pokémon, search your deck for a Basic Pokémon and put it onto your Bench. Then, shuffle your deck.`;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttachEnergyEffect && effect.energyCard === this) {
@@ -59,13 +59,11 @@ export class CaptureEnergy extends EnergyCard {
           player.deck.moveCardTo(card, openSlots[index]);
           openSlots[index].pokemonPlayedTurn = state.turn;
         });
-        return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-          player.deck.applyOrder(order);
-        });
+
+        SHUFFLE_DECK(store, state, player);
+        return state;
       });
     }
-
     return state;
   }
-
 }

@@ -106,7 +106,7 @@ export class GiratinaLVX extends PokemonCard {
         if (card.marker.hasMarker(this.DARKNESS_LOST_MARKER, this)){
           card.marker.removeMarker(this.DARKNESS_LOST_MARKER, this);
         }
-      })
+      });
     }
 
     // making sure it gets put on the active pokemon

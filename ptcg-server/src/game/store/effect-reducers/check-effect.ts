@@ -2,10 +2,11 @@ import { GameError } from '../../game-error';
 import { GameLog, GameMessage } from '../../game-message';
 import { PlayerType, SlotType } from '../actions/play-card-action';
 import { EnergyCard } from '../card/energy-card';
+import { PokemonCard } from '../card/pokemon-card';
 import { CheckHpEffect, CheckProvidedEnergyEffect, CheckTableStateEffect } from '../effects/check-effects';
 import { Effect } from '../effects/effect';
 import { KnockOutEffect } from '../effects/game-effects';
-import { TAKE_SPECIFIC_PRIZES } from '../prefabs/prefabs';
+import { TAKE_SPECIFIC_PRIZES, MOVE_CARDS } from '../prefabs/prefabs';
 import { ChoosePokemonPrompt } from '../prompts/choose-pokemon-prompt';
 import { ChoosePrizePrompt } from '../prompts/choose-prize-prompt';
 import { CoinFlipPrompt } from '../prompts/coin-flip-prompt';
@@ -125,13 +126,24 @@ function handleBenchSizeChange(store: StoreLike, state: State, benchSizes: numbe
       // Discard all empty slots and selected Pokemons
       for (let i = player.bench.length - 1; i >= 0; i--) {
         if (selected.includes(player.bench[i])) {
-          player.bench[i].moveTo(player.discard);
+          const cardList = player.bench[i];
+          const pokemons = cardList.getPokemons();
+          const otherCards = cardList.cards.filter(card => !(card instanceof PokemonCard));
+
+          // Move other cards to discard
+          if (otherCards.length > 0) {
+            MOVE_CARDS(store, state, cardList, player.discard, { cards: otherCards });
+          }
+
+          // Move Pokémon to discard
+          if (pokemons.length > 0) {
+            MOVE_CARDS(store, state, cardList, player.discard, { cards: pokemons });
+          }
           player.bench.splice(i, 1);
         }
       }
     });
   });
-
   // Mark that we've handled bench size changes
   state.benchSizeChangeHandled = true;
   return state;
@@ -154,7 +166,6 @@ function chooseActivePokemons(state: State): ChoosePokemonPrompt[] {
       prompts.push(choose);
     }
   }
-
   return prompts;
 }
 

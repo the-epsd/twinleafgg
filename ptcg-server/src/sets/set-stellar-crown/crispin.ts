@@ -60,7 +60,7 @@ export class Crispin extends TrainerCard {
           opponent.id,
           GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
           selected
-        ), () => { });
+        ), () => state);
 
         player.deck.moveCardsTo(cards, cardList);
 
@@ -96,9 +96,9 @@ export class Crispin extends TrainerCard {
 
         return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
           player.deck.applyOrder(order);
+          return state;
         });
-      }
-      );
+      });
     }
     return state;
   }

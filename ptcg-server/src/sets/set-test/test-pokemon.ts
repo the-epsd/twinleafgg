@@ -25,6 +25,18 @@ export class TestPokemon extends PokemonCard {
       useWhenInPlay: true,
       powerType: PowerType.ABILITY,
       text: 'Once during your turn, both players Active Pokemon are Knocked Out.'
+    },
+    {
+      name: 'Draw 1 From Top',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: 'Draw 1 card from the top of your deck.'
+    },
+    {
+      name: 'Draw 1 From Bottom',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: 'Draw 1 card from the bottom of your deck.'
     }
   ];
 
@@ -101,6 +113,16 @@ export class TestPokemon extends PokemonCard {
           }
         }
       });
+    }
+
+    if (effect instanceof PowerEffect && effect.power === this.powers[2]) {
+      const player = effect.player;
+      player.deck.moveCardTo(player.deck.cards[0], player.hand);
+    }
+
+    if (effect instanceof PowerEffect && effect.power === this.powers[3]) {
+      const player = effect.player;
+      player.deck.moveCardTo(player.deck.cards[player.deck.cards.length - 1], player.hand);
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

@@ -52,7 +52,7 @@ export class LuxrayGL extends PokemonCard {
           return state;
         }
 
-        MOVE_CARDS(store, state, player.hand, player.discard, { cards: cards })
+        MOVE_CARDS(store, state, player.hand, player.discard, { cards: cards });
         return state;
       });
     }

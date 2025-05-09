@@ -54,6 +54,8 @@ export class Player {
 
   showAllStageAbilities: boolean = false;
 
+  legacyEnergyUsed: boolean = false;
+
   public readonly DAMAGE_DEALT_MARKER = 'DAMAGE_DEALT_MARKER';
   public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
   public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';

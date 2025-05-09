@@ -50,12 +50,12 @@ export class ArceusMetal extends PokemonCard {
       || effect instanceof AddSpecialConditionsEffect) 
       && effect.player.marker.hasMarker(this.METAL_BARRIER_MARKER, this) 
       && effect.target.getPokemonCard() === this){
-        if (state.phase !== GamePhase.ATTACK){
-          return state;
-        }
-
-        effect.preventDefault = true;
+      if (state.phase !== GamePhase.ATTACK){
+        return state;
       }
+
+      effect.preventDefault = true;
+    }
 
     return state;
   }

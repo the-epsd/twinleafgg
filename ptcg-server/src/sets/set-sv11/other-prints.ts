@@ -1,8 +1,8 @@
-import { Cheren } from "../set-emerging-powers/cheren";
-import { PrismEnergy } from "../set-next-destinies/prism-energy";
-import { EnergyRetrieval } from "../set-scarlet-and-violet/energy-retrieval";
-import { ProfessorsResearch } from "../set-scarlet-and-violet/professors-research";
-import { AirBalloon } from "../set-sword-and-shield/air-balloon";
+import { Cheren } from '../set-emerging-powers/cheren';
+import { PrismEnergy } from '../set-next-destinies/prism-energy';
+import { EnergyRetrieval } from '../set-scarlet-and-violet/energy-retrieval';
+import { ProfessorsResearch } from '../set-scarlet-and-violet/professors-research';
+import { AirBalloon } from '../set-sword-and-shield/air-balloon';
 
 export class AirBalloonSV11 extends AirBalloon {
   public regulationMark = 'I';

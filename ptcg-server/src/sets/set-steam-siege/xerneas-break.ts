@@ -25,7 +25,7 @@ export class XerneasBREAK extends PokemonCard {
     damage: 20,
     damageCalculation: 'x',
     text: 'This attack does 20 damage times the amount of Energy attached to all of your Pokémon.'
-  }]
+  }];
 
   public set: string = 'STS';
   public cardImage: string = 'assets/cardback.png';

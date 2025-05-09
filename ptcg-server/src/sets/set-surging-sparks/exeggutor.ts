@@ -45,7 +45,7 @@ export class Exeggutor extends PokemonCard {
         (left, p) => left + p.provides.length, 0
       );
 
-      let coins = [];
+      const coins = [];
 
       for (let i = 0; i < opponentsEnergyCount + myEnergyCount; i++) {
         coins.push(new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP));

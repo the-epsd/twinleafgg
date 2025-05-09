@@ -33,12 +33,12 @@ export class Machop extends PokemonCard {
   public name: string = 'Machop';
   public fullName: string = 'Machop SF';
 
-  public usedKnockBack = false
+  public usedKnockBack = false;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      this.usedKnockBack = true
+      this.usedKnockBack = true;
     }
 
     if (effect instanceof AfterAttackEffect && this.usedKnockBack === true) {

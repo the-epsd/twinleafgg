@@ -92,7 +92,7 @@ export class DialgaGLVX extends PokemonCard {
         ), selected => {
           const cards = selected || [];
           if (cards.length > 0) {
-            MOVE_CARDS(store, state, opponent.active, opponent.lostzone, { cards: cards })
+            MOVE_CARDS(store, state, opponent.active, opponent.lostzone, { cards: cards });
           }
           return state;
         });

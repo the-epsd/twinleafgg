@@ -1,12 +1,13 @@
 import { PokemonCard, Stage, CardTag, CardType, Card, ChooseCardsPrompt, CoinFlipPrompt, EnergyCard, GameMessage, State, StateUtils, StoreLike, SuperType } from '../../game';
+import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 
 export class Sneasel extends PokemonCard {
 
-  public stage = Stage.BASIC; 
+  public stage = Stage.BASIC;
 
-  public tags = [ CardTag.RAPID_STRIKE ];
+  public tags = [CardTag.RAPID_STRIKE];
 
   public cardType = CardType.WATER;
 
@@ -14,11 +15,11 @@ export class Sneasel extends PokemonCard {
 
   public weakness = [{ type: CardType.METAL }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [{
     name: 'Cut Down',
-    cost: [ CardType.COLORLESS ],
+    cost: [CardType.COLORLESS],
     damage: 0,
     text: 'Flip a coin. If heads, discard an Energy from your opponent\'s Active Pokémon.'
   }];
@@ -60,11 +61,10 @@ export class Sneasel extends PokemonCard {
             { min: 1, max: 1, allowCancel: false }
           ), selected => {
             card = selected[0];
-
-            opponent.active.moveCardTo(card, opponent.discard);
-            return state;
+            return store.reduceEffect(state, new DiscardCardsEffect(effect, [card]));
           });
-        }});
+        }
+      });
       return state;
     }
     return state;

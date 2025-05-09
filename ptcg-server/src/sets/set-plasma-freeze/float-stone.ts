@@ -1,5 +1,5 @@
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { TrainerType } from '../../game/store/card/card-types';
+import { CardType, TrainerType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
@@ -27,12 +27,14 @@ export class FloatStone extends TrainerCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof CheckRetreatCostEffect && effect.player.active.tool === this) {
-      if (IS_TOOL_BLOCKED(store, state, effect.player, this)) { return state; }
-
-      effect.cost = [];
+      const index = effect.cost.indexOf(CardType.COLORLESS);
+      if (IS_TOOL_BLOCKED(store, state, effect.player, this)) {
+        return state;
+      }
+      if (index !== -1) {
+        effect.cost.splice(index, 99);
+      }
     }
-
     return state;
   }
-
 }
