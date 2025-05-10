@@ -127,3 +127,22 @@
 .toast-offset {
   margin-top: 55px !important;
 }
+
+// Snackbar styles
+.disconnect-snackbar {
+  background: #2196f3 !important; // Blue color for reconnecting
+  color: white !important;
+
+  .mat-simple-snackbar-action {
+    color: white !important;
+  }
+}
+
+.error-snackbar {
+  background: #f44336 !important; // Red color for error
+  color: white !important;
+
+  .mat-simple-snackbar-action {
+    color: white !important;
+  }
+}

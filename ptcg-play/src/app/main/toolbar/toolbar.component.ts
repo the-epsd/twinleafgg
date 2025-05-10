@@ -11,6 +11,11 @@ import { environment } from '../../../environments/environment';
 
 import { MatDialog } from '@angular/material/dialog';
 import { SettingsDialogComponent } from '../../table/table-sidebar/settings-dialog/settings-dialog.component';
+import { AlertService } from '../../shared/alert/alert.service';
+import { TranslateService } from '@ngx-translate/core';
+import { GameService } from '../../api/services/game.service';
+import { LocalGameState } from '../../shared/session/session.interface';
+import { GamePhase } from 'ptcg-server';
 
 @UntilDestroy()
 @Component({
@@ -24,8 +29,11 @@ export class ToolbarComponent implements OnInit {
 
   private loggedUser$: Observable<UserInfo | undefined>;
   public loggedUser: UserInfo | undefined;
-  public gameStates$: Observable<GameState[]>;
+  public gameStates$: Observable<LocalGameState[]>;
   public unreadMessages$: Observable<number>;
+  public hasTableNotifications$: Observable<boolean>;
+  public tableBadgeContent$: Observable<string>;
+  public tableBadgeColor$: Observable<string>;
 
   apiUrl = environment.apiUrl;
 
@@ -33,10 +41,73 @@ export class ToolbarComponent implements OnInit {
     private loginRememberService: LoginRememberService,
     private router: Router,
     private sessionService: SessionService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private alertService: AlertService,
+    private translate: TranslateService,
+    private gameService: GameService
   ) {
-    this.gameStates$ = this.sessionService.get(session => session.gameStates).pipe(
-      map(gameStates => gameStates.slice(0, 1))
+    this.gameStates$ = this.sessionService.get(session => session.gameStates);
+
+    this.hasTableNotifications$ = this.gameStates$.pipe(
+      map(gameStates => {
+        const clientId = this.sessionService.session.clientId;
+        return gameStates.some(gameState => {
+          if (gameState.replay || gameState.deleted) {
+            return false;
+          }
+          const state = gameState.state;
+          const prompts = state.prompts.filter(p => p.result === undefined);
+          const waitingForMe = prompts.some(p => p.playerId === clientId);
+          const myTurn = state.players[state.activePlayer].id === clientId && state.phase === GamePhase.PLAYER_TURN;
+          const waitingForInvitation = prompts.find(p => p.type === 'Invite player');
+          return (waitingForMe && waitingForInvitation) || (waitingForMe || myTurn);
+        });
+      })
+    );
+
+    this.tableBadgeContent$ = this.gameStates$.pipe(
+      map(gameStates => {
+        const clientId = this.sessionService.session.clientId;
+        for (const gameState of gameStates) {
+          if (gameState.replay || gameState.deleted) {
+            continue;
+          }
+          const state = gameState.state;
+          const prompts = state.prompts.filter(p => p.result === undefined);
+          const waitingForMe = prompts.some(p => p.playerId === clientId);
+          const myTurn = state.players[state.activePlayer].id === clientId && state.phase === GamePhase.PLAYER_TURN;
+          const waitingForInvitation = prompts.find(p => p.type === 'Invite player');
+
+          if (waitingForMe && waitingForInvitation) {
+            return '?';
+          } else if (waitingForMe || myTurn) {
+            return '!';
+          }
+        }
+        return '';
+      })
+    );
+
+    this.tableBadgeColor$ = this.gameStates$.pipe(
+      map(gameStates => {
+        const clientId = this.sessionService.session.clientId;
+        for (const gameState of gameStates) {
+          if (gameState.replay || gameState.deleted) {
+            continue;
+          }
+          const state = gameState.state;
+          const prompts = state.prompts.filter(p => p.result === undefined);
+          const waitingForMe = prompts.some(p => p.playerId === clientId);
+          const waitingForInvitation = prompts.find(p => p.type === 'Invite player');
+
+          if (waitingForMe && waitingForInvitation) {
+            return 'accent';
+          } else if (waitingForMe || state.players[state.activePlayer].id === clientId && state.phase === GamePhase.PLAYER_TURN) {
+            return 'primary';
+          }
+        }
+        return 'primary';
+      })
     );
 
     this.unreadMessages$ = this.sessionService.get(session => {
@@ -80,5 +151,23 @@ export class ToolbarComponent implements OnInit {
 
   public onLogoClick() {
     this.logoClick.emit();
+  }
+
+  async closeGame(gameState: LocalGameState) {
+    if (gameState.state.players.some(p => p.id === this.sessionService.session.clientId)) {
+      const result = await this.alertService.confirm(
+        this.translate.instant('MAIN_LEAVE_GAME')
+      );
+
+      if (!result) {
+        return;
+      }
+    }
+
+    if (gameState.deleted) {
+      this.gameService.removeLocalGameState(gameState.localId);
+    } else {
+      this.gameService.leave(gameState.gameId);
+    }
   }
 }
