@@ -84,12 +84,14 @@ import { RichEnergy } from './rich-energy';
 import { Rotom } from './rotom';
 import { Sandygast } from './sandygast';
 import { Scovillainex } from './scovillain-ex';
+import { Sealeo } from './sealeo';
 import { Shroodle } from './shroodle';
 import { Sizzlipede } from './sizzlipede';
 import { Skeledirge } from './skeledirge';
 import { Slakingex } from './slaking-ex';
 import { Slakoth } from './slakoth';
 import { Smoochum } from './smoochum';
+import { Spheal } from './spheal';
 import { Surfer } from './surfer';
 import { Sylveonex } from './sylveon-ex';
 import { TapuKoko } from './tapu-koko';
@@ -106,6 +108,7 @@ import { Vibrava } from './vibrava';
 import { Vigoroth } from './vigoroth';
 import { Vivillion } from './vivillion';
 import { Vulpix } from './vulpix';
+import { Walrein } from './walrein';
 import { Wochien } from './wo-chien';
 import { Zarude } from './zarude';
 import { Zweilous } from './zweilous';
@@ -210,6 +213,9 @@ export const setSurgingSparks: Card[] = [
   new Sizzlipede(),
   new Centiskorch(),
   new Cyclizarex(),
+  new Sealeo(),
+  new Spheal(),
+  new Walrein(),
   new Blitzle(),
   new TapuKoko(),
   new Quaxly(),
