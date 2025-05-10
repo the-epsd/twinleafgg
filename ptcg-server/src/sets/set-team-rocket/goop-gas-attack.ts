@@ -48,7 +48,6 @@ export class GoopGasAttack extends TrainerCard {
       if (player !== owner) {
         REMOVE_MARKER(this.GOOP_GAS_MARKER, player, this);
         REMOVE_MARKER(this.GOOP_GAS_MARKER, opponent, this);
-        console.log('Opponent end turn, markers removed');
       }
     }
 
