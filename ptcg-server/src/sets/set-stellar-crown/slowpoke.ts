@@ -3,6 +3,8 @@ import { Effect } from '../../game/store/effects/effect';
 import { MOVE_CARDS, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Slowpoke extends PokemonCard {
+
+  public regulationMark = 'H';
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = W;
   public hp: number = 80;
