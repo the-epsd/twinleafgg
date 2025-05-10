@@ -6,12 +6,13 @@ import { PokemonRescue } from './pokemon-rescue';
 import { Skitty } from './skitty';
 import { SkuntankG } from './skuntank-g';
 import { Ralts } from './ralts';
-import {Giratina} from './giratina';
-import {GiratinaLVX} from './giratina-lv-x';
-import {PalkiaG} from './palkia-g';
-import {PalkiaGLVX} from './palkia-g-lv-x';
-import {DialgaG} from './dialgs-g';
-import {DialgaGLVX} from './dialga-g-lv-x';
+import { Giratina } from './giratina';
+import { GiratinaLVX } from './giratina-lv-x';
+import { PalkiaG } from './palkia-g';
+import { PalkiaGLVX } from './palkia-g-lv-x';
+import { DialgaG } from './dialgs-g';
+import { DialgaGLVX } from './dialga-g-lv-x';
+import { Vulpix } from './vulpix';
 
 export const setPlatinum: Card[] = [
   new SkuntankG(),
@@ -27,4 +28,5 @@ export const setPlatinum: Card[] = [
   new PalkiaGLVX(),
   new DialgaG(),
   new DialgaGLVX(),
+  new Vulpix(),
 ];
