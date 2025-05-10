@@ -42,10 +42,11 @@ import { Salandit } from './salandit';
 import { Salazzle } from './salazzle';
 import { Scorbunny } from './scorbunny';
 import { Slowking } from './slowking';
+import { Slowpoke } from './slowpoke';
 import { Terapagosex } from './terapagos-ex';
 import { Veluza } from './veluza';
 import { Zeraora } from './zeraora';
-import {Marill} from './marill';
+import { Marill } from './marill';
 
 export const setStellarCrown: Card[] = [
   new Archaludon(),
@@ -89,6 +90,7 @@ export const setStellarCrown: Card[] = [
   new Salazzle(),
   new Scorbunny(),
   new Slowking(),
+  new Slowpoke(),
   new Terapagosex(),
   new Veluza(),
   new Zeraora(),
