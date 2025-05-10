@@ -8,7 +8,7 @@ import { Card, ChooseCardsPrompt, PokemonCardList } from '../../game';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { CONFIRMATION_PROMPT, MOVE_CARD_TO, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
+import { COIN_FLIP_PROMPT, CONFIRMATION_PROMPT, MOVE_CARD_TO, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 
 export class PokemonContestHall extends TrainerCard {
 
@@ -33,46 +33,50 @@ export class PokemonContestHall extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_USE_STADIUM);
       }
 
-      let cards: Card[] = [];
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
-        player.deck,
-        { superType: SuperType.POKEMON, stage: Stage.BASIC },
-        { min: 0, max: 1, allowCancel: false }
-      ), selectedCards => {
-        cards = selectedCards || [];
+      COIN_FLIP_PROMPT(store, state, player, (result) => {
+        if (result) {
+          let cards: Card[] = [];
+          return store.prompt(state, new ChooseCardsPrompt(
+            player,
+            GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
+            player.deck,
+            { superType: SuperType.POKEMON, stage: Stage.BASIC },
+            { min: 0, max: 1, allowCancel: false }
+          ), selectedCards => {
+            cards = selectedCards || [];
 
-        // Operation canceled by the user
-        if (cards.length === 0) {
-          SHUFFLE_DECK(store, state, player);
-        } else {
-          cards.forEach((card, index) => {
-            MOVE_CARD_TO(state, card, slots[index]);
-            slots[index].pokemonPlayedTurn = state.turn;
+            // Operation canceled by the user
+            if (cards.length === 0) {
+              SHUFFLE_DECK(store, state, player);
+            } else {
+              cards.forEach((card, index) => {
+                MOVE_CARD_TO(state, card, slots[index]);
+                slots[index].pokemonPlayedTurn = state.turn;
 
-            CONFIRMATION_PROMPT(store, state, player, (result) => {
-              if (result) {
-                return store.prompt(state, new ChooseCardsPrompt(
-                  player,
-                  GameMessage.CHOOSE_CARD_TO_ATTACH,
-                  player.deck,
-                  { superType: SuperType.TRAINER, trainerType: TrainerType.TOOL },
-                  { min: 0, max: 1, allowCancel: false }
-                ), selectedCards => {
-                  if (selectedCards.length > 0) {
-                    selectedCards.forEach(card => {
-                      MOVE_CARD_TO(state, card, slots[index]);
-                      slots[index].tool = card;
+                CONFIRMATION_PROMPT(store, state, player, (result) => {
+                  if (result) {
+                    return store.prompt(state, new ChooseCardsPrompt(
+                      player,
+                      GameMessage.CHOOSE_CARD_TO_ATTACH,
+                      player.deck,
+                      { superType: SuperType.TRAINER, trainerType: TrainerType.TOOL },
+                      { min: 0, max: 1, allowCancel: false }
+                    ), selectedCards => {
+                      if (selectedCards.length > 0) {
+                        selectedCards.forEach(card => {
+                          MOVE_CARD_TO(state, card, slots[index]);
+                          slots[index].tool = card;
+                        });
+                      }
+                      SHUFFLE_DECK(store, state, player);
                     });
                   }
-                  SHUFFLE_DECK(store, state, player);
                 });
-              }
-            });
+              });
+            }
+            SHUFFLE_DECK(store, state, player);
           });
         }
-        SHUFFLE_DECK(store, state, player);
       });
     }
     return state;
