@@ -76,7 +76,7 @@ export class Claydol extends PokemonCard {
       }
       
       // Putting the "Ability used" marker on 
-      ABILITY_USED(player,this)
+      ABILITY_USED(player,this);
 
       return store.prompt(state, new ChooseCardsPrompt(
         player,

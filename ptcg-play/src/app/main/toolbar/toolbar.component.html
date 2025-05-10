@@ -20,9 +20,17 @@
 
   <!-- <span class="title-text" translate>MAIN_TABLES</span> -->
   <div class="horizontal-nav">
-    <a mat-button *ngFor="let gameState of (gameStates$ | async)">
-      <ptcg-sidenav-item [gameState]="gameState"></ptcg-sidenav-item>
-    </a>
+    <button mat-button [matMenuTriggerFor]="gamesMenu" *ngIf="(gameStates$ | async)?.length > 0">
+      {{ 'MAIN_TABLES' | translate }}
+      <mat-icon>arrow_drop_down</mat-icon>
+      <span *ngIf="hasTableNotifications$ | async" class="notification-badge" [matBadge]="tableBadgeContent$ | async"
+        [matBadgeColor]="tableBadgeColor$ | async" matBadgeOverlap="false"></span>
+    </button>
+    <mat-menu #gamesMenu="matMenu">
+      <a mat-menu-item *ngFor="let gameState of (gameStates$ | async)" [routerLink]="['/table', gameState.localId]">
+        <ptcg-sidenav-item [gameState]="gameState"></ptcg-sidenav-item>
+      </a>
+    </mat-menu>
   </div>
 
 
