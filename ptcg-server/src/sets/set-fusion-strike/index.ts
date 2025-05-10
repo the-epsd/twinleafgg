@@ -28,6 +28,7 @@ import { InteleonVMAX } from './inteleon-vmax';
 import { Lapras } from './lapras';
 import { Maractus } from './maractus';
 import { Meloetta } from './meloetta';
+import { Meowth } from './meowth';
 import { MewV } from './mew-v';
 import { MewVMAX } from './mew-vmax';
 import { Mudkip } from './mudkip';
@@ -78,6 +79,7 @@ export const setFusionStrike: Card[] = [
   new Lapras(),
   new Maractus(),
   new Meloetta(),
+  new Meowth(),
   new MewV(),
   new MewVMAX(),
   new Mudkip(),
