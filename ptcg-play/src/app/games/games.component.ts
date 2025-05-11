@@ -20,6 +20,7 @@ import { Deck, DeckListEntry } from '../api/interfaces/deck.interface';
 import { MatchmakingLobbyComponent } from './matchmaking-lobby/matchmaking-lobby.component';
 import { ProfileService } from '../api/services/profile.service';
 import { GameService } from '../api/services/game.service';
+import { SocketService } from '../api/socket.service';
 
 @UntilDestroy()
 @Component({
@@ -50,7 +51,8 @@ export class GamesComponent implements OnInit {
     private translate: TranslateService,
     private router: Router,
     private profileService: ProfileService,
-    private gameService: GameService
+    private gameService: GameService,
+    private socketService: SocketService
   ) {
     this.clients$ = this.sessionService.get(
       session => session.users,
@@ -85,6 +87,34 @@ export class GamesComponent implements OnInit {
       .subscribe(clientId => {
         this.clientId = clientId;
       });
+
+    // Listen for player disconnect/reconnect events
+    this.socketService.on('game:playerDisconnect', (data: { gameId: number, playerId: number }) => {
+      this.updateGamePlayerStatus(data.gameId, data.playerId, true);
+    });
+
+    this.socketService.on('game:playerReconnect', (data: { gameId: number, playerId: number }) => {
+      this.updateGamePlayerStatus(data.gameId, data.playerId, false);
+    });
+  }
+
+  private updateGamePlayerStatus(gameId: number, playerId: number, isDisconnected: boolean) {
+    const games = this.sessionService.session.games;
+    const gameIndex = games.findIndex(g => g.gameId === gameId);
+
+    if (gameIndex !== -1) {
+      const game = games[gameIndex];
+      const updatedGame = {
+        ...game,
+        players: game.players.map(p =>
+          p.clientId === playerId ? { ...p, disconnected: isDisconnected } : p
+        )
+      };
+
+      const updatedGames = [...games];
+      updatedGames[gameIndex] = updatedGame;
+      this.sessionService.set({ games: updatedGames });
+    }
   }
 
   private showCreateGamePopup(decks: SelectPopupOption<DeckListEntry>[]): Promise<CreateGamePopupResult> {

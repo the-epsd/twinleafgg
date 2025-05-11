@@ -83,7 +83,12 @@ export class AppComponent implements OnInit {
             this.reconnectTimeout = setTimeout(async () => {
               if (!this.socketService.isConnected) {
                 console.log('[Client Reconnect] Reconnection timeout');
-                this.handleDisconnect();
+                // Instead of immediately handling disconnect, try one more time
+                if (this.reconnectAttempts < this.MAX_RECONNECT_ATTEMPTS) {
+                  this.socketService.socket.connect();
+                } else {
+                  this.handleDisconnect();
+                }
               }
             }, 30000); // 30 second timeout
           } else {
@@ -100,6 +105,21 @@ export class AppComponent implements OnInit {
           if (this.disconnectSnackBarRef) {
             this.disconnectSnackBarRef.dismiss();
             this.disconnectSnackBarRef = null;
+          }
+
+          // If we have a stored player ID, try to rejoin any active games
+          const activeGames = this.sessionService.session.gameStates?.filter(g => !g.deleted && !g.gameOver);
+          if (activeGames && activeGames.length > 0) {
+            const playerId = this.socketService.getPlayerId();
+            if (playerId) {
+              console.log(`[Client Reconnect] Attempting to rejoin game with player ID ${playerId}`);
+              activeGames.forEach(game => {
+                this.socketService.joinGame(game.gameId).subscribe({
+                  next: () => console.log(`[Client Reconnect] Successfully rejoined game ${game.gameId}`),
+                  error: (error) => console.error(`[Client Reconnect] Failed to rejoin game ${game.gameId}:`, error)
+                });
+              });
+            }
           }
         }
       }
@@ -161,10 +181,19 @@ export class AppComponent implements OnInit {
       }
     );
 
-    this.socketService.disable();
-    this.dialog.closeAll();
-    this.sessionService.clear();
-    this.router.navigate(['/login']);
+    // Only clear session and redirect if we're not in an active game
+    const activeGames = this.sessionService.session.gameStates?.filter(g => !g.deleted && !g.gameOver);
+    if (!activeGames || activeGames.length === 0) {
+      this.socketService.disable();
+      this.dialog.closeAll();
+      this.sessionService.clear();
+      this.router.navigate(['/login']);
+    } else {
+      // If we have active games, just show the error but don't redirect
+      console.log('[Client Disconnect] Keeping session active due to active games');
+      // Try to reconnect one more time
+      this.socketService.socket.connect();
+    }
   }
 
   public ngOnDestroy() {
@@ -188,19 +217,5 @@ export class AppComponent implements OnInit {
     let cardSize = Math.floor(cardHeight / cardAspectRatio);
     cardSize = Math.min(Math.max(cardSize, 60), 60);
     element.style.setProperty('--card-size', cardSize + 'px');
-  }
-
-  @HostListener('window:beforeunload', ['$event'])
-  beforeUnloadHandler(event: BeforeUnloadEvent) {
-    // Check if user is in an active game
-    const activeGames = this.sessionService.session.gameStates?.filter(g => !g.deleted && !g.gameOver);
-
-    if (activeGames && activeGames.length > 0) {
-      // Show a warning
-      const message = this.translate.instant('WARNING_ACTIVE_GAMES');
-      event.preventDefault();
-      event.returnValue = message;
-      return message;
-    }
   }
 }

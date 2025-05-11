@@ -9,6 +9,7 @@ import { Core } from '../core/core';
 import { State } from '../store/state/state';
 import { GameSettings } from '../core/game-settings';
 import { Format } from '../store/card/card-types';
+import { Player } from '../store/state/player';
 
 export abstract class BotClient implements Client {
 
@@ -56,6 +57,14 @@ export abstract class BotClient implements Client {
   public abstract onMessage(from: Client, message: Message): void;
 
   public abstract onMessageRead(user: User): void;
+
+  public onPlayerDisconnect(game: Game, player: Player): void {
+    // Bots don't need to handle player disconnections
+  }
+
+  public onPlayerReconnect(game: Game, player: Player): void {
+    // Bots don't need to handle player reconnections
+  }
 
   createGame(deck: string[], gameSettings?: GameSettings, invited?: Client): Game {
     if (this.core === undefined) {

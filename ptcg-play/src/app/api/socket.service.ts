@@ -30,6 +30,7 @@ export class SocketService {
   private connectionSubject = new BehaviorSubject<boolean>(false);
   private lastPingTime: number = 0;
   private heartbeatInterval: any;
+  private playerId: number | undefined;
   private reconnectStrategy: ReconnectStrategy = {
     maxAttempts: 5,
     backoff: {
@@ -265,6 +266,9 @@ export class SocketService {
           }
         }, defaultDelay);
     }
+
+    // Emit disconnect event to notify subscribers
+    this.connectionSubject.next(false);
   }
 
   public joinMatchmakingQueue(format: Format, deck: string[]): Observable<any> {
@@ -303,6 +307,9 @@ export class SocketService {
       this.socket.disconnect();
     }
 
+    // Reset reconnection attempts counter
+    this.socket.io.reconnectionAttempts(0);
+
     this.socket.connect();
     this.enabled = true;
   }
@@ -316,6 +323,12 @@ export class SocketService {
 
   public emit<T, R>(message: string, data?: T): Observable<R> {
     return new Observable<R>(observer => {
+      if (!this.socket.connected) {
+        observer.error(new ApiError(ApiErrorEnum.SOCKET_ERROR, 'Socket not connected'));
+        observer.complete();
+        return;
+      }
+
       this.socket.emit(message, data, (response: SocketResponse<R>) => {
         if (response && response.message !== 'ok') {
           observer.error(new ApiError(ApiErrorEnum.SOCKET_ERROR, String(response.data)));
@@ -361,5 +374,20 @@ export class SocketService {
 
   get isConnected(): boolean {
     return this.socket.connected;
+  }
+
+  public setPlayerId(id: number): void {
+    this.playerId = id;
+  }
+
+  public getPlayerId(): number | undefined {
+    return this.playerId;
+  }
+
+  public joinGame(gameId: number): Observable<any> {
+    return this.emit('game:join', {
+      gameId,
+      playerId: this.playerId  // Pass the stored player ID during reconnection
+    });
   }
 }
