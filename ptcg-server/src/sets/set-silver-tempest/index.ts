@@ -35,6 +35,7 @@ import { LeafyCamoPoncho } from './leafy-camo-poncho';
 import { Litten } from './litten';
 import { LugiaV } from './lugia-v';
 import { LugiaVSTAR } from './lugia-vstar';
+import { MagearnaV } from './magearna-v';
 import { Meowstic } from './meowstic';
 import { Metagross } from './metagross';
 import { Mismagius } from './mismagius';
@@ -107,6 +108,7 @@ export const setSilverTempest: Card[] = [
   new Litten(),
   new LugiaV(),
   new LugiaVSTAR(),
+  new MagearnaV(),
   new Meowstic(),
   new Metagross(),
   new Mismagius(),
