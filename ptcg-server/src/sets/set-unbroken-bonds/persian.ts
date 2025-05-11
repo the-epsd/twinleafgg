@@ -1,5 +1,5 @@
 import { PokemonCard, Stage, PowerType, StoreLike, State, PlayerType } from '../../game';
-import { CheckAttackCostEffect } from '../../game/store/effects/check-effects';
+import { CheckAttackCostEffect, CheckPokemonAttacksEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
@@ -51,8 +51,9 @@ export class Persian extends PokemonCard {
       }
 
       const pokemonCard = player.active.getPokemonCard();
-
-      if (pokemonCard && pokemonCard.attacks.some(attack => attack.name === 'Caturday')) {
+      const pokemonAttacks = new CheckPokemonAttacksEffect(player);
+      store.reduceEffect(state, pokemonAttacks);
+      if (pokemonCard && pokemonAttacks.attacks.some(attack => attack.name === 'Caturday')) {
         effect.cost = [];
       }
     }
