@@ -29,6 +29,7 @@ import { Mewtwo } from './mewtwo';
 import { Mismagius } from './mismagius';
 import { Murkrow } from './murkrow';
 import { Oddish } from './oddish';
+import { Persian } from './persian';
 import { PheromosaBuzzwoleGX } from './pheromosa-buzzwole-gx';
 import { Pokegear30 } from './pokegear-30';
 import { Poliwag } from './poliwag';
@@ -44,9 +45,9 @@ import { Tyrogue } from './tyrogue';
 import { Volcanion } from './volcanion';
 import { Zeraora } from './zeraora';
 import { StealthyHood } from './stealthy-hood';
-import {MukAlolanMukGX} from './muk-and-alolan-muk-gx';
-import {MarshadowMachampGX} from './marshadow-and-machamp-gx';
-import {LucarioMelmetalGX} from './lucario-and-melmetal-gx';
+import { MukAlolanMukGX } from './muk-and-alolan-muk-gx';
+import { MarshadowMachampGX } from './marshadow-and-machamp-gx';
+import { LucarioMelmetalGX } from './lucario-and-melmetal-gx';
 
 export const setUnbrokenBonds: Card[] = [
   new Arcanine(),
@@ -75,6 +76,7 @@ export const setUnbrokenBonds: Card[] = [
   new Mewtwo(),
   new Mismagius(),
   new Oddish(),
+  new Persian(),
   new Pokegear30(),
   new Poliwag(),
   new Porygon(),
