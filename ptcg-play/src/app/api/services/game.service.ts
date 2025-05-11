@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {
   ClientInfo, GameState, State, CardTarget, StateLog, Replay,
-  Base64, StateSerializer, PlayerStats
+  Base64, StateSerializer, PlayerStats, ApiErrorEnum
 } from 'ptcg-server';
 import { Observable } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
@@ -23,6 +23,9 @@ export interface GameUserInfo {
 
 @Injectable()
 export class GameService {
+  private lastAction: string = '';
+  private lastActionParams: any = {};
+  private currentGameId: number = 0;
 
   constructor(
     private api: ApiService,
@@ -37,16 +40,48 @@ export class GameService {
     return this.api.get<PlayerStatsResponse>('/v1/game/' + gameId + '/playerStats');
   }
 
-  public join(gameId: number): Observable<GameState> {
+  public join(gameId: number, playerId?: number): Observable<GameState> {
     this.boardInteractionService.endBoardSelection();
+    this.currentGameId = gameId; // Store the current game ID
 
     return new Observable<GameState>(observer => {
-      this.socketService.emit('game:join', gameId)
+      const joinData = { gameId, playerId };
+      console.log('[Game] Joining game with data:', joinData);
+
+      this.socketService.emit('game:join', joinData)
         .pipe(finalize(() => observer.complete()))
         .subscribe((gameState: GameState) => {
-          this.appendGameState(gameState);
-          observer.next(gameState);
+          // Ensure we have a valid game state before proceeding
+          if (!gameState || !gameState.stateData) {
+            console.error('[Game] Invalid game state received');
+            observer.error(new ApiError(ApiErrorEnum.GAME_INVALID_ID));
+            return;
+          }
+
+          try {
+            const localGameState = this.appendGameState(gameState);
+            if (!localGameState) {
+              console.error('[Game] Failed to append game state');
+              observer.error(new ApiError(ApiErrorEnum.GAME_INVALID_ID));
+              return;
+            }
+
+            // Store the player ID for reconnection purposes
+            const clientId = this.sessionService.session.clientId;
+            const state = this.decodeStateData(gameState.stateData);
+            const player = state.players.find(p => p.id === clientId);
+            if (player) {
+              console.log('[Game] Storing player ID for reconnection:', player.id);
+              this.socketService.setPlayerId(player.id);
+            }
+
+            observer.next(gameState);
+          } catch (error) {
+            console.error('[Game] Error appending game state:', error);
+            observer.error(new ApiError(ApiErrorEnum.GAME_INVALID_ID));
+          }
         }, (error: any) => {
+          console.error('[Game] Error joining game:', error);
           observer.error(error);
         });
     });
@@ -158,7 +193,9 @@ export class GameService {
   }
 
   public playCardAction(gameId: number, handIndex: number, target: CardTarget) {
-    this.socketService.emit('game:action:playCard', { gameId, handIndex, target })
+    this.lastAction = 'game:action:playCard';
+    this.lastActionParams = { gameId, handIndex, target };
+    this.socketService.emit(this.lastAction, this.lastActionParams)
       .subscribe(() => { }, (error: ApiError) => this.handleError(error));
   }
 
@@ -193,10 +230,22 @@ export class GameService {
   }
 
   private startListening(id: number) {
+    // Remove any existing listeners first to prevent duplicates
+    this.stopListening(id);
+
     this.socketService.on(`game[${id}]:join`, (clientId: number) => this.onJoin(id, clientId));
     this.socketService.on(`game[${id}]:leave`, (clientId: number) => this.onLeave(id, clientId));
-    this.socketService.on(`game[${id}]:stateChange`, (data: { stateData: string, playerStats: PlayerStats[] }) =>
-      this.onStateChange(id, data.stateData, data.playerStats));
+    this.socketService.on(`game[${id}]:stateChange`, (data: { stateData: string, playerStats: PlayerStats[] }) => {
+      try {
+        if (!data || !data.stateData) {
+          console.error('[Game Service] Invalid state change data received');
+          return;
+        }
+        this.onStateChange(id, data.stateData, data.playerStats);
+      } catch (error) {
+        console.error('[Game Service] Error handling state change:', error);
+      }
+    });
   }
 
   private stopListening(id: number) {
@@ -206,10 +255,16 @@ export class GameService {
   }
 
   private onStateChange(gameId: number, stateData: string, playerStats: PlayerStats[]) {
-    const state = this.decodeStateData(stateData);
-    const games = this.sessionService.session.gameStates;
-    const index = games.findIndex(g => g.gameId === gameId && g.deleted === false);
-    if (index !== -1) {
+    try {
+      const state = this.decodeStateData(stateData);
+      const games = this.sessionService.session.gameStates;
+      const index = games.findIndex(g => g.gameId === gameId && g.deleted === false);
+
+      if (index === -1) {
+        console.warn(`[Game Service] Game state not found for game ${gameId}`);
+        return;
+      }
+
       const gameStates = this.sessionService.session.gameStates.slice();
       const logs = [...gameStates[index].logs, ...state.logs];
       gameStates[index] = { ...gameStates[index], state, logs, playerStats };
@@ -217,6 +272,17 @@ export class GameService {
 
       // Update the BoardInteractionService with the latest logs
       this.boardInteractionService.updateGameLogs(logs);
+    } catch (error) {
+      console.error('[Game Service] Error processing state change:', error);
+      // Attempt to recover by requesting a fresh game state
+      this.socketService.emit('game:join', gameId).subscribe(
+        (gameState: GameState) => {
+          this.appendGameState(gameState);
+        },
+        (error) => {
+          console.error('[Game Service] Failed to recover game state:', error);
+        }
+      );
     }
   }
 
@@ -259,16 +325,60 @@ export class GameService {
     return serializer.deserialize(serializedState);
   }
 
-  private handleError(error: ApiError): void {
-    const message = String(error.message);
-    const translations = this.translate.translations[this.translate.currentLang]
-      || this.translate.translations[this.translate.defaultLang];
+  private handleError(error: ApiError) {
+    if (!error.handled) {
+      console.log('[Game] Error details:', {
+        message: error.message,
+        code: error.code,
+        currentGameId: this.currentGameId,
+        lastAction: this.lastAction
+      });
 
-    const key = translations && translations.GAME_MESSAGES[message]
-      ? 'GAME_MESSAGES.' + message
-      : 'ERROR_UNKNOWN';
+      // Check if this is a reconnection-related error
+      if (error.message === ApiErrorEnum.GAME_INVALID_ID ||
+        error.message === 'ERROR_DISCONNECTED_FROM_SERVER' ||
+        error.message === ApiErrorEnum.SOCKET_ERROR) {
 
-    this.alertService.toast(this.translate.instant(key));
+        // Get the player ID for reconnection
+        const playerId = this.socketService.getPlayerId();
+        console.log('[Game] Attempting to rejoin game with player ID:', playerId);
+
+        // Try to rejoin the game with the stored player ID
+        this.socketService.emit('game:join', {
+          gameId: this.currentGameId,
+          playerId: playerId
+        }).subscribe({
+          next: (gameState: GameState) => {
+            console.log('[Game] Successfully rejoined game');
+            this.appendGameState(gameState);
+
+            // If we have a pending action, retry it
+            if (this.lastAction) {
+              console.log('[Game] Retrying last action:', this.lastAction);
+              this.socketService.emit(this.lastAction, this.lastActionParams)
+                .subscribe(() => { }, (retryError: ApiError) => {
+                  console.error('[Game] Failed to retry action:', retryError);
+                  this.alertService.toast(this.translate.instant('ERROR_UNKNOWN'));
+                });
+            }
+          },
+          error: (rejoinError) => {
+            console.error('[Game] Failed to rejoin game:', rejoinError);
+            this.alertService.toast(this.translate.instant('ERROR_DISCONNECTED_FROM_SERVER'));
+          }
+        });
+      } else {
+        this.alertService.toast(this.translate.instant('ERROR_UNKNOWN'));
+      }
+    }
+  }
+
+  // Modify action methods to track the last action
+  public attackAction(gameId: number, attack: string) {
+    this.lastAction = 'game:action:attack';
+    this.lastActionParams = { gameId, attack };
+    this.socketService.emit(this.lastAction, this.lastActionParams)
+      .subscribe(() => { }, (error: ApiError) => this.handleError(error));
   }
 
 }

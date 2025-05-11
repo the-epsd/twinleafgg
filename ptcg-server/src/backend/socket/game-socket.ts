@@ -12,6 +12,7 @@ import { CoreSocket } from './core-socket';
 import { ApiErrorEnum } from '../common/errors';
 import { Game } from '../../game/core/game';
 import { State } from '../../game/store/state/state';
+import { Player } from '../../game/store/state/player';
 import { Core } from '../../game/core/core';
 import { GameState } from '../interfaces/core.interface';
 import { ResolvePromptAction } from '../../game/store/actions/resolve-prompt-action';
@@ -74,12 +75,33 @@ export class GameSocket {
     }
   }
 
-  private joinGame(gameId: number, response: Response<GameState>): void {
-    const game = this.core.games.find(g => g.id === gameId);
+  private joinGame(params: { gameId: number, playerId?: number }, response: Response<GameState>): void {
+    const game = this.core.games.find(g => g.id === params.gameId);
     if (game === undefined) {
       response('error', ApiErrorEnum.GAME_INVALID_ID);
       return;
     }
+
+    // Check if this client is already in the game
+    const existingPlayer = game.state.players.find(p => p.id === this.client.id);
+    if (existingPlayer) {
+      // Client is already in the game, just update their connection
+      console.log(`[Game] Player ${this.client.name} (${this.client.id}) already in game ${params.gameId}`);
+      game.handleClientReconnect(this.client);
+    } else if (params.playerId !== undefined) {
+      // Try to reconnect with provided playerId
+      const previousPlayer = game.state.players.find(p => p.id === params.playerId);
+      if (previousPlayer && previousPlayer.name === this.client.name) {
+        console.log(`[Game] Player ${this.client.name} (${params.playerId}) reconnecting to game ${params.gameId}`);
+        this.client.id = params.playerId;
+        game.handleClientReconnect(this.client);
+      } else {
+        console.log(`[Game] Invalid reconnection attempt - player ${params.playerId} not found or name mismatch in game ${params.gameId}`);
+        response('error', ApiErrorEnum.GAME_INVALID_ID);
+        return;
+      }
+    }
+
     this.cache.lastLogIdCache[game.id] = 0;
     this.core.joinGame(this.client, game);
     response('ok', CoreSocket.buildGameState(game));
@@ -113,8 +135,8 @@ export class GameSocket {
     }
     try {
       game.dispatch(this.client, action);
-    } catch (error) {
-      response('error', error.message);
+    } catch (error: any) {
+      response('error', error.message || ApiErrorEnum.SERVER_ERROR);
     }
     response('ok');
   }
@@ -167,8 +189,8 @@ export class GameSocket {
         response('error', ApiErrorEnum.PROMPT_INVALID_RESULT);
         return;
       }
-    } catch (error) {
-      response('error', error);
+    } catch (error: any) {
+      response('error', error.message || ApiErrorEnum.PROMPT_INVALID_RESULT);
       return;
     }
 
@@ -208,6 +230,14 @@ export class GameSocket {
   private changeAvatar(params: { gameId: number, avatarName: string }, response: Response<void>) {
     const action = new ChangeAvatarAction(this.client.id, params.avatarName);
     this.dispatch(params.gameId, action, response);
+  }
+
+  public onPlayerDisconnect(game: Game, player: Player): void {
+    this.socket.emit(`game[${game.id}]:playerDisconnect`, { playerId: player.id });
+  }
+
+  public onPlayerReconnect(game: Game, player: Player): void {
+    this.socket.emit(`game[${game.id}]:playerReconnect`, { playerId: player.id });
   }
 
 }

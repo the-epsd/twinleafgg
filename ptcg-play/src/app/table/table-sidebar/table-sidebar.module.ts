@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, forwardRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { PlayerBarComponent } from './player-bar/player-bar.component';
@@ -15,7 +15,7 @@ import { PlayerTimeComponent } from './player-time/player-time.component';
 @NgModule({
   imports: [
     CommonModule,
-    ProfileModule,
+    forwardRef(() => ProfileModule),
     SharedModule
   ],
   declarations: [

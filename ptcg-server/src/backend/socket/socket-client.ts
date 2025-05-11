@@ -3,6 +3,7 @@ import { Client } from '../../game/client/client.interface';
 import { Core } from '../../game/core/core';
 import { Game } from '../../game/core/game';
 import { State } from '../../game/store/state/state';
+import { Player } from '../../game/store/state/player';
 import { Message, User } from '../../storage';
 import { CoreSocket } from './core-socket';
 import { GameSocket } from './game-socket';
@@ -18,7 +19,8 @@ export class SocketClient implements Client {
   public user: User;
   public games: Game[] = [];
   public core: Core;
-  private socket: SocketWrapper;
+  public socket: Socket;
+  private socketWrapper: SocketWrapper;
   private cache: SocketCache = new SocketCache();
   private coreSocket: CoreSocket;
   private gameSocket: GameSocket;
@@ -27,18 +29,37 @@ export class SocketClient implements Client {
   private _isDisposed: boolean = false;
 
   constructor(user: User, core: Core, io: Server, socket: Socket) {
-    this.id = Math.floor(Math.random() * 1000000);
+    // First check if this user is already in any active games
+    const activeGames = core.games.filter(game =>
+      game.state.players.some(player => player.name === user.name)
+    );
+
+    if (activeGames.length > 0) {
+      // If user is in active games, use their player ID from the game
+      const player = activeGames[0].state.players.find(p => p.name === user.name);
+      if (player) {
+        this.id = player.id;
+        console.log(`[Socket] Reusing existing player ID ${this.id} for ${user.name}`);
+      } else {
+        this.id = Math.floor(Math.random() * 1000000);
+      }
+    } else {
+      // If not in any active games, generate new ID
+      this.id = Math.floor(Math.random() * 1000000);
+    }
+
     this.user = user;
     this.name = user.name;
-    this.socket = new SocketWrapper(io, socket);
+    this.socket = socket;
+    this.socketWrapper = new SocketWrapper(io, socket);
     this.core = core;
 
     console.log(`[Socket] Client created: ${user.name} [${this.id}]`);
 
-    this.coreSocket = new CoreSocket(this, this.socket, core, this.cache);
-    this.gameSocket = new GameSocket(this, this.socket, core, this.cache);
-    this.messageSocket = new MessageSocket(this, this.socket, core);
-    this.matchmakingSocket = new MatchmakingSocket(this, this.socket, core);
+    this.coreSocket = new CoreSocket(this, this.socketWrapper, core, this.cache);
+    this.gameSocket = new GameSocket(this, this.socketWrapper, core, this.cache);
+    this.messageSocket = new MessageSocket(this, this.socketWrapper, core);
+    this.matchmakingSocket = new MatchmakingSocket(this, this.socketWrapper, core);
   }
 
   public onConnect(client: Client): void {
@@ -150,10 +171,28 @@ export class SocketClient implements Client {
     }
   }
 
+  public onPlayerDisconnect(game: Game, player: Player): void {
+    try {
+      if (this._isDisposed) return;
+      this.gameSocket.onPlayerDisconnect(game, player);
+    } catch (error: any) {
+      console.error(`[Socket] Player disconnect error: ${this.name} [${this.id}] - ${error.message}`);
+    }
+  }
+
+  public onPlayerReconnect(game: Game, player: Player): void {
+    try {
+      if (this._isDisposed) return;
+      this.gameSocket.onPlayerReconnect(game, player);
+    } catch (error: any) {
+      console.error(`[Socket] Player reconnect error: ${this.name} [${this.id}] - ${error.message}`);
+    }
+  }
+
   public attachListeners(): void {
     try {
       if (this._isDisposed) return;
-      this.socket.attachListeners();
+      this.socketWrapper.attachListeners();
     } catch (error: any) {
       console.error(`[Socket] Listener attach error: ${this.name} [${this.id}] - ${error.message}`);
     }
@@ -165,8 +204,8 @@ export class SocketClient implements Client {
 
       console.log(`[Socket] Disposing client: ${this.name} [${this.id}]`);
 
-      if (this.socket?.socket) {
-        this.socket.socket.removeAllListeners();
+      if (this.socket) {
+        this.socket.removeAllListeners();
       }
 
       if (this.matchmakingSocket) {

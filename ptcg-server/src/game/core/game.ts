@@ -51,12 +51,14 @@ export class Game implements StoreHandler {
   }
 
   public cleanup(): void {
-    this.stopTimer();
-    if (this.matchRecorder) {
-      this.matchRecorder.cleanup();
+    if (this.state.phase === GamePhase.FINISHED) {
+      this.stopTimer();
+      if (this.matchRecorder) {
+        this.matchRecorder.cleanup();
+      }
+      this.store.cleanup();
+      this.arbiter.cleanup();
     }
-    this.store.cleanup();
-    this.arbiter.cleanup();
   }
 
   public onStateChange(state: State): void {
@@ -125,8 +127,66 @@ export class Game implements StoreHandler {
 
     const player = state.players.find(p => p.id === client.id);
     if (player !== undefined) {
-      const action = new AbortGameAction(player.id, AbortGameReason.DISCONNECTED);
-      this.store.dispatch(action);
+      player.disconnected = true;
+
+      const allPlayersDisconnected = state.players.every(p => p.disconnected);
+      if (allPlayersDisconnected) {
+        const action = new AbortGameAction(player.id, AbortGameReason.DISCONNECTED);
+        this.store.dispatch(action);
+      } else {
+        this.clients.forEach(c => {
+          if (c !== client) {
+            c.onPlayerDisconnect(this, player);
+          }
+        });
+      }
+    }
+  }
+
+  public handleClientDisconnect(client: Client): void {
+    const player = this.state.players.find(p => p.id === client.id);
+    if (player) {
+      player.disconnected = true;
+
+      if (this.state.phase !== GamePhase.FINISHED) {
+        this.clients.forEach(c => {
+          if (c !== client) {
+            c.onPlayerDisconnect(this, player);
+          }
+        });
+      }
+    }
+  }
+
+  public handleClientReconnect(client: Client): void {
+    const player = this.state.players.find(p => p.id === client.id);
+    if (player) {
+      player.disconnected = false;
+
+      try {
+        client.onStateChange(this, this.state);
+
+        this.clients.forEach(c => {
+          if (c !== client) {
+            c.onPlayerReconnect(this, player);
+          }
+        });
+
+        const playerPrompts = this.state.prompts.filter(p => p.playerId === player.id);
+        if (playerPrompts.length > 0) {
+          client.onStateChange(this, this.state);
+        }
+
+        const allPlayersReconnected = this.state.players.every(p => !p.disconnected);
+        if (allPlayersReconnected && this.state.phase !== GamePhase.FINISHED) {
+          if (this.timeoutRef === undefined) {
+            this.startTimer();
+          }
+        }
+      } catch (error) {
+        console.error(`[Game] Error syncing state for reconnected player ${player.id}:`, error);
+        client.onStateChange(this, this.state);
+      }
     }
   }
 
@@ -135,7 +195,6 @@ export class Game implements StoreHandler {
       return state;
     }
 
-    // Action dispatched not by the player
     const isPlayer = state.players.some(p => p.id === playerId);
     if (isPlayer === false) {
       return state;
@@ -174,10 +233,6 @@ export class Game implements StoreHandler {
     });
   }
 
-  /**
-   * Returns playerIds that needs to make a move.
-   * Used to calculate their time left.
-   */
   private getTimeRunningPlayers(state: State): number[] {
     if (state.phase === GamePhase.WAITING_FOR_PLAYERS) {
       return [];
@@ -205,7 +260,6 @@ export class Game implements StoreHandler {
   private startTimer() {
     const intervalDelay = 1000; // 1 second
 
-    // Game time is set to unlimited
     if (this.gameSettings.timeLimit === 0) {
       return;
     }

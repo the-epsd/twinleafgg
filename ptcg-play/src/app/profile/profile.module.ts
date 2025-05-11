@@ -9,7 +9,6 @@ import { HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
-import { GamesModule } from '../games/games.module';
 import { SharedModule } from '../shared/shared.module';
 import { ProfileComponent } from './profile.component';
 import { EditAvatarsPopupComponent } from './edit-avatars-popup/edit-avatars-popup.component';
@@ -21,7 +20,6 @@ import { SelectAvatarComponent } from './select-avatar/select-avatar.component';
 @NgModule({
   imports: [
     SharedModule,
-    GamesModule,
     MatDialogModule,
     MatTableModule,
     MatRadioModule,
@@ -51,5 +49,7 @@ import { SelectAvatarComponent } from './select-avatar/select-avatar.component';
     EditAvatarsPopupComponent
   ],
   exports: [
+    ProfileComponent,
+    SelectAvatarComponent
   ]
 }) export class ProfileModule { }
