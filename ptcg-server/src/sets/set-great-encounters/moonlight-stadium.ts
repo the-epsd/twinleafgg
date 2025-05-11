@@ -18,21 +18,21 @@ export class MoonlightStadium extends TrainerCard {
   public setNumber: string = '100';
 
   public text: string =
-    'The Retreat Cost for each {P} and {D} Pokémon (both yours and your opponent\'s) is 0.';
+    'The Retreat Cost for each [P] and [D] Pokémon (both yours and your opponent\'s) is 0.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    
+
     if (effect instanceof CheckRetreatCostEffect && StateUtils.getStadiumCard(state) === this) {
       const checkPokemonType = new CheckPokemonTypeEffect(effect.player.active);
       store.reduceEffect(state, checkPokemonType);
-      
+
       if ((checkPokemonType.cardTypes.includes(CardType.DARK)) || checkPokemonType.cardTypes.includes(CardType.PSYCHIC)) {
         effect.cost = [];
       }
-      
+
       return state;
     }
-    
+
     if (effect instanceof UseStadiumEffect && StateUtils.getStadiumCard(state) === this) {
       throw new GameError(GameMessage.CANNOT_USE_STADIUM);
     }
