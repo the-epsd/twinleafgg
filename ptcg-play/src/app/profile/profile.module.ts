@@ -16,10 +16,12 @@ import { ChangeEmailPopupComponent } from './change-email-popup/change-email-pop
 import { ChangePasswordPopupComponent } from './change-password-popup/change-password-popup.component';
 import { ChangeCardImagesPopupComponent } from './change-card-images-popup/change-card-images-popup.component';
 import { SelectAvatarComponent } from './select-avatar/select-avatar.component';
+import { GamesModule } from '../games/games.module';
 
 @NgModule({
   imports: [
     SharedModule,
+    GamesModule,
     MatDialogModule,
     MatTableModule,
     MatRadioModule,
@@ -49,7 +51,5 @@ import { SelectAvatarComponent } from './select-avatar/select-avatar.component';
     EditAvatarsPopupComponent
   ],
   exports: [
-    ProfileComponent,
-    SelectAvatarComponent
   ]
 }) export class ProfileModule { }

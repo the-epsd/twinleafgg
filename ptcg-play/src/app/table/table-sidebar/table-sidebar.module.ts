@@ -15,7 +15,7 @@ import { PlayerTimeComponent } from './player-time/player-time.component';
 @NgModule({
   imports: [
     CommonModule,
-    forwardRef(() => ProfileModule),
+    ProfileModule,
     SharedModule
   ],
   declarations: [

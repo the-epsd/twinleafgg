@@ -60,23 +60,10 @@ export class Core {
         });
       }
 
-      // Instead of immediately leaving games, mark the client as disconnected
-      client.games.forEach(game => {
-        // Keep the client in the game but mark as disconnected
-        game.handleClientDisconnect(client);
-      });
-
-      // Remove from active clients but keep game state
+      client.games.forEach(game => this.leaveGame(client, game));
       this.clients.splice(index, 1);
       client.core = undefined;
       this.emit(c => c.onDisconnect(client));
-
-      // Set a timeout to actually leave games if not reconnected
-      setTimeout(() => {
-        if (!client.socket?.connected) {
-          client.games.forEach(game => this.leaveGame(client, game));
-        }
-      }, 1 * 60 * 1000); // 1 minute grace period
     } catch (error) {
       if (error instanceof GameError) {
         console.error('[Core Disconnect Error]:', error.message);
@@ -213,38 +200,29 @@ export class Core {
 
   private startInactiveGameCleanup(): void {
     const scheduler = Scheduler.getInstance();
-    // Check for inactive games every 2 minutes
+    // Check for inactive games every 5 minutes
     scheduler.run(() => {
-      const inactiveTimeout = 2 * 60 * 1000; // 2 minutes
+      const inactiveTimeout = 5 * 60 * 1000; // 5 minutes
 
       this.games.forEach(game => {
         if (game.isInactive(inactiveTimeout)) {
           console.log(`[Game Cleanup] Cleaning up inactive game ${game.id}`);
-          // Only force end the game if it's been inactive for too long
+          // Force end the game
           const state = game.state;
           if (state.phase !== GamePhase.FINISHED) {
-            // Check if any players are still connected
-            const hasConnectedPlayers = game.clients.some(client => client.socket?.connected);
-
-            if (!hasConnectedPlayers) {
-              state.players.forEach(player => {
-                const action = new AbortGameAction(player.id, AbortGameReason.DISCONNECTED);
-                // Use the first client as the source for the abort action
-                if (game.clients.length > 0) {
-                  game.dispatch(game.clients[0], action);
-                }
-              });
-            } else {
-              // If there are still connected players, don't abort the game
-              console.log(`[Game Cleanup] Game ${game.id} has connected players, skipping cleanup`);
-              return;
-            }
+            state.players.forEach(player => {
+              const action = new AbortGameAction(player.id, AbortGameReason.DISCONNECTED);
+              // Use the first client as the source for the abort action
+              if (game.clients.length > 0) {
+                game.dispatch(game.clients[0], action);
+              }
+            });
           }
           game.cleanup();
           this.deleteGame(game);
         }
       });
-    }, 2 * 60 * 1000); // Run every 2 minutes
+    }, 5 * 60); // Run every 5 minutes
   }
 
 }

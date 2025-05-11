@@ -31,11 +31,11 @@ export class WebSocketServer {
   public async listen(httpServer: http.Server): Promise<void> {
     const opts: Partial<ServerOptions> = {
       pingInterval: 30000,        // Check connection every 30 seconds
-      pingTimeout: 120000,        // Increase timeout to 120 seconds
-      connectTimeout: 120000,     // Increase connection timeout to 120 seconds
+      pingTimeout: 60000,         // Set timeout to 60 seconds
+      connectTimeout: 60000,      // 60s connection timeout
       transports: ['websocket', 'polling'],
       allowUpgrades: true,
-      upgradeTimeout: 120000,
+      upgradeTimeout: 60000,
       perMessageDeflate: true,
       httpCompression: true,
       allowEIO3: true,
@@ -74,11 +74,11 @@ export class WebSocketServer {
   private monitorConnection(socket: Socket): void {
     let lastPingTime = Date.now();
     let missedPings = 0;
-    const MAX_MISSED_PINGS = 5;  // Increase from 3 to 5
+    const MAX_MISSED_PINGS = 3;
     let consecutiveErrors = 0;
-    const MAX_CONSECUTIVE_ERRORS = 10;  // Increase from 5 to 10
+    const MAX_CONSECUTIVE_ERRORS = 5;
     let lastActivityTime = Date.now();
-    const INACTIVITY_TIMEOUT = 900000;  // Increase from 5 minutes to 15 minutes
+    const INACTIVITY_TIMEOUT = 300000; // 5 minutes
 
     // Monitor packet activity
     socket.conn.on('packet', (packet: Packet) => {
@@ -88,23 +88,16 @@ export class WebSocketServer {
         const now = Date.now();
         const pingDelay = now - lastPingTime;
 
-        if (pingDelay > 60000) {  // Increase from 30s to 60s
+        if (pingDelay > 30000) {
           console.warn(`[Socket] High ping delay detected for ${socket.id}: ${pingDelay}ms`);
           missedPings++;
 
           if (missedPings >= MAX_MISSED_PINGS) {
-            console.warn(`[Socket] Too many missed pings for ${socket.id}, attempting graceful reconnection`);
-            // Instead of forcing disconnect, try to recover
-            socket.emit('reconnect_required');
-            // Give client time to handle reconnection
-            setTimeout(() => {
-              if (!socket.connected) {
-                socket.disconnect(true);
-              }
-            }, 30000);  // 30 second grace period
+            console.warn(`[Socket] Too many missed pings for ${socket.id}, forcing reconnection`);
+            socket.disconnect(true); // Force client to reconnect
           }
         } else {
-          missedPings = Math.max(0, missedPings - 1);  // Gradually reduce missed pings
+          missedPings = 0;
         }
 
         lastPingTime = now;
