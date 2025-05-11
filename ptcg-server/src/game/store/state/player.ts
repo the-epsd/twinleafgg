@@ -103,8 +103,6 @@ export class Player {
   // Taken prize cards ("taken" means "moved to the player's hand")
   prizesTaken: number = 0;
 
-  disconnected: boolean = false;
-
   getPrizeLeft(): number {
     return this.prizes.reduce((left, p) => left + p.cards.length, 0);
   }

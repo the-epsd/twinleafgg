@@ -39,9 +39,6 @@ export class User extends BaseEntity {
   @Column()
   public avatarFile: string = '';
 
-  @Column({ type: 'int', nullable: true })
-  public clientId: number | null = null;
-
   @OneToMany(type => Deck, deck => deck.user)
   decks!: Deck[];
 
@@ -67,5 +64,4 @@ export class User extends BaseEntity {
     await User.update(this.id, { lastSeen: this.lastSeen });
     return this;
   }
-
 }
