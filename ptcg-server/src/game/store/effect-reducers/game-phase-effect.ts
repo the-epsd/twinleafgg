@@ -183,6 +183,7 @@ export function gamePhaseReducer(store: StoreLike, state: State, effect: Effect)
     effect.player.marker.removeMarker(effect.player.DAMAGE_DEALT_MARKER);
 
     player.supporterTurn = 0;
+    player.active.attacksThisTurn = 0;
 
     if (player === undefined) {
       throw new GameError(GameMessage.NOT_YOUR_TURN);
