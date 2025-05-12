@@ -32,7 +32,8 @@ export class HustleBelt extends TrainerCard {
 
       if (IS_TOOL_BLOCKED(store, state, effect.player, this)){ return state; }
 
-      if (effect.damage > 0 && effect.target === opponent.active && effect.source.damage !== 0 && effect.source.hp - effect.source.damage <= 30) {
+      const attack = effect.attack;
+      if (attack && attack.damage > 0 && effect.target === opponent.active && effect.source.damage !== 0 && effect.source.hp - effect.source.damage <= 30) {
         effect.damage += 60;
       }
     }

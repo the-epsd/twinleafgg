@@ -34,7 +34,8 @@ export class PowerfulColorlessEnergy extends EnergyCard {
     if (effect instanceof DealDamageEffect && effect.source.cards.includes(this)) {
       const opponent = StateUtils.getOpponent(state, effect.player);
       const attackingPokemon = effect.source.getPokemonCard();
-      if (effect.damage > 0 && effect.target === opponent.active && attackingPokemon?.cardType === CardType.COLORLESS) {
+      const attack = effect.attack;
+      if (attack && attack.damage > 0 && effect.target === opponent.active && attackingPokemon?.cardType === CardType.COLORLESS) {
         effect.damage += 20;
       }
     }
