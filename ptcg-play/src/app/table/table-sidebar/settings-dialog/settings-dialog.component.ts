@@ -13,6 +13,7 @@ export class SettingsDialogComponent {
   holoEnabled = true;
   showCardName = false;
   cardSize = 100;
+  testAnimation = true;
 
   constructor(
     public dialogRef: MatDialogRef<SettingsDialogComponent>,
@@ -25,6 +26,9 @@ export class SettingsDialogComponent {
       enabled => this.showCardName = enabled
     );
     this.settingsService.cardSize$.subscribe(size => this.cardSize = size);
+    this.settingsService.testAnimation$.subscribe(
+      enabled => this.testAnimation = enabled
+    );
   }
 
   onCardSizeChange(event: Event) {
@@ -36,10 +40,10 @@ export class SettingsDialogComponent {
     this.settingsService.setHoloEnabled(this.holoEnabled);
     this.settingsService.setShowCardName(this.showCardName);
     this.settingsService.setCardSize(this.cardSize);
+    this.settingsService.setTestAnimation(this.testAnimation);
     this.dialogRef.close();
   }
 }
-
 
 @NgModule({
   imports: [

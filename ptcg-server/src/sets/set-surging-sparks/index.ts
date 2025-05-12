@@ -109,6 +109,7 @@ import { Vulpix } from './vulpix';
 import { Wochien } from './wo-chien';
 import { Zarude } from './zarude';
 import { Zweilous } from './zweilous';
+import { Exeggutor } from './exeggutor';
 
 export const setSurgingSparks: Card[] = [
   new Dialga(),
@@ -128,6 +129,7 @@ export const setSurgingSparks: Card[] = [
   new Togepi(),
   new Togetic(),
   new Togekiss(),
+  new Exeggutor(),
   new Deino(),
   new Zweilous(),
   new Hydreigonex(),

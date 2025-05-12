@@ -10,6 +10,7 @@ import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { ShowCardsPrompt } from '../../game/store/prompts/show-cards-prompt';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
+import { GameError } from '../../game';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -23,6 +24,9 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     }
   });
 
+  if (blocked.length === player.discard.cards.length) {
+    throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+  }
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
 

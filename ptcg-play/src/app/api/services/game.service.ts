@@ -214,6 +214,9 @@ export class GameService {
       const logs = [...gameStates[index].logs, ...state.logs];
       gameStates[index] = { ...gameStates[index], state, logs, playerStats };
       this.sessionService.set({ gameStates });
+
+      // Update the BoardInteractionService with the latest logs
+      this.boardInteractionService.updateGameLogs(logs);
     }
   }
 

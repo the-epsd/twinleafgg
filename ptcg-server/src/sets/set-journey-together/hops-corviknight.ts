@@ -75,11 +75,10 @@ export class HopsCorviknight extends PokemonCard {
         if (!targets || targets.length === 0) {
           return;
         }
-        const damageEffect = new PutDamageEffect(effect, 20);
+        const damageEffect = new PutDamageEffect(effect, 50);
         damageEffect.target = targets[0];
         store.reduceEffect(state, damageEffect);
       });
-
       return state;
     }
 

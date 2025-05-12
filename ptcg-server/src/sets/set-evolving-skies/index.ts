@@ -47,10 +47,10 @@ import { Wishiwashi } from './wishiwashi';
 import { ZinniasResolve } from './zinnias-resolve';
 import { Zoroark } from './zoroark';
 import { Zorua } from './zorua';
-
+import { BoostShake } from './boost-shake';
 
 export const setEvolvingSkies: Card[] = [
-
+  new BoostShake(),
   new Copycat(),
   new Cryogonal(),
   new CrystalCave(),

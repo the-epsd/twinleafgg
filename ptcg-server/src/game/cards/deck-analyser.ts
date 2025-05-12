@@ -29,6 +29,9 @@ export class DeckAnalyser {
     let hasStar = false;
     let hasUnownTag = false;
     let unownCount = 0;
+    let hasArceusRule = false;
+    let arceusRuleCount = 0;
+    let arceusCount = 0;
 
     if (this.cards.length !== 60) {
       return false;
@@ -60,9 +63,22 @@ export class DeckAnalyser {
         unownCount++;
       }
 
+      // CHeck for Arceus Rule
+      if (card.tags.includes(CardTag.ARCEUS)){
+        hasArceusRule = true;
+      }
+
+      // Count Cards with 'Arceus' in their name
+      if (card.name === 'Arceus'){
+        arceusCount++;
+        if (card.tags.includes(CardTag.ARCEUS)){
+          arceusRuleCount++;
+        }
+      }
+
       if (!(card instanceof EnergyCard) || card.energyType !== EnergyType.BASIC) {
         countMap[card.name] = (countMap[card.name] || 0) + 1;
-        if (countMap[card.name] > 4) {
+        if (countMap[card.name] > 4 && (!hasArceusRule || arceusCount !== arceusRuleCount)) {
           return false;
         }
       }
@@ -98,6 +114,11 @@ export class DeckAnalyser {
 
     // If any card has UNOWN tag, total Unown cards must be 4 or less
     if (hasUnownTag && unownCount > 4) {
+      return false;
+    }
+
+    // If there is a Arceus Rule Arceus in the deck, all of them have to have the Arceus Rule for the deck to be legal with more than 4 Arceus
+    if (hasArceusRule && arceusCount !== arceusRuleCount){
       return false;
     }
 

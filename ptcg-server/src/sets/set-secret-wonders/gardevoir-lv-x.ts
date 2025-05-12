@@ -126,7 +126,7 @@ export class GardevoirLVX extends PokemonCard {
       ), target => {
         const damageEffect = new KnockOutEffect(player, target[0]);
         store.reduceEffect(state, damageEffect);
-      })
+      });
     }
 
     // Trying to get all of the previous stage's attacks and powers

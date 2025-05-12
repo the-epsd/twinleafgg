@@ -4,7 +4,7 @@ import { PokemonCard } from '../card/pokemon-card';
 import { DealDamageEffect, DiscardCardsEffect, HealTargetEffect, PutDamageEffect } from '../effects/attack-effects';
 import { AddSpecialConditionsPowerEffect, CheckPrizesDestinationEffect, CheckProvidedEnergyEffect } from '../effects/check-effects';
 import { Effect } from '../effects/effect';
-import { AttackEffect, DrawPrizesEffect, EvolveEffect, KnockOutEffect, PowerEffect, RetreatEffect } from '../effects/game-effects';
+import { AttackEffect, DrawPrizesEffect, EvolveEffect, KnockOutEffect, PowerEffect, RetreatEffect, SpecialEnergyEffect } from '../effects/game-effects';
 import { AfterAttackEffect, EndTurnEffect } from '../effects/game-phase-effects';
 import { MoveCardsEffect } from '../effects/game-effects';
 import { AttachEnergyEffect, ToolEffect } from '../effects/play-card-effects';
@@ -563,6 +563,21 @@ export function IS_TOOL_BLOCKED(store: StoreLike, state: State, player: Player, 
   return false;
 }
 
+/**
+ * Checks if a special energy's effect is being blocked for the given player and Pokemon it is attached to. Do not use in CheckProvidedEnergyEffect.
+ * @returns `true` if the special energy's effect is blocked, `false` if the special energy's effect is able to activate.
+ */
+export function IS_SPECIAL_ENERGY_BLOCKED(store: StoreLike, state: State, player: Player, card: EnergyCard, attachedTo: PokemonCardList, exemptFromOpponentsSpecialEnergyBlockingAbility = false): boolean {
+  // Try to reduce SpecialEnergyEffect, to check if something is blocking the effect
+  try {
+    const stub = new SpecialEnergyEffect(player, card, attachedTo, exemptFromOpponentsSpecialEnergyBlockingAbility);
+    store.reduceEffect(state, stub);
+  } catch {
+    return true;
+  }
+  return false;
+}
+
 export function CAN_EVOLVE_ON_FIRST_TURN_GOING_SECOND(state: State, player: Player, pokemon: PokemonCardList) {
   if (state.turn === 2) {
     player.canEvolve = true;
@@ -693,6 +708,19 @@ export function BLOCK_IF_GX_ATTACK_USED(player: Player) {
     throw new GameError(GameMessage.LABEL_GX_USED);
 }
 
+export function BLOCK_IF_HAS_SPECIAL_CONDITION(player: Player, source: Card) {
+  if (player.active.cards[0] === source && player.active.specialConditions.length > 0)
+    throw new GameError(GameMessage.CANNOT_USE_POWER);
+}
+
+export function BLOCK_IF_ASLEEP_CONFUSED_PARALYZED(player: Player, source: Card) {
+  if (player.active.cards[0] === source &&
+    player.active.specialConditions.includes(SpecialCondition.ASLEEP) ||
+    player.active.specialConditions.includes(SpecialCondition.CONFUSED) ||
+    player.active.specialConditions.includes(SpecialCondition.PARALYZED)) {
+    throw new GameError(GameMessage.CANNOT_USE_POWER);
+  }
+}
 
 //#region Special Conditions
 export function ADD_SPECIAL_CONDITIONS_TO_PLAYER_ACTIVE(
@@ -805,7 +833,8 @@ export function MOVE_CARDS(
     count?: number,
     toTop?: boolean,
     toBottom?: boolean,
-    skipCleanup?: boolean
+    skipCleanup?: boolean,
+    sourceCard?: Card
   } = {}
 ): State {
   return store.reduceEffect(state, new MoveCardsEffect(source, destination, options));

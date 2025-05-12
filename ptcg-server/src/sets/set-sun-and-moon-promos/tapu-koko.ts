@@ -36,7 +36,7 @@ export class TapuKoko extends PokemonCard {
 
   public set: string = 'SMP';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = 'SM30';
+  public setNumber: string = '30';
   public name: string = 'Tapu Koko';
   public fullName: string = 'Tapu Koko SMP';
 

@@ -4,8 +4,8 @@ import { TrainerType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { StateUtils } from '../../game/store/state-utils';
-import { DealDamageEffect } from '../../game/store/effects/attack-effects';
-import {ToolEffect} from '../../game/store/effects/play-card-effects';
+import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { ToolEffect } from '../../game/store/effects/play-card-effects';
 
 
 export class DefianceBand extends TrainerCard {
@@ -29,8 +29,7 @@ export class DefianceBand extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof DealDamageEffect && effect.source.cards.includes(this)) {
-
+    if (effect instanceof PutDamageEffect && effect.source.cards.includes(this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -46,8 +45,11 @@ export class DefianceBand extends TrainerCard {
         return state;
       }
 
-      const opponentActive = opponent.active.getPokemonCard();
-      if (opponentActive && effect.target.cards.includes(opponentActive)) {
+      if (effect.target !== player.active && effect.target !== opponent.active) {
+        return state;
+      }
+
+      if (effect.damage > 0 && effect.target === opponent.active) {
         effect.damage += 30;
       }
     }

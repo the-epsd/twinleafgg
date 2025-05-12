@@ -95,7 +95,7 @@
   "DECK_TITLE": "Decks",
   "DECK_TYPE": "Type",
   "DECK_VALID": "Valid",
-  "ERROR_DISCONNECTED_FROM_SERVER": "Disconnected from the server.",
+  "ERROR_DISCONNECTED_FROM_SERVER": "Disconnected from server. Please try again.",
   "ERROR_INVALID_NAME_OR_PASSWORD": "Invalid username or password.",
   "ERROR_INVALID_REQUEST": "The request was rejected by the server.",
   "ERROR_NAME_IN_USE": "This username is already in use.",
@@ -341,7 +341,7 @@
   "BUTTON_EXPORT_DECKLIST": "Export Decklist",
   "NEWS_AND_UPDATES": "News & Updates",
   "DECK_SET_AS_DEFAULT": "Set as default deck",
-  "RECONNECTING_TO_SERVER": "Reconnecting to server...",
+  "RECONNECTING_TO_SERVER": "Connection lost. Attempting to reconnect...",
   "ERROR_ACCOUNT_BANNED": "This account has been banned for violating the Terms of Service",
   "FORMAT_ALL": "All",
   "FORMAT_STANDARD": "Standard",
@@ -591,5 +591,10 @@
   "PROFILE_BAN_ERROR": "Error banning user",
   "PROFILE_UNBAN_USER": "Unban User",
   "PROFILE_UNBAN_SUCCESS": "User has been unbanned successfully",
-  "PROFILE_UNBAN_ERROR": "Error unbanning user"
+  "PROFILE_UNBAN_ERROR": "Error unbanning user",
+  "SOCKET_DISCONNECTED": "Disconnected from server",
+  "SOCKET_RECONNECTING": "Reconnecting... (Attempt {attempt})",
+  "SOCKET_RECONNECT_ATTEMPT": "Reconnection attempt {attempt}",
+  "SOCKET_RECONNECTED": "Reconnected successfully",
+  "SOCKET_RECONNECT_FAILED": "Failed to reconnect to server"
 }

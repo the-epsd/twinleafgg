@@ -5,14 +5,18 @@ $ptcg-sidenav-close-margin: $ptcg-sidenav-close-button-size - map-get($padding, 
 
 
 .ptcg-sidenav-item {
-  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 36px;
 }
 
 .ptcg-sidenav-label-container {
-  max-width: 100%;
-  padding-right: $ptcg-sidenav-close-margin;
+  max-width: calc(100% - 40px);
   color: white;
   font-weight: bold;
+  padding: 0;
 }
 
 .ptcg-sidenav-label-badge {
@@ -26,12 +30,21 @@ $ptcg-sidenav-close-margin: $ptcg-sidenav-close-button-size - map-get($padding, 
   white-space: nowrap;
 }
 
-.ptcg-sidenav-close-button {
-  align-items: center;
-  bottom: 0;
-  display: flex;
-  position: absolute;
-  right: -7.5px;
-  top: 0;
-  width: $ptcg-sidenav-close-button-size;
+.close-button {
+  color: rgba(255, 255, 255, 0.7);
+  margin-left: 8px;
+  height: 32px;
+  width: 32px;
+  line-height: 32px;
+
+  &:hover {
+    color: white;
+  }
+
+  mat-icon {
+    font-size: 18px;
+    height: 18px;
+    width: 18px;
+    line-height: 18px;
+  }
 }

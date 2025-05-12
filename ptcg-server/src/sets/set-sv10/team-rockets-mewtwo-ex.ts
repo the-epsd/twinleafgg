@@ -41,24 +41,21 @@ export class TeamRocketsMewtwoex extends PokemonCard {
     if (effect instanceof UseAttackEffect && effect.source.cards.includes(this)) {
       const player = effect.player;
 
-      if (!IS_ABILITY_BLOCKED) {
-        // Count Team Rocket's Pokémon in play
-        let teamRocketPokemonCount = 0;
+      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
+        return state;
+      }
+      // Count Team Rocket's Pokémon in play
+      let teamRocketPokemonCount = 0;
 
-        if (player.active?.getPokemonCard()?.tags.includes(CardTag.TEAM_ROCKET)) {
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+        if (card?.tags.includes(CardTag.TEAM_ROCKET)) {
           teamRocketPokemonCount++;
         }
+      });
 
-        player.bench.forEach(benchSpot => {
-          if (benchSpot.getPokemonCard()?.tags.includes(CardTag.TEAM_ROCKET)) {
-            teamRocketPokemonCount++;
-          }
-        });
-
-        // If less than 4 Team Rocket's Pokémon, prevent attack
-        if (teamRocketPokemonCount < 4) {
-          throw new GameError(GameMessage.CANNOT_USE_ATTACK);
-        }
+      // If less than 4 Team Rocket's Pokémon, prevent attack
+      if (teamRocketPokemonCount < 4) {
+        throw new GameError(GameMessage.CANNOT_USE_ATTACK);
       }
     }
 

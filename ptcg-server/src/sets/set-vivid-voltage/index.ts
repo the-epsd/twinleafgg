@@ -1,4 +1,5 @@
 import { Card } from '../../game/store/card/card';
+import { Dusknoir } from './dusknoir';
 import { AromaticEnergy } from './aromatic-energy';
 import { Beedrill } from './beedrill';
 import { Beldum } from './beldum';
@@ -10,6 +11,7 @@ import { CoatingMetalEnergy } from './coating-metal-energy';
 import { Dhelmise } from './dhelmise';
 import { Donphan } from './donphan';
 import { Duraludon } from './duraludon';
+import { Duskull } from './duskull';
 import { Exploud } from './exploud';
 import { TalonflameVFA } from './full-art';
 import { Jirachi } from './jirachi';
@@ -44,6 +46,8 @@ export const setVividVoltage: Card[] = [
   new Dhelmise(),
   new Donphan(),
   new Duraludon(),
+  new Dusknoir(),
+  new Duskull(),
   new Exploud(),
   new Jirachi(),
   new Leon(),

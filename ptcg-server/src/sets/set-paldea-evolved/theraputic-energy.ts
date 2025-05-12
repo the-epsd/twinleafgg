@@ -4,6 +4,7 @@ import { EnergyCard } from '../../game/store/card/energy-card';
 import { CheckTableStateEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
+import { IS_SPECIAL_ENERGY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 export class TherapeuticEnergy extends EnergyCard {
 
@@ -30,6 +31,10 @@ export class TherapeuticEnergy extends EnergyCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof AttachEnergyEffect && effect.target.cards.includes(this)) {
+      if (IS_SPECIAL_ENERGY_BLOCKED(store, state, effect.player, this, effect.target)) {
+        return state;
+      }
+
       const pokemon = effect.target;
 
       pokemon.removeSpecialCondition(SpecialCondition.ASLEEP);
@@ -41,6 +46,10 @@ export class TherapeuticEnergy extends EnergyCard {
       const cardList = StateUtils.findCardList(state, this);
 
       if (cardList instanceof PokemonCardList && cardList.cards.includes(this)) {
+        if (IS_SPECIAL_ENERGY_BLOCKED(store, state, effect.player, this, cardList)) {
+          return state;
+        }
+
         const conditionsToKeep = [SpecialCondition.ABILITY_USED, SpecialCondition.POISONED, SpecialCondition.BURNED];
         const hasSpecialCondition = cardList.specialConditions.some(condition => !conditionsToKeep.includes(condition));
         if (hasSpecialCondition) {

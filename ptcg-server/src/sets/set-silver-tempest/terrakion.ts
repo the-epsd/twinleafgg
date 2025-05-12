@@ -1,9 +1,9 @@
+import { GameError, GameMessage, State, StoreLike } from '../../game';
+import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, GameError, GameMessage, StateUtils, PlayerType } from '../../game';
+import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 
@@ -28,58 +28,38 @@ export class Terrakion extends PokemonCard {
   public name: string = 'Terrakion';
   public fullName: string = 'Terrakion SIT';
 
-  public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
-  public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';
-
   public readonly CAVERN_TACKLE_MARKER = 'CAVERN_TACKLE_MARKER';
-  public readonly CLEAR_CAVERN_TACKLE_MARKER = 'CLEAR_CAVERN_TACKLE_MARKER';
+
+  private turnTracker = 0;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.CAVERN_TACKLE_MARKER, this)) {
+      this.turnTracker++;
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_2_MARKER, this)) {
-      effect.player.marker.removeMarker(this.ATTACK_USED_MARKER, this);
-      effect.player.marker.removeMarker(this.ATTACK_USED_2_MARKER, this);
-      console.log('marker cleared');
-    }
-
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-      effect.player.marker.addMarker(this.ATTACK_USED_2_MARKER, this);
-      console.log('second marker added');
+      // if 3 turns have passed, that means the attack was used, opponent couldn't damage
+      // player couldn't use cavern tackle, so the attack is fully resolved
+      if (this.turnTracker === 2) {
+        effect.player.marker.removeMarker(this.CAVERN_TACKLE_MARKER, this);
+      }
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
 
       // Check marker
-      if (player.marker.hasMarker(this.ATTACK_USED_MARKER, this)) {
-        console.log('attack blocked');
+      if (player.marker.hasMarker(this.CAVERN_TACKLE_MARKER, this)) {
         throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
       }
 
-      player.marker.addMarker(this.ATTACK_USED_MARKER, this);
+      player.marker.addMarker(this.CAVERN_TACKLE_MARKER, this);
 
-      player.active.marker.addMarker(this.CAVERN_TACKLE_MARKER, this);
-      opponent.marker.addMarker(this.CLEAR_CAVERN_TACKLE_MARKER, this);
-
+      this.turnTracker = 0;
     }
 
-    if (effect instanceof PutDamageEffect
-      && effect.target.marker.hasMarker(this.CAVERN_TACKLE_MARKER)) {
+    if (effect instanceof PutDamageEffect && effect.target.marker.hasMarker(this.CAVERN_TACKLE_MARKER, this)) {
       effect.preventDefault = true;
       return state;
-    }
-
-    if (effect instanceof EndTurnEffect
-      && effect.player.marker.hasMarker(this.CLEAR_CAVERN_TACKLE_MARKER, this)) {
-
-      effect.player.marker.removeMarker(this.CLEAR_CAVERN_TACKLE_MARKER, this);
-
-      const opponent = StateUtils.getOpponent(state, effect.player);
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-        cardList.marker.removeMarker(this.CAVERN_TACKLE_MARKER, this);
-      });
     }
 
     return state;

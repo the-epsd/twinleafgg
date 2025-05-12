@@ -27,6 +27,7 @@ import { Golett } from './golett';
 import { Golurk } from './golurk';
 import { IceRiderCalyrexV } from './ice-rider-calyrex-v';
 import { IceRiderCalyrexVMAX } from './ice-rider-calyrex-vmax';
+import { ImpactEnergy } from './impact-energy';
 import { Inkay } from './inkay';
 import { Inteleon } from './inteleon';
 import { JustifiedGloves } from './justified-gloves';
@@ -81,6 +82,7 @@ export const setChillingReign: Card[] = [
   new Golurk(),
   new IceRiderCalyrexV(),
   new IceRiderCalyrexVMAX(),
+  new ImpactEnergy(),
   new Inkay(),
   new Inteleon(),
   new JustifiedGloves(),

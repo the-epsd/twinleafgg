@@ -6,6 +6,7 @@ import { PokemonCardList } from '../state/pokemon-card-list';
 import { TrainerCard } from '../card/trainer-card';
 import { CardList } from '../state/card-list';
 import { Card } from '../card/card';
+import { Stage } from '../card/card-types';
 
 export enum PlayCardEffects {
   ATTACH_ENERGY_EFFECT = 'ATTACH_ENERGY_EFFECT',
@@ -49,6 +50,9 @@ export class PlayPokemonEffect implements Effect {
     this.player = player;
     this.pokemonCard = pokemonCard;
     this.target = target;
+    if (pokemonCard.stage === Stage.BASIC) {
+      this.target.showBasicAnimation = true;
+    }
   }
 }
 

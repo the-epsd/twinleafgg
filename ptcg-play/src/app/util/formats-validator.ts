@@ -48,6 +48,23 @@ export class FormatValidator {
       }
     }
 
+    // code for the Arceus Rule
+    const hasArceusRule = cards.some(card => card.tags.includes(CardTag.ARCEUS));
+    if (hasArceusRule) {
+      const arceusRuleCount = cards.filter(card => card.tags.includes(CardTag.ARCEUS)).length;
+      const arceusCount = cards.filter(card => card.name === 'Arceus').length;
+
+      if (arceusCount !== arceusCount && arceusCount > 4){
+        return formatList.filter(f => 
+          f !== Format.GLC &&
+          f !== Format.EXPANDED &&
+          f !== Format.STANDARD &&
+          f !== Format.STANDARD_NIGHTLY &&
+          f !== Format.UNLIMITED
+        );
+      }
+    }
+
     // Check GLC rules first
     if (formatList.includes(Format.GLC)) {
       // check for singleton violation

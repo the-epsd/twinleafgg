@@ -6,6 +6,7 @@ const { SimpleBot } = require('./output/simple-bot/simple-bot');
 const { CardManager } = require('./output/game/cards/card-manager');
 const { StateSerializer } = require('./output/game/serializer/state-serializer');
 const { config } = require('./output/config');
+const { Format } = require('./output/game/store/card/card-types');
 const sets = require('./output/sets');
 const process = require('process');
 
@@ -19,6 +20,8 @@ cardManager.defineSet(sets.setFossil);
 cardManager.defineSet(sets.setTeamRocket);
 cardManager.defineSet(sets.setWOTCPromos);
 cardManager.defineSet(sets.setVendingSeries);
+
+cardManager.defineSet(sets.setGymHeros);
 
 cardManager.defineSet(sets.setBaseSetEnergy);
 
@@ -158,6 +161,7 @@ cardManager.defineSet(sets.setPrismaticEvolution);
 cardManager.defineSet(sets.setJourneyTogether);
 cardManager.defineSet(sets.setSV9a);
 cardManager.defineSet(sets.setSV10);
+cardManager.defineSet(sets.setSV11);
 cardManager.defineSet(sets.setM1S);
 
 cardManager.defineSet(sets.setTest);
@@ -173,7 +177,9 @@ const botManager = BotManager.getInstance();
 // botManager.registerBot(new SimpleBot('Gardevoir'));
 // botManager.registerBot(new SimpleBot('Charizard'));
 // botManager.registerBot(new SimpleBot('LostBox'));
-// botManager.registerBot(new SimpleBot('Lugia'));
+// const lugiaBot = new SimpleBot('Lugia');
+// lugiaBot.setDeck(Format.STANDARD_NIGHTLY, ["Lillie's Clefairy ex JTG", "Team Rocket's Articuno SV10", "Team Rocket's Mewtwo ex SV10", "Team Rocket's Mewtwo ex SV10", "Team Rocket's Mimikyu SV10", "Team Rocket's Tarountula SV10", "Team Rocket's Tarountula SV10", "Team Rocket's Tarountula SV10", "Team Rocket's Tarountula SV10", "Team Rocket's Spidops SV10", "Team Rocket's Spidops SV10", "Team Rocket's Spidops SV10", "Team Rocket's Spidops SV10", "Team Rocket's Archer SV10", "Team Rocket's Ariana SV10", "Team Rocket's Ariana SV10", "Team Rocket's Ariana SV10", "Team Rocket's Ariana SV10", "Team Rocket's Giovanni SV10", "Team Rocket's Giovanni SV10", "Team Rocket's Giovanni SV10", "Team Rocket's Petrel SV10", "Team Rocket's Proton SV10", "Team Rocket's Proton SV10", "Earthen Vessel PAR", "Earthen Vessel PAR", "Earthen Vessel PAR", "Energy Switch SVI", "Energy Switch SVI", "Energy Switch SVI", "Energy Switch SVI", "Night Stretcher SFA", "Night Stretcher SFA", "Team Rocket's Great Ball SV10", "Team Rocket's Great Ball SV10", "Team Rocket's Receiver SV10", "Team Rocket's Receiver SV10", "Team Rocket's Receiver SV10", "Team Rocket's Receiver SV10", "Ultra Ball PAF", "Ultra Ball PAF", "Ultra Ball PAF", "Ultra Ball PAF", "Bravery Charm PAL", "Bravery Charm PAL", "Lucky Helmet TWM", "Lucky Helmet TWM", "Maximum Belt TEF", "Team Rocket's Factory SV10", "Team Rocket's Factory SV10", "Team Rocket's Factory SV10", "Grass Energy SVE", "Grass Energy SVE", "Grass Energy SVE", "Psychic Energy SVE", "Psychic Energy SVE", "Team Rocket Energy SV10", "Team Rocket Energy SV10", "Team Rocket Energy SV10", "Team Rocket Energy SV10"]);
+// botManager.registerBot(lugiaBot);
 // botManager.registerBot(new SimpleBot('Dragapult'));
 // botManager.registerBot(new SimpleBot('Standard'));
 // botManager.registerBot(new SimpleBot('GLC'));

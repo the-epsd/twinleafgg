@@ -97,7 +97,7 @@ export class Volcanion extends PokemonCard {
 
         checkProvidedEnergyEffect.energyMap.forEach(em => {
           energyCount += em.provides.filter(cardType => {
-            return em.card.name == 'Fire Energy';
+            return cardType === CardType.FIRE || cardType === CardType.ANY;
           }).length;
         });
       });
@@ -107,7 +107,6 @@ export class Volcanion extends PokemonCard {
 
       return state;
     }
-
     return state;
   }
 }

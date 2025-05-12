@@ -48,6 +48,7 @@ export enum CardTag {
   TEAM_ROCKET = 'TEAM_ROCKET',
   UNOWN = 'UNOWN',
   PRIMAL = 'PRIMAL',
+  ARCEUS = 'ARCEUS',
 }
 
 export enum SuperType {

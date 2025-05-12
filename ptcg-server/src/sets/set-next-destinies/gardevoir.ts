@@ -81,9 +81,9 @@ export class Gardevoir extends PokemonCard {
 
         effect.source.cards.forEach(c => {
           if (c instanceof EnergyCard && !effect.energyMap.some(e => e.card === c)) {
-            const providedTypes = c.provides.filter(type => type === CardType.GRASS);
+            const providedTypes = c.provides.filter(type => type === CardType.PSYCHIC);
             if (providedTypes.length > 0) {
-              effect.energyMap.push({ card: c, provides: [CardType.GRASS, CardType.GRASS] });
+              effect.energyMap.push({ card: c, provides: [CardType.PSYCHIC, CardType.PSYCHIC] });
             }
           }
         });

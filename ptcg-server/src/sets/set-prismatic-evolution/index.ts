@@ -17,6 +17,7 @@ import { Pupitar } from './pupitar';
 import { Regigigas } from './regigigas';
 import { RotoStick } from './roto-stick';
 import { Seaking } from './seaking';
+import { Sneasel } from './sneasel';
 import { Sylveon } from './sylveon';
 import { TreasureTracker } from './treasure-tracker';
 import { Tyranitarex } from './tyranitar-ex';
@@ -36,6 +37,7 @@ export const setPrismaticEvolution: Card[] = [
   new Leafeonex(),
   new Glaceonex(),
   new Sylveon(),
+  new Sneasel(),  
   new Seaking(),
   new Regigigas(),
   new MaxRod(),

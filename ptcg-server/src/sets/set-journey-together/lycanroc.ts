@@ -1,9 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, EnergyType } from '../../game/store/card/card-types';
-import { StoreLike, State, PlayerType, Power, PowerType, Attack, StateUtils, SlotType } from '../../game';
+import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
+import { StoreLike, State, PlayerType, Power, PowerType, Attack, StateUtils, SlotType, AttachEnergyPrompt, ConfirmPrompt, GameMessage } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { ATTACH_ENERGY_PROMPT, CONFIRMATION_PROMPT, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
-import { EvolveEffect } from '../../game/store/effects/game-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { EvolveEffect, PowerEffect } from '../../game/store/effects/game-effects';
 
 export class Lycanroc extends PokemonCard {
 
@@ -20,7 +20,7 @@ export class Lycanroc extends PokemonCard {
     name: 'Spike Cloak',
     powerType: PowerType.ABILITY,
     text: 'You may use this Ability when you play this Pokémon from your hand to evolve 1 of your Pokémon. ' +
-      'Attach up to 2 Spike Energy cards from your discard pile to this Pokémon.'
+      'Attach up to 2 Spiky Energy cards from your discard pile to this Pokémon.'
   }];
 
   public attacks: Attack[] = [
@@ -41,15 +41,48 @@ export class Lycanroc extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof EvolveEffect && effect.pokemonCard === this) {
-      CONFIRMATION_PROMPT(store, state, effect.player, (result) => {
-        if (!result)
-          return;
-        ATTACH_ENERGY_PROMPT(
-          store, state, effect.player, PlayerType.BOTTOM_PLAYER, SlotType.DISCARD, [SlotType.ACTIVE, SlotType.BENCH],
-          { energyType: EnergyType.SPECIAL, name: 'Spike Energy' },
-          { min: 0, max: 1, allowCancel: false },
-        );
+    if ((effect instanceof EvolveEffect) && effect.pokemonCard === this) {
+      const player = effect.player;
+
+      // Try to reduce PowerEffect, to check if something is blocking our ability
+      try {
+        const stub = new PowerEffect(player, {
+          name: 'test',
+          powerType: PowerType.ABILITY,
+          text: ''
+        }, this);
+        store.reduceEffect(state, stub);
+      } catch {
+        return state;
+      }
+      state = store.prompt(state, new ConfirmPrompt(
+        effect.player.id,
+        GameMessage.WANT_TO_USE_ABILITY,
+      ), wantToUse => {
+        if (wantToUse) {
+
+          const player = effect.player;
+          return store.prompt(state, new AttachEnergyPrompt(
+            player.id,
+            GameMessage.ATTACH_ENERGY_CARDS,
+            player.discard,
+            PlayerType.BOTTOM_PLAYER,
+            [SlotType.BENCH, SlotType.ACTIVE],
+            { superType: SuperType.ENERGY, name: 'Spiky Energy' },
+            { allowCancel: false, min: 0, max: 2 },
+          ), transfers => {
+            transfers = transfers || [];
+            // cancelled by user
+            if (transfers.length === 0) {
+              return state;
+            }
+            for (const transfer of transfers) {
+              const target = StateUtils.getTarget(state, player, transfer.to);
+              player.discard.moveCardTo(transfer.card, target);
+            }
+          });
+        }
+        return state;
       });
     }
 

@@ -3,6 +3,7 @@ import { CardType, EnergyType } from '../../game/store/card/card-types';
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { Effect } from '../../game/store/effects/effect';
 import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
+import { IS_SPECIAL_ENERGY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 export class JetEnergy extends EnergyCard {
 
@@ -31,6 +32,10 @@ export class JetEnergy extends EnergyCard {
     if (effect instanceof AttachEnergyEffect && effect.energyCard === this) {
       const player = effect.player;
       const target = effect.target;
+
+      if (IS_SPECIAL_ENERGY_BLOCKED(store, state, effect.player, this, effect.target)) {
+        return state;
+      }
 
       player.switchPokemon(target);
     }

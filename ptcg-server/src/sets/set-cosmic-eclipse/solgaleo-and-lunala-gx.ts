@@ -83,7 +83,7 @@ export class SolgaleoLunalaGX extends PokemonCard {
         if (card.marker.hasMarker(this.COSMIC_BURN_MARKER, this)){
           card.marker.removeMarker(this.COSMIC_BURN_MARKER, this);
         }
-      })
+      });
     }
 
     if (effect instanceof EndTurnEffect && effect.player.active.marker.hasMarker(this.COSMIC_BURN_MARKER, this)) {
@@ -101,7 +101,7 @@ export class SolgaleoLunalaGX extends PokemonCard {
     if ((effect instanceof PutDamageEffect 
       || effect instanceof PutCountersEffect 
       || effect instanceof AddSpecialConditionsEffect) && effect.opponent.marker.hasMarker(this.LIGHT_OF_THE_PROTECTOR_MARKER, this)){
-        effect.preventDefault = true;
+      effect.preventDefault = true;
     }
 
     return state;

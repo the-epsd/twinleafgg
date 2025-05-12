@@ -27,9 +27,9 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   const blocked: number[] = [];
   player.deck.cards.forEach((card, index) => {
     // eslint-disable-next-line no-empty
-    if (card instanceof PokemonCard && card.stage !== Stage.BASIC && card.stage !== Stage.RESTORED) {
+    if (card instanceof PokemonCard && card.evolvesFrom !== '' && card.stage !== Stage.LV_X) {
     } else {
-      blocked.push(index);      
+      blocked.push(index);
     }
   });
 
@@ -59,7 +59,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   cards.forEach((card, index) => {
     store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
   });
-  
+
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);
   });
@@ -70,7 +70,7 @@ export class EvolutionIncense extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
 
   public set: string = 'SSH';
-  
+
   public regulationMark = 'D';
 
   public name: string = 'Evolution Incense';

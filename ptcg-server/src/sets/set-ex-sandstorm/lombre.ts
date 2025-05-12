@@ -1,8 +1,8 @@
-import { PokemonCard, Stage, CardType, PowerType, StoreLike, State, CoinFlipPrompt, GameMessage, PlayerType, ConfirmPrompt } from "../../game";
-import { Effect } from "../../game/store/effects/effect";
-import { AttackEffect, HealEffect } from "../../game/store/effects/game-effects";
-import { BetweenTurnsEffect } from "../../game/store/effects/game-phase-effects";
-import { IS_POKEBODY_BLOCKED } from "../../game/store/prefabs/prefabs";
+import { PokemonCard, Stage, CardType, PowerType, StoreLike, State, CoinFlipPrompt, GameMessage, PlayerType, ConfirmPrompt } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+import { AttackEffect, HealEffect } from '../../game/store/effects/game-effects';
+import { BetweenTurnsEffect } from '../../game/store/effects/game-phase-effects';
+import { IS_POKEBODY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 
 export class Lombre extends PokemonCard {

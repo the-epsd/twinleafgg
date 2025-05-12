@@ -34,7 +34,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
   const blocked: number[] = [];
   player.deck.cards.forEach((card, index) => {
-    if (card instanceof PokemonCard && card.stage == Stage.BASIC) {
+    if (card instanceof PokemonCard && (card.evolvesFrom === '' || card.stage === Stage.LV_X)) {
       blocked.push(index);
     }
   });

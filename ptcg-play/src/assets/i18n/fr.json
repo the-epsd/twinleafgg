@@ -550,5 +550,10 @@
   },
   "PROFILE_BAN_USER": "Bannir l'utilisateur",
   "PROFILE_BAN_SUCCESS": "L'utilisateur a été banni avec succès",
-  "PROFILE_BAN_ERROR": "Erreur lors du bannissement de l'utilisateur"
+  "PROFILE_BAN_ERROR": "Erreur lors du bannissement de l'utilisateur",
+  "SOCKET_DISCONNECTED": "Déconnecté du serveur",
+  "SOCKET_RECONNECTING": "Reconnexion... (Essai {attempt})",
+  "SOCKET_RECONNECT_ATTEMPT": "Essai de reconnexion {attempt}",
+  "SOCKET_RECONNECTED": "Reconnecté avec succès",
+  "SOCKET_RECONNECT_FAILED": "Échec de la reconnexion au serveur"
 }

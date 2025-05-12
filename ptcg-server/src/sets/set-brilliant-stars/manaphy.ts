@@ -70,6 +70,11 @@ export class Manaphy extends PokemonCard {
         return state;
       }
 
+      const attackingPlayer = StateUtils.findOwner(state, effect.source);
+      if (attackingPlayer === player) {
+        return state;
+      }
+
       // Try to reduce PowerEffect, to check if something is blocking our ability
       try {
         const stub = new PowerEffect(player, {

@@ -32,6 +32,7 @@ import { Pikachu } from './pikachu';
 import { Ponyta } from './ponyta';
 import { ProfessorOaksSetup } from './professor-oaks-setup';
 import { Rosa } from './rosa';
+import { Roxie } from './roxie';
 import { Sawsbuck } from './sawsbuck';
 import { Slugma } from './slugma';
 import { Stoutland } from './stoutland';
@@ -50,6 +51,9 @@ import { Swoobat } from './swoobat';
 import { Mimikyu } from './mimikyu';
 import { OricorioGX } from './oricorio-gx';
 import { DragoniumZDragonClaw } from './dragonium-z';
+import { Gloom } from './gloom';
+import { Oddish } from './oddish';
+import { VileplumeGX } from './vileplume-gx';
 import {MegaLopunnyJigglypuffGX} from './mega-lopuny-and-jigglypuff-gx';
 import {VenusaurSnivyGX} from './venusaur-and-snivy-gx';
 import {LilliesFullForce} from './lillies-full-force';
@@ -61,8 +65,11 @@ export const setCosmicEclipse: Card[] = [
   new ArceusDialgaPalkiaGX(),
   new BellelbaAndBrycenMan(),
   new Blacephalon(),
+  new BlastoisePiplupGX(),
   new Buzzwole(),
+  new Carvanha(),
   new ChaoticSwell(),
+  new CharizardBraixenGX(),
   new Clay(),
   new Clefairy(),
   new CynthiaAndCaitlin(),
@@ -75,6 +82,7 @@ export const setCosmicEclipse: Card[] = [
   new Flabebe(),
   new Flabebe2(),
   new Floette(),
+  new Gloom(),
   new Golett(),
   new GreatCatcher(),
   new GuzmaAndHala(),
@@ -84,26 +92,29 @@ export const setCosmicEclipse: Card[] = [
   new LilliesPokeDoll(),
   new Lillipup(),
   new MallowAndLana(),
+  new Mimikyu(),
+  new NaganadelGuzzlordGX(),
   new Natu(),
+  new Oddish(),
   new Onix(),
+  new OricorioGX(),
   new Phione(),
   new Pikachu(),
   new Ponyta(),
   new ProfessorOaksSetup(),
   new Rosa(),
+  new Roxie(),
   new Sawsbuck(),
   new Slugma(),
   new Stoutland(),
   new Sunkern(),
   new Swirlix(),
+  new Swoobat(),
   new TagCall(),
-  new UltraNecrozma(),
-  new Wishiwashi(),
-  new BlastoisePiplupGX(),
-  new CharizardBraixenGX(),
   new TogepiCleffaIgglybuffGX(),
-  new Carvanha(),
-  new NaganadelGuzzlordGX(),
+  new UltraNecrozma(),
+  new VileplumeGX(),
+  new Wishiwashi(),
   new Woobat(),
   new Swoobat(),
   new Mimikyu(),

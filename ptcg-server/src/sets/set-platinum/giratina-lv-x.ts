@@ -4,10 +4,10 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import {PutDamageEffect} from '../../game/store/effects/attack-effects';
 import {CheckPokemonAttacksEffect, CheckPokemonPowersEffect, CheckTableStateEffect} from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, KnockOutEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect, KnockOutEffect } from '../../game/store/effects/game-effects';
 import {EndTurnEffect} from '../../game/store/effects/game-phase-effects';
 import {PlayPokemonEffect} from '../../game/store/effects/play-card-effects';
-import {MOVE_CARDS, WAS_ATTACK_USED} from '../../game/store/prefabs/prefabs';
+import {IS_POKEBODY_BLOCKED, MOVE_CARDS, WAS_ATTACK_USED} from '../../game/store/prefabs/prefabs';
 
 export class GiratinaLVX extends PokemonCard {
   public stage: Stage = Stage.LV_X;
@@ -63,16 +63,7 @@ export class GiratinaLVX extends PokemonCard {
       if (!isGiratinaInPlay){ return state; }
 
       if (effect.invisibleTentacles){ return state; }
-      try {
-        const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.POKEBODY,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
-      } catch {
-        return state;
-      }
+      if (IS_POKEBODY_BLOCKED(store, state, opponent, this)){ return state; }
 
       if (player.hand.cards.length === 0){ throw new GameError(GameMessage.BLOCKED_BY_ABILITY); }
       return store.prompt(state, new ChooseCardsPrompt(
@@ -115,7 +106,7 @@ export class GiratinaLVX extends PokemonCard {
         if (card.marker.hasMarker(this.DARKNESS_LOST_MARKER, this)){
           card.marker.removeMarker(this.DARKNESS_LOST_MARKER, this);
         }
-      })
+      });
     }
 
     // making sure it gets put on the active pokemon

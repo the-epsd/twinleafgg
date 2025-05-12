@@ -14,7 +14,7 @@ import { BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 export class AlolanNinetalesGX extends PokemonCard {
 
   public tags = [CardTag.POKEMON_GX];
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Alolan Vulpix';
   public cardType: CardType = CardType.WATER;
   public hp: number = 210;
@@ -102,7 +102,7 @@ export class AlolanNinetalesGX extends PokemonCard {
       // Check if player has used GX attack
       BLOCK_IF_GX_ATTACK_USED(player);
       // set GX attack as used for game
-      player.usedGX = true; 
+      player.usedGX = true;
 
       opponent.active.damage += player.active.damage;
       player.active.damage = 0;

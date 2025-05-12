@@ -6,6 +6,8 @@ export * from './set-team-rocket';
 export * from './set-vending-series';
 export * from './set-wotc-promos';
 
+export * from './set-gym-heros';
+
 //Retro Energy
 export * from './set-base-set-energy';
 
@@ -149,6 +151,7 @@ export * from './set-prismatic-evolution';
 export * from './set-journey-together';
 export * from './set-sv9a';
 export * from './set-sv10';
+export * from './set-sv11';
 export * from './set-m1s';
 
 //TEST

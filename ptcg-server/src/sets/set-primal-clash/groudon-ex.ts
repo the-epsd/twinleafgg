@@ -55,7 +55,7 @@ export class GroudonEx extends PokemonCard {
           ), selected => {
             cards = selected;
 
-            MOVE_CARDS(store, state, opponent.active, opponent.discard, { cards: cards })
+            MOVE_CARDS(store, state, opponent.active, opponent.discard, { cards: cards });
           });
 
         }

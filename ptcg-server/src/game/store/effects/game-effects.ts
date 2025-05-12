@@ -7,6 +7,7 @@ import { Card } from '../card/card';
 import { CardTarget } from '../actions/play-card-action';
 import { TrainerCard } from '../card/trainer-card';
 import { CardList } from '../state/card-list';
+import { EnergyCard } from '../card/energy-card';
 
 export enum GameEffects {
   RETREAT_EFFECT = 'RETREAT_EFFECT',
@@ -20,7 +21,8 @@ export enum GameEffects {
   EVOLVE_EFFECT = 'EVOLVE_EFFECT',
   DRAW_PRIZES_EFFECT = 'DRAW_PRIZES_EFFECT',
   MOVE_CARDS_EFFECT = 'MOVE_CARDS_EFFECT',
-  EFFECT_OF_ABILITY_EFFECT = 'EFFECT_OF_ABILITY_EFFECT'
+  EFFECT_OF_ABILITY_EFFECT = 'EFFECT_OF_ABILITY_EFFECT',
+  SPECIAL_ENERGY_EFFECT = 'SPECIAL_ENERGY_EFFECT'
 }
 
 export class RetreatEffect implements Effect {
@@ -207,6 +209,7 @@ export class EvolveEffect implements Effect {
     this.player = player;
     this.target = target;
     this.pokemonCard = pokemonCard;
+    this.target.triggerAnimation = true;
   }
 }
 
@@ -234,6 +237,7 @@ export class MoveCardsEffect implements Effect {
   public toTop?: boolean;
   public toBottom?: boolean;
   public skipCleanup?: boolean;
+  public sourceCard?: Card;
 
   constructor(
     source: CardList | PokemonCardList,
@@ -243,7 +247,8 @@ export class MoveCardsEffect implements Effect {
       count?: number,
       toTop?: boolean,
       toBottom?: boolean,
-      skipCleanup?: boolean
+      skipCleanup?: boolean,
+      sourceCard?: Card
     } = {}
   ) {
     this.source = source;
@@ -253,6 +258,7 @@ export class MoveCardsEffect implements Effect {
     this.toTop = options.toTop;
     this.toBottom = options.toBottom;
     this.skipCleanup = options.skipCleanup;
+    this.sourceCard = options.sourceCard;
   }
 }
 
@@ -274,6 +280,27 @@ export class EffectOfAbilityEffect implements Effect {
     this.power = power;
     this.card = card;
     this.target = target;
+  }
+}
+
+export class SpecialEnergyEffect implements Effect {
+  readonly type: string = GameEffects.SPECIAL_ENERGY_EFFECT;
+  public preventDefault = false;
+  public player: Player;
+  public card: EnergyCard;
+  public attachedTo: PokemonCardList;
+  public exemptFromOpponentsSpecialEnergyBlockingAbility: boolean;
+
+  constructor(
+    player: Player,
+    card: EnergyCard,
+    attachedTo: PokemonCardList,
+    exemptFromOpponentsSpecialEnergyBlockingAbility: boolean = false
+  ) {
+    this.player = player;
+    this.card = card;
+    this.attachedTo = attachedTo;
+    this.exemptFromOpponentsSpecialEnergyBlockingAbility = exemptFromOpponentsSpecialEnergyBlockingAbility;
   }
 }
 
