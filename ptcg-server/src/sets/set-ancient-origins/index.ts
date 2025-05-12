@@ -4,6 +4,7 @@ import { Baltoy } from './baltoy';
 import { EcoArm } from './eco-arm';
 import { Eevee } from './eevee';
 import { HexManiac } from './hex-maniac';
+import { HoopaEX } from './hoopa-ex';
 import { Unown } from './unown';
 import { Vaporeon } from './vaporeon';
 import { Vileplume } from './vileplume';
@@ -14,6 +15,7 @@ export const setAncientOrigins: Card[] = [
   new EcoArm(),
   new Eevee(),
   new HexManiac(),
+  new HoopaEX(),
   new Unown(),
   new Vaporeon(),
   new Vileplume(),
