@@ -9,21 +9,21 @@ import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effect
 export class MagearnaV extends PokemonCard {
   public tags = [CardTag.POKEMON_V];
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.METAL;
+  public cardType: CardType = M;
   public hp: number = 210;
-  public weakness = [{ type: CardType.FIRE }];
-  public resistance = [{ type: CardType.GRASS, value: -30 }];
-  public retreat = [CardType.COLORLESS];
+  public weakness = [{ type: R }];
+  public resistance = [{ type: G, value: -30 }];
+  public retreat = [C];
 
   public attacks = [{
     name: 'Gear Throw',
-    cost: [CardType.METAL],
+    cost: [M],
     damage: 0,
     text: 'This attack does 30 damage to 1 of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
   },
   {
     name: 'Special Laser',
-    cost: [CardType.METAL, CardType.METAL, CardType.COLORLESS],
+    cost: [M, M, C],
     damage: 100,
     text: 'If this Pokémon has any Special Energy attached, this attack does 120 more damage.'
   }];
