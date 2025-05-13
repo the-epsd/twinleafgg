@@ -7,6 +7,7 @@ import { Centiskorch } from './centiskorch';
 import { Cinccino } from './cinccino';
 import { Cinderace } from './cinderace';
 import { Copperajah } from './copperajah';
+import { CramorantV } from './cramorant-v';
 import { Drizzile } from './drizzile';
 import { EvolutionIncense } from './evolution-incense';
 import { Ferroseed } from './ferroseed';
@@ -41,6 +42,7 @@ export const setSwordAndShield: Card[] = [
   new Cinccino(),
   new Cinderace(),
   new Copperajah(),
+  new CramorantV(),
   new Drizzile(),
   new EvolutionIncense(),
   new Ferroseed(),
