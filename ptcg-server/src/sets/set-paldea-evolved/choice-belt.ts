@@ -48,7 +48,8 @@ export class ChoiceBelt extends TrainerCard {
       const targetCard = effect.target.getPokemonCard();
       if (targetCard && targetCard.tags.includes(CardTag.POKEMON_V) || targetCard && targetCard.tags.includes(CardTag.POKEMON_VMAX) || targetCard && targetCard.tags.includes(CardTag.POKEMON_VSTAR)) {
 
-        if (effect.damage > 0 && effect.target === opponent.active) {
+        const attack = effect.attack;
+        if (attack && attack.damage > 0 && effect.target === opponent.active) {
 
           effect.damage += 30;
         }

@@ -1,6 +1,5 @@
 import { Component, OnInit, HostListener, ElementRef } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserInfo } from 'ptcg-server';
 import { Observable, interval } from 'rxjs';
 import { Router } from '@angular/router';
@@ -26,10 +25,8 @@ export class AppComponent implements OnInit {
   public isLoggedIn = false;
   public loggedUser: UserInfo | undefined;
   private authToken$: Observable<string>;
-  private readonly MAX_RECONNECT_ATTEMPTS = 3;
-  private reconnectAttempts = 0;
-  private reconnectTimeout: any;
-  private disconnectSnackBarRef: any;
+  // private readonly MAX_RECONNECT_ATTEMPTS = 3;
+  // private reconnectAttempts = 0;
 
   constructor(
     private alertService: AlertService,
@@ -40,8 +37,7 @@ export class AppComponent implements OnInit {
     private router: Router,
     private sessionService: SessionService,
     private socketService: SocketService,
-    private translate: TranslateService,
-    private snackBar: MatSnackBar
+    private translate: TranslateService
   ) {
     this.authToken$ = this.sessionService.get(session => session.authToken);
     setTimeout(() => this.onResize());
@@ -66,41 +62,13 @@ export class AppComponent implements OnInit {
       next: async connected => {
         if (!connected && this.isLoggedIn) {
           console.log('[Client Disconnect] Socket connection lost while logged in');
-
-          if (this.reconnectAttempts < this.MAX_RECONNECT_ATTEMPTS) {
-            this.reconnectAttempts++;
-            console.log(`[Client Reconnect] Attempt ${this.reconnectAttempts} of ${this.MAX_RECONNECT_ATTEMPTS}`);
-
-            // Show reconnecting message in snackbar
-            this.showDisconnectSnackBar(this.translate.instant('RECONNECTING_TO_SERVER'));
-
-            // Clear any existing timeout
-            if (this.reconnectTimeout) {
-              clearTimeout(this.reconnectTimeout);
-            }
-
-            // Set timeout to check if reconnection was successful
-            this.reconnectTimeout = setTimeout(async () => {
-              if (!this.socketService.isConnected) {
-                console.log('[Client Reconnect] Reconnection timeout');
-                this.handleDisconnect();
-              }
-            }, 30000); // 30 second timeout
-          } else {
-            this.handleDisconnect();
-          }
+          this.socketService.disable();
+          this.dialog.closeAll();
+          await this.alertService.alert(this.translate.instant('ERROR_DISCONNECTED_FROM_SERVER'));
+          this.sessionService.clear();
+          this.router.navigate(['/login']);
         } else if (connected) {
           console.log('[Client Connect] Socket connection established');
-          this.reconnectAttempts = 0;
-          if (this.reconnectTimeout) {
-            clearTimeout(this.reconnectTimeout);
-            this.reconnectTimeout = null;
-          }
-          // Dismiss the snackbar if it's showing
-          if (this.disconnectSnackBarRef) {
-            this.disconnectSnackBarRef.dismiss();
-            this.disconnectSnackBarRef = null;
-          }
         }
       }
     });
@@ -127,53 +95,7 @@ export class AppComponent implements OnInit {
     });
   }
 
-  private showDisconnectSnackBar(message: string) {
-    // Dismiss any existing snackbar
-    if (this.disconnectSnackBarRef) {
-      this.disconnectSnackBarRef.dismiss();
-    }
-
-    // Show new snackbar
-    this.disconnectSnackBarRef = this.snackBar.open(message, 'Dismiss', {
-      duration: undefined, // Keep open until dismissed or reconnected
-      horizontalPosition: 'center',
-      verticalPosition: 'top',
-      panelClass: ['disconnect-snackbar']
-    });
-  }
-
-  private async handleDisconnect() {
-    // Dismiss the reconnecting snackbar if it exists
-    if (this.disconnectSnackBarRef) {
-      this.disconnectSnackBarRef.dismiss();
-      this.disconnectSnackBarRef = null;
-    }
-
-    // Show final disconnect message
-    this.snackBar.open(
-      this.translate.instant('ERROR_DISCONNECTED_FROM_SERVER'),
-      'OK',
-      {
-        duration: 5000,
-        horizontalPosition: 'center',
-        verticalPosition: 'top',
-        panelClass: ['error-snackbar']
-      }
-    );
-
-    this.socketService.disable();
-    this.dialog.closeAll();
-    this.sessionService.clear();
-    this.router.navigate(['/login']);
-  }
-
   public ngOnDestroy() {
-    if (this.reconnectTimeout) {
-      clearTimeout(this.reconnectTimeout);
-    }
-    if (this.disconnectSnackBarRef) {
-      this.disconnectSnackBarRef.dismiss();
-    }
     document.removeEventListener('visibilitychange', () => { });
   }
 
@@ -190,17 +112,17 @@ export class AppComponent implements OnInit {
     element.style.setProperty('--card-size', cardSize + 'px');
   }
 
-  @HostListener('window:beforeunload', ['$event'])
-  beforeUnloadHandler(event: BeforeUnloadEvent) {
-    // Check if user is in an active game
-    const activeGames = this.sessionService.session.gameStates?.filter(g => !g.deleted && !g.gameOver);
+  // @HostListener('window:beforeunload', ['$event'])
+  // beforeUnloadHandler(event: BeforeUnloadEvent) {
+  //   // Check if user is in an active game
+  //   const activeGames = this.sessionService.session.gameStates?.filter(g => !g.deleted && !g.gameOver);
 
-    if (activeGames && activeGames.length > 0) {
-      // Show a warning
-      const message = this.translate.instant('WARNING_ACTIVE_GAMES');
-      event.preventDefault();
-      event.returnValue = message;
-      return message;
-    }
-  }
+  //   if (activeGames && activeGames.length > 0) {
+  //     // Show a warning
+  //     const message = this.translate.instant('WARNING_ACTIVE_GAMES');
+  //     event.preventDefault();
+  //     event.returnValue = message;
+  //     return message;
+  //   }
+  // }
 }

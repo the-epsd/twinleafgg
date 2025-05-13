@@ -62,7 +62,8 @@ export class Altaria extends PokemonCard {
         if (card === this) {
           if (!checkPokemonType.cardTypes.includes(N))
             return state;
-          if (effect.damage > 0 && (effect.target === opponent.active || effect.target === effect.player.active))
+          const attack = effect.attack;
+          if (attack && attack.damage > 0 && (effect.target === opponent.active || effect.target === effect.player.active))
             effect.damage += 20;
         }
       });
