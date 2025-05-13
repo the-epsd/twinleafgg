@@ -17,6 +17,8 @@ import { Duraludon } from './duraludon';
 import { Electivire } from './electivire';
 import { GalarMine } from './galar-mine';
 import { GalarianMeowth } from './galarian-meowth';
+import { GalarianRunerigus } from './galarian-runerigus';
+import { GalarianYamask } from './galarian-yamask';
 import { Honedge } from './honedge';
 import { HorrorPsychicEnergy } from './horror-psychic-energy';
 import { Metapod } from './metapod';
@@ -47,6 +49,8 @@ export const setRebelClash: Card[] = [
   new Electivire(),
   new GalarMine(),
   new GalarianMeowth(),
+  new GalarianRunerigus(),
+  new GalarianYamask(),
   new Honedge(),
   new HorrorPsychicEnergy(),
   new Metapod(),
