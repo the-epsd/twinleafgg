@@ -9,6 +9,7 @@ import { CelebiVenusaurGX } from './celebi-and-venusaur-gx';
 import { Charizard } from './charizard';
 import { Charmander } from './charmander';
 import { Charmeleon } from './charmeleon';
+import { CobalionGX } from './cobalion-gx';
 import { Dragonite } from './dragonite';
 import { EeveeSnorlaxGX } from './eevee-and-snorlax-gx';
 import { Ferrothorn } from './ferrothorn';
@@ -50,6 +51,7 @@ export const setTeamUp: Card[] = [
   new Charizard(),
   new Charmander(),
   new Charmeleon(),
+  new CobalionGX(),
   new Dragonite(),
   new Ferrothorn(),
   new Galvantula(),
