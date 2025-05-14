@@ -14,6 +14,8 @@ import { LandorusEx } from './landorus-ex';
 import { Munna } from './munna';
 import { Pignite } from './pignite';
 import { Potion } from './potion';
+import { Raticate } from './raticate';
+import { Rattata } from './rattata';
 import { Skyla } from './skyla';
 import { Squirtle } from './squirtle';
 import { Stoutland } from './stoutland';
@@ -36,6 +38,8 @@ export const setBoundariesCrossed: Card[] = [
   new Munna(),
   new Pignite(),
   new Potion(),
+  new Raticate(),
+  new Rattata(),
   new RockyHelmetBCR(),
   new Skyla(),
   new Squirtle(),
