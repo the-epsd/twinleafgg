@@ -9,10 +9,13 @@ import { Diantha } from './diantha';
 import { Flabebe } from './flabebe';
 import { Floette } from './floette';
 import { Florges } from './florges';
-import {FossilExcavationMap} from './fossil-excavation-map';
+import { FossilExcavationMap } from './fossil-excavation-map';
 import { Froakie } from './froakie';
 import { FroakieFrubbles } from './froakie-2';
 import { Frogadier } from './frogadier';
+import { Goodra } from './goodra';
+import { Goomy } from './goomy';
+import { Goomy2 } from './goomy-2';
 import { GreninjaGX } from './greninja-gx';
 import { Inkay } from './inkay';
 import { Klefki } from './klefki';
@@ -23,11 +26,12 @@ import { Malamar } from './malamar';
 import { MetalFryingPan } from './metal-frying-pan';
 import { MysteriousTreasure } from './mysterious-treasure';
 import { Rockruff } from './rockruff';
+import { Sliggoo } from './sliggoo';
 import { UltraNecrozmaGX } from './ultra-necrozma-gx';
 import { UltraSpace } from './ultra-space';
 import { UnitEnergyFDY } from './unit-energy-fdy';
 import { VolcanionPrismStar } from './volcanion-prism-star';
-import {XerneasGX} from './xerneas-gx';
+import { XerneasGX } from './xerneas-gx';
 import { YveltalGX } from './yveltal-gx';
 
 export const setForbiddenLight: Card[] = [
@@ -44,6 +48,9 @@ export const setForbiddenLight: Card[] = [
   new FroakieFrubbles(),
   new Frogadier(),
   new FossilExcavationMap(),
+  new Goodra(),
+  new Goomy(),
+  new Goomy2(),
   new GreninjaGX(),
   new Inkay(),
   new Klefki(),
@@ -53,6 +60,7 @@ export const setForbiddenLight: Card[] = [
   new MetalFryingPan(),
   new MysteriousTreasure(),
   new Rockruff(),
+  new Sliggoo(),
   new UltraNecrozmaGX(),
   new UltraSpace(),
   new UnitEnergyFDY(),
