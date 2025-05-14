@@ -9,6 +9,7 @@ import { Espeonex } from './espeon-ex';
 import { Flareonex } from './flareon-ex';
 import { AmarysFA, AmarysSAR, AtticusFA, AtticusFA2, BloodmoonUrsalunaexSAR, CeruledgeexSAR, CornerstoneMaskOgerponexSAR, CrispinSAR, DragapultexSAR, DraytonSAR, EeveeexSAR, EriFA, EspeonexSAR, FlareonexSAR, GholdengoexSAR, GiacomoFA, GlaceonexSAR, HearthflameMaskOgerponexSAR, IronCrownexSAR, IronHandsexSAR, IronLeavesexUR, IronValiantexSAR, JaninesSecretArtSAR, JolteonexSAR, KieranSAR, LaceySAR, LeafeonexSAR, MelaFA, PalafinexSAR, PecharuntexSAR, PikachuexUR, RagingBoltexSAR, RoaringMoonexSAR, SandyShocksexSAR, SylveonexSAR, TealMaskOgerponexSAR, TealMaskOgerponexUR, TerapagosexSAR, TerapagosexUR, UmbreonexSAR, VaporeonexSAR, WalkingWakeexUR, WellspringMaskOgerponexSAR } from './full-art';
 import { Glaceonex } from './glaceon-ex';
+import {Hoothoot} from './hoothoot';
 import { Jolteonex } from './jolteon-ex';
 import { Larvitar } from './larvitar';
 import { Leafeonex } from './leafeon-ex';
@@ -47,6 +48,7 @@ export const setPrismaticEvolution: Card[] = [
   new Pupitar(),
   new Tyranitarex(),
   new Bronzor(),
+  new Hoothoot(),
 
   // Reprints
   new ApplinPRE(),
