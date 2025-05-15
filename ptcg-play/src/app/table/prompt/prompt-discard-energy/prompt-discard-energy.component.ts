@@ -793,6 +793,10 @@ export class PromptDiscardEnergyComponent implements OnInit, OnDestroy {
       'Fairy Energy': 'assets/energy/fairy.png',
       'Electrode': 'assets/energy/electrode.png',
       'Holon\'s Castform': 'assets/energy/holon-castform.png',
+      'Holon\'s Magnemite': 'assets/energy/holons-magnemite.png',
+      'Holon\'s Magneton': 'assets/energy/holons-magneton.png',
+      'Holon\'s Voltorb': 'assets/energy/holons-voltorb.png',
+      'Holon\'s Electrode': 'assets/energy/holons-electrode.png',
     };
 
     return basicEnergyUrls[card.name] || '';

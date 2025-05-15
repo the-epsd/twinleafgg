@@ -43,7 +43,8 @@ The attacks of the [C] Pokémon this card is attached to do 20 more damage to yo
         return state;
       }
 
-      if (effect.damage > 0 && effect.target === effect.opponent.active) {
+      const attack = effect.attack;
+      if (attack && attack.damage > 0 && effect.target === effect.opponent.active) {
         effect.damage += 20;
       }
     }

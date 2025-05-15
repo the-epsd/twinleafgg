@@ -44,7 +44,8 @@ export class Melony extends TrainerCard {
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card) => {
         if (card.tags.includes(CardTag.POKEMON_V)
           || card.tags.includes(CardTag.POKEMON_VSTAR)
-          || card.tags.includes(CardTag.POKEMON_VMAX)) {
+          || card.tags.includes(CardTag.POKEMON_VMAX)
+          || card.tags.includes(CardTag.POKEMON_VUNION)) {
           hasValidTarget = true;
         }
       });
@@ -58,7 +59,8 @@ export class Melony extends TrainerCard {
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
         if (!card.tags.includes(CardTag.POKEMON_V)
           && !card.tags.includes(CardTag.POKEMON_VSTAR)
-          && !card.tags.includes(CardTag.POKEMON_VMAX)) {
+          && !card.tags.includes(CardTag.POKEMON_VMAX)
+          && !card.tags.includes(CardTag.POKEMON_VUNION)) {
           blockedTargets.push(target);
         }
       });

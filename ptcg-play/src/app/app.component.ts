@@ -112,17 +112,17 @@ export class AppComponent implements OnInit {
     element.style.setProperty('--card-size', cardSize + 'px');
   }
 
-  @HostListener('window:beforeunload', ['$event'])
-  beforeUnloadHandler(event: BeforeUnloadEvent) {
-    // Check if user is in an active game
-    const activeGames = this.sessionService.session.gameStates?.filter(g => !g.deleted && !g.gameOver);
+  // @HostListener('window:beforeunload', ['$event'])
+  // beforeUnloadHandler(event: BeforeUnloadEvent) {
+  //   // Check if user is in an active game
+  //   const activeGames = this.sessionService.session.gameStates?.filter(g => !g.deleted && !g.gameOver);
 
-    if (activeGames && activeGames.length > 0) {
-      // Show a warning
-      const message = this.translate.instant('WARNING_ACTIVE_GAMES');
-      event.preventDefault();
-      event.returnValue = message;
-      return message;
-    }
-  }
+  //   if (activeGames && activeGames.length > 0) {
+  //     // Show a warning
+  //     const message = this.translate.instant('WARNING_ACTIVE_GAMES');
+  //     event.preventDefault();
+  //     event.returnValue = message;
+  //     return message;
+  //   }
+  // }
 }

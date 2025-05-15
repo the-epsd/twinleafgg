@@ -12,6 +12,7 @@ import {MAlakazamEx} from './mega-alakazam-ex';
 import {MAudinoEx} from './mega-audino-ex';
 import { Mew } from './mew';
 import { N } from './n';
+import {RegirockEx} from './regirock-ex';
 import { Riolu } from './riolu';
 import { TeamRocketsHandiwork } from './team-rockets-handiwork';
 import { Whismur } from './whismur';
@@ -33,4 +34,5 @@ export const setFatesCollide: Card[] = [
   new AlakazamEx(),
   new MAlakazamEx(),
   new AlakazamSpiritLink(),
+  new RegirockEx(),
 ];

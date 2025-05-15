@@ -34,7 +34,8 @@ export class PracticeStudio extends TrainerCard {
       const pokemonCard = effect.source.getPokemonCard();
       const opponent = StateUtils.getOpponent(state, effect.player);
 
-      if (effect.damage > 0 && effect.target === opponent.active && pokemonCard && pokemonCard.stage === Stage.STAGE_1) {
+      const attack = effect.attack;
+      if (attack && attack.damage > 0 && effect.target === opponent.active && pokemonCard && pokemonCard.stage === Stage.STAGE_1) {
         effect.damage += 10;
       }
     }

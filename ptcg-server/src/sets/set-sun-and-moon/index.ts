@@ -21,6 +21,7 @@ import { RotomDex } from './rotom-dex';
 import { Rowlet } from './rowlet';
 import { TeamSkullGrunt } from './team-skull-grunt';
 import { TimerBall } from './timer-ball';
+import {TaurosGX} from './tauros-gx';
 
 export const setSunAndMoon: Card[] = [
   new AlolanGrimer(),
@@ -44,6 +45,7 @@ export const setSunAndMoon: Card[] = [
   new Repel(),
   new TeamSkullGrunt(),
   new TimerBall(),
+  new TaurosGX(),
 
   // Reprints
   new NestBallSUM(),
