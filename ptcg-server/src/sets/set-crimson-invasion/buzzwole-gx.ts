@@ -6,7 +6,7 @@ import { BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class BuzzwoleGX extends PokemonCard {
 
-  public tags = [CardTag.POKEMON_GX];
+  public tags = [CardTag.POKEMON_GX, CardTag.ULTRA_BEAST];
 
   public stage: Stage = Stage.BASIC;
 
