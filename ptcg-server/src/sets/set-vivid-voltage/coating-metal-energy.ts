@@ -3,6 +3,7 @@ import { EnergyCard } from '../../game/store/card/energy-card';
 import { AbstractAttackEffect, DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { CheckPokemonTypeEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
+import { IS_SPECIAL_ENERGY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
@@ -24,9 +25,9 @@ export class CoatingMetalEnergy extends EnergyCard {
   public setNumber: string = '163';
 
   public text =
-    'As long as this card is attached to a Pokémon, it provides [M] Energy.' +
-    '' +
-    'The [M] Pokémon this card is attached to has no Weakness.';
+    `As long as this card is attached to a Pokémon, it provides [M] Energy.
+    
+The [M] Pokémon this card is attached to has no Weakness.`;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -37,6 +38,10 @@ export class CoatingMetalEnergy extends EnergyCard {
 
     // Prevent effects of attacks
     if (effect instanceof AbstractAttackEffect && effect.target && effect.target.cards.includes(this)) {
+      if (IS_SPECIAL_ENERGY_BLOCKED(store, state, effect.opponent, this, effect.target)) {
+        return state;
+      }
+
       const checkPokemonType = new CheckPokemonTypeEffect(effect.target);
       store.reduceEffect(state, checkPokemonType);
 

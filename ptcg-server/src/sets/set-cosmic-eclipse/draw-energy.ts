@@ -2,6 +2,7 @@ import { CardType, EnergyType } from '../../game/store/card/card-types';
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { Effect } from '../../game/store/effects/effect';
 import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
+import { DRAW_CARDS, IS_SPECIAL_ENERGY_BLOCKED } from '../../game/store/prefabs/prefabs';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
@@ -23,7 +24,7 @@ export class DrawEnergy extends EnergyCard {
 
   public text =
     'This card provides [C] Energy.' +
-    '' +
+    '\n\n' +
     'When you attach this card from your hand to a Pokémon, draw a card.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -31,13 +32,11 @@ export class DrawEnergy extends EnergyCard {
     if (effect instanceof AttachEnergyEffect && effect.energyCard === this) {
       const player = effect.player;
 
-      if (player.deck.cards.length === 0) {
+      if (IS_SPECIAL_ENERGY_BLOCKED(store, state, player, this, effect.target)) {
         return state;
       }
 
-
-
-      player.deck.moveTo(player.hand, 1);
+      DRAW_CARDS(player, 1);
     }
 
     return state;

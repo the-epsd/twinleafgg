@@ -21,14 +21,15 @@ export class TwinEnergy extends EnergyCard {
 
   public setNumber: string = '174';
 
-  public text = 'As long as this card is attached to a Pokémon that isn\'t a Pokémon V or a Pokémon-GX, it provides [C][C] Energy.' +
-    '' +
-    'If this card is attached to a Pokémon V or a Pokémon-GX, it provides [C] Energy instead.';
+  public text =
+    `As long as this card is attached to a Pokémon that isn't a Pokémon V or a Pokémon-GX, it provides [C][C] Energy.
+    
+If this card is attached to a Pokémon V or a Pokémon-GX, it provides [C] Energy instead.`;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
-      
+
       if (effect.source.getPokemonCard()!.tags.includes(CardTag.POKEMON_GX) ||
         effect.source.getPokemonCard()!.tags.includes(CardTag.POKEMON_V) ||
         effect.source.getPokemonCard()!.tags.includes(CardTag.POKEMON_VSTAR) ||
@@ -36,8 +37,9 @@ export class TwinEnergy extends EnergyCard {
         return state;
       }
 
-      this.provides = [CardType.COLORLESS, CardType.COLORLESS];
+      effect.energyMap.push({ card: this, provides: [CardType.COLORLESS, CardType.COLORLESS] });
     }
+
     return state;
   }
 }

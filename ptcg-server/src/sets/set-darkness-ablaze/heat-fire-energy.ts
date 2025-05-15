@@ -2,6 +2,7 @@ import { CardType, EnergyType } from '../../game/store/card/card-types';
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { CheckHpEffect, CheckPokemonTypeEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
+import { IS_SPECIAL_ENERGY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
@@ -25,9 +26,9 @@ export class HeatFireEnergy extends EnergyCard {
   public fullName = 'Heat Fire Energy DAA';
 
   public text =
-    'As long as this card is attached to a Pokémon, it provides [R] Energy.' +
-    '' +
-    'The [R] Pokémon this card is attached to gets +20 HP.';
+    `As long as this card is attached to a Pokémon, it provides [R] Energy.
+    
+The [R] Pokémon this card is attached to gets +20 HP.`;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -38,6 +39,10 @@ export class HeatFireEnergy extends EnergyCard {
 
     // Prevent effects of attacks
     if (effect instanceof CheckHpEffect && effect.target?.cards?.includes(this)) {
+      if (IS_SPECIAL_ENERGY_BLOCKED(store, state, effect.player, this, effect.target)) {
+        return state;
+      }
+
       const checkPokemonType = new CheckPokemonTypeEffect(effect.target);
       store.reduceEffect(state, checkPokemonType);
 

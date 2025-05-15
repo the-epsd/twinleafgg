@@ -4,6 +4,7 @@ import { EnergyCard } from '../../game/store/card/energy-card';
 import { AfterDamageEffect } from '../../game/store/effects/attack-effects';
 import { CheckPokemonTypeEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
+import { IS_SPECIAL_ENERGY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 import { GamePhase, State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
@@ -20,9 +21,9 @@ export class HorrorPsychicEnergy extends EnergyCard {
   public setNumber: string = '172';
 
   public text =
-    'As long as this card is attached to a Pokémon, it provides [P] Energy.' +
-    '' +
-    'If the [P] Pokémon this card is attached to is in the Active Spot and is damaged by an opponent\'s attack (even if it is Knocked Out), put 2 damage counters on the Attacking Pokémon.';
+    `As long as this card is attached to a Pokémon, it provides [P] Energy.
+    
+If the [P] Pokémon this card is attached to is in the Active Spot and is damaged by an opponent's attack (even if it is Knocked Out), put 2 damage counters on the Attacking Pokémon.`;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -34,6 +35,10 @@ export class HorrorPsychicEnergy extends EnergyCard {
     if (effect instanceof AfterDamageEffect && effect.target.cards?.includes(this)) {
       const player = effect.player;
       const targetPlayer = StateUtils.findOwner(state, effect.target);
+
+      if (IS_SPECIAL_ENERGY_BLOCKED(store, state, player, this, effect.target)) {
+        return state;
+      }
 
       const checkPokemonType = new CheckPokemonTypeEffect(targetPlayer.active);
       store.reduceEffect(state, checkPokemonType);

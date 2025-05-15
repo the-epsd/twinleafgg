@@ -24,9 +24,9 @@ export class RecycleEnergy extends EnergyCard {
   public fullName = 'Recycle Energy UNM';
 
   public text =
-    `This card provides C Energy.' +
+    `This card provides [C] Energy.
     
-    'If this card is discarded from play, put it into your hand instead of the discard pile.`;
+If this card is discarded from play, put it into your hand instead of the discard pile.`;
 
   public RECYCLE_ENERGY_MARKER = 'RECYCLE_ENERGY_MARKER';
 

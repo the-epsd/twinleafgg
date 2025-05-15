@@ -23,7 +23,7 @@ export class UnitEnergyGRW extends EnergyCard {
   public fullName = 'Unit Energy GRW UPR';
 
   public text = 'This card provides [C] Energy.' +
-    '' +
+    '\n\n' +
     'While this card is attached to a Pokémon, it provides [G], [R], and [W] Energy but provides only 1 Energy at a time.';
 
   public blendedEnergies = [CardType.GRASS, CardType.FIRE, CardType.WATER];
