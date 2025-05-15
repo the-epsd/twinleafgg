@@ -37,7 +37,7 @@ When you attach this card from your hand to a Pokémon, search your deck for a B
         return state;
       }
 
-      SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH(store, state, player, { stage: Stage.BASIC }, { min: 0, max: 1 });
+      return SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH(store, state, player, { stage: Stage.BASIC }, { min: 0, max: 1 });
     }
     return state;
   }
