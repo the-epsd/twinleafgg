@@ -1,10 +1,35 @@
-import { ChoosePokemonPrompt, GameMessage, PlayerType, SlotType } from '../../game';
+import { ChoosePokemonPrompt, GameMessage, PlayerType, PokemonCardList, SlotType } from '../../game';
 import { CardType, EnergyType } from '../../game/store/card/card-types';
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { Effect } from '../../game/store/effects/effect';
 import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
+
+function* playCard(next: Function, store: StoreLike, state: State, effect: AttachEnergyEffect): IterableIterator<State> {
+  const player = effect.player;
+
+  if (effect.player.active !== effect.target) {
+    return state;
+  }
+
+  let targets: PokemonCardList[] = [];
+  yield store.prompt(state, new ChoosePokemonPrompt(
+    player.id,
+    GameMessage.CHOOSE_POKEMON_TO_SWITCH,
+    PlayerType.BOTTOM_PLAYER,
+    [SlotType.BENCH],
+    { allowCancel: false }
+  ), results => {
+    targets = results || [];
+    next();
+  });
+
+  if (targets.length === 0) {
+    return state;
+  }
+  player.switchPokemon(targets[0]);
+}
 
 export class WarpEnergy extends EnergyCard {
 
@@ -22,35 +47,14 @@ export class WarpEnergy extends EnergyCard {
 
   public fullName = 'Warp Energy SLG';
 
-  public text =
-    'This card provides [C] Energy.' +
-    '' +
-    'When you attach this card from your hand to your Active Pokémon, switch that Pokémon with 1 of your Benched Pokémon.4244';
+  public text = `This card provides [C] Energy.
+
+When you attach this card from your hand to your Active Pokémon, switch that Pokémon with 1 of your Benched Pokémon.`;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttachEnergyEffect && effect.target?.cards?.includes(this)) {
-      const player = effect.player;
-
-      if (player.deck.cards.length === 0) {
-        return state;
-      }
-
-
-
-      if (effect.player.active !== effect.target) {
-        return state;
-      }
-
-      state = store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_POKEMON_TO_SWITCH,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.BENCH],
-        { allowCancel: false }
-      ), result => {
-        const cardList = result[0];
-        player.switchPokemon(cardList);
-      });
+      const generator = playCard(() => generator.next(), store, state, effect);
+      return generator.next().value;
     }
 
     return state;
