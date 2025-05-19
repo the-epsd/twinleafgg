@@ -1,8 +1,7 @@
 import { GameError } from '../../game-error';
 import { GameLog, GameMessage } from '../../game-message';
-import { BoardEffect, CardTag, CardType, SpecialCondition, Stage, SuperType, TrainerType } from '../card/card-types';
+import { BoardEffect, CardTag, CardType, SpecialCondition, Stage, SuperType } from '../card/card-types';
 import { Resistance, Weakness } from '../card/pokemon-types';
-import { TrainerCard } from '../card/trainer-card';
 import { ApplyWeaknessEffect, DealDamageEffect } from '../effects/attack-effects';
 import {
   AddSpecialConditionsPowerEffect,
@@ -24,13 +23,10 @@ import {
   UseTrainerPowerEffect
 } from '../effects/game-effects';
 import { AfterAttackEffect, EndTurnEffect } from '../effects/game-phase-effects';
-import { ChooseAttackPrompt } from '../prompts/choose-attack-prompt';
 import { CoinFlipPrompt } from '../prompts/coin-flip-prompt';
-import { ConfirmPrompt } from '../prompts/confirm-prompt';
 import { StateUtils } from '../state-utils';
 import { GamePhase, State } from '../state/state';
 import { StoreLike } from '../store-like';
-import { checkState } from './check-effect';
 import { MoveCardsEffect } from '../effects/game-effects';
 import { PokemonCardList } from '../state/pokemon-card-list';
 import { MOVE_CARDS } from '../prefabs/prefabs';
@@ -72,6 +68,7 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
 
+  console.log('[useAttack] Starting attack sequence');
 
   //Skip attack on first turn
   if (state.turn === 1 && effect.attack.canUseOnFirstTurn !== true && state.rules.attackFirstTurn == false) {
@@ -82,14 +79,6 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
   if (sp.includes(SpecialCondition.PARALYZED) || sp.includes(SpecialCondition.ASLEEP)) {
     throw new GameError(GameMessage.BLOCKED_BY_SPECIAL_CONDITION);
   }
-
-  // if (player.alteredCreationDamage == true) {
-  //   player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-  //     if (effect instanceof DealDamageEffect && effect.source === cardList) {
-  //       effect.damage += 20;
-  //     }
-  //   });
-  // }
 
   const attack = effect.attack;
   let attackingPokemon = player.active;
@@ -132,6 +121,7 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
     }
   }
 
+  console.log('[useAttack] Executing first attack:', attack.name);
   store.log(state, GameLog.LOG_PLAYER_USES_ATTACK, { name: player.name, attack: attack.name });
   state.phase = GamePhase.ATTACK;
 
@@ -143,87 +133,18 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
   }
 
   if (attackEffect.damage > 0) {
+    console.log('[useAttack] Applying damage:', attackEffect.damage);
     const dealDamage = new DealDamageEffect(attackEffect, attackEffect.damage);
     state = store.reduceEffect(state, dealDamage);
   }
 
   const afterAttackEffect = new AfterAttackEffect(effect.player);
-  store.reduceEffect(state, afterAttackEffect);
+  state = store.reduceEffect(state, afterAttackEffect);
 
   if (store.hasPrompts()) {
     yield store.waitPrompt(state, () => next());
   }
-
-  // Check for knockouts and process them
-  state = checkState(store, state);
-
-  // Check if the opponent's active Pokémon is knocked out
-  if (opponent.active.cards.length === 0) {
-    // Wait for the opponent to select a new active Pokémon
-    yield store.waitPrompt(state, () => next());
-  }
-
-  const attackThisTurn = player.active.attacksThisTurn;
-  const playerActive = player.active.getPokemonCard();
-
-  // Now, we can check if the Pokémon can attack again
-  const canAttackAgain = playerActive && playerActive.canAttackTwice && attackThisTurn && attackThisTurn < 2;
-  const hasBarrageAbility = player.active.getPokemonCard()?.powers.some(power => power.barrage === true);
-
-  if (canAttackAgain || hasBarrageAbility) {
-    // Prompt the player if they want to attack again
-    yield store.prompt(state, new ConfirmPrompt(
-      player.id,
-      GameMessage.WANT_TO_ATTACK_AGAIN
-    ), wantToAttackAgain => {
-      if (wantToAttackAgain) {
-        if (hasBarrageAbility) {
-
-          const attackableCards = player.active.cards.filter(card =>
-            card.superType === SuperType.POKEMON ||
-            (card.superType === SuperType.TRAINER && card instanceof TrainerCard && card.trainerType === TrainerType.TOOL && card.attacks.length > 0)
-          );
-
-          // Use ChooseAttackPrompt for Barrage ability
-          store.prompt(state, new ChooseAttackPrompt(
-            player.id,
-            GameMessage.CHOOSE_ATTACK_TO_COPY,
-            attackableCards,
-            { allowCancel: false }
-          ), selectedAttack => {
-            if (selectedAttack) {
-              const secondAttackEffect = new AttackEffect(player, opponent, selectedAttack);
-              state = useAttack(() => next(), store, state, secondAttackEffect).next().value;
-
-              if (store.hasPrompts()) {
-                state = store.waitPrompt(state, () => next());
-              }
-
-              if (secondAttackEffect.damage > 0) {
-                const dealDamage = new DealDamageEffect(secondAttackEffect, secondAttackEffect.damage);
-                state = store.reduceEffect(state, dealDamage);
-              }
-
-              state = store.reduceEffect(state, new EndTurnEffect(player));
-              return state;
-            }
-            next();
-          });
-        } else {
-          const dealDamage = new DealDamageEffect(attackEffect, attackEffect.damage);
-          state = store.reduceEffect(state, dealDamage);
-          state = store.reduceEffect(state, new EndTurnEffect(player));
-        }
-      } else {
-        state = store.reduceEffect(state, new EndTurnEffect(player));
-      }
-      next();
-    });
-  }
-
-  if (!canAttackAgain && !hasBarrageAbility) {
-    return store.reduceEffect(state, new EndTurnEffect(player));
-  }
+  return store.reduceEffect(state, new EndTurnEffect(player));
 }
 
 export function gameReducer(store: StoreLike, state: State, effect: Effect): State {

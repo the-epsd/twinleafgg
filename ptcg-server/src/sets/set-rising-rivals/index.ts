@@ -5,6 +5,7 @@ import { Jirachi } from './jirachi';
 import { LuxrayGL } from './luxray-gl';
 import { LuxrayGLLVX } from './luxray-gl-lv-x';
 import { PokemonContestHall } from './pokemon-contest-hall';
+import { RoseradeGL } from './roserade-gl';
 
 export const setRisingRivals: Card[] = [
   new Jirachi(),
@@ -13,4 +14,5 @@ export const setRisingRivals: Card[] = [
   new FloatzelGL(),
   new FloatzelGLLVX(),
   new PokemonContestHall(),
+  new RoseradeGL(),
 ];

@@ -11,6 +11,8 @@ export class Tinkatuff extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_1;
 
+  public evolvesFrom: string = 'Tinkatink';
+
   public regulationMark = 'G';
 
   public cardType: CardType = CardType.PSYCHIC;

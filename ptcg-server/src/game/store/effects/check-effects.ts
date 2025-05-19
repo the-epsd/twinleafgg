@@ -167,7 +167,7 @@ export class CheckProvidedEnergyEffect implements Effect {
         if (value.card.energyType === EnergyType.SPECIAL) {
           value.provides = [CardType.COLORLESS];
         }
-      })
+      });
     }
     return this._energyMap;
   }

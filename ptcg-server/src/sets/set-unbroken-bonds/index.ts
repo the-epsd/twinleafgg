@@ -2,6 +2,7 @@ import { Card } from '../../game/store/card/card';
 import { Arcanine } from './arcanine';
 import { Aron } from './aron';
 import { Blacephalon } from './blacephalon';
+import { Charjabug } from './charjabug';
 import { Cleffa } from './cleffa';
 import { DedenneGX } from './dedenne-gx';
 import { DuskStone } from './dusk-stone';
@@ -29,6 +30,7 @@ import { Mewtwo } from './mewtwo';
 import { Mismagius } from './mismagius';
 import { Murkrow } from './murkrow';
 import { Oddish } from './oddish';
+import { Persian } from './persian';
 import { PheromosaBuzzwoleGX } from './pheromosa-buzzwole-gx';
 import { Pokegear30 } from './pokegear-30';
 import { Poliwag } from './poliwag';
@@ -44,14 +46,15 @@ import { Tyrogue } from './tyrogue';
 import { Volcanion } from './volcanion';
 import { Zeraora } from './zeraora';
 import { StealthyHood } from './stealthy-hood';
-import {MukAlolanMukGX} from './muk-and-alolan-muk-gx';
-import {MarshadowMachampGX} from './marshadow-and-machamp-gx';
-import {LucarioMelmetalGX} from './lucario-and-melmetal-gx';
+import { MukAlolanMukGX } from './muk-and-alolan-muk-gx';
+import { MarshadowMachampGX } from './marshadow-and-machamp-gx';
+import { LucarioMelmetalGX } from './lucario-and-melmetal-gx';
 
 export const setUnbrokenBonds: Card[] = [
   new Arcanine(),
   new Aron(),
   new Blacephalon(),
+  new Charjabug(),
   new Cleffa(),
   new DedenneGX(),
   new DuskStone(),
@@ -75,6 +78,7 @@ export const setUnbrokenBonds: Card[] = [
   new Mewtwo(),
   new Mismagius(),
   new Oddish(),
+  new Persian(),
   new Pokegear30(),
   new Poliwag(),
   new Porygon(),

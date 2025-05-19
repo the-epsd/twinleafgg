@@ -7,6 +7,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
+import { IS_SPECIAL_ENERGY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 export class BurningEnergy extends EnergyCard {
   public provides: CardType[] = [CardType.COLORLESS];
@@ -23,8 +24,8 @@ If this card is discarded by an attack of the [R] Pokémon this card is attached
 
 (If this card is attached to anything other than a [R] Pokémon, discard this card.)`;
 
-  public readonly BURNING_ENERGY_EXISTANCE_MARKER = 'BURNING_ENERGY_EXISTANCE_MARKER';
-  public readonly BURNING_ENERGY_DISCARDED_MARKER = 'BURNING_ENERGY_DISCARDED_MARKER';
+  public readonly BURNING_EXISTANCE_MARKER = 'BURNING_EXISTANCE_MARKER';
+  public readonly BURNING_DISCARDED_MARKER = 'BURNING_DISCARDED_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttachEnergyEffect && effect.energyCard === this) {
@@ -46,37 +47,38 @@ If this card is discarded by an attack of the [R] Pokémon this card is attached
       return state;
     }
 
-    // checking if this is on the player's active when attacking
-    if (effect instanceof AttackEffect && effect.source.cards.includes(this)){
-      effect.player.marker.addMarker(this.BURNING_ENERGY_EXISTANCE_MARKER, this);
+    if (effect instanceof AttackEffect && effect.source.cards.includes(this) && effect.player.active === effect.source) {
+      if (IS_SPECIAL_ENERGY_BLOCKED(store, state, effect.player, this, effect.source)) {
+        return state;
+      }
+      effect.player.marker.addMarker(this.BURNING_EXISTANCE_MARKER, this);
     }
 
     // checking if this card is discarded while attacking
-    if (effect instanceof DiscardCardsEffect && effect.player.marker.hasMarker(this.BURNING_ENERGY_EXISTANCE_MARKER, this)){
-      effect.player.marker.addMarker(this.BURNING_ENERGY_DISCARDED_MARKER, this);
+    if (effect instanceof DiscardCardsEffect && effect.player.marker.hasMarker(this.BURNING_EXISTANCE_MARKER, this)) {
+      if (IS_SPECIAL_ENERGY_BLOCKED(store, state, effect.player, this, effect.source)) {
+        return state;
+      }
+      effect.player.marker.addMarker(this.BURNING_DISCARDED_MARKER, this);
     }
 
     // removing the markers and handling the reattaching of it
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.BURNING_ENERGY_EXISTANCE_MARKER, this)){
-      effect.player.marker.removeMarker(this.BURNING_ENERGY_EXISTANCE_MARKER, this);
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.BURNING_EXISTANCE_MARKER, this)) {
+      effect.player.marker.removeMarker(this.BURNING_EXISTANCE_MARKER, this);
 
       // if this card was in the discard and triggered that earlier part, move it onto the acitve
-      if (effect.player.marker.hasMarker(this.BURNING_ENERGY_DISCARDED_MARKER, this)){
-        effect.player.marker.removeMarker(this.BURNING_ENERGY_DISCARDED_MARKER, this);
+      if (effect.player.marker.hasMarker(this.BURNING_DISCARDED_MARKER, this)) {
+        effect.player.marker.removeMarker(this.BURNING_DISCARDED_MARKER, this);
 
-        if (effect.player.active !== undefined){
+        if (effect.player.active !== undefined) {
           effect.player.discard.cards.forEach(card => {
-            if (card === this){
+            if (card === this) {
               effect.player.discard.moveCardTo(card, effect.player.active);
             }
           });
         }
-
       }
     }
-
     return state;
-
   }
-
 }

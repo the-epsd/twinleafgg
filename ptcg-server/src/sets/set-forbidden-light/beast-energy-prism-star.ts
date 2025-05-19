@@ -6,19 +6,20 @@ import { Effect } from '../../game/store/effects/effect';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { StateUtils } from '../../game/store/state-utils';
+import { IS_SPECIAL_ENERGY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 export class BeastEnergy extends EnergyCard {
 
   public tags = [CardTag.PRISM_STAR];
 
-  public provides: CardType[] = [];
+  public provides: CardType[] = [CardType.COLORLESS];
 
   public energyType = EnergyType.SPECIAL;
 
   public set: string = 'FLI';
 
   public setNumber: string = '117';
-  
+
   public cardImage = 'assets/cardback.png';
 
   public name = 'Beast Energy';
@@ -26,7 +27,9 @@ export class BeastEnergy extends EnergyCard {
   public fullName = 'Beast Energy FLI';
 
   public text =
-    'This card provides [C] Energy. \n While this card is attached to an Ultra Beast, it provides every type of Energy but provides only 1 Energy at a time. The attacks of the Ultra Beast this card is attached to do 30 more damage to your opponent\'s Active Pokémon (before applying Weakness and Resistance).';
+    'This card provides [C] Energy.' +
+    '\n\n' +
+    'While this card is attached to an Ultra Beast, it provides every type of Energy but provides only 1 Energy at a time. The attacks of the Ultra Beast this card is attached to do 30 more damage to your opponent\'s Active Pokémon (before applying Weakness and Resistance).';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -35,11 +38,6 @@ export class BeastEnergy extends EnergyCard {
       if (effect.source.getPokemonCard()?.tags.includes(CardTag.ULTRA_BEAST)) {
         effect.energyMap.push({ card: this, provides: [CardType.ANY] });
       }
-      // slapping the default (this provides colorless) when not on an ultra beast
-      if (!effect.source.getPokemonCard()?.tags.includes(CardTag.ULTRA_BEAST)) {
-        effect.energyMap.push({ card: this, provides: [CardType.COLORLESS] });
-      }
-      return state;
     }
 
     // do the additional damage
@@ -52,6 +50,10 @@ export class BeastEnergy extends EnergyCard {
       }
 
       if (!effect.source.getPokemonCard()?.tags.includes(CardTag.ULTRA_BEAST)) {
+        return state;
+      }
+
+      if (IS_SPECIAL_ENERGY_BLOCKED(store, state, player, this, effect.source)) {
         return state;
       }
 

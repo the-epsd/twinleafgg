@@ -49,7 +49,8 @@ export class ExpertBelt extends TrainerCard {
         return state;
       }
 
-      if (effect.damage > 0 && effect.target === opponent.active) {
+      const attack = effect.attack;
+      if (attack && attack.damage > 0 && effect.target === opponent.active) {
         effect.damage += 20;
       }
     }

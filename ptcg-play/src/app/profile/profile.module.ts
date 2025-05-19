@@ -9,7 +9,6 @@ import { HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
-import { GamesModule } from '../games/games.module';
 import { SharedModule } from '../shared/shared.module';
 import { ProfileComponent } from './profile.component';
 import { EditAvatarsPopupComponent } from './edit-avatars-popup/edit-avatars-popup.component';
@@ -17,6 +16,7 @@ import { ChangeEmailPopupComponent } from './change-email-popup/change-email-pop
 import { ChangePasswordPopupComponent } from './change-password-popup/change-password-popup.component';
 import { ChangeCardImagesPopupComponent } from './change-card-images-popup/change-card-images-popup.component';
 import { SelectAvatarComponent } from './select-avatar/select-avatar.component';
+import { GamesModule } from '../games/games.module';
 
 @NgModule({
   imports: [

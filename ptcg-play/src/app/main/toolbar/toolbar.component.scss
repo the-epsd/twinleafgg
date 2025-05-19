@@ -28,12 +28,15 @@ mat-toolbar {
   }
 }
 
+.notification-badge {
+  margin-left: 8px;
+}
+
 ::ng-deep .mat-badge-content {
-  transform: scale(.8) !important; // Increase this value to make the badge larger
+  transform: scale(.8) !important;
   transform-origin: center;
   margin-top: 10px;
   margin-right: 6px;
-  background-color: red;
   font-size: 12px;
   font-weight: bold;
 }
@@ -55,4 +58,45 @@ ptcg-user-bar {
   left: unset;
   width: map-get($ptcg-size, sidebar);
   transform: scale(.8) !important; // Increase this value to make the badge larger
+}
+
+.games-menu {
+  .game-menu-item {
+    a[mat-menu-item] {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-right: 8px;
+
+      ptcg-sidenav-item {
+        flex: 1;
+      }
+
+      .close-button {
+        margin-left: 8px;
+        color: rgba(255, 255, 255, 0.7);
+
+        &:hover {
+          color: white;
+        }
+      }
+    }
+  }
+}
+
+::ng-deep .mat-menu-panel {
+  .mat-menu-item {
+    height: 36px;
+    line-height: 36px;
+  }
+}
+
+.notification-dot {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 8px;
+  height: 8px;
+  background-color: #ff4081;
+  border-radius: 50%;
 }

@@ -11,7 +11,7 @@ export class Dusknoir extends PokemonCard {
   public cardType: CardType = P;
   public hp: number = 150;
   public weakness: Weakness[] = [{ type: D }];
-  public resistance: Resistance[] = [{ type: F, value: -30 }]
+  public resistance: Resistance[] = [{ type: F, value: -30 }];
   public retreat: CardType[] = [C, C];
 
   public attacks: Attack[] = [
