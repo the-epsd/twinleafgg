@@ -1,4 +1,5 @@
 import { Card } from '../../game';
+import { CursedStone } from './cursed-stone';
 import { GiantStump } from './giant-stump';
 import { Kecleon } from './kecleon';
 import { Lapras } from './lapras';
@@ -8,6 +9,7 @@ import { PowerTree } from './power-tree';
 import { ReactEnergy } from './react-energy';
 
 export const setEXLegendMaker: Card[] = [
+  new CursedStone(),
   new GiantStump(),
   new Kecleon(),
   new Lapras(),

@@ -37,7 +37,8 @@ export class ChoiceBand extends TrainerCard {
         return state;
       }
 
-      if (effect.damage > 0 && effect.target === opponent.active && defending
+      const attack = effect.attack;
+      if (attack && attack.damage > 0 && effect.target === opponent.active && defending
         && (defending.tags.includes(CardTag.POKEMON_GX) || defending.tags.includes(CardTag.POKEMON_EX))) {
         effect.damage += 30;
       }

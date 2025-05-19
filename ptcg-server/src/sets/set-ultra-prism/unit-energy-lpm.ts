@@ -23,7 +23,7 @@ export class UnitEnergyLPM extends EnergyCard {
   public fullName = 'Unit Energy LPM UPR';
 
   public text = 'This card provides [C] Energy.' +
-    '' +
+    '\n\n' +
     'While this card is attached to a Pokémon, it provides [L], [P], and [M] Energy but provides only 1 Energy at a time.';
 
   public blendedEnergies = [CardType.LIGHTNING, CardType.PSYCHIC, CardType.METAL];

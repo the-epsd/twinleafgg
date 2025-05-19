@@ -2,7 +2,7 @@ import { CardType, EnergyType } from '../../game/store/card/card-types';
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { CheckPokemonTypeEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { DEAL_DAMAGE } from '../../game/store/prefabs/prefabs';
+import { DEAL_DAMAGE, IS_SPECIAL_ENERGY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
@@ -25,7 +25,8 @@ export class StoneFightingEnergy extends EnergyCard {
 
   public fullName = 'Stone Fighting Energy VIV';
 
-  public text = `As long as this card is attached to a Pokémon, it provides [F] Energy.
+  public text =
+    `As long as this card is attached to a Pokémon, it provides [F] Energy.
 
 The [F] Pokémon this card is attached to takes 20 less damage from attacks from your opponent's Pokémon (after applying Weakness and Resistance).`;
 
@@ -36,6 +37,10 @@ The [F] Pokémon this card is attached to takes 20 less damage from attacks from
     }
 
     if (DEAL_DAMAGE(effect) && effect.target.cards.includes(this)) {
+      if (IS_SPECIAL_ENERGY_BLOCKED(store, state, effect.opponent, this, effect.target)) {
+        return state;
+      }
+
       const checkPokemonType = new CheckPokemonTypeEffect(effect.target);
       store.reduceEffect(state, checkPokemonType);
 

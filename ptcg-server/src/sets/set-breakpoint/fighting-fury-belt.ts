@@ -33,7 +33,8 @@ export class FightingFuryBelt extends TrainerCard {
 
       if (IS_TOOL_BLOCKED(store, state, effect.player, this)){ return state; }
 
-      if (effect.damage > 0 && effect.target === opponent.active) {
+      const attack = effect.attack;
+      if (attack && attack.damage > 0 && effect.target === opponent.active) {
         effect.damage += 10;
       }
     }

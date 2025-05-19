@@ -19,22 +19,22 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   }
 
   effect.preventDefault = true;
-  player.hand.moveCardTo(effect.trainerCard, player.supporter);  
-  
+  player.hand.moveCardTo(effect.trainerCard, player.supporter);
+
   yield store.prompt(state, new ChooseCardsPrompt(
     player,
     GameMessage.CHOOSE_CARD_TO_DISCARD,
     player.deck,
-    { },
-    { min: 1, max: 3, allowCancel: false }
+    {},
+    { min: 0, max: 3, allowCancel: false }
   ), selected => {
     cards = selected || [];
     next();
   });
 
   player.deck.moveCardsTo(cards, player.discard);
-  player.supporter.moveCardTo(effect.trainerCard, player.discard);  
-  
+  player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);
   });

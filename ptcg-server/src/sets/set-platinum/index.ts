@@ -1,6 +1,7 @@
 import { Card } from '../../game/store/card/card';
 import { CrobatG } from './crobat-g';
 import { Delcatty } from './delcatty';
+import { Dialga } from './dialga';
 import { PokeTurn } from './poke-turn';
 import { PokemonRescue } from './pokemon-rescue';
 import { Skitty } from './skitty';
@@ -18,6 +19,7 @@ export const setPlatinum: Card[] = [
   new SkuntankG(),
   new CrobatG(),
   new Delcatty(),
+  new Dialga(),
   new PokeTurn(),
   new PokemonRescue(),
   new Ralts(),

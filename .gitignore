@@ -53,3 +53,6 @@ ptcg-server/.nyc_output/processinfo/index.json
 # Output
 ptcg-server/output
 ptcg-server/dist
+
+# Specific Sets
+ptcg-server/src/sets/set-test/
