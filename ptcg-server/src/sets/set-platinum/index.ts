@@ -13,6 +13,7 @@ import { PalkiaG } from './palkia-g';
 import { PalkiaGLVX } from './palkia-g-lv-x';
 import { DialgaG } from './dialgs-g';
 import { DialgaGLVX } from './dialga-g-lv-x';
+import { Vulpix } from './vulpix';
 
 export const setPlatinum: Card[] = [
   new SkuntankG(),
@@ -29,4 +30,5 @@ export const setPlatinum: Card[] = [
   new PalkiaGLVX(),
   new DialgaG(),
   new DialgaGLVX(),
+  new Vulpix(),
 ];
