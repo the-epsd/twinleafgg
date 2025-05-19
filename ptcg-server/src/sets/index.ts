@@ -38,6 +38,8 @@ export * from './set-ex-power-keepers';
 export * from './set-ex-firered-leafgreen';
 export * from './set-ex-legend-maker';
 
+export * from './set-pop-series-5';
+
 //DP Era
 export * from './set-diamond-and-pearl';
 export * from './set-mysterious-treasures';

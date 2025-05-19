@@ -52,6 +52,8 @@ cardManager.defineSet(sets.setEXFireRedLeafGreen);
 cardManager.defineSet(sets.setEXDeltaSpecies);
 cardManager.defineSet(sets.setEXLegendMaker);
 
+cardManager.defineSet(sets.setPOPSeries5);
+
 cardManager.defineSet(sets.setDiamondAndPearl);
 cardManager.defineSet(sets.setMysteriousTreasures);
 cardManager.defineSet(sets.setSupremeVictors);
