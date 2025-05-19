@@ -1,3 +1,4 @@
+import { ChoosePokemonPrompt, GameMessage, PlayerType, PokemonCardList, SlotType } from '../../game';
 import { CardType, EnergyType } from '../../game/store/card/card-types';
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { Effect } from '../../game/store/effects/effect';
@@ -6,20 +7,38 @@ import { IS_SPECIAL_ENERGY_BLOCKED, SWITCH_ACTIVE_WITH_BENCHED } from '../../gam
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
+function* playCard(next: Function, store: StoreLike, state: State, effect: AttachEnergyEffect): IterableIterator<State> {
+  const player = effect.player;
+
+  if (effect.player.active !== effect.target) {
+    return state;
+  }
+
+  let targets: PokemonCardList[] = [];
+  yield store.prompt(state, new ChoosePokemonPrompt(
+    player.id,
+    GameMessage.CHOOSE_POKEMON_TO_SWITCH,
+    PlayerType.BOTTOM_PLAYER,
+    [SlotType.BENCH],
+    { allowCancel: false }
+  ), results => {
+    targets = results || [];
+    next();
+  });
+
+  if (targets.length === 0) {
+    return state;
+  }
+  player.switchPokemon(targets[0]);
+}
+
 export class WarpEnergy extends EnergyCard {
-
   public provides: CardType[] = [CardType.COLORLESS];
-
   public energyType = EnergyType.SPECIAL;
-
   public set: string = 'SLG';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '70';
-
   public name = 'Warp Energy';
-
   public fullName = 'Warp Energy SLG';
 
   public text =
@@ -39,8 +58,6 @@ export class WarpEnergy extends EnergyCard {
 
       return SWITCH_ACTIVE_WITH_BENCHED(store, state, player);
     }
-
     return state;
   }
-
 }

@@ -13,7 +13,6 @@ export class Ceruledge extends PokemonCard {
   public cardType: CardType = R;
   public weakness = [{ type: W }];
   public retreat = [C, C];
-  public tags = [CardTag.ACE_SPEC];
 
   public attacks = [
     {
