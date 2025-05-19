@@ -17,6 +17,7 @@ import { Galvantula } from './glavantula';
 import { GengarMimikyuGX } from './gengar-and-mimikyu-gx';
 import { Hitmonchan } from './hitmonchan';
 import { Hitmonlee } from './hitmonlee';
+import { IngoAndEmmet } from './ingo-and-emmet';
 import { Jasmine } from './jasmine';
 import { Jirachi } from './jirachi';
 import { Joltik } from './joltik';
@@ -58,6 +59,7 @@ export const setTeamUp: Card[] = [
   new GengarMimikyuGX(),
   new Hitmonchan(),
   new Hitmonlee(),
+  new IngoAndEmmet(),
   new Jasmine(),
   new Jirachi(),
   new Joltik(),
