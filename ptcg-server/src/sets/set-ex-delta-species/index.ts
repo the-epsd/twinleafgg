@@ -1,4 +1,5 @@
 import { Card } from '../../game/store/card/card';
+import { Beldum } from './beldum';
 import { Eevee } from './eevee';
 import { HolonMentor } from './holon-mentor';
 import { HolonsElectrode } from './holons-electrode';
@@ -11,6 +12,7 @@ import { Persian } from './persian';
 import { SuperScoopUpDS } from './other-prints';
 
 export const setEXDeltaSpecies: Card[] = [
+  new Beldum(),
   new Eevee(),
   new HolonMentor(),
   new HolonsElectrode(),
