@@ -6,9 +6,11 @@ import { Camerupt } from './camerupt';
 import { Charizard } from './charizard';
 import { Charmander } from './charmander';
 import { Ditto } from './ditto';
+import {Gyarados} from './gyarados';
 import { Ivysaur } from './ivysaur';
 import { Lunatone } from './lunatone';
 import { LureModule } from './lure-module';
+import {Magikarp} from './magikarp';
 import { Moltres } from './moltres';
 import { Pokestop } from './pokestop';
 import { RadiantVenusaur } from './radiant-venusaur';
@@ -40,5 +42,7 @@ export const setPokemonGO: Card[] = [
   new Slowbro(),
   new Slowpoke(),
   new LureModule(),
-  new Wartortle()
+  new Wartortle(),
+  new Magikarp(),
+  new Gyarados(),
 ];

@@ -29,6 +29,7 @@ cardManager.defineSet(sets.setNeoGenesis);
 cardManager.defineSet(sets.setNeoDiscovery)
 
 //E-Card Era
+cardManager.defineSet(sets.setExpedition);
 cardManager.defineSet(sets.setAquapolis);
 cardManager.defineSet(sets.setSkyridge);
 
@@ -51,6 +52,8 @@ cardManager.defineSet(sets.setEXPowerKeepers);
 cardManager.defineSet(sets.setEXFireRedLeafGreen);
 cardManager.defineSet(sets.setEXDeltaSpecies);
 cardManager.defineSet(sets.setEXLegendMaker);
+
+cardManager.defineSet(sets.setPOPSeries5);
 
 cardManager.defineSet(sets.setDiamondAndPearl);
 cardManager.defineSet(sets.setMysteriousTreasures);

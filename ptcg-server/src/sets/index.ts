@@ -15,6 +15,7 @@ export * from './set-neo-genesis';
 export * from './set-neo-discovery';
 
 //E-Card Era
+export * from './set-expedition';
 export * from './set-aquapolis';
 export * from './set-skyridge';
 
@@ -37,6 +38,8 @@ export * from './set-ex-crystal-guardians';
 export * from './set-ex-power-keepers';
 export * from './set-ex-firered-leafgreen';
 export * from './set-ex-legend-maker';
+
+export * from './set-pop-series-5';
 
 //DP Era
 export * from './set-diamond-and-pearl';
