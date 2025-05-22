@@ -10,6 +10,7 @@ import { HolonsMagnemite } from './holons-magnemite';
 import { HolonsMagneton } from './holons-magneton';
 import { HolonsVoltorb } from './holons-voltorb';
 import { Jolteonex } from './jolteon-ex';
+import { Larvitar } from './larvitar';
 import { Meowth } from './meowth';
 import { Persian } from './persian';
 import { SuperScoopUpDS } from './other-prints';
@@ -26,6 +27,7 @@ export const setEXDeltaSpecies: Card[] = [
   new HolonsMagneton(),
   new HolonsVoltorb(),
   new Jolteonex(),
+  new Larvitar(),
   new Meowth(),
   new Persian(),
   new SuperScoopUpDS(),
