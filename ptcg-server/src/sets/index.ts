@@ -15,6 +15,7 @@ export * from './set-neo-genesis';
 export * from './set-neo-discovery';
 
 //E-Card Era
+export * from './set-expedition';
 export * from './set-aquapolis';
 export * from './set-skyridge';
 

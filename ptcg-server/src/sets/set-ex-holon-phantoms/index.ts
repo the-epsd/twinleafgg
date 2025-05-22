@@ -1,4 +1,5 @@
 import { Card } from '../../game/store/card/card';
+import { GrassEnergy, FireEnergy, WaterEnergy, LightningEnergy, PsychicEnergy, FightingEnergy } from './basic-energies';
 import { HolonAdventurer } from './holon-adventurer';
 import { DeltaRainbowEnergy } from './delta-rainbow-energy';
 import { Exeggcute } from './exeggcute';
@@ -21,4 +22,12 @@ export const setEXHolonPhantoms: Card[] = [
   new Pikachu(),
   new Raichu(),
   new HolonsCastform(),
+
+  // Basic energies
+  new GrassEnergy(),
+  new FireEnergy(),
+  new WaterEnergy(),
+  new LightningEnergy(),
+  new PsychicEnergy(),
+  new FightingEnergy(),
 ];

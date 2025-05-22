@@ -1,4 +1,5 @@
 import { Card } from '../../game';
+import { GrassEnergy, FireEnergy, WaterEnergy, LightningEnergy, PsychicEnergy, FightingEnergy } from './basic-energies';
 import { DarknessEnergySpecial } from './darkness-energy-special';
 import { Delcatty } from './delcatty';
 import { Skitty } from './skitty';
@@ -13,6 +14,14 @@ export const setEXRubyAndSapphire: Card[] = [
   new Delcatty(),
   new Skitty(),
   new Blaziken(),
+
+  // Basic energies
+  new GrassEnergy(),
+  new FireEnergy(),
+  new WaterEnergy(),
+  new LightningEnergy(),
+  new PsychicEnergy(),
+  new FightingEnergy(),
 
   // Other Prints
   new MetalEnergySpecialRS(),
