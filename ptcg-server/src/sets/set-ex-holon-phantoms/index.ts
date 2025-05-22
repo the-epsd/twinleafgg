@@ -1,5 +1,8 @@
 import { Card } from '../../game/store/card/card';
 import { HolonAdventurer } from './holon-adventurer';
+import { DeltaRainbowEnergy } from './delta-rainbow-energy';
+import { Exeggcute } from './exeggcute';
+import { Exeggutor } from './exeggutor';
 import { HolonsCastform } from './holons-castform';
 import { Meowth } from './meowth';
 import { Oddish } from './oddish';
@@ -9,6 +12,9 @@ import { Raichu } from './raichu';
 
 export const setEXHolonPhantoms: Card[] = [
   new HolonAdventurer(),
+  new DeltaRainbowEnergy(),
+  new Exeggcute(),
+  new Exeggutor(),
   new Meowth(),
   new Oddish(),
   new Pidgey(),
