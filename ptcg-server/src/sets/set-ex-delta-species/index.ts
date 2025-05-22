@@ -3,6 +3,7 @@ import { Beldum } from './beldum';
 import { Eevee } from './eevee';
 import { HolonMentor } from './holon-mentor';
 import { HolonTransceiver } from './holon-transceiver';
+import { HolonResearcher } from './holon-researcher';
 import { HolonsElectrode } from './holons-electrode';
 import { HolonsMagnemite } from './holons-magnemite';
 import { HolonsMagneton } from './holons-magneton';
@@ -17,6 +18,7 @@ export const setEXDeltaSpecies: Card[] = [
   new Eevee(),
   new HolonMentor(),
   new HolonTransceiver(),
+  new HolonResearcher(),
   new HolonsElectrode(),
   new HolonsMagnemite(),
   new HolonsMagneton(),
