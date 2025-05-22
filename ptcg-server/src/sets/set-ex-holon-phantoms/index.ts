@@ -1,4 +1,5 @@
 import { Card } from '../../game/store/card/card';
+import { HolonAdventurer } from './holon-adventurer';
 import { DeltaRainbowEnergy } from './delta-rainbow-energy';
 import { Exeggcute } from './exeggcute';
 import { Exeggutor } from './exeggutor';
@@ -10,6 +11,7 @@ import { Pikachu } from './pikachu';
 import { Raichu } from './raichu';
 
 export const setEXHolonPhantoms: Card[] = [
+  new HolonAdventurer(),
   new DeltaRainbowEnergy(),
   new Exeggcute(),
   new Exeggutor(),
