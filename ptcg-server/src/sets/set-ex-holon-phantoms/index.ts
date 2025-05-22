@@ -1,5 +1,6 @@
 import { Card } from '../../game/store/card/card';
-import {  HolonsCastform  } from './holons-castform';
+import { GrassEnergy, FireEnergy, WaterEnergy, LightningEnergy, PsychicEnergy, FightingEnergy } from './basic-energies';
+import { HolonsCastform } from './holons-castform';
 import { Meowth } from './meowth';
 import { Oddish } from './oddish';
 import { Pidgey } from './pidgey';
@@ -13,4 +14,12 @@ export const setEXHolonPhantoms: Card[] = [
   new Pikachu(),
   new Raichu(),
   new HolonsCastform(),
+
+  // Basic energies
+  new GrassEnergy(),
+  new FireEnergy(),
+  new WaterEnergy(),
+  new LightningEnergy(),
+  new PsychicEnergy(),
+  new FightingEnergy(),
 ];

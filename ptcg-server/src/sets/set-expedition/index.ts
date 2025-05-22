@@ -1,13 +1,7 @@
-import { Card } from '../../game';
+import { Card } from '../../game/store/card/card';
 import { GrassEnergy, FireEnergy, WaterEnergy, LightningEnergy, PsychicEnergy, FightingEnergy } from './basic-energies';
-import { Medichamex } from './medicham-ex';
-import { Meditite } from './meditite';
-import { Scott } from './scott';
 
-export const setEXEmerald: Card[] = [
-  new Medichamex(),
-  new Meditite(),
-  new Scott(),
+export const setExpedition: Card[] = [
 
   // Basic energies
   new GrassEnergy(),

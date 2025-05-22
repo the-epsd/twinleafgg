@@ -1,4 +1,5 @@
 import { Card } from '../../game/store/card/card';
+import { GrassEnergy, FireEnergy, WaterEnergy, LightningEnergy, PsychicEnergy, FightingEnergy, DarknessEnergy, MetalEnergy } from './basic-energies';
 import { Herdier } from './herdier';
 import { Lillipup } from './lillipup';
 import { Pignite } from './pignite';
@@ -25,4 +26,14 @@ export const setBlackAndWhite: Card[] = [
   new Zekrom(),
   new Zoroark(),
   new Zorua(),
+
+  // Basic energies
+  new GrassEnergy(),
+  new FireEnergy(),
+  new WaterEnergy(),
+  new LightningEnergy(),
+  new PsychicEnergy(),
+  new FightingEnergy(),
+  new DarknessEnergy(),
+  new MetalEnergy(),
 ];

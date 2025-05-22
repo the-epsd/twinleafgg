@@ -29,6 +29,7 @@ cardManager.defineSet(sets.setNeoGenesis);
 cardManager.defineSet(sets.setNeoDiscovery)
 
 //E-Card Era
+cardManager.defineSet(sets.setExpedition);
 cardManager.defineSet(sets.setAquapolis);
 cardManager.defineSet(sets.setSkyridge);
 
