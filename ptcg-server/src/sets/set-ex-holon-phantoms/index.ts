@@ -10,6 +10,7 @@ import { Oddish } from './oddish';
 import { Pidgey } from './pidgey';
 import { Pikachu } from './pikachu';
 import { Raichu } from './raichu';
+import { RareCandy } from './rare-candy';
 
 export const setEXHolonPhantoms: Card[] = [
   new HolonAdventurer(),
@@ -22,6 +23,7 @@ export const setEXHolonPhantoms: Card[] = [
   new Pikachu(),
   new Raichu(),
   new HolonsCastform(),
+  new RareCandy(),
 
   // Basic energies
   new GrassEnergy(),
